@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:1919b3e1ff2a4562a1d4a69aeffba5cd89664f26c7bb5ac27dfba289488f1ead",
+  "content_hash": "sha256:5cafe665956de9e0cf88bbcca14369ed42297ca8b33930604b8a692545899ded",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -10664,6 +10664,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:a-brainstormed-idea-is-a-first-class-kind",
+      "properties": {
+        "acted_at": "2026-08-30T00:00:00Z",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:a-claim-may-need-a-list-rather-than-a-radius",
       "properties": {
         "role": "approver"
@@ -16490,6 +16499,16 @@
         "evidence": "The published-surface export cannot carry a behavioural promise, so the capability ships a document that is structurally incomplete for the job it is offered for. Found by the dynograph-foundation trial, 2026-07-28."
       },
       "to_id": "cap:publish-surface"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "cap:a-decision-can-be-created-already-settled",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "That capability is the INSTANCE fix the 08-09 finding produced — collapsing add_decision plus set_decision_status into one call that cannot be misordered. It made that pair safe and left the class open, which is why the same user hit it again through add_change_event plus pin_at_epoch. The instance fix is the reason the recurrence looks new.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:the-parallel-batch-class-recurred-because-only-its-instance-was-fixed"
     },
     {
       "edge_type": "CAUSES",
@@ -34009,6 +34028,24 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-ordering-hazard-is-named-where-it-bites",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-ordering-hazard-is-named-where-it-bites",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-exchange"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-orientation-call-stops-rereading-stale-records",
       "properties": {
         "accepted_baseline": true,
@@ -37503,6 +37540,24 @@
     },
     {
       "edge_type": "CONTRADICTS",
+      "from_id": "fact:alexs-third-report-lands-and-one-of-its-two-standing-items-is-already-fixed",
+      "properties": {
+        "alignment": "opposing",
+        "evidence": "alignment=supporting. That decision is open on how a content-only client gets an answer without resurrecting the 2x wire cost. This is its third independent occurrence — two clients, three sessions — and the user's own ranking of it as the item everything else is downstream of. Corroboration and escalation, not conflict."
+      },
+      "to_id": "dec:idea-how-does-a-content-only-client-get-an-answer"
+    },
+    {
+      "edge_type": "CONTRADICTS",
+      "from_id": "fact:alexs-third-report-lands-and-one-of-its-two-standing-items-is-already-fixed",
+      "properties": {
+        "alignment": "opposing",
+        "evidence": "alignment=supporting. That fact set up the output-schema experiment: one tool declares an output contract, the rest do not, and a user calls both in one session. This report is the pre-condition arm measured on 0.43.0 — neither arrives — produced by a real user without anyone asking. Putting him on 0.44.0 turns his ordinary work into the experiment's live arm."
+      },
+      "to_id": "fact:reflow2-sends-a-structured-payload-for-tools-that-declare-no-output-contract"
+    },
+    {
+      "edge_type": "CONTRADICTS",
       "from_id": "fact:apply-heal-would-have-destroyed-the-wrong-contributor",
       "properties": {
         "alignment": "opposing",
@@ -37636,6 +37691,15 @@
         "evidence": "alignment=supporting. That idea proposes obligations riding the tool that performs the act. This is a measurement from the very session that recorded it, showing the discipline failing in the way the idea predicts — the agent held the rule, held the candidates, and still needed the user to be the trigger."
       },
       "to_id": "dec:idea-governance-rides-the-tool-that-does-the-thing"
+    },
+    {
+      "edge_type": "CONTRADICTS",
+      "from_id": "fact:the-parallel-batch-class-recurred-because-only-its-instance-was-fixed",
+      "properties": {
+        "alignment": "opposing",
+        "evidence": "alignment=supporting. That 2026-08-09 pass established the mechanism — the RwLock serialises access, not intent, so a parallel batch carries no ordering and Node not found is the correct answer. This pass confirms it holds for a different tool pair twenty-one days later, and confirms its own stated limit is still unmet: neither pass reproduced it with a concurrent client."
+      },
+      "to_id": "fact:the-decision-race-is-caller-ordering-not-read-after-write"
     },
     {
       "edge_type": "CONTRADICTS",
@@ -112926,6 +112990,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:grok-shell-feedback-2026-08-30",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "sub:serving"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:handshake",
       "properties": {
         "completeness": "complete",
@@ -115223,6 +115296,14 @@
         "criticality": "required"
       },
       "to_id": "dep:dynograph-foundation"
+    },
+    {
+      "edge_type": "RISKS",
+      "from_id": "art:grok-shell-feedback-2026-08-30",
+      "properties": {
+        "evidence": "The report's item 3 names a state the drift gate exists to prevent: a dependent write racing inside a parallel batch, whose failure is invisible because success is not readable, leaving a committed export whose artifact hashes do not match disk. The risk is carried by the combination of the two defects rather than by either alone."
+      },
+      "to_id": "fact:alexs-third-report-lands-and-one-of-its-two-standing-items-is-already-fixed"
     },
     {
       "edge_type": "RISKS",
@@ -120354,6 +120435,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:grok-shell-feedback-2026-08-30",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:grok-shell-feedback-2026-08-30"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:handshake",
       "properties": {
         "action": "created"
@@ -122504,6 +122593,17 @@
       }
     },
     {
+      "node_id": "art:grok-shell-feedback-2026-08-30",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:7c221ff092dae097f9ae49d2c3d1ecaa229cc4b3d1f2774ce2329969c49efda6",
+        "location": "docs/feedback/2026-08-30-grok-shell-agent-feedback.md",
+        "name": "Alex's agent-session feedback, 2026-08-30 (grok-shell-reflow2 1.0.13, reflow2 0.43.0) — items 1 and 2 still reproduced, plus four new: a parallel-write race that fails invisibly, two documentation misses, and the operational cost of unreadable success",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:handshake",
       "node_type": "Artifact",
       "properties": {
@@ -123644,7 +123744,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:522431d330b0e7ba6893e06e9a72d41edd5e300c337796c4b7dee512ec21e387",
+        "checksum": "sha256:505641b59d00f5b06d765bc7d6681e33fa799928402c4b40675237251fd97316",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -124363,7 +124463,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:d1e8e17847235ddde93e07f576a5a591481413914fddece4eb5d819285792880",
+        "checksum": "sha256:686b07a7ca5a6defc589aec6f5e9f9fcbfbc81c605237e61397c3763ada53936",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/exchange.rs",
         "name": "tools/exchange.rs",
@@ -133631,6 +133731,18 @@
       }
     },
     {
+      "node_id": "chg:the-ordering-hazard-is-named-where-it-bites",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-30",
+        "name": "A reference to an absent node names the ordering hazard, and export warns it can run early",
+        "rationale": "Alex's 2026-08-30 field report, item 3. Root-caused under the root-cause skill: TWO symptoms with different causes, and his inference on the second is probably wrong — `set_artifact_checksum` DOES verify the ChangeEvent exists and `NodeNotFound` reaches `content` (proven by his own pin refusal being visible), so his checksum call almost certainly SUCCEEDED and the export that showed the old hash ran before it. That moves the danger from write-then-write to WRITE-THEN-EXPORT, which no refusal will ever catch.\n\nWHY IT RECURRED, and this is the finding: `fact:the-decision-race-is-caller-ordering-not-read-after-write` (2026-08-09, same user's fleet) diagnosed the class correctly and named the general fix as A DESCRIPTION, NOT A FEATURE. What shipped was the INSTANCE fix — collapsing add_decision + set_decision_status into one call. That pair became safe and the class stayed open, so the same user hit it twenty-one days later through add_change_event + pin_at_epoch. Collapsing pairs cannot close an open set.\n\n⚠️ STILL NOT REPRODUCED WITH A CONCURRENT CLIENT — the limit the 08-09 note flagged and nobody closed. The new concurrent test asserts the caller can always tell a no-op from a save, but does not force the race, because asserting a scheduler outcome is flaky by construction.",
+        "subject": "system",
+        "summary": "`dyno_err` gives `NodeNotFound` its own arm: the refusal still names the missing node, then says that if the call was issued in the same parallel batch as the one creating it the two are NOT ordered, tells the caller to sequence them or use a constructor that does both — and still admits the node may simply never have been created, because the message cannot tell those apart. One funnel, so every order-dependent tool inherits it. `export_graph`'s description gains the hazard no error can catch: issued in a batch with writes it can run FIRST and serialise a state missing them, and unlike a failed write THAT FAILURE IS SILENT — the export succeeds, it is merely early, and the document then committed is the one whose artifact hashes will not match disk. Three tests; the regression one was OBSERVED FAILING against the unfixed code."
+      }
+    },
+    {
       "node_id": "chg:the-orientation-call-stops-rereading-stale-records",
       "node_type": "ChangeEvent",
       "properties": {
@@ -135678,6 +135790,16 @@
         "decision": "ACCEPTED by Anthony, 2026-08-17 (\"accept the black box decision\"). This is now the settled mechanism the SE increment will use when it runs.\n\nHIS DIRECTION, looking ahead to a future increment doing proper SE on reflow2 itself: 'we talked about 8 subsystems of reflow2, but currently there were not really any black-boxes... when we do this SE task, this SPECIFIES edge will be needed between each black-box.'\n\nTHE DIRECTION IS RIGHT AND THE MECHANISM NEEDED ONE CORRECTION, settled here so the increment does not start by drawing the wrong edges. SPECIFIES does not run BETWEEN two black boxes. It runs from a machine-readable contract ARTIFACT to the INTERFACE that sits between them. Three distinct edges are needed and they answer three different questions:\n\n  PROVIDES / CONSUMES   Component -> Interface   WHO offers this boundary, and who needs it. This is the edge between black boxes, and it is what is missing today (`fact:the-eight-subsystems-are-groupings-not-black-boxes`: 0 of 8 subsystems provide anything).\n  SPECIFIES             Artifact  -> Interface   WHICH FILE is the authoritative contract. This is what makes the boundary CHECKABLE instead of prose, and it is the edge that has never been drawn anywhere in the graph.\n  REALIZES              Artifact  -> Component   which code implements the box. Already drawn everywhere.\n\nSO THE SE INCREMENT OWES, PER BOUNDARY: an Interface node, a PROVIDES and one or more CONSUMES, and a SPECIFIES to whatever file actually defines the contract. Drawing SPECIFIES alone between subsystems that provide nothing would attach contracts to boundaries that do not exist.\n\nWHY IT MATTERS BEYOND TIDINESS. `req:interface-spec-complete` says a published interface must carry enough to check compatibility rather than prose; `seam_report` and `granularity_report` read the interface tier. With 0 of 8 subsystems providing anything, those computations have nothing to read above the leaves — the decomposition is invisible to every tool that reasons about seams.\n\n⚠️ A CORRECTION THE INCREMENT MUST MAKE BEFORE IT ADDS ANYTHING. `fact:three-of-five-foundation-consumes-edges-name-the-wrong-component` — the CONSUMES edges to the foundation already in the graph are wrong three times in five (`cmp:propagate`, `cmp:search` and `cmp:heal` are credited with crates they do not import). Those are the same edge type this decision rests on. Building new boundary edges on top of a tier that already misattributes three of five would bake the error in.",
         "name": "A black box is defined by PROVIDES/CONSUMES; SPECIFIES is what makes its contract checkable rather than prose",
         "rationale": "ACCEPTED ON ANTHONY'S WORD after the mechanism was put to him with the correction stated plainly. What he agreed to is the THREE-EDGE SHAPE, not a schedule: the SE increment itself remains governed by `dec:idea-should-reflow2s-own-design-be-re-derived-through-a-principled-se-process`, which is separately accepted as 'DO IT, BUT NOT YET'.\n\nWHAT WAS REJECTED: drawing SPECIFIES directly between subsystems, which is the form his own words took. It was rejected on the mechanism rather than the intent — SPECIFIES is declared `Artifact -> Interface|Capability|Component` and has no meaning as a component-to-component edge, so the version he described would not have expressed what he wanted even if drawn.\n\nHIS STANDING GROUND, stated in the same breath and closing the cost objection in advance for what will be a large increment: 'I'm more interested in doing things right. If that requires redoing work, so be it - I prefer quality. So if adding SPECIFIES is right, then we have our answer regardless of the amount of work that it includes.'\n\nA COUPLING THE SEQUENCING MUST RESPECT, found while answering this and unchanged by the acceptance. Adding subsystem interfaces adds PROVIDES/CONSUMES edges, which ARE traversed by propagation (Lateral, both directions). Making SPECIFIES propagate would add more. Both ENLARGE every blast radius and therefore every scoped region — at exactly the moment `dec:the-default-scope-depth-should-be-two` is shrinking depth to make regions mean something. The two pull against each other, so the depth change should land and be re-measured BEFORE the SE work adds edges, and re-measured again after. Otherwise a region that got usable will quietly stop being so and nothing will say which change did it. `dec:should-specifies-propagate-impact` holds that question and stays open deliberately.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:a-brainstormed-idea-is-a-first-class-kind",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Anthony, 2026-08-30: *\"it sounds like the alternative is not viable, so I think a brainstormed idea becomes a first class kind in the vocabulary.\"*\n\nWHAT THIS SETTLES, AND ONLY THIS. An exploratory idea gets a declared, queryable marker distinguishing it from a Decision recording a choice somebody faced. It does NOT settle `dec:exploratory-staging`'s second half — where a NOT-YET-AGREED WISH lives (the Capability side, 34 stuck gaps, added 2026-08-10). That node's own closing line names the wish question as the one to put to the user, and it was not put or answered today. It stays open.\n\n═══ WHY NOW, WHEN IT WAS TWICE JUDGED TOO SMALL ═══\n\n`dec:exploratory-staging` recorded that two of the four original arguments for a kind had DISSOLVED — brainstormed ideas are already silent by construction (`detect_gaps` raises `undecided_decision_point` only on a Decision with 2+ registered alternatives), and delivery/certainty counts already exclude Decisions. What remained was retirement candidates and at-a-glance readability: *\"real but small\"*, and explicitly left to Anthony as a schema-change judgement.\n\n⭐ A THIRD ARGUMENT NOW EXISTS AND IT IS OF A DIFFERENT KIND. `dec:idea-governance-rides-the-tool-that-does-the-thing` proposes A′ — extending the near-match refusal that already fires so it also asks about RELATEDNESS, not only duplication. Measured 2026-08-30, A′ CANNOT BE SCOPED WITHOUT THIS: 207 idea-Decisions and 363 other Decisions differ by NOTHING a computation may read. Status does not separate them (32 non-idea Decisions are also `proposed`); `no_relation_note` is the discipline's output, not a marker available before it exists. The only separator is the `dec:idea-` ID PREFIX.\n\n🛑 AND THAT IS THE DEFECT FIXED AND MERGED THE SAME MORNING. `fact:seam-roll-up-found-a-container-by-id-prefix-and-answered-a-false-zero` (#390): an id's spelling treated as authoritative about what a node IS, instead of asking the graph. Scoping A′ by prefix would reintroduce that class hours after closing it. That is the *\"alternative is not viable\"* Anthony is referring to.\n\nSo the argument that carries this is not readability. It is `req:a-vocabulary-distinction-proves-it-is-read`: a distinction earns its keep when a computation reads it, and A′ is that computation. Unscoped, A′ would land on the Requirement/Capability/ChangeEvent capture path that Alex's 2026-08-30 field report identifies as his existing friction — so the marker is what keeps a fix for idea linking away from a live user's working path.\n\n═══ WHAT SHAPE — RECOMMENDED, NOT SETTLED ═══\n\n\"First-class kind\" admits two readings and they differ by an order of magnitude in cost:\n\n(i) A NEW NODE TYPE. Everything handling Decision would need to learn it — `what_next`, the detectors, the reports, delivery, the merge driver. Large blast radius for a noun whose behaviour is otherwise identical to a Decision.\n\n(ii) A DECLARED PROPERTY ON Decision, set by the brainstorm skill at capture and read by the guard. Schema-validated, queryable, and it satisfies the read-it test without a new type.\n\n⭐ RECOMMENDED: (ii). It buys the computation A′ needs and both remaining benefits `dec:exploratory-staging` named — retirement candidates and readability become queries rather than prose — at the cost of one declared property.\n\n⚠️ ONE KNOWN TRAP TO AVOID IN THE BUILD: if the marker is expressed as an ENUM VALUE, the schema stamp will not count it. The stamp counts node and edge TYPES, and this project has recorded four instances of that blindness — most recently on `ifc:mcp-tools-http`, where a missing enum word was declined once for exactly this reason before being added anyway. A consumer pinning a build would gain a distinction nothing tells them about.\n\n═══ NOT ESTABLISHED ═══\n· Whether existing idea-Decisions get backfilled, and on what evidence. The only signal available for the existing 207 is the id prefix — the very thing being retired — so a backfill would launder it into a property. Marking only NEW ideas is honest and leaves the old population unqueryable; backfilling is convenient and dishonest. Nobody has chosen.\n· Whether the marker belongs on Decision at all, or whether the wish question (`dec:exploratory-staging`, 2026-08-10 half) wants the same mechanism, in which case deciding them separately may foreclose one.",
+        "name": "DECIDED — a brainstormed idea is a first-class kind in the vocabulary, because the alternative is an id-prefix test",
+        "rationale": "Recorded as its own accepted Decision rather than by moving `dec:exploratory-staging` to accepted, because that node holds TWO questions and Anthony answered one. Marking it accepted would assert that the not-yet-agreed-wish half — its 2026-08-10 addition, 34 stuck gaps, and the question its own text names as the one to put to the user — had been settled today. It was not.",
         "status": "accepted"
       }
     },
@@ -144633,6 +144755,16 @@
       }
     },
     {
+      "node_id": "frag:art:grok-shell-feedback-2026-08-30",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "imported",
+        "status": "ingested",
+        "title": "Registered Alex's agent-session feedback, 2026-08-30 (grok-shell-reflow2 1.0.13, reflow2 0.43.0) — items 1 and 2 still reproduced, plus four new: a parallel-write race that fails invisibly, two documentation misses, and the operational cost of unreadable success"
+      }
+    },
+    {
       "node_id": "frag:art:handshake",
       "node_type": "Fragment",
       "properties": {
@@ -152897,6 +153029,18 @@
       }
     },
     {
+      "node_id": "fact:alexs-third-report-lands-and-one-of-its-two-standing-items-is-already-fixed",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "measurement",
+        "statement": "TRIAGE OF ALEX'S 2026-08-30 FIELD REPORT (grok-shell-reflow2 1.0.13, running reflow2 0.43.0), relayed by Anthony. Two files were handed over; ONE WAS ALREADY CAPTURED and is recorded here so nobody re-triages it.\n\n═══ WHICH FILE IS WHICH, READ OFF THE FILES ═══\nThe 08-29 upload is the SAME report already committed as docs/feedback/2026-08-29-grok-shell-agent-feedback.md — differently formatted, same two items, no new information. The 08-30 upload is NEW: items 1 and 2 still reproduced on 0.43.0, plus four previously unreported. Registered as art:grok-shell-feedback-2026-08-30.\n\n═══ ① HIS ITEM 2 IS ALREADY FIXED, AND HE IS ON THE WRONG VERSION ═══\nHe asks: *\"name the TYPE in the refusal so the agent knows it is looking at a different kind of node.\"* v0.44.0 does exactly that — crates/reflow2-mcp/src/tools/capture.rs:594 emits *\"The design already holds a DIFFERENT KIND OF RECORD saying something close to this\"* and names the type.\n\nVERIFIED BY USE, not by reading the code: this session hit that refusal THREE TIMES on 0.44.0 and it named the near-match as a Decision and as a DesignEpoch each time. Alex is running 0.43.0. **The fix shipped and did not reach the user who asked for it**, which is a distribution finding rather than a design one.\n\n═══ ② HIS ITEM 1 IS NOW ON ITS THIRD INDEPENDENT REPORT ═══\n  2026-08-27  Grok Build TUI      art:grok-build-tui-feedback-2026-08-27\n  2026-08-29  grok-shell 1.0.13   art:grok-shell-feedback-2026-08-29\n  2026-08-30  grok-shell 1.0.13   art:grok-shell-feedback-2026-08-30\n\nThree sessions, two different clients, same symptom: every non-prose non-refusal reply is a stub, so `search_design`, `get_node`, `loop_status`, `detect_gaps` and every `add_*` success is invisible. HE RANKS IT HIS OWN #1 and says everything else is downstream of it. His whole session ran on `export_graph` to a scratch path plus a JSON parse — a full-graph dump to answer *\"did this one write stick?\"*\n\nThe design already holds this as `dec:idea-how-does-a-content-only-client-get-an-answer` (OPEN) and knows why the duplication was removed (`fact:every-reply-was-sent-twice`, `ver:a-reply-is-sent-once`). What is new is the third occurrence and his priority ordering.\n\n⭐ AND IT IS THE EXPERIMENT v0.44.0 EXISTS FOR. `fact:reflow2-sends-a-structured-payload-for-tools-that-declare-no-output-contract` (2026-08-29) set up a control arm: one tool declares an output contract, the rest do not, and a user calls both in one session. ALEX ON 0.44.0 IS THAT EXPERIMENT, and his report is the pre-condition measurement on 0.43.0 — 'neither arrives' — taken without anyone asking for it.\n\n═══ ③ NEW AND ACTIONABLE: A DEPENDENT WRITE IN A PARALLEL BATCH FAILS, AND THE FAILURE IS INVISIBLE ═══\nHis item 3. A harness emitted `add_change_event` and `pin_at_epoch` naming that same ChangeEvent IN ONE PARALLEL BATCH. The pin lost the race and refused with *\"Node not found\"*. Then `set_artifact_checksum` with `design_change_event_id` pointing at it returned only the stub, and the next export still carried the OLD checksum — so the write had failed and nothing said so.\n\n🛑 THE SHARP EDGE IS THE COMBINATION, NOT EITHER HALF. A racing write is recoverable if you can see it fail; an invisible success is survivable if writes do not race. Together they produce a COMMITTED EXPORT WHOSE ARTIFACT HASHES DO NOT MATCH DISK, which is the state the drift gate exists to prevent. This session avoided it only by sequencing the same three calls by hand.\n\nHis own suggestion, worth taking on its merits: a line in the pin/checksum refusal saying \"create the ChangeEvent first\", and serialising writes that name a just-created id.\n\n═══ ④ ITEMS 4 AND 5 ARE DOCUMENTATION, AND HE LABELS THEM SO ═══\n`get_instructions {section: \"existing-design\"}` — a slug guessed from prose that does not exist; and `get_skill {name: \"where\"}` — the slash command is `where`, the served skill is `where-am-i`. BOTH REFUSALS WERE CORRECT AND ACTIONABLE and he says so. Item 6 is item 1's consequence, not a separate finding.\n\n═══ WHAT HE SAYS WORKS, RECORDED BECAUSE PRAISE IS EVIDENCE TOO ═══\nRefusals arrive complete and actionable in `content`; the four prose tools return whole documents; sectioned `get_instructions` avoids the ~27 KB cap; `export_graph` with a path is a reliable read/write; `distinct_from` unblocks cross-type matches once treated as normal.\n\n⚠️ NOT ESTABLISHED: whether item 1 is a reflow2 defect or a grok-shell-reflow2 1.0.13 conformance gap. He says he cannot tell, and neither can this session — reflow2 made a deliberate trade (stop duplicating, because duplication was the difference between a readable reply and a refused one) and that trade breaks this client. Naming it a client bug would be convenient and is not established.",
+        "subject_id": "dec:idea-how-does-a-content-only-client-get-an-answer",
+        "valid_from": "2026-08-30"
+      }
+    },
+    {
       "node_id": "fact:an-agent-stopped-reaching-for-reflow2-and-a-second-one-reproduced-it-the-same-day",
       "node_type": "TemporalFact",
       "properties": {
@@ -156229,6 +156373,18 @@
         "statement": "THE PRIMARY USER DESCRIBES HIS OWN WORKING MODEL, AND ONE SESSION MEASURED IT. Anthony, 2026-08-11, unprompted.\n\nHIS WORDS: \"I guess how I've been treating reflow2 is as a 'funnel' for my instructions, ideas, feedback, requirements and brainstorming. it often comes in random order and often touches upon subjects that I had previously thought about and entered into reflow2 development... both my brother and I kind of work like this of organically developing our projects as we go. probably looking at this session is a good microcosm of how I've developed and used reflow2 so far - and it has kept up pretty well.\"\n\n⭐ THE CLAIM IS TESTABLE AND THE SESSION TESTED IT. NINE times in one working day, an input that arrived as a fresh thought landed on something the graph already held. None became a duplicate:\n\n  \"what's next for governance\"            -> six requirements already authored from an external report\n  render the docs from the graph           -> viewpoints.md's recorded Direction, the unbuilt half of BL-40\n  `claude update` as an aspiration         -> req:frictionless-update, ACCEPTED, explicitly modelled on Claude Code\n  feedback as a prioritisation signal      -> req:friction-has-a-severity-bar, considered AND DROPPED, by him\n  the backward-trace problem               -> req:no-idea-goes-quiet, accepted, capturing his own complaint 7 days earlier\n  the MCP breakage                         -> a defect fact recorded 4 days earlier WITH ITS FIX in its evidence field\n  the second user's \"put the skill in\"     -> report-friction, already shipped in the kit\n  his own organic working model            -> req:accreted-intent-becomes-a-design, proposed and unaccepted\n  \"make search-first automatic\"            -> search-first already written into FIVE served skills, and\n                                              req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue,\n                                              proposed, which is exactly the delivery mechanism he asked for\n\nThe ninth happened WHILE RECORDING THE EIGHTH, which is the cleanest possible demonstration of the pattern.\n\n⚠⚠ THE ASYMMETRY IS THE FINDING, NOT THE COUNT. Every one of the nine was found because an agent WENT AND LOOKED. Nothing surfaced any of them. Had the search not been run, each becomes a near-duplicate node wearing different words, and the graph fills with the same idea nine times. So reflow2 is a funnel on PULL and not on PUSH: it will hold everything and volunteer nothing.\n\nTHAT IS THE SAME SHAPE AS THREE OTHER FINDINGS THE SAME DAY, which is why it is recorded as one fact rather than as praise: (1) the loop only sees what an agent hand-carries in (dec:idea-the-loop-only-sees-what-an-agent-hand-carries); (2) skills fire when a user TYPES them, confirmed twice — once by self-measurement in req:skill-use-survives-a-long-session and once from the field by the second user; (3) a fully-diagnosed defect with its fix already written sat four days because no ranking reads measured facts (dec:idea-field-evidence-is-a-prioritisation-input). Four instances, one mechanism: the design's memory is complete and entirely on demand.\n\n⭐ WHY THIS IS FILED AGAINST req:accreted-intent-becomes-a-design RATHER THAN AS A NEW IDEA. That requirement — \"a body of intent accreted over years, contradicting itself and never built, can still become a design\" — IS the working model he just described, and it is `proposed` and unaccepted. The way the primary user and the second user actually work is captured in the design and never confirmed. That is the eighth collision above, and it is about reflow2's own understanding of who uses it.\n\nWHAT IS NOT CLAIMED: nine collisions in one session is evidence that the ORDER of his input does not cost him coherence WHEN AN AGENT SEARCHES. It is not evidence about how often a session that does not search creates duplicates — nobody has measured that, and it is the number that would say what the pull-only property actually costs.",
         "subject_id": "req:accreted-intent-becomes-a-design",
         "valid_from": "2026-08-11"
+      }
+    },
+    {
+      "node_id": "fact:the-parallel-batch-class-recurred-because-only-its-instance-was-fixed",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "ROOT-CAUSE PASS ON ALEX'S ITEM 3, 2026-08-30, run under the root-cause skill at Anthony's request. TWO SYMPTOMS WERE REPORTED AS ONE FAILURE. They have different causes, and the reporter's own inference about the second is probably wrong.\n\n═══ ① THE SYMPTOM, WITH HIS DIAGNOSIS CUT OUT ═══\nIn one parallel tool batch containing `add_change_event id=chg:X` and `pin_at_epoch node=chg:X`, the pin returned `Node not found: ChangeEvent chg:X` in `content`. A later retry found it present. A subsequent `set_artifact_checksum` naming that id returned the STRUCTURED-CONTENT STUB — not a refusal — and the next `export_graph` still carried the OLD checksum. His text says *\"the pin raced the create\"*; that is a hypothesis, and it is removed here so it had to survive a measurement.\n\n═══ ② PRECEDENT, AND IT REFUTES THE LEADING CANDIDATE ═══\n`fact:the-decision-race-is-caller-ordering-not-read-after-write` (2026-08-09, twenty-one days earlier, SAME USER'S FLEET) already established the mechanism for the identical class:\n\n  · READ-AFTER-WRITE ALREADY HOLDS. A capture tool takes an exclusive `write_lock()`, writes, and the guard drops BEFORE the response returns. There is no visibility window to close.\n  · THE RWLOCK SERIALISES ACCESS, NOT INTENT. Parallel batches carry no ordering, so the modify can legitimately win the lock first — at which instant the node genuinely does not exist and `Node not found` is the CORRECT answer, not a bug.\n\nSo the first symptom is fully explained and is not a defect in the write path.\n\n═══ ③ THE DISCRIMINATING MEASUREMENT ON THE SECOND SYMPTOM ═══\nHis conclusion: *\"first checksum call almost certainly failed (ChangeEvent missing, or export raced), and the failure was invisible.\"*\n\nMeasured in code 2026-08-30:\n  · crates/reflow2-core/src/artifact.rs, DesignUpdated branch: the ChangeEvent existence IS checked and a missing one returns `DynoError::NodeNotFound`.\n  · The MCP layer validates only that the field is PRESENT; the existence check is in core.\n  · `NodeNotFound` reaches `content` — proven by his own report, where `pin_at_epoch`'s identical error WAS visible to him.\n\n⭐ THEREFORE THE CHECKSUM CALL DID NOT FAIL ON A MISSING CHANGEEVENT. Had it done so he would have seen that refusal in the same channel and the same shape as the pin. He saw a stub, which is the SUCCESS rendering. THE WRITE ALMOST CERTAINLY LANDED, AND THE `export_graph` THAT SHOWED THE OLD HASH RAN BEFORE IT. He named this possibility himself and then set it aside.\n\n═══ ④ WHY THAT MATTERS — IT MOVES THE DANGER ═══\nIf the write never failed, then \"serialise dependent writes\" fixes the pin and DOES NOT fix the thing that actually threatens a committed export. The dangerous shape is not write-then-write; it is WRITE-THEN-EXPORT. `export_graph` acquires the same lock and is ordered by nothing, so an export issued in the same turn as writes can serialise a graph state missing those writes — and that document is the one that gets COMMITTED. A wrong committed export is worse than a failed pin, and it produces exactly the state the drift gate exists to catch.\n\n═══ ⑤ THE CLASS, AND WHY IT RECURRED ═══\nThe 2026-08-09 note named the general fix in as many words: *\"THE GENERAL FIX IS A DESCRIPTION, NOT A FEATURE: no tool description says that parallel batches carry no ordering, or that a create-then-modify pair must be sequenced.\"*\n\nWhat was built instead was the INSTANCE fix — `cap:a-decision-can-be-created-already-settled`, collapsing `add_decision` + `set_decision_status` into one unmisorderable call. That pair is now safe. Twenty-one days later the same user hit the same class through a DIFFERENT pair (`add_change_event` + `pin_at_epoch`) and a different shape entirely (writes + `export_graph`).\n\n🛑 SO THE CAUSE OF THE RECURRENCE IS THAT THE FIX ADDRESSED THE PAIR AND THE DESCRIPTION WAS NEVER WRITTEN. Test ⑥ of the root-cause skill applied: would the 08-09 fix have prevented the 08-30 report? No. It stops one pair out of an open set.\n\n═══ ⑥ WHY IT IS INVISIBLE TO THIS USER SPECIFICALLY ═══\nOrdering hazards are survivable when you can read the result. On a client that forwards only `content` (his item 1, now on its third report) a successful write and a no-op are indistinguishable, so the ONE recovery available — read it back — is closed. The two defects are independent and only dangerous together, which is why this arrived as one confusing report rather than two clear ones.\n\n═══ ⑦ NOT ESTABLISHED ═══\n· STILL NOT REPRODUCED WITH A CONCURRENT CLIENT. The 08-09 note flagged exactly this limit and it still stands: both passes read the mechanism from code rather than driving two overlapping calls at one server. The reproduction is two overlapping tool calls asserting the failure disappears when sequenced, and nobody has run it.\n· Whether the checksum write landed is INFERRED from the refusal channel behaving as his own report shows, not observed in his graph.\n· Whether `export_graph` can in fact be ordered before a write in the same batch is reasoned from the shared lock, not measured.",
+        "subject_id": "cap:mcp-surface",
+        "valid_from": "2026-08-30"
       }
     },
     {
@@ -159584,7 +159740,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:1b422797646b07bc3b0a4fecd4c9fc1dc9f6bf4a2ce6e3e4891d614edbf534d9",
+  "prev_content_hash": "sha256:1919b3e1ff2a4562a1d4a69aeffba5cd89664f26c7bb5ac27dfba289488f1ead",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
