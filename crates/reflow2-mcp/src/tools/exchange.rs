@@ -122,7 +122,14 @@ impl ReflowService {
                        can read, and a backup wants to be a file anyway. CONVENTION: export ONCE \
                        between commits, straight onto the committed file — the lineage link is \
                        built from whatever file is already at that path, so exporting elsewhere \
-                       and copying it in, or exporting twice, both break the chain silently.",
+                       and copying it in, or exporting twice, both break the chain silently. \
+                       \u{1F6D1} NEVER ISSUE THIS IN THE SAME PARALLEL BATCH AS WRITES YOU EXPECT \
+                       IT TO CONTAIN. Tool calls a harness emits together are unordered and this \
+                       one takes the same lock, so it can run BEFORE them and serialise a design \
+                       state that is missing them. Unlike a write naming an absent node, THIS \
+                       FAILURE IS SILENT — the export succeeds, it is simply early, and the \
+                       document you then commit is the one whose artifact hashes will not match \
+                       disk. Sequence the export after the writes have returned.",
         annotations(read_only_hint = true)
     )]
     pub async fn export_graph(

@@ -377,8 +377,33 @@ pub(crate) fn dyno_err(e: DynoError) -> McpError {
     match e {
         // Caused by what the caller supplied — a bad id, type, edge, value, or
         // key segment. These are the caller's to fix.
-        DynoError::NodeNotFound { .. }
-        | DynoError::EdgeNotFound { .. }
+        // A REFERENCED NODE THAT IS NOT THERE IS THE ORDERING HAZARD, and the
+        // caller cannot see it from the message alone. reflow2's lock
+        // serialises ACCESS, not INTENT: tool calls a harness emits in one
+        // parallel batch are unordered, so a call that NAMES a node can win the
+        // lock before the call that CREATES it — at which instant the node
+        // genuinely is absent and this error is the correct answer, not a bug.
+        //
+        // `fact:the-decision-race-is-caller-ordering-not-read-after-write`
+        // (2026-08-09) diagnosed this and named the general fix as a
+        // DESCRIPTION rather than a feature. What shipped instead was the
+        // instance fix for one pair, and the same user hit the same class
+        // through a different pair twenty-one days later
+        // (`fact:the-parallel-batch-class-recurred-because-only-its-instance-was-fixed`).
+        // This arm is that description, placed where it is read at the moment
+        // it is needed rather than in prose somebody read once.
+        DynoError::NodeNotFound { .. } => McpError::invalid_params(
+            format!(
+                "{e}. IF YOU ISSUED THIS IN THE SAME PARALLEL BATCH AS THE CALL THAT CREATES \
+                 THAT NODE, THE TWO ARE NOT ORDERED — reflow2 serialises access, not intent, so \
+                 this call can run first and the node genuinely does not exist yet. Sequence the \
+                 create before the call that names it, or use a constructor that does both in one \
+                 call where one exists. If the node was never created at all, that is the other \
+                 reading and this message cannot tell them apart."
+            ),
+            None,
+        ),
+        DynoError::EdgeNotFound { .. }
         | DynoError::InvalidEdge { .. }
         | DynoError::UnknownNodeType(_)
         | DynoError::UnknownEdgeType(_)
