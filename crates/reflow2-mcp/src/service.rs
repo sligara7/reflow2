@@ -2143,6 +2143,23 @@ pub struct DecisionReq {
     /// refusal, if any, lists exactly what to put here.
     #[serde(default)]
     pub distinct_from: Option<Vec<String>>,
+    /// WHAT KIND OF THING THIS IS — `exploratory` (an idea being turned over,
+    /// recorded so it is not lost and explicitly NOT claimed as intent) or
+    /// `choice` (a decision somebody actually faced).
+    ///
+    /// OMITTING IT IS A THIRD STATE, not a synonym for `choice`: absent means
+    /// nobody said. There is no default, for the reason `quality_target` gives
+    /// — a default makes an unasked question indistinguishable from an answered
+    /// one.
+    ///
+    /// It is READ, which is the bar a vocabulary distinction has to clear here:
+    /// the brainstorm skill's linking discipline fires on `exploratory` and
+    /// stays off the Requirement/Capability/ChangeEvent capture path. Set it in
+    /// THIS call rather than a follow-up — two order-dependent calls are the
+    /// hazard `fact:the-parallel-batch-class-recurred-because-only-its-instance-was-fixed`
+    /// records.
+    #[serde(default)]
+    pub kind: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]

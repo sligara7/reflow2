@@ -116,6 +116,29 @@ schema:
         # as a trade already made. Reaching `accepted` is now a separate act
         # (`set_decision_status`, or `collapse_decision` choosing a fork).
         status: { type: enum, values: [proposed, accepted, superseded, rejected], default: proposed, indexed: true }
+        # WHAT KIND OF THING THIS DECISION IS — a choice somebody faced, or an
+        # idea somebody was turning over. Accepted 2026-08-30 on Anthony's word
+        # (`dec:a-brainstormed-idea-is-a-first-class-kind`).
+        #
+        # It exists because a COMPUTATION reads it, which is the bar
+        # `req:a-vocabulary-distinction-proves-it-is-read` sets and the reason
+        # this was twice judged too small to build. The brainstorm skill's
+        # linking discipline needs to fire on ideas and NOT on the
+        # Requirement/Capability/ChangeEvent capture path, and measured
+        # 2026-08-30 there was nothing to fire on: 207 idea-Decisions and 363
+        # others differ by nothing readable. `status` does not separate them —
+        # 32 non-idea Decisions are also `proposed` — and the only remaining
+        # signal was the `dec:idea-` ID PREFIX, which is the defect closed that
+        # same morning in #390 (an id's spelling read as its type).
+        #
+        # ABSENT MEANS NOBODY SAID, never `choice`. There is deliberately no
+        # default, for the reason `quality_target` states: a default would make
+        # an unasked question indistinguishable from an answered one, and the
+        # 207 ideas already in the graph carry no honest evidence of their kind
+        # — the only signal for them is the prefix being retired, so backfilling
+        # would launder it into a property. They stay unmarked until somebody
+        # says otherwise.
+        kind: { type: enum, values: [exploratory, choice], indexed: true, description: "`exploratory` — an idea being turned over, recorded so it is not lost and explicitly NOT claimed as intent. `choice` — a decision somebody actually faced. ABSENT means nobody said, which is a third state and not a synonym for `choice`." }
         # The structural home for "somebody looked and there was nothing to draw"
         # (2026-08-21, dec:idea-what-notices-an-idea-that-connects-to-nothing).
         #

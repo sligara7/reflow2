@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:5cafe665956de9e0cf88bbcca14369ed42297ca8b33930604b8a692545899ded",
+  "content_hash": "sha256:3db1adbe1a1c75abbc513dd12a057f5bf026e9d05a5ecd7c6a3b78f048d5631e",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -23800,6 +23800,51 @@
         "action": "modified"
       },
       "to_id": "art:verify"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-idea-is-a-declared-kind",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:brainstorm-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-idea-is-a-declared-kind",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-structure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-idea-is-a-declared-kind",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-idea-is-a-declared-kind",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-idea-is-a-declared-kind",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
     },
     {
       "edge_type": "CHANGED",
@@ -121684,7 +121729,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:557e7e6dd6b83bb847999fd1dd15d6ca926339791af22786ff9c1780971dca6a",
+        "checksum": "sha256:a08ccdafc473e706335004389b57df45a73e3e9264533863fc0b29a4bfff67b0",
         "granularity": "atomic",
         "location": "getting-started/skills/brainstorm/SKILL.md",
         "name": "brainstorm/SKILL.md",
@@ -123574,7 +123619,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:d88999bd98b6d7c87e0b250ba0a31318b764b79e0fcdcafb37ba667eef7942c7",
+        "checksum": "sha256:52059935429035e25b8a36df590d88ee9788369e20067feaf28482f4909aa71f",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/structure.yaml",
@@ -123744,7 +123789,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:505641b59d00f5b06d765bc7d6681e33fa799928402c4b40675237251fd97316",
+        "checksum": "sha256:80d2b6f376df57461a614604d3c125df6fd831ebcf0832d918ed10f16c49ae11",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -123831,7 +123876,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:980c4c5bdecf79654ee7e155643e0e0a9e7919ae5211c6d851c2d8b85f6417fd",
+        "checksum": "sha256:bbdda5701cadd718373258790f8067b93ea8325372b080d55bf511ddc214d6ca",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -124424,7 +124469,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:84c190ca64b365ebef17cd6d733715e8d2e06ebfd8e4d1a544bdf8e4235a10ac",
+        "checksum": "sha256:cc1e1fb870ee734a8ac3c99c728aaf617d17c2e68459077f6b5940a66c18fabc",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
         "name": "crates/reflow2-mcp/src/tools/capture.rs",
@@ -130375,6 +130420,18 @@
       }
     },
     {
+      "node_id": "chg:an-idea-is-a-declared-kind",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-08-30",
+        "name": "A brainstormed idea says it is one, in a property a computation can read",
+        "rationale": "Anthony accepted `dec:a-brainstormed-idea-is-a-first-class-kind` 2026-08-30, choosing shape (ii), a declared property rather than a new node type — the latter would make `what_next`, the detectors, the reports, delivery and the merge driver all learn a noun that otherwise behaves exactly like a Decision.\n\nWHY IT WAS BUILT NOW AFTER BEING TWICE JUDGED TOO SMALL: `req:a-vocabulary-distinction-proves-it-is-read` demands a computation read a distinction. A′ — the linking discipline riding the near-match refusal — is that computation, and measured 2026-08-30 it could not be scoped: 207 idea-Decisions and 363 other Decisions differed by nothing readable, `status` does not separate them (32 non-idea Decisions are also `proposed`), and the only remaining signal was the `dec:idea-` ID PREFIX — the defect closed the same morning in #390. Unscoped, A′ would land on the Requirement/Capability/ChangeEvent capture path a consumer's field report names as existing friction, so the marker is what keeps the fix off a live user's path.\n\n⚠️ NO DEFAULT, DELIBERATELY. Absent means NOBODY SAID — a third state, not a synonym for `choice` — following the doctrine `Decision.quality_target` already states. The 207 existing ideas stay UNMARKED: their only evidence of kind is the prefix being retired, so backfilling would launder it into a property. That leaves the existing population unqueryable and is the honest option; whether to backfill anyway is recorded as unsettled.\n\n⚠️ THE SCHEMA STAMP DOES NOT CARRY THIS. It records node and edge type names and counts, and no property names at all, so a consumer pinning a build gains a distinction nothing tells them about. Whether `schema_version` should move for a property addition is unresolved and is now a live question rather than a footnote.",
+        "subject": "system",
+        "summary": "`Decision.kind` declared in schema/structure.yaml — `exploratory` (an idea being turned over, recorded so it is not lost and NOT claimed as intent) or `choice` (a decision somebody faced), indexed, WITH NO DEFAULT. `DecisionReq` gains the field and the tool writes it INSIDE THE SAME CALL rather than through a follow-up setter, because two order-dependent calls is the hazard #392 documented and `cap:a-decision-can-be-created-already-settled` was built to remove for `status`. An undeclared value is refused, and the refusal says omitting is also valid so the obvious repair is not to guess. The brainstorm skill now sets it at capture and both mirrors were re-synced. Four tests, including that ABSENT STAYS ABSENT. Core suite 135 suites / 1548 passed / 0 failed; toolsnaps, schema, skill-lint, doc-versions and self-host gates green."
+      }
+    },
+    {
       "node_id": "chg:anchor-decision-second-hint",
       "node_type": "ChangeEvent",
       "properties": {
@@ -135797,7 +135854,7 @@
       "node_id": "dec:a-brainstormed-idea-is-a-first-class-kind",
       "node_type": "Decision",
       "properties": {
-        "decision": "Anthony, 2026-08-30: *\"it sounds like the alternative is not viable, so I think a brainstormed idea becomes a first class kind in the vocabulary.\"*\n\nWHAT THIS SETTLES, AND ONLY THIS. An exploratory idea gets a declared, queryable marker distinguishing it from a Decision recording a choice somebody faced. It does NOT settle `dec:exploratory-staging`'s second half — where a NOT-YET-AGREED WISH lives (the Capability side, 34 stuck gaps, added 2026-08-10). That node's own closing line names the wish question as the one to put to the user, and it was not put or answered today. It stays open.\n\n═══ WHY NOW, WHEN IT WAS TWICE JUDGED TOO SMALL ═══\n\n`dec:exploratory-staging` recorded that two of the four original arguments for a kind had DISSOLVED — brainstormed ideas are already silent by construction (`detect_gaps` raises `undecided_decision_point` only on a Decision with 2+ registered alternatives), and delivery/certainty counts already exclude Decisions. What remained was retirement candidates and at-a-glance readability: *\"real but small\"*, and explicitly left to Anthony as a schema-change judgement.\n\n⭐ A THIRD ARGUMENT NOW EXISTS AND IT IS OF A DIFFERENT KIND. `dec:idea-governance-rides-the-tool-that-does-the-thing` proposes A′ — extending the near-match refusal that already fires so it also asks about RELATEDNESS, not only duplication. Measured 2026-08-30, A′ CANNOT BE SCOPED WITHOUT THIS: 207 idea-Decisions and 363 other Decisions differ by NOTHING a computation may read. Status does not separate them (32 non-idea Decisions are also `proposed`); `no_relation_note` is the discipline's output, not a marker available before it exists. The only separator is the `dec:idea-` ID PREFIX.\n\n🛑 AND THAT IS THE DEFECT FIXED AND MERGED THE SAME MORNING. `fact:seam-roll-up-found-a-container-by-id-prefix-and-answered-a-false-zero` (#390): an id's spelling treated as authoritative about what a node IS, instead of asking the graph. Scoping A′ by prefix would reintroduce that class hours after closing it. That is the *\"alternative is not viable\"* Anthony is referring to.\n\nSo the argument that carries this is not readability. It is `req:a-vocabulary-distinction-proves-it-is-read`: a distinction earns its keep when a computation reads it, and A′ is that computation. Unscoped, A′ would land on the Requirement/Capability/ChangeEvent capture path that Alex's 2026-08-30 field report identifies as his existing friction — so the marker is what keeps a fix for idea linking away from a live user's working path.\n\n═══ WHAT SHAPE — RECOMMENDED, NOT SETTLED ═══\n\n\"First-class kind\" admits two readings and they differ by an order of magnitude in cost:\n\n(i) A NEW NODE TYPE. Everything handling Decision would need to learn it — `what_next`, the detectors, the reports, delivery, the merge driver. Large blast radius for a noun whose behaviour is otherwise identical to a Decision.\n\n(ii) A DECLARED PROPERTY ON Decision, set by the brainstorm skill at capture and read by the guard. Schema-validated, queryable, and it satisfies the read-it test without a new type.\n\n⭐ RECOMMENDED: (ii). It buys the computation A′ needs and both remaining benefits `dec:exploratory-staging` named — retirement candidates and readability become queries rather than prose — at the cost of one declared property.\n\n⚠️ ONE KNOWN TRAP TO AVOID IN THE BUILD: if the marker is expressed as an ENUM VALUE, the schema stamp will not count it. The stamp counts node and edge TYPES, and this project has recorded four instances of that blindness — most recently on `ifc:mcp-tools-http`, where a missing enum word was declined once for exactly this reason before being added anyway. A consumer pinning a build would gain a distinction nothing tells them about.\n\n═══ NOT ESTABLISHED ═══\n· Whether existing idea-Decisions get backfilled, and on what evidence. The only signal available for the existing 207 is the id prefix — the very thing being retired — so a backfill would launder it into a property. Marking only NEW ideas is honest and leaves the old population unqueryable; backfilling is convenient and dishonest. Nobody has chosen.\n· Whether the marker belongs on Decision at all, or whether the wish question (`dec:exploratory-staging`, 2026-08-10 half) wants the same mechanism, in which case deciding them separately may foreclose one.",
+        "decision": "Anthony, 2026-08-30: *\"it sounds like the alternative is not viable, so I think a brainstormed idea becomes a first class kind in the vocabulary.\"* Shape (ii) chosen the same day: A DECLARED PROPERTY ON `Decision`, not a new node type.\n\nWHAT THIS SETTLES, AND ONLY THIS. An exploratory idea gets a declared, queryable marker distinguishing it from a Decision recording a choice somebody faced. It does NOT settle `dec:exploratory-staging`'s second half — where a NOT-YET-AGREED WISH lives (the Capability side, 34 stuck gaps, added 2026-08-10). That node's own closing line names the wish question as the one to put to the user, and it was not put or answered today. It stays open.\n\n═══ WHY NOW, WHEN IT WAS TWICE JUDGED TOO SMALL ═══\n\n`dec:exploratory-staging` recorded that two of the four original arguments for a kind had DISSOLVED — brainstormed ideas are already silent by construction (`detect_gaps` raises `undecided_decision_point` only on a Decision with 2+ registered alternatives), and delivery/certainty counts already exclude Decisions. What remained was retirement candidates and at-a-glance readability: *\"real but small\"*, and explicitly left to Anthony as a schema-change judgement.\n\n⭐ A THIRD ARGUMENT NOW EXISTS AND IT IS OF A DIFFERENT KIND. `dec:idea-governance-rides-the-tool-that-does-the-thing` proposes A′ — extending the near-match refusal that already fires so it also asks about RELATEDNESS, not only duplication. Measured 2026-08-30, A′ CANNOT BE SCOPED WITHOUT THIS: 207 idea-Decisions and 363 other Decisions differ by NOTHING a computation may read. Status does not separate them (32 non-idea Decisions are also `proposed`); `no_relation_note` is the discipline's output, not a marker available before it exists. The only separator is the `dec:idea-` ID PREFIX.\n\n🛑 AND THAT IS THE DEFECT FIXED AND MERGED THE SAME MORNING. `fact:seam-roll-up-found-a-container-by-id-prefix-and-answered-a-false-zero` (#390): an id's spelling treated as authoritative about what a node IS, instead of asking the graph. Scoping A′ by prefix would reintroduce that class hours after closing it. That is the *\"alternative is not viable\"* Anthony is referring to.\n\nSo the argument that carries this is not readability. It is `req:a-vocabulary-distinction-proves-it-is-read`: a distinction earns its keep when a computation reads it, and A′ is that computation. Unscoped, A′ would land on the Requirement/Capability/ChangeEvent capture path that Alex's 2026-08-30 field report identifies as his existing friction — so the marker is what keeps a fix for idea linking away from a live user's working path.\n\n═══ THE SHAPE, CHOSEN ═══\n\n(i) A NEW NODE TYPE was rejected: everything handling Decision would have to learn it — `what_next`, the detectors, the reports, delivery, the merge driver — for a noun whose behaviour is otherwise identical.\n\n(ii) CHOSEN — a declared property on `Decision`, set by the brainstorm skill at capture and read by the guard. It buys the computation A′ needs and both benefits `dec:exploratory-staging` was holding out for: retirement candidates and readability become queries rather than prose. Model it on `Decision.quality_target`, whose own description settles the default question correctly — ABSENT MEANS NOBODY WAS ASKED, never a substantive value.\n\n⚠️ CORRECTED 2026-08-30, AFTER THE CHOICE AND BEFORE THE BUILD. This node first said the stamp trap applies *\"if the marker is expressed as an ENUM VALUE\"*. THAT WAS INCOMPLETE AND THE CORRECTION MATTERS TO (ii). The export stamp carries `node_type_names`, `edge_type_names` and their counts — AND NO PROPERTY NAMES AT ALL. So a new PROPERTY is equally invisible to it, whichever way the marker is shaped; the hazard is not enum-specific and cannot be dodged by choosing a bool. This project has recorded four instances of that blindness, most recently on `ifc:mcp-tools-http`, where a missing enum word was declined once for exactly this reason before being added anyway. A consumer pinning a build gains a distinction nothing tells them about. `schema_version` (currently 1) is the field that COULD carry it; whether it is bumped for a property addition is not established and is the one thing to check while building.\n\n═══ NOT ESTABLISHED ═══\n· Whether existing idea-Decisions get backfilled, and on what evidence. The only signal available for the existing 207 is the id prefix — the very thing being retired — so a backfill would launder it into a property. Marking only NEW ideas is honest and leaves the old population unqueryable; backfilling is convenient and dishonest. Nobody has chosen.\n· Whether `schema_version` moves for a property addition (above).\n· Whether the marker belongs on Decision at all, or whether the wish question (`dec:exploratory-staging`, 2026-08-10 half) wants the same mechanism, in which case deciding them separately may foreclose one.",
         "name": "DECIDED — a brainstormed idea is a first-class kind in the vocabulary, because the alternative is an id-prefix test",
         "rationale": "Recorded as its own accepted Decision rather than by moving `dec:exploratory-staging` to accepted, because that node holds TWO questions and Anthony answered one. Marking it accepted would assert that the not-yet-agreed-wish half — its 2026-08-10 addition, 34 stuck gaps, and the question its own text names as the one to put to the user — had been settled today. It was not.",
         "status": "accepted"
@@ -159740,7 +159797,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:1919b3e1ff2a4562a1d4a69aeffba5cd89664f26c7bb5ac27dfba289488f1ead",
+  "prev_content_hash": "sha256:5cafe665956de9e0cf88bbcca14369ed42297ca8b33930604b8a692545899ded",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
