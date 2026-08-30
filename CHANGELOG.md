@@ -31,6 +31,64 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.43.0] — 2026-08-29
+
+**Upgrade action: none, and one thing gets better on its own.** After installing, the first
+session in each project replaces any shared server left running on the old binary. Before this
+release that daemon kept serving the previous version and nothing said so — see *Fixed*.
+
+### Added
+
+- **`help` skill and `/what-is-this`** — explains reflow2 to someone who has never seen it: what
+  it physically is, what it can answer that nothing else can, the one first move for where they
+  are, and what it deliberately will not do.
+- **`onboarding` skill and `/where-does-it-go`** — answers *"we need to add this, where does it
+  go?"* for someone who did not build the system: which part should own it, what touching it would
+  reach, which decisions already govern there and **who made them**, and honestly which parts of
+  the real system the design cannot see.
+- **`dangling_reference` HEAL rule** — reports a property that names a node which does not exist,
+  on its own terms rather than only when the node is otherwise unattached. `detect_defects` gains
+  the `dangling_reference` category; a consumer parsing `category` will see a new value.
+- **`acknowledge_defect_by`** — the defect half of the acknowledgement family can now record whose
+  judgement it was, which its sibling `acknowledge_gap` has been able to do since 0.41.
+
+### Changed
+
+- **`where-am-i` reports what is DELIVERED**, first — *"N of M requirements have something built
+  and passing behind them"*, computed from the traceability thread rather than from a status
+  field. It was already computed and nothing told the agent to say it.
+- **Evaluative reports are reachable from a skill.** `maturity_report`, `readiness_report`,
+  `consumption_report` and `ility_report` were named in none of the served skills and none of the
+  instruction files; they are now routed, and `skill_lint` fails the build if a `*_report` is
+  reachable from nothing.
+- **The README leads with what reflow2 is** — a program on your machine, a design as a file in
+  your repo, your agent talking to it over MCP — before any philosophy, with a diagram and the
+  install line. Seven stale facts corrected, including a claim that the graph store is an external
+  dependency, which stopped being true in 0.42.
+- **The schema says why two id-valued properties are NOT node references.** `Snapshot.target_id`
+  is a historical anchor and is expected to stop resolving; `Question.gap_id` names a computed gap
+  and resolves to nothing by construction. Visible through `describe_schema`.
+
+### Fixed
+
+- 🛑 **A session no longer attaches to a shared server running a different build.** The rendezvous
+  now records which build is serving, and a client that finds a mismatch stops that daemon and
+  elects a fresh one instead of joining it. **Before this, upgrading left the old daemon serving
+  while every version string a user could check read current** — reported from the field on macOS,
+  where the existing staleness detection cannot fire at all because it reads `/proc/self/exe`.
+  Sixth recorded instance since 2026-08-07 and the first fix that changes behaviour rather than
+  improving a report.
+  - *If you have a session open during the upgrade:* nothing to do. The next tool call replaces
+    the daemon and says so in the server log.
+  - *If a mismatched daemon cannot be stopped* (a different user owns it), the session attaches
+    anyway and warns, naming `--stop-shared`.
+- **`create_node` refuses a property that names a node which does not exist**, the guard
+  `create_edge` has had since 0.20 — applied to the other shape of reference.
+- **A restore reports an unresolvable reference instead of refusing the whole document.**
+  `import_graph` names them on `ImportReport.dangling_node_refs` and completes; refusing made an
+  export with one pre-existing bad reference unrestorable, with hand-editing the export as the
+  only remedy.
+
 ## [0.42.0] — 2026-08-28
 
 ### Added — a served method for finding the cause, and skills that declare what they owe
