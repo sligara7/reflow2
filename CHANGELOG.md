@@ -31,6 +31,72 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.45.0] — 2026-08-30
+
+**Upgrade action: none.** The schema gains an OPTIONAL property and the tool
+surface gains optional parameters; nothing existing is removed, renamed or made
+required. The version stamp carries node and edge TYPE names and does not move
+for a property, so a consumer pinning a build sees no compatibility event —
+which is also the honest reason no upgrade doc ships with this cut. ⚠️ Noted
+rather than buried: the bucket table above says a *schema change* pulls in the
+upgrade-doc checklist, and `flow:release-cut` says a note is owed *iff the stamp
+moved*. For an optional property those give different answers. This cut follows
+the flow, because the stamp is the operational test a consumer can actually
+observe; whether the stamp SHOULD carry properties is open and unanswered.
+
+### Fixed
+
+- **A container is found by its level, not by how its id is spelled.** The
+  containment roll-up under `seam_coverage` chose a parent with
+  `starts_with("cmp:") || starts_with("sys:")` — a naming convention standing in
+  for the `level` declaration. Any module whose container was named anything
+  else failed to lift, and the pair was dropped from BOTH the coupling set and
+  the contract set, so the answer went quiet rather than wrong out loud.
+
+  **It was worse for you than for us.** reflow2's own design was accidentally
+  part-immune because 8 of its 18 subsystems happen to be spelled `sys:*` — 58
+  of 86 modules were lost. A design whose components are named the way anyone
+  would name them (`payments-api` inside `platform`) lost **every** coupling and
+  got `0 uncovered` having compared nothing. A false zero is the most reassuring
+  answer a coupling model can give, and therefore the one least likely to be
+  questioned. (#390)
+
+- **A reference to a node that is not there names the ordering hazard.** Tool
+  calls a harness emits in one parallel batch are unordered, so a call that
+  NAMES a node can run before the one that CREATES it — at which point `Node not
+  found` is the correct answer, not a bug. The refusal now says so, tells you to
+  sequence them, and still admits the node may simply never have been created,
+  because it cannot tell those apart. One funnel, so every order-dependent tool
+  inherits it. `export_graph` gains the matching warning for the case no error
+  can catch: issued alongside writes it can run FIRST and serialise a state
+  missing them, and that failure is silent. From a user's field report. (#392)
+
+### Added
+
+- **A derived number carries what it was computed over.** `maturity_report`'s
+  bands gain a `caveat`, rendered under the number in the markdown report, for
+  the four where a *correct* design reads low: seams (answered at module level),
+  realization (an unregistered file is invisible), assurance (a capability
+  checked only at component granularity), operation (a design that never
+  modelled an Environment). Deliberately absent on the three that measure what
+  they claim — a caveat on every band is noise. No band's value changes. (#391)
+
+- **`Decision.kind`** — `exploratory` or `choice`, optional, with **no default**:
+  absent means nobody said, which is a third state rather than a synonym for
+  `choice`. Set it in the same `add_decision` call; there is no follow-up setter,
+  because two order-dependent calls is the hazard above. (#393)
+
+- **The relatedness judgement rides the near-match refusal.** When
+  `add_decision` surfaces near-matches for an `exploratory` Decision, it now asks
+  whether any is RELATED as well as whether any is the SAME — answered with
+  `related_to` or an honest `no_relation_note`, both landing in that same call.
+  It adds no new interruption: the refusal already stopped you and made you read
+  the list. It compels a recorded judgement, never an edge. (#394)
+
+- **`linking_report`** — whether the linking discipline is being followed, split
+  into linked / noted / silent, naming the silent ones. It reports and never
+  presses. (#394)
+
 ## [0.44.0] — 2026-08-30
 
 **Upgrade action: none.** Both changes are from one user's field report and neither asks anything
