@@ -31,6 +31,42 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.44.0] — 2026-08-30
+
+**Upgrade action: none.** Both changes are from one user's field report and neither asks anything
+of you. One of them is an experiment, and if you are the person who filed the report, the thing
+worth doing is described under *Added*.
+
+### Changed
+
+- **A near-match of a DIFFERENT node type is no longer described as a possible duplicate.**
+  Recording what shipped as a ChangeEvent and then what must stay true as a Requirement is the
+  sequence reflow2's own instructions ask for, and the search-before-you-add guard was treating
+  the second as a near-duplicate of the first — every time. The refusal now reads according to
+  the type relationship: a same-type match is unchanged and still offers `SHARPEN`, while a
+  cross-type match is named as a **different kind of record** and does not offer sharpening,
+  because calling `add_requirement` with a ChangeEvent's id is not a route that exists.
+  - *The refusal is deliberately kept.* Excluding cross-type pairs from the check outright would
+    trade a false alarm for a silent miss, and nobody has counted how often a cross-type match is
+    a genuine duplicate. Until somebody does, the check still fires and `distinct_from` is still
+    the way through — it just no longer implies you are duplicating something.
+
+### Added
+
+- **`search_design` declares an `outputSchema`** — the first and only declared output contract on
+  the surface, and it is an **experiment rather than a policy**. A user whose client negotiated
+  the newest MCP revision still sees only the `content` stub for almost every tool, which ruled
+  out the obvious explanation. reflow2 returns `structuredContent` everywhere and had declared an
+  output schema nowhere; a client that surfaces structured payloads only for tools advertising
+  one would behave exactly that way.
+  - *If your agent cannot see reflow2's tool results:* call `search_design` and one other tool in
+    the same session and compare. If the first now arrives and the second still does not, that is
+    the answer, and please say so. If neither arrives, that is also a real result.
+  - *Every other tool is the control on purpose*, and a test fails the build if a second schema
+    is declared before that comparison is made. Declaring more would make the result unreadable.
+  - Declaring a schema cannot change what a call returns: the SDK advertises it in `tools/list`
+    and never validates outgoing payloads against it.
+
 ## [0.43.0] — 2026-08-29
 
 **Upgrade action: none, and one thing gets better on its own.** After installing, the first
