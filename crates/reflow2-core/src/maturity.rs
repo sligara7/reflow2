@@ -86,6 +86,19 @@ pub struct MaturityBand {
     /// Why this band could not be measured, when it could not.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub note: Option<String>,
+    /// What would make this band read LOW for a design that is actually
+    /// fine — the caveat that travels WITH the number instead of living
+    /// only in the tool that computes it.
+    ///
+    /// `dec:idea-a-derived-number-carries-what-it-was-computed-over-wherever-it-is-quoted`,
+    /// accepted 2026-08-30. `seam_coverage` already warned that a design
+    /// declaring contracts above module level reads as having none; the band
+    /// asking the same question repeated the ratio and dropped the warning, so
+    /// a reader had nothing to be suspicious of. A caveat is NOT a note: `note`
+    /// says the band could not be measured, this says it was measured and here
+    /// is how to misread it.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub caveat: Option<&'static str>,
 }
 
 /// The design's position on the trajectory.
@@ -108,36 +121,59 @@ pub struct MaturityProfile {
 }
 
 /// The bands, in trajectory order, with the question each one asks.
-const BANDS: &[(&str, &str)] = &[
+const BANDS: &[(&str, &str, Option<&str>)] = &[
     (
         "intent",
         "Of the requirements still live, how many carry the user's own word — accepted or met \
          rather than merely asserted?",
+        None,
     ),
     (
         "function",
         "Of the requirements still live, how many have a Capability that SATISFIES them?",
+        None,
     ),
     (
         "allocation",
         "Of the capabilities, how many are placed in a Component?",
+        None,
     ),
     (
         "seams",
         "Of the couplings between two Components, how many run through a declared Interface that \
          one provides and the other consumes?",
+        Some(
+            "Answered at MODULE level. A design that declares its contracts at a HIGHER boundary \
+             — subsystem, system — reads low here and may be fully covered one altitude up. \
+             `seam_coverage` with an `altitude` asks that question; this band does not.",
+        ),
     ),
     (
         "realization",
         "Of the capabilities, how many have an Artifact that REALIZES them?",
+        Some(
+            "Counts only capabilities some Artifact points at. A file nobody has REGISTERED is \
+             invisible here, so a design that is fully built and has never run link-artifacts \
+             reads low. `coverage_report` names the files no Artifact points at.",
+        ),
     ),
     (
         "assurance",
         "Of the capabilities, how many carry a Verification that is actually PASSING?",
+        Some(
+            "Counts a capability's OWN passing check. One proven only at its COMPONENT's \
+             granularity is not counted, so a design that deliberately checks at the component \
+             boundary reads low while being checked.",
+        ),
     ),
     (
         "operation",
         "Of the releases, how many reached an Environment?",
+        Some(
+            "Counts releases with a DEPLOYED_TO edge to a declared Environment. A design that \
+             has never modelled an Environment reads zero here however much of it is actually \
+             running.",
+        ),
     ),
 ];
 
@@ -587,7 +623,7 @@ impl DesignGraph {
         };
 
         let mut bands = Vec::with_capacity(BANDS.len());
-        for (i, ((name, question), (present, population))) in
+        for (i, ((name, question, caveat), (present, population))) in
             BANDS.iter().zip(measured.iter()).enumerate()
         {
             bands.push(MaturityBand {
@@ -598,6 +634,7 @@ impl DesignGraph {
                 population: *population,
                 ratio: (*population > 0).then(|| *present as f64 / *population as f64),
                 note: (*population == 0).then(|| empty_reason(name)),
+                caveat: *caveat,
             });
         }
 

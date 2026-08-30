@@ -1592,6 +1592,14 @@ impl GraphReport {
                         let _ = writeln!(m, "- **{}** — not measurable yet", b.name);
                     }
                 }
+                // The caveat travels WITH the number. `seam_coverage` warned
+                // that a design declaring contracts above module level reads
+                // as having none, and this band repeated the ratio without it
+                // — so a reader had nothing to be suspicious of
+                // (dec:idea-a-derived-number-carries-what-it-was-computed-over-wherever-it-is-quoted).
+                if let Some(caveat) = b.caveat {
+                    let _ = writeln!(m, "  - _reads low when:_ {caveat}");
+                }
             }
             if !self.maturity.ahead_of_frontier.is_empty() {
                 let _ = writeln!(
