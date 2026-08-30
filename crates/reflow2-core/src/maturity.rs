@@ -173,9 +173,15 @@ pub(crate) struct SeamSets {
     pub raw_couplings: usize,
     /// How many contract pairs existed before lifting.
     pub raw_declared: usize,
-    /// Endpoints that reached no container at the requested level and were
-    /// dropped from both sets. Counted rather than silently kept at their own
-    /// level, which would mix two altitudes in one answer.
+    /// PAIRS — coupling or contract — with an endpoint that reached no
+    /// container at the requested level, and so were dropped. Counted rather
+    /// than silently kept at their own level, which would mix two altitudes in
+    /// one answer.
+    ///
+    /// It counts PAIRS, not endpoints, and accumulates across BOTH sets, so it
+    /// can exceed the number of components in the design. It said "endpoint(s)"
+    /// until 2026-08-30 and that wording sent a reader hunting for orphaned
+    /// components that did not exist.
     pub unreachable: usize,
 }
 
@@ -364,11 +370,23 @@ impl DesignGraph {
             if prop(&node, "level") == Some(level) {
                 break Some(here);
             }
-            let parent = self
-                .incoming(&here, Some(edge::CONTAINS))?
-                .into_iter()
-                .map(|e| e.from_id)
-                .find(|p| p.starts_with("cmp:") || p.starts_with("sys:"));
+            // A parent counts when it IS a Component — tested by type, never by
+            // how its id happens to be spelled. This read
+            // `p.starts_with("cmp:") || p.starts_with("sys:")` until
+            // 2026-08-30, which silently dropped every module whose container
+            // is named `sub:*`. Measured on reflow2's own design: 58 of its 86
+            // modules failed to lift, so the subsystem-level answer compared 8
+            // boundaries instead of 19 and reported 0 uncovered instead of 6.
+            // An id prefix is a naming convention; `level` is the declaration.
+            let mut parents: Vec<String> = Vec::new();
+            for e in self.incoming(&here, Some(edge::CONTAINS))? {
+                if self.get_node(node::COMPONENT, &e.from_id)?.is_some() {
+                    parents.push(e.from_id);
+                }
+            }
+            // Smallest id wins, so a design whose containment forks answers the
+            // same way twice instead of following edge order.
+            let parent = parents.into_iter().min();
             match parent {
                 Some(p) => here = p,
                 None => break None,
@@ -454,8 +472,8 @@ impl DesignGraph {
                     sets.raw_couplings,
                     if sets.unreachable > 0 {
                         format!(
-                            "; {} endpoint(s) reached no container at this level and were dropped \
-                             from both sides",
+                            "; {} coupling/contract pair(s) had an endpoint that reached no \
+                             container at this level and were dropped from both sides",
                             sets.unreachable
                         )
                     } else {

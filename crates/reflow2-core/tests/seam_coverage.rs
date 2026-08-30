@@ -171,3 +171,81 @@ fn the_roll_up_writes_nothing_back() {
         "asking the question changed the design"
     );
 }
+
+/// The same shape as `two_subsystems`, with the containers named `sub:*`.
+/// Nothing about a roll-up depends on how an id is spelled.
+fn two_subsystems_named_sub() -> DesignGraph {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:p", "A program").unwrap();
+    for (id, level) in [
+        ("sub:a", "subsystem"),
+        ("sub:b", "subsystem"),
+        ("cmp:a1", "component"),
+        ("cmp:a2", "component"),
+        ("cmp:b1", "component"),
+        ("cmp:b2", "component"),
+    ] {
+        g.add_component(id, id, "a part", Some(level)).unwrap();
+    }
+    g.contain_component("sub:a", "cmp:a1").unwrap();
+    g.contain_component("sub:a", "cmp:a2").unwrap();
+    g.contain_component("sub:b", "cmp:b1").unwrap();
+    g.contain_component("sub:b", "cmp:b2").unwrap();
+    g.create_edge(
+        edge::DEPENDS_ON,
+        node::COMPONENT,
+        "cmp:a1",
+        node::COMPONENT,
+        "cmp:b1",
+        Props::new(),
+    )
+    .unwrap();
+    g.add_interface("ifc:x", "The contract").unwrap();
+    g.provides("cmp:a2", "ifc:x").unwrap();
+    g.consumes("cmp:b2", "ifc:x").unwrap();
+    g
+}
+
+#[test]
+fn a_container_is_found_by_its_level_not_by_how_its_id_is_spelled() {
+    // REGRESSION, 2026-08-30. The walk up the spine picked a parent with
+    // `p.starts_with("cmp:") || p.starts_with("sys:")` — a naming convention
+    // standing in for the `level` declaration. Every module whose container was
+    // named `sub:*` failed to lift and its pair was dropped from BOTH sets, so
+    // the answer stayed silent instead of being wrong out loud.
+    //
+    // On reflow2's own design that hid 58 of 86 modules: the subsystem-level
+    // answer compared 8 boundaries instead of 19 and reported 0 uncovered
+    // instead of 6. Every test above this one used `sys:`-named containers, so
+    // the suite shared the code's assumption and stayed green.
+    let g = two_subsystems_named_sub();
+    let r = g.seam_coverage(Some("subsystem")).unwrap();
+
+    assert_eq!(r.couplings, 1, "a1->b1 must lift to sub:a <-> sub:b");
+    assert_eq!(r.covered, 1, "and the a2/b2 contract onto the same pair");
+    assert_eq!(
+        r.covered_by[0].between,
+        ("sub:a".into(), "sub:b".into()),
+        "the lifted pair must name the sub:* containers"
+    );
+    assert!(
+        !r.scope_note.contains("reached no"),
+        "nothing was unreachable, so nothing may be reported dropped: {}",
+        r.scope_note
+    );
+}
+
+#[test]
+fn a_dropped_pair_is_reported_as_a_pair_not_as_an_endpoint() {
+    // `unreachable` increments once per PAIR and accumulates across BOTH the
+    // coupling set and the contract set. It said "endpoint(s)" until
+    // 2026-08-30, which reads as a count of orphaned components and sends a
+    // reader looking for ones that do not exist.
+    let g = two_subsystems();
+    let r = g.seam_coverage(Some("system")).unwrap();
+    assert!(
+        r.scope_note.contains("coupling/contract pair(s)"),
+        "a pair count must not be labelled an endpoint count: {}",
+        r.scope_note
+    );
+}
