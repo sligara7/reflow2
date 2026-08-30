@@ -85,6 +85,78 @@ pub struct Rendezvous {
     /// The reflow2 that published it — for the operator reading the file, and so
     /// a future version can refuse an incompatible peer rather than guess.
     pub version: String,
+    /// WHICH BUILD is serving, as `size:mtime_nanos` of the executable at the
+    /// moment this server started. `None` means the daemon predates this field.
+    ///
+    /// ⭐ WHY NOT `version`, WHICH IS RIGHT THERE. A version string cannot tell
+    /// two builds of one version apart, and that is the commonest case by far:
+    /// measured 2026-08-29, a development session lost SIX cycles to a stale
+    /// daemon while `Cargo.toml` read `0.42.0` the entire day — every daemon and
+    /// every client published `0.42.0` and a version check would have caught
+    /// none of them.
+    ///
+    /// ⭐ AND WHY NOT THE INODE, which was the first proposal and was refuted by
+    /// measurement: `install -m 755` REWRITES IN PLACE, so the installer path —
+    /// the one a real user reported — keeps the same inode. Size and mtime both
+    /// move under an in-place rewrite AND under `cargo build`'s unlink-and-
+    /// replace, so they catch both. One `stat`, no hashing of a 300 MB binary.
+    ///
+    /// It is deliberately NOT a content hash: a hash is stronger and costs a
+    /// full read on every daemon start, and this decides whether to re-elect a
+    /// local process, not whether to trust a stranger.
+    #[serde(default)]
+    pub exe_fingerprint: Option<String>,
+}
+
+/// `size:mtime_nanos` of this process's own executable, or `None` when the path
+/// cannot be resolved or stat'd.
+///
+/// `None` is a real answer and is treated as "cannot tell", never as "matches".
+pub fn exe_fingerprint() -> Option<String> {
+    let exe = std::env::current_exe().ok()?;
+    let md = std::fs::metadata(&exe).ok()?;
+    let mtime = md
+        .modified()
+        .ok()?
+        .duration_since(std::time::UNIX_EPOCH)
+        .ok()?
+        .as_nanos();
+    Some(format!("{}:{}", md.len(), mtime))
+}
+
+/// Should this client REPLACE the server at `r` rather than attach to it?
+///
+/// `Some(reason)` means re-elect and say why; `None` means attach.
+///
+/// 🛑 THE WHOLE POINT IS THAT THIS CHANGES BEHAVIOUR RATHER THAN REPORTING.
+/// This defect has been recorded five times since 2026-08-07 and every previous
+/// response improved a REPORT — `served_by.stale`, its note, the AGENTS.md
+/// correction. The skew went on happening, most expensively on 2026-08-08 when
+/// it cost a day of dogfooding: five merged PRs never ran through a live
+/// session because the daemon predated all of them.
+pub fn should_reelect(r: &Rendezvous, mine: Option<&str>) -> Option<String> {
+    // WE CANNOT FINGERPRINT OURSELVES, SO WE CANNOT CLAIM A MISMATCH. Killing a
+    // healthy daemon on a guess is worse than attaching to a possibly-old one,
+    // and this is the same refusal `served_by.stale` makes when it cannot read
+    // `/proc/self/exe`: it answers unknown, never stale.
+    let mine = mine?;
+    match r.exe_fingerprint.as_deref() {
+        // Published by a build from before this field existed — which means it
+        // predates this fix BY CONSTRUCTION, so it is old whatever it says.
+        // This is the case that matters on the FIRST upgrade after shipping:
+        // Alex's 0.39.0 daemon publishes no fingerprint, and treating absence
+        // as "matches" would make the fix unable to fix the report that
+        // prompted it.
+        None => Some(format!(
+            "it published no build fingerprint, so it predates this check (it reports version {})",
+            r.version
+        )),
+        Some(theirs) if theirs != mine => Some(format!(
+            "it is a different build — serving {theirs}, this session is {mine}              (versions: {} there)",
+            r.version
+        )),
+        Some(_) => None,
+    }
 }
 
 /// `<graph-path>.server.json`, beside the store rather than inside it.
@@ -206,8 +278,65 @@ pub async fn ensure_server_async(
                  along with the project; electing a server for this graph instead"
             );
         } else if probe(&r.url).await {
-            tracing::info!(url = %r.url, pid = r.pid, "attaching to the shared reflow2 server");
-            return Ok(r.url);
+            // 🛑 A LIVE SERVER FOR THE RIGHT GRAPH IS NOT AUTOMATICALLY THE RIGHT
+            // SERVER. Until 2026-08-29 this branch attached on liveness and graph
+            // identity alone, so a client of one build attached to a daemon of
+            // another and every tool call hit the older surface while every
+            // version string a user could check read current. Recorded six times
+            // since 2026-08-07 — most expensively on 2026-08-08, when it cost a
+            // day of dogfooding — and reported from the field by a user on macOS,
+            // where `served_by.stale` cannot fire at all because it reads
+            // `/proc/self/exe`.
+            //
+            // Every previous response improved a REPORT. This one changes what
+            // the client DOES, because five rounds of reporting did not stop it.
+            match should_reelect(&r, exe_fingerprint().as_deref()) {
+                None => {
+                    tracing::info!(
+                        url = %r.url, pid = r.pid,
+                        "attaching to the shared reflow2 server"
+                    );
+                    return Ok(r.url);
+                }
+                Some(why) => {
+                    tracing::warn!(
+                        url = %r.url, pid = r.pid, reason = %why,
+                        "replacing the shared reflow2 server: {why}"
+                    );
+                    // SIGTERM, not SIGKILL: the server removes its own rendezvous
+                    // on the way out, and a killed one leaves a record pointing at
+                    // a dead port for the next session to probe and discard. Same
+                    // choice `--stop-shared` makes, for the same reason.
+                    #[cfg(unix)]
+                    let stopped = std::process::Command::new("kill")
+                        .arg(r.pid.to_string())
+                        .status()
+                        .map(|s| s.success())
+                        .unwrap_or(false);
+                    #[cfg(not(unix))]
+                    let stopped = false;
+
+                    if stopped {
+                        // Belt and braces: the daemon clears this itself, but a
+                        // record left behind would send the next probe at a dead
+                        // port and cost this session the respawn timeout.
+                        remove_rendezvous(graph_path);
+                    } else {
+                        // ⚠️ COULD NOT STOP IT — a foreign owner, or it exited
+                        // between the probe and the signal. ATTACH ANYWAY rather
+                        // than orphan the rendezvous and spawn a second server
+                        // that will lose the store lock: a session on a stale
+                        // surface is degraded, a session with no design brain is
+                        // stopped, and the first is the lesser harm. The warning
+                        // above already named the skew.
+                        tracing::warn!(
+                            pid = r.pid,
+                            "could not stop the mismatched server, so attaching to it anyway —                              run `reflow2-mcp --graph-path <path> --stop-shared` by hand"
+                        );
+                        return Ok(r.url);
+                    }
+                }
+            }
         }
     }
 
@@ -461,12 +590,94 @@ impl Default for Activity {
 mod tests {
     use super::*;
 
+    /// `fact:the-attach-path-checks-liveness-and-identity-but-never-version`,
+    /// reported by Alex 2026-08-29 after an upgrade left a 0.39.0 daemon serving
+    /// a 0.42.0 install. Sixth recorded instance since 2026-08-07.
+    ///
+    /// These pin the DECISION, not the plumbing: whether a client facing a
+    /// daemon of a different build attaches to it or replaces it.
+    mod reelect {
+        use super::super::{Rendezvous, should_reelect};
+
+        fn rv(version: &str, fp: Option<&str>) -> Rendezvous {
+            Rendezvous {
+                url: "http://127.0.0.1:1/".into(),
+                pid: 1,
+                graph_path: "g".into(),
+                version: version.into(),
+                exe_fingerprint: fp.map(str::to_string),
+            }
+        }
+
+        /// THE CASE THAT COSTS SIX CYCLES AND A VERSION CHECK CANNOT SEE.
+        /// Measured 2026-08-29: `Cargo.toml` read `0.42.0` all day while five
+        /// daemons were rebuilt under it. Same version, different build.
+        #[test]
+        fn a_different_build_of_the_same_version_is_replaced() {
+            let r = rv("0.42.0", Some("100:5"));
+            assert!(
+                should_reelect(&r, Some("100:9")).is_some(),
+                "same version, different mtime — this is the rebuild case and it must re-elect"
+            );
+        }
+
+        /// ALEX'S CASE. `install -m 755` rewrites IN PLACE, so the inode is
+        /// unchanged — measured, and it is why the first proposed fix was wrong.
+        /// Size and mtime both move.
+        #[test]
+        fn an_in_place_upgrade_is_replaced() {
+            let r = rv("0.39.0", Some("19:1788052050"));
+            assert!(
+                should_reelect(&r, Some("34:1788052051")).is_some(),
+                "an in-place install changes size and mtime and must re-elect"
+            );
+        }
+
+        /// A daemon published before this field existed cannot be compared, and
+        /// every such daemon predates the fix BY CONSTRUCTION. Alex's 0.39.0
+        /// server is exactly this on the first upgrade, so treating `None` as
+        /// "matches" would make the fix unable to fix the report that prompted it.
+        #[test]
+        fn a_daemon_with_no_fingerprint_is_replaced() {
+            let r = rv("0.39.0", None);
+            assert!(
+                should_reelect(&r, Some("34:1788052051")).is_some(),
+                "no fingerprint means the daemon predates this feature — replace it"
+            );
+        }
+
+        /// THE COUNTERWEIGHT, and the one that makes the rest safe. The common
+        /// case is an ordinary second session on an unchanged binary, and
+        /// re-electing there would kill a healthy daemon on every attach.
+        #[test]
+        fn the_same_build_is_attached_to() {
+            let r = rv("0.42.0", Some("100:5"));
+            assert!(
+                should_reelect(&r, Some("100:5")).is_none(),
+                "identical build — attaching is correct and re-electing would be a regression"
+            );
+        }
+
+        /// We cannot stat our own executable, so we cannot claim a mismatch.
+        /// Refusing to guess is the same rule `served_by.stale` follows when
+        /// `/proc/self/exe` is unreadable — it reports unknown, not stale.
+        #[test]
+        fn an_unknowable_local_build_attaches_rather_than_guessing() {
+            let r = rv("0.42.0", Some("100:5"));
+            assert!(
+                should_reelect(&r, None).is_none(),
+                "cannot fingerprint ourselves — attach rather than kill a daemon on a guess"
+            );
+        }
+    }
+
     fn rv_for(graph_path: &str) -> Rendezvous {
         Rendezvous {
             url: "http://127.0.0.1:1/".into(),
             pid: 1,
             graph_path: graph_path.to_string(),
             version: "test".into(),
+            exe_fingerprint: None,
         }
     }
 
@@ -562,6 +773,7 @@ mod tests {
             pid: 4242,
             graph_path: graph.to_string(),
             version: "test".into(),
+            exe_fingerprint: None,
         };
         publish_rendezvous(graph, &r).unwrap();
         let back = read_rendezvous(graph).expect("a published rendezvous must read back");
@@ -603,6 +815,7 @@ mod tests {
                     pid,
                     graph_path: graph.to_string(),
                     version: "test".into(),
+                    exe_fingerprint: None,
                 },
             )
             .unwrap();

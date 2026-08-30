@@ -1099,6 +1099,9 @@ where
                 pid: std::process::id(),
                 graph_path: cfg.graph_path.clone(),
                 version: env!("CARGO_PKG_VERSION").to_string(),
+                // WHICH BUILD is about to serve, captured now so a later client
+                // can tell this daemon apart from a rebuild of the same version.
+                exe_fingerprint: reflow2_mcp::shared::exe_fingerprint(),
             },
         )?;
         eprintln!(

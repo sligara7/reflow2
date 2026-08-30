@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:9972dfe1de319f1056aac85275ec2cf2c418f50d29a5a076726d4e6034bffb2c",
+  "content_hash": "sha256:8bcb93f7db30c49de79bd9f13eb0f5abc085c77c18a4d6d8691987b91c4e410b",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -14839,6 +14839,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "fact:the-upgrade-path-leaves-the-shared-server-on-the-old-binary",
+      "properties": {
+        "acted_at": "2026-08-29",
+        "role": "author"
+      },
+      "to_id": "who:alex"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "ifc:ambient-agent",
       "properties": {
         "acted_at": "2026-08-09",
@@ -16513,6 +16522,26 @@
     },
     {
       "edge_type": "CAUSES",
+      "from_id": "fact:the-attach-path-checks-liveness-and-identity-but-never-version",
+      "properties": {
+        "basis": "causal",
+        "evidence": "Same cause, twenty-one days earlier, and that instance cost a day of dogfooding with five merged PRs never running through a live session. It reached its own conclusion — that the documented remedy (restart) is the thing that fails under `--shared` — and stopped at naming the remedy rather than asking why the client attaches to a mismatched daemon at all. Drawn to make the recurrence visible from the cause: the same fix answers both, and neither is answered by changing the installer.",
+        "validation_status": "hypothesis"
+      },
+      "to_id": "fact:the-stale-server-defect-recurred-to-the-people-who-wrote-it-down"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:the-attach-path-checks-liveness-and-identity-but-never-version",
+      "properties": {
+        "basis": "causal",
+        "evidence": "The cause behind Alex's report. `ensure_server_async` attaches to any live rendezvous for the right graph without ever reading the version it publishes, so a client of version X attaches to a daemon of version Y by design rather than by accident. `basis: causal` because the mechanism is read out of the attach path rather than inferred from correlation; `validation_status: hypothesis` because the discriminating test — a client refusing or re-electing on a version mismatch — has not been built or run.",
+        "validation_status": "hypothesis"
+      },
+      "to_id": "fact:the-upgrade-path-leaves-the-shared-server-on-the-old-binary"
+    },
+    {
+      "edge_type": "CAUSES",
       "from_id": "fact:the-level-ladder-has-a-hard-floor-at-component-and-no-assembly-rung",
       "properties": {
         "basis": "correlational",
@@ -17791,6 +17820,24 @@
         "action": "modified"
       },
       "to_id": "dec:a-claim-may-need-a-list-rather-than-a-radius"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-client-replaces-a-mismatched-server-instead-of-reporting-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:main"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-client-replaces-a-mismatched-server-instead-of-reporting-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:shared"
     },
     {
       "edge_type": "CHANGED",
@@ -40230,6 +40277,15 @@
         "evidence": "THE SAME FINDING, RE-DERIVED THREE DAYS LATER BY A SESSION THAT DID NOT SEARCH FIRST. The 2026-08-26 node already says it: the orphan check short-circuits on degree > 0 before it looks at pointer properties, so a fact attached to anything hides its broken subject, and the better a fact is linked the less likely its dangling subject is to be seen. The 08-29 node states the same mechanism in its own words and calls it new. LINKED RATHER THAN MERGED because both reasons matter and the numbers genuinely differ: 08-26 measured 8 of 9 caught with 1 invisible, 08-29 measured 7 of 9 with 2. Neither is wrong - fact:defect-kit-manifest-drift-is-invisible-to-ci gained edges between those dates and crossed from visible to invisible, which is the mechanism demonstrating itself on a live node. The later node also carries what the earlier does not: the bias argument, and the rule that shipped as #373."
       },
       "to_id": "fact:nine-temporalfacts-point-their-subject-at-a-node-that-does-not-exist"
+    },
+    {
+      "edge_type": "DUPLICATES",
+      "from_id": "fact:the-upgrade-path-leaves-the-shared-server-on-the-old-binary",
+      "properties": {
+        "basis": "suspected",
+        "evidence": "The same class from the other end, and linked rather than merged because the two halves are different and both matter. That fact measured a REPORTER who could not name the version it was talking to, and so filed a defect eighteen hours after it was fixed. This one measures the mechanism that PRODUCES that condition: replacing the binary never restarts what serves it, so the version a session reports and the version it is talking to diverge silently. Its own text already flagged this half as unaddressed — 'the same trap is live on this side, served_by.stale reporting a replaced executable' — and this is that half arriving as a field report from a real user on a second platform."
+      },
+      "to_id": "fact:an-agent-that-cannot-name-its-version-reports-fixed-bugs"
     },
     {
       "edge_type": "EVOLVES_INTO",
@@ -109136,6 +109192,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:a-client-elects-a-server-of-its-own-build",
+      "properties": {},
+      "to_id": "req:the-server-is-the-authority-on-its-own-currency"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:a-component-can-be-moved-not-just-given-another-parent",
       "properties": {},
       "to_id": "req:a-part-can-be-moved-not-only-given-a-second-parent"
@@ -112005,6 +112067,12 @@
       "from_id": "ver:a-claim-reads-back-with-its-age",
       "properties": {},
       "to_id": "cap:claims-carry-their-age"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:a-client-refuses-a-server-of-a-different-build",
+      "properties": {},
+      "to_id": "cap:a-client-elects-a-server-of-its-own-build"
     },
     {
       "edge_type": "VERIFIES",
@@ -116505,7 +116573,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:dc66589b6c117c43fab27145543c4f9201b5affb51c2cc5e8eb038b6c2219366",
+        "checksum": "sha256:bfb897b70007a5832915d2c1df7d72c52db17691e51eed46c5230d32b851761e",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/main.rs",
         "name": "main.rs",
@@ -117392,7 +117460,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:beea0318ad745475a9c61706967a8b58b472fceae88138bcfc3221e84b7312fe",
+        "checksum": "sha256:07c14dfde457ed916d2624ec716758b3babf87003502dec8c2752431480d232b",
         "location": "crates/reflow2-mcp/src/shared.rs",
         "name": "shared.rs",
         "status": "realized"
@@ -118429,6 +118497,16 @@
       "properties": {
         "description": "THREE THINGS, and the corpus had two of them while authors wrote all three into one. `name` is what a list renders; `description` is what the check IS; `findings` (new) is what a RUN found. `add_verification` gains `description`; `set_verification_status` gains `findings`; `loop_status`'s rollup shortens a long name AND says that it did. (The guard matched the OBSERVATION that named this defect and the REQUIREMENT that answers it; this is the built thing that closes both.)\n\n⭐⭐ THE REQUIREMENT NAMED ITS OWN PRECONDITION AND THE ANSWER WAS NO. It asked, in its own words: \"THE LOAD-BEARING UNCERTAINTY, to answer BEFORE building: WOULD A NEW FIELD ALONE CHANGE ANYTHING? A declared field nobody writes to leaves the corpus exactly as it is.\" Measured before writing any code:\n\n    Verifications                        164\n    median `name`                         76 words   (72 over 100, 17 over 300, longest 654)\n    `description` — DECLARED, fulltext,\n    and the node's EMBEDDING FIELD         1 use in 164\n\n⇒ SO A `findings` FIELD ALONE WOULD HAVE BECOME THE SECOND UNUSED FIELD. The uncertainty was real and the answer sat in the corpus for anyone who counted.\n\n⭐ AND THE ROOT CAUSE WAS REACHABILITY, NOT NEGLECT — found by reading the constructor rather than inferring from the number. `add_verification(id, name, method, level)` HAD NO PARAMETER FOR `description`. The only route was raw `create_node` and essentially nobody took it. Authors wrote reports into `name` because **`name` was the only string the constructor accepted**. The field was not ignored; it was unwritable. That is `dec:how-should-a-temporal-fact-carry-its-date-when-there-is-no-epoch` one door along — there, 112 nodes wrote an UNDECLARED property because the declared route did not fit; here, one node wrote a declared property because the route did not exist.\n\nWHERE EACH FIELD IS WRITTEN IS THE DESIGN, not a convenience:\n• `description` on the CONSTRUCTOR — what the check is, stated once.\n• `findings` on `set_verification_status` — what a RUN found, restated whenever an outcome changes. Evidence belongs to a run, so it is recorded when the run produces it, by the caller holding it.\n• Omitting `findings` LEAVES IT ALONE, exactly as `last_run_at` does since 2026-08-08 — re-marking a check passing without restating evidence must not erase it. Erasing is a deliberate act deserving an explicit one, the convention `set_interface_spec`, `set_decision_status` and `set_epoch_status` all state and which this function's own first line already promised.\n\nTHE ROLLUP, their second ask: `loop_status`'s `verifications.attention[]` shortens a `name` past 25 words — and carries `name_truncated`, `name_words`, and a top-level `names_truncated` note saying how many and where the full text is. ⭐ THE ANNOUNCEMENT IS THE POINT, not decoration: a silently shortened name reads as \"that is the whole name\", a vacuous zero one layer over, and it is the SIXTH of Anthony's own engineering principles — no silent caps or truncation. Truncating without fixing reachability would have been the stopgap `rule:fix-it-properly-while-it-is-still-cheap` forbids; cause and symptom were fixed together.\n\n⚠️ BOUNDS, stated rather than discovered later:\n• NOTHING IS MIGRATED. The 164 existing long names stay as they are. A property once written cannot be removed, so the best available repair would duplicate rather than move — and rewriting 164 authored names is not a mechanical act. New checks get the shape; old ones keep theirs. The median will fall slowly or not at all, and that is honest rather than disappointing.\n• `findings` IS NOT VALIDATED OR PARSED. reflow2 records what an author says a run found and never judges it (`dec:non-goal-reflow2-does-not-judge-whether-a-check-is-meaningful`). A `passing` status beside findings describing a failure is a contradiction only a reader can catch — dev_storyflow's 2026-08-07 report exactly, where a check recorded \"EXIT 0, verdict STALE\" and stayed passing forever. This gives that evidence a home; it does not make the contradiction computable.\n• The schema gains a PROPERTY, not a type, so the version stamp (counting node/edge types, 29/61) does not move and an older reflow2 can still read the graph.",
         "name": "A check records what it FOUND separately from what it IS, and the rollup that made a cheap call expensive to read says when it shortened a name",
+        "provenance": "authored",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "cap:a-client-elects-a-server-of-its-own-build",
+      "node_type": "Capability",
+      "properties": {
+        "description": "The shared server publishes `exe_fingerprint` — `size:mtime_nanos` of its executable at start — and a client compares it before attaching. Mismatch means SIGTERM the daemon, clear the rendezvous, elect a fresh one. Match means attach exactly as before.\n\nTHREE NEAR-MATCHES OFFERED AND ALL READ. `cap:the-server-knows-its-own-currency` is the DETECTION this does not replace; `fact:the-attach-path-checks-liveness-and-identity-but-never-version` is the MEASUREMENT of the hole; `chg:a-client-replaces-a-mismatched-server-instead-of-reporting-it` DATES the repair. This is the standing capability that keeps it from reopening.\n\nDISTINCT FROM THE DETECTION IN THREE WAYS THAT MATTER. That one asks a server about ITSELF — \"was my executable replaced under me\" — by reading `/proc/self/exe` for a ` (deleted)` marker, and it REPORTS. This compares TWO independently published facts and ACTS. So it catches \"I was freshly spawned from an old build\", which introspection cannot see by construction; it works on macOS, where the `/proc` read fails and `served_by.stale` can only ever answer `unknown`; and it removes the skew rather than announcing it.\n\n⭐ THE COMPARAND IS THE DESIGN, AND TWO CANDIDATES WERE REFUTED BY MEASUREMENT BEFORE THIS ONE. A version string tells two builds of one version apart NOT AT ALL — the case that cost a development session six cycles on 2026-08-29 had `0.42.0` on both sides all day. An inode is worse: `install -m 755` rewrites IN PLACE and keeps it, so an inode check would have missed the field report that prompted the work. Size and mtime move under an in-place rewrite AND under `cargo build`'s unlink-and-replace, measured on both paths.\n\n🛑 ABSENT MEANS REPLACE, NOT MATCH. A daemon publishing no fingerprint predates this field and is old by construction — which is the state of every daemon running at the moment this ships.\n\n🛑 AND IT REFUSES TO GUESS TWICE OVER. A process that cannot fingerprint itself attaches rather than killing a healthy daemon on no evidence. A SIGTERM that fails attaches anyway, loudly, naming the manual remedy — a session on a stale surface is degraded, a session with no design brain is stopped, and the first is the lesser harm.\n\n⚠️ THE STANDING RISK: this can stop a daemon another session is mid-write against. `--stop-shared` accepts the same risk with a human choosing the moment; this takes the choice automatically, judged the lesser harm against six recorded instances of sessions writing through the wrong surface.",
+        "name": "A session attaches only to a server of its own build, and replaces one that is not",
         "provenance": "authored",
         "status": "realized"
       }
@@ -121184,6 +121262,18 @@
       "properties": {
         "change_type": "scope_change",
         "name": "Snapshot of the decision while it still reads OPEN / NOT YET DECIDED, before Anthony's ruling is written into it"
+      }
+    },
+    {
+      "node_id": "chg:a-client-replaces-a-mismatched-server-instead-of-reporting-it",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-29",
+        "name": "A client that meets a different build replaces the server instead of attaching and reporting",
+        "rationale": "🛑 THE TESTS WERE WRITTEN AGAINST A STUB OF TODAY'S BEHAVIOUR AND OBSERVED FAILING: 3 failed, 2 passed. The two that passed are the counterweights — same build attaches, unknown attaches — which is the correct reading, because today's behaviour is right for those and wrong for the three real cases. Recorded because a failing-first test and one written after the fix both end green.\n\n⭐ WHY THIS CHANGES BEHAVIOUR RATHER THAN REPORTING, WHICH IS THE WHOLE POINT. The defect has been recorded six times since 2026-08-07 and every previous response improved a REPORT: `served_by.stale`, its stale_note, the AGENTS.md correction, `graph.client.json`. The skew went on happening — most expensively on 2026-08-08, when it cost a day of dogfooding and five merged PRs never ran through a live session. Five rounds of better reporting did not stop it, and that is the evidence for acting instead of announcing.\n\n📌 AND IT REACHES A PLATFORM THE OLD DETECTION CANNOT. `exe_replaced_since_start` reads `/proc/self/exe` and tests for a ` (deleted)` suffix — Linux only. On macOS it returns `unknown`, so `served_by.stale` can never be true there, which is why nothing surfaced this to Alex at all. Comparing two independently-published `stat` results is plain POSIX and works on both.\n\n⚠️ THE RISK ACCEPTED, STATED PLAINLY: this can stop a daemon another session is mid-write against. `--stop-shared` already accepts that risk, but with a human choosing the moment; this takes the choice automatically. It is judged the lesser harm because the alternative is a session silently writing through a surface that is not the one it was built against — which is what actually happened, six times. If it proves wrong, the mitigation is narrow: re-elect only when nothing else is attached, which the Activity tracker could answer.\n\nNOT ESTABLISHED: whether mtime is preserved by any installer path in use. reflow2's own uses `install -m 755` with no `-p`, verified today; a package manager or a `cp -p` would defeat this, and nothing checks.",
+        "subject": "system",
+        "summary": "Fixes `fact:the-attach-path-checks-liveness-and-identity-but-never-version` — the cause behind Alex's field report and five earlier instances since 2026-08-07.\n\n`Rendezvous` gains `exe_fingerprint: Option<String>` — `size:mtime_nanos` of the executable, captured when the daemon starts. `ensure_server_async` now asks `should_reelect` before attaching: on a mismatch it SIGTERMs the old daemon, clears the rendezvous and elects a fresh one. On a match it attaches exactly as before.\n\n⭐ THE COMPARAND WAS CHOSEN BY MEASUREMENT AND THE FIRST TWO CANDIDATES WERE BOTH REFUTED.\n• A VERSION STRING catches nothing that matters: `Cargo.toml` read `0.42.0` all day on 2026-08-29 while a development session lost SIX cycles to stale daemons — every daemon and every client published `0.42.0`. Its coverage equals the installer fix: the upgrade path only.\n• AN INODE was the second proposal and is worse: measured, `install -m 755` REWRITES IN PLACE and keeps the same inode, so it would have missed the very report that prompted the work.\n• SIZE + MTIME move under BOTH — verified on both paths the same day: `install -m 755` changed size and mtime with the inode unchanged; a real `cargo build` changed inode AND mtime (4481075 -> 4488902). One `stat`, no hashing of a 326 MB binary.\n\n⚠️ AN ABSENT FINGERPRINT MEANS REPLACE, NOT MATCH. Any daemon publishing none predates this field, so it is old by construction — and that is exactly Alex's 0.39.0 server on the first upgrade after this ships. Treating absence as agreement would have made the fix unable to fix the report that prompted it.\n\n🛑 AND IT REFUSES TO GUESS IN TWO PLACES. If this process cannot fingerprint itself it ATTACHES rather than killing a healthy daemon on no evidence — the same refusal `served_by.stale` makes when `/proc/self/exe` is unreadable. And if the SIGTERM fails (a foreign owner, or it exited between probe and signal) it attaches anyway with a loud warning naming the manual remedy, because a session on a stale surface is degraded while a session with no design brain is stopped."
       }
     },
     {
@@ -149068,6 +149158,19 @@
       }
     },
     {
+      "node_id": "fact:the-attach-path-checks-liveness-and-identity-but-never-version",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "ROOT-CAUSE PASS ON ALEX'S UPGRADE REPORT, 2026-08-29. The cause is not the installer. ⚠️ AND THIS NODE'S OWN FIRST DRAFT OVERSTATED THE FIX — corrected below, measured rather than argued.\n\n═══ ① THE CAUSE, READ OUT OF THE CODE ═══\n\n`ensure_server_async` (`shared.rs`) asks an existing rendezvous exactly two questions: **is it for THIS graph**, and **does something ANSWER at that URL** (`else if probe(&r.url).await { attach }`). It then attaches. **`r.version` is never read.**\n\n🛑 THE FIELD EXISTS WITH ITS PURPOSE WRITTEN ON IT. `Rendezvous.version`: *\"so a FUTURE VERSION CAN REFUSE AN INCOMPATIBLE PEER rather than guess.\"* Published, intended, and the refusal deferred to a future that has not come.\n\n⭐ AND SOMEBODY CHOSE THIS DELIBERATELY, in `relaunchable_exe_from`'s doc: *\"The resulting version skew is exactly what `served_by.stale` already reports, so it is visible rather than silent.\"* Defensible for the stranded-session problem it solved; it is also the reasoning that produced Alex's bug, because it treats *reported in a JSON field* as *the operator will know*.\n\n═══ 🛑 ② THE INSTALLER IS A TRIGGER — AND SO IS A VERSION CHECK ═══\n\nApplying the step-⑥ test to BOTH candidate fixes, measured:\n\n    instance                                   install.sh fix   version check\n    Alex, macOS, installer upgrade 0.39→0.42        YES              YES\n    this dev session, Linux, x6 (cargo build)        NO               NO\n    Anthony, 2026-08-08 (rebuild)                    NO               NO\n\n🛑 **THE FIRST DRAFT OF THIS NODE CLAIMED A VERSION CHECK \"WOULD HAVE CAUGHT EVERY ONE OF THEM\". FALSE.** Measured: `Cargo.toml` read `0.42.0` all day, and every one of the five daemons this session stopped published `version: 0.42.0` against a client that was also `0.42.0`. **A version-string check catches ZERO of the six rebuild instances** — its coverage is the same as fixing the installer, the release-upgrade path only.\n\n⇒ **THE COMPARAND MUST DISTINGUISH TWO BUILDS OF ONE VERSION.** A version string cannot. `(dev, inode)` of the executable can, in one `stat()`: `cargo build` and `install -m 755` both write a NEW file, so the running daemon holds the old inode while a fresh client resolves the new one. Same file → same inode → correctly silent.\n\n═══ 🛑 ③ AND THE EXISTING DETECTION IS INERT ON ALEX'S PLATFORM ═══\n\n`exe_replaced_since_start()` (`service.rs:149`) reads `/proc/self/exe` and tests the link text for a ` (deleted)` suffix. **That is Linux-only.** On macOS the `read_link` fails and it returns `(None, UNKNOWN_NOTE)` — so `served_by.stale` is **never `true` on a Mac**, only `unknown`.\n\n⇒ Alex's situation is strictly worse than this session's. On Linux the skew at least reported `stale: true` six times. On macOS the mechanism built to catch exactly this is silently non-functional, which is why nothing surfaced it to him. **`(dev, inode)` compared at attach is plain POSIX and works on both**, which is a second, independent argument for that comparand over either the version string or the `(deleted)` marker.\n\n═══ ④ THE CLASS: FIVE RESPONSES, ALL DETECTION, ZERO BEHAVIOUR CHANGE ═══\n\n    2026-08-07  a running server cannot say it is stale\n    2026-08-0?  reproduced first hand here\n    2026-08-08  recurred to the people who wrote it down — cost a day of dogfooding\n    2026-08-13  a fresh server on an old build is not stale and stamps confidently\n    2026-08-17  AGENTS.md said an mcp reconnect picks up a rebuild; a shared server makes that false\n    2026-08-29  this dev session (x6) and Alex\n\nEvery response improved REPORTING. **Nothing ever changed what the client DOES.** Same shape as `fact:the-instruction-surface-routes-to-hygiene-and-not-to-whether-the-thing-works`: the information existed and did not reach the person.\n\n═══ 🛑 BOUNDS ═══\n\nNOT ESTABLISHED: what the client should DO on a mismatch. Refuse, warn, or re-elect are three different products, and automatically stopping a daemon another session is mid-write against is not obviously safe — `--stop-shared` accepts that risk deliberately, with a human choosing the moment.\n\nNOT MEASURED: that `cargo build` and `install -m 755` change the inode. It is inferred from the `(deleted)` marker working at all — the marker only appears when a file is unlinked and replaced, so replacement is established for the Linux rebuild path; the macOS installer path is unverified.\n\nNOT ESTABLISHED: whether an inode is stable enough in practice — a bind mount, a container layer, or an overlay filesystem could in principle reuse one.",
+        "subject_id": "req:the-server-is-the-authority-on-its-own-currency",
+        "valid_from": "2026-08-29",
+        "value": "{\"trigger\":\"Alex's upgrade report, 2026-08-29\",\"cause\":\"ensure_server_async attaches on liveness + graph identity only; Rendezvous.version is published and never read at attach\",\"correction_to_first_draft\":\"claimed a version check would catch every instance - FALSE. Cargo.toml read 0.42.0 all day and all five daemons published 0.42.0 against 0.42.0 clients, so a version-string check catches ZERO of the six rebuild instances\",\"coverage\":{\"install_sh_fix\":\"Alex only\",\"version_string_check\":\"Alex only\",\"dev_inode_check\":\"all six, and cross-platform\"},\"third_finding\":\"exe_replaced_since_start reads /proc/self/exe and is LINUX-ONLY; on macOS served_by.stale is never true, only unknown - the detection built for this is inert on Alex's platform\",\"class\":\"five recorded responses, every one improved REPORTING, none changed what the client DOES\",\"not_established\":[\"what the client should do on mismatch - refuse, warn or re-elect are three different products\",\"that cargo build and install -m 755 change the inode: inferred from the (deleted) marker working, not measured; the macOS installer path is unverified\",\"whether an inode is stable enough in practice under bind mounts, container layers or overlay filesystems\"]}"
+      }
+    },
+    {
       "node_id": "fact:the-author-of-a-skill-did-not-use-it-an-hour-later",
       "node_type": "TemporalFact",
       "properties": {
@@ -149799,6 +149902,19 @@
       }
     },
     {
+      "node_id": "fact:the-upgrade-path-leaves-the-shared-server-on-the-old-binary",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "UPGRADING THE BINARY DOES NOT REPLACE THE PROCESS THAT SERVES IT, AND EVERY SIGNAL A USER WOULD CHECK LOOKS CURRENT. Reported by Alex (who:alex) on macOS arm64, 2026-08-29, with a clean repro and the authoritative objects read rather than inferred.\n\nMEASURED BY HIM AT THE TIME OF THE CHECK:\n\n    disk binary   ~/.local/bin/reflow2-mcp --version   ->  0.42.0   (mtime 15:20)\n    live daemon   pid 66293, started 14:58 (BEFORE that mtime), --serve-shared\n    .reflow2/graph.server.json                          ->  \"version\": \"0.39.0\"\n    HTTP initialize on the rendezvous URL               ->  serverInfo.version 0.39.0\n    this session's stdio wrapper                        ->  0.42.0, attached to the 0.39.0 daemon\n\nTHREE VERSIONS IN PLAY AT ONCE, and the server log records the attach-probe handshake as 0.42.0 against a process still serving 0.39.0.\n\nREPRO, needing no design content: start a shared server; upgrade the binary in place without stopping it; open a new client session. It attaches to the existing rendezvous and keeps answering as the pre-upgrade version.\n\n🛑 WHY IT MATTERS MORE THAN A STALE PROCESS USUALLY WOULD, in his words: *\"`reflow2-mcp --version` and a new session both look current while every tool call still hits the old surface. The install appeared to succeed.\"* The mismatch IS discoverable — `graph.server.json`, `served_by.stale`, HTTP `initialize` — but **nothing in the upgrade path surfaces it, and the obvious recovery (restart the session) is the one the docs say does not work**, because `--shared` re-attaches to the same daemon.\n\n⭐ SECOND ENVIRONMENT, SAME DAY, INDEPENDENTLY: the same skew bit this development session SIX TIMES on Linux, from the other direction — `cargo build` replacing the binary under a running daemon rather than an installer doing it. So it is not a macOS quirk and not an installer quirk; it is that NOTHING connects replacing the executable to restarting what serves it. Worst after a `schema/*.yaml` or skill edit, because both are compiled in, so a stale server serves the OLD `describe_schema` and the OLD skill text while every version string reads current.\n\nHIS SUGGESTED FIX, and it is the right shape: *\"The install script could restart the shared process after replacing the binary, so the new version is what actually serves.\"* Read 2026-08-29: `tools/install.sh` has ZERO awareness of a running daemon — no `serve-shared`, `stop-shared`, `kill` or rendezvous handling anywhere in its 179 lines. It replaces the binary at line 119 and never touches the process.\n\n🛑 AND IT GATES THE NEXT RELEASE. Cutting v0.43.0 means every user who upgrades meets this again — including Alex, and including the coworkers he is about to show it to, whose first experience would be a server that serves the previous version while reporting the new one.\n\n🛑 NOT ESTABLISHED: whether SIGTERM to every `--serve-shared` process is safe on a machine where several graphs are served at once. The `--stop-shared` path already prefers SIGTERM precisely so the server removes its own rendezvous on the way out, and a client that finds no rendezvous spawns a fresh one — so the shape is known to work for ONE graph. Nothing has tested it for several at once, and an installer acts machine-wide.\n\n📌 ALSO NOT USED, and he says so himself: `.reflow2/kit-version.json` still read 0.11.0 — the setup-time kit stamp, not the running server. It is not the authority for this question and he did not treat it as one.",
+        "subject_id": "cap:kit",
+        "valid_from": "2026-08-29",
+        "value": "{\"reporter\":\"who:alex\",\"platform\":\"macOS darwin arm64\",\"date\":\"2026-08-29\",\"measured\":{\"disk_binary\":\"0.42.0\",\"disk_mtime\":\"15:20\",\"live_daemon_pid\":66293,\"daemon_started\":\"14:58\",\"graph_server_json_version\":\"0.39.0\",\"http_initialize_serverInfo\":\"0.39.0\",\"stdio_wrapper\":\"0.42.0\"},\"repro\":[\"start a shared server\",\"upgrade the binary in place without stopping it\",\"open a new client session - it re-attaches and answers as the old version\"],\"why_it_matters\":\"every signal a user would check looks current; the obvious recovery (restart the session) is the one that does not work\",\"corroboration\":\"same skew hit this dev session six times on Linux the same day, via cargo build rather than an installer - not a macOS or installer quirk\",\"suggested_fix\":\"install.sh restarts the shared process after replacing the binary\",\"install_sh_today\":\"179 lines, zero awareness of a running daemon; replaces the binary at line 119\",\"gates\":\"the v0.43.0 cut - every upgrading user meets this again\",\"not_established\":\"whether SIGTERM to every --serve-shared process is safe when several graphs are served at once; the known-good shape is one graph\"}"
+      }
+    },
+    {
       "node_id": "fact:the-upstream-watch-is-findable-only-in-reflow2s-own-words",
       "node_type": "TemporalFact",
       "properties": {
@@ -150013,6 +150129,20 @@
         "level": "unit",
         "method": "test",
         "name": "A dated claim reads back with its age, and an undated one says nothing",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:a-client-refuses-a-server-of-a-different-build",
+      "node_type": "Verification",
+      "properties": {
+        "description": "Five cases in `crates/reflow2-mcp/src/shared.rs`, module `tests::reelect`, pinning the DECISION rather than the plumbing.\n\n🛑 OBSERVED FAILING FIRST, against a stub of today's behaviour: **3 failed, 2 passed**. The two that passed are the counterweights — same build attaches, unknown attaches — which is the correct reading, because today's behaviour is right for those and wrong for the three real cases. That split is stronger evidence than an all-red run: it shows the tests discriminate rather than merely rejecting the stub.\n\nWHAT IS PINNED:\n① a DIFFERENT BUILD OF THE SAME VERSION is replaced — the case that cost this session six cycles and that a version check cannot see;\n② an IN-PLACE UPGRADE is replaced — Alex's case; `install -m 755` keeps the inode, so this is also the case that refuted the inode proposal;\n③ a daemon with NO FINGERPRINT is replaced — it predates the field, which is every daemon alive when this ships;\n④ the SAME BUILD is attached to — without this the fix would kill a healthy daemon on every attach;\n⑤ an UNKNOWABLE local build attaches rather than guessing.\n\n⚠️ WHAT IT DOES NOT COVER: the SIGTERM and re-election themselves. Those spawn processes and are exercised only by the live path, so the failure mode they carry — stopping a daemon another session is mid-write against — is argued in the capability and not tested here.",
+        "findings": "5 passed after the fix; **3 failed and 2 passed before it**, against a stub of today's behaviour. Full workspace suite green — 167 suites, 0 failures. `cargo clippy --all-targets` and `cargo fmt` clean.\n\nTHE RED RUN IS THE EVIDENCE AND ITS SHAPE MATTERS: the two that passed against the stub were the counterweights (same build attaches, unknown attaches), so the tests discriminated rather than merely rejecting a stub that did nothing.",
+        "kind": "verification",
+        "last_run_at": "2026-08-29",
+        "level": "unit",
+        "method": "test",
+        "name": "A client re-elects on a build mismatch, attaches on a match, and never guesses",
         "status": "passing"
       }
     },
@@ -152824,7 +152954,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:4b8420f13fbda505db73e8b4228131f76eb3aab57efff0cdea5f2921ced239ad",
+  "prev_content_hash": "sha256:9972dfe1de319f1056aac85275ec2cf2c418f50d29a5a076726d4e6034bffb2c",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
