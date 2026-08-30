@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:4b8420f13fbda505db73e8b4228131f76eb3aab57efff0cdea5f2921ced239ad",
+  "content_hash": "sha256:9972dfe1de319f1056aac85275ec2cf2c418f50d29a5a076726d4e6034bffb2c",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -13079,6 +13079,15 @@
       "from_id": "dec:the-graph-read-contract-stays-internal",
       "properties": {
         "acted_at": "2026-08-21",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:the-hub-waits-for-somebody-to-ask-for-it",
+      "properties": {
+        "acted_at": "2026-08-29",
         "role": "approver"
       },
       "to_id": "who:ajs"
@@ -45496,6 +45505,24 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "dec:idea-a-hub-owns-designs-it-does-not-absorb-and-that-is-a-third-relation",
+      "properties": {
+        "note": "The UPWARD form — roll-up, cross-design realization, sync notification, last-export dates. Parked pending field demand, not rejected: its item 1 (a hub keeping shadow copies of a child's capabilities with nothing detecting the duplication) is a coherence failure rather than a status report, and remains the strongest single argument in the thread.",
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-hub-waits-for-somebody-to-ask-for-it"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "dec:idea-a-published-decision-loses-its-approver-and-the-childs-gate-fails-on-it",
+      "properties": {
+        "note": "The defect prediction underneath the downward form. Parked, and its bound corrected twice since it was written: the gate it names is reflow2-only and does not ship to consumers, and the fix is one thing rather than a machinery programme — the approver Contributor travelling in the published surface, which passed the stock gate untouched.",
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-hub-waits-for-somebody-to-ask-for-it"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "dec:idea-a-session-holds-several-graphs",
       "properties": {},
       "to_id": "dec:nested-graphs"
@@ -45543,6 +45570,15 @@
       "from_id": "dec:idea-intent-crosses-designs",
       "properties": {},
       "to_id": "dec:nested-graphs"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "dec:idea-intent-crosses-designs",
+      "properties": {
+        "note": "The DOWNWARD question — what may cross a boundary, and whether an inherited decision binds or is merely visible. Parked with its answer already measured: the status field is the switch, `proposed` versus `accepted`, and only the binding form needs the approver to travel. The question stays open; acting on it does not.",
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-hub-waits-for-somebody-to-ask-for-it"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -45605,6 +45641,15 @@
       "from_id": "dec:idea-should-reflow2-carry-its-own-git-discipline",
       "properties": {},
       "to_id": "dec:export-once-per-pr"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "dec:idea-the-hub-holds-a-copy-per-sub-repo-and-copies-go-stale",
+      "properties": {
+        "note": "The CUSTODY question — where a sub-project's design lives and what keeps a hub-held copy current. Parked. Its copy-versus-reference half was answered on 2026-08-29 (a mirror is a pinned copy that keeps the origin id and is marked not-yours-to-edit); what stays open is whether a sub-project needs a design of its own at all, which is the part that would make this a different product.",
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-hub-waits-for-somebody-to-ask-for-it"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -132715,6 +132760,16 @@
       }
     },
     {
+      "node_id": "dec:the-hub-waits-for-somebody-to-ask-for-it",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "The hub / project-brain thread is DEFERRED, deliberately and on Anthony's word, 2026-08-29. Nothing further is built — not the upward roll-up, not downward inheritance, not making Decision publishable, not the approver travelling in a surface.\n\n**THE TRIGGER TO REVISIT IS NAMED AND IS A PERSON, NOT A DATE:** Alex, or another real user, saying they need it. Field demand, not a scheduled review.\n\nHIS WORDS, and the two halves are separate claims: *\"I think the value is obvious and we should do this. that being said, nobody is really asking for this at all and I'm hesitant to build it until Alex or someone else gives me feedback that they actually need it.\"*\n\n⭐ SO THIS IS NOT A JUDGEMENT THAT THE FEATURE IS WRONG. He believes the value is obvious, from running programs where a sub-team not knowing a program decision has a cost he has watched. What is missing is DEMAND, and the two are different findings that a single \"deferred\" would have blurred.\n\nTWO NEAR-MATCHES OFFERED AND BOTH READ. `dec:idea-intent-crosses-designs` is the QUESTION — what may cross a design boundary, and in which direction; this is the RULING ABOUT WHETHER TO ACT ON IT, and it deliberately leaves that question open rather than answering it. `fact:the-status-field-is-the-binding-versus-visible-switch` is the MEASUREMENT taken while investigating; it stands on its own whether or not anything is ever built. A parked question, a measurement, and a ruling not to proceed are three different states, and collapsing any two would either erase the thinking or claim it was concluded.\n\nWHAT IS KEPT RATHER THAN DISCARDED — the thread produced real results and they stand whether or not the feature is ever built:\n- Binding versus visible needs NO new mechanism: it is `accepted` versus `proposed`, and only the binding form needs the approver to travel. Measured against the real gate.\n- The approver-loss defect prediction, with its bound corrected: that gate is reflow2-only and does not ship to consumers.\n- The question, the upward form and the custody problem, all parked against this ruling rather than deleted.\n\n📌 THE PREREQUISITE STAYS TRUE WHILE THIS IS PARKED: the hxm_program report measured ZERO of seven sibling designs exporting anything. Even a keen user cannot use a hub until something publishes. If demand arrives, the first work is getting one sibling to export — not the hub vocabulary.",
+        "name": "The hub is not built until a user asks for it — the value is not in doubt, the demand is",
+        "rationale": "RECORDED BECAUSE RESTRAINT IS THE HARDEST THING FOR A DESIGN GRAPH TO HOLD. An idea that was built leaves a diff; an idea deliberately NOT built leaves nothing, and the next session finds four rich brainstorm nodes with an obvious next step and starts work. This is the node that stops that, and it names the condition under which starting would be right.\n\n⭐ THE EVIDENCE THAT SUPPORTS THE RESTRAINT, measured rather than felt: the linking layer this feature would extend — `mirror_surface`, `export_surface`, `pair_designs`, `seam_report` — is BUILT, VERIFIED, and has ZERO INSTANCES in any real graph. `cap:built-and-consumed-by-nothing` is a detector this project wrote for exactly that shape. Building more of a layer nobody has used once is the failure mode Anthony names from acquisitions: *\"designs get so overcomplicated when often a simple solution will do — engineers often over design something, it is kind of their nature.\"*\n\n⚠️ THE HONEST COUNTERWEIGHT, stated so a later reader can overturn this properly: waiting for demand systematically underweights features whose value is invisible until they exist. Nobody asks for a thing they have not seen, and a program lead who has never had cross-project decision inheritance has no vocabulary to request it. That is a real cost of this ruling, and if it is ever overturned that is likely to be the reason.\n\nWHAT WOULD MAKE IT CHEAP TO REVISIT: the twenty-minute test that was NOT run — take one real program-level decision, put it in front of the person working that sub-project, and ask whether having it in their design would have changed what they did. It needs no code, it answers the demand question directly, and it stays available.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:the-ility-target-is-a-governing-decision-asked-at-genesis",
       "node_type": "Decision",
       "properties": {
@@ -152769,7 +152824,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:ef408da53201974489824a533cba6e99c27a03c4cc9a6aaea7dc0f9ee57f5efd",
+  "prev_content_hash": "sha256:4b8420f13fbda505db73e8b4228131f76eb3aab57efff0cdea5f2921ced239ad",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
