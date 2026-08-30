@@ -69,6 +69,7 @@ fn decision(id: &str, name: &str, text: &str, rationale: Option<&str>) -> Decisi
         decision: Some(text.into()),
         rationale: rationale.map(str::to_string),
         distinct_from: None,
+        kind: None,
     }
 }
 

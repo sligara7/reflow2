@@ -1472,10 +1472,36 @@ impl ReflowService {
         let name = __rf.str("name", req.name);
         let decision = __rf.str("decision", req.decision);
         __rf.finish()?;
-        let node = NodeDto::from(
-            g.add_decision(&req.id, &name, &decision, req.rationale.as_deref())
-                .map_err(dyno_err)?,
-        );
+        let mut stored = g
+            .add_decision(&req.id, &name, &decision, req.rationale.as_deref())
+            .map_err(dyno_err)?;
+        // The kind rides THIS call rather than a follow-up setter. Two
+        // order-dependent calls is precisely the hazard #392 documented, and
+        // `cap:a-decision-can-be-created-already-settled` exists because the
+        // same shape bit a consumer on status. Inside one write lock these are
+        // sequential and atomic to every other caller, so the API stays one call.
+        if let Some(kind) = req.kind.as_deref() {
+            const KINDS: [&str; 2] = ["exploratory", "choice"];
+            if !KINDS.contains(&kind) {
+                return Err(McpError::invalid_params(
+                    format!(
+                        "kind must be one of {KINDS:?} — `exploratory` for an idea being turned \
+                         over, `choice` for a decision somebody faced. OMITTING IT IS ALSO VALID \
+                         and means nobody said, which is a third state rather than a synonym for \
+                         `choice`; got `{kind}`"
+                    ),
+                    None,
+                ));
+            }
+            stored = g
+                .upsert_node(
+                    node_ty,
+                    &req.id,
+                    reflow2_core::nodes::Props::new().set("kind", kind),
+                )
+                .map_err(dyno_err)?;
+        }
+        let node = NodeDto::from(stored);
         let found = search_first(&g, &req.id, existed, &format!("{name} {decision}"));
         if let Err(e) =
             refuse_unless_deliberate(&found, req.distinct_from.as_ref(), &req.id, "Decision")

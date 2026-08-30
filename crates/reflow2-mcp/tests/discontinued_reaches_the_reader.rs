@@ -89,6 +89,7 @@ async fn withdrawn() -> ReflowService {
         decision: Some("Built, shipped, correct, and used zero times.".into()),
         rationale: None,
         distinct_from: None,
+        kind: None,
     })));
     j!(s.set_decision_status(Parameters(SetDecisionStatusReq {
         decision_id: "dec:discontinue".into(),
@@ -208,6 +209,7 @@ async fn a_proposed_decision_discontinues_nothing() {
         decision: Some("Not settled.".into()),
         rationale: None,
         distinct_from: None,
+        kind: None,
     })));
     j!(s.create_edge(Parameters(CreateEdgeReq {
         edge_type: "OBSOLETES".into(),
@@ -285,6 +287,7 @@ async fn it_is_not_a_capability_only_field() {
         decision: Some("Withdrawn.".into()),
         rationale: None,
         distinct_from: None,
+        kind: None,
     })));
     j!(s.set_decision_status(Parameters(SetDecisionStatusReq {
         decision_id: "dec:drop".into(),

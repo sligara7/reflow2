@@ -44,7 +44,14 @@ or a real decision left as a musing.
 One **Decision at status `proposed`** per *question*, with the ideas as its options in the
 decision text:
 
-1. `add_decision` — name it as the open question (*"OPEN — does X…?"*), not as a conclusion.
+1. `add_decision` — name it as the open question (*"OPEN — does X…?"*), not as a conclusion,
+   **and pass `kind: "exploratory"` in that same call.** It is what separates an idea being
+   turned over from a choice somebody faced, and it is READ: the linking discipline in step 4
+   fires on it, and stays off the Requirement/Capability/ChangeEvent capture path where it
+   would be noise. Set it here rather than afterwards — a follow-up setter is two
+   order-dependent calls, which is the hazard a harness emitting parallel batches actually
+   hits. **Omitting it is a third state meaning nobody said, not a synonym for `choice`**, so
+   leaving it off does not quietly classify the idea; it just leaves it unqueryable.
 2. **Confirm the node came back `status: proposed`** — `add_decision` lands there, and a Decision
    that reads `accepted` would assert a settlement that never happened. Only reach for
    `set_decision_status` if it did not.

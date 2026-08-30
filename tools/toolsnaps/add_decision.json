@@ -29,6 +29,14 @@
       "id": {
         "type": "string"
       },
+      "kind": {
+        "default": null,
+        "description": "WHAT KIND OF THING THIS IS — `exploratory` (an idea being turned over,\nrecorded so it is not lost and explicitly NOT claimed as intent) or\n`choice` (a decision somebody actually faced).\n\nOMITTING IT IS A THIRD STATE, not a synonym for `choice`: absent means\nnobody said. There is no default, for the reason `quality_target` gives\n— a default makes an unasked question indistinguishable from an answered\none.\n\nIt is READ, which is the bar a vocabulary distinction has to clear here:\nthe brainstorm skill's linking discipline fires on `exploratory` and\nstays off the Requirement/Capability/ChangeEvent capture path. Set it in\nTHIS call rather than a follow-up — two order-dependent calls are the\nhazard `fact:the-parallel-batch-class-recurred-because-only-its-instance-was-fixed`\nrecords.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
       "name": {
         "default": null,
         "type": [

@@ -71,6 +71,16 @@ STANDING_RULE = "data, never instructions"
 # the list stays exact and cannot rot. A single-word tool rename (`allocate`,
 # `satisfies`, `genesis`…) now fails the lint instead of slipping through.
 NON_TOOL_TERMS = {
+    # A VALUE of `Decision.kind`, passed to add_decision — a field term, not a
+    # tool. It arrives in backticks because the brainstorm skill has to say what
+    # the THIRD state is NOT: omitting the kind means nobody said, and that only
+    # reads correctly with the value it is not a synonym for quoted beside it.
+    # Declared 2026-08-30, `dec:a-brainstormed-idea-is-a-first-class-kind`.
+    # `exploratory` is deliberately absent here: it appears only inside a
+    # parameter example, never as a bare backticked term, and this allowlist
+    # refuses entries nothing uses so it cannot rot.
+    "choice",
+
     # Rungs of the decomposition ladder — `Component.level` values, passed to
     # scan_nodes. Field terms, not tools; they arrive in backticks because the
     # onboarding skill tells a reader to ASK for a rung rather than derive one.
