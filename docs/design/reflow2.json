@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:da249028182fa4c3d32e6f917759b3f3904f4ca760d8b7b17c05fc31c26061f1",
+  "content_hash": "sha256:78ee057df672945084a5b14fd6e6b7f50bb6211909932c0de6fdbe42d722ed18",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -10343,6 +10343,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "art:grok-shell-feedback-2026-08-29",
+      "properties": {
+        "acted_at": "2026-08-29",
+        "role": "author"
+      },
+      "to_id": "who:alex"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "art:merge",
       "properties": {
         "acted_at": "2026-07-22",
@@ -16658,6 +16667,16 @@
         "validation_status": "unvalidated"
       },
       "to_id": "dec:the-decomposition-ladder-is-open-not-a-fixed-enum"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:the-near-match-filter-has-no-node-type-term",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "Cause -> symptom, established by reading the code rather than by inference. The symptom node records WHAT Alex hit (add_requirement refused naming a ChangeEvent; add_decision refused naming a Capability). This node records WHY: the near-match filter at capture.rs:190 tests only not-itself and score-above-floor, and carries node_type for display only. Direction matters and is checked — the untyped filter produces the cross-type refusal, never the reverse. Confidence 1.0 on the mechanism; the OPEN part is which of the two repairs to take, and that is a judgement about how often a cross-type hit is a real duplicate, which nobody has counted.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:the-duplicate-guard-cannot-tell-a-second-layer-from-a-second-copy"
     },
     {
       "edge_type": "CAUSES",
@@ -23860,6 +23879,15 @@
         "action": "modified"
       },
       "to_id": "dec:idea-backlog-belongs-in-the-graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:baseline-08ecaafebf6b9b59",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:grok-shell-feedback-2026-08-29"
     },
     {
       "edge_type": "CHANGED",
@@ -40185,6 +40213,22 @@
     },
     {
       "edge_type": "DOCUMENTS",
+      "from_id": "art:grok-shell-feedback-2026-08-29",
+      "properties": {
+        "doc_kind": "field_report"
+      },
+      "to_id": "dec:idea-how-does-a-content-only-client-get-an-answer"
+    },
+    {
+      "edge_type": "DOCUMENTS",
+      "from_id": "art:grok-shell-feedback-2026-08-29",
+      "properties": {
+        "doc_kind": "field_report"
+      },
+      "to_id": "fact:the-duplicate-guard-cannot-tell-a-second-layer-from-a-second-copy"
+    },
+    {
+      "edge_type": "DOCUMENTS",
       "from_id": "art:increment-plan",
       "properties": {
         "doc_kind": "design_doc"
@@ -40570,6 +40614,15 @@
       "from_id": "art:grok-build-tui-feedback-2026-08-27",
       "properties": {
         "note": "A dated field report from 2026-08-27. It describes nothing and implements nothing, correctly: it is true of a moment and must not track the design as it moves. Same genre and same ruling as its four siblings.",
+        "ruling": "parks"
+      },
+      "to_id": "dec:a-dated-field-report-is-registered-and-parked"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "art:grok-shell-feedback-2026-08-29",
+      "properties": {
+        "note": "A dated field report from Alex's grok-shell seat, 2026-08-29. Registered so the design knows the evidence exists and where it lives; it describes a moment on one machine and must not be revised as the design moves. Same genre and same ruling as its five siblings. Note this one DOES carry two DOCUMENTS edges — to the finding it produced and to the open decision whose question it answered — which is the ruling working as written: parking suppresses the unattached-document defect, it does not forbid saying what the report bears on.",
         "ruling": "parks"
       },
       "to_id": "dec:a-dated-field-report-is-registered-and-parked"
@@ -107439,6 +107492,15 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:a-client-replaces-a-mismatched-server-instead-of-reporting-it",
+      "properties": {
+        "at": "2026-08-29",
+        "note": "CLOSED BY THE REPORTER, NOT BY THE FIX. v0.43.0 shipped and Alex — who filed this with the original measurements — upgraded and confirmed it resolved. That confirmation is the evidence; the passing unit tests were not, and this node was deliberately left open through the release cut for exactly that reason.\n\n⭐ THE FIX TOOK A DIFFERENT ROUTE FROM HIS SUGGESTION, AND THE DIFFERENCE MATTERS. He proposed that `install.sh` restart the shared process after replacing the binary. Instead the CLIENT re-elects: the rendezvous now carries an `exe_fingerprint` (size+mtime), and a session meeting a mismatch SIGTERMs that daemon and spawns its own. `tools/install.sh` is UNCHANGED and still has zero awareness of a running daemon — which is now correct rather than a gap, because the repair sits on the side that can actually observe the skew.\n\nTWO CONSEQUENCES OF THAT ROUTE, both good and neither obvious from the report: it fixes the DEVELOPER direction too (`cargo build` replacing the binary under a running daemon — the same skew hit this project six times in one day on Linux, which no installer change would have touched); and it sidesteps the open question this node flagged as NOT ESTABLISHED — whether an installer may SIGTERM every `--serve-shared` process machine-wide — because a client stops only the one daemon serving ITS graph. That question is not answered, it is no longer on the path.\n\n🛑 WHAT REMAINS TRUE AND IS NOT CLOSED BY THIS: the sibling finding that an agent which cannot NAME its running version reports already-fixed bugs. That is a reporting problem, not an attach problem, and this fix does not reach it — see the ANTICIPATES edge between the two."
+      },
+      "to_id": "fact:the-upgrade-path-leaves-the-shared-server-on-the-old-binary"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:a-dangling-reference-is-detected-on-its-own-terms",
       "properties": {
         "at": "2026-08-29",
@@ -109983,6 +110045,15 @@
         "conformance": "verified"
       },
       "to_id": "cap:update-is-one-word"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:main",
+      "properties": {
+        "completeness": "partial",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-client-elects-a-server-of-its-own-build"
     },
     {
       "edge_type": "REALIZES",
@@ -119140,6 +119211,17 @@
       }
     },
     {
+      "node_id": "art:grok-shell-feedback-2026-08-29",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:07512b3c6c62c66e95749f7fb26e0ff6b82201f22d04fc2a9560e6f14404fa04",
+        "location": "docs/feedback/2026-08-29-grok-shell-agent-feedback.md",
+        "name": "Alex's agent-session feedback, 2026-08-29 (grok-shell-reflow2 1.0.13, macOS) — two items: the client forwards only `content` so almost every tool payload is invisible to the model, and the near-duplicate guard matches across node types",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:handshake",
       "node_type": "Artifact",
       "properties": {
@@ -126934,6 +127016,16 @@
       }
     },
     {
+      "node_id": "chg:baseline-08ecaafebf6b9b59",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-08-29",
+        "name": "First baseline. A field report is a fixed historical document — it records what one session on one machine observed on one day, so it should never change again; any later drift on this file means it was edited after the fact, which is a defect in the record rather than an update to it.",
+        "subject": "record"
+      }
+    },
+    {
       "node_id": "chg:baseline-09e42dc28449aaeb",
       "node_type": "ChangeEvent",
       "properties": {
@@ -133981,7 +134073,7 @@
       "node_id": "dec:idea-how-does-a-content-only-client-get-an-answer",
       "node_type": "Decision",
       "properties": {
-        "decision": "**RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL.** Raised 2026-08-28 from a field report, not from thinking about reflow2.\n\n📌 The near-match offered was `fact:every-reply-was-sent-twice` — the MEASUREMENT that caused this, and the record of the choice made. This is the open question of what to do now that the choice has a named cost. Kept separate so the measurement stays a measurement.\n\n⚠️ **THE CONSTRAINT THAT BOUNDS EVERY OPTION:** reverting to always-duplicate resurrects the refusals. `detect_gaps` was 157,785 bytes on the wire and a harness refused it outright; 26,096 after the fix. **No option may give that back.**\n\n═══ OPTIONS, NONE CHOSEN ═══\n\n**(a) GATE ON THE NEGOTIATED PROTOCOL VERSION.** Duplicate into `content` only when the client negotiated below `2025-06-18`. This is what MCP's own backwards-compatibility SHOULD asks for, and it costs the 2× only for clients that need it. ⚠️ Counter, the one that killed this in August: priced at threading `RequestContext` through 155 handlers and 151 `ok_json` call sites. **That price has NOT been re-measured**, and two things bear on it — the version comparison already exists and is tested (`version_is_per_request`), and `json_result` is a single choke point, which is exactly the shape that made read-only cheap on 2026-08-26 when making `write_lock` fallible let the compiler find all 98 sites. ⚠️ **SECOND COUNTER, POSSIBLY FATAL: the reporting client may have negotiated a MODERN version and still read only `content`.** If so, gating on version would not have helped it at all.\n\n**(b) GATE ON SIZE, NOT VERSION.** Duplicate whenever the payload is small enough to be harmless — most replies are — and send the signpost only for the big ones. ⚠️ Counter: the failure becomes intermittent and size-dependent, which is worse to diagnose than a consistent one. A client would read most answers and silently lose the largest, which are the orientation calls that matter most.\n\n**(c) A SERVER FLAG** — `--duplicate-content`, set by whoever runs the server for such a client. Cheap, explicit, no protocol guessing. ⚠️ Counter: it must be DISCOVERED, and the person who needs it is reading a stub that does not mention it. That is the addressee problem again. Mitigated only if the stub itself names the flag.\n\n**(d) FIX THE SIGNPOST'S ADDRESSEE, and nothing else.** Rewrite the stub to speak to the AGENT, which is who reads it, naming what the agent can actually do: use `graph_report_markdown` and the prose tools, export to a file and read that, ask the operator for a flag. ⚠️ Counter: makes the outage survivable, not absent — the reporter's own words stand, that export-and-parse *'cannot replace `search_design` before a create, or `loop_status` before finishing.'* ⭐ But it is a one-string change that strictly improves every other option, so it is arguably complementary rather than alternative.\n\n**(e) DO NOTHING; IT IS THE CLIENT'S BUG.** The spec says SHOULD, not MUST. ⚠️ Counter: `rule:reflow2-is-built-for-other-projects-not-for-itself` makes field use the point, and this is field use. Declining should be explicit rather than by neglect.\n\n═══ ⚠️ WHAT MUST BE CHECKED BEFORE CHOOSING ═══\n\n1. **Which protocol revision did the reporting client negotiate?** The report does not say. If it is modern, option (a) is dead on arrival and the framing changes. **Cheapest and most decisive question here.** ⭐ ASKED 2026-08-28 — Anthony put it to Alex; an answer is expected within a day or so. `cap:the-handshake-is-written-down-beside-the-graph` was built the same day so the answer arrives in a file rather than requiring him to instrument his machine.\n\n   📌 **THE REFERENCE POINT TO READ HIS ANSWER AGAINST, measured 2026-08-28 on this repo's own server:** a known-good client — `claude-code 2.1.241` — requested and negotiated **`2025-11-25`**, and reads `structuredContent` without difficulty. So a modern revision in Alex's reply does NOT explain his outage and points at option (c) or (d); an old one (`2024-11-05`, `2025-03-26`) points at option (a). One line of his file decides it.\n\n2. **What does the ~300-line estimate cost today?** Made before anyone tried; the read-only precedent suggests a choke point plus the compiler may do most of it.\n3. **Is one client one client, or the first of several?** n=1 for the affected population — the mirror of the n=0 that justified the original decision.",
+        "decision": "**RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL.** Raised 2026-08-28 from a field report, not from thinking about reflow2.\n\n📌 The near-match offered was `fact:every-reply-was-sent-twice` — the MEASUREMENT that caused this, and the record of the choice made. This is the open question of what to do now that the choice has a named cost. Kept separate so the measurement stays a measurement.\n\n⚠️ **THE CONSTRAINT THAT BOUNDS EVERY OPTION:** reverting to always-duplicate resurrects the refusals. `detect_gaps` was 157,785 bytes on the wire and a harness refused it outright; 26,096 after the fix. **No option may give that back.**\n\n═══ OPTIONS, NONE CHOSEN ═══\n\n**(a) GATE ON THE NEGOTIATED PROTOCOL VERSION.** Duplicate into `content` only when the client negotiated below `2025-06-18`. This is what MCP's own backwards-compatibility SHOULD asks for, and it costs the 2× only for clients that need it. ⚠️ Counter, the one that killed this in August: priced at threading `RequestContext` through 155 handlers and 151 `ok_json` call sites. **That price has NOT been re-measured**, and two things bear on it — the version comparison already exists and is tested (`version_is_per_request`), and `json_result` is a single choke point, which is exactly the shape that made read-only cheap on 2026-08-26 when making `write_lock` fallible let the compiler find all 98 sites. ⚠️ **SECOND COUNTER, POSSIBLY FATAL: the reporting client may have negotiated a MODERN version and still read only `content`.** If so, gating on version would not have helped it at all.\n\n**(b) GATE ON SIZE, NOT VERSION.** Duplicate whenever the payload is small enough to be harmless — most replies are — and send the signpost only for the big ones. ⚠️ Counter: the failure becomes intermittent and size-dependent, which is worse to diagnose than a consistent one. A client would read most answers and silently lose the largest, which are the orientation calls that matter most.\n\n**(c) A SERVER FLAG** — `--duplicate-content`, set by whoever runs the server for such a client. Cheap, explicit, no protocol guessing. ⚠️ Counter: it must be DISCOVERED, and the person who needs it is reading a stub that does not mention it. That is the addressee problem again. Mitigated only if the stub itself names the flag.\n\n**(d) FIX THE SIGNPOST'S ADDRESSEE, and nothing else.** Rewrite the stub to speak to the AGENT, which is who reads it, naming what the agent can actually do: use `graph_report_markdown` and the prose tools, export to a file and read that, ask the operator for a flag. ⚠️ Counter: makes the outage survivable, not absent — the reporter's own words stand, that export-and-parse *'cannot replace `search_design` before a create, or `loop_status` before finishing.'* ⭐ But it is a one-string change that strictly improves every other option, so it is arguably complementary rather than alternative.\n\n**(e) DO NOTHING; IT IS THE CLIENT'S BUG.** The spec says SHOULD, not MUST. ⚠️ Counter: `rule:reflow2-is-built-for-other-projects-not-for-itself` makes field use the point, and this is field use. Declining should be explicit rather than by neglect.\n\n═══ ⚠️ WHAT MUST BE CHECKED BEFORE CHOOSING ═══\n\n1. **Which protocol revision did the reporting client negotiate?** The report does not say. If it is modern, option (a) is dead on arrival and the framing changes. **Cheapest and most decisive question here.** ⭐ ASKED 2026-08-28 — Anthony put it to Alex; an answer is expected within a day or so. `cap:the-handshake-is-written-down-beside-the-graph` was built the same day so the answer arrives in a file rather than requiring him to instrument his machine.\n\n   📌 **THE REFERENCE POINT TO READ HIS ANSWER AGAINST, measured 2026-08-28 on this repo's own server:** a known-good client — `claude-code 2.1.241` — requested and negotiated **`2025-11-25`**, and reads `structuredContent` without difficulty. So a modern revision in Alex's reply does NOT explain his outage and points at option (c) or (d); an old one (`2024-11-05`, `2025-03-26`) points at option (a). One line of his file decides it.\n\n2. **What does the ~300-line estimate cost today?** Made before anyone tried; the read-only precedent suggests a choke point plus the compiler may do most of it.\n3. **Is one client one client, or the first of several?** n=1 for the affected population — the mirror of the n=0 that justified the original decision.\n\n═══ ⭐⭐ QUESTION 1 IS ANSWERED — 2026-08-29, AND IT KILLS OPTION (a) ═══\n\nAlex's second report (`art:grok-shell-feedback-2026-08-29`) names it outright: **`grok-shell-reflow2 1.0.13`, MCP `2025-11-25`, macOS darwin arm64.** That is a MODERN revision — **byte-identical to the one `claude-code 2.1.241` negotiates and reads without difficulty**, which is the reference point recorded above for exactly this comparison.\n\n🛑 **SO OPTION (a) IS DEAD ON ARRIVAL, precisely as its own SECOND COUNTER predicted.** Gating on the negotiated protocol version would not have helped this client at all: it negotiated the newest revision reflow2 has ever seen and still forwards only `content`. The ~300-line `RequestContext` estimate in question 2 no longer needs pricing FOR THIS PURPOSE — not because it is too expensive, but because it would buy nothing.\n\n⭐ **THE INSTRUMENT BUILT TO ANSWER THIS WORKED, AND THAT IS WORTH RECORDING SEPARATELY.** `cap:the-handshake-is-written-down-beside-the-graph` was built 2026-08-28 for this one question, so the answer would arrive in a file rather than requiring Alex to instrument his machine. It did: `.reflow2/graph.client.json` carried `protocol_has_structured_content: true` AND the note distinguishing *contains the field* from *reads the field*, and his agent quoted both back. A question asked on 2026-08-28 was answered by a mechanism shipped on 2026-08-28 and read on 2026-08-29, with no round-trip to the user.\n\n🛑 **AND IT ESTABLISHES SOMETHING STRONGER THAN \"(a) LOSES\": NO AUTOMATIC DETECTION IS POSSIBLE AT ALL.** The negotiated revision was the only signal reflow2 had for guessing readership, and it is now known to be uncorrelated with it. Nothing in MCP asks a client whether it READS `structuredContent`, and a client that forwards only `content` cannot be asked — the question and the answer would both go where it is not looking. **Every remaining option is therefore either explicit (a flag somebody sets), heuristic (size), or palliative (a better signpost).** That is a narrowing of the space, not a preference among what is left.\n\nWHAT THE SECOND REPORT ADDS TO THE OTHER TWO QUESTIONS:\n\n- **Question 3, the population: still n=1 CLIENT, now n=2 REPORTS.** Same client, same seat, twelve days apart. That is persistence rather than spread, and it is weaker evidence than two independent clients would be — say so rather than letting two reports read as two users.\n- **The cost is now measured rather than argued.** The workaround he ran all session was `export_graph` to a scratch path and parse the JSON on disk — **a ~880 KB full-graph dump (~890 nodes / ~1.7k edges) to answer \"did this one write stick?\"**, at \"tens of extra round-trips and full-graph parses per session\". His own summary of what it costs: *\"the notice is accurate; the loop still cannot see the graph.\"*\n- **New evidence FOR option (d), from what actually survived.** Refusals and the four prose tools DID reach him in full — so the escape hatches the stub already names are real and they worked. What he could not do is the two things the loop depends on: *\"'search before you add' cannot be followed from the search result\"*, and *\"you cannot tell a successful write from a silent no-op without a second export.\"* A better signpost cannot fix those two; it can only make them navigable sooner.\n\n🛑 **STILL PROPOSED, STILL NOBODY'S CHOICE.** Question 1 being answered removes one option; it does not choose among the remaining four, and that choice is Anthony's. What has changed is that it can now be made without waiting on anything.",
         "name": "OPEN — how does a client that reads only `content` get an answer, without resurrecting the 2× wire cost?",
         "rationale": "Raised because the field named the client the August decision was explicitly gambling did not exist: *'a large invasive change to protect a client nobody could name'*. The gamble was reasonable and it lost.\n\nThe constraint is stated before the options because the tempting move — put the payload back in `content` — undoes a measured 6× improvement and re-breaks the harnesses that drove it.\n\nOption (d) is flagged as complementary rather than alternative: the signpost speaks to the client while being read by the agent, and that is wrong regardless of which other option is chosen.\n\nLeft as brainstorming because question 1 can invalidate option (a) entirely and nobody has asked it. Choosing before asking would be the same mistake in a new costume.",
         "status": "proposed"
@@ -149075,6 +149167,17 @@
       }
     },
     {
+      "node_id": "fact:a-newborn-capability-with-no-owner-scores-below-the-build-gates-threshold",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "status",
+        "statement": "MEASURED 2026-08-29 during the v0.43.0 cut. PR #385 shipped `cap:a-client-elects-a-server-of-its-own-build` with a PASSING Verification but no `ALLOCATED_TO` and no `REALIZES` — a capability with a check, no owning part and no file. Its CI was green and correctly so: the two gaps it raises score 0.50 (\"isn't assigned to any part\") and 0.45 (\"nothing builds it\"), and `reflow2_check.py --gap-threshold` defaults to 0.80. The gate exited 0 with both listed as NOTES.\n\nTHE DEBT SURFACED ONE PR LATER, in the release cut, and only because a human READ the notes. That is the asymmetry worth naming: CI reads the EXIT CODE, and a person reads the OUTPUT. Everything between 0.00 and 0.80 is visible to exactly one of those two readers, and nothing routes it to the other.\n\nWHAT THIS IS NOT: a calibration error. 0.80 is a defensible line and lowering it to 0.45 would fail the build on every deliberately-deferred allocation (`dec:idea-allocation-waits-for-the-last-responsible-moment` parks exactly that, on purpose). The observation is narrower and it is about AGE: severity is computed from the gap's shape, and knows nothing about whether the capability was introduced by the commit under test or has stood unallocated for six weeks. A brand-new orphan and a long-accepted deferral score identically. The FIRST is a thing the author forgot in the last hour and would fix on sight; the SECOND is a standing decision. Only the author of the PR can tell them apart, and they are the one reader the exit code never shows the list to.\n\nNOT PROPOSING A FIX. `loop_status {\"since_export\": true}` already computes what is owed on ground the committed export does not hold, which is the closest existing answer to \"what did THIS change introduce\" — whether the gate should use it is undecided and nobody has been asked.",
+        "subject_id": "art:check",
+        "valid_from": "2026-08-29"
+      }
+    },
+    {
       "node_id": "fact:a-parse-that-shrinks-the-evidence-is-indistinguishable-from-honest-emptiness",
       "node_type": "TemporalFact",
       "properties": {
@@ -150859,7 +150962,7 @@
         "basis": "measured",
         "confidence": 0.9,
         "fact_type": "defect",
-        "statement": "art:main (crates/reflow2-mcp/src/main.rs) REALIZES cap:snapshot-read and cmp:main, and nothing else — so the file that carries the whole CLI surface is traced to one capability it barely touches and NOT to the ones it actually serves. Measured 2026-08-06 by reconcile_artifacts, which returned propagation_seeds ['cap:snapshot-read','cmp:main'] for a change that was entirely about cap:content-store's --content-path argument. CONSEQUENCE: the reconcile-driven path from a code change back to the intent that justified it — the loop link-artifacts step 6 exists to close, and which the skill calls 'the loop the original Reflow never closed' — lands on the wrong capability for any CLI change. The correct blast radius was only obtained because the agent hand-named cap:content-store in add_change_event from judgement; had it trusted the graph, ifc:mcp-tools would never have appeared as a boundary crossing and a tool-surface change would have shipped unnoticed. THE UNDERLYING SHAPE is that main.rs is one atomic artifact standing for many capabilities (content store, HTTP/shared serving, export, import, merge driver, latent mode), which is the pending_expansion case link-artifacts describes: a placeholder standing in for files that should each become their own node, where an atomic registration buys a false tick. Not yet decided whether the fix is more REALIZES edges from the one artifact or a finer artifact decomposition.\n\n═══ SECOND OCCURRENCE, 2026-08-29 — 23 DAYS LATER, SAME COST, SAME WORKAROUND ═══\n\nSurfaced by `unclaimed_findings` during a capture-session pass, as the ONE candidate returned for that session's three ChangeEvents (subjects_examined 13), reached via art:main. Examined and left OPEN: the session changed main.rs (an import now prints unresolvable node references) but changed nothing about what it REALIZES, so every word above is still true.\n\n⭐ WHAT MAKES IT WORTH RE-DATING RATHER THAN JUST NOT CLOSING: the session REPRODUCED the defect's cost without noticing at the time. All three of its ChangeEvents carried `affected` lists typed out from judgement — art:export, art:graph, art:main, art:schema-temporal, art:repair-notes-lifted-test, and later art:heal, art:service, art:tools-coherence — read off `reflow2_check.py`'s drift output rather than obtained from the graph. That is the identical workaround the 2026-08-06 entry describes, arrived at independently, by an agent that had not read this node.\n\n🛑 SO THE HAND-NAMING IS NOT AN ANOMALY OF ONE SESSION; IT IS THE STANDING PRACTICE THIS DEFECT FORCES. The drift report names the FILES that changed, and mapping those to intent stays a human judgement — which is exactly the loop step this defect breaks. Two occurrences, 23 days apart, both silent, both only visible because someone looked.\n\nThe fix remains undecided (more REALIZES edges vs. finer artifact decomposition). What the second occurrence adds is evidence about COST: the workaround is cheap and reliable enough that nobody is forced to fix the cause, which is why it has survived 23 days.",
+        "statement": "art:main (crates/reflow2-mcp/src/main.rs) REALIZES cap:snapshot-read and cmp:main, and nothing else — so the file that carries the whole CLI surface is traced to one capability it barely touches and NOT to the ones it actually serves. Measured 2026-08-06 by reconcile_artifacts, which returned propagation_seeds ['cap:snapshot-read','cmp:main'] for a change that was entirely about cap:content-store's --content-path argument. CONSEQUENCE: the reconcile-driven path from a code change back to the intent that justified it — the loop link-artifacts step 6 exists to close, and which the skill calls 'the loop the original Reflow never closed' — lands on the wrong capability for any CLI change. The correct blast radius was only obtained because the agent hand-named cap:content-store in add_change_event from judgement; had it trusted the graph, ifc:mcp-tools would never have appeared as a boundary crossing and a tool-surface change would have shipped unnoticed. THE UNDERLYING SHAPE is that main.rs is one atomic artifact standing for many capabilities (content store, HTTP/shared serving, export, import, merge driver, latent mode), which is the pending_expansion case link-artifacts describes: a placeholder standing in for files that should each become their own node, where an atomic registration buys a false tick. Not yet decided whether the fix is more REALIZES edges from the one artifact or a finer artifact decomposition.\n\n═══ SECOND OCCURRENCE, 2026-08-29 — 23 DAYS LATER, SAME COST, SAME WORKAROUND ═══\n\nSurfaced by `unclaimed_findings` during a capture-session pass, as the ONE candidate returned for that session's three ChangeEvents (subjects_examined 13), reached via art:main. Examined and left OPEN: the session changed main.rs (an import now prints unresolvable node references) but changed nothing about what it REALIZES, so every word above is still true.\n\n⭐ WHAT MAKES IT WORTH RE-DATING RATHER THAN JUST NOT CLOSING: the session REPRODUCED the defect's cost without noticing at the time. All three of its ChangeEvents carried `affected` lists typed out from judgement — art:export, art:graph, art:main, art:schema-temporal, art:repair-notes-lifted-test, and later art:heal, art:service, art:tools-coherence — read off `reflow2_check.py`'s drift output rather than obtained from the graph. That is the identical workaround the 2026-08-06 entry describes, arrived at independently, by an agent that had not read this node.\n\n🛑 SO THE HAND-NAMING IS NOT AN ANOMALY OF ONE SESSION; IT IS THE STANDING PRACTICE THIS DEFECT FORCES. The drift report names the FILES that changed, and mapping those to intent stays a human judgement — which is exactly the loop step this defect breaks. Two occurrences, 23 days apart, both silent, both only visible because someone looked.\n\nThe fix remains undecided (more REALIZES edges vs. finer artifact decomposition). What the second occurrence adds is evidence about COST: the workaround is cheap and reliable enough that nobody is forced to fix the cause, which is why it has survived 23 days.\n\n═══ THIRD OCCURRENCE, 2026-08-29 (v0.43.0 CUT) — THE DEFECT CAUSED A FRESH UNDER-REGISTRATION HOURS AFTER A SESSION FIXED ONE ═══\n\nSurfaced by `unclaimed_findings` again, the same single candidate via art:main, during the release cut. Left OPEN — every word above is still true — but this occurrence is a DIFFERENT and worse shape than the second, and it was made BY the session recording it.\n\nWHAT HAPPENED: v0.43.0's headline fix (`cap:a-client-elects-a-server-of-its-own-build`) is served by TWO files. `crates/reflow2-mcp/src/shared.rs` decides — `exe_fingerprint()`, `should_reelect()`, the SIGTERM-and-respawn path. `crates/reflow2-mcp/src/main.rs:1104` PUBLISHES the fingerprint into the rendezvous, and without that half no client can ever match a build: the capability is not partially served without it, it is not served at all. Only `art:shared` was registered as realizing it. Verified by reading both files, not inferred.\n\n⭐ THE PART THAT INDICTS THE SHAPE RATHER THAN THE AGENT: this same session had, an hour earlier, caught and repaired a MISSING REALIZES edge on this very capability (it had a passing check but no owning part and no file at all), was therefore actively thinking about exactly this class of omission, and STILL registered only one of the two files. Not from carelessness — from `art:main` being an atomic node whose name gives a session no reason to think of it as a participant in a shared-server capability. The registration a session reaches for is the file it edited MOST, and main.rs is nearly always the file it edited LEAST.\n\nSO THE SECOND OCCURRENCE'S LESSON UNDERSTATES THIS. That entry says the defect forces a hand-naming WORKAROUND that is cheap and reliable. This one shows the workaround is NOT reliable: hand-naming from judgement is exactly what produced the under-registration, because judgement reaches for the file that felt like the change. The cost is no longer only a wrong blast radius on CLI changes — it is that new golden-thread edges get written INCOMPLETE, so the defect now propagates into the very traceability it corrupts.\n\nWHAT WAS DONE ABOUT IT, AND WHAT WAS NOT: the missing `art:main REALIZES cap:a-client-elects-a-server-of-its-own-build` edge was drawn, because it records a true relationship and the release's headline capability should not ship with half a thread. 🛑 THAT EDGE DOES NOT REACH THE CAUSE and must not be read as a fix: it repairs ONE instance, by hand, using the same judgement that failed — which is the workaround, applied once more. The cause is `art:main`'s atomic granularity, the decision between more edges and finer decomposition is still open and still nobody's, and a fourth occurrence is the expected outcome of leaving it open.",
         "subject_id": "art:main",
         "value": "{\"artifact\":\"art:main\",\"location\":\"crates/reflow2-mcp/src/main.rs\",\"realizes_actual\":[\"cap:snapshot-read\",\"cmp:main\"],\"realizes_expected_at_least\":[\"cap:content-store\"],\"found_by\":\"reconcile_artifacts propagation_seeds, 2026-08-06\",\"granularity_declared\":\"atomic\",\"candidate_granularity\":\"pending_expansion\",\"why_it_mattered_today\":\"the correct radius (829 impacted, ifc:mcp-tools crossed) came from a hand-named seed, not from the graph\"}"
       }
@@ -151736,6 +151839,18 @@
       }
     },
     {
+      "node_id": "fact:manual-work-bc0cc1bd0bedb1f4",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "manual_work",
+        "statement": "Wrote a throwaway Python script against the committed export to answer \"which capabilities claim they are built but have no passing check?\" — walking capability status against VERIFIES edges to a passing check, because the loop reported the COUNT and named nothing. The count said 1; my derivation said 10. I could not reconcile the two, so I could not tell whether the tool and I were answering different questions or whether one of us was wrong, and I shipped the release leaving the item open on that basis. The report that holds the underlying detail was reachable but returned ~65,000 characters and overflowed the reply, so it could not be read in the session that needed it. THE COST IS THE UNRECONCILED NUMBER, not the script: a count with no reachable members cannot be checked, and an agent that cannot check it either trusts it or rebuilds it by hand — I did both and got two answers.",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-08-29",
+        "value": "{\"diagnosis\":\"tool_missing\",\"reflow2_tool\":\"loop_status\"}"
+      }
+    },
+    {
       "node_id": "fact:manual-work-c94ff005efcd95fa",
       "node_type": "TemporalFact",
       "properties": {
@@ -151888,6 +152003,18 @@
         "statement": "MEASURED 2026-08-13 by RUNNING reflow2 against flo2's committed export (`~/project/flo2/docs/design/flo2.json`, 106 nodes, graph_id `1a97fc1f1de4d5d2`, minted, stamp 0.27.0 against reflow2's 0.29.0). flo2 was NOT written to; the one designation experiment below was made on an in-memory copy.\n\n═══ 1. COMPUTED PAIRING FINDS NOTHING BETWEEN TWO PROJECTS BUILT TO WORK TOGETHER ═══\n\n`pair_designs`, both designs exactly as they stand:\n\n    paired 0 · conflicts 10 · unmet_needs 5 · dead_surface 2 · candidates 1\n    unclassified 2 ours / 1 theirs\n\nflo2's `ifc:reflow2-design-api` (\"reflow2 design tool surface\") lands in DEAD SURFACE. Cause: both sides declare their half of the same contract as `published` — reflow2 publishes `ifc:mcp-tools`, flo2 publishes `ifc:reflow2-design-api` — and published↔published never pairs, which is the complementary-role rule working as designed. flo2 models that boundary from its own inside (\"THE SEAM between the two halves of flo2\"), which is locally defensible and makes cross-design pairing impossible.\n\n═══ 2. 🛑🛑 FIXING THE ROLE DOES NOT FIX IT — THE NAME MATCHER RANKS THE WRONG ANSWER HIGHER ═══\n\nExperiment, in memory only: flip flo2's `ifc:reflow2-design-api` to `both`. STILL 0 PAIRED, and the three considerations it produces are:\n\n    81  ifc:graph-export  ↔ ifc:reflow2-design-api   WRONG, and ranked FIRST\n    64  ifc:mcp-tools     ↔ ifc:reflow2-design-api   RIGHT, stuck in the candidate band (60-85)\n    61  ifc:mcp-tools     ↔ ifc:model-provider-api   WRONG\n\n⇒ **THE ONLY TRUE SEAM THESE TWO PROJECTS HAVE IS OUT-RANKED BY AN INCORRECT MATCH**, because \"Design export document\" and \"reflow2 design tool surface\" share the word *design*. WHAT PREVENTED A FALSE PAIR WAS THE ATTRIBUTE KEY, NOT THE NAMES: `medium` disagreed (`data` vs `REST`). Had flo2 said `data`, reflow2 would have confidently paired the wrong two boundaries — the failure `dec:idea-defined-pair-types-so-two-projects-combine-by-lookup` already recorded from the dynograph-foundation trial. Most of the 10 conflicts are the same noise: reflow2's `req-dyno-*` (`medium: library`) matching flo2's REST APIs at 77-83 on *-api* overlap alone.\n\n⭐⭐ THIS IS THE EMPIRICAL CASE FOR OPTION C (`SPECIFIES`, where the content hash IS the agreement). It was argued theoretically on that node; here the name matcher is observed producing a wrong answer ABOVE the right one, on the only real seam available.\n\n═══ 3. ✅ THE ASSERTED PAIR ANSWERS THE ACTUAL GOAL, AND IT IS A DIFFERENT TOOL ═══\n\n`seam_report` with the pair supplied BY HAND — `ifc:mcp-tools` ↔ `ifc:reflow2-design-api`:\n\n    agreed 3 · incompatible 0 · differs 0 · UNSTATED BY NOBODY 5\n\n⇒ **THE TWO PROJECTS ARE COMPATIBLE AS FAR AS ANYTHING IS STATED, AND FIVE NAMED AXES STAND BETWEEN \"roughly interfaces\" AND \"fully specified\"**: `auth`, `transport_security`, `operations`, `error_model`, `payload_schema`.\n\n🛑 AND REFLOW2 IS THE SILENT SIDE ON THE TWO THAT MATTER. flo2 states `auth: none` and `transport_security: tls`; reflow2's own PUBLISHED `ifc:mcp-tools` states NEITHER. The report's own wording: *\"we assume `unstated`, they require `none` — the side that assumed less finds out in production\"*. reflow2 has not specified its own published boundary, and only a cross-project check surfaced it.\n\n📌 NOT EXAMINED, and it is named in the output rather than left implied: THE TYPES THAT CROSS the boundary (`con:pairing-stops-at-the-boundary`). Every axis above is a property OF a boundary; a struct travelling through one is invisible to the check.\n\n═══ 4. TWO OPERATIONAL NOTES ═══\n\n· `mirrors` on reflow2 returns **0**. The machinery for \"I designed against your published surface, pinned at this version\" is BUILT and has never been used on the one pair of projects that most obviously calls for it.\n· The by-name CLI degraded to `pair_designs: tool not found` because a `--serve-shared` daemon (pid 892293) held the store lock — `fact:the-degraded-surfaces-diagnosis-never-reaches-a-by-name-caller` again, third sighting. THE CURE THAT WORKED: spawn the client with `--shared` so it attaches through the daemon instead of taking the lock.",
         "subject_id": "proj:reflow2",
         "valid_from": "2026-08-13"
+      }
+    },
+    {
+      "node_id": "fact:reflow2-sends-a-structured-payload-for-tools-that-declare-no-output-contract",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.7,
+        "fact_type": "defect",
+        "statement": "MEASURED 2026-08-29 while root-causing Alex's `content`-only report. **reflow2 returns `structuredContent` on every JSON tool and declares `outputSchema` on NONE of them.**\n\n    grep -rniE 'output_schema|outputSchema' --include=*.rs crates/   ->  no matches\n    rmcp 3.1.2 src/model/tool.rs:30  pub output_schema: Option<Arc<JsonObject>>\n    rmcp 3.1.2 src/model/tool.rs:210 with_raw_output_schema(...)\n    rmcp 3.1.2 src/model/tool.rs:242 with_output_schema::<T>()\n\nSo the SDK offers the field with two builders, `input_schema` is populated for all ~165 tools, and `output_schema` is left `None` everywhere. MCP pairs `outputSchema` with `structuredContent`: the schema is what tells a client what the structured payload will look like and, on the client side, whether to expect one at all.\n\n⭐ WHY THIS IS A CANDIDATE CAUSE FOR THE FIELD REPORT. `dec:idea-how-does-a-content-only-client-get-an-answer` framed the outage as *the client does not read `structuredContent`* and listed five things to do about it, all remediation. None asked whether reflow2 gives a client grounds to read it. A client that surfaces the structured payload only for tools advertising an output contract would behave EXACTLY as Alex describes against this server, while negotiating the newest protocol revision — which is the combination the decision found hardest to explain.\n\n🛑 IT IS A CANDIDATE, NOT THE CAUSE, AND ONE MEASUREMENT ALREADY BOUNDS IT. Absence of `outputSchema` is NOT SUFFICIENT to cause the failure: `claude-code 2.1.241` reads this server's `structuredContent` without difficulty against the same undeclared surface, observed continuously through this session. So the claim can only ever be that the absence is NECESSARY for grok-shell specifically, not that it breaks clients in general. Anything stronger is unsupported.\n\n⭐ THE DISCRIMINATING EXPERIMENT, AND IT IS SMALL: declare `output_schema` on ONE tool, ship it, have Alex call that tool and one undeclared one in the same session.\n  • declared arrives, undeclared does not  ->  CAUSE CONFIRMED, and the repair is to declare output schemas rather than to choose among (b)–(e).\n  • neither arrives  ->  REFUTED; the client ignores `structuredContent` unconditionally and the decision's remaining options stand unchanged.\nEither result is worth the round-trip, and n=1 tool is enough because the two arms run against the same server in the same session.\n\n🛑 AND THE FINDING STANDS ON ITS OWN EVEN IF THE EXPERIMENT REFUTES IT, WHICH IS WHY IT IS RECORDED SEPARATELY FROM THE DECISION. reflow2's own doctrine says an undeclared contract can be neither honoured nor violated — `seam_report` exists to find exactly this, and the project treats an Interface with an empty spec as a defect shape. **The seam between reflow2 and every MCP client is declared on the input side for 165 tools and undeclared on the output side for all of them.** That asymmetry was never decided; it is what happens when `input_schema` is required by the SDK's constructor and `output_schema` is optional. Same class as the hand-maintained contract this project keeps finding: the field nobody was forced to fill.\n\n⚠️ NOT ESTABLISHED: what a full declaration would cost. Tool outputs here are `serde_json::Value` built by hand rather than typed structs, so `with_output_schema::<T>()` has no `T` to name for most tools and `with_raw_output_schema` would mean writing schemas by hand or deriving types first. Nobody has priced it, and the one-tool experiment deliberately does not require pricing it.",
+        "subject_id": "cap:mcp-surface",
+        "valid_from": "2026-08-29"
       }
     },
     {
@@ -152213,6 +152340,18 @@
       }
     },
     {
+      "node_id": "fact:the-duplicate-guard-cannot-tell-a-second-layer-from-a-second-copy",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.9,
+        "fact_type": "defect",
+        "statement": "REPORTED BY ALEX (who:alex) 2026-08-29 from `art:grok-shell-feedback-2026-08-29` — grok-shell-reflow2 1.0.13, reflow2 0.42.0, macOS. Two refusals, both cross-type:\n\n    add_requirement  -> refused, naming an existing ChangeEvent\n    add_decision     -> refused, naming an existing Capability\n\nBoth were resolved with `distinct_from` naming the other-typed node, after which the create succeeded. ⭐ HE IS EXPLICIT THAT THE REFUSAL TEXT IS GOOD: *\"clear and actionable.\"* This is not a complaint about the message, and the guard is not misfiring in the sense of matching unrelated text — the nodes it named really did say the same thing in the same words.\n\n🛑 THE DEFECT IS THAT THE GUARD CANNOT TELL A SECOND LAYER FROM A SECOND COPY, AND THE DESIGN'S OWN PRESCRIBED WORKFLOW PRODUCES THE FIRST. reflow2 instructs a session to record what shipped as a ChangeEvent AND what must stay true as a Requirement AND why it was chosen as a Decision. Those are deliberately different records of one idea, at different layers, and the served instructions ask for all of them. So an agent following the loop HONESTLY — change event first, then the durable intent — trips the guard every time, in his words: *\"`distinct_from` works; it is just the default path now.\"*\n\nWHAT IT COSTS: one refused round-trip per honest capture, and a standing invitation to skip the second record rather than argue with the tool. The second failure mode is the expensive one and it is INVISIBLE — a Requirement never written because the guard made it awkward leaves no trace anywhere, and `intent 73%` is already this design's weakest axis.\n\n⚠️ WHAT IS NOT ESTABLISHED, and it decides the repair:\n\n① **Cross-type matching is not simply wrong.** \"You already have a Capability that says this\" is a genuinely useful catch, and same-type-only matching would lose it. Nobody has counted how often a cross-type hit is a real duplicate versus the layered-capture case, and without that number a change here is a guess.\n\n② **The two directions may not be symmetric.** ChangeEvent -> Requirement is the prescribed loop and is ALWAYS legitimate. Capability -> Decision (his second case) is less clearly so — a Decision restating a Capability may be a real duplicate. Treating all cross-type pairs alike would over-correct on the strength of the first case.\n\n③ **The type pair is already known at the call site**, so a narrower answer than on/off exists and has not been costed: keep the refusal but change what it SAYS when the near-match is a different type — name the layer relationship (*\"this looks like the ChangeEvent for the same work; if this is the durable requirement behind it, pass distinct_from\"*) rather than presenting it as a duplicate. That would keep every real catch and remove the friction, and it is a message change rather than a behaviour change.\n\n📌 NOT A REGRESSION: the guard has behaved this way since `chg:search-first-fires-at-the-tool` (v0.28.0), which normalises the threshold against the new node's own in-query score and searches the design without restricting by type. This is the first report of the consequence — twelve days after the same reporter's first report, and from the only seat known to be running the loop end-to-end by hand.",
+        "subject_id": "cap:search-first-at-the-tool",
+        "valid_from": "2026-08-29"
+      }
+    },
+    {
       "node_id": "fact:the-eight-subsystems-are-groupings-not-black-boxes",
       "node_type": "TemporalFact",
       "properties": {
@@ -152486,6 +152625,18 @@
         "subject_id": "proj:reflow2",
         "valid_from": "2026-08-16",
         "value": "{\"measured\":\"2026-08-16, against the running build\",\"file\":\"/home/ajs7/project/music_graph/reflow2_feedback_NEWER_from_second_machine.txt\",\"file_header_version\":\"reflow2 0.20.0, 2026-08-01\",\"current_version\":\"0.32.1\",\"sections\":4,\"verified_fixed\":[\"F5 (PR #19 + #23, 2026-08-01) - reproduced live: names the shared interfaces, severity Warning not Critical\",\"F3 (detect.rs:1843, 2026-08-09) - required designation skipped\",\"F4 (heal.rs:872) - counts REALIZES/DOCUMENTS/SPECIFIES/PRODUCES/SATISFIES\"],\"handoff_error\":\"carried 'F1-F24 UNTRIAGED' for ~2 weeks and ranked F5 first on its (dangerous) tag\",\"still_open\":\"F10-F20 (F21, F22 closed 2026-08-16)\",\"unverified\":[\"F6\",\"F7\",\"F8\",\"F9\"],\"rule\":\"read the version line in a feedback file before ranking it; re-verify against the current build before believing any to-do list about it, including your own previous session's\"}"
+      }
+    },
+    {
+      "node_id": "fact:the-near-match-filter-has-no-node-type-term",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "THE MEASURED CAUSE of Alex's cross-type refusals. Read 2026-08-29 in `crates/reflow2-mcp/src/tools/capture.rs`:\n\n    const NEAR_MATCH_RATIO: f32 = 0.5;                          // line 65\n    let floor = self_score * NEAR_MATCH_RATIO;                   // line 186\n    let near: Vec<NearMatch> = result.hits.iter()\n        .filter(|h| h.node_id != node_id && h.score >= floor)    // line 190\n\n🛑 **THE FILTER HAS TWO TERMS AND NEITHER IS THE NODE TYPE: not-itself, and score-above-floor.** `node_type` IS carried into `NearMatch` — and printed in the refusal, which is why Alex could see he had been handed a ChangeEvent — but it is display only. Nothing in the selection reads it.\n\nSO THE CROSS-TYPE BEHAVIOUR IS NOT A TUNING PROBLEM AND LOWERING OR RAISING THE RATIO CANNOT ADDRESS IT. A ChangeEvent and the Requirement behind it describe one piece of work in one vocabulary; they SHOULD score alike, and any threshold that separated them would also stop catching genuine same-type duplicates written in different words — which is the guard's whole purpose.\n\n⭐ THE REPAIR IS AVAILABLE WHERE THE DEFECT IS, WHICH IS WHY THIS IS WORTH RECORDING PRECISELY: the type pair is already in hand at line 190, so the guard can act on it without any new lookup, plumbing or vocabulary. Two shapes, and they are not equivalent:\n  ① EXCLUDE the prescribed layer pairs from the filter (ChangeEvent -> Requirement/Decision). Removes the friction; also removes a real catch if the agent genuinely was duplicating.\n  ② KEEP the refusal and change what it SAYS when the types differ — name the layering rather than presenting it as a duplicate. Keeps every catch, costs one more round-trip, and is a message change rather than a behaviour change.\n② is the conservative one and matches how this guard was justified in the first place (`refuse_unless_deliberate` is documented as forcing a choice, not as preventing a write).\n\n📌 NOT A REGRESSION AND NOT A MISFIRE: the guard's own doc comment says it must never refuse on a WEAK resemblance and records the ratio as deliberately conservative. It is behaving exactly as specified. What was never specified is what a near-match of a DIFFERENT TYPE means — the code was written as though every hit were a candidate duplicate, and the design's own capture loop produces hits that are not.",
+        "subject_id": "cap:search-first-at-the-tool",
+        "valid_from": "2026-08-29"
       }
     },
     {
@@ -152808,6 +152959,7 @@
         "statement": "UPGRADING THE BINARY DOES NOT REPLACE THE PROCESS THAT SERVES IT, AND EVERY SIGNAL A USER WOULD CHECK LOOKS CURRENT. Reported by Alex (who:alex) on macOS arm64, 2026-08-29, with a clean repro and the authoritative objects read rather than inferred.\n\nMEASURED BY HIM AT THE TIME OF THE CHECK:\n\n    disk binary   ~/.local/bin/reflow2-mcp --version   ->  0.42.0   (mtime 15:20)\n    live daemon   pid 66293, started 14:58 (BEFORE that mtime), --serve-shared\n    .reflow2/graph.server.json                          ->  \"version\": \"0.39.0\"\n    HTTP initialize on the rendezvous URL               ->  serverInfo.version 0.39.0\n    this session's stdio wrapper                        ->  0.42.0, attached to the 0.39.0 daemon\n\nTHREE VERSIONS IN PLAY AT ONCE, and the server log records the attach-probe handshake as 0.42.0 against a process still serving 0.39.0.\n\nREPRO, needing no design content: start a shared server; upgrade the binary in place without stopping it; open a new client session. It attaches to the existing rendezvous and keeps answering as the pre-upgrade version.\n\n🛑 WHY IT MATTERS MORE THAN A STALE PROCESS USUALLY WOULD, in his words: *\"`reflow2-mcp --version` and a new session both look current while every tool call still hits the old surface. The install appeared to succeed.\"* The mismatch IS discoverable — `graph.server.json`, `served_by.stale`, HTTP `initialize` — but **nothing in the upgrade path surfaces it, and the obvious recovery (restart the session) is the one the docs say does not work**, because `--shared` re-attaches to the same daemon.\n\n⭐ SECOND ENVIRONMENT, SAME DAY, INDEPENDENTLY: the same skew bit this development session SIX TIMES on Linux, from the other direction — `cargo build` replacing the binary under a running daemon rather than an installer doing it. So it is not a macOS quirk and not an installer quirk; it is that NOTHING connects replacing the executable to restarting what serves it. Worst after a `schema/*.yaml` or skill edit, because both are compiled in, so a stale server serves the OLD `describe_schema` and the OLD skill text while every version string reads current.\n\nHIS SUGGESTED FIX, and it is the right shape: *\"The install script could restart the shared process after replacing the binary, so the new version is what actually serves.\"* Read 2026-08-29: `tools/install.sh` has ZERO awareness of a running daemon — no `serve-shared`, `stop-shared`, `kill` or rendezvous handling anywhere in its 179 lines. It replaces the binary at line 119 and never touches the process.\n\n🛑 AND IT GATES THE NEXT RELEASE. Cutting v0.43.0 means every user who upgrades meets this again — including Alex, and including the coworkers he is about to show it to, whose first experience would be a server that serves the previous version while reporting the new one.\n\n🛑 NOT ESTABLISHED: whether SIGTERM to every `--serve-shared` process is safe on a machine where several graphs are served at once. The `--stop-shared` path already prefers SIGTERM precisely so the server removes its own rendezvous on the way out, and a client that finds no rendezvous spawns a fresh one — so the shape is known to work for ONE graph. Nothing has tested it for several at once, and an installer acts machine-wide.\n\n📌 ALSO NOT USED, and he says so himself: `.reflow2/kit-version.json` still read 0.11.0 — the setup-time kit stamp, not the running server. It is not the authority for this question and he did not treat it as one.",
         "subject_id": "cap:kit",
         "valid_from": "2026-08-29",
+        "valid_to": "2026-08-29",
         "value": "{\"reporter\":\"who:alex\",\"platform\":\"macOS darwin arm64\",\"date\":\"2026-08-29\",\"measured\":{\"disk_binary\":\"0.42.0\",\"disk_mtime\":\"15:20\",\"live_daemon_pid\":66293,\"daemon_started\":\"14:58\",\"graph_server_json_version\":\"0.39.0\",\"http_initialize_serverInfo\":\"0.39.0\",\"stdio_wrapper\":\"0.42.0\"},\"repro\":[\"start a shared server\",\"upgrade the binary in place without stopping it\",\"open a new client session - it re-attaches and answers as the old version\"],\"why_it_matters\":\"every signal a user would check looks current; the obvious recovery (restart the session) is the one that does not work\",\"corroboration\":\"same skew hit this dev session six times on Linux the same day, via cargo build rather than an installer - not a macOS or installer quirk\",\"suggested_fix\":\"install.sh restarts the shared process after replacing the binary\",\"install_sh_today\":\"179 lines, zero awareness of a running daemon; replaces the binary at line 119\",\"gates\":\"the v0.43.0 cut - every upgrading user meets this again\",\"not_established\":\"whether SIGTERM to every --serve-shared process is safe when several graphs are served at once; the known-good shape is one graph\"}"
       }
     },
@@ -155851,7 +156003,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:8bcb93f7db30c49de79bd9f13eb0f5abc085c77c18a4d6d8691987b91c4e410b",
+  "prev_content_hash": "sha256:da249028182fa4c3d32e6f917759b3f3904f4ca760d8b7b17c05fc31c26061f1",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
