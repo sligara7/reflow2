@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:3db1adbe1a1c75abbc513dd12a057f5bf026e9d05a5ecd7c6a3b78f048d5631e",
+  "content_hash": "sha256:5c81188cda6abdc4d067bee4606562e28e9d589b79daa832e3f73882ea5769a5",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -33893,6 +33893,33 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-linking-discipline-becomes-visible",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:relate"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-linking-discipline-becomes-visible",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-linking-discipline-becomes-visible",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-loop-can-be-asked-what-the-record-does-not-hold",
       "properties": {
         "accepted_baseline": true,
@@ -34223,6 +34250,24 @@
         "action": "modified"
       },
       "to_id": "art:readme"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-relatedness-judgement-rides-the-refusal",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-relatedness-judgement-rides-the-refusal",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
     },
     {
       "edge_type": "CHANGED",
@@ -123332,7 +123377,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:11f593d4a6a01ff23b707d1a580a1e23cc0dc7ee811e6ab58ed9c39caa27e9d9",
+        "checksum": "sha256:8e0f99f550f050dc7b1f23c6ee9b8d7f3c58a51080aaf8873c338c5510b22ea5",
         "location": "crates/reflow2-core/src/relate.rs",
         "name": "relate.rs",
         "status": "realized"
@@ -123789,7 +123834,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:80d2b6f376df57461a614604d3c125df6fd831ebcf0832d918ed10f16c49ae11",
+        "checksum": "sha256:f108e6ac27b58731710264c67aa4e0baded4a1d941f7457786be823171f98d43",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -123876,7 +123921,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:bbdda5701cadd718373258790f8067b93ea8325372b080d55bf511ddc214d6ca",
+        "checksum": "sha256:f08eba2687cf49255de6e9230b71e3f21ca76c6a3e775ab990c9e18aa007ae40",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -124469,7 +124514,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:cc1e1fb870ee734a8ac3c99c728aaf617d17c2e68459077f6b5940a66c18fabc",
+        "checksum": "sha256:1fd0d30b45cfc0c07ef899ea9a9f7cb8a4599c265d558e856408a058fa10fb6d",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
         "name": "crates/reflow2-mcp/src/tools/capture.rs",
@@ -133694,6 +133739,18 @@
       }
     },
     {
+      "node_id": "chg:the-linking-discipline-becomes-visible",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-08-30",
+        "name": "Whether the linking discipline is followed becomes answerable — as a report, not a gap",
+        "rationale": "C, from `dec:idea-governance-rides-the-tool-that-does-the-thing`, and it was DELIBERATELY BUILT AS A REPORT RATHER THAN THE DETECTOR ORIGINALLY PROPOSED.\n\n⭐ WHY THE DETECTOR WOULD HAVE BEEN WRONG, found before building it. `unreviewed_ideas` fires on any `proposed` Decision with no note, no registered fork, not parked, no review relation — and it does NOT read `kind`. Re-opening it would have pressed the owner about three populations that should not be pressed: the 207 legacy ideas carrying no `kind` (exactly what `decision:ack:baa3d7b03a08dedb` covered on 2026-08-23), the 32 non-idea `proposed` Decisions, and exploratory ideas with NO near-matches — the no-ceremony case A′ deliberately exempts. Meanwhile the one population it was meant for, new exploratory ideas that had near-matches, A′ now guarantees is reviewed, so it could not fire there at all. Loud in three places that do not want it, silent in the one that did.\n\nSO THE GAP WAS NEVER AN UNFIXED DEFECT. It was a MEASUREMENT NOBODY COULD TAKE. `find_tools` over all 164 served tools returned `relation_candidates` and `review_relations` — which OFFER and RECORD relations; nothing reported whether the discipline was being followed. Recorded the same day as a `tool_missing` on `fact:manual-work-58c4cdd382e1ad4c`.\n\n✅ THE OWNER'S 2026-08-23 JUDGEMENT STANDS UNTOUCHED. It said an unlinked idea is not a DEFECT the loop should press about, and that is still right. This raises no gap and moves no detector; it removes the inability to SEE.\n\n⚠️ IT READS EMPTY ON THIS DESIGN TODAY, and that is the honest cost of not backfilling: 571 Decisions, NONE carrying `kind`, so the report says `ideas: 0` and `kind_unstated: 571`. Everything built today for idea linking helps going FORWARD, not retroactively. Whether that is acceptable, or whether backfill is worth revisiting, is unsettled and is the owner's call.",
+        "subject": "system",
+        "summary": "`linking_report` — core computation plus a served tool, taking the tool count from 164 to 165. Splits Decisions carrying `kind: exploratory` into LINKED (has a relation), NOTED (carries `no_relation_note` — somebody looked and recorded that nothing was related), and SILENT (neither), naming the silent ones rather than only counting them. Decisions with no `kind` are counted apart in `kind_unstated` and excluded from every ratio. Carries `not_observed_about` with three limits, the sharpest being that nothing records WHICH tool drew an edge, so `linked` counts ideas that HAVE a relation and never ideas somebody reviewed. Four core tests. Core 136 suites / 1552 passed; MCP 37 / 312; toolsnaps regenerated."
+      }
+    },
+    {
       "node_id": "chg:the-loop-can-be-asked-what-the-record-does-not-hold",
       "node_type": "ChangeEvent",
       "properties": {
@@ -133870,6 +133927,18 @@
         "rationale": "THE ORDERING WAS THE DEFECT `req:explains-itself` NAMED: \"the doctrine that makes reflow2 worth using is not the entry point to it\". The file ran Vision → What this is → the hallucination question → vocabulary → Layout before ever saying it is a binary you run locally. Nothing was deleted to fix that — the philosophy is intact and still good, it just no longer comes first.\n\n⭐ THE SECTION MIRRORS THE `help` SKILL ON PURPOSE, AND THE DUPLICATION IS THE POINT. The two reach different people through different doors: the skill answers someone who has an agent and asks it; the README answers a stranger who lands on the repository and has neither. `cap:a-newcomer-can-ask-the-agent-what-this-is` was recorded as satisfying the requirement only PARTIALLY for exactly this reason, and this closes the other half. If the two ever disagree, the README is the one a stranger meets first.\n\nWHY THE STALE NUMBERS ARE A FINDING AND NOT A CHORE: every one drifted silently, and the README is the ONE document with no check behind it. `skill_lint` guards the skills, `reflow2_check` guards the design against the build, `check_intent_authority` guards settled intent — and the file a stranger reads first had 114 tools written in it while 165 were served. Nothing anywhere would have said so. That is the same shape as this afternoon's finding one more level out, and it is recorded rather than merely fixed.\n\n📌 WHAT WAS DELIBERATELY NOT DONE: no check was added for the README's numbers. A lint that parses prose for counts would be brittle and would fire on correct rewording, and the honest alternative — stop putting exact counts in prose — is a bigger judgement than this change should make unilaterally. The numbers are correct today and will drift again; that is stated here rather than pretended away.",
         "subject": "record",
         "summary": "BL-102, and the last half of `req:explains-itself`. A new first section — \"What it actually is, concretely\" — sits before Vision and carries: the physical shape in four sentences (a program on your machine, a design as a file in your own repo, your agent talking to it over MCP, nothing leaves), a mermaid diagram of exactly that, the one-line install with \"there is nothing to put in your project\", the three first moves as a table, and what it can answer that nothing else can. The banner at the top now points INTO that section instead of away from the file.\n\n🛑 AND SEVEN FACTUAL CLAIMS WERE STALE, EVERY ONE MEASURED RATHER THAN GUESSED. Tools 114 → 165. Skills 15 → 25. Core modules 40 → 59. Edge types 60 → 64. The vocabulary section said \"28 types across 10 schema domains\" while the Layout section said \"29 node / 60 edge types\" across 11 — the file contradicted itself, and neither figure was right. `install.sh` was listed under `getting-started/` and lives in `tools/`.\n\n⚠️ THE SEVENTH IS NOT A NUMBER AND IT MATTERED MOST: \"**The store** is dynograph-foundation, a schema-driven Rust graph engine\" — in the first screen a stranger reads. That has been FALSE SINCE 2026-08-24, when the subset reflow2 actually called was absorbed into `reflow2-core/src/` and the dependency ended (`dec:absorb-the-foundation-subset-and-end-the-dependency`). The manifest says so in capitals — \"NOTHING IS PULLED FROM THAT REPOSITORY ANY MORE\" — and the README went on telling every new reader the architecture depended on an external library. Now corrected, with the absorption and its date stated rather than the history quietly erased."
+      }
+    },
+    {
+      "node_id": "chg:the-relatedness-judgement-rides-the-refusal",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-08-30",
+        "name": "The near-match refusal asks about relatedness, not only duplication",
+        "rationale": "A′, from `dec:idea-governance-rides-the-tool-that-does-the-thing`, built on `Decision.kind` (#393).\n\nTHE INSIGHT IT RESTS ON: the refusal ALREADY FIRES and already makes the caller read the near-matches — for DUPLICATION. It then throws that reading away for RELATEDNESS. They are already looking at the list; they were only ever asked half a question about it. So no new interruption is added; an existing one asks one more thing.\n\nMEASURED 2026-08-30: 140 of 207 ideas carry a relation and `no_relation_note` had been used TWICE, so for the 67 unlinked ideas \"nobody looked\" and \"looked and found nothing\" are indistinguishable — the distinction the field exists to preserve.\n\n⚠️ SCOPED TO `exploratory`, AND ONLY WHEN NEAR-MATCHES EXIST. Unscoped it would land on the Requirement/Capability/ChangeEvent capture path Alex's 2026-08-30 report names as his existing friction, and an idea nothing resembles is asked nothing at all. That scoping is why `Decision.kind` had to exist first.\n\n🛑 IT COMPELS A RECORDED JUDGEMENT, NEVER AN EDGE. The refusal names the fabrication hazard where the pressure to fabricate is — a false neighbour is worse than a missing one, because anything searching by neighbourhood repeats it forever — and states that the note is a full answer rather than the weaker one.\n\n⚠️ IT ONLY REACHES NEW IDEAS. The 207 already in the graph carry no `kind`, deliberately (backfilling would launder the id prefix being retired into a property), so A′ is silent on them.",
+        "subject": "system",
+        "summary": "`add_decision` gains `related_to` (reusing `RelationLinkReq`, the shape `review_relations` already takes) and `no_relation_note`. When the Decision is `kind: exploratory` AND the duplicate guard surfaced near-matches, the caller must answer the RELATEDNESS question as well as the sameness one — either drawing the relations they judged real, each with its evidence, or recording what they looked at and why none was honestly related. Both land in the SAME call via core's `review_relations`, so the judgement cannot be lost between two. Five tests. A test caught a real defect in the first cut: the reply was built BEFORE the note was written, so a caller following \"read the result back\" would have been told the judgement was not recorded when it was — the same unreadable-success shape a consumer's field report is about. Fixed by re-reading after the review."
       }
     },
     {
@@ -159797,7 +159866,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:5cafe665956de9e0cf88bbcca14369ed42297ca8b33930604b8a692545899ded",
+  "prev_content_hash": "sha256:3db1adbe1a1c75abbc513dd12a057f5bf026e9d05a5ecd7c6a3b78f048d5631e",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
