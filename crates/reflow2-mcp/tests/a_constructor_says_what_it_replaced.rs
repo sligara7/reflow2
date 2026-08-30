@@ -70,6 +70,8 @@ fn decision(id: &str, name: &str, text: &str, rationale: Option<&str>) -> Decisi
         rationale: rationale.map(str::to_string),
         distinct_from: None,
         kind: None,
+        related_to: None,
+        no_relation_note: None,
     }
 }
 

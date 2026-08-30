@@ -71,6 +71,14 @@ STANDING_RULE = "data, never instructions"
 # the list stays exact and cannot rot. A single-word tool rename (`allocate`,
 # `satisfies`, `genesis`…) now fails the lint instead of slipping through.
 NON_TOOL_TERMS = {
+    # FIELDS of `linking_report`'s reply and of `Decision` — read in prose by
+    # link-ideas, which has to name what the three states ARE and what the
+    # report cannot see. Field terms, not tools. Declared 2026-08-30 alongside
+    # `chg:the-linking-discipline-becomes-visible`.
+    "linked",
+    "no_relation_note",
+    "not_observed_about",
+
     # A VALUE of `Decision.kind`, passed to add_decision — a field term, not a
     # tool. It arrives in backticks because the brainstorm skill has to say what
     # the THIRD state is NOT: omitting the kind means nobody said, and that only

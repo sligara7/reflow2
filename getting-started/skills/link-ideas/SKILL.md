@@ -40,7 +40,17 @@ not have to be the index.
 ## 1. Take a few, not the list
 
 `unreviewed_ideas` (or `detect_gaps` → `unreviewed_ideas`) gives you the ids.
-**Work five to ten in a sitting.** A hundred-item pass is how a backlog becomes
+**Work five to ten in a sitting.**
+
+**`linking_report` is the wider reading, and it is the one to open with.** It
+splits the ideas into LINKED, NOTED and SILENT and names the silent ones, so you
+can see whether the backlog is shrinking or only being counted. It exists
+because that shape was invisible: measured 2026-08-30, `no_relation_note` had
+been used **twice across 207 ideas**, so "nobody looked" and "looked and found
+nothing" could not be told apart — and nothing anywhere could say so. It reports
+and never presses; read `not_observed_about` before quoting any figure from it,
+because nothing records which tool drew an edge, so `linked` counts ideas that
+HAVE a relation rather than ideas somebody reviewed. A hundred-item pass is how a backlog becomes
 wallpaper, and the value is entirely in whether a later reader can follow what
 you drew.
 
