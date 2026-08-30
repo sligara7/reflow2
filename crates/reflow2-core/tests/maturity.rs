@@ -20,6 +20,7 @@
 //! forbids reflow2 supplying the bar, and needing none at all is stronger than
 //! stating one.
 
+use reflow2_core::nodes::{Props, edge, node};
 use reflow2_core::{DesignGraph, MaturityProfile};
 
 fn graph() -> DesignGraph {
@@ -297,4 +298,81 @@ fn the_profile_is_deterministic() {
     let a = serde_json::to_string(&report(&g)).expect("serialize");
     let b = serde_json::to_string(&report(&g)).expect("serialize");
     assert_eq!(a, b);
+}
+
+/// A band's number must carry what it was computed over.
+///
+/// `dec:idea-a-derived-number-carries-what-it-was-computed-over-wherever-it-is-quoted`,
+/// accepted 2026-08-30. `seam_coverage` emits a scope_note saying a design
+/// that declares contracts at a HIGHER boundary than it records dependencies
+/// reads as having none at module level. The seams band asks the SAME question
+/// and repeated the ratio without the warning, so an agent reading the
+/// trajectory had nothing to be suspicious of — and reported 18% as a finding.
+#[test]
+fn a_band_that_can_read_low_for_a_correct_design_says_so() {
+    let g = DesignGraph::open_in_memory().unwrap();
+    let m = g.maturity_report().unwrap();
+
+    let seams = m.bands.iter().find(|b| b.name == "seams").unwrap();
+    let caveat = seams
+        .caveat
+        .expect("the seams band must carry the caveat its source tool considers essential");
+    assert!(
+        caveat.contains("MODULE level"),
+        "the caveat must name the altitude the band answers at: {caveat}"
+    );
+    assert!(
+        caveat.contains("altitude"),
+        "and must point at the call that asks the other question: {caveat}"
+    );
+
+    // Every band that can read low for a correct design carries one; the ones
+    // that measure exactly what they claim do not. A caveat on every band would
+    // be noise, and noise is how a real warning stops being read.
+    for name in ["seams", "realization", "assurance", "operation"] {
+        let b = m.bands.iter().find(|b| b.name == name).unwrap();
+        assert!(b.caveat.is_some(), "{name} must carry a caveat");
+    }
+    for name in ["intent", "function", "allocation"] {
+        let b = m.bands.iter().find(|b| b.name == name).unwrap();
+        assert!(
+            b.caveat.is_none(),
+            "{name} measures what it claims and must NOT carry a caveat"
+        );
+    }
+}
+
+/// A caveat that only exists in the struct has not solved the problem: the
+/// failure was a REPORT quoting a number and stripping the warning.
+#[test]
+fn the_rendered_report_carries_the_caveat_next_to_the_number() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:p", "A program").unwrap();
+    g.add_component("cmp:a", "a", "a part", Some("component"))
+        .unwrap();
+    g.add_component("cmp:b", "b", "a part", Some("component"))
+        .unwrap();
+    g.create_edge(
+        edge::DEPENDS_ON,
+        node::COMPONENT,
+        "cmp:a",
+        node::COMPONENT,
+        "cmp:b",
+        Props::new(),
+    )
+    .unwrap();
+
+    let md = g.graph_report().unwrap().to_markdown();
+    assert!(
+        md.contains("Trajectory"),
+        "the trajectory section must render at all"
+    );
+    assert!(
+        md.contains("reads low when:"),
+        "the caveat must appear in the rendered report, not only in the struct:\n{md}"
+    );
+    assert!(
+        md.contains("MODULE level"),
+        "and it must be the seams caveat specifically:\n{md}"
+    );
 }

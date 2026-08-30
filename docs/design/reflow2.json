@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:1b422797646b07bc3b0a4fecd4c9fc1dc9f6bf4a2ce6e3e4891d614edbf534d9",
+  "content_hash": "sha256:1919b3e1ff2a4562a1d4a69aeffba5cd89664f26c7bb5ac27dfba289488f1ead",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -11947,6 +11947,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-governance-rides-the-tool-that-does-the-thing",
+      "properties": {
+        "acted_at": "2026-08-30T00:00:00Z",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-have-the-three-legs-been-applied-uniformly-and-are-three-legs-enough",
       "properties": {
         "acted_at": "2026-08-26",
@@ -16581,6 +16590,16 @@
       "from_id": "fact:a-skill-is-loaded-only-when-something-already-in-hand-demands-it",
       "properties": {
         "basis": "correlational",
+        "evidence": "That fact is the measured root cause this idea answers: 'No reflow2 tool makes any reflow2 skill a precondition of itself', with one counter-example where a NON-reflow2 tool (Artifact) demanded a skill and the skill was duly loaded. Building governance into the tool is the shape that measurement points at, so the finding produced the idea rather than merely resembling it.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "dec:idea-governance-rides-the-tool-that-does-the-thing"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:a-skill-is-loaded-only-when-something-already-in-hand-demands-it",
+      "properties": {
+        "basis": "correlational",
         "evidence": "THE CLASS TEST (step ⑥): does the cause explain the EARLIER occurrence, not just today's? Yes, and from a different fleet and model. That agent used search_design, get_node, create_node, loop_status and get_skill constantly — everything already in its hand — and used detect_gaps, gap_to_prompt, impact-check, detect_defects, reconcile_artifacts, coverage_report and evidence_report exactly zero times. Nothing it was already calling required any of them. Its own reason (3) states the same mechanism independently: 'skills are PULL, and the thing that would tell you to load one is itself a lookup you must remember to make.' Its measured discriminator — three blocking gates each produced an immediate fix, zero passive hints did — is the same shape and was reproduced a third time today.",
         "validation_status": "unvalidated"
       },
@@ -17165,6 +17184,33 @@
         "action": "added"
       },
       "to_id": "req:structure-with-no-function-is-asked-about"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-band-carries-what-it-was-computed-over",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:maturity"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-band-carries-what-it-was-computed-over",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:report"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-band-carries-what-it-was-computed-over",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:a-derived-number-carries-what-it-was-computed-over"
     },
     {
       "edge_type": "CHANGED",
@@ -37438,6 +37484,15 @@
     },
     {
       "edge_type": "CONTRADICTS",
+      "from_id": "fact:a-skill-is-loaded-only-when-something-already-in-hand-demands-it",
+      "properties": {
+        "alignment": "opposing",
+        "evidence": "alignment=supporting: this is CORROBORATION, not conflict. That requirement argued from reasoning that a catalogue read once cannot serve a discipline applying mid-flow; this root-cause pass measured it three weeks later and found the mechanism — a skill loads only when something already in hand demands it, and no reflow2 tool demands one. The requirement predicted the shape and the fact confirmed it, and until now nothing connected them."
+      },
+      "to_id": "req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue"
+    },
+    {
+      "edge_type": "CONTRADICTS",
       "from_id": "fact:adopt-recovers-depth-cleanly-and-cannot-recover-the-functional-carving",
       "properties": {
         "alignment": "supporting",
@@ -37554,6 +37609,33 @@
         "evidence": "That measurement implied the fix was more enforcement, reading the 23/23-versus-5-18 spread as an argument for checking more mechanics. This one shows the spread is not an enforcement shortfall but a SCOPE limit: every existing check asserts a universal predicate and none can express a per-class obligation, so adding exhaustive checks cannot close the gap it identified. The counts stand; the implied remedy does not."
       },
       "to_id": "fact:skill-mechanics-track-enforcement-exactly-and-they-split-into-three-kinds"
+    },
+    {
+      "edge_type": "CONTRADICTS",
+      "from_id": "fact:the-linking-discipline-reproduced-its-own-finding-2026-08-30",
+      "properties": {
+        "alignment": "opposing",
+        "evidence": "alignment=supporting. That capability's own rationale is the same mechanism measured for the sibling discipline one step earlier in the workflow: 'search before you add' sat in five skills, fired only when somebody loaded one, and was moved into the write tool as a two-sided refusal. This fact is the case for giving link-after-capture the same treatment, and the capability is the evidence that the treatment works."
+      },
+      "to_id": "cap:search-first-at-the-tool"
+    },
+    {
+      "edge_type": "CONTRADICTS",
+      "from_id": "fact:the-linking-discipline-reproduced-its-own-finding-2026-08-30",
+      "properties": {
+        "alignment": "opposing",
+        "evidence": "alignment=supporting — corroboration, not conflict. That decision measured on 2026-08-21 that idea edges appear only when Anthony asks in as many words. This is an independent reproduction nine days later, in a session that had the skill loaded and the candidates in hand, which rules out the three comfortable explanations (ignorance, unavailability, no candidates)."
+      },
+      "to_id": "dec:idea-do-ideas-form-a-graph-or-only-a-list"
+    },
+    {
+      "edge_type": "CONTRADICTS",
+      "from_id": "fact:the-linking-discipline-reproduced-its-own-finding-2026-08-30",
+      "properties": {
+        "alignment": "opposing",
+        "evidence": "alignment=supporting. That idea proposes obligations riding the tool that performs the act. This is a measurement from the very session that recorded it, showing the discipline failing in the way the idea predicts — the agent held the rule, held the candidates, and still needed the user to be the trigger."
+      },
+      "to_id": "dec:idea-governance-rides-the-tool-that-does-the-thing"
     },
     {
       "edge_type": "CONTRADICTS",
@@ -38694,6 +38776,26 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-governance-rides-the-tool-that-does-the-thing",
+      "properties": {
+        "evidence": "Same conversation, 2026-08-30, and the two answers interact: if the governance layer's six unused vocabulary items are removed rather than made real, then delivering obligations at the tool becomes the WHOLE mechanism rather than one half of it. Deciding how governance is delivered before deciding what governance vocabulary survives would be the wrong order.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-the-governance-layer-is-declared-and-mostly-unused"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-governance-rides-the-tool-that-does-the-thing",
+      "properties": {
+        "evidence": "That requirement holds the general principle and the proven carrier (loop_hint / with_loop_hint). Today's idea is the compositional and user-supplied extension of it, so it is only worth building once that one is settled — which it is not: it has sat at `proposed` since 2026-08-19 and is Anthony's own words.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "req:the-reminder-rides-the-response"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "dec:idea-how-does-the-graph-learn-what-a-session-invalidated",
       "properties": {
         "evidence": "Options C, D and E are all instances of this proposed-and-unbuilt requirement: a discipline that applies mid-task belongs at the TOOL that triggers it, not in a catalogue read once. If it is never accepted, only options A (a detector), B (a skill edit) and F (nothing) remain reachable — so what this question can be answered WITH depends on that one landing first.",
@@ -38741,6 +38843,16 @@
         "weight_basis": "estimated"
       },
       "to_id": "cap:interface-spec"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-search-first-fires-without-being-remembered",
+      "properties": {
+        "evidence": "That node asks how ONE discipline (search-before-you-add) fires without being remembered, and records that it is written into five skills and still needs somebody to load one. It is the specific case; this is the general mechanism. A typed obligation riding the tool response would answer it, so it depends on this landing rather than the other way round.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-governance-rides-the-tool-that-does-the-thing"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -46147,6 +46259,14 @@
       "from_id": "dec:idea-gap-flows-to-the-dependency",
       "properties": {},
       "to_id": "req:design-composes"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "dec:idea-governance-rides-the-tool-that-does-the-thing",
+      "properties": {
+        "note": "That accepted requirement establishes WHAT must be true — a discipline that applies mid-flow cannot be served by a catalogue read once. This idea is a candidate mechanism for delivering it, keyed on the node/edge type acted on. Linked GOVERNED_BY rather than DEPENDS_ON to match how dec:idea-search-first-fires-without-being-remembered is already wired to the same requirement, so the three sit in one neighbourhood a traversal can walk."
+      },
+      "to_id": "req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -122698,7 +122818,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:fb1175739e62e26abfcd25817baa60a5dbfbe02b187e0ba612ba97768c09bf0c",
+        "checksum": "sha256:6466478fa63bbc6982687e7c1d82680a0ec83df3593a99244fb68ee37741cf81",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/maturity.rs",
         "name": "maturity.rs",
@@ -123137,7 +123257,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:3d70c496485b388f908ff5768e3ae4a8d7a8ef85aee088e6b023603cac2554f2",
+        "checksum": "sha256:f9bcf38a59b25371b561aef5adb79bda9a3edfe16d54956a8e811ffd727226c6",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/report.rs",
         "name": "report.rs",
@@ -124744,7 +124864,7 @@
         "description": "A ratio reported by one tool must carry the caveat its SOURCE tool considers essential, so a warning cannot be stripped by the tool that repeats the number.\n\nDISTINCT FROM dec:idea-a-derived-number-carries-what-it-was-computed-over-wherever-it-is-quoted, which is the OPEN QUESTION and the four options weighed. Anthony chose (a) with (d) as a follow-on, 2026-08-30. This is what gets BUILT; that is why.\n\nTHE INSTANCE THAT PROMPTED IT, measured 2026-08-30. `seam_coverage` emits a scope_note saying a design that declares contracts at a HIGHER boundary than it records dependencies will read as uncovered at module level, and to pass `altitude`. `maturity_report`'s seams band asks the SAME question at module level with none of that warning, and `graph_report_markdown` prints `seams 18% (13/72)` barer still. The band's `not_observed_about` list is four items long and does not include the one caveat its sibling considers necessary.\n\n⭐ WHY IT IS NOT AN AGENT-BEHAVIOUR PROBLEM. An agent reading the trajectory band has nothing to be suspicious of. Anthony named the pattern — an agent announces a number and only afterwards says what it actually measured — and asked for the ordering reversed. The reversal is not achievable by instruction alone, because the caveat is not in the number's hand at the moment it is quoted.\n\nTHE BANDS WHERE A CORRECT DESIGN READS LOW: SEAMS (answered at module level; a design declaring contracts one level up reads near zero); REALIZATION (a file nobody registered as an Artifact is invisible, so a user who has built everything and never run link-artifacts reads 0%); ASSURANCE (a capability checked only at component granularity is not counted); OPERATION (a design that never modelled an Environment reads as undeployed).\n\n⚠️ ONLY THE SEAMS CAVEAT IS MEASURED. The other three are reasoned from the band definitions and are NOT verified against a real design exhibiting them. Recorded so a later session does not inherit four confirmed findings where there is one.\n\nTHE SECOND LEG (Anthony's (d), a follow-on rather than a substitute): where-am-i re-derives a band from its source tool before naming it the FRONTIER, because the frontier is the one band that drives what the user does next. An instruction with no detector behind it is the weakest leg, which is why it rides behind the tool-side fix.\n\nWHAT IT MUST NOT DO: change the numbers. Moving a band's value would break comparison against every earlier reading. The caveat is added; the ratio stays.",
         "name": "A derived number carries what it was computed over, wherever it is quoted",
         "provenance": "authored",
-        "status": "planned"
+        "status": "realized"
       }
     },
     {
@@ -127349,6 +127469,18 @@
         "rationale": "⚠️ THESE 117 EDGES DELIBERATELY CARRY NO `acted_at`, AND A LATER SESSION MUST NOT READ THAT AS AN OVERSIGHT. Stamping them 2026-08-29 would assert that Anthony judged 117 gaps in one morning, which is false; the real judgement dates are spread over 2026-07-23..2026-08-28 and were never recorded per-acknowledgement, so null is the only true value. Absent means \"not recorded\", and that is the honest answer.\n\nTHE SECOND REASON MATTERS MORE, because it protects a measurement. #368's root-cause analysis turned on dates: all 51 pre-existing approver edges on the gap side are dated 2026-08-23/24, the day `acknowledge_gap` shipped its `approver` parameter, and THAT CLUSTERING IS WHAT REFUTED the comfortable reading that 30% attribution meant careless callers. It established that the parameter gets used when it exists, which is what made its ABSENCE on `acknowledge_defect` the cause rather than caller behaviour. Backdating or same-dating this backfill would drop 117 synthetic points into exactly that distribution and destroy the evidence — a future session re-running the analysis would see 168 attributed acknowledgements clustered on two days and conclude something that was never true.\n\nSo the record of the backfill lives HERE, in one event that says what happened and when, rather than in 117 timestamps that would each say something slightly false.\n\nThis closes the caller-side half of `cap:an-acknowledgement-says-whose-judgement-it-was` for the gap family: the parameter shipped 2026-08-23, the sibling tool was fixed in #368, and this is the history the parameter could not have carried because it did not exist yet.",
         "subject": "record",
         "summary": "Every `decision:ack:*` gap acknowledgement that carried no approver — 117 of the 168 — was given an AUTHORED_BY role=approver edge to who:ajs, on Anthony's explicit word this session (\"for the 117 unattributed acknowledgements, you can attribute them to me\"). Written as one atomic create_edges call. Nothing about the acknowledgements themselves changed; only the record of whose judgement they were, which is why this is on the `record` axis. The set was verified against the committed export before writing: 117 is exactly the residue #368 measured, and no rationale in it attributes the judgement to anyone else. Four mention another name (Alex, the storyflow fleet) and all four are incidental — the trials programme lists storyflow among the real designs reflow2 is used on, and the Alex one is who:ajs's own standing policy re-firing because a capability joined the affected set. Thirty-one name no person at all; every one of those is an agent re-application of a standing disposition Anthony set (the trials-programme policy of 2026-07-23, dec:intent-preserved's post-cut rule), so the approver is his even though the prose does not say a name. The 9 unattributed `acknowledge_defect` acknowledgements are NOT in this set and remain unattributed."
+      }
+    },
+    {
+      "node_id": "chg:a-band-carries-what-it-was-computed-over",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-08-30",
+        "name": "A maturity band carries what it was computed over, and the report prints it",
+        "rationale": "`seam_coverage` emits a scope_note warning that a design declaring contracts above module level reads as having none. `maturity_report` asks the same question with none of that warning, and `graph_report_markdown` printed `seams 18% (13/72)` barer still — so an agent reading the trajectory band had nothing to be suspicious of and reported 18% as a finding. THE CAVEAT EXISTED AND WAS STRIPPED BY THE TOOL THAT QUOTED THE NUMBER, which is not an agent-behaviour problem and cannot be fixed by instruction.\n\nAnthony chose option (a) of dec:idea-a-derived-number-carries-what-it-was-computed-over-wherever-it-is-quoted on 2026-08-30, with the where-am-i re-derivation as a follow-on. Deliberately does NOT change any band's value: moving a ratio would break comparison with every earlier reading, so the caveat is added and the number stays.\n\n⚠️ ONLY THE SEAMS CAVEAT IS MEASURED. The other three are reasoned from the band definitions and are not yet verified against a real design exhibiting them.",
+        "subject": "system",
+        "summary": "`MaturityBand` gains a `caveat`, carried in the same table as each band's `question` so a band cannot gain one without a home for it. Populated for the four bands where a CORRECT design reads low — seams (answered at module level), realization (an unregistered file is invisible), assurance (a capability checked only at component granularity is not counted), operation (a design that never modelled an Environment reads as undeployed) — and deliberately absent on intent, function and allocation, which measure what they claim. `to_markdown` renders it under the number as `_reads low when:_`. Two tests: one that the seams caveat names the altitude and points at `seam_coverage`, one that it survives into the RENDERED report, because a caveat living only in the struct would have prevented nothing."
       }
     },
     {
@@ -137327,6 +137459,16 @@
         "name": "OPEN — should management/governance stay inside reflow2, or split into a sister package?",
         "rationale": "Recorded as brainstorming at Anthony's request (/brainstorm, 2026-08-09). Searching the graph first changed the shape of the question three times: proj:reflow2's objective already claims concept-through-operations, so a split narrows a stated scope; dec:bl-155's never-called list turns out to be ~17/40 management tools, which is the strongest datum on either side and reads both ways; and req:thin-install + req:no-setup-per-project give the split a concrete, already-accepted cost. The storyflow fleet's trial-case report (2026-08-09, api-boss 05af57c1) supplies option D from a month of live operation. No option is recommended and none is promoted to intent.",
         "status": "superseded"
+      }
+    },
+    {
+      "node_id": "dec:idea-governance-rides-the-tool-that-does-the-thing",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-30, continuing the governance thread: *\"what if instead of creating new tools for governance and management, it was instead built into each tool... it is kind of like our idea to compose skills from a set of classes. for instance, if a tool that writes to the graph is used, maybe it has a governance edge, 'push design changes to GitHub repo using git worktree branch, never to main directly'... there could be other governance/management type fields that get added based on the type of node/edge it is.\"*\n\n⭐ THREE NODES ALREADY HOLD PARTS OF THIS, AND ONE OF THEM IS HIS OWN, STILL UNACCEPTED.\n\n· `req:the-reminder-rides-the-response` — **status `proposed` since 2026-08-19**, his words: *\"how come we can't attach a parameter to each skill request that returns something to the user.\"* It states the principle in general form — *a discipline that must survive context distance belongs on the wire, not in a file* — and already records that `loop_hint` / `with_loop_hint` in service.rs is the proven carrier. It also records a real narrowing: **his proposal was an INPUT parameter, what is owed is an OUTPUT**, because an input has a chicken-and-egg. ELEVEN DAYS LATER IT IS STILL WAITING ON HIM, while today's remark restates it.\n· `req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue` — ACCEPTED. Task-skills are reached for at a boundary; discipline-skills apply mid-flow, and *\"a catalogue structurally cannot serve the second\"* because it is read once.\n· `dec:idea-search-first-fires-without-being-remembered` — the same shape for one specific discipline: search-before-you-add is written into five skills and still depends on somebody loading one.\n· `fact:a-skill-is-loaded-only-when-something-already-in-hand-demands-it` — the measured ROOT CAUSE: *\"No reflow2 tool makes any reflow2 skill a precondition of itself.\"* One skill in a long session loaded because a NON-reflow2 tool (`Artifact`) declared it a precondition. **The mechanism he is describing is already proven to work — by somebody else's tool.**\n\n═══ WHAT IS GENUINELY NEW TODAY, AND WHY THIS IS A SEPARATE NODE ═══\n\n(1) **KEYED ON THE TYPE, NOT PLACED PER TOOL.** The obligation attaches to the KIND of thing acted on — a graph write, a node of this type, an edge of that type — so a NEW tool that writes inherits the write-obligations without anyone remembering to wire it. `loop_hint` is computed and hand-placed per call site; this is compositional, and it is the half his skill-classes analogy (`composes: [STANDING, WRITES, MINTS, MEASURES]`, which exists on skills and not on tools) actually points at.\n\n(2) **THE USER SUPPLIES THE OBLIGATION.** Every instance above is a discipline REFLOW2 knows about ITSELF. His example happens to be one reflow2 holds (`rule:nothing-lands-on-main-directly`), but his brother's employer has GitLab push rules reflow2 has never heard of. `governance-proposal` CAPTURES a user's rule; nothing DELIVERS it at the moment of the act. Capture without delivery is the gap.\n\nNeither is in the three nodes above, which is why this is recorded beside them rather than merged into one.\n\n═══ OPTIONS, NONE CHOSEN ═══\n(a) EXTEND `loop_hint` INTO A TYPED OBLIGATION CHANNEL — same proven carrier, content composed from the types touched plus any user rules that match. Smallest step from what exists.\n(b) TOOLS DECLARE A REQUIRED SKILL, the way `Artifact` requires `artifact-design`. Attacks the measured root cause directly and is the one shape already observed to work on this agent.\n(c) BOTH — (b) where a discipline has a procedure behind it, (a) for one-line obligations needing no skill.\n(d) NOTHING NEW: accept `req:the-reminder-rides-the-response` first and see what its delivery naturally covers, since today's idea may be a special case rather than a separate feature.\n\n⚠️ THE FAILURE MODE TO DESIGN AGAINST, and it already retired a detector here: an obligation on every write becomes noise, and noise is how a real warning stops being read. `unexpected_coupling` was retired for firing on correct architecture; `loop_hint` answered the same pressure with a fire-on-change throttle. Anything built here needs a rationing story before it needs features.\n\nNOT ESTABLISHED: whether a user-supplied obligation is new vocabulary or an existing DesignRule with a trigger; and whether anything READS it, which `req:a-vocabulary-distinction-proves-it-is-read` demands before it is added.",
+        "name": "OPEN — governance as a property of each TOOL rather than a new set of nodes: keyed on the node/edge type acted on, and suppliable by the USER",
+        "rationale": "Captured under the brainstorm skill; the current increment stays the priority. Recorded beside `req:the-reminder-rides-the-response` rather than merged into it because two parts of today's remark — keying the obligation on the node/edge TYPE so new tools inherit it, and letting the USER supply the rule — are absent from that requirement, which concerns reflow2 delivering disciplines it already knows about itself. The overlap is named in the text so a later reader finds one line of reasoning rather than three lookalike ideas.",
+        "status": "proposed"
       }
     },
     {
@@ -155153,6 +155295,18 @@
       }
     },
     {
+      "node_id": "fact:manual-work-58c4cdd382e1ad4c",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "manual_work",
+        "statement": "Wrote queries measuring the HEALTH OF IDEA LINKING across the whole idea population: how many ideas carry at least one semantic relation, how many carry the explicit \"nothing was related\" note, how many carry neither, what node types ideas connect to, and a two-hop reachability walk to check a neighbourhood was genuinely connected rather than merely named in prose. The unreviewed count is computed internally and drives a gap, but the BREAKDOWN — linked versus deliberately noted versus silent — is what separates \"nobody looked\" from \"looked and found nothing\", and nothing serves it. find_tools over all 164 served tools returned relation_candidates and review_relations: both offer or record relations, neither measures whether the discipline is followed.",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-08-30",
+        "value": "{\"diagnosis\":\"tool_missing\",\"reflow2_tool\":null}"
+      }
+    },
+    {
       "node_id": "fact:manual-work-76c1f87ece4e7d11",
       "node_type": "TemporalFact",
       "properties": {
@@ -155173,6 +155327,18 @@
         "statement": "Wrote scripts to read a month of agent session transcripts off a peer machine and count, per skill, how often it was loaded versus how often the user typed its command — then the same per tool, to compare tools whose description demands a skill against tools that demand none. The output was the evidence for two experiments about why skills go unused. Three passes were needed because the first two mis-attributed every load: the harness records tool results as user turns, and records a slash command and its expansion as two separate turns, so any naive \"previous user turn\" test returns a clean-looking 100% that is entirely an artifact. Nothing in the design surface reads session history, so the whole question — is the kit actually being reached for — is answerable only from outside it.",
         "subject_id": "proj:reflow2",
         "valid_from": "2026-08-29",
+        "value": "{\"diagnosis\":\"tool_missing\",\"reflow2_tool\":null}"
+      }
+    },
+    {
+      "node_id": "fact:manual-work-a685764192e8790a",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "manual_work",
+        "statement": "Wrote a Python model of a served analysis (the containment roll-up) and ran it against the COMMITTED EXPORT FILE, to check the running tool's answer against an independent computation of the same thing. It reproduced the served numbers exactly, which is what made a silent wrong answer diagnosable — and then, with one condition changed, produced the corrected numbers before any code was touched. Also re-ran it over a synthetic design named the way an ordinary user would name things, which is what showed the defect was total for a user and only partial for this project. The general shape: run a served analysis against an export document rather than the live graph, so its answer can be checked against a model.",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-08-30",
         "value": "{\"diagnosis\":\"tool_missing\",\"reflow2_tool\":null}"
       }
     },
@@ -155918,6 +156084,18 @@
         "statement": "THE LOCAL LINEAGE GATE'S VERDICT DEPENDS ON WHEN YOU RUN IT RELATIVE TO COMMITTING — NOT ONLY ON WHAT THE FILE SAYS. Measured 2026-08-14 while amending PR #175 to cover captures made after its first export.\n\nSEQUENCE, REPRODUCIBLE:\n```\n1. git checkout origin/main -- docs/design/reflow2.json    (restore baseline f9a65a)\n2. export_graph --overwrite                                 (writes 4b93b0, prev=f9a65a)\n3. reflow2_check --export docs/design/reflow2.json          -> FAIL, exit 1\n     \"records sha256:f9a65a… where sha256:5c393f… is expected\"\n4. git commit --amend                                       (HEAD now carries 4b93b0)\n5. reflow2_check --export docs/design/reflow2.json          -> OK, exit 0, 80 notes\n```\n**THE FILE WAS BYTE-IDENTICAL AT STEPS 3 AND 5.** Only the git HEAD moved. The gate reads the export committed at HEAD to decide what the new file should chain FROM; before the amend that was the branch's earlier export (`5c393f`), after it that was main (`f9a65a`), and only the second comparison is the one CI makes.\n\n⇒ **THE OPERATIONAL RULE: RUN `reflow2_check` AFTER COMMITTING OR AMENDING, NEVER BEFORE.** Run beforehand it answers a question nobody asked — whether the working file chains from a commit that is about to stop existing.\n\n⭐ THE PAIR THIS COMPLETES, AND IT IS WHY THIS IS WORTH RECORDING SEPARATELY. `fact:the-local-lineage-gate-cannot-see-a-stacked-export` records the OPPOSITE error: the local gate PASSING on a commit CI rejected, because CI checks out the PR MERGE commit where `HEAD~1` is MAIN. Together they say the same thing from both sides — **the gate is always reasoning about a PAIR of commits, and both failure modes come from that pair differing between local and CI.** Neither is a bug in the gate; both are a bug in when it is trusted.\n  · stacked branch → local PASSES, CI FAILS (that fact)\n  · pre-amend → local FAILS, CI would have PASSED (this fact)\n\n📌 THE STEP THAT MADE THE AMEND CORRECT, worth keeping because skipping it is the silent failure: **restore the export from `origin/main` BEFORE re-exporting.** Exporting on top of the branch's own committed export would have chained `5c393f → new`, giving TWO hops against the merge base and the CI failure `dec:export-once-per-pr` exists to prevent. The restore is what keeps it one hop.\n\n⚠️ NOT ESTABLISHED: whether the gate could tell these apart itself — e.g. by naming which commit it compared against, so a reader can see it is answering about `HEAD` rather than about the merge base. That would make both failure modes self-explaining rather than needing two recorded facts to interpret. Not attempted here.",
         "subject_id": "proj:reflow2",
         "valid_from": "2026-08-14"
+      }
+    },
+    {
+      "node_id": "fact:the-linking-discipline-reproduced-its-own-finding-2026-08-30",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "measurement",
+        "statement": "ROOT-CAUSE PASS, 2026-08-30, run under the root-cause skill AFTER Anthony asked whether one had been run. It had not. The first version of this node asserted a cause borrowed from `dec:idea-do-ideas-form-a-graph-or-only-a-list` rather than tested, and the discriminating measurements below REFUTED IT.\n\n═══ ① WHAT THE FIRST VERSION OF THIS NODE CLAIMED, AND WHY IT WAS WRONG ═══\n\nIt said the 2026-08-21 finding *\"reproduced itself exactly\"* — that finding being 145 idea-Decisions, 12 idea-to-idea edges, 68 whose only edge is their author, and the conclusion *\"reflow2 does NOT link ideas... the agent mostly does not.\"*\n\nMEASURED 2026-08-30 over the whole idea population:\n\n    idea-Decisions                              207   (was 145)\n    with >=1 SEMANTIC edge to anything          140   = 68%\n    with >=1 edge to another IDEA                83   (was ~12 edges total)\n    idea->idea endpoints                        144   (was 12)\n    with ZERO semantic edges                     67\n\n🛑 THE POPULATION-LEVEL FINDING DID NOT REPRODUCE. IT IMPROVED BY ROUGHLY AN ORDER OF MAGNITUDE, and almost none of that was this session's ten-odd edges. Sessions between 08-21 and 08-30 did link. \"The agent mostly does not link\" was true when written and is no longer true. Recording a reproduction would have embalmed a stale finding — which is the failure `invalidated_findings` exists to catch, committed here by the session that had just used that tool on somebody else's stale claim.\n\nWhat DID recur is one instance: this session drew 2 edges, named 3 more nodes in prose only, and drew them after Anthony asked. That is an anecdote, not the population.\n\n═══ ② THE DISCRIMINATING MEASUREMENT, AND THE ACTUAL FINDING ═══\n\nThe skill's step 4 has TWO outcomes: draw the true relations, or record `no_relation_note` — *\"what you searched, what was nearest, and why nothing was honestly related\"* — which is what separates an idea somebody judged from one nobody opened.\n\n    ideas carrying a `no_relation_note`           2  of 207\n    ideas with ZERO edges                        67\n    of those 67, how many were noted              0\n\n⭐ SO THE LINKING HALF LARGELY WORKS AND THE JUDGEMENT-RECORDING HALF DOES NOT EXIST IN PRACTICE. Two uses in 207. Every one of the 67 unlinked ideas is silent, so for each of them \"nobody looked\" and \"looked and found nothing\" are indistinguishable — exactly the distinction the field was added to preserve.\n\n═══ ③ WHY NOTHING EVER SURFACED THIS — THE THIRD LEG WAS ACCEPTED AWAY ═══\n\n`fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it` states the pattern: vocabulary reaches a design only with A TYPED TOOL + AN INSTRUCTION + A DETECTOR THAT NOTICES ABSENCE. Here:\n\n  ✅ TOOL       `review_relations` exists and REFUSES when given neither links nor a note.\n  ✅ INSTRUCTION brainstorm step 4, explicit, with the fabrication hazard spelled out.\n  🛑 DETECTOR   `detect_unreviewed_ideas` (detect.rs:4376) EXISTS AND IS SILENT. Confirmed 2026-08-30: `detect_gaps` returns 4 gaps and `unreviewed_ideas` is not among them, against a population of 67.\n\nIt is silent because ANTHONY ACCEPTED IT, 2026-08-23, in his own words: *\"Accept it. A parked idea legitimately governs nothing yet.\"* The reasoning on `decision:ack:baa3d7b03a08dedb` is sound and is not being second-guessed here: a `proposed` Decision asserts nothing, and demanding relations from every idea *\"would add exactly the ceremony the brainstorm skill exists to remove.\"*\n\n⚠️ BUT THAT ACKNOWLEDGEMENT ANSWERED A NARROWER QUESTION THAN THE ONE IT NOW SILENCES, and it says so itself: *\"It does not say linking ideas is worthless — review_relations exists precisely so a session CAN record a relation or an honest 'nothing was related', and the count is still computed.\"* It settled whether an unlinked idea is a DEFECT TO PRESS THE USER ABOUT. It did not settle whether anyone should ever learn that the honest-nothing path has been used twice in two hundred.\n\n📌 AND IT WAS WRITTEN TO EXPIRE: *\"THE REVIEW EXPIRES BY CONSTRUCTION if the affected set changes... raised at 117 of 166 ideas and stood at 110 of 192 when this was written. If the shape shifts materially the question comes back.\"* The shape HAS shifted materially and in the good direction — 110 of 192 unreviewed then, 67 of 207 now — and the question has not come back.\n\n═══ ④ THE CAUSE, STATED AS A CLASS ═══\n\nNOT \"the agent forgets to link\". The cause is that THE DISCIPLINE'S ONLY OBSERVABLE OUTPUT IS AN EDGE, AND AN EDGE IS PRODUCED BY A DOZEN OTHER TOOLS. Compliance is indistinguishable from incidental byproduct: 140 ideas carry edges, and nothing says how many were reviewed rather than merely connected in passing by `governed_by`, `satisfies` or `create_edge`. The one act that would leave positive evidence of a considered judgement — the note — costs a call, produces no visible artifact, and is the only half nobody performs.\n\nThat is the same shape as `cap:search-first-at-the-tool`, one step earlier in the same workflow: search-before-you-add sat in five skills, fired only when somebody loaded one, and was fixed by moving it INTO the write tool as a two-sided refusal that cannot be skipped. Link-after-capture has the refusal but nothing compels the call.\n\n═══ ⑤ NOT ESTABLISHED ═══\n· How many of the 140 linked ideas were linked THROUGH `review_relations` rather than by other tools. Nothing records which tool drew an edge, so \"is the discipline followed?\" is not answerable from the graph at all — which may be the more fundamental finding.\n· Whether the 67 silent ideas are a problem. Anthony's 08-23 judgement says an unlinked idea is not a defect, and that judgement stands.\n· Whether the five edges this session drew on `dec:idea-governance-rides-the-tool-that-does-the-thing` are sound. They were drawn under direct request, and the node sits at degree 5 against the skill's guidance of two or three.",
+        "subject_id": "dec:idea-do-ideas-form-a-graph-or-only-a-list",
+        "valid_from": "2026-08-30"
       }
     },
     {
@@ -159406,7 +159584,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:7e4a4647a73a31671b2f6ff2462fd4a279541922b9a005a75f256dfe0312b9a6",
+  "prev_content_hash": "sha256:1b422797646b07bc3b0a4fecd4c9fc1dc9f6bf4a2ce6e3e4891d614edbf534d9",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
