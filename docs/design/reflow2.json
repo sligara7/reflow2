@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:7e4a4647a73a31671b2f6ff2462fd4a279541922b9a005a75f256dfe0312b9a6",
+  "content_hash": "sha256:1b422797646b07bc3b0a4fecd4c9fc1dc9f6bf4a2ce6e3e4891d614edbf534d9",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -1122,6 +1122,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:structure"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-derived-number-carries-what-it-was-computed-over",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:report"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -2925,6 +2933,14 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:the-systems-interface-and-functionality-views-are-rendered",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:report"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:tool-carries-convention",
       "properties": {
         "weight_basis": "estimated"
@@ -3243,6 +3259,14 @@
     },
     {
       "edge_type": "ANTICIPATES",
+      "from_id": "dec:idea-reflow2-serves-a-project-that-is-not-software",
+      "properties": {
+        "evidence": "That node (Alex, 2026-08-14) named the shape this one instantiates: the vocabulary is neutral and 'EVERYTHING WRAPPED AROUND IT' is software-shaped. Who authors a domain artifact is a concrete instance of that wrapping, and it is deliberately NOT among its five options — so the earlier node saw the territory without covering this question."
+      },
+      "to_id": "dec:idea-who-authors-the-domain-artifact"
+    },
+    {
+      "edge_type": "ANTICIPATES",
       "from_id": "dec:idea-relevance-ranking",
       "properties": {
         "evidence": "Same 2026-08-01 review. It observes that `propagate.rs` ranks a blast radius by GLOBAL betweenness — 'is this node important in general' — rather than by relevance to the change, which is the requirement's distinction between reading the shape and reading it for a purpose. Betweenness WAS absorbed; the alternative ranking it argues for would want `pagerank.rs` (291 lines), left upstream."
@@ -3264,6 +3288,14 @@
         "evidence": "Same 2026-08-01 review, and the sharpest instance: it observes that `cut_structure` (absorbed, in use) answers 'what is a single point of failure' and NOT 'how separable are these two parts', which needs a minimum edge cut. That gap is precisely what this requirement says the design should be able to see. ⚠️ Needs `maxflow.rs` (248 lines) — left upstream by increment 3, on the verified ground that `cut_structure` does not depend on it."
       },
       "to_id": "req:graph-theory-undergirds-the-design-brain"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "dec:idea-the-environment-compliance-layer-was-designed-and-never-built",
+      "properties": {
+        "evidence": "EnvironmentRule's zero instance count IS that decision showing up as data. It recorded that the compliance layer was designed in full and never built; measuring the vocabulary two weeks later found the type declared and never instantiated. The earlier node predicted this reading without anyone having taken it."
+      },
+      "to_id": "dec:idea-the-governance-layer-is-declared-and-mostly-unused"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -3357,6 +3389,14 @@
         "evidence": "That measurement ends by naming exactly this as the question it leaves to the owner — 'which level should carry contracts' — so the earlier fact saw this idea coming and this idea is the answer to it. Drawn FROM the fact TO this decision."
       },
       "to_id": "dec:idea-a-contract-is-declared-at-the-lowest-level-and-rolled-up"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "fact:coupling-and-contract-are-recorded-in-vocabularies-that-never-meet",
+      "properties": {
+        "evidence": "That earlier finding established that couplings and contracts are recorded in vocabularies that are DISJOINT BY CONSTRUCTION, so the module-level seams number could not move however many contracts anyone wrote. It saw exactly why the 18% band is a weak number — and the band still prints it with no such caveat, which is what this decision is about."
+      },
+      "to_id": "dec:idea-a-derived-number-carries-what-it-was-computed-over-wherever-it-is-quoted"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -11179,6 +11219,24 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-a-derived-number-carries-what-it-was-computed-over-wherever-it-is-quoted",
+      "properties": {
+        "acted_at": "2026-08-30T00:00:00Z",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-a-design-that-belongs-to-several-domains-at-once",
+      "properties": {
+        "acted_at": "2026-08-30T00:00:00Z",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-a-factory-builds-the-mechanics-in-so-a-class-fix-is-one-edit",
       "properties": {
         "acted_at": "2026-08-28",
@@ -12499,6 +12557,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-the-governance-layer-is-declared-and-mostly-unused",
+      "properties": {
+        "acted_at": "2026-08-30T00:00:00Z",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-the-graph-notices-the-record-moved-without-being-asked",
       "properties": {
         "acted_at": "2026-08-11",
@@ -12724,6 +12791,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-where-do-lessons-learned-live-and-can-a-user-state-a-precondition",
+      "properties": {
+        "acted_at": "2026-08-30T00:00:00Z",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-where-does-the-10k-work-actually-land",
       "properties": {
         "acted_at": "2026-08-21",
@@ -12757,6 +12833,15 @@
         "role": "author"
       },
       "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-who-authors-the-domain-artifact",
+      "properties": {
+        "acted_at": "2026-08-30T00:00:00Z",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -15448,8 +15533,8 @@
       "edge_type": "AUTHORED_BY",
       "from_id": "req:an-undeclared-coupling-is-named-not-just-counted",
       "properties": {
-        "acted_at": "2026-08-13",
-        "role": "author"
+        "acted_at": "2026-08-30T00:00:00Z",
+        "role": "approver"
       },
       "to_id": "who:ajs"
     },
@@ -15881,6 +15966,15 @@
       "properties": {
         "acted_at": "2026-08-18",
         "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:the-agent-never-authors-what-requires-accountable-sign-off",
+      "properties": {
+        "acted_at": "2026-08-30T00:00:00Z",
+        "role": "approver"
       },
       "to_id": "who:ajs"
     },
@@ -16463,6 +16557,16 @@
     },
     {
       "edge_type": "CAUSES",
+      "from_id": "dec:idea-who-authors-the-domain-artifact",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "This requirement is the one thing Anthony promoted out of that brainstorm on 2026-08-30 — tier 3 of the three-tier split it proposed. The decision stays open on the other two tiers; this is the road that was taken.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "req:the-agent-never-authors-what-requires-accountable-sign-off"
+    },
+    {
+      "edge_type": "CAUSES",
       "from_id": "dec:the-decomposition-ladder-is-open-not-a-fixed-enum",
       "properties": {
         "basis": "causal",
@@ -16667,6 +16771,16 @@
         "validation_status": "validated"
       },
       "to_id": "dec:idea-a-finding-carries-its-bounds"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:seam-roll-up-found-a-container-by-id-prefix-and-answered-a-false-zero",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The false-zero investigation is what put the pattern in front of the user: the session announced 'seams 18%, 59 undeclared boundaries' from the trajectory band, then measured and found both the 18% and the 100% wrong. He named the ordering as the thing to fix. Without that sequence in the same session the question would not have been asked.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "dec:idea-a-derived-number-carries-what-it-was-computed-over-wherever-it-is-quoted"
     },
     {
       "edge_type": "CAUSES",
@@ -31230,6 +31344,42 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:seam-lift-finds-a-container-by-level-not-by-id-prefix",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:maturity"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:seam-lift-finds-a-container-by-level-not-by-id-prefix",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:seam-coverage-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:seam-lift-finds-a-container-by-level-not-by-id-prefix",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:undeclared-seam-is-named"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:seam-lift-finds-a-container-by-level-not-by-id-prefix",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "fact:seam-roll-up-found-a-container-by-id-prefix-and-answered-a-false-zero"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:seams-detector-built",
       "properties": {
         "accepted_baseline": false,
@@ -35341,6 +35491,17 @@
       "to_id": "cmp:byte-store"
     },
     {
+      "edge_type": "CLAIMS",
+      "from_id": "who:claude-code",
+      "properties": {
+        "claimed_at": "2026-08-30T00:00:00Z",
+        "depth": 2,
+        "note": "Fixing seam_coverage's containment lift: it selects a parent by id prefix (cmp:/sys:) instead of by Component level, so the 10 sub:* subsystems never lift and 58 of 86 modules are silently dropped from the rolled-up seam answer.",
+        "seat": "asligar-bitecool:4176513:96c83b5f"
+      },
+      "to_id": "cmp:seam"
+    },
+    {
       "edge_type": "CONSTRAINS",
       "from_id": "con:a-sweep-builds-its-network-a-fixed-number-of-times",
       "properties": {
@@ -37377,6 +37538,16 @@
     },
     {
       "edge_type": "CONTRADICTS",
+      "from_id": "fact:seam-roll-up-found-a-container-by-id-prefix-and-answered-a-false-zero",
+      "properties": {
+        "alignment": "supporting",
+        "confidence": 0.9,
+        "evidence": "Same class, one day apart, read in opposite directions. 2026-08-29 named the mechanism behind nine dangling references as 'the id was CONSTRUCTED by convention rather than resolved by lookup'. This one is the id INTERPRETED by convention rather than resolved by lookup: seam_coverage read a node's level out of its id spelling. Both skip asking the graph what the node is. Two independent instances make this a class rather than a coincidence."
+      },
+      "to_id": "fact:which-properties-are-node-references-is-a-judgement-made-once-and-never-recorded-for-the-others"
+    },
+    {
+      "edge_type": "CONTRADICTS",
       "from_id": "fact:the-exhaustive-check-was-built-and-can-only-carry-universal-obligations",
       "properties": {
         "alignment": "opposing",
@@ -38342,6 +38513,26 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-a-design-that-belongs-to-several-domains-at-once",
+      "properties": {
+        "evidence": "Both of Anthony's physical cases — the biodome and his brother's garage — are gated on regulatory context rather than on engineering: septic and greywater rules bind 'recycles waste' harder than any pump does, and a garage needs a permit. That node already states the Environment/EnvironmentRule layer 'is what makes design a house concrete', and it is designed and unbuilt. The artifact list here stays hypothetical until it exists.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-the-environment-compliance-layer-was-designed-and-never-built"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-a-design-that-belongs-to-several-domains-at-once",
+      "properties": {
+        "evidence": "This question is moot while `Project.domain` is written and never read — which is exactly what that requirement records. A scalar domain field only breaks on a multi-discipline project once some computation READS it, so this matters if and only if that one is acted on first.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "req:framework-is-chosen-not-defaulted"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "dec:idea-a-factory-builds-the-mechanics-in-so-a-class-fix-is-one-edit",
       "properties": {
         "evidence": "A factory can only guarantee mechanics somebody has named. Until the class contract question is answered — which axes, obliging what — there is nothing for a factory to build in, so this is worth nothing until that one lands.",
@@ -38714,6 +38905,16 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-where-do-lessons-learned-live-and-can-a-user-state-a-precondition",
+      "properties": {
+        "evidence": "Both came from one remark of Anthony's on 2026-08-30 that the governance layer is immature, and he named them as two facets. This one proposes making a PRECONDITION expressible; whether that is worth doing turns on the measured question that one holds — six pieces of governance vocabulary at zero instances. Adding a seventh before deciding the fate of the six would be the wrong order.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-the-governance-layer-is-declared-and-mostly-unused"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "dec:idea-where-does-tool-use-actually-fail-four-layers",
       "properties": {
         "evidence": "The frame's central claim — that layer ③ (worth it) is the bottleneck — is inference from two agent self-reports and cannot be tested until the missing half of that requirement exists: the comparison between the work a session performed and the skill that covers it. Loads are already counted; the performed-versus-appropriate gap is what would turn this diagnostic into a measurement rather than an argument.",
@@ -38721,6 +38922,16 @@
         "weight_basis": "estimated"
       },
       "to_id": "req:skill-adherence-is-measured"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-who-authors-the-domain-artifact",
+      "properties": {
+        "evidence": "The authorship question only exists because that requirement is ACCEPTED. If reflow2 designed only software, the artifacts would be source files it already handles and there would be nothing to decide. Accepting 'software, hardware, a document, a process' is what creates the obligation to say who produces the hardware artifact.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "req:design-anything"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -39620,6 +39831,16 @@
         "weight_basis": "estimated"
       },
       "to_id": "req:reflow2-can-say-which-of-its-own-skills-a-session-reached-for"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "req:the-agent-never-authors-what-requires-accountable-sign-off",
+      "properties": {
+        "evidence": "The boundary only exists because reflow2 accepted designing hardware, buildings and processes. A software-only tool never produces an artifact anybody has to be licensed to sign, so this obligation is created by that requirement rather than standing on its own.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "req:design-anything"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -46009,6 +46230,14 @@
       "from_id": "dec:idea-should-reflow2-carry-its-own-git-discipline",
       "properties": {},
       "to_id": "dec:export-once-per-pr"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "dec:idea-the-governance-layer-is-declared-and-mostly-unused",
+      "properties": {
+        "note": "That rule is why these zeroes are weak evidence rather than a verdict: reflow2's own design has no permit, no inspection and no regulator, so a governance vocabulary reading zero here says the self-host has not travelled there — not that the vocabulary is wrong. It is what keeps this an open question rather than a deletion list."
+      },
+      "to_id": "rule:the-self-host-always-trails-what-it-teaches"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -110414,6 +110643,15 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:seam-lift-finds-a-container-by-level-not-by-id-prefix",
+      "properties": {
+        "at": "2026-08-30",
+        "note": "PARTIAL — one of this acknowledgement's two legs, and it is the load-bearing one. The ack accepts 64 undeclared module couplings as correct, and cites as measured evidence: 'lifted to subsystem it reads 11 couplings, 11 covered, 0 uncovered.' That subsystem roll-up came from lift_to_level choosing a containment parent by id prefix, which silently dropped every module contained by a `sub:*` subsystem. THE ZERO WAS AN ARTEFACT. Corrected 2026-08-30: 19 couplings, 13 covered, SIX uncovered — sub:change-and-structure<->sub:finding, <->sub:telling, sub:evidence<->sub:finding, <->sub:telling, sub:evidence<->sys:time-history, sub:finding<->sub:telling.\n\nTHE OTHER LEG STILL STANDS and is why this is not a withdrawal: 'all 64 pairs sit inside ONE crate with zero crossing a crate boundary, and 44 of the 55 files in reflow2-core carry impl DesignGraph' — measured independently of the roll-up, unaffected by this defect, and still the right reason not to write 64 module-level contracts.\n\nWHAT IS OWED: a re-reading, not an automatic reversal. The rule the ack invokes (a contract is declared at the lowest level and higher levels answer by roll-up) is unchanged; what changed is that the roll-up now says six subsystem boundaries do NOT answer. Whether those six are real contracts or another correct absence is the owner's judgement, and nothing here decides it."
+      },
+      "to_id": "decision:ack:f384097e7d8b01b0"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:sidecar-loss-refused",
       "properties": {
         "at": "2026-08-07",
@@ -110583,6 +110821,14 @@
         "evidence": "One is a hazard, the other answers it. That 2026-08-15 observation records a real export that was skipped because the written instructions implied a stop that was not needed — a correct-looking reading of a correct-looking procedure, not negligence. It is the measured instance of the failure this question exists to close, and it is why 'write the procedure more carefully' is not one of the roads listed."
       },
       "to_id": "fact:defect-the-export-was-skipped-because-the-instructions-imply-a-stop-that-is-not-needed"
+    },
+    {
+      "edge_type": "MITIGATES",
+      "from_id": "dec:idea-where-do-lessons-learned-live-and-can-a-user-state-a-precondition",
+      "properties": {
+        "evidence": "That requirement, accepted the same day, forbids the agent from AUTHORING an artifact carrying professional sign-off — a permit being the type case. It creates an obligation the design cannot currently MODEL: nothing expresses 'this permit must be obtained, by that authority, before this activity'. Making a precondition expressible is what would let the design carry the thing the rule refuses to let the agent forge."
+      },
+      "to_id": "req:the-agent-never-authors-what-requires-accountable-sign-off"
     },
     {
       "edge_type": "MITIGATES",
@@ -111053,6 +111299,12 @@
       "from_id": "epoch:planned-seams",
       "properties": {},
       "to_id": "epoch:planned-one-write-surface"
+    },
+    {
+      "edge_type": "PRECEDES",
+      "from_id": "epoch:planned-seams",
+      "properties": {},
+      "to_id": "epoch:the-systems-views-are-rendered-from-the-graph"
     },
     {
       "edge_type": "PRECEDES",
@@ -115063,6 +115315,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:a-derived-number-carries-what-it-was-computed-over",
+      "properties": {},
+      "to_id": "req:a-report-says-what-it-swept-and-whether-its-checks-ran"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:a-design-says-which-vocabulary-it-has-never-used",
       "properties": {},
       "to_id": "req:declared-vocabulary-is-reachable-from-the-surface"
@@ -116569,6 +116827,15 @@
     },
     {
       "edge_type": "SCHEDULED_FOR",
+      "from_id": "cap:a-derived-number-carries-what-it-was-computed-over",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-08-30"
+      },
+      "to_id": "epoch:planned-seams"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
       "from_id": "cap:arrival-delta",
       "properties": {
         "modality": "required",
@@ -116737,6 +117004,15 @@
         "recorded_at": "2026-08-20"
       },
       "to_id": "epoch:the-declared-walls-hold"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
+      "from_id": "cap:the-systems-interface-and-functionality-views-are-rendered",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-08-30"
+      },
+      "to_id": "epoch:the-systems-views-are-rendered-from-the-graph"
     },
     {
       "edge_type": "SCHEDULED_FOR",
@@ -122422,7 +122698,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:aaa12309461d664654dfffca2324056ed42e4b49f5bb32f1b5d1bcfc4d2dc103",
+        "checksum": "sha256:fb1175739e62e26abfcd25817baa60a5dbfbe02b187e0ba612ba97768c09bf0c",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/maturity.rs",
         "name": "maturity.rs",
@@ -123172,7 +123448,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:603b3fd3af338c53b0a04134d79d2b7fea979a5e11b9b80a1ec37d7def62c4e6",
+        "checksum": "sha256:24102ada053e17fa1f1f1519627b9cd3e6222b1cae6405c82270f45632473b75",
         "location": "crates/reflow2-core/tests/seam_coverage.rs",
         "name": "seam_coverage.rs",
         "status": "realized"
@@ -124459,6 +124735,16 @@
         "name": "A declared wall is checked against the coupling it contains — on any project, with no configuration",
         "provenance": "authored",
         "status": "realized"
+      }
+    },
+    {
+      "node_id": "cap:a-derived-number-carries-what-it-was-computed-over",
+      "node_type": "Capability",
+      "properties": {
+        "description": "A ratio reported by one tool must carry the caveat its SOURCE tool considers essential, so a warning cannot be stripped by the tool that repeats the number.\n\nDISTINCT FROM dec:idea-a-derived-number-carries-what-it-was-computed-over-wherever-it-is-quoted, which is the OPEN QUESTION and the four options weighed. Anthony chose (a) with (d) as a follow-on, 2026-08-30. This is what gets BUILT; that is why.\n\nTHE INSTANCE THAT PROMPTED IT, measured 2026-08-30. `seam_coverage` emits a scope_note saying a design that declares contracts at a HIGHER boundary than it records dependencies will read as uncovered at module level, and to pass `altitude`. `maturity_report`'s seams band asks the SAME question at module level with none of that warning, and `graph_report_markdown` prints `seams 18% (13/72)` barer still. The band's `not_observed_about` list is four items long and does not include the one caveat its sibling considers necessary.\n\n⭐ WHY IT IS NOT AN AGENT-BEHAVIOUR PROBLEM. An agent reading the trajectory band has nothing to be suspicious of. Anthony named the pattern — an agent announces a number and only afterwards says what it actually measured — and asked for the ordering reversed. The reversal is not achievable by instruction alone, because the caveat is not in the number's hand at the moment it is quoted.\n\nTHE BANDS WHERE A CORRECT DESIGN READS LOW: SEAMS (answered at module level; a design declaring contracts one level up reads near zero); REALIZATION (a file nobody registered as an Artifact is invisible, so a user who has built everything and never run link-artifacts reads 0%); ASSURANCE (a capability checked only at component granularity is not counted); OPERATION (a design that never modelled an Environment reads as undeployed).\n\n⚠️ ONLY THE SEAMS CAVEAT IS MEASURED. The other three are reasoned from the band definitions and are NOT verified against a real design exhibiting them. Recorded so a later session does not inherit four confirmed findings where there is one.\n\nTHE SECOND LEG (Anthony's (d), a follow-on rather than a substitute): where-am-i re-derives a band from its source tool before naming it the FRONTIER, because the frontier is the one band that drives what the user does next. An instruction with no detector behind it is the weakest leg, which is why it rides behind the tool-side fix.\n\nWHAT IT MUST NOT DO: change the numbers. Moving a band's value would break comparison against every earlier reading. The caveat is added; the ratio stays.",
+        "name": "A derived number carries what it was computed over, wherever it is quoted",
+        "provenance": "authored",
+        "status": "planned"
       }
     },
     {
@@ -126888,6 +127174,16 @@
         "provenance": "authored",
         "status": "realized",
         "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:the-systems-interface-and-functionality-views-are-rendered",
+      "node_type": "Capability",
+      "properties": {
+        "description": "An agent can query the design and render the two systems viewpoints a DoDAF/UAF-trained reader expects, WITHOUT extrapolating: SV-1/SvcV-1 (Systems/Services Interface Description — the parts, their boundaries, and what crosses each) and SV-4/SvcV-4 (Systems/Services Functionality Description — the system functions and the flows between them).\n\nDISTINCT FROM epoch:the-systems-views-are-rendered-from-the-graph, which is WHEN this is due. This is WHAT must become true, and it outlives the increment that carries it.\n\nWHOSE JOB IS WHOSE, and it is the point rather than an implementation note. reflow2 serves the content; the AGENT renders. Anthony, 2026-08-30: \"this is the concept we defined a long ago that the agent would do the rendering.\" So the deliverable is not a new fixed renderer — `tools/render_views.py` is the standing one and already carries a \"Structural ≈ SV-1\" row — but whether an agent holding only the served design can produce these two views at all.\n\n⭐ THE VIEW IS A PROBE, and docs/viewpoints.md already governs: \"If rendering requires extrapolating or filling in missing details, that is a sign something is missing or wrong inside reflow2 — not a prompt to improvise.\" A confession list is a work list. Rule 4 of that file is the one to watch: a renderer that reaches zero confessions by asking only what the graph can already answer has been tuned to the instrument.\n\nWHAT IS ALREADY THERE, so this is not started from nothing: Structural (≈ SV-1) and Functional (≈ OV-5) are rendered today. SV-4 IS ABSENT FROM THE CATALOGUE ENTIRELY — and it is not OV-5 renamed. OV-5 is operational activity; SV-4 is SYSTEM function and the data flowing between functions. Whether reflow2's vocabulary can express that is the open question this answers: `Capability` carries function, `DEPENDS_ON` between capabilities forms the functional DAG, and `Flow` + `PART_OF_FLOW.step_order` carries ordering — but nothing yet says what DATA crosses between two functions, which is half of what SV-4 is.\n\nWHY IT SITS AFTER THE SEAM WORK: SV-1 is an interface description and can only be as good as the seam picture beneath it. It will confess exactly where contracts are undeclared, which makes it the honest test of whether that increment landed — and a better use of effort than hand-writing contracts for reflow2's own six uncovered boundaries, which Anthony's 2026-08-13 reasoning already rejected as fixing one design and teaching reflow2 nothing.\n\nNOT DECIDED HERE: whether the output is HTML alongside the existing views page, a served projection, or something the agent composes per session; and whether SV-4's data-flow half needs new vocabulary or is a modelling gap in reflow2's own design only.",
+        "name": "The systems interface and functionality views (SV-1/SvcV-1, SV-4/SvcV-4) are rendered from the graph, and every fill-in is confessed",
+        "provenance": "authored",
+        "status": "planned"
       }
     },
     {
@@ -132479,6 +132775,18 @@
       }
     },
     {
+      "node_id": "chg:seam-lift-finds-a-container-by-level-not-by-id-prefix",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-30",
+        "name": "Seam roll-up finds a container by level, not by id prefix",
+        "rationale": "Ten of this design's eighteen subsystems are named `sub:*`, so 58 of 86 modules never lifted and their pairs were dropped from BOTH the coupling and contract sets. seam_coverage therefore answered `0 uncovered` at subsystem altitude — a FALSE ZERO, the shape fact:ten-components-report-a-zero-blast-radius-the-source-contradicts already names as the worst answer a coupling model can give. The honest reading is 13 of 19 covered, with six named subsystem boundaries owing a contract; and the `seams 18%` trajectory band was the same defect seen from module level.\n\nTHE CLASS, recorded one day earlier on fact:which-properties-are-node-references-is-a-judgement-made-once-and-never-recorded-for-the-others: an id's spelling treated as authoritative about what a node IS, instead of asking the graph. That fact found ids CONSTRUCTED by convention; this is ids INTERPRETED by convention. The guard is that an id prefix is a naming convention carrying no meaning a computation may read — `level`, `node_type` and the schema are where that meaning is declared.\n\nWHY NO TEST CAUGHT IT: all five existing seam_coverage tests named their fixture containers `sys:a`/`sys:b`, so the suite shared the implementation's assumption and stayed green. High coverage of the function, zero coverage of the question. Full analysis on fact:seam-roll-up-found-a-container-by-id-prefix-and-answered-a-false-zero.",
+        "subject": "system",
+        "summary": "`DesignGraph::lift_to_level` in crates/reflow2-core/src/maturity.rs chose a containment parent with `p.starts_with(\"cmp:\") || p.starts_with(\"sys:\")` — an id naming convention standing in for the `level` declaration. Replaced with a test that the parent IS a Component, and made the choice deterministic (smallest id) where containment forks. Also corrected `SeamSets.unreachable`'s scope_note, which counted PAIRS across both sets while calling them \"endpoint(s)\". Two regression tests added and OBSERVED FAILING against the unfixed code: `a_container_is_found_by_its_level_not_by_how_its_id_is_spelled` and `a_dropped_pair_is_reported_as_a_pair_not_as_an_endpoint`. 508 core tests pass."
+      }
+    },
+    {
       "node_id": "chg:seams-detector-built",
       "node_type": "ChangeEvent",
       "properties": {
@@ -136167,6 +136475,26 @@
       }
     },
     {
+      "node_id": "dec:idea-a-derived-number-carries-what-it-was-computed-over-wherever-it-is-quoted",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-30, on noticing a pattern in agent replies: a number is announced (\"59 undeclared boundaries\"), and only afterwards comes \"here is what I actually measured\". He asked whether the ordering can be switched, and whether that is a reflow2 change or an agent tendency.\n\nMEASURED THE SAME DAY, and it is BOTH — but the reflow2 half is specific and fixable:\n\n`seam_coverage` emits a scope_note that says, in words, that a design declaring its contracts at a HIGHER boundary than it records its dependencies will read as having none at module level, and tells the caller to pass `altitude`. That warning is correct and it is right there in the tool.\n\n`maturity_report`'s seams band asks the SAME question — \"Of the couplings between two Components, how many run through a declared Interface that one provides and the other consumes?\", population 72, present 13 — at module level, with NO altitude and NONE of that warning. `graph_report_markdown` then prints `seams 18% (13/72) ← frontier`, barer still. Its `not_observed_about` list is long and careful and does not include the one caveat its sibling tool considers essential.\n\n⭐ SO THE CAVEAT EXISTS AND IS STRIPPED BY THE TOOL THAT QUOTES THE NUMBER. That is not an agent tendency. An agent reading the trajectory band has nothing to be suspicious of, and 18% was in fact wrong twice over (dec fix on 2026-08-30: the roll-up dropped 58 of 86 modules; the honest reading is 13 of 19 at subsystem altitude, six boundaries genuinely undeclared).\n\nTHE OPTIONS, none chosen:\n\n(a) A band carries the population caveat of whatever computed it — the note travels with the number rather than living only at its source. Root fix, matches \"an id prefix carries no meaning a computation may read\" in spirit: a NUMBER carries no meaning without its population. Cost: every report grows, and reports are already long.\n\n(b) Bands distinguish a STRONG number from a WEAK one. \"Delivered 153 of 194\" is strong — the thread is real and each hop is an edge somebody drew. \"Seams 18%\" is weak — the two vocabularies do not meet by construction, which the design already recorded as fact:coupling-and-contract-are-recorded-in-vocabularies-that-never-meet. Nothing in the report tells a reader which kind of number they are holding. Cost: \"strong/weak\" is a judgement, and dec:report-dont-judge says reflow2 reports and does not rule.\n\n(c) The maturity seams band is answered AT ALTITUDE, or states that it is module-level. Narrowest fix, addresses this instance and not the class.\n\n(d) A skill instruction: where-am-i must re-derive a band from its source tool before naming it the FRONTIER, because the frontier is the one band that drives what the user does next. Targeted rather than \"measure everything\". Cost: it is an instruction with no detector behind it, which is the weakest of the three legs (fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it), and where-am-i is meant to be a cheap check-in.\n\nTHE HONEST COUNTER-ARGUMENT TO THE USER'S ASK AS STATED: \"measure first, then report\" applied generally would make orientation expensive — where-am-i would have to run the tool behind every band on every check-in. The cheaper shape is that a number arrives WITH what it was computed over, so a reader can see which ones are weak, and the agent goes and measures only the one that is about to drive a decision.",
+        "name": "OPEN — should a derived number carry its own caveat wherever it is quoted, so a warning cannot be stripped by the tool that repeats the number?",
+        "rationale": "Recorded so the pattern Anthony noticed is not lost as a conversational remark. The measurement behind it — that seam_coverage's scope_note is stripped by maturity_report and graph_report_markdown asking the same question without it — is the part that makes this a reflow2 question rather than a prompt-engineering one.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:idea-a-design-that-belongs-to-several-domains-at-once",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-30, asking it directly of his own long-standing idea: *\"I've wanted to design a 'mini-house' that is like a biodome and is as self-sufficient and recycles waste, etc — again, what is the 'domain' of this design and what should its artifacts be.\"*\n\n⭐ THE QUESTION MAY BE THE FINDING. A self-sufficient habitat is not one domain. It is at least: architecture (envelope, thermal, structure), environmental and mechanical engineering (water reclamation, greywater and blackwater, air, HVAC), energy (generation, storage, load), agriculture or biology if it grows food, and controls. Asking which ONE it is has no true answer.\n\n`Project.domain` is a single scalar, and `req:framework-is-chosen-not-defaulted` already records that it is WRITTEN AND NEVER READ. If it is ever made to drive anything — which is option (c) of dec:idea-reflow2-serves-a-project-that-is-not-software — then a project spanning five disciplines is the case that breaks a scalar field on its first real outing. Cheap to notice now, expensive to notice after something reads it.\n\n═══ WHAT THE ARTIFACTS PROBABLY ARE, offered as a starting list to be corrected ═══\n\n· A MASS AND ENERGY BALANCE — water in/out/recovered, air, nutrients, power generated against power drawn. For a closed-loop habitat this is the artifact that matters most, because the failure that actually hurts is a loop that does not close.\n· Loop schematics for water, waste and air (the process-engineering P&ID shape).\n· Architectural plans for the envelope, and a thermal model.\n· A growing plan, if it feeds anyone — species, area, yield, nutrient cycle.\n· A controls and monitoring specification.\n· Code and regulatory compliance — septic and greywater rules are usually the binding constraint on \"recycles waste\", far more than any engineering limit.\n\n⭐ AND ONE OF THOSE IS ALREADY NEARLY REFLOW2'S. `Flow`, `Resource` and budget `Constraint` (`quantity` / `limit` / `direction`, with their CONSTRAINS spenders) are close to a mass-and-energy balance already, and the SV-7 measures/budgets viewpoint renders one — with an honest verdict of `incomplete` when any contribution is unstated. FOR A CLOSED-LOOP DESIGN, \"incomplete because somebody has not said what this loop returns\" IS THE MOST USEFUL SENTENCE THE TOOL COULD SAY. That is not a new feature; it is existing machinery pointed at a domain nobody has pointed it at.\n\n═══ AND THE REGULATORY HALF IS DESIGNED AND UNBUILT ═══\n`dec:idea-the-environment-compliance-layer-was-designed-and-never-built` says in as many words that the Environment / EnvironmentRule layer *\"is what makes 'design a house' concrete\"*. The biodome and the garage are both that unbuilt half. Two of the three cases Anthony named land on the same missing piece, which is worth more than either case alone.\n\n═══ OPTIONS, NONE CHOSEN ═══\n(a) DOMAIN STAYS ONE FIELD and a multi-discipline project picks its dominant one. Simplest; loses exactly the projects most worth having.\n(b) DOMAIN BECOMES A SET. Honest to reality; every computation that reads it then has to decide what to do when two domains disagree, which is a real cost and not obviously worth paying.\n(c) DOMAIN IS NOT ON THE PROJECT AT ALL — discipline belongs to the PART, not the whole, since the envelope is architecture and the water loop is process engineering within one design. Closest to how the work is actually divided, and the largest change.\n(d) DELETE IT, per `req:a-vocabulary-distinction-proves-it-is-read` — a distinction nothing reads should be made real or removed, and nothing reads this one today.\n\nNOT ESTABLISHED: whether any of this is worth doing before somebody actually starts a non-software design in reflow2. The garage is the nearest real candidate and it is Alex's, not Anthony's, so the evidence would be a second user's again.",
+        "name": "OPEN — the biodome has no single domain, and `Project.domain` is one field. Is asking \"what domain is this?\" the wrong question?",
+        "rationale": "Captured under the brainstorm skill, separately from dec:idea-who-authors-the-domain-artifact because these are two different questions — that one asks who holds the pen, this asks whether \"the domain\" is even a well-formed question for a design that spans five disciplines. Recorded as open rather than as a requirement: the artifact list is a starting point offered for correction by the person who actually wants the thing built, and the four options change the schema in ways nobody has chosen.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-a-factory-builds-the-mechanics-in-so-a-class-fix-is-one-edit",
       "node_type": "Decision",
       "properties": {
@@ -137738,6 +138066,16 @@
       }
     },
     {
+      "node_id": "dec:idea-the-governance-layer-is-declared-and-mostly-unused",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-30: *\"reflow2 has 'governance and management' set of nodes and edges that I don't think we use well and may not be mature yet.\"*\n\nMEASURED THE SAME DAY against the committed export, because the instinct was checkable:\n\n    GOVERNED_BY edges      1086     carries essentially the whole layer\n    DesignRule               21     healthy, and mostly release/process lessons\n    Constraint                4     ALL FOUR about reflow2's own performance\n                                    (sweep cost, hydrate cost, pairing scope) —\n                                    not one regulatory or contractual limit\n    QualityGate               0     type declared, never instantiated\n    EnvironmentRule           0     type declared, never instantiated\n    GATED_ON edges            0\n    COMPLIES_WITH edges       0\n    IMPOSES edges             0\n    VIOLATES_RULE edges       0\n\n⭐ SO IT IS NOT EVENLY IMMATURE. One edge type does all the work and six pieces of vocabulary have never been used once. That is a different problem from \"the layer needs more features\", and it lands squarely on a rule this design already holds: `req:a-vocabulary-distinction-proves-it-is-read` says a distinction no computation reads should be MADE REAL OR REMOVED. Six of these are currently neither.\n\n═══ THE HONEST COUNTER-ARGUMENT ═══\nZero instances on REFLOW2'S OWN design proves little about the vocabulary, because reflow2 is a software project with no permits, no inspections and no regulator. `rule:the-self-host-always-trails-what-it-teaches` says exactly this — the self-host is not the test of whether a domain concept earns its place. The right evidence is a design that HAS a regulator, and Anthony has just said he intends to start one (the biodome, `dec:idea-a-design-that-belongs-to-several-domains-at-once`). Deciding this before that project runs would be guessing.\n\n═══ OPTIONS, NONE CHOSEN ═══\n(a) WAIT FOR THE BIODOME. It is the first design that will have real preconditions, and it is weeks away rather than hypothetical. Cheapest, and it produces evidence instead of opinion.\n(b) BUILD THE ENVIRONMENT COMPLIANCE LAYER, which `dec:idea-the-environment-compliance-layer-was-designed-and-never-built` already says *\"is what makes 'design a house' concrete\"*. EnvironmentRule's zero count is that decision showing up as data.\n(c) REMOVE WHAT NOTHING READS, per the design's own rule. Honest and cheap, and it loses vocabulary that may be exactly right the moment a non-software design arrives.\n(d) LEAVE IT AND SAY SO IN THE DOCS — the layer is declared, untravelled, and known to be. Costs nothing and stays true whichever of the others happens.\n\nNOT ESTABLISHED: whether QualityGate and EnvironmentRule are the right shapes at all, or were designed before anyone had a case to fit them to. Nobody has tried to model a permit with them.",
+        "name": "OPEN — the governance vocabulary is one heavily-used edge and a lot of zeroes. Is it immature, or is most of it a distinction nothing reads?",
+        "rationale": "Captured under the brainstorm skill while the current increment stays the priority. Recorded as open because the measurement proves the vocabulary is UNUSED and proves nothing about whether it is WRONG — reflow2's own design has no regulator, so its zeroes are weak evidence by the project's own self-host rule.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-the-graph-notices-the-record-moved-without-being-asked",
       "node_type": "Decision",
       "properties": {
@@ -138005,6 +138343,16 @@
       }
     },
     {
+      "node_id": "dec:idea-where-do-lessons-learned-live-and-can-a-user-state-a-precondition",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-30, on seeing past release mistakes surface again at each cut: *\"I'm not sure where these lessons learned are stored (in the agent's memory or in a .md file somewhere or maybe they are in the reflow2 graph like I want them to be).\"*\n\n═══ FACET 1: THEY ARE IN THE GRAPH — IN THREE PLACES, WITH NO ONE VIEW ═══\n\nAnswered by looking, 2026-08-30. The release lessons are recorded, and they are DesignRules, a Flow, and TemporalFacts:\n\n· `rule:success-is-read-from-the-authoritative-object` — from the v0.38.0 manifest that shipped empty because a dry run reads like a write.\n· `rule:the-export-is-written-once-per-branch`, `rule:a-gate-is-run-against-the-state-it-will-be-judged-in`, `rule:nothing-lands-on-main-directly`, `rule:an-issue-is-root-caused-then-pinned-by-a-test-then-fixed`.\n· `flow:release-cut` — the procedure itself, with `cap:a-cut-is-read-from-the-design`: *\"a cut is read from the design rather than from the last one.\"*\n· `fact:three-shipping-mistakes-the-gates-caught-and-one-they-did-not`, `fact:export-must-be-last-means-last-relative-to-main-not-to-the-branch`.\n\n⭐ SO THE ANSWER TO HIS QUESTION IS \"YES, MOSTLY\" — and the gap is not capture, it is that a LESSON HAS NO SINGLE HOME OR VIEW. Three node types hold them by different routes, and which one a given lesson landed in depends on the session that wrote it rather than on what kind of lesson it is. `fact:todays-gate-lessons-have-a-served-home-and-it-is-empty` (2026-08-14) says a version of this already.\n\n🛑 AND ONE PART IS GENUINELY OUTSIDE THE GRAPH, WHICH IS THE HALF HE FEARED. Some release knowledge lives in the AGENT'S OWN MEMORY FILES, which are not the design, not visible to him, and not visible to any other contributor or agent. One such note asserts the seven release steps *\"exist nowhere else as a list\"* — while `flow:release-cut` exists. Either the note is stale or the Flow is incomplete, and NOTHING CAN TELL WHICH, because the two records cannot see each other. A lesson in agent memory is a lesson the project does not have.\n\n═══ FACET 2: A USER CANNOT SAY \"GET THE PERMIT FIRST\" ═══\n\nHis example: *\"on my brother's garage design, maybe there is something in the graph that says, before building, must obtain permit from city for XYZ.\"*\n\nMeasured: the vocabulary for this is DECLARED AND EMPTY — QualityGate 0 instances, EnvironmentRule 0, GATED_ON 0 edges (see dec:idea-the-governance-layer-is-declared-and-mostly-unused).\n\n⭐ AND `GATED_ON` IS THE WRONG SHAPE ANYWAY, WHICH IS THE SHARPER FINDING. It carries a READINESS RUNG — `kind` TRL or MRL, `min_level` 1-9. It says \"this increment needs that technology at TRL 6.\" A permit is not a rung. It is a PRECONDITION WITH AN AUTHORITY AND A DATE: somebody external grants it, it is obtained or it is not, and there is no level 4 of having a permit. Same shape for an inspection, a certification, a sign-off, a landlord's consent, a change-control board approval — and for the GitLab push rules Anthony mentions his brother's employer having.\n\nSo reflow2 can express \"wait until this is mature enough\" and cannot express \"wait until someone else has said yes.\" Those are different, and only the first is built.\n\n📌 IT CONNECTS TO WHAT WAS ACCEPTED TODAY. `req:the-agent-never-authors-what-requires-accountable-sign-off` says the agent must not author artifacts carrying professional accountability. A permit is exactly such an artifact — so the design already has a rule ABOUT these things while having no way to MODEL one.\n\n═══ OPTIONS, NONE CHOSEN ═══\n(a) A LESSON IS ITS OWN THING, with one home and one view, whatever produced it.\n(b) LESSONS STAY WHERE THEY ARE and a VIEW gathers them — cheaper, changes no vocabulary, and matches \"views are projections\".\n(c) A PRECONDITION BECOMES EXPRESSIBLE — an obligation with an authority, a status and a date, distinct from a readiness rung. New vocabulary, and `req:a-vocabulary-distinction-proves-it-is-read` demands something read it before it is added.\n(d) STOP PUTTING PROJECT KNOWLEDGE IN AGENT MEMORY, or at least detect the split. Independent of the rest and the only one that costs nothing.\n\nNOT ESTABLISHED: whether (c) is one new concept or three (permit, approval, certification), and whether a Verification with an external provenance already covers most of it. Nobody has tried.",
+        "name": "OPEN — the release lessons ARE in the graph, scattered across three node types; and a user cannot yet say \"get the permit before you build\"",
+        "rationale": "Captured under the brainstorm skill while the current increment stays the priority. Split from the vocabulary-usage node because these are different questions: that one asks whether the governance layer earns its keep, this asks where a lesson belongs and what shape a precondition is. The first facet turned out to be answerable by looking, so it is recorded as an answer with its remaining gap rather than as an open question.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-where-does-the-10k-work-actually-land",
       "node_type": "Decision",
       "properties": {
@@ -138041,6 +138389,16 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — the boundary question underneath dec:idea-outward-docs-are-rendered-from-the-graph, 2026-08-11. Separate node because it has an answer whichever way that one goes. Nothing here is intent.\n\nTHE OBSERVATION: reflow2's outward-facing docs are not one kind of thing, and rendering the wrong ones would hollow them out.\n\n  PROJECTABLE — the content IS graph state, and every staleness found today lives here\n    three-axes.md      what the schema holds on each axis; the status column is a COUNT\n    overview.md        the type counts, the reading order, what is built vs planned\n    genesis.md         what the genesis tool does and what it returns\n    artifact-linking.md    what link_artifact / reconcile_artifacts return\n    impact-propagation.md  what propagate_from returns — a worked blast radius IS an example\n    gap-surfacing.md   what detect_gaps returns, and the live gap list\n    heal-process.md    what propose_heal returns\n    viewpoints.md      the catalogue itself is a table of what renders\n\n  IRREDUCIBLE ARGUMENT — no graph query produces this, and a rendered version would be worse\n    vision.md          the four lifecycle transitions and WHY they break. An argument, not data.\n    partnership.md     the LLM failure-mode taxonomy. Most of it is not in the graph and should\n                       not be — \"sycophancy\" is not a node type. Its value is the reasoning.\n    operating-environment.md   the Kennewick-vs-Mars argument for why environments matter, about\n                       a layer with ZERO instances — so a projection would render an empty page\n                       for the doc that explains why the layer should exist at all.\n\n⭐ THE THIRD CASE IS THE INTERESTING ONE AND IT BREAKS THE SIMPLE SPLIT. `operating-environment.md` argues for a capability that has never been used. A pure projection of it renders nothing, because there is nothing to project — the doc's whole job is to explain something the graph does NOT yet hold. Any rendering scheme has to allow a doc to be ABOUT AN ABSENCE without confessing itself into uselessness. The same is true of every doc describing planned work.\n\n⭐ AND THE SPLIT IS NOT PER-DOC, IT IS PER-PARAGRAPH. `overview.md` is mostly reading order and argument, with one sentence carrying \"29 node types, 60 edge types\" — which is the sentence that went wrong. `three-axes.md` is mostly explanation with one STATUS COLUMN that is wrong. So the natural unit is a SECTION, not a file, which is the argument for option (c) in the parent node — embed rendered blocks in prose — rather than rendering whole documents.\n\nIDEAS, unranked:\n(a) Per-section markers: prose files with fenced regions regenerated from a named tool call, and a CI check that re-renders and diffs. Facts under the gate, argument left alone, absence expressible because the prose around the block says what the empty block means.\n(b) Two doc classes with different rules — `docs/rendered/` regenerated wholesale and gate-checked, `docs/` hand-written and exempt. Cleaner to enforce, and it splits a reader's attention across two directories.\n(c) Render everything and accept that argument-shaped docs become thin. Rejected on sight here, recorded so nobody re-proposes it: it would delete the reasoning that is the most valuable content reflow2 has.\n(d) Render nothing; instead add a CHECK that every factual claim in a doc matches the graph. Keeps all prose, needs the claims to be machine-identifiable — which is `check_doc_versions.py` generalised beyond version strings, and that tool already proves the pattern works (it FAILS when a pattern matches nothing, so rewording a doc breaks the build loudly instead of silently disabling the check).\n\n📌 (d) IS CHEAPER THAN IT LOOKS AND IS NOT MUTUALLY EXCLUSIVE WITH (a). `tools/check_doc_versions.py` is already a CI gate that asserts doc claims against the build, anchored on literal phrases, deliberately failing when a pattern matches nothing. Extending its anchors from version strings to type counts would have caught `overview.md`'s \"60 edge types\" this morning for the cost of one line.",
         "name": "OPEN — which outward-facing docs can NEVER be a projection, and how do rendered facts and irreducible argument sit together on one page?",
         "rationale": "Rendering the docs is not one decision — some docs ARE graph state, some are argument no query produces, and one (operating-environment) argues for a layer with zero instances, so a projection of it renders an empty page. The natural unit turns out to be a section rather than a file, which changes what the parent question is actually choosing between.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-who-authors-the-domain-artifact",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-30, revisiting at higher fidelity something he says he has raised several times.\n\nHIS WORDS: *\"creation of views must be native to domain of the design project.\"* Three cases he named — a 3D-printed component for a car engine (.stl or whatever the industry standard is for printing an alloy), his brother's garage (architectural blueprints in a format that domain accepts), and a self-sufficient biodome. And the question under all three: *\"does the agent create the .stl file (not sure if it can or if it would be good) or does it guide the user through using blender or some other software\"*.\n\n⭐ HIS STATED FEAR IS THE CONSTRAINT, AND IT IS NOT GENERIC ANXIETY: *\"an agent can be 'over confident' and can 'hallucinate' thereby giving a design artifact that can't be trusted or used or fills in design considerations without asking the designer.\"* Note the two halves — an artifact that is WRONG, and an artifact that QUIETLY DECIDES something the designer never chose. The second is the one reflow2 already has doctrine about.\n\nDISTINCT FROM dec:idea-reflow2-serves-a-project-that-is-not-software, which asks why the DELIVERY (skills, examples, defaults) is software-shaped when the vocabulary is neutral. This asks who holds the pen for the domain artifact itself, which is not among that node's five options.\n\n═══ A REFRAMING WORTH TESTING BEFORE THE OPTIONS ═══\n\nAn .stl may be the wrong thing to argue about. It is triangle soup — a BUILD OUTPUT nobody reads or reviews, the CAD equivalent of a compiled binary. reflow2 has never claimed to write anybody's binary; it tracks the SOURCE that produces one, with a checksum, realizing a capability.\n\nThe reviewable source for a printed part is parametric: OpenSCAD, CadQuery, build123d. Text. Diffable. Checksummable. Deterministic to compile. A human can read it and disagree with it. If that is right, this case dissolves: the agent may author the SOURCE, because its errors are visible, and the .stl is a build artifact rather than a design artifact. UNTESTED, and it is the first thing to check rather than assert — it may not generalise past parts simple enough to be parametric.\n\n═══ THE OPTIONS, NONE CHOSEN ═══\n\n(a) THE AGENT NEVER AUTHORS A DOMAIN ARTIFACT — it carries the design into the third-party tool and the result back. Safest against his fear, and it matches the division already stated for views (reflow2 serves content, the agent renders). Counter: it makes reflow2 a filing cabinet in domains where the artifact is cheap and reviewable, and an agent writing OpenSCAD is genuinely useful.\n\n(b) THE AGENT AUTHORS ONLY WHAT A HUMAN CAN REVIEW — parametric source, schedules, bills of material, specifications; never opaque geometry, never analysis results. THE LINE IS NOT THE FORMAT, IT IS REVIEWABILITY. Counter: reviewability is a judgement and will be argued at every boundary.\n\n(c) A THIRD TIER THE OTHER TWO MISS — artifacts the agent must not author for LEGAL rather than quality reasons. A garage needs a permit, and in most jurisdictions a structural drawing is stamped by a licensed engineer. An FEA result for an engine component under thermal and cyclic load is a professional judgement somebody is accountable for. Not a hallucination risk; a licensure boundary, and no amount of agent competence crosses it.\n\n(d) REFLOW2 OWNS ONE CLASS NATIVELY, WHATEVER THE DOMAIN — the systems-engineering artifacts: requirements, interfaces, allocations, verification matrices, and resource/mass/energy balances. Domain-neutral by construction, and what reflow2 already IS. On the biodome that may be the most valuable artifact and nobody else produces it: `Flow`, `Resource` and budget `Constraint` already carry roughly a mass-and-energy balance, and the SV-7 measures/budgets viewpoint already renders one.\n\n(e) THE DOCTRINE ALREADY EXISTS AND ONLY NEEDS EXTENDING. docs/viewpoints.md: *\"If rendering requires extrapolating or filling in missing details, that is a sign something is missing or wrong inside reflow2 — not a prompt to improvise.\"* `cap:no-fabricated-repair` says the same for repairs. Extended to domain artifacts: IF PRODUCING THE ARTIFACT REQUIRES DECIDING SOMETHING NOBODY STATED, THAT IS A GAP TO ASK ABOUT, NOT A BLANK TO FILL. This answers the second half of his fear — the quiet fill-in — with machinery that already exists. It does NOT answer the first half: a confident wrong number nobody asked about is still wrong.\n\n═══ WHAT NOBODY HAS MEASURED ═══\nWhether an agent can produce a USABLE parametric part for a real mechanical requirement has not been tried here. Every option above reasons about capability rather than showing evidence of it, and Anthony's own standing question — what did you actually measure — applies to this node as much as to anything else.",
+        "name": "OPEN — when the design's artifacts are an .stl, a blueprint or a mass balance, does the agent AUTHOR them or carry the design into the tool that does?",
+        "rationale": "Captured under the brainstorm skill. Recorded as an open question because the artifact-authorship boundary is genuinely unsettled and the answer differs by domain and by legal exposure — writing it as a requirement would assert a policy nobody has chosen. The reframing (an .stl is a build output; parametric source is the design artifact) is offered as the cheapest thing to test first, not as the answer.\n\n⚠️ OBSERVED INSTANCE OF dec:idea-a-prose-field-silently-absorbed-tool-call-markup, 2026-08-30, stated precisely because the first correction of it overstated the damage. What actually happened: this node's FIRST write put two literal closing tags — `</rationale>` and `</invoke>` — on the TAIL OF THIS FIELD. The `decision` field was unaffected and the field separation itself worked. The write SUCCEEDED and nothing complained. That parked idea now has one observed occurrence rather than only a suspicion, and the observed shape is narrower than feared: markup bleeds into the LAST prose field of a call, it does not collapse fields together.",
         "status": "proposed"
       }
     },
@@ -141727,7 +142085,7 @@
       "node_type": "DesignEpoch",
       "properties": {
         "epoch_type": "release_cut",
-        "name": "PLANNED — seams, the frontier the instruments already name. maturity_report puts seams at 0% (0 of 73 couplings declared through a contract) across 23 releases, and Interface has 3 instances with the 5 spec properties set on none. BL-193 a CONSUMED interface with no spec fires no gap; BL-190 the stewardship edge joins it because a new edge type is a schema change and pairing keeps it to one bump. NO VERSION NUMBER BY DESIGN (dec:idea-a-planned-increment-is-named-by-content-not-by-number). Supersedes epoch:v0270-planned.",
+        "name": "PLANNED — seams become trustworthy before they become work. The instruments that report the seam picture were wrong in both directions: the roll-up dropped 58 of 86 modules and answered a FALSE ZERO, and the module-level band reports a ratio over a population it never names. Fix the instruments, then re-read what they say. NO VERSION NUMBER BY DESIGN (dec:idea-a-planned-increment-is-named-by-content-not-by-number). Supersedes epoch:v0270-planned. REVISED 2026-08-30 — the prior text is preserved on chg:seam-lift-finds-a-container-by-level-not-by-id-prefix and described a world that had moved: it said seams sat at 0% of 73 couplings with 3 Interfaces and none specified, and cited BL-193/BL-190 from a backlog retired 2026-08-07. Today there are 22 Interfaces, several fully specified, and the honest reading is 13 of 19 subsystem boundaries covered with SIX genuinely undeclared.",
         "sequence": 266,
         "status": "planned"
       }
@@ -142120,6 +142478,16 @@
         "name": "Three consumer-reported defects where a served surface destroyed data or stated something false (2026-08-09)",
         "sequence": 298,
         "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:the-systems-views-are-rendered-from-the-graph",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "release_cut",
+        "name": "PLANNED — the systems views are rendered from the graph, and what they cannot render is the finding. SV-1/SvcV-1 (Systems/Services Interface Description) and SV-4/SvcV-4 (Systems/Services Functionality Description), produced by the AGENT querying the design rather than by a fixed renderer — the division dec:agent-navigates-content and docs/viewpoints.md already state, where reflow2 serves the content and the agent renders. Anthony, 2026-08-30: \"we've done so much SE work on reflow2 itself and one of the features of reflow2 is for it to report the design graph content back to agent and the agent renders these views.\" DELIBERATELY AFTER THE SEAM WORK: SV-1 IS an interface description, so it can only be as good as the seam picture — which is why it is the honest test of whether that increment worked, and a better one than hand-writing contracts for reflow2's own six boundaries. NO VERSION NUMBER BY DESIGN (dec:idea-a-planned-increment-is-named-by-content-not-by-number).",
+        "sequence": 267,
+        "status": "planned"
       }
     },
     {
@@ -147839,7 +148207,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "Anthony, 2026-08-13, reframing what had been treated as a chore: \"the step of adding seams for reflow2 needs to be something reflow2 does for ANY project.\"\n\nHe is right that it was framed wrongly. The prior plan was to hand-label reflow2's own 73 couplings, which fixes one design and teaches reflow2 nothing. Every consumer arrives in the same state — components that depend on each other with no contract recorded between them — and the tool should meet them there.\n\n⭐ THE MECHANISM ALREADY EXISTS AND IS DISCARDED. `crates/reflow2-core/src/maturity.rs:203` computes exactly two sets to produce the `seams` band: `couplings` (Component pairs joined by DEPENDS_ON) and `declared` (pairs joined by a real contract — counted only when BOTH a PROVIDES and a CONSUMES are recorded on the same Interface, because \"one-sided is exactly the unrecorded contract the capture skill warns about\"). It divides one by the other, reports a ratio, and drops the difference on the floor.\n\n`couplings - declared` IS the answer, computed on every maturity run, for every design, and never named. On reflow2's own graph that set has 73 members and the band reads 0%.\n\n🛑 AND NOTHING ELSE COVERS IT. `grep seam` in detect.rs returns nothing: there is no gap source for \"these two components are coupled and no contract is declared between them.\" The two interface detectors run the OPPOSITE direction — `unprovided_interface` (an Interface nobody provides) and `unconsumed_interface` (an Interface nobody consumes) — and both require an Interface to already exist. A design that has never declared one is invisible to both.\n\nWHAT THIS MUST NOT DO, and it is the whole constraint. reflow2 can see THAT two components are coupled. It cannot know WHAT the contract is — the medium, the payload, the auth, the direction. Proposing one would be `req:a-repair-suggestion-never-proposes-fabrication` exactly, and `cap:no-fabricated-repair` is the built answer to that class. So the finding names the PAIR and asks; it never drafts the Interface.\n\nTHE SHAPE THAT FOLLOWS FROM THE ABOVE: report each undeclared coupling as a gap whose question is answerable by the person who owns the two components — \"cmp:A depends on cmp:B and no contract is recorded between them; is there one, and what is it?\" — routed through the ordinary detect→ask path, with `gap_to_prompt` doing the wording.\n\n⚠️ TWO THINGS TO GET RIGHT, both learned from detectors this project has already had to retune:\n  · VOLUME. reflow2 alone would emit 73. `chg:gap-reporting-at-corpus-scale` records the same shape biting at an order of magnitude (\"300 captured ideas produce 300 identical gaps\"), and `unexpected_coupling` was RETIRED for firing on correct architecture. An aggregate keyed on the rule — the shape `cap:aggregate-gap-keying` exists for — is more likely right than 73 individual nags.\n  · A DESIGN WITH NO COMPONENT DEPENDENCIES HAS NO SEAMS TO DECLARE, and maturity.rs already says so: \"no two Components depend on each other, so there is no seam to declare.\" The finding must stay silent there rather than reporting a clean 0 as a fault.\n\n📌 WHY IT IS WORTH BUILDING RATHER THAN LABELLING BY HAND: the seams band is reflow2's own frontier and has never moved. Every piece of federation machinery — pair_designs, cap:seam-incompatibility, cap:complementary-pairing, export_surface — is built and verified against fixtures, and has almost nothing to run on in any real design, because no real design has been given a reason to declare its boundaries.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -149554,6 +149922,18 @@
         "provenance": "authored",
         "statement": "Anthony, 2026-08-18, promoted from `dec:idea-a-user-carries-a-persona-that-shapes-every-reply` on his instruction *\"do the where-am-i fix and add the who are you ask\"*, and SHARPENED the same day (see clause 1). Raised from Alex's field report that he was about to show reflow2 to coworkers and expected them to meet reflow2's own vocabulary cold. **That Decision asks WHETHER a stored persona is the right mechanism and stays open; this states WHAT IS OWED.**\n\nWHAT IS REQUIRED, in three parts:\n\n1. **THE AGENT ESTABLISHES WHAT LENS THE READER BRINGS, BEFORE IT READS THE DESIGN BACK — AND THE QUESTION MUST ELICIT A BACKGROUND, NOT AN IDENTITY.**\n\n   ⭐⭐ **THIS CLAUSE WAS SHARPENED BECAUSE THE FIRST VERSION FAILED ON ITS OWN TERMS.** It specified the wording *\"who am I talking to, and what do you work in?\"* — and Anthony caught it immediately: *\"a user could reply with 'Bob' and that doesn't tell you much about Bob and the lens with which he sees his design.\"* **\"Bob\" is a correct answer to that question.** A requirement that names a question which a useless answer satisfies has not stated what it wants. **What is owed is the VOCABULARY THE READER ALREADY OWNS**, and the wording is a means to it — so this requirement states the property and leaves the phrasing to the skill.\n\n   Three obligations follow, and they are separable:\n   (a) **ASK FOR BACKGROUND, NOT IDENTITY** — what they do day to day AND what they trained in.\n   (b) **SHOW WHAT A USEFUL ANSWER LOOKS LIKE.** An example in the question shapes the reply far more reliably than an instruction to answer fully. *\"Software engineer, but my degree is in biology\"* is the shape being asked for.\n   (c) **A THIN ANSWER GETS ONE FOLLOW-UP AND NO MORE.** This is an opening courtesy, not an intake form; interrogating someone about themselves before answering their question is worse than pitching it slightly wrong.\n\n   ⭐ **THE TWO HALVES DIVERGE, AND THE DIVERGENCE IS THE INFORMATIVE PART.** Measured against the two real users: Alex is a **software applications engineer with a bachelor's in BIOLOGY**; Anthony **develops software but came through space acquisitions and systems engineering, with a BS in EE and an MS in EE (electro-optics) focused on space object detection.** Neither is recoverable from a job title, and each changes which explanation lands — living-systems analogies for one, requirements/cost/risk and a physical signal-versus-noise intuition for the other. **A job title alone would have produced the same register for both, and it would have been wrong for both.**\n\n2. **THE ANSWER SHAPES THE REGISTER OF EVERY REPLY, NOT ONLY OF QUESTIONS.** `req:a-question-arrives-with-a-reading` already governs how a CHOICE is put to the user. This covers status readouts, gap lists, explanations of what was built — the replies containing no decision at all, which is most of them.\n\n3. **AND IT NEVER SHAPES THE RECORD.** What is written into the design stays in its own register whoever is in the room, because the next reader is someone else. `second-person-to-him-third-person-in-the-record` is the existing statement of the same split.\n\n⭐⭐ **THE LOAD-BEARING DISTINCTION: THIS IS A VOCABULARY SWAP, NOT A DIFFICULTY DIAL.** Anthony's SE terms — requirement, interface, allocation, verification, TRL, KPP, signal-to-noise — are NATIVE and softening them patronises him and loses precision; what he wants dropped is **reflow2's INTERNAL vocabulary** (gap, loop, detector, node id, \"the loop owes\"). Alex's coworkers meet all of it cold. A hitting coach who knows baseball and not software wants the whole thing in terms he already owns. **None of the three wants \"simpler English\"; each wants a DIFFERENT vocabulary, and only one wants less technical density.** So a plain-language mode or a reading-level setting would be wrong for the primary user, wrong for the coach, and only accidentally right for a generic newcomer.\n\n📌 **THE BACKGROUND IS A STARTING POINT, NOT A VERDICT.** People show their vocabulary by using it. When the reader's own words say more than their opening answer did, the record is updated — a background written once and never revisited goes stale like any other fact.\n\n📌 WHERE IT IS ASKED: `where-am-i` already fires *\"at the start of any session on an existing design\"*, so it is the one moment reliably reached before the agent starts talking, and it is what a NEW person hits first.\n\n🛑 **AND THAT SKILL HARDCODED AN AUDIENCE, WHICH WAS A DEFECT ON ITS OWN.** It read *\"Write it as prose for the person who described this project to you\"* — assuming the reader had briefed the agent. Alex's coworkers briefed nobody. Fixed 2026-08-18 (PR #246).\n\n⚠️ **ASKING WHO SOMEBODY IS DOES NOT VIOLATE `dec:idea-the-graph-vocabulary-never-reaches-the-user`.** That decision forbids making the user choose an INTERNAL CATEGORY — a question about reflow2's schema only reflow2 can answer. Asking about their background asks for the one fact reflow2 genuinely cannot look up. **They are opposites: one hands reflow2's work to the user, the other asks for what only the user has.**\n\n⚠️ **A GUESS IS OFFERED, NEVER ASSUMED.** A login name, a git author or an existing handle is a reasonable offer and a terrible silent default — `req:defaults-do-not-assert`. A description somebody did not choose is a stereotype the design then repeats back forever, and SELF-DESCRIBED vs ASSIGNED is the difference between a good feature and a bad one. **Live instance: Alex's background is recorded RELAYED BY ANTHONY and says so on its face, awaiting his own correction.**\n\nWHAT IS DELIBERATELY NOT REQUIRED, and left open in the Decision this was promoted from: a dedicated persona property on Contributor. `description` carries it today and the trial is reversible; by Anthony's own ruling (`chg:bl179-maturity-profile`) a field no computation reads does not earn its keep. ⭐ **The honest route to earning it is `ver:gap-carries-a-reading`'s `skill_lint`, which ALREADY checks that no served skill hardcodes an ANSWER LANGUAGE — the sibling check, that no served skill hardcodes an AUDIENCE, would make this mechanically enforced rather than instruction-only.**\n\n🛑 UNTIL THAT CHECK EXISTS THIS IS AN INSTRUCTION WITH NOTHING ABLE TO OBSERVE IT — the failure `dec:idea-the-enum-question-came-back-four-days-after-it-was-fixed` measured recurring within four days of a fix shipping. Stated plainly so this is not mistaken for delivered when the prose lands.",
         "status": "proposed"
+      }
+    },
+    {
+      "node_id": "req:the-agent-never-authors-what-requires-accountable-sign-off",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "The agent never authors a design artifact that requires professional licensure or accountable sign-off — it carries the requirement into the tool and the result back as evidence",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Where a design artifact carries PROFESSIONAL ACCOUNTABILITY — a stamped structural drawing, a permit submission, a certified analysis, a safety or medical certification — the agent must not produce it. It may state the requirement the artifact has to meet, identify who or what produces it, and record the returned result as a Verification with its provenance. It must not be the author.\n\nAnthony, 2026-08-30, accepting this after a brainstorm on non-software domains (`dec:idea-who-authors-the-domain-artifact`, where this was tier 3 of three).\n\n⭐ THE REASON IS NOT AGENT QUALITY, AND THAT IS WHY IT IS A REQUIREMENT RATHER THAN A GUIDELINE. The other two tiers turn on whether a human can review the output, which is a judgement that moves as models improve. This one does not move at all: in most jurisdictions a structural drawing for a habitable structure is stamped by a licensed engineer, and an analysis someone relies on is a professional judgement with a name attached to it. No level of model competence makes an unlicensed author licensed. A better agent makes tiers 1 and 2 wider; it leaves this boundary exactly where it is.\n\nDISTINGUISH IT FROM THE FABRICATION RULE IT SITS BESIDE. `cap:no-fabricated-repair` and the viewpoints no-extrapolation rule both stop the agent inventing content nobody stated — they answer \"did anybody decide this?\". This answers a different question: \"is this agent ENTITLED to be the one who says it?\" An artifact can be entirely faithful to the design, invent nothing, and still be one the agent must not sign.\n\nWHAT IT DOES NOT SAY: that reflow2 cannot help with such a design. It can hold the requirements, the interfaces, the allocations and the verification matrix for a permitted building all the way through — and that is most of the work. What it must not do is emit the document that carries somebody's professional signature.\n\nCONCRETE CASES BEHIND IT: a garage extension needing a permit (Alex's, the nearest real candidate), and a car-engine component whose FEA under thermal and cyclic loading somebody is accountable for.\n\nNOT ESTABLISHED: how the boundary is DETECTED rather than merely stated. Nothing in reflow2 today knows which artifact types carry licensure, and jurisdictions differ. A requirement with no detector behind it is the weakest of the three legs — so this is accepted intent with its enforcement still open.",
+        "status": "accepted"
       }
     },
     {
@@ -155038,6 +155418,19 @@
       }
     },
     {
+      "node_id": "fact:seam-roll-up-found-a-container-by-id-prefix-and-answered-a-false-zero",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "ROOT-CAUSE PASS ON THE SEAMS FRONTIER, 2026-08-30, run under the root-cause skill after the trajectory band read `seams 18% (13/72) ← frontier` and the subsystem roll-up read `0 uncovered`. NEITHER NUMBER WAS RIGHT.\n\n═══ ① THE CAUSE — AN ID'S SPELLING TREATED AS ITS TYPE ═══\n\n`DesignGraph::lift_to_level` (crates/reflow2-core/src/maturity.rs) walked up the CONTAINS spine and chose a parent with:\n\n    .find(|p| p.starts_with(\"cmp:\") || p.starts_with(\"sys:\"))\n\nA NAMING CONVENTION STANDING IN FOR THE `level` DECLARATION. Ten of this design's eighteen subsystems are named `sub:*` — sub:tool-surface, sub:finding, sub:telling, sub:evidence, sub:serving, sub:change-and-structure, sub:across-designs, sub:surface-shaping, sub:session-posture, sub:install. Any module contained by one of those returned None from the lift, and the pair was then dropped from BOTH the coupling set and the contract set, so the roll-up went QUIET rather than wrong out loud.\n\n═══ ② WHAT IT COST, MEASURED AGAINST THE COMMITTED EXPORT ═══\n\nThe function was replicated over docs/design/reflow2.json and reproduced the served answer exactly (8 couplings / 8 declared / 8 covered / 83 dropped), which is the check that it is the same computation. With the prefix test replaced by a Component-type test:\n\n                                  as served      corrected\n    modules that fail to lift     58 of 86       3 of 86\n    subsystem couplings compared  8              19\n    covered                       8              13\n    uncovered                     0              6\n    pairs dropped                 83             7\n\nThe six genuinely undeclared subsystem boundaries, invisible until now:\n    sub:change-and-structure <-> sub:finding\n    sub:change-and-structure <-> sub:telling\n    sub:evidence <-> sub:finding\n    sub:evidence <-> sub:telling\n    sub:evidence <-> sys:time-history\n    sub:finding <-> sub:telling\n\nThe three real lift failures are cmp:degraded, cmp:nudge and cmp:sync — the same three named in fact:ten-components-report-a-zero-blast-radius-the-source-contradicts as carrying no coupling edges at all. A separate, already-recorded defect of absence, not this one.\n\n⭐ SO BOTH PUBLISHED READINGS WERE WRONG IN OPPOSITE DIRECTIONS. Module level said 18% and was measuring 72 in-process Rust call pairs against a vocabulary that cannot cover them. Subsystem level said 100% and was a FALSE ZERO — the shape fact:ten-components-report-a-zero-blast-radius-the-source-contradicts already names as the worst answer a coupling model can give, because it is the most reassuring reply available and therefore the one least likely to be questioned. The honest reading is 13 of 19, and six boundaries owe a contract.\n\n═══ ③ THE CLASS, AND IT WAS RECORDED ONE DAY EARLIER ═══\n\nfact:which-properties-are-node-references-is-a-judgement-made-once-and-never-recorded-for-the-others (2026-08-29) found nine dangling references and named the mechanism: *THE ID WAS CONSTRUCTED BY CONVENTION RATHER THAN RESOLVED BY LOOKUP.* This is the same class read in the other direction — the id was INTERPRETED by convention rather than resolved by lookup. One writes an id by guessing its spelling; the other reads a node's type out of its spelling. Both skip asking the graph what the node actually is.\n\nThe fix that generalises is therefore not 'add sub: to the list'. It is that an id prefix is a naming convention and carries no meaning a computation may read; `level`, `node_type` and the schema are where that meaning is declared.\n\n═══ ④ WHY NO TEST CAUGHT IT ═══\n\ntests/seam_coverage.rs had five tests, all passing before and after the repair. Every fixture named its containers `sys:a` and `sys:b` — THE SUITE SHARED THE CODE'S ASSUMPTION. A blind spot in the implementation and a blind spot in its fixture were the same blind spot, so coverage of the function was high and coverage of the question was zero.\n\nPinned 2026-08-30 by two tests written against the unfixed code and OBSERVED FAILING: `a_container_is_found_by_its_level_not_by_how_its_id_is_spelled` (left 0, right 1) and `a_dropped_pair_is_reported_as_a_pair_not_as_an_endpoint`.\n\n═══ ⑤ A SECOND, SMALLER DEFECT FOUND IN THE SAME FUNCTION ═══\n\n`SeamSets.unreachable` increments once per PAIR and accumulates across both sets, but the scope_note called them `endpoint(s)`. On this design that printed '83 endpoint(s) reached no container', which reads as a count of orphaned components — and sent this investigation's first hypothesis (an incomplete containment spine) down a path the data refuted: 83 of 86 modules DO have a direct subsystem parent. Reworded to name pairs.\n\n═══ ⑥ THE REST OF THE CODEBASE WAS SWEPT — THREE MORE SITES, ALL BENIGN ═══\n\nA repo-wide grep for `starts_with(\"<id-prefix>\")` over crates/, excluding tests, found exactly three others: heal.rs:1665, report.rs:1840 and structure.rs:299. ALL THREE READ `decision:ack:`, WHICH REFLOW2 MINTS ITSELF (detect.rs:1437, heal.rs:185) and reads back. Write and read are the same code, so a design that spells its ids differently cannot break them — which is precisely the failure mode that bit seam_coverage, where the ids were authored by whoever built the design. A WEAKER INSTANCE OF THE SAME CLASS AND NOT A LIVE DEFECT: a hand-authored Decision carrying that id would still be misread as a review record. Left alone deliberately, and recorded here so it is a judgement rather than an oversight.\n\n═══ ⑦ NOT ESTABLISHED ═══\n\n· Whether `sub:` versus `sys:` is a distinction anyone MEANT. Both are level `subsystem`; the prefixes carry no declared meaning. If they are meant to, that is a decision nobody has recorded, and this repair is correct either way.\n· The six uncovered boundaries are NAMED, NOT SPECIFIED. What each contract says is design work awaiting the owner.\n· Only `starts_with` was swept. Other spellings of the same mistake — `contains(\"cmp:\")`, a regex over an id, a split on ':' — were not searched for.",
+        "subject_id": "cap:undeclared-seam-is-named",
+        "valid_from": "2026-08-30",
+        "value": "{\"swept_2026_08_30\":\"repo-wide grep for starts_with(\\\"<id-prefix>\\\") over crates/, excluding tests\",\"other_sites_found\":3,\"other_sites\":[\"heal.rs:1665\",\"report.rs:1840\",\"structure.rs:299\"],\"other_sites_verdict\":\"all three read the prefix `decision:ack:`, which reflow2 MINTS itself (detect.rs:1437, heal.rs:185) and reads back. Write and read are the same code, so the convention cannot be violated by a design that spells its ids differently — the failure mode that bit seam_coverage. WEAKER INSTANCE OF THE SAME CLASS, NOT A LIVE DEFECT: a hand-authored Decision carrying that id would still be misread as a review record. Left alone deliberately; recorded so it is a judgement rather than an oversight.\",\"seam_coverage_before\":{\"couplings\":8,\"declared\":8,\"covered\":8,\"uncovered\":0,\"dropped\":83,\"modules_failing_to_lift\":58},\"seam_coverage_after\":{\"couplings\":19,\"declared\":19,\"covered\":13,\"uncovered\":6,\"dropped\":7,\"modules_failing_to_lift\":3},\"uncovered_subsystem_boundaries\":[\"sub:change-and-structure<->sub:finding\",\"sub:change-and-structure<->sub:telling\",\"sub:evidence<->sub:finding\",\"sub:evidence<->sub:telling\",\"sub:evidence<->sys:time-history\",\"sub:finding<->sub:telling\"],\"still_not_established\":[\"whether sub: versus sys: is a distinction anyone MEANT — both are level subsystem and the prefixes carry no declared meaning\",\"what each of the six contracts SAYS — named, not specified; design work awaiting the owner\"]}"
+      }
+    },
+    {
       "node_id": "fact:second-user-first-run-report-2026-08-13",
       "node_type": "TemporalFact",
       "properties": {
@@ -159013,7 +159406,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:6962c73e4858725643827d365c74b41f6764fd92d76be7f3f83bc54c96af3011",
+  "prev_content_hash": "sha256:7e4a4647a73a31671b2f6ff2462fd4a279541922b9a005a75f256dfe0312b9a6",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
