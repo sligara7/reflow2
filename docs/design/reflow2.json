@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:9cfb0b539c3507a126c5ec08271665a1a91bc3f5221fbbbfd8ed5c556ecacf71",
+  "content_hash": "sha256:c9c4840eda0c383583e5eb12431c693f989beb4758aad46120193e4ae9fcbe24",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -3216,6 +3216,14 @@
         "evidence": "That question proposed this audit as its option (a) and predicted what it would find — that the legs were never applied uniformly, and that three legs may not be sufficient. Both came back confirmed: 58% carry all three, and five types carry all three while sitting unused."
       },
       "to_id": "fact:the-three-legs-audit-run-at-last-54-of-93-and-five-types-exist-only-in-the-schema"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "dec:idea-how-does-the-graph-learn-what-a-session-invalidated",
+      "properties": {
+        "evidence": "The earlier one saw this coming and named the mechanism to test. It recorded two sightings and six options in August; this is four more sightings, measured against the option that has since been BUILT, and it reports where that option reaches and where it cannot. It is the evidence that node was waiting for, not a restatement of it."
+      },
+      "to_id": "fact:four-stale-records-in-one-session-and-the-built-mechanism-reached-at-most-one"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -15388,6 +15396,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-design-can-be-asked-what-fraction-of-a-kind-carries-a-relation",
+      "properties": {
+        "acted_at": "2026-08-31",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:a-design-says-what-crosses-each-boundary-between-its-parts",
       "properties": {
         "acted_at": "2026-08-23",
@@ -16971,6 +16988,16 @@
         "validation_status": "validated"
       },
       "to_id": "dec:idea-a-finding-carries-its-bounds"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:five-capabilities-were-built-reachable-and-unreached-and-one-query-shape-found-them-all",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The measurement is what produced the requirement, not a restatement of it: five findings in one session all came from the same hand-rolled question, and noticing that they shared a shape is what turned a repeated inconvenience into a stated obligation. Direction matters here — the fact caused the requirement, and a later reader asking why this was ever required should land on the evidence.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "req:a-design-can-be-asked-what-fraction-of-a-kind-carries-a-relation"
     },
     {
       "edge_type": "CAUSES",
@@ -40011,6 +40038,16 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "fact:four-stale-records-in-one-session-and-the-built-mechanism-reached-at-most-one",
+      "properties": {
+        "evidence": "That accepted requirement states the property — a reader can tell what this design has already achieved without asking a person — and explicitly leaves HOW unsettled. This measures how far the current how actually gets, which is the only thing that can tell whether the requirement is met.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "req:the-graph-can-say-what-has-already-been-done"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "fact:skill-mechanics-track-enforcement-exactly-and-they-split-into-three-kinds",
       "properties": {
         "evidence": "The third mechanic kind — tool-side preconditions — is identified only because that observation counted HOW each of five skills came to be invoked, and found the one self-invoked without the user was the one a tool demanded. Without that count this measurement would have concluded the factory should edit SKILL.md files, which is the wrong artifact for the mechanic that has evidence behind it.",
@@ -40028,6 +40065,16 @@
         "weight_basis": "estimated"
       },
       "to_id": "dec:mosa-conformance"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "req:a-design-can-be-asked-what-fraction-of-a-kind-carries-a-relation",
+      "properties": {
+        "evidence": "That accepted requirement asks the design to surface what was built and is used by nothing, and `consumption_report` correctly declines to answer it at 11% modelled consumption. A general instance-level coverage read is the shape that would let it answer — and would let a reader see the 11% itself, which is the number that governs whether its answer means anything.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "req:the-design-says-what-was-built-and-never-used"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -151296,6 +151343,18 @@
       }
     },
     {
+      "node_id": "req:a-design-can-be-asked-what-fraction-of-a-kind-carries-a-relation",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "A design can be asked what fraction of any declared kind of thing carries a given relation — without somebody writing a script",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Anthony's word, 2026-08-31, promoted from the session's own evidence. STATED AS A PROPERTY, NOT A DESIGN — how it is served is not settled here.\n\nTHE PROPERTY: a reader can ask this design \"of my N things of kind X, how many carry relation R?\" and get an answer, for any X and R the schema declares — not only for the handful somebody has already hardcoded.\n\n📌 DISTINCT FROM `fact:five-capabilities-...-one-query-shape-found-them-all`, having read it: that node MEASURES what one session found and how (five instances, all hand-rolled). This states what must stay TRUE of the product. Recording what was observed and recording what is now required are different acts on the same work, and the fact is the evidence for this requirement rather than a restatement of it.\n\n═══ WHY IT IS A REQUIREMENT AND NOT A CONVENIENCE ═══\nIt is the core traceability question of systems engineering, in the user's own words rather than reflow2's: HOW MANY OF MY REQUIREMENTS ARE ACTUALLY VERIFIED? How many of my components have a declared interface? How many of my capabilities have anything that consumes them? A design tool that cannot answer that on demand asks the user to trust a coverage claim it cannot show its working for.\n\n═══ THE EVIDENCE, MEASURED 2026-08-31 ═══\nFive separate findings in ONE session came from exactly this question, and every one was answered by an ad-hoc script over the committed export because no served read does it:\n    3 of 22 Interfaces carry an incoming VERIFIES\n    3 of 192 Capabilities carry a signature\n    3 of 45 struct-coupled modules sit behind the read trait\n    20 of 181 Capabilities have a recorded consumer\n    3 of 4 Constraints are budgets\n`find_tools` on \"count edges of one type pointing at nodes of another type\" returns a node lister and two bulk WRITERS. Also filed as a `report_manual_work` with diagnosis `tool_missing`.\n\n⭐ FOUR SPECIAL CASES OF THIS SHAPE ALREADY EXIST, WHICH IS THE ARGUMENT. `coverage_report`, `consumption_report`, `seam_coverage` and the delivery line each answer ONE fixed pair, well. That four were built separately says the shape is wanted repeatedly; it also means every new pair needs a new tool and a new release.\n\n🛑 AND THE NEAR-MISS IS WHAT MAKES IT SHARP. `vocabulary_coverage` answers this at TYPE level — is this node type, edge type or property ever used — and on 2026-08-31 it scored the `functional` domain 1.0 on both node and edge types while `set_capability_signature` sat at 3 of 192. USED ONCE AND USED EVERYWHERE IT APPLIES ARE INDISTINGUISHABLE TO A TYPE-LEVEL READING. Instance-level coverage is a different question and the design does not hold it.\n\n═══ ⚠️ WHAT THIS REQUIREMENT MUST NOT BE READ AS ═══\n· NOT a claim that low coverage is a DEFECT. A capability built ahead of its consumer, a deliberate extension point and genuine surplus all produce the same fraction — the caution `consumption_report` already states about itself. The requirement is that the number be ASKABLE, never that it be high.\n· NOT a request for a verdict or a score. `dec:report-dont-judge` governs the neighbourhood and should govern this.\n· NOT settled as to surface. Whether it is one general tool, a parameterised report or a query language is open — and a general form has a cost the four special cases do not: each of those carries domain-specific bounds and `not_observed_about` prose that a generic answer would lose.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:a-design-says-what-crosses-each-boundary-between-its-parts",
       "node_type": "Requirement",
       "properties": {
@@ -158891,6 +158950,18 @@
       }
     },
     {
+      "node_id": "fact:four-stale-records-in-one-session-and-the-built-mechanism-reached-at-most-one",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "measurement",
+        "statement": "A TEST OF THE INVALIDATION MECHANISM AGAINST FOUR REAL CASES, 2026-08-31 — direct evidence for choosing among the six options on `dec:idea-how-does-the-graph-learn-what-a-session-invalidated`, which was recorded 2026-08-23 when only two sightings existed.\n\n═══ OPTION B WAS BUILT, AND IT WORKS ═══\nThat node's option B — \"capture-session ASKS THE INVALIDATION QUESTION\" — has shipped: capture-session carries test 7, and `unclaimed_findings` computes the candidates. Run today it behaved correctly: 2 candidates returned, `subjects_examined: 4`, and on judgement NEITHER was mine to close (one was the live output-schema control arm, one was my own fact from the same day). No false closure, no silence mistaken for an all-clear.\n\n═══ 🛑 AND IT WOULD HAVE REACHED AT MOST ONE OF THE FOUR STALE RECORDS THIS SESSION ACTUALLY FOUND ═══\n① `fact:the-parallel-batch-class-recurred...` — TemporalFact, subject `cap:mcp-surface`, which this session's changes DID touch. REACHABLE in principle. Found by reading it, before any computation was run.\n② `dec:idea-should-optimize-be-a-served-skill-any-project-can-run` — A DECISION, asking whether to build a skill that exists and has run twice. 🛑 STRUCTURALLY OUT OF REACH: `unclaimed_findings` returns TemporalFacts only.\n③ `fact:a-contract-is-the-one-thing-reflow2-cannot-attach-evidence-to` — TemporalFact, subject `cmp:verify`. This session's changes never touched `cmp:verify`, so the subject-changed path would not have surfaced it. Found by reading `schema/verify.yaml` while checking something else.\n④ `dec:bl83a-functional-decomposition` — A DECISION whose prose describes a flat ten while the graph holds 8 subsystems plus 2 systems of five. 🛑 OUT OF REACH for the same reason as ②.\n\n⭐⭐ THE FINDING NONE OF THE SIX OPTIONS NAMES: HALF OF THEM WERE DECISIONS, AND THE WHOLE MECHANISM IS TEMPORALFACT-ONLY. Option A's proposed detector (`stale_measurement`) is defined over `basis: measured` TemporalFacts with no `valid_to`; options C, D and E all key on findings of that same kind. A Decision has no `valid_to` and no equivalent — its `status` moves only on the owner's word, correctly — so a Decision whose text has been overtaken by events has NO mechanism at all, proposed or built.\n\n⇒ ALL FOUR WERE FOUND BY READING, NOT BY ANY COMPUTATION. Two by following a citation, one by opening a schema file for an unrelated reason, one by counting nodes to answer a different question.\n\n═══ ⚠️ BOUNDS, AND THE SECOND ONE IS SERIOUS ═══\n· n = ONE SESSION. Four instances in one day on one design is not a rate.\n· 🛑 THE FOUR ARE NOT INDEPENDENT DISCOVERIES. Finding the first one PRIMED the search: after ①, this session was actively alert to staleness, and ②–④ were found by a reader looking for exactly that. A session not primed would plausibly have found one and carried on. That cuts BOTH ways — it inflates the count, and it means the unprimed case is worse rather than better.\n· It does not measure how many stale records this design holds. The 2026-08-23 figure — 267 open facts, 200 whose subject has since changed — remains the only estimate, and it is an upper bound rather than a count.",
+        "subject_id": "cap:mcp-surface",
+        "valid_from": "2026-08-31"
+      }
+    },
+    {
       "node_id": "fact:gap-to-prompt-tells-the-agent-to-strip-the-vocabulary-its-own-description-says-to-keep",
       "node_type": "TemporalFact",
       "properties": {
@@ -163361,7 +163432,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:f96da0e9f12820fc55d3bc04c3618003e80784b89f5ca93ffd4069b813947d14",
+  "prev_content_hash": "sha256:9cfb0b539c3507a126c5ec08271665a1a91bc3f5221fbbbfd8ed5c556ecacf71",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
