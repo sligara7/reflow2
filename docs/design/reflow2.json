@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:c9c4840eda0c383583e5eb12431c693f989beb4758aad46120193e4ae9fcbe24",
+  "content_hash": "sha256:d3afab4ddb082a797a42f44cba52aeec4e81d836c0e1f3c88d7d7565743bfa77",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -3509,6 +3509,14 @@
       "from_id": "fact:the-signpost-instructs-a-party-that-cannot-act-and-the-absent-client-was-named",
       "properties": {},
       "to_id": "dec:idea-how-does-a-content-only-client-get-an-answer"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "fact:the-target-dir-reached-263-gib-of-this-projects-own-test-binaries",
+      "properties": {
+        "evidence": "The earlier one saw this coming and said so in as many words: its closing note records that the Cargo.toml comment 'says WHAT happened without naming the command that does it safely', and that 'that gap is what cost this session a failed test run'. It named the missing leg a week before the disk filled again."
+      },
+      "to_id": "dec:idea-where-does-a-disk-space-rule-live-when-the-gate-runs-on-the-wrong-machine"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -12965,6 +12973,15 @@
       "from_id": "dec:idea-where-do-lessons-learned-live-and-can-a-user-state-a-precondition",
       "properties": {
         "acted_at": "2026-08-30T00:00:00Z",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-where-does-a-disk-space-rule-live-when-the-gate-runs-on-the-wrong-machine",
+      "properties": {
+        "acted_at": "2026-08-31",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -39538,6 +39555,16 @@
         "weight_basis": "estimated"
       },
       "to_id": "dec:idea-the-governance-layer-is-declared-and-mostly-unused"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-where-does-a-disk-space-rule-live-when-the-gate-runs-on-the-wrong-machine",
+      "properties": {
+        "evidence": "Which option is right turns on that finding: the sweep command is a typed piece of know-how with no instruction surface and no detector, so every option below is really a choice of which missing leg to build. If the three-legs reading is wrong, the cheap advisory options become adequate.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -142125,6 +142152,17 @@
       }
     },
     {
+      "node_id": "dec:idea-where-does-a-disk-space-rule-live-when-the-gate-runs-on-the-wrong-machine",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — Anthony, 2026-08-31, after a Low Disk Space warning: \"we've seen this issue before... adding it as a governance rule for this project\". Nothing chosen.\n\n═══ THE RECURRENCE, WITH TODAY'S NUMBERS ═══\n    earlier sweep (recorded in the `[profile.dev]` comment)   recovered 225 GiB\n    2026-08-24   disk hit 100%, 428 G of 468 G, then 43 MB free; `cargo test --workspace` died with `No space left on device`\n    2026-08-31   81% used; target/debug 194 G; swept 171.7 GiB + 8.1 GiB incremental; 81% → 41%, 88 G free → 266 G\nAt least three occurrences. Today's sweep took under a minute and the knowledge to do it safely already existed.\n\n═══ ⭐ THE FIX IS WRITTEN DOWN IN THREE PLACES AND NONE OF THEM FIRES ═══\n· `[profile.dev]` in the workspace Cargo.toml — describes the phenomenon and does NOT name the safe command.\n· `fact:the-target-dir-reached-263-gib-of-this-projects-own-test-binaries` — has the exact command and the reason for the `-p` flags.\n· An agent's session memory.\nNone is consulted before the disk fills, because nothing asks. THIS IS THE THREE-LEGS PATTERN AGAIN — knowledge present, detector absent — and it is the third instance recorded on 2026-08-31 alone.\n\n🛑 AND THE FAILURE IS A MISDIAGNOSIS, WHICH IS WHY IT COSTS MORE THAN THE SWEEP. On 2026-08-24 a full disk presented as a linker `Bus error`, and `grep -c` on a binary silently found nothing without `-a`. A session can spend an hour on a phantom compiler bug. `rule:success-is-read-from-the-authoritative-object` already covers the general shape; nothing connects it to this instance.\n\n═══ 🛑 THE HARD PART, AND IT IS THE REASON THIS IS A QUESTION RATHER THAN A TASK ═══\nreflow2's governance vocabulary is `DesignRule` + `enforced: true`, and enforcement means FAILING THE BUILD via `reflow2_check.py` in CI. But **CI runs on GitHub's runners, which have their own disk and never see this**. A build gate would fire on the wrong machine, and pass green on the exact machine where the problem lives.\n\n⇒ So the natural home for a governance rule is structurally unable to enforce this one. That is worth more than the disk chore: it is a limit of the governance vocabulary, found by a case it cannot hold.\n\n═══ THE OPTIONS, none chosen ═══\n① A DesignRule with `enforced: false` — record the know-how and the exact command, and accept it is advisory. Cheap, honest, and does nothing on its own. ⚠️ reflow2 had 5 DesignRules, 4 marked `enforced: true`, and NOT ONE carried a VERIFIES — an unenforced rule here has a recorded history of being decoration.\n② THE SessionStart HOOK REPORTS FREE SPACE. It already runs on the developer's machine at the one moment that matters, and `loop_nudge.py` proves a hook can speak. Fires where the problem is; costs a `statvfs` call. ⚠️ Adds noise to every session start for a condition that is rare.\n③ `loop_status` CARRIES IT in `next`, beside unexported work. Same machine, same reader, already the call every session makes. ⚠️ reflow2-core does no file I/O by design — but `sync_debt` already reads files at the MCP layer for exactly this reason, so there is precedent and a place.\n④ A LOCAL PRE-COMMIT OR PRE-TEST CHECK — fires before the expensive command rather than at session start. Closest to the moment of failure. ⚠️ Another hook to install and keep working.\n⑤ CAP THE GROWTH INSTEAD. Already attempted: the `[profile.dev]` comment says plainly that those settings \"only slow the refill\". Tried, insufficient, recorded.\n⑥ DO NOTHING — a known operational chore on one machine, swept in under a minute when noticed. ⚠️ It has now been noticed three times, twice as a confusing failure rather than a warning.\n\n═══ ⭐⭐ THE PRODUCT QUESTION UNDERNEATH, WHICH IS WHY THIS IS WORTH RECORDING AT ALL ═══\n\"When the disk is tight, run `cargo clean -p reflow2-core -p reflow2-mcp`, never the bare form\" is OPERATIONAL KNOW-HOW ATTACHED TO A PART. The capture-intent skill's own routing table has a row for exactly this and it reads: *\"⚠️ Nothing fits cleanly. Say so rather than forcing it into a requirement's prose. Recorded as an open gap in reflow2's own design, not a row to guess at.\"*\n\n⇒ THIS IS A CONCRETE INSTANCE OF AN ALREADY-KNOWN VOCABULARY GAP, arriving from the field rather than from introspection. Every project reflow2 serves has runbook knowledge of this shape — which command to run when, on which machine, and which near-identical command destroys something. reflow2 currently has nowhere to put it, and a design tool that cannot hold a runbook hands that knowledge back to whoever happens to remember it.\n\n⚠️ COUNTER-ARGUMENTS. (1) A disk warning is arguably the operating system's job, not a design tool's, and reflow2 taking it on is scope creep. (2) The single-machine case is cheap to fix by hand and has been, three times, in about a minute each. (3) Nothing here has measured the RATE of refill — the 2026-08-24 note says so explicitly — so any threshold would be picked rather than derived, which the optimize skill forbids for budgets and the same reasoning applies here.",
+        "kind": "exploratory",
+        "name": "OPEN — the disk has filled at least three times and the fix is written down three places that never fire; should this be a governance rule, and where can a rule about a DEVELOPER'S MACHINE even live?",
+        "rationale": "Recorded under the brainstorm discipline — ideas as ideas, nothing promoted. Anthony asked for it as a governance rule; `governance-proposal` is the skill that would settle whether breaking it should stop the build, and it is deliberately NOT run here because the interesting finding is that this rule cannot be enforced the way that skill assumes. Putting it through the standard path would have produced a rule marked enforced that no gate could ever check, on the machine where it matters.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-where-does-the-10k-work-actually-land",
       "node_type": "Decision",
       "properties": {
@@ -163432,7 +163470,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:9cfb0b539c3507a126c5ec08271665a1a91bc3f5221fbbbfd8ed5c556ecacf71",
+  "prev_content_hash": "sha256:c9c4840eda0c383583e5eb12431c693f989beb4758aad46120193e4ae9fcbe24",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
