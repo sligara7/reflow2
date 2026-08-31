@@ -460,9 +460,90 @@ pub(crate) fn revision_of(
     })
 }
 
+/// A prose field that swallowed the tool call's NEXT parameter, so that
+/// parameter never arrived.
+#[derive(Debug, serde::Serialize)]
+pub(crate) struct AbsorbedMarkup {
+    /// The prose field the markup landed in.
+    pub field: &'static str,
+    /// Parameters this tool declares, named inside that field, and absent from
+    /// the call. These are what was lost.
+    pub lost: Vec<&'static str>,
+    pub note: String,
+}
+
+/// Report a prose field that names a parameter **this tool declares** and
+/// **this call did not supply** (`dec:idea-a-prose-field-silently-absorbed-tool-call-markup`,
+/// accepted 2026-08-31).
+///
+/// # It keys on the LOSS, not on the syntax, and that is the whole design
+///
+/// A malformed tool call puts the next parameter's opening tag inside the
+/// current parameter's prose; the write then SUCCEEDS and the named parameter
+/// is simply absent. Nothing else notices — not the schema (a string is a
+/// string), not `undeclared` (the property is declared and merely missing), not
+/// the revision block (it correctly reports replacing one property and cannot
+/// know the replacement is corrupt).
+///
+/// 🛑 MATCHING THE MARKUP ITSELF WOULD BE WRONG, and it was measured rather than
+/// argued. Three nodes in reflow2's own design quote `</decision>` and
+/// `<parameter name=` deliberately — including the decision documenting this
+/// defect and the two findings behind it. Against the committed export:
+///
+/// ```text
+///   "contains the markup at all"                   3 false positives
+///   "names a parameter the node lacks"             2  (both TemporalFacts — a type with no `rationale`)
+///   scoped to the tool's OWN declared parameters   0  across 1,776 nodes
+/// ```
+///
+/// The last row is this function. The scoping is why `create_node` is out:
+/// its `props` bag declares no prose parameters, so "was it supplied?" has no
+/// meaning there.
+///
+/// # It warns; it never refuses
+///
+/// A property bag accepting what arrives is arguably correct, and a refusal
+/// would be a new way to lose a write. Caller keeps the node either way.
+pub(crate) fn absorbed_markup(fields: &[(&'static str, Option<&str>)]) -> Option<AbsorbedMarkup> {
+    for (field, value) in fields {
+        let Some(value) = value else { continue };
+        let lost: Vec<&'static str> = fields
+            .iter()
+            .filter(|(_, v)| v.is_none())
+            .map(|(name, _)| *name)
+            .filter(|name| {
+                // Both emitted forms seen in the field: the explicit
+                // `<parameter name="x">` and the abbreviated `<x>` / `</x>`.
+                value.contains(&format!("<parameter name=\"{name}\""))
+                    || value.contains(&format!("<{name}>"))
+                    || value.contains(&format!("</{name}>"))
+            })
+            .collect();
+        if !lost.is_empty() {
+            let names = lost.join("`, `");
+            return Some(AbsorbedMarkup {
+                field,
+                note: format!(
+                    "`{field}` CONTAINS WHAT LOOKS LIKE THE OPENING OF `{names}`, AND `{names}` \
+                     DID NOT ARRIVE — so this call probably malformed its own tool-call markup \
+                     and that parameter was swallowed into the prose. THE NODE WAS WRITTEN \
+                     ANYWAY and is exactly as you see it; nothing was refused. Read `{field}` \
+                     back: if it ends in tool-call markup, re-send this call with `{names}` as \
+                     its own parameter. A node whose `{names}` is missing because it was \
+                     swallowed reads as one somebody chose not to write, and no detector can \
+                     tell those apart."
+                ),
+                lost,
+            });
+        }
+    }
+    None
+}
+
 /// Attach the advisory blocks a capture result carries — `search_first` when a
 /// create resembles something already there, `revision` when the call landed on
-/// a node that already existed.
+/// a node that already existed, `absorbed_markup` when a prose field swallowed
+/// a parameter that then never arrived.
 ///
 /// The two are mutually exclusive by construction and that is the design:
 /// `search_first` answers *should this be a new node at all*, `revision`
@@ -473,10 +554,20 @@ pub(crate) fn with_capture_notes<T: serde::Serialize>(
     hint: &str,
     found: Option<SearchFirst>,
     revision: Option<Revision>,
+    absorbed: Option<AbsorbedMarkup>,
 ) -> Result<CallToolResult, McpError> {
     let mut v = serde_json::to_value(value).map_err(ser_err)?;
     if let Some(obj) = v.as_object_mut() {
         obj.insert("loop_hint".into(), JsonValue::String(hint.to_string()));
+        // Speaks only when something was actually lost. A block present and
+        // empty on every capture is the noise its two siblings are explicitly
+        // built not to become.
+        if let Some(am) = absorbed {
+            obj.insert(
+                "absorbed_markup".into(),
+                serde_json::to_value(am).map_err(ser_err)?,
+            );
+        }
         if let Some(sf) = found {
             // Only speak when there is something to say: a block that is
             // present and empty on every single create is the noise this is
@@ -722,6 +813,11 @@ impl ReflowService {
              loop_status says what's owed",
             found,
             revision,
+            // No observed instance on this tool yet, and the check is a
+            // one-line extension when there is one. Wired where the harm was
+            // measured (`add_decision`, `add_change_event`) rather than
+            // everywhere on the argument that it might apply.
+            None,
         )
     }
 
@@ -807,6 +903,11 @@ impl ReflowService {
              the capture batch lands (detect-and-ask)",
             found,
             revision,
+            // No observed instance on this tool yet, and the check is a
+            // one-line extension when there is one. Wired where the harm was
+            // measured (`add_decision`, `add_change_event`) rather than
+            // everywhere on the argument that it might apply.
+            None,
         )
     }
 
@@ -950,6 +1051,11 @@ impl ReflowService {
             "loop: structural change — run detect_defects (check-health) when the batch lands",
             found,
             revision,
+            // No observed instance on this tool yet, and the check is a
+            // one-line extension when there is one. Wired where the harm was
+            // measured (`add_decision`, `add_change_event`) rather than
+            // everywhere on the argument that it might apply.
+            None,
         )
     }
 
@@ -1108,6 +1214,11 @@ impl ReflowService {
              (check-health) when the batch lands",
             found,
             revision,
+            // No observed instance on this tool yet, and the check is a
+            // one-line extension when there is one. Wired where the harm was
+            // measured (`add_decision`, `add_change_event`) rather than
+            // everywhere on the argument that it might apply.
+            None,
         )
     }
 
@@ -1284,6 +1395,11 @@ impl ReflowService {
             "loop: a Constraint binds what it CONSTRAINS — wire it, then run detect_gaps",
             found,
             revision,
+            // No observed instance on this tool yet, and the check is a
+            // one-line extension when there is one. Wired where the harm was
+            // measured (`add_decision`, `add_change_event`) rather than
+            // everywhere on the argument that it might apply.
+            None,
         )
     }
 
@@ -1627,6 +1743,14 @@ impl ReflowService {
              (set_decision_status)",
             found,
             revision,
+            // One of the two tools with observed instances: five in reflow2's
+            // own design, two more in `proj:bhome`. `decision` swallowing
+            // `rationale` is the exact shape every one of them took.
+            absorbed_markup(&[
+                ("name", Some(&name)),
+                ("decision", Some(&decision)),
+                ("rationale", req.rationale.as_deref()),
+            ]),
         )
     }
 

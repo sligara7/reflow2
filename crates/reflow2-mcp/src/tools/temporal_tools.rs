@@ -456,10 +456,23 @@ impl ReflowService {
             .map_err(dyno_err)?;
             changed.push(json!({ "node_id": a.node_id, "action": action }));
         }
-        ok_json(json!({
+        // The second of the two tools with observed instances. `summary`
+        // swallowing `rationale` is how `chg:the-relatedness-judgement-rides-
+        // the-refusal` lost its reasoning, and how bhome's ChangeEvent lost
+        // its own on 2026-08-31. Warns; never refuses — the event above is
+        // already written.
+        let mut out = json!({
             "event": NodeDto::from(event),
             "changed": changed,
-        }))
+        });
+        if let Some(am) = crate::tools::capture::absorbed_markup(&[
+            ("name", Some(&name)),
+            ("summary", req.summary.as_deref()),
+            ("rationale", req.rationale.as_deref()),
+        ]) {
+            out["absorbed_markup"] = serde_json::to_value(am).map_err(ser_err)?;
+        }
+        ok_json(out)
     }
 
     #[tool(

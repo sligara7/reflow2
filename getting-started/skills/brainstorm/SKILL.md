@@ -138,7 +138,17 @@ are unsure, the "no real relation" line *is* the correct answer — not the weak
 When the thinking is done, ask which ideas the user wants to keep as intent. Then:
 
 - **Promoted** → **capture-intent** takes over: Requirements at `proposed`, capabilities, the
-  golden thread. The brainstorm Decision stays, now with the road that was taken recorded on it.
+  golden thread. The brainstorm Decision stays, now with the road that was taken recorded on it —
+  and **`EVOLVES_INTO`, drawn from the idea to what it became, is how you record that.**
+
+  ⭐ **NAMED HERE BECAUSE NOTHING POINTED AT IT AND A USER FOUND IT ANYWAY.** `proj:bhome`
+  reported on 2026-08-31: *"`EVOLVES_INTO` turned out to be exactly the right edge for a
+  promotion, and no instruction pointed at it."* The obvious reading of "the road that was taken
+  recorded on it" is to rewrite the decision's prose — which means re-sending a multi-kilobyte
+  field to append one sentence, and meeting the revision-safety warning at the one moment it is
+  most likely to be earned. The edge records the same fact structurally, costs nothing, and is
+  queryable. Its own definition fits without stretching: *the source is an earlier form that
+  becomes the target over time.*
 - **Everything else stays exactly where it is.** Recorded as considered, never deleted — the roads
   not taken are part of the design's memory, and a later session that finds an old idea knows both
   that it was thought of and that it was not chosen.
