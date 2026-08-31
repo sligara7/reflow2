@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:b111ed5df1ef64955984294ea36fe920ff133fbd917792285daa0dda636f1cff",
+  "content_hash": "sha256:014e2ef3df74b066bf69e672cfb2eae05f2bb49ffeee330c53a8665a4edaf6c1",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -13492,6 +13492,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:the-unexported-work-check-keeps-its-node-count-and-says-so",
+      "properties": {
+        "acted_at": "2026-08-31",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:the-vocabulary-half-of-the-foundation-is-deliberately-open",
       "properties": {
         "acted_at": "2026-08-20",
@@ -23200,6 +23209,15 @@
         "action": "modified"
       },
       "to_id": "art:dependency-manifest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-f362caf13ee19150",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:the-export-can-be-ordered-before-its-writes"
     },
     {
       "edge_type": "CHANGED",
@@ -33104,6 +33122,33 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-early-export-warning-earns-its-number",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:the-export-can-be-ordered-before-its-writes"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-early-export-warning-earns-its-number",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-exchange"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-early-export-warning-earns-its-number",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:mcp-surface"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-enforced-rule-gets-its-detector",
       "properties": {
         "accepted_baseline": false,
@@ -33632,6 +33677,15 @@
         "action": "modified"
       },
       "to_id": "dec:a-restore-reports-an-unresolvable-reference-rather-than-refusing-it"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-in-step-line-names-its-blind-spot",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:sync-debt"
     },
     {
       "edge_type": "CHANGED",
@@ -35719,6 +35773,16 @@
         "action": "modified"
       },
       "to_id": "cmp:byte-store"
+    },
+    {
+      "edge_type": "CLAIMS",
+      "from_id": "who:claude-code",
+      "properties": {
+        "depth": 2,
+        "note": "Closing the parallel-batch ordering class at the root: (1) reproduce the race with two overlapping calls at one server — the measurement fact:the-decision-race-is-caller-ordering-not-read-after-write and fact:the-parallel-batch-class-recurred both say is owed and nobody has run; (2) write the tool-description fix named 2026-08-09 and never built; (3) guard the write-then-export hazard, which is the shape that can commit a wrong export.",
+        "seat": "asligar-bitecool:session-01b82ee4"
+      },
+      "to_id": "cap:mcp-surface"
     },
     {
       "edge_type": "CLAIMS",
@@ -41350,6 +41414,14 @@
       "from_id": "art:schema-temporal",
       "properties": {},
       "to_id": "dec:how-should-a-temporal-fact-carry-its-date-when-there-is-no-epoch"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "art:sync-debt",
+      "properties": {
+        "note": "This file holds the node-count comparison the decision rules on: the `live_nodes > export_nodes` arm stays, the in-step arm gains the sentence naming what it cannot see, and no further detector is built here. A later session proposing to add one — or to reach for `write_gen` — should read the rejection before writing code."
+      },
+      "to_id": "dec:the-unexported-work-check-keeps-its-node-count-and-says-so"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -113823,6 +113895,24 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "fact:the-early-export-is-measured-and-a-property-only-write-is-invisible-to-the-net",
+      "properties": {
+        "at": "2026-08-31",
+        "note": "ITS CLOSING CAVEAT IS ANSWERED AND ITS CENTRAL CLAIM IS CONFIRMED, NOT OVERTURNED. That note ends \"NOT VERIFIED BY EXECUTION HERE: the mechanism was read from the code rather than reproduced with a concurrent client... A reproduction would be two overlapping tool calls against one server asserting the failure disappears when they are sequenced.\" Both halves have now been run — `sequenced_the_same_pair_always_succeeds` and the two spawn-based arms measured here — and its diagnosis holds exactly: the hazard is ORDER, not visibility, and read-after-write was never the problem.\n\n⭐ ITS OTHER PREDICTION ALSO CAME TRUE, twenty-two days later and at cost. It said \"THE GENERAL FIX IS A DESCRIPTION, NOT A FEATURE\" and warned that collapsing one pair would not close an open set. The instance fix was built, the description was not, and the same user hit the same class through a different pair — which is the whole of fact:the-parallel-batch-class-recurred-because-only-its-instance-was-fixed. This node was right and was under-acted-on, which is worth more than being right.\n\n🛑 WHAT IS NOT CLAIMED: the reproduction stays deliberately short of asserting that a concurrent batch FAILS. That is a scheduler outcome and pinning it would flap. The arms COUNT the outcome instead and are ignored by default."
+      },
+      "to_id": "fact:the-decision-race-is-caller-ordering-not-read-after-write"
+    },
+    {
+      "edge_type": "INVALIDATES",
+      "from_id": "fact:the-early-export-is-measured-and-a-property-only-write-is-invisible-to-the-net",
+      "properties": {
+        "at": "2026-08-31",
+        "note": "TWO CLAUSES RETIRED, AND THE NODE OTHERWISE STANDS IN FULL. (1) Its ⑦ says \"whether export_graph can in fact be ordered before a write in the same batch is reasoned from the shared lock, not measured\" — it is now measured at ~45% with each call on its own task. (2) Its ⑤ names the cause of the recurrence as \"the fix addressed the pair and THE DESCRIPTION WAS NEVER WRITTEN\"; the description now exists in two places, both shipped in PR #392 the same day that fact was written — service.rs:397 gives every NodeNotFound refusal the ordering hazard, and exchange.rs gives export_graph the silent-early-export warning.\n\n⚠️ AND THE STALENESS ALREADY COST SOMETHING, which is why this edge is drawn rather than left to a reader. On 2026-08-31 a session read this node's ⑦, reported all three items as outstanding, and recommended building work that was already on main and passing. The record said \"not established\" about work that had shipped hours earlier — the same shape as the Verification-status incident that put Constraints into the where-am-i pass.\n\n🛑 WHAT STILL STANDS AND IS NOT CLAIMED HERE: its ① and ② (the pin's Node not found is the CORRECT answer, not a write-path defect), its ③ discriminating measurement on the checksum call, its ④ reading that the danger is write-then-export rather than write-then-write — now confirmed rather than overturned — and its remaining ⑦ clause that whether the checksum write landed is INFERRED from the refusal channel, not observed in Alex's graph. That last is untouched."
+      },
+      "to_id": "fact:the-parallel-batch-class-recurred-because-only-its-instance-was-fixed"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "fact:the-overreach-is-n1-of-312-and-89-percent-of-facts-have-no-name-at-all",
       "properties": {
         "at": "2026-08-27",
@@ -117659,6 +117749,15 @@
         "completeness": "partial"
       },
       "to_id": "cap:publish-surface"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:the-export-can-be-ordered-before-its-writes",
+      "properties": {
+        "completeness": "partial",
+        "conformance": "verified"
+      },
+      "to_id": "cap:mcp-surface"
     },
     {
       "edge_type": "REALIZES",
@@ -124144,6 +124243,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:the-export-can-be-ordered-before-its-writes",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:the-export-can-be-ordered-before-its-writes"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:tools-ask",
       "properties": {
         "action": "created"
@@ -126937,7 +127044,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:9d1d436090d03e4910d98fd89225efb7a13a7d23d95a06193cf0d97f68075603",
+        "checksum": "sha256:ca2aff3556bafb7fd4c5134a93b8c42d7aa14b827f830f52bffc2ce160c089f1",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/sync_debt.rs",
         "name": "sync_debt.rs",
@@ -127290,6 +127397,17 @@
       }
     },
     {
+      "node_id": "art:the-export-can-be-ordered-before-its-writes",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:56d765358bc4bc6ec48643bff710598463f65ff3098803129f029eb6f5990404",
+        "location": "crates/reflow2-mcp/tests/the_export_can_be_ordered_before_its_writes.rs",
+        "name": "the_export_can_be_ordered_before_its_writes.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:tools-ask",
       "node_type": "Artifact",
       "properties": {
@@ -127372,7 +127490,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:686b07a7ca5a6defc589aec6f5e9f9fcbfbc81c605237e61397c3763ada53936",
+        "checksum": "sha256:4576905d2355e6f2a62eebb6051716caee7a51c56ab6282afe097e3ff045df15",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/exchange.rs",
         "name": "tools/exchange.rs",
@@ -133067,6 +133185,16 @@
       }
     },
     {
+      "node_id": "chg:accept-f362caf13ee19150",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-31",
+        "name": "`cargo fmt --all` reflowed the file after it was registered; no assertion, arm or measured number moved.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-f499d8ed8cbf3d1e",
       "node_type": "ChangeEvent",
       "properties": {
@@ -136288,6 +136416,18 @@
       }
     },
     {
+      "node_id": "chg:the-early-export-warning-earns-its-number",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "documentation",
+        "detected_at": "2026-08-31",
+        "name": "The export ordering hazard is measured, and the warning says by how much",
+        "rationale": "A warning that says a thing CAN happen and a warning that says it happens 45% of the time are read differently, and only one of them changes what a harness author does.\n\n⭐ THE METHOD WAS THE TRAP, and it is recorded so nobody re-measures it wrong. Driving the pair with tokio::join! in one task reads 1% — join! polls in order, the write takes the lock first, and the honest conclusion from that number is \"too rare to mention\". The per-task shape a real server uses reads 45%. A 40x method artefact sat between the obvious measurement and the true one.\n\n🛑 THE PART WORTH ACTING ON IS THE SECOND ARM. sync_debt's unexported-work nudge fires on live_nodes > export_nodes, so it sees an early export that dropped a NODE and is blind to one that dropped a PROPERTY change — measured, 0 of 10 caught. That is precisely the shape of Alex's 2026-08-30 report (set_artifact_checksum, old checksum still in the export), so the one net that exists would not have told him. Whether to replace the node-count proxy with something that moves on any write is left as a decision rather than built: the service already counts write generations, but that counter is per-process and resets on restart, so it is a candidate and not yet a design.\n\n⚠️ AND THE PROMPT FOR ALL OF THIS WAS A STALE RECORD. A session read the 2026-08-30 finding's \"not established\" section, reported three items as outstanding, and recommended work that had shipped in PR #392 hours earlier and was passing on main. Two INVALIDATES edges now stand against that node so the next reader meets the correction rather than the claim.",
+        "subject": "record",
+        "summary": "Took the measurement two findings said was owed, and rewrote export_graph's parallel-batch warning to carry it. The hazard was real: with each call on its own task, as a real server runs them, the export serialised a state missing a concurrent write in 91 of 200 trials (~45%). Added crates/reflow2-mcp/tests/the_export_can_be_ordered_before_its_writes.rs — two arms, ignored by default because they are measurements rather than gates. No behaviour changed; the description now states a measured rate instead of a mechanism argument, and names the blind spot in the downstream net."
+      }
+    },
+    {
       "node_id": "chg:the-enforced-rule-gets-its-detector",
       "node_type": "ChangeEvent",
       "properties": {
@@ -136474,6 +136614,18 @@
         "rationale": "A DECISION IS SETTLED ON ITS RATIONALE, SO CORRECTING THE RATIONALE FIRST IS THE WHOLE POINT. Accepting it as written would embalm a false claim about this project's own history at the moment it becomes binding — and an accepted Decision is what `where-am-i` reads back to the user as \"what you decided\", which is where a fiction does the most damage.\n\nTHE TWO EDITS PULL IN OPPOSITE DIRECTIONS, and both are recorded rather than only the convenient one. Withdrawing the rename leg WEAKENS the case for reporting: that leg argued the write-time guard cannot reach the real cause, and on this graph it reaches all nine. Closing the laundering cost STRENGTHENS it: the one price the decision admitted paying is now paid down by a detector that did not exist when it was drafted.\n\nWHAT IS DELIBERATELY NOT TOUCHED: the decision text itself, and the three arguments that carry it — an import ASSERTS NOTHING and reproduces a state the document is evidence of; refusal left this design's own 3388-node export unrestorable with hand-editing the export as the only remedy, which is the one thing the project tells users never to do; and `ImportReport` already answers this same question three times the other way (`skipped_edges`, `integrity_note`, `provenance_note`), so refusing here would have one import refusing what its neighbour two lines up reports. None of those three rested on the rename claim.\n\nSTATUS IS NOT MOVED BY THIS EVENT. `rule:design-intent-moves-only-on-the-owners-word` is ENFORCED and `check_intent_authority` fails the build on settled intent with no approver, so the ruling is Anthony's and is asked for separately. This only makes the thing he is ruling on true.",
         "subject": "record",
         "summary": "`dec:a-restore-reports-an-unresolvable-reference-rather-than-refusing-it` is about to be put to Anthony for a ruling, and its rationale contains a claim measured false the same day. Two edits, both to the rationale, none to the decision text: (1) the sentence \"four capabilities renamed after the fact was written\" is withdrawn and replaced with what was actually measured — those four ids never existed as nodes, so all nine of this graph's dangling values were wrong when written and every one would have been refused at write time; (2) the stated COST — \"import is now a path by which a dangling reference can enter a graph that did not have one — an export/import laundering route the write guard closes\" — is updated, because that route is no longer silent: the `dangling_reference` rule shipped in #373 reports an unresolvable reference on its own terms whatever the node's degree, so anything an import launders is detected on the next sweep rather than never."
+      }
+    },
+    {
+      "node_id": "chg:the-in-step-line-names-its-blind-spot",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-31",
+        "name": "The clean sync line says what a node count cannot see",
+        "rationale": "The defect was never that the check is incomplete — it is that its quiet read as a guarantee. All three bounds were already written down in the Rust doc comment, which is exactly where no agent and no user has ever read them; that is fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it happening inside reflow2's own code.\n\n⭐ FOURTH INSTANCE OF A PATTERN THIS PROJECT HAS ALREADY CHOSEN THREE TIMES, which is why it was preferred over new machinery: open_questions carries a loop_hint so count 0 cannot read as an all-clear; detect_defects carries swept.note and coverage_note naming what a sweep could not have found; detect_gaps reports share_of_anchored so a narrowed answer cannot pass as the whole. A reply that cannot tell \"nothing to report\" from \"nothing I can see\" has to say which it is.\n\n🛑 WHAT WAS DELIBERATELY NOT BUILT, and why, is on dec:the-unexported-work-check-keeps-its-node-count-and-says-so (accepted, Anthony 2026-08-31): write_gen is rejected outright because it resets on restart and would produce a FALSE ALL-CLEAR, and no second detector is built because reflow2_check.py already fails the build on a checksum_change. The counter-argument is recorded there too — that gate fires only at commit time and only over registered artifacts, so the uncovered cases are named rather than papered over.",
+        "subject": "system",
+        "summary": "sync_debt's in-step message used to read \"X is exactly where this graph left it.\" full stop, so its silence was taken as \"everything of mine is in that file\". It never could promise that: the comparison counts NODES, so a write that changed only a property or only an edge leaves both counts equal and lands in that arm looking settled. The line now names the instrument and both shapes it is blind to, and carries the measured 0-of-10. Pinned by the_in_step_line_says_what_a_node_count_cannot_see, alongside the existing counterweight test that the same arm must still raise no alarm. The third bound is also added to SyncDebt::export_nodes's doc comment, which previously stated only two."
       }
     },
     {
@@ -142515,6 +142667,16 @@
         "decision": "Anthony, 2026-08-25, accepting a proposed functional grouping put to him with alternatives. **Applied the same day.**\n\n    BEFORE   95 components   depth {1:13, 2:80, 3:2}   span>7: 3  (coherence-loop 28, agent-surface 25, foundation 10)\n    AFTER   105 components   depth {1:13, 2:37, 3:55}  span>7: 2  (tool-surface 12 deliberate, foundation 10 out of scope)\n             hierarchy_issues 0        multiple_parents 0\n\n⚠️ **THIS PARTIALLY SUPERSEDES `fact:adopt-recovers-depth-cleanly-and-cannot-recover-the-functional-carving`**, which the duplicate guard surfaced and which is the measurement that motivated this work. Its headline reads *\"the hand-built functional design violates span of control in 4 places\"* — that was true when written this morning (coherence-loop 28, agent-surface 25, reflow2 13, foundation 10) and is **now 2**, of which one is deliberate and one out of scope. **Everything else in that fact still stands**, including its central finding that adopt cannot recover the functional carving, which is exactly why this split was done by hand.\n\n═══ sys:coherence-loop, 28 → 5 ═══\n\n    Finding              7   detect heal hierarchy surprises granularity consumption coverage\n    Telling              6   report ility maturity dimensions regions scope\n    Evidence             6   verify artifact confirm drift fielded operate\n    Change and structure 6   propagate budget structure allocate relate claims\n    Across designs       3   compose depends seam\n\n⭐⭐ **SEPARATING FINDING FROM TELLING IS THE OBSERVABILITY CUT, and it is why this grouping and not another.** `dec:reflow2-is-built-for-observability` (accepted hours earlier) says this design is built so its answers never misrepresent what it knows. Observability-driven allocation wants THE INSTRUMENT SEPARATED FROM THE SUBJECT — a part that finds a problem must not be the part that decides how loudly to report it. Fusing detection and reporting is how a green gate over uncovered ground gets built without anybody choosing to. **The quality target was not decoration; it picked the cut.**\n\nEvidence is separate from both because Finding and Telling reason ABOUT THE DESIGN while Evidence reasons about THE WORLD THE DESIGN DESCRIBES — the boundary where as-designed and as-built are allowed to disagree.\n\n═══ sys:agent-surface, 25 → 5 ═══\n\n    Tool surface         12   the twelve tools-* slices\n    Serving and transport 6   service main mcp-http proxy shared registry\n    Session posture       3   latent sync-debt discover\n    Surface shaping       3   dto bulk skills\n    Install               1   init\n\n🛑 **THE TOOL SURFACE STAYS AT 12, OVER THE BAND, ON HIS EXPLICIT WORD:** *\"leave it at 12 — don't invent a rung.\"* Those slices are already a partition of ONE surface, cut once by lifecycle phase. Splitting them to reach seven would use span of control as a GENERATOR — the error the open-ladder decision and the whole depth-is-a-consequence argument forbid. **The band said 25 was wrong. It does not say 12 is.**\n\n📌 **AND `Install` IS A SUBSYSTEM OF ONE, KEPT THAT WAY.** It is the only part that writes into a repository that is not reflow2's own; folding it into a bigger box to avoid a group of one would hide the single place where the blast radius leaves this project. Group size is a check on whether a grouping is doing work, never a quota to fill.\n\n═══ HOW THE RUNG WAS MADE, and the alternative rejected ═══\n\nThe declared ladder is `part ▸ component ▸ subsystem ▸ system ▸ …` and there is no rung between `subsystem` and `component`. Two ways to make room: DEMOTE the 53 modules to `part`, or PROMOTE the two containers to `system`. **Promotion, because it preserves what every existing node means** — the modules stay components — and changes 2 levels instead of 53.\n\n⚠️ THE COST, STATED: the top tier is now MIXED — 8 subsystems and 2 systems under the Project. That asymmetry is honest rather than accidental: these two really are bigger, holding 84 and 49 of 211 capabilities between them.\n\n🛑 **WHAT THIS DELIBERATELY IS NOT: the module hierarchy adopt recovered.** That trial's top tier was `cmp:crate-reflow2-core` and `cmp:crate-reflow2-mcp` — CRATES. Applying it would have replaced a functional carving with a structural one and overturned `dec:bl83a-functional-decomposition`. A functional over-span wants a functional answer; the module view stays evidence, never a replacement spine. (The scratch graph is gone in any case — the only stores left on disk are from 2026-08-20 and hold the flat pre-nesting version.)\n\n📌 STILL OPEN, surfaced by this split rather than created by it: `cmp:claims` (coordination of parallel work) and `cmp:operate` (deploy/environments) may not belong in the coherence loop at all. Both were placed rather than resolved, and the discomfort is written on `sub:change-and-structure`. `sys:foundation` at 10 children was out of scope and is still over the band.",
         "name": "DECIDED — coherence-loop and agent-surface each gain a functional rung; the tool surface stays at 12 rather than inventing one",
         "rationale": "Settled by the user against recorded alternatives on both questions — a broader three-group split and a member-by-member walkthrough for the first, a phase-split of the tool slices and a defer-agent-surface option for the second.\n\nDISTINCT FROM the adopt trial fact the guard surfaced, and the line is clean: that node MEASURED that depth is recoverable from the artifact and that the functional carving is not. This is the DECISION about what the functional rung actually is — which had to be made by hand precisely because that measurement said inspection could not produce it. The fact motivated this; it does not contain it.\n\nRecorded as one decision covering both splits because they share their method and justification: the same ladder problem, the same promotion choice, and the same rule that span of control checks a grouping rather than generating one. Two nodes would duplicate the reasoning and let one drift.\n\nThe two groups that break the band — tool surface at 12 and Install at 1 — are argued IN the decision rather than apologised for, because a later reader running span of control will find them and needs to meet the reason rather than re-derive it.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:the-unexported-work-check-keeps-its-node-count-and-says-so",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "The `live_nodes > export_nodes` comparison in `sync_debt` STAYS AS IT IS. No second detector is built for the property-only case it misses. What changes is that the in-step line now says what a node count cannot see, so its quiet stops reading as a guarantee.\n\n`write_gen` — the per-process write counter on `ReflowService` — is REJECTED as the instrument, not deferred.\n\n📌 HOW THIS DIFFERS FROM THE THREE NODES IT WAS OFFERED AGAINST, having read them: `dec:idea-the-graph-notices-the-record-moved-without-being-asked` decided the check should EXIST and be gated on a content hash; `fact:defect-nothing-in-the-loop-reports-unexported-work-...` recorded that in_step was being misread; `fact:the-early-export-is-...-invisible-to-the-net` measured how far the resulting proxy falls short. All three are about the finding. This one is about the INSTRUMENT: which mechanism to measure with, and the ruling that no further mechanism gets built.",
+        "name": "DECIDED — the unexported-work check keeps its node-count proxy and names its blind spot; write_gen is rejected",
+        "rationale": "Anthony's word, 2026-08-31, on a recommendation with its counter-argument stated.\n\n═══ WHY NOT write_gen ═══\nIt is an `AtomicU64` on the service and RESETS ON RESTART. A session that starts fresh reads generation 0 against a recorded 57 and the comparison says CLEAN — a false all-clear, which is the one direction a safety net must never fail in. Making it fail safe means reading \"lower than recorded\" as \"unknown, so nudge\", which fires at every session start and teaches people to ignore the nudge. That is worse than the gap it closes. Rejected on the merits rather than parked, so it does not return as an open candidate.\n\n═══ WHY NOT A SECOND DETECTOR AT ALL ═══\nThe correctness net already covers the reported case, and this was verified in code rather than assumed: `tools/reflow2_check.py` hashes every registered artifact from the working tree, calls `reconcile_artifacts` with `exhaustive: true`, and puts any `checksum_change` into `failures` — a RED BUILD naming the remedy. The 2026-08-30 field report's exact scenario (early export, stale checksum, file on disk moved) fails that gate on the next commit. A second detector for a failure the gate already catches is a duplicated check.\n\n⚠️ AND THE COUNTER-ARGUMENT, which is real and was put before the decision: the gate fires at COMMIT time and only over REGISTERED ARTIFACTS. A wrong export sitting in a working tree between commits is unguarded, and a design change touching no artifact — a property on a Requirement, a status, an edge — is outside the artifact reconcile entirely. So \"the gate covers it\" is true of the reported case and not of every case. If those become the ones that bite, this decision is the thing to revisit.\n\n═══ WHY THE MESSAGE, AND NOT MACHINERY ═══\nThe bounds were already written down — all of them, in `SyncDebt::export_nodes`'s doc comment — where no agent and no user has ever read them. The defect was never that the check is incomplete; it is that its silence read as completeness. This project has already chosen that same remedy three times (`open_questions`'s hint on an empty answer, `detect_defects`'s `swept.note` and `coverage_note`, `detect_gaps`'s `share_of_anchored`), so this is a fourth instance of an established pattern rather than a first instance of a new mechanism.\n\n📌 EDGE COUNTING WAS ALSO CONSIDERED AND IS RULED OUT BY AN EXISTING COST ARGUMENT, recorded on the same field: counting edges means walking every node's adjacency, which costs what the export costs, and paying that on the path every ordinary session takes is the thing this check exists to avoid.\n\n⭐ ONE PREMISE HAS MOVED AND IS RECORDED HERE SO THE NEXT READER MEETS IT. The decision that keeps the EXACT comparison off the ordinary path — pinned by `the_expensive_export_is_not_built_on_the_ordinary_path` — was taken when `build_export_doc` measured 1,137 ms. It has measured 236.5 ms since 2026-08-25, a 4.8x improvement, and nothing revisited it. The closure argument still holds on the common path, so nothing changes today; but that decision now cites a cost that is no longer true, and exactness is the door if the uncovered cases above ever start to bite.",
         "status": "accepted"
       }
     },
@@ -148729,6 +148891,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered stale_seat.rs + test_stale_seat.py"
+      }
+    },
+    {
+      "node_id": "frag:art:the-export-can-be-ordered-before-its-writes",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered the_export_can_be_ordered_before_its_writes.rs"
       }
     },
     {
@@ -159024,6 +159196,18 @@
       }
     },
     {
+      "node_id": "fact:the-early-export-is-measured-and-a-property-only-write-is-invisible-to-the-net",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "measurement",
+        "statement": "THE MEASUREMENT TWO EARLIER FINDINGS SAID WAS OWED, TAKEN 2026-08-31. Both fact:the-decision-race-is-caller-ordering-not-read-after-write (2026-08-09) and fact:the-parallel-batch-class-recurred-because-only-its-instance-was-fixed (2026-08-30) close with the same admission: whether export_graph can in fact be ordered before a write in the same batch is REASONED FROM THE SHARED LOCK, NOT MEASURED. export_graph's tool description had been warning about it on that argument alone. It is now observed.\n\n═══ THE NUMBERS — in-memory backend, 4 worker threads, 200 trials per arm ═══\n  ARM A  write CREATES A NODE    91/200 early (~45%)   [repeats: 96, and 79/87 on an earlier cut]\n  ARM B  write changes A PROPERTY 10/200 early (~5%)   0 of 10 catchable downstream\n\nPinned by crates/reflow2-mcp/tests/the_export_can_be_ordered_before_its_writes.rs, ignored by default because these are MEASUREMENTS, not gates — asserting a scheduler outcome is flaky by construction, the same reasoning that made a_dependent_write_in_a_parallel_batch.rs pin the message rather than the race.\n\n⭐ THE METHOD CHANGES THE ANSWER BY 40x, AND THE OBVIOUS METHOD IS THE WRONG ONE. Driving the pair with tokio::join! inside ONE task measures 1%, because join! polls in order and the write almost always takes the lock first. A real MCP server handles each request on ITS OWN TASK; reproduced with tokio::spawn that is 45%. Anyone re-running this must keep the per-task shape — measured the obvious way, this hazard reads as too rare to mention, and the warning already in the description would have looked like overcaution.\n\n🛑 ARM B IS THE FINDING, AND IT IS THE SHAPE THE FIELD REPORT CARRIED. sync_debt raises its unexported-work nudge on live_nodes > export_nodes — A NODE COUNT (crates/reflow2-mcp/src/sync_debt.rs:181). A write that only changes a PROPERTY moves no count, so an early export holding the OLD value is byte-indistinguishable to that check from a complete one. Measured: 0 of 10 early exports would have been caught. Alex's 2026-08-30 report was exactly this — set_artifact_checksum, a property write, and an export that still carried the old checksum. The net that exists would not have told him, and the design should stop implying it would.\n\n═══ WHAT THIS DOES NOT ESTABLISH ═══\n· IN-MEMORY BACKEND ONLY. The RocksDB backend holds the same lock so the mechanism should carry, but the rates are not measured there and a slower write would move them.\n· NOT MEASURED THROUGH A REAL MCP TRANSPORT. These call the service methods directly; a client's own batching may interleave differently.\n· ARM B's ~5% is NOT established as the general property-write rate. That arm seeds a node first, so the extra sequenced write warms the lock and the scheduler, and the seeding is a confound rather than a control. What is established is that the shape occurs and that nothing downstream sees it.\n· WHETHER TO BUILD A DETECTOR IS NOT DECIDED HERE. A completeness check that moved on ANY write rather than on node count would close it — the service already counts write generations at service.rs write_gen — but that counter is per-process and resets on restart, so it is a candidate, not a design.",
+        "subject_id": "cap:mcp-surface",
+        "valid_from": "2026-08-31"
+      }
+    },
+    {
       "node_id": "fact:the-eight-subsystems-are-groupings-not-black-boxes",
       "node_type": "TemporalFact",
       "properties": {
@@ -162753,7 +162937,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:d6e705cc0ebf73de9715e741c20d2a5619536c52851a7f932042d69cef564c7e",
+  "prev_content_hash": "sha256:b111ed5df1ef64955984294ea36fe920ff133fbd917792285daa0dda636f1cff",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
