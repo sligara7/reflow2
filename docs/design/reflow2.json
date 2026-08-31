@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:014e2ef3df74b066bf69e672cfb2eae05f2bb49ffeee330c53a8665a4edaf6c1",
+  "content_hash": "sha256:f96da0e9f12820fc55d3bc04c3618003e80784b89f5ca93ffd4069b813947d14",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -3479,6 +3479,14 @@
         "evidence": "The earlier observation saw the same shape one layer down. It found that one RocksDB store serves every git branch, so two branches share a live graph — and its sharpest note is that `parallel-work`'s trigger conditions are framed by PEOPLE, so the solo maintainer with two branches, who hits the identical collision, is the reader the skill excludes. Same failure family: the machinery for keeping two lines of work apart exists, and what neither the store nor the skill carries is whether a line of work is FINISHED."
       },
       "to_id": "req:the-graph-can-say-what-has-already-been-done"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "fact:the-orientation-reads-cost-ten-seconds-and-the-store-is-not-why",
+      "properties": {
+        "evidence": "The earlier one saw this coming, explicitly. That fact records that on 2026-08-23 an agent asked exactly this question — where else should we optimise — read it, and quoted three already-false claims back as current, and it names that incident as the reason req:the-graph-can-say-what-has-already-been-done exists. It anticipates the failure mode of the very question this node opens."
+      },
+      "to_id": "dec:idea-is-there-performance-left-after-the-four-wins-and-what-is-the-budget"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -11627,6 +11635,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-can-a-one-thing-at-a-time-skill-serve-a-whole-codebase-sweep",
+      "properties": {
+        "acted_at": "2026-08-31",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-can-exhaustive-per-subsystem-tests-be-derived-rather-than-imagined",
       "properties": {
         "acted_at": "2026-08-21",
@@ -12175,6 +12192,24 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-is-subsystem-the-right-unit-to-sweep-when-the-coupling-is-a-level-down",
+      "properties": {
+        "acted_at": "2026-08-31",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-is-the-cleanup-target-duplication-or-under-separation",
+      "properties": {
+        "acted_at": "2026-08-31",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-is-the-evolution-vocabulary-unused-because-nothing-asks-for-it",
       "properties": {
         "acted_at": "2026-08-17",
@@ -12193,6 +12228,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-is-the-restructure-target-the-shared-struct-rather-than-the-subsystem-contracts",
+      "properties": {
+        "acted_at": "2026-08-31",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-is-there-a-feedback-intake-skill-and-is-it-a-router",
       "properties": {
         "acted_at": "2026-08-15",
@@ -12205,6 +12249,15 @@
       "from_id": "dec:idea-is-there-a-lightweight-task-capture-below-the-increment-grain",
       "properties": {
         "acted_at": "2026-08-25T14:00:00Z",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-is-there-performance-left-after-the-four-wins-and-what-is-the-budget",
+      "properties": {
+        "acted_at": "2026-08-31",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -12542,6 +12595,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-should-the-spine-be-re-derived-from-the-actual-structure",
+      "properties": {
+        "acted_at": "2026-08-31",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-silence-is-reported-not-inferred",
       "properties": {
         "acted_at": "2026-08-14",
@@ -12788,6 +12850,15 @@
       "from_id": "dec:idea-what-guarantees-the-export-if-the-export-is-the-only-durable-copy",
       "properties": {
         "acted_at": "2026-08-24T22:50:00Z",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-what-instrument-can-actually-see-unused-code-here",
+      "properties": {
+        "acted_at": "2026-08-31",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -16498,6 +16569,14 @@
         "evidence": "One standing makes the other unanswerable in its own terms. 'Which embedded engine compiles fastest' presumes an embedded engine is needed; if the measured answer here is that a store buys only durability and crash-safety, the redb-vs-rocksdb comparison is being run on the wrong axis. Blocks rather than obsoletes: the engine question becomes live again the moment this one settles in favour of keeping a store."
       },
       "to_id": "dec:idea-a-byte-backend-that-compiles-in-seconds"
+    },
+    {
+      "edge_type": "BLOCKS",
+      "from_id": "dec:idea-is-the-restructure-target-the-shared-struct-rather-than-the-subsystem-contracts",
+      "properties": {
+        "evidence": "Modularity is currently NOT MEASURABLE on this design — graph_report reports 1 of 70 components carrying any coupling, so there is no partition to score. While the shared struct means module boundaries are not where the coupling runs, a computed modularity score cannot mean what that requirement wants it to mean."
+      },
+      "to_id": "req:modularity-computed"
     },
     {
       "edge_type": "BLOCKS",
@@ -37649,6 +37728,15 @@
     },
     {
       "edge_type": "CONTRADICTS",
+      "from_id": "dec:idea-should-the-spine-be-re-derived-from-the-actual-structure",
+      "properties": {
+        "alignment": "opposing",
+        "evidence": "Both cannot hold. That accepted decision carves the spine from PURPOSE and states explicitly that a functional carving comes from the product's purpose and NOT the code; this question proposes deriving it from the code instead. If this were taken, that decision would have to be superseded rather than amended."
+      },
+      "to_id": "dec:bl83a-functional-decomposition"
+    },
+    {
+      "edge_type": "CONTRADICTS",
       "from_id": "dec:idea-the-handoff-file-contradicts-an-accepted-decision-and-nobody-reconciled-them",
       "properties": {
         "alignment": "opposing",
@@ -38958,6 +39046,26 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-can-a-one-thing-at-a-time-skill-serve-a-whole-codebase-sweep",
+      "properties": {
+        "evidence": "Whether the skill's single-target shape is a problem depends entirely on whether there is more than one target left worth taking. If the performance question resolves to 'nothing here', a scalpel is the right instrument and the sweep-vs-scalpel tension never arises.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-is-there-performance-left-after-the-four-wins-and-what-is-the-budget"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-can-a-one-thing-at-a-time-skill-serve-a-whole-codebase-sweep",
+      "properties": {
+        "evidence": "Asking whether the skill's SHAPE fits a sweep is only worth anything once the skill exists and is served — which is precisely what that node asked, and what events have since settled. It is the parent question; this one becomes askable only after it resolved.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-should-optimize-be-a-served-skill-any-project-can-run"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "dec:idea-can-reflow2-see-the-work-a-session-did-by-hand",
       "properties": {
         "evidence": "Option (a) reads transcripts, and a script's source IS design content — the exact thing that requirement forbids carrying. Any transcript-side form of this instrument is only buildable if it can report the SHAPE of hand-rolled work without its content, so that requirement governs whether the most promising option exists at all.",
@@ -39109,6 +39217,36 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-is-subsystem-the-right-unit-to-sweep-when-the-coupling-is-a-level-down",
+      "properties": {
+        "evidence": "The right unit differs by which shape is being hunted: duplication is found by comparing across the codebase, which a per-subsystem walk is structurally bad at, while under-separation is already located at five named artifacts and needs no walk at all.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-is-the-cleanup-target-duplication-or-under-separation"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-is-subsystem-the-right-unit-to-sweep-when-the-coupling-is-a-level-down",
+      "properties": {
+        "evidence": "Choosing a traversal is only worth anything once something can SEE what the traversal is looking for. If the instrument question resolves to 'we cannot cheaply know', there is nothing for any traversal to find and the unit becomes moot.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-what-instrument-can-actually-see-unused-code-here"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-is-the-restructure-target-the-shared-struct-rather-than-the-subsystem-contracts",
+      "properties": {
+        "evidence": "Whether either restructure is worth doing turns on whether substitutability is actually wanted here, and that swap is the only proposed test of it. If nothing is ever swapped, option ② pays for a problem nobody had.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-swap-dynograph-foundation-as-the-substitutability-demo"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "dec:idea-linking-half-ideas-needs-a-task-that-can-be-run",
       "properties": {
         "evidence": "That node's detector is BUILT and firing at 110 of 183, which is what makes this question askable at all — without the count there is no backlog to work and no way to tell whether working it helps. This starts where that one finished.",
@@ -39209,6 +39347,16 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-should-the-spine-be-re-derived-from-the-actual-structure",
+      "properties": {
+        "evidence": "Whether re-carving can deliver the stated goal turns on whether the code has black-box boundaries to find, which is exactly what that node measures: 45 of 88 modules hang methods off one shared struct. If the struct is never split, no re-carving produces black boxes and options ①-④ are all about description rather than encapsulation.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-is-the-restructure-target-the-shared-struct-rather-than-the-subsystem-contracts"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "dec:idea-the-handoff-file-contradicts-an-accepted-decision-and-nobody-reconciled-them",
       "properties": {
         "evidence": "Only the EXOGENOUS half of a handoff is homeless — 'Jakub said finish the tests', 'CI was pending when I stopped' — because loop_status already computes the rest. That exogenous half is precisely the ground the task-capture question opened on 2026-08-25, so option (c) here cannot be built until that one has an answer.",
@@ -39266,6 +39414,16 @@
         "weight_basis": "estimated"
       },
       "to_id": "req:init-installs-only-the-harness-you-name"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-what-instrument-can-actually-see-unused-code-here",
+      "properties": {
+        "evidence": "This question's most promising branch — option ①, model consumption edges up past the 50% threshold — is worth nothing unless that capability stands, because raising the ratio only helps if something is waiting to read it. The capability is built and correctly declines at 11%; the question exists because of that decline, not in spite of it.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "cap:built-and-consumed-by-nothing"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -41266,11 +41424,27 @@
     },
     {
       "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-the-ility-chooses-the-allocation-graph",
+      "properties": {
+        "evidence": "The older thought grown up. That node asked whether the quality attribute should drive allocation and established the four-graphs observation; this one asks the same question with a concrete proposal attached — abandon the current spine — and with the co-change measurement it called runnable now actually run."
+      },
+      "to_id": "dec:idea-should-the-spine-be-re-derived-from-the-actual-structure"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
       "from_id": "dec:idea-what-guarantees-the-export-if-the-export-is-the-only-durable-copy",
       "properties": {
         "evidence": "The older thought, grown up. That node listed 'export on every write' as road 1 and recorded it as dead, on the ground that a whole-document write is fatal on a per-change path. A full export measured 1,168 ms when that was written and 265 ms after #330 and the BTreeMap backend change, so the road reopens on a number rather than on an argument — and it reopens with a new distinction the original road did not have: write to the working tree, not to git history."
       },
       "to_id": "dec:idea-does-the-graph-write-itself-through-to-the-repo-on-every-change"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-what-would-a-provided-contract-buy-substitution-derived-tests-or-a-mock",
+      "properties": {
+        "evidence": "That 2026-08-21 node is the older thought grown up. It asked what a contract would BUY and concluded the contract was the least urgent of three needs for optimisation, behind a target and a measurement. Both have since been supplied, so the question it deferred — is the contract then the lever? — is the one this node asks."
+      },
+      "to_id": "dec:idea-is-the-restructure-target-the-shared-struct-rather-than-the-subsystem-contracts"
     },
     {
       "edge_type": "EVOLVES_INTO",
@@ -113921,6 +114095,15 @@
       "to_id": "fact:a-findings-name-can-claim-more-than-its-data-and-the-name-is-what-search-returns"
     },
     {
+      "edge_type": "INVALIDATES",
+      "from_id": "fact:the-wall-arrived-and-the-god-struct-did-not-move",
+      "properties": {
+        "at": "2026-08-31",
+        "note": "ITS HEADLINE IS NOW FALSE AND WAS FALSE WITHIN A DAY OF BEING WRITTEN. That fact says \"VERIFIES cannot target an Interface, so no contract in any reflow2 design can carry a check\" and \"Every Interface in every design using reflow2 is unverifiable by construction\". Interface was added to the VERIFIES `to` list on 2026-08-22 — the day after — on Anthony's call, and schema/verify.yaml carries the reasoning in full. Measured 2026-08-31: all THREE published contracts now carry a check, including `ifc:mcp-tools`, the node that fact named as the sharpest instance of the gap.\n\n⚠️ THIS IS THE THIRD STALE FINDING FOUND IN ONE SESSION, and the pattern is now worth more than any of them individually: the parallel-batch finding (overtaken by PR #392 the same day), the optimize decision (asking whether to build a skill that exists and has run twice), and this one (fixed the day after it was written). All three were correct when written, none carried a claim against it, and each was read back as current. `req:the-graph-can-say-what-has-already-been-done` exists because of exactly this and is evidently not yet satisfied by anything.\n\n🛑 WHAT STILL STANDS AND IS NOT CLAIMED HERE: everything the fact says about WHY it mattered. Its argument that a contract is the node MOSA turns on, that \"does this boundary actually hold?\" is the most natural question to ask of a published contract, and its reading of the VERIFIES list as having under-enumerated itself three times — all untouched, and the third instance it predicted is precisely the one that got fixed. Its closing caution that adding Interface \"deserves the same scrutiny in reverse\" was heeded rather than ignored: the schema comment records the decision and its reasoning at length."
+      },
+      "to_id": "fact:a-contract-is-the-one-thing-reflow2-cannot-attach-evidence-to"
+    },
+    {
       "edge_type": "MITIGATES",
       "from_id": "chg:write-buffer-gets-an-index-and-hydrate-drops-tenfold",
       "properties": {
@@ -140254,6 +140437,17 @@
       }
     },
     {
+      "node_id": "dec:idea-can-a-one-thing-at-a-time-skill-serve-a-whole-codebase-sweep",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — Anthony, 2026-08-31, continuing the cleanup brainstorm after noting the `optimize` skill exists and has not been used much. Nothing chosen.\n\n📌 DISTINCT FROM `dec:idea-should-optimize-be-a-served-skill-any-project-can-run`, having read it: that node asks WHETHER the skill should exist and be served, and its answer arrived by events — built, served, run twice. This node takes the skill's existence as given and asks what that one never raised: whether its SHAPE fits the work now proposed for it. A DEPENDS_ON edge to it is drawn deliberately.\n\nTHE TENSION, structural rather than a matter of taste. The skill is single-target in its own words: the title is \"Optimise ONE thing, against a number you wrote down first\", step 5 is \"Change one thing\", and step 6 stops the work the moment ONE budget is met. The proposed effort is the opposite shape — walk every subsystem, sweep for dead code, redundancy and slowness. A skill built to make work STOP is being asked to organise work defined by its breadth.\n\n⭐ THE READING THAT DISSOLVES IT, and it stretches neither side: THE SWEEP IS STEP 1. Step 1 already says \"measure where the time actually goes, then rank by COST PER UNIT OF WORK, not by total\" — that IS a whole-codebase pass, and it is the only one of the seven meant to be broad. Steps 4-7 then apply to whatever the ranking tops, one target at a time, each with its own budget. On this reading the effort is not sweep-then-optimise-everything; it is ONE broad measurement followed by one or two bounded optimisations, and the skill already has the shape.\n\n⚠️ WHAT THAT READING COSTS, stated because it is a real loss: step 1 ranks by cost per unit of work, which is NOT the ordering a subsystem walk produces, and a ranked pass never says when you are done. If what is wanted is assurance that every subsystem was looked at, step 1 does not supply it and nothing else in the skill does.\n\n⚠️ AND STEP 1 EXPLICITLY PERMITS \"NOTHING HERE\": \"A run that measures a set of tools and finds every one of them under a second is a SUCCESSFUL run of this skill. A version of this step that always finds something is a version that manufactures work.\" A sweep briefed as an elimination effort has a built-in pull the other way, and that sentence exists to resist exactly that pull.\n\n📌 STEP 2 WOULD PICK A DIFFERENT TARGET than \"each subsystem\": measure the PRODUCT surface before the DEVELOPER surface. Of the three budget runs to date, two targeted the test suite and a structural read count; only the SPOF sweep touched what a user waits on. A third run has an obvious brief the skill itself would choose — what Alex waits on in a session.\n\nOPEN SUB-QUESTION: does dead-code and redundancy work belong under `optimize` at all, or is that a different skill wearing a performance label? The skill measures time, memory and bytes; \"code nobody calls\" is none of those, and its sibling questions show the instruments for it are separately blind.",
+        "kind": "exploratory",
+        "name": "OPEN — the optimize skill is single-target by construction and the proposed effort is a sweep; is the sweep step 1 of the skill, or does the skill need a shape it does not have?",
+        "rationale": "Recorded under the brainstorm discipline. Raised because the mismatch is easy to miss: both the skill and the proposal are about \"making things better\", and nothing surfaces that one is a scalpel and the other a sweep until somebody tries to run one as the other.\n\n📌 CREATED VIA `create_node` RATHER THAN `add_decision`, and the reason is itself a friction finding worth keeping: the near-match guard correctly refused twice and its remedy was to pass `related_to` — an array of relation OBJECTS — in the same call. This client serialised that argument as a string on both attempts (\"invalid type: string ... expected a sequence\"), so the prescribed route was not actionable from here. The judgement the guard was protecting was not skipped: `distinct_from` reasoning is stated above and the DEPENDS_ON edge was drawn immediately afterwards with `review_relations`. Note also that the served `add_decision` schema declares neither `related_to` nor `kind`, while the server accepts and requires them.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-can-exhaustive-per-subsystem-tests-be-derived-rather-than-imagined",
       "node_type": "Decision",
       "properties": {
@@ -140902,6 +141096,29 @@
       }
     },
     {
+      "node_id": "dec:idea-is-subsystem-the-right-unit-to-sweep-when-the-coupling-is-a-level-down",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — Anthony's idea, 2026-08-31, and this one questions the SHAPE of his own proposal rather than its content. Nothing chosen.\n\nHE PROPOSED WALKING SUBSYSTEM BY SUBSYSTEM. The design has 18 Components at `level: subsystem`. Three things measured today suggest that unit may not bound the work:\n\n· THE COUPLING IS A LEVEL DOWN. `detect_defects` reports coupling_by_level:\n      component   86 components,  93 coupled pairs\n      subsystem   18 components,   8 coupled pairs\n      system       2 components,   0 coupled pairs\n      part         2 components,   0 coupled pairs\n  Nearly all the coupling is between COMPONENTS. A sweep bounded at subsystem level is mostly sweeping inside units that are not where the entanglement lives.\n\n· THE SUBSYSTEMS ARE GROUPINGS, NOT BLACK BOXES — `fact:the-eight-subsystems-are-groupings-not-black-boxes` says so directly. A grouping does not give a boundary you can finish and move past.\n\n· THE COARSE FILES CUT ACROSS ANYWAY. The five artifacts `granularity_report` names sit in two different crates and serve capabilities from several subsystems; `art:service` alone realizes 10. Working subsystem-by-subsystem would meet service.rs repeatedly, from several directions, and never as a whole.\n\nOPTIONS, none chosen:\n① BY SUBSYSTEM, as proposed. Familiar SE traversal, gives a completion story, and the design already names the 18.\n② BY ARTIFACT, worst-first — take the five coarse files, since they are where the design and build disagree most and they are already ranked.\n③ BY CRATE — two of them, which matches how the compiler and the test suite are actually bounded.\n④ NOT A SWEEP AT ALL — take only what a measurement flags, and accept \"nothing here\" where nothing is flagged.\n\n⚠️ THE HONEST COUNTER-ARGUMENT TO MY OWN OBJECTION: a systematic traversal has a virtue the ranked ones lack — it TERMINATES, and it can say what it covered. A worst-first list never says when you are done, and \"take only what is flagged\" inherits every blind spot of the instruments, which the sibling questions show are substantial. If the goal is assurance of coverage rather than a fix count, ① is the one that delivers it.",
+        "kind": "exploratory",
+        "name": "OPEN — is \"subsystem by subsystem\" the right traversal for a cleanup sweep, when the coupling sits a level below and the coarse files cut across?",
+        "rationale": "Recorded under the brainstorm discipline. Raised as a question rather than as a correction: the subsystem traversal is a reasonable SE instinct and the measurements above are a reason to check it, not a reason to overrule it. The counter-argument is recorded in the same node deliberately, because the coverage property of a systematic walk is real and the alternatives do not have it.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-is-the-cleanup-target-duplication-or-under-separation",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — Anthony's idea, 2026-08-31. Nothing chosen.\n\nTHE QUESTION. \"Eliminate redundant code\" and \"do it once\" name one intent, but the design can see TWO different shapes here and their remedies point in opposite directions:\n\n· DUPLICATION — the same logic written twice. Fix: MERGE. Nothing currently measures this; no tool in reflow2 reports it and no finding in the graph names an instance. It may be real and it is presently unevidenced.\n\n· UNDER-SEPARATION — the build holding as one thing what the design holds as several. Fix: SPLIT. This IS measured, by `granularity_report`, today:\n      art:service   crates/reflow2-mcp/src/service.rs    10 capabilities  [unusual 5.88]\n      art:detect    crates/reflow2-core/src/detect.rs     9               [5.18]\n      art:temporal  crates/reflow2-core/src/temporal.rs   9               [5.18]\n      art:heal      crates/reflow2-core/src/heal.rs        8               [4.49]\n      art:graph     crates/reflow2-core/src/graph.rs       6               [3.09]\n  against a median of 1 across 151 registered artifacts. service.rs is called out further: \"No other artifact in this design realizes as many, so this is not the design's normal coarseness — it is one place that did not follow the rest.\"\n\n🛑 AND THE TOOL REFUSES TO SAY WHICH SIDE IS WRONG, deliberately: N capabilities in one artifact may mean the artifact should be N files, or that the DESIGN over-decomposed and should hold fewer capabilities, or that it is right for this phase. That judgement is the user's. So the measured half of this question does not tell us to split anything.\n\n⚠️ A REAL RISK IN CONFLATING THEM: a sweep briefed as \"remove redundancy\" that meets service.rs will merge or trim where the actual finding is that ten distinct capabilities share one file. That makes the coarseness worse while reporting progress.\n\n📌 WORTH KEEPING AS A COUNTER-EXAMPLE OF DRY DONE RIGHT, already in this codebase: `sync_debt` borrows its judgement from `sync::assess_overwrite` rather than reimplementing it, and says so in its own record. Whatever this effort finds, that is the shape to preserve.\n\n⚠️ AND A BOUND ON THE MEASURED HALF: `granularity_report` reads REALIZES edges only, so a file no Artifact points at is invisible to it — 141 files are in that state. It also measures NO SIZE at all: a six-thousand-line artifact realizing exactly one capability is silent here.",
+        "kind": "exploratory",
+        "name": "OPEN — does \"eliminate redundant code, do it once\" mean MERGING duplication, or SPLITTING the five artifacts the build holds as one thing? The fixes are opposite",
+        "no_relation_note": "Searched \"duplication same logic implemented twice do it once\" and reviewed what the duplicate guard offered. Nothing in the design is honestly related: the nearest hits were about the near-match guard itself and about a skill-lint check, which share vocabulary (\"twice\", \"same shape\") and not subject. Notably, NO node in this graph records an instance of duplicated code — which is itself part of this question's content: the merge half of the target is entirely unevidenced, while the split half is measured by granularity_report. The one real neighbour is the sibling traversal question, and it links in from its own end rather than being duplicated here.",
+        "rationale": "Recorded under the brainstorm discipline — ideas as ideas. Anthony has not said which shape he means, and the two readings are both faithful to his words, which is exactly why it is worth asking rather than assuming.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-is-the-evolution-vocabulary-unused-because-nothing-asks-for-it",
       "node_type": "Decision",
       "properties": {
@@ -140922,6 +141139,17 @@
       }
     },
     {
+      "node_id": "dec:idea-is-the-restructure-target-the-shared-struct-rather-than-the-subsystem-contracts",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — Anthony, 2026-08-31: \"as reflow2 grew organically, this is mostly an effort to go back and fix STRUCTURE, not function... I had at one point discussed the possibility of each subsystem having an interface contract. but maybe before we optimize, we should restructure the code. then it would be possible to optimize performance internal to a black box.\" Nothing chosen.\n\n📌 CREATED VIA create_node after searching (MOSA; black box / subsystem contract / restructure) and reading the near-matches in full — `dec:idea-what-would-a-provided-contract-buy-substitution-derived-tests-or-a-mock`, `dec:mosa-conformance`, `dec:idea-a-black-box-owes-an-interface-the-way-a-capability-owes-a-requirement`, `dec:a-black-box-needs-three-edges-not-one`. Relations drawn separately with review_relations; `add_decision`'s guard route was not usable from this client (its `related_to` argument serialises as a string here).\n\n═══ WHY THIS IS A DIFFERENT QUESTION FROM THE 2026-08-21 ONE ═══\nThat node asked WHAT A CONTRACT WOULD BUY — substitution, derivable tests, a mock, optimisation — and answered that for OPTIMISATION the contract is the LEAST urgent of three needs, behind a target and a measurement. Both of those have since been supplied. This node asks the question that becomes live only now: given a target and a measurement exist, IS A CONTRACT THE THING THAT WOULD MAKE A MODULE INDEPENDENTLY OPTIMISABLE — or is it the shared struct?\n\n═══ THE MEASUREMENT THAT PROVOKES IT (re-measured 2026-08-31) ═══\n    88 core modules; 45 add methods to the SHARED `DesignGraph` struct across 62 impl blocks\n    graph.rs carries 54 public methods on that one struct\n    of 64 coupled pairs with no declared contract, 56 have `impl DesignGraph` on BOTH ends and ZERO cross a crate boundary\n\nModules own their OUTPUT TYPES and not their STATE. So a module can rework its ALGORITHMS freely and cannot rework its DATA REPRESENTATION at all. A contract at a subsystem seam does not change that, because the coupling runs through shared state rather than through the interface — which means an ICD per subsystem would document boundaries the code does not have.\n\n═══ THE OPTIONS, none chosen ═══\n① CONTRACTS FIRST, AS PROPOSED. Declare a provided contract per subsystem. Buys MOSA-style substitutability on paper and gives the seam frontier something to move. Does NOT buy independently optimisable internals while the struct is shared. Cheapest, and it is the leg reflow2 is best at.\n② BREAK UP THE STRUCT. The change that would actually produce black boxes: give modules their own state behind their own accessors. Large, risky, touches everything, and nothing has yet been BLOCKED by the current shape — both budgets met so far were algorithmic, the class this structure still permits.\n③ NEITHER YET — ESTABLISH THE NEED FIRST. `dec:idea-swap-dynograph-foundation-as-the-substitutability-demo` is open and is the only proposed test of whether substitution is even wanted here. Answering it would say whether ① or ② is worth anything.\n④ CONTRACTS AS DOCUMENTATION, EXPLICITLY. Write them for what they genuinely buy — a published promise, a mockable double, a checkable boundary now that VERIFIES can target an Interface — and drop the claim that they enable per-module optimisation. Honest, and smaller than ① pretends to be.\n\n⚠️ THE COUNTER-ARGUMENT TO MY OWN FRAMING, recorded beside it: `impl` blocks spread across modules is a normal and often deliberate Rust idiom for one aggregate, not automatically a defect. And nothing has yet been prevented by it — the claim that it caps optimisation is STRUCTURAL, not an observed impediment. If no optimisation is ever actually blocked, ② would be a large restructure paying for a problem nobody had.\n\n⭐ THE TERMINOLOGY POINT FROM 2026-08-21 STILL APPLIES AND IS WORTH REPEATING: substitution is the BLACK-BOX activity (replace the inside, only the contract matters); optimisation is the WHITE-BOX activity (keep the contract, rework the inside). They are duals across one boundary, which is why one contract serves both — but they need it in opposite orders.",
+        "kind": "exploratory",
+        "name": "OPEN — if the goal is optimisable black boxes, is the restructure that buys them breaking up the shared DesignGraph struct rather than writing a contract per subsystem?",
+        "rationale": "Recorded under the brainstorm discipline — ideas as ideas, nothing promoted. Raised because Anthony's proposed ordering (restructure, then optimise inside the black box) is the reverse of what the 2026-08-21 measurement concluded, and because the premise that made that conclusion actionable has since changed: the target and the measurement he lacked then now exist, so the question genuinely reopens rather than merely repeating.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-is-there-a-feedback-intake-skill-and-is-it-a-router",
       "node_type": "Decision",
       "properties": {
@@ -140938,6 +141166,17 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-25, from real work rather than from thinking about reflow2: *\"as I'm working through one of the projects at work, sometimes, I just want to say, we need to do this task next. it isn't really a brainstorm or capture-session or capture-intent type activity... Jakub said let's finish up the tests for the scripts and add a tutorial on how to use the new scripts. I feel like it really isn't a brainstorming task or a requirement, just a simple — I need to do these things (like a checklist).\"*\n\n⭐ HIS CONTEXT MATTERS AND COMPLICATES IT: *\"I have a tutorial, a project, a simulated beamline and some other inter-related work.\"* The tasks arrive across several INTER-RELATED efforts, not inside one design. Which graph a cross-project checklist lives in is a question none of the options below answers cleanly.\n\n═══ WHAT ALREADY CLAIMS THIS GROUND ═══\n\n**`plan-increments` says this is its job, in as many words.** Its description: *\"Also use when you catch yourself keeping a to-do list in the conversation: that is a delivery plan, and it belongs in the graph where everyone can see it.\"* That is Anthony's case, named.\n\n🛑 **BUT THE WEIGHT IS WRONG.** The skill is 106 lines, 12 numbered steps, and reaches `add_epoch`, `add_release`, `gate_on`, `arrival_delta`, `detect_gaps`, `loop_status`, plus readiness modality and TRL thresholds. That is a DELIVERY-PLANNING RITUAL — right for \"what ships in v2\", absurd for two things a colleague said in a corridor. **The gap is not vocabulary, it is CEREMONY.** A capture that costs more than the thing captured does not get used, and the to-do list stays in the conversation exactly as it does today.\n\n**There is no `Task` node type**, checked. Work is carried at increment grain: `DesignEpoch` (with `status: planned`), `Release`, and capabilities scheduled into them.\n\n═══ THE OPTIONS, none chosen ═══\n\n**A. A `/task` or `/todo` SKILL, deliberately tiny.** Two or three lines of instruction, one node per item, no ceremony. Earns its place only if it stays small.\n ⚠️ Cost: a 24th skill, and `fact:nine-of-twenty-skills-are-edited-without-a-drift-signal` says the set is already hard to keep coherent.\n\n**B. A `Task` NODE TYPE.** Honest about what it is; sortable, statusable, assignable.\n 🛑 Cost, and it is the serious one: **this is the road to being a tracker.** reflow2's whole claim is that it holds WHY, and Jira/Linear/GitHub Issues hold WHAT-NEXT far better. A Task type invites status fields, assignees, due dates and priority — and every one of those is a thing reflow2 would then be bad at. Anthony's own anti-over-engineering instinct is the strongest argument against this option.\n\n**C. ⭐ TASKS ARE ALREADY SAYABLE AS ABSENCES AND STATUSES — no new vocabulary at all.** Test his own example: *\"finish up the tests for the scripts\"* is a `Verification` at `status: planned` against the component; *\"add a tutorial on how to use the new scripts\"* is an `Artifact` that does not exist yet, or a `Capability` at `planned`. **Both are already expressible, and both then show up in `loop_status` and the gap detectors as real design debt rather than as a private list.** A task, on this reading, is not a new kind of thing — it is a design node that ought to exist and does not, or one whose status ought to move.\n ⚠️ Cost: it demands a translation step at the exact moment the user wants to dump three sentences and move on. If the translation is not near-free, this is option A with extra thinking.\n\n**D. LOWER THE CEREMONY OF `plan-increments` INSTEAD.** Give it a fast path for \"just record these, do not plan a release\".\n ⚠️ Cost: a skill with two modes is two skills sharing a name, which `detect-and-ask` is already accused of elsewhere.\n\n**E. DO NOTHING — say plainly that this belongs in the user's tracker.** reflow2 holds design, not work.\n ⚠️ Cost: it is a real answer and it contradicts `plan-increments` existing at all, plus `dec:backlog-is-retired` which deliberately moved backlog rows INTO the graph. Taking this option means retracting ground the project already took.\n\n═══ THE TEST THAT WOULD DECIDE IT ═══\n\nTake his actual sentence — *\"finish up the tests for the scripts and add a tutorial on how to use the new scripts\"* — and try to record it under option C on a real project graph, timed. If it is two tool calls and no thinking, C wins and nothing new is needed. If it takes a paragraph of judgement about which node type each half is, the ceremony objection applies to C as much as to `plan-increments`, and A becomes the honest answer.\n\n📌 NOT A REQUIREMENT AND NOT INTENT, which is his own framing and worth preserving: he is not asking reflow2 to DO anything new, he is reporting that a thing he does every day has no cheap home.",
         "name": "OPEN — \"these are the things I need to do next\" has no cheap home: plan-increments claims the ground but is a full delivery ritual, and a Task node type would turn a design brain into a tracker",
         "rationale": "Captured under the brainstorm skill: recorded as an idea, nothing promoted, nothing settled.\n\nKept separate from `cap:plan-increments` (the built capability that claims this ground at increment grain) and from `dec:idea-lining-work-up-in-increments-should-be-the-default-not-a-skill-you-remember` (which asks whether increment planning should fire automatically rather than be remembered). This asks whether there is a grain BELOW an increment that has no home at all — a question that survives whichever way that one is settled, because making a heavy skill automatic does not make it light.\n\nRaised from live work at NSLS-II rather than from reflow2's own development, which is the evidence class this project has least of.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-is-there-performance-left-after-the-four-wins-and-what-is-the-budget",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — Anthony's idea, 2026-08-31. Nothing chosen.\n\n⭐⭐ READ THE HAZARD FIRST — THIS EXACT QUESTION HAS ALREADY MISFIRED TWICE ON STALE RECORDS. On 2026-08-23 an agent asked where else to optimise, read `fact:the-orientation-reads-cost-ten-seconds-and-the-store-is-not-why`, and quoted three claims back as current that PR #290 had already made false. Anthony corrected it — \"I think we already determined candidate 3\" — and he was right while the graph was wrong. That incident is why `req:the-graph-can-say-what-has-already-been-done` exists. It happened AGAIN on 2026-08-31, this session, on the parallel-batch finding. Any sweep that starts by reading old findings will reproduce it a third time.\n\nTHE WINS ALREADY TAKEN, so nobody re-derives them:\n    hydrate to queryable      8,828 ms -> 909 ms\n    build_export_doc          1,137 ms -> 237 ms\n    detect_structural_defects  44.5 s  -> 4.43 s\n    open_questions (1st call)  11.7 s  -> 2.95 s   (56 SPOF candidates: 878 ms each -> 5.08 ms for all 56)\n\nTWO MEASUREMENTS THAT ARE STILL LIVE AND UNCLOSED, which is where a fresh look would start:\n· THE LIVE STORE CARRIES 7.4x THE BYTES OF ITS OWN CONTENT (`fact:every-cost-number-today-was-a-debug-build-and-the-live-store-is-7x-its-content`). That is a compaction/GC question nobody has taken.\n· THE BUILD PROFILE IS WORTH 2.2x ON `loop_status` — so part of what feels slow to a developer is debug-vs-release rather than code, and any new number must say which profile it was taken in.\n\n⚠️ THE DISCIPLINE IS ALREADY WRITTEN AND CI ENFORCES IT. The `optimize` skill requires the budget to precede the code, the number to be DERIVED rather than picked, measurement against the budget rather than the starting point, stopping when it is met, recording what was deliberately left undone, and it explicitly ALLOWS the answer \"nothing here\". So \"identify areas where we can improve performance\" has a prescribed shape: name the target and the budget first, or do not start.\n\nOPEN SUB-QUESTIONS: what is the target — a user-visible latency, a CI wall-clock, a memory ceiling? Whose experience is being improved, Alex's session or a developer's build? And is 7.4x store overhead actually costing anyone anything, or is it merely untidy?",
+        "kind": "exploratory",
+        "name": "OPEN — is there performance left worth taking after the four big wins, and what budget would say when it is done?",
+        "rationale": "Recorded under the brainstorm discipline. The wins-already-taken table is included deliberately and is the most load-bearing part of this node: the recorded failure mode for this specific question is a session re-deriving closed work from a stale finding, twice now.",
         "status": "proposed"
       }
     },
@@ -141276,6 +141515,7 @@
       "properties": {
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Nothing here is intent.\n\nANTHONY, 2026-08-21: \"as I state quite often, using reflow2 on reflow2 is our first proof of concept; however, reflow2 is a tool for other projects. that being said, should we introduce an /optimize skill (that would occur after black boxes have been identified) that any project could do on its modules?\"\n\n⭐ THE UNUSUAL THING ABOUT THIS IDEA IS THAT THE PROCEDURE WAS ALREADY RUN ONCE, BY HAND, AN HOUR BEFORE HE ASKED. That is not a coincidence to note in passing — it is the only evidence available about whether the skill would have content, and it is first-hand rather than imagined.\n\nTHE RUN, in the order it actually happened:\n  1. MEASURED WHERE THE TIME WENT. 191.8 s across 127 test binaries. The worst thing was not the biggest file but the worst COST PER UNIT OF WORK — 2.44 s/test in one file against a 0.92 s median for a whole binary.\n  2. FOUND THE CAUSE BY MEASURING, NOT GUESSING. open_in_memory 41.3 ms vs an add_capability write at 54.7 us: construction cost 750x a write. Cause: eleven include_str!'d YAML documents re-parsed on every construction.\n  3. WROTE THE BUDGET DOWN BEFORE TOUCHING CODE. `con:graph-construction-is-setup-not-work`, 1 ms, derived rather than picked.\n  4. OPTIMISED. Cached the parse.\n  5. RE-MEASURED AGAINST THE BUDGET AND STOPPED. Suite 191.8 s -> 96.5 s.\n  6. MADE THE MEASUREMENT DURABLE.\n  7. PAID THE GUARDS THAT FIRED.\n\n═══════════════════════════════════════════════════════════════════\n⭐⭐ THE STEP THAT EARNED ITS PLACE: THE BUDGET MADE THE WORK STOP\n═══════════════════════════════════════════════════════════════════\n\nFirst re-measurement after the fix read 2.79 ms — a 14.8x speedup AND OVER BUDGET. Without a number written down beforehand, \"14.8x faster\" is exactly where optimisation stops and everyone feels good. The warm figure was 266 us, under budget, so the work stopped there — leaving the obvious next move (Arc instead of cloning the schema, which would recover 252 of those 266 us) UNDONE, because it needs a dependency's API in another repo. **The budget produced a defensible stopping point at a repo boundary.** That is the anti-over-engineering mechanism working, and it is the strongest argument that the skill has real content rather than being a checklist.\n\n═══════════════════════════════════════════════════════════════════\n🛑 TWO THINGS BIT DURING THE RUN, AND BOTH BELONG IN THE SKILL\n═══════════════════════════════════════════════════════════════════\n\n(1) **A DURATION ASSERTION IN A PARALLEL SUITE MEASURES CONTENTION, NOT CODE.** The first durable test asserted \"a warm construction takes under 5 ms\". Alone: 266 us, comfortable. Inside `cargo test --workspace` with dozens of binaries competing: **6 ms, and the gate failed.** The usual response is to raise the threshold until it stops complaining, which RETIRES THE GATE WITHOUT ANYONE DECIDING TO. The fix was to assert a RATIO — cold construction versus warm — which survives contention because both halves are slowed equally, and which asserts the thing that actually broke: the parse happening once. ⇒ **AN OPTIMISATION GUARD SHOULD ASSERT THE STRUCTURE THAT MAKES THE CODE FAST, NOT THE TIME IT TAKES.** Time is a property of the machine as much as of the program.\n\n(2) **THE OPTIMISATION TRIPPED A DESIGN RULE, AND PAYING IT WAS ONE PARAGRAPH.** Caching the parse in a `LazyLock` is a process-global, and `no_per_design_process_globals` refused it. That test's own words: *\"the door closes one convenient static at a time, each individually reasonable.\"* Mine was one of those. The rule's question — would a second design open in this process need a different value? — had a clean answer (the YAML is compiled in; it is a fact about the BINARY), and the cost of the global was stating it. ⇒ **OPTIMISATION IS WHERE ARCHITECTURAL RULES GET QUIETLY TRADED AWAY FOR SPEED**, one reasonable exception at a time, and a skill that does not say so is missing the thing most worth saying.\n\n═══════════════════════════════════════════════════════════════════\n🛑 AND HIS PRECONDITION IS THE PART I WOULD PUSH BACK ON\n═══════════════════════════════════════════════════════════════════\n\nHe frames it as occurring AFTER black boxes have been identified. Measured earlier today, optimising one module needs THREE things and the contract is only one:\n  (i)   a WALL, so a change inside cannot leak out       — 0 of 10 subsystems publish a contract\n  (ii)  a TARGET, so you know when to stop                — 1 Constraint before today, and not a budget\n  (iii) a MEASUREMENT, so you can tell if you improved it — no benches, no criterion, not one Instant::now()\n\n**AND THE RUN ABOVE HAPPENED WITH (i) ABSENT.** No contract existed for the module optimised, and the work was still correct, bounded and successful — because (ii) and (iii) were supplied. You CANNOT optimise with a wall and no measurement; you can only change things and believe you improved them. So the skill does NOT need to wait for black boxes, and gating it on them would withhold the cheapest of the three returns until the most expensive one is finished. ⇒ **THE PRECONDITION IS A TARGET AND A MEASUREMENT, NOT A CONTRACT.** A contract makes optimisation SAFER (a change that leaks is caught); it does not make it possible.\n\n═══════════════════════════════════════════════════════════════════\nTHE OPTIONS\n═══════════════════════════════════════════════════════════════════\n\n(a) A SERVED `optimize` SKILL, gated on a target and a measurement rather than on black boxes. Its content is the ORDER and the REFUSALS, not the technique: measure before guessing; write the budget BEFORE the code; re-measure against the budget rather than against the old number; assert structure not duration; and when a rule refuses your change, pay it in prose rather than weakening it. CHEAPEST, and it is the leg reflow2 is best at. HONEST LIMIT: **ONE RUN IS NOT A PROCEDURE.** Everything above came from a single optimisation, in Rust, on a test suite, on one machine. A skill generalised from n=1 is a story about one afternoon wearing the costume of a method.\n\n(b) THE THIRD LEG FIRST — a detector. `Constraint` + `budget_report` is the TOOL leg and it exists; a skill would be the INSTRUCTION leg; nothing notices a project that has optimised without a budget, or a Constraint nobody ever measured against. Candidate finding: *a Constraint with no contribution recorded* — a budget stated and never checked, which is the shape a target takes when it decays into decoration.\n\n(c) DO NOTHING YET, AND RUN IT AGAIN FIRST. Optimise a second thing — ideally in a different language, or on something that is not a test suite — and see which of the seven steps survive contact. The strongest argument for waiting is that the two lessons above were BOTH discovered by doing rather than by thinking, and a second run is the only way to find the third.\n\n(d) FOLD IT INTO AN EXISTING SKILL rather than minting a twenty-first. `check-health` and `impact-check` already run after a change. Cheapest on surface area; loses the thing that makes the procedure work, which is that it is a SEQUENCE with a step that must come first.\n\n═══════════════════════════════════════════════════════════════════\nWHAT IS NOT KNOWN\n═══════════════════════════════════════════════════════════════════\nWhether any of the seven steps is reflow2-specific. Step 1 needed cargo's per-binary timings parsed out of test output — a project with no such output would need something else entirely, and a skill cannot supply it. The GENERIC part may be only steps 3, 5 and 6 (state the budget, re-measure against it, make it durable), with steps 1, 2 and 4 being \"do the obvious thing for your stack\". If that is the whole content, it is a short skill — and possibly a better one for being short.",
         "name": "OPEN — should `optimize` be a served skill? The procedure was run once by hand and two of its lessons were found by doing, not thinking",
+        "rationale": "═══ UPDATE 2026-08-31 — THE PREMISE OF THIS QUESTION HAS MOVED, AND THE DECISION TEXT ABOVE IS AS ANTHONY LEFT IT ON 2026-08-21. Nothing above was rewritten; this is appended so a reader meets the correction rather than the stale framing. ═══\n\nWHAT HAPPENED SINCE. The skill was BUILT and IS SERVED — `optimize/SKILL.md`, carried in the served catalogue and in `list_skills`, with ten of its obligations pinned by `tools/skill_lint.py` in CI (budget precedes the code; the number is derived not picked; measures against the budget not the starting point; stops when met; records what was left undone; guards assert structure not duration; names the raise-the-threshold failure; refuses to weaken a rule for speed; allows the answer \"nothing here\"; states how little it has been run). So option (a) was effectively taken.\n\n⭐ AND IT HAS NOW BEEN RUN TWICE, NOT ONCE. This node's central caveat — \"ONE RUN IS NOT A PROCEDURE... a skill generalised from n=1 is a story about one afternoon wearing the costume of a method\" — is n=2 as of the 2026-08-21 granularity and sweep work. Three budget Constraints now exist, and MEASURED 2026-08-31 all three are MET and GUARDED, by guards that assert structure exactly as the skill demands:\n    con:graph-construction-is-setup-not-work      1 ms      the_first_construction_pays_for_the_parse_and_the_rest_do_not (cold/warm ratio)\n    con:granularity-reads-scale-with-artifacts    N+2 reads the_reading_costs_one_store_read_per_artifact_plus_a_constant (a count)\n    con:a-sweep-builds-its-network-a-fixed-number 4 builds  the_sweep_does_not_scale_with_its_candidates (a count)\nBoth budgets this node's siblings recorded as UNMET at the time of writing (41x and 2.5x over) have since been met. Nobody had re-read them, which is why this is being written down.\n\n🛑 OPTION (c) IS THE ONE STILL OPEN, AND ANTHONY IS NOW PROPOSING EXACTLY IT. Its words were: \"DO NOTHING YET, AND RUN IT AGAIN FIRST. Optimise a second thing — ideally in a different language, or on something that is NOT A TEST SUITE — and see which of the seven steps survive contact.\" Of the three runs to date, two targeted a test suite or a structural read count and only the sweep touched the product surface. His 2026-08-31 proposal to sweep the subsystems for performance is a candidate third run against something that is not a test suite, which is the evidence option (c) asked for.\n\n🛑 OPTION (b) REMAINS UNBUILT AND IS THE MISSING THIRD LEG. It named the detector precisely: \"a Constraint with no contribution recorded — a budget stated and never checked, which is the shape a target takes when it decays into decoration.\" The TOOL leg exists (`Constraint` + `budget_report`) and the INSTRUCTION leg now exists (the served skill), but nothing notices a project that optimised without a budget, or a budget nobody ever measured against. On the three-legs reading, that absence is the likeliest reason the skill sees little use — including here.\n\n⚠️ WHAT THIS UPDATE DOES NOT SETTLE: whether any of the seven steps is reflow2-specific, which this node listed under \"what is not known\" and which two further runs on the same project cannot answer. That still needs a run somewhere that is not this repository.",
         "status": "proposed"
       }
     },
@@ -141346,6 +141586,17 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT A PROPOSAL. Anthony, 2026-08-25: *\"I forget how big you said the reflow2 project json file is, but I believe it was 50+ MB? I can't remember, but github has a size restriction for files that can be git pushed (I believe a hard limitation is 100 MiB). Hence, compressing the file discussion\"* — with minification, gzip/zstd/brotli and key-shortening laid out as the options.\n\n**THE INSTINCT TO LOOK WAS RIGHT AND EVERY NUMBER CAME OUT DIFFERENT FROM THE GENERIC ADVICE.** All measured 2026-08-25 at main `691b4fb`.\n\n═══ 1. THE FILE IS NOT NEAR THE LIMIT ═══\n\n    raw (pretty-printed)      8.32 MB    ← 8.3% of GitHub's 100 MiB hard limit\n    GitHub hard limit        100.00 MiB    ~12x headroom\n\nThe 50+ MB recollection is about 6x high. **There is no file-size problem to solve.**\n\n═══ 2. ⚠️ MINIFICATION BUYS 12%, NOT 40-80% — AND THE REASON GENERALISES ═══\n\n    minified (jq -c)          7.34 MB    88.2% of raw   →  1.1x\n    gzip -9                   2.11 MB    25.3%          →  3.9x\n    minified + gzip           2.06 MB    24.8%          →  4.0x\n    zstd -19                  1.27 MB    15.3%          →  6.6x\n\nThe standard \"40-80%\" figure assumes machine-generated records: short values, many repeated keys, deep structural syntax. **reflow2's export is the exact inverse.** Measured composition:\n\n    string VALUES   5.95 MB   78.5%   ← the prose\n    KEY names       0.97 MB   12.8%   ← all that key-shortening could ever touch\n\n⇒ **Key-shortening has a 12.8% ceiling and would break every reader** — the schema, the Python gates, `compare_designs`, every consumer. Converting to a header+matrix form has the same ceiling for the same reason.\n\n═══ 3. ⭐⭐ COMMITTING IT COMPRESSED WOULD MAKE THE REPOSITORY BIGGER, MEASURED ═══\n\nWhat git ACTUALLY spends on 550 revisions of this path:\n\n    revisions                    550\n    sum of logical sizes    1,729.3 MB\n    actual on-disk cost       357.0 MB   (20.64% — delta + zlib)\n    AVERAGE PER REVISION      664.6 KB\n\nCompare a per-file compressor: gzip -9 is **2.11 MB**, zstd -19 is **1.27 MB**. Git already beats both by 2-3x, because successive exports of one design are ENORMOUSLY similar and delta-compress against each other.\n\n🛑 **A COMPRESSED BLOB HAS NO EXPLOITABLE SIMILARITY TO THE PREVIOUS COMPRESSED BLOB.** Commit `.json.zst` and every revision costs its full ~1.27 MB instead of 664 KB. **The proposal that looks like it saves 85% actually costs about 2x** — and it destroys `git diff` on the one artifact whose diff a reviewer most needs to read.\n\n═══ 4. REFORMATTING IS SAFE FOR THE LINEAGE, WHICH WAS WORTH CHECKING ═══\n\n`compute_content_hash` is sha256 over the **canonical compact sorted-key JSON of `{edges, graph_id, nodes}`** — the design content, NOT the file bytes. So pretty-printing, minifying or reformatting does not move `content_hash` and cannot sever the chain. **The objection that would have killed minification outright does not apply.** (It still destroys diff readability, which is a different and larger objection.)\n\n═══ THE OPTIONS, none chosen ═══\n\n**A. DO NOTHING.** 8.3% of the file limit; `.git` is 539 MB, of which 357 MB is this path's history.\n ⚠️ Grows ~65 MB per 100 PRs. Fine for years; not free forever.\n\n**B. MINIFY BEFORE COMMIT.** 12% smaller.\n ⚠️ Turns a 136,374-line file into ONE line. Every design diff becomes \"the file changed\" — and the design diff is what a reviewer reads to see what a PR did to the model. **12% for the loss of reviewability is the worst trade on this list.**\n\n**C. COMPRESS BEFORE COMMIT (gzip/zstd/brotli).** ❌ **MEASURED WORSE**: ~2x the repository, plus no diff at all.\n\n**D. COMMIT THE EXPORT LESS OFTEN.** The repo cost is 550 revisions × 664 KB, not the file size. Export on release, or on demand, rather than once per PR.\n ⭐ The only option that attacks the measured driver. ⚠️ It collides head-on with `dec:export-once-per-pr` and with the export being the reviewable record of a PR — and it interacts with the store-inversion work, where the export becomes the DURABLE copy and wants writing MORE often, not less. Those two pull in opposite directions and that tension is the real content here.\n\n**E. ATTACK THE PROSE.** 78.5% is string values; `decision` 16.0%, `statement` 14.7%, `rationale` 6.3%, `description` 6.1% — **43% of the document in four fields.**\n ⚠️ AND THIS IMPLICATES HOW THE GRAPH IS WRITTEN, INCLUDING BY THIS AGENT: single statements of 3,000+ characters were written today. The prose is the value of the design — it is the reasoning that would otherwise be lost — so \"write less\" is not obviously right. But it IS where the bytes are, and nobody has ever asked whether the marginal paragraph earns its place.\n\n**F. HISTORY-LEVEL TOOLS** — Git LFS, shallow clones, periodic history rewrite.\n ⚠️ LFS makes the design un-diffable and un-reviewable in the web UI; rewriting history breaks every existing clone and hash reference.\n\n📌 THE FRAME THAT MAY MATTER MORE THAN ANY OPTION: this asks about the ARCHIVAL copy at the moment the project is deciding whether the export becomes the DURABLE copy (`dec:idea-the-store-becomes-a-session-cache-and-the-export-becomes-the-truth`). Measured the same day: a separate gitignored autosave path dissolves the auto-export/lineage collision. **If durability moves to a path git never sees, then how often the ARCHIVAL copy is committed becomes a free variable** — and option D stops fighting the export-once-per-PR rule.",
         "name": "OPEN — the export is 8.3 MB, not 50; minifying buys 12%, and committing it COMPRESSED would make the repo 2-3x BIGGER. The cost is 550 committed revisions and the prose inside them, not the encoding",
         "rationale": "Recorded under the brainstorm skill as an idea, not intent, and linked on creation.\n\nEvery figure was measured rather than taken from the general advice, and that turned out to matter three times: the file is 6x smaller than remembered, minification is 6x weaker than the standard estimate because this document is prose rather than records, and compressing before commit is not a saving at all but roughly a doubling. **A brainstorm that had reasoned from the generic numbers would have recommended exactly the wrong thing.**\n\nThe options are kept with their costs rather than ranked, because the choice turns on something not settled yet — whether the export is about to become the durable copy, which changes what the committed copy is even for.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-should-the-spine-be-re-derived-from-the-actual-structure",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — Anthony, 2026-08-31. Nothing chosen. His words: \"maybe we defined 10 subsystems independent of what the structure actually is and we can't seem to reconcile them. maybe the better approach is to forget the 10 subsystems and define new boundaries based on the actual structure of the code? then we can at least get to some defined black-boxes that agree with the structure of the actual code?\"\n\n📌 CREATED VIA create_node after searching and reading the near-matches in full; relations drawn with review_relations (add_decision's `related_to` route does not serialise from this client).\n\n═══ WHAT THE RECORD ALREADY ANSWERS, so this starts from the frontier ═══\n· The ten WERE defined independent of code structure, deliberately — `dec:bl83a-functional-decomposition`, accepted 2026-07-23, derived with him. Structure-derived was not an unconsidered option; it was the state being escaped: the self-model had been recovered backwards from the file tree and the domain primitives a design-graph tool IS appeared nowhere.\n· The code-derived spine was offered AGAIN on 2026-08-25 with the artefact in hand — adopt had recovered the module hierarchy, top tier `cmp:crate-reflow2-core` / `cmp:crate-reflow2-mcp` — and was declined on the record.\n· The 10-vs-actual mismatch is REAL but is in the PROSE: 8 of the ten sit at `level: subsystem` and two at `level: system` with five children each. The spine itself is clean — hierarchy_issues 0, multiple_parents 0. See `fact:the-ten-subsystems-are-eighteen-and-the-decision-that-names-them-was-never-amended`.\n\n═══ 🛑 THE NEW ARGUMENT, AND IT CUTS AGAINST THE STATED GOAL ═══\nThe goal is \"black boxes that agree with the structure of the actual code\". Measured 2026-08-31: 88 core modules, 45 of them adding methods to the SHARED `DesignGraph` struct across 62 impl blocks, graph.rs alone carrying 54; and 56 of 64 uncovered coupling pairs have `impl DesignGraph` on BOTH ends, crossing no crate boundary.\n\n⇒ THE CODE HAS NO BLACK-BOX BOUNDARIES TO AGREE WITH. Re-deriving the spine from structure would produce two crates and a module list — which is what adopt produced, and what was declined twice. It would not produce black boxes, because a black box needs encapsulated STATE and 45 modules share one struct's. **A carving cannot discover a boundary the code does not have.**\n\n═══ THE OPTIONS, none chosen ═══\n① KEEP THE FUNCTIONAL SPINE, AMEND ITS PROSE. Cheapest and honest: the structure is coherent, only its describing decision is stale. Buys nothing new.\n② RE-DERIVE FROM THE MODULES, as proposed. Would reproduce the crate/module view declined twice, and by today's measurement would not yield black boxes.\n③ RE-DERIVE FROM CO-CHANGE — the one branch with data. Measured 2026-08-21: 536 co-change observations between Components, 380 of them (71%) CROSSING a current subsystem boundary, and the signal survives removing `cmp:service` as a confound (70%). Leiden on that graph would run today and would produce a MATERIALLY different decomposition. It answers \"what changes together\", i.e. maintainability.\n④ PICK THE ILITY FIRST, THEN THE GRAPH — his own 2026-08-08 idea. Note it has ALREADY been done once: the coherence-loop split was made by the OBSERVABILITY cut, and that decision says so in as many words (\"the quality target was not decoration; it picked the cut\").\n⑤ SPLIT THE STRUCT. The only option that actually creates black boxes, and it is a code change rather than a carving. Large, and nothing has yet been blocked by the current shape.\n\n⚠️ COUNTER-ARGUMENTS, recorded beside rather than used to argue the idea down. (1) 71% disagreement measures DIFFERENCE, not improvement — nothing compares the two decompositions against any outcome anybody cares about. (2) The performance branch is not even runnable: `evaluate_allocation` reports ONE capability-to-capability dependency edge in the whole design, so Leiden on the dependency graph has nothing to cluster. (3) This project has twice retired metric-driven verdicts that fired on correct architecture, so a purely computed allocator has a recorded failure mode here. (4) A service boundary carries obligations no coupling graph encodes — deployment unit, failure domain, ownership, release cadence.\n\n⭐ THE QUESTION UNDERNEATH ALL FIVE, and it may be the one worth answering first: WHAT IS THE SPINE FOR? If it is for explaining the product to a reader, function wins and the code view stays evidence. If it is for bounding change, co-change wins. If it is for substitution or independent optimisation, none of them wins until the struct is split.",
+        "kind": "exploratory",
+        "name": "OPEN — should the functional spine be abandoned for boundaries derived from actual structure, and if so from WHICH structure: the modules, the co-change graph, or an ility?",
+        "rationale": "Recorded under the brainstorm discipline — ideas as ideas, nothing promoted, and the two prior declines recorded beside the proposal rather than used to close it. He has now raised structure-derived allocation three times (2026-08-08 as graph-theoretic clustering, 2026-08-21 as \"draw a boundary around the communities\", 2026-08-31 as \"forget the ten\"), and each time the answer has turned on WHICH GRAPH rather than on yes or no. That the question keeps returning in different words is itself evidence the prior answers never reached him — the same pattern as the four stale records found this session.",
         "status": "proposed"
       }
     },
@@ -141635,6 +141886,17 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-24, raising it inside the ephemeral-store idea: *\"may have to make safeguards to ensure that the reflow2 graph is exported at the conclusion of each session\"*. Nothing here is intent and nothing is planned.\n\nWHY THIS IS ITS OWN QUESTION rather than a clause of `dec:idea-the-store-becomes-a-session-cache-and-the-export-becomes-the-truth` — read in full and judged distinct: that one asks WHAT the enduring artifact is; this asks WHAT MAKES IT RELIABLE. They are answered by different work — one is a storage-model decision, the other is a durability mechanism — and this half is worth something even if the inversion is never taken, because **the export is ALREADY the only copy that survives losing the graph directory.** `loop_status` says exactly that on every call today.\n\n⭐ THE ASYMMETRY THAT MAKES THIS SHARP. Today an unexported session loses THE SESSION'S WORK and the store still holds the design. Under the inversion, an unexported session loses THE DESIGN. **The same failure changes from an annoyance into data loss, and nothing about the mechanism changes with it.** That is why he flagged it in the same breath as the idea rather than afterwards.\n\n🛑 IT HAS ALREADY HAPPENED, WHICH TAKES THIS OUT OF THE HYPOTHETICAL. `fact:defect-the-export-was-skipped-because-the-instructions-imply-a-stop-that-is-not-needed` (2026-08-15) records an export that was skipped, for a reason nobody would have predicted: the written instructions implied a stop that was not needed. Not negligence — a correct-looking reading of a correct-looking procedure.\n\nEVERY MECHANISM REFLOW2 HAS TODAY IS A NUDGE, AND A NUDGE IS NOT A GUARANTEE:\n- The **Stop hook** (`loop_nudge.py`) blocks a finish with unchecked writes — **ONCE**, by its own design, and never twice.\n- `loop_status` REPORTS unexported nodes. Reporting is not writing.\n- ⚠️ **And the hook is one-harness-only.** `dec:idea-the-loop-nudge-exists-for-one-harness-only` is ACCEPTED: the mechanism is `.claude/settings.json`. A durability guarantee that exists only inside Claude Code is not a durability guarantee — and flo2's users would not be in Claude Code at all.\n\n⇒ **THE GUARANTEE CANNOT LIVE IN THE HARNESS, BECAUSE THE HARNESS IS THE THING THAT MIGHT NOT COME BACK.** A session ends by crashing, by a killed terminal, by a closed laptop, by a container being reaped. None of those run a Stop hook. Anything depending on an orderly shutdown answers a different question from the one that matters.\n\nROADS, none chosen, listed so the ones not taken keep their reasoning:\n1. **EXPORT ON EVERY WRITE (write-through).** Strongest guarantee, and the hosted-tier node already recorded the objection: *\"the export being whole-document is correct for an archival action and fatal on a per-change path\"*. Dead unless the export becomes incremental.\n2. **PERIODIC / DEBOUNCED EXPORT.** Bounded loss instead of no loss. Cheap, harness-independent, and it turns \"did the session export?\" into \"how much did we lose?\" — a question with a knob on it.\n3. **THE SERVER OWNS IT, NOT THE SESSION.** The shared server already outlives any one session and already knows when a design goes idle; eviction and export become the same event. ⭐ This is the road that fits what already exists — the server is the only component that observes a session ENDING without being the session.\n4. **DECLINE THE INVERSION** — the store stays authoritative, the export stays archival. Costs nothing, keeps the 9x inflation and the open-instance ceiling.\n5. **A WAL/JOURNAL BESIDE THE BLOB**, replayed on hydrate. Ordinary database engineering, and it re-implements part of what RocksDB already does — named here so nobody proposes it as though it were new.\n\n⚠️ AN OBJECTION TO THE WHOLE FRAME, recorded beside the idea rather than used to argue it down: **RocksDB already solves durability, and solves it well.** Moving the durable copy to a JSON document chooses a weaker durability story on purpose, in exchange for cheap hydration and cheap eviction. That trade may be right for a hosted tier; it is not obviously right for one person on one laptop, where the store has never lost anything.\n\nRECORDED AS A QUESTION, NOT A CONCLUSION.",
         "name": "OPEN — if reflow2.json becomes the enduring artifact, what GUARANTEES it is written? Every mechanism reflow2 has today nudges, and a nudge that is skipped once has already been measured",
         "rationale": "Captured under the brainstorm skill: recorded as an idea, nothing promoted, nothing settled.\n\nSplit from `dec:idea-the-store-becomes-a-session-cache-and-the-export-becomes-the-truth` deliberately, and the split recorded with `distinct_from` after reading it: one node holding \"what is durable\" and \"what makes it durable\" could only ever be half-answered. This half stands alone because the export is ALREADY the only copy surviving loss of `.reflow2/graph`, so the guarantee question is live today and waits on no storage-model change.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-what-instrument-can-actually-see-unused-code-here",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — Anthony's idea, 2026-08-31, thinking out loud about a systematic cleanup sweep. Nothing here is intent and nothing has been chosen.\n\nTHE QUESTION. He wants dead code eliminated. Before scheduling that, what would actually SHOW it? Two instruments were checked and neither answers today:\n\n· THE COMPILER CANNOT SEE IT. `reflow2-core` is a library crate, so every `pub` item is public API and Rust's `dead_code` lint never fires on it. A clean build is therefore NOT evidence of no dead code — it is the instrument being blind. Same shape as the 40x method artefact measured this morning: the obvious measurement returns \"nothing here\" and reads as an all-clear.\n\n· THE DESIGN'S OWN TOOL REFUSES, ON PURPOSE. `consumption_report` exists for exactly this question and answers: a consumer is recorded for 20 of 181 built capabilities (11%), below the 50% at which absence carries signal, so the 161 unconsumed are WITHHELD and the ratio is the finding. That refusal is correct — at 11% the list would report the modelling style, not what is unused.\n\nOPTIONS, none chosen:\n① MODEL CONSUMPTION UP PAST 50%, so the tool starts answering. Expensive in edges, and it makes reflow2 able to answer the question for USERS too, not just here.\n② A CODE-LEVEL SWEEP that needs no design: `unreachable_pub`, or downgrading `pub` to `pub(crate)` and seeing what fails to compile. Cheap, mechanical, and blind to anything reachable-but-never-called.\n③ COVERAGE-BASED — run the suite and the real binary, see what never executes. Catches what ② cannot; needs a harness and conflates \"untested\" with \"unused\".\n④ ACCEPT THAT WE CANNOT CHEAPLY KNOW, and do not run the sweep. A legitimate answer the optimize skill explicitly permits (\"allows the answer 'nothing here'\").\n\n⚠️ COUNTER-ARGUMENT, recorded beside rather than used to argue him down: there is currently NO MEASUREMENT that meaningful dead code exists here at all. The premise of the sweep is unmeasured, and ①–③ are all ways of testing the premise rather than ways of doing the work.",
+        "kind": "exploratory",
+        "name": "OPEN — what instrument can actually see dead or unused code in reflow2, given the compiler is blind to it and the design's own tool refuses to answer?",
+        "rationale": "Recorded under the brainstorm discipline: the ideas enter the graph labelled as ideas so nothing is lost and nothing is claimed as intent. Anthony has not chosen any option and none should be read as recommended by its position.\n\n📌 WHY THIS IS SEPARATE FROM THE TWO NODES IT WAS OFFERED AGAINST, having read them: `req:the-design-says-what-was-built-and-never-used` is accepted INTENT that the design surface such things, and `cap:built-and-consumed-by-nothing` is the BUILT capability that does it. Both exist and work. This question is about what to do given that the built capability, correctly, declines to answer at 11% modelled consumption — an instrument question, not a request for the capability.",
         "status": "proposed"
       }
     },
@@ -159781,6 +160043,18 @@
       }
     },
     {
+      "node_id": "fact:the-ten-subsystems-are-eighteen-and-the-decision-that-names-them-was-never-amended",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "measurement",
+        "statement": "PROVENANCE OF THE DECOMPOSITION, ANSWERED FROM THE RECORD 2026-08-31, because Anthony asked how the ten subsystems were arrived at and whether they were defined independent of the actual structure.\n\n═══ ① THE SE PROCESS EXISTS AND IS RECORDED. IT WAS ALSO ACCRETIVE. ═══\n2026-07-23 — `dec:bl83a-functional-decomposition`, ACCEPTED, \"derived with the user\". Its rationale is the answer to the question: the self-model HAD been recovered backwards from the file tree, so its 38 Components were the Rust module list and the domain primitives a design-graph product fundamentally IS — node and edge types — appeared nowhere (BL-83). The replacement was carved from PURPOSE: \"the functional systems a design-graph tool IS\". The rationale states the principle explicitly: \"A functional carving comes from the product's purpose (a genesis input), NOT the code, and cuts across crate boundaries, so adopt on the code can only re-derive the module view.\"\n\n⭐ SO THE ANSWER TO \"WERE THEY DEFINED INDEPENDENT OF THE STRUCTURE?\" IS YES, DELIBERATELY, WITH A STATED REASON — and structure-derived was not an unconsidered alternative but the state being escaped from.\n\nTHE COUNT THEN ACCRETED, four amendments on one node:\n    7   as first written\n    8   2026-08-02  arithmetic correction (documentation had joined; prose said seven, scan_nodes said eight)\n    9   2026-08-20  sys:foundation CREATED — \"the carving itself moved\"\n   10   2026-08-20  cmp:packaging promoted from leaf to subsystem, same day\n\n═══ ② AND THE SHAPE MOVED A FIFTH TIME WITHOUT THE DECISION FOLLOWING ═══\n2026-08-25 — `dec:the-two-oversized-subsystems-are-split-functionally`, ACCEPTED on his word against recorded alternatives: sys:coherence-loop 28 children → 5, sys:agent-surface 25 → 5, both PROMOTED to `level: system` to make the rung. `dec:bl83a-functional-decomposition` still describes a flat ten and was never amended for it.\n\nMEASURED ON THE COMMITTED EXPORT TODAY:\n    level=system      2   sys:coherence-loop, sys:agent-surface\n    level=subsystem  18   8 originals at root + the 10 sub:* under those two\n    level=component  86\n    level=part        2\n    multiple_parents  0   hierarchy_issues 0\n\nOf the ten the decision names, EIGHT are at `level: subsystem` and TWO are at `level: system`. They are not peers in the graph and the decision says they are.\n\n🛑 THE RECONCILIATION FAILURE IS IN THE PROSE, NOT IN THE SPINE. Every sub:* has exactly one parent, no component has two, and hierarchy_issues is zero — the structure is coherent and was changed deliberately. What is stale is the decision TEXT. This is the FOURTH stale record found in one session, after the parallel-batch finding, the optimize decision, and the Interface/VERIFIES fact.\n\n═══ ③ THE ILITY-DRIVEN CUT HAS ALREADY BEEN MADE ONCE, AND IT IS RECORDED AS SUCH ═══\nThe coherence-loop split was not arbitrary grouping. Its own words: \"SEPARATING FINDING FROM TELLING IS THE OBSERVABILITY CUT, and it is why this grouping and not another... Observability-driven allocation wants THE INSTRUMENT SEPARATED FROM THE SUBJECT — a part that finds a problem must not be the part that decides how loudly to report it. THE QUALITY TARGET WAS NOT DECORATION; IT PICKED THE CUT.\"\n\n⇒ That is `dec:idea-the-ility-chooses-the-allocation-graph` exercised on a real carving. The ility→graph direction that node says \"does not exist\" HAS been used once, by hand, and nobody linked the two.\n\n═══ ④ AND THE CODE-DERIVED SPINE WAS OFFERED AND DECLINED, WITH THE ARTEFACT IN HAND ═══\nThe same 2026-08-25 decision records it: adopt HAD recovered the module hierarchy, its top tier was `cmp:crate-reflow2-core` and `cmp:crate-reflow2-mcp` — CRATES — and it was deliberately not applied, because \"applying it would have replaced a functional carving with a structural one and overturned dec:bl83a-functional-decomposition. A functional over-span wants a functional answer; the module view stays evidence, never a replacement spine.\"\n\n⚠️ WHAT THIS FACT DOES NOT SETTLE, and it is the live question: whether that call should now be REVERSED. It measures what was decided and why, not whether it was right. Today's separate measurement — 45 of 88 core modules adding methods to one shared DesignGraph struct — bears on it directly and was not available in July or August.",
+        "subject_id": "dec:bl83a-functional-decomposition",
+        "valid_from": "2026-08-31"
+      }
+    },
+    {
       "node_id": "fact:the-test-quality-axes-are-built-and-unused",
       "node_type": "TemporalFact",
       "properties": {
@@ -159877,6 +160151,18 @@
         "statement": "A TWO-ARM TRIAL RUN ON REFLOW2 ITSELF, at Anthony's direction and in his framing: 'reflow2 is like a doctor who develops a new medicine, but tries it on himself first before the public.' The candidate was option (b) of `dec:idea-how-does-a-users-project-acquire-vocabulary-it-never-uses` — report vocabulary a design has never used — reshaped as a COVERAGE STATEMENT rather than a gap list. Computed portably: schema read from the SERVER via `describe_schema`, corpus from the graph's own export, nothing about reflow2's file layout involved, so this is what any project would get.\n\n  ARM 1 — MATURE (reflow2's own, 2535 nodes / 10362 edges)\n    node types 22/29 (75%)   edge types 37/61 (60%)   properties 141/169 (83%)\n    flat list would be 59 items\n  ARM 2 — DAY ONE (immediately after `genesis`, 2 nodes / 0 edges)\n    node types 2/29 (6%)     edge types 0/61 (0%)     properties 9/18 (50%)\n    flat list would be 97 items\n\n⭐ THE TRIAL CONFIRMED THE OBJECTION AND SPLIT THE FEATURE IN TWO. The FIGURES pass both arms: '0 of 61 edge types' on a day-one design is not noise, it is a true and useful statement that nothing has yet been said about how anything relates. The FLAT LIST fails arm 2 outright — 97 items handed to a user thirty seconds into their project, MORE than the 59 a mature design produces. So the list ships as drill-down on request, never as standing output. Had this been shipped on the argument alone it would have been at its worst for exactly the users it was meant to help.\n\n⭐⭐ TWO THINGS THE TRIAL PRODUCED THAT NO AMOUNT OF ARGUING HAD:\n\n(1) THE UNUSED VOCABULARY CLUSTERS INTO WHOLE SUBSYSTEMS, and reads as about four findings rather than 31. Flow: `Flow` node type plus PART_OF_FLOW / PERFORMED_IN / PRODUCES / TRIGGERS. Dimensions and readiness: `DimensionObservation`, `DimensionAssessment`, `ReadinessAssessment` plus HAS_OBSERVATION / HAS_READINESS / OBSERVED_IN / CALIBRATED_AGAINST. Quality gates: `QualityGate` plus GATED_ON. Governance and risk: COMPLIES_WITH / IMPOSES / MITIGATES / VIOLATES_RULE. So the output should GROUP, and a grouped answer on a mature design is short enough to read every time.\n\n(2) THE REPORT MUST BE PARKABLE OR IT WILL NAG ABOUT A SETTLED DECISION. `OWNED_BY` is in the unused list, and its absence is DELIBERATE — `dec:ownership-reads-claims-before-adding-an-edge` says OWNED_BY is added only if claims prove insufficient. A coverage report that cannot be told 'this one is on purpose' would report a correct decision as a hole forever, which is `req:a-deliberate-state-is-not-a-defect` exactly. The `ruling: parks` mechanism shipped 2026-08-17 is what it needs, and neither piece was designed with the other in mind.\n\nNOT BUILT. The trial was run to decide the SHAPE before building, which was the agreement. What it decided: ship the figures, group the list, make it parkable, and keep the flat list behind a request.",
         "subject_id": "dec:idea-how-does-a-users-project-acquire-vocabulary-it-never-uses",
         "valid_from": "2026-08-18"
+      }
+    },
+    {
+      "node_id": "fact:the-wall-arrived-and-the-god-struct-did-not-move",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "measurement",
+        "statement": "RE-MEASURED 2026-08-31, because Anthony returned to the restructure-before-optimise question and the numbers under it are ten days old. THREE OF THE FOUR PREMISES HAVE MOVED. THE ONE THAT DECIDES THE QUESTION HAS NOT.\n\n═══ WHAT MOVED SINCE 2026-08-21 ═══\n· (ii) A TARGET — was \"1 Constraint in the entire design, and it is a SEMANTIC limit, not a budget. 0 DimensionAssessments. There is no stated performance target anywhere.\" NOW: 4 Constraints, 3 of them derived budgets, and ALL THREE MEASURED MET AND GUARDED TODAY (graph construction 1 ms, granularity N+2 reads, sweep 4 network builds).\n· (iii) A MEASUREMENT — was \"no benches directory, no criterion dependency, and not one Instant::now() or elapsed() in any test or tool. Nothing in this repository measures how long anything takes.\" NOW: the optimize skill has been run twice end to end, and a third measurement was taken today.\n· (i) A WALL — was \"0 of 10 subsystems publish a contract\" and, separately, `fact:a-contract-is-the-one-thing-reflow2-cannot-attach-evidence-to` said no Interface could carry a check at all. BOTH MOVED. Interface was added to the VERIFIES `to` list on 2026-08-22 on Anthony's call, and measured today ALL THREE published contracts now carry a check: ifc:mcp-tools <- ver:the-served-tool-surface-matches-its-goldens, ifc:mcp-tools-http <- ver:shared-sessions, ifc:graph-export <- ver:the-export-survives-being-read-back. 22 Interfaces now: 9 required, 10 internal (was 4), 3 published.\n\n⭐⭐ SO OPTION (e) WAS TAKEN AND IT WORKED. The 2026-08-21 node's cheapest option — \"give one module a target and a measurement, and optimise it\" — is exactly what happened, twice, and the budgets held. The two legs it called the urgent ones are supplied.\n\n═══ 🛑 AND THE FINDING THAT DECIDES THE QUESTION IS UNCHANGED, RE-MEASURED TODAY ═══\n    88 core .rs modules\n    45 of them add methods to the SHARED `DesignGraph` struct, across 62 impl blocks\n    67 of them DO define types of their own\n    graph.rs alone carries 54 public methods on that one struct; temporal.rs 16, verify.rs 14, report.rs 12, detect.rs 12\n(2026-08-21 read 54 modules / 43 sharing / 58 impl blocks. The ratio is the same and the absolute count has grown.)\n\nTODAY'S SEAM SWEEP SAYS THE SAME THING FROM THE OTHER SIDE: of the 64 coupled pairs with no declared contract, 56 have `impl DesignGraph` on BOTH ends and ZERO cross a crate boundary (`fact:coupling-and-contract-are-recorded-in-vocabularies-that-never-meet`). Two independent measurements, one conclusion.\n\n⭐ THE CONSEQUENCE, AND IT IS THE ANSWER TO \"RESTRUCTURE FIRST, THEN OPTIMISE INSIDE THE BLACK BOX\": modules own their OUTPUT TYPES and not their STATE. Every one reads the same store through the same accessors. So what a module can freely rework is its ALGORITHMS; what it cannot is its DATA REPRESENTATION — changing how anything is stored or indexed touches everybody. A CONTRACT AT THE SEAM DOES NOT CHANGE THAT, because the coupling runs through shared state rather than through the interface. Writing an ICD per subsystem would document boundaries that the code does not have.\n\n⚠️ WHAT THIS DOES NOT ESTABLISH. It does not say the god-struct SHOULD be broken up — that is a large change with its own risks, and `impl` blocks spread across modules is a normal and often deliberate Rust idiom for one aggregate. It says only that subsystem contracts are not the lever that produces substitutable or independently-optimisable modules while this holds. Whether anyone NEEDS that substitutability is a separate question the design has never answered; `dec:idea-swap-dynograph-foundation-as-the-substitutability-demo` is still open and is the only proposed test of it.\n\n⚠️ AND IT DOES NOT MEASURE WHETHER THE SHARED STATE ACTUALLY COSTS ANYTHING TODAY. No optimisation has yet been blocked by it. The claim is structural, not an observed impediment — the two budgets that were met were both algorithmic, which is precisely the class this structure still permits.",
+        "subject_id": "cmp:service",
+        "valid_from": "2026-08-31"
       }
     },
     {
@@ -162937,7 +163223,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:b111ed5df1ef64955984294ea36fe920ff133fbd917792285daa0dda636f1cff",
+  "prev_content_hash": "sha256:014e2ef3df74b066bf69e672cfb2eae05f2bb49ffeee330c53a8665a4edaf6c1",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
