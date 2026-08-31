@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:bb035d58a5b8eb837953bee5517e1530be10964878bc79fb2fff6baf40b059d1",
+  "content_hash": "sha256:c4f4465156f7ed79cc479c8aa5114bf0bf722c731c7c67d6c6faced29c7313cd",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -3373,6 +3373,14 @@
       "from_id": "dec:orientation-is-computed-not-written",
       "properties": {},
       "to_id": "dec:a-projection-is-named-and-the-battery-runs-over-it"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "dec:parallel-alternatives",
+      "properties": {
+        "evidence": "The earlier one saw this coming and wrote the reopening condition into its own deferral list: \"world-scoping IF SIMULTANEOUS IN-GRAPH AoA PROVES NEEDED\". Its argument against world-scoping was explicitly conditional on the benefit being \"not yet needed\". This is the first field report supplying that condition, with a measured cost rather than a preference."
+      },
+      "to_id": "fact:the-fork-ask-is-a-deferred-branch-whose-reopening-condition-is-now-met"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -17127,6 +17135,16 @@
     },
     {
       "edge_type": "CAUSES",
+      "from_id": "fact:the-parked-idea-predicate-predates-the-vocabulary-that-would-sharpen-it",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The proxy-keyed predicate is what produces ophyd's item 4, recorded in the triage fact this points at. `is_parked_idea` keys on `status == proposed` alone and so cannot tell an idea deliberately held as an alternative from a choice nobody has settled; `Decision.kind` is exactly that discrimination and arrived four days AFTER the rule (2026-08-30 vs 2026-08-26), read by no detector. Reproduced on reflow2's own graph as heal:43f0bd5292ef9d87 rather than taken on report.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:the-fork-ask-is-a-deferred-branch-whose-reopening-condition-is-now-met"
+    },
+    {
+      "edge_type": "CAUSES",
       "from_id": "fact:which-properties-are-node-references-is-a-judgement-made-once-and-never-recorded-for-the-others",
       "properties": {
         "basis": "correlational",
@@ -24884,6 +24902,15 @@
         "action": "modified"
       },
       "to_id": "art:manual-work"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:baseline-bcc8d2cb7857453a",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:ophyd-service-fork-feedback-2026-08-31"
     },
     {
       "edge_type": "CHANGED",
@@ -40254,6 +40281,16 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "fact:the-fork-ask-is-a-deferred-branch-whose-reopening-condition-is-now-met",
+      "properties": {
+        "evidence": "Both turn on the same unbuilt primitive. Exploring an alternative decomposition — re-carving the spine — has exactly the problem ophyd reports: it would reverse settled decisions in the one live design, so it cannot be modelled without damaging what it is being compared against. A fork scope is what would make that question answerable rather than hypothetical.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-should-the-spine-be-re-derived-from-the-actual-structure"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "req:a-design-can-be-asked-what-fraction-of-a-kind-carries-a-relation",
       "properties": {
         "evidence": "That accepted requirement asks the design to surface what was built and is used by nothing, and `consumption_report` correctly declines to answer it at 11% modelled consumption. A general instance-level coverage read is the shape that would let it answer — and would let a reader see the 11% itself, which is the number that governs whether its answer means anything.",
@@ -41442,6 +41479,12 @@
         "doc_kind": "agent_instructions"
       },
       "to_id": "cap:skills-served"
+    },
+    {
+      "edge_type": "DOCUMENTS",
+      "from_id": "art:ophyd-service-fork-feedback-2026-08-31",
+      "properties": {},
+      "to_id": "fact:the-fork-ask-is-a-deferred-branch-whose-reopening-condition-is-now-met"
     },
     {
       "edge_type": "DOCUMENTS",
@@ -126640,6 +126683,17 @@
       }
     },
     {
+      "node_id": "art:ophyd-service-fork-feedback-2026-08-31",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:02c32ab9b4c8a4efbeeb1e82f5529baa3a9653fbe1e8ba172f6ed5f5aab7e5f2",
+        "location": "docs/feedback/2026-08-31-ophyd-service-fork-feedback.md",
+        "name": "ophyd-service fork feedback, 2026-08-31",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:optimize-command",
       "node_type": "Artifact",
       "properties": {
@@ -134545,6 +134599,16 @@
         "change_type": "baseline_established",
         "detected_at": "2026-08-26",
         "name": "First baseline — new in this change.",
+        "subject": "record"
+      }
+    },
+    {
+      "node_id": "chg:baseline-bcc8d2cb7857453a",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-08-31",
+        "name": "First baseline. Copied byte-identical from the upload and verified NOT a strict prefix of art:ophyd-service-feedback-2026-08-19 before registering — a fresh document rather than an append, which is the opposite of dev_storyflow's pattern and had to be read off the file rather than assumed.",
         "subject": "record"
       }
     },
@@ -160103,6 +160167,18 @@
       }
     },
     {
+      "node_id": "fact:the-fork-ask-is-a-deferred-branch-whose-reopening-condition-is-now-met",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "measurement",
+        "statement": "TRIAGE OF THE OPHYD-SERVICE FORK REPORT, 2026-08-31. Environment stated by the reporter and checked: reflow2 0.45.0, claude-code 2.1.251, MCP 2025-11-25, read off `.reflow2/graph.client.json` in their own repo. CURRENT BINARY — these findings are live.\n\n📌 NOT AN APPEND. Checked against `art:ophyd-service-feedback-2026-08-19` with a strict-prefix diff: 120 lines against 172, different content. A fresh document, not a running log — unlike dev_storyflow's, whose older copies ARE strict prefixes. The identity was read off the file, not off a note about it.\n\n═══ ⭐⭐ ① THE HEADLINE ASK IS NOT A NEW GAP. IT IS A DEFERRED BRANCH WHOSE STATED REOPENING CONDITION IS NOW MET. ═══\n`dec:parallel-alternatives` (ACCEPTED 2026-07-22, Anthony's word, both axes the recommended option) settles that AoA alternatives are BRANCH-BY-FILE rather than world-tagged inside one live graph. Its closing line names exactly what ophyd is asking for:\n\n    \"Deferred: the decision-point pointer nodes + collapse wiring (rung 2),\n     WORLD-SCOPING IF SIMULTANEOUS IN-GRAPH AoA PROVES NEEDED, and\n     per-branch readiness scoring (BL-68).\"\n\nAnd its reasoning against world-scoping was explicitly conditional: it \"would bake world-awareness into every detector (possible_duplicate, allocation, SPOF, ...) — a large invasive change for a simultaneous-in-one-graph benefit NOT YET NEEDED, and BL-70 says branch-by-file 'teaches what the real scoping primitive must preserve' first.\"\n\n⇒ OPHYD IS THE FIELD EVIDENCE THAT DECISION SAID WOULD REOPEN IT, and it arrives with a cost rather than a preference: a real architecture question (service consolidation) is PARKED — recorded as prose-level ideas, code branch created and idle — because modelling it properly would damage the main design's signals. Their sentence is the one worth keeping: \"the tool's own strength (the health machinery) is what makes the workaround unacceptable.\"\n\n⚠️ WHAT THAT DOES NOT SETTLE: whether branch-by-file has yet taught what the scoping primitive must preserve, which was the stated precondition. One report is evidence of need, not evidence that the lesson has been learned.\n\n═══ 🛑 ② THEIR ITEM 4 IS NOW THE THIRD FIELD REPORT ON ONE RULE, AND THEY DISAGREE ═══\nOphyd objects that a CONTRADICTS from an exploratory idea to an accepted Decision lands in the main design's defect count — measured, 1 to 2 — and reads as damage rather than as a live exploration.\n\nBUT `proj:bhome`, reporting the SAME DAY on the SAME behaviour, called it CORRECT: \"Two were between brainstormed ideas and were correctly suppressed... The third involves a real requirement and was correctly surfaced. Nothing told me that distinction existed; the tool just got it right.\"\n\nAnd heal.rs:1812-1825 records a PRIOR conflict with hxm_program (2026-08-26) resolved the same way, in a comment: \"Against settled design, one parked side still leaves a live question.\" Suppression requires BOTH sides parked; one parked side against settled design still reports.\n\n⇒ THREE REPORTS, TWO POSITIONS, ON A RULE WHOSE REASONING IS ALREADY WRITTEN DOWN. This is not a defect to fix; it is a disagreement to decide, and none of the three reporters knows about the other two.\n\n═══ ⭐ ③ BUT OPHYD'S PROPOSED DISCRIMINATOR IS BETTER THAN ANYTHING AVAILABLE WHEN THAT RULE WAS WRITTEN — AND IT IS 2% POPULATED ═══\nThey suggest keying on \"a CONTRADICTS whose source is an OPEN `kind: exploratory` Decision\". MEASURED: `is_parked_idea` (heal.rs:2009) keys on `status == \"proposed\"` and NOTHING ELSE — which cannot tell an IDEA being turned over from a CHOICE somebody faced and has not settled. `kind` is exactly that discrimination and did not exist when the rule was written.\n\n🛑 AND IT WOULD REACH ALMOST NOTHING TODAY: 12 of 584 Decisions carry `kind`; 572 do not. The only computation that reads `Decision.kind` is `linking_report` in relate.rs — a REPORT, not a detector. (detect.rs:4935 reads `Verification.kind`, a different property.)\n\n⇒ SIXTH INSTANCE TODAY OF THE SAME SHAPE: a typed distinction built, an instruction that sets it (the brainstorm skill passes it), and NO DETECTOR READING IT. The fix is right in shape and would be near-inert until `kind` is populated — which is itself the argument the brainstorm skill's own honest-limits section anticipated when it said the graph had no brainstorm kind and that whether the distinction should become vocabulary 'turns on whether any computation would read it'.\n\n═══ ⚠️ BOUNDS ═══\n· One project, one session, one agent, and the agent is an LLM session rather than an independent user.\n· The 1-to-2 defect measurement is on THEIR design, not reproduced here.\n· Their `find_tools` check is reported, not verified by this triage — though it matches what `find_tools` returns here for the same shape of query.\n· Whether world-scoping is the right answer is NOT established by any of this. What is established is that the accepted decision's own reopening condition has field evidence behind it for the first time.",
+        "subject_id": "cap:cluster-claims",
+        "valid_from": "2026-08-31"
+      }
+    },
+    {
       "node_id": "fact:the-gate-caught-the-agent-six-times-and-five-were-the-same-two-habits",
       "node_type": "TemporalFact",
       "properties": {
@@ -160390,6 +160466,18 @@
         "statement": "ROOT-CAUSE PASS ON ALEX'S ITEM 3, 2026-08-30, run under the root-cause skill at Anthony's request. TWO SYMPTOMS WERE REPORTED AS ONE FAILURE. They have different causes, and the reporter's own inference about the second is probably wrong.\n\n═══ ① THE SYMPTOM, WITH HIS DIAGNOSIS CUT OUT ═══\nIn one parallel tool batch containing `add_change_event id=chg:X` and `pin_at_epoch node=chg:X`, the pin returned `Node not found: ChangeEvent chg:X` in `content`. A later retry found it present. A subsequent `set_artifact_checksum` naming that id returned the STRUCTURED-CONTENT STUB — not a refusal — and the next `export_graph` still carried the OLD checksum. His text says *\"the pin raced the create\"*; that is a hypothesis, and it is removed here so it had to survive a measurement.\n\n═══ ② PRECEDENT, AND IT REFUTES THE LEADING CANDIDATE ═══\n`fact:the-decision-race-is-caller-ordering-not-read-after-write` (2026-08-09, twenty-one days earlier, SAME USER'S FLEET) already established the mechanism for the identical class:\n\n  · READ-AFTER-WRITE ALREADY HOLDS. A capture tool takes an exclusive `write_lock()`, writes, and the guard drops BEFORE the response returns. There is no visibility window to close.\n  · THE RWLOCK SERIALISES ACCESS, NOT INTENT. Parallel batches carry no ordering, so the modify can legitimately win the lock first — at which instant the node genuinely does not exist and `Node not found` is the CORRECT answer, not a bug.\n\nSo the first symptom is fully explained and is not a defect in the write path.\n\n═══ ③ THE DISCRIMINATING MEASUREMENT ON THE SECOND SYMPTOM ═══\nHis conclusion: *\"first checksum call almost certainly failed (ChangeEvent missing, or export raced), and the failure was invisible.\"*\n\nMeasured in code 2026-08-30:\n  · crates/reflow2-core/src/artifact.rs, DesignUpdated branch: the ChangeEvent existence IS checked and a missing one returns `DynoError::NodeNotFound`.\n  · The MCP layer validates only that the field is PRESENT; the existence check is in core.\n  · `NodeNotFound` reaches `content` — proven by his own report, where `pin_at_epoch`'s identical error WAS visible to him.\n\n⭐ THEREFORE THE CHECKSUM CALL DID NOT FAIL ON A MISSING CHANGEEVENT. Had it done so he would have seen that refusal in the same channel and the same shape as the pin. He saw a stub, which is the SUCCESS rendering. THE WRITE ALMOST CERTAINLY LANDED, AND THE `export_graph` THAT SHOWED THE OLD HASH RAN BEFORE IT. He named this possibility himself and then set it aside.\n\n═══ ④ WHY THAT MATTERS — IT MOVES THE DANGER ═══\nIf the write never failed, then \"serialise dependent writes\" fixes the pin and DOES NOT fix the thing that actually threatens a committed export. The dangerous shape is not write-then-write; it is WRITE-THEN-EXPORT. `export_graph` acquires the same lock and is ordered by nothing, so an export issued in the same turn as writes can serialise a graph state missing those writes — and that document is the one that gets COMMITTED. A wrong committed export is worse than a failed pin, and it produces exactly the state the drift gate exists to catch.\n\n═══ ⑤ THE CLASS, AND WHY IT RECURRED ═══\nThe 2026-08-09 note named the general fix in as many words: *\"THE GENERAL FIX IS A DESCRIPTION, NOT A FEATURE: no tool description says that parallel batches carry no ordering, or that a create-then-modify pair must be sequenced.\"*\n\nWhat was built instead was the INSTANCE fix — `cap:a-decision-can-be-created-already-settled`, collapsing `add_decision` + `set_decision_status` into one unmisorderable call. That pair is now safe. Twenty-one days later the same user hit the same class through a DIFFERENT pair (`add_change_event` + `pin_at_epoch`) and a different shape entirely (writes + `export_graph`).\n\n🛑 SO THE CAUSE OF THE RECURRENCE IS THAT THE FIX ADDRESSED THE PAIR AND THE DESCRIPTION WAS NEVER WRITTEN. Test ⑥ of the root-cause skill applied: would the 08-09 fix have prevented the 08-30 report? No. It stops one pair out of an open set.\n\n═══ ⑥ WHY IT IS INVISIBLE TO THIS USER SPECIFICALLY ═══\nOrdering hazards are survivable when you can read the result. On a client that forwards only `content` (his item 1, now on its third report) a successful write and a no-op are indistinguishable, so the ONE recovery available — read it back — is closed. The two defects are independent and only dangerous together, which is why this arrived as one confusing report rather than two clear ones.\n\n═══ ⑦ NOT ESTABLISHED ═══\n· STILL NOT REPRODUCED WITH A CONCURRENT CLIENT. The 08-09 note flagged exactly this limit and it still stands: both passes read the mechanism from code rather than driving two overlapping calls at one server. The reproduction is two overlapping tool calls asserting the failure disappears when sequenced, and nobody has run it.\n· Whether the checksum write landed is INFERRED from the refusal channel behaving as his own report shows, not observed in his graph.\n· Whether `export_graph` can in fact be ordered before a write in the same batch is reasoned from the shared lock, not measured.",
         "subject_id": "cap:mcp-surface",
         "valid_from": "2026-08-30"
+      }
+    },
+    {
+      "node_id": "fact:the-parked-idea-predicate-predates-the-vocabulary-that-would-sharpen-it",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "correction",
+        "statement": "ROOT-CAUSE PASS ON OPHYD-SERVICE'S ITEM 4, run under the root-cause skill at Anthony's request, 2026-08-31.\n\n═══ ① THE SYMPTOM, WITH THE DIAGNOSIS CUT OUT ═══\nObserved (ophyd, verbatim): a CONTRADICTS edge from an exploratory Decision to an ACCEPTED Decision \"raised the main design's structural-defect count from 1 to 2 the moment it was drawn\", and loop_status carries the +1 while the idea stays open. NOT AFFECTED, and this bounds it: contradictions between TWO proposed Decisions ARE suppressed, which `proj:bhome` independently confirmed working the same day.\n\n═══ ② THE ANSWER WAS ALREADY WRITTEN DOWN, TWICE — STEP ② PAID ═══\n`dec:idea-a-proposed-decision-asserts-nothing-so-what-may-a-structural-detector-say-about-it` is ACCEPTED (2026-08-26, Anthony's word) and specifies the rule exactly: `contradiction` skips when BOTH endpoints are parked ideas; `unresolved_setup` skips when EITHER is. Its stated reason: \"A contradiction is real as soon as ONE side asserts something, so it needs both sides parked before it goes quiet.\" A counterweight test, `a_proposed_decision_is_not_treated_as_withdrawn`, exists SPECIFICALLY to defend the behaviour ophyd is objecting to: \"a parked idea that conflicts with an accepted decision is a real thing to settle.\"\n\n⇒ SO THE BEHAVIOUR IS NOT A DEFECT. IT IS A DECIDED POSITION WITH A TEST GUARDING IT.\n\n═══ ③ REPRODUCED HERE RATHER THAN TAKEN ON REPORT ═══\n`heal:43f0bd5292ef9d87` on reflow2's own graph today: `dec:idea-should-the-spine-be-re-derived-from-the-actual-structure` (exploratory, proposed) CONTRADICTS `dec:bl83a-functional-decomposition` (accepted), reported as a `contradiction` WARNING. The candidate \"the observation is wrong\" is dead.\n\n═══ ⭐⭐ ④ THE CAUSE, AND IT IS A DATE RATHER THAN AN INFERENCE ═══\n`is_parked_idea` (heal.rs:2009) keys on `status == \"proposed\"` AND NOTHING ELSE. That predicate cannot separate two things:\n  · a CHOICE somebody faced and has not settled — where a clash with settled design IS a live question, and the rule is right\n  · an IDEA deliberately held as an alternative — where the clash is the exploration working, and ophyd is right\n\nThe vocabulary that separates them EXISTS: `Decision.kind`, declared in schema/structure.yaml:141, INDEXED, values `[exploratory, choice]`, with \"ABSENT means nobody said, which is a third state and not a synonym for `choice`.\"\n\n🛑 AND IT ARRIVED FOUR DAYS AFTER THE RULE:\n    2026-08-26  3b41812  `is_parked_idea` written (#349)\n    2026-08-30  5022594  `Decision.kind` added — \"An idea is a declared kind, not an id prefix\" (#393)\n\n⇒ THE RULE KEYS ON A PROXY BECAUSE THE PRECISE PROPERTY DID NOT EXIST WHEN IT WAS WRITTEN. Nothing reads `Decision.kind` today except `linking_report` in relate.rs — a report, not a detector — and 12 of 584 Decisions carry it.\n\n═══ ⑤ WHY BOTH FIELD REPORTS ARE RIGHT ═══\nbhome praised the surfacing; ophyd objects to it; hxm_program (2026-08-26) objected to a THIRD case already fixed. All three are consistent once the conflation is named: they are describing different node kinds wearing the same `status`.\n\n═══ ⑥ THE CLASS, NOT THE INSTANCE ═══\nWould keying on `kind` have prevented hxm_program's report? NO — theirs was idea-vs-idea, fixed by the both-sides rule. So this is a genuinely different case rather than a re-fix, which is the test step ⑥ demands. The CLASS is: a detector keyed on a PROXY that predates the precise vocabulary, with nothing noticing when the vocabulary later arrives. That is the same shape as `dec:edge-orthogonality`'s test — a distinction earns its keep only if a computation reads it — pointing the other way: here the distinction was built and no computation was updated to read it.\n\n═══ ⚠️ ⑦ WHAT IS NOT ESTABLISHED, AND WHY NOTHING WAS BUILT ═══\n· NO FIX WAS WRITTEN. Changing this reverses an ACCEPTED decision and would require deleting or amending a counterweight test that exists on purpose. That is Anthony's call, not a repair.\n· THE FIX WOULD BE NEAR-INERT TODAY: 12 of 584 Decisions carry `kind`, so keying on it would change almost nothing until the property is populated — and the 572 without it would keep the current behaviour, which may be right or may be a second inconsistency.\n· A SHARPER PROBLEM SITS BESIDE IT, ALREADY RECORDED AND UNTOUCHED BY ANY OF THIS: `dec:idea-should-an-idea-be-linked-to-the-intent-that-scopes-it` measured that an idea contradicting an accepted DECISION scores +2 in what_next while one contradicting a REQUIREMENT scores 0 and is read by nothing. Its words: \"The more serious contradiction is the unread one.\" Ophyd is objecting to the case that IS read.\n· The 1-to-2 count is ophyd's measurement on ophyd's design and was not reproduced there; what was reproduced here is the FINDING, not their count.",
+        "subject_id": "cap:a-finding-names-the-mechanism-that-parks-a-deliberate-state",
+        "valid_from": "2026-08-31"
       }
     },
     {
@@ -163807,7 +163895,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:28c10743ce308dce8aadd2e021961c8d7fe335a87f6812ee2349b805201a328e",
+  "prev_content_hash": "sha256:bb035d58a5b8eb837953bee5517e1530be10964878bc79fb2fff6baf40b059d1",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
