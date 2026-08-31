@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:c4f4465156f7ed79cc479c8aa5114bf0bf722c731c7c67d6c6faced29c7313cd",
+  "content_hash": "sha256:176906c026a83f859f2b0d07f803eb6d95af53c2c2534b1b06ff8b406c23de13",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -3208,6 +3208,14 @@
         "evidence": "Recorded 2026-08-01 asking whether reflow2 should adopt embeddings and the HNSW index or stay lexical. It anticipated the same choice this capability made in the small: increment 1 dropped `hnsw.rs` and `distance.rs` (1,941 lines) on the ground that reflow2 calls neither, which is the 'stay lexical' answer taken by construction rather than by decision. ⚠️ The idea remains OPEN and this does not settle it — but a later reader should know the code it would need is no longer in the tree."
       },
       "to_id": "cap:graph-algorithms"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "dec:idea-have-the-three-legs-been-applied-uniformly-and-are-three-legs-enough",
+      "properties": {
+        "evidence": "The earlier one saw this coming and asked the exact question this pass answers with evidence: whether three legs are enough, and whether a fourth is needed to make a practice HAPPEN rather than merely be possible and observable. It had two measured cases; this adds eight, and one of them is a sub-shape it could not have predicted — an instruction that is present, correct, and addressed to the wrong reader."
+      },
+      "to_id": "fact:eight-more-instances-and-one-is-misrouting-rather-than-a-missing-leg"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -12587,6 +12595,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-should-a-node-carry-its-git-coordinate",
+      "properties": {
+        "acted_at": "2026-08-31",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-should-a-requirement-trace-back-to-its-demand-signal",
       "properties": {
         "acted_at": "2026-08-11",
@@ -12893,6 +12910,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-the-requirement-tiers-exist-and-nothing-reads-them",
+      "properties": {
+        "acted_at": "2026-08-31",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-the-store-becomes-a-session-cache-and-the-export-becomes-the-truth",
       "properties": {
         "acted_at": "2026-08-24T22:50:00Z",
@@ -12986,6 +13012,15 @@
       "from_id": "dec:idea-what-is-reflow2s-part-in-an-automated-translation",
       "properties": {
         "acted_at": "2026-08-19",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-what-is-the-minimum-path-to-fork-ophyd-service-today",
+      "properties": {
+        "acted_at": "2026-08-31",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -15483,7 +15518,7 @@
       "from_id": "req:a-design-can-be-asked-what-fraction-of-a-kind-carries-a-relation",
       "properties": {
         "acted_at": "2026-08-31",
-        "role": "author"
+        "role": "approver"
       },
       "to_id": "who:ajs"
     },
@@ -17072,6 +17107,16 @@
         "validation_status": "validated"
       },
       "to_id": "dec:idea-a-finding-carries-its-bounds"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:eight-more-instances-and-one-is-misrouting-rather-than-a-missing-leg",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The misrouting is what parked ophyd-service. The worktree fork path had every leg and was filed under a skill description naming two-or-more-people; their agent searched, concluded tool_missing, and shelved a real architecture question. The cost of the pattern is not abstract here — it is one idle code branch and one deferred decision.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:the-fork-ask-is-a-deferred-branch-whose-reopening-condition-is-now-met"
     },
     {
       "edge_type": "CAUSES",
@@ -39543,6 +39588,16 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-should-a-node-carry-its-git-coordinate",
+      "properties": {
+        "evidence": "Both are the same bet in different clothes: a declared property is worth adding only if something reads it and something keeps it true. That node measures what happens when neither holds — 205 requirements at a default nobody chose — and a per-node branch field with no recomputation would be the same shape at ten times the node count.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-the-requirement-tiers-exist-and-nothing-reads-them"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "dec:idea-should-an-idea-be-linked-to-the-intent-that-scopes-it",
       "properties": {
         "evidence": "Option D here fails for exactly the reason that node documents: prose is not queryable, so nothing notices the scoping step being skipped, and a detector that WOULD notice is the kind whose one acknowledgement then silences it forever. Whichever option wins, its enforcement inherits that unsettled keying question.",
@@ -39663,6 +39718,16 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-the-requirement-tiers-exist-and-nothing-reads-them",
+      "properties": {
+        "evidence": "This is the same shape that fact measures, now at eight instances: a typed distinction declared and indexed, an instruction able to set it, and no computation reading it. Whether the tiers are worth anything turns on that pattern's diagnosis — if reach is the problem rather than vocabulary, building more readers before populating anything repeats it.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "fact:five-capabilities-were-built-reachable-and-unreached-and-one-query-shape-found-them-all"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "dec:idea-the-store-becomes-a-session-cache-and-the-export-becomes-the-truth",
       "properties": {
         "evidence": "The inversion is only worth taking if this lands first. Making reflow2.json the enduring artifact turns an unexported session from an annoyance into loss of the design itself, so the durability mechanism is a precondition of the storage model rather than a follow-on to it. Direction is deliberate: the inversion depends on the guarantee, not the other way round — the guarantee is worth building on its own, because the export is already the only copy that survives losing the graph directory.",
@@ -39690,6 +39755,16 @@
         "weight_basis": "estimated"
       },
       "to_id": "cap:built-and-consumed-by-nothing"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-what-is-the-minimum-path-to-fork-ophyd-service-today",
+      "properties": {
+        "evidence": "Option ② — classify only the blast radius before forking — is that node's `lineage: derived` + GOVERNED_BY applied to a bounded set instead of all 205. Whether it is worth doing here turns on whether the tier is worth populating at all, which is the question that node holds.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-the-requirement-tiers-exist-and-nothing-reads-them"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -114537,11 +114612,27 @@
     },
     {
       "edge_type": "MITIGATES",
+      "from_id": "dec:idea-should-a-node-carry-its-git-coordinate",
+      "properties": {
+        "evidence": "A branch coordinate is what would make the worktree fork self-describing: today the only thing saying which design you are editing is the graph path in an MCP config, and that node records mis-pointing it as the route's most dangerous unpaid cost. Option ② or ③ would let a session say which branch its design came from rather than inferring it from a path."
+      },
+      "to_id": "dec:idea-what-is-the-minimum-path-to-fork-ophyd-service-today"
+    },
+    {
+      "edge_type": "MITIGATES",
       "from_id": "dec:idea-the-read-seam-exists-and-the-question-is-migration-not-architecture",
       "properties": {
         "evidence": "CountingRead is what makes a per-module store-read budget measurable from outside the module, and it is the mechanism behind the one granularity budget that exists. Migrating a module behind GraphRead is therefore the act that makes that module optimisable under the optimize skill's own rules, which demand a measurement before any budget."
       },
       "to_id": "dec:idea-is-there-performance-left-after-the-four-wins-and-what-is-the-budget"
+    },
+    {
+      "edge_type": "MITIGATES",
+      "from_id": "dec:idea-the-requirement-tiers-exist-and-nothing-reads-them",
+      "properties": {
+        "evidence": "The derived tier is the substrate that would make a fork safe. The schema already says a derived requirement loses its reason to exist when its governing Decision is re-opened — which is precisely 'what does this fork retire?', the question that makes reversing a settled choice tractable instead of destructive. Nothing computes it today, and lineage is 0% populated, so the fork currently has no way to answer it."
+      },
+      "to_id": "fact:the-fork-ask-is-a-deferred-branch-whose-reopening-condition-is-now-met"
     },
     {
       "edge_type": "MITIGATES",
@@ -114558,6 +114649,14 @@
         "evidence": "One is a hazard, the other answers it. That 2026-08-15 observation records a real export that was skipped because the written instructions implied a stop that was not needed — a correct-looking reading of a correct-looking procedure, not negligence. It is the measured instance of the failure this question exists to close, and it is why 'write the procedure more carefully' is not one of the roads listed."
       },
       "to_id": "fact:defect-the-export-was-skipped-because-the-instructions-imply-a-stop-that-is-not-needed"
+    },
+    {
+      "edge_type": "MITIGATES",
+      "from_id": "dec:idea-what-is-the-minimum-path-to-fork-ophyd-service-today",
+      "properties": {
+        "evidence": "This answers the blocked-today half of that finding without settling its expensive half. Option ④ also feeds it: running a real fork is precisely the evidence dec:parallel-alternatives deferred world-scoping pending, so the unblock and the experiment are the same act."
+      },
+      "to_id": "fact:the-fork-ask-is-a-deferred-branch-whose-reopening-condition-is-now-met"
     },
     {
       "edge_type": "MITIGATES",
@@ -141968,6 +142067,17 @@
       }
     },
     {
+      "node_id": "dec:idea-should-a-node-carry-its-git-coordinate",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — Anthony, 2026-08-31, arriving out of the alternate-design discussion. Nothing chosen.\n\nHIS WORDS: \"does each node in the graph have an associated git repo/branch field... when the agent wants to determine where something is, it can just look at the node. And in the case of an alternate design, maybe the nodes/edges of the alternate design project have git_repo/alternate_design_branch. Additionally, when something is in work, maybe it has the branch that it is being worked in... when it is merged to main, then the node is also updated to git_repo/main now. If we were really fancy, could maybe include the commit hash... Then there is explicit traceability with every node in the design with its git repo/branch/commit?\"\n\n═══ WHAT EXISTS TODAY, CHECKED ═══\nNO node type carries a git coordinate. The nearest three, and none is this:\n· `Artifact.location` + `checksum` — a path and a content hash. WHERE a file is, not which branch a NODE belongs to.\n· `Resource.version` — \"for a design-dependency: the version this design MEANS to depend on — a tag, a commit, a release\". About depending on ANOTHER design.\n· The export `stamp` — carries `reflow2_version` and the schema shape, and NO git coordinate at all.\n\n═══ ⭐⭐ THE STRONGEST ARGUMENT FOR IT IS A TRAP THAT HAS ALREADY BITTEN ═══\nThe design graph does NOT branch with git: one store per DIRECTORY, shared by every branch checked out in it. A session on a feature branch writes into the same graph as main, and a plain export then carries the other branch's writes. That was caught once as FOUR PHANTOM DRIFTS and it would have merged cleanly — a silent wrong merge, which is the worst class this project recognises. A branch coordinate is exactly what would make that detectable rather than discovered.\n\n═══ 🛑 AND THERE IS A CIRCULARITY THAT BOUNDS THE COMMIT HALF ═══\nThe design is exported to a FILE THAT LIVES IN THE REPO. A node therefore CANNOT carry the hash of the commit that contains it: writing the hash changes the file, which changes the commit. The commit field can only ever mean \"the commit this was DERIVED FROM\" or \"last synced at\" — never \"the commit I am in\". That is not fatal, and it is not what the idea assumes, so it has to be stated before anyone builds it.\n\n═══ 🛑 AND THE CORE CANNOT COMPUTE IT ═══\n`reflow2-core` does NO file I/O, deliberately and repeatedly — `reconcile_artifacts` makes the CALLER supply hashes for exactly this reason. So a git coordinate would be CALLER-SUPPLIED: a claim, not a computation. That is the shape that goes stale, and this session has recorded EIGHT instances today of a declared property nothing reads or populates.\n\n⭐ THE PRECEDENT THAT SHOWS WHAT WOULD MAKE IT WORK: `Artifact.checksum` is the same shape — a git-adjacent fact stored on a node — and it earns its keep ONLY because `reconcile_artifacts` recomputes it from disk and reports divergence. A branch field with no equivalent recomputation is decoration that will be wrong the first time somebody merges without updating it, which his own sentence anticipates (\"then the node is ALSO UPDATED\") and which nothing would notice.\n\n═══ THE OPTIONS, none chosen ═══\n① PER-NODE repo/branch/commit, as proposed. Maximum traceability. ⚠️ 3,536 nodes each carrying a hand-maintained fact with no recomputation; goes stale on every merge; and the commit half cannot mean what it appears to.\n② ON THE EXPORT STAMP ONLY — branch and commit recorded once per export, at the MCP layer where file I/O is already allowed. ⭐ CHEAPEST, and it catches the phantom-drift trap exactly, because that trap is a property of the EXPORT rather than of any node. ⚠️ Says nothing about an individual node's provenance, which is what he asked for.\n③ ON THE ChangeEvent — the branch a change was made on, recorded at the moment of the write. ⭐ A ChangeEvent is already the \"what moved and when\" record, it is written once and never edited, so it CANNOT go stale the way a per-node field would. ⚠️ Answers \"where was this changed\" rather than \"where does this live now\".\n④ ONLY ON ARTIFACTS, extending `location` with a repo/branch. ⭐ Artifacts are the nodes that actually correspond to files, and the recomputation machinery already exists there. ⚠️ Leaves every non-Artifact node — which is most of the graph — unlocated.\n⑤ NOTHING, AND FIX THE TRAP DIRECTLY: have the export or `sync_status` warn when the working tree's branch differs from the one the last export was taken on. ⚠️ Solves the measured incident and none of the traceability he is asking for.\n\n═══ ⚠️ COUNTER-ARGUMENTS ═══\n(1) `dec:merge-three-way` settled that GIT IS THE DAG and reflow2 owns no branch machinery. Recording a coordinate is not owning the DAG, but ① edges toward reflow2 maintaining a parallel model of git state, which is the thing that decision refused.\n(2) The idea's own update rule — \"when merged to main, the node is also updated\" — is a hand-maintained invariant with nothing checking it, which is the exact cause shape this project keeps finding: \"a rule maintained by hand with nothing checking it is a rule that silently stops being true\".\n(3) It is not clear anybody has needed per-node location. The phantom-drift incident needed EXPORT-level branch awareness; the fork case needs to know which STORE a node is in, which the store path already answers.",
+        "kind": "exploratory",
+        "name": "OPEN — should every node carry a git repo/branch/commit coordinate? The trap it would catch is real and already measured; the granularity it needs may be the export, not the node",
+        "rationale": "Recorded under the brainstorm discipline — ideas as ideas, nothing promoted, counter-arguments beside rather than against.\n\nThe circularity and the no-file-IO constraint are recorded first because both bound what the idea can mean, and neither is visible from the proposal as stated: a node cannot carry its own commit, and the core cannot compute any git fact, so every option below is a caller-supplied claim rather than a derived one.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-should-a-requirement-trace-back-to-its-demand-signal",
       "node_type": "Decision",
       "properties": {
@@ -142309,6 +142419,17 @@
       }
     },
     {
+      "node_id": "dec:idea-the-requirement-tiers-exist-and-nothing-reads-them",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — Anthony, 2026-08-31, thinking out loud after the fork discussion. Nothing chosen.\n\nHIS WORDS: \"overarching requirements (not tied to implementation) and derived requirements that are dependent upon the design choices you make (things like, because you made decision X, this causes a requirement on capability Z). the overarching requirements are more like KPPs that are independent of design choices... do we need different tiers of requirements?\"\n\n═══ ⭐⭐ THE TIERS ALREADY EXIST, AND THE SCHEMA DEFINES THEM IN HIS OWN TERMS ═══\n`Requirement.lineage`, declared and INDEXED in schema/core.yaml, values `[original, decomposed, derived]`:\n· `original` — \"the stakeholder's own word\"\n· `decomposed` — \"a 1:1 split of a parent adding no new information — it DECOMPOSES that parent, and satisfying every child satisfies it\"\n· `derived` — \"technical necessity nobody asked for, CREATED BY A DESIGN DECISION — it is GOVERNED_BY that Decision, and IF THE DECISION IS RE-OPENED THE REQUIREMENT MAY LOSE ITS REASON TO EXIST\"\n\nAnd the overarching tier exists as its own thing: a KPP is `Constraint.category = kpp`, carrying `limit` as the THRESHOLD and `objective` as the desired value — \"inviolable intent, in the acquisition sense — a threshold that, if missed, fails the effort regardless of how well everything else went.\" Modelled as a Constraint subtype rather than a node type ON HIS OWN CALL, 2026-07-25, because the quantity/limit/direction triple and the budget rollup already existed. Two detectors read it: `KppUnbound` and a threshold-violation rule, and its violations rank above ordinary gaps.\n\n═══ 🛑 MEASURED 2026-08-31, AND THIS IS THE FINDING ═══\n    Requirements        205\n      lineage=original  205   ← ALL of them, and `original` is the schema DEFAULT\n      lineage=decomposed  0\n      lineage=derived     0\n    Constraints           4   all category=technical\n      category=kpp        0\n    Readers of Requirement.lineage: NONE. The only code mentions are in the setter.\n\n⇒ THE VOCABULARY IS NOT MISSING. IT IS UNUSED AND UNREAD. Eighth instance today of a typed distinction built, an instruction that can set it, and no computation reading it.\n\n⚠️ AND THE DEFAULT MAKES A CLAIM NOBODY MADE. `original` means \"the stakeholder's own word\". It is stamped on all 205 because nobody classified them, so the design currently asserts that every requirement came from a stakeholder — the same failure `Interface.designation` documents about itself (\"BECAUSE it is the default, `internal` cannot distinguish 'deliberately internal' from 'nobody classified this'\"), except here the default is the CLAIMY value rather than the neutral one.\n\n═══ ⭐⭐ AND HIS TWO QUESTIONS TODAY ARE ONE QUESTION ═══\nThe schema already states the consequence that makes forks tractable: a derived requirement \"is GOVERNED_BY that Decision, and if the decision is RE-OPENED the requirement may lose its reason to exist.\"\n\nNOTHING COMPUTES THAT. And it is exactly what an exploration fork needs to be safe: reversing decision X in a fork should tell you which requirements lose their basis. Without it, a fork silently keeps requirements whose only reason was the choice it just reversed — which is the \"reversals of previously settled requirements\" worry he opened the fork discussion with.\n\n⇒ SO THE TIERS ARE NOT A SEPARATE TOPIC FROM THE FORK. `lineage: derived` + GOVERNED_BY is the substrate that makes \"what does this fork retire?\" a computation instead of a judgement, and it is 0% populated.\n\n═══ THE OPTIONS, none chosen ═══\n① POPULATE NOTHING, BUILD NOTHING. The tiers are honest as unused vocabulary; a design where every requirement really is the stakeholder's word loses nothing. ⚠️ But this design is not that — several requirements here plainly exist because of a decision.\n② FIX THE DEFAULT so unset is distinguishable from `original`. Cheapest thing that could not be wrong, and it stops the graph asserting stakeholder provenance for 205 requirements nobody classified. ⚠️ A schema default change, with the same reader question the `constrains`/`basis` item raised this morning.\n③ BUILD THE READER — \"which requirements lose their reason if this decision is re-opened?\" — a traversal of GOVERNED_BY from a Decision to its derived requirements. ⭐ This is the fork-enabling one, and it needs ② or a population pass first or it returns nothing.\n④ POPULATE `lineage` ON THIS DESIGN as a trial, to see whether the distinction is even discoverable in retrospect. ⚠️ Retro-classifying 205 requirements is a judgement call per node, and getting it wrong writes a false provenance claim.\n⑤ A DETECTOR: a Requirement with `lineage: derived` and no GOVERNED_BY is a claim with no basis. Cheap, and it only fires once ④ happens.\n\n⚠️ COUNTER-ARGUMENTS. (1) `dec:edge-orthogonality`'s test cuts both ways: a distinction earns its keep only if a computation reads it — so the honest reading of 0 readers is that the tiers have NOT earned their keep yet, and building a reader to justify a property is backwards. (2) KPPs at 0 of 4 may be correct for this project: reflow2 has no threshold whose miss fails the effort, and inventing one to exercise the vocabulary would be worse than leaving it empty. (3) Nobody has asked for tiering except in this conversation — no field report mentions it.",
+        "kind": "exploratory",
+        "name": "OPEN — do we need requirement tiers? They exist, are better specified than the question assumes, and are 0% used — and the derived tier is what would make a design fork computable",
+        "rationale": "Recorded under the brainstorm discipline — ideas as ideas, nothing promoted. The measurement is the part worth keeping whatever is decided: the tiers Anthony is describing are already declared, in his own vocabulary, and are 0% populated with no reader. That reframes the question from 'do we need this?' to 'why has something already built never been reached for?', which is the eighth instance of that shape recorded today.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-the-store-becomes-a-session-cache-and-the-export-becomes-the-truth",
       "node_type": "Decision",
       "properties": {
@@ -142436,6 +142557,17 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Nothing is claimed as intent, nothing is planned, and nobody has asked for this. Anthony, 2026-08-19, revisiting a use case he says he had in mind when he created the **adopt** skill: *\"taking some code base, running adopt skill on it, then we translate into another language… is there anything we can take from this?\"*, prompted by The New Stack on Canonical + University of Bristol translating AppArmor and snap-confine from C to Rust.\n\n═══════════════════════════════════════════════\nWHAT THE ARTICLE ACTUALLY SAYS, because it reframes the use case\n\n· *\"Generating code at scale is no longer the hard part — the hard part is proving that code actually does what the original did.\"*\n· *\"Trust, not code, is the bottleneck.\"*\n· Canonical's stated goal is not a rewrite. It is to find out **what evidence maintainers would need before trusting an automated translation of production code.** They are explicitly *\"not rushing to rewrite either one\"*.\n· Their method: an LLM generates Rust, then fuzzing plus formal program analysis compares the two implementations, and **symbolic repair** diagnoses and fixes each behavioural mismatch.\n· *\"A Rust port that interprets a policy differently from the existing implementation might compile perfectly and still be wrong.\"*\n· `unsafe` is the trap: a translator can carry hard C constructs across by leaning on it, *\"but relying on unsafe too heavily would bring many of the original memory-safety risks into the new code.\"* Idiomatic Rust needs *\"changes to data structures and lifetimes across several functions or entire modules\"* — so a faithful port is not line-by-line.\n· Target scale: *\"entire repositories containing hundreds of thousands of lines of C.\"*\n\n⭐ THE REFRAME. The naive version of this use case is \"adopt the C, generate the Rust from the graph.\" The article says that half is **solved and is not the bottleneck**. So if reflow2 has a part here at all, it is on the trust side, not the generation side.\n\n═══════════════════════════════════════════════\nIDEAS, unranked, each with what is cheap or expensive about it\n\n**A. reflow2 holds the ORACLE, not the translation.** adopt(C) recovers what the system is FOR; that recovered intent is the specification the Rust must satisfy, and the graph is where evidence that it does accumulates per capability, dated and attributed. Cheap, in that it needs no new mechanism.\n   ⚠️ COUNTER, and it is serious: adopt's intent is AGENT-RECOVERED FROM THE ARTIFACT BEING REPLACED. Using it as the oracle for a security-critical port risks a graph that is complete, confident and wrong in exactly the way the article warns a port can be. `req:adopt-says-how-much-it-got` exists precisely so recovery reports its own coverage — that number is the honest precondition, and a low one should stop this cold.\n\n**B. A PORT IS TWO AS-DESIGNED RECORDS, AND reflow2 ALREADY COMPARES THOSE.** `cap:certify-restructuring` (status `verified`) classifies every divergence between two design records as function-bearing, structural, or unclassified, and returns preserved / not_preserved / **indeterminate** — with *\"unclassified never passes.\"* A translation is the largest restructuring there is: function must be identical, structure is expected to differ. `compare_designs` / `pair_designs` are the same family.\n   ⭐ WHY THIS IS INTERESTING: it is a DESIGN-level differential, far coarser than symbolic execution, and it catches a class those tools cannot — a capability present in one implementation and absent in the other. Nobody is looking there.\n   ⚠️ COUNTER: coarse means coarse. It would never have caught AppArmor parsing a policy differently, which is the failure the article is actually about.\n\n**C. `unsafe` is a DESIGN-level debt signal, not a test outcome.** \"No capability counts as ported while its realizing artifact exceeds N unsafe blocks\" is expressible today — a DesignRule with stop-the-build power, or a Constraint, or a `GATED_ON` threshold. The article treats unsafe-overuse as the thing that quietly defeats the whole exercise, which is exactly the kind of claim that should be visible in a design rather than discovered in review.\n   ⭐ Also the most under-used part of reflow2 by Anthony's own measure — hard limits are built and barely used (1 Constraint node).\n\n**D. THE BOTTLENECK THEY NAME IS THE THING reflow2 ALREADY COMPUTES.** *\"What evidence would a maintainer need\"* is a coverage-of-claims-by-checks question: `evidence_report`, `confirmation_ledger`, `coverage_report`, `readiness_report`. The right answer to a maintainer is not \"it is equivalent\" but \"these capabilities have evidence, these do not, and here is what nobody checked\" — and reflow2's habit of REFUSING to summarise thin evidence is the feature, not a limitation.\n\n**E. THE CHEAP EXPERIMENT, and the only one with an answer key.** Run adopt on a real C project AND on its existing hand-written Rust port, then `compare_designs`. **`sudo-rs` vs `sudo`** is the strongest candidate: security-critical, deliberately behaviour-compatible, both public, both modest. `uutils` vs GNU coreutils is a second. The question it answers is falsifiable — *does the comparison surface anything a maintainer would care about, or only noise?*\n   📌 SAME SHAPE as `dec:idea-run-adopt-on-reflow2-itself-as-a-ground-truth-test`, already in this graph: pick a case where the answer is independently known, then see whether the tool finds it.\n\n═══════════════════════════════════════════════\n🛑 WHERE THIS MUST NOT GO, recorded now while it is cheap to say\n\nreflow2 does not do differential testing, symbolic execution, or repair, and should not start. `dec:non-goal-reflow2-does-not-judge-whether-a-check-is-meaningful` already settles the general form. The fuzzing-plus-formal-analysis half is Bristol's actual research and is where the difficulty lives; a pitch that drifts into \"reflow2 verifies the port\" would be claiming their result.\n\n⚠️ SCALE IS UNPROVEN. The article's target is 100k+ LOC repositories. adopt has never been run near that, and `cap:bl-211` — genesis assumes an opening BRIEF and has no shape for an opening FOLDER — is open. Any claim about repository-scale ingest is currently unevidenced.\n\n⚠️ AND NOBODY ASKED. This is a use case its author envisioned, not one a user brought. `dec:idea-field-evidence-is-a-prioritisation-input` would rank it below anything two projects reported this week.",
         "name": "OPEN — in an automated C→Rust style translation, is reflow2's part the ORACLE and the EVIDENCE LEDGER rather than the translation, and does the port become a two-design comparison?",
         "rationale": "Recorded as an open question rather than a proposal because Anthony was explicitly revisiting an old idea and asking what could be taken from someone else's work, not stating intent. The article's own framing is what makes it worth recording at all: it separates code generation, which it calls solved, from evidence of behavioural equivalence, which it calls the bottleneck — and that split lands on machinery reflow2 already has (`cap:certify-restructuring`, verified, whose verdict refuses to pass an unclassified divergence) rather than on machinery it would have to build. The counter-arguments are recorded beside each idea rather than argued in conversation, per the brainstorm rule, because the strongest objection here — that adopt's recovered intent is inferred from the very artifact being replaced, so it cannot be a trustworthy oracle for a security-critical port — is the kind of thing that gets lost and then re-proposed. NOTE ON THE RECORD: the first write of this node was malformed in the same way two earlier writes this session were, sending the rationale inside the decision body; corrected in place, and the recurrence is itself evidence on fact:changing-one-sentence-in-a-long-decision-cost-a-full-6242-character-resend.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-what-is-the-minimum-path-to-fork-ophyd-service-today",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — Anthony, 2026-08-31: \"how do we resolve the ophyd-service issue so that I can start implementing an alternate design?\" Nothing chosen. He is BLOCKED on a real project, so this is a question about the cheapest unblock rather than about the right long-term shape.\n\n═══ WHAT IS ALREADY TRUE, VERIFIED RATHER THAN ASSUMED ═══\n· A GIT WORKTREE GIVES THE DESIGN A BRANCH. The store is single-writer PER DIRECTORY, so a worktree is a separate directory and gets its own live graph. `reflow2-mcp --graph-path ./.reflow2/graph --import <export>` seeds it in one command; `--import` was confirmed present on the binary. This is documented in the `parallel-work` skill — framed for TWO PEOPLE, never for exploration, which is why nobody found it.\n· `git switch` does NOT branch the design. One store for the repo and all its branches. That trap is recorded and has bitten before as four phantom drifts.\n· CROSS-FORK COMPARISON WORKS. `analyze_alternatives` was run end-to-end on a real fork of this design: main 73 structural defects against fork 72, with node-level divergence reported, opening throwaway graphs and never touching the live one. Ophyd's claim that the health machinery is fork-blind is PARTLY WRONG and they should be told.\n· WHAT IS GENUINELY ABSENT: cross-boundary edges, one session seeing both, and a one-call fork.\n\n═══ 🛑 THE GAP THAT ACTUALLY BEARS ON HIS FEAR ═══\nHis stated worry is \"reversals of previously settled requirements and accepted ideas\". The schema already says a `lineage: derived` requirement is GOVERNED_BY the Decision that created it and \"if the decision is re-opened the requirement may lose its reason to exist\" — but lineage is 205/205 `original` (the default) and nothing reads it. So today NOTHING CAN TELL HIM WHICH REQUIREMENTS LOSE THEIR BASIS if the alternative reverses a decision. That is the one computation that would make the fork safe rather than merely possible.\n\n═══ THE OPTIONS, none chosen ═══\n① FORK NOW, CLASSIFY NOTHING. Worktree + import, work in the fork, compare with analyze_alternatives, register_alternative to anchor it. ⭐ Unblocks him today with zero new machinery. ⚠️ The reversal set stays a judgement he holds in his head, which is the thing he said he was afraid of.\n② FORK NOW, AND CLASSIFY ONLY THE BLAST RADIUS FIRST. Before forking, `propagate_from` the decisions the alternative would reverse, and set `lineage: derived` + GOVERNED_BY on the requirements in that radius that genuinely exist BECAUSE of those decisions. ⭐ Bounded — a handful of nodes, not 205 — and it produces the written list \"these lose their basis if X reverses\" that answers his fear directly. ⚠️ Classification is a judgement per node and a wrong one writes a false provenance claim; and it is retro-fitting, which is harder than doing it at capture.\n③ BUILD WORLD-SCOPING FIRST. The ergonomics he actually wants. ⚠️ Blocks the project for as long as it takes, and `dec:parallel-alternatives` argues it bakes fork-awareness into every detector. Its own precondition — that branch-by-file teach what the scoping primitive must preserve — is unmet precisely because nobody has run a real fork yet.\n④ FORK NOW AND TREAT IT AS THE EXPERIMENT. Take ① or ②, and record what the fork actually turns out to need. ⭐ This is the evidence `dec:parallel-alternatives` deferred world-scoping pending, and it costs nothing extra beyond noticing.\n\n═══ ⚠️ COUNTER-ARGUMENTS, recorded beside rather than used to decide ═══\n(1) ② risks the retro-classification trap: deciding after the fact why a requirement exists is exactly the reconstruction this project distrusts elsewhere, and `original` being the default means there is no record of which were ever considered.\n(2) The worktree route has a real cost nobody has paid yet — the MCP config must point at the worktree's graph path, and getting that wrong means silently editing the wrong design. That failure mode is worse than the one being avoided.\n(3) Nothing here has been tried on ophyd-service itself. Everything verified was verified on reflow2's own graph, which is a different shape and a different size.",
+        "kind": "exploratory",
+        "name": "OPEN — what is the minimum path to start implementing ophyd-service's alternate design today, given the fork mechanism exists and the derived-requirement tier is unpopulated?",
+        "rationale": "Recorded under the brainstorm discipline — ideas as ideas, nothing promoted, and the verifications kept separate from the options so a later reader can tell what was measured from what was proposed.\n\nKept as one node because it is one question with one deadline: he is blocked now. The long-term shape (whether world-scoping gets built) is a different question and lives on `fact:the-fork-ask-is-a-deferred-branch-whose-reopening-condition-is-now-met`; merging them would let the cheap unblock be held hostage to the expensive decision, which is how the project got parked in the first place.",
         "status": "proposed"
       }
     },
@@ -151754,7 +151886,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "Anthony's word, 2026-08-31, promoted from the session's own evidence. STATED AS A PROPERTY, NOT A DESIGN — how it is served is not settled here.\n\nTHE PROPERTY: a reader can ask this design \"of my N things of kind X, how many carry relation R?\" and get an answer, for any X and R the schema declares — not only for the handful somebody has already hardcoded.\n\n📌 DISTINCT FROM `fact:five-capabilities-...-one-query-shape-found-them-all`, having read it: that node MEASURES what one session found and how (five instances, all hand-rolled). This states what must stay TRUE of the product. Recording what was observed and recording what is now required are different acts on the same work, and the fact is the evidence for this requirement rather than a restatement of it.\n\n═══ WHY IT IS A REQUIREMENT AND NOT A CONVENIENCE ═══\nIt is the core traceability question of systems engineering, in the user's own words rather than reflow2's: HOW MANY OF MY REQUIREMENTS ARE ACTUALLY VERIFIED? How many of my components have a declared interface? How many of my capabilities have anything that consumes them? A design tool that cannot answer that on demand asks the user to trust a coverage claim it cannot show its working for.\n\n═══ THE EVIDENCE, MEASURED 2026-08-31 ═══\nFive separate findings in ONE session came from exactly this question, and every one was answered by an ad-hoc script over the committed export because no served read does it:\n    3 of 22 Interfaces carry an incoming VERIFIES\n    3 of 192 Capabilities carry a signature\n    3 of 45 struct-coupled modules sit behind the read trait\n    20 of 181 Capabilities have a recorded consumer\n    3 of 4 Constraints are budgets\n`find_tools` on \"count edges of one type pointing at nodes of another type\" returns a node lister and two bulk WRITERS. Also filed as a `report_manual_work` with diagnosis `tool_missing`.\n\n⭐ FOUR SPECIAL CASES OF THIS SHAPE ALREADY EXIST, WHICH IS THE ARGUMENT. `coverage_report`, `consumption_report`, `seam_coverage` and the delivery line each answer ONE fixed pair, well. That four were built separately says the shape is wanted repeatedly; it also means every new pair needs a new tool and a new release.\n\n🛑 AND THE NEAR-MISS IS WHAT MAKES IT SHARP. `vocabulary_coverage` answers this at TYPE level — is this node type, edge type or property ever used — and on 2026-08-31 it scored the `functional` domain 1.0 on both node and edge types while `set_capability_signature` sat at 3 of 192. USED ONCE AND USED EVERYWHERE IT APPLIES ARE INDISTINGUISHABLE TO A TYPE-LEVEL READING. Instance-level coverage is a different question and the design does not hold it.\n\n═══ ⚠️ WHAT THIS REQUIREMENT MUST NOT BE READ AS ═══\n· NOT a claim that low coverage is a DEFECT. A capability built ahead of its consumer, a deliberate extension point and genuine surplus all produce the same fraction — the caution `consumption_report` already states about itself. The requirement is that the number be ASKABLE, never that it be high.\n· NOT a request for a verdict or a score. `dec:report-dont-judge` governs the neighbourhood and should govern this.\n· NOT settled as to surface. Whether it is one general tool, a parameterised report or a query language is open — and a general form has a cost the four special cases do not: each of those carries domain-specific bounds and `not_observed_about` prose that a generic answer would lose.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -159194,6 +159326,18 @@
       }
     },
     {
+      "node_id": "fact:eight-more-instances-and-one-is-misrouting-rather-than-a-missing-leg",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "measurement",
+        "statement": "ROOT-CAUSE PASS ON \"BUILT, DECLARED, AND UNREACHED\", run under the root-cause skill at Anthony's request 2026-08-31 after the shape turned up eight times in one session.\n\n═══ ② THE CAUSE IS ALREADY RECORDED, WITH NUMBERS, AND STEP ② FOUND IT ═══\nNo new cause was derived. `fact:the-three-legs-audit-run-at-last-54-of-93-and-five-types-exist-only-in-the-schema` (2026-08-26) swept all 93 declared types against the three legs — typed tool, instruction, absence-detector:\n    all three legs   54 (58%)     NO LEGS AT ALL   13 (14%)\n    five types exist ONLY in the schema: COMPLIES_WITH, IMPOSES, OPERATES_IN, SUPPLEMENTS, VIOLATES_RULE\n\nAnd `dec:idea-have-the-three-legs-been-applied-uniformly-and-are-three-legs-enough` (OPEN) already records that THREE LEGS ARE NOT SUFFICIENT, measured twice: `DECOMPOSES` had all three and stayed at ZERO edges, because its detector \"fires on a Requirement that ALREADY CARRIES an incoming DECOMPOSES edge — it checks whether an existing decomposition is covered; it cannot ask why none exists\". Half-idea linking had all three and left 110 ideas unlinked. Its conclusion is the hypothesis: \"Is there a FOURTH leg: something that makes the practice HAPPEN, rather than merely possible and observable?\"\n\n⇒ SO THIS SESSION ADDS EVIDENCE, NOT A DIAGNOSIS. Five of that audit's types had all three legs and zero instances; today found eight more of the same family in one day.\n\n═══ ③ THE EIGHT, MEASURED ═══\n    the `optimize` skill                run 2 times ever\n    Constraint / budget_report          4 constraints, 0 of category kpp\n    set_capability_signature            3 of 192 capabilities\n    Interface as a VERIFIES target      3 of 22 interfaces — but 3 of 3 PUBLISHED ones, so arguably working\n    the GraphRead trait                 3 of 45 struct-coupled modules\n    Decision.kind                       12 of 584, read only by a report\n    Requirement.lineage                 205/205 at the DEFAULT, read by nothing\n    the worktree fork path              documented, and a real project parked for want of finding it\n\n═══ ⭐⭐ ④ ONE OF THE EIGHT IS A DIFFERENT SHAPE, AND IT IS THE EXPENSIVE ONE ═══\nThe worktree fork has ALL THE LEGS. The mechanism exists (store is single-writer per DIRECTORY, `--import` seeds a fresh one in one command), the instruction exists and is correct and complete, and it is a SERVED skill. Nothing is missing.\n\n🛑 IT IS FILED UNDER A DESCRIPTION NOBODY LOOKING FOR IT WOULD SEARCH. `parallel-work` opens \"Use when two or more people (or agents) need to work on one design at the same time without colliding\". A user wanting to EXPLORE AN ALTERNATIVE does not match on that, and ophyd-service's agent ran `find_tools` before filing, concluded `tool_missing`, and parked a real architecture question with an idle code branch.\n\n⇒ THAT IS NOT A MISSING LEG. IT IS A MISROUTED ONE — leg 2 present, correct, and addressed to the wrong reader. The three-leg frame cannot see it, because the frame asks WHETHER an instruction exists and never WHOM IT IS ADDRESSED TO.\n\n⭐ AND THE PARTIAL PRECEDENT EXISTS: `cap:every-served-report-is-reachable-from-an-instruction` makes CI fail when a served *_report is named in no skill. The same idea, one layer over, for reports only — and it checks reachability, not whether the route matches the reader's words.\n\n═══ ⑤ THE DISCRIMINATOR AMONG THE EIGHT, WHICH THE FOURTH-LEG HYPOTHESIS PREDICTS ═══\nWhat the USED vocabulary has that these do not is not a leg — it is FORCE. `search_first` fires on every capture; the `revision` block on every revise; `loop_status` is pushed by a Stop hook; the export-lineage rule FAILS CI. Every one of those happens whether or not anybody reaches for it. All eight above require somebody to reach.\n\nAnd it is independently measured: `fact:agents-do-self-invoke-skills-at-scale-and-the-hook-not-the-catalogue-predicts-which` — 93 sessions across two other projects, 88% of skill loads with no slash command behind them, and \"what predicts a skill's load count is being named in the ALWAYS-INJECTED SessionStart hook, not being in the served catalogue.\"\n\n═══ ⚠️ ⑥ WHAT THIS DOES NOT ESTABLISH ═══\n· NOTHING WAS BUILT AND NO CAUSE WAS NEWLY FOUND. The fourth-leg question stays open exactly where it was; this supplies instances and one sub-shape.\n· LOW REACH IS NOT AUTOMATICALLY A DEFECT. 0 KPPs may be correct — reflow2 may have no threshold whose miss fails the effort — and Interface-as-VERIFIES is 3 of 3 on the interfaces that matter. Counting them together overstates the pattern, and they are listed separately for that reason.\n· THE EIGHT ARE NOT INDEPENDENT SAMPLES. They are what one session happened to touch in one day, and finding the first primed the search for the rest — the same confound recorded on the stale-records count today.\n· WHETHER FORCE IS THE FOURTH LEG IS AN INFERENCE FROM WHICH THINGS ARE USED HERE. Nobody has tried adding force to one unused capability and measured whether reach follows.",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-08-31"
+      }
+    },
+    {
       "node_id": "fact:eighteen-declared-properties-nothing-has-ever-written",
       "node_type": "TemporalFact",
       "properties": {
@@ -163895,7 +164039,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:bb035d58a5b8eb837953bee5517e1530be10964878bc79fb2fff6baf40b059d1",
+  "prev_content_hash": "sha256:c4f4465156f7ed79cc479c8aa5114bf0bf722c731c7c67d6c6faced29c7313cd",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
