@@ -195,6 +195,16 @@ impl ReflowService {
                      (detect-and-ask) when the batch lands",
                     None,
                     revision,
+                    // `create_node` is OUT OF SCOPE by design, not by omission.
+                    // Its `props` is one JSON bag declaring no prose
+                    // parameters, so "was the named parameter supplied?" has no
+                    // meaning — and that scoping is what took the check from 2
+                    // false positives to 0. Measured 2026-08-31: zero instances
+                    // of the damage shape from any writer across 3,528 nodes,
+                    // and this path already carries `undeclared` plus a JSON
+                    // parse that refuses structural corruption loudly. Option C
+                    // (a CI scan over the export) is the home for this case.
+                    None,
                 )
             }
             Err(e) => Err(node_error(&g, &req.node_type, e)),

@@ -218,6 +218,18 @@ pub struct SweepScope {
     /// The rule categories evaluated on this graph, so "no findings" can be read
     /// as "these ran and found nothing" rather than taken on trust.
     pub rules: Vec<&'static str>,
+    /// Nodes sitting ALONE in the topology walk — components of exactly one.
+    ///
+    /// A FIELD RATHER THAN A CLAUSE, on `proj:bhome`'s 2026-08-31 report. It
+    /// used to be interpolated mid-sentence into every `unthreaded_cluster`
+    /// message and nowhere else: "8 further node(s) sit alone in this walk and
+    /// are not reported by this rule". That is a BIGGER fact than either
+    /// finding it was attached to — eight isolated nodes against two clusters
+    /// of two — and it is precisely the "what could this not see" information
+    /// the rest of this struct exists to carry structurally. As prose it was
+    /// easy to skim, repeated identically on every cluster finding, and absent
+    /// entirely when the rule found no clusters at all.
+    pub isolated_in_walk: usize,
     /// Nodes whose unattached state a RULING declares correct — a `GOVERNED_BY`
     /// edge carrying `ruling: parks` to a Decision that says why.
     ///
@@ -1052,6 +1064,7 @@ impl DesignGraph {
         Ok(SweepScope {
             nodes,
             design_network_nodes,
+            isolated_in_walk: self.design_network()?.isolated_in_walk(),
             parked: self.parked_nodes()?,
             suppressed_by_parked_idea: suppressed,
             rules: HealCategory::ALL.iter().map(|c| c.as_str()).collect(),
@@ -2050,11 +2063,6 @@ impl DesignGraph {
         let index = self.node_type_index()?;
         let total_nodes = index.len();
         let swept = net.node_count();
-        let singletons = net
-            .component_groups()
-            .into_iter()
-            .filter(|g| g.len() == 1)
-            .count();
         let mut clusters: Vec<Vec<usize>> = net
             .component_groups()
             .into_iter()
@@ -2116,8 +2124,7 @@ impl DesignGraph {
                          events, dimension records and review records are not in the walk, and \
                          CONTAINS is not a traceability edge — so these nodes may still be \
                          reachable through links it does not follow, and \"cut off here\" is not \
-                         \"unreachable in the graph\". {singletons} further node(s) sit alone in \
-                         this walk and are not reported by this rule",
+                         \"unreachable in the graph\"",
                         affected.len()
                     ),
                     // NO SUGGESTION, DELIBERATELY. `generate_bridge` used to sit

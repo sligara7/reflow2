@@ -164,6 +164,25 @@ impl DesignNetwork {
         connected_components(&self.graph).groups()
     }
 
+    /// Nodes sitting ALONE in this walk — components of exactly one.
+    ///
+    /// Shared by `unthreaded_cluster` and by the sweep scope ON PURPOSE. The
+    /// count used to be interpolated into that rule's prose message and nowhere
+    /// else, which `proj:bhome` reported on 2026-08-31: it is a BIGGER fact than
+    /// either finding it was attached to — eight isolated nodes against two
+    /// clusters of two — and as a mid-sentence clause, repeated identically on
+    /// every cluster finding, it was easy to skim past.
+    ///
+    /// It is one expression rather than two because `rule_populations` already
+    /// records why: deriving a number the rule also computes "would create a
+    /// second implementation of one number, able to disagree with the first".
+    pub(crate) fn isolated_in_walk(&self) -> usize {
+        self.component_groups()
+            .iter()
+            .filter(|g| g.len() == 1)
+            .count()
+    }
+
     /// Articulation-point node indices (candidate single points of failure).
     pub(crate) fn articulation_points(&self) -> Vec<usize> {
         cut_structure(&self.graph).articulation_points

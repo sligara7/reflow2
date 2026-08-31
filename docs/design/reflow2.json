@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:28c10743ce308dce8aadd2e021961c8d7fe335a87f6812ee2349b805201a328e",
+  "content_hash": "sha256:bb035d58a5b8eb837953bee5517e1530be10964878bc79fb2fff6baf40b059d1",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -11475,6 +11475,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-a-prose-field-silently-absorbed-tool-call-markup",
+      "properties": {
+        "acted_at": "2026-08-31",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-a-published-decision-loses-its-approver-and-the-childs-gate-fails-on-it",
       "properties": {
         "acted_at": "2026-08-29",
@@ -20618,6 +20627,33 @@
         "action": "modified"
       },
       "to_id": "art:proposed-asserts-nothing-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-swallowed-parameter-says-so",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-swallowed-parameter-says-so",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-query"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-swallowed-parameter-says-so",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-temporal"
     },
     {
       "edge_type": "CHANGED",
@@ -33201,6 +33237,60 @@
         "action": "modified"
       },
       "to_id": "dec:idea-do-ideas-form-a-graph-or-only-a-list"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-cheap-tranche-from-bhomes-report",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:brainstorm-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-cheap-tranche-from-bhomes-report",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-cheap-tranche-from-bhomes-report",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:structure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-cheap-tranche-from-bhomes-report",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:a-ruling-parks-a-node-and-parked-nodes-are-counted"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-cheap-tranche-from-bhomes-report",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:a-sweep-says-what-it-could-not-have-found"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-cheap-tranche-from-bhomes-report",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:brainstorm"
     },
     {
       "edge_type": "CHANGED",
@@ -115422,6 +115512,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:a-prose-field-that-swallowed-a-parameter-says-so",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:search-first-at-the-tool"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:acknowledgement-approver-test",
       "properties": {
         "completeness": "complete",
@@ -123476,6 +123575,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:a-prose-field-that-swallowed-a-parameter-says-so",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:a-prose-field-that-swallowed-a-parameter-says-so"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:acknowledgement-approver-test",
       "properties": {
         "action": "created"
@@ -125001,6 +125108,17 @@
       }
     },
     {
+      "node_id": "art:a-prose-field-that-swallowed-a-parameter-says-so",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:ff89e57ad51c7b5c49fea674abda5d9f03214014efa1a02253dc989067a6acbb",
+        "location": "crates/reflow2-mcp/tests/a_prose_field_that_swallowed_a_parameter_says_so.rs",
+        "name": "a_prose_field_that_swallowed_a_parameter_says_so.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:acknowledgement-approver-test",
       "node_type": "Artifact",
       "properties": {
@@ -125144,7 +125262,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:a08ccdafc473e706335004389b57df45a73e3e9264533863fc0b29a4bfff67b0",
+        "checksum": "sha256:0391a0b35b71576a7b0265bb3a4c89f2f2e114815d91e5159232da0e29e4aed9",
         "granularity": "atomic",
         "location": "getting-started/skills/brainstorm/SKILL.md",
         "name": "brainstorm/SKILL.md",
@@ -126079,7 +126197,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:efcfef0d000789a90a9055c374b42a77958a8b6e5dde7b8de49797fd38df4189",
+        "checksum": "sha256:0016d62bc19043717dd1a8fcf0e88b6904ddbc19fe0d3a55577f2d69e4cc7c0d",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/heal.rs",
         "name": "heal.rs",
@@ -127425,7 +127543,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:1b27052dff8f08e63679801b3a1b96f003d1e68d54f9c2352c0387d5746c7748",
+        "checksum": "sha256:ca3d21b614e5916c8f986159ab37ef67f324033e7af29f210ea6554d2b1a9234",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/structure.rs",
         "name": "structure.rs",
@@ -127895,7 +128013,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:1fd0d30b45cfc0c07ef899ea9a9f7cb8a4599c265d558e856408a058fa10fb6d",
+        "checksum": "sha256:6b49c7c653f0f7be9b1864a51dfb978d8791a89904065e6646d7e5949d740859",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
         "name": "crates/reflow2-mcp/src/tools/capture.rs",
@@ -127971,7 +128089,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:fc8bf22168d8c7268e17ac66dd80ec41f9d8035ba76f9298a47b490bf3683a5c",
+        "checksum": "sha256:c4758c5328693dfb65a9db44be01846b421dc0f1de1b89fc386746ddaa457f6e",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/query.rs",
         "name": "tools/query.rs",
@@ -127995,7 +128113,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:4732c3bb7cebda9ddde396ec21c4b6748e2304cd3af064ab9b24fa21b16a8965",
+        "checksum": "sha256:62c4f912992e218586094f84332eb64a513c7617340c557734e3384569ca381d",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/temporal_tools.rs",
         "name": "tools/temporal_tools.rs",
@@ -131501,6 +131619,18 @@
         "rationale": "🛑 THIS FIXES A DEFECT THE PARKED-IDEA WORK ITSELF INTRODUCED, CAUGHT BEFORE IT MERGED. Making three finding kinds read `is_parked_idea` took reflow2's own design from 89 to 61 defects, and nothing anywhere said the missing findings had been suppressed. A reader seeing 61 could not tell it from a design that genuinely has 61 — which is exactly the vacuous zero `SweepScope.parked` was built to prevent, reintroduced one rule over BY THE CHANGE THAT WAS FIXING IT.\n\n`art:heal` realizes `cap:a-sweep-says-what-it-could-not-have-found`, and the sibling `parks` mechanism COUNTS parked nodes rather than silencing them. The new rule now does the same, so the two deliberate-state mechanisms behave alike instead of one reporting and one hiding.\n\n⭐ IT IS A `swept.` FIGURE, NOT A DEFECT TALLY, and that distinction is load-bearing rather than cosmetic. The complaint that started this whole thread was that a DEFECT count grew when you brainstormed, which teaches people to stop reading it. A description of what the sweep did not look at costs a brainstormer nothing and lets an auditor reconstruct the total.\n\n⚠️ THE COUNTERWEIGHT PIN IS THE ONE THAT MAKES THE FIELD TRUSTWORTHY. `a_clean_sweep_reports_nothing_suppressed` asserts the map is EMPTY when nothing was parked — without it, a wired-but-never-incremented field reads exactly like a design with no parked ideas, which is the same failure mode wearing the new field's clothes. It was written deliberately: the implementation was landed with the plumbing but WITHOUT the increments, the pin was run and went red for that reason, and only then were the three increment sites added.\n\n📌 WHERE THE NUMBERS DIFFER AND WHY, so nobody reconciles them wrongly: the 89 -> 61 delta is 28, while the suppression count on the same design reads 33. Both are right — the graph grew by three brainstormed Decisions and four relations between the two measurements, and those added suppressible findings. The reconciliation that holds at any instant is `reported + suppressed`, not a delta against an older count.",
         "subject": "system",
         "summary": "`SweepScope.suppressed_by_parked_idea` added — findings NOT reported because a parked idea was involved, counted by category. Measured on reflow2's own design the same day: 61 reported + 33 suppressed (contradiction 3, unresolved_setup 27, unthreaded_cluster 3), so the total reconciles instead of 33 findings vanishing. Threaded as an accumulator through `all_defects` / `open_defects_counting` / `detect_structural_defects` so the detectors count AS THEY SKIP — the count is never recomputed, because a second copy of the skip rule would drift from the first. Two new pins (14 tests total); core suite 1504 passed / 0 failed across 130 binaries; toolsnaps unchanged, since this is a result shape rather than a tool schema."
+      }
+    },
+    {
+      "node_id": "chg:a-swallowed-parameter-says-so",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-31",
+        "name": "A prose field that swallowed the next parameter says so, and the write still lands",
+        "rationale": "It keys on the LOSS, not on the syntax, and that distinction was measured before any code was written rather than argued afterwards.\n\nThe decision's own counter-argument to the naive form is fatal and correct: three nodes in this design quote `</decision>` and `<parameter name=` deliberately — including the decision documenting the defect and the two findings behind it. Tested against the committed export:\n\n    \"contains the markup at all\"                   3 false positives\n    \"names a parameter the node lacks\"             2  (both TemporalFacts — a type with no `rationale` at all)\n    scoped to the tool's OWN declared parameters   0  across 1,776 nodes\n\n⭐ THE DECISION HAD ALREADY SPECIFIED THIS SHAPE and nobody had noticed. Option A's counter reads: \"Any guard has to key on SHAPE — markup at the TAIL of a value, immediately followed by what parses as another parameter name — not on the strings appearing at all.\" That was arrived at independently on 2026-08-31 from the false-positive test, and then found already written in August. The build is A's keying with B's severity.\n\n🛑 `create_node` IS OUT OF SCOPE BY DESIGN, NOT BY OMISSION, and the reasoning is recorded at the call site so nobody reads it as a gap. Its `props` is one JSON bag declaring no prose parameters, so \"was the named parameter supplied?\" has no meaning there — and that scoping is exactly what took the middle row above from 2 false positives to 0. Measured the same day: zero instances of the damage shape from ANY writer across 3,528 nodes; `create_node` already carries `undeclared` and a JSON parse that refuses structural corruption loudly. Option C, a CI scan over the committed export, remains available and is the right home for that case if an instance ever appears.\n\n📌 FIVE OF THE SEVEN OBSERVED INSTANCES WERE reflow2's OWN; TWO WERE A CONSUMER'S. `proj:bhome` hit it on both wired tools and independently proposed the same warn-don't-reject fix, which is what moved the decision off the shelf — the node had held itself below field-reported work on the explicit ground that no user had reported it.",
+        "subject": "system",
+        "summary": "Built the guard `dec:idea-a-prose-field-silently-absorbed-tool-call-markup` accepted the same day: `absorbed_markup()` in capture.rs, surfaced as a fourth advisory block beside `search_first` and `revision`, wired into `add_decision` and `add_change_event` — the two tools with observed instances. It fires when a prose field names a parameter THIS tool declares and THIS call did not supply. It WARNS and never refuses; the node lands either way. Five tests, all observed failing before the guard existed, and the two counterweights passed from the start because absence-of-block was already the correct answer for correct work. Full crate suite 39/39, toolsnaps unchanged (no schema moved), skill lint clean."
       }
     },
     {
@@ -136841,6 +136971,18 @@
       }
     },
     {
+      "node_id": "chg:the-cheap-tranche-from-bhomes-report",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-31",
+        "name": "Four small fixes from the bhome field report, none of which needed a design decision",
+        "rationale": "Grouped as one change because they share a justification rather than a mechanism: each is a case where reflow2 already had the right answer available and was not using it, and none required Anthony to settle anything.\n\n⭐ (1) IS A BIGGER FACT THAN THE FINDINGS IT WAS ATTACHED TO. bhome's words: eight isolated nodes against two clusters of two, \"buried mid-sentence inside a prose message, repeated identically on both cluster findings... it is precisely the 'what could this not see' information the rest of the reply is so good at surfacing structurally.\" As prose it was also ABSENT ENTIRELY when the rule found no clusters — the case where it matters most. Implemented as a shared `isolated_in_walk()` on the network rather than a second computation, because `rule_populations` already records why: deriving a number the rule also computes \"would create a second implementation of one number, able to disagree with the first\".\n\n⭐ (4) REMOVES THREE OF SIX FINDINGS AT THE SOURCE, and uses a mechanism that already exists. `ruling: parks` and `swept.parked` were built precisely so \"a count that grows when somebody does the right thing\" stops teaching people to stop reading it. Nobody had pointed them at reflow2's OWN scaffolding, so following the documented workflow reliably produced `orphan_node` findings for Questions that `gap_to_prompt` had just created and for `epoch:genesis`. The nodes stay VISIBLE and counted in `swept.parked` — parked is not silenced.\n\n📌 WHAT THIS TRANCHE DELIBERATELY EXCLUDES, so the omission is not read as neglect: the cross-type duplicate repair, inline golden-thread links, the corroboration relation, and append-mode for long fields. Every one of those is an OPEN decision, and settling one by building it would forge the owner's word — which `rule:design-intent-moves-only-on-the-owners-word` forbids and which this project has reverted itself for before.\n\n⚠️ WHAT THE BLAST RADIUS COULD NOT ESTABLISH, per the impact-check discipline: propagation stops at depth 5 with 38 nodes beyond it, it cannot see coupling nobody recorded, and a file no Artifact points at is invisible to it — 141 files are in that state. `coverage_report` is what distinguishes \"nothing downstream\" from \"nothing modelled downstream\".",
+        "subject": "system",
+        "summary": "The four items in bhome's 2026-08-31 report that were unambiguous — no open question, no vocabulary change, no reversal of anything settled. (1) The count of nodes sitting ALONE in the topology walk becomes `swept.isolated_in_walk` instead of a clause buried mid-sentence in every unthreaded_cluster message. (2) `constrains` stops stamping `basis` when no `contribution` was given, because there is no estimate involved in \"these two streams must never connect\". (3) The brainstorm skill names `EVOLVES_INTO` in step 5 as the way to record what an idea became. (4) `gap_to_prompt` and `genesis` park the nodes they create, so following the documented workflow stops manufacturing orphan findings."
+      }
+    },
+    {
       "node_id": "chg:the-decomposition-ladder-is-open",
       "node_type": "ChangeEvent",
       "properties": {
@@ -140455,8 +140597,8 @@
       "properties": {
         "decision": "RECORDED AS A FINDING, 2026-08-19, split out of `fact:changing-one-sentence-in-a-long-decision-cost-a-full-6242-character-resend` because it had been filed under the wrong fix. Nothing built, nothing asked for.\n\n**WHAT HAPPENED, twice in one session.** A `Decision` was written with a closing tag and the `rationale` ARGUMENT emitted inside the `decision` parameter. Both calls **succeeded**. What landed was a decision body ending in tool-call markup, and no `rationale` property at all:\n\n  1. `dec:idea-parks-shipped-...` — body ended `</decision>` then `<parameter name=\"rationale\">…`\n  2. `dec:idea-what-is-reflow2s-part-in-an-automated-translation` — body ended `</decision>` then `<rationale>…</rationale></invoke>`\n\n**NO LAYER NOTICED.** Not the schema (a string is a string), not `undeclared` (the property is declared and was simply absent), not the revision block (it faithfully reported replacing one property — it just cannot know the replacement is corrupt), not the dedup guard, not `detect_defects`. Both were caught only because the reply was read. **A design brain silently carrying `</invoke>` inside a Decision's prose is a worse outcome than any awkward edit**, because everything downstream — `search_design`'s index, the embedding field, a `where-am-i` narration, an export a person reads — treats it as content.\n\n🛑 **AND IT IS NOT THE `resolve_decision` CASE.** Both were FIRST writes of NEW nodes. A resolution-append tool would not have been reachable and would have prevented neither. Filing these with the resend measurement was an error, corrected the same day when Anthony asked for the evidence to be walked through.\n\n✅ **MEASURED, AND IT IS THE REASSURING ANSWER: THIS IS NEW, NOT LONG-STANDING.** The committed export was scanned — all 2,607 nodes, every string property, for closing tool-call tags and `<parameter name=` — and found **0**. So no earlier session left absorbed markup in this graph, and the two instances above (both since corrected) are the only ones. The scan is ~10 lines of Python and is the cheap form of the check any guard would institutionalise.\n\n═══════════════════════════════════════════════\nIDEAS, and none is as cheap as it first looks\n\n**A. Reject a text property whose value contains tool-call markup.**\n   ⚠️ COUNTER, AND IT IS FATAL TO THE NAIVE FORM: this very node, and the fact it was split from, both quote `</decision>` and `</invoke>` ON PURPOSE — and the scan above found exactly those two as its only hits once they existed. A rule matching those strings anywhere would refuse the only two nodes in the design that document the bug. Any guard has to key on SHAPE — markup at the TAIL of a value, immediately followed by what parses as another parameter name — not on the strings appearing at all.\n\n**B. Warn rather than refuse.** Surface it the way `undeclared` surfaces an unknown property: the write lands, the reply says \"this value ends in what looks like a tool-call boundary\". Cheaper, no false-refusal risk, and it fails in the safe direction. ⚠️ But it inherits `undeclared`'s own disease if it ever fires on correct writes — which is the exact complaint hxm_program filed about `ChangeEvent.description`.\n\n**C. A periodic scan rather than a write-time check.** The 10-line scan above, run in CI over the committed export. Catches the class with no false-refusal risk and no per-write cost, at the price of finding it later rather than at the moment of the write. ⚠️ Later may be fine here: the failure is silent but not destructive — nothing else breaks while it sits.\n\n**D. Do nothing, and treat it as a caller defect.** Defensible: the caller emitted a malformed call and the transport accepted it. ⚠️ Counter: reflow2's whole posture is that a silent wrong write is worse than a loud refusal, and this is a silent wrong write. `dec:two-sided-accept` and the dedup guard both exist because the design does not trust a write to be right just because it parsed.\n\n**E. The generalisation worth naming.** `cap:a-revising-write-says-whether-the-state-survived` computes whether the REPLACED state survived. Nothing computes whether the REPLACEMENT is plausible. Those are different questions and only the first is built.\n\n═══════════════════════════════════════════════\n⚠️ HONEST BOUNDS, stated so this is not over-read\n\n· n = 2, one session, one caller, one model. Not a rate.\n· Both were on parameters over 4,000 characters, and none of roughly thirty short writes the same day malformed — suggestive that long free-text arguments are where boundaries get mis-emitted, but observational and confounded, since the long writes also carry the most retyped text.\n· NO USER REPORTED THIS. It is a self-host observation, and by `dec:idea-field-evidence-is-a-prioritisation-input` it ranks below anything two projects filed this week. What makes it worth recording at all is that the failure is SILENT and lands in the durable record.\n· STILL NOT ESTABLISHED: whether any USER's graph carries such markup. Only this design was scanned, and it is the one graph whose caller is known.",
         "name": "OPEN — a prose field swallowed tool-call markup and the write SUCCEEDED: nothing refuses, flags or notices a node whose body ends in `</decision><rationale>…</invoke>`",
-        "rationale": "Split into its own node rather than left inside the resend fact because the two were filed together only by coincidence of timing, and that coincidence led to a wrong recommendation — that `resolve_decision` would fix both. It fixes one. Recorded as an open question rather than a proposal because the obvious guard is not obvious: the naive string match would refuse the very nodes that document the defect, which is a good reason to think before building. Kept explicitly below the field-reported items in priority, per the design's own rule that field evidence outranks self-host observation, so that recording it does not smuggle it up the queue. The dedup guard named the fact it was split from, which is correct behaviour and was read before declaring them distinct — the split is deliberate, not an accident of wording.",
-        "status": "proposed"
+        "rationale": "Split into its own node rather than left inside the resend fact because the two were filed together only by coincidence of timing, and that coincidence led to a wrong recommendation — that `resolve_decision` would fix both. It fixes one. Recorded as an open question rather than a proposal because the obvious guard is not obvious: the naive string match would refuse the very nodes that document the defect, which is a good reason to think before building. Kept explicitly below the field-reported items in priority, per the design's own rule that field evidence outranks self-host observation, so that recording it does not smuggle it up the queue. The dedup guard named the fact it was split from, which is correct behaviour and was read before declaring them distinct — the split is deliberate, not an accident of wording.\n\n═══════════════════════════════════════════════\n✅ ACCEPTED 2026-08-31, ANTHONY'S WORD. THE CHOSEN SHAPE IS A's KEYING WITH B's SEVERITY.\n\nWHAT IS BUILT: a WARNING, never a refusal, that fires when a prose field names a parameter via `<parameter name=\"X\">` where **X is a declared parameter of the tool being called AND X was not supplied in that call**. It detects the LOSS rather than the syntax.\n\n⭐ THIS NODE ALREADY SPECIFIED IT. Option A's counter-argument reads: \"Any guard has to key on SHAPE — markup at the TAIL of a value, immediately followed by what parses as another parameter name — not on the strings appearing at all.\" That is the accepted design, arrived at independently on 2026-08-31 and then found already written here. Option B supplied the severity: warn, do not refuse, failing in the safe direction.\n\n📐 THE COUNTER-ARGUMENT WAS TESTED AGAINST THE REAL GRAPH BEFORE ANY CODE, and it is quantified rather than assumed:\n    naive \"contains the markup at all\"            3 false positives — all three are nodes ABOUT this defect, including THIS one\n    \"names a parameter the node lacks\"            2 false positives — both TemporalFacts, a type with no `rationale` parameter\n    type-scoped to the tool's OWN declared params 0 false positives across 1,776 nodes\nThe middle row is why the check is scoped to the typed `add_*` tools rather than applied to every string in the store: `create_node` takes a `props` bag with no declared prose parameters, so the question \"was the named parameter supplied?\" has no meaning there.\n\n🛑 AND THE BOUND THIS NODE FLAGGED AS UNRESOLVED IS NOW RESOLVED, WHICH IS WHAT MOVED IT. It closed with \"NO USER REPORTED THIS. It is a self-host observation... STILL NOT ESTABLISHED: whether any USER's graph carries such markup.\" A consumer project hit it twice on 2026-08-31 — `proj:bhome`, a pod dwelling with no connection to reflow2's subject matter, on `add_decision` and `add_change_event` — and independently proposed the same warn-don't-reject fix. See `fact:bhome-confirms-two-known-causes-and-supplies-the-measurements-both-were-waiting-on`. Seven instances now across two projects and two graphs; the self-host caveat no longer applies.\n\n📌 bhome ALSO ADDED A CONSEQUENCE THIS NODE DOES NOT RECORD: the bleed swallows subsequent STRUCTURED parameters, not only prose. One node landed with the markup in `decision`, no `rationale`, AND none of three `related_to` relations — so `unreviewed_ideas` could not fire either, because the node genuinely had none. That strengthens the case for warning at the write: three separate silences, one cause.\n\n⚠️ WHAT IS DELIBERATELY NOT BUILT: option C's periodic CI scan. The write-time warning reaches the moment the author can still fix it cheaply; a scan finds it later and the two are not equivalent. C stays available and is not foreclosed. Option D (do nothing) is declined on the ground this node itself argues — reflow2's posture is that a silent wrong write is worse than a loud refusal, and this is a silent wrong write.",
+        "status": "accepted"
       }
     },
     {
@@ -147957,6 +148099,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered getting-started/SETUP.md"
+      }
+    },
+    {
+      "node_id": "frag:art:a-prose-field-that-swallowed-a-parameter-says-so",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered a_prose_field_that_swallowed_a_parameter_says_so.rs"
       }
     },
     {
@@ -163655,7 +163807,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:d3afab4ddb082a797a42f44cba52aeec4e81d836c0e1f3c88d7d7565743bfa77",
+  "prev_content_hash": "sha256:28c10743ce308dce8aadd2e021961c8d7fe335a87f6812ee2349b805201a328e",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
