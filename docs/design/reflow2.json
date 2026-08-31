@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:f96da0e9f12820fc55d3bc04c3618003e80784b89f5ca93ffd4069b813947d14",
+  "content_hash": "sha256:9cfb0b539c3507a126c5ec08271665a1a91bc3f5221fbbbfd8ed5c556ecacf71",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -3558,6 +3558,14 @@
         "evidence": "The three-legs measurement (2026-08-18) predicted this exact hole in advance: an instruction without a detector that notices ABSENCE leaves the vocabulary empty in every project using reflow2, not only in reflow2's own graph. 145 ideas joined by 12 edges is what that prediction looks like when it comes true. The fact named the leg before anyone went looking for it."
       },
       "to_id": "dec:idea-what-notices-an-idea-that-connects-to-nothing"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it",
+      "properties": {
+        "evidence": "The earlier one saw this coming. It named the three legs — typed tool, instruction, detector that notices absence — and predicted that vocabulary without the third leg fails to reach a design. These five are that prediction instantiated inside reflow2's own project rather than in a user's, with the additional detail that the missing detector has a single concrete shape: a per-type coverage query that does not exist."
+      },
+      "to_id": "fact:five-capabilities-were-built-reachable-and-unreached-and-one-query-shape-found-them-all"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -12658,6 +12666,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-the-architecture-is-graph-centric-and-the-question-is-which-decoupling",
+      "properties": {
+        "acted_at": "2026-08-31",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-the-enum-question-came-back-four-days-after-it-was-fixed",
       "properties": {
         "acted_at": "2026-08-19",
@@ -12778,6 +12795,15 @@
       "from_id": "dec:idea-the-persona-has-no-delivery-leg-so-what-carries-it",
       "properties": {
         "acted_at": "2026-08-26",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-the-read-seam-exists-and-the-question-is-migration-not-architecture",
+      "properties": {
+        "acted_at": "2026-08-31",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -39357,6 +39383,16 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-the-architecture-is-graph-centric-and-the-question-is-which-decoupling",
+      "properties": {
+        "evidence": "The crate-split option rests entirely on compile cost being worth reducing, and that node is where compile time was already felt as a problem without being quantified. Neither can be judged until somebody times a rebuild, which is the same missing measurement for both.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-a-byte-backend-that-compiles-in-seconds"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "dec:idea-the-handoff-file-contradicts-an-accepted-decision-and-nobody-reconciled-them",
       "properties": {
         "evidence": "Only the EXOGENOUS half of a handoff is homeless — 'Jakub said finish the tests', 'CI was pending when I stopped' — because loop_status already computes the rest. That exogenous half is precisely the ground the task-capture question opened on 2026-08-25, so option (c) here cannot be built until that one has an answer.",
@@ -41392,6 +41428,14 @@
     },
     {
       "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-is-the-restructure-target-the-shared-struct-rather-than-the-subsystem-contracts",
+      "properties": {
+        "evidence": "The older thought grown up, within one session. That node concluded the code has no black-box boundaries and named breaking up the struct as the only option that would create them; this one finds that the mechanism to do so already exists as GraphRead, is proven by a second implementation, and reaches 3 of 45 modules — which turns a large architectural question into a bounded migration."
+      },
+      "to_id": "dec:idea-the-read-seam-exists-and-the-question-is-migration-not-architecture"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
       "from_id": "dec:idea-is-there-a-lightweight-task-capture-below-the-increment-grain",
       "properties": {
         "evidence": "Yesterday's question asked where 'these are the things I need to do next' has a cheap home, and its options were all about NODE TYPE and ceremony. This is the same need one day later with a different mechanism proposed — edges as the worklist rather than a Task type — which sidesteps the tracker objection that killed option B there. The earlier node stays live because its option C (tasks are already sayable as absences and statuses) is untested and would make this unnecessary."
@@ -41429,6 +41473,14 @@
         "evidence": "The older thought grown up. That node asked whether the quality attribute should drive allocation and established the four-graphs observation; this one asks the same question with a concrete proposal attached — abandon the current spine — and with the co-change measurement it called runnable now actually run."
       },
       "to_id": "dec:idea-should-the-spine-be-re-derived-from-the-actual-structure"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-the-read-seam-exists-and-the-question-is-migration-not-architecture",
+      "properties": {
+        "evidence": "The older thought grown up, minutes later. That node found GraphRead already built and framed the work as migration; this one supplies the architectural name for what went wrong (behaviour smearing in a graph-centric architecture), scores three candidate patterns against decisions already taken, and adds a fourth remedy — the crate split — that the migration framing did not surface."
+      },
+      "to_id": "dec:idea-the-architecture-is-graph-centric-and-the-question-is-which-decoupling"
     },
     {
       "edge_type": "EVOLVES_INTO",
@@ -114069,6 +114121,15 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "fact:build-cost-is-crate-scoped-and-neither-restructure-would-pay-for-itself-in-build-time",
+      "properties": {
+        "at": "2026-08-31",
+        "note": "PARTIAL — ITS \"NOT ESTABLISHED\" CLAUSE IS ANSWERED AND ITS CENTRAL CLAIM IS CONFIRMED, SO THE NODE STAYS OPEN. That fact closes with \"NOT ESTABLISHED: how long a full `reflow2-core` rebuild actually takes, or what a crate split would save. The compile-unit argument is READ FROM RUST'S MODEL, NOT TIMED.\" It has now been timed, hours later, on the same day.\n\nWHAT THE MEASUREMENT DID TO IT: confirmed it, and bounded it. Its reasoning — that the crate is the compilation unit so a struct split cannot help — is right, and touching a one-impl-block leaf costs the same as touching the 54-method god-struct (13.74-14.09s workspace either way). What it could not say, and now can: the whole crate rebuilds in ~4s, so a CRATE split has a ceiling of about four seconds, which is not a restructure that pays for itself either. The fact argued the struct split was the wrong remedy; the measurement adds that the remedy it pointed at is barely worth taking.\n\n⭐ AND IT SURFACED SOMETHING NEITHER NODE PREDICTED: ~10 of the 14 seconds is `reflow2-mcp` rebuilding behind core, so the dominant lever is the core→mcp dependency rather than anything inside core.\n\n🛑 EVERYTHING ELSE IN THAT FACT IS UNTOUCHED and is the reason it stays open: its confirmation of global coupling and write contention, its finding that two of the three proposed remedies (ECS, opaque handles) collide with deliberate decisions, and its observation that the zero-crate-boundary seam result is arithmetic rather than a finding. Only the timing clause moved."
+      },
+      "to_id": "fact:change-fragility-is-crate-scoped-not-struct-scoped"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "fact:the-early-export-is-measured-and-a-property-only-write-is-invisible-to-the-net",
       "properties": {
         "at": "2026-08-31",
@@ -114159,6 +114220,14 @@
         "evidence": "One is a hazard, the other answers it. That finding measured that vocabulary reaches a user's design only with a typed tool AND an instruction AND a detector that notices absence. propose_allocation is a typed tool with neither of the other two legs, so it reaches nobody. Every option here supplies at least one missing leg, and option E supplies the detector first — which is the leg that makes the loop ask rather than wait to be told."
       },
       "to_id": "fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it"
+    },
+    {
+      "edge_type": "MITIGATES",
+      "from_id": "dec:idea-the-read-seam-exists-and-the-question-is-migration-not-architecture",
+      "properties": {
+        "evidence": "CountingRead is what makes a per-module store-read budget measurable from outside the module, and it is the mechanism behind the one granularity budget that exists. Migrating a module behind GraphRead is therefore the act that makes that module optimisable under the optimize skill's own rules, which demand a measurement before any budget."
+      },
+      "to_id": "dec:idea-is-there-performance-left-after-the-four-wins-and-what-is-the-budget"
     },
     {
       "edge_type": "MITIGATES",
@@ -141670,6 +141739,17 @@
       }
     },
     {
+      "node_id": "dec:idea-the-architecture-is-graph-centric-and-the-question-is-which-decoupling",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — Anthony, 2026-08-31, supplying the architectural frame and three candidate patterns. Nothing chosen.\n\n⭐ THE FRAME IS THE CONTRIBUTION, AND IT IS WORTH ADOPTING WHETHER OR NOT ANY PATTERN IS. His words: a graph-centric architecture is one where \"a single, unified graph data structure serves as the primary source of truth and communication backbone\" — common in compilers, game engines, CAD and system-modelling tools — and it is meant to be layered:\n\n    BEHAVIOUR LAYER   modules that query, compute, and write results back\n         ↓ queries / mutations\n    DATA LAYER        pure nodes and edges; indexes, pointers, memory layout\n\nHis diagnosis: \"BEHAVIOUR SMEARING\" — the behaviour layer has collapsed into the data layer, so `DesignGraph` \"is no longer just a graph, it has become the entire application\".\n\n⇒ WHY THAT FRAME EARNS ITS KEEP: it reclassifies the shared struct from DEFECT to KNOWN PATTERN WITH A KNOWN FAILURE MODE. reflow2 IS supposed to be graph-centric — that is what the product is. The question stops being \"was the architecture wrong\" and becomes \"which layer did the behaviour end up in\", which is answerable and repairable incrementally.\n\n═══ HIS FOUR CONSEQUENCES, TESTED — see fact:change-fragility-is-crate-scoped-not-struct-scoped ═══\n✅ Global coupling — confirmed: 45 of 88 modules, 62 impl blocks.\n✅ Thread bottlenecks — confirmed, and measured INDEPENDENTLY hours earlier: one RwLock over the whole struct, concurrent export early in 91 of 200 trials.\n🛑 Change fragility — TRUE BUT MISATTRIBUTED. All 88 core modules live in ONE crate, and the crate is Rust's compilation unit, so everything recompiles on any change regardless of the struct. Splitting the struct does not fix it; splitting the CRATE does. Two independent remedies for two different symptoms.\n✅ Single source of truth / rich relationships — the advantages are real and are why the pattern was chosen.\n\n═══ HIS THREE PATTERNS, SCORED AGAINST WHAT IS ALREADY DECIDED ═══\n① VISITOR / QUERY DRIVERS — \"an independent CircuitAnalyzer that takes a reference to the graph\". ALREADY THE ESTABLISHED PATH HERE, applied three times as `pub fn granularity_report(g: &dyn GraphRead)` rather than as an analyzer struct. Same pattern, free-function flavour. Reach is 3 of 45. LOWEST RISK, PROVEN IN-TREE.\n② ECS — strip properties into module-owned arrays. COLLIDES WITH A DELIBERATE DECISION: `create_node`'s contract says \"the store is a property bag ON PURPOSE, so a design can record what reflow2 never anticipated\". Typed per-module arrays need the property set known at compile time, which would remove the extensibility a USER's design depends on. A real option that trades away a product property, not an accident.\n③ OPAQUE NODE HANDLES — `NodeId(42)`. The GOAL is right and the mechanism collides: reflow2's ids are semantic strings that are PUBLIC SURFACE, appearing in every tool call, the committed export, the skills and the prose. And the encapsulation he wants from it is already delivered by `GraphRead` without touching ids.\n④ CRATE SPLIT — NOT ON HIS LIST, and it is the only one that addresses change fragility. It would also give the seam frontier something to measure: 56 of 64 uncovered coupling pairs cross no crate boundary today, which with two crates for 116 modules is arithmetic rather than a finding.\n\n⚠️ COUNTER-ARGUMENTS. (1) Nothing has yet been BLOCKED by any of this — the case throughout is measurability and contention, not a defect anyone has hit. (2) Compile cost is asserted and never timed; `dec:idea-a-byte-backend-that-compiles-in-seconds` suggests it has been FELT without being quantified, and the optimize skill would demand the number before the remedy. (3) `&dyn GraphRead` puts dynamic dispatch on the hottest read path and that cost is also unmeasured.\n\n⭐ THE SEQUENCING THIS SUGGESTS, stated as an observation and not a plan: ① is incremental, reversible, proven, and each step buys a module its own measurability. ④ is the one with an unmeasured premise that could be measured cheaply first. ② and ③ each require overturning something already decided, so they want a decision rather than a migration.",
+        "kind": "exploratory",
+        "name": "OPEN — reflow2 is a graph-centric architecture that has smeared behaviour into its data layer; which decoupling does it take, and is a crate split on the list?",
+        "rationale": "Recorded under the brainstorm discipline — ideas as ideas, nothing promoted, the collisions with existing decisions recorded beside the patterns rather than used to dismiss them.\n\nThe frame is kept separately from the patterns on purpose: adopting \"graph-centric architecture with behaviour smearing\" as the description costs nothing and improves how every later reader understands the shared struct, even if none of the four remedies is ever taken.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-the-enum-question-came-back-four-days-after-it-was-fixed",
       "node_type": "Decision",
       "properties": {
@@ -141786,6 +141866,16 @@
         "decision": "**RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL.** Prompted by a user report, 2026-08-26: reflow2 *\"still speaks its own jargon and never asks who I am\"*, with the user's own guess that this is another two-of-three-legs case.\n\n📌 DISTINCT FROM THE TWO THE GUARD OFFERED, BY ROLE. The fact MEASURES what shipped. The capability describes WHAT WAS BUILT and is honest that it is `in_progress`. **This asks what should happen NOW**, which neither answers — a measurement states a condition and a capability states an intent; the disposition is a third thing.\n\n**The user's guess was right and the measurement is sharper than the guess.** It is not a missing leg: the delivery mechanism was **built, core-tested, and left on a branch that never merged** (`e01c760`, \"WIP: lens on the skill response — core green, mcp handler tests unrun\"). `reader_lens` / `lens_line` / `ReaderLens` have zero occurrences in shipped code, and `lens` is absent from the `get_skill` / `list_skills` toolsnaps.\n\n═══ ⭐ WHY IT BITES A USER AND NOT THE OWNER ═══\n\nThe two skills that instruct asking — `where-am-i` and `capture-intent` — are exactly the ones a **regular** user runs and a **new** user does not. The owner runs `/where` constantly, so the persona works for him and silently fails for everyone else. **A mechanism that only fires on the path its author walks is indistinguishable from a working one, from where the author stands.**\n\n═══ OPTIONS, none chosen ═══\n\n**(a) ⭐ LAND THE BRANCH.** The work exists; six core tests pass; five MCP handler tests were written and never run. Cheapest by a wide margin, and the capability node already describes what \"done\" means. ⚠️ Counter: it is a month old and the surrounding code has moved — `write_lock` alone gained a `?` at 98 call sites today. Re-landing is not free, and unrun handler tests are unrun evidence.\n\n**(b) CARRY IT ON THE LOOP RAIL INSTEAD OF THE SKILL RESPONSE.** `loop_status` and `open_questions` are what a session calls FIRST, before it knows which skill it wants; a skill response arrives only after somebody chose a skill. ⚠️ Counter: the orientation calls are already dense, and `dec:read-hint-shape` deliberately throttles what rides them. Adding a second passenger means re-opening that decision rather than assuming it.\n\n**(c) A DETECTOR FOR THE MISSING BACKGROUND.** Nothing today notices a Contributor with no `description`, or a design with no person in it at all. That is leg three and it is absent. ⚠️ Counter: it tells the OWNER something is missing; it does nothing for the session speaking jargon right now. It closes the audit hole, not the user's complaint.\n\n**(d) ACCEPT IT AND RETIRE THE CAPABILITY.** If the lens is not worth re-landing, saying so beats a node that reads `in_progress` forever. ⚠️ Counter: the underlying need has now been reported twice, months apart, by someone who is not the owner.\n\n═══ ⚠️ A SECOND FINDING, SEPARABLE AND ARGUABLY WORSE ═══\n\n**The v0.41.0 release report lists this capability under `capabilities_covered`.** That list derives from the components and artifacts a release ships, never from a capability's STATUS — so a capability whose implementation does not exist in the codebase reads as covered by a release. The capability node is honest; the release reading is not, and nothing reconciles the two. Whether `release_report` should read status is a different question and is not decided here.\n\n═══ ⚠️ AND THE LIMIT THAT NONE OF THIS TOUCHES ═══\n\nThe capability's own description already says it: the tests prove the lens computes and is attached, *\"they do not prove an agent acts on it, and nothing proves the translation is any good. This fixes 'the agent forgot'; it does not touch 'the agent translated badly'.\"* Every option above closes DELIVERY. **The quality of the translation remains unmeasured**, and the trial that would measure it — a real gap list narrated to a reader with a stated non-software background — is still the missing instrument.",
         "name": "OPEN — the persona reaches nobody who does not run where-am-i: land the built branch, or is a skill-response field the wrong carrier?",
         "rationale": "Recorded as its own question because it is about the CARRIER — what puts the persona in front of an agent — which is separate from whether reflow2 can translate a user's domain vocabulary at all, and separate again from whether a new user can find their way around the skills.\n\nThe measurement was taken before the options were written and it changed the question. The first framing was \"which leg is missing\"; the answer is that the leg was built and never landed. That is a different repair with a different cost, and mis-stating it would have sent somebody to write code that already exists.\n\n⚠️ Worth recording as a CLASS, not just an instance: a mechanism that only fires on the path its author walks is invisible from the author's seat by construction. Neither report of this symptom would have arrived without a user who is not the owner, and the same shape will hide the next one.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-the-read-seam-exists-and-the-question-is-migration-not-architecture",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — Anthony, 2026-08-31, proposing three ways to break the hub monolith: Interface Segregation (split `impl DesignGraph` into smaller traits), Data-Context-Interaction (treat DesignGraph as pure data, move hanging methods into contextual worker modules), and Sub-graph Views (a `ReadGraphView` for queriers, a `MutationGraphView` for mutators). Nothing chosen.\n\n⭐⭐ THE FINDING, MEASURED 2026-08-31: ALL THREE ALREADY EXIST HERE, AS ONE MECHANISM, AND IT REACHES 3 OF 45 MODULES.\n\n`crates/reflow2-core/src/graph_read.rs` declares `pub trait GraphRead` — five functions: get_node, scan_nodes, count_nodes, outgoing, and one more. `DesignGraph` implements it. That IS the interface segregation, and it is also the read view.\n\nAND THE MIGRATION PATTERN IS ESTABLISHED, applied three times:\n    pub fn confirmation_ledger(g: &dyn GraphRead) -> Result<ConfirmationLedger, DynoError>\n    pub fn granularity_report(g: &dyn GraphRead)  -> Result<GranularityReport, DynoError>\n    (coverage.rs the third)\nA free function over the contract, with a one-line `impl DesignGraph` block left behind as a delegating wrapper so no caller breaks. THAT IS THE DCI SHAPE — pure data, behaviour in a contextual worker — arrived at independently and already in the tree.\n\nAND THERE IS A SECOND IMPLEMENTATION, WHICH IS THE PART THAT PROVES THE SEAM IS REAL: `CountingRead<'_>`, a decorator. Its own words: \"before this there was no way to ask what a module costs the store without editing the module. Now any module behind the contract can be measured from the outside, by construction, without touching it... wrap a real graph, a test fake, or another decorator, and the module under measurement cannot tell.\"\n\n═══ ⭐ THE CONSEQUENCE THAT TIES THIS TO THE OPTIMISE THREAD ═══\n`CountingRead` is what makes `con:granularity-reads-scale-with-artifacts-not-edges` (N+2 store reads) MEASURABLE AT ALL. So the read seam is not merely tidier structure — IT IS THE MEASUREMENT LEG FOR PER-MODULE OPTIMISATION. That is exactly the thing Anthony wanted from \"optimise inside a black box\", and it is available today for any module that sits behind the contract and unavailable for any that does not.\n\n⇒ So the honest reframe: the architecture question looks settled and the open question is REACH. 3 of 45 modules are behind the contract; 42 still take `&self` on the shared struct.\n\n═══ THE NUMBERS THAT MAKE IT TRACTABLE ═══\n    78  `&self` methods on DesignGraph   (read)\n    16  `&mut self` methods              (write)\n    45  modules adding methods to the struct, 62 impl blocks\n     5  functions on GraphRead\n     2  implementations (DesignGraph, CountingRead)\n     3  modules migrated\nThe surface is 83% read, so a read view covers most of it, and a `MutationGraphView` — the half that does NOT exist — would be a 16-method problem rather than a 94-method one.\n\n═══ THE OPTIONS, none chosen ═══\n① MIGRATE MODULES ONTO `GraphRead`, worst-first, using the established three-step pattern. Incremental, reversible, each step independently valuable because it makes that module measurable. No new architecture. Bounded by 42.\n② BUILD THE WRITE HALF — a `MutationGraphView` over the 16 `&mut self` methods, completing the read/write split he drew. Smaller than the read side and gives the write path the same measurability.\n③ WIDEN `GraphRead` FIRST. Five functions may not cover what the 42 need; some will want traversal or index access that is not there. Measuring what they actually call, before migrating, would say whether five is enough.\n④ DO NOTHING AND LET IT SPREAD BY DEMAND — migrate a module only when somebody needs to measure or fake it. Cheapest; leaves the reach permanently low, which is how it got to 3 of 45.\n\n⚠️ COUNTER-ARGUMENTS, recorded beside rather than used to argue it down. (1) `dec:the-graph-read-contract-stays-internal` (ACCEPTED, his word 2026-08-21) settles that this boundary is INTERNAL, not published — modular is not the same as published, and widening its reach must not be read as a commitment to outsiders. (2) Nothing has yet been BLOCKED by a module not being behind the contract; the case for migration is measurability, not a defect. (3) `&dyn GraphRead` is dynamic dispatch on the hottest read path in the system, and no measurement here says what that costs — the optimize skill would demand that number before a mass migration, not after.",
+        "kind": "exploratory",
+        "name": "OPEN — ISP / DCI / read-write views are all already built here as GraphRead, reaching 3 of 45 modules; is the work migration rather than architecture?",
         "status": "proposed"
       }
     },
@@ -157247,6 +157337,30 @@
       }
     },
     {
+      "node_id": "fact:build-cost-is-crate-scoped-and-neither-restructure-would-pay-for-itself-in-build-time",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "measurement",
+        "statement": "THE DISCRIMINATING EXPERIMENT, RUN 2026-08-31 ON ANTHONY'S WORD, and it returns \"nothing here\" — which the optimize skill explicitly permits as a successful outcome.\n\nTHE HYPOTHESIS UNDER TEST: that behaviour smeared onto the shared `DesignGraph` struct causes change fragility, so splitting the struct would reduce rebuild cost. THE EXPERIMENT DESIGNED TO FALSIFY IT: touch a LEAF module (granularity.rs, one impl block) and touch the GOD-STRUCT (graph.rs, 54 public methods on the shared struct), and compare. If the struct is the cause, the second must cost more.\n\n═══ MEASURED, debug profile, two runs per condition, crates-compiled verified from cargo's own output ═══\n                              workspace          core only     crates built\n    no-op                  0.38s / 0.31s              —             0\n    touch LEAF module     13.74s / 13.80s   4.39s / 3.93s        2 / 1\n    touch GOD-STRUCT      13.80s / 14.09s   3.98s / 3.95s        2 / 1\n\n⭐⭐ THE HYPOTHESIS IS FALSIFIED. Leaf and god-struct are INDISTINGUISHABLE — the spread WITHIN a condition (13.74-14.09) is as wide as the spread BETWEEN them, and core-only is if anything marginally faster for the god-struct. Touching one impl block costs exactly what touching fifty-four costs, because the CRATE is Rust's compilation unit and both files live in `reflow2-core`.\n\n⇒ A STRUCT SPLIT WOULD SAVE ZERO BUILD TIME. That is now measured rather than argued, and it closes the compile-fragility branch of the restructure question. `fact:change-fragility-is-crate-scoped-not-struct-scoped` reasoned this from Rust's compilation model; this measures it.\n\n═══ AND WHAT A CRATE SPLIT WOULD BUY IS ALSO BOUNDED, IN THE SAME NUMBERS ═══\nThe whole 88-module `reflow2-core` crate rebuilds in ~4 SECONDS. So splitting core into N crates has a CEILING of about four seconds per incremental build, before counting the dependent chain that would still rebuild. That is not a restructure that pays for itself.\n\n⭐ THE DOMINANT COST IS SOMEWHERE ELSE ENTIRELY, and the measurement hands it over unasked: core-only is ~4s and workspace is ~14s, so ROUGHLY TEN OF THE FOURTEEN SECONDS IS `reflow2-mcp` REBUILDING because it depends on core. The existing crate boundary is already earning its keep — it saves those ten seconds whenever only core is needed — and the largest single lever on incremental build time is the core→mcp dependency, not anything inside core.\n\n═══ ⚠️ WHAT THIS DOES NOT ESTABLISH ═══\n· DEBUG PROFILE ONLY, one machine, warm cache. Release builds and cold builds are not measured and would be much larger; users get release binaries, developers get this.\n· IT MEASURES ONLY BUILD TIME. The other three consequences of behaviour smearing — global coupling, write contention on the single RwLock, and per-module measurability — are untouched by this result and remain live arguments for a struct split. THIS KILLS ONE ARGUMENT, NOT THE PROPOSAL.\n· It does not measure `cargo test` or `cargo check`, which are what a developer actually waits on most often; only `cargo build` was timed.\n· No budget was written before this, because none was needed: the optimize skill's step 1 is measurement, and the answer arrived before any target was called for. Nothing was optimised and nothing should be.",
+        "subject_id": "cmp:graph",
+        "valid_from": "2026-08-31"
+      }
+    },
+    {
+      "node_id": "fact:change-fragility-is-crate-scoped-not-struct-scoped",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "correction",
+        "statement": "TESTING THE GRAPH-CENTRIC ARCHITECTURE DIAGNOSIS, 2026-08-31. Anthony framed the shared-struct problem as \"behaviour smearing\" in a graph-centric architecture and listed four consequences. TWO ARE CONFIRMED, ONE HAS A DIFFERENT CAUSE THAN THE FRAME IMPLIES, AND THE DIFFERENCE CHANGES WHICH REMEDY WORKS.\n\n═══ ✅ CONFIRMED — THREAD BOTTLENECKS, AND IT WAS MEASURED INDEPENDENTLY THIS MORNING ═══\nHis claim: \"Parallel processing becomes difficult due to massive write-contention on one struct.\" That is precisely `fact:the-early-export-is-measured-and-a-property-only-write-is-invisible-to-the-net`, measured hours earlier without this frame in hand: one `RwLock` over the whole `DesignGraph`, and a concurrent `export_graph` serialising a state missing a concurrent write in 91 of 200 trials. The prediction and the measurement were arrived at independently and agree.\n\n═══ ✅ CONFIRMED — GLOBAL COUPLING ═══\n45 of 88 core modules add methods to the shared struct across 62 impl blocks; 56 of 64 uncovered coupling pairs have `impl DesignGraph` on both ends.\n\n═══ 🛑 DIFFERENT CAUSE — CHANGE FRAGILITY ═══\nHis claim: \"Altering a core node or edge property forces a recompile of all 45 modules.\" TRUE, AND THE GOD-STRUCT IS NOT WHY. Measured: the workspace holds exactly TWO crates, `reflow2-core` and `reflow2-mcp`, and all 88 core modules — the 45 included — live in `reflow2-core`. In Rust the CRATE is the compilation unit, so a change anywhere in `reflow2-core` recompiles all 88 modules whether or not they hang off `DesignGraph`.\n\n⇒ SPLITTING THE STRUCT WOULD NOT FIX COMPILE FRAGILITY. SPLITTING THE CRATE WOULD. The frame bundles two remedies that address different symptoms:\n    struct split  → fixes global coupling and write contention; leaves recompile scope unchanged\n    crate split   → fixes recompile scope and would give the seam measurement something to measure; leaves the shared struct intact within each crate\nThey are independent and either can be done without the other.\n\n⭐ AND IT EXPLAINS AN EARLIER MEASUREMENT THAT HAD NO EXPLANATION. `fact:coupling-and-contract-are-recorded-in-vocabularies-that-never-meet` found that of 64 uncovered coupling pairs, ZERO cross a crate boundary — recorded as a curiosity. With two crates for 116 modules, zero is the expected result, not a surprise. The seam frontier reads 13 of 72 partly because there are almost no crate boundaries for a seam to sit on.\n\n═══ ⚠️ AND TWO OF THE THREE PROPOSED REMEDIES COLLIDE WITH DELIBERATE DECISIONS ═══\n· ECS — \"strip properties out of the graph nodes... store the actual data in separate arrays owned by individual modules\". This fights `create_node`'s stated contract: \"the store is a PROPERTY BAG ON PURPOSE, so a design can record what reflow2 never anticipated.\" That openness is what lets a USER's design carry vocabulary reflow2 does not know about, and module-owned typed arrays would require the set of properties to be known at compile time. It is a real option, but it trades away an extensibility the product depends on rather than an accident.\n· OPAQUE NODE HANDLES — \"give modules lightweight integer IDs (e.g. NodeId(42))\". reflow2's ids are SEMANTIC STRINGS (`cmp:service`, `dec:export-once-per-pr`) and they are public surface: they appear in every tool call, in the committed export, in skills and in prose. An internal integer handle is possible, but the encapsulation he wants from it is already delivered by `GraphRead` without touching the id format.\n· VISITOR / QUERY DRIVERS — the third is already the established migration path here, applied three times as free functions over `&dyn GraphRead` rather than as analyzer structs. Same pattern, different flavour.\n\n⚠️ NOT ESTABLISHED: how long a full `reflow2-core` rebuild actually takes, or what a crate split would save. The compile-unit argument is read from Rust's model, not timed. Nobody has measured incremental build cost here, and `dec:idea-a-byte-backend-that-compiles-in-seconds` suggests compile time has been felt as a problem without being quantified.",
+        "subject_id": "cmp:graph",
+        "valid_from": "2026-08-31"
+      }
+    },
+    {
       "node_id": "fact:changing-one-sentence-in-a-long-decision-cost-a-full-6242-character-resend",
       "node_type": "TemporalFact",
       "properties": {
@@ -158728,6 +158842,18 @@
       }
     },
     {
+      "node_id": "fact:five-capabilities-were-built-reachable-and-unreached-and-one-query-shape-found-them-all",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "measurement",
+        "statement": "A SIDEWAYS FINDING FROM 2026-08-31 — nothing in the session was looking for it, and it turned up five times before it was noticed as a pattern.\n\n═══ FIVE CAPABILITIES, EACH BUILT, EACH REACHABLE, EACH ALMOST UNREACHED ═══\n    the `optimize` skill                 run 2 times, ever\n    Constraint + budget_report           4 Constraints exist; 3 are budgets\n    set_capability_signature             3 of 192 capabilities carry a signature\n    Interface as a VERIFIES target       3 of 22 interfaces carry a check\n    the GraphRead trait                  3 of 45 struct-coupled modules sit behind it\n\nNone of these is broken. Each was built deliberately, each works, each has a second implementation or a passing check behind it. What none of them has is REACH.\n\n⭐⭐ AND THE THING WORTH KEEPING IS HOW ALL FIVE WERE FOUND: THE SAME QUERY SHAPE, HAND-ROLLED EVERY TIME. Each number above answers \"how many of my declared X carry a Y?\" — how many Interfaces have an incoming VERIFIES, how many Capabilities have an outgoing SATISFIES or a signature, how many modules sit behind a trait. Every one was computed with an ad-hoc script over the committed export, because NO SERVED TOOL ANSWERS THAT QUESTION. Verified with `find_tools` rather than assumed: querying \"count edges of one type pointing at nodes of another type\" returns `scan_nodes` (lists nodes, not edges) and two bulk WRITERS. The read does not exist.\n\n═══ WHY THIS IS THE MISSING THIRD LEG, FIVE TIMES OVER ═══\n`fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it` says vocabulary reaches a design only with a TYPED TOOL + an INSTRUCTION + A DETECTOR THAT NOTICES ABSENCE. All five above have the tool. Several have the instruction. NONE has a detector, and the reason is now concrete rather than cultural: the detector for \"this vocabulary is declared and nobody uses it\" would be exactly the query shape that does not exist.\n\n⭐ IT ALSO SEPARATES TWO THINGS `dec:bl-155` SAYS IT CANNOT SEPARATE. That decision measured 40 of 132 tools never called and states outright that it CANNOT TELL UNUSED FROM UNREACHABLE. A per-type coverage query answers a different question and does not have that blind spot: `set_capability_signature` at 3 of 192 is not unreachable — it is reachable, documented, and unreached, which is a distinct diagnosis with a distinct repair.\n\n⚠️ WHAT THIS DOES NOT ESTABLISH. (1) That low reach is a DEFECT in any of the five — a capability built ahead of its need and one that failed to catch on look identical here, which is the same caution `consumption_report` states about itself. (2) That a coverage query would have CAUSED any of them to be used; it would have made the absence visible, which is necessary and not sufficient. (3) The five were not sampled systematically — they are the ones one session happened to touch in one day, so the true rate across reflow2's vocabulary is unmeasured and could be better or worse.",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-08-31"
+      }
+    },
+    {
       "node_id": "fact:five-false-green-traps-in-one-session-and-three-were-the-agents-own-command",
       "node_type": "TemporalFact",
       "properties": {
@@ -158845,6 +158971,18 @@
         "statement": "THE UNDECLARED-SEAM FINDING COULD NOT REACH ZERO, AND THE REASON WAS AN ALTITUDE MISMATCH RATHER THAN MISSING CONTRACTS. `fact:coupling-and-contract-are-recorded-in-vocabularies-that-never-meet` measured the two sets as DISJOINT BY CONSTRUCTION — couplings read from DEPENDS_ON between modules, contracts from PROVIDES/CONSUMES between the boxes that contain them — so writing a contract could never move the number. MEASURED 2026-08-23 on reflow2's own design: module level 72 couplings against 42 contract pairs leaves 64 undeclared; LIFTED TO `subsystem` it is 11 against 13 with NOTHING undeclared. || ⭐ LIFTING BOTH SETS IS THE WHOLE CORRECTNESS ARGUMENT, AND THE HALF-FIX LOOKS RIGHT. Rolling up only the COUPLINGS is the obvious move and leaves the two vocabularies exactly as disjoint as they were — the contracts are still recorded between the leaves. Proven by reverting to that half-fix and watching the one case that matters fail while four others stayed green, which is why the case exists. || ⚠️ A ZERO HERE IS THE MOST DANGEROUS ANSWER THE TOOL CAN GIVE, and it is designed around. 'Nothing undeclared' at subsystem altitude compared ELEVEN couplings, not seventy-two. Every reply therefore carries the raw count and, when an altitude reaches nothing, the number of endpoints dropped — asked at `system`, where this design has no components at all, it reports 0 couplings compared and 114 endpoints unreachable rather than a clean bill. A vacuous zero that announces its own vacuity. || NOTHING IS WRITTEN BACK. The roll-up is derived on every call from CONTAINS + PROVIDES + CONSUMES. A stored edge between two subsystems would make the graph assert a contract nobody declared and be indistinguishable afterwards from one somebody did — `dec:views-are-projections`, and Anthony's own standing rule that a view is a projection and renderer fill-ins are defects. Pinned by a case that exports the design before and after and compares content hashes. || WHAT IT DOES NOT SETTLE: whether `detect_undeclared_seams` and the maturity `seams` band should themselves move to an altitude, or keep answering at module level. They are unchanged here on purpose — changing what a detector reports is a louder act than adding a way to ask, and the 64 remains visible until somebody decides which altitude that gap is about. || SOURCE: measured 2026-08-23 on reflow2 0.38.0, driving the built binary over real stdio.",
         "subject_id": "cmp:seam",
         "valid_from": "2026-08-23"
+      }
+    },
+    {
+      "node_id": "fact:manual-work-27d7ef142430bbea",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "manual_work",
+        "statement": "Wrote ad-hoc scripts over the committed export, five separate times in one session, to answer one recurring question: \"how many of my declared X carry a Y?\" — how many Interfaces have an incoming VERIFIES, how many Capabilities carry a signature, how many Components sit at a given level and where they hang on the containment spine, how many nodes of a type have an edge of a type. Each answer took a fresh throwaway script. `find_tools` on \"count edges of one type pointing at nodes of another type\" returns a node lister and two bulk writers; the read has no served form. The counts these produced were the session's most load-bearing findings, so the shape is not incidental.",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-08-31",
+        "value": "{\"diagnosis\":\"tool_missing\",\"reflow2_tool\":null}"
       }
     },
     {
@@ -163223,7 +163361,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:014e2ef3df74b066bf69e672cfb2eae05f2bb49ffeee330c53a8665a4edaf6c1",
+  "prev_content_hash": "sha256:f96da0e9f12820fc55d3bc04c3618003e80784b89f5ca93ffd4069b813947d14",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
