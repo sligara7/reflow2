@@ -126,10 +126,14 @@ impl ReflowService {
                        \u{1F6D1} NEVER ISSUE THIS IN THE SAME PARALLEL BATCH AS WRITES YOU EXPECT \
                        IT TO CONTAIN. Tool calls a harness emits together are unordered and this \
                        one takes the same lock, so it can run BEFORE them and serialise a design \
-                       state that is missing them. Unlike a write naming an absent node, THIS \
-                       FAILURE IS SILENT — the export succeeds, it is simply early, and the \
-                       document you then commit is the one whose artifact hashes will not match \
-                       disk. Sequence the export after the writes have returned.",
+                       state that is missing them. MEASURED, not theoretical: with each call on \
+                       its own task, as a real server runs them, the export was early in 91 of \
+                       200 trials. Unlike a write naming an absent node, THIS FAILURE IS SILENT \
+                       — the export succeeds, it is simply early, and the document you then \
+                       commit is the one whose artifact hashes will not match disk. Sequence the \
+                       export after the writes have returned. \u{26A0} The unexported-work nudge \
+                       will NOT catch it: that compares NODE COUNTS, so a missed PROPERTY change \
+                       is invisible to it — 0 of 10 caught.",
         annotations(read_only_hint = true)
     )]
     pub async fn export_graph(

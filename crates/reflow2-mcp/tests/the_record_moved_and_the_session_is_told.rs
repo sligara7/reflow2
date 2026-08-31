@@ -598,6 +598,53 @@ fn a_fully_exported_graph_says_nothing_extra() {
     );
 }
 
+/// THE CLEAN LINE MUST NAME ITS BLIND SPOT. `a_fully_exported_graph_says_nothing_extra`
+/// pins that this arm raises no ALARM; this pins that its quiet is not mistaken
+/// for a guarantee.
+///
+/// The comparison behind it counts NODES, so a write that changed only a
+/// property — or only an edge — leaves both counts equal and lands here looking
+/// settled. That is not hypothetical: racing a concurrent `export_graph`
+/// against a status-only write put the export early 10 times in 200, and a
+/// node-count comparison would have caught 0 of them
+/// (`fact:the-early-export-is-measured-and-a-property-only-write-is-invisible-to-the-net`).
+/// It is also the shape the field actually reported — `set_artifact_checksum`,
+/// an export still carrying the old checksum.
+///
+/// The bounds were written down before this, in `SyncDebt::export_nodes`'s doc
+/// comment, where no agent and no user has ever read them. Same remedy as
+/// `open_questions` speaking on an empty answer: a reply that cannot tell
+/// "nothing to report" from "nothing I can see" has to say which it is.
+#[test]
+fn the_in_step_line_says_what_a_node_count_cannot_see() {
+    let (dir, gp) = scratch("blindspot");
+    let file = dir.path().join("reflow2.json");
+
+    let exported = design(&["cap:one", "cap:two"]);
+    put(&file, &exported);
+    mark_synced(&gp, &file, &exported);
+
+    let live = exported.nodes.len();
+    let found = sync_debt(&gp, live, &|| Some(exported.clone()));
+    let msg = found[0].message();
+
+    assert!(
+        msg.contains("NODE COUNT"),
+        "the clean line must name the instrument it is reading, not just its \
+         verdict: {msg}"
+    );
+    assert!(
+        msg.contains("property") && msg.contains("edge"),
+        "and name BOTH shapes it cannot see — a property-only and an edge-only \
+         write: {msg}"
+    );
+    assert!(
+        !msg.contains("never been exported"),
+        "while still raising no alarm, which is the counterweight this must not \
+         break: {msg}"
+    );
+}
+
 /// COUNTERWEIGHT 2: unexported work is NOT actionable sync debt. `behind` means
 /// somebody else's work is in the file and you should import it; exporting your
 /// own is a different act with a different remedy, and collapsing the two would

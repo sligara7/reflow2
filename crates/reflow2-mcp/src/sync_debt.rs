@@ -108,13 +108,31 @@ pub struct SyncDebt {
     /// file to its own recorded hash". Now they can: `live_nodes >
     /// export_nodes` means unexported work, whatever `state` says.
     ///
-    /// TWO BOUNDS, stated here rather than discovered later. (1) Counts, not
+    /// THREE BOUNDS, stated here rather than discovered later. (1) Counts, not
     /// ids — equal counts with different ids still slip through, so this is a
     /// READING AID and not a durability guarantee. (2) NODES ONLY, and
     /// deliberately: counting edges means walking every node's adjacency, which
     /// costs what the export costs, and paying that on the path every ordinary
     /// session takes is the one thing this check was built to avoid. An
     /// edge-only divergence is therefore invisible here.
+    ///
+    /// (3) A PROPERTY-ONLY WRITE MOVES NEITHER COUNT, so it is invisible here
+    /// too — and unlike (1) and (2) this one has been measured rather than
+    /// argued. `fact:the-early-export-is-measured-and-a-property-only-write-is-
+    /// invisible-to-the-net` (2026-08-31) raced a concurrent `export_graph`
+    /// against a write that only changed a status: the export was early 10 times
+    /// in 200, and a node-count comparison would have caught 0 of them. That is
+    /// the shape of the 2026-08-30 field report — `set_artifact_checksum`, an
+    /// export still carrying the old checksum — so the case this check misses is
+    /// the case a user actually hit.
+    ///
+    /// ⭐ ALL THREE NOW REACH THE READER, which is the point. They sat in this
+    /// doc comment while the served message said only "exactly where this graph
+    /// left it", and a bound nobody is shown is a bound nobody applies
+    /// (`fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it`).
+    /// The in-step sentence carries the limit now, on the same reasoning that
+    /// made `open_questions` speak on an empty answer: silence and an all-clear
+    /// must not share a reply.
     pub export_nodes: usize,
     /// Nodes in the live graph right now. See [`Self::export_nodes`].
     pub live_nodes: usize,
@@ -188,7 +206,20 @@ impl SyncDebt {
                 self.export_nodes,
                 self.live_nodes - self.export_nodes
             ),
-            _ => format!("{} is exactly where this graph left it.", self.path),
+            // THE CLEAN LINE SAYS WHAT IT CANNOT SEE. Silence here used to read
+            // as "everything of mine is in that file", which this comparison has
+            // never been able to promise: it counts NODES, so a write that
+            // changed only a property or only an edge leaves both counts equal
+            // and lands in this arm looking settled. Measured 0 of 10 caught.
+            // Same remedy as `open_questions` on an empty answer — a reply that
+            // cannot distinguish "nothing to report" from "nothing I can see"
+            // must say which it is.
+            _ => format!(
+                "{} is exactly where this graph left it — as far as a NODE COUNT can see, which \
+                 is blind to a write that changed only a property or only an edge (measured: 0 \
+                 of 10 such early exports caught). Re-export if you have written since.",
+                self.path
+            ),
         }
     }
 }
