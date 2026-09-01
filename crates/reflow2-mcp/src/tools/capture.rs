@@ -400,6 +400,49 @@ fn properties_hash(props: &HashMap<String, Value>) -> String {
 /// now. `None` when there was no prior node — a create has nothing to report,
 /// and a block present and empty on every create is the noise `search_first`
 /// already refuses to become.
+/// Keep the value a revising write is about to make unrecoverable — but only
+/// when nothing else holds it.
+///
+/// # Why this runs BEFORE `revision_of` and not after
+///
+/// The note `revision_of` produces reports whether the replaced state survived.
+/// Preserving afterwards would leave the caller reading "no snapshot holds
+/// this" about a value that had just been saved — a true statement at the
+/// instant it was computed and a misleading one by the time it was read. Run
+/// first, and the same note becomes the receipt musicjug asked for, computed
+/// rather than claimed.
+///
+/// 🛑 THE RESULT IS DELIBERATELY DROPPED. The preserve is best-effort and must
+/// never fail the caller's write (see `preserve_prior_state`), and its outcome
+/// does not need reporting here because `revision_of` re-reads the graph a
+/// moment later and says what is actually true. Nothing is being swallowed: if
+/// the preserve failed, the note still warns exactly as it did before.
+pub(crate) fn preserve_prior(g: &mut DesignGraph, prior: Option<&StoredNode>, now: &NodeDto) {
+    let Some(prior) = prior else { return };
+    let replaced: Vec<String> = now
+        .properties
+        .iter()
+        .filter(|(key, new_value)| {
+            prior
+                .properties
+                .get(*key)
+                .is_some_and(|old| old != *new_value)
+        })
+        .map(|(key, _)| key.clone())
+        .collect();
+    if replaced.is_empty() {
+        return;
+    }
+    let hash = properties_hash(&prior.properties);
+    let _ = g.preserve_prior_state(
+        &prior.node_type,
+        &prior.node_id,
+        &hash,
+        &replaced,
+        &prior.properties,
+    );
+}
+
 pub(crate) fn revision_of(
     g: &DesignGraph,
     prior: Option<&StoredNode>,
@@ -909,6 +952,7 @@ impl ReflowService {
             }
             return Err(e);
         }
+        preserve_prior(&mut g, prior.as_ref(), &node);
         let revision = revision_of(&g, prior.as_ref(), &node);
         with_capture_notes(
             node,
@@ -999,6 +1043,7 @@ impl ReflowService {
             }
             return Err(e);
         }
+        preserve_prior(&mut g, prior.as_ref(), &node);
         let revision = revision_of(&g, prior.as_ref(), &node);
         with_capture_notes(
             node,
@@ -1148,6 +1193,7 @@ impl ReflowService {
             }
             return Err(e);
         }
+        preserve_prior(&mut g, prior.as_ref(), &node);
         let revision = revision_of(&g, prior.as_ref(), &node);
         with_capture_notes(
             node,
@@ -1332,6 +1378,7 @@ impl ReflowService {
         __rf.finish()?;
         let node = NodeDto::from(g.add_interface(&req.id, &name).map_err(dyno_err)?);
         let found = search_first(&g, &req.id, existed, &name);
+        preserve_prior(&mut g, prior.as_ref(), &node);
         let revision = revision_of(&g, prior.as_ref(), &node);
         with_capture_notes(
             node,
@@ -1514,6 +1561,7 @@ impl ReflowService {
             .map_err(dyno_err)?,
         );
         let found = search_first(&g, &req.id, existed, &format!("{name} {statement}"));
+        preserve_prior(&mut g, prior.as_ref(), &node);
         let revision = revision_of(&g, prior.as_ref(), &node);
         with_capture_notes(
             node,
@@ -1861,6 +1909,7 @@ impl ReflowService {
             Some(fresh) => NodeDto::from(fresh),
             None => node,
         };
+        preserve_prior(&mut g, prior.as_ref(), &node);
         let revision = revision_of(&g, prior.as_ref(), &node);
         with_capture_notes(
             node,

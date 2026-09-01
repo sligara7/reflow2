@@ -188,6 +188,12 @@ impl ReflowService {
             Ok(n) => {
                 let mut dto = NodeDto::from(n);
                 dto.undeclared = undeclared;
+                // The generic write path gets the same protection as the
+                // typed constructors, and arguably needs it more: this is
+                // where a node type with no constructor of its own gets
+                // edited, and where the 2026-09-01 loss that prompted the
+                // work actually happened.
+                crate::tools::capture::preserve_prior(&mut g, prior.as_ref(), &dto);
                 let revision = crate::tools::capture::revision_of(&g, prior.as_ref(), &dto);
                 crate::tools::capture::with_capture_notes(
                     dto,

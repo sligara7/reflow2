@@ -474,6 +474,33 @@ fn snapshot_id(epoch_id: &str, node_id: &str) -> String {
 /// anything, and the error says so rather than growing history quietly.
 const MAX_SNAPSHOT_REVISIONS: usize = 64;
 
+/// The epoch automatic preserves are pinned to.
+///
+/// # Why a standing epoch of its own, rather than the latest one
+///
+/// An epoch bounds a round of WORK. A preserve taken because a write would
+/// otherwise have lost a value is not part of anybody's round — attaching it to
+/// whichever epoch happened to be newest would misattribute it, and minting one
+/// per preserve would bury the timeline (193 epochs already exist on reflow2's
+/// own design). One standing epoch says what these snapshots actually are:
+/// taken by the machine, because the alternative was losing the text.
+///
+/// ⚠️ IT IS CREATED LAZILY AND ONLY WHEN SOMETHING IS ACTUALLY PRESERVED, so a
+/// design where nothing was ever at risk never grows one.
+pub const PRESERVE_EPOCH_ID: &str = "epoch:preserved-on-write";
+
+/// Outcome of an automatic preserve — see [`DesignGraph::preserve_prior_state`].
+#[derive(Debug, Clone)]
+pub enum Preserved {
+    /// A snapshot was taken; the id is where the prior value now lives.
+    Taken(String),
+    /// Nothing was at risk, so nothing was taken. NOT a failure.
+    NothingAtRisk,
+    /// Something at risk could not be preserved, and the reason. The caller's
+    /// write still stood — see the note on `preserve_prior_state`.
+    Failed(String),
+}
+
 /// Axis-Z (temporal) operations. See the module docs.
 impl DesignGraph {
     // ---- Epochs -----------------------------------------------------------
@@ -1147,7 +1174,126 @@ impl DesignGraph {
                     node_type: node_type.to_string(),
                     node_id: node_id.to_string(),
                 })?;
+        self.snapshot_state(epoch_id, node_type, node_id, &current.properties)
+    }
 
+    /// Keep a replaced value, but ONLY when nothing else already holds it.
+    ///
+    /// # The scope is the design
+    ///
+    /// Anthony, 2026-09-01: snapshot **only when it would actually lose
+    /// something**. Snapshotting every revising write would grow the graph for
+    /// no gain, because most revisions replace nothing or replace something
+    /// already preserved.
+    ///
+    /// The trigger is not a new judgement. `prior_state_coverage` already
+    /// computed exactly this, and the revising write was already REPORTING it
+    /// afterwards as "no snapshot holds the prior value — checked, not
+    /// assumed". All that changes is that the caller which holds the only copy
+    /// now keeps it instead of describing its loss.
+    ///
+    /// # 🛑 Best-effort, and never a new way to fail
+    ///
+    /// Every error is swallowed into [`Preserved::Failed`] rather than
+    /// returned. The caller's write is what was asked for; this is an
+    /// improvement on top of it, and an improvement that can refuse the
+    /// original request is a worse trade than the loss it prevents. When it
+    /// fails, the revision note reports the loss exactly as it did before —
+    /// strictly no worse than the old behaviour.
+    ///
+    /// That also disarms the one landmine in the standing-epoch choice:
+    /// `MAX_SNAPSHOT_REVISIONS` caps snapshots per node per epoch, and a node
+    /// revised past that cap in [`PRESERVE_EPOCH_ID`] would otherwise start
+    /// refusing ordinary writes years from now.
+    pub fn preserve_prior_state(
+        &mut self,
+        node_type: &str,
+        node_id: &str,
+        prior_content_hash: &str,
+        replaced_fields: &[String],
+        prior_props: &HashMap<String, Value>,
+    ) -> Preserved {
+        if replaced_fields.is_empty() {
+            return Preserved::NothingAtRisk;
+        }
+        let coverage = match self.prior_state_coverage(
+            node_id,
+            prior_content_hash,
+            replaced_fields,
+            prior_props,
+        ) {
+            Ok(c) => c,
+            Err(e) => return Preserved::Failed(format!("could not read prior coverage: {e}")),
+        };
+        // A whole-state snapshot covers every field; otherwise a field is at
+        // risk only if nothing holds it. Same computation the note reports.
+        if coverage.whole.is_some() {
+            return Preserved::NothingAtRisk;
+        }
+        if replaced_fields
+            .iter()
+            .all(|f| coverage.by_field.contains_key(f))
+        {
+            return Preserved::NothingAtRisk;
+        }
+        if self
+            .get_node(node::DESIGN_EPOCH, PRESERVE_EPOCH_ID)
+            .ok()
+            .flatten()
+            .is_none()
+            && let Err(e) = self.add_epoch(
+                PRESERVE_EPOCH_ID,
+                "Preserved on write",
+                EpochType::Revision,
+                0,
+            )
+        {
+            return Preserved::Failed(format!("could not open the preserve epoch: {e}"));
+        }
+        match self.snapshot_state(PRESERVE_EPOCH_ID, node_type, node_id, prior_props) {
+            Ok(snap) => Preserved::Taken(snap.node_id),
+            Err(e) => Preserved::Failed(format!("could not preserve the prior state: {e}")),
+        }
+    }
+
+    /// Preserve a prior state that is NO LONGER IN THE GRAPH, because the write
+    /// that replaced it has already happened.
+    ///
+    /// [`snapshot_node`](Self::snapshot_node) reads the node's CURRENT
+    /// properties, which is right when you snapshot before overwriting. The
+    /// automatic preserve on a revising write cannot do that: it only learns a
+    /// field was at risk by comparing the incoming values against the stored
+    /// ones, and by then the store holds the new state. So the caller supplies
+    /// the prior properties it is still holding.
+    ///
+    /// EDGES ARE READ LIVE AND THAT IS CORRECT HERE: a property-only revision
+    /// does not move edges, so the edge set now is the edge set then. A caller
+    /// using this after an edge change would capture the wrong ones — which is
+    /// why it takes properties explicitly rather than pretending to be a
+    /// general time machine.
+    pub fn snapshot_state(
+        &mut self,
+        epoch_id: &str,
+        node_type: &str,
+        node_id: &str,
+        state: &HashMap<String, Value>,
+    ) -> Result<StoredNode, DynoError> {
+        let current = StoredNode {
+            graph_id: self.graph_id().to_string(),
+            node_type: node_type.to_string(),
+            node_id: node_id.to_string(),
+            properties: state.clone(),
+        };
+        self.snapshot_from(epoch_id, node_type, node_id, current)
+    }
+
+    fn snapshot_from(
+        &mut self,
+        epoch_id: &str,
+        node_type: &str,
+        node_id: &str,
+        current: StoredNode,
+    ) -> Result<StoredNode, DynoError> {
         // Sort the properties before serializing: `StoredNode.properties` is a
         // `HashMap`, whose iteration order is seeded per process, so an unsorted
         // `to_string` writes byte-different `state` for the same node on every
