@@ -1272,6 +1272,28 @@ impl ReflowService {
     }
 
     #[tool(
+        description = "Record that one Component DEPENDS ON another (DEPENDS_ON) — the coupling \
+                       every topology rule reads. THIS IS THE ONE TO REACH FOR when you mean \
+                       \"this part needs that part\": cycle detection, single-point-of-failure \
+                       analysis and the undeclared-seam gap are all computed from these edges, \
+                       and a design that never draws them gets a clean topology answer that is \
+                       SILENT about its components rather than clean about them. NOT TO BE \
+                       CONFUSED WITH `external_dependency`, which pins which version of ANOTHER \
+                       DESIGN this one is built against — a different concept that used to hold \
+                       this name and was renamed to free it.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn depends_on(
+        &self,
+        Parameters(req): Parameters<EdgePairReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.write_lock().await?;
+        ok_json(EdgeDto::from(
+            g.depends_on(&req.from_id, &req.to_id).map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(
         description = "Allocate a Capability to a Component (ALLOCATED_TO).",
         annotations(read_only_hint = false)
     )]

@@ -1,0 +1,24 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Record that one Component DEPENDS ON another (DEPENDS_ON) — the coupling every topology rule reads. THIS IS THE ONE TO REACH FOR when you mean \"this part needs that part\": cycle detection, single-point-of-failure analysis and the undeclared-seam gap are all computed from these edges, and a design that never draws them gets a clean topology answer that is SILENT about its components rather than clean about them. NOT TO BE CONFUSED WITH `external_dependency`, which pins which version of ANOTHER DESIGN this one is built against — a different concept that used to hold this name and was renamed to free it.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "from_id": {
+        "type": "string"
+      },
+      "to_id": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "from_id",
+      "to_id"
+    ],
+    "type": "object"
+  },
+  "name": "depends_on"
+}

@@ -1607,6 +1607,39 @@ impl DesignGraph {
         )
     }
 
+    /// `Component DEPENDS_ON Component` — the coupling the topology rules read.
+    ///
+    /// # Why this exists as a typed helper
+    ///
+    /// It is the single most common structural edge in any design, and it feeds
+    /// cycle detection, single-point-of-failure analysis and the seam gap —
+    /// and until 2026-09-01 it was the one edge with no helper, so recording a
+    /// coupling meant a raw `create_edge` with both endpoint types spelled out.
+    ///
+    /// Reported by musicjug (`fact:the-commonest-structural-edge-has-no-typed-helper-and-its-name-is-taken`):
+    /// searching for it found `external_dependency`, which pins a version of
+    /// ANOTHER DESIGN and is a different concept entirely. That tool is now
+    /// `external_dependency`, freeing this name.
+    ///
+    /// ⚠️ THE HELPER DOES NOT MAKE THE MODELLING HAPPEN. Measured on reflow2's
+    /// own design the day this landed: 1 of 70 components carried any coupling,
+    /// so modularity reported "not measurable" rather than a score. This
+    /// removes the excuse, not the work.
+    pub fn depends_on(
+        &mut self,
+        from_component_id: &str,
+        to_component_id: &str,
+    ) -> Result<StoredEdge, DynoError> {
+        self.create_edge(
+            edge::DEPENDS_ON,
+            node::COMPONENT,
+            from_component_id,
+            node::COMPONENT,
+            to_component_id,
+            Props::new(),
+        )
+    }
+
     /// `node GOVERNED_BY Decision/DesignRule` — the node is shaped by a
     /// recorded decision. `from_type` and `to_type` are required: the schema
     /// allows any endpoints (`from: "*"`, `to: "*"`).

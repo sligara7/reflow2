@@ -63,9 +63,9 @@ impl ReflowService {
                        'nobody has said', never 'there is no design'.",
         annotations(read_only_hint = false)
     )]
-    pub async fn declare_dependency(
+    pub async fn external_dependency(
         &self,
-        Parameters(req): Parameters<DeclareDependencyReq>,
+        Parameters(req): Parameters<ExternalDependencyReq>,
     ) -> Result<CallToolResult, McpError> {
         let decl = reflow2_core::DependencyDeclaration {
             id: req.id,
@@ -97,7 +97,7 @@ impl ReflowService {
             note: req.note,
         };
         let mut g = self.write_lock().await?;
-        g.declare_dependency(&decl).map_err(dyno_err)?;
+        g.declare_external_dependency(&decl).map_err(dyno_err)?;
         ok_json(g.dependency_manifest().map_err(dyno_err)?)
     }
 

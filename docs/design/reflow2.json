@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:910ad6706b6989ce5731d50601ea4281e03624d771dd9aba57cff645f32ece16",
+  "content_hash": "sha256:f37fed11315cd976ec988e8503cccbdbc8ce6fa9fc8643afabf292627f7e8eac",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -1058,6 +1058,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:maturity"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-coupling-has-a-typed-call-of-its-own",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:depends"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -10961,6 +10969,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:an-agents-reasoning-is-recorded-as-an-open-decision-before-any-new-mechanism",
+      "properties": {
+        "acted_at": "2026-09-01",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:an-empty-manifest-on-a-shipped-release-stops-the-build",
       "properties": {
         "acted_at": "2026-08-21",
@@ -12614,6 +12631,15 @@
       "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-should-a-large-node-be-changeable-one-field-at-a-time",
       "properties": {
+        "acted_at": "2026-09-01",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-should-a-large-node-be-changeable-one-field-at-a-time",
+      "properties": {
         "acted_at": "2026-08-31",
         "role": "author"
       },
@@ -12778,6 +12804,15 @@
       "properties": {
         "acted_at": "2026-08-31",
         "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-should-there-be-a-typed-depends-on-and-the-existing-name-freed",
+      "properties": {
+        "acted_at": "2026-09-01",
+        "role": "approver"
       },
       "to_id": "who:ajs"
     },
@@ -15583,6 +15618,15 @@
         "role": "author"
       },
       "to_id": "who:storyflow-storybug-boss"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-coupling-is-one-typed-call-and-the-name-that-says-so-means-that",
+      "properties": {
+        "acted_at": "2026-09-01",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -33578,6 +33622,87 @@
         "action": "modified"
       },
       "to_id": "cap:brainstorm"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-coupling-edge-gets-its-name-back",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:depends"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-coupling-edge-gets-its-name-back",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:depends-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-coupling-edge-gets-its-name-back",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-coupling-edge-gets-its-name-back",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-coupling-edge-gets-its-name-back",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-built"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-coupling-edge-gets-its-name-back",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-coupling-edge-gets-its-name-back",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:upstream"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-coupling-edge-gets-its-name-back",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:upstream-judgement-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-coupling-edge-gets-its-name-back",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:upstream-read-test"
     },
     {
       "edge_type": "CHANGED",
@@ -118711,6 +118836,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:test-the-commonest-edge-has-a-typed-helper",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-coupling-has-a-typed-call-of-its-own"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:the-export-can-be-ordered-before-its-writes",
       "properties": {
         "completeness": "partial",
@@ -119437,6 +119571,12 @@
       "from_id": "cap:a-contract-answers-at-the-altitude-you-asked",
       "properties": {},
       "to_id": "req:an-undeclared-coupling-is-named-not-just-counted"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:a-coupling-has-a-typed-call-of-its-own",
+      "properties": {},
+      "to_id": "req:a-coupling-is-one-typed-call-and-the-name-that-says-so-means-that"
     },
     {
       "edge_type": "SATISFIES",
@@ -123566,6 +123706,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:the-coupling-helper-exists-and-the-old-name-does-not",
+      "properties": {},
+      "to_id": "cap:a-coupling-has-a-typed-call-of-its-own"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:the-declared-subsystems-are-acyclic",
       "properties": {},
       "to_id": "cap:comparing-two-designs-does-not-reach-into-the-reporting-layer"
@@ -125260,6 +125406,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:test-the-commonest-edge-has-a-typed-helper",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-the-commonest-edge-has-a-typed-helper"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:the-export-can-be-ordered-before-its-writes",
       "properties": {
         "action": "created"
@@ -126200,7 +126354,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:2bca54fad6b5ae52f1d3b4aada6425b5b4f063630821ecb5df46d15400a4025d",
+        "checksum": "sha256:9925cd3fef14ed2c4c7b0524dac5eaf710321fdfadfcbbbc6c248838469c8051",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/depends.rs",
         "name": "depends.rs",
@@ -126213,7 +126367,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:2732433d60adbc611e3bf38c21caf7babd342dded35dacddd25bf1a0e9f65215",
+        "checksum": "sha256:05f53c2cc91f2cece257545a3c6222532aa9345417af5f72ea869093ec2028a9",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/depends.rs",
         "name": "tests/depends.rs",
@@ -126592,7 +126746,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:fe03dabb3ed33b0981ef8bc735fca63e9e4b57bdf04874b300da82bf880ff71b",
+        "checksum": "sha256:c684b16b24065bb5ac40166578ca9ddc5e4a6a803feb65afd4a7759ce4ad4a65",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/graph.rs",
         "name": "crates/reflow2-core/src/graph.rs",
@@ -127832,7 +127986,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f108e6ac27b58731710264c67aa4e0baded4a1d941f7457786be823171f98d43",
+        "checksum": "sha256:1d88437219d649c0a0564f0f00004a1ba4371a514aaf4314d965b440898b5a12",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -128491,6 +128645,17 @@
       }
     },
     {
+      "node_id": "art:test-the-commonest-edge-has-a-typed-helper",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:dcaa41841abec920578f4954c54f6bc256ba4f2a3e6177a8a315958ee133e941",
+        "location": "crates/reflow2-mcp/tests/the_commonest_edge_has_a_typed_helper.rs",
+        "name": "the_commonest_edge_has_a_typed_helper.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:the-export-can-be-ordered-before-its-writes",
       "node_type": "Artifact",
       "properties": {
@@ -128532,7 +128697,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:885c1185e6bca2ff3155ce845675fb51333f381ffc12b9701ed2a1bfb5f8ee94",
+        "checksum": "sha256:762dc0eabfe9f31516f14b669db5fdf97716a515055845d767c2b1bcd8dbb0d9",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/built.rs",
         "name": "tools/built.rs",
@@ -128545,7 +128710,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:135f97f3dc07a9ade1ce00720326f590583f183349a0b796798388c4e101aa1d",
+        "checksum": "sha256:345a7d91a46a97025d4766524e8efbac61f59f9d26ff4c40bcf5f98aeaef412e",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
         "name": "crates/reflow2-mcp/src/tools/capture.rs",
@@ -128812,7 +128977,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:bb93be30a84ee75aae99db9e46ebc77f4c562b43981beb443ca1102a6740a5cb",
+        "checksum": "sha256:c5e88afb0418cb9bc8cbfe2c3075bc1a07cc994e08766ba40aa7ebb35baa5fdf",
         "location": "crates/reflow2-mcp/src/upstream.rs",
         "name": "upstream.rs",
         "status": "realized"
@@ -128823,7 +128988,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:ac434ae5b39148987403ef19a85c3b6c117051a20a3a60ec972f3c961988e83c",
+        "checksum": "sha256:96aacd4f4dd5a78bbaa9a73330808afd48adb323a9ed3616932530537de6ecc9",
         "location": "crates/reflow2-core/tests/an_upstream_design_is_watched_not_imported.rs",
         "name": "tests/an_upstream_design_is_watched_not_imported.rs",
         "status": "realized"
@@ -128834,7 +128999,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:d7fab7cc84baa2230268dbf641cead965aacbe076bcd679dc1f226efecd901ac",
+        "checksum": "sha256:258f9f6edd97fe586f71cbf9c9b6a12459f39b4243ed54d21ace4d5b63a5ac0b",
         "location": "crates/reflow2-mcp/tests/an_upstream_export_is_read_without_being_imported.rs",
         "name": "tests/an_upstream_export_is_read_without_being_imported.rs",
         "status": "realized"
@@ -128991,6 +129156,16 @@
       "properties": {
         "description": "BUILT 2026-08-23 on Anthony's word. DISTINCT FROM `dec:idea-a-contract-is-declared-at-the-lowest-level-and-rolled-up`, which records the QUESTION and stays `proposed`: he authorised the roll-up PROJECTION, not the wider rule that would move the detector's altitude too. And DISTINCT FROM `fact:lifting-both-sets-is-what-made-the-two-vocabularies-meet`, which is the MEASUREMENT behind it — that node holds the numbers and the near-miss; this is the thing that was built. Keeping them apart is what lets the design say whether the fix happened, separately from what it found.\n\nALSO DISTINCT FROM `dec:idea-a-view-can-slice-by-altitude-not-only-by-aspect`, which stays open and is a different thing wearing the same word. That one asks which nodes are TOP LEVEL for a management reader — an ABSTRACTION filter, and its own text records why it is stuck: a filter chosen by the renderer rather than derived from the graph is the renderer fill-in the doctrine calls a defect. This is a ROLL-UP ALONG CONTAINMENT — answering a question at the level it was asked by walking down the spine. No filter, no new property, no schema change, which is exactly why it was buildable today and that one was not.\n\nWHAT IT DOES: `seam_coverage {altitude}` lifts BOTH the couplings and the contracts to the nearest container at a chosen `Component.level`, then compares them. `covered_by` names the finest-level pair where each contract actually sits, so \"yes, A and B interface\" always arrives with where to look.",
         "name": "A boundary question is answered at the altitude it was asked, naming the leaf where the contract actually lives",
+        "provenance": "authored",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "cap:a-coupling-has-a-typed-call-of-its-own",
+      "node_type": "Capability",
+      "properties": {
+        "description": "`depends_on(from_id, to_id)` draws `Component DEPENDS_ON Component`, joining the nine typed helpers that already fill in endpoint types. It refuses an absent endpoint like every other one, so the convenience does not buy a new way to point a dependency into nothing.\n\nThe cross-design version pin that used to hold this name is now served as `external_dependency` (core: `DesignGraph::declare_external_dependency`). The core keeps its verb because it reads as Rust; the served tool drops it because it reads as a noun beside `depends_on`, `allocate` and `satisfies`.\n\n⚠️ A BREAKING CHANGE TO A SERVED SURFACE, taken deliberately rather than deferred: `rule:fix-it-properly-while-it-is-still-cheap`'s second clause makes \"it would break consumers\" a reason to do it NOW, and the deprecation discipline begins at 1.0.",
+        "name": "Component coupling is one typed call, and the cross-design pin no longer holds its name",
         "provenance": "authored",
         "status": "realized"
       }
@@ -137557,6 +137732,18 @@
       }
     },
     {
+      "node_id": "chg:the-coupling-edge-gets-its-name-back",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-09-01",
+        "name": "Component coupling gets a typed call, and the cross-design pin gives up the name it was holding",
+        "rationale": "Anthony's word, 2026-09-01: \"I think we should change the declare_dependency --> external_dependency\", overruling the recommendation that the rename follow later on a deprecation path. That is `rule:fix-it-properly-while-it-is-still-cheap`'s second clause applied as written — \"it would break consumers\" is a reason to do it NOW, and the deprecation discipline begins at 1.0.\n\nFROM musicjug, 2026-08-31 (`fact:the-commonest-structural-edge-has-no-typed-helper-and-its-name-is-taken`): the session searched for a way to say one component depends on another, found the version-pinning tool by name, and fell back to a raw `create_edge`. The absence alone cost a raw write; the collision routed a searching agent to the wrong tool first, and `find_tools` ranks by name, so the misdirection was systematic rather than unlucky.\n\nRENAMING THE CORE METHOD TOO WAS NOT COSMETIC: leaving `declare_dependency` in core behind a tool called `external_dependency` would have created exactly the helper-vs-core naming disagreement `fact:defect-typed-tool-parameter-names-are-inconsistent` has counted eleven of. This is the eleventh instance being closed rather than the twelfth being opened.\n\nPinned by four tests written first and OBSERVED FAILING IN TWO STAGES, which is what shows they discriminate: with the helper absent the file did not compile; with the helper added and the rename not yet done, the two helper tests PASSED and the two rename tests FAILED. The counterweight is `the_old_colliding_name_is_gone` — if the old name had survived alongside the new one, the collision would remain and the other rename test would still have passed. The rename is observed through `report_manual_work`, which asks the LIVE ROUTER rather than a hand-kept list.\n\n⚠️ WHAT THIS DOES NOT DO, said plainly because the temptation is to read it as more: it does not make any design better connected. Measured the day it landed, 1 of 70 of reflow2's own components carried any coupling, so modularity still reports \"not measurable\" rather than a score. This removes the excuse; the modelling stays the designer's work.",
+        "subject": "system",
+        "summary": "TWO CHANGES, because the report was two defects that compound.\n\n① ADDED `depends_on(from_id, to_id)` — `DesignGraph::depends_on` in graph.rs beside `allocate`, served from capture.rs. Draws `Component DEPENDS_ON Component`, the edge cycle detection, single-point-of-failure analysis and the undeclared-seam gap all read. It is a thin wrapper filling in endpoint types, which is all the other nine typed helpers are, and it refuses an absent endpoint exactly like them.\n\n② RENAMED the cross-design version pin, which was holding that name. Served tool `declare_dependency` -> `external_dependency`; core `DesignGraph::declare_dependency` -> `declare_external_dependency`; request struct `DeclareDependencyReq` -> `ExternalDependencyReq`. The core keeps its verb because it reads as Rust; the served tool drops it because it reads as a noun beside `depends_on`, `allocate` and `satisfies`.\n\n🛑 A BREAKING CHANGE TO A SERVED SURFACE, and the toolsnap goldens record it as one removed and one added so a reviewer sees exactly what moved."
+      }
+    },
+    {
       "node_id": "chg:the-decomposition-ladder-is-open",
       "node_type": "ChangeEvent",
       "properties": {
@@ -140299,6 +140486,17 @@
       }
     },
     {
+      "node_id": "dec:an-agents-reasoning-is-recorded-as-an-open-decision-before-any-new-mechanism",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "ACCEPTED on Anthony's word, 2026-09-01, against the recommendation that the zero-cost option be tried before any mechanism is added.\n\nTHE PROBLEM, restated so this stands alone: reflow2 models the USER's word thoroughly and the AGENT's almost not at all. An agent holding a correct substantive answer to an open question has `answer_question` — whose own description is \"record what the USER said\" — and `acknowledge_gap`, which refuses an unknown approver. Using either would put the agent's reasoning in the user's mouth, so it stays quiet, and the silence is indistinguishable from having nothing to say.\n\n⭐ THE PRACTICE, AND IT USES ONLY WHAT ALREADY EXISTS: the agent records its reasoning as a `proposed` Decision, linked to the question it answers, with the human named as approver. That is attributed, visible, reported by `loop_status` until answered, and impossible to mistake for the owner's word. It costs one node and no new vocabulary.\n\n🛑 AND NOTHING IS BUILT UNTIL THAT IS SHOWN INSUFFICIENT. `dec:idea-should-the-agents-own-word-get-a-first-class-record` — generalising `proposed` + approver to gap answers, acknowledgements and possibly requirement status — STAYS OPEN and is deliberately not taken here. The reason is the one that decision named against itself: every record type that gains a proposed state gains a lifecycle, and lifecycles are where designs rot. Four states across six node types is twenty-four combinations nobody has thought about, bought to solve a problem the existing mechanism may already solve.\n\n📌 WHAT WOULD REOPEN IT — named now, so the condition is on the record rather than in somebody's memory, and because this design has just been reminded what a parked decision is worth when it says what would unpark it (`chg:the-prescribed-layer-pairs-stop-refusing`): a case where the proposed-Decision practice is tried and is genuinely the wrong shape — an answer that has no natural decision to hang off, or one where the linked-Decision route loses information the gap needed to keep.",
+        "kind": "choice",
+        "name": "DECIDED — an agent with a substantive answer records it as an open Decision linked to the question, and nothing new gets built until that is shown insufficient",
+        "rationale": "RECORDED AS ITS OWN DECISION rather than as a status change on the idea it defers, because they are different claims: \"adopt this practice\" is settled, and \"generalise the mechanism\" is not. Collapsing them would either assert a generalisation nobody approved, or lose the practice that WAS approved.\n\n⚠️ THE HONEST WEAKNESS, and it is the reason a reopening condition is written above: this is the cheap option chosen partly BECAUSE it is cheap. Nobody has yet tried the practice on a real gap and found it sufficient — the evidence for it is an argument, not a measurement, which is a weaker footing than this project usually accepts. What makes that acceptable here is the asymmetry of cost: the practice can be abandoned in a session, and a lifecycle across six node types cannot.\n\n📌 IT ALSO DOES NOT TOUCH THE ANTI-FORGERY RULE, which stays exactly as it is. `acknowledge_gap` still requires the owner's name, `answer_question` still records what the user said, and requirement status still moves only on their word. Nothing here relaxes any of that; it gives the agent a place to stand that was always available and never named.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:an-empty-manifest-on-a-shipped-release-stops-the-build",
       "node_type": "Decision",
       "properties": {
@@ -142532,7 +142730,7 @@
         "kind": "exploratory",
         "name": "OPEN — should a write offer a dry run, a snapshot-on-revise, or field-level validation, so a large node is not re-sent whole to change one thing?",
         "rationale": "Two reports, two directions, one underlying question. The note that partial revision already exists for the `add_*` constructors is from this project's own tool descriptions and was available to neither reporter — which is itself a finding about discoverability.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -142730,7 +142928,7 @@
         "kind": "exploratory",
         "name": "OPEN — should component DEPENDS_ON get a typed helper, and should `declare_dependency` be renamed to free the obvious name?",
         "rationale": "musicjug's idea, relayed. The coupling-measurability connection and the deprecation-path caution are this project's own context.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -150405,6 +150603,16 @@
       }
     },
     {
+      "node_id": "frag:art:test-the-commonest-edge-has-a-typed-helper",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered the_commonest_edge_has_a_typed_helper.rs"
+      }
+    },
+    {
       "node_id": "frag:art:the-export-can-be-ordered-before-its-writes",
       "node_type": "Fragment",
       "properties": {
@@ -152409,6 +152617,18 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "ANTHONY, 2026-08-13, after Alex's first run on a real work project: *\"this is a core feature of reflow2. both my brother and I thought it already worked.\"*\n\n**IT DID NOT, AND IT NEVER HAD.** `git log -S \"docs/design\" -- tools/reflow2_init.py` returns exactly ONE commit — the one that fixed it. The same for any non-backup export destination. So this is NOT the regression it felt like: nothing was lost, and there was never a working version to lose.\n\n🛑 THE REASON IT WAS INVISIBLE, AND IT IS THE WHOLE POINT OF WRITING THIS DOWN: **no Requirement and no Capability ever said it.** A search of every Requirement and Capability for *durable record / committed export / shareable / docs/design* returns nothing about a consumer's committable record; the nearest, `req:design-reachable-without-the-repo`, is about reaching a design WITHOUT the repo, which is a different need.\n\n⇒ CONSEQUENCES, ALL OF WHICH ARE THE SYSTEM WORKING CORRECTLY:\n  · `cap:kit` reads `verified` and is NOT lying — its scope is *\"one command sets up or refreshes the design environment\"*, which it does.\n  · `detect_gaps` could not surface it. It finds Requirements nothing satisfies; **it cannot find a Requirement nobody wrote.**\n  · Every gate was green and every gate was right.\n\n⇒ **AN UNSTATED REQUIREMENT CANNOT BE UNMET.** That is the one class reflow2 is structurally blind to, and it produced a hole in the feature the whole tool exists for: the design record other people read.\n\n📌 WHAT THE INSTALLER DID INSTEAD, which is why two users believed it worked: it DID export — `backup_graph` writes `.reflow2/backups/design-<stamp>.json` — and `git check-ignore` confirms that path is covered by the `.gitignore` rule THE SAME INSTALLER WRITES. **The output of the one export landed inside the ignore rule.** Everything looked present and nothing was reachable.\n\n⚠️ AND THE PROTECTION THREAD WOULD NOT HAVE CAUGHT IT. `dec:idea-a-satisfied-requirement-earns-a-stricter-mutability-class` and `dec:idea-stability-is-earned-by-history-not-by-reaching-a-state` both protect what IS recorded — a satisfied requirement, an operational thread, a stable lifecycle. Alex's *\"don't change core functionality\"* is about DRIFT. This was ABSENCE from the first commit, so freezing, scoring or baselining would have left it exactly as open. **The measure this needs is different in kind, and confusing the two would build the wrong safeguard.**\n\nWHAT THE REQUIREMENT IS, stated so it can be checked: after `reflow2_init.py` runs, the project contains a design export at a path git will track — `docs/design/<project>.json` — and the user is told, where they are looking, that this is the file to commit. It must hold on a BRAND-NEW project, which is the only case either user actually hit.\n\n📌 EVIDENCE CLASS WORTH NOTING: both of Alex's reports (`fact:second-user-report-2026-08-11`, `fact:second-user-first-run-report-2026-08-13`) were found by somebody meeting the output for the first time, and neither was visible to anyone who already knew the system. That is now two data points for the same instrument.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:a-coupling-is-one-typed-call-and-the-name-that-says-so-means-that",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "Recording that one part depends on another is one typed call, and the obvious name means that",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "The edge every topology rule reads — component coupling — is recorded through a typed call of its own, and the name an agent reaches for when it means \"this part needs that part\" resolves to that call rather than to something else.\n\nFrom musicjug's field report, 2026-08-31: searching for it found `declare_dependency`, which pins a version of ANOTHER DESIGN, and the session fell back to a raw edge write. Accepted on Anthony's word 2026-09-01, together with the rename that frees the name.\n\n⚠️ THIS REQUIREMENT IS ABOUT THE AFFORDANCE, NOT THE MODELLING. It does not say a design must declare its couplings, and satisfying it does not make any design better connected — measured the day it landed, 1 of 70 of reflow2's own components carried any coupling and modularity was therefore not measurable. This removes the excuse; the work stays the designer's.",
         "status": "accepted"
       }
     },
@@ -164318,6 +164538,20 @@
       }
     },
     {
+      "node_id": "ver:the-coupling-helper-exists-and-the-old-name-does-not",
+      "node_type": "Verification",
+      "properties": {
+        "description": "`crates/reflow2-mcp/tests/the_commonest_edge_has_a_typed_helper.rs`, four cases.\n\nTWO PAIRS. The helper: one typed call draws `DEPENDS_ON` and names both ends; and an endpoint that does not exist is still REFUSED, so the convenience buys no new way to point a dependency into nothing.\n\nThe rename: `external_dependency` is served, and `declare_dependency` is NOT. ⭐ THE SECOND IS THE COUNTERWEIGHT AND CARRIES THE WEIGHT — if the old name had survived alongside the new one, the collision that caused the report would remain and the first assertion would still pass.\n\nBoth rename cases are observed through `report_manual_work`, which asks the LIVE ROUTER whether reflow2 serves a tool by that name. That is deliberate: a hand-kept list of tool names is the defect class that check was built to stop.",
+        "findings": "4 passed, 0 failed, in the full workspace run of 1929 tests (0 failed) on 2026-09-01.\n\n⭐ OBSERVED FAILING IN TWO STAGES, which is what shows the four discriminate rather than merely accepting whatever the code does.\n\nStage 1 — helper absent: the file did not COMPILE (`no method named depends_on`). That is the weak form of failing-first and would not, alone, be evidence.\n\nStage 2 — helper added, rename NOT yet done: 2 passed and 2 failed, and the split was exactly the right one. `a_component_coupling_has_one_typed_call` and `a_coupling_to_a_component_that_does_not_exist_is_refused` passed on the new helper; `the_cross_design_pin_is_served_as_external_dependency` and `the_old_colliding_name_is_gone` both failed, because the old name was still the served one. Only then was the rename applied.\n\n📌 The rename half is observed through the LIVE ROUTER rather than a hand-kept name list, so it cannot pass because somebody updated a fixture.",
+        "kind": "verification",
+        "last_run_at": "2026-09-01",
+        "level": "unit",
+        "method": "test",
+        "name": "A coupling is one typed call, the freed name is served, and the colliding one is gone",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:the-declared-subsystems-are-acyclic",
       "node_type": "Verification",
       "properties": {
@@ -164764,7 +164998,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:77e899bc88f4a740484f3548a5cd1f565f850314bdd6a4206d1b782ea231754a",
+  "prev_content_hash": "sha256:910ad6706b6989ce5731d50601ea4281e03624d771dd9aba57cff645f32ece16",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
