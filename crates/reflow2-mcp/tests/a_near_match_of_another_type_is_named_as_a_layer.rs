@@ -29,30 +29,41 @@
 //! also stop catching the same-type duplicates the guard exists for — the nine
 //! collisions in one session that produced it.
 //!
-//! # The repair chosen, and the one rejected
+//! # The repair chosen, and the one rejected — then reopened
 //!
 //! Two shapes were available and they are not equivalent:
 //!
-//! * ① EXCLUDE cross-type pairs from the filter. Removes the friction, and
-//!   removes a real catch when the agent genuinely was duplicating an idea
-//!   across layers. REJECTED: it trades a false alarm for a silent miss, and a
-//!   silent miss in the duplicate guard is the failure it was built to stop.
+//! * ① EXCLUDE the prescribed layer pairs from the filter. Removes the
+//!   friction, and removes a real catch when the agent genuinely was
+//!   duplicating an idea across layers. REJECTED 2026-08-29: it trades a false
+//!   alarm for a silent miss, and a silent miss in the duplicate guard is the
+//!   failure it was built to stop.
 //! * ② KEEP the refusal, change what it SAYS when the types differ — name the
-//!   layering instead of implying duplication. CHOSEN. Every real catch
-//!   survives, the cost is one more round-trip, and it matches how this guard
-//!   was justified: `refuse_unless_deliberate` is documented as forcing a
+//!   layering instead of implying duplication. CHOSEN 2026-08-29. Every real
+//!   catch survives, the cost is one more round-trip, and it matches how this
+//!   guard was justified: `refuse_unless_deliberate` is documented as forcing a
 //!   CHOICE, never as preventing a write.
 //!
-//! ⚠️ WHAT IS STILL NOT ESTABLISHED, so nobody reads ② as settled: nobody has
-//! counted how often a cross-type hit is a REAL duplicate versus this layered
-//! capture. That count is what would justify ①, and it has not been taken.
+//! 🛑 ① WAS REJECTED FOR ONE STATED REASON — "nobody has counted how often a
+//! cross-type hit IS a real duplicate" — AND THAT COUNT ARRIVED ON 2026-08-31.
+//! Two field reports written by sessions that could not see each other, on
+//! designs with nothing in common: 12 refusals, 12 judged distinct, 0 real
+//! duplicates, plus 3 more incurred by the triage session itself. Anthony chose
+//! ① the same day, scoped to the pairs with evidence behind them.
+//!
+//! ⭐ SO ALEX'S OWN CASE NO LONGER REFUSES AT ALL, and the first test below had
+//! to move to a pair that still does. ChangeEvent→Requirement is now in
+//! `PRESCRIBED_LAYER_PAIRS`; see
+//! `a_prescribed_layer_pair_no_longer_refuses.rs`, which pins that and pins
+//! that the match is still REPORTED. ② was not replaced by ①: it survives
+//! underneath it, and is what every unmeasured cross-type pair still gets.
 //!
 //! # What these tests pin
 //!
 //! The CLASS, not Alex's two instances: that the refusal's wording is a
-//! function of whether the types differ, in both directions. Pinning only his
-//! ChangeEvent→Requirement case would leave the same-type wording free to drift
-//! into the layered phrasing, which would quietly destroy the distinction.
+//! function of whether the types differ, in both directions. Pinning only one
+//! case would leave the same-type wording free to drift into the layered
+//! phrasing, which would quietly destroy the distinction.
 
 use reflow2_mcp::service::*;
 use rmcp::handler::server::wrapper::Parameters;
@@ -91,21 +102,29 @@ async fn seed_change_event(s: &ReflowService) {
     .expect("the change event records what shipped");
 }
 
-/// ⭐ THE REPORTED CASE. The prescribed loop — record what shipped, then record
-/// the durable intent behind it — must not be told it is duplicating.
+/// ⭐ THE WORDING, ON A PAIR THAT STILL REFUSES.
+///
+/// This was Alex's ChangeEvent→Requirement case until 2026-08-31, when the
+/// measured count moved that pair into `PRESCRIBED_LAYER_PAIRS` and it stopped
+/// refusing entirely. The wording still has to be pinned for everything else,
+/// so the test moved to ChangeEvent→Component: a pair nobody has measured,
+/// which therefore still refuses and must still be described as a different
+/// KIND of record rather than as a near-duplicate.
 #[tokio::test]
 async fn a_cross_type_near_match_names_the_layering_not_a_duplicate() {
     let s = svc().await;
     seed_change_event(&s).await;
 
     let err = s
-        .add_requirement(Parameters(requirement(
-            "req:a-session-serves-its-own-build",
-            "A session talks only to a server of its own build",
-            SHIPPED,
-        )))
+        .add_component(Parameters(ComponentReq {
+            id: "cmp:client-elector".into(),
+            name: Some("Client elector".into()),
+            description: Some(SHIPPED.into()),
+            level: None,
+            distinct_from: None,
+        }))
         .await
-        .expect_err("the guard still refuses, because ② keeps the refusal");
+        .expect_err("an unmeasured cross-type pair still refuses, because ② survives");
 
     let msg = err.message.to_string();
 

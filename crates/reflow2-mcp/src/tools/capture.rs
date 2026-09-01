@@ -92,6 +92,79 @@ pub(crate) struct NearMatch {
     node_id: String,
     node_type: String,
     name: String,
+    /// The hit's `kind`, when it declares one. Read for exactly one pairing —
+    /// a Decision created against an `exploratory` Decision is the brainstorm
+    /// skill's promotion step, not a duplicate — and carried as `None` for
+    /// every type that has no such field.
+    ///
+    /// Serialised only when present, so an ordinary near-match reads exactly as
+    /// it did before this existed.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    kind: Option<String>,
+}
+
+/// Type pairs the capture loop PRESCRIBES, which therefore must not be refused
+/// as near-duplicates of each other.
+///
+/// # Why these and not every cross-type pair
+///
+/// `chg:a-cross-type-near-match-is-named-as-a-layer` (2026-08-29) rejected
+/// blanket cross-type suppression for one stated reason: nobody had counted how
+/// often a cross-type hit is a REAL duplicate. That count now exists
+/// (`fact:twelve-near-match-refusals-across-two-designs-and-not-one-was-a-duplicate`)
+/// — 12 field refusals across two designs whose sessions could not see each
+/// other, plus 3 incurred by the triage session itself, and not one was a
+/// duplicate.
+///
+/// 🛑 SO THE SET IS THE PAIRS WITH EVIDENCE, NOT EVERY PAIR THAT COULD BE
+/// ARGUED FOR. Requirement↔Component, for instance, is plausibly a layer pair
+/// and is deliberately absent: nobody has measured it, and adding it would be
+/// the same unmeasured assumption the 2026-08-29 repair refused to make in the
+/// other direction. When a new pairing is measured, add it here with its
+/// evidence and not before.
+///
+/// Order does not matter — the pair is matched both ways, because which side is
+/// being created is an accident of the session's sequence.
+const PRESCRIBED_LAYER_PAIRS: &[(&str, &str)] = &[
+    // The golden thread. bhome ×4, musicjug ×1. The served instructions ask for
+    // both records, and a Capability is SUPPOSED to read like the Requirement
+    // it satisfies.
+    ("Requirement", "Capability"),
+    // The change loop: record what shipped, then what must stay true / why.
+    // bhome ×3 (ChangeEvent↔Decision); Alex 2026-08-29 (ChangeEvent↔Requirement,
+    // and Decision↔Capability).
+    ("ChangeEvent", "Requirement"),
+    ("ChangeEvent", "Decision"),
+    ("ChangeEvent", "Capability"),
+    ("Decision", "Capability"),
+    // A decision about a part reads like the part. musicjug ×1
+    // (dec:one-clock vs comp:clock).
+    ("Decision", "Component"),
+    // A measurement and the decision it informs. Incurred ×3 by the session
+    // that recorded the count — the only refusals in the whole set NOT
+    // self-reported by an agent grading its own work.
+    ("TemporalFact", "Decision"),
+];
+
+/// Is this pair one the capture loop prescribes, in either direction?
+fn is_prescribed_layer(creating: &str, hit: &NearMatch) -> bool {
+    // The one SAME-TYPE exemption, and it needs the `kind` rather than the
+    // type: step 5 of the brainstorm skill promotes an `exploratory` Decision
+    // into a settled one via EVOLVES_INTO, so the idea and the decision that
+    // answers it are supposed to read alike. bhome ×1, musicjug ×2.
+    //
+    // Deliberately one-directional on the HIT: an exploratory idea recorded
+    // against an existing settled decision is not the promotion path, and there
+    // is no measurement saying it should be exempt.
+    if creating == "Decision"
+        && hit.node_type == "Decision"
+        && hit.kind.as_deref() == Some("exploratory")
+    {
+        return true;
+    }
+    PRESCRIBED_LAYER_PAIRS.iter().any(|(a, b)| {
+        (creating == *a && hit.node_type == *b) || (creating == *b && hit.node_type == *a)
+    })
 }
 
 /// The advisory attached to a newly-created capture node: what already looked
@@ -193,6 +266,24 @@ pub(crate) fn search_first(
             node_id: h.node_id.clone(),
             node_type: h.node_type.clone(),
             name: h.name.clone(),
+            // Read only for Decisions, which is the only type whose `kind`
+            // decides a pairing. A failed or absent lookup is `None`, which
+            // means the pair is NOT exempted — the conservative direction, so
+            // a read error can only ever cost a round trip, never a silent
+            // suppression.
+            kind: (h.node_type == "Decision")
+                .then(|| {
+                    g.get_node(&h.node_type, &h.node_id)
+                        .ok()
+                        .flatten()
+                        .and_then(|n| {
+                            n.properties
+                                .get("kind")
+                                .and_then(|v| v.as_str())
+                                .map(str::to_string)
+                        })
+                })
+                .flatten(),
         })
         .collect();
     let note = (!near.is_empty()).then(|| {
@@ -635,10 +726,22 @@ fn refuse_unless_deliberate(
     let acknowledged: std::collections::HashSet<&str> = distinct_from
         .map(|v| v.iter().map(String::as_str).collect())
         .unwrap_or_default();
+    // ⭐ A PRESCRIBED LAYER PAIR IS REPORTED, NOT REFUSED — and the distinction
+    // is the whole design of this change. The match stays in
+    // `sf.near_matches`, so the caller still sees what it matched and a later
+    // reader can still find it; only the REFUSAL is dropped. Narrowing a guard
+    // and blinding it look identical unless the evidence survives, so it does.
+    //
+    // Anthony, 2026-08-31, on the measured count. Before this, following the
+    // documented loop tripped the guard every time, and the mitigation agents
+    // reached for — pre-declaring `distinct_from` on every write — had already
+    // produced the silent miss that blanket suppression was rejected to avoid,
+    // while leaving no record of the trade.
     let unacknowledged: Vec<&NearMatch> = sf
         .near_matches
         .iter()
         .filter(|m| !acknowledged.contains(m.node_id.as_str()))
+        .filter(|m| !is_prescribed_layer(creating, m))
         .collect();
     if unacknowledged.is_empty() {
         return Ok(());

@@ -45,6 +45,7 @@ pub mod detect;
 pub mod dimensions;
 pub mod discover;
 pub mod drift;
+pub mod edge_prose;
 pub mod export;
 pub mod fielded;
 pub mod flow;

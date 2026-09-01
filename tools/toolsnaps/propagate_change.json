@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": true
   },
-  "description": "Blast radius of a recorded ChangeEvent along the golden thread. Returns a summary (counts by distance, the distance-1 ring, risk crossings); pass full=true for every impacted node with its hop chain.",
+  "description": "Blast radius of a recorded ChangeEvent along the golden thread. Returns a summary (counts by distance, the distance-1 ring, risk crossings); pass full=true for every impacted node with its hop chain. ALSO READS THE EDGES' OWN PROSE: `stale_edge_evidence` names edges whose `evidence` or `note` still uses language the changed node has DROPPED — the case where a reader following an edge is misled by text that reads as current. It is lexical, never a refusal, and it says so; a node with no snapshot gets a `coverage_note` saying the check was SILENT about its edges rather than clean on them.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,

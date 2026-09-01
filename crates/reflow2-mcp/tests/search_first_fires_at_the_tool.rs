@@ -194,25 +194,39 @@ async fn an_unrelated_node_is_created_without_friction() {
 
 // ACROSS TYPES on purpose: a Capability backed out of a Requirement's own words
 // is `unmotivated_capability` waiting to happen, and that pair is the one most
-// worth catching.
+// worth SEEING.
+//
+// ⭐ IT IS SEEN, AND SINCE 2026-08-31 IT IS NO LONGER REFUSED. Requirement and
+// the Capability that satisfies it is the golden thread — the served
+// instructions ask for both records, and it was the single most-refused pairing
+// in the field: 4 of bhome's 8 false positives and 1 of musicjug's 4, with not
+// one of the 15 measured refusals turning out to be a real duplicate
+// (`chg:the-prescribed-layer-pairs-stop-refusing`).
+//
+// 🛑 SO WHAT THIS TEST NOW PINS IS THE DISTINCTION THAT CHANGE RESTS ON: the
+// REPORT survives even though the REFUSAL is gone. If the advisory ever stopped
+// carrying the match, suppressing the refusal would have become deleting the
+// check, and nothing else in the suite would notice.
 #[tokio::test]
-async fn a_capability_restating_a_requirement_is_caught_across_types() {
+async fn a_capability_restating_a_requirement_is_reported_but_not_refused() {
     let s = svc().await;
     seed_first(&s).await;
-    let err = s
-        .add_capability(Parameters(CapabilityReq {
-            id: "cap:cumulative".into(),
-            name: Some("Send cumulative totals".into()),
-            description: Some(IDEA_B.into()),
-            status: None,
-            distinct_from: None,
-        }))
-        .await
-        .expect_err("a capability restating a requirement must be caught");
+    let made = j!(s.add_capability(Parameters(CapabilityReq {
+        id: "cap:cumulative".into(),
+        name: Some("Send cumulative totals".into()),
+        description: Some(IDEA_B.into()),
+        status: None,
+        distinct_from: None,
+    })));
+    assert_eq!(made["node_id"], "cap:cumulative");
+    let advisory = made
+        .get("search_first")
+        .expect("the golden-thread pair is still REPORTED, only no longer refused");
     assert!(
-        err.message.contains("req:offline-sync"),
-        "the cross-type match must be named: {}",
-        err.message
+        serde_json::to_string(advisory)
+            .expect("serialisable")
+            .contains("req:offline-sync"),
+        "the cross-type match must still be named in the advisory: {advisory}"
     );
 }
 
