@@ -148,7 +148,40 @@ const COMMAND_ALIASES: &[(&str, Result<&str, &str>)] = &[
         "debt",
         Err("no skill — it calls the `loop_status` tool directly"),
     ),
+    // ADDED 2026-09-01. These three were missing, and their absence reproduced
+    // the exact 2026-08-19 failure this table was written to fix: asking for a
+    // slash command by name got a bare list of skills, none of them matching.
+    // The original repair covered the aliases that existed THEN and nothing
+    // made the next one join — see
+    // `fact:the-command-surface-has-five-copies-and-nothing-reconciles-them`.
+    ("what-is-this", Ok("help")),
+    ("where-does-it-go", Ok("onboarding")),
+    (
+        "next",
+        Err("no skill — it calls the `what_next` tool directly"),
+    ),
 ];
+
+/// What a person types to reach `skill_name`, including the leading slash.
+///
+/// # Why the server states this rather than leaving it to be worked out
+///
+/// Eight skills answer to a word that is not their name. Anyone deriving the
+/// mapping by comparing a skills directory against a commands directory gets
+/// those eight wrong — measured 2026-09-01, when an agent with full filesystem
+/// access reported 11 of 28 commands for exactly that reason, having taken the
+/// aliased ones for skills with no shortcut at all.
+///
+/// 🛑 EVERY SKILL GETS ONE, including the ordinary case where the command is
+/// simply the skill's own name. Returning nothing for the unaliased majority
+/// would put the reader back to inferring, which is the defect.
+pub fn shortcut_for(skill_name: &str) -> String {
+    COMMAND_ALIASES
+        .iter()
+        .find(|(_, target)| matches!(target, Ok(skill) if *skill == skill_name))
+        .map(|(alias, _)| format!("/{alias}"))
+        .unwrap_or_else(|| format!("/{skill_name}"))
+}
 
 /// The sentence that turns a refusal into an instruction, when the name asked
 /// for is a slash command rather than a skill.

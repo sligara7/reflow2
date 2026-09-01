@@ -72,6 +72,42 @@ Ask which of three they are, then give them **one** command — not the menu:
 that is exactly backwards: the tool exists to turn rough intent into structure and then ask about
 what is missing.
 
+## 3b. ⭐ And show them the whole surface, because nobody else will
+
+**Anthony, 2026-09-01, who WROTE these:** *"I developed this, but I don't even know how to use
+most of them (I usually let the agent use them)."* If the author cannot name his own commands, a
+newcomer certainly cannot, and a person who does not know a command exists will never type it.
+
+So after their first move, **list every command** — all of them, not a selection.
+
+🛑 **GET THE LIST FROM `list_skills`, NEVER FROM MEMORY AND NEVER BY READING A DIRECTORY.** Each
+entry carries a `shortcut` — what a person actually types — because **eight skills answer to a
+word that is not their name** (`capture-intent` is `/req`, `check-health` is `/health`,
+`detect-and-ask` is `/gaps`, `governance-proposal` is `/rules`, `kpp-proposal` is `/kpp`,
+`onboarding` is `/where-does-it-go`, `where-am-i` is `/where`, `help` is `/what-is-this`).
+
+⚠️ **THIS IS NOT A HYPOTHETICAL FAILURE.** On 2026-09-01 an agent with full filesystem access
+answered this exact question with 11 of 28 commands, because it matched command names against
+skill names and reported the eight aliased ones — plus nine others — as reachable only through
+`get_skill`. It under-reported the tool's surface by 60% to the person who built it. The
+`shortcut` field exists so that nobody has to derive this again.
+
+**Three commands are not skills at all** and will not appear in that list — say them too:
+
+| Command | What it does |
+| --- | --- |
+| `/debt` | what the coherence loop owes right now |
+| `/decisions` | what has been decided, and why |
+| `/next` | which decisions to settle next |
+
+**Group them by when a person would reach for one** — starting a design, capturing intent, reading
+where it stands, changing something, connecting things up — rather than alphabetically. The
+grouping is the part that makes a list of twenty-eight usable; a flat dump is the same
+under-reporting failure by a different route.
+
+⚠️ **A LIST IS ORIENTATION, NOT THE FIRST MOVE.** Give them their one command from §3 first, and
+the full list after. Reversed, the menu is what they remember and they start nowhere.
+
 ## 4. What it deliberately will not do
 
 Say these unprompted. Every one of them is a disappointment somebody would otherwise discover in

@@ -80,14 +80,21 @@ impl ReflowService {
     ) -> Result<CallToolResult, McpError> {
         let items: Vec<_> = SKILLS
             .iter()
-            .map(|s| json!({"name": s.name, "description": s.description}))
+            .map(|s| {
+                json!({
+                    "name": s.name,
+                    "shortcut": crate::skills::shortcut_for(s.name),
+                    "description": s.description,
+                })
+            })
             .collect();
         let mut payload = json!({
             "count": items.len(),
             "skills": items,
             "note": "Served from the reflow2 binary (dec:skills-served), so they cannot drift from \
                      the version you are running. Your harness does NOT auto-load these — call \
-                     get_skill to read one in full."
+                     get_skill to read one in full. `shortcut` is what a PERSON types; eight of \
+                     these differ from the skill name, so never derive it by matching names."
         });
         // The reminder rides the response the agent is already reading.
         if let (Some(lens), Some(obj)) = (self.lens_for_response().await, payload.as_object_mut()) {

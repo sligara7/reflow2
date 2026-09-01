@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:16f43a16ed9a6d850ad7ac76e0485a07ed300ca5dc11fa4ce583069cc5c69ed2",
+  "content_hash": "sha256:38aa17a82f2916b83e1499912253d39b4510800021f6a5a6ce84341bec3866b6",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2806,6 +2806,14 @@
     {
       "edge_type": "ALLOCATED_TO",
       "from_id": "cap:the-agent-asks-who-it-is-talking-to",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:the-command-surface-answers-for-itself",
       "properties": {
         "weight_basis": "estimated"
       },
@@ -33660,6 +33668,42 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-command-surface-answers-for-itself",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:help-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-command-surface-answers-for-itself",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-command-surface-answers-for-itself",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skills"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-command-surface-answers-for-itself",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-skills"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-coupling-edge-gets-its-name-back",
       "properties": {
         "accepted_baseline": true,
@@ -40016,6 +40060,16 @@
         "weight_basis": "estimated"
       },
       "to_id": "dec:idea-do-ideas-form-a-graph-or-only-a-list"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-should-help-expand-a-single-command-with-examples",
+      "properties": {
+        "evidence": "Option ③ — drawing examples from real recorded use rather than writing them — is only available if session tool and skill use is logged, which that decision is open on.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:how-should-reflow2-log-its-own-usage"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -116311,6 +116365,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:check-command-surface",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:the-command-surface-answers-for-itself"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:check-health-skill",
       "properties": {
         "completeness": "complete"
@@ -118880,6 +118943,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:test-the-command-surface-answers-for-itself",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:the-command-surface-answers-for-itself"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:test-the-commonest-edge-has-a-typed-helper",
       "properties": {
         "completeness": "complete",
@@ -121016,6 +121088,12 @@
       "from_id": "cap:the-agent-asks-who-it-is-talking-to",
       "properties": {},
       "to_id": "req:the-agent-learns-who-it-is-talking-to"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:the-command-surface-answers-for-itself",
+      "properties": {},
+      "to_id": "req:the-surface-routes-to-what-the-tool-is-for-not-only-to-its-hygiene"
     },
     {
       "edge_type": "SATISFIES",
@@ -123762,6 +123840,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:the-command-surface-answers-for-itself",
+      "properties": {},
+      "to_id": "cap:the-command-surface-answers-for-itself"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:the-coupling-helper-exists-and-the-old-name-does-not",
       "properties": {},
       "to_id": "cap:a-coupling-has-a-typed-call-of-its-own"
@@ -124347,6 +124431,14 @@
         "action": "created"
       },
       "to_id": "art:changelog-test"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:check-command-surface",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:check-command-surface"
     },
     {
       "edge_type": "YIELDED",
@@ -125470,6 +125562,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:test-the-command-surface-answers-for-itself",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-the-command-surface-answers-for-itself"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:test-the-commonest-edge-has-a-typed-helper",
       "properties": {
         "action": "created"
@@ -126089,6 +126189,17 @@
         "name": "reflow2_check.py",
         "status": "realized",
         "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:check-command-surface",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:98520529c34049639c0ee453cd47c50f86fdad67c356e5cc271d73ef63513881",
+        "location": "tools/check_command_surface.py",
+        "name": "tools/check_command_surface.py",
+        "status": "realized"
       }
     },
     {
@@ -126916,7 +127027,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:be01560d2be43e4cfc583a519ea57a65404cae15aeabb2ba247d50b9de77e505",
+        "checksum": "sha256:776dac29b2d37ee2139dc434d8de8edc523315dac4b91f4140dad826d94222c3",
         "location": "getting-started/skills/help/SKILL.md",
         "name": "help/SKILL.md — explaining reflow2 to someone who has not been convinced yet",
         "status": "realized"
@@ -128137,7 +128248,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f08eba2687cf49255de6e9230b71e3f21ca76c6a3e775ab990c9e18aa007ae40",
+        "checksum": "sha256:b44b5f60b7a6116be266069c64c34251a14a2ced6426f3a9b636e4a9a9519542",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -128163,7 +128274,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:55de4e6bdf65e0ac328b5b8c452f8b2776479f7e12841420ab7b0ce52d4bbf55",
+        "checksum": "sha256:05ce690aea2d48f10e96d4e6d6463578bd9c223ae8e38a48eadf0c97a5872371",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/skills.rs",
         "name": "skills.rs",
@@ -128720,6 +128831,17 @@
       }
     },
     {
+      "node_id": "art:test-the-command-surface-answers-for-itself",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:aac33ba9263e6dac48454b686a8682a45a1e43a3affad5f5c9272ce6f51dcf0d",
+        "location": "crates/reflow2-mcp/tests/the_command_surface_answers_for_itself.rs",
+        "name": "the_command_surface_answers_for_itself.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:test-the-commonest-edge-has-a-typed-helper",
       "node_type": "Artifact",
       "properties": {
@@ -128874,7 +128996,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:56669d9a0f4e84be147072e7aafce96257442b74556011601e0ce5b175c0eeab",
+        "checksum": "sha256:6d4ab8be4e1f82dcc00f2038cdc6220b3ad53609eeabc91ae8cdf341f8fa5af1",
         "location": "crates/reflow2-mcp/src/tools/skills_tools.rs",
         "name": "skills_tools.rs",
         "status": "realized"
@@ -131627,6 +131749,16 @@
       "properties": {
         "description": "DELIVERED 2026-08-18 in the `where-am-i` skill (PR #246), then REVISED the same day (`epoch:the-ask-elicits-a-lens-not-a-name`). Source is `getting-started/skills/where-am-i/SKILL.md`, mirrored byte-identically to `.claude/` and `.grok/`, all three enforced by `skill_lint`. **This is the DELIVERY; `req:the-agent-learns-who-it-is-talking-to` states what is owed, and `dec:idea-a-user-carries-a-persona-that-shapes-every-reply` still asks whether a stored persona is the right long-term mechanism.**\n\nWHAT SHIPPED:\n1. **A \"Who you are talking to\" step** before the design is read back. It asks once, records the answer via `add_contributor`'s `description` **in the reader's own words**, and does NOT ask again when one is recorded. A guess from a login or git author is an OFFER and never a silent default. The answer shapes speech but never the record.\n2. **The hardcoded audience removed.** The instruction read *\"Write it as prose for the person who described this project to you\"* — false for exactly the newcomer this serves.\n3. **A register rule** under \"Keep it honest\", stating the vocabulary-swap distinction: reflow2's own words (gap, loop, detector) dropped; a systems engineer's words (requirement, interface, verification) KEPT, because softening them is condescension.\n\n⭐⭐ **THE REVISION, AND WHY THE FIRST VERSION WAS NOT GOOD ENOUGH.** It asked *\"who am I talking to, and what do you work in?\"* — and **\"Bob\" answers that correctly while telling the agent nothing.** Anthony caught it the day it shipped. The ask now:\n  · **requests a BACKGROUND, not an identity** — what they do day to day AND what they trained in;\n  · **carries an example of a useful answer inside the question** (*\"software engineer, but my degree is in biology\"*), because an example shapes a reply far more reliably than an instruction to answer fully;\n  · **explains that the two halves diverge and that the divergence is the point**, with three worked cases of how a background changes which explanation lands;\n  · **gives a thin answer ONE follow-up and then stops** — an opening courtesy, not an intake form;\n  · **keeps listening afterwards**, because people show their vocabulary by using it and a background written once goes stale like any other fact.\n\n🛑 **STATUS IS `realized`, NOT `verified`.** `skill_lint` proves the prose is present, mirrored and references only real tools. **It does not prove the behaviour happens.** The scoped gap pass classifies this correctly as `component_granularity_verification` — a real check one hop away at `cmp:skills`, shared by ten capabilities. The route to its own proof already exists in shape: `skill_lint` asserts *no served skill hardcodes a particular answer language*; the sibling — **no served skill hardcodes an AUDIENCE** — would have caught the defect in (2) and would keep it caught. Named, not built.",
         "name": "Orientation asks what lens the reader brings, once, and matches their vocabulary from then on",
+        "provenance": "authored",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "cap:the-command-surface-answers-for-itself",
+      "node_type": "Capability",
+      "properties": {
+        "description": "`list_skills` carries a `shortcut` per skill — stated by the server, never derived by the reader — because eight skills answer to a word that is not their name. Every skill has one, including the unaliased majority, so \"no alias\" never has to be told apart from \"nothing said\".\n\n`tools/check_command_surface.py` compares the surfaces that used to drift: three skill directories against each other, the command source against its copy, every skill against a command that reaches it, every command against a skill that exists, and every renamed command against `COMMAND_ALIASES`. Wired into CI.\n\n⚠️ USER-SCOPE COMMANDS ARE A NOTE, NEVER A FAILURE. They live outside the repository, so CI cannot see them; claiming to have checked something invisible to the gate would be worse than silence. That is the half of the original defect this does not close.",
+        "name": "Every skill states the word a person types, and the copies of the surface are compared",
         "provenance": "authored",
         "status": "realized"
       }
@@ -137829,6 +137961,18 @@
       }
     },
     {
+      "node_id": "chg:the-command-surface-answers-for-itself",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-09-01",
+        "name": "Every skill states the word a person types, and a gate compares the surfaces that used to drift",
+        "rationale": "Anthony, 2026-09-01, asking \"I thought there were 23 skills now?\" — a question about a count that turned out to be a question about five copies of one surface (`fact:the-command-surface-has-five-copies-and-nothing-reconciles-them`).\n\n⭐ THE PROMPT WAS THIS SESSION'S OWN FAILURE. Asked what commands exist, it answered with 11 of 28 — matching command names against skill names, and reporting the eight aliased ones plus nine others as reachable only through `get_skill`. An agent with full filesystem access under-reported the tool's surface by 60% TO THE PERSON WHO BUILT IT, and he caught it. That is the same shape musicjug reported the day before, arriving from the inside.\n\n⭐ AND HIS SENTENCE IS THE FINDING BEHIND THE HELP CHANGE: \"I developed this, but I don't even know how to use most of them (I usually let the agent use them).\" If the author cannot name his own commands, the surface is not discoverable by anybody, and a person who does not know a command exists will never type it.\n\n🛑 THE GATE WAS VERIFIED TO FAIL BEFORE IT WAS WIRED, on all three drift shapes and each one that has actually happened: an alias removed (caught, naming the 2026-08-19 failure), a user-scope copy deleted (reported as a NOTE — user scope is outside the repo and CI cannot see it, so claiming to check it would be worse than silence), and a command removed (caught twice — as source-vs-copy drift AND as a skill nobody can type). A check that only passes on a clean tree proves nothing.\n\n📌 THE CAUSE, NAMED: skills are SERVED from the binary so they cannot drift from the running version; commands are COPIED FILES so they can. One half was designed against this failure and the other was not, and the copied half is the one a user in another project actually meets. The gate does not remove that asymmetry — it makes the asymmetry noisy.\n\n⚠️ WHAT IS STILL NOT COVERED: user-scope drift can only ever be a note, so the four-command gap that started this can recur on any machine and CI will stay green. Fixing that properly means generating the user-scope copies rather than copying them, which nobody has decided.",
+        "subject": "system",
+        "summary": "FOUR CHANGES, from one question about a count.\n\n① THE ALIAS TABLE IS COMPLETE. `COMMAND_ALIASES` gained `what-is-this` -> `help`, `where-does-it-go` -> `onboarding`, and `next` (tool-backed). It was missing three of eleven, so `get_skill(\"what-is-this\")` refused with a bare list of names — the precise 2026-08-19 failure the table was written to fix. The original repair covered the aliases that existed then and nothing made the next one join.\n\n② `list_skills` NOW CARRIES A `shortcut` PER SKILL — what a PERSON types, stated by the server rather than derived by the reader. Every skill gets one, including the unaliased majority whose command is simply its own name: returning nothing for those would put the reader back to inferring, which is the defect.\n\n③ `tools/check_command_surface.py`, WIRED INTO CI. Compares the three skill directories, the command source against its copy, every skill against a command that reaches it, every command against a skill that exists, and every renamed command against the alias table.\n\n④ THE `help` SKILL NOW SHOWS THE WHOLE SURFACE, from `list_skills` rather than from a baked list that would drift again — grouped by when a person would reach for one, with the three tool-backed commands named separately because they never appear in that call.\n\nALSO: the four commands that existed only in this repo were copied to user scope, so the other projects on this machine have them."
+      }
+    },
+    {
       "node_id": "chg:the-coupling-edge-gets-its-name-back",
       "node_type": "ChangeEvent",
       "properties": {
@@ -142912,6 +143056,17 @@
         "name": "OPEN — reflow2 ships `find_tools` and an agent never used it because nothing said how it differs from the harness's own search. Fix the pitch, serve bundles, or take ARD's answer?",
         "no_relation_note": "Searched the near-match surface; the closest recorded material is the stranded-server family, which is named in the text as a DIFFERENT question rather than linked, because the bootstrap complaint and the find_tools pitch share only the session that reported them. No honest relation to draw for the find_tools half.",
         "rationale": "musicjug's ideas, relayed. The three-legs connection and the bootstrap-family pointer are this project's own context and were not available to the reporter.\n\nPRIOR ART ADDED 2026-09-01 at Anthony's pointer. It is recorded here rather than as a second idea because it answers the SAME open question — a node holding one question with new evidence, not two questions.\n\n⚠️ THE HONEST LIMIT ON BORROWING FROM ARD: it is four months old and at v0.91, so adopting its shapes couples a pre-1.0 tool to a pre-1.0 standard. READING its ADRs carries none of that risk and is what is proposed here; implementing an ARD-shaped interface, or publishing into ARD, is a different decision with a different cost and has not been taken.\n\n📌 AND THE COMPARISON IS NOT EXACT. ARD's endpoints search a collection of THIRD-PARTY resources whose descriptions the service does not control; `find_tools` searches 165 tools reflow2 itself authors and can describe however it likes. That asymmetry may make the facet answer cheaper here than it was for them, or may make it unnecessary — nobody has checked which.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-should-help-expand-a-single-command-with-examples",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony's idea, 2026-09-01, in his own words: \"if a user typed /help link-ideas, for instance, it would be cool if that showed them an expanded version of link-ideas and maybe some simple examples of how to use them.\"\n\n⭐ AND THE SENTENCE THAT CAME WITH IT IS THE MORE IMPORTANT HALF: **\"I developed this, but I don't even know how to use most of them (I usually let the agent use them).\"**\n\nThat is the author of reflow2 saying he is not a user of his own command surface. It reframes what `/help <command>` would be FOR: not onboarding a stranger, but giving a person who owns the design a way to use it DIRECTLY rather than only through an agent. Those are different products. The existing `help` skill is written for the first and would not serve the second — its own honest-limits section says it explains the TOOL and cannot explain a design.\n\nWHAT AN EXPANSION WOULD CARRY, unresolved:\n· the skill's own trigger — WHEN to reach for it — which is already the first sentence of every description\n· a worked example: what the user types, and what comes back\n· what it will NOT do, which the `help` skill already argues is the section a skeptical reader trusts most\n· whether it answers for the 3 TOOL-BACKED commands (`/debt`, `/decisions`, `/next`) too, which have no skill to expand\n\nWHERE THE CONTENT WOULD COME FROM, and this is the real question. Three candidates, none chosen:\n① THE SKILL BODY ITSELF, already served in full by `get_skill`. Free, always in step with the running version — and written for an AGENT to follow, not for a person to read. A user typing `/help link-ideas` would get a procedure aimed at somebody else.\n② A NEW `examples` SECTION IN EACH SKILL.md. Honest and versioned with the skill; 25 sections to write, and worked examples go stale in a way trigger prose does not.\n③ GENERATED FROM REAL USE — the graph already records sessions, and `dec:how-should-reflow2-log-its-own-usage` is open on exactly whether tool and skill use gets logged. An example drawn from a real session cannot be aspirational. Depends on a decision nobody has taken.\n\n⚠️ THE COUNTER-ARGUMENT, and it is Anthony's own standing one: this is reflow2 explaining reflow2, which is the self-absorption he has warned about twice. What rescues it is that the reported user is a REAL user who is blocked — he cannot use two thirds of his own surface — so the need is field evidence rather than polish. But the scope should stay the smallest thing that unblocks a person, not a documentation programme.\n\n📌 NOT THE SAME AS the settled part of the same conversation: `/help` with no argument listing all 28 commands is his instruction and is being built, not brainstormed. This node is only the per-command expansion.",
+        "kind": "exploratory",
+        "name": "OPEN — should `/help <command>` expand one command with worked examples, for a user who has only ever watched an agent use it?",
+        "rationale": "Anthony's idea, relayed in his words. The reframing — that the ask is about a user who only ever watched an agent, rather than about a newcomer — is his sentence, not an inference.\n\nThe three content sources and the self-absorption counter-argument are this session's, recorded beside the idea rather than used to decide it.",
         "status": "proposed"
       }
     },
@@ -149290,6 +149445,16 @@
       }
     },
     {
+      "node_id": "frag:art:check-command-surface",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered tools/check_command_surface.py"
+      }
+    },
+    {
       "node_id": "frag:art:check-health-skill",
       "node_type": "Fragment",
       "properties": {
@@ -150707,6 +150872,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered stale_seat.rs + test_stale_seat.py"
+      }
+    },
+    {
+      "node_id": "frag:art:test-the-command-surface-answers-for-itself",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered the_command_surface_answers_for_itself.rs"
       }
     },
     {
@@ -161082,6 +161257,18 @@
       }
     },
     {
+      "node_id": "fact:the-command-surface-has-five-copies-and-nothing-reconciles-them",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "REFLOW2'S OWN COMMAND SURFACE EXISTS IN FIVE PLACES AND NOTHING CHECKS THAT THEY AGREE. Measured 2026-09-01, prompted by Anthony asking why a count was 23.\n\n  getting-started/skills/     25  SOURCE — compiled into the binary\n  .claude/skills/            25  copy, for harness auto-matching\n  .grok/skills/              25  copy\n  getting-started/commands/  28  SOURCE for the slash commands\n  .claude/commands/          28  copy\n  ~/.claude/commands/        24  USER SCOPE — what every OTHER project sees\n  COMMAND_ALIASES            8   the skill<->command name map, in skills.rs\n\nWHAT WAS ALREADY IN STEP, checked rather than assumed: the three skill directories are byte-identical, and `getting-started/commands/` matches `.claude/commands/` exactly. The drift is not everywhere.\n\n🛑 WHERE IT HAD DRIFTED, both found by measuring rather than reported:\n① FOUR COMMANDS EXISTED ONLY IN THIS REPO — `/link-ideas`, `/root-cause`, `/what-is-this`, `/where-does-it-go`. User scope is what every other project on this machine sees, so in bhome, musicjug and ophyd-service those four did not exist. `/root-cause` is the sharpest loss: its whole argument is that it must be pulled AT THE MOMENT of the work, and it is missing from exactly the projects where work happens. (Copied across the same day; nothing prevents recurrence.)\n② THE ALIAS TABLE IS MISSING THREE OF ELEVEN. It carries `rules`, `req`, `gaps`, `where`, `kpp`, `health`, `decisions`, `debt` — and NOT `what-is-this` -> `help`, `where-does-it-go` -> `onboarding`, or `next` (tool-backed). So `get_skill(\"what-is-this\")` fails with a bare list of names, which is the precise failure reported on 2026-08-19 that caused the table to be written. The repair did not cover its own class.\n\n⭐ THE TWO HALVES HAVE OPPOSITE GUARANTEES, AND THAT IS THE CAUSE WORTH NAMING. Skills are SERVED from the binary (`dec:skills-served`) specifically so they cannot drift from the running version. Slash commands are COPIED FILES, so they can and did. One surface was designed against this failure and the other was not — and the copied half is the one a user in another project actually meets.\n\n📌 AND AN AGENT WITH FULL ACCESS UNDER-REPORTED IT BY 60%. Asked what commands exist, this session listed 11 of 28 — having matched command names against skill names and reported the 17 aliased ones as reachable only through `get_skill`. Anthony caught it. That is the same shape musicjug reported the day before (\"reflow2 ships find_tools and I never used it because nothing told me how it differs\"), arriving this time from the inside: the surface is not discoverable even to something reading the directory.\n\n⚠️ WHAT IS NOT ESTABLISHED: whether user-scope drift has ever cost anybody anything. Nobody has reported reaching for one of the four and finding it absent — the loss is inferred from what the commands are for, not observed.",
+        "subject_id": "cap:skills-served",
+        "valid_from": "2026-09-01"
+      }
+    },
+    {
       "node_id": "fact:the-commands-cover-nine-of-twenty-skills-and-the-checkout-cannot-feel-it",
       "node_type": "TemporalFact",
       "properties": {
@@ -164659,6 +164846,20 @@
       }
     },
     {
+      "node_id": "ver:the-command-surface-answers-for-itself",
+      "node_type": "Verification",
+      "properties": {
+        "description": "Two halves.\n\n`crates/reflow2-mcp/tests/the_command_surface_answers_for_itself.rs`, four cases: every skill carries a shortcut; the eight aliased ones carry the word a person actually types; an UNALIASED skill still states one rather than being left blank; and asking by the typed name says where it is served.\n\n`tools/check_command_surface.py`, run in CI and VERIFIED TO FAIL BEFORE IT WAS WIRED — on all three drift shapes, each of which has really happened: an alias removed, a user-scope copy deleted, a command removed. A gate that only passes on a clean tree is evidence of nothing.\n\n⚠️ ONE ASSERTION IN THIS FILE PASSED BEFORE THE FIX AND WAS WRONG. `asking_by_the_typed_name_says_where_it_is_served` originally checked that the refusal CONTAINED the served skill's name — which it did, because the refusal lists all 25 names and \"help\" is one of them. It now requires the hint sentence itself. A test that passes for the wrong reason is worse than a missing one, and this one was caught only by running it against unfixed code.",
+        "findings": "4 passed, 0 failed, in the full workspace run of 1936 tests (0 failed) on 2026-09-01. The surface gate reports OK — 25 skills, 28 commands, 8 aliases, 0 findings, 0 notes.\n\n⭐ OBSERVED FAILING FIRST, and the sequence is the evidence. Written against the unfixed code, 3 of 4 failed and 1 passed — and THAT PASS WAS THE BUG. The refusal test asserted only that the message contained the served skill's name, which it did by accident because the refusal lists all 25. Tightened to require the hint sentence, all 4 failed. Only then was the fix applied.\n\n🛑 AND THE GATE WAS PROVEN TO DISCRIMINATE SEPARATELY, by reintroducing each drift that has really happened and confirming the failure text: removing the `what-is-this` alias (caught, naming the 2026-08-19 failure by name), deleting a user-scope copy (reported as a NOTE, never a failure — user scope is outside the repo and CI cannot see it), and removing a command (caught TWICE, as source-vs-copy drift and as a skill nobody can type). The tree was restored and re-verified clean after each.",
+        "kind": "verification",
+        "last_run_at": "2026-09-01",
+        "level": "integration",
+        "method": "test",
+        "name": "Every skill states its shortcut, and the surface gate fails on each drift that has actually happened",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:the-coupling-helper-exists-and-the-old-name-does-not",
       "node_type": "Verification",
       "properties": {
@@ -165119,7 +165320,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:f37fed11315cd976ec988e8503cccbdbc8ce6fa9fc8643afabf292627f7e8eac",
+  "prev_content_hash": "sha256:16f43a16ed9a6d850ad7ac76e0485a07ed300ca5dc11fa4ce583069cc5c69ed2",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
