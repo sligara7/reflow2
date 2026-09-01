@@ -383,3 +383,268 @@ found two subsystems I had genuinely left floating.
   tool created itself.
 - Similarly `epoch:genesis` is flagged as an orphan — created by the `genesis` tool, never attached
   to anything by any documented step. Three of six findings are artifacts of reflow2's own scaffolding.
+
+---
+
+## Session 1, part 5 — retiring something, and a fifth duplicate-guard hit
+
+Anthony settled two decisions, and one of them knocked out a requirement accepted an hour
+earlier. So this was the first time anything got *removed* from the design.
+
+### Retirement is modelled properly, and it stopped me doing the tidy thing
+
+`OBSOLETES` is the mechanism, and three details in its description are each load-bearing:
+
+- **It is drawn from the accepted Decision that withdrew the thing, not from a successor.** The
+  reasoning given: a retirement edge normally presumes a successor at the source end, and something
+  discontinued with no replacement has nothing to put there — but it always has a decision behind
+  it. That is a real modelling insight, not a convention.
+- **Only an ACCEPTED Decision discontinues anything.** A `proposed` withdrawal has withdrawn
+  nothing. This forced me to create the ruling, get it accepted, *then* draw the edge — three steps
+  where deleting the node would have been one.
+- **The target's `status` deliberately does not move**, "because that field records what was BUILT,
+  and this edge records that it is gone."
+
+And it worked end to end without my managing it: after the retirement, gap count stayed at 3. The
+discontinued capability's `unrealized_capability` and `unmotivated_capability` findings fell silent
+on their own, and `set_requirement_status: dropped` stopped the requirement raising
+`unsatisfied_requirement`. **Nothing was deleted and nothing started nagging** — the rejected idea
+keeps its full case, the dropped requirement keeps the problem statement that killed it, and the
+withdrawn capability is still readable.
+
+The alternative I would have reached for unaided — `delete_node` — is precisely what the
+`orphan_node` repair note calls out: *"Deleting the node to clear this finding is the one repair
+that looks clean and loses the most."*
+
+### Fifth duplicate-guard hit, and the pattern is now unmistakable
+
+Creating the withdrawal Decision was refused as too close to **the ChangeEvent and the Requirement
+I had created moments earlier as part of the same operation.**
+
+That is now five refusals in one session, and this one is the most instructive: recording a change
+and recording the decision that authorises it is *the documented workflow*, and it necessarily
+produces two nodes describing the same event in similar words. The guard's own text concedes this
+("recording what shipped and recording what must stay true are different acts on the same work, and
+they are supposed to read alike") — but it still costs a round trip every time.
+
+**The five hits break into two shapes, both canonical reflow2 workflows:**
+1. Requirement + the Capability created to satisfy it (4 times) — the golden thread.
+2. ChangeEvent + the Decision authorising it (1 time) — the change loop.
+
+Neither is a duplicate. A guard that fires hardest on the two patterns the instructions most want
+you to follow is mis-tuned, not wrong. Suppressing it when the two nodes are joined in the same
+batch by `SATISFIES` or `CHANGED`/`OBSOLETES` would keep the real check and remove every false
+positive seen here.
+
+### Change propagation, second run
+
+Settling two decisions at once returned 46 impacted nodes across 4 distance bands, with an 8-node
+direct ring — and the summary form (`counts_by_distance` + `direct_ring` + `risk_crossings`) was
+the right default. I used `full: true` on the first propagation and did not need it on the second;
+the risk-crossing list alone told me which of the 46 mattered.
+
+---
+
+## Session 1, part 6 — a good refusal, and a note on bulk-write atomicity
+
+Two more brainstormed ideas (green materials; commodity materials).
+
+- **`related_to` rejected an unknown field loudly**: I passed `basis` on a `CAUSES` relation —
+  legitimate on the edge type itself, but not exposed through `related_to` — and got
+  *"unknown field `basis`, expected one of `relation`, `other_type`, `other_id`, `evidence`,
+  `incoming`"*. **This is the behaviour the malformed-markup case should have had**: refused, named,
+  and told me the legal set. Same session, two extra fields in a prose payload, two opposite
+  outcomes — strict deserialisation caught one, and free-text fields swallowed the other. The
+  inconsistency is the finding, and it argues the fix belongs at the prose-field boundary.
+- **`create_edges` all-or-nothing behaved exactly as advertised** when the failed decision meant two
+  of four edges referenced a node that did not exist: *"nothing was written — 2 of the items failed
+  and a bulk write is all or nothing. Every failure is listed so you can fix them together."* No
+  partial graph, both failures named at once. Worth noting because the alternative — writing the two
+  valid edges and reporting two errors — would have left the design half-linked in a way that reads
+  as complete.
+- **Cost of the strictness, and it is real**: the refusal meant re-sending a ~4 KB decision body
+  verbatim, because nothing was created. Field-level validation before the write, or a dry-run,
+  would make long-prose nodes cheaper to get right. This is the same underlying gap as the
+  append-vs-replace friction noted earlier: reflow2 has no way to say "change this one thing" on a
+  large node.
+- **`unreviewed_ideas` staying silent was the confirmation** that both decisions' relations landed —
+  a detector's *absence* used as a positive check, which only works because the detector is known to
+  fire on exactly that condition. Worth recording as an argument for detectors having sharp,
+  predictable trigger conditions rather than fuzzy ones.
+
+### Promotion, part 2 — and Constraint finally earning its documentation
+
+Three ideas promoted. All three landed as **Constraints, not Requirements**, and that routing was
+non-obvious enough to be worth recording.
+
+`capture-intent`'s table says a prohibition with no number in it — *"we must never…", "it is not
+allowed to…"* — is a **Constraint, NOT a Requirement**, and warns that reading the type as
+budgets-only once cost a design eleven constitutional prohibitions left as Requirements that
+"report unsatisfied forever." That warning did real work here. My instinct was Requirement for all
+three; on the table's advice they became:
+
+- "no proprietary or single-vendor parts" — a prohibition
+- "no high-emission materials in the sealed envelope" — a prohibition
+- "prefer the lower-impact material, all else equal" — a tiebreaker rule, also not a goal
+
+Had they been Requirements, all three would have raised `unsatisfied_requirement` permanently,
+because nothing *satisfies* a prohibition — you either comply or you don't. Gap count stayed at 3
+after all three landed, which is the confirmation the routing was right.
+
+**The measured-failure framing is what made the advice usable.** "Constraint is not only for
+budgets" as a bare statement would have washed over me. "Eleven prohibitions in a real design now
+report unsatisfied forever, and it never produced an error — it produced a confident wrong
+conclusion" is a specific enough consequence to change behaviour.
+
+**Sixth duplicate-guard hit**, and it completes the taxonomy: the settled Decision was flagged
+against the open idea Decision it resolves. That is a *third* canonical workflow shape, after
+requirement-plus-capability and change-plus-decision — an open question and its answer are supposed
+to coexist, and `EVOLVES_INTO` between them is precisely how the brainstorm skill says to record a
+promotion. **All six false positives are pairs the tool's own workflows create by design.**
+
+---
+
+## Session 1, part 7 — a scope narrowing, and edges as living records
+
+Anthony narrowed the climate range from desert-to-arctic to lower-48 city climates, and chose to
+buy the container shell rather than fabricate one.
+
+### The best single moment of the session
+
+`propagate_change` on the narrowing returned 53 impacted nodes with an 8-node direct ring — and
+**five of those eight were `RISKS` edges pointing at the changed requirement.** Narrowing the
+climate range did not merely alter one node; it weakened or retired five separately-recorded
+objections at once, and the propagation showed me exactly which five without my remembering any of
+them.
+
+Those five objections were written across three earlier conversations, hours apart, each as an
+aside during a brainstorm. **No human and no unaided model would have reliably recalled that
+"commodity materials are specified for ordinary climates" was an objection now answered by a change
+to the climate.** That is the design brain doing the thing it exists for.
+
+### Edge properties are a record that goes stale, and nothing says so
+
+This is the most substantive new finding.
+
+Those five `RISKS` edges carried `evidence` text written when the range was desert-to-arctic —
+"in the arctic, a tank of water at fish temperature is a large continuous heat load", and so on.
+After the narrowing, that evidence is **wrong**, and a reader following the edge would be misled by
+prose that reads as current.
+
+Nothing in reflow2 flags this. The node-level story is excellent — `add_*` warns loudly on every
+overwrite, `reconcile_artifacts` catches drift between design and files, `change_axis_unstated`
+catches an unstated axis. But **edge `evidence` and `note` fields are prose written at a moment in
+time, they are exactly as perishable as node text, and no detector reads them.** I updated four of
+the five by hand only because the propagation happened to list them and I happened to remember what
+they said.
+
+Two suggestions, in order of cheapness:
+1. **When `propagate_change`'s direct ring includes an edge whose `evidence` mentions terms that no
+   longer appear in the changed node, say so.** Even a crude string check would have caught
+   "arctic" surviving in four edges after "arctic" left the requirement.
+2. More generally, a `stale_edge_evidence` detector, or simply a `written_at` stamp on edge prose so
+   a reader can see the evidence predates the node it describes.
+
+**Re-writing an edge with `create_edges` upserts its properties cleanly**, which made the repair
+easy once identified — the problem is purely one of noticing.
+
+### Eighth duplicate-guard hit
+
+Same change-event-versus-decision shape as before. The count is now eight, across three canonical
+workflow pairs. I have stopped treating each as noteworthy and started passing `distinct_from`
+pre-emptively, which is itself the concerning outcome: **a guard that is routinely pre-empted has
+stopped being a check.**
+
+---
+
+## Session 1, part 8 — eleven decisions at once, and a budget that says no
+
+Anthony accepted every recommendation from a walkthrough of the open items. Roughly 60 writes:
+7 new decisions, 2 new requirements, 3 new constraints, 1 new capability, 8 revisions, 40 edges.
+
+### `budget_report` is the sharpest tool in the set
+
+The floor-area constraint was set up as a real numeric budget — `quantity: floor_area_sqft`,
+`limit: 250`, `direction: maximum` — with each capability's footprint attached as a `contribution`
+on its `CONSTRAINS` edge. The report came back:
+
+```
+total: 297, limit: 250, verdict: "exceeded", unstated: [], basis_coverage: {estimated: 10}
+```
+
+**A one-word verdict on whether the design physically fits.** Before this, "it's going to be tight"
+was a sentence in a conversation that would have evaporated. Now it is a computed fact attached to
+the ten subsystems that cause it, each with a note saying what its number covers, and it will
+re-compute every time any of them changes.
+
+Three details that make it trustworthy rather than merely tidy:
+- **`unstated: []`** — it lists contributors with no number rather than treating them as zero, and
+  it says the verdict is `incomplete` when any are missing. An empty list here is what licenses
+  reading `297` as a real total.
+- **`basis_coverage: {estimated: 10}`** — every number is flagged as my estimate, not measurement.
+  Nobody reading this later can mistake it for survey data.
+- **`path_note`** — it volunteered that the contributors form no dependency chain, so the simple
+  total is the only meaningful rollup. It explained why it did not compute the other thing it can
+  compute.
+
+This is the first tool in the session that produced a *conclusion Anthony has to act on* rather
+than a record of a conclusion he reached. Worth noting how cheap it was: ten edges with a number on
+each.
+
+### The design is now large enough that the loop is doing real work
+
+Two questions asked hours ago were still open and `open_questions` had them verbatim, with the
+exact wording Anthony saw — so answering them was a lookup rather than a reconstruction. Both
+closed cleanly with `answer_question`.
+
+### One reversal, handled the way the tooling wanted
+
+The insect species recommendation reversed a decision accepted earlier the same day. Recording it
+as a `ChangeEvent` first, with the reasoning chain that had gone wrong, then a new accepted
+`Decision`, then revisions to the four nodes that carried the old assumption — that sequence is
+what the AGENTS.md loop prescribes and it worked without friction. The design now contains both the
+reasoning that led to black soldier fly and the reasoning that overturned it, which is the thing a
+conversation would have lost.
+
+---
+
+## Session 1, part 9 — `register_alternative`, and taking back an earlier complaint
+
+Three permitting options recorded as real alternatives under the open decision, plus an
+egress requirement.
+
+### I was wrong about `register_alternative`, and the reason is worth recording
+
+Earlier I complained that `register_alternative` demands a `location` naming a per-branch design
+export, and I declined to use it for the composting-toilet-versus-digester fork on the grounds that
+neither branch had been designed and inventing a path would put a file location in the graph that
+resolves for nobody.
+
+That complaint stands as written but the conclusion was too quick. **The correct move was to
+actually write the branch documents.** Three short memos — one per permitting option, a page each —
+took a single Bash call, and then `register_alternative` worked exactly as designed: three
+Artifacts, each `GOVERNED_BY` the Decision, each `CONTRADICTS` its siblings, all pointing at files
+that genuinely exist and that Anthony can read.
+
+The requirement I called friction is doing real work: **it refuses to let a "fork" exist as three
+bullet points in a prose field.** If the options are not worth writing down separately, they are
+not yet alternatives — they are a sentence. Forcing the document into existence is the point, and
+the design gained its first three artifacts as a side effect.
+
+**Revised suggestion, much narrower than the original:** say this in the tool description. "If no
+branch document exists yet, write one — that is the work this call is asking for" would have got me
+there two hours earlier. The current wording reads as a schema requirement rather than as a
+deliberate forcing function.
+
+### The tension the design surfaced on its own
+
+Recording the egress requirement produced two `RISKS` edges I did not go looking for. An escape
+opening is a large cut in the corrugated wall requiring welded reinforcement — which collides with
+the minimise-cuts constraint AND with the buy-the-shell-build-the-inside decision, whose entire
+purpose was to keep Anthony off welding. **It is the one place the bought-shell line has to be
+crossed**, and neither Anthony nor I had noticed until the requirement was written down next to
+the constraint.
+
+Worth naming what did the work here: nothing detected this. Writing the requirement in the same
+vocabulary as the constraint, and then asking what it touches, is what surfaced it. The graph made
+the question askable; it did not answer it.

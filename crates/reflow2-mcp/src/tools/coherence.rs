@@ -520,7 +520,13 @@ impl ReflowService {
     #[tool(
         description = "Blast radius of a recorded ChangeEvent along the golden thread. Returns \
                        a summary (counts by distance, the distance-1 ring, risk crossings); \
-                       pass full=true for every impacted node with its hop chain.",
+                       pass full=true for every impacted node with its hop chain. ALSO READS THE \
+                       EDGES' OWN PROSE: `stale_edge_evidence` names edges whose `evidence` or \
+                       `note` still uses language the changed node has DROPPED — the case where \
+                       a reader following an edge is misled by text that reads as current. It is \
+                       lexical, never a refusal, and it says so; a node with no snapshot gets a \
+                       `coverage_note` saying the check was SILENT about its edges rather than \
+                       clean on them.",
         annotations(read_only_hint = true)
     )]
     pub async fn propagate_change(
@@ -534,11 +540,47 @@ impl ReflowService {
         let radius = g
             .propagate_change(&req.change_event_id, opts)
             .map_err(dyno_err)?;
-        if req.full.unwrap_or(false) {
-            ok_json(radius)
-        } else {
-            ok_json(radius.summarize())
+
+        // ⭐ THE EDGE PROSE IS READ HERE BECAUSE THIS IS WHERE THE READER
+        // ALREADY IS. bhome caught four stale RISKS edges only because the
+        // propagation happened to list them and the agent happened to remember
+        // what they said — so the check is attached to the call that was
+        // already going to surface those edges, rather than added as a sweep
+        // nobody would run.
+        //
+        // Seeds are the nodes the ChangeEvent CHANGED, which are exactly the
+        // nodes whose wording may have moved out from under an edge.
+        let mut edge_prose = serde_json::Map::new();
+        for seed in &radius.seeds {
+            match g.stale_edge_evidence(seed) {
+                Ok(report) if report.findings.is_empty() && report.coverage_note.is_none() => {}
+                Ok(report) => {
+                    edge_prose.insert(
+                        seed.clone(),
+                        serde_json::to_value(report).unwrap_or(serde_json::Value::Null),
+                    );
+                }
+                // A failed read here must not cost the caller the propagation
+                // they asked for; it is an advisory riding along.
+                Err(_) => {}
+            }
         }
+
+        let mut out = if req.full.unwrap_or(false) {
+            serde_json::to_value(&radius)
+        } else {
+            serde_json::to_value(radius.summarize())
+        }
+        .unwrap_or(serde_json::Value::Null);
+        if !edge_prose.is_empty()
+            && let Some(obj) = out.as_object_mut()
+        {
+            obj.insert(
+                "stale_edge_evidence".into(),
+                serde_json::Value::Object(edge_prose),
+            );
+        }
+        ok_json(out)
     }
 
     #[tool(

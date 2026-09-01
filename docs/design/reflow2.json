@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:176906c026a83f859f2b0d07f803eb6d95af53c2c2534b1b06ff8b406c23de13",
+  "content_hash": "sha256:77e899bc88f4a740484f3548a5cd1f565f850314bdd6a4206d1b782ea231754a",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -1826,6 +1826,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:drift"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:edge-prose-is-read-when-the-node-moves",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:propagate"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -12586,12 +12594,30 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-should-a-cycle-be-refused-at-edge-creation-the-way-a-duplicate-is",
+      "properties": {
+        "acted_at": "2026-08-31",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-should-a-finding-be-required-to-bound-its-own-claim",
       "properties": {
         "acted_at": "2026-08-27",
         "role": "author"
       },
       "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-should-a-large-node-be-changeable-one-field-at-a-time",
+      "properties": {
+        "acted_at": "2026-08-31",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -12640,6 +12666,42 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-should-detect-gaps-say-how-long-the-road-is",
+      "properties": {
+        "acted_at": "2026-08-31",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-should-edge-prose-be-governed-the-way-node-prose-is",
+      "properties": {
+        "acted_at": "2026-08-31",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-should-edge-prose-be-governed-the-way-node-prose-is",
+      "properties": {
+        "acted_at": "2026-08-31",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-should-find-tools-be-discoverable-and-serve-workflow-bundles",
+      "properties": {
+        "acted_at": "2026-08-31",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-should-optimize-be-a-served-skill-any-project-can-run",
       "properties": {
         "acted_at": "2026-08-21",
@@ -12685,6 +12747,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-should-the-agents-own-word-get-a-first-class-record",
+      "properties": {
+        "acted_at": "2026-08-31",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-should-the-checksum-accept-have-an-as-built-aligned-disposition",
       "properties": {
         "acted_at": "2026-08-14",
@@ -12709,6 +12780,15 @@
         "role": "author"
       },
       "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-should-there-be-a-typed-depends-on-and-the-existing-name-freed",
+      "properties": {
+        "acted_at": "2026-08-31",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -12865,6 +12945,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-the-instruction-layer-runs-ahead-of-the-typed-tool-layer",
+      "properties": {
+        "acted_at": "2026-08-31",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-the-loop-nudge-exists-for-one-harness-only",
       "properties": {
         "acted_at": "2026-08-14",
@@ -12889,6 +12978,15 @@
         "role": "author"
       },
       "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-the-near-match-repair-can-now-be-reopened-because-the-count-exists",
+      "properties": {
+        "acted_at": "2026-08-31",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -15830,6 +15928,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:an-edges-prose-does-not-outlive-the-node-it-points-at",
+      "properties": {
+        "acted_at": "2026-08-31",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:an-unavailable-loop-trigger-is-named-as-unavailable",
       "properties": {
         "acted_at": "2026-08-14",
@@ -16873,6 +16980,46 @@
     },
     {
       "edge_type": "CAUSES",
+      "from_id": "dec:idea-the-instruction-layer-runs-ahead-of-the-typed-tool-layer",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "Instance ① of the candidate pattern: the gap text names both moves and only acknowledge_gap has a tool.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:a-gap-can-be-answered-in-prose-but-only-closed-with-a-signature"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "dec:idea-the-instruction-layer-runs-ahead-of-the-typed-tool-layer",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "Instance ③ : node prose is governed by warnings, reconcilers and detectors; edge prose has none of the three, so the repair is by hand and by memory.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:edge-prose-is-as-perishable-as-node-prose-and-nothing-reads-it"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "dec:idea-the-instruction-layer-runs-ahead-of-the-typed-tool-layer",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "Instance ② : the loop asks for component dependencies and the typed surface omits the edge, so the agent falls back to raw create_edge.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:the-commonest-structural-edge-has-no-typed-helper-and-its-name-is-taken"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "dec:idea-the-instruction-layer-runs-ahead-of-the-typed-tool-layer",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "Instance ④ : the message prescribes an order the caller cannot reliably honour, from the one place that could have preserved the value instead.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:the-revision-warning-holds-the-only-copy-of-what-it-warns-was-lost"
+    },
+    {
+      "edge_type": "CAUSES",
       "from_id": "dec:idea-what-does-se-doctrine-actually-prescribe-upfront-and-what-of-it-does-reflow2-have",
       "properties": {
         "basis": "correlational",
@@ -17110,6 +17257,16 @@
     },
     {
       "edge_type": "CAUSES",
+      "from_id": "fact:edge-prose-is-as-perishable-as-node-prose-and-nothing-reads-it",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The measured defect with its five-edge instance is the evidence; this is the open question about which of the three repairs to take.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "dec:idea-should-edge-prose-be-governed-the-way-node-prose-is"
+    },
+    {
+      "edge_type": "CAUSES",
       "from_id": "fact:eight-more-instances-and-one-is-misrouting-rather-than-a-missing-leg",
       "properties": {
         "basis": "correlational",
@@ -17127,6 +17284,16 @@
         "validation_status": "unvalidated"
       },
       "to_id": "req:a-design-can-be-asked-what-fraction-of-a-kind-carries-a-relation"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:reflow2-has-a-vocabulary-for-the-users-word-and-none-for-the-agents",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The measured cause raises this design question; the fact is the evidence and this is the open question about what to do with it.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "dec:idea-should-the-agents-own-word-get-a-first-class-record"
     },
     {
       "edge_type": "CAUSES",
@@ -17160,6 +17327,26 @@
     },
     {
       "edge_type": "CAUSES",
+      "from_id": "fact:the-commonest-structural-edge-has-no-typed-helper-and-its-name-is-taken",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The measured defect is the evidence; this is the open question about the two repairs it suggests.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "dec:idea-should-there-be-a-typed-depends-on-and-the-existing-name-freed"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:the-gap-list-refills-with-no-visible-frontier-and-it-reads-as-a-treadmill",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The measured observation is the symptom; this is the open question about whether and how to answer it.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "dec:idea-should-detect-gaps-say-how-long-the-road-is"
+    },
+    {
+      "edge_type": "CAUSES",
       "from_id": "fact:the-level-ladder-has-a-hard-floor-at-component-and-no-assembly-rung",
       "properties": {
         "basis": "correlational",
@@ -17187,6 +17374,16 @@
         "validation_status": "unvalidated"
       },
       "to_id": "fact:the-fork-ask-is-a-deferred-branch-whose-reopening-condition-is-now-met"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:the-revision-warning-holds-the-only-copy-of-what-it-warns-was-lost",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The measured defect is the evidence for the snapshot half of this question; the dry-run and partial-update halves come from bhome's cost complaint recorded in the same fact.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "dec:idea-should-a-large-node-be-changeable-one-field-at-a-time"
     },
     {
       "edge_type": "CAUSES",
@@ -24536,6 +24733,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:baseline-084d3a6e8fc12e51",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:musicjug-genesis-feedback-2026-08-31"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:baseline-08ecaafebf6b9b59",
       "properties": {
         "accepted_baseline": true,
@@ -28422,6 +28628,15 @@
         "action": "modified"
       },
       "to_id": "dec:idea-dynograph-crates-independent-in-code-coupled-in-release"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:edge-prose-is-read-when-the-node-under-it-moves",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
     },
     {
       "edge_type": "CHANGED",
@@ -34725,6 +34940,33 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-prescribed-layer-pairs-stop-refusing",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-a-near-match-of-another-type-is-named-as-a-layer"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-prescribed-layer-pairs-stop-refusing",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-search-first"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-prescribed-layer-pairs-stop-refusing",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-readme-says-what-it-is-before-what-it-believes",
       "properties": {
         "accepted_baseline": true,
@@ -35579,6 +35821,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:two-independent-genesis-reports-arrive-the-same-day",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:bhome-genesis-feedback-2026-08-31"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:two-more-modules-behind-the-read-contract",
       "properties": {
         "accepted_baseline": true,
@@ -36143,16 +36394,6 @@
         "action": "modified"
       },
       "to_id": "cmp:byte-store"
-    },
-    {
-      "edge_type": "CLAIMS",
-      "from_id": "who:claude-code",
-      "properties": {
-        "depth": 2,
-        "note": "Closing the parallel-batch ordering class at the root: (1) reproduce the race with two overlapping calls at one server — the measurement fact:the-decision-race-is-caller-ordering-not-read-after-write and fact:the-parallel-batch-class-recurred both say is owed and nobody has run; (2) write the tool-description fix named 2026-08-09 and never built; (3) guard the write-then-export hazard, which is the shape that can commit a wrong export.",
-        "seat": "asligar-bitecool:session-01b82ee4"
-      },
-      "to_id": "cap:mcp-surface"
     },
     {
       "edge_type": "CLAIMS",
@@ -41857,6 +42098,14 @@
     },
     {
       "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-the-instruction-layer-runs-ahead-of-the-typed-tool-layer",
+      "properties": {
+        "evidence": "The road this idea actually took. Rejected 2026-09-01 as a grouping of four, but the measurement it demanded of itself is what produced this narrower cause — which explains two of its four instances precisely and claims nothing about the other two. Drawn rather than written into the decision's prose, because the promotion edge records the outcome structurally and leaves the original reasoning intact (bhome, 2026-08-31: EVOLVES_INTO is the right edge for this and no instruction pointed at it)."
+      },
+      "to_id": "fact:reflow2-has-a-vocabulary-for-the-users-word-and-none-for-the-agents"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
       "from_id": "dec:idea-the-read-seam-exists-and-the-question-is-migration-not-architecture",
       "properties": {
         "evidence": "The older thought grown up, minutes later. That node found GraphRead already built and framed the work as migration; this one supplies the architectural name for what went wrong (behaviour smearing in a graph-centric architecture), scores three candidate patterns against decisions already taken, and adds a fourth remedy — the crate split — that the migration framing did not surface."
@@ -42007,6 +42256,15 @@
         "note": "GOVERNED_BY and deliberately NOT REALIZES. This script delivers no product capability — it ran once, on 2026-08-07, to execute dec:backlog-is-retired, and asserting that it realizes something would be the false claim this project treats as a defect. It is committed rather than discarded because its CLASSIFY table is the judgement half of the migration: which of the four types each retired row became, and which node it was attached to. That mapping exists nowhere else, and without it 'why is BL-140 a defect against cmp:detect' is unanswerable. The prose it moved came from the row verbatim; only the routing was decided, and this file is where that decision is legible."
       },
       "to_id": "dec:backlog-is-retired"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "art:musicjug-genesis-feedback-2026-08-31",
+      "properties": {
+        "note": "A new member of the genre this ruling was written over: an agent-authored field report from the 2026-08-31 musicjug genesis session, frozen as of that date. It implements nothing, specifies nothing and describes nothing — it records what one session saw — so none of REALIZES / DOCUMENTS / SPECIFIES / PRODUCES / SATISFIES is true of it, and DOCUMENTS in particular would invert the direction of obligation by making every future design change read as staling a report that is simply history.",
+        "ruling": "parks"
+      },
+      "to_id": "dec:a-dated-field-report-is-registered-and-parked"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -116407,6 +116665,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:edge-prose",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:edge-prose-is-read-when-the-node-moves"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:enforced-rule-detector-test",
       "properties": {
         "completeness": "complete"
@@ -118223,6 +118490,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:test-a-prescribed-layer-pair-no-longer-refuses",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:search-first-at-the-tool"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:test-a-session-with-no-seed-can-find-one",
       "properties": {
         "completeness": "complete",
@@ -118261,6 +118537,15 @@
         "completeness": "complete"
       },
       "to_id": "cap:detect"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:test-edge-prose-is-governed-like-node-prose",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:edge-prose-is-read-when-the-node-moves"
     },
     {
       "edge_type": "REALIZES",
@@ -119048,6 +119333,14 @@
     },
     {
       "edge_type": "RISKS",
+      "from_id": "dec:idea-should-a-cycle-be-refused-at-edge-creation-the-way-a-duplicate-is",
+      "properties": {
+        "evidence": "This idea proposes a second inline refuse-or-warn guard modelled on the duplicate guard, which that measurement shows firing 15 times with zero true positives; building the second without diagnosing the first would repeat the failure."
+      },
+      "to_id": "fact:twelve-near-match-refusals-across-two-designs-and-not-one-was-a-duplicate"
+    },
+    {
+      "edge_type": "RISKS",
       "from_id": "fact:a-hydrated-seat-keeps-every-confirmation-date-and-loses-only-its-sync-state",
       "properties": {
         "confidence": 0.9,
@@ -119726,6 +120019,12 @@
       "from_id": "cap:drift-direction",
       "properties": {},
       "to_id": "req:drift-has-direction"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:edge-prose-is-read-when-the-node-moves",
+      "properties": {},
+      "to_id": "req:an-edges-prose-does-not-outlive-the-node-it-points-at"
     },
     {
       "edge_type": "SATISFIES",
@@ -122121,6 +122420,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:a-prescribed-layer-pair-is-reported-not-refused",
+      "properties": {},
+      "to_id": "cap:search-first-at-the-tool"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:a-proposal-describes-its-own-sweep",
       "properties": {},
       "to_id": "req:a-report-says-what-it-swept-and-whether-its-checks-ran"
@@ -122574,6 +122879,12 @@
       "from_id": "ver:drift-direction",
       "properties": {},
       "to_id": "cap:drift-direction"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:edge-prose-is-governed-like-node-prose",
+      "properties": {},
+      "to_id": "cap:edge-prose-is-read-when-the-node-moves"
     },
     {
       "edge_type": "VERIFIES",
@@ -124013,6 +124324,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:edge-prose",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:edge-prose"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:enforced-rule-detector-test",
       "properties": {
         "action": "created"
@@ -124805,6 +125124,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:test-a-prescribed-layer-pair-no-longer-refuses",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-a-prescribed-layer-pair-no-longer-refuses"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:test-a-session-with-no-seed-can-find-one",
       "properties": {
         "action": "created"
@@ -124842,6 +125169,14 @@
         "action": "created"
       },
       "to_id": "art:test-discontinued-is-read"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:test-edge-prose-is-governed-like-node-prose",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-edge-prose-is-governed-like-node-prose"
     },
     {
       "edge_type": "YIELDED",
@@ -125380,7 +125715,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:e214ceb8ea94e3cd0403b51b4798f40cec83ae0a7c3f3422c3b7d0f1c4362b12",
+        "checksum": "sha256:b11bb9070a9e3e15f099bdd5f1ee6cd04a50ac4b8afe184dca96177e6903478f",
         "location": "docs/feedback/2026-08-31-bhome-genesis-feedback.md",
         "name": "bhome genesis feedback, 2026-08-31",
         "status": "realized"
@@ -126036,6 +126371,17 @@
         "name": "dto.rs",
         "status": "realized",
         "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:edge-prose",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:419d73ebc5b87068e523eec0ac898c918f04a544cd367fdb5a344067cb173186",
+        "location": "crates/reflow2-core/src/edge_prose.rs",
+        "name": "crates/reflow2-core/src/edge_prose.rs",
+        "status": "realized"
       }
     },
     {
@@ -126717,6 +127063,17 @@
         "checksum": "sha256:d096230f4c9b28747c2ec676526332ecf66aebe7487bb7bbc25faea165955e67",
         "location": "crates/reflow2-core/tests/move_component.rs",
         "name": "move_component.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:musicjug-genesis-feedback-2026-08-31",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:40e11439739f8513d47c98fd0ce290ad4b127ea191defb159a352b1881082bb3",
+        "location": "docs/feedback/2026-08-31-musicjug-genesis-feedback.md",
+        "name": "musicjug genesis feedback, 2026-08-31",
         "status": "realized"
       }
     },
@@ -127796,9 +128153,20 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b3189511c8931abf50b002ee8105fe8162ea441499ceeb9b3f350d7961d167de",
+        "checksum": "sha256:52b01de8abacb450d7d1e339dfe2f7744dc733c62b8fc0a43bfaefd8019ab03e",
         "location": "crates/reflow2-mcp/tests/a_near_match_of_another_type_is_named_as_a_layer.rs",
         "name": "a_near_match_of_another_type_is_named_as_a_layer.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:test-a-prescribed-layer-pair-no-longer-refuses",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:5edb3b20b6d030dfe73c12a99d561e0316456bfb3da485696d4b06300768f990",
+        "location": "crates/reflow2-mcp/tests/a_prescribed_layer_pair_no_longer_refuses.rs",
+        "name": "a_prescribed_layer_pair_no_longer_refuses.rs",
         "status": "realized"
       }
     },
@@ -127874,6 +128242,17 @@
         "name": "discontinued_is_read.rs — eight cases: the defect, the authority check, the cascade, the visible count, two counterweights, and the two that pin the VOCABULARY saying where abandonment lives",
         "status": "realized",
         "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:test-edge-prose-is-governed-like-node-prose",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:dad53a2a19acf6c530fde3bae50cd36202dc47f57d1148470a035e156e663117",
+        "location": "crates/reflow2-core/tests/edge_prose_is_governed_like_node_prose.rs",
+        "name": "edge_prose_is_governed_like_node_prose.rs",
+        "status": "realized"
       }
     },
     {
@@ -128025,7 +128404,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:59b8b8d85f3560a487b3ee0598c862dde9ce2d043fbfac693ba4b5610dca10a8",
+        "checksum": "sha256:84a404662909195a97f5ea03af3b507a65df768b133f3cbc6a46ae20fb31edf9",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/tests/search_first_fires_at_the_tool.rs",
         "name": "search_first_fires_at_the_tool.rs — six cases: the refusal, the rollback, both deliberate routes, the no-false-refusal counterweight, and the cross-type catch",
@@ -128166,7 +128545,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:6b49c7c653f0f7be9b1864a51dfb978d8791a89904065e6646d7e5949d740859",
+        "checksum": "sha256:135f97f3dc07a9ade1ce00720326f590583f183349a0b796798388c4e101aa1d",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
         "name": "crates/reflow2-mcp/src/tools/capture.rs",
@@ -128192,7 +128571,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:4b8e497a000950d4c6156e83fce45759688aa9487a80eb63107d57e892adfd5c",
+        "checksum": "sha256:a98284a4a5d33196b4e82d399d7881fe46561be6bb9886eb40139311bd50ffdd",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
@@ -129757,6 +130136,16 @@
         "provenance": "authored",
         "status": "verified",
         "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:edge-prose-is-read-when-the-node-moves",
+      "node_type": "Capability",
+      "properties": {
+        "description": "`stale_edge_evidence(node_id)` reads the `evidence` and `note` on every edge touching a node and names those still using language the node has DROPPED — comparing against the node's most recent snapshot, so a term that was never about the node is not confused with one the node has since lost. Surfaced by `propagate_change`, keyed by seed, because that is the call already putting those edges in front of a reader.\n\nReports `edges_with_prose` so an empty result over zero examined edges is distinguishable from one over twenty, and a `coverage_note` when there was no prior state — silent about the edges rather than clean on them. Warning only; it never refuses a write, and it carries its own caveat that it is lexical rather than semantic.",
+        "name": "An edge whose prose outlived the node it points at is named, with the terms that moved",
+        "provenance": "authored",
+        "status": "realized"
       }
     },
     {
@@ -134262,6 +134651,16 @@
       }
     },
     {
+      "node_id": "chg:baseline-084d3a6e8fc12e51",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-08-31",
+        "name": "First baseline. Copied byte-identical from /home/ajs7/project/musicjug/feedback.md and verified with diff before registering.",
+        "subject": "record"
+      }
+    },
+    {
       "node_id": "chg:baseline-08ecaafebf6b9b59",
       "node_type": "ChangeEvent",
       "properties": {
@@ -135785,6 +136184,18 @@
         "change_type": "scope_change",
         "name": "\"Leave dynograph-foundation as its own repo for now\" takes the repo-split option off the table without settling the releasability question",
         "subject": "record"
+      }
+    },
+    {
+      "node_id": "chg:edge-prose-is-read-when-the-node-under-it-moves",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-08-31",
+        "name": "An edge whose prose outlived the node it points at is named by the propagation that surfaces it",
+        "rationale": "Anthony's word, 2026-08-31, on `fact:edge-prose-is-as-perishable-as-node-prose-and-nothing-reads-it`. bhome narrowed a climate requirement and left five RISKS edges still arguing about the arctic; four were repaired only because \"the propagation happened to list them and I happened to remember what they said.\"\n\nTHE ASYMMETRY WAS THE FINDING: node prose is governed three ways — an overwrite warning on every `add_*`, `reconcile_artifacts` for design-vs-file drift, `change_axis_unstated` for an unstated axis — and edge prose had none of the three, though an edge property is a claim about the world in exactly the way a node property is.\n\n🛑 IT IS A WARNING AND NEVER A REFUSAL, deliberately. The same surface has just measured what a mis-tuned heuristic guard costs: 15 near-match refusals, zero true positives, and agents who learned to pre-empt it. A warning that names its own crudeness costs a glance; a refusal costs a round trip and teaches the caller to route around it.\n\nPinned by four tests. The counterweight matters more than the positive one and asserts BOTH that a still-supported edge is not reported AND that the check actually examined it (`edges_with_prose == 1`) — a silent result over an unexamined edge would prove nothing, which is this design's own standing rule about a zero.",
+        "subject": "system",
+        "summary": "New `crates/reflow2-core/src/edge_prose.rs`: `DesignGraph::stale_edge_evidence(node_id)` returns an `EdgeProseReport` naming incident edges whose `evidence` or `note` still uses language the node has DROPPED, with the specific terms. Wired into `propagate_change`, keyed by seed, so it reaches the reader at the moment they are already looking at those edges.\n\n⭐ IT COMPARES AGAINST THE NODE'S PRIOR STATE, NOT ONLY ITS CURRENT TEXT, and that is the whole design. The obvious version — flag any significant term absent from the node — was written first and REJECTED because it fires on healthy edges: on the reporter's own counter-example, an edge whose evidence still holds contains \"demand\" and \"envelope\", neither of which was ever in the requirement. The sharper signal is a term the edge still uses that the node USED TO say and no longer does, which `record_change`'s snapshot already preserves.\n\n`EdgeProseReport` carries `edges_with_prose` (an empty result over zero examined edges is a different fact from one over twenty), a `coverage_note` present ONLY when there is no prior state — saying the check was SILENT about the edges rather than clean on them — and a `caveat` carried with every answer rather than left in the docs where a reader quoting the result would not see it."
       }
     },
     {
@@ -137319,6 +137730,18 @@
       }
     },
     {
+      "node_id": "chg:the-grouping-hypothesis-is-rejected-on-its-own-measurement",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "resync",
+        "detected_at": "2026-09-01",
+        "name": "The four findings are four defects, not one pattern — rejected on the measurement it asked for",
+        "rationale": "RECORDED BECAUSE A REJECTED IDEA THAT WAS NEARLY RIGHT IS WORTH MORE THAN A FORGOTTEN ONE. The four findings now stand as four, each with its own record and its own open question, which is how they were filed before the grouping was proposed:\n\n· ② `dec:idea-should-there-be-a-typed-depends-on-and-the-existing-name-freed` — open\n· ③ `dec:idea-should-edge-prose-be-governed-the-way-node-prose-is` — ACCEPTED and shipped 2026-08-31\n· ①/④ `dec:idea-should-the-agents-own-word-get-a-first-class-record` and `dec:idea-should-a-large-node-be-changeable-one-field-at-a-time` — open\n\n⚠️ WHAT THE REJECTION DOES NOT SAY. It does not say the four are unrelated — ① and ④ demonstrably share a cause. It says the SET of four does not, and that grouping them would have manufactured a systemic defect out of ordinary gaps. That is the over-engineering failure this project watches for, and the idea's own rationale predicted it as the honest counter-argument before the measurement was taken.\n\n📌 THE GENERATIVE QUESTION THE IDEA RAISED SURVIVES ITS REJECTION and nobody has answered it: \"where else does a reflow2 message tell somebody to do something no tool does?\" The measurement answered it for four affordances, not for the instruction corpus. If that sweep is ever run, this is the node that asked for it.",
+        "subject": "record",
+        "summary": "`dec:idea-the-instruction-layer-runs-ahead-of-the-typed-tool-layer` is REJECTED on Anthony's word, 2026-09-01: \"let's go with 4 defects per your measurement.\"\n\nThe idea proposed that four findings from the 2026-08-31 field reports shared one cause — reflow2's prose names the right move and only the OTHER move has a tool. It named its own settling measurement: check each affordance against the tool surface. Taken 2026-08-31:\n\n  ① answer a gap substantively   -> EXISTS (`answer_question` takes a `gap_id`, ask.rs:294)\n  ② component DEPENDS_ON         -> absent\n  ③ edge-prose staleness         -> absent\n  ④ snapshot the replaced field  -> absent\n\nThree of four, not four of four. The hypothesis predicted four and got three, so it is not the cause of the set.\n\n⭐ THE IDEA IS REJECTED AND ITS INVESTIGATION IS NOT WASTED. The measurement it demanded is what produced `fact:reflow2-has-a-vocabulary-for-the-users-word-and-none-for-the-agents`, which explains ① and ④ precisely and claims nothing about ② and ③. A narrower cause with evidence replaced a wider one without it."
+      }
+    },
+    {
       "node_id": "chg:the-handoff-hook-is-retired-and-the-contradiction-closed",
       "node_type": "ChangeEvent",
       "properties": {
@@ -137660,6 +138083,18 @@
       }
     },
     {
+      "node_id": "chg:the-prescribed-layer-pairs-stop-refusing",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-31",
+        "name": "A near-match at a prescribed layer of the capture loop is reported, not refused",
+        "rationale": "Anthony's word, 2026-08-31, on the count the 2026-08-29 repair named as its own reopening condition: \"Nobody has counted how often a cross-type hit IS a real duplicate.\" The count is `fact:twelve-near-match-refusals-across-two-designs-and-not-one-was-a-duplicate` — 12 field refusals across two designs whose sessions could not see each other, 12 judged distinct, 0 duplicates, plus 3 incurred by the triage session itself while writing the decision that acts on it.\n\n⭐ WHY THE FALSE-POSITIVE RATE WAS NOT THE DECIDING ARGUMENT. The silent miss that option ① was rejected to avoid had ALREADY ARRIVED by another route: bhome, at its eighth refusal, \"started passing `distinct_from` pre-emptively\", and concluded that a guard routinely pre-empted has stopped being a check. Doing nothing preserved the appearance of a check and none of its effect.\n\n🛑 THE SET IS THE PAIRS WITH EVIDENCE, NOT EVERY PAIR THAT COULD BE ARGUED FOR. Requirement↔Component is plausibly a layer pair and is deliberately absent — nobody has measured it, and adding it would be the same unmeasured assumption the 2026-08-29 repair refused to make in the other direction.\n\nPinned by five tests written first and OBSERVED FAILING in the right split: the three that must change failed, and the two counterweights — a same-type duplicate still refused, an unmeasured cross-type pair still refused with the layer wording — passed against the unfixed code, which is what shows the tests discriminate rather than merely accepting the new behaviour.\n\n📌 STILL OPEN, and not fixed here: the refusal returns only ONE LAYER of the near-match set, so `distinct_from` cannot be answered in one call. Measured this session (three attempts, the full node body re-sent each time). It is a defect independent of how the guard is tuned and now fires far less often, but it is not gone.",
+        "subject": "system",
+        "summary": "`refuse_unless_deliberate` drops prescribed-layer matches before deciding whether to refuse. `PRESCRIBED_LAYER_PAIRS` in capture.rs holds the pairs with evidence behind them — Requirement↔Capability, ChangeEvent↔{Requirement,Decision,Capability}, Decision↔{Capability,Component}, TemporalFact↔Decision — matched in either direction. One SAME-TYPE exemption is keyed on `kind` rather than type: a Decision created against an `exploratory` Decision is the brainstorm skill's promotion step, so `NearMatch` gained an optional `kind`, read only for Decisions and `None` on a failed lookup (the conservative direction — a read error can cost a round trip, never a silent suppression).\n\n🛑 THE REFUSAL IS SUPPRESSED; THE REPORT IS NOT. A prescribed-layer match still comes back in `search_first.near_matches` exactly as before, so the caller still sees what it matched and a later reader can still find it. That is the difference between narrowing a guard and blinding it, and a test asserts it — without that assertion this change would be indistinguishable from deleting the check.\n\nOption ② from 2026-08-29 survives underneath: an UNMEASURED cross-type pair still refuses, and still with the layer wording."
+      }
+    },
+    {
       "node_id": "chg:the-readme-says-what-it-is-before-what-it-believes",
       "node_type": "ChangeEvent",
       "properties": {
@@ -137939,6 +138374,18 @@
         "rationale": "MEASURED 2026-08-29 across 91 sessions of dev-storyflow — see `fact:agents-do-self-invoke-skills-at-scale-and-the-hook-not-the-catalogue-predicts-which`. 88% of skill loads had no slash command behind them, and what predicts a skill's load count is being named in an always-injected surface rather than in the served catalogue.\n\nWHY TWO ARMS RATHER THAN ONE FIX: the observational result is confounded. `where-am-i` is named in the hook AND is the most generally useful skill in the set, so hook-presence and intrinsic usefulness cannot be separated from data nobody intervened on. One skill added to each channel, with baselines taken first, is the discriminating experiment.\n\n    TOOL-SIDE  impact-check  from record_change   baseline 19% (16 sessions)\n    HOOK       link-artifacts in SESSION_START    baseline 22% (27 sessions)\n\n⚠️ THE FINDING THAT MAKES THIS HARD, and it is recorded rather than worked around: BOTH CHANNELS ARE A FIXED BUDGET. `add_change_event` has the worst measured compliance (24%, 29 sessions) and sits at 1494 chars against a 1500-char limit — it physically could not carry a demand. The budget gate was left alone rather than raised, the tool-side arm was scoped to `record_change`, and the collision was written down. Naming all 23 skills in the hook would likewise rebuild the catalogue that demonstrably predicts nothing. Whatever mechanism wins, it wins inside a budget.\n\n🛑 THIS RECORDS AN EXPERIMENT, NOT A RESULT. Nothing here says either channel works. Read the baselines again in a few weeks.",
         "subject": "system",
         "summary": "Two paired EXPERIMENTS, on different skills so neither can claim the other's result. TOOL-SIDE: `impact-check` is demanded from `record_change`'s tool description, and `skill_lint` gains a `demanded_by` check — a skill declares the tools whose descriptions must demand it, read from the committed toolsnap goldens, and the gate fails when a named tool does not. HOOK: `link-artifacts` is named in `SESSION_START_TEXT`. Baselines are written into the code beside each change rather than left in a transcript."
+      }
+    },
+    {
+      "node_id": "chg:two-independent-genesis-reports-arrive-the-same-day",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "resync",
+        "detected_at": "2026-08-31",
+        "name": "Two independent genesis field reports arrive the same day, and they corroborate each other",
+        "rationale": "Registered as working-tree paths the drift gate can hash, following the convention every other field report here uses. Both are agent-authored feedback from projects Anthony owns, which is the case `req:agent-authored-feedback-is-reproducible-and-never-leaves-unasked` governs: the human whose project it was written inside still decides whether it leaves.\n\nA dated field report is registered and PARKED (`dec:a-dated-field-report-is-registered-and-parked`) — its unattached state is correct, because it is a frozen record of what one session saw and is not tracking the design as it moves.",
+        "subject": "record",
+        "summary": "Two agent-authored field reports from two of Anthony's own projects, both from `/genesis` sessions on 2026-08-31, both registered byte-identical into docs/feedback/. bhome's is the SAME append-only file already triaged earlier today, grown from 385 to 650 lines — the 385-line version was verified as a STRICT PREFIX of the 650-line one before registering, so only lines 386-650 are new material. musicjug's is a first arrival: a browser rhythm game for a 9-year-old, 71 nodes, no code written yet.\n\nTHE TWO REPORTS WERE WRITTEN INDEPENDENTLY, BY SESSIONS THAT COULD NOT SEE EACH OTHER, ON DESIGNS WITH NOTHING IN COMMON — a shipping-container aquaponics build and a children's music game. That is what makes their agreement evidence rather than repetition."
       }
     },
     {
@@ -142057,12 +142504,34 @@
       }
     },
     {
+      "node_id": "dec:idea-should-a-cycle-be-refused-at-edge-creation-the-way-a-duplicate-is",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. musicjug's idea, 2026-08-31 (art:musicjug-genesis-feedback-2026-08-31, \"Ideas\" §1), in its own words.\n\nIt built TWO dependency cycles in one session, minutes apart, each closed by a single `consumes`/`provides` call, and noticed neither. `detect_defects` caught both on the next sweep — which is the headline success in that report. The idea is that the sweep is one beat too late.\n\nIts proposed message: \"This CONSUMES would close a loop: `comp:coach -> comp:shell -> comp:coach`. If the dependency is real and only pointing the wrong way, reverse it — have the source publish and the target subscribe.\"\n\nWHY IT MIGHT WORK: \"The duplicate guard already proves this pattern works and that agents respond to it. Inline would have taught me the rule on the first occurrence instead of the second.\" The information is in hand at the moment of the call — `consumes` already knows the existing DEPENDS_ON and PROVIDES edges.\n\n⚠️ THE COUNTER-ARGUMENT IS SITTING RIGHT NEXT TO IT IN THE SAME SESSION, and it is strong. The duplicate guard is the other inline refuse-or-warn on this surface, and this project has just measured it firing 15 times with zero true positives and being routinely pre-empted (`fact:twelve-near-match-refusals-across-two-designs-and-not-one-was-a-duplicate`). Adding a second inline guard modelled on the first should not be done without asking why the first went wrong. A cycle check has one advantage the duplicate check never had — it is EXACT rather than heuristic, with no similarity threshold to mis-tune — and that difference may be the whole answer, but it should be stated as the reason rather than assumed.\n\n📌 ALSO WORTH WEIGHING: the report says the second cycle \"is what convinced me the first wasn't luck\". An inline refusal on the first would have prevented the second — and with it, the evidence that the detector works. That is not an argument against the fix, but it is a real thing the current behaviour produced.",
+        "kind": "exploratory",
+        "name": "OPEN — should `consumes`/`provides` refuse-or-warn inline when the edge would close a dependency cycle, instead of leaving it to the next sweep?",
+        "rationale": "musicjug's idea, relayed verbatim rather than paraphrased. The counter-argument is this project's own measurement from the same day and was not available to the reporter.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-should-a-finding-be-required-to-bound-its-own-claim",
       "node_type": "Decision",
       "properties": {
         "decision": "**RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL.** Raised 2026-08-27 from a live cost, not from thinking about the model: `fact:a-findings-name-can-claim-more-than-its-data-and-the-name-is-what-search-returns`.\n\n═══ THE QUESTION ═══\n\nA measured fact's NAME said the seam number *\"can never reach zero\"* because two edge sets were *\"disjoint by construction\"*. The measurement was sound; the claim was a state described as a law, and it moved in an afternoon. `search_design` returns the NAME, so that is the sentence a session meets.\n\nShould anything require a finding to say what it does NOT establish — and if so, where?\n\n═══ OPTIONS, NONE CHOSEN ═══\n\n**(a) NOTHING. This is writing discipline, not vocabulary.** The convention already exists and is widely followed — the exemplar itself carries a \"WHAT THIS DOES NOT SETTLE\" paragraph. One instance of a badly-worded name is a reason to write better names, not to grow the schema. ⚠️ Counter: the discipline was followed and still failed, because it bounded the body while the overreach was in the name, and the name is what search returns. A convention that does not reach the field readers see is not doing the job.\n\n**(b) A NAMING RULE, enforced by a lint.** Forbid law-shaped language — *by construction*, *can never*, *always*, *impossible* — in a TemporalFact name unless the body justifies it. ⚠️ Counter: word-blocklists are crude and generate false positives on findings where the strong claim is TRUE and earned. And a lint that fires on correct work is the alarm-on-correct-work failure this project keeps finding.\n\n**(c) A DECLARED BOUNDS FIELD on TemporalFact** — a `does_not_establish` sibling to `statement`, returned by `search_design` alongside the name. ⚠️ Counter: `basis` and `valid_from`/`valid_to` already exist and are the schema's answer to \"how strong is this claim, and when\"; a fourth qualifier may be one too many. And a declared field that is usually empty teaches readers to ignore it, which is worse than prose that is usually present.\n\n**(d) CHANGE WHAT SEARCH RETURNS** rather than what facts carry — return the closing paragraph, or the first line of `statement`, beside the name. ⚠️ Counter: it grows every search result on a design with 300+ facts, and `search_design` is already a bounded reply; this trades the cheapest read in the loop for a problem measured once.\n\n═══ ⚠️ WHAT MUST BE MEASURED BEFORE ANY OF IT ═══\n\n**Nobody has counted the prevalence.** n=1. Before growing a schema or writing a lint, somebody should sweep this design's TemporalFacts and ask how many names carry a claim their body does not support. If the answer is one, option (a) is obviously right and everything else is over-engineering. **That sweep has not been done, and doing it is cheaper than every option here.**\n\n📌 SEPARATE FROM, AND ADJACENT TO, `fact:the-upstream-watch-is-findable-only-in-reflow2s-own-words`. Both are cases where the record is ACCURATE and still misleads a reader — one through a name that overreaches, one through a description written in vocabulary its users do not share. Whether they are one problem about the gap between what a record says and what a reader takes from it, or two unrelated ones, is itself unsettled.",
         "name": "OPEN — should a finding have to bound its own claim, and is the NAME the field that needs it?",
         "rationale": "Raised because the cost was real and traceable: the overreaching name was cited twice as grounds for NOT doing work — once to the user, once into a ChangeEvent — before a five-minute measurement overturned it. A finding that argues against measuring is the most expensive kind to get wrong.\n\nLeft as brainstorming because the honest first move is a count, not a design. Option (a) — do nothing, write better names — is a real option and is listed first among the counters for that reason: at n=1 the schema should not move.\n\nRecorded with all four options rather than the one that looks best, because the two strongest counters point in opposite directions: the convention already exists and failed anyway, which argues for a mechanism; and the prevalence is unmeasured, which argues against building one.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-should-a-large-node-be-changeable-one-field-at-a-time",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Both reports arrived at this from opposite directions on 2026-08-31, neither connecting it to the other.\n\n· **bhome (part 6), on cost.** A refused bulk write meant re-sending a ~4 KB decision body verbatim, because nothing was created. \"Field-level validation before the write, or a dry-run, would make long-prose nodes cheaper to get right. This is the same underlying gap as the append-vs-replace friction: reflow2 has no way to say 'change this one thing' on a large node.\"\n· **musicjug (idea 2), on safety.** The revision reply says, correctly, that it holds the only copy in existence of the replaced field — so it is the one caller that could still save it. \"Snapshot automatically, or offer `snapshot_prior: true`, and the warning becomes a receipt rather than a regret.\"\n\nTHREE IDEAS: a **dry run** (validate without writing); **`snapshot_prior: true`** (keep what is being replaced); **field-level validation** before the write is attempted.\n\n📌 PART OF THIS IS ALREADY TRUE AND WAS NOT KNOWN TO EITHER REPORTER: the `add_*` constructors take content fields as REQUIRED TO CREATE AND OPTIONAL TO REVISE — call again with the same id and only what you are changing, and omitted fields keep their stored value. So \"change this one thing\" exists for those. It does NOT exist for `create_node`, which merges but where a partial props object is the ordinary path, and the cost bhome hit was a REFUSED bulk write, where the issue is that a refusal discards work rather than that an update needs the whole node.\n\n⚠️ SO THE THREE ASKS ARE NOT EQUALLY MOTIVATED, and it is worth separating them before building any: the partial-update ask is largely already answered and the instruction may simply be unfindable; the dry-run ask is about refusals discarding a large payload; the snapshot ask is about a value being lost. Only the third is a data-loss risk, and it is the one with a named cheap fix.\n\n⚠️ AND ON THE SEQUENCING POINT UNDERNEATH musicjug's version: \"the prescribed order is not reliably achievable from a harness that emits parallel tool batches.\" A rule that depends on call ORDER can be broken by an agent host without either party choosing to, which is an argument for the tool preserving the value itself rather than instructing the caller to.",
+        "kind": "exploratory",
+        "name": "OPEN — should a write offer a dry run, a snapshot-on-revise, or field-level validation, so a large node is not re-sent whole to change one thing?",
+        "rationale": "Two reports, two directions, one underlying question. The note that partial revision already exists for the `add_*` constructors is from this project's own tool descriptions and was available to neither reporter — which is itself a finding about discoverability.",
         "status": "proposed"
       }
     },
@@ -142114,6 +142583,40 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-12, second half of his CAP question. Nothing here is intent and nothing has been chosen.\n\nDISTINCT FROM `dec:idea-is-reflow2-itself-a-cp-store-behind-an-ap-record`, deliberately kept apart: that one asks whether CAP describes reflow2's OWN architecture. This one asks whether CAP is vocabulary reflow2 should HAND ITS USERS. One node holding both could only ever be half-answered.\n\nSIBLING, NOT DUPLICATE, OF `dec:idea-the-ility-chooses-the-allocation-graph` (proposed, 2026-08-08). That node asks about the DIRECTION of inference — should the quality attribute drive allocation rather than be read off it. This asks whether a SPECIFIC well-known trade-off frame belongs in the vocabulary at all. Related, and the answers could differ: the ility→graph direction could be built without CAP ever appearing, and CAP could be added without changing allocation.\n\n⭐ THE CONCRETE GAP, checked rather than asserted. `schema/dimensions.yaml` already carries NINE axes attachable to any node: reliability, performance, maintainability, security, scalability, observability, testability, coupling, maturity. **Consistency is not among them. Availability is not among them. Partition tolerance is not among them.** For a tool whose owner's stated operating context includes federated, independently-evolving systems, that is a real absence rather than a stylistic one.\n\nAND ONE PIECE ALREADY EXISTS UNDER A DIFFERENT NAME: `cap:seam-incompatibility` — \"say when two linked designs disagree at a boundary\" — is, structurally, a consistency check across a partition between two independently-evolving replicas. The federation work (`cap:mirror-surface`, `cap:composed-analysis`, `cap:complementary-pairing`) is a distributed-design problem that has never been described in distributed-systems terms.\n\n═══ THE OPTIONS ═══\n\nA — NOTHING. CAP is domain knowledge the AGENT brings to a conversation, not vocabulary the graph must hold. An agent can already reason about it and record the resulting decision as an ordinary Decision node, today, with no change whatsoever. CHEAPEST, and the null hypothesis this has to beat.\n\nB — ADD `consistency` AND `availability` TO THE DIMENSION ENUM. Cheap, additive, existing graphs unaffected. `ility_report` already reports NOT INFORMED with a reason for axes it cannot compute — so honest silence is the built-in default and nothing pretends. NOTE: a new enum value moves NO stamp count, which would be the fifth recorded instance of the stamp being blind to a real compatibility event.\n\nC — ASK IT UPFRONT, at genesis or adopt: \"is this system CP or AP under partition, and L or C in normal operation?\" This is exactly the shape `dec:idea-the-ility-chooses-the-allocation-graph` argues for in Anthony's own words — \"if you don't ask upfront, these cost a lot in having to rework services after they've been already developed.\" A CAP posture chosen late is a rewrite; chosen early it is a constraint everything else obeys.\n\nD — A CONTRADICTION DETECTOR, and the only option where anything COMPUTES. A design asserting strict consistency AND high availability across a declared partition boundary is claiming something the theorem forbids. reflow2 already has the machinery: `CONTRADICTS`, `cap:kpp` for inviolable intent, `constrains`, and `cap:key-interfaces` for computing whether a change crosses a published boundary. This is a KPP breach with a known proof.\n\n═══ COUNTER-ARGUMENTS, recorded beside the idea ═══\n\n⚠️ 1. THE STRONGEST ONE — reflow2 IS DOMAIN-NEUTRAL AND CAP IS NOT. Its stated operating breadth is greenfield and brownfield and continual, across several organisations; the owner's own context is Space Force systems engineering and a Brookhaven beamline stack. CAP is meaningless for a beamline's mechanical design or a spacecraft thermal budget. Building a distributed-systems theorem into the core vocabulary privileges software architecture over every other domain the tool claims to serve.\n\n⚠️ 2. \"PICK TWO OF THREE\" IS ITSELF A MISLEADING FRAME, and shipping it would propagate the misreading. CAP forces a choice ONLY DURING a partition; in normal operation a system need not sacrifice either. That is precisely why PACELC exists. A tool that offers CAP as a first-class axis would be handing users the version practitioners most often get wrong.\n\n⚠️ 3. VOCABULARY NOBODY USES IS THE SHAPE THIS PROJECT SPENT A MONTH REMOVING. Requirement's five-state lifecycle runs 3-of-5 unused; BL-198 was the removal work. Nine dimensions already exist and the ility report cannot inform four of them. Two more unused axes make the enum longer and the design no truer.\n\n⚠️ 4. A PLANNED CAPABILITY COSTS THREE GAPS FOREVER (`dec:exploratory-staging`, measured: 34 of 73 open gaps came from routing wishes to Capability). Option D as a planned capability is a standing tax until someone builds it.\n\n📌 WHERE THE IDEA IS STRONGEST, narrower than \"add CAP\": not as a general axis, but where reflow2 ALREADY has the substrate — the federation seam. `cap:seam-incompatibility` computes disagreement between two independently-evolving designs, which is a consistency question with a real detector behind it. If any of this earns its place, that is the door, and it needs no enum change at all.",
         "name": "PARKED, NOT ACCEPTED — should consistency/availability/partition-tolerance be vocabulary reflow2 offers? The federation seam is the road if any is ever taken. Anthony, 2026-08-12: revisit later, more important things first.",
         "rationale": "PARKED ON ANTHONY'S WORD, 2026-08-12: \"we can add cap:seam-incompatibility as proposed, but leave it as not accepted. one day we can come back to this — it doesn't sound like it has huge applicability, so I think there are more important things to deal with in the interim.\"\n\nWHAT THAT SETTLES AND WHAT IT DOES NOT. It settles the ROAD: if consistency vocabulary is ever taken up, it enters through `cap:seam-incompatibility` — the federation seam, where reflow2 already computes when two independently-evolving designs disagree at a boundary — and NOT as new `dimension` enum values (option B) or a general axis. It does NOT accept the idea, schedule it, or claim it will happen. Status stays `proposed`.\n\n🛑 DELIBERATELY NOT MINTED AS A PLANNED CAPABILITY, and this is the one judgement made on his behalf rather than by his word. He said \"add cap:seam-incompatibility as proposed\" — but `cap:seam-incompatibility` ALREADY EXISTS and is `realized` (it is the built detector this idea would extend), and Capability has no `proposed` status: its lifecycle is planned / in_progress / realized / verified. Creating a NEW planned Capability to hold the idea would cost THREE GAPS FOREVER — unmotivated, unrealized, unverified — which is `dec:exploratory-staging`'s measured finding (34 of 73 open gaps came from exactly that routing). Parking something explicitly because there are MORE IMPORTANT THINGS TO DEAL WITH, and paying a standing three-gap nag for it, would defeat his own stated reason. A proposed Decision is SILENT by construction — `detect_gaps` fires `undecided_decision_point` only on two or more REGISTERED alternatives — so the idea is kept, findable by search, and costs nothing until someone registers real alternatives under it.\n\nIF HE WANTS IT TRACKED AS WORK rather than kept as a thought, that is one `add_capability` call away and the three gaps are the honest price of scheduling it. The choice is his; the default taken here is the quiet one, matching what he asked for.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-should-detect-gaps-say-how-long-the-road-is",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. musicjug's ideas §4 and §7, 2026-08-31, which are two halves of one complaint.\n\nEvery fix surfaced more gaps, all legitimate, and nothing said how far there was to go. \"At no point could I tell the owner 'three more rounds and we're clean' versus 'this goes on for twenty.'\" To a human watching an agent work, that reads as a treadmill even when every item is worth doing.\n\nTWO IDEAS, and they answer different questions:\n· **FRONTIER — how far.** \"Fixing these 3 will likely surface ~5 more, mostly `undeclared_seam` and `unverified_*`; the phase-level gaps clear only when artifacts exist.\" Deliberately coarse.\n· **PHASE HINT — what order.** A single line when components first appear: \"next: declare dependencies, then interfaces on the coupled pairs, then verifications.\" The session got there by following five separate `loop_hint` strings across five detect rounds. The ordering was known the whole time and delivered one piece at a time, which is the same information shaped so it cannot be used as a plan.\n\nWHAT IS CHEAP: `detect_gaps` already knows which phase transition triggers each gap source. That is what a frontier estimate is made of; nothing new has to be computed, only stated.\n\n⚠️ THE COUNTER-ARGUMENT, and this project has a specific allergy to it: a frontier estimate is a FORECAST, and this design is careful about basis — `TemporalFact` distinguishes `measured` from `forecast` precisely because a projected number quoted later as a fact is how a design misleads itself. \"~5 more\" that turns out to be 25 is worse than saying nothing, and there is no way to bound the error honestly on a design nobody has seen before. Any build of this should carry its own basis the way `budget_report` does with `unstated` and `basis_coverage`.\n\n📌 THE PHASE HINT HAS NONE OF THAT PROBLEM and is much the cheaper half. It states a known ordering rather than predicting a count. If only one of the two gets built, it should be that one.",
+        "kind": "exploratory",
+        "name": "OPEN — should gap detection report a frontier (\"~5 more, mostly seams\") and a phase-transition plan, instead of one hint at a time?",
+        "rationale": "musicjug's idea, relayed. The forecast caution is this project's own existing doctrine about `basis`, not the reporter's.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-should-edge-prose-be-governed-the-way-node-prose-is",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. bhome's suggestions, 2026-08-31 (part 7), after finding four RISKS edges still arguing about the arctic hours after \"arctic\" left the requirement they pointed at.\n\nTHREE IDEAS, cheapest first, and they are not alternatives — each is a different amount of the same job:\n· **① A TERM CHECK INSIDE `propagate_change`.** When a direct-ring edge's `evidence` mentions terms that no longer appear in the changed node, say so. \"Even a crude string check would have caught 'arctic' surviving in four edges after 'arctic' left the requirement.\" Costs nothing extra to compute — the direct ring and both texts are already in hand at that moment.\n· **② A `written_at` STAMP ON EDGE PROSE**, so a reader can see the evidence predates the node it describes. Does not detect anything; makes staleness visible to a human following the edge.\n· **③ A `stale_edge_evidence` DETECTOR** — the full version, sweeping rather than only on propagation.\n\nWHY THE ASYMMETRY IS WORTH CLOSING: node prose is governed three ways — every `add_*` warns on overwrite, `reconcile_artifacts` catches design-vs-file drift, `change_axis_unstated` catches an unstated axis. Edge prose has none. An edge property is a claim about the world in the same way a node property is.\n\n⚠️ THE COUNTER-ARGUMENT: a string check is a heuristic, and this project has just measured what a mis-tuned heuristic guard costs (15 near-match refusals, zero true positives). A term that leaves a requirement's text has not necessarily left its meaning, so ① will produce false alarms — the question is whether a WARNING that names its own crudeness is different in kind from a REFUSAL that blocks a write. It probably is, and that difference should be the stated reason rather than an assumption.\n\n📌 NOT A WRITE PROBLEM: \"Re-writing an edge with `create_edges` upserts its properties cleanly — the problem is purely one of noticing.\" Nothing here needs a new write path.",
+        "kind": "exploratory",
+        "name": "OPEN — should edge `evidence` and `note` be governed like node prose: a staleness check, a `written_at` stamp, or a warning inside propagate_change?",
+        "rationale": "bhome's ideas, relayed in its own order of cheapness. The heuristic caution is this project's same-day measurement, not the reporter's.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:idea-should-find-tools-be-discoverable-and-serve-workflow-bundles",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. musicjug's idea §6 and complaint §7, 2026-08-31.\n\nThe session made roughly ten separate tool-schema lookups across one session, each a round trip, because it could not know it would need `delete_edge` until a cycle appeared or `set_interface_designation` until a gap asked for it. \"A reflow2 session therefore has a high call-count floor.\"\n\n⭐ THE PART THAT MATTERS IS NOT THE COST, IT IS THE MISS: \"This is the deferred-tool harness rather than reflow2 proper. But reflow2 ships `find_tools`, and I never used it because nothing told me how it differs from the harness's own search — so the one mitigation that exists was invisible from where I sat.\"\n\nTWO IDEAS:\n· **SAY WHAT `find_tools` IS FOR.** It exists, it is served, and an agent with a tool-discovery problem did not reach for it because it could not tell it apart from the host's search. That is a positioning fix, not a code one.\n· **BUNDLES.** `find_tools(\"genesis\")`, or a `bundle` argument, returning the ~12 schemas that workflow needs in one call, so an agent loads once rather than ten times.\n\n⚠️ THE COUNTER-ARGUMENT ON BUNDLES: loading twelve schemas an agent may not need is not obviously cheaper than loading four it does, and a bundle that guesses wrong costs both. The measured problem is that the lookups are UNPREDICTABLE — needed only when a gap or a defect appears — which is exactly the case a fixed bundle cannot anticipate. A bundle keyed to a SKILL rather than to a workflow phase might fare better, since the skill knows what it is about to ask for, but nobody has checked which tools each skill actually uses.\n\n📌 THIS IS A KNOWN SHAPE HERE, and worth connecting: reflow2 has a recorded doctrine that a capability reaches a user only with a typed tool, an instruction, AND a detector that notices absence. `find_tools` has the tool and no instruction pointing at it — which is the same leg missing as in several of the day's other findings, and the cheapest one to fix anywhere.\n\n⚠️ SEPARATELY AND NOT THE SAME QUESTION: the report's §1 complaint that `reflow2_start_design` requires a client restart before any design tool exists — \"the FIRST thing a new user experiences, and a hard stop requiring manual action mid-flow.\" That belongs to the existing stranded-server family (`fact:defect-rebuild-strands-the-shared-server`, `fact:defect-the-latent-surface-never-re-probes-after-a-cli-restore`) rather than here, but it is the same session's first impression and nobody has asked whether the first-run case differs from the rebuild case.",
+        "kind": "exploratory",
+        "name": "OPEN — reflow2 ships `find_tools` and an agent never used it because nothing said how it differs from the harness's own search. Fix the pitch, or serve bundles?",
+        "no_relation_note": "Searched the near-match surface; the closest recorded material is the stranded-server family, which is named in the text as a DIFFERENT question rather than linked, because the bootstrap complaint and the find_tools pitch share only the session that reported them. No honest relation to draw for the find_tools half.",
+        "rationale": "musicjug's ideas, relayed. The three-legs connection and the bootstrap-family pointer are this project's own context and were not available to the reporter.",
         "status": "proposed"
       }
     },
@@ -142178,6 +142681,17 @@
       }
     },
     {
+      "node_id": "dec:idea-should-the-agents-own-word-get-a-first-class-record",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. It came out of root-causing the 2026-08-31 field reports rather than from anybody asking for it.\n\nreflow2 models the USER's word thoroughly — `acknowledge_gap` refuses an unknown approver, `answer_question` records \"what the user said\", requirement status only moves on their say-so. It models THE AGENT's word in exactly one place: a Decision at `proposed` carrying AUTHORED_BY `role=approver`, which `loop_status` reports until the human answers.\n\nmusicjug praised that one place unprompted — \"I have not seen another design tool that models 'I recommend this, but it is not mine to decide' as a first-class state; for agent-driven work this is close to essential\" — and, four sections later, complained about the absence of the same thing for gaps, without connecting the two.\n\nTHE QUESTION: is `proposed` + approver a general pattern other records should get, or is it correctly special to Decisions?\n\nWhere it would apply if generalised:\n· an agent-authored ANSWER to a gap — proposed, attributed, expiring, awaiting the owner\n· an agent-authored ACKNOWLEDGEMENT — \"I judge this fine as it stands; you have not said so\"\n· possibly an agent-proposed requirement status move, which today is forbidden outright\n\nWHAT IS CHEAP: the mechanism exists and is proven — `proposed` + approver + `loop_status` reporting is built, and agents in the field already understand it.\nWHAT IS EXPENSIVE: every record type that gains a proposed state gains a lifecycle, and lifecycles are where designs rot.\n\nTHE HONEST COUNTER-ARGUMENT, and it may be decisive: a Decision is ABOUT a choice, so \"proposed\" is a natural stage of it; an acknowledgement is a judgement that either has an author or does not. A proposed acknowledgement might just be a slower way of leaving the gap open — which the agent can already do for free, and which is arguably the honest outcome when the owner has not spoken.\n\n⚠️ AND THE SIMPLEST ANSWER MAY BE NONE OF THIS: leave the vocabulary alone and let the agent record its reasoning as a `proposed` Decision it can already create, linked to the gap. One node, no new mechanism. Nobody has checked whether that is sufficient, and it should be checked before anything is built.",
+        "kind": "exploratory",
+        "name": "OPEN — should the one mechanism that models \"I recommend this but it is not mine to decide\" be generalised beyond Decisions?",
+        "rationale": "Generated by the root-cause pass over the two 2026-08-31 field reports, whose measurement refuted the first explanation and produced this instead. It explains two of that pass's four findings and explicitly not the other two.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-should-the-checksum-accept-have-an-as-built-aligned-disposition",
       "node_type": "Decision",
       "properties": {
@@ -142205,6 +142719,17 @@
         "kind": "exploratory",
         "name": "OPEN — should the functional spine be abandoned for boundaries derived from actual structure, and if so from WHICH structure: the modules, the co-change graph, or an ility?",
         "rationale": "Recorded under the brainstorm discipline — ideas as ideas, nothing promoted, and the two prior declines recorded beside the proposal rather than used to close it. He has now raised structure-derived allocation three times (2026-08-08 as graph-theoretic clustering, 2026-08-21 as \"draw a boundary around the communities\", 2026-08-31 as \"forget the ten\"), and each time the answer has turned on WHICH GRAPH rather than on yes or no. That the question keeps returning in different words is itself evidence the prior answers never reached him — the same pattern as the four stale records found this session.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-should-there-be-a-typed-depends-on-and-the-existing-name-freed",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. musicjug's idea §5, 2026-08-31.\n\nComponent `DEPENDS_ON` feeds cycle detection, single-point-of-failure analysis and the seam gap, and has no typed helper — while `declare_dependency`, which an agent searching for it reaches first, is cross-design version pinning. The session fell back to raw `create_edge`.\n\nTWO PARTS, and they can be taken separately:\n· **ADD `depends_on(from_component, to_component)`** — joins the nine typed helpers that already exist. Cheap; it is a thin wrapper over `create_edge` that fills in the endpoint types, which is all the others are.\n· **RENAME the existing one** to `declare_external_dependency` or `declare_design_dependency`. \"Two different concepts should not compete for the same obvious name, especially when one of them feeds every topology rule in the tool.\"\n\nWHY IT MIGHT MATTER MORE THAN IT LOOKS: reflow2's own design has 1 of 70 components carrying any modelled coupling, so modularity is currently NOT MEASURABLE on the tool's own graph. `fact:coupling-and-contract-are-recorded-in-vocabularies-that-never-meet` already records that couplings and contracts live in disjoint edge sets here. A missing typed helper on the coupling side is one plausible reason that set stays thin — though nobody has tested that, and it may equally be that nobody has done the modelling work.\n\n⚠️ THE COUNTER-ARGUMENT ON THE RENAME: it is a breaking change to a served surface, and `rule:fix-it-properly-while-it-is-still-cheap` says do it NOW rather than after 1.0 — but the rename and the addition are independent, and adding `depends_on` alone removes most of the harm by giving the search a correct first hit. Renaming could follow on the deprecation path rather than blocking the useful half.\n\n📌 THIS IS THE ELEVENTH IN A COUNTED FAMILY of helper-vs-schema naming disagreements from three independent sources, and the first where the collision is the TOOL's name rather than a parameter's. Whether the family has a common cause is not asked here.",
+        "kind": "exploratory",
+        "name": "OPEN — should component DEPENDS_ON get a typed helper, and should `declare_dependency` be renamed to free the obvious name?",
+        "rationale": "musicjug's idea, relayed. The coupling-measurability connection and the deprecation-path caution are this project's own context.",
         "status": "proposed"
       }
     },
@@ -142369,6 +142894,17 @@
       }
     },
     {
+      "node_id": "dec:idea-the-instruction-layer-runs-ahead-of-the-typed-tool-layer",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "CANDIDATE PATTERN, NOT A ROOT CAUSE — recorded as an idea because it has not been through the refutation step the root-cause skill requires, and the first plausible explanation is exactly what that skill exists to slow down.\n\nFour of the findings from the 2026-08-31 field reports have the same shape. In each, reflow2 STATES the correct move in prose and offers a TYPED TOOL only for a different move — so the agent takes an untyped fallback, and the fallback leaves nothing any detector can read.\n\n① `answer_gap` (musicjug). The gap text says \"Write the answer into the design ... or acknowledge_gap.\" Only the second half has a tool. Fallback: acknowledge under the owner's name, or leave a solved gap open as noise.\n② `depends_on` (musicjug). The loop asks for component dependencies; nine typed helpers exist and that one does not, while its obvious name is taken by cross-design version pinning. Fallback: raw `create_edge`.\n③ Edge prose (bhome). Every `add_*` warns loudly on node overwrite and `reconcile_artifacts` catches file drift; nothing governs edge `evidence` or `note`. Fallback: repair by hand, if you happen to remember what the edge said.\n④ Snapshot-before-revise (musicjug). The warning names the right order and holds the only copy of the replaced value. Fallback: an undo recipe, in a harness that emits parallel batches and cannot reliably honour call order anyway.\n\nTHE COMMON SHAPE, stated so it can be refuted: **the instruction layer is ahead of the typed-tool layer, and where it is ahead, the agent's fallback is invisible.** reflow2's own recorded doctrine says vocabulary reaches a design only with three legs — a typed tool, an instruction, and a detector that notices absence. In all four, leg two is present, leg one is missing, and leg three therefore cannot fire.",
+        "kind": "exploratory",
+        "name": "OPEN — four findings in one day share a shape: reflow2's prose names the right move and only the OTHER move has a tool. Is that one defect or four?",
+        "rationale": "WHY THIS MIGHT BE ONE THING AND NOT FOUR: the four repairs are independent and each is cheap on its own, so treating them separately loses nothing immediate. What it would lose is the fifth instance. If the pattern is real, the generative question is \"where else does a reflow2 message tell somebody to do something no tool does?\" — which is answerable by reading the instruction corpus against the tool surface, and would find the next four before a user does.\n\nWHY IT MIGHT NOT BE ONE THING, and this is the honest counter: ② is a naming accident, ③ is a whole unbuilt governance layer for edges, ④ is a sequencing choice, and ① is a deliberate anti-forgery guard whose scope was drawn slightly too wide. Those have four different causes and share only a symptom — an agent doing the untyped thing. Grouping them could manufacture a \"systemic defect\" out of four ordinary gaps, which is precisely the over-engineering failure mode this project watches for. The count is four out of roughly a dozen findings; nobody has checked the other eight against the pattern, or checked how many typed tools DO have their instruction.\n\nWHAT WOULD SETTLE IT: read the served skill and tool prose for imperatives (\"write the answer\", \"record the dependency\", \"snapshot first\") and check each against the tool surface. If the hit rate is high, it is one thing. If these four are the whole set, they are four.\n\n⚠️ THE CHEAPEST HALF IS INDEPENDENT OF THE ANSWER. All four individual repairs stand on their own merits and none of them waits on this question.",
+        "status": "rejected"
+      }
+    },
+    {
       "node_id": "dec:idea-the-kit-diagnoses-a-stale-project",
       "node_type": "Decision",
       "properties": {
@@ -142396,6 +142932,17 @@
         "name": "OPEN — should the loop be able to SUBSCRIBE to reality, rather than only seeing what an agent hand-carries into it?",
         "rationale": "An external report's three separate frictions turned out to share one cause, and the same cause was independently demonstrated in this repo the same day when loop_status reported zero drift on a file no detector had looked at. The open part is not whether the gap is real but whether closing it means cheapening the carry or automating it — and automation is exactly what this project's accepted doctrine refuses for structure.",
         "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-the-near-match-repair-can-now-be-reopened-because-the-count-exists",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "THE 2026-08-29 REPAIR NAMED ITS OWN REOPENING CONDITION, AND THE CONDITION IS NOW MET.\n\n`chg:a-cross-type-near-match-is-named-as-a-layer` shipped the conservative half (option ② — reword the refusal when the types differ) and rejected the behavioural half (option ① — exclude the prescribed layer pairs from the filter) for exactly one stated reason: \"Nobody has counted how often a cross-type hit IS a real duplicate, so suppressing the check would act on an unmeasured assumption.\"\n\n`fact:twelve-near-match-refusals-across-two-designs-and-not-one-was-a-duplicate` supplies the count. 12 refusals, two independent designs with nothing in common, 12 judged distinct, 0 real duplicates. Both observers independently name the same pairings, and neither could see the other's report.\n\n🛑 AND TWO MORE ARRIVED WHILE THIS DECISION WAS BEING WRITTEN, WHICH IS THE SHARPEST EVIDENCE IN THE FILE BECAUSE NOBODY REPORTED IT — it happened to the session doing the triage.\n\nAttempt 1 was refused against the very measurement that motivates it: a Decision blocked by the TemporalFact it acts on. A FIFTH pairing, and the loop's own shape again — a measurement and the decision it informs are supposed to read alike.\n\nAttempt 2, carrying `distinct_from` for that one, was refused again — against TWO DIFFERENT nodes the first refusal had not mentioned.\n\n⭐ THAT SECOND REFUSAL BREAKS THE ONLY MITIGATION ANYONE HAS. bhome's report says it had \"started passing `distinct_from` pre-emptively\", and concluded that a guard routinely pre-empted has stopped being a check. This session's experience is worse than that: **you cannot pre-empt it in one call, because the near-match set is not knowable before the call and each cleared hit can reveal a fresh one.** The cost is not one extra round trip per write; it is N, unbounded, discovered one at a time, and each round trip re-sends the entire node body — here roughly 4 KB, three times. bhome recorded that same re-send cost separately (part 6) without connecting it to this.\n\nFOUR OPTIONS, RECOMMENDED ONE FIRST.\n\n⭐ **① SUPPRESS THE NAMED PAIRINGS, KEEP EVERY OTHER CROSS-TYPE CHECK.** Requirement↔Capability, ChangeEvent↔Decision, Decision↔Component, exploratory-Decision↔the-Decision-that-settles-it, and TemporalFact↔Decision stop refusing; every other type pair refuses exactly as today. Consequence: removes 14 of 14 observed false positives and keeps the guard armed everywhere the evidence does not reach. Cost: if one of those pairings ever IS a genuine duplication across layers, it now passes silently — but that is the failure the pre-emption habit already produces, without leaving a record.\n② **RAISE THE BAR FOR THOSE PAIRINGS RATHER THAN REMOVING IT** — refuse only on a much higher similarity score. Keeps a catch for near-verbatim copies. Cost: a threshold nobody has data to set, and `fact:the-near-match-filter-has-no-node-type-term` already establishes that no ratio can separate a ChangeEvent from the Requirement behind it, because they SHOULD score alike.\n③ **DISSOLVE IT INSTEAD OF TUNING IT** — `dec:idea-should-a-creation-call-carry-its-own-golden-thread` proposes `add_requirement`/`add_capability` taking `project_id` and `satisfies` inline, so the pair is created in ONE call and the second write never happens. Fixes the largest pairing at the root and removes 22 of 44 measured boilerplate edge writes. Does nothing for the other four pairings.\n④ **DO NOTHING.** The guard stays armed and stays pre-empted: the false positives continue AND the check is not actually running. Strictly worse than ①.\n\n⭐ RECOMMENDATION: ① NOW AND ③ SEPARATELY, not one instead of the other. ③ is the better fix for one pairing and is a larger piece of work; ① is available at the line that already has the type pair in hand (capture.rs:190) and needs no new lookup, plumbing or vocabulary.\n\n📌 ONE REPAIR IS WORTH DOING UNDER EVERY OPTION INCLUDING ④: make the refusal return the WHOLE near-match set rather than one layer of it, so `distinct_from` can be answered once. Attempt 2 proves it does not today, and that is a bug independent of how the guard is tuned.",
+        "kind": "choice",
+        "name": "OPEN — the cross-type near-match repair was parked for want of a count. The count is now 12 refusals, 0 duplicates. Does the behavioural half proceed?",
+        "rationale": "THE HONEST COUNTER-ARGUMENT, because a recommendation with no counterweight reads as steering:\n\nThe measurement has a real weakness and it should be weighed rather than waved past. Both field observers are AGENTS, both judged their OWN writes, and an agent that has decided its write is distinct is not a neutral referee — 12/0 is a lower bound on the false-positive rate, not a proven zero. Nobody has audited the 12 to see whether any was a duplicate the agent talked itself past. If even one was, option ① makes that class permanently invisible.\n\nAgainst that: the guard is documented as `refuse_unless_deliberate` — forcing a CHOICE, never preventing a write — so it never had the power to stop a determined duplicate. And option ④ preserves the appearance of a check and none of its effect, which is the worst state of the four.\n\nALSO WORTH KNOWING BEFORE DECIDING: the 2026-08-29 repair is not wasted work under any option. The rewording is what let musicjug say \"that sentence told me instantly which of the two cases I was in\" — the message change earned its keep independently of whether the behaviour now changes too.\n\n⚠️ AND A NOTE ON THE EVIDENCE'S PROVENANCE, since this design cares about it: the two in-session refusals are the only ones here NOT self-reported by an agent grading its own work. They were incurred, not observed, and they would have been recorded identically whichever way they fell.",
+        "status": "accepted"
       }
     },
     {
@@ -148688,6 +149235,16 @@
       }
     },
     {
+      "node_id": "frag:art:edge-prose",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered crates/reflow2-core/src/edge_prose.rs"
+      }
+    },
+    {
       "node_id": "frag:art:enforced-rule-detector-test",
       "node_type": "Fragment",
       "properties": {
@@ -149678,6 +150235,16 @@
       }
     },
     {
+      "node_id": "frag:art:test-a-prescribed-layer-pair-no-longer-refuses",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered a_prescribed_layer_pair_no_longer_refuses.rs"
+      }
+    },
+    {
       "node_id": "frag:art:test-a-session-with-no-seed-can-find-one",
       "node_type": "Fragment",
       "properties": {
@@ -149725,6 +150292,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered discontinued_is_read.rs — six cases: the defect, the authority check, the cascade, the visible count, and two counterweights"
+      }
+    },
+    {
+      "node_id": "frag:art:test-edge-prose-is-governed-like-node-prose",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered edge_prose_is_governed_like_node_prose.rs"
       }
     },
     {
@@ -152547,6 +153124,18 @@
         "provenance": "authored",
         "statement": "Raised by @ajs from flo2, 2026-08-05, and this is the concrete instance that exposed req:the-loop-says-what-is-owed-to-a-person. A design can hold any number of Decision nodes at proposed — genuinely open choices, one of them blocking another person's work — and NOTHING REPORTS THEM.\n\nMEASURED TWICE, ON TWO DESIGNS, INDEPENDENTLY. (1) On flo2's own design, holding EIGHT proposed decisions: detect_gaps returned 12 gaps, NONE referencing a Decision; loop_status reported unanswered_questions 0, unwritten_answers 0, and has no field that counts an open decision at all. (2) REPRODUCED ON REFLOW2'S OWN DESIGN, 2026-08-05, deliberately as a test rather than by accident: capturing this proposal created dec:one-process-many-stores at status proposed and gave it an AUTHORED_BY edge with role=approver to who:ajs — the exact shape this requirement says should be reported. loop_status then returned clean:false with unsurfaced_gaps 11, unanswered_questions 0, and NO field counting an open decision; detect_gaps returned 11 gaps of which ZERO referenced dec:one-process-many-stores. Every one of the 11 was about the capabilities and requirements captured alongside it. So the loop reported eleven things it was owed and stayed silent about the one item a named person had actually been asked to decide.\n\nThat second measurement matters more than the first: it is on the design of the tool itself, made by the tool's own instrumentation, on a node built specifically to be the positive case. The detector is not failing on an exotic shape — it is silent on the canonical one.\n\nTHE QUIET IS RIGHT; THE LACK OF AN EXIT IS NOT. This is documented and deliberate. The brainstorm skill records a musing as a proposed Decision with its options in prose precisely so the loop stays silent while somebody is still thinking, and detect_gaps fires undecided_decision_point only on a Decision holding two or more REGISTERED ALTERNATIVES — a fork with real design behind each branch. That line is a good one and must survive: a brainstormed Decision with no approver must keep costing nothing, so thinking out loud stays free.\n\nTHE PROBLEM IS THAT THERE IS NO WAY TO CROSS IT. A musing that becomes a live question owned by a named person has no state to move to. register_alternative does not fit: it requires a LOCATION per alternative — where that alternative's design export lives, branch-by-file — and the options here are prose (\"connect the user's own git repo\" against \"provision a hosted sandbox\"), neither of which has a design export. Using it would mean inventing file paths that do not exist in order to make a detector notice something true. And the Question machinery cannot be pointed at a Decision: answer_question refuses unless gap_to_prompt already recorded a question, and gap_to_prompt takes a GapCandidate from detect_gaps, so Questions are GAP-DERIVED ONLY — there is no way to raise a standalone question against a node somebody must decide on. That refusal is correct and well-explained; the limitation is upstream of it.\n\nTHE GRAPH ALREADY KNOWS, which is what makes this cheaper than it looks: AUTHORED_BY with role=approver is already the graph SAYING that a named contributor owes an answer here. The information is present and structured. Nothing computes on it.\n\nTHE DISCRIMINATOR THIS REQUIREMENT ASKS FOR: proposed AND carrying an approver edge means somebody has been asked to decide and the loop should say so. Proposed with no approver means somebody is thinking, and the loop stays silent. The graph already distinguishes these two; the loop does not read the distinction.\n\nWHAT IT COST, which is the shape of what it will cost users: flo2's requirement was that its open decisions surface for the second contributor when he clones. The graph could not satisfy it, so it was met OUTSIDE THE GRAPH — a hand-written list in README.md plus a committed loop-nudge hook. That list is a second copy of something the graph already holds, maintained by hand, with nothing checking the two agree. It will drift the first time a decision is added or settled, and it will drift SILENTLY — the precise failure mode reflow2 exists to prevent. A design brain that holds the open decisions but cannot report them pushes its users into keeping a shadow list.",
         "status": "proposed"
+      }
+    },
+    {
+      "node_id": "req:an-edges-prose-does-not-outlive-the-node-it-points-at",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "A reader following an edge is not misled by prose that outlived the node under it",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "An edge's `evidence` and `note` are claims about the world, written at a moment in time, and the design says when one still uses language the node it points at has since dropped — rather than leaving a reader to follow an edge whose reasoning reads as current and is not.\n\nRecorded from bhome's field report, 2026-08-31: narrowing a climate requirement left five RISKS edges still arguing about the arctic, and four were repaired only because the propagation happened to list them and the agent happened to remember what they said. Accepted on Anthony's word the same day.\n\n⚠️ THE OBLIGATION IS TO SAY, NOT TO REPAIR. Whether stale-reading evidence is now WRONG is a judgement about meaning, and this requirement deliberately does not claim the design can make it. It also does not oblige the check to be able to answer everywhere: where no prior state was recorded, saying so is satisfying this requirement, not failing it.",
+        "status": "accepted"
       }
     },
     {
@@ -156845,6 +157434,18 @@
       }
     },
     {
+      "node_id": "fact:a-gap-can-be-answered-in-prose-but-only-closed-with-a-signature",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "AN AGENT WITH A CORRECT SUBSTANTIVE ANSWER TO A GAP HAS NO HONEST WAY TO RECORD IT. Measured in musicjug, 2026-08-31 (art:musicjug-genesis-feedback-2026-08-31, \"The bad\" §6), and CORRECTED the same day by a measurement — see the correction below.\n\n`decomposition_coverage` asked a real question — \"what did the parent hold that none of its children hold?\" — and the session had a real answer: four children say WHAT she learns, and a newly-added fifth carries the HOW, which was the part actually at risk of being designed away.\n\nTwo exits were offered and neither fits: write another child (wrong — nothing was left over), or `acknowledge_gap`, which is the OWNER's word by definition and refuses an unknown approver. The session acknowledged with the owner named, honest only because they had endorsed the reading one message earlier. \"Without that I would have had to leave a solved gap open as noise.\"\n\n🛑 CORRECTION, 2026-08-31, from reading the tool surface rather than the report: **`answer_question` DOES accept a `gap_id`** (crates/reflow2-mcp/src/tools/ask.rs:294), so the affordance is not absent as first recorded here. What is absent is an HONEST USE of it by an agent: its own description reads \"Record what the user said in reply to a question\", so an agent putting its own reasoning there would be recording its answer as the user's. That is the same forgery `acknowledge_gap`'s approver rule exists to prevent.\n\n⭐ SO THE FINDING SURVIVES AND ITS SHAPE CHANGES. The problem is not a missing verb; it is that reflow2's vocabulary for recording THE USER'S word is well developed and its vocabulary for recording THE AGENT'S is almost empty — see `fact:reflow2-has-a-vocabulary-for-the-users-word-and-none-for-the-agents`. The one place the other half IS modelled is a Decision at `proposed` carrying an approver, which musicjug praised in the same report without connecting it to this complaint.\n\n📌 THE GAP TEXT ITSELF NAMES BOTH MOVES: \"Write the answer into the design ... or acknowledge_gap.\" Only the second reads as available to an agent.\n\n⚠️ WHY THIS IS NOT AN ARGUMENT TO RELAX THE APPROVER RULE. Acknowledging is a JUDGEMENT that the design is fine as it stands, and an agent forging that is exactly what `fact:acknowledge-gap-records-a-judgement-without-recording-whose` was fixed to stop. Answering is a different act: it makes a claim that is itself checkable and re-expires. Collapsing the two in either direction loses something.",
+        "subject_id": "cap:an-acknowledgement-says-whose-judgement-it-was",
+        "valid_from": "2026-08-31"
+      }
+    },
+    {
       "node_id": "fact:a-gate-is-only-as-wide-as-the-toolchain-that-runs-it",
       "node_type": "TemporalFact",
       "properties": {
@@ -159314,6 +159915,18 @@
       }
     },
     {
+      "node_id": "fact:edge-prose-is-as-perishable-as-node-prose-and-nothing-reads-it",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "EDGE `evidence` AND `note` ARE PROSE WRITTEN AT A MOMENT IN TIME, EXACTLY AS PERISHABLE AS NODE TEXT, AND NO DETECTOR READS THEM. Measured in bhome, 2026-08-31 (art:bhome-genesis-feedback-2026-08-31, \"Session 1, part 7\").\n\nTHE INSTANCE, and it is a clean one. Anthony narrowed a climate requirement from desert-to-arctic to lower-48 city climates. `propagate_change` returned 53 impacted nodes with an 8-node direct ring, five of them RISKS edges pointing at the changed requirement — which the report calls the best single moment of the session, because those five objections had been written across three earlier conversations, hours apart, each as a brainstorm aside, and nothing else would have recalled them.\n\nBut the five RISKS edges carried `evidence` written when the range WAS desert-to-arctic — e.g. \"in the arctic, a tank of water at fish temperature is a large continuous heat load\". After the narrowing that evidence is WRONG, and a reader following the edge is misled by prose that reads as current. The agent repaired four of five by hand, and says why it caught them at all: \"only because the propagation happened to list them and I happened to remember what they said.\"\n\n🛑 THE ASYMMETRY IS THE FINDING. The node-level story is complete: every `add_*` warns loudly on overwrite, `reconcile_artifacts` catches design-vs-file drift, `change_axis_unstated` catches an unstated axis. The edge-level story is empty. Nothing warns, nothing reconciles, nothing detects. An edge property is a claim about the world in the same way a node property is, and only one of the two is governed.\n\n⭐ THE REPAIR IS AVAILABLE WHERE THE DEFECT IS. `propagate_change` already computes the direct ring and already holds both the changed node's text and each ring edge's `evidence`. The report's own two proposals, cheapest first: ① when a direct-ring edge's `evidence` mentions terms that no longer appear in the changed node, say so — even a crude string check would have caught \"arctic\" surviving in four edges after \"arctic\" left the requirement; ② more generally a `stale_edge_evidence` detector, or a `written_at` stamp on edge prose so a reader can see the evidence predates the node it describes.\n\n📌 NOT A WRITE PROBLEM: \"Re-writing an edge with `create_edges` upserts its properties cleanly, which made the repair easy once identified — the problem is purely one of noticing.\"",
+        "subject_id": "cap:propagate",
+        "valid_from": "2026-08-31"
+      }
+    },
+    {
       "node_id": "fact:eight-capabilities-are-reported-built-on-the-strength-of-a-test-file",
       "node_type": "TemporalFact",
       "properties": {
@@ -159867,6 +160480,18 @@
       }
     },
     {
+      "node_id": "fact:reflow2-has-a-vocabulary-for-the-users-word-and-none-for-the-agents",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.8,
+        "fact_type": "defect",
+        "statement": "CANDIDATE CAUSE, PRODUCED BY A MEASUREMENT THAT REFUTED THE FIRST EXPLANATION. Root-caused 2026-08-31 against the two field reports.\n\nTHE FIRST EXPLANATION WAS \"the instruction layer runs ahead of the typed-tool layer\" (dec:idea-the-instruction-layer-runs-ahead-of-the-typed-tool-layer), which predicted all four affordances would be ABSENT. The discriminating measurement was: for each, does a tool already exist that the agent simply did not find? Taken against the tool surface —\n\n  ① answer a gap substantively -> **EXISTS**. `answer_question` accepts EITHER `gap_id` or `question_id` (crates/reflow2-mcp/src/tools/ask.rs:294). Not absent.\n  ② component DEPENDS_ON      -> ABSENT. Only `declare_dependency` (built.rs:66), a different concept.\n  ③ edge-prose staleness      -> ABSENT. No detector in detect.rs reads edge `evidence` or `note`.\n  ④ snapshot the replaced field -> ABSENT. `certify_preservation` is design-to-design merge preservation (exchange.rs:495), not field replacement.\n\n3 of 4 absent, 1 present. **THE FOUR ARE NOT ONE CLASS.** They are two classes of two, and grouping them would have been the over-generalisation the first record warned about.\n\n⭐ THE SECOND CLASS IS THE ONE WORTH HAVING, and the measurement is what surfaced it. `answer_question` exists, takes the right id, and MEANS THE WRONG THING: its own description is \"Record what the user said in reply to a question.\" `acknowledge_gap` is the same shape — it refuses an unknown approver because acknowledging is the owner's judgement. So an agent holding a correct substantive answer has a tool it must not use, because using it would put its own reasoning in the user's mouth. It stays silent instead, and the silence is indistinguishable from having nothing to say.\n\n**REFLOW2 HAS A WELL-DEVELOPED VOCABULARY FOR RECORDING THE USER'S WORD AND ALMOST NONE FOR RECORDING THE AGENT'S.** That is a strength, not an accident — it is what stops a design being forged — but it has exactly one place where the other half is modelled: a Decision at `proposed` carrying AUTHORED_BY `role=approver`, which says \"I recommend this and it is not mine to decide\" and is reported by `loop_status` until the human answers. musicjug singled that out unprompted: \"I have not seen another design tool that models this as a first-class state. For agent-driven work this is close to essential.\"\n\n📌 SO THE SHAPE OF THE ASK CHANGES. Not \"add `answer_gap`\" as a new verb, but: **generalise the one mechanism that already works.** An agent-authored answer is a `proposed` record with the human named as approver — visible, attributed, expiring, and impossible to mistake for the owner's word. `answer_question` and `acknowledge_gap` each need that variant rather than a sibling tool.\n\n⚠️ WHAT THIS DOES NOT COVER, said plainly rather than stretched to fit: ② and ③ have nothing to do with whose voice a record is in. A missing typed helper for component coupling and an ungoverned edge-prose layer are two ordinary gaps with two ordinary causes. This cause explains two of the four findings and no more.\n\n📌 AND WHAT WAS NOT ESTABLISHED: nobody checked whether `answer_question` on a gap that was never asked is refused for a reason that would ALSO block the proposed variant — it requires a Question minted by `gap_to_prompt` first, and whether an agent-authored answer should mint one is unexamined. No test was written; this is a reading of the code and the tool descriptions, not a behavioural measurement of the running server.",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-08-31"
+      }
+    },
+    {
       "node_id": "fact:reflow2-sends-a-structured-payload-for-tools-that-declare-no-output-contract",
       "node_type": "TemporalFact",
       "properties": {
@@ -159976,6 +160601,18 @@
         "subject_id": "cap:shared-sessions",
         "valid_from": "2026-08-07",
         "value": "{\"reported\":\"2026-08-07 dev_storyflow, api-boss 5d608b85, from a live 5-hour shift\",\"scale\":\"7 --shared client processes + 1 --serve-shared; 3 bosses + 4 workers; one graph\",\"held_1\":\"zero lock contention all day; the REFLOW2-HOLD/RELEASE ritual is gone entirely\",\"held_2\":\"server-side behaviour reaches attached seats with no restart; only the tool list is negotiated at connect; restarted 1 session instead of 6\",\"held_3\":\"advisory claims defended explicitly: no deadlocks, no waiting, no force-release\",\"held_4\":\"mint_seat vs add_contributor as separate concepts held up\",\"held_5\":\"concurrent reads of the same nodes uneventful\",\"held_6\":\"workers on the design brain returned re-resolvable node ids instead of prose\",\"do_not_change\":\"advisory-not-lock claims; forced checksum disposition; per-property merge; served skills; --shared itself\"}"
+      }
+    },
+    {
+      "node_id": "fact:six-capabilities-earned-their-keep-in-the-field-on-one-day",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "observation",
+        "statement": "WHAT ACTUALLY PAID OFF, IN TWO REAL DESIGNS, ON ONE DAY — recorded because reflow2 collects friction diligently and evidence of USE almost not at all (only ~11% of capabilities have any recorded consumer, and a report that only ever lists debt reads as a hygiene tool).\n\n① **detect_defects caught two architecture cycles before a line of code existed** (musicjug). `comp:coach -> comp:shell -> comp:coach`, severity critical, fixed; then `comp:shell -> comp:stage -> comp:shell`. \"Same mistake, made twice, minutes apart, by me, unnoticed both times.\" Cost to catch at design time: ~4 minutes. The session's own verdict: \"the second one is what convinced me the first wasn't luck.\" It then wrote the rule down (`dec:shell-is-the-composition-root`) so a third one does not get built — a detector that changes the RULES rather than only the graph.\n\n② **The absence doctrine changed behaviour, in the exact words it was built to say** (musicjug). \"the component level has 7 component(s) and ZERO dependency pairs between them, so every topology result here is silent about that level rather than clean about it.\" The session had just received a clean sweep, and that sentence told it the clean sweep meant nothing. It declared twelve component dependencies BECAUSE OF THAT LINE — which is what made ① possible at all. \"Almost every analysis tool in existence reports '0 findings' identically whether it looked hard and found nothing or couldn't have found anything. This should be copied by other tools.\" THE HEADLINE FINDING DEPENDED ON THE ABSENCE FINDING.\n\n③ **quality_target_unstated changed the architecture** (musicjug). Forcing \"which would you sacrifice the others for?\" before allocation got the answer \"timing\", and because of it rendering and touch input were fused into one component with one clock as sole time authority — \"a shape I would not have chosen by default.\" What made it answerable by a non-specialist owner in one click was the gap text spelling out how the four attributes actually disagree.\n\n④ **budget_report produced a conclusion the owner has to act on** (bhome, part 8) — the first tool in that session to do so rather than record a conclusion he had already reached. `total: 297, limit: 250, verdict: \"exceeded\", unstated: [], basis_coverage: {estimated: 10}`. Three details make it trustworthy rather than tidy: `unstated: []` licenses reading 297 as a real total; `estimated: 10` stops anyone mistaking it for survey data; `path_note` explained why it did not compute the other rollup it can compute. Cost: ten edges with a number on each.\n\n⑤ **Retirement worked end to end without management** (bhome, part 5). OBSOLETES drawn from the accepted Decision that withdrew the thing; only an ACCEPTED Decision discontinues anything; the target's `status` deliberately does not move. After the retirement the gap count stayed at 3 — the discontinued capability's findings fell silent on their own and nothing started nagging. \"The alternative I would have reached for unaided — delete_node — is precisely what the orphan_node repair note calls out.\"\n\n⑥ **`proposed` + an approver models \"I recommend this, but it is not mine to decide\"** (musicjug). The agent recorded its own architectural recommendation, left it unsettled, attached the owner as approver; `loop_status` reported it under `assigned_decisions` and kept reporting it until answered. \"I did not have to remember to ask, and I could not accidentally record my recommendation as their decision. I have not seen another design tool that models this as a first-class state. For agent-driven work this is close to essential.\"\n\n⭐ AND ONE ON INSTRUCTION DESIGN, WHICH IS ITSELF A MEASUREMENT: both reports independently say that instructions carrying their own EVIDENCE got followed and bare instructions did not. musicjug: \"'on 2026-08-21 reflow2's own graph held 145 brainstormed ideas joined by 12 edges' is why I actually drew the relations instead of skipping to the next step. An instruction with a measurement attached gets followed. An instruction that says 'remember to link things' does not.\" bhome, on the Constraint-not-Requirement routing: \"'Constraint is not only for budgets' as a bare statement would have washed over me. 'Eleven prohibitions in a real design now report unsatisfied forever' is specific enough to change behaviour.\" Two observers, same conclusion, about the house style of every skill here.",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-08-31"
       }
     },
     {
@@ -160126,6 +160763,18 @@
         "fact_type": "defect",
         "statement": "**ANTHONY, 2026-08-14, ON HIS WORK COMPUTER, JUST AFTER UPDATING: `● Unknown command: /capture-session`. THE SKILL EXISTS, IS SERVED, AND HAS NO COMMAND — AND THE ONE PLACE THAT CANNOT REPRODUCE THIS IS THE REPO WHERE THE DECISION WAS MADE.**\n\n═══ MEASURED, 2026-08-14 ═══\n```\ngetting-started/skills/     20 skills served\ngetting-started/commands/   11 command files\n```\nThe eleven: `/adopt /brainstorm /debt /decisions /gaps /genesis /health /kpp /req /rules /where`.\n\nTwo of them front a TOOL, not a skill — `debt.md` calls `loop_status`, `decisions.md` queries. So **nine commands front a skill, and ELEVEN OF THE TWENTY SKILLS ARE FRONTED BY NOTHING**: capture-session, ci-gate, impact-check, ingest-corpus, link-artifacts, link-projects, parallel-work, plan-increments, report-friction, retire-from-design, revise-design.\n\n⇒ On a consumer install those eleven are reachable only if the agent thinks to call `get_skill`. **`capture-session` is one of them, and it is the skill whose own text says the user should not have to be the trigger.**\n\n═══ ⭐⭐ WHY NOBODY HERE COULD SEE IT ═══\n\nAnthony, correcting this session: *\"seems to work here fine, as well as /capture-intent.\"* **He is right, and the reason is the finding.**\n```\n.claude/skills/   20 directories   <- the SOURCE the binary compiles in\n```\nClaude Code loads a project's `.claude/skills/<name>/SKILL.md` as `/<name>`. This checkout holds all twenty **as sources**, so in reflow2's own repo every skill resolves as a slash command — including the eleven that ship with none. `/capture-intent` resolves here for that reason and cannot resolve on a consumer install, where nothing is copied (`dec:skills-served`).\n\n**The decision's own question (`question:5aa0248a4e730d34`) asked whether commands should ship \"so a consumer project gets the same ergonomics reflow2's own repo has\". The repo's ergonomics come from the SKILL SOURCES, not from the commands — so the eleven were never sized against the twenty they were meant to match.** This is `req:the-tool-finds-its-own-blind-spots` arriving in the environment again, the same shape as the symlinked kit in `fact:updating-reflow2-does-not-update-a-project-already-set-up` and found the same day.\n\n═══ 🛑 THE GUARD IS ASYMMETRIC, AND THAT IS WHY IT STAYED QUIET ═══\n\n`dec:commands-are-the-exception` names ONE rot direction and closes it: *\"a command could name a skill that no longer exists. `skill_lint` fails on exactly that.\"* **The opposite direction — a skill that no command names — is checked by nothing.** Grepped `tools/test_init.py` and `tools/skill_lint.py`: no assertion pins the command count or compares the two sets, so every skill added since has shipped uncovered in silence. Nine of the eleven uncovered skills postdate the decision.\n\n═══ 🛑 AND THE RECORD SAYS EIGHT ═══\n\n`dec:commands-are-the-exception`, `chg:commands-ship` and `ver:install-reaches-the-agent` all say **eight** slash commands and enumerate them. **Eleven ship** — `/adopt`, `/genesis` and `/rules` were added without the record moving. Nothing pins the number, so nothing noticed.\n\n═══ ✅ THE OPEN QUESTION IS ANSWERED, AND THE ANSWER IS SHARPER THAN EITHER HYPOTHESIS ═══\n\nThis node previously left open WHY he expected `/capture-session` there, naming two readings: he reached for a skill he knew existed, or the project predates `dec:skills-served` and carried copied skills the update pruned.\n\n**ANTHONY, 2026-08-14: \"I believe the project pre-dates the capture-session skill.\"** MEASURED: capture-session shipped in `4a9f4e7` (PR #163) on **2026-08-12**, released in v0.29.0 the same day.\n\n⇒ **THE PRUNED-COPY READING IS RULED OUT FOR THIS SKILL. A project set up before 2026-08-12 never held a capture-session copy to prune — the skill did not exist when its kit was written.** So the command was never there, was never removed, and could not have resolved at any point in that project's life.\n\n⭐⭐ **WHICH LEAVES THE FIRST READING, AND IT IS A CLEANER DEMONSTRATION OF THE BLIND SPOT THAN THE MEASUREMENT ABOVE.** He knew the skill's NAME — and the place he could have learned it is the reflow2 checkout, where `.claude/skills/capture-session/` makes it a working slash command. **The maintainer learned a skill's name in the one environment where typing it works, then typed it where it never could.** The blind spot is not only that the repo cannot reproduce the defect; it is that the repo actively TEACHES the wrong affordance.\n\n📌 SECOND-ORDER, AND IT COMPOUNDS: a project set up before 2026-08-12 also carries a KIT from before then, so whatever commands it does have are that generation's. `fact:updating-reflow2-does-not-update-a-project-already-set-up` — the binary updates, the per-project kit does not — applies to this machine directly. `reflow2 init . --harness=claude` is what refreshes it; `ls .claude/commands` says whether `init` was ever run there at all.",
         "subject_id": "dec:commands-are-the-exception"
+      }
+    },
+    {
+      "node_id": "fact:the-commonest-structural-edge-has-no-typed-helper-and-its-name-is-taken",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "COMPONENT `DEPENDS_ON` — the edge that feeds cycle detection, single-point-of-failure analysis and the seam gap — HAS NO TYPED HELPER, AND THE OBVIOUS NAME IS ALREADY TAKEN BY SOMETHING ELSE. Measured in musicjug, 2026-08-31 (art:musicjug-genesis-feedback-2026-08-31, \"The bad\" §4).\n\nThe session searched for a way to record that one component depends on another. `declare_dependency` matched by name and turned out to be CROSS-DESIGN version pinning — git tags, feature flags, export watching (cap:design-dependencies-declared). Completely different concept. It fell back to raw `create_edge` with `DEPENDS_ON`.\n\nTHE TYPED SURFACE COVERS: contains, contain_component, satisfies, allocate, realizes, provides, consumes, governed_by, decomposes. It does not cover the single most common structural edge in any design.\n\n🛑 TWO DEFECTS, NOT ONE, AND THEY COMPOUND. The absence alone would cost a raw `create_edge`. The name collision actively routes a searching agent to the wrong tool first — and `find_tools` ranks by name, so the misdirection is systematic rather than unlucky. musicjug's proposal: add `depends_on(from_component, to_component)`, and rename the existing one `declare_external_dependency` or `declare_design_dependency`.\n\n⚠️ THIS IS NOT AN ISOLATED NAMING SLIP — it joins a counted family. `fact:defect-typed-tool-parameter-names-are-inconsistent` and `chg:param-name-mismatch-hits-a-third-independent-source` record ten prior helper-vs-schema disagreements from three independent sources. This is the eleventh, and the first where the disagreement is the TOOL's name rather than a parameter's.\n\n📌 AND IT HAS A KNOWN DOWNSTREAM COST ALREADY IN THE GRAPH: `fact:coupling-and-contract-are-recorded-in-vocabularies-that-never-meet` — couplings read from DEPENDS_ON, contracts from PROVIDES/CONSUMES, disjoint by construction on reflow2's own design. A missing typed helper on the coupling side is one reason that set stays thin. reflow2's own snapshot, same day: 1 of 70 components carries any modelled coupling, so modularity is not measurable.",
+        "subject_id": "cap:design-dependencies-declared",
+        "valid_from": "2026-08-31"
       }
     },
     {
@@ -160311,6 +160960,18 @@
       }
     },
     {
+      "node_id": "fact:the-forcing-function-was-right-and-only-its-wording-was-wrong",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "observation",
+        "statement": "A FIELD REPORT RETRACTS ITS OWN COMPLAINT, AND THE RETRACTION IS THE MORE USEFUL FINDING. bhome, 2026-08-31 (art:bhome-genesis-feedback-2026-08-31, part 9), under the heading \"I was wrong about `register_alternative`, and the reason is worth recording\".\n\nTHE ORIGINAL COMPLAINT, filed earlier in the same file: `register_alternative` demands a `location` naming a per-branch design export, and the session declined to use it for a composting-toilet-versus-digester fork \"on the grounds that neither branch had been designed and inventing a path would put a file location in the graph that resolves for nobody.\"\n\nTHE RETRACTION: \"That complaint stands as written but the conclusion was too quick. The correct move was to actually write the branch documents.\" Three short memos, one per permitting option, a page each, took a single Bash call — and then the tool worked as designed: three Artifacts, each GOVERNED_BY the Decision, each CONTRADICTS its siblings, all pointing at files that genuinely exist and the owner can read. The design gained its first three artifacts as a side effect.\n\n⭐ THE REQUIREMENT IT CALLED FRICTION IS DOING REAL WORK: \"it refuses to let a 'fork' exist as three bullet points in a prose field. If the options are not worth writing down separately, they are not yet alternatives — they are a sentence. Forcing the document into existence is the point.\"\n\n📌 SO THE ASK COLLAPSES FROM A BEHAVIOUR CHANGE TO ONE SENTENCE OF DOCUMENTATION — and the session names the sentence: \"'If no branch document exists yet, write one — that is the work this call is asking for' would have got me there two hours earlier. The current wording reads as a schema requirement rather than as a deliberate forcing function.\"\n\n⚠️ WORTH KEEPING AS A GENERAL CAUTION ABOUT FIELD REPORTS: the first-pass complaint was CORRECT ABOUT THE FACTS and wrong about the conclusion, and only a second encounter hours later surfaced that. A friction item acted on immediately would have removed a forcing function that was earning its keep.",
+        "subject_id": "cap:decision-point",
+        "valid_from": "2026-08-31"
+      }
+    },
+    {
       "node_id": "fact:the-fork-ask-is-a-deferred-branch-whose-reopening-condition-is-now-met",
       "node_type": "TemporalFact",
       "properties": {
@@ -160319,6 +160980,18 @@
         "fact_type": "measurement",
         "statement": "TRIAGE OF THE OPHYD-SERVICE FORK REPORT, 2026-08-31. Environment stated by the reporter and checked: reflow2 0.45.0, claude-code 2.1.251, MCP 2025-11-25, read off `.reflow2/graph.client.json` in their own repo. CURRENT BINARY — these findings are live.\n\n📌 NOT AN APPEND. Checked against `art:ophyd-service-feedback-2026-08-19` with a strict-prefix diff: 120 lines against 172, different content. A fresh document, not a running log — unlike dev_storyflow's, whose older copies ARE strict prefixes. The identity was read off the file, not off a note about it.\n\n═══ ⭐⭐ ① THE HEADLINE ASK IS NOT A NEW GAP. IT IS A DEFERRED BRANCH WHOSE STATED REOPENING CONDITION IS NOW MET. ═══\n`dec:parallel-alternatives` (ACCEPTED 2026-07-22, Anthony's word, both axes the recommended option) settles that AoA alternatives are BRANCH-BY-FILE rather than world-tagged inside one live graph. Its closing line names exactly what ophyd is asking for:\n\n    \"Deferred: the decision-point pointer nodes + collapse wiring (rung 2),\n     WORLD-SCOPING IF SIMULTANEOUS IN-GRAPH AoA PROVES NEEDED, and\n     per-branch readiness scoring (BL-68).\"\n\nAnd its reasoning against world-scoping was explicitly conditional: it \"would bake world-awareness into every detector (possible_duplicate, allocation, SPOF, ...) — a large invasive change for a simultaneous-in-one-graph benefit NOT YET NEEDED, and BL-70 says branch-by-file 'teaches what the real scoping primitive must preserve' first.\"\n\n⇒ OPHYD IS THE FIELD EVIDENCE THAT DECISION SAID WOULD REOPEN IT, and it arrives with a cost rather than a preference: a real architecture question (service consolidation) is PARKED — recorded as prose-level ideas, code branch created and idle — because modelling it properly would damage the main design's signals. Their sentence is the one worth keeping: \"the tool's own strength (the health machinery) is what makes the workaround unacceptable.\"\n\n⚠️ WHAT THAT DOES NOT SETTLE: whether branch-by-file has yet taught what the scoping primitive must preserve, which was the stated precondition. One report is evidence of need, not evidence that the lesson has been learned.\n\n═══ 🛑 ② THEIR ITEM 4 IS NOW THE THIRD FIELD REPORT ON ONE RULE, AND THEY DISAGREE ═══\nOphyd objects that a CONTRADICTS from an exploratory idea to an accepted Decision lands in the main design's defect count — measured, 1 to 2 — and reads as damage rather than as a live exploration.\n\nBUT `proj:bhome`, reporting the SAME DAY on the SAME behaviour, called it CORRECT: \"Two were between brainstormed ideas and were correctly suppressed... The third involves a real requirement and was correctly surfaced. Nothing told me that distinction existed; the tool just got it right.\"\n\nAnd heal.rs:1812-1825 records a PRIOR conflict with hxm_program (2026-08-26) resolved the same way, in a comment: \"Against settled design, one parked side still leaves a live question.\" Suppression requires BOTH sides parked; one parked side against settled design still reports.\n\n⇒ THREE REPORTS, TWO POSITIONS, ON A RULE WHOSE REASONING IS ALREADY WRITTEN DOWN. This is not a defect to fix; it is a disagreement to decide, and none of the three reporters knows about the other two.\n\n═══ ⭐ ③ BUT OPHYD'S PROPOSED DISCRIMINATOR IS BETTER THAN ANYTHING AVAILABLE WHEN THAT RULE WAS WRITTEN — AND IT IS 2% POPULATED ═══\nThey suggest keying on \"a CONTRADICTS whose source is an OPEN `kind: exploratory` Decision\". MEASURED: `is_parked_idea` (heal.rs:2009) keys on `status == \"proposed\"` and NOTHING ELSE — which cannot tell an IDEA being turned over from a CHOICE somebody faced and has not settled. `kind` is exactly that discrimination and did not exist when the rule was written.\n\n🛑 AND IT WOULD REACH ALMOST NOTHING TODAY: 12 of 584 Decisions carry `kind`; 572 do not. The only computation that reads `Decision.kind` is `linking_report` in relate.rs — a REPORT, not a detector. (detect.rs:4935 reads `Verification.kind`, a different property.)\n\n⇒ SIXTH INSTANCE TODAY OF THE SAME SHAPE: a typed distinction built, an instruction that sets it (the brainstorm skill passes it), and NO DETECTOR READING IT. The fix is right in shape and would be near-inert until `kind` is populated — which is itself the argument the brainstorm skill's own honest-limits section anticipated when it said the graph had no brainstorm kind and that whether the distinction should become vocabulary 'turns on whether any computation would read it'.\n\n═══ ⚠️ BOUNDS ═══\n· One project, one session, one agent, and the agent is an LLM session rather than an independent user.\n· The 1-to-2 defect measurement is on THEIR design, not reproduced here.\n· Their `find_tools` check is reported, not verified by this triage — though it matches what `find_tools` returns here for the same shape of query.\n· Whether world-scoping is the right answer is NOT established by any of this. What is established is that the accepted decision's own reopening condition has field evidence behind it for the first time.",
         "subject_id": "cap:cluster-claims",
+        "valid_from": "2026-08-31"
+      }
+    },
+    {
+      "node_id": "fact:the-gap-list-refills-with-no-visible-frontier-and-it-reads-as-a-treadmill",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.9,
+        "fact_type": "observation",
+        "statement": "EVERY FIX SURFACED MORE GAPS, EVERY ONE OF THEM LEGITIMATE, AND NOTHING SAID HOW LONG THE ROAD WAS. Measured in musicjug, 2026-08-31 (art:musicjug-genesis-feedback-2026-08-31, \"The bad\" §5), on a 71-node design taken from a paragraph to a clean structural sweep in one session.\n\nThe observed chain, each step triggered by completing the one above it:\n\n    declare component dependencies  -> undeclared_seam × 12 pairs\n    declare interfaces              -> no_published_boundary\n    designate one published         -> unverified_published_contract + incomplete_published_contract\n    add components                  -> unallocated_component + design_without_build + no_deploy_operate\n    add a release                   -> release_without_epoch\n\n\"Every one of these was legitimate and I acted on all of them. But at no point could I tell the owner 'three more rounds and we're clean' versus 'this goes on for twenty.'\"\n\n🛑 THE COST IS BORNE BY THE HUMAN WATCHING, NOT BY THE AGENT WORKING. \"To a user watching an agent work, an ever-refilling list reads as a treadmill even when each item is genuinely worth doing.\" The design is getting better and the experience is of losing ground — and a user who quits at round three quits a working process.\n\n⭐ THE INFORMATION EXISTS ALREADY: `detect_gaps` knows which phase transition triggers each gap source, which is exactly what a frontier estimate is made of. musicjug's proposal is deliberately coarse — \"fixing these 3 will likely surface ~5 more, mostly `undeclared_seam` and `unverified_*`; the phase-level gaps clear only when artifacts exist.\" Enough to say how long the road is, not a schedule.\n\n📌 RELATED AND NOT THE SAME: the session also asked for a phase-transition HINT at the moment components first appear (\"next: declare dependencies, then interfaces on the coupled pairs, then verifications\"), which would have compressed five detect rounds into one plan. The frontier says HOW FAR; the hint says WHAT ORDER. It got the ordering one `loop_hint` at a time, which is the same information delivered so as to be unusable as a plan.",
+        "subject_id": "cap:detect",
         "valid_from": "2026-08-31"
       }
     },
@@ -160671,6 +161344,18 @@
         "statement": "MEASURED 2026-08-25. Adding a road to a brainstormed Decision meant re-sending its whole `decision` field, because constructors merge by overwrite. The reply said so:\n\n    \"This call REPLACED 1 property on a node that already existed, AND NO\n     SNAPSHOT HOLDS THE PRIOR VALUE OF `decision` — checked, not assumed.\n     For that field, the value in `replaced` above is the only copy in\n     existence and this reply is the only place it appears.\"\n\n⭐ THE CAPABILITY DID ITS JOB PERFECTLY, AND THAT IS THE POINT. `cap:a-revising-write-says-whether-the-state-survived` computes whether the replaced state is preserved rather than restating the rule at everyone, and it reported the destruction accurately, named the exact field, confirmed it had CHECKED for a snapshot rather than assumed, handed back the only surviving copy, and prescribed the undo. Nothing is broken here. **Its name is `says whether the state survived`, not `prevents` — it is a reporting mechanism and it reported.**\n\n🛑 WHAT MAKES THIS WORTH RECORDING IS WHO DID IT AND WHEN. The `capture-session` skill carries a paragraph about the FIRST instance: *\"the first finding ever closed under test 7 was closed WRONG, minutes after the test shipped: the closure was written by overwriting the statement, destroying the measurement it was closing... The pull toward replacing is strong because a closure reads like a correction.\"* The agent that committed this second instance had **read that paragraph in this same session, hours earlier**, and had followed it correctly at the time — deliberately choosing `invalidates` over overwriting on two separate findings, and choosing to anchor a new measurement as its own node rather than revise a decision, EXPLICITLY to avoid this trap. Then it overwrote anyway, for a different reason (adding an option to a brainstorm, which does not read like a closure at all).\n\n⭐⭐ SO THE WARNING'S OWN FRAMING IS TOO NARROW, AND THAT IS THE FINDING. It explains the pull as *\"a closure reads like a correction\"*. This instance was not a closure and had no correction in it — it was an ADDITION to a brainstorm, the most innocent-looking edit there is. **The hazard is not closures; it is any edit to a field that already holds prose, because the only way to add a paragraph is to re-send the whole field.** An instruction that warns about one shape leaves the others unguarded, and the reader who has just complied with it feels safest.\n\n⚠️ NO FIX PROPOSED, and the obvious ones are worth naming with their costs: an append-only field or a patch argument would remove the hazard and complicate every writer; auto-snapshotting before a destructive merge would preserve the pre-image and put a write on every revise; refusing the merge without an explicit acknowledgement would stop it and add a round trip to ordinary editing. `dec:idea-should-record-change-refuse-a-snapshot-of-state-that-already-moved` already holds a neighbouring question.\n\n📌 NOT SEVERE IN THIS CASE, stated so the record is not read as worse than it was: the replaced text and its replacement were both written by the same agent minutes apart, the new text was verified to be a superset of the old in substance, and the pre-image survives in the session transcript. The finding is the PATTERN, not the damage.\n\n📌 BOUNDS: two instances total, both on reflow2's own graph, both by an agent rather than a person. Whether a human editor hits it as often is unknown and uncounted.",
         "subject_id": "cap:a-revising-write-says-whether-the-state-survived",
         "valid_from": "2026-08-25"
+      }
+    },
+    {
+      "node_id": "fact:the-revision-warning-holds-the-only-copy-of-what-it-warns-was-lost",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "THE REVISION WARNING ARRIVES AFTER THE WRITE, FOR AN OPERATION THE TOOL DOCUMENTS AND SUPPORTS, AND OFFERS NO FORWARD ACTION. Measured in musicjug, 2026-08-31 (art:musicjug-genesis-feedback-2026-08-31, \"The bad\" §3).\n\nSharpening a Decision with a quality bar the owner had just supplied produced: \"`record_change` BEFORE the merge is what puts the old state in the design's own timeline; called now it would snapshot the REPLACEMENT and the history would be wrong.\"\n\nThe advice is correct and the risk is real. The complaint is about WHEN, and about what is left to do: \"a well-earned warning that reads like an accusation and offers no forward action, only an undo recipe\" — fired at the moment the agent was doing exactly the right thing, recording new information the owner had just given.\n\n⭐ THE TOOL IS UNIQUELY POSITIONED TO PREVENT THE LOSS IT WARNS ABOUT. The reply says, correctly, that it holds THE ONLY COPY IN EXISTENCE of the replaced field — which means the warning is emitted by the one caller that could still save it. musicjug's proposal: snapshot automatically, or offer `snapshot_prior: true`, \"and the warning becomes a receipt rather than a regret.\" This capability already COMPUTES whether the replaced state survived, which is the hard half; what it does not do is keep it.\n\n🛑 AND THE PRESCRIBED ORDER IS NOT RELIABLY ACHIEVABLE FROM THE CALLER'S SIDE: \"the prescribed order is not reliably achievable from a harness that emits parallel tool batches.\" A rule that depends on call ORDER is a rule an agent host can break without either party choosing to — which makes before-the-write sequencing the wrong place to rest a guarantee reflow2 could enforce itself.\n\n📌 THE SAME SHAPE APPEARS IN bhome, FROM THE OTHER DIRECTION (art:bhome-genesis-feedback-2026-08-31, part 6): a refused bulk write meant re-sending a ~4 KB decision body verbatim, because nothing was created. \"Field-level validation before the write, or a dry-run, would make long-prose nodes cheaper to get right. This is the same underlying gap as the append-vs-replace friction: reflow2 has no way to say 'change this one thing' on a large node.\"",
+        "subject_id": "cap:a-revising-write-says-whether-the-state-survived",
+        "valid_from": "2026-08-31"
       }
     },
     {
@@ -161041,6 +161726,18 @@
       }
     },
     {
+      "node_id": "fact:twelve-near-match-refusals-across-two-designs-and-not-one-was-a-duplicate",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "measurement",
+        "statement": "THE COUNT THE 2026-08-29 REPAIR SAID NOBODY HAD. `chg:a-cross-type-near-match-is-named-as-a-layer` rejected the behavioural repair (option ① — exclude the prescribed layer pairs from the filter) with one stated reason and only one: \"Nobody has counted how often a cross-type hit IS a real duplicate, so suppressing the check would act on an unmeasured assumption.\" Two independent field reports on 2026-08-31 supply the count, and the triage session then added two more by incurring them.\n\n**14 near-match refusals. 14 judged distinct. 0 real duplicates.**\n\n- **bhome (8 hits)**, a shipping-container aquaponics build — art:bhome-genesis-feedback-2026-08-31, lines 386-650. Three workflow shapes: Requirement + the Capability created to satisfy it (×4, the golden thread); ChangeEvent + the Decision authorising it (×3, the change loop); an open idea Decision + the Decision that settles it (×1, promotion via EVOLVES_INTO, which is step 5 of the brainstorm skill). Its words: \"All six false positives are pairs the tool's own workflows create by design.\"\n- **musicjug (4 hits)**, a browser rhythm game for a 9-year-old — art:musicjug-genesis-feedback-2026-08-31. All four cross-type, all four distinct, tabulated: cap:note-highway vs req:vertical-note-highway; dec:two-speed-synthesis vs the brainstorm idea it promoted; dec:shaping-controls vs ditto; dec:one-clock vs comp:clock. Its words: \"the guard's highest-frequency firings are on the three pairings the design WANTS to look similar.\"\n- **This triage session (2 hits), and these are the only ones not self-reported by an agent grading its own work.** Writing `dec:idea-the-near-match-repair-can-now-be-reopened-because-the-count-exists` was refused TWICE: first against the measurement that motivates it (a FIFTH pairing — TemporalFact ↔ the Decision it informs), then, carrying `distinct_from` for that one, against TWO FURTHER nodes the first refusal had never mentioned.\n\n⭐ THE TWO REPORTS AGREE ON THE TAXONOMY WITHOUT HAVING SEEN EACH OTHER. Both independently name Capability↔Requirement and promoted-idea↔settling-Decision. musicjug adds Decision↔Component; bhome adds ChangeEvent↔Decision; this session adds TemporalFact↔Decision. Five pairings, three observers, one conclusion.\n\n🛑 AND THE MITIGATION HAS DEFEATED THE CHECK, WHICH IS THE PART THAT CHANGES THE VERDICT. bhome, at its eighth hit: \"I have stopped treating each as noteworthy and started passing `distinct_from` pre-emptively, which is itself the concerning outcome: a guard that is routinely pre-empted has stopped being a check.\" Option ① was rejected because suppressing the check would trade a false alarm for a silent miss. The measurement says the silent miss ARRIVED ANYWAY, by the other route: an agent that pre-declares `distinct_from` before every write is no longer being checked at all, and unlike a suppression it leaves no record of the trade.\n\n🛑 AND THE PRE-EMPTION DOES NOT EVEN WORK IN ONE CALL — measured here, not reported. The refusal returns ONE LAYER of the near-match set, so clearing it can surface a fresh layer. The cost per write is therefore N round trips, unbounded and discovered one at a time, each re-sending the full node body (~4 KB here, three times). bhome recorded that re-send cost separately in part 6 without connecting it to this. **That is a defect independent of how the guard is tuned: the refusal should return the whole set so `distinct_from` can be answered once.**\n\n📌 WHAT THIS DOES NOT SETTLE: the 12 field hits were judged distinct by the agents that wrote them, and nobody has audited whether any WAS a duplicate the agent talked itself past. The number is a lower bound on the false-positive rate, not a proven zero. The 2 in-session hits are exempt from that caveat — they were incurred rather than observed.",
+        "subject_id": "cap:search-first-at-the-tool",
+        "valid_from": "2026-08-31"
+      }
+    },
+    {
       "node_id": "fact:twelve-records-that-still-read-confident",
       "node_type": "TemporalFact",
       "properties": {
@@ -161372,6 +162069,20 @@
         "level": "unit",
         "method": "test",
         "name": "Five probes: an edgeless epoch is reported, a Verification that verifies nothing is reported, a pointer property counts as attachment, DETECT keeps its own types, an empty design is not a defect",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:a-prescribed-layer-pair-is-reported-not-refused",
+      "node_type": "Verification",
+      "properties": {
+        "description": "`crates/reflow2-mcp/tests/a_prescribed_layer_pair_no_longer_refuses.rs`, five cases, plus the two updated files that carried the old behaviour (`a_near_match_of_another_type_is_named_as_a_layer.rs`, `search_first_fires_at_the_tool.rs`).\n\n⭐ THE LOAD-BEARING ASSERTION IS NOT THAT THE WRITE SUCCEEDS — it is that the near-match is STILL REPORTED in `search_first` when the refusal is dropped. Without it, narrowing this guard and deleting it are indistinguishable from outside, and every other test in the file would pass either way.\n\nTwo counterweights hold the other side: a same-type duplicate still refuses and still offers SHARPEN, and an UNMEASURED cross-type pair still refuses with the 2026-08-29 layer wording — so the conservative repair survives underneath the behavioural one rather than being replaced by it.",
+        "findings": "5 passed, 0 failed, in the full workspace run of 1925 tests (0 failed) on 2026-08-31.\n\n⭐ OBSERVED FAILING FIRST, IN THE SPLIT THAT SHOWS THEY DISCRIMINATE. Against the unfixed code: 3 failed and 2 passed. The three that failed were exactly the ones the change had to alter (Requirement→Capability, exploratory-Decision→Decision, TemporalFact→Decision); the two that passed were the counterweights (a same-type duplicate still refused, an unmeasured cross-type pair still refused with the layer wording). A suite that only went green afterwards would not have told those apart.\n\n📌 TWO PRE-EXISTING TESTS ALSO HAD TO CHANGE, and their old assertions are the honest record of the reversal rather than casualties of it: `a_near_match_of_another_type_is_named_as_a_layer` moved to ChangeEvent→Component, because Alex's own ChangeEvent→Requirement case no longer refuses at all; and `a_capability_restating_a_requirement_is_caught_across_types` became `..._is_reported_but_not_refused`, which is now the clearest statement in the suite of what this change does and does not do.",
+        "kind": "verification",
+        "last_run_at": "2026-08-31",
+        "level": "unit",
+        "method": "test",
+        "name": "A prescribed layer pair is reported and not refused, and everything else still refuses",
         "status": "passing"
       }
     },
@@ -162308,6 +163019,20 @@
         "level": "integration",
         "method": "test",
         "name": "Drift reports which way it went, and names what the design has wrong",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:edge-prose-is-governed-like-node-prose",
+      "node_type": "Verification",
+      "properties": {
+        "description": "`crates/reflow2-core/tests/edge_prose_is_governed_like_node_prose.rs`, four cases.\n\n⭐ THE COUNTERWEIGHT CARRIES MORE WEIGHT THAN THE POSITIVE CASE and asserts two things, not one: that an edge still supported by the node is NOT reported, AND that the check actually examined it (`edges_with_prose == 1`). A silent result over an unexamined edge would prove nothing — this design's own standing rule about what a zero means.\n\nThe other two: an edge whose evidence still says \"arctic\" after the requirement narrowed IS named, with the term itself rather than only the edge; and a node with no snapshot returns a `coverage_note` saying the check was SILENT about its edges rather than clean on them, naming `record_change` as what would let it answer.",
+        "findings": "4 passed, 0 failed, in the full workspace run of 1925 tests (0 failed) on 2026-08-31.\n\n⚠️ HOW THESE TESTS WERE OBSERVED TO DISCRIMINATE, stated because \"written first and watched fail\" is the claim that is easiest to make and hardest to check later. The function did not exist when they were written, so they failed to COMPILE rather than failing on behaviour — a weaker form of the rule. What supplies the missing evidence is the counterweight: the naive implementation (compare edge prose against the node's CURRENT text only) was written first and rejected precisely because it flags `demand` and `envelope` in the still-holding edge, neither of which was ever in the requirement. The counterweight fixture is the measurement that killed that implementation, and it is asserted alongside `edges_with_prose == 1` so a future silent pass cannot come from examining nothing.",
+        "kind": "verification",
+        "last_run_at": "2026-08-31",
+        "level": "unit",
+        "method": "test",
+        "name": "Edge prose that outlived its node is named, and prose that still holds is not",
         "status": "passing"
       }
     },
@@ -164039,7 +164764,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:c4f4465156f7ed79cc479c8aa5114bf0bf722c731c7c67d6c6faced29c7313cd",
+  "prev_content_hash": "sha256:176906c026a83f859f2b0d07f803eb6d95af53c2c2534b1b06ff8b406c23de13",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
