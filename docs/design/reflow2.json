@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:f37fed11315cd976ec988e8503cccbdbc8ce6fa9fc8643afabf292627f7e8eac",
+  "content_hash": "sha256:16f43a16ed9a6d850ad7ac76e0485a07ed300ca5dc11fa4ce583069cc5c69ed2",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -1226,6 +1226,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:verify"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-revising-write-keeps-what-it-would-have-lost",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:temporal"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -33568,6 +33576,33 @@
         "action": "modified"
       },
       "to_id": "dec:idea-do-ideas-form-a-graph-or-only-a-list"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-call-holding-the-only-copy-keeps-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:temporal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-call-holding-the-only-copy-keeps-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-call-holding-the-only-copy-keeps-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-query"
     },
     {
       "edge_type": "CHANGED",
@@ -118624,6 +118659,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:test-a-replaced-value-is-kept",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-revising-write-keeps-what-it-would-have-lost"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:test-a-session-with-no-seed-can-find-one",
       "properties": {
         "completeness": "complete",
@@ -119703,6 +119747,12 @@
       "from_id": "cap:a-repair-can-say-what-it-invalidated",
       "properties": {},
       "to_id": "req:a-dated-observation-does-not-read-as-standing-doctrine"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:a-revising-write-keeps-what-it-would-have-lost",
+      "properties": {},
+      "to_id": "req:intent-preserved"
     },
     {
       "edge_type": "SATISFIES",
@@ -122620,6 +122670,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:a-replaced-value-is-kept-only-when-it-would-be-lost",
+      "properties": {},
+      "to_id": "cap:a-revising-write-keeps-what-it-would-have-lost"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:a-reply-is-sent-once",
       "properties": {},
       "to_id": "cap:bounded-reads"
@@ -125275,6 +125331,14 @@
         "action": "created"
       },
       "to_id": "art:test-a-prescribed-layer-pair-no-longer-refuses"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:test-a-replaced-value-is-kept",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-a-replaced-value-is-kept"
     },
     {
       "edge_type": "YIELDED",
@@ -128283,7 +128347,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:0312c8e62f8bd002c78fbfbe7561d76e977ce431f0c47f992bee9f5362f4d417",
+        "checksum": "sha256:122a7a56982f79b218cf98607c4b1744a1d54390a99809b7caf5d2e1f0818ce9",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/temporal.rs",
         "name": "crates/reflow2-core/src/temporal.rs",
@@ -128332,6 +128396,17 @@
         "checksum": "sha256:6770214bea12c53e80f106d2aba19e08171bd4cf7d0aea7d4dc95dfc12b29337",
         "location": "crates/reflow2-core/tests/a_repair_can_say_what_it_invalidated.rs",
         "name": "a_repair_can_say_what_it_invalidated.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:test-a-replaced-value-is-kept",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:437126714328e788b19e49d7f62040f5a3f9363e6800755116f2aeb5c4c29fe1",
+        "location": "crates/reflow2-mcp/tests/a_replaced_value_is_kept_when_it_would_be_lost.rs",
+        "name": "a_replaced_value_is_kept_when_it_would_be_lost.rs",
         "status": "realized"
       }
     },
@@ -128710,7 +128785,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:345a7d91a46a97025d4766524e8efbac61f59f9d26ff4c40bcf5f98aeaef412e",
+        "checksum": "sha256:bafe9163b9d5e2aa93885fd9802300fd17b5f208f45b6b7118614870c64e5c05",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
         "name": "crates/reflow2-mcp/src/tools/capture.rs",
@@ -128786,7 +128861,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c4758c5328693dfb65a9db44be01846b421dc0f1de1b89fc386746ddaa457f6e",
+        "checksum": "sha256:6eb8f7da7ccb08bb0b10e5a31a90f43c7b1db968d7dcce7b5034f49fa2e33ce4",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/query.rs",
         "name": "tools/query.rs",
@@ -129376,6 +129451,16 @@
         "name": "A repair can say what it invalidated, and the reader says whether a re-run is owed",
         "provenance": "authored",
         "status": "verified"
+      }
+    },
+    {
+      "node_id": "cap:a-revising-write-keeps-what-it-would-have-lost",
+      "node_type": "Capability",
+      "properties": {
+        "description": "`preserve_prior_state` snapshots the prior properties of a node whose revising write is about to replace a field that no existing snapshot holds. It runs at the six typed constructors AND at `create_node`, before the revision note is computed, so the note reports preservation rather than loss.\n\nSCOPED, and the scope is the design: nothing at risk means nothing taken. A write that replaces nothing, or replaces only fields already preserved, snapshots nothing. The trigger is the condition `prior_state_coverage` was already computing and the write was already reporting afterwards.\n\nBEST-EFFORT: a preserve that cannot be taken never fails the caller's write, and the note then warns exactly as it did before. Snapshots land in a standing `epoch:preserved-on-write`, created lazily, because a preserve is not part of anybody's round of work.\n\n📌 THIS IS THE OTHER HALF OF `cap:a-revising-write-says-whether-the-state-survived`, which COMPUTES whether the replaced state survived. That capability found the answer; this one makes the answer yes.",
+        "name": "A revising write keeps a replaced value nothing else holds — and takes nothing when nothing is at risk",
+        "provenance": "authored",
+        "status": "realized"
       }
     },
     {
@@ -137717,6 +137802,18 @@
         "name": "The brainstorm skill connects the dots",
         "rationale": "Anthony gave his word 2026-08-21 on the first of the two halves he named: \"the brainstorm skill is the perfect place to start linking ideas. it is like when a person starts 'connecting the dots'.\"\n\nMEASURED BEFORE BUILDING: 145 brainstormed ideas joined by 12 edges; 111 of them reached no other idea within two hops; the most common edge on an idea was its author.\n\nTHE MISSING LEG WAS THE INSTRUCTION, NOT THE TOOL. The connective vocabulary had existed the whole time - twelve wildcard relation types in the inference layer (CONTRADICTS, EVOLVES_INTO, DEPENDS_ON, CAUSES, BLOCKS, DUPLICATES, ANTICIPATES, OBSOLETES, RISKS, MITIGATES, TRIGGERS, VIOLATES), used 81 times across the graph and 29 times between two Decisions - and the brainstorm skill named none of them.\n\nTHE SKILL IS THE RIGHT HOME FOR ONE REASON THAT OUTWEIGHS THE OTHERS: the near-matches are already in hand at capture. The skill already requires a search before writing, and the dedup guard already returns the nodes it judged close. That list was read to avoid a duplicate and then discarded, every single time. Linking there costs one judgement, not a pass.\n\nTHE STEP TAKES THE THIRD SHAPE rather than either extreme. Merely offering candidates depends on the agent choosing well, which is the status quo that produced 12 edges across 145 ideas. Requiring an edge manufactures relations to satisfy an instruction, and a false neighbour is worse than a missing one because anything that searches by neighbourhood repeats it. So the step asks for the honest edges AND for a written line when none is drawn - the same shape distinct_from already uses on the dedup guard, and the only one of the three that leaves a record of the judgement either way.\n\nDOGFOODED on the idea that produced it, which now carries three edges drawn under the new step.\n\nSTILL MISSING: the third leg. Nothing yet notices an idea that names no relation and no line. That detector is what would make this hold across sessions rather than depending on each agent reading the skill.",
         "summary": "The brainstorm skill now links each new idea to the ones it actually relates to, and records an explicit line when no relation is honest."
+      }
+    },
+    {
+      "node_id": "chg:the-call-holding-the-only-copy-keeps-it",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-09-01",
+        "name": "A revising write keeps the value it would otherwise make unrecoverable — and only then",
+        "rationale": "Anthony's word, 2026-09-01, accepting the recommendation AND its stated counter-argument: snapshot only when it would actually lose something, rather than on every write.\n\nFROM musicjug (`fact:the-revision-warning-holds-the-only-copy-of-what-it-warns-was-lost`): the warning is emitted by the one caller that could still save the value, and offers an undo recipe instead. The order it prescribed — record_change BEFORE the edit — is not reliably achievable from a harness that emits parallel tool batches, so resting the guarantee on call ORDER rests it on something an agent host can break without either party choosing to. This moves the guarantee inside the write.\n\n⭐ AND IT HAPPENED TWICE TO THE SESSIONS RECORDING IT — on 2026-08-31, and again on 2026-09-01 when sharpening a decision genuinely dropped two paragraphs, recoverable only because the prior value was echoed in the tool reply and the session was still reading it. That second one is the argument in one line.\n\n🛑 BEST-EFFORT BY DESIGN, AND THAT IS NOT LAZINESS. Every error is swallowed into `Preserved::Failed` rather than returned: the write is what the caller asked for, and an improvement that can refuse the original request is a worse trade than the loss it prevents. When the preserve fails the note reports the loss exactly as before — strictly no worse than the old behaviour, so this can only add safety. It also disarms the one landmine in the standing-epoch choice: `MAX_SNAPSHOT_REVISIONS` caps snapshots per node per epoch, and a hot node would otherwise start refusing ordinary writes years from now.\n\nPinned by three tests written first and OBSERVED FAILING IN THE RIGHT SPLIT: the one that had to change failed, and BOTH counterweights passed against the unfixed code. The counterweights are what make \"scoped\" mean something — a write replacing nothing preserves nothing, and a field already preserved is not preserved twice. Without them this change would be indistinguishable from snapshotting everything, which is the cost the scope exists to avoid.",
+        "subject": "system",
+        "summary": "`DesignGraph::preserve_prior_state` in temporal.rs, called from `preserve_prior` in capture.rs at all six revising constructors, BEFORE `revision_of` computes its note.\n\nTHE TRIGGER IS NOT A NEW JUDGEMENT. `prior_state_coverage` already computed exactly this condition and the write was already REPORTING it afterwards — \"no snapshot holds the prior value, checked, not assumed\". All that changed is that the call holding the only copy now keeps it instead of describing its loss. Nothing at risk means nothing taken: a write that replaces nothing, or replaces something already preserved, snapshots nothing.\n\n⭐ IT RUNS BEFORE THE NOTE IS COMPUTED, deliberately. Preserving afterwards would leave the caller reading \"no snapshot holds this\" about a value that had just been saved — true when computed, misleading when read. Run first and the same note becomes the receipt musicjug asked for, computed rather than claimed.\n\nSUPPORTING CHANGES: `snapshot_node` now delegates to a new `snapshot_state`, which preserves a state the caller supplies rather than one read from the graph — the automatic preserve only learns a field was at risk by comparing incoming values against stored ones, and by then the store holds the new state. Edges are still read live, which is correct because a property-only revision does not move them, and the doc says so rather than pretending to be a general time machine.\n\nA standing epoch `epoch:preserved-on-write` holds these, created lazily. An epoch bounds a round of WORK, and a preserve taken because a write would have lost something is not part of anybody's round; attaching it to whichever epoch was newest would misattribute it, and minting one per preserve would bury a timeline that already has 193."
       }
     },
     {
@@ -150443,6 +150540,16 @@
       }
     },
     {
+      "node_id": "frag:art:test-a-replaced-value-is-kept",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered a_replaced_value_is_kept_when_it_would_be_lost.rs"
+      }
+    },
+    {
       "node_id": "frag:art:test-a-session-with-no-seed-can-find-one",
       "node_type": "Fragment",
       "properties": {
@@ -162431,6 +162538,20 @@
       }
     },
     {
+      "node_id": "ver:a-replaced-value-is-kept-only-when-it-would-be-lost",
+      "node_type": "Verification",
+      "properties": {
+        "description": "`crates/reflow2-mcp/tests/a_replaced_value_is_kept_when_it_would_be_lost.rs`, three cases, plus the updated `a_constructor_says_what_it_replaced.rs`.\n\n⭐ THE TWO COUNTERWEIGHTS CARRY MORE WEIGHT THAN THE POSITIVE CASE, because they are what makes \"scoped\" mean anything: a write that replaces nothing preserves nothing, and a field already preserved is not preserved twice. Without them this would be indistinguishable from snapshotting every revising write — the cost the scope exists to avoid.\n\n📌 AND ONE PRE-EXISTING TEST CHANGED ITS PREMISE rather than being deleted. `the_note_names_the_record_change_ordering` asserted the note NAMES THE REMEDY (record_change BEFORE the merge); it is now `the_note_reports_the_replaced_state_was_kept`, because there is no longer a remedy to name in that case. Asserting the old warning would be asserting the fix did not happen. The warning path itself is unchanged and still fires when a preserve cannot be taken.",
+        "findings": "3 passed, 0 failed, in the full workspace run of 1932 tests (0 failed) on 2026-09-01.\n\n⭐ OBSERVED FAILING IN THE RIGHT SPLIT: 1 failed, 2 passed against the unfixed code. The one that failed was the reported case; BOTH counterweights passed before the change, which is what shows they constrain the scope rather than merely describing the new behaviour.\n\n🛑 FOUR PRE-EXISTING TESTS CHANGED THEIR PREMISE, and that is the honest cost of this change rather than a detail. `a_constructor_says_what_it_replaced.rs` had one, and `a_revising_write_says_whether_the_state_survived.rs` had three — a whole file built to pin that the tool tells the truth about LOSS, in a world where the loss now mostly does not happen. Each was rewritten to assert the new truth and RENAMED where the old name would have lied about what it checks.\n\n⚠️ THE ONE THAT NEEDED CARE was `a_snapshot_of_a_different_state_does_not_count_as_preservation` — the invariant that a stale snapshot must not be credited as the current prior state. The automatic preserve makes that condition true at the tool boundary, so the test could no longer distinguish. Rather than delete the protection: it now asserts the preserved snapshot holds the INTERMEDIATE text and NOT the original, which tests the same property from the other side; and the unmaskable form is already held in core by `prior_state_coverage.rs::a_different_value_in_the_snapshot_is_not_preservation`, which the preserve cannot reach. Checked, not assumed.",
+        "kind": "verification",
+        "last_run_at": "2026-09-01",
+        "level": "unit",
+        "method": "test",
+        "name": "A replaced value nothing else holds is kept, and a write with nothing at risk keeps nothing",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:a-reply-is-sent-once",
       "node_type": "Verification",
       "properties": {
@@ -164998,7 +165119,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:910ad6706b6989ce5731d50601ea4281e03624d771dd9aba57cff645f32ece16",
+  "prev_content_hash": "sha256:f37fed11315cd976ec988e8503cccbdbc8ce6fa9fc8643afabf292627f7e8eac",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

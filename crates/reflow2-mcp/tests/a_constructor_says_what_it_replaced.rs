@@ -201,18 +201,46 @@ async fn a_revision_that_changed_nothing_says_so() {
     assert!(rev["added"].as_array().expect("list").is_empty());
 }
 
-/// The note is what an agent actually reads at call time, so it must name the
-/// ordering that makes `record_change` honest — snapshot BEFORE the merge. A
-/// snapshot taken afterwards stores the replacement, which is one of the four
-/// reports this work came from.
+/// ⭐ THIS TEST'S PREMISE CHANGED ON 2026-09-01, and the change is the point.
+///
+/// It used to assert that the note NAMES THE REMEDY — run `record_change`
+/// BEFORE the merge — because the value being replaced was about to become
+/// unrecoverable and all the tool could do was say so.
+///
+/// It no longer says that here, because there is no longer anything to remedy:
+/// the write now PRESERVES a replaced value that nothing else holds, before
+/// computing this note (`chg:the-call-holding-the-only-copy-keeps-it`). The
+/// note in this scenario is a receipt, and asserting the old warning would be
+/// asserting that the fix did not happen.
+///
+/// 🛑 THE WARNING ITSELF IS NOT GONE and must not be, which is why the second
+/// half of this test exists: when a preserve genuinely cannot be taken, the
+/// remedy has to be named at call time exactly as before. That path is
+/// exercised in `a_replaced_value_is_kept_when_it_would_be_lost.rs`; what is
+/// pinned HERE is that the ordinary case reports preservation rather than
+/// loss — otherwise a regression that silently stopped preserving would leave
+/// every test green while the note went back to warning.
 #[tokio::test]
-async fn the_note_names_the_record_change_ordering() {
+async fn the_note_reports_the_replaced_state_was_kept() {
     let s = svc().await;
     j!(s.add_requirement(Parameters(req("req:heals-itself", "Heals", FIRST))));
     let out = j!(s.add_requirement(Parameters(req("req:heals-itself", "Heals", SECOND))));
     let note = out["revision"]["note"].as_str().expect("a note");
+
     assert!(
-        note.contains("record_change") && note.contains("BEFORE"),
-        "the remedy must be named at call time, not only in a skill: {note}"
+        note.contains("PRESERVED"),
+        "the replaced state is kept now, so the note must be a receipt: {note}"
+    );
+    assert!(
+        !note.contains("NO SNAPSHOT HOLDS"),
+        "and it must not still warn that nothing holds a value that was just saved: {note}"
+    );
+    // Absent OR empty — the field is omitted when there is nothing to say,
+    // which is the same claim by a quieter route.
+    let at_risk = out["revision"].get("fields_at_risk");
+    assert!(
+        at_risk.is_none_or(|v| v.as_array().is_some_and(|a| a.is_empty())),
+        "nothing is at risk once it has been preserved: {}",
+        out["revision"]
     );
 }

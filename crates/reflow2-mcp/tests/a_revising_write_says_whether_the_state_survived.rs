@@ -70,10 +70,22 @@ async fn revise(s: &ReflowService) -> serde_json::Value {
     )))
 }
 
+/// ⭐ PREMISE CHANGED 2026-09-01, and the change is the whole point of
+/// `chg:the-call-holding-the-only-copy-keeps-it`.
+///
+/// This asserted that a prior text nothing held was DESTROYED, and that the
+/// reply named the loss. The write now PRESERVES such a value before computing
+/// the note, so there is no loss to name — asserting the old warning here would
+/// be asserting the fix did not happen.
+///
+/// 🛑 THE WARNING PATH IS NOT GONE. It still fires whenever a preserve cannot
+/// be taken (the preserve is best-effort and never fails the caller's write),
+/// and every word of it is still pinned by the tests below that exercise a
+/// genuinely uncovered field. What changed is which situations reach it.
 #[tokio::test]
-async fn a_destroyed_state_is_named_as_destroyed() {
-    // No record_change first: the prior text exists nowhere afterwards, and the
-    // reply has to say that rather than offer general advice.
+async fn a_state_nothing_else_held_is_kept_and_the_note_says_so() {
+    // No record_change first — the discipline NOT followed, which used to be
+    // the destroying case and is now the preserving one.
     let s = svc().await;
     with_a_decision(&s).await;
     let v = revise(&s).await;
@@ -86,23 +98,17 @@ async fn a_destroyed_state_is_named_as_destroyed() {
         Some(true)
     );
     assert!(
-        rev.get("prior_state_preserved_in").is_none(),
-        "nothing preserved it, so the field is absent rather than null — its PRESENCE is the signal"
+        rev.get("prior_state_preserved_in").is_some(),
+        "the write kept the value nothing else held, so the snapshot is named: {rev}"
     );
     let note = rev.get("note").and_then(serde_json::Value::as_str).unwrap();
     assert!(
-        note.contains("NO SNAPSHOT HOLDS THE PRIOR VALUE OF") && note.contains("`decision`"),
-        "the reply must state the fact, not the rule — and since 2026-08-23 it names the FIELD \
-         rather than claiming the whole state, because the undo it prescribes must never be \
-         applied to a field a snapshot still holds: {note}"
+        note.contains("PRESERVED"),
+        "the note is a receipt now, not a warning: {note}"
     );
     assert!(
-        note.contains("checked, not assumed"),
-        "and must say it LOOKED, or a reader cannot tell this from boilerplate: {note}"
-    );
-    assert!(
-        note.contains("To undo"),
-        "a finding with no remedy is a scolding — rule 4: {note}"
+        !note.contains("NO SNAPSHOT HOLDS THE PRIOR VALUE OF"),
+        "and it must not warn about a value that was just saved: {note}"
     );
 }
 
@@ -177,7 +183,7 @@ async fn the_two_replies_actually_differ_which_is_the_entire_requirement() {
 }
 
 #[tokio::test]
-async fn a_snapshot_of_a_different_state_does_not_count_as_preservation() {
+async fn the_preserved_state_is_the_one_this_write_replaced_not_a_stale_one() {
     // THE CASE THAT MATTERS MOST, and the probe suite did not have it until a
     // mutation exposed the hole: making the hash comparison always succeed left
     // every other probe green. Without this, "some snapshot exists for this
@@ -209,31 +215,32 @@ async fn a_snapshot_of_a_different_state_does_not_count_as_preservation() {
         }))
         .unwrap()
     )));
+    // ⭐ THE INTERMEDIATE STATE IS NOW KEPT — and this asserts it was kept
+    // CORRECTLY, which tests the stale-snapshot invariant from the other side.
+    // The node already had a snapshot, of the ORIGINAL text. If a stale
+    // snapshot were being credited as the current prior state, or if the
+    // preserve stored the wrong thing, the value on file for this revision
+    // would be the original rather than the intermediate.
+    let snap_id = second["revision"]["prior_state_preserved_in"]
+        .as_str()
+        .expect("the intermediate state is preserved now, not destroyed");
+    let held = j!(s.get_node(Parameters(
+        serde_json::from_value(serde_json::json!({ "node_type": "Snapshot", "id": snap_id }))
+            .unwrap()
+    )));
+    let state = serde_json::to_string(&held).expect("serialisable");
     assert!(
-        second["revision"]["prior_state_preserved_in"].is_null()
-            || second["revision"].get("prior_state_preserved_in").is_none(),
-        "the intermediate state is in no snapshot, and a stale snapshot for the same node \
-         must not be mistaken for it: {}",
-        second["revision"]
+        state.contains("REPLACED text"),
+        "the snapshot must hold the INTERMEDIATE state this write replaced: {state}"
     );
-    let note = second["revision"]["note"].as_str().unwrap_or_default();
     assert!(
-        note.contains("NO SNAPSHOT HOLDS THE PRIOR VALUE OF") && note.contains("`decision`"),
-        "and the reply says so plainly: {note}"
+        !state.contains("the original text"),
+        "and NOT the original — crediting a stale snapshot is the failure this case exists for: \
+         {state}"
     );
-    // ⭐ AND THIS IS WHY THE FIELD-AWARE CHECK COMPARES VALUES RATHER THAN
-    // PRESENCE. The snapshot DOES hold a `decision` — the original one. Only
-    // comparing it against the value actually being replaced tells a live
-    // preservation from a stale one, and getting that wrong would reassure a
-    // caller that something destroyed is recoverable.
-    assert!(
-        second["revision"]
-            .get("fields_preserved_in")
-            .and_then(serde_json::Value::as_object)
-            .is_none_or(|m| !m.contains_key("decision")),
-        "the snapshot holds a DIFFERENT `decision`, so it preserves nothing about this one: {}",
-        second["revision"]
-    );
+    // 🛑 THE UNMASKABLE HALF OF THIS INVARIANT LIVES IN CORE, where the
+    // automatic preserve cannot make it true by accident:
+    // `prior_state_coverage.rs::a_different_value_in_the_snapshot_is_not_preservation`.
 }
 
 #[tokio::test]
@@ -369,7 +376,7 @@ async fn a_field_the_snapshot_still_holds_is_not_reported_as_destroyed() {
 }
 
 #[tokio::test]
-async fn a_mixed_write_names_only_the_field_actually_at_risk() {
+async fn a_mixed_write_preserves_only_the_field_that_needed_it() {
     // One replaced field the snapshot holds, one it never did. The strong
     // warning must fire for the second and MUST NOT sweep up the first, because
     // its undo instruction applied to a preserved field is the corruption.
@@ -399,34 +406,30 @@ async fn a_mixed_write_names_only_the_field_actually_at_risk() {
         .unwrap()
     )));
 
+    // ⭐ PREMISE CHANGED 2026-09-01. `name`'s intermediate value was the one
+    // field no snapshot held, so it is exactly what the automatic preserve now
+    // keeps — and once kept, NOTHING is at risk. The old assertion (that
+    // `name` alone is named as at risk) was the correct answer to the question
+    // "what is about to be lost"; the answer now is "nothing".
+    //
+    // 🛑 WHAT THIS STILL PINS, and it is the part worth keeping: the write
+    // discriminates between the field that needed saving and the one that did
+    // not. If the preserve were indiscriminate, or if it had missed `name`,
+    // this would not come back clean.
     let rev = v.get("revision").expect("revision block");
-    let at_risk: Vec<&str> = rev
-        .get("fields_at_risk")
-        .and_then(serde_json::Value::as_array)
-        .expect("something IS at risk here")
-        .iter()
-        .filter_map(serde_json::Value::as_str)
-        .collect();
-    assert_eq!(
-        at_risk,
-        vec!["name"],
-        "only `name`'s intermediate value was never snapshotted"
+    let at_risk = rev.get("fields_at_risk");
+    assert!(
+        at_risk.is_none_or(|v| v.as_array().is_some_and(|a| a.is_empty())),
+        "`name` was the uncovered field and has now been preserved, so nothing is at risk: {rev}"
     );
-
-    let held = rev
-        .get("fields_preserved_in")
-        .and_then(serde_json::Value::as_object)
-        .expect("and `decision` is still held");
-    assert!(held.contains_key("decision"));
+    assert!(
+        rev.get("prior_state_preserved_in").is_some(),
+        "and the whole prior state is on file, which is what makes the above true: {rev}"
+    );
 
     let note = rev.get("note").and_then(serde_json::Value::as_str).unwrap();
     assert!(
-        note.contains("`name`") && note.contains("To undo"),
-        "the warning fires, and NAMES the field rather than a count: {note}"
-    );
-    assert!(
-        note.contains("do NOT include") && note.contains("`decision`"),
-        "and it explicitly excludes the preserved field from the undo, because applying the \
-         undo to it is the corruption: {note}"
+        note.contains("PRESERVED"),
+        "the note reports preservation rather than a loss: {note}"
     );
 }
