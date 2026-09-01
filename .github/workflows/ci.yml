@@ -123,6 +123,15 @@ jobs:
         run: python3 tools/check_intent_authority.py docs/design/reflow2.json
       - name: Intent-authority suite (hermetic — it must never pass quietly)
         run: python3 tools/test_check_intent_authority.py
+      - name: Command surface agrees with itself
+        # reflow2's own surface lives in several places — three skill dirs, a
+        # command source and its copy, and an alias table in Rust — and until
+        # 2026-09-01 nothing compared them. Two had already drifted: four
+        # commands existed only in this repo, and the alias table was missing
+        # three of eleven, which reproduced the exact 2026-08-19 failure that
+        # table was written to fix. Verified to FAIL on all three drift shapes
+        # before being wired here, not merely to pass on a clean tree.
+        run: python3 tools/check_command_surface.py
       - name: Merge-driver suite (real git branches, not a home-grown client)
         # Git is the client this contract is with, so git runs the test: two
         # branches editing different parts of one export must merge with no

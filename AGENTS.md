@@ -290,6 +290,7 @@ python3 tools/skill_lint.py                              # after any skill or to
 python3 tools/test_wall_check.py                         # the wall-check instrument's own net
 python3 tools/reflow2_check.py --export docs/design/reflow2.json   # design vs build, and the export chain
 python3 tools/check_intent_authority.py docs/design/reflow2.json    # settled intent carries the owner's name
+python3 tools/check_command_surface.py                   # the skill/command copies still agree
 ```
 
 > **This list is a SUBSET and `ci.yml` is the authority.** The full job also runs the instruments

@@ -107,6 +107,16 @@ NON_TOOL_TERMS = {
     # with instead. A 2026-08-27 field report was talking to a 0.39.0 server
     # while that file said 0.11.0.
     "reflow2_version",
+    # SKILL NAMES and a FIELD name, quoted by the `help` skill because it has to
+    # say which word a person types versus which skill answers — `help` is served
+    # as `/what-is-this` and `onboarding` as `/where-does-it-go`, and `shortcut`
+    # is the `list_skills` field that states the mapping. None is a tool.
+    # Declared 2026-09-01 with `chg:the-command-surface-answers-for-itself`,
+    # whose whole subject is that this mapping must be stated rather than
+    # derived — so the skill naming it is the fix, not a slip.
+    "help",
+    "onboarding",
+    "shortcut",
     # `subject_id` is the TemporalFact PROPERTY that anchors an observation to
     # what it is about, and `subjects_examined` is a FIELD of the
     # `unclaimed_findings` reply. capture-session names both deliberately:
