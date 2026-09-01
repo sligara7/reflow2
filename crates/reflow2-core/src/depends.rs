@@ -165,7 +165,10 @@ pub struct DependencyReport {
 
 impl DesignGraph {
     /// Declare a dependency on another design (`req:design-dependencies-declared`).
-    pub fn declare_dependency(&mut self, decl: &DependencyDeclaration) -> Result<(), DynoError> {
+    pub fn declare_external_dependency(
+        &mut self,
+        decl: &DependencyDeclaration,
+    ) -> Result<(), DynoError> {
         if decl.version.trim().is_empty() {
             return Err(DynoError::Validation {
                 node_type: node::RESOURCE.into(),

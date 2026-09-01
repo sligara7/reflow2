@@ -52,7 +52,7 @@ fn graph() -> DesignGraph {
 #[test]
 fn a_declaration_survives_the_round_trip() {
     let mut g = graph();
-    g.declare_dependency(&decl()).unwrap();
+    g.declare_external_dependency(&decl()).unwrap();
 
     let back = g.declared_dependencies().unwrap();
     assert_eq!(back.len(), 1);
@@ -66,7 +66,9 @@ fn a_declaration_without_a_version_is_refused() {
     let mut g = graph();
     let mut d = decl();
     d.version = "  ".into();
-    let err = g.declare_dependency(&d).expect_err("must be refused");
+    let err = g
+        .declare_external_dependency(&d)
+        .expect_err("must be refused");
     assert!(
         err.to_string().contains("AS OF"),
         "the refusal should say why the version matters: {err}"
@@ -86,7 +88,7 @@ fn a_build_taking_something_undeclared_is_reported() {
 #[test]
 fn a_pin_the_build_has_moved_past_is_reported() {
     let mut g = graph();
-    g.declare_dependency(&decl()).unwrap();
+    g.declare_external_dependency(&decl()).unwrap();
 
     let report = g.reconcile_dependencies(&[observed("v0.12.0")]).unwrap();
     let kinds: Vec<&str> = report.findings.iter().map(|f| f.kind).collect();
@@ -101,7 +103,7 @@ fn a_declaration_the_build_no_longer_takes_is_reported() {
     // The opposite failure, and it must not be silent either: a stale
     // declaration is a promise about something you no longer use.
     let mut g = graph();
-    g.declare_dependency(&decl()).unwrap();
+    g.declare_external_dependency(&decl()).unwrap();
 
     let report = g.reconcile_dependencies(&[]).unwrap();
     assert_eq!(report.findings.len(), 1);
@@ -123,7 +125,7 @@ fn a_declaration_an_accepted_decision_retired_is_skipped_and_named() {
     // the declaration had been withdrawn. A correct retirement had become a
     // permanently red gate.
     let mut g = graph();
-    g.declare_dependency(&decl()).unwrap();
+    g.declare_external_dependency(&decl()).unwrap();
     g.add_decision(
         "dec:absorbed",
         "The dependency was absorbed",
@@ -167,7 +169,7 @@ fn a_declaration_retired_by_a_proposed_decision_still_reports() {
     // Somebody proposing a removal is not the same as the owner agreeing to it,
     // and the gate must keep asking until they do.
     let mut g = graph();
-    g.declare_dependency(&decl()).unwrap();
+    g.declare_external_dependency(&decl()).unwrap();
     g.add_decision("dec:maybe", "Maybe drop it", "Thinking about it.", None)
         .unwrap();
     g.create_edge(
@@ -198,7 +200,7 @@ fn a_feature_forwarded_by_name_but_never_declared_is_reported() {
     let mut g = graph();
     let mut d = decl();
     d.features = vec!["rocksdb".into()];
-    g.declare_dependency(&d).unwrap();
+    g.declare_external_dependency(&d).unwrap();
 
     let mut o = observed("v0.11.0");
     o.features = vec!["rocksdb".into(), "fulltext".into()];
@@ -213,7 +215,7 @@ fn agreement_between_declaration_and_build_says_so_plainly() {
     let mut d = decl();
     d.components = vec!["dynograph-core".into(), "dynograph-storage".into()];
     d.features = vec!["rocksdb".into()];
-    g.declare_dependency(&d).unwrap();
+    g.declare_external_dependency(&d).unwrap();
 
     let report = g.reconcile_dependencies(&[observed("v0.11.0")]).unwrap();
     assert!(report.findings.is_empty(), "{:?}", report.findings);
@@ -240,7 +242,7 @@ fn the_manifest_says_which_reflow2_wrote_it() {
     // file whose producer is unknown cannot be read safely by a tool that has
     // since changed what the fields mean.
     let mut g = graph();
-    g.declare_dependency(&decl()).unwrap();
+    g.declare_external_dependency(&decl()).unwrap();
 
     let toml = g.dependency_manifest().unwrap();
     assert!(toml.contains("[reflow2]"), "{toml}");
@@ -282,14 +284,14 @@ fn a_dependency_that_is_also_a_design_says_so_and_one_that_is_not_stays_silent()
 
     let mut linked = decl();
     linked.graph_id = Some("dynograph-foundation".into());
-    g.declare_dependency(&linked).unwrap();
+    g.declare_external_dependency(&linked).unwrap();
 
     let mut plain = decl();
     plain.id = "dep:serde".into();
     plain.name = "serde".into();
     plain.source = "https://crates.io".into();
     plain.graph_id = None;
-    g.declare_dependency(&plain).unwrap();
+    g.declare_external_dependency(&plain).unwrap();
 
     let back = g.declared_dependencies().unwrap();
     let linked_back = back
@@ -331,7 +333,7 @@ fn a_blank_graph_id_is_treated_as_nobody_having_said() {
     let mut g = graph();
     let mut blank = decl();
     blank.graph_id = Some("   ".into());
-    g.declare_dependency(&blank).unwrap();
+    g.declare_external_dependency(&blank).unwrap();
 
     let back = g.declared_dependencies().unwrap();
     assert_eq!(back[0].graph_id, None);

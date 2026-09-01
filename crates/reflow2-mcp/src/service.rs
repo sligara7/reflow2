@@ -2470,7 +2470,7 @@ pub struct SeamPairDto {
 
 #[derive(Debug, Default, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
-pub struct DeclareDependencyReq {
+pub struct ExternalDependencyReq {
     /// Stable id, e.g. `dep:dynograph-foundation`.
     pub id: String,
     pub name: String,

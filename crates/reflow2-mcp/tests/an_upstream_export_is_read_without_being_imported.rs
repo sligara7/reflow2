@@ -67,7 +67,7 @@ fn reading_an_upstream_does_not_pull_a_single_node_into_this_design() {
     let path = upstream_export(dir.as_path(), "beamline_sim", Some("cmp:sim-only"));
 
     let mut mine = DesignGraph::open_in_memory_as("mine").expect("graph");
-    mine.declare_dependency(&DependencyDeclaration {
+    mine.declare_external_dependency(&DependencyDeclaration {
         id: "dep:sim".into(),
         name: "beamline-sim".into(),
         source: path.clone(),
@@ -118,7 +118,7 @@ fn a_real_change_upstream_is_seen_and_keeps_being_seen() {
     let _ = upstream_export(dir.as_path(), "beamline_sim", Some("cmp:new-work"));
 
     let mut mine = DesignGraph::open_in_memory_as("mine").expect("graph");
-    mine.declare_dependency(&DependencyDeclaration {
+    mine.declare_external_dependency(&DependencyDeclaration {
         id: "dep:sim".into(),
         name: "beamline-sim".into(),
         source: path.clone(),
@@ -204,7 +204,7 @@ fn declaring_a_watch_on_an_export_that_does_not_exist_yet_is_allowed() {
     assert!(upstream::baseline_hash("/no/such/path/reflow2.json").is_none());
 
     let mut mine = DesignGraph::open_in_memory_as("mine").expect("graph");
-    mine.declare_dependency(&DependencyDeclaration {
+    mine.declare_external_dependency(&DependencyDeclaration {
         id: "dep:sim".into(),
         name: "beamline-sim".into(),
         source: "https://github.com/example/beamline-sim.git".into(),

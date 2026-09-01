@@ -55,7 +55,7 @@ fn kinds(g: &DesignGraph, observed: &[ObservedUpstream]) -> Vec<String> {
 #[test]
 fn an_upstream_that_has_not_moved_says_so_plainly() {
     let mut g = graph();
-    g.declare_dependency(&watched(Some("sha256:aaa")))
+    g.declare_external_dependency(&watched(Some("sha256:aaa")))
         .expect("declare");
     let report = g
         .reconcile_upstream(&[seen("read", Some("sha256:aaa"), Some("beamline_sim"))])
@@ -72,7 +72,7 @@ fn an_upstream_that_has_not_moved_says_so_plainly() {
 #[test]
 fn an_upstream_that_moved_is_reported_with_the_pin_it_is_declared_against() {
     let mut g = graph();
-    g.declare_dependency(&watched(Some("sha256:aaa")))
+    g.declare_external_dependency(&watched(Some("sha256:aaa")))
         .expect("declare");
     let report = g
         .reconcile_upstream(&[seen("read", Some("sha256:bbb"), Some("beamline_sim"))])
@@ -93,7 +93,7 @@ fn an_upstream_that_moved_is_reported_with_the_pin_it_is_declared_against() {
 #[test]
 fn reading_never_updates_the_baseline_so_a_move_keeps_being_reported() {
     let mut g = graph();
-    g.declare_dependency(&watched(Some("sha256:aaa")))
+    g.declare_external_dependency(&watched(Some("sha256:aaa")))
         .expect("declare");
     let moved = [seen("read", Some("sha256:bbb"), Some("beamline_sim"))];
     for _ in 0..3 {
@@ -113,12 +113,12 @@ fn reading_never_updates_the_baseline_so_a_move_keeps_being_reported() {
 #[test]
 fn re_declaring_takes_a_new_baseline_and_the_report_goes_quiet() {
     let mut g = graph();
-    g.declare_dependency(&watched(Some("sha256:aaa")))
+    g.declare_external_dependency(&watched(Some("sha256:aaa")))
         .expect("declare");
     let moved = [seen("read", Some("sha256:bbb"), Some("beamline_sim"))];
     assert_eq!(kinds(&g, &moved), vec!["moved"]);
 
-    g.declare_dependency(&watched(Some("sha256:bbb")))
+    g.declare_external_dependency(&watched(Some("sha256:bbb")))
         .expect("re-declare");
     assert_eq!(kinds(&g, &moved), vec!["unchanged"]);
 }
@@ -126,7 +126,8 @@ fn re_declaring_takes_a_new_baseline_and_the_report_goes_quiet() {
 #[test]
 fn a_readable_export_nobody_has_ever_recorded_is_never_seen_not_unchanged() {
     let mut g = graph();
-    g.declare_dependency(&watched(None)).expect("declare");
+    g.declare_external_dependency(&watched(None))
+        .expect("declare");
     let report = g
         .reconcile_upstream(&[seen("read", Some("sha256:aaa"), Some("beamline_sim"))])
         .expect("reconcile");
@@ -139,7 +140,7 @@ fn a_readable_export_nobody_has_ever_recorded_is_never_seen_not_unchanged() {
 #[test]
 fn a_pointer_at_nothing_and_a_pointer_at_rubbish_are_different_findings() {
     let mut g = graph();
-    g.declare_dependency(&watched(Some("sha256:aaa")))
+    g.declare_external_dependency(&watched(Some("sha256:aaa")))
         .expect("declare");
     assert_eq!(kinds(&g, &[seen("missing", None, None)]), vec!["missing"]);
     assert_eq!(
@@ -154,7 +155,7 @@ fn a_pointer_at_nothing_and_a_pointer_at_rubbish_are_different_findings() {
 #[test]
 fn an_export_belonging_to_a_different_design_is_named_as_that_and_not_as_movement() {
     let mut g = graph();
-    g.declare_dependency(&watched(Some("sha256:aaa")))
+    g.declare_external_dependency(&watched(Some("sha256:aaa")))
         .expect("declare");
     let report = g
         .reconcile_upstream(&[seen("read", Some("sha256:bbb"), Some("vision_rig"))])
@@ -172,7 +173,7 @@ fn a_declared_design_with_no_export_to_watch_is_reported_not_skipped() {
     let mut g = graph();
     let mut d = watched(None);
     d.design_export = None;
-    g.declare_dependency(&d).expect("declare");
+    g.declare_external_dependency(&d).expect("declare");
     let report = g.reconcile_upstream(&[]).expect("reconcile");
     assert_eq!(report.findings[0].kind, "not_watched");
     assert_eq!(report.designs_declared, 1);
@@ -189,7 +190,7 @@ fn a_declared_design_with_no_export_to_watch_is_reported_not_skipped() {
 #[test]
 fn a_watched_target_nobody_looked_at_is_not_observed_rather_than_unchanged() {
     let mut g = graph();
-    g.declare_dependency(&watched(Some("sha256:aaa")))
+    g.declare_external_dependency(&watched(Some("sha256:aaa")))
         .expect("declare");
     let report = g.reconcile_upstream(&[]).expect("reconcile");
     assert_eq!(report.findings[0].kind, "not_observed");
@@ -202,7 +203,7 @@ fn a_watched_target_nobody_looked_at_is_not_observed_rather_than_unchanged() {
 #[test]
 fn a_plain_build_dependency_produces_no_upstream_finding() {
     let mut g = graph();
-    g.declare_dependency(&DependencyDeclaration {
+    g.declare_external_dependency(&DependencyDeclaration {
         id: "dep:serde".into(),
         name: "serde".into(),
         source: "crates.io".into(),
@@ -237,7 +238,7 @@ fn declaring_nothing_says_nobody_has_said_rather_than_nothing_moved() {
 #[test]
 fn the_targets_a_caller_should_open_come_from_the_committed_manifest() {
     let mut g = graph();
-    g.declare_dependency(&watched(Some("sha256:aaa")))
+    g.declare_external_dependency(&watched(Some("sha256:aaa")))
         .expect("declare");
     let targets = g.upstream_targets().expect("targets");
     assert_eq!(targets.len(), 1);
@@ -252,7 +253,7 @@ fn the_targets_a_caller_should_open_come_from_the_committed_manifest() {
 #[test]
 fn the_watch_pointer_and_its_baseline_survive_into_the_manifest() {
     let mut g = graph();
-    g.declare_dependency(&watched(Some("sha256:aaa")))
+    g.declare_external_dependency(&watched(Some("sha256:aaa")))
         .expect("declare");
     let toml = g.dependency_manifest().expect("manifest");
     assert!(toml.contains("design_export = \"/somewhere/sim/docs/design/reflow2.json\""));
@@ -267,7 +268,7 @@ fn an_unwatched_dependency_emits_no_watch_fields_at_all() {
     let mut g = graph();
     let mut d = watched(None);
     d.design_export = None;
-    g.declare_dependency(&d).expect("declare");
+    g.declare_external_dependency(&d).expect("declare");
     let toml = g.dependency_manifest().expect("manifest");
     assert!(!toml.contains("design_export"));
 }

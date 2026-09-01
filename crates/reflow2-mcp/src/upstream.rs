@@ -80,7 +80,7 @@ pub struct UpstreamNotRead {
 /// 🛑 IT NEVER WRITES. Not the baseline hash, not a sync record, nothing. A
 /// check that refreshed its own baseline on read would report `moved` exactly
 /// once and then be permanently quiet, which is worse than no check at all.
-/// Taking a new baseline is `declare_dependency`'s job, and it is a deliberate
+/// Taking a new baseline is `external_dependency`'s job, and it is a deliberate
 /// act by the person who read what changed (`dec:ask-not-repair`).
 pub fn observe_upstreams(
     targets: &[UpstreamTarget],
@@ -143,7 +143,7 @@ fn observe_one(t: &UpstreamTarget) -> ObservedUpstream {
 
 /// Read the current content hash of one export, for taking a BASELINE.
 ///
-/// Used by `declare_dependency` when a declaration names an export to watch:
+/// Used by `external_dependency` when a declaration names an export to watch:
 /// the hash recorded is what the declarer saw AT THAT MOMENT, which is the only
 /// thing a later "has it moved?" can honestly be measured against. Returns
 /// `None` when there is nothing readable there — a declaration whose pointer is
