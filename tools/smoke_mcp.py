@@ -360,7 +360,12 @@ def run(binary: str, graph_path: str) -> int:
     # (each asks a different question) but nothing names the set, so the fourth
     # is always a surprise. If you are adding an edge type: grep for the old
     # count before you push.
-    c.ok("every edge type is discoverable", len(vocab.get("edge_types", [])) == 64,
+    #
+    # 2026-09-02, ANSWERS: THE FOURTH WAS A SURPRISE AGAIN, exactly as predicted
+    # above — three were fixed (schema.rs, vocabulary.rs, tools.rs) and CI caught
+    # this one. The comment was read and still not acted on, which is an argument
+    # that naming the set matters more than warning about it.
+    c.ok("every edge type is discoverable", len(vocab.get("edge_types", [])) == 65,
          len(vocab.get("edge_types", [])))
 
     exact = s.call("describe_schema", {"from": "Capability", "to": "Component"})

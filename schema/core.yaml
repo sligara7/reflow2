@@ -280,6 +280,48 @@ schema:
         note: { type: string, description: "What is actually owned, and any bound on it — the sentence a colleague needs when they find your name on something. An owner with no note is still an owner; this is where 'the ingest half, not the export half' goes." }
         since: { type: string, description: "ISO-8601 date ownership was taken, if recorded. The core takes no clock, so the caller supplies it." }
 
+    ANSWERS:
+      # TARGET ENUMERATED, SOURCE DELIBERATELY OPEN.
+      #
+      # THE SCHEMA ALREADY DESCRIBED THIS EDGE BEFORE IT EXISTED. Question.answer
+      # reads "The design nodes it produced are linked separately" — and nothing
+      # linked them. Measured 2026-09-02: describe_schema{Decision, Question}
+      # returned ZERO exact and ZERO half-exact matches, so the only way to say
+      # "this decision is what the user's answer became" was a `*`/`*` edge that
+      # validates and means nothing.
+      #
+      # THREE INDEPENDENT REPORTS WANTED THIS ONE EDGE: proj:chama read loop debt
+      # on a correctly-deferred answer (2026-09-02); api-boss found a Question
+      # created outside gap_to_prompt permanently unanswerable and proposed
+      # exactly this as fix (3) (2026-08-15); and the question of whether a
+      # Question's wording can be amended needs somewhere to hang the amendment.
+      #
+      # `to` IS PINNED so describe_schema ranks it half_exact rather than burying
+      # it among the both-sides wildcards — applying the lesson of
+      # fact:governed-by-is-the-governance-edge-and-describe-schema-can-never-rank-it,
+      # where the RIGHT edge existed and the ranking hid it.
+      #
+      # `from` STAYS OPEN because an answer is not always a Decision: it can land
+      # as a Requirement, a Capability, or a status move. Enumerating it would
+      # refuse the honest cases, and narrowing a wildcard later is a
+      # consumer-facing break.
+      from: "*"
+      to: Question
+      extraction_hint: >
+        The design record that ANSWERED a question — the Decision, Requirement
+        or Capability the user's reply actually became. Reads as a sentence:
+        the RECORD answers the QUESTION. Draw it when you write the answer in,
+        so a later session can tell an answer that reached the design from one
+        that only reached the chat.
+
+        ⚠️ ITS ABSENCE MEANS "NOBODY SAID", NOT "NOT WRITTEN IN". Every design
+        written before 2026-09-02 has answered Questions and no ANSWERS edges,
+        so treating a missing edge as evidence of missing work would invent
+        debt on every existing graph. Reports read the edge as POSITIVE
+        evidence only.
+      properties:
+        note: { type: string, description: "HOW this record answers the question — the sentence a later reader needs when the answer is not obvious from the record alone." }
+
     ASKS_ABOUT:
       from: Question
       to: "*"

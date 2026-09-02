@@ -1929,6 +1929,38 @@ impl ReflowService {
     }
 
     #[tool(
+        description = "Record that this design record ANSWERED a question (ANSWERS) \u{2014} the \
+                       Decision, Requirement or Capability the user's reply actually became. \
+                       Reads as a sentence: the RECORD answers the QUESTION. Take \
+                       `question_id` from `open_questions`. \
+                       DRAW IT AS YOU WRITE THE ANSWER IN, not at session end: this is the \
+                       only thing that lets a later session tell an answer that reached the \
+                       DESIGN from one that reached only the CHAT. Until it exists, nothing \
+                       can \u{2014} `loop_status` counts answered questions whose gap is still \
+                       open and says outright that it cannot tell which is which. \
+                       ITS ABSENCE IS NOT A CONFESSION. A question with no ANSWERS edge is \
+                       one nobody has said anything about, NOT one whose answer went \
+                       unwritten, and no report treats it as debt \u{2014} every design written \
+                       before 2026-09-02 has answered questions and none of these edges.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn answers(
+        &self,
+        Parameters(req): Parameters<crate::service::AnswersReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.write_lock().await?;
+        ok_json(EdgeDto::from(
+            g.answers(
+                &req.from_type,
+                &req.from_id,
+                &req.question_id,
+                req.note.as_deref(),
+            )
+            .map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(
         description = "Link a node to the Decision or DesignRule that shapes it (GOVERNED_BY). \
                        PASS `ruling: parks` WHEN THE RULING DECLARES THIS NODE'S UNATTACHED OR \
                        UNSATISFIED STATE CORRECT — a registered document that deliberately draws \

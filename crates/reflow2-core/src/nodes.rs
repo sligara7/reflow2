@@ -93,6 +93,32 @@ pub mod edge {
     /// `Project → *` — the decomposition (axis-Y) containment spine.
     /// `Question → *` — the design nodes a question was raised about.
     pub const ASKS_ABOUT: &str = "ASKS_ABOUT";
+    /// `* → Question` — the design record that ANSWERED a question: the
+    /// Decision, Requirement or status move the user's reply actually became.
+    ///
+    /// THE SCHEMA PROMISED THIS BEFORE IT EXISTED. `Question.answer` has always
+    /// read "What the user said, in their own words. The design nodes it
+    /// produced are linked separately" — and nothing linked them, separately or
+    /// otherwise. Measured 2026-09-02: `describe_schema{Decision, Question}`
+    /// returned zero exact and zero half-exact matches.
+    ///
+    /// SOURCE OPEN, TARGET ENUMERATED, and the asymmetry is the whole point. An
+    /// answer can land as a Decision, a Requirement, a Capability or a status
+    /// move, so the source cannot honestly be narrowed. The TARGET is pinned to
+    /// `Question` so `describe_schema` ranks it `half_exact` instead of burying
+    /// it in the both-sides-wildcard pile — the trap `proj:chama` fell into when
+    /// GOVERNED_BY was the right edge and nothing surfaced it.
+    ///
+    /// ⭐ DELIBERATELY ABSENT FROM THE IMPACT TABLE BELOW, and this comment is
+    /// the record that the question was ASKED rather than missed — the table's
+    /// own warning is that "twice now a new edge type has reached a Release
+    /// without anyone asking whether the impact table should know about it".
+    /// A Question is a record of HAVING ASKED, not a link in the golden thread;
+    /// `ASKS_ABOUT` is outside the table for the same reason, and `AUTHORED_BY`
+    /// says outright it "never enlarges a blast radius". Adding ANSWERS would
+    /// drag every Question into `design_network()` and make each one a fresh
+    /// island for `unthreaded_cluster` to report.
+    pub const ANSWERS: &str = "ANSWERS";
     pub const CONTAINS: &str = "CONTAINS";
     /// `Requirement → Requirement` — child DECOMPOSES parent: a 1:1 split that
     /// adds no new information. Directed child→parent so a leaf finds its

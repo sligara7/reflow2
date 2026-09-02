@@ -37,6 +37,41 @@ reading the old key gets nothing back — and gets it silently, which is why thi
 is called out rather than buried. `tools/graph_probe.py` and
 `tools/loop_nudge.py` are updated in the same change.
 
+### Added
+
+- **A design record can say which Question it answered — `ANSWERS`.** The
+  schema had described this edge for months without it existing:
+  `Question.answer` reads *"What the user said, in their own words. The design
+  nodes it produced are linked separately"* — and nothing linked them.
+  Measured 2026-09-02: `describe_schema{Decision, Question}` returned **zero**
+  exact and zero half-exact matches, so the only way to say "this decision is
+  what the user's answer became" was a `*`/`*` edge that validates and means
+  nothing.
+
+  Three independent reports wanted this one edge: `proj:chama` reading loop
+  debt on a correctly-deferred answer (2026-09-02); api-boss finding a Question
+  created outside `gap_to_prompt` permanently unanswerable and proposing
+  exactly this as fix (3) (2026-08-15); and the still-open question of whether
+  a Question's recorded wording can be amended, which needs somewhere to hang
+  the amendment.
+
+  `loop_status` now reports `answered_naming_their_record` alongside
+  `answered_with_open_gap`, and the typed `answers` tool draws the edge.
+
+  ⚠️ **Its absence means "nobody said", NOT "not written in", and every report
+  reads it that way.** Every design written before this release has answered
+  Questions and no `ANSWERS` edges; treating a missing edge as evidence of
+  missing work would invent debt on every existing graph — the mixed-vintage
+  hazard AGENTS.md names for any additive schema change. The edge is positive
+  evidence only, and the debt line says so in words.
+
+  🛑 **THE STAMP MOVES: 64 → 65 edge types.** By `flow:release-cut` a note is
+  owed *iff the stamp moved*, so **an upgrade doc is owed when this is cut** —
+  unlike v0.45.0, where an optional *property* left the stamp still and the cut
+  argued its way to none. Nothing existing is removed, renamed or made
+  required, so the upgrade ACTION is expected to be "none"; the doc is owed
+  because a consumer pinning a build can observe the stamp change.
+
 ### Changed
 
 - **The answered-question debt line says only what its computation can support.**

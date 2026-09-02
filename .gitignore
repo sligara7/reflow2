@@ -39,3 +39,6 @@ opencode.json
 # reporting projects are proprietary. The design still registers each report
 # and captures its findings; only the document stays out.
 docs/feedback/
+
+# Local operator notes — machine names, accounts, paths. PUBLIC REPO: never commit.
+docs/local/

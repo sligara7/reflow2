@@ -399,6 +399,14 @@ pub struct LoopStatus {
     /// asserted the half this count cannot reach, and three projects each
     /// diagnosed the resulting message from scratch.
     pub answered_with_open_gap: usize,
+    /// How many of `answered_with_open_gap` NAME the design record that
+    /// answered them, via an `ANSWERS` edge.
+    ///
+    /// POSITIVE EVIDENCE ONLY. The difference between this and
+    /// `answered_with_open_gap` is what nobody has said either way — NOT a
+    /// count of answers that went unwritten. Every design predating the
+    /// `ANSWERS` edge (2026-09-02) reports 0 here and is not thereby in debt.
+    pub answered_naming_their_record: usize,
     /// Decisions left `proposed` that a NAMED person has been asked to settle —
     /// an `AUTHORED_BY` edge carrying `role=approver`.
     ///
@@ -781,6 +789,24 @@ impl DesignGraph {
         };
         let unanswered_questions = questions.iter().filter(|q| q.status == "asked").count();
         let answered_with_open_gap = questions.iter().filter(|q| q.status == "answered").count();
+        // HOW MANY OF THOSE NAME THE RECORD THAT ANSWERED THEM. This is the
+        // half the old message ASSERTED and never checked.
+        //
+        // AN `ANSWERS` EDGE IS POSITIVE EVIDENCE AND ITS ABSENCE IS "NOBODY
+        // SAID", never "not written in". Every design written before the edge
+        // existed (2026-09-02) has answered Questions and no ANSWERS edges, so
+        // reading absence as debt would invent work on every existing graph —
+        // the mixed-vintage hazard AGENTS.md names for any additive schema
+        // change. The message below says the count and declines the inference.
+        let mut answered_naming_their_record = 0usize;
+        for q in questions.iter().filter(|q| q.status == "answered") {
+            if !self
+                .incoming(&q.question_id, Some(edge::ANSWERS))?
+                .is_empty()
+            {
+                answered_naming_their_record += 1;
+            }
+        }
 
         // A Decision that is still `proposed` AND carries an approver edge:
         // somebody was asked to decide and nothing else says so. The approver
@@ -873,10 +899,11 @@ impl DesignGraph {
             // commonest case: a deferral the genesis skill itself prescribes,
             // recorded as an open Decision, whose gap is legitimately open.
             next.push(format!(
-                "{answered_with_open_gap} answered question(s) still have an open gap — that \
-                 is all this knows, and it is not a claim the answer went unwritten: read \
-                 them (open_questions), then write in what is missing or leave a gap that is \
-                 genuinely blocked"
+                "{answered_with_open_gap} answered question(s) still have an open gap, \
+                 {answered_naming_their_record} of which name the record that answered them. \
+                 An unnamed one is NOT evidence the answer went unwritten — nothing here \
+                 looks for it: read them (open_questions), and draw `answers` as you write \
+                 each answer in, so a later session can tell the two apart"
             ));
         }
         if unsettled_assigned_decisions > 0 {
@@ -1034,6 +1061,7 @@ impl DesignGraph {
             unsurfaced_gaps,
             unanswered_questions,
             answered_with_open_gap,
+            answered_naming_their_record,
             unsettled_assigned_decisions,
             structural_defects,
             unproven_capabilities,
