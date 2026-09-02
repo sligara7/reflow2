@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:e25d330b1ce57e3f599908272fa9e2021013f1133bdf80fd01e9515e7d0716f4",
+  "content_hash": "sha256:1c705dc2ec7cceb7ca3a7b11b79e02ec36a9f8171b3d2ebb11badaab22d2fa6d",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -10072,6 +10072,12 @@
       "from_id": "snap:epoch:planning-axis-intent:req:graph-indexes-snapshots",
       "properties": {},
       "to_id": "epoch:planning-axis-intent"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:fact:the-command-surface-has-five-copies-and-nothing-reconciles-them",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -50210,6 +50216,12 @@
       "from_id": "fact:defect-typed-tool-parameter-names-are-inconsistent",
       "properties": {},
       "to_id": "snap:epoch:usgov-genesis-feedback-triaged:fact:defect-typed-tool-parameter-names-are-inconsistent"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "fact:the-command-surface-has-five-copies-and-nothing-reconciles-them",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:fact:the-command-surface-has-five-copies-and-nothing-reconciles-them"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -117934,6 +117946,15 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:edge-prose-is-read-when-the-node-under-it-moves",
+      "properties": {
+        "at": "2026-08-31",
+        "note": "\"NO DETECTOR READS THEM\" stopped being true the same day it was written. `stale_edge_evidence` reads edge `evidence` and `note`, surfaced through `propagate_change`.\n\n📌 IT TOOK THE FACT'S OWN OPTION ① AND THEN SHARPENED IT. The fact proposed a crude term check against the changed node's CURRENT text; that version was built first and thrown away, because on this fact's own counter-example it fires on healthy edges. The shipped check compares against the node's PRIOR snapshot instead. The proposal was right about where to put the check and wrong about what to compare — both worth keeping, which is why the text stands unedited."
+      },
+      "to_id": "fact:edge-prose-is-as-perishable-as-node-prose-and-nothing-reads-it"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:lineage-message-names-its-decision",
       "properties": {
         "at": "2026-08-20",
@@ -117967,6 +117988,24 @@
         "note": "The fact opens \"CLOSED 2026-08-07, same day, by dec:sidecar-loss-guarded-by-store-evidence — the refusal now exists in code (identity::resolve_on_open + store_has_content), ver:sessions-cannot-cross-designs passes 5/5\". This ChangeEvent is that work. ⚠️ THE CLOSURE IS PARTIAL IN ONE NAMED WAY, stated on the fact itself: the refusal STOPS the loss but does not RECOVER a design already lost, because the id still cannot be read back off the store. This edge claims the recorded measurement is stale, not that the whole class is solved."
       },
       "to_id": "fact:defect-lost-identity-sidecar-opens-empty"
+    },
+    {
+      "edge_type": "INVALIDATES",
+      "from_id": "chg:the-call-holding-the-only-copy-keeps-it",
+      "properties": {
+        "at": "2026-09-01",
+        "note": "The warning no longer holds the only copy: a revising write now PRESERVES a replaced value that nothing else holds, before computing the note, so the note is a receipt in that case rather than a regret.\n\n⚠️ ITS LAST PARAGRAPH IS NOT RETIRED AND SHOULD NOT BE READ AS SUCH. bhome's separate complaint — a refused bulk write discarding a ~4 KB body, and \"no way to say 'change this one thing' on a large node\" — is a different gap and remains open under `dec:idea-should-a-large-node-be-changeable-one-field-at-a-time`, which Anthony accepted the same day with only the snapshot half built.\n\n📌 The fact's own sequencing argument is what decided the design: a rule resting on call ORDER can be broken by an agent host without either party choosing to, so the guarantee moved inside the write."
+      },
+      "to_id": "fact:the-revision-warning-holds-the-only-copy-of-what-it-warns-was-lost"
+    },
+    {
+      "edge_type": "INVALIDATES",
+      "from_id": "chg:the-coupling-edge-gets-its-name-back",
+      "properties": {
+        "at": "2026-09-01",
+        "note": "Both halves stopped being true on 2026-09-01. `depends_on(from_id, to_id)` exists, and the cross-design pin is served as `external_dependency` (core: `declare_external_dependency`), so the obvious name now means the obvious thing.\n\n⚠️ ONE CLAUSE OF IT SURVIVES AND IS DELIBERATELY NOT CLOSED WITH IT: \"1 of 70 components carries any modelled coupling, so modularity is not measurable\" was still true when this was retired. The helper removed the excuse, not the work — and `fact:coupling-and-contract-are-recorded-in-vocabularies-that-never-meet` still stands on its own."
+      },
+      "to_id": "fact:the-commonest-structural-edge-has-no-typed-helper-and-its-name-is-taken"
     },
     {
       "edge_type": "INVALIDATES",
@@ -118012,6 +118051,15 @@
         "note": "RE-MEASURED HOURS LATER, ON THE SAME DESIGN, AFTER THE COST IT NAMED WAS FIXED. Its SAVE column is no longer current:\n\n    build export doc   1,137.3 ms -> 236.5 ms\n    TOTAL session save 1,168.3 ms -> 265.3 ms\n\nWHICH PART MOVED, precisely — this is a PARTIAL supersession and the node is NOT closed: only the write side. Its load figures still stand within noise (1,098 ms then, 1,156 ms after; the ~8% import regression from BTreeMap inserts is inside that). Its two headline findings BOTH survive and one is strengthened: the full-text index is cheap and derived, and the byte store is not the bottleneck — the remaining save cost is not storage either.\n\n⭐ AND ITS OWN PREDICTION CAME TRUE. That fact called out `build_export_doc` at 1,137 ms as \"the dominant cost moved to a place nobody has looked... the same SHAPE as the import defect just fixed... very likely another `Vec` somewhere.\" It was a HashMap, and the shape was exactly right: a linear scan standing in for an indexed lookup. The node earned its keep by naming the next measurement, which is what a good measurement does.\n\n🛑 SECOND INSTANCE OF A KNOWN BLIND SPOT, AND IT WAS PREDICTED IN ADVANCE. `unclaimed_findings` on this ChangeEvent returned nothing with subjects_examined=1, exactly as `fact:unclaimed-findings-cannot-join-a-change-to-a-finding-hung-off-a-different-node` said it would: the change is anchored to `cmp:byte-store` (the code) and this observation to a Decision (the question it answered), so the join never happens. Closed by judgement again. A HAS_TEMPORAL_FACT edge from cmp:byte-store has now been drawn so the next change to that component reaches it."
       },
       "to_id": "fact:a-database-free-session-costs-11s-to-load-and-12s-to-save"
+    },
+    {
+      "edge_type": "INVALIDATES",
+      "from_id": "chg:the-prescribed-layer-pairs-stop-refusing",
+      "properties": {
+        "at": "2026-09-01",
+        "note": "Its central claim — \"THE FILTER HAS TWO TERMS AND NEITHER IS THE NODE TYPE\" — stopped being true on 2026-09-01. `refuse_unless_deliberate` now drops prescribed-layer matches before deciding whether to refuse, so the type pair IS read in the selection and not only printed in the message.\n\n⭐ THE FACT ALSO PREDICTED ITS OWN REPAIR AND WAS RIGHT: \"the type pair is already in hand at line 190, so the guard can act on it without any new lookup, plumbing or vocabulary.\" That is exactly what was done. Its option ② shipped on 2026-08-29 and its option ① on 2026-09-01, once the count it said was missing had been taken.\n\n📌 The measurement, the code reading and the two-shapes analysis all stand and are preserved verbatim — only the present-tense claim about the filter is closed."
+      },
+      "to_id": "fact:the-near-match-filter-has-no-node-type-term"
     },
     {
       "edge_type": "INVALIDATES",
@@ -160008,6 +160056,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:preserved-on-write:fact:the-command-surface-has-five-copies-and-nothing-reconciles-them",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[]",
+        "state": "{\"basis\":\"measured\",\"confidence\":1.0,\"fact_type\":\"defect\",\"statement\":\"REFLOW2'S OWN COMMAND SURFACE EXISTS IN FIVE PLACES AND NOTHING CHECKS THAT THEY AGREE. Measured 2026-09-01, prompted by Anthony asking why a count was 23.\\n\\n  getting-started/skills/     25  SOURCE — compiled into the binary\\n  .claude/skills/            25  copy, for harness auto-matching\\n  .grok/skills/              25  copy\\n  getting-started/commands/  28  SOURCE for the slash commands\\n  .claude/commands/          28  copy\\n  ~/.claude/commands/        24  USER SCOPE — what every OTHER project sees\\n  COMMAND_ALIASES            8   the skill<->command name map, in skills.rs\\n\\nWHAT WAS ALREADY IN STEP, checked rather than assumed: the three skill directories are byte-identical, and `getting-started/commands/` matches `.claude/commands/` exactly. The drift is not everywhere.\\n\\n🛑 WHERE IT HAD DRIFTED, both found by measuring rather than reported:\\n① FOUR COMMANDS EXISTED ONLY IN THIS REPO — `/link-ideas`, `/root-cause`, `/what-is-this`, `/where-does-it-go`. User scope is what every other project on this machine sees, so in bhome, musicjug and ophyd-service those four did not exist. `/root-cause` is the sharpest loss: its whole argument is that it must be pulled AT THE MOMENT of the work, and it is missing from exactly the projects where work happens. (Copied across the same day; nothing prevents recurrence.)\\n② THE ALIAS TABLE IS MISSING THREE OF ELEVEN. It carries `rules`, `req`, `gaps`, `where`, `kpp`, `health`, `decisions`, `debt` — and NOT `what-is-this` -> `help`, `where-does-it-go` -> `onboarding`, or `next` (tool-backed). So `get_skill(\\\"what-is-this\\\")` fails with a bare list of names, which is the precise failure reported on 2026-08-19 that caused the table to be written. The repair did not cover its own class.\\n\\n⭐ THE TWO HALVES HAVE OPPOSITE GUARANTEES, AND THAT IS THE CAUSE WORTH NAMING. Skills are SERVED from the binary (`dec:skills-served`) specifically so they cannot drift from the running version. Slash commands are COPIED FILES, so they can and did. One surface was designed against this failure and the other was not — and the copied half is the one a user in another project actually meets.\\n\\n📌 AND AN AGENT WITH FULL ACCESS UNDER-REPORTED IT BY 60%. Asked what commands exist, this session listed 11 of 28 — having matched command names against skill names and reported the 17 aliased ones as reachable only through `get_skill`. Anthony caught it. That is the same shape musicjug reported the day before (\\\"reflow2 ships find_tools and I never used it because nothing told me how it differs\\\"), arriving this time from the inside: the surface is not discoverable even to something reading the directory.\\n\\n⚠️ WHAT IS NOT ESTABLISHED: whether user-scope drift has ever cost anybody anything. Nobody has reported reaching for one of the four and finding it absent — the loss is inferred from what the commands are for, not observed.\",\"subject_id\":\"cap:skills-served\",\"valid_from\":\"2026-09-01\"}",
+        "target_id": "fact:the-command-surface-has-five-copies-and-nothing-reconciles-them",
+        "target_type": "TemporalFact"
+      }
+    },
+    {
       "node_id": "snap:epoch:preserved-on-write:rel:v0450",
       "node_type": "Snapshot",
       "properties": {
@@ -163655,7 +163713,8 @@
         "fact_type": "defect",
         "statement": "EDGE `evidence` AND `note` ARE PROSE WRITTEN AT A MOMENT IN TIME, EXACTLY AS PERISHABLE AS NODE TEXT, AND NO DETECTOR READS THEM. Measured in bhome, 2026-08-31 (art:bhome-genesis-feedback-2026-08-31, \"Session 1, part 7\").\n\nTHE INSTANCE, and it is a clean one. Anthony narrowed a climate requirement from desert-to-arctic to lower-48 city climates. `propagate_change` returned 53 impacted nodes with an 8-node direct ring, five of them RISKS edges pointing at the changed requirement — which the report calls the best single moment of the session, because those five objections had been written across three earlier conversations, hours apart, each as a brainstorm aside, and nothing else would have recalled them.\n\nBut the five RISKS edges carried `evidence` written when the range WAS desert-to-arctic — e.g. \"in the arctic, a tank of water at fish temperature is a large continuous heat load\". After the narrowing that evidence is WRONG, and a reader following the edge is misled by prose that reads as current. The agent repaired four of five by hand, and says why it caught them at all: \"only because the propagation happened to list them and I happened to remember what they said.\"\n\n🛑 THE ASYMMETRY IS THE FINDING. The node-level story is complete: every `add_*` warns loudly on overwrite, `reconcile_artifacts` catches design-vs-file drift, `change_axis_unstated` catches an unstated axis. The edge-level story is empty. Nothing warns, nothing reconciles, nothing detects. An edge property is a claim about the world in the same way a node property is, and only one of the two is governed.\n\n⭐ THE REPAIR IS AVAILABLE WHERE THE DEFECT IS. `propagate_change` already computes the direct ring and already holds both the changed node's text and each ring edge's `evidence`. The report's own two proposals, cheapest first: ① when a direct-ring edge's `evidence` mentions terms that no longer appear in the changed node, say so — even a crude string check would have caught \"arctic\" surviving in four edges after \"arctic\" left the requirement; ② more generally a `stale_edge_evidence` detector, or a `written_at` stamp on edge prose so a reader can see the evidence predates the node it describes.\n\n📌 NOT A WRITE PROBLEM: \"Re-writing an edge with `create_edges` upserts its properties cleanly, which made the repair easy once identified — the problem is purely one of noticing.\"",
         "subject_id": "cap:propagate",
-        "valid_from": "2026-08-31"
+        "valid_from": "2026-08-31",
+        "valid_to": "2026-08-31"
       }
     },
     {
@@ -164009,6 +164068,18 @@
       }
     },
     {
+      "node_id": "fact:manual-work-9c6a4397bbcf0f96",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "manual_work",
+        "statement": "Wrote a script to find every ChangeEvent belonging to a release increment, by diffing node ids between the live design and the previous tag's committed export, then checking which of them carry no epoch pin. It found 16 of 16 unpinned.\n\nThis is hand-rolled on EVERY cut. The release annex records it as the only reliable method — \"diff ChangeEvent ids against the PREVIOUS TAG's export, not against memory\" — after a cut once pinned 6 and missed 16 more, and `changelog_view` returned 12 entries before the diff and 47 after while reporting `unmapped: []` both times. So the tool that would have caught it reported nothing missing.",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-09-01",
+        "value": "{\"diagnosis\":\"tool_missing\",\"reflow2_tool\":null}"
+      }
+    },
+    {
       "node_id": "fact:manual-work-a685764192e8790a",
       "node_type": "TemporalFact",
       "properties": {
@@ -164054,6 +164125,18 @@
         "subject_id": "proj:reflow2",
         "valid_from": "2026-08-29",
         "value": "{\"diagnosis\":\"tool_missing\",\"reflow2_tool\":\"loop_status\"}"
+      }
+    },
+    {
+      "node_id": "fact:manual-work-bd46d05a4e70ba56",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "manual_work",
+        "statement": "Wrote a script, several times across the session, to find which REGISTERED artifacts had drifted: load the committed export, map each Artifact's location to its stored checksum, hash the files git reports as changed, and print the ones that differ.\n\n`reconcile_artifacts` is the served tool for this and I did not use it once — it takes observations the caller has already computed and performs no file I/O itself, which is a deliberate design, but it means the hashing-and-diffing half is left to every caller and I rebuilt it each time rather than writing it once.",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-09-01",
+        "value": "{\"diagnosis\":\"tool_not_found\",\"reflow2_tool\":\"reconcile_artifacts\"}"
       }
     },
     {
@@ -164493,7 +164576,7 @@
         "basis": "measured",
         "confidence": 1.0,
         "fact_type": "defect",
-        "statement": "REFLOW2'S OWN COMMAND SURFACE EXISTS IN FIVE PLACES AND NOTHING CHECKS THAT THEY AGREE. Measured 2026-09-01, prompted by Anthony asking why a count was 23.\n\n  getting-started/skills/     25  SOURCE — compiled into the binary\n  .claude/skills/            25  copy, for harness auto-matching\n  .grok/skills/              25  copy\n  getting-started/commands/  28  SOURCE for the slash commands\n  .claude/commands/          28  copy\n  ~/.claude/commands/        24  USER SCOPE — what every OTHER project sees\n  COMMAND_ALIASES            8   the skill<->command name map, in skills.rs\n\nWHAT WAS ALREADY IN STEP, checked rather than assumed: the three skill directories are byte-identical, and `getting-started/commands/` matches `.claude/commands/` exactly. The drift is not everywhere.\n\n🛑 WHERE IT HAD DRIFTED, both found by measuring rather than reported:\n① FOUR COMMANDS EXISTED ONLY IN THIS REPO — `/link-ideas`, `/root-cause`, `/what-is-this`, `/where-does-it-go`. User scope is what every other project on this machine sees, so in bhome, musicjug and ophyd-service those four did not exist. `/root-cause` is the sharpest loss: its whole argument is that it must be pulled AT THE MOMENT of the work, and it is missing from exactly the projects where work happens. (Copied across the same day; nothing prevents recurrence.)\n② THE ALIAS TABLE IS MISSING THREE OF ELEVEN. It carries `rules`, `req`, `gaps`, `where`, `kpp`, `health`, `decisions`, `debt` — and NOT `what-is-this` -> `help`, `where-does-it-go` -> `onboarding`, or `next` (tool-backed). So `get_skill(\"what-is-this\")` fails with a bare list of names, which is the precise failure reported on 2026-08-19 that caused the table to be written. The repair did not cover its own class.\n\n⭐ THE TWO HALVES HAVE OPPOSITE GUARANTEES, AND THAT IS THE CAUSE WORTH NAMING. Skills are SERVED from the binary (`dec:skills-served`) specifically so they cannot drift from the running version. Slash commands are COPIED FILES, so they can and did. One surface was designed against this failure and the other was not — and the copied half is the one a user in another project actually meets.\n\n📌 AND AN AGENT WITH FULL ACCESS UNDER-REPORTED IT BY 60%. Asked what commands exist, this session listed 11 of 28 — having matched command names against skill names and reported the 17 aliased ones as reachable only through `get_skill`. Anthony caught it. That is the same shape musicjug reported the day before (\"reflow2 ships find_tools and I never used it because nothing told me how it differs\"), arriving this time from the inside: the surface is not discoverable even to something reading the directory.\n\n⚠️ WHAT IS NOT ESTABLISHED: whether user-scope drift has ever cost anybody anything. Nobody has reported reaching for one of the four and finding it absent — the loss is inferred from what the commands are for, not observed.",
+        "statement": "REFLOW2'S OWN COMMAND SURFACE EXISTS IN FIVE PLACES AND NOTHING CHECKS THAT THEY AGREE. Measured 2026-09-01, prompted by Anthony asking why a count was 23.\n\n  getting-started/skills/     25  SOURCE — compiled into the binary\n  .claude/skills/            25  copy, for harness auto-matching\n  .grok/skills/              25  copy\n  getting-started/commands/  28  SOURCE for the slash commands\n  .claude/commands/          28  copy\n  ~/.claude/commands/        24  USER SCOPE — what every OTHER project sees\n  COMMAND_ALIASES            8   the skill<->command name map, in skills.rs\n\nWHAT WAS ALREADY IN STEP, checked rather than assumed: the three skill directories are byte-identical, and `getting-started/commands/` matches `.claude/commands/` exactly. The drift is not everywhere.\n\n🛑 WHERE IT HAD DRIFTED, both found by measuring rather than reported:\n① FOUR COMMANDS EXISTED ONLY IN THIS REPO — `/link-ideas`, `/root-cause`, `/what-is-this`, `/where-does-it-go`. User scope is what every other project on this machine sees, so in bhome, musicjug and ophyd-service those four did not exist. `/root-cause` is the sharpest loss: its whole argument is that it must be pulled AT THE MOMENT of the work, and it is missing from exactly the projects where work happens. (Copied across the same day; nothing prevents recurrence.)\n② THE ALIAS TABLE IS MISSING THREE OF ELEVEN. It carries `rules`, `req`, `gaps`, `where`, `kpp`, `health`, `decisions`, `debt` — and NOT `what-is-this` -> `help`, `where-does-it-go` -> `onboarding`, or `next` (tool-backed). So `get_skill(\"what-is-this\")` fails with a bare list of names, which is the precise failure reported on 2026-08-19 that caused the table to be written. The repair did not cover its own class.\n\n⭐ THE TWO HALVES HAVE OPPOSITE GUARANTEES, AND THAT IS THE CAUSE WORTH NAMING. Skills are SERVED from the binary (`dec:skills-served`) specifically so they cannot drift from the running version. Slash commands are COPIED FILES, so they can and did. One surface was designed against this failure and the other was not — and the copied half is the one a user in another project actually meets.\n\n📌 AND AN AGENT WITH FULL ACCESS UNDER-REPORTED IT BY 60%. Asked what commands exist, this session listed 11 of 28 — having matched command names against skill names and reported the 17 aliased ones as reachable only through `get_skill`. Anthony caught it. That is the same shape musicjug reported the day before (\"reflow2 ships find_tools and I never used it because nothing told me how it differs\"), arriving this time from the inside: the surface is not discoverable even to something reading the directory.\n\n⚠️ WHAT IS NOT ESTABLISHED: whether user-scope drift has ever cost anybody anything. Nobody has reported reaching for one of the four and finding it absent — the loss is inferred from what the commands are for, not observed.\n\n═════════════════════════════════════════════════════════\n⚠️ PARTLY SUPERSEDED 2026-09-01, AND DELIBERATELY LEFT OPEN\n═════════════════════════════════════════════════════════\n\nWHAT MOVED: \"nothing checks that they agree\" is no longer true of the surfaces INSIDE the repository. `tools/check_command_surface.py` runs in CI and compares the three skill directories, the command source against its copy, every skill against a command that reaches it, every command against a skill that exists, and every renamed command against the alias table. `COMMAND_ALIASES` is complete, and `list_skills` now states each skill's `shortcut` so nobody has to derive the mapping. ① and ② above are both repaired (`chg:the-command-surface-answers-for-itself`).\n\n🛑 WHAT STILL STANDS, WHICH IS WHY THIS IS NOT CLOSED: **user scope remains unreachable.** `~/.claude/commands/` lives outside the repository, so CI cannot see it; the check reports it as a NOTE and never a failure, on the machine that happens to run it and no other. The four-command gap that started this can recur on any machine with the build staying green. Closing this fact would assert a completeness the repair does not have.\n\n⭐ AND THE SAME BLIND SPOT CAUGHT THE AGENT AGAIN, an hour later, which is why it is recorded here rather than as its own node. Told that the ophyd-service work had been done on a work laptop, this session stated as fact that the laptop was \"behind\" and missing the four commands. It could not see that machine. Anthony challenged it and the claim collapsed to an inference — plausible, because user-scope copies are per-machine and nothing syncs them, but not observed. **Second time in one day that this session asserted something about a surface it could not measure, both about the same surface.** The honest form is the one the check itself takes: report the note, name what it could not look at, and do not upgrade an inference into an observation.",
         "subject_id": "cap:skills-served",
         "valid_from": "2026-09-01"
       }
@@ -164518,7 +164601,8 @@
         "fact_type": "defect",
         "statement": "COMPONENT `DEPENDS_ON` — the edge that feeds cycle detection, single-point-of-failure analysis and the seam gap — HAS NO TYPED HELPER, AND THE OBVIOUS NAME IS ALREADY TAKEN BY SOMETHING ELSE. Measured in musicjug, 2026-08-31 (art:musicjug-genesis-feedback-2026-08-31, \"The bad\" §4).\n\nThe session searched for a way to record that one component depends on another. `declare_dependency` matched by name and turned out to be CROSS-DESIGN version pinning — git tags, feature flags, export watching (cap:design-dependencies-declared). Completely different concept. It fell back to raw `create_edge` with `DEPENDS_ON`.\n\nTHE TYPED SURFACE COVERS: contains, contain_component, satisfies, allocate, realizes, provides, consumes, governed_by, decomposes. It does not cover the single most common structural edge in any design.\n\n🛑 TWO DEFECTS, NOT ONE, AND THEY COMPOUND. The absence alone would cost a raw `create_edge`. The name collision actively routes a searching agent to the wrong tool first — and `find_tools` ranks by name, so the misdirection is systematic rather than unlucky. musicjug's proposal: add `depends_on(from_component, to_component)`, and rename the existing one `declare_external_dependency` or `declare_design_dependency`.\n\n⚠️ THIS IS NOT AN ISOLATED NAMING SLIP — it joins a counted family. `fact:defect-typed-tool-parameter-names-are-inconsistent` and `chg:param-name-mismatch-hits-a-third-independent-source` record ten prior helper-vs-schema disagreements from three independent sources. This is the eleventh, and the first where the disagreement is the TOOL's name rather than a parameter's.\n\n📌 AND IT HAS A KNOWN DOWNSTREAM COST ALREADY IN THE GRAPH: `fact:coupling-and-contract-are-recorded-in-vocabularies-that-never-meet` — couplings read from DEPENDS_ON, contracts from PROVIDES/CONSUMES, disjoint by construction on reflow2's own design. A missing typed helper on the coupling side is one reason that set stays thin. reflow2's own snapshot, same day: 1 of 70 components carries any modelled coupling, so modularity is not measurable.",
         "subject_id": "cap:design-dependencies-declared",
-        "valid_from": "2026-08-31"
+        "valid_from": "2026-08-31",
+        "valid_to": "2026-09-01"
       }
     },
     {
@@ -164975,7 +165059,8 @@
         "fact_type": "defect",
         "statement": "THE MEASURED CAUSE of Alex's cross-type refusals. Read 2026-08-29 in `crates/reflow2-mcp/src/tools/capture.rs`:\n\n    const NEAR_MATCH_RATIO: f32 = 0.5;                          // line 65\n    let floor = self_score * NEAR_MATCH_RATIO;                   // line 186\n    let near: Vec<NearMatch> = result.hits.iter()\n        .filter(|h| h.node_id != node_id && h.score >= floor)    // line 190\n\n🛑 **THE FILTER HAS TWO TERMS AND NEITHER IS THE NODE TYPE: not-itself, and score-above-floor.** `node_type` IS carried into `NearMatch` — and printed in the refusal, which is why Alex could see he had been handed a ChangeEvent — but it is display only. Nothing in the selection reads it.\n\nSO THE CROSS-TYPE BEHAVIOUR IS NOT A TUNING PROBLEM AND LOWERING OR RAISING THE RATIO CANNOT ADDRESS IT. A ChangeEvent and the Requirement behind it describe one piece of work in one vocabulary; they SHOULD score alike, and any threshold that separated them would also stop catching genuine same-type duplicates written in different words — which is the guard's whole purpose.\n\n⭐ THE REPAIR IS AVAILABLE WHERE THE DEFECT IS, WHICH IS WHY THIS IS WORTH RECORDING PRECISELY: the type pair is already in hand at line 190, so the guard can act on it without any new lookup, plumbing or vocabulary. Two shapes, and they are not equivalent:\n  ① EXCLUDE the prescribed layer pairs from the filter (ChangeEvent -> Requirement/Decision). Removes the friction; also removes a real catch if the agent genuinely was duplicating.\n  ② KEEP the refusal and change what it SAYS when the types differ — name the layering rather than presenting it as a duplicate. Keeps every catch, costs one more round-trip, and is a message change rather than a behaviour change.\n② is the conservative one and matches how this guard was justified in the first place (`refuse_unless_deliberate` is documented as forcing a choice, not as preventing a write).\n\n📌 NOT A REGRESSION AND NOT A MISFIRE: the guard's own doc comment says it must never refuse on a WEAK resemblance and records the ratio as deliberately conservative. It is behaving exactly as specified. What was never specified is what a near-match of a DIFFERENT TYPE means — the code was written as though every hit were a candidate duplicate, and the design's own capture loop produces hits that are not.",
         "subject_id": "cap:search-first-at-the-tool",
-        "valid_from": "2026-08-29"
+        "valid_from": "2026-08-29",
+        "valid_to": "2026-09-01"
       }
     },
     {
@@ -165099,7 +165184,8 @@
         "fact_type": "defect",
         "statement": "THE REVISION WARNING ARRIVES AFTER THE WRITE, FOR AN OPERATION THE TOOL DOCUMENTS AND SUPPORTS, AND OFFERS NO FORWARD ACTION. Measured in musicjug, 2026-08-31 (art:musicjug-genesis-feedback-2026-08-31, \"The bad\" §3).\n\nSharpening a Decision with a quality bar the owner had just supplied produced: \"`record_change` BEFORE the merge is what puts the old state in the design's own timeline; called now it would snapshot the REPLACEMENT and the history would be wrong.\"\n\nThe advice is correct and the risk is real. The complaint is about WHEN, and about what is left to do: \"a well-earned warning that reads like an accusation and offers no forward action, only an undo recipe\" — fired at the moment the agent was doing exactly the right thing, recording new information the owner had just given.\n\n⭐ THE TOOL IS UNIQUELY POSITIONED TO PREVENT THE LOSS IT WARNS ABOUT. The reply says, correctly, that it holds THE ONLY COPY IN EXISTENCE of the replaced field — which means the warning is emitted by the one caller that could still save it. musicjug's proposal: snapshot automatically, or offer `snapshot_prior: true`, \"and the warning becomes a receipt rather than a regret.\" This capability already COMPUTES whether the replaced state survived, which is the hard half; what it does not do is keep it.\n\n🛑 AND THE PRESCRIBED ORDER IS NOT RELIABLY ACHIEVABLE FROM THE CALLER'S SIDE: \"the prescribed order is not reliably achievable from a harness that emits parallel tool batches.\" A rule that depends on call ORDER is a rule an agent host can break without either party choosing to — which makes before-the-write sequencing the wrong place to rest a guarantee reflow2 could enforce itself.\n\n📌 THE SAME SHAPE APPEARS IN bhome, FROM THE OTHER DIRECTION (art:bhome-genesis-feedback-2026-08-31, part 6): a refused bulk write meant re-sending a ~4 KB decision body verbatim, because nothing was created. \"Field-level validation before the write, or a dry-run, would make long-prose nodes cheaper to get right. This is the same underlying gap as the append-vs-replace friction: reflow2 has no way to say 'change this one thing' on a large node.\"",
         "subject_id": "cap:a-revising-write-says-whether-the-state-survived",
-        "valid_from": "2026-08-31"
+        "valid_from": "2026-08-31",
+        "valid_to": "2026-09-01"
       }
     },
     {
@@ -165251,6 +165337,18 @@
       }
     },
     {
+      "node_id": "fact:the-staleness-question-returned-zero-because-nobody-said-what-the-changes-touched",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "measurement",
+        "statement": "`unclaimed_findings` RETURNED ZERO ON A SESSION THAT RETIRED FOUR FINDINGS. Measured 2026-09-01 at the close of the session that shipped v0.46.0.\n\nCalled with the eight ChangeEvents this session wrote:\n\n    candidates: 0 · subjects_examined: 20 · unknown_events: []\n\nAnd four open TemporalFacts had in fact been made false by that same work — `fact:the-near-match-filter-has-no-node-type-term`, `fact:the-commonest-structural-edge-has-no-typed-helper-and-its-name-is-taken`, `fact:edge-prose-is-as-perishable-as-node-prose-and-nothing-reads-it`, `fact:the-revision-warning-holds-the-only-copy-of-what-it-warns-was-lost`. All four were closed by hand, from memory of writing them.\n\n🛑 THE CAUSE IS THE DOCUMENTED LIMIT, HIT IN PRACTICE ON 8 OF 8 EVENTS. `add_change_event` takes an `affected` list and draws a CHANGED edge per entry; NONE of this session's eight passed one. The capture-session skill states the limit exactly — \"it still cannot reach work that recorded no ChangeEvent, or one with no CHANGED edges to what it touched\" — and \"Record the change and name what it touched, or nothing can ask on your behalf.\"\n\n⭐ SO THE FAILURE WAS NOT IN THE COMPUTATION. It was in every write that fed it, and the writes were made by an agent that had read the skill saying so, in the same session. The instruction exists, is correct, is served, and did not survive contact with eight consecutive calls that each had somewhere else to be.\n\n⚠️ AND A ZERO HERE IS THE MOST REASSURING ANSWER THE TOOL CAN GIVE. `subjects_examined: 20` reads like diligence; the skill anticipates precisely this and says never to read a quiet answer as \"nothing went stale\" — which is the only reason the four were looked for at all. Without that sentence this session would have closed reporting a clean sweep.\n\n📌 WHAT WOULD FIX IT, unresolved: `affected` is optional and nothing notices its absence, so the shape is the project's own recurring one — a typed field that exists, an instruction that asks for it, and no detector that reads the silence. A ChangeEvent with no CHANGED edges is invisible to the one computation built to ask what a session made false.",
+        "subject_id": "cap:the-graph-asks-what-a-session-made-false",
+        "valid_from": "2026-09-01"
+      }
+    },
+    {
       "node_id": "fact:the-status-field-is-the-binding-versus-visible-switch",
       "node_type": "TemporalFact",
       "properties": {
@@ -165346,6 +165444,18 @@
         "subject_id": "dec:absorb-rocksdb-024-unchanged-then-switch-separately",
         "valid_from": "2026-08-29",
         "value": "{\"reported_by\":\"Anthony, 2026-08-29\",\"claim\":\"official rocksdb crate resumed updates, now 0.25\",\"pinned_at\":\"0.24\",\"verified_here\":false,\"park_affected\":false,\"park_reason\":\"86-file migration to a component that may be retired\",\"switch_decision_affected\":true,\"stale_sentence_location\":\"root Cargo.toml [workspace.dependencies] comment\",\"three_distinct_questions\":[\"bump 0.24 to 0.25 in the same crate\",\"switch to rust-rocksdb\",\"whether a byte store is needed at all\"],\"pattern\":\"conclusion stands, justification rotted - third sighting\"}"
+      }
+    },
+    {
+      "node_id": "fact:the-upgrade-note-rule-cannot-see-the-surface-a-consumer-actually-calls",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "THE RULE THAT DECIDES WHETHER TO WARN A CONSUMER IS KEYED ON A SIGNAL THAT CANNOT SEE THE BREAK. Measured during the v0.46.0 cut, 2026-09-01.\n\n`flow:release-cut` step 3 says an upgrade note is owed IF AND ONLY IF the schema stamp moved, and that conditionality is recorded as one of the two unguessable steps of a cut. Measured against v0.45.0, the stamp did NOT move: 29 node types, 64 edge types, schema version 1, identical.\n\n🛑 AND v0.46.0'S ONLY BREAKING CHANGE WAS A TOOL RENAME. `declare_dependency` -> `external_dependency`. Any script, skill or agent instruction naming the old word fails. The stamp carries node and edge TYPE NAMES and knows nothing about the served tool surface — so a consumer loses a tool from under them and the rule that decides whether to warn them is structurally unable to notice.\n\nThe note was written anyway (`docs/upgrading-to-v0.46.0.md`) and the divergence recorded in the changelog rather than worked around. But the RULE is unchanged and would give the same wrong answer on the next rename.\n\n⭐ THE SHAPE IS THE ONE THIS PROJECT KEEPS FINDING: a check keyed on a signal that does not cover the case it exists for. `toolsnap` DOES see the tool surface and caught the rename as one removed and one added — so the information exists, in a different gate, and nothing joins the two. A cut could ask the toolsnaps whether any tool was removed or renamed since the last tag, and owe a note on that as well as on the stamp.\n\n📌 AND THE ANNEX'S RECORDED TRAPS ALL RECURRED AGAIN, which is now the fourth cut running and is itself the argument that these are design defects rather than operator error: ALL 16 ChangeEvents of the increment were unpinned and were found only by diffing ids against the previous tag's export; `release_includes_all` still defaults to a dry run; the served binary still had to be restarted or the export would have stamped 0.45.0. A procedure whose traps recur on every execution is not a procedure people keep getting wrong.\n\n⚠️ WHAT IS NOT ESTABLISHED: whether anyone has ever been bitten by a missing note. v0.46.0 is the first cut in this record whose only break was in the tool surface, so the rule may simply never have been tested against this case before.",
+        "subject_id": "cap:a-cut-is-read-from-the-design",
+        "valid_from": "2026-09-01"
       }
     },
     {
@@ -168564,7 +168674,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:c79f4accc1979424b59f0ed6034eb5e1a526e401d25bea7073ab2243d777c162",
+  "prev_content_hash": "sha256:e25d330b1ce57e3f599908272fa9e2021013f1133bdf80fd01e9515e7d0716f4",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
