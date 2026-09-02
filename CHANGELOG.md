@@ -31,6 +31,50 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+🛑 **Upgrade action: REQUIRED — one `loop_status` field was RENAMED.**
+`unwritten_answers` is now **`answered_with_open_gap`**. Any script or dashboard
+reading the old key gets nothing back — and gets it silently, which is why this
+is called out rather than buried. `tools/graph_probe.py` and
+`tools/loop_nudge.py` are updated in the same change.
+
+### Changed
+
+- **The answered-question debt line says only what its computation can support.**
+  `loop_status` reported *"N answered question(s) never reached the design — write
+  the answer in, or acknowledge the gap"* from a count that knows one thing: the
+  question is answered and its gap is still open. Nothing looked for the answer
+  among the design's nodes, so the claim was unreachable — and both prescribed
+  remedies were wrong for the commonest case, a deferral **the genesis skill
+  itself prescribes**, recorded as an open Decision, whose gap is legitimately
+  open. Doing the right thing was reported as debt.
+
+  The line now reads *"N answered question(s) still have an open gap — that is all
+  this knows, and it is not a claim the answer went unwritten: read them
+  (open_questions), then write in what is missing or leave a gap that is genuinely
+  blocked."*
+
+  Repaired on **all seven surfaces that repeated the claim**, not just the reported
+  one: the field name (which asserted the unreachable half), its doc comment, the
+  `next` message, the scoped `not_attributable` label, the MCP read-side nudge
+  label, `graph_probe.py`'s probed key, and `loop_nudge.py`'s Stop-hook sentence.
+
+  ⚠️ **The old test was part of the defect.** `tests/report.rs` asserted
+  `contains("never reached the design")` under the comment *"An answer that never
+  reaches the design is its own named debt"* — the false claim was pinned in place
+  by a passing check, which is how it survived seventeen days of green builds.
+  The replacement pins the **class**: no `next` line may assert a fact its
+  computation cannot reach.
+
+  Root-caused here 2026-08-16 and left unrepaired; re-diagnosed from scratch by
+  three independent sessions across three projects (this design's own orientation
+  call, the StoryFlow fleet, and `proj:chama` on 2026-09-02) before it was fixed.
+
+  ⚠️ **What this does NOT fix:** the loop still cannot tell a *deferred* answer
+  from a genuinely unwritten one. It now declines to guess instead of guessing
+  wrong. Making the fact computable needs a typed edge from a design record onto a
+  Question, which does not exist — `describe_schema{Decision, Question}` returns
+  zero exact and zero half-exact matches.
+
 ## [0.46.0] — 2026-09-01
 
 🛑 **Upgrade action: REQUIRED — one tool was RENAMED.** `declare_dependency` is

@@ -1040,7 +1040,7 @@ class AsksTheGraph(unittest.TestCase):
         never computed is absent, not zero. Reading absence as zero would
         manufacture a delta out of a version change and blame the session."""
         self.tally()
-        self.write_probe(baseline={}, counts={"unwritten_answers": 3})
+        self.write_probe(baseline={}, counts={"answered_with_open_gap": 3})
         self.assertIsNone(self.blocked())
 
     def test_an_unreadable_probe_is_silent(self):
