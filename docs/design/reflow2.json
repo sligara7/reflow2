@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:ad6fc842c53d32e58a3e4bdd0195c95a2c5f0c227ca31063c091e955b2f39fc2",
+  "content_hash": "sha256:930b332b9a8b53d77f98afac96977250b0dcc77c449353a8dbc8031c242fc54f",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -11588,6 +11588,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-a-deliberately-open-edge-can-never-be-ranked-as-a-fit",
+      "properties": {
+        "acted_at": "2026-09-02",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-a-derived-number-carries-what-it-was-computed-over-wherever-it-is-quoted",
       "properties": {
         "acted_at": "2026-08-30T00:00:00Z",
@@ -12491,6 +12500,15 @@
       "properties": {
         "acted_at": "2026-08-25T12:00:00Z",
         "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-is-a-replayed-gap-an-input-or-an-echo",
+      "properties": {
+        "acted_at": "2026-09-02",
+        "role": "approver"
       },
       "to_id": "who:ajs"
     },
@@ -22255,6 +22273,15 @@
         "action": "modified"
       },
       "to_id": "art:record-to-record-relations-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-100292b297046fff",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:smoke-mcp"
     },
     {
       "edge_type": "CHANGED",
@@ -35648,6 +35675,24 @@
         "action": "modified"
       },
       "to_id": "art:reply-budget-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-replayed-gap-is-an-echo",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-ask"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-replayed-gap-is-an-echo",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:tools-ask"
     },
     {
       "edge_type": "CHANGED",
@@ -132037,7 +132082,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:4113045f5e4339e63b5360944ed69e9c92f1945d386f48053b7d8430f10b7310",
+        "checksum": "sha256:0f68faa69f7be98caba7a90b62162f8c6a964e192800744714fd89ec03560867",
         "location": "tools/smoke_mcp.py",
         "name": "smoke_mcp.py",
         "status": "realized"
@@ -132592,7 +132637,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:2003d465016bf434dcdfec835368dd8131382b43f71b019b28758478c7104e47",
+        "checksum": "sha256:834221cd4f1d9859b3b06e2de2c3b432538ed9abef97c0a07c1a6e2854740a34",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/ask.rs",
         "name": "tools/ask.rs",
@@ -136601,6 +136646,16 @@
         "change_type": "refactor",
         "detected_at": "2026-08-23",
         "name": "rustfmt re-wrapped two `add_verification` calls onto multiple lines. Formatting only; the seven cases and their assertions are unchanged.",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:accept-100292b297046fff",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "detected_at": "2026-09-02",
+        "name": "TEST REORDERED, DESIGN UNMOVED. The smoke test acknowledged a gap and then phrased it; the new refusal correctly fired. Its assertion was 'asking a gap records the question' — the acknowledged object was incidental — so the withdrawal now precedes the question block, with the reason recorded inline. The guard was NOT weakened to make the test pass, which was the available wrong move.",
         "subject": "system"
       }
     },
@@ -142371,6 +142426,18 @@
       }
     },
     {
+      "node_id": "chg:the-replayed-gap-is-an-echo",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-09-02",
+        "name": "A replayed gap is an ECHO — resolved by id, so mangling it can no longer re-key the answers",
+        "rationale": "⭐ THE PROSE WAS DOING THE WORK THE CODE SHOULD HAVE DONE, which is why this is `defect_fix` and not `documentation`. The warning was loud, specific, correctly placed and read by both reporters — one of them trimmed the payload anyway, because trimming a large object for readability is what a well-behaved agent does. A warning that survives being read is not a control.\n\n⚠️ AND THE FIX ALMOST CREATED THE DEFECT IT CLOSES. After the guard was corrected, both tool descriptions still carried the old warning — prose describing behaviour the code no longer has, which is instance ⑤'s exact shape (`fact:the-schema-described-the-answers-edge-for-months-before-it-existed`). Catching that took a deliberate second pass rather than the change itself. Recorded because it is evidence for `dec:idea-the-load-bearing-prose-is-unchecked-against-the-code-it-describes`: the same session that named the class was one edit from adding to it.\n\n⚠️ WHAT THE SMOKE TEST TAUGHT WITHIN MINUTES: it acknowledged a gap and then phrased it, and the new refusal fired. The test's own assertion was \"asking a gap records the question\" — the acknowledged object was incidental — so the fix was to reorder the test, NOT to weaken the guard. Worth recording because the first instinct on a red gate is to soften the change that reddened it, and here that would have restored the defect.\n\n⚠️ NOT CLOSED: storyflow's separate ask to name a `reason` on degrade needed no work — `degrade_reason` already exists, and the \"payload differs\" cause it would have named is now impossible. But the questions BOTH projects had recorded in degraded form are still sitting in their designs; correcting a Question's recorded wording remains open as `dec:idea-a-recorded-questions-wording-can-be-corrected`.",
+        "subject": "system",
+        "summary": "`rehydrate_gaps` now resolves every replayed gap by `id` alone against a fresh `detect_gaps`, discarding whatever text the caller sends back. Implements the ECHO reading of `dec:idea-is-a-replayed-gap-an-input-or-an-echo`, settled by Anthony 2026-09-02.\n\nTHE GUARD WAS THE DEFECT, not the warning. It rehydrated ONLY when `description` and `evidence` were both empty — a row from a BUDGETED reply — so it trusted the caller's text in exactly the case where it can be wrong. Written for a different purpose, its condition asked \"did the caller send nothing?\" rather than \"might what the caller sent be wrong?\".\n\nTWO PROJECTS, TEN DAYS APART, NEITHER CARELESS: dev_storyflow TRIMMED the description for readability (2026-08-23; 4 of 5 questions degraded to raw detector jargon and were RECORDED in that form under the user's name); proj:chama duplicated a fragment of the title while transcribing (2026-09-02). Two different mutilations, one silent re-key — which is the argument that the failure is the API's shape rather than carelessness, and what killed \"the warning is enough\" as an option.\n\nBEHAVIOUR CHANGE, accepted with the ruling: a gap that is no longer open is REFUSED rather than served from a stale copy — INCLUDING AN ACKNOWLEDGED GAP. That is the point rather than a side effect: `acknowledge_gap` exists so a settled question is not re-asked, and phrasing one from a copy the server no longer recognises is exactly that re-ask. `gap_is_gone` now distinguishes \"the gap is gone\" from \"your payload was wrong\", which it previously conflated in one message that assumed the budgeted case.\n\nTWO TESTS, THE FIRST WRITTEN TO FAIL. It mutilates the payload BOTH ways the field reports did — duplicated title and trimmed description — in a single call, and failed with exactly the field symptom (`rephrase_degraded: true`). The second pins the closed-gap refusal.\n\nBOTH TOOL DESCRIPTIONS CORRECTED. The ⚠ \"REPLAY EACH GAP OBJECT UNCHANGED ... trimming either for readability re-keys every answer\" now describes behaviour the code does not have. They say the opposite, positively: the replay is an echo, and callers should NOT spend effort preserving it byte-for-byte."
+      }
+    },
+    {
       "node_id": "chg:the-resolution-of-a-gap-becomes-schedulable",
       "node_type": "ChangeEvent",
       "properties": {
@@ -145300,9 +145367,9 @@
       "properties": {
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Generated 2026-09-02.\n\nproj:chama asked for a new edge type to say \"this open decision determines whether this constraint can be met\". THE EDGE EXISTS — `Constraint --GOVERNED_BY--> Decision` — and they could not find it, because `describe_schema` ranks by endpoint enumeration and GOVERNED_BY is `*` on both sides deliberately. It falls into the alphabetical wildcard pile for EVERY pair in the design. They reached for BLOCKS and buried the meaning in an `evidence` string.\n\n**THE PREVIOUS TWO INSTANCES WERE FIXED BY ENUMERATING AN ENDPOINT** — VERIFIES in #112, and CONSTRAINS' source on 2026-08-08 after `describe_schema{DesignRule, Component}` returned zero exact matches. THAT REPAIR IS UNAVAILABLE HERE and schema/core.yaml says why in its own words: narrowing a wildcard is a consumer-facing break, and \"what a rule limits\" is genuinely open. GOVERNED_BY's openness is CORRECT. So the third instance of a class cannot take the fix that closed the first two, which is the signal that the class was mis-stated.\n\n**THE RESTATEMENT: the ranking criterion is not the thing it is presented as.** `exact` / `half_exact` measures HOW NARROWLY AN EDGE IS DECLARED. It is presented to the caller as how well the edge MODELS THEIR PAIR. Those coincide for edges whose narrowness is meaningful and come apart exactly for edges whose openness is meaningful — and the second set includes GOVERNED_BY, CAUSES, RISKS, MITIGATES, BLOCKS, CONTRADICTS, OBSOLETES: most of the semantic vocabulary.\n\n🛑 **A THIRD REPORTER, AND THE MOST EXPENSIVE — AND IT IS WORSE THAN UNDER-RANKING.** dev_storyflow, 2026-08-23, needed to say \"this repair invalidates that check's last run\". They ran the discovery tool, exactly as instructed, and reported: *\"`describe_schema(from=Constraint, to=Verification)` returns 0 exact matches ... the two half-exact options (`CONSTRAINS`, `CALIBRATED_AGAINST`) model something else. The nearest honest assertion available is `CONTRADICTS` ... It works, and it is obviously a stand-in.\"* They drew the stand-in and wrote *\"an `INVALIDATES_RUN` ... would say the true thing.\"*\n\n**`INVALIDATES` IS EXACTLY THAT EDGE.** Its hint names their case verbatim — *\"a repair against the check that found it ... Draw it from whatever recorded the work (a Constraint, a ChangeEvent, a Decision) to whatever recorded the finding (a Verification, a TemporalFact).\"* Re-measured 2026-09-02: it comes back **eleventh, in the wildcard pile**, while `CONSTRAINS` and `CALIBRATED_AGAINST` — which model something else, as they correctly judged — are PROMOTED ABOVE IT as `half_exact`.\n\n⭐ **SO THE DEFECT IS SHARPER THAN \"THE RIGHT ANSWER IS UNDER-RANKED\": THE RANKING ACTIVELY PROMOTES WRONG EDGES ABOVE THE RIGHT ONE.** chama's case had 0 half-exact and a flat pile; this one had two half-exact hits, both wrong, sitting above the true answer. A caller who trusts the ranking is worse off than one who ignores it.\n⚠️ BOUND, and it matters: `INVALIDATES` merged 2026-08-23 (#321) and released in v0.40.0 (2026-08-26). Their entry is that evening and they could not read their version, so it very likely was not in their build and they cannot be said to have missed it. What IS established is that the ranking would hide it from them TODAY. They also attached a cost — \"it cost 49 days\" on one blocked item — but that cost belongs to the missing capability, not provably to the ranking.\n\nIDEAS TURNED OVER, none preferred:\n· **A `deliberately_open` marker per edge type**, so describe_schema can distinguish \"open because nobody thought about it\" from \"open because anything may be governed\" and rank the second above the wildcard pile. ⭐ The only option that also separates the two replies below.\n· **Rank by USAGE in this graph** — a pair actually drawn is evidence of a modelled fit that no declaration carries. ⚠️ It reports what people DO rather than what is RIGHT, so an established wrong habit would rank above a correct unused edge.\n· **Let the hint declare its own pairs** in text, and rank on that, changing nothing structural.\n· **Nothing structural: fix the NOTE.** It already says \"prefer leaving the edge out to asserting one that is wrong\" — it could also say \"an edge open on both sides may still be the modelled fit; read the hints, do not read the ranking as an answer.\" ⚠️ Does NOT stop wrong edges being promoted above right ones.\n· **Do nothing.** ⚠️ Now three reporters across two projects, and one of them acted on the ranking and drew a stand-in edge they themselves called wrong.\n\n⭐ **THE SHARPEST FORM, MEASURED 2026-09-02 BY ACCIDENT.** Two calls the same day:\n· `describe_schema{Decision, Constraint}` → 0 exact, 0 half-exact, 17 wildcards. **The right edge EXISTS and is in that pile.**\n· `describe_schema{Decision, Question}` → 0 exact, 0 half-exact, 17 wildcards. **No right edge existed at all** — the genuinely missing vocabulary that became `ANSWERS`.\n**THE TWO REPLIES ARE THE SAME SHAPE AND THE CALLER CANNOT TELL WHICH SITUATION THEY ARE IN.** \"The answer is in this list and I am not ranking it\" and \"there is no answer, ask for one\" are opposite facts requiring opposite actions, rendered identically.\n\n⚠️ WHAT NOBODY HAS MEASURED: how many of the ~18 wildcard edge types carry real semantics, and how often an agent picks a wrong edge because the right one was unranked. Three observed instances now, from three reporters. `dec:edge-orthogonality` sets the bar any answer must clear — a vocabulary distinction earns its keep ONLY IF A COMPUTATION READS IT.",
         "kind": "exploratory",
-        "name": "OPEN — describe_schema ranks by endpoint enumeration, so every deliberately-open edge is permanently unrankable. Enumerating endpoints fixed the last two instances and cannot fix this one",
+        "name": "SETTLED on Anthony's word 2026-09-02 — an edge type declares when its wildcard is DELIBERATE, and describe_schema ranks those above the noise instead of burying them with the accidental ones",
         "rationale": "Worth recording rather than acting on because the finding REFUTES a feature request, and that is the expensive kind to lose. Without this node the next reader meets chama's report, agrees a Decision→Constraint edge is missing, and adds vocabulary for a relation that already exists — making the discovery problem worse by putting two edges where one was already unfindable.\n\nThe fourth option costs a sentence and is available immediately whatever is decided about the rest.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -146412,9 +146479,9 @@
       "properties": {
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Solutions turned over 2026-09-02 for the cause in `fact:the-gap-replay-warning-exists-because-rehydrate-declines-to-run-when-the-caller-sent-text`.\n\nTHE SETTLED PART: `rehydrate_gaps` already resolves a gap by id against a live `detect_gaps()` and replaces the caller's copy wholesale. Its guard runs it ONLY when the caller sent an empty description and evidence. So the server has the authority and declines to use it in exactly the case where the caller's copy can be wrong. proj:chama's mangled title would have been repaired for free.\n\n**THE QUESTION UNDERNEATH, which decides between every option below: is the pass-2 GapCandidate an INPUT the caller may legitimately shape, or an ECHO the server should treat as untrusted transport?** Nothing in the design says. The tool's own prose says \"REPLAY EACH GAP OBJECT UNCHANGED\", which reads as echo — but the code's behaviour is input.\n\n🛑 **A SECOND, INDEPENDENT REPORTER — dev_storyflow, 2026-08-23, ten days before chama and from a different project.** Same defect, and their diagnosis is sharper because they measured it: *\"4 of 5 came back `rephrase_degraded: true` ... Cause, found by diffing my two calls: between the passes I had TRIMMED the gap objects' `description` and `title` for readability. The one gap I passed back byte-identical was the one that worked.\"*\n\nTwo reporters, two different mutilations — one trimmed for readability, one duplicated a fragment by accident — same silent re-key. That is evidence the failure is not carelessness but the shape of the API, which is the argument for A/C over E.\n\n⭐ **AND THEY RULED OUT THE OBVIOUS DIAGNOSIS, which saves the next investigator the trip:** *\"The prompt `id`s matched (`9c9eb00f5f1bdcdf` was identical across both of my calls), so id-matching is not the discriminator and I had no signal to reason from.\"*\n\n**THEY ALSO NAMED A REPAIR NEITHER chama NOR I DID, and it is orthogonal to the input/echo question — worth taking whichever way that lands:** name the REASON on degrade. *\"`rephrase_degraded: true, reason: 'gap payload differs from the prepare pass'` vs `'answer empty'` vs `'answer failed validation'`. Those are very different problems and today they look identical.\"*\n\n⚠️ AND BOTH REPORTERS HIT THE SAME SECOND-ORDER HARM: the degraded question is still RECORDED. Storyflow: *\"a session that did not read the flag would have left four jargon questions sitting in `open_questions` under the user's name.\"* chama's is still there. That is the other decision, `dec:idea-a-recorded-questions-wording-can-be-corrected`.\n\nOPTIONS, none preferred:\n\n· **A — Always rehydrate.** Resolve every gap by id, replace wholesale, delete the guard. Kills the class outright and the ⚠ warning becomes unnecessary. Cost: one `detect_gaps()` per serve pass, already batched to once per call. ⚠️ REAL BEHAVIOUR CHANGE: a gap that has CLOSED since the caller's copy was taken currently gets served; after this it refuses with `gap_is_gone`.\n\n· **B — Rehydrate, fall back to the caller's copy when the id does not resolve.** Kills the mangling class and keeps today's tolerance for closed gaps. ⚠️ Silent: a caller who edited deliberately loses the edit with no signal.\n\n· **C — Verify rather than replace: compare, refuse on mismatch, name the difference.** Turns a silent degradation into a loud refusal, the shape this project prefers elsewhere. ⭐ It also delivers storyflow's \"name the reason\" ask for free. ⚠️ Costs a round trip and treats every difference as an error.\n\n· **D — Accept `gap_id` as chama asked, and deprecate the object form.** On its own a patch; as a deprecation it is `rule:fix-it-properly-while-it-is-still-cheap` clause two.\n\n· **E — Do nothing; the warning is already there.** ⚠️ Now argued against by two independent projects, one of which read the tool description and trimmed the payload anyway — for readability, which is exactly what a well-behaved agent does with a large object.\n\n⭐ NOT THE SAME AS F-01, checked rather than assumed: `chg:the-replay-contract-is-pinned-by-a-round-trip-not-by-a-field` fixed a budgeted row failing to DESERIALIZE (missing `suggested_depth`), by giving the fields serde defaults and pinning the round trip. That is a different failure on the same handshake, already closed. It does not touch the rehydrate guard. ⚠️ But its ROOT CAUSE is the same family and its repair is the generalisable one — \"a stated contract maintained by hand with nothing checking it\", pinned by a round-trip test rather than by remembering.",
         "kind": "exploratory",
-        "name": "OPEN — on gap_to_prompt's second pass, is the GapCandidate the caller's INPUT or the server's ECHO? The whole repair follows from that and nobody has stated it",
+        "name": "SETTLED on Anthony's word 2026-09-02 — the replayed GapCandidate is an ECHO: rehydrate always, delete the guard, and the ⚠ replay warning stops being load-bearing",
         "rationale": "Recorded as an idea rather than repaired directly because the cheapest-looking fix (A, delete the guard) carries a consumer-visible behaviour change that nobody has approved, and because the reporter's own request (D) is the one option that is a patch unless it is paired with a deprecation.\n\n⚠️ The bound on all of this: the guard's current condition is not obviously WRONG — it was written for budgeted replies and does that job correctly. What is missing is a statement of what the second pass's argument is FOR, which would make one of these options obviously right and the rest obviously wrong.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -169545,7 +169612,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:1b5610c0e9c9f3976dac22739b98cd5384f65fbf2637fd815424c3886fda731a",
+  "prev_content_hash": "sha256:ad6fc842c53d32e58a3e4bdd0195c95a2c5f0c227ca31063c091e955b2f39fc2",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
