@@ -31,6 +31,97 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.46.0] — 2026-09-01
+
+🛑 **Upgrade action: REQUIRED — one tool was RENAMED.** `declare_dependency` is
+now **`external_dependency`**. Any script, skill or agent instruction naming the
+old word will fail; the concept is unchanged (it pins which version of ANOTHER
+design you build against). The name was freed because the obvious word was
+needed by the thing it was blocking — see `depends_on` below.
+
+⚠️ **AND THIS CUT SHIPS AN UPGRADE NOTE THAT THE FLOW DID NOT ASK FOR.**
+`flow:release-cut` says a note is owed *iff the schema stamp moved*, and the
+stamp did NOT move here — measured 29 node types / 64 edge types / schema 1,
+identical to v0.45.0. But the stamp carries node and edge TYPE names and knows
+nothing about the TOOL SURFACE, which is where this increment's only breaking
+change lives. A consumer loses a tool from under them and the rule that decides
+whether to warn them cannot see it. The note is written anyway;
+`docs/upgrading-to-v0.46.0.md` carries it, and the gap in the rule is recorded
+rather than worked around.
+
+### Added
+
+- **`depends_on(from_id, to_id)` — component coupling in one typed call.**
+  `Component DEPENDS_ON Component` is what cycle detection, single-point-of-
+  failure analysis and the undeclared-seam gap all read, and it was the one
+  structural edge with no typed helper: recording a coupling meant a raw
+  `create_edge` with both endpoint types spelled out. Reported by a field
+  session that searched for it, found `declare_dependency` by name, and fell
+  back to a raw edge write. ⚠️ It does not do the modelling for you — measured
+  the day it landed, 1 of 70 of reflow2's own components carried any coupling,
+  so modularity still reports "not measurable". This removes the excuse, not
+  the work.
+
+- **A revising write now KEEPS the value it would otherwise destroy.** The
+  revision note used to say, correctly, that it held the only copy in existence
+  of the field just replaced — and then offer an undo recipe. It is emitted by
+  the one caller that could still save the value, so now it saves it, at the six
+  typed constructors and at `create_node`. **Scoped: nothing at risk means
+  nothing taken.** A write that replaces nothing, or replaces something already
+  preserved, snapshots nothing. Best-effort by design — a preserve that cannot
+  be taken never fails your write, and the note then warns exactly as before.
+
+- **`stale_edge_evidence` — an edge whose prose outlived the node it points
+  at.** Surfaced by `propagate_change`, which is already putting those edges in
+  front of you. It compares against the node's PRIOR snapshot rather than its
+  current text: the naive version was written first and thrown away because it
+  fires on healthy edges. Lexical, never a refusal, and it carries its own
+  caveat plus a `coverage_note` saying when it was silent rather than clean.
+
+- **`list_skills` now states each skill's `shortcut`** — what a PERSON types.
+  Eight skills answer to a word that is not their name, so anyone deriving the
+  mapping by comparing directories gets those eight wrong.
+
+- **A fourth CI gate: `tools/check_command_surface.py`**, comparing the skill
+  directories, the command source against its copy, every skill against a
+  command that reaches it, and every renamed command against the alias table.
+
+### Changed
+
+- **`declare_dependency` → `external_dependency`** (see the upgrade action
+  above). The core method is `declare_external_dependency`.
+
+- **A near-match at a PRESCRIBED LAYER of the capture loop is reported, not
+  refused.** Requirement↔Capability, ChangeEvent↔{Requirement, Decision,
+  Capability}, Decision↔{Capability, Component} and TemporalFact↔Decision stop
+  refusing; every other pair refuses exactly as before. The 2026-08-29 repair
+  named its own reopening condition — "nobody has counted how often a cross-type
+  hit IS a real duplicate" — and two independent field reports supplied the
+  count: 12 refusals, 12 judged distinct, 0 real duplicates. 🛑 **The REFUSAL is
+  suppressed; the REPORT is not** — the match still comes back in
+  `search_first`, which is the difference between narrowing a guard and blinding
+  it.
+
+- **The parked-idea predicate reads `kind` as well as `status`.** A Decision
+  left open but marked `kind: choice` is a decision somebody FACED, not a musing,
+  so conflicts involving it surface instead of being suppressed. Read as a
+  fallback rather than a migration: `kind` when set, `status` when not, so no
+  existing design needs reclassifying. ⚠️ Inert until designs carry `kind` —
+  measured zero effect on reflow2's own graph the day it landed.
+
+### Fixed
+
+- **A prose field that swallowed the next parameter says so**, and the write
+  still lands.
+- **The clean sync line says what a node count cannot see** — a property-only
+  change is invisible to a node-count comparison, and the line now says so
+  rather than reading as an all-clear.
+- **The export ordering hazard carries its measured number** rather than a
+  warning with no size on it.
+- **Four small fixes** from a field report, none of which needed a design
+  decision.
+
+
 ## [0.45.0] — 2026-08-30
 
 **Upgrade action: none.** The schema gains an OPTIONAL property and the tool
