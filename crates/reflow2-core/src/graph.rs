@@ -1668,6 +1668,30 @@ impl DesignGraph {
     /// is the part a later reader actually needs: WHY this ruling binds this
     /// node. An agent less inclined to run `describe_schema` simply drops the
     /// reasoning, which is the silent half of the failure.
+    /// Record that this design record ANSWERED a question.
+    ///
+    /// The half `Question.answer` always promised — "the design nodes it
+    /// produced are linked separately" — and nothing delivered until
+    /// 2026-09-02. Draw it as you write the answer in, so a later session can
+    /// tell an answer that reached the design from one that reached only the
+    /// chat.
+    pub fn answers(
+        &mut self,
+        from_type: &str,
+        from_id: &str,
+        question_id: &str,
+        note: Option<&str>,
+    ) -> Result<StoredEdge, DynoError> {
+        self.create_edge(
+            edge::ANSWERS,
+            from_type,
+            from_id,
+            node::QUESTION,
+            question_id,
+            Props::new().set_opt("note", note),
+        )
+    }
+
     pub fn governed_by(
         &mut self,
         from_type: &str,

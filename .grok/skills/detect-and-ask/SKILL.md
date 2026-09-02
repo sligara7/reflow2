@@ -125,6 +125,21 @@ the record**: the gaps stay counted and stay loud (`req:no-idea-goes-quiet`).
    and the gap closes on its own. If it means *"that is fine as it stands"*, call
    `acknowledge_gap` — an answer is not an acknowledgement, and a gap left open with an answered
    question against it will show up in `open_questions` until one or the other happens.
+
+   ⭐ **AND NAME WHAT THE ANSWER BECAME: `answers`, from the node you just wrote to the
+   Question.** This is the one step that lets a later session tell an answer that reached the
+   DESIGN from one that reached only the CHAT. Without it nothing can: `loop_status` counts
+   answered questions whose gap is still open and says outright that it cannot tell which is
+   which, because until 2026-09-02 there was no edge to look for — `Question.answer` promised
+   that "the design nodes it produced are linked separately" and nothing linked them.
+
+   Draw it AS YOU WRITE THE ANSWER IN, not at session end. It costs one call and it is the
+   difference between a record a later reader can follow and one they have to re-derive.
+
+   🛑 **A MISSING `answers` EDGE IS NOT A CONFESSION.** Its absence means nobody said, never
+   that the answer went unwritten, and no report treats it as debt — every design written
+   before the edge existed has answered questions and none of these edges. So draw it where it
+   is true and never invent one to make a count look better.
 5. **If the user decides a gap is fine as it stands, say so in the graph.** Call
    `acknowledge_gap` with the gap's `id`, its `affected_ids`, and the user's reason. It moves
    into `reviewed_gaps` — recorded, not deleted — and the reason becomes a real Decision node

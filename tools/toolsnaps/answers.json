@@ -1,0 +1,38 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Record that this design record ANSWERED a question (ANSWERS) — the Decision, Requirement or Capability the user's reply actually became. Reads as a sentence: the RECORD answers the QUESTION. Take `question_id` from `open_questions`. DRAW IT AS YOU WRITE THE ANSWER IN, not at session end: this is the only thing that lets a later session tell an answer that reached the DESIGN from one that reached only the CHAT. Until it exists, nothing can — `loop_status` counts answered questions whose gap is still open and says outright that it cannot tell which is which. ITS ABSENCE IS NOT A CONFESSION. A question with no ANSWERS edge is one nobody has said anything about, NOT one whose answer went unwritten, and no report treats it as debt — every design written before 2026-09-02 has answered questions and none of these edges.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "from_id": {
+        "type": "string"
+      },
+      "from_type": {
+        "description": "Type of the design record that answered it — `Decision`,\n`Requirement`, `Capability`, whatever the answer actually became.",
+        "type": "string"
+      },
+      "note": {
+        "default": null,
+        "description": "HOW this record answers the question — the sentence a later reader\nneeds when the answer is not obvious from the record alone.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "question_id": {
+        "description": "The Question this record answered. Take it from `open_questions`'\n`question_id`.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "from_type",
+      "from_id",
+      "question_id"
+    ],
+    "type": "object"
+  },
+  "name": "answers"
+}

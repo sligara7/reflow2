@@ -2189,6 +2189,22 @@ pub struct DecisionReq {
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct AnswersReq {
+    /// Type of the design record that answered it — `Decision`,
+    /// `Requirement`, `Capability`, whatever the answer actually became.
+    pub from_type: String,
+    pub from_id: String,
+    /// The Question this record answered. Take it from `open_questions`'
+    /// `question_id`.
+    pub question_id: String,
+    /// HOW this record answers the question — the sentence a later reader
+    /// needs when the answer is not obvious from the record alone.
+    #[serde(default)]
+    pub note: Option<String>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct GovernedByReq {
     pub from_type: String,
     pub from_id: String,

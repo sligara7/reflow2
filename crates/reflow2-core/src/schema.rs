@@ -327,6 +327,11 @@ mod tests {
         // can demand TRL 7 of one technology and 4 of another. Moves the stamp:
         // the next release owes an upgrade note.
         assert_eq!(schema.node_types.len(), 29, "expected 29 node types");
+        // 65 since ANSWERS (2026-09-02) — a design record names the Question it
+        // answered. The schema had DESCRIBED this edge for months without it
+        // existing: `Question.answer` read "the design nodes it produced are
+        // linked separately" and nothing linked them. Three independent reports
+        // asked for it (chama, api-boss, and the open wording question).
         // 63 since IMPLEMENTS + COMPLEMENTS (2026-08-23) — record-to-record
         // relations, which were thinner in this vocabulary than relations to
         // Requirements: a check can now name the file that RUNS it, and two
@@ -340,7 +345,7 @@ mod tests {
         // REFUSE a graph it cannot read rather than fault on one edge at a
         // time. A count pinned here is what forces the author of the next edge
         // type to notice they owe an upgrade note.
-        assert_eq!(schema.edge_types.len(), 64, "expected 64 edge types");
+        assert_eq!(schema.edge_types.len(), 65, "expected 65 edge types");
     }
 
     #[test]
