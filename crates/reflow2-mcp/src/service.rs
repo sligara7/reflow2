@@ -733,7 +733,10 @@ pub(crate) fn read_debt_summary(s: &LoopStatus) -> String {
     };
     add(s.unsurfaced_gaps, "gap(s) never asked");
     add(s.unanswered_questions, "question(s) awaiting the user");
-    add(s.unwritten_answers, "answer(s) not written back");
+    add(
+        s.answered_with_open_gap,
+        "answered question(s) with an open gap",
+    );
     add(
         s.unsettled_assigned_decisions,
         "decision(s) awaiting a named approver",

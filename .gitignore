@@ -32,3 +32,10 @@ opencode.json
 .vscode/mcp.json
 # reflow2's loop-nudge hook — an absolute path to YOUR kit
 .claude/settings.local.json
+
+# Inbound field reports from projects that use reflow2 — kept on the author's
+# machine, never committed (dec:field-reports-are-untracked-because-the-
+# repository-is-public, 2026-09-02). This repository is PUBLIC and some of the
+# reporting projects are proprietary. The design still registers each report
+# and captures its findings; only the document stays out.
+docs/feedback/

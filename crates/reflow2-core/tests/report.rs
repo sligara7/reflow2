@@ -424,16 +424,18 @@ fn captured_intent_owes_a_surface_pass_until_the_question_is_asked() {
         asked.next
     );
 
-    // An answer that never reaches the design is its own named debt.
+    // An answered question whose gap is still open is its own named debt —
+    // and the line says only that, because whether the answer reached the
+    // design is not something this count can see.
     g.answer_question(&gaps[0].id, "It should do x.").unwrap();
     let answered = g.loop_status().unwrap();
-    assert_eq!(answered.unwritten_answers, 1);
+    assert_eq!(answered.answered_with_open_gap, 1);
     assert_eq!(answered.unanswered_questions, gaps.len() - 1);
     assert!(
         answered
             .next
             .iter()
-            .any(|l| l.contains("never reached the design")),
+            .any(|l| l.contains("still have an open gap")),
         "{:?}",
         answered.next
     );
@@ -871,5 +873,72 @@ fn owning_something_does_not_drag_a_person_into_a_blast_radius() {
             .iter()
             .map(|i| &i.node_id)
             .collect::<Vec<_>>()
+    );
+}
+
+#[test]
+fn an_answered_questions_line_claims_only_what_the_count_can_know() {
+    use reflow2_core::AskedQuestion;
+
+    // THE STATE THE GENESIS SKILL PRESCRIBES, and which three field reports
+    // have now produced independently: the user was asked, they said "not
+    // sure", the deferral was recorded as a Decision — so the answer DID
+    // reach the design — and the gap is still legitimately open because
+    // nothing satisfies the requirement yet.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:p", "P").unwrap();
+    g.add_requirement("req:r", "R", "Must do x.").unwrap();
+    g.add_capability("cap:x", "X", "does x", Some("realized"))
+        .unwrap();
+
+    let gap = g
+        .detect_gaps()
+        .unwrap()
+        .into_iter()
+        .find(|gap| !gap.affected_ids.is_empty())
+        .expect("an anchored gap");
+    g.record_asked_question(
+        &gap.id,
+        &gap.affected_ids,
+        "Where should this live?",
+        AskedQuestion::default(),
+    )
+    .unwrap();
+    g.answer_question(&gap.id, "Not sure yet.").unwrap();
+    g.add_decision(
+        "dec:deferred",
+        "Deferred on purpose",
+        "The user said 'not sure'; recorded as an open decision rather than guessed.",
+        Some(
+            "The answer reached the design as this node. The gap stays open \
+              because nothing satisfies the requirement yet, which is true.",
+        ),
+    )
+    .unwrap();
+
+    let s = g.loop_status().unwrap();
+    let line = s
+        .next
+        .iter()
+        .find(|l| l.contains("answered question(s)"))
+        .expect("the answered-question class gets a line")
+        .clone();
+
+    // THE COUNT KNOWS TWO THINGS: this question is answered, and its gap is
+    // still open. It never looks for design nodes, so it cannot say whether
+    // the answer was written in — and here it demonstrably WAS. Pinning the
+    // CLASS, not this sentence: no line may assert a fact its computation
+    // cannot reach.
+    assert!(
+        !line.contains("never reached the design"),
+        "asserts what it cannot know: {line:?}"
+    );
+    assert!(
+        !line.to_lowercase().contains("not written"),
+        "asserts what it cannot know: {line:?}"
+    );
+    assert!(
+        line.contains("open gap") || line.contains("gap is still open"),
+        "should state the fact it CAN support: {line:?}"
     );
 }

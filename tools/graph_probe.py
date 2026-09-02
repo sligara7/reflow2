@@ -81,7 +81,7 @@ TIMEOUT_S = 300
 COUNTS = (
     "unsurfaced_gaps",
     "unanswered_questions",
-    "unwritten_answers",
+    "answered_with_open_gap",
     "undispositioned_drift",
     "unproven_capabilities",
     "unexamined_claims",

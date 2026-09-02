@@ -390,9 +390,15 @@ pub struct LoopStatus {
     pub unsurfaced_gaps: usize,
     /// Questions put to the user, still waiting on them.
     pub unanswered_questions: usize,
-    /// Questions the user answered whose gap is still open — the answer never
-    /// reached the design (write it in, or acknowledge the gap).
-    pub unwritten_answers: usize,
+    /// Questions the user answered whose gap is still OPEN. THAT IS THE WHOLE
+    /// CLAIM: this compares question status against gap status and never looks
+    /// for the answer among the design's nodes, so it cannot say whether the
+    /// answer was written in. A deferral recorded as an open Decision — the
+    /// state the genesis skill prescribes — lands here and is CORRECT rather
+    /// than debt. Renamed from `unwritten_answers` on 2026-09-02: that name
+    /// asserted the half this count cannot reach, and three projects each
+    /// diagnosed the resulting message from scratch.
+    pub answered_with_open_gap: usize,
     /// Decisions left `proposed` that a NAMED person has been asked to settle —
     /// an `AUTHORED_BY` edge carrying `role=approver`.
     ///
@@ -774,7 +780,7 @@ impl DesignGraph {
                 .collect()
         };
         let unanswered_questions = questions.iter().filter(|q| q.status == "asked").count();
-        let unwritten_answers = questions.iter().filter(|q| q.status == "answered").count();
+        let answered_with_open_gap = questions.iter().filter(|q| q.status == "answered").count();
 
         // A Decision that is still `proposed` AND carries an approver edge:
         // somebody was asked to decide and nothing else says so. The approver
@@ -859,10 +865,18 @@ impl DesignGraph {
                  don't re-ask (open_questions)"
             ));
         }
-        if unwritten_answers > 0 {
+        if answered_with_open_gap > 0 {
+            // SAYS ONLY WHAT THE FILTER ABOVE SUPPORTS. The old wording —
+            // "never reached the design — write the answer in, or acknowledge
+            // the gap" — asserted a fact about design nodes that nothing here
+            // looks for, and both remedies it named were wrong for the
+            // commonest case: a deferral the genesis skill itself prescribes,
+            // recorded as an open Decision, whose gap is legitimately open.
             next.push(format!(
-                "{unwritten_answers} answered question(s) never reached the design — write \
-                 the answer in, or acknowledge the gap"
+                "{answered_with_open_gap} answered question(s) still have an open gap — that \
+                 is all this knows, and it is not a claim the answer went unwritten: read \
+                 them (open_questions), then write in what is missing or leave a gap that is \
+                 genuinely blocked"
             ));
         }
         if unsettled_assigned_decisions > 0 {
@@ -943,8 +957,8 @@ impl DesignGraph {
                 (gaps_not_attributable, "open gap(s) on ground nobody owns"),
                 (unanswered_questions, "question(s) waiting on the user"),
                 (
-                    unwritten_answers,
-                    "answered question(s) not yet written into the design",
+                    answered_with_open_gap,
+                    "answered question(s) whose gap is still open",
                 ),
                 (structural_defects, "structural defect(s)"),
                 (
@@ -1019,7 +1033,7 @@ impl DesignGraph {
         Ok(LoopStatus {
             unsurfaced_gaps,
             unanswered_questions,
-            unwritten_answers,
+            answered_with_open_gap,
             unsettled_assigned_decisions,
             structural_defects,
             unproven_capabilities,
