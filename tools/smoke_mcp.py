@@ -704,7 +704,22 @@ def run(binary: str, graph_path: str) -> int:
         stringly,
     )
 
+    s.call("withdraw_gap_acknowledgement", {"gap_id": ack_gap["id"]})
+    s.call("withdraw_gap_acknowledgement", {"gap_id": "gap:deadbeefdeadbeef"})
+    c.ok("withdrawing puts the gap back",
+         ack_gap["id"] in {g["id"] for g in gaps_of(s)})
+
     # Put a question on the record so the restart below can prove it survives.
+    #
+    # THE WITHDRAWAL ABOVE MUST COME FIRST, and that ordering is load-bearing
+    # since 2026-09-02 (dec:idea-is-a-replayed-gap-an-input-or-an-echo). The
+    # replayed gap is now an ECHO — only its `id` is read, and the server
+    # resolves it against a fresh detect_gaps — so an ACKNOWLEDGED gap is
+    # REFUSED rather than phrased from the caller's stale copy. That is the
+    # point: acknowledge_gap exists so a settled question is not asked again,
+    # and phrasing one from a copy the server no longer recognises is exactly
+    # the re-ask it exists to prevent. This block used the acknowledged object
+    # only because it was the one in hand.
     asked_wording = "Is this coupling deliberate?"
     prep = s.call("gap_to_prompt", {"gap": ack_gap, "answers": []})
     s.call("gap_to_prompt", {
@@ -714,11 +729,6 @@ def run(binary: str, graph_path: str) -> int:
     })
     outstanding = s.call("open_questions")
     c.ok("asking a gap records the question", len(outstanding) == 1, outstanding)
-
-    s.call("withdraw_gap_acknowledgement", {"gap_id": ack_gap["id"]})
-    s.call("withdraw_gap_acknowledgement", {"gap_id": "gap:deadbeefdeadbeef"})
-    c.ok("withdrawing puts the gap back",
-         ack_gap["id"] in {g["id"] for g in gaps_of(s)})
     h1 = s.call("gap_to_prompt", {"gap": gaps[0], "answers": []})
     if c.ok("handshake asks the agent for phrasing", h1.get("status") == "needs_llm", h1):
         h2 = s.call("gap_to_prompt", {

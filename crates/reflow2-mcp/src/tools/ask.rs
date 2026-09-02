@@ -60,12 +60,16 @@ impl ReflowService {
                        cannot collide across gaps — each gap is replayed against its own answers \
                        and never sees another's. A MIXED call (some gaps answered, some not) is \
                        refused rather than half-served. The questions are recorded all or none. \
-                       \u{26a0} REPLAY EACH GAP OBJECT UNCHANGED between the two passes. An answer is \
-                       matched by an id hashed from the prompt text, which is built from the \
-                       gap's own title and description, so trimming either for readability \
-                       re-keys every answer and silently degrades the phrasing to raw detector \
-                       jargon. Unmatched answers come back in `unused_answers`, and \
-                       `degrade_reason` on the prompt says what went wrong.",
+                       THE REPLAYED GAP IS AN ECHO: only its `id` is read. The server resolves \
+                       each gap afresh and ignores the text you send back, so trimming a \
+                       description for readability or mangling a title CANNOT re-key your \
+                       answers \u{2014} it used to, and two projects paid for it ten days apart \
+                       before the guard was fixed on 2026-09-02. Send the row back as you got it \
+                       and do not spend effort preserving it byte-for-byte. \
+                       \u{26a0} A gap that has CLOSED since you took it is REFUSED rather than \
+                       served from your stale copy, because recording a question against a \
+                       finding nobody has is the worse outcome. Unmatched answers still come \
+                       back in `unused_answers`, and `degrade_reason` says what went wrong.",
         annotations(read_only_hint = false)
     )]
     pub async fn gaps_to_prompts(
@@ -189,12 +193,14 @@ impl ReflowService {
                        that domain; a `plain` question is not automatically one in their \
                        vocabulary, and swapping vocabulary is not simplifying — a systems \
                        engineer wants `interface` and `verification` kept. \
-                       \u{26a0} REPLAY THE GAP OBJECT UNCHANGED between the two passes. An answer is \
-                       matched by an id hashed from the prompt text, which is built from the \
-                       gap's own title and description, so trimming either for readability \
-                       re-keys every answer and silently degrades the phrasing to raw detector \
-                       jargon. Unmatched answers come back in `unused_answers`, and \
-                       `degrade_reason` on the prompt says what went wrong.",
+                       THE REPLAYED GAP IS AN ECHO: only its `id` is read, and the server \
+                       resolves the gap afresh. Trimming the description or mangling the title \
+                       CANNOT re-key your answers \u{2014} it used to, and that is what silently \
+                       served raw detector jargon to two projects' users before the guard was \
+                       fixed on 2026-09-02. \
+                       \u{26a0} A gap that has CLOSED since you took it is REFUSED rather than \
+                       served from your stale copy. Unmatched answers come back in \
+                       `unused_answers`, and `degrade_reason` says what went wrong.",
         annotations(read_only_hint = false)
     )]
     pub async fn gap_to_prompt(
@@ -376,8 +382,28 @@ impl ReflowService {
         &self,
         gaps: Vec<GapCandidate>,
     ) -> Result<Vec<GapCandidate>, McpError> {
-        let compacted = |gap: &GapCandidate| gap.description.is_empty() && gap.evidence.is_empty();
-        if !gaps.iter().any(compacted) {
+        // THE REPLAYED GAP IS AN ECHO, NOT AN INPUT
+        // (dec:idea-is-a-replayed-gap-an-input-or-an-echo, 2026-09-02).
+        //
+        // ⭐ ONLY THE `id` IS READ. Everything else the caller sends back is
+        // discarded in favour of the server's own copy, so mutilating the
+        // payload between the passes CANNOT re-key the answers.
+        //
+        // 🛑 THIS GUARD USED TO RUN ONLY WHEN `description` AND `evidence` WERE
+        // BOTH EMPTY — that is, only for a row from a BUDGETED reply — and so
+        // trusted the caller's text in exactly the case where it can be wrong.
+        // Two projects paid for that ten days apart, neither carelessly:
+        // dev_storyflow TRIMMED the description for readability (2026-08-23, 4
+        // of 5 questions silently degraded to raw detector jargon), and
+        // proj:chama duplicated a fragment of the title while transcribing
+        // (2026-09-02). The tool's own prose already said "REPLAY EACH GAP
+        // OBJECT UNCHANGED" — the code just did not enforce it.
+        //
+        // COST: one `detect_gaps()` per call rather than per gap, which is why
+        // the batch form exists. A closed gap is now REFUSED rather than served
+        // from a stale copy; recording a question against a finding nobody has
+        // is the worse outcome, and that trade is the settled part.
+        if gaps.is_empty() {
             return Ok(gaps);
         }
         let open = {
@@ -386,9 +412,6 @@ impl ReflowService {
         };
         gaps.into_iter()
             .map(|gap| {
-                if !compacted(&gap) {
-                    return Ok(gap);
-                }
                 open.iter()
                     .find(|candidate| candidate.id == gap.id)
                     .cloned()
@@ -401,10 +424,11 @@ impl ReflowService {
         {
             McpError::invalid_params(
                 format!(
-                    "gap {gap_id} carries no description or evidence, so it is a row from a \
-                     BUDGETED detect_gaps reply — and no open gap has that id any more. It was \
-                     either closed or acknowledged since that reply. Re-run detect_gaps and ask \
-                     about what is still open."
+                    "no open gap has the id {gap_id}. The gap you replayed is resolved by ID \
+                     against a fresh detect_gaps — the text you send back is an echo and is not \
+                     read — so this means the gap itself was CLOSED or ACKNOWLEDGED since you \
+                     took it, not that your payload was wrong. Re-run detect_gaps and ask about \
+                     what is still open."
                 ),
                 None,
             )

@@ -37,6 +37,34 @@ reading the old key gets nothing back — and gets it silently, which is why thi
 is called out rather than buried. `tools/graph_probe.py` and
 `tools/loop_nudge.py` are updated in the same change.
 
+### Fixed
+
+- **A replayed gap is an ECHO, so mangling it can no longer re-key your answers.**
+  `gap_to_prompt` / `gaps_to_prompts` resolve the replayed gap by **`id` alone**
+  against a fresh `detect_gaps`; the text you send back is not read.
+
+  The guard used to rehydrate ONLY when `description` and `evidence` were both
+  empty — a row from a *budgeted* reply — and so trusted the caller's text in
+  exactly the case where it can be wrong. **Two projects paid for that ten days
+  apart, neither carelessly:** dev_storyflow *trimmed* the description for
+  readability (2026-08-23; 4 of 5 questions silently degraded to raw detector
+  jargon and were recorded that way under the user's name), and `proj:chama`
+  duplicated a fragment of the title while transcribing (2026-09-02). The tool's
+  own prose already said *"REPLAY EACH GAP OBJECT UNCHANGED"* — the code simply
+  did not enforce it, and the warning was doing the work the guard should have.
+
+  🛑 **BEHAVIOUR CHANGE: a gap that is no longer open is REFUSED, not served
+  from your stale copy.** That includes an **acknowledged** gap. This is
+  deliberate — `acknowledge_gap` exists so a settled question is not asked
+  again, and phrasing one from a copy the server no longer recognises is the
+  re-ask it exists to prevent. The refusal says which of the two happened, so
+  "your payload was wrong" and "the gap is gone" are no longer the same message.
+
+  Both tool descriptions are corrected rather than left standing: they now say
+  the replay is an echo and tell callers **not** to spend effort preserving it
+  byte-for-byte. Leaving the old warning would have described behaviour the code
+  no longer has.
+
 ### Added
 
 - **A design record can say which Question it answered — `ANSWERS`.** The
