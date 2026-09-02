@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:1c705dc2ec7cceb7ca3a7b11b79e02ec36a9f8171b3d2ebb11badaab22d2fa6d",
+  "content_hash": "sha256:1b5610c0e9c9f3976dac22739b98cd5384f65fbf2637fd815424c3886fda731a",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -3469,6 +3469,14 @@
         "evidence": "That earlier finding established that couplings and contracts are recorded in vocabularies that are DISJOINT BY CONSTRUCTION, so the module-level seams number could not move however many contracts anyone wrote. It saw exactly why the 18% band is a weak number — and the band still prints it with no such caveat, which is what this decision is about."
       },
       "to_id": "dec:idea-a-derived-number-carries-what-it-was-computed-over-wherever-it-is-quoted"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "fact:defect-loop-status-asserts-an-answer-never-reached-the-design-from-a-fact-that-cannot-say-so",
+      "properties": {
+        "evidence": "The 2026-08-16 fact saw this coming in its own text: it named option A (\"the narrow honest repair is for the message to say what it actually knows\") and stated the obstacle behind option C (\"'was this answer written into the design' has no general computation\"). It framed the choice seventeen days before the recurrence made it worth deciding."
+      },
+      "to_id": "dec:idea-how-should-the-loop-know-that-an-answer-reached-the-design"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -10075,6 +10083,24 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:dec:idea-a-deliberately-open-edge-can-never-be-ranked-as-a-fit",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:dec:idea-a-detector-can-read-the-phase-the-design-already-declares",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:dec:idea-how-should-the-loop-know-that-an-answer-reached-the-design",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:fact:the-command-surface-has-five-copies-and-nothing-reconciles-them",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
@@ -11401,6 +11427,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:field-reports-are-untracked-because-the-repository-is-public",
+      "properties": {
+        "acted_at": "2026-09-02",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:fix-the-comparison-before-pointing-it-earlier",
       "properties": {
         "acted_at": "2026-08-10",
@@ -12375,6 +12410,15 @@
       "properties": {
         "acted_at": "2026-08-16",
         "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-how-should-the-loop-know-that-an-answer-reached-the-design",
+      "properties": {
+        "acted_at": "2026-09-02",
+        "role": "approver"
       },
       "to_id": "who:ajs"
     },
@@ -17175,6 +17219,16 @@
         "validation_status": "validated"
       },
       "to_id": "dec:a-stale-finding-is-closed-by-a-claim-not-a-computation"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "dec:idea-how-should-the-loop-know-that-an-answer-reached-the-design",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "CONDITIONAL, and stated as a hypothesis rather than asserted: IF option C is chosen — a typed edge from a design record onto a Question — it also supplies the vehicle for the wording question's amendment option, where a later record says what was meant without editing what was asked. One piece of vocabulary would answer both. It is not yet true, because C is one of four options and may not be chosen.",
+        "validation_status": "hypothesis"
+      },
+      "to_id": "dec:idea-a-recorded-questions-wording-can-be-corrected"
     },
     {
       "edge_type": "CAUSES",
@@ -25315,6 +25369,15 @@
         "action": "modified"
       },
       "to_id": "art:stats"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:baseline-966418b6faa4d715",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:chama-genesis-feedback-2026-09-02"
     },
     {
       "edge_type": "CHANGED",
@@ -33662,6 +33725,60 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-answered-question-line-says-only-what-it-knows",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:graph-probe"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-answered-question-line-says-only-what-it-knows",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:loop-nudge"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-answered-question-line-says-only-what-it-knows",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:report"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-answered-question-line-says-only-what-it-knows",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-answered-question-line-says-only-what-it-knows",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-loop-nudge"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-answered-question-line-says-only-what-it-knows",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-as-built-record-catches-up-with-what-295-built",
       "properties": {
         "accepted_baseline": false,
@@ -39927,6 +40044,16 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-a-recorded-questions-wording-can-be-corrected",
+      "properties": {
+        "evidence": "Fixing the rehydrate guard removes the commonest way a Question's wording degrades, which changes how much this question is worth answering — but not whether it needs answering, since a badly-phrased question is equally permanent. The dependency is on how urgent this is, not on whether it is real.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "fact:the-gap-replay-warning-exists-because-rehydrate-declines-to-run-when-the-caller-sent-text"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "dec:idea-a-view-can-slice-by-altitude-not-only-by-aspect",
       "properties": {
         "evidence": "A view that slices by ALTITUDE needs to know what the altitudes ARE, and this decision is what settles that. It is the precise dependency: the altitude view is the missing half of the lowest-level-contract rule (that rule is accepted, its roll-up view is not built), and an open ladder means the rungs it projects onto are per-design rather than a fixed five. ⚠️ AND IT IS NOT ONLY A VIEW: `seam_coverage` ALREADY takes an altitude argument and answers differently per rung — 72/8/64 at module, 11/11/0 at subsystem — so at least one shipped tool keys on the ladder today. That dependency is NOT in the five unsettled items listed on the ladder decision and belongs there.",
@@ -42485,6 +42612,14 @@
     },
     {
       "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-how-should-the-loop-know-that-an-answer-reached-the-design",
+      "properties": {
+        "confidence": 1.0
+      },
+      "to_id": "chg:the-answered-question-line-says-only-what-it-knows"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
       "from_id": "dec:idea-is-the-restructure-target-the-shared-struct-rather-than-the-subsystem-contracts",
       "properties": {
         "evidence": "The older thought grown up, within one session. That node concluded the code has no black-box boundaries and named breaking up the struct as the only option that would create them; this one finds that the mechanism to do so already exists as GraphRead, is proven by a second implementation, and reaches 3 of 45 modules — which turns a large architectural question into a bounded migration."
@@ -42530,6 +42665,14 @@
         "evidence": "The older thought grown up. That node asked whether the quality attribute should drive allocation and established the four-graphs observation; this one asks the same question with a concrete proposal attached — abandon the current spine — and with the co-change measurement it called runnable now actually run."
       },
       "to_id": "dec:idea-should-the-spine-be-re-derived-from-the-actual-structure"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-the-instruction-layer-runs-ahead-of-the-typed-tool-layer",
+      "properties": {
+        "evidence": "The 2026-08-31 grouping asked whether reflow2's PROSE runs ahead of its TYPED TOOLS and was rejected as four unrelated causes sharing a symptom. This is the same investigation one step on and a different claim — not that the prose promises tools that do not exist, but that the prose describes behaviour that is not what the code does. Drawn from the older node to this one because that rejection is the direct ancestor of this question and its counter-argument applies here too."
+      },
+      "to_id": "dec:idea-the-load-bearing-prose-is-unchecked-against-the-code-it-describes"
     },
     {
       "edge_type": "EVOLVES_INTO",
@@ -42634,6 +42777,15 @@
         "evidence": "Merged 2026-08-22 on Anthony's ruling. This 2026-08-06 statement is the earlier form; the survivor carries his own wording and absorbed this one's worked examples and its where-does-the-fix-land test verbatim. Neither was authoritative while both stood — a live instance of req:a-rule-knows-where-it-is-authoritatively-stated. SUPERSEDES was tried first and is not a legal DesignRule-to-DesignRule edge; EVOLVES_INTO is the honest relation anyway, since nothing here was withdrawn, only grown into one place. Retired on the record rather than deleted: it was true when written."
       },
       "to_id": "rule:reflow2-is-built-for-other-projects-not-for-itself"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "art:chama-genesis-feedback-2026-09-02",
+      "properties": {
+        "note": "A dated field report from proj:chama's first genesis session, written from outside reflow2's development. Frozen observation: it must not be revised as reflow2 moves, so no DOCUMENTS edge is honest. Third member of the genre after the two ophyd/hxm reports of 2026-08-19.",
+        "ruling": "parks"
+      },
+      "to_id": "dec:a-dated-field-report-is-registered-and-parked"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -49991,6 +50143,18 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:idea-a-deliberately-open-edge-can-never-be-ranked-as-a-fit",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:dec:idea-a-deliberately-open-edge-can-never-be-ranked-as-a-fit"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:idea-a-detector-can-read-the-phase-the-design-already-declares",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:dec:idea-a-detector-can-read-the-phase-the-design-already-declares"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "dec:idea-a-factory-builds-the-mechanics-in-so-a-class-fix-is-one-edit",
       "properties": {},
       "to_id": "snap:epoch:composition-is-chosen-over-exhaustive-checks:dec:idea-a-factory-builds-the-mechanics-in-so-a-class-fix-is-one-edit"
@@ -50060,6 +50224,12 @@
       "from_id": "dec:idea-how-does-a-users-project-acquire-vocabulary-it-never-uses",
       "properties": {},
       "to_id": "snap:epoch:the-owner-rules-on-scope-and-reachability:dec:idea-how-does-a-users-project-acquire-vocabulary-it-never-uses"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:idea-how-should-the-loop-know-that-an-answer-reached-the-design",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:dec:idea-how-should-the-loop-know-that-an-answer-reached-the-design"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -117991,6 +118161,24 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:the-answered-question-line-says-only-what-it-knows",
+      "properties": {
+        "at": "2026-09-02",
+        "note": "The defect this fact measured on 2026-08-16 is repaired: the message no longer asserts anything about design nodes, and the narrow honest repair it named ('for the message to say what it actually knows') is what was built. The fact's DESCRIPTION of the mechanism stays accurate and worth reading; only its currency as an open defect has ended."
+      },
+      "to_id": "fact:defect-loop-status-asserts-an-answer-never-reached-the-design-from-a-fact-that-cannot-say-so"
+    },
+    {
+      "edge_type": "INVALIDATES",
+      "from_id": "chg:the-answered-question-line-says-only-what-it-knows",
+      "properties": {
+        "at": "2026-09-02",
+        "note": "The recurrence this fact recorded is closed at the source: the computation is unchanged but the sentence no longer claims past it, on all seven surfaces. What the fact says about the COST of withholding a fix from consumers who cannot see this graph remains true and is not invalidated."
+      },
+      "to_id": "fact:the-answered-question-message-recurred-in-a-third-project-with-the-computation-unchanged"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:the-call-holding-the-only-copy-keeps-it",
       "properties": {
         "at": "2026-09-01",
@@ -118359,6 +118547,94 @@
         "confidence": 1.0
       },
       "to_id": "dec:idea-backlog-belongs-in-the-graph"
+    },
+    {
+      "edge_type": "OBSOLETES",
+      "from_id": "dec:field-reports-are-untracked-because-the-repository-is-public",
+      "properties": {
+        "confidence": 1.0
+      },
+      "to_id": "art:bhome-genesis-feedback-2026-08-31"
+    },
+    {
+      "edge_type": "OBSOLETES",
+      "from_id": "dec:field-reports-are-untracked-because-the-repository-is-public",
+      "properties": {
+        "confidence": 1.0
+      },
+      "to_id": "art:chama-genesis-feedback-2026-09-02"
+    },
+    {
+      "edge_type": "OBSOLETES",
+      "from_id": "dec:field-reports-are-untracked-because-the-repository-is-public",
+      "properties": {
+        "confidence": 1.0
+      },
+      "to_id": "art:dev-storyflow-feedback-2026-08-23"
+    },
+    {
+      "edge_type": "OBSOLETES",
+      "from_id": "dec:field-reports-are-untracked-because-the-repository-is-public",
+      "properties": {
+        "confidence": 1.0
+      },
+      "to_id": "art:grok-build-tui-feedback-2026-08-27"
+    },
+    {
+      "edge_type": "OBSOLETES",
+      "from_id": "dec:field-reports-are-untracked-because-the-repository-is-public",
+      "properties": {
+        "confidence": 1.0
+      },
+      "to_id": "art:grok-shell-feedback-2026-08-29"
+    },
+    {
+      "edge_type": "OBSOLETES",
+      "from_id": "dec:field-reports-are-untracked-because-the-repository-is-public",
+      "properties": {
+        "confidence": 1.0
+      },
+      "to_id": "art:grok-shell-feedback-2026-08-30"
+    },
+    {
+      "edge_type": "OBSOLETES",
+      "from_id": "dec:field-reports-are-untracked-because-the-repository-is-public",
+      "properties": {
+        "confidence": 1.0
+      },
+      "to_id": "art:hxm-program-feedback-2026-08-19"
+    },
+    {
+      "edge_type": "OBSOLETES",
+      "from_id": "dec:field-reports-are-untracked-because-the-repository-is-public",
+      "properties": {
+        "confidence": 1.0
+      },
+      "to_id": "art:hxm-program-feedback-2026-08-26"
+    },
+    {
+      "edge_type": "OBSOLETES",
+      "from_id": "dec:field-reports-are-untracked-because-the-repository-is-public",
+      "properties": {
+        "confidence": 1.0
+      },
+      "to_id": "art:musicjug-genesis-feedback-2026-08-31"
+    },
+    {
+      "edge_type": "OBSOLETES",
+      "from_id": "dec:field-reports-are-untracked-because-the-repository-is-public",
+      "properties": {
+        "confidence": 1.0
+      },
+      "to_id": "art:ophyd-service-feedback-2026-08-19"
+    },
+    {
+      "edge_type": "OBSOLETES",
+      "from_id": "dec:field-reports-are-untracked-because-the-repository-is-public",
+      "properties": {
+        "confidence": 1.0
+      },
+      "to_id": "art:ophyd-service-fork-feedback-2026-08-31"
     },
     {
       "edge_type": "OBSOLETES",
@@ -125239,6 +125515,70 @@
       "to_id": "cap:derived-release-manifest"
     },
     {
+      "edge_type": "TRIGGERS",
+      "from_id": "fact:authored-by-describes-itself-as-inert-and-is-the-assignment-primitive",
+      "properties": {
+        "evidence": "Instance ③: the authored_by description says the edge never enlarges a blast radius — true of propagation, and read at the point of writing the edge it means 'nothing computes on this', while approver+proposed drives loop debt."
+      },
+      "to_id": "dec:idea-the-load-bearing-prose-is-unchecked-against-the-code-it-describes"
+    },
+    {
+      "edge_type": "TRIGGERS",
+      "from_id": "fact:genesis-phase-is-a-third-instance-of-a-deliberate-state-read-as-a-defect",
+      "properties": {
+        "evidence": "That measurement is what raised this question: it establishes the genesis islands are correct-by-construction AND that parks cannot reach them, which is precisely the pair of facts that makes 'should a detector read a declared phase' worth asking. Drawn from the fact to the idea — the measurement initiated the question, not the reverse."
+      },
+      "to_id": "dec:idea-a-detector-can-read-the-phase-the-design-already-declares"
+    },
+    {
+      "edge_type": "TRIGGERS",
+      "from_id": "fact:governed-by-is-the-governance-edge-and-describe-schema-can-never-rank-it",
+      "properties": {
+        "evidence": "That measurement — GOVERNED_BY unranked in both directions, and the enumeration repair unavailable because the openness is correct — is what raised this question. Drawn from the fact to the idea, because the measurement initiated the question rather than the reverse."
+      },
+      "to_id": "dec:idea-a-deliberately-open-edge-can-never-be-ranked-as-a-fit"
+    },
+    {
+      "edge_type": "TRIGGERS",
+      "from_id": "fact:governed-by-is-the-governance-edge-and-describe-schema-can-never-rank-it",
+      "properties": {
+        "evidence": "Instance ②: describe_schema presents a ranking computed from endpoint enumeration as though it measured how well an edge models the caller's pair, and those two come apart exactly for deliberately-open edges."
+      },
+      "to_id": "dec:idea-the-load-bearing-prose-is-unchecked-against-the-code-it-describes"
+    },
+    {
+      "edge_type": "TRIGGERS",
+      "from_id": "fact:the-answered-question-message-recurred-in-a-third-project-with-the-computation-unchanged",
+      "properties": {
+        "evidence": "The recurrence measurement — same computation, third project, seventeen days on — is what turned a known wording defect into a live question about whether the cheap repair is worth making at all. Drawn from the fact to the idea because the measurement came first."
+      },
+      "to_id": "dec:idea-how-should-the-loop-know-that-an-answer-reached-the-design"
+    },
+    {
+      "edge_type": "TRIGGERS",
+      "from_id": "fact:the-answered-question-message-recurred-in-a-third-project-with-the-computation-unchanged",
+      "properties": {
+        "evidence": "Instance ① of the candidate class: the message asserts an answer never reached the design from a count that knows only that a question is answered and its gap is open. Confirmed unchanged in source 2026-09-02, seventeen days after the cause was recorded."
+      },
+      "to_id": "dec:idea-the-load-bearing-prose-is-unchecked-against-the-code-it-describes"
+    },
+    {
+      "edge_type": "TRIGGERS",
+      "from_id": "fact:the-gap-replay-warning-exists-because-rehydrate-declines-to-run-when-the-caller-sent-text",
+      "properties": {
+        "evidence": "That measurement — the server already rehydrates by id and the guard declines — is what raised this question and is what makes the reporter's own requested fix the weakest option rather than the obvious one. Drawn from the fact to the idea because the measurement came first."
+      },
+      "to_id": "dec:idea-is-a-replayed-gap-an-input-or-an-echo"
+    },
+    {
+      "edge_type": "TRIGGERS",
+      "from_id": "fact:unresolved-setup-says-nothing-follows-through-and-never-checks-whether-anything-did",
+      "properties": {
+        "evidence": "Instance ④, and the strongest one: `unresolved_setup`'s message says \"nothing follows through\" while its computation asks only \"is either side still a parked idea?\". The sentence and the code ask DIFFERENT QUESTIONS rather than the sentence merely over-reaching its data — and it was found by walking into it during ordinary work, not by looking."
+      },
+      "to_id": "dec:idea-the-load-bearing-prose-is-unchecked-against-the-code-it-describes"
+    },
+    {
       "edge_type": "VALID_FROM",
       "from_id": "fact:bl-105",
       "properties": {},
@@ -129307,6 +129647,17 @@
       }
     },
     {
+      "node_id": "art:chama-genesis-feedback-2026-09-02",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:1a56aff917cd90cefc32df68d3e90c00d67297242987186ec3eb90f70e5d530d",
+        "location": "docs/feedback/2026-09-02-chama-genesis-feedback.md",
+        "name": "chama field report — first genesis run on a brand-new design, 2026-09-02",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:change-event-text-test",
       "node_type": "Artifact",
       "properties": {
@@ -130088,7 +130439,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:e3fc4c9ff468a60601de359670718ddd2abb503fd00cd63df3488592aa049231",
+        "checksum": "sha256:cab8605c9f5a37bf88e04583ba0610474a0a9316628516292b61de49186458c0",
         "location": "tools/graph_probe.py",
         "name": "graph_probe.py",
         "status": "realized"
@@ -130417,7 +130768,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:1dc6dec37183cd464134e89d8e96c54aa9990cb2082760232cb56dfd7008386d",
+        "checksum": "sha256:c28eefc04c02189671d16f4d28efb401ece3339a7773440bd4765efead870f42",
         "granularity": "atomic",
         "location": "tools/loop_nudge.py",
         "name": "loop_nudge.py",
@@ -130928,7 +131279,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f9bcf38a59b25371b561aef5adb79bda9a3edfe16d54956a8e811ffd727226c6",
+        "checksum": "sha256:c1db020ba26a39b4b13df7f99312a4eb79a4537e0e718ee1815ce4f191f1a71b",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/report.rs",
         "name": "report.rs",
@@ -131315,7 +131666,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:1d88437219d649c0a0564f0f00004a1ba4371a514aaf4314d965b440898b5a12",
+        "checksum": "sha256:cb099d737cd3ffa84fb9c407bcb9fe5b8a4f5384b870e87669a96cee2249a36a",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -131802,7 +132153,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:aa56730094653f62900b367ec4a25d0df0c6f728bdcd6580dabc42ef2adbd372",
+        "checksum": "sha256:b8d5cee522585c5cb884103117bfd550130823ce1a3579b88b51044f92d21a24",
         "granularity": "atomic",
         "location": "tools/test_loop_nudge.py",
         "name": "test_loop_nudge.py",
@@ -138633,6 +138984,16 @@
       }
     },
     {
+      "node_id": "chg:baseline-966418b6faa4d715",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-09-02",
+        "name": "FIRST baseline — nothing moved. The report was originally registered at /home/ajs7/project/chama/feedback.md, a path that exists only on one machine, so the coherence gate correctly failed it as missing_artifact in CI. Copied into docs/feedback/ per the convention every prior field report follows, and baselined there. A frozen observation needs a versioned copy the design can actually point at.",
+        "subject": "record"
+      }
+    },
+    {
       "node_id": "chg:baseline-9fadd6105aa8d3d4",
       "node_type": "ChangeEvent",
       "properties": {
@@ -141104,6 +141465,18 @@
         "rationale": "ROOT-CAUSED 2026-08-29 with the `root-cause` skill, from three CI failures on PR #366 against the ENFORCED `rule:design-intent-moves-only-on-the-owners-word`.\n\nTHE CAUSE IS NOT THIS TOOL. `cap:an-acknowledgement-says-whose-judgement-it-was` was built 2026-08-23 and reached `acknowledge_gap` and `acknowledge_gaps` only; the sibling was left behind.\n\n    acknowledge_gap(s)   HAS the param    168 acknowledgements,  51 attributed\n    acknowledge_defect   NO param          12 acknowledgements,   0 attributed\n\n🛑 THE ZERO IS STRUCTURAL, NOT NEGLIGENCE — there was no field to fill, so the tool could not attribute even when the caller wanted to, while `heal.rs` asserted in a comment that \"the user just settled it\".\n\n⭐ THE MEASUREMENT THAT KILLED THE COMFORTABLE READING: 51 of 168 looked like a 30% compliance rate and an argument that callers skip the field. Every one of those 51 approver edges is dated 2026-08-23 or 2026-08-24 — the day the parameter shipped and the day after — so the 117 without one are pre-fix history and there is NO evidence the parameter is skipped when it exists. That is what makes its ABSENCE the cause rather than caller behaviour.\n\nTwo other candidates were refuted rather than dropped: that something else minted these ids (`heal.rs:164` does), and that the gate's scope is wrong because `ver:acknowledgement-not-structure` excludes `decision:ack:` from the design network (the capability text explicitly says an absent approver \"will be reported by check_intent_authority\", so the design intends the gate to cover acknowledgements).\n\n⭐⭐ IT PINS THE CLASS, NOT THE INSTANCE. Adding a parameter to one tool fixes twelve nodes and nothing about the next capability that lands on one sibling and not the others. What was maintained by hand with nothing checking it was the FAMILY. The invariant was observed failing against the pre-fix surface: it names `acknowledge_defect` and passes the two siblings that were already correct.\n\n⚠️ NOT ESTABLISHED: why `acknowledge_defect` was missed on 2026-08-23 — overlooked or deliberately deferred. Nothing in the code or the graph says, and guessing would put a false cause in the record. Also open: whether the 117 unattributed historical acknowledgements should be backfilled or left as honest history.",
         "subject": "system",
         "summary": "`acknowledge_defect_by` takes `approver` and `acted_at`, mirroring `acknowledge_gap_by`: the Contributor is checked BEFORE anything is minted, `AUTHORED_BY role=approver` is drawn, and an absent approver is reported in the reply rather than assumed. Absence stays ALLOWED (a design with no Contributor modelled must still be able to accept a defect); a name matching no Contributor is REFUSED. `toolsnap.py` gains a family invariant: every `acknowledge_*` tool must offer `approver`, searched at any schema depth so a bulk form carrying it per item still counts."
+      }
+    },
+    {
+      "node_id": "chg:the-answered-question-line-says-only-what-it-knows",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-09-02",
+        "name": "The answered-question debt line says only what its computation can support — on all seven surfaces that repeated the claim",
+        "rationale": "THE CAUSE, written down because the repair is recoverable from the diff and the cause is not: the message was authored by hand alongside a counter it did not match, and nothing checks a reflow2 sentence against the behaviour it describes. That is why it shipped, why a passing test locked it in, and why three independent sessions each re-diagnosed it from scratch — reflow2's own orientation call 2026-08-16, the StoryFlow fleet, and proj:chama on 2026-09-02, seventeen days after the cause was recorded here and findable by its own error string.\n\nLABELLED `defect_fix` RATHER THAN `documentation` DELIBERATELY. The tool's own test is behavioural: a normative sentence that changes what somebody DOES takes a real label. This one prescribed two remedies and agents acted on them — chama followed the prescription and was told to undo correct work — so it was behaviour, not prose about behaviour.\n\n⚠️ WHAT THIS DOES NOT FIX, stated so it is not read as closed: the loop still cannot tell a DEFERRED answer from a genuinely unwritten one. It now declines to guess instead of guessing wrong, which is strictly better and strictly less useful than option B or C of the decision this implements. Making the fact computable needs a typed edge from a design record onto a Question, which does not exist — measured 2026-09-02: `describe_schema{Decision, Question}` returns zero exact and zero half-exact matches.\n\n⚠️ CONSUMER-VISIBLE BREAK, flagged rather than buried: `unwritten_answers` was a served field in the loop_status JSON. Renaming it is judged correct here because the NAME was itself the false claim and reflow2 is pre-1.0, where `rule:fix-it-properly-while-it-is-still-cheap` says break consumers now rather than deprecate. The counter-precedent was weighed and rejected: heal.rs deliberately did NOT rename `unthreaded_cluster` because \"renaming it to be accurate would break them to fix a sentence\" — different, because that name was merely imprecise while this one asserted something untrue.",
+        "subject": "system",
+        "summary": "`loop_status` said \"N answered question(s) never reached the design — write the answer in, or acknowledge the gap\" from a count that knows only that a question is answered and its gap is still open. Nothing looked for the answer among the design's nodes. Both prescribed remedies were wrong for the commonest case — a deferral the genesis skill itself prescribes, recorded as an open Decision, whose gap is legitimately open.\n\nFIXED ON EVERY SURFACE THAT REPEATED THE CLAIM, because repairing only the one reported line would have fixed the instance and left the class: the `LoopStatus.answered_with_open_gap` field (renamed from `unwritten_answers`, whose NAME asserted the unreachable half), its doc comment, the `next` message, the scoped `not_attributable` label, `service.rs`'s read-side nudge label (\"answer(s) not written back\"), `tools/graph_probe.py`'s probed key, and `tools/loop_nudge.py`'s Stop-hook sentence (\"answer(s) the user gave that nothing has written into the design\").\n\nThe new line: \"N answered question(s) still have an open gap — that is all this knows, and it is not a claim the answer went unwritten: read them (open_questions), then write in what is missing or leave a gap that is genuinely blocked.\"\n\nPINNED BY A TEST THAT WAS OBSERVED TO FAIL FIRST. `an_answered_questions_line_claims_only_what_the_count_can_know` builds the state the genesis skill prescribes — question answered \"not sure\", the deferral recorded as an open Decision so the answer DID reach the design, gap still legitimately open — and asserts the line makes no claim about design nodes. Against the unfixed code it failed with the false sentence quoted verbatim. It pins the CLASS: no `next` line may assert a fact its computation cannot reach.\n\n⚠️ AND THE OLD TEST WAS PART OF THE DEFECT: `tests/report.rs` asserted `l.contains(\"never reached the design\")` under the comment \"An answer that never reaches the design is its own named debt.\" The false claim was pinned in place by a passing check, which is why it survived seventeen days of green builds.\n\nWorkspace green (cargo test --workspace, exit 0; the 20 report tests confirmed by name) and 91 Python nudge tests pass against the renamed key."
       }
     },
     {
@@ -144471,6 +144844,17 @@
       }
     },
     {
+      "node_id": "dec:field-reports-are-untracked-because-the-repository-is-public",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "ANTHONY'S WORD, 2026-09-02: *\"can we .gitignore the docs/feedback files? I don't want them appearing on the repo for the whole world to see. And storyflow is my own proprietary project that I don't want anybody to see.\"*\n\n**THE ACT: `docs/feedback/` is added to .gitignore and its 11 tracked files are removed from the index with `git rm --cached` — they STAY ON DISK on his machine.** This is untracking, not deletion. He was asked and chose \"keep locally, never commit\".\n\nDISTINCT FROM `dec:reflow2s-own-feedback-documents-are-removed-once-captured` (accepted 2026-08-15), and the difference is why this is a separate node:\n· That decision DELETES the document, and its licence is CAPTURE — \"once ingested, please remove\". Its reason is tidiness: he did not want documents accumulating in a repo he has to clean up later.\n· This one UNTRACKS the document and keeps it. Its reason is DISCLOSURE, and it does not depend on ingestion being complete, because nothing is lost — the file remains on his machine whether or not the graph has finished with it.\nBoth retire the Artifact from the BUILD's view; only the older one destroys the source. Applying the older policy to eleven documents whose ingestion nobody has verified would destroy sources under a licence never granted for them.\n\n⚠️ **WHAT THIS DOES NOT ACHIEVE, measured 2026-09-02 and put to him before he chose.** The repository is PUBLIC and has been since 2026-07-17.\n· The 11 files remain in git HISTORY and stay retrievable by anyone; `docs/feedback/2026-08-23-dev-storyflow-agent-feedback.md` has been public for ten days.\n· **THE LARGER EXPOSURE IS NOT THESE FILES.** `docs/design/reflow2.json` is committed and public, and **275 of its 3,632 nodes name storyflow (643 mentions)** — the findings, facts and decisions that quote the fleet reports. Untracking the source documents does nothing about those.\nHe was shown all three wider options — make the repository private, rewrite history, or scrub the export — and chose the narrow one knowingly. THIS IS RECORDED SO IT IS NOT LATER MISTAKEN FOR AN ASSURANCE THE CONTENT IS PRIVATE. It is not; it stops the bleeding forward only.\n\n**MECHANICS, and why the Artifacts must move too.** These 11 documents are registered Artifacts. Untracking them makes `reflow2_check.py` fail with `missing_artifact` in CI, because the build no longer contains a file the design points at — measured today when `art:chama-genesis-feedback-2026-09-02` failed exactly that way. So each is RETIRED ON THE RECORD via OBSOLETES from this decision, which is what `expected_absence` reads: the two documents already retired under the 2026-08-15 policy show as notes rather than failures for precisely this reason.\n\nThe Artifacts keep their names and checksums — the proof of what was captured — and their Fragments and YIELDED edges, so every finding stays traceable to the document that produced it. What is retired is the claim that the BUILD contains the file. The file still exists; it is simply no longer somewhere this repository can see.\n\nGOING FORWARD, his choice in the same exchange: new field reports are kept locally and never committed. A report can still be registered and its findings captured; the document itself does not enter the repository.",
+        "kind": "choice",
+        "name": "Field reports are UNTRACKED and kept only on the author's machine — the repository is public and some of the projects reporting are proprietary",
+        "rationale": "Recorded separately rather than as a second application of the 2026-08-15 policy because the licence is different and a later reader must be able to tell which one governs. That policy's condition is \"once ingested\" — it trades the document for its capture. This decision needs no such condition: the file survives on his machine, so untracking costs nothing recoverable.\n\nKept honest about its limits on purpose. A decision that said only \"field reports are private now\" would read, in six months, as a statement that the content is not public. It is public, it stays public, and the two measurements above are in the decision text so nobody has to re-derive them to know that.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:fix-the-comparison-before-pointing-it-earlier",
       "node_type": "Decision",
       "properties": {
@@ -144691,6 +145075,17 @@
       }
     },
     {
+      "node_id": "dec:idea-a-deliberately-open-edge-can-never-be-ranked-as-a-fit",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Generated 2026-09-02.\n\nproj:chama asked for a new edge type to say \"this open decision determines whether this constraint can be met\". THE EDGE EXISTS — `Constraint --GOVERNED_BY--> Decision` — and they could not find it, because `describe_schema` ranks by endpoint enumeration and GOVERNED_BY is `*` on both sides deliberately. It falls into the alphabetical wildcard pile for EVERY pair in the design. They reached for BLOCKS and buried the meaning in an `evidence` string.\n\n**THE PREVIOUS TWO INSTANCES WERE FIXED BY ENUMERATING AN ENDPOINT** — VERIFIES in #112, and CONSTRAINS' source on 2026-08-08 after `describe_schema{DesignRule, Component}` returned zero exact matches. THAT REPAIR IS UNAVAILABLE HERE and schema/core.yaml says why in its own words: narrowing a wildcard is a consumer-facing break, and \"what a rule limits\" is genuinely open. GOVERNED_BY's openness is CORRECT. So the third instance of a class cannot take the fix that closed the first two, which is the signal that the class was mis-stated.\n\n**THE RESTATEMENT: the ranking criterion is not the thing it is presented as.** `exact` / `half_exact` measures HOW NARROWLY AN EDGE IS DECLARED. It is presented to the caller as how well the edge MODELS THEIR PAIR. Those coincide for edges whose narrowness is meaningful and come apart exactly for edges whose openness is meaningful — and the second set includes GOVERNED_BY, CAUSES, RISKS, MITIGATES, BLOCKS, CONTRADICTS, OBSOLETES: most of the semantic vocabulary.\n\n⭐ **THE SHARPEST FORM, MEASURED 2026-09-02 BY ACCIDENT WHILE BRAINSTORMING THIS.** Two calls on the same day:\n· `describe_schema{from: Decision, to: Constraint}` → 0 exact, 0 half-exact, 17 wildcards. **The right edge EXISTS and is in that pile.**\n· `describe_schema{from: Decision, to: Question}` → 0 exact, 0 half-exact, 17 wildcards. **No right edge exists at all** — this is the genuinely missing vocabulary behind `dec:idea-how-should-the-loop-know-that-an-answer-reached-the-design`.\n**THE TWO REPLIES ARE THE SAME SHAPE, AND THE CALLER CANNOT TELL WHICH SITUATION THEY ARE IN.** \"The answer is in this list and I am not ranking it\" and \"there is no answer and you need new vocabulary\" are opposite facts requiring opposite actions — draw the edge, or ask for one — and the tool renders them identically. That is a stronger argument than the original finding, because it means the output is uninformative in BOTH directions rather than merely under-ranked in one.\n\nIDEAS TURNED OVER, none preferred:\n· **A `deliberately_open` marker per edge type**, so describe_schema can distinguish \"open because nobody thought about it\" from \"open because anything may be governed\" and rank the second above the wildcard pile. ⭐ This is the only option that also separates the two replies above.\n· **Rank by USAGE in this graph** — GOVERNED_BY joins Constraint to Decision many times here; a pair actually drawn is evidence of a modelled fit that no declaration carries. Also separates the two replies, and needs no new vocabulary at all. ⚠️ It reports what people DO rather than what is RIGHT, so an established wrong habit would rank above a correct unused edge.\n· **Let the hint declare its own pairs** in text, and rank on that, changing nothing structural.\n· **Nothing structural: fix the NOTE.** It already says \"prefer leaving the edge out to asserting one that is wrong\" — it could also say \"an edge open on both sides may still be the modelled fit; read the hints, do not read the ranking as an answer.\" ⚠️ It would NOT separate the two replies; a caller still cannot tell a hidden answer from an absent one.\n· **Do nothing.** One report, one pair. The note already warns the ranking is not an answer, and chama half-heeded it.\n\n⚠️ WHAT NOBODY HAS MEASURED, and it decides between \"do nothing\" and everything else: how many of the ~18 wildcard edge types carry real semantics, and how often an agent picks a wrong edge because the right one was unranked. chama is one observed instance; the Decision→Question call above is a second, from a different direction, inside one day. `dec:edge-orthogonality` already sets the bar any answer must clear — a vocabulary distinction earns its keep ONLY IF A COMPUTATION READS IT — and a `deliberately_open` marker would have to be read by the ranking to qualify.",
+        "kind": "exploratory",
+        "name": "OPEN — describe_schema ranks by endpoint enumeration, so every deliberately-open edge is permanently unrankable. Enumerating endpoints fixed the last two instances and cannot fix this one",
+        "rationale": "Worth recording rather than acting on because the finding REFUTES a feature request, and that is the expensive kind to lose. Without this node the next reader meets chama's report, agrees a Decision→Constraint edge is missing, and adds vocabulary for a relation that already exists — making the discovery problem worse by putting two edges where one was already unfindable.\n\nThe fourth option costs a sentence and is available immediately whatever is decided about the rest.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-a-derived-number-carries-what-it-was-computed-over-wherever-it-is-quoted",
       "node_type": "Decision",
       "properties": {
@@ -144707,6 +145102,17 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-30, asking it directly of his own long-standing idea: *\"I've wanted to design a 'mini-house' that is like a biodome and is as self-sufficient and recycles waste, etc — again, what is the 'domain' of this design and what should its artifacts be.\"*\n\n⭐ THE QUESTION MAY BE THE FINDING. A self-sufficient habitat is not one domain. It is at least: architecture (envelope, thermal, structure), environmental and mechanical engineering (water reclamation, greywater and blackwater, air, HVAC), energy (generation, storage, load), agriculture or biology if it grows food, and controls. Asking which ONE it is has no true answer.\n\n`Project.domain` is a single scalar, and `req:framework-is-chosen-not-defaulted` already records that it is WRITTEN AND NEVER READ. If it is ever made to drive anything — which is option (c) of dec:idea-reflow2-serves-a-project-that-is-not-software — then a project spanning five disciplines is the case that breaks a scalar field on its first real outing. Cheap to notice now, expensive to notice after something reads it.\n\n═══ WHAT THE ARTIFACTS PROBABLY ARE, offered as a starting list to be corrected ═══\n\n· A MASS AND ENERGY BALANCE — water in/out/recovered, air, nutrients, power generated against power drawn. For a closed-loop habitat this is the artifact that matters most, because the failure that actually hurts is a loop that does not close.\n· Loop schematics for water, waste and air (the process-engineering P&ID shape).\n· Architectural plans for the envelope, and a thermal model.\n· A growing plan, if it feeds anyone — species, area, yield, nutrient cycle.\n· A controls and monitoring specification.\n· Code and regulatory compliance — septic and greywater rules are usually the binding constraint on \"recycles waste\", far more than any engineering limit.\n\n⭐ AND ONE OF THOSE IS ALREADY NEARLY REFLOW2'S. `Flow`, `Resource` and budget `Constraint` (`quantity` / `limit` / `direction`, with their CONSTRAINS spenders) are close to a mass-and-energy balance already, and the SV-7 measures/budgets viewpoint renders one — with an honest verdict of `incomplete` when any contribution is unstated. FOR A CLOSED-LOOP DESIGN, \"incomplete because somebody has not said what this loop returns\" IS THE MOST USEFUL SENTENCE THE TOOL COULD SAY. That is not a new feature; it is existing machinery pointed at a domain nobody has pointed it at.\n\n═══ AND THE REGULATORY HALF IS DESIGNED AND UNBUILT ═══\n`dec:idea-the-environment-compliance-layer-was-designed-and-never-built` says in as many words that the Environment / EnvironmentRule layer *\"is what makes 'design a house' concrete\"*. The biodome and the garage are both that unbuilt half. Two of the three cases Anthony named land on the same missing piece, which is worth more than either case alone.\n\n═══ OPTIONS, NONE CHOSEN ═══\n(a) DOMAIN STAYS ONE FIELD and a multi-discipline project picks its dominant one. Simplest; loses exactly the projects most worth having.\n(b) DOMAIN BECOMES A SET. Honest to reality; every computation that reads it then has to decide what to do when two domains disagree, which is a real cost and not obviously worth paying.\n(c) DOMAIN IS NOT ON THE PROJECT AT ALL — discipline belongs to the PART, not the whole, since the envelope is architecture and the water loop is process engineering within one design. Closest to how the work is actually divided, and the largest change.\n(d) DELETE IT, per `req:a-vocabulary-distinction-proves-it-is-read` — a distinction nothing reads should be made real or removed, and nothing reads this one today.\n\nNOT ESTABLISHED: whether any of this is worth doing before somebody actually starts a non-software design in reflow2. The garage is the nearest real candidate and it is Alex's, not Anthony's, so the evidence would be a second user's again.",
         "name": "OPEN — the biodome has no single domain, and `Project.domain` is one field. Is asking \"what domain is this?\" the wrong question?",
         "rationale": "Captured under the brainstorm skill, separately from dec:idea-who-authors-the-domain-artifact because these are two different questions — that one asks who holds the pen, this asks whether \"the domain\" is even a well-formed question for a design that spans five disciplines. Recorded as open rather than as a requirement: the artifact list is a starting point offered for correction by the person who actually wants the thing built, and the four options change the schema in ways nobody has chosen.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-a-detector-can-read-the-phase-the-design-already-declares",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Generated 2026-09-02 from proj:chama's third instance of `req:a-deliberate-state-is-not-a-defect`.\n\nTHE ESTABLISHED ANSWER TO A DELIBERATE STATE IS `GOVERNED_BY ruling: parks`, and it is a good one: two-sided by construction, requires an ACCEPTED Decision so a musing cannot suppress a finding, keeps the node visible and counted in `swept.parked`. It answers instances (a) and (b) of that requirement.\n\n⭐ IT CANNOT ANSWER THE GENESIS CASE, AND THE REASON IS THE SAME ONE ALREADY WRITTEN DOWN. heal.rs:1958-1959 records that \"the `parks` ruling requires an ACCEPTED Decision, which is why parks cannot reach the brainstorm case at all\". The genesis case has the identical shape: eight islands, all correct, all transient, and asking a first-time user to write an accepted Decision ruling their own genesis normal — in their first ten minutes — is worse than the warning.\n\n**AND THE DESIGN ALREADY SAYS IT WITHOUT BEING ASKED.** `concept_without_design` fires only at zero Components. Its being open IS a machine-readable declaration that structure is deliberately unspecified. `unthreaded_cluster` cannot thread a design with no Components, by construction — CONTAINS is not a traceability edge. So one detector already holds the fact that would exonerate the other, and they do not speak.\n\nTHE QUESTION, which is bigger than the instance: **is there a class of deliberate state the design DECLARES rather than RULES, and should detectors read it?** parks is the ruled kind — a human said so. This would be the derived kind — the graph's own state says so, and nobody has to act.\n\nOPTIONS TURNED OVER, none preferred:\n· **`swept.expected_at_this_phase`**, chama's suggestion, keyed on `concept_without_design` being open. Fits the existing \"report differently rather than hide\" pattern exactly.\n· **Key on zero-Components directly** rather than on another detector's output, so two detectors do not become coupled — a second implementation of one fact is the hazard `structure.rs` already names about `isolated_in_walk`.\n· **Leave it, and fix the FIRST-RUN EXPERIENCE instead** — the harm chama identified is a new user reading \"10 structural defects\" and concluding they erred. That could be a framing problem in what genesis reports, not a detector problem at all.\n· **Do nothing.** It self-cleared 10 → 6 within the session. Transient noise that resolves may not be worth a mechanism, and this project's own doctrine watches for over-engineering.\n\n🛑 **AN OPTION THAT LOOKS OBVIOUS AND IS ALREADY DEAD — read this before proposing it.** \"Read the phase off the design's own Epoch nodes\" is the first idea anyone will have, because reflow2 HAS an epoch vocabulary: `add_epoch`, `plan_epoch`, `set_epoch_status`, `pin_at_epoch`. MEASURED 2026-09-02: **this graph contains ZERO Epoch nodes**, after 3624 nodes and months of use by the project that built the vocabulary. A phase signal keyed on epochs would read nothing on the design most likely to have one, and nothing at all on a first-session graph — which is the exact case this question is about. (That zero is also a candidate instance of `dec:idea-detect-vocabulary-that-nothing-reaches` in its own right, and is not pursued here.)\n\n⚠️ THE STRONGEST ARGUMENT AGAINST ANY MECHANISM: `dec:idea-detect-vocabulary-that-nothing-reaches` warns that another marker nothing reads would be a further instance of the disease it documents, and `req:a-cluster-can-be-declared-deliberately-separate` is CONDITIONAL on its marker being read back for exactly that reason. A phase concept must be readable, not merely declared — and the epoch measurement above is what that failure looks like when it has already happened.",
+        "kind": "exploratory",
+        "name": "OPEN — parks needs a human ruling per node. A design at genesis already declares its phase machine-readably. Should a detector read that instead of waiting to be told?",
+        "rationale": "Kept separate from `req:a-cluster-can-be-declared-deliberately-separate` (option A, still proposed) although they are neighbours: that requirement is about a HUMAN declaring a partition permanent, with a read-back condition attached. This is about a detector deriving a TRANSIENT phase with no human act at all. The read-back condition that governs the first does not obviously apply to the second, because nothing is declared to go stale.\n\nRecorded rather than built because the fourth option — do nothing — is live. The state resolved on its own inside one session, and the measured harm so far is one user's first impression, reported once.",
         "status": "proposed"
       }
     },
@@ -144865,6 +145271,17 @@
         "decision": "**RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL.** Anthony, 2026-08-29, taking the copy-vs-reference sub-question off `dec:idea-intent-crosses-designs` as the first thing to settle.\n\n═══ FIRST, WHAT IS ALREADY ANSWERED — AND IT WAS ANSWERED HERE BEFORE ═══\n\nThe sub-question was posed as a fork: *does an inherited decision keep the hub's id, or get copied?* — \"a copy is a second source of truth\" against one horn, \"a reference means the child's graph cannot be read alone\" against the other.\n\n**It is not a fork, and `dec:idea-a-session-holds-several-graphs` already worked this out on 2026-08-12** under Anthony's mutable/immutable framing: `mirror_surface` writes the far side in as FOREIGN NODES, and that framing *\"collapses three of the four costs the union framing raised\"*. Re-read in `crates/reflow2-core/src/export.rs` on 2026-08-29 and it holds — a mirror is **a pinned copy that keeps the origin's id and is marked not-yours-to-edit**: nodes land in the local store so the child reads alone; each gets `provenance: imported`; the mirrored Project carries `mirror_of` / `mirror_content_hash` / `mirrored_at` / `mirror_nodes` so disagreement is COMPUTABLE; local edges attach as ordinary edges because *\"foreignness is a property of the node, never of the link\"*; collisions are refused, never merged.\n\n📌 **AND THE BLOCKER THAT NODE NAMES IS NOW FIXED, WHICH IT DOES NOT KNOW.** Its trial ended: *\"mirror_surface HAS NO REFRESH... 12 of 13 ids collided with the previous mirror of the same design... the staleness register READS FRESH after a failed refresh\"*, and it calls that *\"the concrete blocker under every option in this node\"*. `mirror_surface` now detects a refresh by `mirror_of`, removes what it previously held (recorded in `mirror_nodes` on the mirrored Project), reports `withdrawn`, and **REFUSES before writing** when a withdrawal would orphan a host edge — citing that exact 12-of-13 measurement in its own comment. The blocker is gone; the three things that trial left explicitly open are not all gone with it.\n\n═══ 🛑 SO THE OPEN HALF IS NARROWER, AND IT IS THE #368 SHAPE ONE BOUNDARY OUT ═══\n\nBoth nodes discuss authority in the abstract — *\"who may accept intent in the overlap\"*, *\"is a mirrored decision BINDING or only VISIBLE\"* — and the mutable/immutable framing concluded the rule becomes *\"enforced by construction\"* because you cannot write a design you cannot write to. **That is true for editing and false for the gate.** Measured 2026-08-29:\n\n1. `published_promises()` (`graph.rs:1352`) scans **Requirements** carrying `designation: published`. A surface holds those, published Interfaces, the artifacts that SPECIFY/REALIZE them, and the Project. **No Contributor is ever in a surface.**\n2. `mirror_surface` carries only *\"edges wholly inside what we actually mirrored\"*. A Decision's `AUTHORED_BY role=approver` points at a Contributor — outside the set, so **the edge is silently dropped**.\n3. `tools/check_intent_authority.py` contains **zero** occurrences of `provenance`, `imported`, `mirror` or `graph_id`. It walks every node where `settles_intent()` holds and demands an approver.\n\n⇒ **A published Decision arrives in the child `accepted` and unattributed, and the child's ENFORCED gate fails its build on a node it is structurally forbidden to fix.** Not a hypothetical: it is `cap:an-acknowledgement-says-whose-judgement-it-was` failing again — settled intent minted with no field able to carry an approver, tripping `rule:design-intent-moves-only-on-the-owners-word`. #368 fixed that inside one graph on 2026-08-29; nothing has asked it across two, because nobody has ever published a Decision.\n\n⭐ **THE QUESTION IS THEREFORE NOT COPY-VS-REFERENCE. IT IS WHETHER AUTHORITY TRAVELS WITH THE DECISION** — the concrete form of the \"hard half nobody has answered\" on `dec:idea-intent-crosses-designs`.\n\n═══ OPTIONS, NONE CHOSEN ═══\n\n**(a) The surface carries the approver as a foreign Contributor, and the gate reads foreignness.** The hub owner arrives beside the decision, marked `imported`; `check_intent_authority` accepts approved-by-a-foreign-approver instead of reporting missing. ⭐ It answers *\"whose word governs a child that inherited a decision it never approved?\"* **by name, in the record, permanently** — the honest form of the authority claim rather than a silent one. ⚠️ Counter: child graphs accumulate foreign people, and every scoped read taking a `contributor_id` must then tell a local person from a mirrored one — `loop_status`'s scoped mode included. Making the claim explicit and durable is also exactly what a reader hostile to the whole feature would point at.\n\n**(b) Decisions cross as VISIBLE ONLY — no `GOVERNED_BY` across the boundary.** The child reads the hub's reasoning and inherits no authority, so the gate never meets foreign settled intent and none of the above is built. ⚠️ Counter: a sibling can still re-derive a ruling its neighbour already made, which was the original complaint. **But note this counter is weaker than it looks here:** the argument for the downward direction was that it moves WHY rather than status, and visibility delivers WHY in full. Binding adds only enforcement.\n\n**(c) Both — publish for visibility now, defer binding.** ⚠️ Counter: `dec:idea-intent-crosses-designs` records that *\"leaders decide and sub-projects inherit\"* is the BINDING reading said out loud, so shipping visibility alone answers a question Anthony did not ask.\n\n**(d) Nothing crosses.** ⚠️ Counter: declining should be explicit rather than by neglect.\n\n📌 **PREREQUISITE UNDER EVERY OPTION EXCEPT (d):** `Decision` carries no `designation` property at all today, so the opt-in shape `set_requirement_designation` uses would have to be given to it first.\n\n⚠️ **AND THE OTHER TWO THINGS THE 2026-08-12 TRIAL LEFT OPEN ARE STILL OPEN**, so this must not be read as clearing them: whether a host's committed export should CARRY mirrored nodes or merely NAME them by pin, and what a refresh owes a host edge whose foreign target was RENAMED rather than withdrawn — the refusal handles withdrawal, and a rename is the case where both ids arrive.",
         "name": "OPEN — copy-vs-reference is already settled by mirroring; what nothing has asked is whether a published Decision's APPROVER survives the crossing, and measured today it does not",
         "rationale": "Started as its own node rather than folded into either near-match, after reading both in full at the duplicate guard's prompt. `dec:idea-intent-crosses-designs` asks WHAT MAY CROSS a boundary; `dec:idea-a-session-holds-several-graphs` asks WHICH GRAPHS A SESSION SEES and works out the mirroring mechanics. This asks a third thing neither reaches: given that mirroring is the mechanism, does the APPROVER survive the crossing — and it is answered, negatively, by three facts about code that were true the whole time.\n\nFolding it into the several-graphs node was the close call, since that is where the mutable/immutable framing lives. Kept separate because that node's conclusion — the ownership rule becomes \"enforced by construction\" — is exactly the claim this refutes in one specific place, and a refutation buried inside the node it refutes cannot be found by anyone reading either.\n\nTHE METHOD IS THE POINT AND IT IS THE THIRD TIME ON THIS THREAD. `dec:idea-intent-crosses-designs` carries its own correction: \"the claim was made from the capability's one-line description rather than from the code... READ THE EXPORT, NOT THE SUMMARY.\" Applied here it dissolved the copy-vs-reference fork instead of answering it, and then produced a defect prediction with a file and line for each of its three legs — refutable by reading rather than arguable.\n\nThe options are kept as four rather than collapsed toward the interesting one, and (b) is written at full strength deliberately: visibility-only needs none of this machinery, and the strongest argument for the downward direction — that it moves WHY rather than status — is fully served by visibility alone. That cuts against the option this session found most interesting, which is why it is on the record rather than in the conversation.\n\nRecorded as brainstorming. Nothing here is proposed for building, and the approver-loss finding is a prediction about code nobody has run, not an observed failure.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-a-recorded-questions-wording-can-be-corrected",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Raised by proj:chama, 2026-09-02, and it is the half of their gap_to_prompt report that root-cause did NOT dissolve.\n\nTHEIR CASE: they mangled a GapCandidate between the two passes, the question degraded to raw detector jargon, and THAT degraded wording is what got recorded as the question asked. `open_questions` still shows their duplicated title as the `context_setter`. The good phrasing existed only in the chat with the user. They found no way to correct it — `withdraw_question` retires a question overtaken by events, which is a different fact. In their words: \"a transcription slip is now indelible design record.\"\n\n⭐ THE MECHANICAL CAUSE IS SEPARATELY FIXABLE AND DOES NOT ANSWER THIS. `fact:the-gap-replay-warning-exists-because-rehydrate-declines-to-run-when-the-caller-sent-text` shows the re-key was preventable — the server already resolves the gap by id and declined to. Fix that and this particular slip stops happening. THE QUESTION SURVIVES ANYWAY, because a question can be badly worded without any transcription error at all: an agent can simply phrase it poorly, and the record is equally permanent.\n\nTHE OPTIONS, in the user's terms rather than the schema's:\n\n· **Leave it immutable.** A Question records WHAT WAS ASKED. Editing it after the fact makes the record a claim about what someone wishes they had asked, and the answer stored against it was given to the original words. This is a real anti-forgery argument and it is the same family as `dec:certainty-derived` and the OBSOLETES doctrine (a thing withdrawn keeps its status; the edge carries the new fact).\n· **Allow re-derivation, not editing.** Regenerate the wording from the live gap, keeping the old text on the record as superseded. Preserves the audit trail and fixes the common case, which is a mechanical degradation rather than a change of mind.\n· **Allow an amendment edge.** Leave the Question untouched and let a later record say \"this was asked badly; here is what was meant\" — the same shape as recording a ChangeEvent before deleting a stale edge, which is the move the delete_edge description talked chama INTO and which they praised.\n· **Do nothing and say so.** Document the immutability as intended, so the next agent does not spend the session looking for a tool that is deliberately absent.\n\n⚠️ WHAT MAKES THIS GENUINELY UNDECIDED: a Question is one of the few nodes whose content is MACHINE-DERIVED from another node's text rather than authored. So \"what was asked\" and \"what the gap said\" are two different facts that currently share one field, and none of the four options is obviously right without knowing which of them the record is for.\n\nNOTHING HERE IS PROPOSED. `answer_question` reaching only ids it can derive is a related but distinct defect already recorded (`fact:defect-a-question-not-created-by-gap-to-prompt-can-never-be-answered`).",
+        "kind": "exploratory",
+        "name": "OPEN — a Question's recorded wording is indelible. Is that a deliberate anti-forgery property, or an unintended one nobody chose?",
+        "rationale": "Recorded as an idea because chama asked for a specific mechanism (\"some way to re-derive or amend a Question's text\") and the mechanism is the least interesting part — the question underneath is what a Question node is FOR, and that has never been stated. Answering the mechanism without answering that would produce a tool whose correct use nobody could describe.\n\nNot promoted to a requirement: nobody has been asked, and immutability may well be the right answer.",
         "status": "proposed"
       }
     },
@@ -145687,6 +146104,17 @@
       }
     },
     {
+      "node_id": "dec:idea-how-should-the-loop-know-that-an-answer-reached-the-design",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Solutions turned over 2026-09-02 for a cause recorded on 2026-08-16 and unrepaired since.\n\nTHE SETTLED PART: `loop_status` prints \"N answered question(s) never reached the design — write the answer in, or acknowledge the gap\" from `questions.iter().filter(|q| q.status == \"answered\").count()`. That counter knows the question is answered and its gap is open. It knows nothing about whether design nodes exist. The 2026-08-16 fact already names the honest narrow repair; three sessions across three projects have now paid full diagnosis for it.\n\nOPTIONS, none preferred:\n\n· **A — Shrink the message to what it knows.** \"N question(s) are answered and their gap is still open.\" Drop both prescriptions, or replace them with a neutral prompt. Costs nothing, breaks nothing, available today, and it is what the original fact proposed. ⚠️ It makes the line honest and also less useful: a reader still cannot tell a deferral from a genuinely unwritten answer, which is the thing they actually want to know.\n\n· **B — Infer the deferred case**, chama's suggestion: when the answered question's gap is BLOCKS-ed or GOVERNED_BY an open Decision, report it as DEFERRED rather than UNWRITTEN. Reads a ruling the design already made, which is the move `req:a-deliberate-state-is-not-a-defect` asks for throughout. ⚠️ It is a heuristic: an open Decision standing near a gap is not proof that the answer was written, and a wrong DEFERRED is more reassuring than a wrong UNWRITTEN, which makes its failure mode the worse-shaped one.\n\n· **C — Make the fact recordable: a typed edge saying THIS RECORD ANSWERS THAT QUESTION.** The computation stops being an inference and becomes a lookup. ⭐ MEASURED TODAY: `describe_schema{from: Decision, to: Question}` returns ZERO exact and ZERO half-exact matches — nothing models the pair, so this needs new vocabulary rather than wiring. ⭐ AND IT CONVERGES WITH AN INDEPENDENT REPORT: api-boss proposed exactly this on 2026-08-15 for a DIFFERENT defect (\"let a Decision CLOSE a Question with an edge, making the linkage first-class and surviving whichever id scheme wins\" — `fact:defect-a-question-not-created-by-gap-to-prompt-can-never-be-answered`). Two projects, two symptoms, one missing edge. ⚠️ The counter is this project's own bar: `dec:edge-orthogonality` says a vocabulary distinction earns its keep only if a computation reads it — which this one would, so the bar is cleared, but it is still new vocabulary for a line of text.\n\n· **D — Drop the line entirely** while it cannot be computed. ⚠️ Loses a real signal: an answer that genuinely never got written IS debt, and it would go unreported.\n\n⭐ THE SHAPE WORTH NOTICING: A is a prose repair to a prose defect, and C makes the claim true by giving it something to read. `rule:fix-it-properly-while-it-is-still-cheap` points at C; the fact that A has been available and unbuilt for seventeen days points at how little the cheap repair is worth on its own.\n\nNOT ESTABLISHED: whether an answer can land as something other than a Decision — a Requirement, a status move, a bare edge — often enough that a Decision→Question edge would cover only part of the ground. The 2026-08-16 fact says outright that \"was this answer written into the design\" has no general computation, which is an argument that C solves the tractable half and leaves the rest.",
+        "kind": "exploratory",
+        "name": "SETTLED on Anthony's word 2026-09-02 — option A: the line says only what the count knows. Options B and C (telling a DEFERRED answer from an unwritten one) stay open and would need a typed edge onto a Question",
+        "rationale": "Recorded rather than acted on because A and C are not the same size and the choice between them is the user's: A is a sentence and can ship immediately; C is vocabulary, has an independent second use already recorded, and would make the claim computable rather than merely modest.\n\nThe convergence with api-boss's 2026-08-15 proposal is the reason this is worth a node at all. One project asking for an edge is a feature request; two projects reaching it from unrelated symptoms is evidence the edge is missing.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:idea-human-newcomer-reader",
       "node_type": "Decision",
       "properties": {
@@ -145733,6 +146161,17 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-25, hours after the open ladder shipped in #334: *\"looking at this from a fresh perspective; how should this have been done or what is the most correct way?\"* Nothing here retracts #334 and nothing is planned.\n\nWHAT SHIPPED, so the alternatives are judged against something concrete: `Component.level` is a STRING naming a rung; `Project.decomposition_levels` is a `list:string` ordered bottom-first; rank is `position()` in that list, computed at read time and never stored; an off-ladder name ranks `None` and is reported as `unknown_level`.\n\n═══════════════════════════════════════════════════════════════\n🛑 THE STRONGEST CRITICISM OF WHAT SHIPPED, AND IT IS THE SAME\nMISTAKE ONE LEVEL UP\n═══════════════════════════════════════════════════════════════\n\nThe fixed enum was rejected because **\"atomic\" shifts by domain** — a microprocessor chip for aerospace, a code module for software. **The shipped design asserts ONE LADDER PER DESIGN**, which is that same assertion moved up a rung rather than removed. A system-of-systems spanning an airframe and its flight software has TWO natural ladders, and `Project.decomposition_levels` forces them to share one. `req:recursive-black-box-decomposition` explicitly reaches \"from code projects to biology projects\" — a design that spans both is exactly where this bites.\n\n⇒ Per-SUBTREE ladders, not per-design, may be the correct shape. Nothing in #334 forecloses it (the ladder is read through one function, `decomposition_ladder()`), but nothing anticipates it either.\n\n═══════════════════════════════════════════════════════════════\nTHE FIVE SHAPES, WITH WHAT EACH COSTS\n═══════════════════════════════════════════════════════════════\n\n**A. DECLARED RUNG NAME (what shipped).** Legible in diffs and messages; no migration (93 components untouched); insertable without renumbering stored data. Costs: a string can be misspelled and the schema no longer catches it; list POSITION is implicit ordering, so inserting a rung silently renumbers every rank; one ladder per design.\n\n**B. DERIVE DEPTH FROM THE SPINE — drop `level` entirely.** Depth = distance from the root of `CONTAINS`. No ladder to declare, no typos, unlimited depth free, and `level_spine_disagreement` becomes IMPOSSIBLE rather than detected.\n⚠️ ALREADY CONSIDERED AND REJECTED, and the reason must be read precisely. `cap:ask-for-one-rung-of-the-decomposition` records: deriving the top tier from the spine \"returns leaves nobody wired to a parent — measured on this design: 8 subsystems by declared level, 2 leaves by spine position.\"\n⭐ BUT THAT MEASUREMENT IS ABOUT AN INCOMPLETE SPINE, NOT ABOUT DERIVING BEING WRONG. The derived answer was wrong because 14 components had no parent, not because depth is a bad definition of level. **The two failure modes are different and the design pays for one of them today:** derive fails on an unwired spine; declare fails when declaration and spine disagree, which is why `level_spine_disagreement` had to be built at all. Choosing declare bought a detector.\nCosts of B that stand regardless: a node not yet wired has NO level, so \"this is a subsystem\" cannot be claimed before it is placed; and the NAMES carry meaning a reader wants — \"subsystem\" not \"depth 2\".\n\n**C. RUNGS AS FIRST-CLASS NODES.** `cmp:x` points at `lvl:subsystem`; rungs order by `PRECEDES` edges. Typos become impossible (edge endpoints are validated), ordering is explicit rather than list position, insertion is a new node plus two edges with nothing renumbered, a rung can carry its OWN description — and Anthony's four stopping rules could attach to the rung they govern instead of living in a fact nobody traverses. Costs: a new node type, an edge per component, heavier queries, and it is the most machinery for a property that is one word.\n\n**D. RELATIVE ONLY — no names, just \"a parent is exactly one below its child\".** Simplest possible; works at any depth. Loses \"show me every subsystem\" entirely, which `cap:ask-for-one-rung-of-the-decomposition` was built to provide and which is a real question people ask.\n\n**E. DECLARE AND DERIVE, AND MAKE THE DISAGREEMENT THE PRODUCT.** Keep the declared name AND compute spine depth, then report where they diverge — which is half-built already as `level_spine_disagreement`. This treats the two answers as independent evidence rather than picking a winner. Costs: two things to keep, and it only pays off on a design whose spine is complete enough for the derived answer to mean anything.\n\n═══════════════════════════════════════════════════════════════\nWHAT WOULD ACTUALLY DECIDE IT\n═══════════════════════════════════════════════════════════════\n\nNot argument — a measurement nobody has: **how complete is the containment spine on a real design?** `fact:the-black-box-tier-has-two-answers-that-disagree` measured 121 of 2,526 nodes (4%) carrying a CONTAINS parent, and 14 components as roots. If the spine were complete, B costs nothing and removes a whole defect class. While it is 4% populated, B is unusable and A is the only thing that works. **So the right shape depends on a number that moves, and today's number argues for what shipped.**\n\n📌 A SMALLER THING WORTH RECORDING: `list:string` had existed in the schema validator and been used by NO schema file — `Project.decomposition_levels` is its first real use. That is untested territory reached without noticing, and it is the kind of thing that is fine until it is not.\n\nKEPT DISTINCT from `fact:the-black-box-tier-has-two-answers-that-disagree` after reading it: that is the 2026-08-18 MEASUREMENT of the two answers disagreeing, and it is the evidence this reasons FROM. This is the design question that measurement raises and does not answer — which of five shapes should carry depth at all.",
         "name": "OPEN — was the open ladder built the right way? A declared rung NAME per component was one of at least five shapes, and the one that shipped still asserts ONE ladder per design",
         "rationale": "Captured under the brainstorm skill: recorded as an idea, nothing promoted, nothing settled, and #334 stands.\n\nKept separate from `dec:the-decomposition-ladder-is-open-not-a-fixed-enum` (which decided THAT the ladder opens, and is accepted and implemented) and from `cap:ask-for-one-rung-of-the-decomposition` (the built capability whose declare-over-derive choice this re-examines). This asks a third thing neither answers: given that the ladder is open, is a declared rung NAME the right carrier for depth at all — asked with the implementation in hand rather than before it, which is why it can criticise something concrete instead of speculating.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-is-a-replayed-gap-an-input-or-an-echo",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Solutions turned over 2026-09-02 for the cause in `fact:the-gap-replay-warning-exists-because-rehydrate-declines-to-run-when-the-caller-sent-text`.\n\nTHE SETTLED PART: `rehydrate_gaps` already resolves a gap by id against a live `detect_gaps()` and replaces the caller's copy wholesale. Its guard runs it ONLY when the caller sent an empty description and evidence. So the server has the authority and declines to use it in exactly the case where the caller's copy can be wrong. proj:chama's mangled title would have been repaired for free.\n\n**THE QUESTION UNDERNEATH, which decides between every option below: is the pass-2 GapCandidate an INPUT the caller may legitimately shape, or an ECHO the server should treat as untrusted transport?** Nothing in the design says. The tool's own prose says \"REPLAY EACH GAP OBJECT UNCHANGED\", which reads as echo — but the code's behaviour is input.\n\nOPTIONS, none preferred:\n\n· **A — Always rehydrate.** Resolve every gap by id, replace wholesale, delete the guard. Kills the class outright and the ⚠ warning becomes unnecessary. Cost: one `detect_gaps()` per serve pass, already batched to once per call. ⚠️ REAL BEHAVIOUR CHANGE: a gap that has CLOSED since the caller's copy was taken currently gets served; after this it refuses with `gap_is_gone`. Whether refusing is correct is a judgement nobody has been asked for — recording a Question against a gap that no longer exists is arguably worse than refusing, but it is a change consumers would feel.\n\n· **B — Rehydrate, fall back to the caller's copy when the id does not resolve.** Kills the mangling class and keeps today's tolerance for closed gaps. ⚠️ Its weakness is silence: a caller who edited the text deliberately loses the edit with no signal, and the two cases (mangled / closed) become indistinguishable in the reply.\n\n· **C — Verify rather than replace: compare the caller's copy to the server's, refuse on mismatch and name the difference.** Turns a silent degradation into a loud refusal, which is the shape this project already prefers elsewhere — `create_edges` is all-or-nothing, and `gaps_to_prompts` refuses a MIXED batch rather than half-serving it. Costs the caller a round trip. ⚠️ It also treats every difference as an error, which is only right if the answer to the input/echo question is \"echo\".\n\n· **D — Accept `gap_id` as chama asked, and deprecate the object form.** Their literal request. On its own it is a patch: the old path stays and stays trusting. As a DEPRECATION it is different — new callers take the safe door, the old one warns, and it is removed later, which is `rule:fix-it-properly-while-it-is-still-cheap` clause two rather than a workaround.\n\n· **E — Do nothing; the warning is already there.** ⚠️ Recorded because it must be argued against rather than skipped, and the argument is short: the warning is loud, specific, correctly placed, and it still did not work. A field report from a first session hit the failure anyway.\n\n⭐ WHAT MAKES A AND C DIFFERENT IN KIND, not just in cost: A says the server owns the text and quietly makes it right. C says the caller asserted something false and must be told. Both are defensible; they answer the input/echo question opposite ways, and choosing a mechanism without answering it first is how this guard got its current condition in the first place.",
+        "kind": "exploratory",
+        "name": "OPEN — on gap_to_prompt's second pass, is the GapCandidate the caller's INPUT or the server's ECHO? The whole repair follows from that and nobody has stated it",
+        "rationale": "Recorded as an idea rather than repaired directly because the cheapest-looking fix (A, delete the guard) carries a consumer-visible behaviour change that nobody has approved, and because the reporter's own request (D) is the one option that is a patch unless it is paired with a deprecation.\n\n⚠️ The bound on all of this: the guard's current condition is not obviously WRONG — it was written for budgeted replies and does that job correctly. What is missing is a statement of what the second pass's argument is FOR, which would make one of these options obviously right and the rest obviously wrong.",
         "status": "proposed"
       }
     },
@@ -146569,6 +147008,17 @@
         "decision": "UNSETTLED. Six things are mechanically decidable and none is currently reported: (1) is anything under `.reflow2/` tracked by git; (2) are the MCP configs tracked, carrying absolute paths meaningless on another machine; (3) does `.reflow2/kit-version.json` match the installed kit; (4) do local skill copies exist and differ from the served ones, given a local copy silently SHADOWS the served one; (5) is `--graph-path` absolute rather than relative-and-cwd-dependent; (6) is a committed export present, and current against the live graph. SHAPES, not a recommendation: (a) extend `reflow2_init.py --check`, which already reports what a run would change and already owns the stamp and the skill mirrors — smallest, and it means one command answers \"what would change\" and \"what is wrong\"; (b) a separate `reflow2_doctor.py` beside `reflow2_check.py`, on the argument that \"would this install change files\" and \"is this project's reflow2 setup sane\" are different questions with different audiences; (c) fold the checks into `check_kit_manifest.py`, which already compares the stamp and is closest in spirit; (d) decline, and put the six checks in a served skill instead, on the ground that an agent can run git itself and instructions are cheaper than code. WHATEVER THE SHAPE, IT REPORTS AND DOES NOT REPAIR: `git rm --cached` is a judgement about someone's history, and rewriting an MCP config is not something to do silently. Name the finding, name the remedy, let the human run it — the same split `dec:ask-not-repair` draws for merges. AND IT CANNOT BE AN MCP TOOL: `dec:agent-navigates-content` keeps reflow2 out of file IO, and every check above reads the filesystem or shells to git. The kit is the home; the machinery is half-built there already.",
         "name": "OPEN — should the kit ship a command that tells a project how it is out of date, instead of every agent re-deriving the migration?",
         "rationale": "Raised because the evidence arrived in an unusually clean form. `req:thin-install` is ACCEPTED and quotes Alex asking for exactly this on 2026-07-25; `cap:skills-served` delivered the forward half; and on 2026-08-08 Alex — the requirement's own author — spent eight manual steps escaping a 0.11.0 kit under a 0.24.0 binary, because nothing exists for a project installed BEFORE served skills. TWO AGENTS DERIVED THAT MIGRATION INDEPENDENTLY THE SAME DAY AND DISAGREED: his eight steps against my seven, overlapping on six. His included a regression (rewriting `--graph-path` to a relative path, the configuration `dec:no-design-here-never-looked` records as minting an accidental third graph in Anthony's own repo); mine got the stamp filename wrong on first pass. Neither was careless — the knowledge is scattered across the installer source, three accepted decisions and two verifications, and is re-derived per session. That is the failure reflow2's own instructions name as its reason to exist, pointed at the migration rather than the design. Evidence: fact:defect-a-pre-served-skills-install-is-stranded and fact:defect-installer-cannot-warn-that-the-graph-dir-is-already-tracked.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-the-load-bearing-prose-is-unchecked-against-the-code-it-describes",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. A candidate class, generated during root-cause on the proj:chama field report of 2026-09-02 and stated so it can be refuted.\n\nTHREE OF THAT REPORT'S SIX FINDINGS ARE THE SAME SHAPE: a reflow2 self-description that is out of step with what the code does.\n\n① `loop_status` — \"1 answered question(s) never reached the design\". The computation is `questions.iter().filter(|q| q.status == \"answered\").count()`. It knows the question is answered and its gap is open; the message asserts something about whether design nodes exist. Nothing looks for them. (`fact:the-answered-question-message-recurred-in-a-third-project-with-the-computation-unchanged`)\n② `describe_schema` — its ranking says GOVERNED_BY is no better a fit than sixteen wildcards, when it is the design's primary governance edge and the true answer to the pair being asked about. The rank is computed from endpoint enumeration and presented as modelledness. (`fact:governed-by-is-the-governance-edge-and-describe-schema-can-never-rank-it`)\n③ `authored_by` — \"deliberately not a traceability edge, so it never enlarges a blast radius\". True about propagation, and it reads as \"nothing computes on this\" at the exact moment an agent decides whether to set `role: approver`, which is the assignment primitive that drives loop debt. (`fact:authored-by-describes-itself-as-inert-and-is-the-assignment-primitive`)\n\n⭐ AND A FOURTH, ALREADY FIXED ONCE, WHICH IS WHAT MAKES THIS WORTH ASKING: heal.rs records in its own comment that `unthreaded_cluster` \"SPOKE THE WORDS OF UNREACHABILITY AND WALKED SOMETHING NARROWER\" — the message claimed disconnection from the design while computing disconnection from a walk covering 1133 of 2413 nodes. Same defect, found by dev_storyflow 2026-08-17, repaired in the sentence. Nothing generalised from it.\n\nTHE COMMON SHAPE, stated to be attacked: **reflow2's prose is load-bearing — its own field reports say so — and it is maintained entirely by hand with nothing checking any sentence against the behaviour it describes.** The root-cause skill's own heuristic is that the cause is usually something maintained by hand with nothing checking it; here the hand-maintained thing is the feature.\n\n⚠️ WHY THIS MIGHT BE ONE THING: the failure is invisible by construction. A wrong sentence and a right one both compile, both ship, and the gap only appears when a user acts on the sentence — which is exactly how all four surfaced, each from a different project, none from a test.\n\n⚠️ AND WHY IT MIGHT NOT, which is the honest counter and is strong: these three have three different causes. ① is a message asserting past its data. ② is a ranking function whose criterion does not track the thing it is presented as ranking. ③ is a true sentence that misleads by omission. Only ① is straightforwardly \"the prose lies\". Grouping them could manufacture a systemic defect out of three ordinary ones — the over-engineering failure this project watches for, and the same reason `dec:idea-the-instruction-layer-runs-ahead-of-the-typed-tool-layer` was REJECTED on 2026-08-31 for a neighbouring grouping. That rejection is evidence against this one.\n\nNOT A COUNT ANYBODY HAS TAKEN: how many tool descriptions and gap texts make a checkable claim about behaviour, and what fraction are currently true. Nobody has looked.",
+        "kind": "exploratory",
+        "name": "OPEN — three of six chama findings are reflow2 describing itself wrongly. The prose is the acclaimed feature and nothing checks it. Is that one defect or three?",
+        "rationale": "WHAT WOULD SETTLE IT, and it is cheap enough to be worth naming: the claims in question are a specific and small kind — a sentence asserting what a COMPUTATION does or does not do (\"never reached the design\", \"never enlarges a blast radius\", a rank presented as fit). That is narrower than \"is the documentation accurate\", and it may be testable: a test that asserts the message text alongside the state that produces it would have caught ① and would have failed the day the message was written.\n\nIf most load-bearing prose makes no checkable claim, these three are three bugs and this node should be rejected like its predecessor. If a meaningful fraction does, the generative question is \"which other sentences assert something about a computation, and which are still true?\" — and that is answerable by reading the tool surface rather than by waiting for a fourth project to report it.\n\n⚠️ THE REPAIRS ARE INDEPENDENT OF THE ANSWER. All three are cheap on their own and none waits on this question. Recorded so the fifth instance is recognised rather than diagnosed from scratch — which is precisely what ① cost three separate sessions.",
         "status": "proposed"
       }
     },
@@ -160056,6 +160506,36 @@
       }
     },
     {
+      "node_id": "snap:epoch:preserved-on-write:dec:idea-a-deliberately-open-edge-can-never-be-ranked-as-a-fit",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[]",
+        "state": "{\"decision\":\"RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Generated 2026-09-02.\\n\\nproj:chama asked for a new edge type to say \\\"this open decision determines whether this constraint can be met\\\". THE EDGE EXISTS — `Constraint --GOVERNED_BY--> Decision` — and they could not find it, because `describe_schema` ranks by endpoint enumeration and GOVERNED_BY is `*` on both sides deliberately. It falls into the alphabetical wildcard pile for EVERY pair in the design. They reached for BLOCKS and buried the meaning in an `evidence` string.\\n\\n**THE PREVIOUS TWO INSTANCES WERE FIXED BY ENUMERATING AN ENDPOINT** — VERIFIES in #112, and CONSTRAINS' source on 2026-08-08 after `describe_schema{DesignRule, Component}` returned zero exact matches. THAT REPAIR IS UNAVAILABLE HERE and schema/core.yaml says why in its own words: narrowing a wildcard is a consumer-facing break, and \\\"what a rule limits\\\" is genuinely open. GOVERNED_BY's openness is CORRECT. So the third instance of a class cannot take the fix that closed the first two, which is the signal that the class was mis-stated.\\n\\n**THE RESTATEMENT: the ranking criterion is not the thing it is presented as.** `exact` / `half_exact` measures HOW NARROWLY AN EDGE IS DECLARED. It is presented to the caller as how well the edge MODELS THEIR PAIR. Those coincide for edges whose narrowness is meaningful and come apart exactly for edges whose openness is meaningful — and the second set includes GOVERNED_BY, CAUSES, RISKS, MITIGATES, BLOCKS, CONTRADICTS, OBSOLETES: most of the semantic vocabulary.\\n\\nIDEAS TURNED OVER, none preferred:\\n· **A `deliberately_open` marker per edge type**, so describe_schema can distinguish \\\"open because nobody thought about it\\\" from \\\"open because anything may be governed\\\" and rank the second above the wildcard pile.\\n· **Rank by USAGE in this graph** — GOVERNED_BY joins Constraint to Decision hundreds of times here; a pair that is actually drawn is evidence of a modelled fit that no declaration carries.\\n· **Let the hint declare its own pairs** in text, and rank on that, changing nothing structural.\\n· **Nothing structural: fix the NOTE.** It already says \\\"prefer leaving the edge out to asserting one that is wrong\\\" — it could also say \\\"an edge open on both sides may still be the modelled fit; read the hints, do not read the ranking as an answer.\\\"\\n· **Do nothing.** One report, one pair. The note already warns the ranking is not an answer, and chama half-heeded it.\\n\\n⚠️ WHAT NOBODY HAS MEASURED, and it decides between \\\"do nothing\\\" and everything else: how many of the ~18 wildcard edge types carry real semantics, and how often an agent picks a wrong edge because the right one was unranked. chama is one observed instance. `dec:edge-orthogonality` already sets the bar any answer must clear — a vocabulary distinction earns its keep ONLY IF A COMPUTATION READS IT — and a `deliberately_open` marker would have to be read by the ranking to qualify.\",\"kind\":\"exploratory\",\"name\":\"OPEN — describe_schema ranks by endpoint enumeration, so every deliberately-open edge is permanently unrankable. Enumerating endpoints fixed the last two instances and cannot fix this one\",\"rationale\":\"Worth recording rather than acting on because the finding REFUTES a feature request, and that is the expensive kind to lose. Without this node the next reader meets chama's report, agrees a Decision→Constraint edge is missing, and adds vocabulary for a relation that already exists — making the discovery problem worse by putting two edges where one was already unfindable.\\n\\nThe fourth option costs a sentence and is available immediately whatever is decided about the rest.\",\"status\":\"proposed\"}",
+        "target_id": "dec:idea-a-deliberately-open-edge-can-never-be-ranked-as-a-fit",
+        "target_type": "Decision"
+      }
+    },
+    {
+      "node_id": "snap:epoch:preserved-on-write:dec:idea-a-detector-can-read-the-phase-the-design-already-declares",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[]",
+        "state": "{\"decision\":\"RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Generated 2026-09-02 from proj:chama's third instance of `req:a-deliberate-state-is-not-a-defect`.\\n\\nTHE ESTABLISHED ANSWER TO A DELIBERATE STATE IS `GOVERNED_BY ruling: parks`, and it is a good one: two-sided by construction, requires an ACCEPTED Decision so a musing cannot suppress a finding, keeps the node visible and counted in `swept.parked`. It answers instances (a) and (b) of that requirement.\\n\\n⭐ IT CANNOT ANSWER THE GENESIS CASE, AND THE REASON IS THE SAME ONE ALREADY WRITTEN DOWN. heal.rs:1958-1959 records that \\\"the `parks` ruling requires an ACCEPTED Decision, which is why parks cannot reach the brainstorm case at all\\\". The genesis case has the identical shape: eight islands, all correct, all transient, and asking a first-time user to write an accepted Decision ruling their own genesis normal — in their first ten minutes — is worse than the warning.\\n\\n**AND THE DESIGN ALREADY SAYS IT WITHOUT BEING ASKED.** `concept_without_design` fires only at zero Components. Its being open IS a machine-readable declaration that structure is deliberately unspecified. `unthreaded_cluster` cannot thread a design with no Components, by construction — CONTAINS is not a traceability edge. So one detector already holds the fact that would exonerate the other, and they do not speak.\\n\\nTHE QUESTION, which is bigger than the instance: **is there a class of deliberate state the design DECLARES rather than RULES, and should detectors read it?** parks is the ruled kind — a human said so. This would be the derived kind — the graph's own state says so, and nobody has to act.\\n\\nOPTIONS TURNED OVER, none preferred:\\n· **`swept.expected_at_this_phase`**, chama's suggestion, keyed on `concept_without_design` being open. Fits the existing \\\"report differently rather than hide\\\" pattern exactly.\\n· **Key on zero-Components directly** rather than on another detector's output, so two detectors do not become coupled — a second implementation of one fact is the hazard `structure.rs` already names about `isolated_in_walk`.\\n· **Leave it, and fix the FIRST-RUN EXPERIENCE instead** — the harm chama identified is a new user reading \\\"10 structural defects\\\" and concluding they erred. That could be a framing problem in what genesis reports, not a detector problem at all.\\n· **Do nothing.** It self-cleared 10 → 6 within the session. Transient noise that resolves may not be worth a mechanism, and this project's own doctrine watches for over-engineering.\\n\\n⚠️ THE STRONGEST ARGUMENT AGAINST ANY MECHANISM: `dec:idea-detect-vocabulary-that-nothing-reaches` warns that another marker nothing reads would be a further instance of the disease it documents, and `req:a-cluster-can-be-declared-deliberately-separate` is CONDITIONAL on its marker being read back for exactly that reason. A phase concept must be readable, not merely declared.\",\"kind\":\"exploratory\",\"name\":\"OPEN — parks needs a human ruling per node. A design at genesis already declares its phase machine-readably. Should a detector read that instead of waiting to be told?\",\"rationale\":\"Kept separate from `req:a-cluster-can-be-declared-deliberately-separate` (option A, still proposed) although they are neighbours: that requirement is about a HUMAN declaring a partition permanent, with a read-back condition attached. This is about a detector deriving a TRANSIENT phase with no human act at all. The read-back condition that governs the first does not obviously apply to the second, because nothing is declared to go stale.\\n\\nRecorded rather than built because the fourth option — do nothing — is live. The state resolved on its own inside one session, and the measured harm so far is one user's first impression, reported once.\",\"status\":\"proposed\"}",
+        "target_id": "dec:idea-a-detector-can-read-the-phase-the-design-already-declares",
+        "target_type": "Decision"
+      }
+    },
+    {
+      "node_id": "snap:epoch:preserved-on-write:dec:idea-how-should-the-loop-know-that-an-answer-reached-the-design",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"CAUSES\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-a-recorded-questions-wording-can-be-corrected\",\"properties\":{\"basis\":\"correlational\",\"evidence\":\"CONDITIONAL, and stated as a hypothesis rather than asserted: IF option C is chosen — a typed edge from a design record onto a Question — it also supplies the vehicle for the wording question's amendment option, where a later record says what was meant without editing what was asked. One piece of vocabulary would answer both. It is not yet true, because C is one of four options and may not be chosen.\",\"validation_status\":\"hypothesis\"}}]",
+        "state": "{\"decision\":\"RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Solutions turned over 2026-09-02 for a cause recorded on 2026-08-16 and unrepaired since.\\n\\nTHE SETTLED PART: `loop_status` prints \\\"N answered question(s) never reached the design — write the answer in, or acknowledge the gap\\\" from `questions.iter().filter(|q| q.status == \\\"answered\\\").count()`. That counter knows the question is answered and its gap is open. It knows nothing about whether design nodes exist. The 2026-08-16 fact already names the honest narrow repair; three sessions across three projects have now paid full diagnosis for it.\\n\\nOPTIONS, none preferred:\\n\\n· **A — Shrink the message to what it knows.** \\\"N question(s) are answered and their gap is still open.\\\" Drop both prescriptions, or replace them with a neutral prompt. Costs nothing, breaks nothing, available today, and it is what the original fact proposed. ⚠️ It makes the line honest and also less useful: a reader still cannot tell a deferral from a genuinely unwritten answer, which is the thing they actually want to know.\\n\\n· **B — Infer the deferred case**, chama's suggestion: when the answered question's gap is BLOCKS-ed or GOVERNED_BY an open Decision, report it as DEFERRED rather than UNWRITTEN. Reads a ruling the design already made, which is the move `req:a-deliberate-state-is-not-a-defect` asks for throughout. ⚠️ It is a heuristic: an open Decision standing near a gap is not proof that the answer was written, and a wrong DEFERRED is more reassuring than a wrong UNWRITTEN, which makes its failure mode the worse-shaped one.\\n\\n· **C — Make the fact recordable: a typed edge saying THIS RECORD ANSWERS THAT QUESTION.** The computation stops being an inference and becomes a lookup. ⭐ MEASURED TODAY: `describe_schema{from: Decision, to: Question}` returns ZERO exact and ZERO half-exact matches — nothing models the pair, so this needs new vocabulary rather than wiring. ⭐ AND IT CONVERGES WITH AN INDEPENDENT REPORT: api-boss proposed exactly this on 2026-08-15 for a DIFFERENT defect (\\\"let a Decision CLOSE a Question with an edge, making the linkage first-class and surviving whichever id scheme wins\\\" — `fact:defect-a-question-not-created-by-gap-to-prompt-can-never-be-answered`). Two projects, two symptoms, one missing edge. ⚠️ The counter is this project's own bar: `dec:edge-orthogonality` says a vocabulary distinction earns its keep only if a computation reads it — which this one would, so the bar is cleared, but it is still new vocabulary for a line of text.\\n\\n· **D — Drop the line entirely** while it cannot be computed. ⚠️ Loses a real signal: an answer that genuinely never got written IS debt, and it would go unreported.\\n\\n⭐ THE SHAPE WORTH NOTICING: A is a prose repair to a prose defect, and C makes the claim true by giving it something to read. `rule:fix-it-properly-while-it-is-still-cheap` points at C; the fact that A has been available and unbuilt for seventeen days points at how little the cheap repair is worth on its own.\\n\\nNOT ESTABLISHED: whether an answer can land as something other than a Decision — a Requirement, a status move, a bare edge — often enough that a Decision→Question edge would cover only part of the ground. The 2026-08-16 fact says outright that \\\"was this answer written into the design\\\" has no general computation, which is an argument that C solves the tractable half and leaves the rest.\",\"kind\":\"exploratory\",\"name\":\"OPEN — \\\"the answer never reached the design\\\" has no computation behind it. Should the message shrink to what it knows, or should the fact be made recordable?\",\"rationale\":\"Recorded rather than acted on because A and C are not the same size and the choice between them is the user's: A is a sentence and can ship immediately; C is vocabulary, has an independent second use already recorded, and would make the claim computable rather than merely modest.\\n\\nThe convergence with api-boss's 2026-08-15 proposal is the reason this is worth a node at all. One project asking for an edge is a feature request; two projects reaching it from unrelated symptoms is evidence the edge is missing.\",\"status\":\"proposed\"}",
+        "target_id": "dec:idea-how-should-the-loop-know-that-an-answer-reached-the-design",
+        "target_type": "Decision"
+      }
+    },
+    {
       "node_id": "snap:epoch:preserved-on-write:fact:the-command-surface-has-five-copies-and-nothing-reconciles-them",
       "node_type": "Snapshot",
       "properties": {
@@ -161567,6 +162047,18 @@
         "fact_type": "defect",
         "statement": "MEASURED 2026-08-09 ON THIS GRAPH, ON A REAL MERGE ANTHONY AUTHORISED. `propose_heal` offered to merge the owner's two Contributor nodes and CHOSE THE WRONG SURVIVOR: keep `ctr:anthony` (8 edges, no description), destroy `who:ajs` (161 edges, the full description, and the id form `add_contributor`'s own parameter description gives as its example).\n\n⭐ AND IT SAID SO ITSELF, WHICH IS THE PART WORTH KEEPING. Verbatim from `would_destroy`: \"deleting 'who:ajs' keeps only 'ctr:anthony's properties; also replaced: description. THE ALPHABET CHOSE THE VICTIM: both carry the same provenance, so the smaller id survived (BL-29) — nothing about the design decided which of these two lives.\" The disclosure is exemplary and it is the only reason the merge was not applied as proposed. A tool that names its own arbitrariness is doing the right thing; a tool whose arbitrariness DECIDES is still wrong.\n\nWHY THIS IS EVIDENCE AND NOT AN OPINION: `dec:merge-survivor-provenance` (ACCEPTED) says the survivor is chosen by provenance with id breaking ties. Here both nodes carry the SAME provenance, so the tie-break ran — and the tie-break is alphabetical, which has no relationship to which node the design actually depends on. `fact:defect-merge-survivor-ignores-priority-and-status` already contradicts that decision and the pair has been a standing structural defect (`heal:7456a4d260ca45ce`). THIS IS THE FIRST TIME THE DEFECT HAS BEEN OBSERVED COSTING SOMETHING ON A REAL MERGE rather than argued in the abstract.\n\nA CHEAP SIGNAL THE RULE COULD READ, offered because naming the fix is more useful than naming the fault: EDGE COUNT. 161 against 8 is not a close call, and neither is \"has a description\" against \"has none\". Degree is already computable and would have picked correctly here without any new vocabulary. Provenance-then-alphabet is the rule that produced the wrong answer; provenance-then-degree would not have.\n\nWHAT WAS ACTUALLY DONE: the merge was performed BY HAND — `record_change` first so the snapshot holds `ctr:anthony` and all 9 of its edges, then the 8 AUTHORED_BY edges re-pointed to `who:ajs` with `role` and `acted_at` preserved and checked for pre-existing overlap (none, so nothing was overwritten), then the node deleted. `detect_defects` went 7 findings to 6 with the duplicate gone.\n\n📝 ONE THING THIS DOES NOT SHOW, stated so the finding is not read wider than it is: `propose_heal --conservative` proposed NOTHING for this duplicate, and only `--aggressive` offered the merge. So the dangerous proposal is not the default. What the default gives instead is silence on a duplicate a human had explicitly asserted, which is its own question.",
         "subject_id": "dec:merge-survivor-provenance"
+      }
+    },
+    {
+      "node_id": "fact:authored-by-describes-itself-as-inert-and-is-the-assignment-primitive",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "MEASURED IN SOURCE 2026-09-02 (capture.rs:2000-2007). The reporter said 'nothing documents it'. The stronger and more useful statement is that THE DESCRIPTION POINTS THE OTHER WAY.\n\nSetting `role: approver` on a PROPOSED Decision puts it in `loop_status.assigned_decisions` with `unsettled_assigned_decisions` and produces '1 open decision(s) name someone who was asked to settle them'. It is the mechanism for 'this decision is parked on a named human', and `req:an-assigned-open-decision-is-reported` is the intent behind it. proj:chama set it on instinct and got the behaviour they wanted without knowing why.\n\n**THE `authored_by` DESCRIPTION SAYS THE EDGE IS INERT:** 'This is the structured author behind a node; it is deliberately not a traceability edge, so it never enlarges a blast radius.' Both halves are true about PROPAGATION and both read, at the point of writing the edge, as 'this is metadata and nothing computes on it'. Nothing in the description connects `approver` + `proposed` to tracked debt against a person. An agent reading only this tool would not know the assignment primitive exists; an agent reading it carefully would conclude it does not.\n\nTHE REPAIR IS ONE SENTENCE IN THE HINT, and it is cheap. What makes it worth recording rather than just doing: this is the same shape as the other two prose findings in the same report — a self-description out of step with the behaviour, in a project whose own field reports name the prose as its best feature.",
+        "subject_id": "cmp:tools-capture",
+        "valid_from": "2026-09-02"
       }
     },
     {
@@ -163937,6 +164429,30 @@
       }
     },
     {
+      "node_id": "fact:genesis-phase-is-a-third-instance-of-a-deliberate-state-read-as-a-defect",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "A THIRD MEASURED INSTANCE OF THIS REQUIREMENT, and the first that NO EXISTING MECHANISM CAN REACH.\n\nproj:chama, ten minutes into its first genesis, ran detect_defects: 10 structural defects, 8 of them `unthreaded_cluster` — every requirement sitting with its satisfying capability as a 2-3 node island.\n\n**THAT SHAPE IS THE PLAN, AND REFLOW2 SAYS SO IN THREE PLACES AT ONCE.** The genesis skill instructs 'do NOT create Components yet — leaving structure unspecified is deliberate'. `concept_without_design` fires at the same moment describing the same state APPROVINGLY (detect.rs:129: it 'fires only at ZERO components'). And heal.rs states in its own comment that CONTAINS is not a traceability edge and `design_network()` drops nine node types — so a design with no Components CANNOT thread, by construction. Two detectors read one graph state; one calls it the plan, the other calls it a defect.\n\nIt resolved on its own (10 → 6) as decisions and dependency edges arrived, which confirms phase noise. But a first-time user reading '10 structural defects' in their first ten minutes reasonably concludes they have done something wrong — and this requirement's own recorded hazard is that the correct action degrades the instrument until someone stops doing it.\n\n⭐ **WHY `parks` CANNOT ANSWER THIS ONE, which is what makes it a new instance rather than a repeat.** The two prior instances were fixed, or are fixable, by a ruling: `GOVERNED_BY ruling: parks` to an ACCEPTED Decision. That mechanism is PER-NODE and requires a human ruling, and heal.rs:1958-1959 already records the same limit from the other side — 'the `parks` ruling requires an ACCEPTED Decision, which is why parks cannot reach the brainstorm case at all'. Here nobody should have to rule anything: THE DESIGN ALREADY DECLARES THE PHASE, because `concept_without_design` being open IS the machine-readable statement that there are zero components. This instance is derivable with no user act at all, which none of the prior ones were.\n\nTHE REPORTER'S SUGGESTION, and it fits the existing pattern rather than inventing one: while `concept_without_design` is open, report `unthreaded_cluster` under `swept.expected_at_this_phase` — visible and counted, never silenced, the same 'report differently rather than hide' shape `swept.parked` already establishes.\n\n⚠️ NOT ESTABLISHED: whether other detectors fire on the same genesis state, and whether phase-awareness should key on `concept_without_design` specifically or on zero-Components directly. Nobody has been asked which.",
+        "subject_id": "req:a-deliberate-state-is-not-a-defect",
+        "valid_from": "2026-09-02"
+      }
+    },
+    {
+      "node_id": "fact:governed-by-is-the-governance-edge-and-describe-schema-can-never-rank-it",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "MEASURED 2026-09-02 ON THE LIVE SURFACE, and it REFUTES THE REPORTER'S FEATURE REQUEST — the edge they said had no home already exists.\n\nproj:chama wanted to record 'this OPEN DECISION determines whether this CONSTRAINT can be met' (the chain choice decides whether the user's Rust preference is honoured). `CONSTRAINS` refused Decision→Constraint, they found no other home, and buried the consequence as prose in the `evidence` of an unrelated BLOCKS edge. Their ask: a new modelled relation.\n\n**THE RELATION IS `Constraint --GOVERNED_BY--> Decision`.** Its hint: 'Source node is shaped or constrained by a target Decision, DesignRule or Requirement. Anything in the design may be governed, which is why the source stays open.' That is the sentence they wanted, and GOVERNED_BY is read by the detectors and carried in the design network walk.\n\n⭐ **THEY COULD NOT HAVE FOUND IT, AND THE REASON IS STRUCTURAL.** describe_schema ranks by ENDPOINT ENUMERATION: `exact` (both sides named), `half_exact` (one side named), then the `*`/`*` pile. GOVERNED_BY is `*` on BOTH sides ON PURPOSE — deliberately open because anything may be governed — so IT CAN NEVER RANK ABOVE THE NOISE FOR ANY PAIR IN THE DESIGN. Measured both directions:\n· describe_schema{from: Decision, to: Constraint} → exact 0, half_exact 0, 17 wildcards, GOVERNED_BY alphabetical in the pile.\n· describe_schema{from: Constraint, to: Decision} → exact 0, half_exact 1 — and the one promoted is CONSTRAINS, which is the WRONG relation here; GOVERNED_BY is still in the pile.\n\nSO THE PRIMARY GOVERNANCE VOCABULARY IS INVISIBLE TO THE PRIMARY VOCABULARY-DISCOVERY TOOL, for every pair, by construction. The very openness that makes GOVERNED_BY universally applicable makes it universally unrankable. An agent asking 'how do I say this?' is handed 17 alphabetised wildcards and reaches for BLOCKS.\n\nAND THE TOOL'S OWN NOTE MAKES IT WORSE BY BEING RIGHT: 'they will validate, but validating is not the same as meaning what you intend... prefer leaving the edge out to asserting one that is wrong.' Correct advice, and with GOVERNED_BY unranked it steers the agent away from the true edge along with the false ones.\n\nTHIS IS THE THIRD INSTANCE OF THE WILDCARD-DISCOVERY CLASS: VERIFIES (#112), CONSTRAINS' source enumerated 2026-08-08 after `describe_schema{DesignRule, Component}` returned zero exact matches, and now this. THE FIRST TWO WERE FIXED BY ENUMERATING AN ENDPOINT. THAT REPAIR CANNOT WORK HERE — schema/core.yaml records that narrowing a wildcard is a consumer-facing break, and GOVERNED_BY's openness is correct. So ranking, not enumeration, is what this instance needs.\n\n⚠️ NOT ESTABLISHED: how many other deliberately-open edge types are unrankable the same way (MITIGATES, RISKS, CAUSES and BLOCKS are all `*`/`*` and all carry real meaning), nor whether a `models_pair` hint or a semantic rank would be the right instrument.",
+        "subject_id": "cmp:foundation-vocabulary",
+        "valid_from": "2026-09-02"
+      }
+    },
+    {
       "node_id": "fact:graph-analysis-covers-a-third-of-the-edge-types",
       "node_type": "TemporalFact",
       "properties": {
@@ -164508,6 +165024,18 @@
       }
     },
     {
+      "node_id": "fact:the-answered-question-message-recurred-in-a-third-project-with-the-computation-unchanged",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "A RECURRENCE, NOT A NEW FINDING — and recording it that way IS the point.\n\nproj:chama's genesis session, 2026-09-02, hit `loop_status`: '1 answered question(s) never reached the design — write the answer in, or acknowledge the gap'. They had asked the substrate question, the user said 'not sure', and they did the prescribed thing: recorded a proposed Decision capturing the deferral and called answer_question. Both suggested remedies were wrong. They diagnosed it from scratch and filed it as a new gap.\n\n**IT WAS ROOT-CAUSED IN THIS GRAPH SEVENTEEN DAYS EARLIER.** `fact:defect-loop-status-asserts-an-answer-never-reached-the-design-from-a-fact-that-cannot-say-so`, 2026-08-16, names the mechanism exactly: the counter knows ONE thing — the question is answered and its gap is still open — and the message turns it into a claim about whether design nodes exist. Nothing looks for them.\n\n**CONFIRMED UNCHANGED IN SOURCE TODAY.** report.rs now reads `let unwritten_answers = questions.iter().filter(|q| q.status == \"answered\").count();` and the message at report.rs:864 is verbatim what it was. The variable moved; the computation is byte-identical. The narrow honest repair the 2026-08-16 fact named — 'for the message to say what it actually knows' — was never made.\n\n⭐ THE COST IS NOW MEASURABLE AND IT IS THE ELEVEN-OCCURRENCE SHAPE: three independent sessions (reflow2's own orientation call 2026-08-16, the StoryFlow fleet's case in the same fact, chama 2026-09-02) each paid full diagnosis for a cause already written down and findable by its own error string. chama could not have searched this graph — they are a different project — which is the sharper half: a fix withheld here is re-diagnosed by every consumer independently, and none of them can see that anyone else already did it.\n\nAND THE STATE IT FLAGS IS STILL DELIBERATE. The genesis skill explicitly tells an agent to produce exactly this resting state — deferral recorded as a proposed Decision, gap honestly open. So the instruction and the instrument still disagree, which is `req:a-deliberate-state-is-not-a-defect` and not a wording bug.",
+        "subject_id": "cmp:tools-coherence",
+        "valid_from": "2026-09-02"
+      }
+    },
+    {
       "node_id": "fact:the-attach-path-checks-liveness-and-identity-but-never-version",
       "node_type": "TemporalFact",
       "properties": {
@@ -164555,6 +165083,18 @@
         "statement": "\"WHAT IS LEFT TO BUILD?\" HAS NO ANSWER IN REFLOW2, AND THE REASON IS NARROWER AND WORSE THAN THE REPORT THAT PROMPTED THE CHECK.\n\nORIGIN: item 1 of the Grok 4.6 agent feedback of 2026-08-13 (`fact:agent-feedback-corroborated-2026-08-14`) — *\"'What is left to build?' is not a first-class query. `what_next` ranks open Decisions.\"* Verified on reflow2's own committed export at `c18a4a1`, 2026-08-14, per `req:agent-authored-feedback-is-reproducible-and-never-leaves-unasked`.\n\n═══ ✅ THEIR CLAIM CONFIRMED ═══\n\n`what_next` (no args) on reflow2's graph returned **12 items: 3 marked + 4 ranked + 1 unexplored + 4 shaping — every one a Decision.** `open_total: 118`, `unranked_pool: 87`. Zero Requirements, zero Capabilities. Its own description says so honestly (*\"which decisions to settle next\"*), so this is a scope fact rather than a bug. `arrival_delta` requires a DesignEpoch or Release `target_id`, so it cannot answer for a design whose remaining work is not scheduled onto one.\n\nTHE HONEST ANSWER, computed directly from the export:\n```\nRequirements 164   accepted 115  proposed 36  dropped 9  deferred 4\nCapabilities 161   verified 77  realized 41  planned 40  in_progress 3\naccepted + live + NOT delivered ............ 9\nlive planned/in_progress capabilities ..... 43\n```\n**None of those 43 appears in any tool's answer to \"what next\".**\n\n═══ 🛑🛑 THE MECHANISM, AND IT IS THE REAL FINDING ═══\n\n`unrealized_capability` LOOKS like the build list — *\"Nothing builds capability X\"* — but fires only 3 times against 43 planned capabilities. `detect.rs` suppresses it three ways, and the decisive one is **`realized_via_component`**:\n\n```rust\nfn realized_via_component(&self, cap_id) -> bool {\n    for alloc in outgoing(cap_id, ALLOCATED_TO) {\n        if !incoming(alloc.to_id, REALIZES).is_empty() { return true }\n    }\n    false\n}\n```\n\n⭐ **IT ASKS WHETHER THE COMPONENT HAS ANY ARTIFACT — NOT WHETHER THE CAPABILITY DOES.** Measured over the 39 live planned capabilities holding no artifact of their own:\n```\nsuppressed by realized_via_component ....... 34   <-- the guard\nsuppressed by owner_claims_built ...........  2\nwould actually raise the gap ...............  5\n```\n⇒ **IN A MATURE PROJECT EVERY COMPONENT ALREADY HAS CODE, SO EVERY NEW PLANNED CAPABILITY IS BORN PRE-SUPPRESSED.** The four captured earlier the same day prove it: `cap:init-asks-which-harness` → `cmp:packaging` (1 artifact), `cap:nudge-absence-says-why` → `cmp:packaging` + `cmp:service` (6), `cap:decomposition-coverage-is-asked` → `cmp:detect` (1), `cap:the-design-interview-precedes-the-capture` → `cmp:skills` (2). All four are `planned`, none has an artifact, **and reflow2 will never ask what gets built for any of them.**\n\n⚠️ THE SUPPRESSION IS DELIBERATE AND WELL-ARGUED, WHICH IS WHY THIS IS A DESIGN QUESTION RATHER THAN A BUG. The BL-42 comment in `detect.rs` records the reasoning: a storyflow adopt trial produced *\"13 of 51 gaps, every one produced by following the adopt skill's own instruction to model artifacts coarsely over a system that is entirely built\"*, and its stated bargain is *\"the question is dropped and the number is kept (`realization` in `graph_report`)\"*. **The guard solves the brownfield-adopt noise problem and creates the greenfield-increment blindness problem, and nothing recorded the second half.**\n\n═══ ⚠️ A WRONG FIRST DIAGNOSIS, KEPT ON THE RECORD ═══\n\nThis session first blamed `owner_claims_built` — the guard that skips a capability whose owning Component is marked `realized`. **Measurement refuted it: only 2 of 39, and the four components involved are all `planned`, not `realized`.** The correct guard was found only by reading `realized_via_component` and counting. Recorded because the same failure — asserting a mechanism from a plausible description instead of measuring it — is the one `dec:idea-intent-crosses-designs` already documents twice about this project.\n\n═══ 📌 WHAT WAS NOT CHECKED ═══\n\nThe computation predicts **5** capabilities would raise the gap; the gate reported **3** *\"Nothing builds capability\"* notes. The 2-item discrepancy was NOT run down — likely `is_discontinued` handling or scope filtering differing from the approximation used here (OBSOLETES targets). **The direction and magnitude of the finding do not depend on it, but the exact figure should not be quoted as though it were reconciled.** Also unchecked: whether `graph_report`'s `realization` number — the half of BL-42's bargain that was kept — is actually reachable by an agent asking what to build next.",
         "subject_id": "proj:reflow2",
         "valid_from": "2026-08-14"
+      }
+    },
+    {
+      "node_id": "fact:the-change-event-escaping-report-did-not-reproduce",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "measurement",
+        "statement": "REPORTED AND REFUTED THE SAME DAY. Recorded so the next reader does not re-investigate it.\n\nproj:chama reported that `add_change_event` double-escapes embedded quotes where `create_nodes` does not — 'via create_nodes → stored Anthony first answered \"not sure\" ✅; via add_change_event → stored Anthony answered \\\"not sure\\\" ❌' — and said they had confirmed it with get_node rather than trusting the write echo.\n\nREPRODUCTION ATTEMPTED 2026-09-02 on this graph. `add_change_event{rationale: \"Probe: Anthony answered \\\"not sure\\\" about the substrate.\"}`, read back with get_node, then the probe node deleted. STORED VALUE IS CLEAN: the reply renders `\\\"`, which is JSON transport encoding of a string containing plain double quotes — identical to what create_nodes produces for the same content. No double-escaping in either path.\n\nMECHANISM AGREES WITH THE MEASUREMENT: temporal_tools.rs:435 passes `req.rationale.as_deref()` straight to the core with no transformation, and both tool paths decode through the same JSON parser. To store a literal backslash-quote the caller must send a doubled backslash.\n\n⭐ THE CANDIDATE THAT WAS RIGHT IS THE ONE THE ROOT-CAUSE SKILL SAYS TO ADD DELIBERATELY: 'the observation itself is wrong — I measured the wrong thing.' The likely cause is comparing a JSON-escaped read against a differently-rendered one. The reporter hedged it honestly in their own text ('I cannot fully rule out my own input differing between the two calls'), and that hedge was the true reading.\n\n⚠️ BOUND: one reproduction, on this graph, with one quote pattern in `rationale` and `summary`. It does not establish that no top-level-string tool anywhere escapes badly — only that this specific reported pair does not.",
+        "subject_id": "cmp:tools-capture",
+        "valid_from": "2026-09-02"
       }
     },
     {
@@ -164821,6 +165361,18 @@
         "statement": "EVERY FIX SURFACED MORE GAPS, EVERY ONE OF THEM LEGITIMATE, AND NOTHING SAID HOW LONG THE ROAD WAS. Measured in musicjug, 2026-08-31 (art:musicjug-genesis-feedback-2026-08-31, \"The bad\" §5), on a 71-node design taken from a paragraph to a clean structural sweep in one session.\n\nThe observed chain, each step triggered by completing the one above it:\n\n    declare component dependencies  -> undeclared_seam × 12 pairs\n    declare interfaces              -> no_published_boundary\n    designate one published         -> unverified_published_contract + incomplete_published_contract\n    add components                  -> unallocated_component + design_without_build + no_deploy_operate\n    add a release                   -> release_without_epoch\n\n\"Every one of these was legitimate and I acted on all of them. But at no point could I tell the owner 'three more rounds and we're clean' versus 'this goes on for twenty.'\"\n\n🛑 THE COST IS BORNE BY THE HUMAN WATCHING, NOT BY THE AGENT WORKING. \"To a user watching an agent work, an ever-refilling list reads as a treadmill even when each item is genuinely worth doing.\" The design is getting better and the experience is of losing ground — and a user who quits at round three quits a working process.\n\n⭐ THE INFORMATION EXISTS ALREADY: `detect_gaps` knows which phase transition triggers each gap source, which is exactly what a frontier estimate is made of. musicjug's proposal is deliberately coarse — \"fixing these 3 will likely surface ~5 more, mostly `undeclared_seam` and `unverified_*`; the phase-level gaps clear only when artifacts exist.\" Enough to say how long the road is, not a schedule.\n\n📌 RELATED AND NOT THE SAME: the session also asked for a phase-transition HINT at the moment components first appear (\"next: declare dependencies, then interfaces on the coupled pairs, then verifications\"), which would have compressed five detect rounds into one plan. The frontier says HOW FAR; the hint says WHAT ORDER. It got the ordering one `loop_hint` at a time, which is the same information delivered so as to be unusable as a plan.",
         "subject_id": "cap:detect",
         "valid_from": "2026-08-31"
+      }
+    },
+    {
+      "node_id": "fact:the-gap-replay-warning-exists-because-rehydrate-declines-to-run-when-the-caller-sent-text",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "MEASURED IN SOURCE 2026-09-02, and it REFUTES THE REPORTER'S OWN ASK, which is why it is recorded rather than the request they made.\n\nproj:chama's genesis session mangled a GapCandidate between gap_to_prompt's two passes — duplicating a fragment of the title — and the answer re-keyed, degrading the question to raw detector jargon. Their ask: 'the server already has the gap from detect_gaps — pass 2 could take gap_id alone.'\n\n⭐ THE SERVER ALREADY DOES EXACTLY THAT, AND DECLINED TO. `ask.rs:205` calls `self.rehydrate_gap(gap)` on the serve pass, and `rehydrate_gaps` (ask.rs:375-398) re-runs `detect_gaps()` and REPLACES the caller's gap with the server's own copy, matched on `candidate.id == gap.id`. chama's id was intact — only the title was mangled — so rehydration WOULD have restored the true title and the answer would have keyed correctly.\n\n**THE GUARD IS THE DEFECT.** ask.rs:379-382:\n    let compacted = |gap| gap.description.is_empty() && gap.evidence.is_empty();\n    if !gaps.iter().any(compacted) { return Ok(gaps); }\nRehydration runs ONLY when the caller sent an EMPTY description and evidence. It was built for a different purpose — recovering a row from a BUDGETED detect_gaps reply — so its trigger asks 'did the caller send nothing?' rather than 'might what the caller sent be wrong?'. A NON-EMPTY description is treated as trustworthy, which is precisely the case where it can be corrupt.\n\nSO THE WARNING IS PROSE STANDING IN FOR A ONE-LINE FIX. The ⚠ at ask.rs:63 ('REPLAY EACH GAP OBJECT UNCHANGED') exists because the guard declines, not because the server lacks the gap. The repair is to rehydrate whenever the id resolves, not to add a gap_id parameter — a new parameter would leave the old path intact and still trusting the caller's copy.\n\n⚠️ NOT ESTABLISHED, and it is why this is a fact rather than a change: always-rehydrating re-runs the detectors on every serve pass (cost, mitigated to once per batch), and it would start REFUSING asks about a gap that has since closed, which the current path allows when the caller holds a full copy. Whether that refusal is correct is a judgement nobody has been asked for.",
+        "subject_id": "cmp:tools-ask",
+        "valid_from": "2026-09-02"
       }
     },
     {
@@ -165637,6 +166189,18 @@
         "statement": "MEASURED 2026-08-24, two days after `unclaimed_findings` shipped (#325).\n\nWHAT HAPPENED: the session measured hydrate cost, wrote `fact:hydrate-cost-is-superlinear-in-edges-and-the-byte-store-is-not-the-bottleneck`, then FIXED the cause and re-measured (8,828 ms -> 909 ms). It recorded `chg:write-buffer-gets-an-index-and-hydrate-drops-tenfold` with a CHANGED edge to `cmp:byte-store`, then asked the question the tool exists to answer.\n\n    unclaimed_findings {\"change_event_ids\": [\"chg:write-buffer-gets-an-index-and-hydrate-drops-tenfold\"]}\n    -> {\"candidates\": [], \"count\": 0, \"subjects_examined\": 1}\n\n**Nothing.** And the stale finding was one the SAME SESSION had written three hours earlier, about the exact code the change repaired.\n\n🛑 THE MECHANISM: the tool walks from a ChangeEvent's CHANGED subjects to the observations THOSE subjects carry. The change touched `cmp:byte-store` (the component whose code moved). The observation hangs off `dec:idea-a-hosted-tier-of-many-single-writer-tenants` (the decision whose open question the measurement answered). **Both anchorings are correct and defensible, and they are different nodes, so the join never happens.** No typo, no missing ChangeEvent, no missing CHANGED edge — every documented precondition was met.\n\n⭐ WHY THIS IS A DIFFERENT LIMIT FROM THE ONES ALREADY WRITTEN DOWN. The tool's own documentation names three: work that records no ChangeEvent, one with no CHANGED edges, and an observation whose `subject_id` names a node that does not exist. This is a fourth and it is the commonest shape of all, because **a measurement is naturally filed against the QUESTION it answers, while a change is naturally filed against the CODE it altered.** Those are almost never the same node. The better a session is at anchoring each thing where its reader will find it, the less likely the two ever meet.\n\n⭐ AND `subjects_examined: 1` IS WHAT SAVED IT. The tool's own guidance — *\"READ `subjects_examined`: zero means your work touched no anchored ground, which is a different fact from 'nothing was retired'\"* — is what prompted the check rather than accepting the empty list. But 1 is not 0, so even that signal read as \"asked properly, found nothing\". **The finding was closed by human judgement, not by the mechanism**, which is the same failure mode the mechanism was built to end.\n\n⚠️ NOT PROPOSING A FIX, because the obvious ones both have costs worth thinking about: widening the walk to relation edges (ANTICIPATES / HAS_TEMPORAL_FACT / CONTRADICTS) would reach this case and would also re-inflate the shortlist toward the wallpaper the session-sized scoping exists to avoid; and asking the WRITER of an observation to also anchor it to the code would push work onto the moment a measurement is taken, which is where discipline is already thinnest.\n\n📌 BOUNDS: one instance, one design, one session. It is not known how often the two anchorings coincide in practice — that is countable across the graph's existing ChangeEvent/TemporalFact pairs and was not counted here.",
         "subject_id": "ver:the-graph-asks-what-a-session-made-false",
         "valid_from": "2026-08-24"
+      }
+    },
+    {
+      "node_id": "fact:unresolved-setup-says-nothing-follows-through-and-never-checks-whether-anything-did",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "MEASURED 2026-09-02 BY WALKING INTO IT, in the same session that shipped the fix for the same class — and the rule's own code comment records its predecessor being caught the same way.\n\nWHAT HAPPENED, in order: an ANTICIPATES edge was drawn from `fact:defect-loop-status-asserts-an-answer-never-reached-the-design-from-a-fact-that-cannot-say-so` to `dec:idea-how-should-the-loop-know-that-an-answer-reached-the-design`. No defect — the target was a `proposed` exploratory idea, and `is_parked_idea` exempts it. Then the decision was SETTLED on the owner's word, `EVOLVES_INTO` was drawn to the ChangeEvent that implements it, and the code shipped with a passing test. Defects went 73 → 74:\n\n  heal:e0abd85e12233d1a (info) — \"'fact:defect-loop-status…' anticipates 'dec:idea-how-should-the-loop-know…' but nothing follows through\"\n\n⭐ **THE FOLLOW-THROUGH IS THE MOST COMPLETE THIS DESIGN CAN RECORD, AND THAT IS WHAT TRIGGERED THE FINDING.** The decision is `accepted`, carries `EVOLVES_INTO` to a ChangeEvent, and the ChangeEvent's repair is merged code under a test observed to fail first. The finding appeared BECAUSE the idea stopped being parked. While it was an unanswered musing it was exempt; the moment it was answered it became a defect.\n\n**MECHANISM CONFIRMED IN SOURCE** (heal.rs:1896-1939). The loop over ANTICIPATES edges has exactly ONE exemption:\n    if self.is_parked_idea(&index, &e.from_id) || self.is_parked_idea(&index, &e.to_id) { continue; }\nand otherwise reports unconditionally. **NOTHING IN THE RULE LOOKS FOR FOLLOW-THROUGH.** It asks \"is either side still a musing?\" and its message asserts \"nothing follows through\" — two different questions. There is no check for a resolved status, an EVOLVES_INTO, a ChangeEvent, or any other trace of the anticipation having been acted on.\n\n⭐ SO THIS IS INSTANCE ④ OF `dec:idea-the-load-bearing-prose-is-unchecked-against-the-code-it-describes`, found by the ordinary work of settling a decision rather than by looking for it — and it is the strongest instance, because the sentence and the computation ask different questions rather than the sentence merely over-reaching.\n\nAND IT IS `req:a-deliberate-state-is-not-a-defect` AGAIN, in its sharpest form yet: the previous instances punished registering a document or leaving a requirement unsatisfied. This one punishes ANSWERING A QUESTION. The instrument is best when the design is most undecided.\n\n⚠️ NOT ESTABLISHED, and it is why no repair is asserted here: what SHOULD count as follow-through is a real design question nobody has been asked. `EVOLVES_INTO` to anything? An `accepted` status on the target? A ChangeEvent naming it? Each answer exempts a different set, and the rule is `info` severity on one edge, so the cheapest honest option — do nothing and record why — is live. Severity `info` also means it never gated anything.\n\n⚠️ BOUND: one edge, one measurement, on this graph. How many of this design's ANTICIPATES edges are in the same state was not counted.",
+        "subject_id": "cmp:heal",
+        "valid_from": "2026-09-02"
       }
     },
     {
@@ -168674,7 +169238,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:e25d330b1ce57e3f599908272fa9e2021013f1133bdf80fd01e9515e7d0716f4",
+  "prev_content_hash": "sha256:1c705dc2ec7cceb7ca3a7b11b79e02ec36a9f8171b3d2ebb11badaab22d2fa6d",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
