@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:38aa17a82f2916b83e1499912253d39b4510800021f6a5a6ce84341bec3866b6",
+  "content_hash": "sha256:c79f4accc1979424b59f0ed6034eb5e1a526e401d25bea7073ab2243d777c162",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -19084,6 +19084,15 @@
         "action": "modified"
       },
       "to_id": "art:tools-temporal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-faced-choice-is-not-a-musing",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:heal"
     },
     {
       "edge_type": "CHANGED",
@@ -118695,6 +118704,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:test-a-choice-is-not-a-musing",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:heal"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:test-a-dangling-reference-is-found-whatever-its-degree",
       "properties": {
         "completeness": "complete",
@@ -122634,6 +122652,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:a-faced-choice-is-not-a-musing",
+      "properties": {},
+      "to_id": "cap:heal"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:a-finding-describes-the-walk-that-produced-it",
       "properties": {},
       "to_id": "cap:a-finding-describes-the-walk-that-produced-it"
@@ -125410,6 +125434,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:test-a-choice-is-not-a-musing",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-a-choice-is-not-a-musing"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:test-a-dangling-reference-is-found-whatever-its-degree",
       "properties": {
         "action": "created"
@@ -127014,7 +127046,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:0016d62bc19043717dd1a8fcf0e88b6904ddbc19fe0d3a55577f2d69e4cc7c0d",
+        "checksum": "sha256:b914d7177e834280291d79317abf5c409f850b2265073ac248ee57b593a68cf0",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/heal.rs",
         "name": "heal.rs",
@@ -128464,6 +128496,17 @@
         "name": "crates/reflow2-core/src/temporal.rs",
         "status": "realized",
         "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:test-a-choice-is-not-a-musing",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:1ef022b7cc39b9a498590f36f6c2b33e5b77497e0cdc89df7e403dc08e69a3f8",
+        "location": "crates/reflow2-core/tests/a_choice_is_not_a_musing.rs",
+        "name": "a_choice_is_not_a_musing.rs",
+        "status": "realized"
       }
     },
     {
@@ -132253,6 +132296,18 @@
       "properties": {
         "change_type": "new_feature",
         "name": "ChangeType gains `documentation` — 13 doc-only ChangeEvents were recorded under three labels that cannot all be right, and a fourth project reached for a word that is still not there"
+      }
+    },
+    {
+      "node_id": "chg:a-faced-choice-is-not-a-musing",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-09-01",
+        "name": "The parked-idea predicate reads `kind` as well as `status`, so a choice somebody faced stops reading as a half-formed thought",
+        "rationale": "Anthony's word, 2026-09-01, on the recommendation to take the discriminator with a status fallback.\n\nFROM ophyd-service (`fact:the-fork-ask-is-a-deferred-branch-whose-reopening-condition-is-now-met`, item ③): their proposed discriminator — key on an open `kind: exploratory` Decision rather than on status alone — is better than anything available when the rule was written, because `Decision.kind` did not exist in August. That half of their report is adopted.\n\n🛑 THE OTHER HALF IS NOT, AND THE RECORD SHOULD NOT READ AS IF IT WERE. Ophyd asked for a contradiction to be SUPPRESSED whenever its source is exploratory, even against settled design. That would overturn a decision accepted on Anthony's word 2026-08-26, whose own counterweight records that \"a parked idea that conflicts with an accepted decision is a real thing to settle\" — and `proj:bhome`, reporting the same day on the same behaviour, called the current answer CORRECT. Two field reports disagree; the settled rule stands untouched, and `an_idea_against_settled_design_still_reports` pins it so the reversal cannot arrive as a side effect of sharpening the predicate.\n\n⭐ THE DIRECTION IS WORTH NAMING: this change ADDS findings rather than silencing them. Every other repair in this family removed noise; this one removes a false silence, which is the rarer and less comfortable half of the same doctrine.\n\nPinned by five tests written first and OBSERVED FAILING IN THE RIGHT SPLIT: 4 passed and 1 failed against the unfixed code. The four that passed are the invariants that must NOT move — unlabelled decisions still park by status, two exploratory ideas still go quiet, an accepted decision is never parked whatever kind it wears, and one parked side against settled design still reports. Only the sharpening failed, which is what shows the tests constrain rather than describe.\n\n📌 THE HONEST LIMIT: this cannot help ophyd until their design carries `kind`, and nobody has checked whether their defect count reading as damage is actually costing them anything. The need is inferred from their report, not measured on their graph.",
+        "subject": "system",
+        "summary": "`is_parked_idea` (heal.rs) now treats a Decision as parked when it is `proposed` AND NOT `kind: choice`. A choice somebody actually faced and has not settled is no longer indistinguishable from an idea being turned over, so a conflict involving one surfaces instead of being suppressed.\n\n⭐ A FALLBACK, NOT A MIGRATION. `kind` is read when set and `status` decides when it is not. Reading `kind` alone would silently UNPARK every existing design — it is unset on 205 of reflow2's own 225 proposed Decisions — and retro-classifying those is the same reconstruction trap that keeps `lineage` at 0 of 207 and that this project refused for requirement provenance a day earlier.\n\nThree call sites inherit it unchanged: `contradiction` (skip when BOTH ends parked), `unresolved_setup` (EITHER), `unthreaded_cluster` (EVERY member). The per-finding asymmetry that `dec:idea-a-proposed-decision-asserts-nothing-so-what-may-a-structural-detector-say-about-it` established is untouched.\n\n⚠️ MEASURED AND INERT HERE TODAY: zero proposed Decisions on reflow2's own design carry `kind: choice`, so no finding moved. Correct in shape, deferred in effect until designs carry the distinction — stated rather than reported as a fix."
       }
     },
     {
@@ -150685,6 +150740,16 @@
       }
     },
     {
+      "node_id": "frag:art:test-a-choice-is-not-a-musing",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered a_choice_is_not_a_musing.rs"
+      }
+    },
+    {
       "node_id": "frag:art:test-a-dangling-reference-is-found-whatever-its-degree",
       "node_type": "Fragment",
       "properties": {
@@ -162485,6 +162550,20 @@
       }
     },
     {
+      "node_id": "ver:a-faced-choice-is-not-a-musing",
+      "node_type": "Verification",
+      "properties": {
+        "description": "`crates/reflow2-core/tests/a_choice_is_not_a_musing.rs`, five cases against the `contradiction` finding — the one that skips only when BOTH ends are parked, so it is what shows whether a node counts as parked.\n\n⭐ FOUR OF THE FIVE ARE COUNTERWEIGHTS, and they carry the weight: an unlabelled `proposed` Decision still parks by status (the fallback, so no design needs reclassifying); two exploratory ideas still go quiet; an ACCEPTED decision is never parked whatever kind it wears (kind must sharpen status, never override it); and one parked side against settled design STILL REPORTS.\n\n🛑 THAT LAST ONE IS PINNED DELIBERATELY AS A GUARD AGAINST THIS VERY CHANGE. It is the assertion ophyd-service asked to have reversed, and it belongs to a decision accepted on Anthony's word 2026-08-26 which `proj:bhome` independently called correct. Pinning it here means the reversal cannot arrive as a side effect of sharpening the predicate — it would need his word and a separate change.",
+        "findings": "5 passed, 0 failed, in the full workspace run of 1941 tests (0 failed) on 2026-09-01.\n\n⭐ OBSERVED FAILING IN THE RIGHT SPLIT: 4 passed and 1 failed against the unfixed code. Only the sharpening failed; every invariant passed BEFORE the change, which is what shows these constrain the change rather than describe it.\n\n⚠️ AND THE CHANGE IS INERT ON THIS DESIGN, MEASURED RATHER THAN ASSUMED: zero of reflow2's own 225 proposed Decisions carry `kind: choice` (205 unset, 20 exploratory), so the sweep count did not move. The fixture proves the behaviour; the graph proves nobody here is affected yet. Both are true and the second is the one a reader would otherwise assume away.",
+        "kind": "verification",
+        "last_run_at": "2026-09-01",
+        "level": "unit",
+        "method": "test",
+        "name": "An unsettled choice is not parked, and the four things that must not move do not move",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:a-finding-describes-the-walk-that-produced-it",
       "node_type": "Verification",
       "properties": {
@@ -165320,7 +165399,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:16f43a16ed9a6d850ad7ac76e0485a07ed300ca5dc11fa4ce583069cc5c69ed2",
+  "prev_content_hash": "sha256:38aa17a82f2916b83e1499912253d39b4510800021f6a5a6ce84341bec3866b6",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

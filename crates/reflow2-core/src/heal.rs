@@ -2006,16 +2006,54 @@ impl DesignGraph {
     /// `every_category_states_whether_it_reads_proposed` is an exhaustive match
     /// that will not compile until a new category's author has said which side
     /// they are on.
+    /// ⭐ `kind` SHARPENS `status`; IT NEVER REPLACES IT (2026-09-01).
+    ///
+    /// `status == "proposed"` alone cannot tell an IDEA BEING TURNED OVER from a
+    /// CHOICE somebody actually faced and has not settled. `Decision.kind` is
+    /// exactly that distinction and did not exist when this predicate was
+    /// written. Reported by ophyd-service, whose proposed discriminator —
+    /// key on an open `kind: exploratory` Decision — is better than anything
+    /// available in August.
+    ///
+    /// So a `kind: choice` left open is NOT parked: somebody faced it, and a
+    /// conflict involving it is a real thing to settle. Everything else is
+    /// unchanged.
+    ///
+    /// 🛑 READ AS A FALLBACK, NOT A MIGRATION. `kind` is consulted when set and
+    /// `status` decides when it is not, because reading `kind` alone would
+    /// silently UNPARK every existing design — it is unset on 205 of reflow2's
+    /// own 225 proposed Decisions. Retro-classifying those is the same
+    /// reconstruction trap that keeps `lineage` at 0 of 207 and that this
+    /// project refused for requirement provenance a day earlier.
+    ///
+    /// ⚠️ AND IT IS INERT UNTIL DESIGNS CARRY THE DISTINCTION. Measured on
+    /// reflow2's own design the day it landed: ZERO proposed Decisions carried
+    /// `kind: choice`, so no finding moved here. Correct in shape, deferred in
+    /// effect — said plainly rather than reported as a fix.
+    ///
+    /// 📌 THIS DOES NOT GIVE OPHYD WHAT THEY ASKED FOR, and must not be read as
+    /// having done so. Suppressing a contradiction whenever the SOURCE is
+    /// exploratory — even against settled design — would overturn
+    /// `dec:idea-a-proposed-decision-asserts-nothing-so-what-may-a-structural-detector-say-about-it`,
+    /// accepted 2026-08-26, which `proj:bhome` independently called correct on
+    /// the same day ophyd objected. Two field reports disagree and the settled
+    /// rule stands; `an_idea_against_settled_design_still_reports` pins it so
+    /// the reversal cannot happen as a side effect of sharpening this.
     fn is_parked_idea(&self, index: &HashMap<String, String>, id: &str) -> bool {
         index
             .get(id)
             .filter(|t| t.as_str() == node::DECISION)
             .and_then(|t| self.get_node(t, id).ok().flatten())
-            .and_then(|n| {
-                n.properties
-                    .get("status")
-                    .and_then(Value::as_str)
-                    .map(|s| s == "proposed")
+            .map(|n| {
+                let prop = |k: &str| {
+                    n.properties
+                        .get(k)
+                        .and_then(Value::as_str)
+                        .map(str::to_string)
+                };
+                let unsettled = prop("status").as_deref() == Some("proposed");
+                let faced_choice = prop("kind").as_deref() == Some("choice");
+                unsettled && !faced_choice
             })
             .unwrap_or(false)
     }
