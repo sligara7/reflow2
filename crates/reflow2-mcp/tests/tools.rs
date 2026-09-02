@@ -304,6 +304,93 @@ async fn link_artifact_closes_the_unrealized_capability_gap() {
     );
 }
 
+/// A MANGLED REPLAY STILL KEYS, because the server owns the gap text.
+///
+/// Two projects hit this ten days apart and neither was careless:
+/// dev_storyflow TRIMMED `description` and `title` for readability
+/// (2026-08-23, 4 of 5 questions degraded), and proj:chama duplicated a
+/// fragment of the title while transcribing (2026-09-02). Both got silently
+/// re-keyed answers and raw detector jargon put to their user.
+///
+/// `dec:idea-is-a-replayed-gap-an-input-or-an-echo`, settled 2026-09-02: the
+/// pass-2 object is an ECHO, not an input. The server resolves the gap by id
+/// and ignores whatever text came back, so mutilating it cannot re-key.
+#[tokio::test]
+async fn a_mangled_gap_replay_still_keys_because_the_server_owns_the_text() {
+    let s = seeded().await;
+    let gaps = jl!(s.detect_gaps(Parameters(GapScopeReq::default())));
+    let gap = gaps
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|g| g["gap_source"] == "unallocated_capability")
+        .expect("a gap")
+        .clone();
+
+    let prep = j!(s.gap_to_prompt(Parameters(GapToPromptReq {
+        gap: obj(&gap),
+        answers: vec![],
+        asked_at: None,
+    })));
+    let prompt_id = prep["prompts"].as_array().unwrap()[0]["id"]
+        .as_str()
+        .unwrap()
+        .to_string();
+
+    // MUTILATE THE GAP BETWEEN THE PASSES, both ways the field reports did.
+    let mut mangled = gap.clone();
+    let title = mangled["title"].as_str().unwrap().to_string();
+    mangled["title"] = serde_json::json!(format!("{title} {title}")); // chama: duplicated
+    mangled["description"] = serde_json::json!("trimmed for readability"); // storyflow: trimmed
+
+    let served = j!(s.gap_to_prompt(Parameters(GapToPromptReq {
+        gap: obj(&mangled),
+        answers: vec![AgentAnswerReq {
+            id: prompt_id,
+            text: "Which component owns ball flight?".into()
+        }],
+        asked_at: None,
+    })));
+
+    assert_eq!(served["status"], "ok");
+    assert_eq!(
+        served["prompt"]["rephrase_degraded"], false,
+        "the answer must still key: the server owns the gap text, not the caller"
+    );
+    assert_eq!(
+        served["prompt"]["question"], "Which component owns ball flight?",
+        "the agent's phrasing survives, not raw detector jargon"
+    );
+}
+
+/// Asking about a gap that has since CLOSED is refused, not served.
+///
+/// The behaviour change that comes with rehydrating always: previously a
+/// caller holding a full copy was served from that copy even if the gap was
+/// gone, which recorded a Question against a finding that no longer existed.
+#[tokio::test]
+async fn a_gap_that_no_longer_exists_is_refused_rather_than_served_from_a_stale_copy() {
+    let s = seeded().await;
+    let gaps = jl!(s.detect_gaps(Parameters(GapScopeReq::default())));
+    let mut gap = gaps
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|g| g["gap_source"] == "unallocated_capability")
+        .expect("a gap")
+        .clone();
+    gap["id"] = serde_json::json!("gap:0000000000000000");
+
+    let out = s
+        .gap_to_prompt(Parameters(GapToPromptReq {
+            gap: obj(&gap),
+            answers: vec![],
+            asked_at: None,
+        }))
+        .await;
+    assert!(out.is_err(), "a gap nobody has cannot be phrased");
+}
+
 #[tokio::test]
 async fn gap_to_prompt_collect_then_serve() {
     let s = seeded().await;
