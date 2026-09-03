@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:29ed22acfef8aabfee95e9f2835a2bde78b60359105fd68830f7f3ba04b915eb",
+  "content_hash": "sha256:d10456cc5fb76d4f70f83b1a67718dd7c9eb3501d00889c33b878734629847a1",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -17231,6 +17231,16 @@
         "validation_status": "unvalidated"
       },
       "to_id": "fact:the-parallel-batch-class-recurred-because-only-its-instance-was-fixed"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "cap:the-record-moved-is-surfaced",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The capability answers ONE question correctly — has the shared record moved ahead of this seat — and it answers it PER TARGET, which is the right scope for that question. The unexported-work reading aid was later hung on the same per-target row and inherited that scope, but its question ('are these nodes exported') is about the SEAT and is answered by the union of the records the seat keeps. One computation, two questions, only one of which the scope fits. Measured 2026-09-03: 5 lines each claiming 185-825 unexported nodes while a set difference put all 825 of the worst line's nodes inside the committed export. Fixed by chg:the-unexported-claim-is-answered-once-for-the-seat.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:defect-the-unexported-claim-was-computed-per-file-and-stated-per-seat"
     },
     {
       "edge_type": "CAUSES",
@@ -36480,6 +36490,33 @@
         "action": "modified"
       },
       "to_id": "art:tools-query"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-unexported-claim-is-answered-once-for-the-seat",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:sync-debt"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-unexported-claim-is-answered-once-for-the-seat",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-unexported-claim-is-answered-once-for-the-seat",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:the-record-moved-is-surfaced"
     },
     {
       "edge_type": "CHANGED",
@@ -135336,7 +135373,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:ca2aff3556bafb7fd4c5134a93b8c42d7aa14b827f830f52bffc2ce160c089f1",
+        "checksum": "sha256:737dd19c2c21035770461d567129d1b635c27255c511046587b7563b3d161082",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/sync_debt.rs",
         "name": "sync_debt.rs",
@@ -135835,7 +135872,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:a98284a4a5d33196b4e82d399d7881fe46561be6bb9886eb40139311bd50ffdd",
+        "checksum": "sha256:b2cd365cc46e5f7b8508052a8c26377cc1da2d00128eed304b60f31de5714e8b",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
@@ -145789,6 +145826,18 @@
         "change_type": "defect_fix",
         "name": "find_tools weights a term by how rare it is, so the catalogue stops being unstable under its own growth",
         "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:the-unexported-claim-is-answered-once-for-the-seat",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-09-03",
+        "name": "The unexported-work nudge is answered once, for the seat",
+        "rationale": "⭐ THE REPORTED SYMPTOM WAS NOISE AND THE MEASURED DEFECT WAS FALSEHOOD, and the difference chose the fix. The report described five noisy lines burying one true one; the committed record was `in_step` at 3662/3662 and emitted nothing, so there was no true line and every one of the five was untrue. A noise framing leads to ranking, deduplication or path filtering — all of which would have left five false sentences saying the same false thing more quietly.\n\n🛑 AND THE FIX THE SYMPTOM ARGUES FOR IS ALREADY ON THE RECORD AS WRONG. Every noisy path sat under /tmp, so 'forget scratch targets' is the obvious move and was the one proposed. `chg:the-orientation-call-stops-rereading-stale-records` shipped exactly that rule five weeks ago and reverted it — fifteen tests in `the_record_moved_and_the_session_is_told` failed and were right to, because hermetic tests, CI workspaces and containers all put genuine shared records under a temp dir. It would also not have worked: this seat tracks a 1545-node backup outside any temp path that produces the identical false sentence on entering the freshest six. Step ② of the root-cause skill paid for itself here — the precedent search returned the refutation of the leading candidate before any code was touched.\n\n⭐ THE CLASS, WHICH IS WHAT MAKES THIS MORE THAN A LINE-COUNT FIX: a per-item computation phrased as a whole-system fact, invisible because every test used exactly ONE item. All 21 tests in this file drove a single sync target, at which scope the per-file answer and the seat answer are identical and the bug cannot appear. The served surface routinely carries six. The pinning tests now drive TWO targets — one current beside one stale — which is the smallest fixture in which the two scopes can disagree.\n\nOBSERVED FAILING FIRST: `a_stale_side_record_does_not_claim_the_seat_holds_unexported_work` was written against the unfixed code and panicked with the false sentence quoted in the assertion output, then passed after the change. 23 tests pass in the file; fmt and clippy clean.",
+        "subject": "system",
+        "summary": "`loop_status` no longer emits one 'N node(s) have never been exported' line per stale record. `sync_debt::unexported_work(&debts, live_nodes)` answers the question ONCE for the seat: it takes the most complete record the seat is accounted for against (states `in_step` or `moved_but_current` only — a `behind` record's count is inflated by another seat's work and cannot vouch for this one's), stays silent if that record already holds as much as the graph does however far every other record has fallen, and otherwise returns a single line naming that record and the number of nodes in NO record. The clause was REMOVED from `SyncDebt::message()`, whose in-step arm now always returns the node-count-bounds sentence — a message about one file may describe that file and may not speak for the graph. ON REFLOW2'S OWN SEAT this turns 5 false lines into 0."
       }
     },
     {
@@ -167723,6 +167772,19 @@
       }
     },
     {
+      "node_id": "fact:defect-the-unexported-claim-was-computed-per-file-and-stated-per-seat",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "THE UNEXPORTED-WORK NUDGE WAS COMPUTED PER FILE AND STATED PER SEAT, AND ON A SEAT WITH MORE THAN ONE TARGET THE SENTENCE WAS FALSE. `loop_status.next` returned 8 lines on reflow2's own graph, 5 of them sync lines, each saying between 185 and 825 node(s) 'have never been exported'. Every one of those five named a one-off scratch dump under /tmp from a dead session. The committed record, docs/design/reflow2.json, held 3662 of 3662 live nodes, was `in_step`, and contributed NO line at all.\n\n⭐ THE FRAMING THAT OPENED THE INVESTIGATION WAS WRONG AND THE CORRECTION IS THE FINDING. The report said 'the single true line sits buried among them' — a signal-to-noise problem. There was no true line. Signal to noise was 0:5. Not one node was unexported, so all five sentences were untrue, and 'noisy' would have led to a ranking or filtering fix that left every sentence just as false.\n\nMEASURED, and this is the step that settled it: a set difference of the worst line's target (probe-authority.json, 2837 nodes, claiming 825 unexported) against the committed export put ALL 825 of those node ids inside the committed export, with 0 nodes in the scratch file and absent from the record. The claim 'have never been exported' was refuted node for node.\n\n⭐ THE CAUSE IS A SCOPE ERROR, NOT ACCUMULATION. `coherence.rs` ran `debts.iter().filter(|d| d.live_nodes > d.export_nodes).map(|d| d.message())` — a comparison against ONE FILE — and `SyncDebt::message()` then phrased the result as a fact about the GRAPH. 'Are these nodes exported' is a question about the SEAT, answered by the union of the records it keeps; asking it of each record separately multiplies one fact by however many records have fallen behind, and every copy asserts something the durable record disproves.\n\n🛑 THE OBVIOUS FIX IS ALREADY REFUTED ON THIS EXACT CODE. All five paths were under /tmp, which makes 'stop tracking scratch paths' look like the cause — it is also what the report proposed ('nothing ever forgets one'). `chg:the-orientation-call-stops-rereading-stale-records` (2026-08-24) SHIPPED that rule and reverted it: fifteen tests in `the_record_moved_and_the_session_is_told` failed and were right to, because a hermetic test, a CI workspace and a container all put GENUINE shared records under a temp dir, one of them named 'the case the whole thing exists for'. And it would not have worked: this seat also tracks /home/ajs7/reflow2-backups/reflow2-2026-08-06-session-backup.json, 1545 nodes, on no temp path, which produces the identical false sentence the moment it enters the freshest six. Accumulation decides WHICH files speak. The scope error is why what they say is false.\n\n⭐ THE CLASS: a per-item computation phrased as a whole-system fact, where every test exercised exactly ONE item so the two scopes were indistinguishable. All 21 tests in this file used a single target; the served surface routinely has six. A fix that only stopped today's five lines is a trigger fix — the class is 'the test fixture had one of the thing the field has many of'.\n\nNOT ESTABLISHED: whether other served rollups phrase per-target findings as seat-wide claims (only this one was examined); and the three standing bounds on the node-count comparison are unchanged — equal counts with different ids, an edge-only divergence, and a property-only write remain invisible, so this is a reading aid and not a durability guarantee.",
+        "subject_id": "cap:the-record-moved-is-surfaced",
+        "valid_from": "2026-09-03",
+        "value": "{\"observed\":\"loop_status.next 8 lines, 5 sync, claiming 185-825 nodes never exported\",\"true_lines\":0,\"committed_record\":\"docs/design/reflow2.json 3662/3662 in_step, silent\",\"discriminating_measurement\":\"set difference: all 825 claimed-unexported ids present in committed export; 0 ids in scratch and absent from record\",\"cause\":\"per-file predicate live_nodes > export_nodes, seat-level phrasing\",\"site\":\"crates/reflow2-mcp/src/tools/coherence.rs filter+map; crates/reflow2-mcp/src/sync_debt.rs SyncDebt::message in_step arm\",\"refuted_candidate\":\"filter /tmp paths - already tried and reverted in chg:the-orientation-call-stops-rereading-stale-records; also defeated by ~/reflow2-backups 1545-node target\",\"class\":\"per-item computation stated as whole-system fact, with every test using exactly one item\",\"tests_before\":\"21, all single-target\"}"
+      }
+    },
+    {
       "node_id": "fact:defect-typed-tool-parameter-names-are-inconsistent",
       "node_type": "TemporalFact",
       "properties": {
@@ -172950,7 +173012,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:30b2f75fcffe3de0ce0af1751c742a2b253b4160720d6c03fac1594cd71c9e34",
+  "prev_content_hash": "sha256:29ed22acfef8aabfee95e9f2835a2bde78b60359105fd68830f7f3ba04b915eb",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

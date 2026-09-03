@@ -565,9 +565,15 @@ fn unexported_work_is_named_on_the_in_step_line() {
     assert_eq!(d.state, "in_step", "the file genuinely has not moved");
     assert_eq!(d.live_nodes, 3);
     assert_eq!(d.export_nodes, 1);
-    let msg = d.message();
+
+    // ASKED OF THE SEAT, which is the only scope the sentence was ever true at.
+    // With one target the seat's answer and the file's coincide — which is
+    // exactly why every test here had one target, and why the scope error
+    // survived until a real seat with six of them was read.
+    let msg = reflow2_mcp::sync_debt::unexported_work(&found, 3)
+        .expect("two of three nodes are in no record; the seat is owed an export");
     assert!(
-        msg.contains('3') && msg.contains('1') && msg.contains("never been exported"),
+        msg.contains('3') && msg.contains('1') && msg.contains("in no record"),
         "the line must say how much is unexported, not merely that all is well: {msg}"
     );
 }
@@ -591,10 +597,9 @@ fn a_fully_exported_graph_says_nothing_extra() {
 
     assert_eq!(d.state, "in_step");
     assert_eq!(d.live_nodes, d.export_nodes);
-    let msg = d.message();
     assert!(
-        !msg.contains("never been exported"),
-        "an in-step, fully-exported record must stay quiet: {msg}"
+        reflow2_mcp::sync_debt::unexported_work(&found, live).is_none(),
+        "an in-step, fully-exported seat must stay quiet"
     );
 }
 
@@ -638,8 +643,11 @@ fn the_in_step_line_says_what_a_node_count_cannot_see() {
         "and name BOTH shapes it cannot see — a property-only and an edge-only \
          write: {msg}"
     );
+    // AND NO SEAT-LEVEL CLAIM ON A PER-FILE LINE, which is the invariant the
+    // 2026-09-03 defect broke: a message about one record may describe that
+    // record and must never speak for the graph.
     assert!(
-        !msg.contains("never been exported"),
+        !msg.contains("never been exported") && !msg.contains("in no record"),
         "while still raising no alarm, which is the counterweight this must not \
          break: {msg}"
     );
@@ -756,7 +764,7 @@ async fn loop_status_puts_unexported_work_in_the_list_a_session_reads() {
         .join(" | ");
 
     assert!(
-        next.contains("never been exported"),
+        next.contains("in no record"),
         "🛑 THE BUG. Unexported work must appear in `next`, not only in a `sync` row a reader \
          skims — the sentence existed and reached nobody: {next}"
     );
@@ -801,7 +809,7 @@ async fn a_fully_exported_graph_adds_nothing_to_next() {
 
     let next = serde_json::to_string(&v["next"]).unwrap_or_default();
     assert!(
-        !next.contains("never been exported"),
+        !next.contains("in no record"),
         "a seat that HAS exported must stay quiet — an aid that fires on correct work is a false \
          alarm on the path every session takes, and would be switched off inside a day: {next}"
     );
@@ -814,5 +822,109 @@ async fn a_fully_exported_graph_adds_nothing_to_next() {
         !next.contains("reflow2.json") && !next.contains("exactly where this graph left it"),
         "`next` is what the loop OWES; an in-step record owes nothing and must not appear in it \
          at all: {next}"
+    );
+}
+
+// ---------------------------------------------------------------------------
+// "HAVE THESE NODES BEEN EXPORTED" IS A QUESTION ABOUT THE SEAT, NOT THE FILE
+// ---------------------------------------------------------------------------
+//
+// The unexported-work sentence was computed per TARGET — `live_nodes >
+// export_nodes`, evaluated once for every record this seat has ever synced
+// with — and then stated as a fact about the seat: "N node(s) here have never
+// been exported". Those are different claims, and on a seat with more than one
+// target the second one is FALSE.
+//
+// MEASURED on reflow2's own graph, 2026-09-03. `loop_status.next` carried six
+// sync lines. Five said between 185 and 825 nodes had "never been exported".
+// The committed record held 3662 of 3662 live nodes and was silent. A set
+// difference against the worst line — probe-authority.json, 825 nodes — put
+// all 825 of them inside the committed export. Every one of those nodes had
+// been exported; the sentence was not merely noisy, it was untrue.
+//
+// 🛑 THE OBVIOUS FIX IS THE WRONG ONE, AND IT IS ALREADY ON THE RECORD.
+// Every one of those five paths was a scratch dump under /tmp, which makes
+// "stop tracking scratch paths" look like the cause. `chg:the-orientation-call-
+// stops-rereading-stale-records` tried exactly that rule and FIFTEEN tests in
+// this file failed and were right to: a hermetic test, a CI workspace and a
+// container all put genuine shared records under a temp dir. And it would not
+// have worked anyway — this seat also tracks a real backup at
+// ~/reflow2-backups holding 1545 nodes, which sits on no temp path and would
+// produce the identical false sentence the moment it entered the freshest six.
+// The pollution decides WHICH files say it. The scope error is why it is false.
+
+/// THE CASE. One record current, one side record stale. The seat is fully
+/// exported and nothing may say otherwise.
+#[test]
+fn a_stale_side_record_does_not_claim_the_seat_holds_unexported_work() {
+    let (dir, gp) = scratch("seat-scope");
+    let record = dir.path().join("reflow2.json");
+    let side = dir.path().join("probe.json");
+
+    // The durable record: everything the seat holds.
+    let whole = design(&["cap:one", "cap:two", "cap:three"]);
+    put(&record, &whole);
+    mark_synced(&gp, &record, &whole);
+
+    // A one-off dump from an earlier session, a strict subset, never touched
+    // since. Exactly the shape of the five /tmp files measured above.
+    let older = design(&["cap:one"]);
+    put(&side, &older);
+    mark_synced(&gp, &side, &older);
+
+    let live = whole.nodes.len();
+    let found = sync_debt(&gp, live, &|| Some(whole.clone()));
+    assert_eq!(found.len(), 2, "both targets are known to this seat");
+
+    let claims: Vec<String> = found
+        .iter()
+        .map(|d| d.message())
+        .filter(|m| m.contains("never been exported"))
+        .collect();
+    assert!(
+        claims.is_empty(),
+        "every live node is in the durable record, so NOTHING may claim the seat holds \
+         unexported work — a stale side record says something about that file, never about \
+         the seat: {claims:?}"
+    );
+}
+
+/// AND WHEN THE WORK REALLY IS UNEXPORTED, exactly one line — naming the record
+/// most worth exporting to, not every record that has fallen behind. The count
+/// is measured against that best record, so it is the number of nodes in NO
+/// record rather than the number missing from the worst one.
+#[test]
+fn an_unexported_seat_is_told_once_and_pointed_at_the_fullest_record() {
+    let (dir, gp) = scratch("seat-scope-owed");
+    let record = dir.path().join("reflow2.json");
+    let side = dir.path().join("probe.json");
+
+    let fullest = design(&["cap:one", "cap:two"]);
+    put(&record, &fullest);
+    mark_synced(&gp, &record, &fullest);
+
+    let stale = design(&["cap:one"]);
+    put(&side, &stale);
+    mark_synced(&gp, &side, &stale);
+
+    // Three live, two in the fullest record: one node is in no record at all.
+    let found = sync_debt(&gp, 3, &|| Some(fullest.clone()));
+    assert_eq!(found.len(), 2);
+
+    let msg = reflow2_mcp::sync_debt::unexported_work(&found, 3)
+        .expect("one node is in no record, so the seat is owed an export");
+    assert!(
+        msg.contains(&record.display().to_string()),
+        "the line must name the record worth exporting to — the fullest one: {msg}"
+    );
+    assert!(
+        !msg.contains(&side.display().to_string()),
+        "and must not name a stale side record, which is not where the work \
+         should go: {msg}"
+    );
+    assert!(
+        msg.contains("1 node(s) here are in no record"),
+        "the shortfall is measured against the FULLEST record (3 live, 2 there), \
+         not against the worst one, which would say 2: {msg}"
     );
 }
