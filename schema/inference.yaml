@@ -81,6 +81,9 @@ schema:
     # the unvalidated_capability gap.
 
     VIOLATES:
+      deliberately_open:
+        from: []
+        to: [Constraint, DesignRule, Requirement]
       from: "*"
       to: "*"
       inference_category: tension
@@ -121,6 +124,9 @@ schema:
       extraction_hint: Source is an earlier form that becomes target over time.
 
     OBSOLETES:
+      deliberately_open:
+        from: [Decision]
+        to: []
       from: "*"
       to: "*"
       inference_category: temporal

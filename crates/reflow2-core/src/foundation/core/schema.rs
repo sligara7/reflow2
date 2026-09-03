@@ -69,6 +69,53 @@ pub struct EdgeTypeDef {
     /// Only meaningful when `inference_category` is also set.
     #[serde(default)]
     pub pass_1_extractable: bool,
+    /// What this edge is FOR, when an endpoint is `*` BY DESIGN rather than by
+    /// oversight — advisory only, and that word is load-bearing.
+    ///
+    /// ⭐ IT NEVER VALIDATES. `from`/`to` still decide what is accepted, and
+    /// nothing here narrows them. Narrowing an endpoint is a consumer-facing
+    /// break — schema/core.yaml says so about CONSTRAINS' target, and it is why
+    /// the fix that closed the VERIFIES and CONSTRAINS instances of this class
+    /// could NOT be reused for GOVERNED_BY. Declaring intent changes only how
+    /// `describe_schema` RANKS and EXPLAINS.
+    ///
+    /// WHY IT IS NEEDED: the ranking measured how narrowly an edge was declared
+    /// and presented that as how well it MODELS the caller's pair. Those come
+    /// apart exactly where openness is deliberate. Measured 2026-09-02: of 17
+    /// both-wildcard edges, SEVEN already name their intended types in their own
+    /// prose — including the two that three reporters could not find — and TEN
+    /// name none, because anything really can block or cause anything. A flag
+    /// without the pairs would promote all seventeen and rebuild the flat pile
+    /// under a new name.
+    #[serde(default)]
+    pub deliberately_open: Option<DeliberateOpenness>,
+}
+
+/// The pairs a deliberately-open edge is FOR. Omit a side to say it is
+/// genuinely universal there; `GOVERNED_BY` is open on `from` because anything
+/// in a design may be governed, and meant for `Decision`/`DesignRule`/
+/// `Requirement` on `to`.
+#[derive(Debug, Clone, Default, Serialize, Deserialize)]
+pub struct DeliberateOpenness {
+    /// Source types this edge is meant for; empty means genuinely any.
+    #[serde(default)]
+    pub from: Vec<String>,
+    /// Target types this edge is meant for; empty means genuinely any.
+    #[serde(default)]
+    pub to: Vec<String>,
+}
+
+impl DeliberateOpenness {
+    /// Does this declaration claim the edge is FOR this pair?
+    ///
+    /// An empty side matches anything, so an edge open on one side and meant
+    /// for named types on the other still answers for its own pair.
+    pub fn covers(&self, from_type: &str, to_type: &str) -> bool {
+        let ok = |declared: &Vec<String>, ty: &str| {
+            declared.is_empty() || declared.iter().any(|d| d == ty)
+        };
+        ok(&self.from, from_type) && ok(&self.to, to_type)
+    }
 }
 
 /// An edge endpoint — single type, list of types, or wildcard.

@@ -221,6 +221,9 @@ schema:
         note: { type: string }
 
     SATISFIES:
+      deliberately_open:
+        from: [Capability, Component, Artifact]
+        to: [Requirement, Constraint]
       from: "*"
       to: "*"
       extraction_hint: >

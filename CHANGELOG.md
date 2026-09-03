@@ -31,6 +31,49 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Fixed
+
+- **A deliberately-open edge declares what it is FOR, and `describe_schema` stops
+  burying it.** The ranking measured how narrowly an edge was *declared* and
+  presented that as how well it *models* your pair. Those come apart exactly
+  where openness is deliberate — and three reporters paid for it:
+
+  | who | wanted to say | drew instead |
+  |---|---|---|
+  | `proj:chama` | "this open decision decides whether this constraint is met" | `BLOCKS`, with the meaning buried in an `evidence` string |
+  | dev_storyflow | "this repair invalidates that check's last run" | `CONTRADICTS`, which they called an obvious stand-in |
+
+  Both had a right answer sitting in the pile: `Constraint --GOVERNED_BY--> Decision`
+  and `Constraint --INVALIDATES--> Verification`, the latter naming that pair in
+  its own hint. **Worse than under-ranking — for storyflow the ranking PROMOTED
+  two edges they correctly judged wrong ABOVE the right one.**
+
+  Edge types may now declare, per side, which types they are for. Ranking has
+  four tiers: names both types · **declares it is for this pair** · names one
+  side · the rest. `describe_schema` returns `modelled_open_matches`, and the
+  note distinguishes *"nothing here is FOR this pair, ask for a new edge type"*
+  from *"the answer is below, declared"* — until now those rendered identically,
+  with identical counts, needing opposite actions.
+
+  ⭐ **Advisory, never validating.** `from`/`to` still decide what is accepted;
+  nothing narrows. That is what made this fix available at all — narrowing an
+  endpoint is a consumer-facing break, which is why the repair that closed the
+  earlier `VERIFIES` (#112) and `CONSTRAINS` (2026-08-08) instances of this class
+  could not be reused for `GOVERNED_BY`.
+
+  Seven of the seventeen both-wildcard edges are declared, read off prose that
+  already named their types. **Ten deliberately are not** — anything really can
+  block, cause or risk anything — and a test pins that they stay unpromoted. A
+  boolean flag would have promoted all seventeen and rebuilt the flat pile under
+  a new name.
+
+  **Upgrade action: none.** `deliberately_open` is an optional schema field;
+  nothing is removed, renamed or made required, and no existing edge changes what
+  it accepts. The version stamp does not move — it carries node and edge TYPE
+  names, and no type was added — so by `flow:release-cut` no upgrade doc is owed,
+  the same reading v0.45.0 took for an optional property.
+
+
 🛑 **Upgrade action: REQUIRED — one `loop_status` field was RENAMED.**
 `unwritten_answers` is now **`answered_with_open_gap`**. Any script or dashboard
 reading the old key gets nothing back — and gets it silently, which is why this
