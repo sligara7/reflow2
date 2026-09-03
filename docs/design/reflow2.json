@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:930b332b9a8b53d77f98afac96977250b0dcc77c449353a8dbc8031c242fc54f",
+  "content_hash": "sha256:a3ee667fd99c0953f6a8c35e862929eb2fffadae6e2971abf6868d0c2995e73a",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -10119,6 +10119,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:dec:idea-the-load-bearing-prose-is-unchecked-against-the-code-it-describes",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:fact:the-command-surface-has-five-copies-and-nothing-reconciles-them",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
@@ -13217,6 +13223,15 @@
       "from_id": "dec:idea-the-instruction-layer-runs-ahead-of-the-typed-tool-layer",
       "properties": {
         "acted_at": "2026-08-31",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-the-load-bearing-prose-is-unchecked-against-the-code-it-describes",
+      "properties": {
+        "acted_at": "2026-09-02",
         "role": "approver"
       },
       "to_id": "who:ajs"
@@ -16870,6 +16885,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "rule:a-new-refusal-claim-is-asserted-before-it-ships",
+      "properties": {
+        "acted_at": "2026-09-02",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "rule:an-identified-issue-is-enduring-never-dropped",
       "properties": {
         "acted_at": "2026-08-20",
@@ -17662,6 +17686,17 @@
         "validation_status": "unvalidated"
       },
       "to_id": "fact:the-fork-ask-is-a-deferred-branch-whose-reopening-condition-is-now-met"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:the-prose-does-not-rot-it-is-born-false",
+      "properties": {
+        "basis": "causal",
+        "confidence": 1.0,
+        "evidence": "The mechanism behind the class, established by a measurement that could have refuted it and did not: `git log -S` on each instance, then reading the code AT the introducing commit. Four were false at birth, one rotted and was caught the same session, one was not false. The prediction 'prose rots as code changes' is refuted for the majority.",
+        "validation_status": "validated"
+      },
+      "to_id": "dec:idea-the-load-bearing-prose-is-unchecked-against-the-code-it-describes"
     },
     {
       "edge_type": "CAUSES",
@@ -35615,6 +35650,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-prose-survey-extended-to-skills-and-found-no-rot",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:foundation-vocabulary"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-readme-says-what-it-is-before-what-it-believes",
       "properties": {
         "accepted_baseline": true,
@@ -49565,6 +49609,14 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "rule:a-new-refusal-claim-is-asserted-before-it-ships",
+      "properties": {
+        "note": "The rule exists because of this decision and carries its two measurements. Drawn so the rule is never read without the evidence that makes its never-retroactive half defensible — without the birth-date finding, backfilling looks like diligence rather than the wrong target."
+      },
+      "to_id": "dec:idea-the-load-bearing-prose-is-unchecked-against-the-code-it-describes"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "rule:design-intent-moves-only-on-the-owners-word",
       "properties": {},
       "to_id": "dec:the-authority-check-guards-forward-not-backward"
@@ -50484,6 +50536,12 @@
       "from_id": "dec:idea-the-ility-chooses-the-allocation-graph",
       "properties": {},
       "to_id": "snap:epoch:the-co-change-experiment-is-run:dec:idea-the-ility-chooses-the-allocation-graph"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:idea-the-load-bearing-prose-is-unchecked-against-the-code-it-describes",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:dec:idea-the-load-bearing-prose-is-unchecked-against-the-code-it-describes"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -118559,6 +118617,24 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "fact:the-prose-does-not-rot-it-is-born-false",
+      "properties": {
+        "at": "2026-09-02",
+        "note": "OVERTURNS ITS CONCLUSION, KEEPS ITS NUMBERS. The population counts stand and are still the best measure of how much prose makes checkable claims. What does not stand is the inference drawn from the rate — that the repair follows from prevalence. Age is uncorrelated with falsity because 4 of 6 were false before they were committed, so 'a low rot rate means auditing is low-yield' was right by accident and for the wrong reason."
+      },
+      "to_id": "fact:the-served-prose-is-mostly-true-and-nothing-checks-any-of-it"
+    },
+    {
+      "edge_type": "INVALIDATES",
+      "from_id": "fact:the-served-prose-is-mostly-true-and-nothing-checks-any-of-it",
+      "properties": {
+        "at": "2026-09-02",
+        "note": "The measurement the decision itself named as what would settle it has now been run, so the question 'is this one defect or three' is no longer open on the evidence it asked for. It answered YES to the grouping (80% of marker-carrying sentences make checkable behavioural claims, ~270 across the surface, nothing checks any) and NO to the implied urgency (five of five sampled claims verified TRUE; the known-false rate is ~2%). Both halves are needed: either alone would mislead."
+      },
+      "to_id": "dec:idea-the-load-bearing-prose-is-unchecked-against-the-code-it-describes"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "fact:the-wall-arrived-and-the-god-struct-did-not-move",
       "properties": {
         "at": "2026-08-31",
@@ -118728,6 +118804,15 @@
         "evidence": "This idea carries a real hazard: the brainstorm skill's step 2 forbids running detect-and-ask over brainstormed nodes, because asking a user to firm up what they deliberately left soft teaches them that thinking out loud has a cost. A naive detector IS that. req:detecting-is-not-asking (2026-08-19) answers it by splitting the two acts — detection unconditional, invitation held for a boundary — so the leg can be built without taxing the thinking. Neither node mentioned the other before this edge."
       },
       "to_id": "dec:idea-what-notices-an-idea-that-connects-to-nothing"
+    },
+    {
+      "edge_type": "MITIGATES",
+      "from_id": "rule:a-new-refusal-claim-is-asserted-before-it-ships",
+      "properties": {
+        "confidence": 1.0,
+        "evidence": "The rule intervenes at the one moment the cause operates — authoring — and nowhere else. It MITIGATES rather than closes: it cannot reach a sentence written before it existed, which is deliberate, and it depends on an author noticing they have written a claim, which is the same faculty that failed four times. What it adds is that noticing now has a required next step instead of being its own reward."
+      },
+      "to_id": "fact:the-prose-does-not-rot-it-is-born-false"
     },
     {
       "edge_type": "MITIGATES",
@@ -142379,6 +142464,18 @@
       }
     },
     {
+      "node_id": "chg:the-prose-survey-extended-to-skills-and-found-no-rot",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "documentation",
+        "detected_at": "2026-09-02",
+        "name": "The prose survey extended to the skill corpus — no rot found by sampling, and the method's own flaw was the finding",
+        "rationale": "RECORDED AS `documentation` / `record` DELIBERATELY: nothing about the system changed, only what the design knows about its own prose. The tool's own guidance says a normative document that changes what somebody DOES takes a real label instead — this changes nothing anyone does, so it takes the honest small one.\n\n⭐ WHY A NULL RESULT IS WORTH A CHANGE EVENT. The five instances that opened this question made the prose look unreliable. Two surveys across 2,552 sentences found no sixth by sampling, which is the strongest available evidence that the base rate is genuinely low — and that is what decides the repair. An audit of the corpus would be the wrong build: at the observed rate a reader wades through fifty true sentences per false one, and would have found none of the six.\n\n⚠️ WHAT WOULD REFUTE THE CONCLUSION: all six known instances were found on the surfaces users touch most, and both surveys sampled the corpus UNIFORMLY. If rot concentrates where prose is heavily read and heavily edited — which is plausible, since those are the sentences that get outgrown — uniform sampling is the wrong instrument and would report exactly this null. A survey weighted by tool call frequency would test that, and nobody has run one.\n\nSO THE DIRECTION STANDS AND IS UNCHANGED BY THIS: pin the claims that CAN be pinned, on the pattern of `chg:the-replay-contract-is-pinned-by-a-round-trip-not-by-a-field` — a round-trip test rather than a corrected sentence — rather than auditing prose nobody can keep true by reading it.",
+        "subject": "record",
+        "summary": "EXTENDING `fact:the-served-prose-is-mostly-true-and-nothing-checks-any-of-it` to the population it named as unsurveyed: the 25 served skills.\n\nPOPULATION: 1,785 sentences. 631 (35%) carry an assertion marker — lower density than tool descriptions (45%), as expected since skills are mostly doctrine. Narrowing to sentences that ALSO name a served tool, which is where a checkable claim about tool behaviour actually lives: 101 sentences (6%), across 23 of 25 skills.\n\nA SAMPLE OF 22 WAS READ. ONE LOOKED LIKE A CLEAN ROT AND WAS NOT.\n\n`retire-from-design` opens its candidate section with *\"`consumption_report` names capabilities nothing is recorded as using.\"* The tool says the opposite where it matters: *\"if the design records a consumer for fewer than half of what it built, the list is WITHHELD.\"* Confirmed in code — `MIN_MODELLED_RATIO = 0.5`, and `if ratio < MIN_MODELLED_RATIO` withholds. On reflow2's own design (8% modelled) the tool names nothing, so the sentence is false exactly where an agent would rely on it.\n\n⭐ **AND THEN THE NEXT PARAGRAPH SAYS IT CORRECTLY**: *\"READ ITS REFUSAL AS THE FINDING. On a design where few capabilities have modelled consumers it declines to name them at all.\"* The section is RIGHT AS A WHOLE. The lead sentence overstates and is qualified three lines later.\n\n**SO THE FINDING IS THE METHOD, NOT THE SENTENCE.** Sentence-level extraction strips the qualifier that makes the prose true — which is the SAME failure dev_storyflow reported in the same week, when their regex for dishonest nodes was 40% wrong because it could not tell a claim from its denial. Their flaw was matching negations; this one is losing context. Both come of scoring prose in units smaller than the argument it makes.\n\n⚠️ THAT BOUND APPLIES BACKWARDS to the tool-description survey too, though more weakly: a tool description is one blob with no paragraph structure, so a qualifier is likelier to sit in the same sentence — but the 80% \"makes a checkable claim\" figure was also judged sentence by sentence and should be read with this in mind.\n\nRESULT ACROSS BOTH POPULATIONS: **zero rotted claims found by sampling.** 5 of 5 verified true in tool descriptions; 22 read in skills with one candidate refuted by its own context. All six known-false instances to date were found by USERS hitting them, never by inspection."
+      }
+    },
+    {
       "node_id": "chg:the-readme-says-what-it-is-before-what-it-believes",
       "node_type": "ChangeEvent",
       "properties": {
@@ -147335,11 +147432,11 @@
       "node_id": "dec:idea-the-load-bearing-prose-is-unchecked-against-the-code-it-describes",
       "node_type": "Decision",
       "properties": {
-        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. A candidate class, generated during root-cause on the proj:chama field report of 2026-09-02 and stated so it can be refuted.\n\nTHREE OF THAT REPORT'S SIX FINDINGS ARE THE SAME SHAPE: a reflow2 self-description that is out of step with what the code does.\n\n① `loop_status` — \"1 answered question(s) never reached the design\". The computation is `questions.iter().filter(|q| q.status == \"answered\").count()`. It knows the question is answered and its gap is open; the message asserts something about whether design nodes exist. Nothing looks for them. (`fact:the-answered-question-message-recurred-in-a-third-project-with-the-computation-unchanged`)\n② `describe_schema` — its ranking says GOVERNED_BY is no better a fit than sixteen wildcards, when it is the design's primary governance edge and the true answer to the pair being asked about. The rank is computed from endpoint enumeration and presented as modelledness. (`fact:governed-by-is-the-governance-edge-and-describe-schema-can-never-rank-it`)\n③ `authored_by` — \"deliberately not a traceability edge, so it never enlarges a blast radius\". True about propagation, and it reads as \"nothing computes on this\" at the exact moment an agent decides whether to set `role: approver`, which is the assignment primitive that drives loop debt. (`fact:authored-by-describes-itself-as-inert-and-is-the-assignment-primitive`)\n\n⭐ AND A FOURTH, ALREADY FIXED ONCE, WHICH IS WHAT MAKES THIS WORTH ASKING: heal.rs records in its own comment that `unthreaded_cluster` \"SPOKE THE WORDS OF UNREACHABILITY AND WALKED SOMETHING NARROWER\" — the message claimed disconnection from the design while computing disconnection from a walk covering 1133 of 2413 nodes. Same defect, found by dev_storyflow 2026-08-17, repaired in the sentence. Nothing generalised from it.\n\nTHE COMMON SHAPE, stated to be attacked: **reflow2's prose is load-bearing — its own field reports say so — and it is maintained entirely by hand with nothing checking any sentence against the behaviour it describes.** The root-cause skill's own heuristic is that the cause is usually something maintained by hand with nothing checking it; here the hand-maintained thing is the feature.\n\n⚠️ WHY THIS MIGHT BE ONE THING: the failure is invisible by construction. A wrong sentence and a right one both compile, both ship, and the gap only appears when a user acts on the sentence — which is exactly how all four surfaced, each from a different project, none from a test.\n\n⚠️ AND WHY IT MIGHT NOT, which is the honest counter and is strong: these three have three different causes. ① is a message asserting past its data. ② is a ranking function whose criterion does not track the thing it is presented as ranking. ③ is a true sentence that misleads by omission. Only ① is straightforwardly \"the prose lies\". Grouping them could manufacture a systemic defect out of three ordinary ones — the over-engineering failure this project watches for, and the same reason `dec:idea-the-instruction-layer-runs-ahead-of-the-typed-tool-layer` was REJECTED on 2026-08-31 for a neighbouring grouping. That rejection is evidence against this one.\n\nNOT A COUNT ANYBODY HAS TAKEN: how many tool descriptions and gap texts make a checkable claim about behaviour, and what fraction are currently true. Nobody has looked.",
-        "kind": "exploratory",
-        "name": "OPEN — three of six chama findings are reflow2 describing itself wrongly. The prose is the acclaimed feature and nothing checks it. Is that one defect or three?",
-        "rationale": "WHAT WOULD SETTLE IT, and it is cheap enough to be worth naming: the claims in question are a specific and small kind — a sentence asserting what a COMPUTATION does or does not do (\"never reached the design\", \"never enlarges a blast radius\", a rank presented as fit). That is narrower than \"is the documentation accurate\", and it may be testable: a test that asserts the message text alongside the state that produces it would have caught ① and would have failed the day the message was written.\n\nIf most load-bearing prose makes no checkable claim, these three are three bugs and this node should be rejected like its predecessor. If a meaningful fraction does, the generative question is \"which other sentences assert something about a computation, and which are still true?\" — and that is answerable by reading the tool surface rather than by waiting for a fourth project to report it.\n\n⚠️ THE REPAIRS ARE INDEPENDENT OF THE ANSWER. All three are cheap on their own and none waits on this question. Recorded so the fifth instance is recognised rather than diagnosed from scratch — which is precisely what ① cost three separate sessions.",
-        "status": "proposed"
+        "decision": "SETTLED 2026-09-02 after two measurements, the second of which OVERTURNED the first's conclusion.\n\n**THE QUESTION WAS: is reflow2's prose going wrong one bug at a time, or is it one thing?** Five instances had accumulated where a served sentence asserted something the code did not do.\n\n**IT IS ONE THING.** Of 767 sentences across the 167 served tool descriptions, 343 carry a behavioural assertion and a read sample says ~80% make a claim checkable against the code — roughly 270 claims, with nothing systematically checking any (`fact:the-served-prose-is-mostly-true-and-nothing-checks-any-of-it`).\n\n**BUT THE CAUSE IS NOT WHAT PREVALENCE SUGGESTED.** The first pass measured HOW MUCH prose is false (~2%) and inferred a repair from the rate. Anthony pushed on the untested alternative it carried, and the root-cause pass then refuted the whole framing (`fact:the-prose-does-not-rot-it-is-born-false`):\n\n· `loop_status` \"never reached the design\" — the counter and the claim it cannot support were written in ONE COMMIT, 57 LINES APART.\n· `unresolved_setup` \"nothing follows through\" — at birth the loop had NO CONDITION AT ALL.\n· `Question.answer` \"linked separately\" — described a structure that would not exist for 46 days.\n· The one genuine rot was caught within the hour, by the session that caused it.\n\n**4 BORN FALSE · 1 ROTTED AND CAUGHT · 1 NOT ACTUALLY FALSE.** The prose does not decay. It is born wrong, by an author with the code in front of them, because a sentence describing a computation is written in a different mode from the computation and nothing forces a comparison at that moment.\n\n**THE RULING: `rule:a-new-refusal-claim-is-asserted-before-it-ships`.** When you write a sentence saying the software REFUSES, CANNOT or NEVER does something, make sure something asserts it before you commit. Often that is checking an existing test, not writing one.\n\n**AND EXPLICITLY NOT RETROACTIVE**, which is the half that took a measurement to earn (`fact:the-cost-of-pinning-refusal-claims-is-affordable-forward-and-pointless-backward`):\n· ~100 such claims already stand. Backfilling them would write a hundred tests to catch perhaps two errors.\n· More decisively, IT WOULD ADDRESS A CAUSE THAT DOES NOT EXIST. A test written today cannot catch a sentence that was already false when committed; it documents whatever the code does now, which is a different act wearing the same clothes.\n· Forward cost is ~6.5 new claims per week in steady state — a little over one per working day.\n\nWHAT WAS REJECTED AND WHY:\n· **Audit the corpus** — wrong target twice over: low yield at 2%, and aimed at decay that is not happening.\n· **\"Be more careful\"** — disproven twice. The authors had the code visible; and the session that NAMED this class was one edit from adding to it while fixing another instance.\n· **Test every behavioural claim (~270)** — more machinery than a 2% defect rate warrants.\n· **Generate prose from behaviour** — strongest, but only fits a few sentence shapes and is a build nobody has costed.\n\n⚠️ THE FRICTION IS WORST AT THE WORST TIME: during a burst of new tools the rate reaches ~24/week. If that bites, the agreed narrowing is to keep only hard REFUSALS (`is refused`, `cannot`) and drop the softer `never`/`nothing` forms.",
+        "kind": "choice",
+        "name": "SETTLED on Anthony's word 2026-09-02 — it is ONE thing, and the cause is BIRTH not decay: a new sentence claiming the code refuses something must be asserted somewhere before it ships. Never retroactive",
+        "rationale": "The two measurements are the reason this is a ruling rather than an opinion, and the second exists only because Anthony declined to accept a conclusion that still carried an untested \"what would refute this\". That instinct was right: the prevalence answer was correct by accident and for the wrong reason, and would have produced a backfill nobody needed.\n\nRecorded with the rejected options and their reasons because the attractive wrong answer here — audit the docs — is the one a later reader will reach for first, and the evidence against it is not obvious without the birth-date measurement.",
+        "status": "accepted"
       }
     },
     {
@@ -152489,6 +152586,16 @@
         "enforced": false,
         "name": "A lesson is generalised before it is built — reflow2 is not tuned to the project that happened to reveal the problem",
         "statement": "When a defect is found in one design, ask what the GENERAL form is before building anything. A detector, threshold or guard fitted to the project that happened to expose the problem makes reflow2 better at that project and worse everywhere else.\n\nANTHONY'S WORDS, 2026-08-14: *\"I don't want to be hyper focused on solving this by creating another requirement which then causes another issue later on. I don't want this to become like a decision tree where it is so specialized to some training data that it is no longer generalizable.\"*\n\n⭐ THE PRINCIPLE ALREADY EXISTED IN THREE PLACES AND HAD NO HOME — which is why it kept being re-derived and re-failed:\n  · `req:the-tool-finds-its-own-blind-spots` (accepted): *\"a detector that reaches zero findings by only asking questions the graph can already answer HAS BEEN TUNED TO THE INSTRUMENT. Satisfying this requirement by adding checks that happen to pass is the failure mode, not the fix.\"*\n  · BL-5's lesson, in a `detect.rs` comment: **a loud detector needs a different QUESTION, not a tuned number.**\n  · `dec:idea-silence-is-reported-not-inferred`, where the concern was raised again.\n\nTHREE MEASURED INSTANCES OF THE FAILURE, each found by a person or agent working by hand rather than by any check:\n  1. `chg:orphan-decision-degree-zero` (2026-08-01) — a clean bill from every detector; zero-degree nodes counted by hand. **One detector was added for that one case.**\n  2. `req:the-tool-finds-its-own-blind-spots` (2026-08-07) — six blind spots, all found by hand.\n  3. 2026-08-14 — 43 live planned capabilities invisible to every tool (`fact:the-build-list-is-suppressed-by-realized-via-component`); an agent had to leave the graph and grep the tree.\n\n📌 THE POSITIVE FORM, because a rule stated only as a prohibition is hard to act on: `granularity_report` is the pattern to copy. It answers a judgement-shaped question — *is the build coarser than the design?* — with **no threshold and no severity**, by comparing against THIS design's own distribution and refusing a verdict. `BL-42`'s `realized_via_component` guard is the counter-example: it solved a real noise problem measured on one storyflow adopt trial and created greenfield-increment blindness that nothing recorded for six weeks.\n\nENFORCEMENT: **advisory, on Anthony's word 2026-08-14.** He was asked whether shipping a check tuned to one design's data should stop the build, and answered that it is advice. That is the honest answer: *\"is this overfitted?\"* is a judgement about why code was written, which is not a property the graph can see — so an enforced version would owe a detector nobody could write, leaving a 0.6 finding open forever. **Advisory here means findable and quotable in review, not weak.**"
+      }
+    },
+    {
+      "node_id": "rule:a-new-refusal-claim-is-asserted-before-it-ships",
+      "node_type": "DesignRule",
+      "properties": {
+        "category": "review",
+        "enforced": false,
+        "name": "A new sentence claiming the software refuses something is asserted somewhere before it ships",
+        "statement": "**THE RULE.** When you write a sentence in a served tool description, skill or message that says the software REFUSES, CANNOT, or NEVER does something — make sure something asserts it before you commit. Usually that means checking a test already covers it; sometimes it means writing one line.\n\n**IT APPLIES TO NEW AND REWORDED SENTENCES ONLY. IT IS NEVER RETROACTIVE**, and that is a ruling rather than an omission. ~100 such claims already stand and are ~98% true; backfilling them would write a hundred tests to catch perhaps two errors, and — the decisive half — it would address a cause that does not exist. A test written today cannot catch a sentence that was already false when it was committed; it documents whatever the code does now, which is a different act wearing the same clothes.\n\n🛑 **ADVICE, NOT A GATE — `enforced: false`, and Anthony chose it deliberately on 2026-09-02 rather than leaving it unstated.** A gate can only catch claims it can FIND, and finding them needs the same keyword classifier used to size this rule: it proposed 197 candidates and reading 25 of them put the true figure near half. A check that misfires roughly one time in two is one people learn to skim, which is the failure `acknowledge_gap`'s own description warns about — *a list that can never reach zero gets skimmed*. Turning this into a red build would trade a real habit for an ignored one.\n\n**WHAT WOULD CHANGE THAT.** If the classifier can be made precise enough to name new refusal claims in a diff with few false positives, the warn-in-CI form becomes available: print what it found, never fail. That was the option not taken, and it is the one to revisit — not the gate.\n\n**WHY THIS RULE AND NOT \"BE MORE CAREFUL\".** Measured over the six known-false sentences: FOUR WERE FALSE THE DAY THEY WERE WRITTEN. In `loop_status` the counter and the claim it cannot support sit in ONE COMMIT, 57 LINES APART. In `unresolved_setup` the message announced \"nothing follows through\" while the loop had no condition at all. The authors had the code in front of them. Care is not the missing ingredient — a comparison is, and nothing forces one at the moment of writing.\n\nThe session that NAMED this class then came within one edit of adding to it: having fixed the gap-replay guard, both tool descriptions still carried the warning describing the behaviour just removed. It took a deliberate second pass to catch. That is the strongest available evidence that vigilance does not scale here — and it is also the honest limit of an unenforced rule, which asks for exactly that vigilance.\n\n**WHAT IT COSTS.** ~6.5 new claims per week in steady state — a little over one per working day. During a burst of new tools it reached ~24/week in the 30 days to 2026-09-02, which is heaviest exactly when tools are being added fastest.\n\n**THE AGREED NARROWING IF IT BITES:** keep hard REFUSALS (`is refused`, `cannot`) and drop the softer `never` / `nothing` forms. Refusals are what an agent acts on and are the cheapest to assert.\n\n**WHAT GOOD LOOKS LIKE.** `loop_status`'s \"an unknown contributor_id is REFUSED\" has a test (`an_unknown_contributor_is_refused_rather_than_answered_with_an_empty_list`). It has been true since the day it shipped and cannot quietly become false. It is the only claim among those checked that is structurally protected, and it is the model.\n\n**WHAT THIS RULE IS NOT.** Not a documentation-accuracy rule — advice to the reader (\"never guess the node type\") asserts nothing about the code and is out of scope. Not a ban on prose: this project's own field reports name the prose as the best thing about it, and the point is to keep it trustworthy, not to thin it out.\n\nSOURCE: `dec:idea-the-load-bearing-prose-is-unchecked-against-the-code-it-describes`, settled by Anthony 2026-09-02, on `fact:the-prose-does-not-rot-it-is-born-false` and `fact:the-cost-of-pinning-refusal-claims-is-affordable-forward-and-pointless-backward`."
       }
     },
     {
@@ -160886,6 +160993,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:preserved-on-write:dec:idea-the-load-bearing-prose-is-unchecked-against-the-code-it-describes",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"EVOLVES_INTO\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-the-instruction-layer-runs-ahead-of-the-typed-tool-layer\",\"properties\":{\"evidence\":\"The 2026-08-31 grouping asked whether reflow2's PROSE runs ahead of its TYPED TOOLS and was rejected as four unrelated causes sharing a symptom. This is the same investigation one step on and a different claim — not that the prose promises tools that do not exist, but that the prose describes behaviour that is not what the code does. Drawn from the older node to this one because that rejection is the direct ancestor of this question and its counter-argument applies here too.\"}}]",
+        "state": "{\"decision\":\"RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. A candidate class, generated during root-cause on the proj:chama field report of 2026-09-02 and stated so it can be refuted.\\n\\nTHREE OF THAT REPORT'S SIX FINDINGS ARE THE SAME SHAPE: a reflow2 self-description that is out of step with what the code does.\\n\\n① `loop_status` — \\\"1 answered question(s) never reached the design\\\". The computation is `questions.iter().filter(|q| q.status == \\\"answered\\\").count()`. It knows the question is answered and its gap is open; the message asserts something about whether design nodes exist. Nothing looks for them. (`fact:the-answered-question-message-recurred-in-a-third-project-with-the-computation-unchanged`)\\n② `describe_schema` — its ranking says GOVERNED_BY is no better a fit than sixteen wildcards, when it is the design's primary governance edge and the true answer to the pair being asked about. The rank is computed from endpoint enumeration and presented as modelledness. (`fact:governed-by-is-the-governance-edge-and-describe-schema-can-never-rank-it`)\\n③ `authored_by` — \\\"deliberately not a traceability edge, so it never enlarges a blast radius\\\". True about propagation, and it reads as \\\"nothing computes on this\\\" at the exact moment an agent decides whether to set `role: approver`, which is the assignment primitive that drives loop debt. (`fact:authored-by-describes-itself-as-inert-and-is-the-assignment-primitive`)\\n\\n⭐ AND A FOURTH, ALREADY FIXED ONCE, WHICH IS WHAT MAKES THIS WORTH ASKING: heal.rs records in its own comment that `unthreaded_cluster` \\\"SPOKE THE WORDS OF UNREACHABILITY AND WALKED SOMETHING NARROWER\\\" — the message claimed disconnection from the design while computing disconnection from a walk covering 1133 of 2413 nodes. Same defect, found by dev_storyflow 2026-08-17, repaired in the sentence. Nothing generalised from it.\\n\\nTHE COMMON SHAPE, stated to be attacked: **reflow2's prose is load-bearing — its own field reports say so — and it is maintained entirely by hand with nothing checking any sentence against the behaviour it describes.** The root-cause skill's own heuristic is that the cause is usually something maintained by hand with nothing checking it; here the hand-maintained thing is the feature.\\n\\n⚠️ WHY THIS MIGHT BE ONE THING: the failure is invisible by construction. A wrong sentence and a right one both compile, both ship, and the gap only appears when a user acts on the sentence — which is exactly how all four surfaced, each from a different project, none from a test.\\n\\n⚠️ AND WHY IT MIGHT NOT, which is the honest counter and is strong: these three have three different causes. ① is a message asserting past its data. ② is a ranking function whose criterion does not track the thing it is presented as ranking. ③ is a true sentence that misleads by omission. Only ① is straightforwardly \\\"the prose lies\\\". Grouping them could manufacture a systemic defect out of three ordinary ones — the over-engineering failure this project watches for, and the same reason `dec:idea-the-instruction-layer-runs-ahead-of-the-typed-tool-layer` was REJECTED on 2026-08-31 for a neighbouring grouping. That rejection is evidence against this one.\\n\\nNOT A COUNT ANYBODY HAS TAKEN: how many tool descriptions and gap texts make a checkable claim about behaviour, and what fraction are currently true. Nobody has looked.\",\"kind\":\"exploratory\",\"name\":\"OPEN — three of six chama findings are reflow2 describing itself wrongly. The prose is the acclaimed feature and nothing checks it. Is that one defect or three?\",\"rationale\":\"WHAT WOULD SETTLE IT, and it is cheap enough to be worth naming: the claims in question are a specific and small kind — a sentence asserting what a COMPUTATION does or does not do (\\\"never reached the design\\\", \\\"never enlarges a blast radius\\\", a rank presented as fit). That is narrower than \\\"is the documentation accurate\\\", and it may be testable: a test that asserts the message text alongside the state that produces it would have caught ① and would have failed the day the message was written.\\n\\nIf most load-bearing prose makes no checkable claim, these three are three bugs and this node should be rejected like its predecessor. If a meaningful fraction does, the generative question is \\\"which other sentences assert something about a computation, and which are still true?\\\" — and that is answerable by reading the tool surface rather than by waiting for a fourth project to report it.\\n\\n⚠️ THE REPAIRS ARE INDEPENDENT OF THE ANSWER. All three are cheap on their own and none waits on this question. Recorded so the fifth instance is recognised rather than diagnosed from scratch — which is precisely what ① cost three separate sessions.\",\"status\":\"proposed\"}",
+        "target_id": "dec:idea-the-load-bearing-prose-is-unchecked-against-the-code-it-describes",
+        "target_type": "Decision"
+      }
+    },
+    {
       "node_id": "snap:epoch:preserved-on-write:fact:the-command-surface-has-five-copies-and-nothing-reconciles-them",
       "node_type": "Snapshot",
       "properties": {
@@ -165534,6 +165651,18 @@
       }
     },
     {
+      "node_id": "fact:the-cost-of-pinning-refusal-claims-is-affordable-forward-and-pointless-backward",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "measurement",
+        "statement": "THE AFFORDABILITY MEASUREMENT that decides the shape of the repair, run 2026-09-02 before committing to build anything.\n\n**EXISTING STOCK: ~100 testable refusal claims** on the served surface (167 tool descriptions). A keyword classifier proposed 197; a read sample of 25 found roughly half genuinely testable — the rest state a tool's PURPOSE (\"What has the design never been told about?\"), list its OUTPUTS, or were advice to the reader that the classifier mis-sorted. Corrected estimate ~100, across 95 of 167 tools.\n\n**ARRIVAL RATE**, measured by diffing today's toolsnaps against 2026-08-03 and counting DISTINCT new claim sentences (not lines — a first attempt counted added LINES and was inflated roughly 2.5x, because a one-word edit re-adds every line of a wrapped string):\n· 103 distinct new refusal claims in 30 days.\n· 75 of those came from 27 BRAND-NEW tools; 28 from 14 reworded ones.\n· **Steady state (rewording only): ~6.5 per week. Including new tools in this window: ~24 per week.**\n\n⭐ **THE SPLIT DECIDES IT, NOT THE TOTAL.**\n\n**BACKFILLING THE ~100 IS THE WRONG BUILD, and the second reason is the real one.** First, they are roughly 98% true, so a hundred tests would catch perhaps two errors. Second and decisively: **backfilling addresses a cause that does not exist.** `fact:the-prose-does-not-rot-it-is-born-false` establishes that 4 of 6 known-false sentences were false at the moment they were committed. A test written today against existing prose cannot catch a sentence that was already wrong three weeks ago — it merely documents whatever the code does now, which is not the same act.\n\n**APPLYING IT FORWARD IS AFFORDABLE.** ~6.5/week is a little over one per working day, and many new claims are already covered by a test that exists — the rule is \"make sure something asserts it\", which is often a check rather than a write.\n\n⚠️ THE FRICTION IS REAL AT THE WORST MOMENT: during a build burst like this 30-day window the cost is ~24/week, i.e. heaviest exactly when tools are being added fastest. If that bites, the next narrowing is to apply the rule only to REFUSALS (`is refused`, `cannot`) and drop the softer `never`/`nothing` forms — refusals are what an agent acts on and are the cheapest to assert.\n\n⚠️ BOUNDS ON THESE NUMBERS. The ~100 is 25 read of 197 and extrapolated: treat it as \"about a hundred\", not a count. The weekly rate is one 30-day window containing an unusual number of new tools, so 6.5 is the more trustworthy figure and 24 is a ceiling rather than a rate. Skills and gap texts were NOT included in either number.",
+        "subject_id": "cmp:foundation-vocabulary",
+        "valid_from": "2026-09-02"
+      }
+    },
+    {
       "node_id": "fact:the-decision-race-is-caller-ordering-not-read-after-write",
       "node_type": "TemporalFact",
       "properties": {
@@ -166041,6 +166170,18 @@
       }
     },
     {
+      "node_id": "fact:the-prose-does-not-rot-it-is-born-false",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "ROOT CAUSE OF THE UNCHECKED-PROSE CLASS, and it OVERTURNS the conclusion drawn from the prevalence survey earlier the same day.\n\nTHE SURVEY MEASURED HOW MUCH PROSE IS FALSE (about 2%) AND INFERRED A REPAIR FROM THE RATE. That skipped the step that matters: nobody asked WHY these sentences are false, or generated candidate causes and took a measurement that could tell them apart. Anthony pushed on exactly that — a conclusion carrying an untested \"what would refute this\" is not a root cause.\n\n**THE DISCRIMINATING QUESTION: WERE THESE SENTENCES EVER TRUE?**\n· \"Prose ROTS as code changes\" predicts each was true when written and outgrown later.\n· \"Prose is BORN FALSE\" predicts it never matched the code.\nOpposite repairs, and `git log -S` settles it.\n\n**MEASURED ACROSS THE SIX KNOWN INSTANCES:**\n\n① `loop_status` \"never reached the design\" — **BORN FALSE, 2026-07-21 (4f6e427).** At birth, line 222 computed `questions.iter().filter(|q| q.status == \"answered\").count()` and line 279 asserted the answer never reached the design. **The counter and the claim it cannot support were written in ONE COMMIT, 57 LINES APART.** Unreported for 26 days.\n② `describe_schema` ranking presented as modelled fit — born false structurally: the rank has always measured endpoint enumeration, and enumeration has never been what it is presented as.\n③ `authored_by` \"never enlarges a blast radius\" — **NOT FALSE.** True of propagation; it misleads by omission. Counted honestly rather than folded in.\n④ `unresolved_setup` \"nothing follows through\" — **BORN FALSE, 2026-07-17 (aea1fda), and the cleanest case.** At birth the loop had NO CONDITION AT ALL: it reported every ANTICIPATES edge with that message while checking nothing about follow-through. False for every edge from the first line of code.\n⑤ `Question.answer` \"the design nodes it produced are linked separately\" — **BORN FALSE, 2026-07-18 (069a28d).** The ANSWERS edge count in `nodes.rs` at that commit was ZERO. It described a structure that would not exist for 46 days.\n⑥ `gap_to_prompt` \"REPLAY UNCHANGED … re-keys every answer\" — **THE ONE GENUINE ROT.** True when written 2026-08-23, made false by the guard fix on 2026-09-02 — and caught in the same session that broke it.\n\n**TALLY: 4 BORN FALSE, 1 TRUE-THEN-ROTTED (caught within the hour), 1 NOT ACTUALLY FALSE.**\n\n⭐ **SO THE PROSE DOES NOT ROT. IT IS BORN FALSE.** There is no ageing mechanism to defend against, which is why the survey found no rot by sampling and why age is uncorrelated with falsity.\n\n⭐ **AND THE AUTHOR HAD THE CODE IN FRONT OF THEM.** In ① the computation and the sentence sit in one diff; in ④ the message describes a check that the same function visibly does not perform. The gap is not knowledge and not time — it is that a sentence describing a computation is written in a different mode from the computation, and NOTHING FORCES A COMPARISON AT THAT MOMENT.\n\n**WHAT THIS CHANGES:**\n· Auditing old prose is wrong, and MORE wrong than the prevalence survey said — not merely low-yield, but aimed at a mechanism that does not exist.\n· \"Pin the claims that can be pinned\" survives, but its TIMING is the whole point: the pin must be written WITH the claim, at authoring time. A retrofitted test cannot catch a sentence that was false before it was committed.\n· The untested alternative that made the earlier conclusion unsafe — \"rot concentrates on heavily-used surfaces\" — is IRRELEVANT to 4 of 6, because there is no wear. That hole is closed by a different route than the survey it threatened.\n\n⚠️ BOUNDS: six instances, all found by users, so this is the population of KNOWN failures and not a sample of all prose. Birth dates come from `git log -S` on a distinctive phrase, which finds the commit that introduced the WORDING — a sentence reworded later would date to the rewording. ①④⑤ were each confirmed by reading the code AT that commit rather than inferring from the date.",
+        "subject_id": "cmp:foundation-vocabulary",
+        "valid_from": "2026-09-02"
+      }
+    },
+    {
       "node_id": "fact:the-read-surface-after-the-sweep-2026-08-23",
       "node_type": "TemporalFact",
       "properties": {
@@ -166196,6 +166337,18 @@
         "fact_type": "observation",
         "statement": "🛑 **CORRECTION: ALEX'S TWO 2026-08-14 REPORTS CAME FROM TWO DIFFERENT MACHINES WITH TWO DIFFERENT AGENTS, AND THIS SESSION TREATED THEM AS ONE.** Anthony, relaying Alex's own question about which feedback was being discussed, then clarifying the setup:\n\n```\n              MACHINE            OS       AGENT    PROJECTS        REPORT\nwork          work laptop        macOS    Claude   real work       the 5 ideas\nhome          personal laptop    macOS    Grok     personal        the Grok feedback.md\n```\n\n⚠️ ON `basis`: the enum offers only `measured` or `forecast`. The machine/agent/OS attribution is REPORTED — Anthony relaying Alex — not observed by reflow2. The kit VERSIONS below are genuinely measured. Marked `measured` because most load-bearing content is, with the distinction stated here rather than lost to a missing enum value.\n\n⚠️ WHAT THIS SESSION GOT WRONG. `fact:agent-feedback-corroborated-2026-08-14` describes the Grok file as *\"a Grok 4.6 session on one of Alex's projects\"*, which reads as the same context that produced the five ideas. It is not. Any inference treating the two as evidence about ONE install is unsound as stated.\n\n═══ THE STALE-KIT CLAIM, RESTATED HONESTLY ═══\n\nThis session repeatedly said *\"three independent signals that consumers run stale kits\"*, implying mutual reinforcement about one user. **They are three SEPARATE installs, each stale:**\n```\nwork / Claude / macOS ..... two of five notes describe behaviour fixed in\n                            #172/#174 -> INFERRED stale, NEVER MEASURED\nhome / Grok / macOS ....... kit-version.json reads 0.11.0 / 0ec473e,\n                            a 2026-07-25 tarball -> MEASURED\nthis dev machine / Linux .. kit stamp 0.28.0 / e2b05c7 -> MEASURED\n```\n⇒ WEAKER as evidence about Alex — only his HOME install was measured, and the five ideas came from WORK. STRONGER as evidence about the UPDATE PATH: three machines, at least two install routes, three versions, none current. **Systemic, not one person forgetting.**\n\n🎯 THE VERSION QUESTION NEEDS A MACHINE. Anthony texted Alex asking what `reflow2 --version` says; **he has two installs and the answer differs.** The WORK one matters most — it produced the five ideas behind `epoch:a-project-is-set-up-right-on-the-first-run` and has never been measured.\n\n═══ ⭐⭐ IT IMMEDIATELY FOUND A DEFECT IN WORK SHIPPED THE SAME HOUR ═══\n\n`cap:init-asks-which-harness` had just been built with a deliberate decision: **`grok` is NOT a registry entry**, because Grok CLI reads `.mcp.json` and a second entry would write the same file twice under two names. A test asserted it. **The reasoning was right and the ergonomics were hostile: `--harness=grok` returned `error: unknown harness 'grok'` and exit 1** — the install REFUSING a correct answer from a user naming his own tool. Learning that Alex runs Grok at home is what surfaced it.\n\nFIXED the same hour, keeping the reasoning and dropping the hostility: `HARNESS_ALIASES = {\"grok\": \"claude\"}` resolves the name without adding a config, the prompt line reads *\"Claude Code (also read by Grok CLI — choose this for Grok)\"*, and `grok,claude` collapses to one config rather than erroring. Four tests guard it, including that every alias points at a real harness and that no name is both an alias and an entry.\n\n📌 **A GENERAL LESSON, since `rule:a-lesson-is-generalised-before-it-is-built` now exists:** a registry that is CORRECT about what to install can still be WRONG about what to accept. The two are different questions — what files does this harness need, and what might a user call it — and collapsing them refuses real answers.\n\n═══ 📌 ENVIRONMENT FACTS NEW TO THE DESIGN ═══\n\n  · **EVERY SECOND-USER REPORT REFLOW2 HAS EVER RECEIVED IS FROM macOS**, and **every measurement reflow2 has ever made is on Linux** — including all of 2026-08-14's installer runs and the harness wizard itself. Whether `tools/install.sh`, the `~/.local/share/reflow2/kit` layout, the merge-driver registration and `--harness` behave identically on macOS is **unverified, and nothing in the design claims it**.\n  · **A TARBALL install is in use** (`0ec473e`), a different update route from a checkout. `user-iterative-release-preference` sets the goal at a ONE-WORD UPDATE; whether the tarball route reaches that is untested.\n\n⭐ THE BREADTH IS ITSELF THE FINDING: the second user exercises reflow2 across two agents (Claude, Grok) and two project classes (work, personal) on one OS reflow2 has never been tested on. For evidence purposes his two report streams should be read as **two users**, and the two agents mean the served skills are being read by two different models.",
         "subject_id": "proj:reflow2"
+      }
+    },
+    {
+      "node_id": "fact:the-served-prose-is-mostly-true-and-nothing-checks-any-of-it",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "measurement",
+        "statement": "THE SETTLING MEASUREMENT for `dec:idea-the-load-bearing-prose-is-unchecked-against-the-code-it-describes`, run 2026-09-02 on Anthony's word. IT DOES NOT SAY WHAT THE FIVE INSTANCES SUGGESTED IT WOULD.\n\n**POPULATION** — the 167 committed toolsnaps, which are the served descriptions byte-for-byte:\n· 767 sentences total.\n· 343 (45%) carry a marker of an assertion about behaviour (never / always / cannot / refuses / only / silently / …).\n· 127 of 167 tools (76%) carry at least one.\n\n**READ, NOT COUNTED** — a reproducible random sample of 40 (seed 20260902) was READ and classified, because dev_storyflow's own lesson from the same week is that a grep cannot tell a claim from its denial: their regex was 40% wrong on first run, matching negations like \"STATUS is planned: nothing is built\" on the word \"built\".\n· ~32 of 40 (80%) make a CHECKABLE claim about what the computation does.\n· 4 are advice (\"Never set kpp on your own reading\"), 4 are descriptive or historical (\"Until this tool existed …\").\n\nSO THE ANSWER TO THE DECISION'S OWN TEST IS **HIGH HIT RATE — IT IS ONE THING, NOT THREE BUGS.** Extrapolated, roughly 270 checkable behavioural claims stand on the served surface, and nothing systematically checks any of them.\n\n⭐ **AND THEN THE RESULT THAT REFRAMES THE WHOLE QUESTION: THE PROSE IS MOSTLY TRUE.** Five sampled claims were verified against the code and ALL FIVE HELD:\n· `propose_heal` \"never mutates\" — takes `&self`, cannot.\n· `mint_seat` \"Writes NOTHING\" — no graph access, no write lock, mints and returns.\n· `plan_epoch` \"a planned epoch REFUSES record_change\" — temporal.rs:809.\n· `loop_status` \"an unknown contributor_id is REFUSED\" — and it is PINNED BY A TEST (`an_unknown_contributor_is_refused_rather_than_answered_with_an_empty_list`).\n· `seam_coverage` \"every coupling is lifted to the nearest container at that level\" — TRUE, and the id-prefix bug that once made it false was fixed 2026-08-30 with the measurement in the code comment.\n\n**SO THE DEFECT RATE IS LOW AND THE DETECTION LATENCY IS THE PROBLEM.** Five known-false claims against ~270 is on the order of 2%. Every one of the five was found by a USER, weeks after it rotted, and none by sampling — which is what a low base rate plus no checking produces. The class is real; the frequency is not the thing that hurts.\n\n⭐ **THAT CHANGES WHAT THE REPAIR SHOULD BE.** Auditing the corpus is low-yield: at ~2% a reader would wade through fifty true sentences to find one false. The generalisable answer already exists in this design's own history — `chg:the-replay-contract-is-pinned-by-a-round-trip-not-by-a-field` root-caused an earlier instance as \"a stated contract maintained by hand with nothing checking it\" and fixed it with a ROUND-TRIP TEST rather than a corrected sentence. `loop_status`'s contributor refusal shows the same shape working: the claim is pinned, so it cannot rot.\n\n⚠️ BOUNDS, and they matter for anyone acting on this. FIVE verifications cannot establish a rate — they establish that the prose is not obviously rotten, which was worth knowing and was not known. The sample was 40 of 343 and only 5 were traced to code, because each trace is a manual read. Skills and gap texts were NOT surveyed, only tool descriptions. And the five known-false instances were found by users on the surfaces users actually touch, so the true rate on HEAVILY-USED prose may be higher than on the whole corpus.",
+        "subject_id": "cmp:foundation-vocabulary",
+        "valid_from": "2026-09-02"
       }
     },
     {
@@ -169612,7 +169765,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:ad6fc842c53d32e58a3e4bdd0195c95a2c5f0c227ca31063c091e955b2f39fc2",
+  "prev_content_hash": "sha256:930b332b9a8b53d77f98afac96977250b0dcc77c449353a8dbc8031c242fc54f",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

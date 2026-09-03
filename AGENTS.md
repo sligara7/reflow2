@@ -700,6 +700,25 @@ reading order (Vision → Design → Process → Heritage). Then:
    users to export before every commit, which is exactly what the lineage check fails on.
    The mirror error is real too: don't push our internal discipline into a served skill, where
    it becomes a rule for somebody else's project that nobody there chose.
+8. **A new sentence claiming the code REFUSES something is asserted before it ships.** When you
+   write, in a tool description, skill or message, that reflow2 *refuses*, *cannot* or *never*
+   does something — make sure something asserts it before you commit. Usually that is checking
+   an existing test covers it; sometimes it is one line. **New and reworded sentences only,
+   never retroactive.**
+   Because the failure is not that prose goes stale — it is **born wrong**. Measured 2026-09-02
+   over the six known-false sentences: **four were false the day they were written.** In
+   `loop_status` the counter and the claim it cannot support sit in ONE COMMIT, 57 LINES APART;
+   in `unresolved_setup` the message announced "nothing follows through" while the loop had no
+   condition at all. The authors had the code in front of them, so care is not the missing
+   ingredient — a comparison is, and nothing forces one at the moment of writing. (The session
+   that discovered this came within one edit of adding a seventh, while fixing the sixth.)
+   ⚠️ **Advice, not a gate** — `enforced: false`, chosen deliberately. A check could only find
+   these with a keyword classifier, and the one used to size this rule over-counted about 2:1;
+   a gate that misfires half the time is one people learn to skim. If the classifier can be made
+   precise, the thing to revisit is **warn-in-CI, never fail** — not a red build.
+   ⚠️ Do NOT backfill the ~100 such claims already standing: they are ~98% true, and a test
+   written today cannot catch a sentence that was already false when committed.
+   `rule:a-new-refusal-claim-is-asserted-before-it-ships`.
 
 ### What carries across sessions, and what does not
 
