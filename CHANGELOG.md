@@ -31,121 +31,24 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
-### Fixed
-
-- **At genesis the islands are the plan, not a defect.** `proj:chama` ran
-  `detect_defects` ten minutes into its first design and got **10 structural
-  defects, 8 of them `unthreaded_cluster`** — every requirement sitting with its
-  satisfying capability as a 2–3 node island.
-
-  That shape is what the genesis skill *instructs* ("do NOT create Components
-  yet — leaving structure unspecified is deliberate"), `concept_without_design`
-  fires at the same state and describes it approvingly, and `CONTAINS` is not a
-  traceability edge — so a design with zero Components **cannot thread by
-  construction**. Two rules read one graph state and one called it a defect. A
-  first-time user reading "10 structural defects" reasonably concludes they did
-  something wrong on day one.
-
-  `unthreaded_cluster` now skips when no Component exists, and the new
-  `swept.expected_at_this_phase` **lists what it skipped** — visible and counted,
-  never silenced, the bargain `swept.parked` already struck. It is keyed on zero
-  Components *directly* rather than on the other detector's output, because a
-  rule consulting another rule's findings can disagree with it later. And it is a
-  **phase, not an exemption**: a test pins that the rule reports normally again
-  the moment a design declares any structure.
-
-- **A recorded Question's wording is immutable, and now says so.** Two projects
-  went looking for an edit tool after their questions were recorded in degraded
-  phrasing, and **the absence cost them more than the bad wording did**.
-
-  It stays immutable: a Question records *what was asked*, and the `answer`
-  stored beside it was given to those exact words — editing them would make the
-  record a claim about what somebody wishes they had asked. That is now stated
-  where an agent actually stands. `withdraw_question` says outright that it is
-  **not** an edit tool and that none exists, and points at the real cause of
-  jargon phrasing: the replayed gap being mutilated between passes, fixed this
-  same release, so asking again now produces the phrasing you meant.
-
-  Both claims are asserted by tests, under AGENTS.md rule 8 — written hours
-  earlier, and applied first to the change that followed it.
-
-
-### Fixed
-
-- **A deliberately-open edge declares what it is FOR, and `describe_schema` stops
-  burying it.** The ranking measured how narrowly an edge was *declared* and
-  presented that as how well it *models* your pair. Those come apart exactly
-  where openness is deliberate — and three reporters paid for it:
-
-  | who | wanted to say | drew instead |
-  |---|---|---|
-  | `proj:chama` | "this open decision decides whether this constraint is met" | `BLOCKS`, with the meaning buried in an `evidence` string |
-  | dev_storyflow | "this repair invalidates that check's last run" | `CONTRADICTS`, which they called an obvious stand-in |
-
-  Both had a right answer sitting in the pile: `Constraint --GOVERNED_BY--> Decision`
-  and `Constraint --INVALIDATES--> Verification`, the latter naming that pair in
-  its own hint. **Worse than under-ranking — for storyflow the ranking PROMOTED
-  two edges they correctly judged wrong ABOVE the right one.**
-
-  Edge types may now declare, per side, which types they are for. Ranking has
-  four tiers: names both types · **declares it is for this pair** · names one
-  side · the rest. `describe_schema` returns `modelled_open_matches`, and the
-  note distinguishes *"nothing here is FOR this pair, ask for a new edge type"*
-  from *"the answer is below, declared"* — until now those rendered identically,
-  with identical counts, needing opposite actions.
-
-  ⭐ **Advisory, never validating.** `from`/`to` still decide what is accepted;
-  nothing narrows. That is what made this fix available at all — narrowing an
-  endpoint is a consumer-facing break, which is why the repair that closed the
-  earlier `VERIFIES` (#112) and `CONSTRAINS` (2026-08-08) instances of this class
-  could not be reused for `GOVERNED_BY`.
-
-  Seven of the seventeen both-wildcard edges are declared, read off prose that
-  already named their types. **Ten deliberately are not** — anything really can
-  block, cause or risk anything — and a test pins that they stay unpromoted. A
-  boolean flag would have promoted all seventeen and rebuilt the flat pile under
-  a new name.
-
-  **Upgrade action: none.** `deliberately_open` is an optional schema field;
-  nothing is removed, renamed or made required, and no existing edge changes what
-  it accepts. The version stamp does not move — it carries node and edge TYPE
-  names, and no type was added — so by `flow:release-cut` no upgrade doc is owed,
-  the same reading v0.45.0 took for an optional property.
-
+## [0.47.0] — 2026-09-03
 
 🛑 **Upgrade action: REQUIRED — one `loop_status` field was RENAMED.**
 `unwritten_answers` is now **`answered_with_open_gap`**. Any script or dashboard
-reading the old key gets nothing back — and gets it silently, which is why this
-is called out rather than buried. `tools/graph_probe.py` and
-`tools/loop_nudge.py` are updated in the same change.
+reading the old key gets nothing back — **and gets it silently**, which is why
+this is the first thing in the entry rather than buried in it. `graph_probe.py`
+and `loop_nudge.py` ship updated in this cut.
 
-### Fixed
+📄 **An upgrade note is owed and ships with this cut**: the stamp MOVED, 64 → 65
+edge types, because `ANSWERS` is a new edge TYPE. (`deliberately_open` is an
+optional *property* and does not move it — the v0.45.0 reading.) Nothing is
+removed or made required, so an existing graph keeps working untouched.
 
-- **A replayed gap is an ECHO, so mangling it can no longer re-key your answers.**
-  `gap_to_prompt` / `gaps_to_prompts` resolve the replayed gap by **`id` alone**
-  against a fresh `detect_gaps`; the text you send back is not read.
-
-  The guard used to rehydrate ONLY when `description` and `evidence` were both
-  empty — a row from a *budgeted* reply — and so trusted the caller's text in
-  exactly the case where it can be wrong. **Two projects paid for that ten days
-  apart, neither carelessly:** dev_storyflow *trimmed* the description for
-  readability (2026-08-23; 4 of 5 questions silently degraded to raw detector
-  jargon and were recorded that way under the user's name), and `proj:chama`
-  duplicated a fragment of the title while transcribing (2026-09-02). The tool's
-  own prose already said *"REPLAY EACH GAP OBJECT UNCHANGED"* — the code simply
-  did not enforce it, and the warning was doing the work the guard should have.
-
-  🛑 **BEHAVIOUR CHANGE: a gap that is no longer open is REFUSED, not served
-  from your stale copy.** That includes an **acknowledged** gap. This is
-  deliberate — `acknowledge_gap` exists so a settled question is not asked
-  again, and phrasing one from a copy the server no longer recognises is the
-  re-ask it exists to prevent. The refusal says which of the two happened, so
-  "your payload was wrong" and "the gap is gone" are no longer the same message.
-
-  Both tool descriptions are corrected rather than left standing: they now say
-  the replay is an echo and tell callers **not** to spend effort preserving it
-  byte-for-byte. Leaving the old warning would have described behaviour the code
-  no longer has.
+**THE INCREMENT: the seven decisions from the `proj:chama` and dev_storyflow
+field reports, settled and built.** Two of the seven turned out to be
+**refutations rather than features** — the edge one project asked for already
+existed, and five of one fleet session's asks had shipped before they were filed.
+Both are recorded, because a design that forgets what it refuted rebuilds it.
 
 ### Added
 
@@ -219,6 +122,117 @@ is called out rather than buried. `tools/graph_probe.py` and
   wrong. Making the fact computable needs a typed edge from a design record onto a
   Question, which does not exist — `describe_schema{Decision, Question}` returns
   zero exact and zero half-exact matches.
+
+### Fixed
+
+- **At genesis the islands are the plan, not a defect.** `proj:chama` ran
+  `detect_defects` ten minutes into its first design and got **10 structural
+  defects, 8 of them `unthreaded_cluster`** — every requirement sitting with its
+  satisfying capability as a 2–3 node island.
+
+  That shape is what the genesis skill *instructs* ("do NOT create Components
+  yet — leaving structure unspecified is deliberate"), `concept_without_design`
+  fires at the same state and describes it approvingly, and `CONTAINS` is not a
+  traceability edge — so a design with zero Components **cannot thread by
+  construction**. Two rules read one graph state and one called it a defect. A
+  first-time user reading "10 structural defects" reasonably concludes they did
+  something wrong on day one.
+
+  `unthreaded_cluster` now skips when no Component exists, and the new
+  `swept.expected_at_this_phase` **lists what it skipped** — visible and counted,
+  never silenced, the bargain `swept.parked` already struck. It is keyed on zero
+  Components *directly* rather than on the other detector's output, because a
+  rule consulting another rule's findings can disagree with it later. And it is a
+  **phase, not an exemption**: a test pins that the rule reports normally again
+  the moment a design declares any structure.
+
+- **A recorded Question's wording is immutable, and now says so.** Two projects
+  went looking for an edit tool after their questions were recorded in degraded
+  phrasing, and **the absence cost them more than the bad wording did**.
+
+  It stays immutable: a Question records *what was asked*, and the `answer`
+  stored beside it was given to those exact words — editing them would make the
+  record a claim about what somebody wishes they had asked. That is now stated
+  where an agent actually stands. `withdraw_question` says outright that it is
+  **not** an edit tool and that none exists, and points at the real cause of
+  jargon phrasing: the replayed gap being mutilated between passes, fixed this
+  same release, so asking again now produces the phrasing you meant.
+
+  Both claims are asserted by tests, under AGENTS.md rule 8 — written hours
+  earlier, and applied first to the change that followed it.
+
+- **A deliberately-open edge declares what it is FOR, and `describe_schema` stops
+  burying it.** The ranking measured how narrowly an edge was *declared* and
+  presented that as how well it *models* your pair. Those come apart exactly
+  where openness is deliberate — and three reporters paid for it:
+
+  | who | wanted to say | drew instead |
+  |---|---|---|
+  | `proj:chama` | "this open decision decides whether this constraint is met" | `BLOCKS`, with the meaning buried in an `evidence` string |
+  | dev_storyflow | "this repair invalidates that check's last run" | `CONTRADICTS`, which they called an obvious stand-in |
+
+  Both had a right answer sitting in the pile: `Constraint --GOVERNED_BY--> Decision`
+  and `Constraint --INVALIDATES--> Verification`, the latter naming that pair in
+  its own hint. **Worse than under-ranking — for storyflow the ranking PROMOTED
+  two edges they correctly judged wrong ABOVE the right one.**
+
+  Edge types may now declare, per side, which types they are for. Ranking has
+  four tiers: names both types · **declares it is for this pair** · names one
+  side · the rest. `describe_schema` returns `modelled_open_matches`, and the
+  note distinguishes *"nothing here is FOR this pair, ask for a new edge type"*
+  from *"the answer is below, declared"* — until now those rendered identically,
+  with identical counts, needing opposite actions.
+
+  ⭐ **Advisory, never validating.** `from`/`to` still decide what is accepted;
+  nothing narrows. That is what made this fix available at all — narrowing an
+  endpoint is a consumer-facing break, which is why the repair that closed the
+  earlier `VERIFIES` (#112) and `CONSTRAINS` (2026-08-08) instances of this class
+  could not be reused for `GOVERNED_BY`.
+
+  Seven of the seventeen both-wildcard edges are declared, read off prose that
+  already named their types. **Ten deliberately are not** — anything really can
+  block, cause or risk anything — and a test pins that they stay unpromoted. A
+  boolean flag would have promoted all seventeen and rebuilt the flat pile under
+  a new name.
+
+  **Upgrade action: none.** `deliberately_open` is an optional schema field;
+  nothing is removed, renamed or made required, and no existing edge changes what
+  it accepts. The version stamp does not move — it carries node and edge TYPE
+  names, and no type was added — so by `flow:release-cut` no upgrade doc is owed,
+  the same reading v0.45.0 took for an optional property.
+
+
+🛑 **Upgrade action: REQUIRED — one `loop_status` field was RENAMED.**
+`unwritten_answers` is now **`answered_with_open_gap`**. Any script or dashboard
+reading the old key gets nothing back — and gets it silently, which is why this
+is called out rather than buried. `tools/graph_probe.py` and
+`tools/loop_nudge.py` are updated in the same change.
+
+- **A replayed gap is an ECHO, so mangling it can no longer re-key your answers.**
+  `gap_to_prompt` / `gaps_to_prompts` resolve the replayed gap by **`id` alone**
+  against a fresh `detect_gaps`; the text you send back is not read.
+
+  The guard used to rehydrate ONLY when `description` and `evidence` were both
+  empty — a row from a *budgeted* reply — and so trusted the caller's text in
+  exactly the case where it can be wrong. **Two projects paid for that ten days
+  apart, neither carelessly:** dev_storyflow *trimmed* the description for
+  readability (2026-08-23; 4 of 5 questions silently degraded to raw detector
+  jargon and were recorded that way under the user's name), and `proj:chama`
+  duplicated a fragment of the title while transcribing (2026-09-02). The tool's
+  own prose already said *"REPLAY EACH GAP OBJECT UNCHANGED"* — the code simply
+  did not enforce it, and the warning was doing the work the guard should have.
+
+  🛑 **BEHAVIOUR CHANGE: a gap that is no longer open is REFUSED, not served
+  from your stale copy.** That includes an **acknowledged** gap. This is
+  deliberate — `acknowledge_gap` exists so a settled question is not asked
+  again, and phrasing one from a copy the server no longer recognises is the
+  re-ask it exists to prevent. The refusal says which of the two happened, so
+  "your payload was wrong" and "the gap is gone" are no longer the same message.
+
+  Both tool descriptions are corrected rather than left standing: they now say
+  the replay is an echo and tell callers **not** to spend effort preserving it
+  byte-for-byte. Leaving the old warning would have described behaviour the code
+  no longer has.
 
 ## [0.46.0] — 2026-09-01
 
