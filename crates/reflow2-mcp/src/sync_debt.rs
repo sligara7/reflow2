@@ -194,18 +194,16 @@ impl SyncDebt {
                  reflow2 export.",
                 self.path
             ),
-            // The unexported-work sentence lives HERE, on the in-step line,
-            // because that is the line a session reads before standing down.
-            _ if self.live_nodes > self.export_nodes => format!(
-                "{} is exactly where this graph left it — but this graph holds {} node(s) and \
-                 that file holds {}, so {} node(s) here have never been exported. The file is \
-                 the only copy that survives losing the graph directory: export before you \
-                 finish.",
-                self.path,
-                self.live_nodes,
-                self.export_nodes,
-                self.live_nodes - self.export_nodes
-            ),
+            // 🛑 THE UNEXPORTED-WORK SENTENCE IS NOT HERE ANY MORE, and where
+            // it used to live is the whole defect. It read
+            // `self.live_nodes > self.export_nodes` — one FILE — and then said
+            // "N node(s) here have never been exported", which is a claim about
+            // the SEAT. On a seat with one target those coincide, and every
+            // test had one target. On a seat with several they do not, and the
+            // sentence is false: measured 2026-09-03 on reflow2's own graph,
+            // five stale side records each claiming between 185 and 825
+            // unexported nodes while the committed record held all 3662 of
+            // them. It is answered once, for the seat, by [`unexported_work`].
             // THE CLEAN LINE SAYS WHAT IT CANNOT SEE. Silence here used to read
             // as "everything of mine is in that file", which this comparison has
             // never been able to promise: it counts NODES, so a write that
@@ -222,6 +220,62 @@ impl SyncDebt {
             ),
         }
     }
+}
+
+/// The ONE sentence a seat owes about its own unexported work — or silence.
+///
+/// ⭐ THE QUESTION IS ABOUT THE SEAT, AND THAT IS THE ENTIRE POINT. "Have these
+/// nodes been exported" is answered by the union of the records this seat keeps,
+/// not by any one of them. Asking it per file and phrasing the answer per seat
+/// is how a fully-exported graph came to be told, five times in one reply, that
+/// hundreds of its nodes had never been exported.
+///
+/// So: find the most complete record this seat is accounted for against. If it
+/// already holds as much as the graph does, the work is durable and there is
+/// nothing to say, however far behind every OTHER record has fallen. Otherwise
+/// one line, naming that record — the one worth exporting to.
+///
+/// 🛑 WHY NOT "STOP TRACKING SCRATCH PATHS", which is what the symptom looks
+/// like it wants. `chg:the-orientation-call-stops-rereading-stale-records` shipped
+/// that rule and reverted it: fifteen tests in
+/// `the_record_moved_and_the_session_is_told` failed and were right to, because a
+/// hermetic test, a CI workspace and a container all put GENUINE shared records
+/// under a temp dir. It also would not have worked — this seat tracks a real
+/// backup outside any temp path whose stale count produces the identical false
+/// sentence. Where the files live decides which ones speak; the scope error is
+/// why what they say is untrue.
+///
+/// ⚠️ ONLY `in_step` AND `moved_but_current` RECORDS COUNT AS COVER, and the
+/// exclusion is deliberately conservative. A `behind` record holds work that came
+/// from somebody else, so its node count is inflated by nodes that are not this
+/// seat's and cannot vouch for this seat's. Excluding it can only make this speak
+/// when it need not — never stay quiet when it should speak.
+///
+/// The three bounds on [`SyncDebt::export_nodes`] apply unchanged: this counts
+/// NODES, so equal counts with different ids, an edge-only divergence, and a
+/// property-only write are all invisible to it. It is a reading aid, not a
+/// durability guarantee, and the sentence says so.
+pub fn unexported_work(debts: &[SyncDebt], live_nodes: usize) -> Option<String> {
+    let mut best: Option<&SyncDebt> = None;
+    for d in debts
+        .iter()
+        .filter(|d| d.state == "in_step" || d.state == "moved_but_current")
+    {
+        if best.is_none_or(|b| d.export_nodes > b.export_nodes) {
+            best = Some(d);
+        }
+    }
+    let best = best?;
+    if best.export_nodes >= live_nodes {
+        return None;
+    }
+    Some(format!(
+        "This graph holds {} node(s), and the most complete record it is in step with — {} —          holds {}, so {} node(s) here are in no record. A record is the only copy that survives          losing the graph directory: export before you finish. (A NODE COUNT, so a write that          changed only a property or only an edge is invisible to it.)",
+        live_nodes,
+        best.path,
+        best.export_nodes,
+        live_nodes - best.export_nodes
+    ))
 }
 
 /// Check every record this seat has synced with against what is on disk now.

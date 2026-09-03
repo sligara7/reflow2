@@ -463,17 +463,18 @@ impl ReflowService {
                 // `in_step` go red would fire on nearly every session
                 // mid-flight. What was missing was never a different verdict;
                 // it was that the verdict could be read ALONE.
-                let unexported: Vec<String> = debts
-                    .iter()
-                    .filter(|d| d.live_nodes > d.export_nodes)
-                    .map(|d| d.message())
-                    .collect();
-                if !unexported.is_empty()
+                //
+                // ⭐ ONE LINE, FOR THE SEAT — not one per record. This filtered
+                // `live_nodes > export_nodes` over every target and pushed each
+                // hit, so a seat that had exported everything got told, once per
+                // stale side record, that it had not. Measured here 2026-09-03:
+                // five lines claiming 185–825 unexported nodes, while the
+                // committed record held all 3662 and stayed silent. The claim
+                // belongs to the seat, so `unexported_work` answers it once.
+                if let Some(m) = crate::sync_debt::unexported_work(&debts, live_nodes)
                     && let Some(arr) = obj.get_mut("next").and_then(|v| v.as_array_mut())
                 {
-                    for m in unexported {
-                        arr.push(json!(m));
-                    }
+                    arr.push(json!(m));
                 }
                 // Every known target, including the quiet ones — "checked three
                 // records, all in step" and "checked nothing" must not share an
