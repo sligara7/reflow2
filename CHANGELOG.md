@@ -33,6 +33,45 @@ This file is the third view: *what changed, and when*.
 
 ### Fixed
 
+- **At genesis the islands are the plan, not a defect.** `proj:chama` ran
+  `detect_defects` ten minutes into its first design and got **10 structural
+  defects, 8 of them `unthreaded_cluster`** — every requirement sitting with its
+  satisfying capability as a 2–3 node island.
+
+  That shape is what the genesis skill *instructs* ("do NOT create Components
+  yet — leaving structure unspecified is deliberate"), `concept_without_design`
+  fires at the same state and describes it approvingly, and `CONTAINS` is not a
+  traceability edge — so a design with zero Components **cannot thread by
+  construction**. Two rules read one graph state and one called it a defect. A
+  first-time user reading "10 structural defects" reasonably concludes they did
+  something wrong on day one.
+
+  `unthreaded_cluster` now skips when no Component exists, and the new
+  `swept.expected_at_this_phase` **lists what it skipped** — visible and counted,
+  never silenced, the bargain `swept.parked` already struck. It is keyed on zero
+  Components *directly* rather than on the other detector's output, because a
+  rule consulting another rule's findings can disagree with it later. And it is a
+  **phase, not an exemption**: a test pins that the rule reports normally again
+  the moment a design declares any structure.
+
+- **A recorded Question's wording is immutable, and now says so.** Two projects
+  went looking for an edit tool after their questions were recorded in degraded
+  phrasing, and **the absence cost them more than the bad wording did**.
+
+  It stays immutable: a Question records *what was asked*, and the `answer`
+  stored beside it was given to those exact words — editing them would make the
+  record a claim about what somebody wishes they had asked. That is now stated
+  where an agent actually stands. `withdraw_question` says outright that it is
+  **not** an edit tool and that none exists, and points at the real cause of
+  jargon phrasing: the replayed gap being mutilated between passes, fixed this
+  same release, so asking again now produces the phrasing you meant.
+
+  Both claims are asserted by tests, under AGENTS.md rule 8 — written hours
+  earlier, and applied first to the change that followed it.
+
+
+### Fixed
+
 - **A deliberately-open edge declares what it is FOR, and `describe_schema` stops
   burying it.** The ranking measured how narrowly an edge was *declared* and
   presented that as how well it *models* your pair. Those come apart exactly

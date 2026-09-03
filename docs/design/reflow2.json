@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:84744988713d9e3061641ac4b20fa2b23e6315e95798c0e4f76315f48bfd7b25",
+  "content_hash": "sha256:13ef1624e71e2423f22f04a010db8739a63b5d2275f3536a9cd8342041e9fd09",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -35242,6 +35242,51 @@
         "action": "modified"
       },
       "to_id": "dec:a-misnaming-is-fixed-in-the-message-not-the-key"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-last-two-from-the-field-triage",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-last-two-from-the-field-triage",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-core"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-last-two-from-the-field-triage",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-ask"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-last-two-from-the-field-triage",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:heal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-last-two-from-the-field-triage",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:tools-ask"
     },
     {
       "edge_type": "CHANGED",
@@ -130929,7 +130974,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b914d7177e834280291d79317abf5c409f850b2265073ac248ee57b593a68cf0",
+        "checksum": "sha256:bd2f0ef11f0837cc7fb7663c1daaa24b3fc8e0bfbba7efaf848138c4660ed848",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/heal.rs",
         "name": "heal.rs",
@@ -131808,7 +131853,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:20bc0c5d682eb092f6da2abc6b58aa9fd76c1e2b6f84dc8653db3b60d1c1582e",
+        "checksum": "sha256:f425ae0b4dd28f9de3b33fc397a1e335fed38d5c403a245b14506997e81d0d30",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/core.yaml",
@@ -132794,7 +132839,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:834221cd4f1d9859b3b06e2de2c3b432538ed9abef97c0a07c1a6e2854740a34",
+        "checksum": "sha256:b60e22c81eeaa41fff7e26a8df0e9e2201612c1ecc321307b40d06ccd171869d",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/ask.rs",
         "name": "tools/ask.rs",
@@ -142310,6 +142355,18 @@
       "properties": {
         "change_type": "scope_change",
         "name": "The misnamed defect category is renamed and the unscoped sweep returns what it examined — both breaks taken now under rule:fix-it-properly-while-it-is-still-cheap, reversing dec:a-misnaming-is-fixed-in-the-message-not-the-key"
+      }
+    },
+    {
+      "node_id": "chg:the-last-two-from-the-field-triage",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-09-02",
+        "name": "A Question's wording is immutable and says so; and at genesis the islands are the plan, not a defect",
+        "rationale": "KEYED ON ZERO COMPONENTS DIRECTLY, NOT ON `concept_without_design`'s OUTPUT. Both would give the same answer today, and that is exactly the risk: a rule consulting another rule's findings can disagree with it later, which is the second-implementation hazard `structure.rs` already names about `isolated_in_walk`. The predicate is one method with two readers — the detector skips, the sweep lists — on the pattern the code endorses for `parked_nodes` delegating to `is_parked`.\n\n⚠️ THE FIRST IMPLEMENTATION THREADED THE LIST THROUGH FOUR FUNCTIONS and was abandoned. `detect_defects -> open_defects_counting -> all_defects -> detect_structural_defects` would each have carried an out-parameter for a value only the last one produces. Computing the island walk once in `sweep_scope`, with the detector needing only a boolean, keeps the rule single-sourced without the plumbing.\n\n⚠️ IT IS A PHASE, NOT AN EXEMPTION, and a test pins that: the moment a design declares any structure the rule reports normally again. Without that, this would be a permanent silencer wearing a phase's clothes — the exact failure `swept.parked` exists to avoid, reintroduced one rule over.\n\n⚠️ NOT ESTABLISHED: whether other detectors fire on the same genesis state. chama reported 10 defects of which 8 were this rule; the other 2 were never diagnosed, and nobody has swept a fresh design to see what else speaks too early.",
+        "subject": "system",
+        "summary": "The last two of the seven decisions from the chama and dev_storyflow triage, both settled by Anthony 2026-09-02.\n\n**#2 — A RECORDED QUESTION'S WORDING IS IMMUTABLE, AND THAT IS NOW STATED.** Two projects went looking for an edit tool after their questions were recorded in degraded form, and the absence cost them more than the bad wording did. Ruling: it stays immutable — a Question records WHAT WAS ASKED, and the `answer` beside it was given to those exact words, so editing would make the record a claim about what somebody wishes they had asked.\n\nSaid in the two places an agent actually stands: `withdraw_question`'s description (the tool they reach for) now states outright that it is NOT an edit tool and that none exists, and points at the real cause of jargon phrasing — the replay guard, fixed the same day, so asking again now produces the phrasing you meant. `Question.question`'s schema description carries the same, framed as by design and not by oversight.\n\n⭐ PINNED, UNDER AGENTS.md RULE 8 WRITTEN HOURS EARLIER. Those sentences claim \"no tool edits this field\" — a claim about the code — so two tests assert it: answering never rewrites the question, and withdrawing preserves the wording rather than erasing it. The rule's first application was to the change that followed it.\n\n**#3 — AT GENESIS THE ISLANDS ARE THE PLAN.** `proj:chama` ran `detect_defects` ten minutes into its first design: 10 structural defects, 8 of them `unthreaded_cluster`, every requirement sitting with its satisfying capability. That shape is what the genesis skill INSTRUCTS, `concept_without_design` fires at the same state and describes it approvingly, and `CONTAINS` is not a traceability edge — so a design with zero Components CANNOT thread by construction. Two rules read one graph state and one called it a defect.\n\n`unthreaded_cluster` now skips when no Component exists, and `swept.expected_at_this_phase` LISTS what it skipped. Visible and counted, never silenced — the bargain `swept.parked` already struck."
       }
     },
     {
@@ -169849,7 +169906,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:a3ee667fd99c0953f6a8c35e862929eb2fffadae6e2971abf6868d0c2995e73a",
+  "prev_content_hash": "sha256:84744988713d9e3061641ac4b20fa2b23e6315e95798c0e4f76315f48bfd7b25",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
