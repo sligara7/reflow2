@@ -247,6 +247,30 @@ pub struct SweepScope {
     /// degrading the instrument, and a later seat watching the count climb has
     /// an incentive to stop registering documents — the worse state.
     pub parked: Vec<String>,
+    /// Findings NOT reported because the design is at a phase where the state
+    /// they describe is THE PLAN — today, `unthreaded_cluster` on a design with
+    /// zero Components.
+    ///
+    /// ⭐ THE DESIGN ALREADY DECLARED THIS AND NOTHING READ IT. The genesis
+    /// skill instructs "do NOT create Components yet — leaving structure
+    /// unspecified is deliberate"; `concept_without_design` fires at exactly
+    /// zero Components and describes the same state approvingly; and `CONTAINS`
+    /// is not a traceability edge, so a design with no Components CANNOT thread
+    /// by construction. Two rules read one graph state and one called it a
+    /// defect.
+    ///
+    /// `proj:chama` measured the cost ten minutes into its first design:
+    /// **10 structural defects, 8 of them `unthreaded_cluster`** — every
+    /// requirement sitting with its satisfying capability. A first-time user
+    /// reading that reasonably concludes they have done something wrong.
+    ///
+    /// COUNTED, NEVER SILENCED — the same bargain `parked` strikes. It is keyed
+    /// on zero Components DIRECTLY rather than on `concept_without_design`'s
+    /// output, because two detectors sharing one derived fact is the second-
+    /// implementation hazard `structure.rs` already names about
+    /// `isolated_in_walk`. And it is a PHASE, not a permanent exemption: the
+    /// moment a design declares any structure, the rule reports normally again.
+    pub expected_at_this_phase: Vec<String>,
     /// Findings NOT REPORTED because a parked idea was involved, by category.
     ///
     /// ⭐ COUNTED FOR THE SAME REASON `parked` IS, AND THE OMISSION WAS CAUGHT
@@ -1066,6 +1090,7 @@ impl DesignGraph {
             design_network_nodes,
             isolated_in_walk: self.design_network()?.isolated_in_walk(),
             parked: self.parked_nodes()?,
+            expected_at_this_phase: self.genesis_phase_islands()?,
             suppressed_by_parked_idea: suppressed,
             rules: HealCategory::ALL.iter().map(|c| c.as_str()).collect(),
             note: (nodes == 0).then(|| {
@@ -2060,6 +2085,46 @@ impl DesignGraph {
 
     /// Graph-topology defects over the design network (via `dynograph-graph`):
     /// disconnected communities, selective single points of failure, dead ends.
+    /// Has this design begun declaring structure at all?
+    ///
+    /// ONE DECISION POINT, TWO READERS: `detect_structural_defects` skips the
+    /// cluster findings when this is false, and `sweep_scope` lists what it
+    /// skipped. Same shape as `parked_nodes` delegating to `is_parked` rather
+    /// than re-deciding — a second copy of the rule is what drifts.
+    fn structure_declared(&self) -> Result<bool, DynoError> {
+        Ok(self.count_nodes(node::COMPONENT)? > 0)
+    }
+
+    /// The clusters NOT reported because the design has no structure yet.
+    ///
+    /// Computed here rather than handed out by the detector, so the island walk
+    /// happens once and the detector only needs the boolean.
+    fn genesis_phase_islands(&self) -> Result<Vec<String>, DynoError> {
+        if self.structure_declared()? {
+            return Ok(Vec::new());
+        }
+        let net = self.design_network()?;
+        let mut clusters: Vec<Vec<usize>> = net
+            .component_groups()
+            .into_iter()
+            .filter(|g| g.len() >= 2)
+            .collect();
+        if clusters.len() <= 1 {
+            return Ok(Vec::new());
+        }
+        clusters.sort_by(|a, b| {
+            b.len()
+                .cmp(&a.len())
+                .then(net.id_of(a[0]).cmp(net.id_of(b[0])))
+        });
+        let mut out: Vec<String> = clusters[1..]
+            .iter()
+            .flat_map(|c| c.iter().map(|&i| net.id_of(i).to_string()))
+            .collect();
+        out.sort();
+        Ok(out)
+    }
+
     fn detect_structural_defects(
         &self,
         issues: &mut Vec<HealIssue>,
@@ -2101,12 +2166,28 @@ impl DesignGraph {
         let index = self.node_type_index()?;
         let total_nodes = index.len();
         let swept = net.node_count();
+
+        // ⭐ AT GENESIS THE ISLANDS ARE THE PLAN. With zero Components nothing
+        // CAN thread — CONTAINS is not a traceability edge — and the genesis
+        // skill instructs leaving structure unspecified. `concept_without_design`
+        // fires at exactly this state and describes it approvingly, so filing it
+        // as a defect is two rules reading one graph and disagreeing.
+        //
+        // KEYED ON ZERO COMPONENTS DIRECTLY, not on the other detector's output:
+        // deriving it twice is the second-implementation hazard `structure.rs`
+        // names about `isolated_in_walk`, and a rule that consults another rule's
+        // findings can disagree with it later.
+        let structure_declared = self.structure_declared()?;
+
         let mut clusters: Vec<Vec<usize>> = net
             .component_groups()
             .into_iter()
             .filter(|g| g.len() >= 2)
             .collect();
-        if clusters.len() > 1 {
+        // AT GENESIS THE ISLANDS ARE THE PLAN — skip, and `sweep_scope` lists
+        // what was skipped under `expected_at_this_phase`. NOT SILENCED: a
+        // vacuous zero is the failure this whole struct exists to prevent.
+        if clusters.len() > 1 && structure_declared {
             // Keep the largest as "the main design"; the rest are islands. Sort
             // by size desc, then by first-member id for determinism.
             clusters.sort_by(|a, b| {
