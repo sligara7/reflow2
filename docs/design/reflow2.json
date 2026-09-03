@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:30b2f75fcffe3de0ce0af1751c742a2b253b4160720d6c03fac1594cd71c9e34",
+  "content_hash": "sha256:29ed22acfef8aabfee95e9f2835a2bde78b60359105fd68830f7f3ba04b915eb",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -121413,6 +121413,15 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:a-deliberately-open-edge-declares-what-it-is-for",
+      "properties": {
+        "at": "2026-09-02",
+        "note": "'CAN NEVER RANK IT' is now false: an edge may declare which pairs it is for, and GOVERNED_BY outranks the wildcard pile for `Constraint -> Decision`. Closed for that claim alone. What stays true and is preserved: the diagnosis that the ranking measured DECLARED NARROWNESS and presented it as MODELLED FIT, and the observation that the enumerate-an-endpoint repair which closed VERIFIES and CONSTRAINS was unavailable here — that reasoning is what produced the advisory declaration rather than a fourth enumeration."
+      },
+      "to_id": "fact:governed-by-is-the-governance-edge-and-describe-schema-can-never-rank-it"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:a-restore-judges-a-reference-against-the-document-not-the-walk",
       "properties": {
         "at": "2026-08-29",
@@ -121572,6 +121581,15 @@
         "note": "Its central claim — \"THE FILTER HAS TWO TERMS AND NEITHER IS THE NODE TYPE\" — stopped being true on 2026-09-01. `refuse_unless_deliberate` now drops prescribed-layer matches before deciding whether to refuse, so the type pair IS read in the selection and not only printed in the message.\n\n⭐ THE FACT ALSO PREDICTED ITS OWN REPAIR AND WAS RIGHT: \"the type pair is already in hand at line 190, so the guard can act on it without any new lookup, plumbing or vocabulary.\" That is exactly what was done. Its option ② shipped on 2026-08-29 and its option ① on 2026-09-01, once the count it said was missing had been taken.\n\n📌 The measurement, the code reading and the two-shapes analysis all stand and are preserved verbatim — only the present-tense claim about the filter is closed."
       },
       "to_id": "fact:the-near-match-filter-has-no-node-type-term"
+    },
+    {
+      "edge_type": "INVALIDATES",
+      "from_id": "chg:the-replayed-gap-is-an-echo",
+      "properties": {
+        "at": "2026-09-02",
+        "note": "The guard this fact measured is DELETED — rehydration now runs on every replayed gap, resolved by id, so 'rehydrate declines when the caller sent text' is no longer true of the code. Its METHOD survives and is why it is closed rather than erased: it found that the server already held the authority and merely declined to use it, which refuted the reporter's own requested fix (a `gap_id` parameter) and produced a better one."
+      },
+      "to_id": "fact:the-gap-replay-warning-exists-because-rehydrate-declines-to-run-when-the-caller-sent-text"
     },
     {
       "edge_type": "INVALIDATES",
@@ -166434,6 +166452,18 @@
       }
     },
     {
+      "node_id": "fact:changelog-view-is-step-two-of-the-cut-and-returns-nothing-for-a-real-cut",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "MEASURED DURING THE v0.47.0 CUT, and found by testing a tool AFTER hand-rolling its job rather than before.\n\n`cap:changelog-view` is **step 2 of `flow:release-cut`** — \"a changelog is a derivable view of the graph's own delta\" — and the transition into step 3 states the discipline it exists to enforce: *\"Pin every ChangeEvent of the INCREMENT first, found by diffing ids against the previous tag's export rather than against memory: v0.22.0's changelog read 12 entries before that diff and 47 after.\"*\n\n**RUN ON THE REAL CUT, IT RETURNS NOTHING.** `changelog_view{from: epoch:v0460, to: epoch:v0470-cut}` → `entries: []`, `unmapped: []`, `notes: []`. The two epochs resolve (sequences 392 and 393); the answer is simply empty.\n\n**WHY:** it derives from nodes pinned `AT_EPOCH`, and the increment's ChangeEvents carry no such pins. The cut procedure creates the epoch and pins the RELEASE to it — `pin_at_epoch` on `rel:v0470`, which the flow rightly insists on because v0.17.0 lacks that edge — and pins nothing else. So the eight ChangeEvents of this increment are joined to no moment, and the tool that reads moments finds none of them.\n\n⭐ THE INCREMENT WAS FOUND BY A HAND-WRITTEN DIFF INSTEAD, which produced the 8 events the changelog was actually written from. The flow's own instruction — diff ids against the previous tag's export — describes exactly that hand-rolled shape, so the PROCEDURE assumes the manual method while naming the tool as the step. Both halves have been true for some time and nobody has read them together.\n\n⚠️ NOT ESTABLISHED: whether the repair is to pin ChangeEvents at the cut epoch (making the tool work as the flow implies), to have `changelog_view` fall back to a date or export diff, or to change the flow to describe what actually happens. The first would add a step to every cut; the third is honest but leaves step 2 doing nothing. Nobody has been asked.\n\n⚠️ AND AN EMPTY ANSWER HERE IS INDISTINGUISHABLE FROM A QUIET INCREMENT. `entries: []` reads exactly like \"nothing changed since the last release\" — which on a six-PR increment is the reassuring kind of wrong this design names elsewhere as the vacuous zero.",
+        "subject_id": "cap:changelog-view",
+        "valid_from": "2026-09-03"
+      }
+    },
+    {
       "node_id": "fact:changing-one-sentence-in-a-long-decision-cost-a-full-6242-character-resend",
       "node_type": "TemporalFact",
       "properties": {
@@ -168045,7 +168075,8 @@
         "fact_type": "defect",
         "statement": "MEASURED 2026-09-02 ON THE LIVE SURFACE, and it REFUTES THE REPORTER'S FEATURE REQUEST — the edge they said had no home already exists.\n\nproj:chama wanted to record 'this OPEN DECISION determines whether this CONSTRAINT can be met' (the chain choice decides whether the user's Rust preference is honoured). `CONSTRAINS` refused Decision→Constraint, they found no other home, and buried the consequence as prose in the `evidence` of an unrelated BLOCKS edge. Their ask: a new modelled relation.\n\n**THE RELATION IS `Constraint --GOVERNED_BY--> Decision`.** Its hint: 'Source node is shaped or constrained by a target Decision, DesignRule or Requirement. Anything in the design may be governed, which is why the source stays open.' That is the sentence they wanted, and GOVERNED_BY is read by the detectors and carried in the design network walk.\n\n⭐ **THEY COULD NOT HAVE FOUND IT, AND THE REASON IS STRUCTURAL.** describe_schema ranks by ENDPOINT ENUMERATION: `exact` (both sides named), `half_exact` (one side named), then the `*`/`*` pile. GOVERNED_BY is `*` on BOTH sides ON PURPOSE — deliberately open because anything may be governed — so IT CAN NEVER RANK ABOVE THE NOISE FOR ANY PAIR IN THE DESIGN. Measured both directions:\n· describe_schema{from: Decision, to: Constraint} → exact 0, half_exact 0, 17 wildcards, GOVERNED_BY alphabetical in the pile.\n· describe_schema{from: Constraint, to: Decision} → exact 0, half_exact 1 — and the one promoted is CONSTRAINS, which is the WRONG relation here; GOVERNED_BY is still in the pile.\n\nSO THE PRIMARY GOVERNANCE VOCABULARY IS INVISIBLE TO THE PRIMARY VOCABULARY-DISCOVERY TOOL, for every pair, by construction. The very openness that makes GOVERNED_BY universally applicable makes it universally unrankable. An agent asking 'how do I say this?' is handed 17 alphabetised wildcards and reaches for BLOCKS.\n\nAND THE TOOL'S OWN NOTE MAKES IT WORSE BY BEING RIGHT: 'they will validate, but validating is not the same as meaning what you intend... prefer leaving the edge out to asserting one that is wrong.' Correct advice, and with GOVERNED_BY unranked it steers the agent away from the true edge along with the false ones.\n\nTHIS IS THE THIRD INSTANCE OF THE WILDCARD-DISCOVERY CLASS: VERIFIES (#112), CONSTRAINS' source enumerated 2026-08-08 after `describe_schema{DesignRule, Component}` returned zero exact matches, and now this. THE FIRST TWO WERE FIXED BY ENUMERATING AN ENDPOINT. THAT REPAIR CANNOT WORK HERE — schema/core.yaml records that narrowing a wildcard is a consumer-facing break, and GOVERNED_BY's openness is correct. So ranking, not enumeration, is what this instance needs.\n\n⚠️ NOT ESTABLISHED: how many other deliberately-open edge types are unrankable the same way (MITIGATES, RISKS, CAUSES and BLOCKS are all `*`/`*` and all carry real meaning), nor whether a `models_pair` hint or a semantic rank would be the right instrument.",
         "subject_id": "cmp:foundation-vocabulary",
-        "valid_from": "2026-09-02"
+        "valid_from": "2026-09-02",
+        "valid_to": "2026-09-02"
       }
     },
     {
@@ -168117,6 +168148,18 @@
         "statement": "THE UNDECLARED-SEAM FINDING COULD NOT REACH ZERO, AND THE REASON WAS AN ALTITUDE MISMATCH RATHER THAN MISSING CONTRACTS. `fact:coupling-and-contract-are-recorded-in-vocabularies-that-never-meet` measured the two sets as DISJOINT BY CONSTRUCTION — couplings read from DEPENDS_ON between modules, contracts from PROVIDES/CONSUMES between the boxes that contain them — so writing a contract could never move the number. MEASURED 2026-08-23 on reflow2's own design: module level 72 couplings against 42 contract pairs leaves 64 undeclared; LIFTED TO `subsystem` it is 11 against 13 with NOTHING undeclared. || ⭐ LIFTING BOTH SETS IS THE WHOLE CORRECTNESS ARGUMENT, AND THE HALF-FIX LOOKS RIGHT. Rolling up only the COUPLINGS is the obvious move and leaves the two vocabularies exactly as disjoint as they were — the contracts are still recorded between the leaves. Proven by reverting to that half-fix and watching the one case that matters fail while four others stayed green, which is why the case exists. || ⚠️ A ZERO HERE IS THE MOST DANGEROUS ANSWER THE TOOL CAN GIVE, and it is designed around. 'Nothing undeclared' at subsystem altitude compared ELEVEN couplings, not seventy-two. Every reply therefore carries the raw count and, when an altitude reaches nothing, the number of endpoints dropped — asked at `system`, where this design has no components at all, it reports 0 couplings compared and 114 endpoints unreachable rather than a clean bill. A vacuous zero that announces its own vacuity. || NOTHING IS WRITTEN BACK. The roll-up is derived on every call from CONTAINS + PROVIDES + CONSUMES. A stored edge between two subsystems would make the graph assert a contract nobody declared and be indistinguishable afterwards from one somebody did — `dec:views-are-projections`, and Anthony's own standing rule that a view is a projection and renderer fill-ins are defects. Pinned by a case that exports the design before and after and compares content hashes. || WHAT IT DOES NOT SETTLE: whether `detect_undeclared_seams` and the maturity `seams` band should themselves move to an altitude, or keep answering at module level. They are unchanged here on purpose — changing what a detector reports is a louder act than adding a way to ask, and the 64 remains visible until somebody decides which altitude that gap is about. || SOURCE: measured 2026-08-23 on reflow2 0.38.0, driving the built binary over real stdio.",
         "subject_id": "cmp:seam",
         "valid_from": "2026-08-23"
+      }
+    },
+    {
+      "node_id": "fact:making-the-repo-private-would-break-the-way-reflow2-ships",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "property",
+        "statement": "ANTHONY, 2026-09-02, rejecting the option this agent had recommended twice: *\"If I make the repo private, nobody can install any longer from it.\"*\n\nRECORDED BECAUSE THE REASON EXISTS NOWHERE ELSE AND THE OPTION WILL BE RE-PROPOSED. The public repository is not an oversight and not inertia — **it is the distribution mechanism.** reflow2 installs by one-liner from GitHub, and `user-iterative-release-preference` records that one-liner install and one-word update are things he has asked for explicitly. Making the repo private would trade the whole install path for a privacy improvement that, as measured the same day, would not even reach the material already published.\n\nTHE AGENT RECOMMENDED PRIVATE AS THE STRONGEST OPTION and repeated the recommendation after the first decision was recorded, because it is the only move that covers git history AND the 275 storyflow-naming nodes in the committed export at once. That reasoning was correct about coverage and wrong about cost, and the cost was invisible from inside the design — nothing in the graph said how reflow2 reaches its users.\n\n⭐ THE GENERAL SHAPE, worth more than the instance: **a design can be complete about what a system IS and silent about how it REACHES anybody**, and an agent reasoning only from the design will confidently recommend something that severs distribution. `req:a-project-records-how-it-ships` exists and this is a live example of what it is for.\n\n⚠️ NOT ESTABLISHED: whether the public repository is the only viable distribution path, or merely the current one. A private repo with released assets, or a package registry, might preserve the one-liner — nobody has costed either, and this fact records the constraint as stated, not as proven exhaustive.",
+        "subject_id": "dec:field-reports-are-untracked-because-the-repository-is-public",
+        "valid_from": "2026-09-02"
       }
     },
     {
@@ -168204,6 +168247,18 @@
       }
     },
     {
+      "node_id": "fact:manual-work-ac2c8a4c428ba086",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "manual_work",
+        "statement": "Wrote a Python pass over the 167 committed toolsnaps to split every served tool description into sentences, flag the ones asserting what the code does (never/cannot/refuses/only), classify them by reading a random sample, and count them — then repeated it over the 25 skill files. It produced the numbers that settled a design question: 767 sentences, 343 asserting, ~80% checkable, ~100 testable refusal claims, ~6.5 new per week. Nothing in the served surface reads reflow2's OWN prose as data; find_tools returned only itself and this tool for the question.",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-09-03",
+        "value": "{\"diagnosis\":\"tool_missing\",\"reflow2_tool\":null}"
+      }
+    },
+    {
       "node_id": "fact:manual-work-b4d0c4de46644a8f",
       "node_type": "TemporalFact",
       "properties": {
@@ -168261,6 +168316,18 @@
         "subject_id": "proj:reflow2",
         "valid_from": "2026-08-28",
         "value": "{\"diagnosis\":\"tool_missing\",\"reflow2_tool\":null}"
+      }
+    },
+    {
+      "node_id": "fact:manual-work-d1930dd9bce65676",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "manual_work",
+        "statement": "Wrote a Python diff of ChangeEvent ids between the committed export and the previous tag's export, to find which changes belonged to the release INCREMENT rather than to the session. THE TOOL FOR THIS EXISTS and is step 2 of the recorded cut procedure, and I did not reach for it — but testing it afterwards showed it would not have helped either: changelog_view from the previous release epoch to the new one returns ZERO entries, because it derives from nodes pinned AT_EPOCH and the increment's ChangeEvents carry no such pins. The cut procedure creates the epoch and pins the RELEASE to it, and pins nothing else. So a discoverability failure on my part masked a data-model gap underneath it, and only the hand-rolled diff produced the 8 events the changelog was actually written from.",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-09-03",
+        "value": "{\"diagnosis\":\"tool_not_found\",\"reflow2_tool\":\"changelog_view\"}"
       }
     },
     {
@@ -168980,7 +169047,8 @@
         "fact_type": "defect",
         "statement": "MEASURED IN SOURCE 2026-09-02, and it REFUTES THE REPORTER'S OWN ASK, which is why it is recorded rather than the request they made.\n\nproj:chama's genesis session mangled a GapCandidate between gap_to_prompt's two passes — duplicating a fragment of the title — and the answer re-keyed, degrading the question to raw detector jargon. Their ask: 'the server already has the gap from detect_gaps — pass 2 could take gap_id alone.'\n\n⭐ THE SERVER ALREADY DOES EXACTLY THAT, AND DECLINED TO. `ask.rs:205` calls `self.rehydrate_gap(gap)` on the serve pass, and `rehydrate_gaps` (ask.rs:375-398) re-runs `detect_gaps()` and REPLACES the caller's gap with the server's own copy, matched on `candidate.id == gap.id`. chama's id was intact — only the title was mangled — so rehydration WOULD have restored the true title and the answer would have keyed correctly.\n\n**THE GUARD IS THE DEFECT.** ask.rs:379-382:\n    let compacted = |gap| gap.description.is_empty() && gap.evidence.is_empty();\n    if !gaps.iter().any(compacted) { return Ok(gaps); }\nRehydration runs ONLY when the caller sent an EMPTY description and evidence. It was built for a different purpose — recovering a row from a BUDGETED detect_gaps reply — so its trigger asks 'did the caller send nothing?' rather than 'might what the caller sent be wrong?'. A NON-EMPTY description is treated as trustworthy, which is precisely the case where it can be corrupt.\n\nSO THE WARNING IS PROSE STANDING IN FOR A ONE-LINE FIX. The ⚠ at ask.rs:63 ('REPLAY EACH GAP OBJECT UNCHANGED') exists because the guard declines, not because the server lacks the gap. The repair is to rehydrate whenever the id resolves, not to add a gap_id parameter — a new parameter would leave the old path intact and still trusting the caller's copy.\n\n⚠️ NOT ESTABLISHED, and it is why this is a fact rather than a change: always-rehydrating re-runs the detectors on every serve pass (cost, mitigated to once per batch), and it would start REFUSING asks about a gap that has since closed, which the current path allows when the caller holds a full copy. Whether that refusal is correct is a judgement nobody has been asked for.",
         "subject_id": "cmp:tools-ask",
-        "valid_from": "2026-09-02"
+        "valid_from": "2026-09-02",
+        "valid_to": "2026-09-02"
       }
     },
     {
@@ -172882,7 +172950,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:13ef1624e71e2423f22f04a010db8739a63b5d2275f3536a9cd8342041e9fd09",
+  "prev_content_hash": "sha256:30b2f75fcffe3de0ce0af1751c742a2b253b4160720d6c03fac1594cd71c9e34",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
