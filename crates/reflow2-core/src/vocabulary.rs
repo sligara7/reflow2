@@ -112,6 +112,11 @@ pub struct EdgeTypeMatch {
     pub spec: EdgeTypeSpec,
     pub from_match: EndpointMatch,
     pub to_match: EndpointMatch,
+    /// This edge DECLARES it is for this pair, even though an endpoint accepts
+    /// anything. Advisory: it never changes what the edge accepts, only where
+    /// it sorts and how the note reads.
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub declared_for_this_pair: bool,
 }
 
 impl EdgeTypeMatch {
@@ -125,9 +130,38 @@ impl EdgeTypeMatch {
     ///
     /// A comparator rather than a `sort_by_key`, which would force a `String`
     /// clone of the edge type on every comparison.
+    /// Sort key: 0 exact, 1 DECLARED-FOR-THIS-PAIR, 2 half-exact, 3 the rest.
+    ///
+    /// 🛑 THE DECLARED TIER OUTRANKS HALF-EXACT, AND THE FIRST CUT HAD IT THE
+    /// OTHER WAY. The reasoning for demoting it sounded right — naming an
+    /// endpoint in the schema looks like a stronger commitment than naming a
+    /// pair in prose — and it reproduced EXACTLY the failure that prompted this
+    /// work: for `Constraint -> Verification`, `CONSTRAINS` and
+    /// `CALIBRATED_AGAINST` are half-exact and outranked `INVALIDATES`, which is
+    /// the edge whose own hint names that pair. dev_storyflow reported those two
+    /// being promoted above the right answer, judged both as modelling something
+    /// else, and drew a stand-in edge instead.
+    ///
+    /// The principle that survives the case: a DECLARATION is a statement of
+    /// intent about THIS PAIR. A half-exact match is a validation fact about ONE
+    /// endpoint that says nothing about the other. Intent about the pair is the
+    /// better answer to "what should I use here?", which is the question asked.
+    fn tier(&self) -> u8 {
+        if self.is_exact() {
+            0
+        } else if self.declared_for_this_pair {
+            1
+        } else if self.from_match == EndpointMatch::Exact || self.to_match == EndpointMatch::Exact {
+            2
+        } else {
+            3
+        }
+    }
+
     fn order(a: &Self, b: &Self) -> std::cmp::Ordering {
-        (a.from_match, a.to_match)
-            .cmp(&(b.from_match, b.to_match))
+        a.tier()
+            .cmp(&b.tier())
+            .then_with(|| (a.from_match, a.to_match).cmp(&(b.from_match, b.to_match)))
             .then_with(|| a.spec.edge_type.cmp(&b.spec.edge_type))
     }
 }
@@ -167,6 +201,12 @@ pub struct EdgeQuery {
     /// this count existed it was presented as merely tolerating the pair
     /// (BL-50). Sorted after the exact fits, before both-sides wildcards.
     pub half_exact_matches: usize,
+    /// How many of `matches` accept this pair through a wildcard but DECLARE
+    /// they are for it. Zero here alongside zero exact and zero half-exact is
+    /// the honest "nothing in the vocabulary is for this pair" — which until
+    /// 2026-09-02 was indistinguishable from "the answer is in the pile and
+    /// nothing is ranking it".
+    pub modelled_open_matches: usize,
     /// Plain-language reading of the result, so a caller that only skims sees
     /// the wildcard caveat rather than treating any hit as a fit.
     pub note: String,
@@ -287,6 +327,8 @@ impl DesignGraph {
                     spec: edge_spec(name, edge_def),
                     from_match,
                     to_match,
+                    // A one-sided listing has no pair to declare for.
+                    declared_for_this_pair: false,
                 });
             }
             if let Some(to_match) = classify(&edge_def.to, node_type) {
@@ -295,6 +337,7 @@ impl DesignGraph {
                     spec: edge_spec(name, edge_def),
                     from_match,
                     to_match,
+                    declared_for_this_pair: false,
                 });
             }
         }
@@ -340,10 +383,20 @@ impl DesignGraph {
             .filter_map(|(name, def)| {
                 let from_match = classify(&def.from, from_type)?;
                 let to_match = classify(&def.to, to_type)?;
+                // Only meaningful where an endpoint is open: a fully enumerated
+                // edge is already ranked by the schema and needs no declaration.
+                let declared_for_this_pair =
+                    from_match != EndpointMatch::Exact || to_match != EndpointMatch::Exact;
+                let declared_for_this_pair = declared_for_this_pair
+                    && def
+                        .deliberately_open
+                        .as_ref()
+                        .is_some_and(|d| d.covers(from_type, to_type));
                 Some(EdgeTypeMatch {
                     spec: edge_spec(name, def),
                     from_match,
                     to_match,
+                    declared_for_this_pair,
                 })
             })
             .collect();
@@ -357,12 +410,14 @@ impl DesignGraph {
                     && (m.from_match == EndpointMatch::Exact || m.to_match == EndpointMatch::Exact)
             })
             .count();
+        let modelled_open_matches = matches.iter().filter(|m| m.declared_for_this_pair).count();
         let note = edge_query_note(
             from_type,
             to_type,
             matches.len(),
             exact_matches,
             half_exact_matches,
+            modelled_open_matches,
         );
 
         Ok(EdgeQuery {
@@ -371,6 +426,7 @@ impl DesignGraph {
             matches,
             exact_matches,
             half_exact_matches,
+            modelled_open_matches,
             note,
         })
     }
@@ -396,29 +452,54 @@ fn edge_query_note(
     total: usize,
     exact: usize,
     half: usize,
+    declared: usize,
 ) -> String {
-    match (total, exact, half) {
-        (0, _, _) => format!(
+    // ⭐ THE `declared` ARM IS WHY THIS FUNCTION GAINED A PARAMETER. Until
+    // 2026-09-02 "the answer is in this pile and nothing is ranking it" and
+    // "there is no answer, ask for one" produced the SAME note with the same
+    // counts — opposite facts needing opposite actions, rendered identically.
+    // Three reporters acted on the wrong one; two drew an edge they themselves
+    // called a stand-in (dec:idea-a-deliberately-open-edge-can-never-be-ranked-as-a-fit).
+    match (total, exact, half, declared) {
+        (0, ..) => format!(
             "No edge type in this schema connects {from_type} to {to_type}. \
              Either the relationship belongs somewhere else in the design, or it \
              needs a new edge type in a schema domain — do not force it through an \
              edge that means something different."
         ),
-        (n, 0, 0) => format!(
-            "No edge type specifically models {from_type} -> {to_type}. The {n} below \
-             accept the pair only because an endpoint is the `*` wildcard: they will \
-             validate, but validating is not the same as meaning what you intend. \
-             Read each `hint` before choosing, and prefer leaving the edge out to \
-             asserting one that is wrong."
+        (n, 0, 0, 0) => format!(
+            "NOTHING IN THIS VOCABULARY IS FOR {from_type} -> {to_type}. The {n} below \
+             accept the pair only because an endpoint is the `*` wildcard, and none of \
+             them DECLARES itself for it: they will validate, but validating is not the \
+             same as meaning what you intend. This is the honest 'ask for a new edge \
+             type' answer — prefer leaving the edge out to asserting one that is wrong."
         ),
-        (n, 0, h) => format!(
+        (n, 0, 0, d) => format!(
+            "No edge type names both {from_type} and {to_type} in the schema, but {d} of \
+             the {n} below (listed first) DECLARE they are for this pair — their endpoint \
+             is open by design, not by oversight, and for this pair such an edge is the \
+             modelled fit. Read its `hint`. The rest accept the pair through a `*` \
+             wildcard and say nothing about meaning it."
+        ),
+        // `modelled fit` is load-bearing WORDING, not decoration: BL-50 added it
+        // so an edge designed for the pair stops being presented as a wildcard
+        // loophole, and two tests pin it. Rewriting this note dropped the phrase
+        // and broke both — caught by those tests, which is the point of them.
+        (n, 0, h, 0) => format!(
             "No edge type names both {from_type} and {to_type}, but {h} of the {n} \
              below (listed first) name one side exactly and are open on the other \
              by design — for its pair such an edge is the modelled fit, not a \
              loophole; read its `hint`. The rest accept the pair only through a \
              `*` wildcard on both sides."
         ),
-        (_, k, _) => format!(
+        (n, 0, h, d) => format!(
+            "No edge type names both {from_type} and {to_type}. {d} of the {n} below \
+             DECLARE they are for this pair and are listed first; {h} more name one \
+             side exactly and are open on the other by design. For this pair either \
+             is the modelled fit rather than a loophole — read the `hint`. The rest \
+             accept the pair only through a `*` wildcard on both sides."
+        ),
+        (_, k, _, _) => format!(
             "{k} edge type(s) explicitly model {from_type} -> {to_type}; these are \
              listed first. Any others accept the pair via a `*` wildcard endpoint."
         ),

@@ -299,6 +299,9 @@ schema:
         calibrated_at: { type: string, description: "When the fit was made, if recorded. The core takes no clock and never asks the system the time." }
 
     INVALIDATES:
+      deliberately_open:
+        from: [Constraint, ChangeEvent, Decision]
+        to: [Verification, TemporalFact]
       # ⭐ WHY THIS EXISTS: a finding survives the work that answered it, and
       # goes on proposing work already done.
       #

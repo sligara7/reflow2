@@ -231,6 +231,9 @@ schema:
         weight_basis: { type: enum, values: [estimated, evidence, measured], default: estimated, description: "How the weight was set." }
 
     GOVERNED_BY:
+      deliberately_open:
+        from: []
+        to: [Decision, DesignRule, Requirement]
       from: "*"
       to: "*"
       # BOTH ENDS STAY WILDCARD, and the hint is what was wrong.

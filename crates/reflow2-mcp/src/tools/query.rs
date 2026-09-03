@@ -301,8 +301,18 @@ impl ReflowService {
                        given types. Call this instead of guessing at create_node / create_edge. \
                        No arguments returns everything; `node_type` focuses one type and the \
                        edges it can carry; `from` + `to` together answer 'what may connect an X \
-                       to a Y?', ranking edge types that model the pair above ones that merely \
-                       accept it through a `*` wildcard.",
+                       to a Y?'. \
+                       THE RANKING HAS FOUR TIERS, and the third is the one that used to be \
+                       missing: edges naming BOTH types; then edges that DECLARE they are for \
+                       this pair (their endpoint is open by design, not by oversight \u{2014} \
+                       `GOVERNED_BY` is open on its source because anything may be governed); \
+                       then edges naming ONE side exactly; then the rest, which accept the pair \
+                       through a `*` wildcard and say nothing about meaning it. \
+                       \u{2b50} READ `note` AND `modelled_open_matches` TOGETHER: \"nothing here \
+                       is FOR this pair, ask for a new edge type\" and \"the answer is below, \
+                       declared\" are different facts needing opposite actions, and until \
+                       2026-09-02 they were rendered identically. Three projects acted on the \
+                       wrong one and two drew an edge they themselves called a stand-in.",
         annotations(read_only_hint = true)
     )]
     pub async fn describe_schema(

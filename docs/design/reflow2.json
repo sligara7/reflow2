@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:a3ee667fd99c0953f6a8c35e862929eb2fffadae6e2971abf6868d0c2995e73a",
+  "content_hash": "sha256:84744988713d9e3061641ac4b20fa2b23e6315e95798c0e4f76315f48bfd7b25",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -19212,6 +19212,78 @@
         "action": "modified"
       },
       "to_id": "req:design-dependencies-declared"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-deliberately-open-edge-declares-what-it-is-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-core"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-deliberately-open-edge-declares-what-it-is-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-functional"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-deliberately-open-edge-declares-what-it-is-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-inference"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-deliberately-open-edge-declares-what-it-is-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-structure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-deliberately-open-edge-declares-what-it-is-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-verify"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-deliberately-open-edge-declares-what-it-is-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-query"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-deliberately-open-edge-declares-what-it-is-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:vocabulary"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-deliberately-open-edge-declares-what-it-is-for",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:foundation-vocabulary"
     },
     {
       "edge_type": "CHANGED",
@@ -131736,7 +131808,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:5a4fc420f8356c31c57af6e4fb0a5e03290d0c11248d797c527f6f4be60a39c0",
+        "checksum": "sha256:20bc0c5d682eb092f6da2abc6b58aa9fd76c1e2b6f84dc8653db3b60d1c1582e",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/core.yaml",
@@ -131778,7 +131850,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:ca801b261fae0e187da754a8126a619799d4c771be2c2354c20fd7dba3965cf4",
+        "checksum": "sha256:d396318d29f8ee2d3643b2a754725e6a2b50b8c43c602c6f774b96904c0d599f",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/functional.yaml",
@@ -131792,7 +131864,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:07f5d9a9594cf5464bfeb426ce94e08f28769d90b154741144b6570a32d578ad",
+        "checksum": "sha256:8cd35a1ccce8a4bc404ec5bcd69d6f9360b5e5b6eac211916a2537753223713b",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/inference.yaml",
@@ -131834,7 +131906,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:52059935429035e25b8a36df590d88ee9788369e20067feaf28482f4909aa71f",
+        "checksum": "sha256:c25836f58f929170a643d37cd690de1ea81c97fc09edf43c97fb980e47c691b4",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/structure.yaml",
@@ -131862,7 +131934,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:748db566db8103cf8dad6832a37f6d330bb321630cb280be4d058d56df8e2b2c",
+        "checksum": "sha256:f9fc7d0374520d283a52b51c0b15ed4fb13c77be317080757d72441f3980dc09",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/verify.yaml",
@@ -132837,7 +132909,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:6eb8f7da7ccb08bb0b10e5a31a90f43c7b1db968d7dcce7b5034f49fa2e33ce4",
+        "checksum": "sha256:480050260d4f66e4ba54a59f5244c2e2bc96fa728311fdaf4bd33e669d324847",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/query.rs",
         "name": "tools/query.rs",
@@ -133098,7 +133170,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:49d6cbc3e16a952fd74358aa553a321d5f2d129047cc23c556f564f35ab23491",
+        "checksum": "sha256:dfc114e0bc1d95adc3d397d9c152d339d8c7f17732cc162f86a9d19752e49819",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/vocabulary.rs",
         "name": "crates/reflow2-core/src/vocabulary.rs",
@@ -136090,6 +136162,18 @@
         "rationale": "Anthony's word 2026-08-26, manifest-driven form chosen over a stateless caller-supplies-paths form: the child list should live in the committed manifest rather than in a per-machine config or the agent's head, which is the property that made this route worth taking at all.\n\nWHY THIS RATHER THAN A HUB RELATION. `fact:the-hub-wants-what-an-accepted-requirement-already-half-built` carries the measurement. Two of the hub case's four wants are the unbuilt half of an ACCEPTED requirement, not new vocabulary — so they arrive with no tracker objection to answer and no third composition mode to define.\n\n⚠️ THE RULE THIS BENDS, NAMED BEFORE IT IS BENT. reflow2-core does no file I/O, deliberately and repeatedly, and `describe_designs` makes the CALLER find candidate paths because reflow2 does no file navigation. Reading an upstream export means reading a file this design was pointed at BY ITS OWN COMMITTED MANIFEST, which is a weaker claim than navigating — but it is not nothing, and it is why the read belongs at the MCP layer beside `sync_debt`, never in the core. That placement is the same call `sync_debt` already made and for the same stated reason.\n\n⚠️ IT MUST NOT SILENCE ITSELF. The recorded hash is what the declarer LAST LOOKED AT, and re-reading must never quietly update it — a check that refreshed its own baseline would report `moved` exactly once and then go permanently quiet. Re-declaring is the acknowledgement, which is `dec:ask-not-repair` applied here: name the remedy, never take it.\n\n⚠️ WHAT IT DOES NOT DELIVER. A dependency declaration says I DEPEND ON that; a hub says I AM ANSWERABLE FOR that. Where a hub merely owns a child, expressing that as a dependency would be the modelling fiction the hxm_program report objected to. Hub wants #1 (cross-design realization) and #3 (verification roll-up) are untouched, and so is the downward-inheritance direction.",
         "subject": "system",
         "summary": "Builds the second check `req:design-dependencies-declared` names and only half-delivered: declared-versus-UPSTREAM, \"has what I depend on moved since\". A declaration that names another reflow2 design gains an optional path to that design's committed export; reflow2 reads the file's content hash at declaration time and reports on later reads whether the upstream has moved, without importing it. Chosen over the existing route because the only two ways a path enters the watch record today are export_graph and import_graph, and importing a child ABSORBS it under the host's name."
+      }
+    },
+    {
+      "node_id": "chg:a-deliberately-open-edge-declares-what-it-is-for",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-09-02",
+        "name": "A deliberately-open edge declares what it is FOR, and describe_schema ranks it above the wildcards it used to be buried with",
+        "rationale": "⚠️ **THE FIRST CUT RANKED HALF-EXACT ABOVE DECLARED AND REPRODUCED THE EXACT REPORTED BUG.** The reasoning sounded right — naming an endpoint in the schema looks like a stronger commitment than naming a pair in prose — and it put CONSTRAINS and CALIBRATED_AGAINST back above INVALIDATES for `Constraint -> Verification`, which IS storyflow's complaint verbatim. The test caught it because it was written from their report rather than from the design.\n\nThe principle that survives the case: a DECLARATION is intent about THIS PAIR; a half-exact match is a validation fact about ONE endpoint that says nothing about the other. Intent about the pair is the better answer to \"what should I use here?\", which is the question actually asked. The wrong reasoning is recorded in the code beside the right answer.\n\n⚠️ **AND I OVER-DECLARED `GATED_ON`**, caught by a test asserting that an unrelated pair stays undeclared. I gave its target `[]` — \"genuinely any\" — making `Release -> Contributor` read as declared. Its target is a TECHNOLOGY; it is open because no node type exists for that, which is a MODELLING GAP, not deliberate universality. Left in, the new tier would have laundered a gap as a design choice, which is the failure mode this whole class is about. Declaration removed.\n\n⚠️ **AND REWRITING THE NOTE BROKE TWO OLDER TESTS** by dropping the phrase \"modelled fit\" — the exact wording BL-50 added so an edge designed for a pair stops being presented as a wildcard loophole. Restored in both arms. Three self-inflicted errors in one change, each caught by a test rather than by care, in the session that ruled care is not the missing ingredient.\n\n⚠️ NOT ESTABLISHED: whether the ten undeclared universals are right to be universal, or whether some deserve declarations nobody has written. And the declarations were read off existing prose, so any hint that was already wrong about its intended types has been faithfully copied.",
+        "subject": "system",
+        "summary": "Implements `dec:idea-a-deliberately-open-edge-can-never-be-ranked-as-a-fit`, settled by Anthony 2026-09-02.\n\nAn edge type may now declare, per side, WHICH TYPES IT IS FOR when an endpoint is `*` by design. `describe_schema` gains a third ranking tier and `modelled_open_matches`, and the note tells \"the answer is below, declared\" apart from \"nothing here is for this pair\".\n\n⭐ **ADVISORY, NEVER VALIDATING — that distinction is what made this fix available at all.** `from`/`to` still decide what is accepted and nothing narrows them. Narrowing an endpoint is a consumer-facing break, which is exactly why the repair that closed the two earlier instances of this class (VERIFIES in #112, CONSTRAINS' source 2026-08-08) COULD NOT be reused for GOVERNED_BY. Declaring intent changes only ranking and explanation.\n\n**THE DECLARATION HAD TO CARRY THE PAIRS, NOT A FLAG, and a measurement decided that.** Of 17 both-wildcard edges, SEVEN already name their intended types in their own prose — including both that reporters could not find — and TEN name none, because anything really can block, cause or risk anything. A boolean would have promoted all 17 and rebuilt the flat pile under a new name. Seven are declared; ten deliberately are not, and a test pins that they stay unpromoted.\n\nBOTH REPORTED CASES NOW RANK CORRECTLY, and both are tests:\n· `Constraint -> Decision`: GOVERNED_BY outranks BLOCKS (proj:chama drew BLOCKS).\n· `Constraint -> Verification`: INVALIDATES outranks CONSTRAINS and CALIBRATED_AGAINST (dev_storyflow drew CONTRADICTS as an admitted stand-in after those two were promoted above the right answer)."
       }
     },
     {
@@ -169765,7 +169849,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:930b332b9a8b53d77f98afac96977250b0dcc77c449353a8dbc8031c242fc54f",
+  "prev_content_hash": "sha256:a3ee667fd99c0953f6a8c35e862929eb2fffadae6e2971abf6868d0c2995e73a",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

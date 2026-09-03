@@ -60,6 +60,9 @@ schema:
   edge_types:
 
     DEPENDS_ON:
+      deliberately_open:
+        from: [Component, Capability]
+        to: [Component, Capability]
       from: "*"
       to: "*"
       extraction_hint: >
