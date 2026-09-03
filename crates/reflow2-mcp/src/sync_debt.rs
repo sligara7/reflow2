@@ -270,7 +270,10 @@ pub fn unexported_work(debts: &[SyncDebt], live_nodes: usize) -> Option<String> 
         return None;
     }
     Some(format!(
-        "This graph holds {} node(s), and the most complete record it is in step with — {} —          holds {}, so {} node(s) here are in no record. A record is the only copy that survives          losing the graph directory: export before you finish. (A NODE COUNT, so a write that          changed only a property or only an edge is invisible to it.)",
+        "This graph holds {} node(s), and the most complete record it is in step with — {} — \
+         holds {}, so {} node(s) here are in no record. A record is the only copy that \
+         survives losing the graph directory: export before you finish. (A NODE COUNT, so a \
+         write that changed only a property or only an edge is invisible to it.)",
         live_nodes,
         best.path,
         best.export_nodes,

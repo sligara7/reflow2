@@ -928,3 +928,49 @@ fn an_unexported_seat_is_told_once_and_pointed_at_the_fullest_record() {
          not against the worst one, which would say 2: {msg}"
     );
 }
+
+/// NO SERVED SENTENCE CARRIES A RUN OF SPACES, which sounds cosmetic and is a
+/// class. Rust strips the indentation after a `\`-newline inside a string, so a
+/// wrapped literal reads correctly — but any tool that rewrites the SOURCE and
+/// eats the backslash first leaves that indentation as literal text, and the
+/// result is invisible in the diff, invisible to `cargo fmt`, and plainly
+/// visible to the user.
+///
+/// MEASURED 2026-09-03: `unexported_work`'s sentence shipped with THREE runs of
+/// ten spaces in it, and reached a real `loop_status` reply. `cargo fmt` was
+/// suspected and REFUTED by experiment — it preserves the continuation and Rust
+/// strips it correctly. The corruption came from the patch script used to write
+/// the file, which treated `\`-newline as its own line continuation and consumed
+/// it before Rust ever saw it.
+///
+/// Pinned over every message this module can produce rather than over the one
+/// that broke, because the next occurrence will be a different sentence.
+#[test]
+fn no_served_sentence_contains_a_run_of_spaces() {
+    let (dir, gp) = scratch("whitespace");
+    let record = dir.path().join("reflow2.json");
+    let side = dir.path().join("probe.json");
+
+    let whole = design(&["cap:one", "cap:two", "cap:three"]);
+    put(&record, &whole);
+    mark_synced(&gp, &record, &whole);
+    let older = design(&["cap:one"]);
+    put(&side, &older);
+    mark_synced(&gp, &side, &older);
+
+    // Every per-file line, plus the seat-level line in the state that emits it.
+    let found = sync_debt(&gp, 5, &|| Some(whole.clone()));
+    let mut sentences: Vec<String> = found.iter().map(|d| d.message()).collect();
+    sentences.push(
+        reflow2_mcp::sync_debt::unexported_work(&found, 5)
+            .expect("5 live against a 3-node record is owed an export"),
+    );
+
+    for s in &sentences {
+        assert!(
+            !s.contains("  "),
+            "a served sentence must not carry a run of spaces — a wrapped string \
+             literal whose backslash was eaten reads exactly like this: {s:?}"
+        );
+    }
+}

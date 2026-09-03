@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:d10456cc5fb76d4f70f83b1a67718dd7c9eb3501d00889c33b878734629847a1",
+  "content_hash": "sha256:19ca11d9583a841bbe05636089c649425d2a37d96ec5c6d756b4c0593dcf8967",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -3344,6 +3344,14 @@
         "evidence": "Same 2026-08-01 review, and the sharpest instance: it observes that `cut_structure` (absorbed, in use) answers 'what is a single point of failure' and NOT 'how separable are these two parts', which needs a minimum edge cut. That gap is precisely what this requirement says the design should be able to see. ⚠️ Needs `maxflow.rs` (248 lines) — left upstream by increment 3, on the verified ground that `cut_structure` does not depend on it."
       },
       "to_id": "req:graph-theory-undergirds-the-design-brain"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "dec:idea-swap-dynograph-foundation-as-the-substitutability-demo",
+      "properties": {
+        "evidence": "That idea asks whether replacing dynograph-foundation is 'the right first proof that a black box can actually be swapped'. It is the same substitutability question one layer DOWN — swap the foundation beneath the graph, versus swap the vocabulary above it — and it was asked first, so it saw this coming. If either is built as a demonstration, the other is the obvious second."
+      },
+      "to_id": "dec:idea-can-the-vocabulary-be-swapped-and-the-rest-reused"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -12008,6 +12016,15 @@
       "from_id": "dec:idea-can-the-unaccepted-be-purged-in-bulk",
       "properties": {
         "acted_at": "2026-08-12",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-can-the-vocabulary-be-swapped-and-the-rest-reused",
+      "properties": {
+        "acted_at": "2026-09-03",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -21352,6 +21369,15 @@
         "action": "modified"
       },
       "to_id": "req:a-scoped-answer-actually-narrows"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-served-sentence-carries-no-run-of-spaces",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:sync-debt"
     },
     {
       "edge_type": "CHANGED",
@@ -40542,6 +40568,16 @@
         "weight_basis": "estimated"
       },
       "to_id": "req:telemetry-carries-usage-never-design-content"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-can-the-vocabulary-be-swapped-and-the-rest-reused",
+      "properties": {
+        "evidence": "A substrate/vocabulary/doctrine split is a claim about where reflow2's real boundaries are, and that question asks whether boundaries should be re-derived from actual structure rather than the declared functional spine. Three measurements already say the declared decomposition disagrees with the coupling; a layering invented on paper before that is settled would be the fourth carving to disagree. This idea is only worth acting on if that one lands first.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-should-the-spine-be-re-derived-from-the-actual-structure"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -121630,12 +121666,39 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:the-snapshot-warning-is-field-aware-and-the-export-note-reaches-the-caller",
+      "properties": {
+        "at": "2026-08-23",
+        "note": "RETIRES ITS CENTRAL CLAUSE — \"AND NOTHING ELSE IN THE LOOP REPORTS THEM EITHER\". That stopped being true on 2026-08-23: this change surfaced the unexported-work sentence in `loop_status.next`, where it had already existed on the in-step line and was filtered out because `in_step` is not `is_actionable()`. The fact's own \"cheapest honest fix\" — report the live node count beside the export's — is exactly what shipped, so the node named its own repair and got it.\n\n📌 EDGE DRAWN 2026-09-03, BY A LATER SESSION, NOT BY THE WORK THAT DID IT. The closure sat in this ChangeEvent's summary where no computation could read it, and the fact was still returned as an open candidate seventeen days later. That is the same shape the field-defect sweep of 2026-08-28 was drawing edges for, and it is the second time this particular finding has been re-read as live.\n\n🛑 WHAT IS NOT CLOSED AND MUST NOT BE READ AS CLOSED. (1) Its reading of `sync` is UNCHANGED and still correct: `in_step` answers whether the RECORD moved ahead of this seat, `ver:the-record-moved-is-surfaced` pins \"ordinary unexported work is NEVER reported\" as the property the design rests on, and making that verdict go red was never the fix. (2) Its first NOT ESTABLISHED clause stands verbatim — whether a count comparison alone is sufficient, since equal counts with different ids still pass. (3) Its whole account of the mechanism, its reproduction, and its point that the word `sync` was doing damage the code was not — all untouched, and all still the best explanation of why the counts exist."
+      },
+      "to_id": "fact:defect-nothing-in-the-loop-reports-unexported-work-and-in-step-is-read-as-if-it-did"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:the-three-real-internal-seams-are-declared",
       "properties": {
         "at": "2026-08-27",
         "note": "PARTIALLY SUPERSEDED, AND THE PART THAT DIED IS THE HEADLINE. That fact's title says the undeclared-seam finding \"can never reach zero\" because the two edge sets are \"disjoint by construction\". IT MOVED TODAY: 8 of 72 covered became 13 of 72, by declaring three contracts between modules that already carried DEPENDS_ON edges.\n\nWHAT WAS ACTUALLY TRUE, and the correction is small but changes what follows from it: the sets were disjoint because every contract SAT AT THE SUBSYSTEM BOUNDARY while every coupling sat between MODULES. That is where the contracts happened to be declared, not a property of the schema. \"By construction\" claims no work can change it; work changed it in an afternoon.\n\nWHAT STILL STANDS, in full and re-measured today:\n- 56 of the 64 uncovered pairs have `impl DesignGraph` on BOTH sides and ZERO cross a crate boundary. Its central point — that demanding a contract between two impl blocks of one struct is an alarm on correct work — is unchanged and now independently reproduced.\n- Its list of the genuine cmp↔cmp boundaries was right, and the three declared today are additional real ones it did not enumerate rather than corrections to it.\n- Its closing sentence is untouched and is still the open question: whether DEPENDS_ON between two impl blocks of one struct is worth recording at all.\n\n⚠️ SO THE NUMBER CAN MOVE, BUT IT CANNOT REACH ZERO HONESTLY — for the reason the fact gives rather than the one it names. 56 of the remaining pairs should not have contracts at all, so a zero would mean somebody wrote 56 fictions. Anyone reading this as licence to close the gap should read the 56 first."
       },
       "to_id": "fact:coupling-and-contract-are-recorded-in-vocabularies-that-never-meet"
+    },
+    {
+      "edge_type": "INVALIDATES",
+      "from_id": "chg:the-unexported-claim-is-answered-once-for-the-seat",
+      "properties": {
+        "at": "2026-09-03",
+        "note": "ANSWERS ITS SECOND \"NOT ESTABLISHED\" CLAUSE, AND NOTHING ELSE. That clause asks \"whether the right home is `sync` or a separate loop debt class\". It is answered, and answered the hard way: the home is NOT the sync row, and putting it there is precisely what made the sentence false. Computed per target, \"N node(s) here have never been exported\" is a claim about ONE FILE phrased as a claim about the SEAT, and on a seat with six records it fired five times, every time untruthfully, while the record holding all 3662 live nodes stayed silent. `sync_debt::unexported_work` now answers it once for the seat.\n\n⭐ SO THE FACT ASKED THE RIGHT QUESTION AND THE FIRST IMPLEMENTATION PICKED THE WRONG ANSWER. It flagged the choice as unsettled on 2026-08-16; the aid shipped on the sync row on 2026-08-23 without the question being taken up; the defect that produced followed on 2026-09-03. The open clause was load-bearing and was passed over.\n\n🛑 ITS OTHER NOT-ESTABLISHED CLAUSE IS UNTOUCHED — whether a count comparison alone is sufficient, since equal counts with different ids still pass. That is as open as it was, and the seat-level form inherits it unchanged."
+      },
+      "to_id": "fact:defect-nothing-in-the-loop-reports-unexported-work-and-in-step-is-read-as-if-it-did"
+    },
+    {
+      "edge_type": "INVALIDATES",
+      "from_id": "chg:the-unexported-claim-is-answered-once-for-the-seat",
+      "properties": {
+        "at": "2026-09-03",
+        "note": "THE DEFECT IT MEASURED IS REPAIRED, SAME DAY, AND VERIFIED ON THE SEAT IT WAS MEASURED ON. `loop_status.next` went from 8 lines to 3 against a fresh binary with `served_by.stale: false`; the five false sentences are gone and `sync` still reports all six targets, so nothing true was suppressed.\n\n🛑 WHAT SURVIVES THE REPAIR AND IS THE REASON THE NODE IS WORTH KEEPING. (1) THE CLASS — a per-item computation stated as a whole-system fact, invisible because every test drove exactly ONE item. Only this one rollup was examined; whether other served reports phrase per-target findings as seat-wide claims is unmeasured, and that is the sentence a later session should act on. (2) The refutation of the leading candidate: filtering scratch paths was already tried and reverted, and a 1545-node backup outside any temp path defeats it independently. (3) The method note — that the report described noise and the measurement found falsehood, and that a noise framing would have bought ranking or dedup while leaving every sentence just as untrue.\n\n⚠️ AND ITS OWN MEASUREMENT ADVICE OUTLIVED THE FIX: the first coupling grep read `node::DECISION` as vocabulary-free, so any re-derivation must count constants, not string literals. That warning was written for a different investigation the same day and applies to this one too.\n\n📌 NOT CLOSED BY THIS: the three standing bounds on the node-count comparison — equal counts with different ids, an edge-only divergence, and a property-only write are all still invisible. The seat-level form inherits every one of them, so this remains a reading aid and not a durability guarantee."
+      },
+      "to_id": "fact:defect-the-unexported-claim-was-computed-per-file-and-stated-per-seat"
     },
     {
       "edge_type": "INVALIDATES",
@@ -135373,7 +135436,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:737dd19c2c21035770461d567129d1b635c27255c511046587b7563b3d161082",
+        "checksum": "sha256:fa6020910eddcda910b8e5beda279b48936fa24dbc89ebeec74b02ea6e44253d",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/sync_debt.rs",
         "name": "sync_debt.rs",
@@ -139507,6 +139570,18 @@
         "change_type": "scope_change",
         "name": "The default scope depth drops 3->2 and a scoped answer reports whether it narrowed at all",
         "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:a-served-sentence-carries-no-run-of-spaces",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-09-03",
+        "name": "The seat-level export sentence loses three runs of ten spaces",
+        "rationale": "⭐ THE CAUSE IS THE PATCH TOOL, NOT THE COMPILER OR THE FORMATTER, and the first guess was wrong. `cargo fmt` was the obvious suspect — a formatter that reflows a wrapped literal. REFUTED BY EXPERIMENT: a throwaway crate with the same `\\`-continued string went through `cargo fmt` unchanged and printed single spaces, because Rust strips the indentation after a `\\`-newline and fmt preserves the continuation. The corruption came from the PYTHON HEREDOC used to write the file: inside a non-raw triple-quoted string, `\\`+newline is Python's OWN line continuation, so Python consumed the backslash and the newline before Rust ever saw them and left the Rust indentation as literal text.\n\n🛑 THE CLASS IS \"A TOOL IN THE MIDDLE SILENTLY TRANSFORMED THE CONTENT\", and it is invisible three ways at once: the diff looks right, `cargo fmt` accepts it, no test read the sentence, and only a human reading a real reply can see it. That is why the pin is over EVERY message this module can produce rather than over the sentence that broke — the next occurrence will be a different sentence written by the same means.\n\n⚠️ IT SHIPPED IN THE SAME PR THAT FIXED A FALSE SENTENCE, which is the part worth keeping: the work was verified end-to-end on the real seat, the served line was read in full, and the spacing was still missed because attention was on whether the CLAIM was true. Correctness of content and correctness of presentation were checked by the same glance and only one of them actually got checked.",
+        "subject": "system",
+        "summary": "`sync_debt::unexported_work`'s sentence shipped in chg:the-unexported-claim-is-answered-once-for-the-seat containing THREE runs of ten literal spaces, and reached a real `loop_status` reply on this seat. The format string is rewritten with genuine `\\`-newline continuations. `no_served_sentence_contains_a_run_of_spaces` pins the class over every message the module produces — not over the one sentence that broke — and was OBSERVED FAILING against the shipped string (checked out from HEAD) before passing on the fix. 24 tests in the file, fmt and clippy clean."
       }
     },
     {
@@ -149108,6 +149183,17 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-12, and he said plainly at capture time that he expects this to stay unaccepted — he wanted it on the record, not enacted. Nothing here is settled.\n\nHIS WORDS: \"should we have a 'purge' skill. I'm getting pretty happy with how reflow2 is now. There are a lot of still unrealized ideas and gaps that we still should work through, but say I'm happy with the current state of the project - can I just 'purge' all the additional things not yet accepted or built? It is a destructive action, but sometimes I'd like to continue reflow2 without every decision and thing I've submitted.\"\n\n⭐ THE NEED IS REAL AND ALREADY EVIDENCED. `fact:the-owner-uses-reflow2-as-a-funnel-for-random-order-input` records that he pours instructions, ideas, feedback and requirements in as they occur to him. That is the tool working as intended, and its cost is exactly what he is describing: the open list grows faster than anyone decides on it, and eventually it stops being a to-do list and becomes noise.\n\n═══ WHAT THIS WOULD TOUCH, MEASURED 2026-08-12 ═══\n\n  Decision    proposed  104 of 341   carrying 248 edges   2 edgeless\n  Requirement proposed   47 of 156   carrying 151 edges   0 edgeless\n  Capability  planned    37 of 151   carrying 150 edges   0 edgeless\n                        ─────────────────────────────────\n                        188 nodes, ~549 edges\n\n🛑🛑 AND THE MEASUREMENT THAT SHOULD DECIDE THIS: **26 OF THE 47 PROPOSED REQUIREMENTS ARE ALREADY SATISFIED BY SOMETHING.** They are built. Their status simply never moved off `proposed`, because status moves only on the owner's word and nobody went back to say so. A purge keyed on \"not yet accepted\" would delete more than half its own target set WRONGLY — deleting delivered work along with the speculation.\n\nThat is not a hypothesis. It is `req:supporting-is-not-conflict` at scale: during the 2026-07-30 prune that requirement was proposed for dropping as \"an orphan in all but name\", and checking its single edge revealed it was DELIVERED, by a `realized` capability. The lesson recorded then was \"low edge count was read as low value, and for a requirement that has been built, edge count is exactly backwards\". One hand-check caught one instance; the same reflex applied in bulk would now be wrong 26 times.\n\n═══ THE PART THAT MAY MAKE THIS UNNECESSARY ═══\n\n⭐ **THE THING HE WANTS MAY ALREADY EXIST, AND IT IS NOT DELETION.** `dec:proposed-requirements-pruned` (accepted, his own word, 2026-07-30) already did this once by hand — nine of twenty-six requirements retired — and its finding is the direct answer here:\n\n> \"All are `dropped`, not deleted... `dropped` also stops them raising `unsatisfied_requirement`, so the open list means what it says again.\"\n\nSo the BENEFIT he is asking for — an open list that means something again — is delivered by the STATUS CHANGE. Deletion adds nothing to that and additionally destroys the reasoning. That decision's rationale states the cost of going further: \"Deleting them would erase why the surviving rules are shaped as they are, and would let the same captures be re-made next quarter by someone who could not see they had been weighed.\"\n\nThe `retire-from-design` skill already carries dropped-not-deleted as its central distinction. So what is missing is not the ACT; it is doing it in BATCH, and being prompted when the list has grown enough to be worth doing — the same shape as `dec:idea-the-graph-notices-the-record-moved-without-being-asked`, where the tool existed and the trigger did not.\n\n═══ THE OPTIONS ═══\n\nA — A BATCH DROP, never a delete. A skill that walks the unaccepted set in classes, proposes a disposition per class, and moves status to `dropped`/`deferred` on his word. Reuses existing vocabulary; nothing is lost; the open list clears. EXPENSIVE: it is 188 nodes, and a batch under one shared reason is precisely what `acknowledge_gaps` already REFUSES by design — \"a batch under one shared reason is exactly the erosion the ask-don't-repair rule exists to prevent\". So the batching has to be per-class with a stated reason each, which is what made the 2026-07-30 prune trustworthy and also what made it slow.\n\nB — ACTUAL DELETION. What he literally asked for. Cheapest to state, and the only option that genuinely reduces graph size. EXPENSIVE, and the objections are unusually concrete: 549 edges would go with the nodes; the 26 delivered-but-unmarked requirements would go with them; and `dec:ask-not-repair` plus the whole `apply_heal` design exist to stop reflow2 destroying design without a human asserting each case.\n\nC — SNAPSHOT-THEN-CLEAR. Export the design first, then drop hard, on the argument that git holds the memory. EXPENSIVE, and this is the one worth thinking hardest about: a design nobody can query is not memory. `search_design` cannot reach a node that only exists in a file, so \"it is in git\" means \"nobody will ever find it again\". The whole point of the graph over documents is that the record is QUERYABLE.\n\nD — DO NOTHING NEW. `retire-from-design` exists and works; the 2026-07-30 prune proves it. What is missing is a nudge when the unaccepted set crosses some size. Free. EXPENSIVE: he has now asked for this, which is evidence the existing route is not discoverable at the moment he wants it.\n\nE — FIX THE UPSTREAM CAUSE INSTEAD. 26 of 47 are stale STATUS, not surplus intent. A pass that asks \"these 26 look delivered — accept them?\" would shrink the open list by more than half WITHOUT dropping anything, and would make the remaining list honest. Not a purge at all; possibly the thing that removes most of the felt need.\n\n═══ THE HONEST COUNTER-ARGUMENT, recorded beside the idea rather than used to kill it ═══\n\nThe brainstorm skill's own closing rule is that roads not taken are part of the design's memory — \"recorded as considered, never deleted... a later session that finds an old idea knows both that it was thought of and that it was not chosen.\" A purge is the direct negation of that rule. If it is ever built, that rule has to be revisited deliberately rather than quietly broken, because half of what makes this graph worth keeping is that it remembers what was rejected and why.\n\n⚠️ AND A SCOPE NOTE: \"not yet accepted or built\" is not one population. A `proposed` Decision that is an OPEN QUESTION is not surplus — it is unfinished thinking, and deleting it discards the question rather than answering it. A `planned` Capability nobody will build is different again. Any version of this has to say which of the three it means; the measurement above keeps them apart for that reason.\n\nNOT DECIDED, and expected by its author to stay that way.",
         "name": "OPEN — when the owner is happy with the current state, can everything not yet accepted or built be cleared in one deliberate act?",
         "rationale": "Captured on Anthony's explicit instruction to record it without pursuing it — \"I expect this one to stay non-accepted, but I did want to capture.\" That is the funnel working exactly as `fact:the-owner-uses-reflow2-as-a-funnel-for-random-order-input` describes, and this node is itself an instance of the thing it proposes purging, which is worth noticing.\n\nThe measurement is what makes it worth keeping rather than merely polite: 26 of 47 proposed requirements are already satisfied, so the felt problem is substantially STALE STATUS rather than surplus intent, and option E addresses more of it than any purge would. The 2026-07-30 prune already established dropped-not-deleted and recorded that `dropped` alone restores the open list — so the benefit sought here is reachable without the destruction.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-can-the-vocabulary-be-swapped-and-the-rest-reused",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, thinking out loud 2026-09-03. Nothing here is intent; no requirement or capability was created.\n\nTHE QUESTION, in his words: \"if we truly modularized reflow2, could we get to a point where we swap out some of the node/edge types with another for another domain, could we reuse most of the other modules?\"\n\nA MEASUREMENT TAKEN WHILE THE QUESTION WAS ASKED, because the question is empirical rather than architectural. Counting every Rust file that names a concrete node or edge type, by string literal OR by `node::`/`edge::` constant:\n\n  reflow2-core: 49 of 89 files (55%) vocabulary-BOUND, 40 (44%) vocabulary-FREE\n  reflow2-mcp : 8 of 28 files (28%) vocabulary-BOUND, 20 (71%) vocabulary-FREE\n  Heaviest: detect.rs 36, heal.rs 30, preserve.rs 29, nodes.rs 26, graph.rs 25, ingest.rs 21\n  Fully generic: stats, llm, search, fuzzy, bulk, dates, identity, agent, all of graphalg (~2,000 lines of cycles/SCC/communities/betweenness/cuts/paths), and on the MCP side shared, proxy, latent, registry, degraded, dto, nudge\n\n⚠️ THE FIRST MEASUREMENT WAS WRONG BY 3x AND THE ERROR IS INSTRUCTIVE. Grepping for string literals said 16% bound; the detectors reference `node::DECISION`, not \"Decision\", so the grep read the most vocabulary-bound file in the codebase as vocabulary-free. Any future attempt to compute this coupling has to count constants, and a proxy that CAN return a reassuring number is exactly the kind that gets believed.\n\n⭐ THE MEASUREMENT SPLITS THE QUESTION IN TWO, AND THE TWO HALVES HAVE OPPOSITE ANSWERS.\n  (a) The SUBSTRATE — store, graph algorithms, search, export/import, merge, sync, provenance, the MCP serving surface — is already domain-free, and not by accident: reflow2-core does no file I/O and graphalg knows nothing but nodes and edges. Roughly 44% of core and 71% of the MCP layer would move to a new domain untouched.\n  (b) The DOCTRINE — detect, heal, preserve, report — is where the vocabulary lives, and those are the four heaviest-bound files AND the product. \"A Requirement that nothing SATISFIES is a gap\" is systems-engineering doctrine, not graph mathematics. It does not transfer to a different domain; it is what somebody would be buying.\n  So \"could we reuse most of the other modules\" is TRUE BY FILE COUNT and FALSE BY VALUE, and which answer matters depends on what the swap is for.\n\n⭐ AND THE VOCABULARY IS ALREADY DATA. `schema/` holds ELEVEN YAML files — core, structure, verify, temporal, build, functional, inference, readiness, operate, environment, dimensions — parsed at load. The node/edge types are not a Rust enum. Half of \"swap the vocabulary\" is already shipped and nobody has framed it that way.\n\nFOUR DIRECTIONS, none chosen:\n\n  ① A THREE-LAYER SPLIT — substrate / vocabulary / doctrine — with doctrine as a pack keyed to a vocabulary. Cheap because layer 1 exists and layer 2 is already YAML. Expensive because the seam between doctrine and substrate has never been drawn, and 55% of core sits across it. Counter: reflow2's declared decomposition already disagrees with its real coupling in three independent measurements, so a fourth carving invented on paper would probably disagree too.\n\n  ② DOCTRINE AS DATA TOO — express detectors as rules over the schema (\"a node of type X with no incoming Y is a gap of kind Z\") rather than as Rust. Attractive because some detectors are already that shape. 🛑 COUNTER, AND IT IS HIS OWN: this is the textbook over-engineering move — a rule DSL invented before a second domain exists, to make expressible things that are already expressed. The interesting detectors (cycle and SPOF analysis, granularity, consumption, preservation) are not simple rules, and a DSL that covers the easy half while the valuable half stays in Rust has bought nothing and added a language.\n\n  ③ DON'T GENERALIZE THE VOCABULARY AT ALL — generalize the SUBSTRATE and let reflow2 stay one opinionated instance on top of it. The reusable artifact is the coherence-loop engine, not the ontology. This is the smallest claim the measurement actually supports.\n\n  ④ STOP DESIGNING IT AND TEST IT — pick a second domain and try, then measure what actually had to change. A candidate is already sitting in the schema: `environment.yaml` declares an Environment/EnvironmentRule compliance layer that nothing writes or reads (`dec:idea-the-environment-compliance-layer-was-designed-and-never-built`), and its own framing is \"what makes 'design a house' concrete\". A second domain that is already half-declared is a cheaper experiment than any of ①–③ and would refute or confirm all three.\n\nTHE HONEST COUNTER TO THE WHOLE QUESTION, recorded beside it rather than argued: reflow2 is a wrench, and the standing rule is that work on it is never for its own sake. Modularizing to enable a domain swap that no user has asked for is work on the wrench. The question earns its keep only if some real second domain wants it — at which point ④ is how you find out, and ①–③ are what you might do afterwards.\n\nNOT ESTABLISHED: whether the 44%/71% generic files are generic in FACT or merely fail to name a type while still assuming one; nothing tested that they compile or behave against a different schema. The file-count proxy says nothing about how much of the VALUE sits on either side of the line, and the paragraph above is a judgement, not a measurement.",
+        "kind": "exploratory",
+        "name": "OPEN — if reflow2 were truly modularized, could the node/edge types be swapped for another domain's and most of the other modules reused?",
+        "rationale": "Captured under the brainstorm skill so a later session reads it as an idea being turned over and never quotes it back as settled intent. The measurement is included because the question is answerable rather than speculative, and because the corrected 55%/28% figures are the part most likely to be re-derived wrongly by whoever picks this up.",
         "status": "proposed"
       }
     },
@@ -173012,7 +173098,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:29ed22acfef8aabfee95e9f2835a2bde78b60359105fd68830f7f3ba04b915eb",
+  "prev_content_hash": "sha256:d10456cc5fb76d4f70f83b1a67718dd7c9eb3501d00889c33b878734629847a1",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
