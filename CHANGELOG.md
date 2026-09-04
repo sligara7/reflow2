@@ -31,6 +31,67 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.47.1] — 2026-09-04
+
+✅ **Upgrade action: NONE.** Two defect fixes, no schema movement (the stamp is
+unchanged at 29 node types / 65 edge types), no tool-surface change. Update
+blindly.
+
+**THE INCREMENT: `loop_status` stopped saying something untrue.** Both fixes are
+in the same sentence, and the second one shipped inside the fix for the first.
+
+### Fixed
+
+- **`loop_status` claimed unexported work that was fully exported — once per
+  stale record.** On a seat with more than one sync target it emitted a line per
+  target: *"N node(s) here have never been exported"*, measured at **five such
+  lines claiming between 185 and 825 nodes** while the committed record held all
+  3,662 of them and stayed silent. A set difference against the worst target put
+  **every one** of its 825 claimed-unexported node ids inside the committed
+  export — the sentence was refuted node for node.
+
+  The cause was a scope error: the predicate `live_nodes > export_nodes` compares
+  the graph against **one file**, and the sentence phrased that as a fact about
+  the **seat**. "Are these nodes exported" is answered by the union of the
+  records a seat keeps, so asking it per record multiplies one fact by however
+  many have fallen behind, and every copy asserts what the durable record
+  disproves.
+
+  `sync_debt::unexported_work` now answers it **once**: the most complete record
+  the seat is accounted for against (`in_step` or `moved_but_current` only — a
+  `behind` record's count is inflated by another seat's work and cannot vouch for
+  this one's), silence if that record already holds as much as the graph does,
+  otherwise a single line naming that record and the nodes in **no** record. The
+  clause is gone from the per-file message: a line about one file may describe
+  that file and may not speak for the graph. On reflow2's own seat this took
+  `next` from **8 lines to 3**.
+
+  🛑 **The obvious fix — stop tracking scratch paths — was already on the record
+  as wrong.** Every noisy path sat under `/tmp`, but that rule was written during
+  the 2026-08-24 work on this same call and **abandoned before it ever shipped**,
+  because fifteen tests failed and were right to: hermetic tests, CI workspaces
+  and containers all put *genuine* shared records under a temp dir. It would not
+  have worked anyway — a 1,545-node backup outside any temp path produces the
+  identical false line. Accumulation decides *which* files
+  speak; the scope error is why what they say is untrue.
+
+  ⚠️ **Unchanged, deliberately:** `sync`'s `in_step` verdict still answers only
+  "has the record moved ahead of this seat", and ordinary unexported work is
+  still never reported as `behind`. And the comparison is still a **node count**,
+  so equal counts with different ids, an edge-only divergence, and a
+  property-only write all remain invisible to it. It is a reading aid, not a
+  durability guarantee, and the sentence says so.
+
+- **That same sentence shipped carrying three runs of ten literal spaces**, and
+  reached served output. `cargo fmt` was the obvious suspect and was **refuted by
+  experiment** — it preserves `\`-newline continuations and Rust strips the
+  indentation correctly. The corruption came from the patch script that wrote the
+  file, which consumed the backslash as *its own* line continuation before Rust
+  ever saw it. Pinned by a test asserting **no** message the module produces
+  carries a run of spaces — the class, not the one sentence, because the next
+  occurrence will be a different sentence written the same way.
+
+
 ## [0.47.0] — 2026-09-03
 
 🛑 **Upgrade action: REQUIRED — one `loop_status` field was RENAMED.**
