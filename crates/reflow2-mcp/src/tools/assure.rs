@@ -106,7 +106,7 @@ impl ReflowService {
                        VALIDATED: reflow2 records what you say a run found and never judges it, \
                        so `passing` beside findings describing a failure is a contradiction only \
                        a reader can catch — which is a real 2026-08-07 field report, where a \
-                       check recorded \"EXIT 0, verdict STALE\" and stayed passing forever.",
+                       check recorded \"EXIT 0, verdict STALE\" and stayed passing forever. CARRIES `prose_currency` WHEN THE STATUS ACTUALLY MOVES and the node holds prose: the description was written under the OLD status and this call did not touch it, so the block names both statuses and QUOTES the prose so you can judge it here rather than in another call. It never says the prose is wrong - only a person can. From a 2026-09-02 field report where a capability went `realized` twenty minutes after a description saying the fix was not installed, and nothing noticed.",
         annotations(read_only_hint = false)
     )]
     pub async fn set_verification_status(
@@ -114,7 +114,12 @@ impl ReflowService {
         Parameters(req): Parameters<VerificationStatusReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await?;
-        ok_json(NodeDto::from(
+        let prior = crate::tools::capture::prior_status(
+            &g,
+            reflow2_core::nodes::node::VERIFICATION,
+            &req.verification_id,
+        );
+        let node = NodeDto::from(
             g.set_verification_status(
                 &req.verification_id,
                 &req.status,
@@ -122,7 +127,10 @@ impl ReflowService {
                 req.findings.as_deref(),
             )
             .map_err(dyno_err)?,
-        ))
+        );
+        ok_json(
+            crate::prose_currency::with_prose_currency(node, prior.as_deref()).map_err(ser_err)?,
+        )
     }
 
     #[tool(

@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Set a Capability's lifecycle status: `planned` (the default) / `in_progress` / `realized` / `verified`. Use it as a capability moves through its life; to record one that already ships, pass `status` to add_capability instead and save a write.",
+  "description": "Set a Capability's lifecycle status: `planned` (the default) / `in_progress` / `realized` / `verified`. Use it as a capability moves through its life; to record one that already ships, pass `status` to add_capability instead and save a write. CARRIES `prose_currency` WHEN THE STATUS ACTUALLY MOVES and the node holds prose: the description was written under the OLD status and this call did not touch it, so the block names both statuses and QUOTES the prose so you can judge it here rather than in another call. It never says the prose is wrong - only a person can. From a 2026-09-02 field report where a capability went `realized` twenty minutes after a description saying the fix was not installed, and nothing noticed.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,

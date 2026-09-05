@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Move an Epoch between `planned` and `arrived`. `planned` → `arrived` is ARRIVAL: the moment a claim about the future becomes a point in the past, after which history can be recorded into it and the planned-versus- delivered delta becomes answerable. The reverse exists so a premature arrival can be corrected; it is not a way to un-happen an epoch. Everything else about the epoch is preserved.",
+  "description": "Move an Epoch between `planned` and `arrived`. `planned` → `arrived` is ARRIVAL: the moment a claim about the future becomes a point in the past, after which history can be recorded into it and the planned-versus- delivered delta becomes answerable. The reverse exists so a premature arrival can be corrected; it is not a way to un-happen an epoch. Everything else about the epoch is preserved. CARRIES `prose_currency` WHEN THE STATUS ACTUALLY MOVES and the node holds prose: the description was written under the OLD status and this call did not touch it, so the block names both statuses and QUOTES the prose so you can judge it here rather than in another call. It never says the prose is wrong - only a person can. From a 2026-09-02 field report where a capability went `realized` twenty minutes after a description saying the fix was not installed, and nothing noticed.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
