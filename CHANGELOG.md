@@ -31,6 +31,85 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.48.0] — 2026-09-05
+
+Minor: the tool surface changed shape (a new tool, an optional parameter, a new flag on four bulk
+tools). The schema stamp did NOT move (29 node types / 65 edge types, same as 0.47.1), so no
+upgrade doc is owed. Almost everything here came from field reports — the qs project's first-use
+write-up, the dev_storyflow agent's appended log, and Alex's five items on 0.47.0 — each
+root-caused before it was fixed, and the practice of doing that is now itself a rule.
+
+### Added
+
+- **`add_design_rule`** — a typed constructor for a DesignRule (name, statement, optional
+  `category`, optional `enforced`). Two independent projects had reached for it and found only
+  generic `create_node`, then guessed the field names wrong. `enforced` stays unset unless you say:
+  whether breaking a rule should stop somebody's build is the owner's call, never defaulted.
+  *Consumer: nothing to change; a rule you already wrote through `create_node` is unaffected.*
+- **`check_only: true` on `create_nodes`, `create_edges`, `set_artifact_checksums`,
+  `acknowledge_gaps`** — validate every item and write nothing. The reply says whether the batch
+  `would_apply` and lists every failure, so a 21-item batch with one bad enum is fixed once and
+  sent once instead of resent whole after each rejection. A bulk write stays all-or-nothing; this
+  is the check before it, not a partial write. *Consumer: opt in; default behaviour unchanged.*
+- **`prose_currency` on `set_capability_status` / `set_verification_status` / `set_epoch_status`** —
+  when a status moves past prose that still describes the old state, the reply that moved it says
+  so and quotes the prose, so a `realized` capability whose description still says "will" is
+  caught at the moment it happens rather than found rotted later.
+- **A DesignRule for how reflow2 reads its own feedback** (`rule:field-feedback-issues-are-root-
+  caused-and-ideas-are-brainstormed`, AGENTS.md rule 9): every issue a field report names gets
+  `/root-cause`, every idea gets `/brainstorm`, without being reminded. Set after a triage done
+  without the skill got two of four causes wrong.
+
+### Changed
+
+- **`get_node` takes `node_type` as OPTIONAL.** The id prefix (`req:`, `dec:`, `ver:` …) names
+  the type by convention, so it is resolved for you. If an id is held by more than one type the read
+  REFUSES and names both rather than guess. `delete_node` deliberately stays strict.
+  *Consumer: existing calls that pass `node_type` are unchanged.*
+- **`served_by.stale` has a non-Linux answer.** Currency is now read from two signals — the
+  `/proc/self/exe` link (Linux) OR a size:mtime fingerprint of the executable captured at process
+  start (everywhere) — and is `unknown` only when neither can be read. On macOS every
+  `loop_status` used to say "unknown, verify another way"; now it says current or stale. The
+  fingerprint also catches an in-place overwrite the link alone missed. *Not yet run on a Mac by
+  the author; the first macOS report will be the verification.*
+- **`add_change_event` accepts `description` only to redirect it.** A ChangeEvent has no
+  `description`; four projects sent one and met a bare field list. The refusal now names `summary`
+  and `rationale` at the moment of the mistake.
+- **`add_epoch` names the sequence you need.** A missing `sequence` on create is refused with the
+  current maximum ("highest existing is N, N+1 is next, leave a gap") or "no epochs yet". It is
+  NOT auto-assigned — a sequence is a position claim, and sequences are spaced on purpose.
+- **`set_interface_spec` says what `auth` is.** A role word in `auth` is refused as an unknown
+  AUTHENTICATION mechanism (the one seam pairing keys on), with the legal values, and the reply
+  says that AUTHORIZATION — who MAY use the interface — has no field yet and how to record it
+  meanwhile (an Actor with `INTERACTS_WITH`, the role in `description`). The schema and tool
+  descriptions say the same before you get there.
+- **The all-or-nothing bulk refusal says the whole batch must be resent** (the valid items were
+  discarded too) and points at `check_only`.
+- **`link-projects` and `adopt` point at `external_dependency`** for "a repository we depend on
+  but do not own" — the tool existed and no skill named it.
+- **`loop_status` reports unexported work once, for the seat**, not once per record file; and a
+  read no longer recomputes the loop after a write (the read-side hint was costing ~6 s per read
+  after every write, ~9.5× a session).
+
+### Fixed
+
+- **A false `loop_status` line.** "N node(s) here have never been exported" was computed per
+  record file and stated per seat, firing five times untruthfully on a seat with six records while
+  the record holding every live node stayed silent.
+- **Served sentences carried runs of literal spaces** from a heredoc that ate line continuations.
+  Pinned so no served string can again.
+
+### Known and deliberately not done
+
+- `Verification.level` / `.method` still take schema defaults (`unit` / `test`) on write and cannot
+  be corrected afterwards — the cause is the schema-default injector, the same class as the
+  Artifact fix of 2026-08-12, and removing those defaults is a schema decision awaiting the owner.
+- A planned Verification still cannot be `schedule_for`'d into an epoch (`SCHEDULED_FOR.from` does
+  not enumerate it); one schema line, same class as the Interface→VERIFIES addition, awaiting the
+  owner.
+- Authorization roles have no home (`req:vocabulary-covers-personnel`, deferred).
+
+
 ## [0.47.1] — 2026-09-04
 
 ✅ **Upgrade action: NONE.** Two defect fixes, no schema movement (the stamp is
