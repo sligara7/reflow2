@@ -112,6 +112,25 @@ pub struct Rendezvous {
 /// cannot be resolved or stat'd.
 ///
 /// `None` is a real answer and is treated as "cannot tell", never as "matches".
+/// The executable's fingerprint AT PROCESS START, captured once and kept.
+///
+/// `exe_replaced_since_start` compares this against a fresh `exe_fingerprint()`
+/// to answer "was my binary replaced?" on platforms with no `/proc/self/exe`
+/// (macOS; Alex, v0.47.0, 2026-09-05 — `fact:defect-currency-is-read-from-
+/// proc-self-exe-so-every-non-linux-run-answers-unknown-on-every-call`).
+/// `main` calls this first thing so the value is genuinely the START one; a
+/// first call that happened after a replace would fingerprint the NEW file and
+/// read as current forever, which is why lazy-on-first-use is not enough.
+///
+/// A process-global on purpose and allowlisted in
+/// `no_per_design_process_globals.rs`: a second design open in this process
+/// runs on the same executable, so this value could not differ per design.
+static STARTUP_FINGERPRINT: std::sync::OnceLock<Option<String>> = std::sync::OnceLock::new();
+
+pub fn startup_fingerprint() -> Option<&'static str> {
+    STARTUP_FINGERPRINT.get_or_init(exe_fingerprint).as_deref()
+}
+
 pub fn exe_fingerprint() -> Option<String> {
     let exe = std::env::current_exe().ok()?;
     let md = std::fs::metadata(&exe).ok()?;

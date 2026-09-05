@@ -107,9 +107,23 @@ pub const CURRENT_NOTE: &str =
     "current: this server's executable is still the file it was started from.";
 
 /// What it says when the question could not be asked at all.
-pub const UNKNOWN_NOTE: &str = "unknown: /proc/self/exe is unreadable (non-Linux, or a \
-     restricted environment). Unknown is not `false` — this server cannot tell you whether it is \
-     current, so verify the running version another way before trusting a rollup.";
+pub const UNKNOWN_NOTE: &str = "unknown: /proc/self/exe is unreadable AND the executable could \
+     not be fingerprinted (size+mtime), so neither currency check could run. Unknown is not \
+     `false` — this server cannot tell you whether it is current, so verify the running version \
+     another way before trusting a rollup.";
+
+/// The fingerprint path's own wording, so a reader knows WHICH check answered.
+/// Weaker than the `(deleted)` link in one way: a binary replaced by one of
+/// identical size and mtime reads current. Rare, and the link path (Linux)
+/// does not share it.
+pub const FINGERPRINT_CURRENT_NOTE: &str = "current: this server's executable has the same \
+     size and mtime it had at start (no /proc on this platform, so currency is read from the \
+     file's fingerprint).";
+pub const FINGERPRINT_STALE_NOTE: &str = "STALE: this server's executable changed size or \
+     mtime since it started (read from the file's fingerprint — no /proc on this platform), so \
+     every computed rollup it returns came from code that is no longer on disk. Graph WRITES \
+     are unaffected. TO REFRESH: `reflow2-mcp --graph-path <path> --stop-shared`, then make \
+     any tool call.";
 
 /// Has this process's own executable been replaced since it started?
 ///
@@ -147,15 +161,54 @@ pub const UNKNOWN_NOTE: &str = "unknown: /proc/self/exe is unreadable (non-Linux
 ///
 /// Non-Linux has no `/proc`, so the honest answer there is `unknown`.
 fn exe_replaced_since_start() -> (Option<bool>, &'static str) {
-    let Ok(link) = std::fs::read_link("/proc/self/exe") else {
-        return (None, UNKNOWN_NOTE);
+    let link = std::fs::read_link("/proc/self/exe")
+        .ok()
+        .map(|p| p.to_string_lossy().into_owned());
+    let now = crate::shared::exe_fingerprint();
+    currency_verdict(
+        link.as_deref(),
+        crate::shared::startup_fingerprint(),
+        now.as_deref(),
+    )
+}
+
+/// The currency verdict from BOTH signals, as a pure function so the non-Linux
+/// branch can be asserted on a Linux CI box.
+///
+/// Two independent signals, either sufficient for STALE:
+/// - the `/proc/self/exe` link text carrying ` (deleted)` (Linux; a replaced
+///   inode — the strongest signal, and it sees a replace even when size and
+///   mtime happen to match);
+/// - the executable's size:mtime fingerprint differing from the one captured
+///   at process start (portable; ALSO catches an in-place overwrite, which
+///   keeps the inode so the link stays clean).
+///
+/// CURRENT needs the link clean (or absent) AND the fingerprints equal (or
+/// unavailable). UNKNOWN only when neither signal could be read at all —
+/// "I could not look" is never reported as "I looked and I am current".
+/// A missing START fingerprint (captured too late to mean anything) counts as
+/// unavailable, never as a match.
+///
+/// `fact:defect-currency-is-read-from-proc-self-exe-so-every-non-linux-run-
+/// answers-unknown-on-every-call` — before this, every macOS `loop_status`
+/// answered unknown.
+pub fn currency_verdict(
+    proc_link: Option<&str>,
+    start_fp: Option<&str>,
+    now_fp: Option<&str>,
+) -> (Option<bool>, &'static str) {
+    let link_deleted = proc_link.map(|l| l.ends_with(" (deleted)"));
+    let fp_moved = match (start_fp, now_fp) {
+        (Some(a), Some(b)) => Some(a != b),
+        _ => None,
     };
-    // The marker is on the LINK TEXT, not the target: the inode still exists,
-    // which is exactly why the process keeps serving and nothing else notices.
-    if link.to_string_lossy().ends_with(" (deleted)") {
-        (Some(true), STALE_NOTE)
-    } else {
-        (Some(false), CURRENT_NOTE)
+    match (link_deleted, fp_moved) {
+        (Some(true), _) => (Some(true), STALE_NOTE),
+        (Some(false), Some(true)) => (Some(true), FINGERPRINT_STALE_NOTE),
+        (Some(false), _) => (Some(false), CURRENT_NOTE),
+        (None, Some(true)) => (Some(true), FINGERPRINT_STALE_NOTE),
+        (None, Some(false)) => (Some(false), FINGERPRINT_CURRENT_NOTE),
+        (None, None) => (None, UNKNOWN_NOTE),
     }
 }
 
