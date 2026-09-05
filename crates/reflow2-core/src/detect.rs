@@ -1833,12 +1833,24 @@ impl DesignGraph {
     /// you to skim it, and a skimmed list is the failure this whole layer
     /// exists to prevent.
     pub fn detect_gaps(&self) -> Result<Vec<GapCandidate>, DynoError> {
+        // MEMOISED PER WRITE GENERATION — see `open_defects_counting` and
+        // `dec:derived-scans-are-memoised-per-write-generation`. An
+        // acknowledgement is a write, so acknowledging a gap invalidates this.
+        {
+            let memo = self.derived_at_current_generation();
+            if let Some(gaps) = memo.gaps.as_ref() {
+                return Ok(gaps.clone());
+            }
+        }
         let mut open = Vec::new();
         for gap in self.all_gaps()? {
             if self.gap_acknowledgement(&gap.id)?.is_none() {
                 open.push(gap);
             }
         }
+        let mut memo = self.derived_at_current_generation();
+        memo.gaps = Some(open.clone());
+        memo.recomputes += 1;
         Ok(open)
     }
 

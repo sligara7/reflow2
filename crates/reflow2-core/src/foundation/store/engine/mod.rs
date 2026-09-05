@@ -381,6 +381,16 @@ impl StorageEngine {
         Ok(())
     }
 
+    /// The store's write generation — see [`ReadCache::generation`]. Every
+    /// write path (direct `put`/`delete`/`prefix_delete`, and `commit_batch`'s
+    /// per-op invalidation) moves it, so equality means "unwritten since".
+    pub fn write_generation(&self) -> u64 {
+        self.read_cache
+            .lock()
+            .expect("read_cache lock poisoned")
+            .generation()
+    }
+
     fn put(&mut self, cf: &str, key: Vec<u8>, value: Vec<u8>) -> Result<(), DynoError> {
         // If batching, buffer the write — don't invalidate cache yet because
         // the data isn't on disk. Cache invalidation happens in commit_batch().

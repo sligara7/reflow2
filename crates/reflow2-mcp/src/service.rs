@@ -3736,8 +3736,21 @@ impl ReflowService {
         if cache.computed_gen == Some(generation) {
             return Ok(None);
         }
-        let status = g.loop_status().map_err(dyno_err)?;
         cache.computed_gen = Some(generation);
+        // 🛑 NO `g.loop_status()` HERE ANY MORE, and where it stood was the
+        // single largest cost on the agent surface. Measured 2026-09-05: a
+        // full loop_status ran on the FIRST READ AFTER EVERY WRITE to produce a
+        // one-line debt summary — 7.7 s per write→read boundary on a scratch
+        // store, ~12 s on the live daemon, 9.5 boundaries per session across 61
+        // real sessions. 1.2–1.9 minutes of unrequested rollup per session,
+        // decorating reads that cost 1–4 ms, for a sentence the session gets
+        // anyway from the loop_status call it is instructed to make.
+        // `dec:the-loop-speaks-on-loop-status-not-inside-every-read`, on
+        // Anthony's word; budget `con:a-read-after-a-write-costs-at-most-twice-
+        // the-same-read-warm`. The record_moved half below is KEPT: it is a
+        // different feature with its own ruling (2026-08-13), and its cost is
+        // the sync read, which `dec:an-unchanged-sync-target-is-not-re-parsed`
+        // makes near zero.
 
         // THE SHARED RECORD MOVING IS ALSO A DEBT, and until now it rode only
         // on `loop_status` — so a session learned that a colleague's work had
@@ -3754,6 +3767,13 @@ impl ReflowService {
         // Gated exactly as `loop_status`'s own copy is — silent whenever the
         // file has not moved, which is the whole of ordinary solo work.
         let record_moved = self.graph_path.as_deref().and_then(|graph_path| {
+            // SIX STATS, NOT SIX PARSES AND A NODE SCAN. On the path every read
+            // takes nothing has moved, and `any_target_moved` says so without
+            // touching the files' contents or the store. Only when it cannot
+            // rule a move out does the full check below run.
+            if !crate::sync_debt::any_target_moved(graph_path) {
+                return None;
+            }
             let live_nodes = g.count_all_nodes().unwrap_or(0);
             let debts =
                 crate::sync_debt::sync_debt(graph_path, live_nodes, &|| g.export_graph().ok());
@@ -3768,12 +3788,8 @@ impl ReflowService {
         // Either debt alone is worth surfacing: a design whose loop is
         // otherwise CLEAN can still have a record that moved under it, and
         // gating on `clean` alone would make that the one case nothing says.
-        let hint = match (!status.clean, record_moved) {
-            (true, Some(moved)) => Some(format!("{} — {moved}", read_debt_summary(&status))),
-            (true, None) => Some(read_debt_summary(&status)),
-            (false, Some(moved)) => Some(moved),
-            (false, None) => None,
-        };
+        // Only the record-moved notice rides on reads now.
+        let hint = record_moved;
         if hint == cache.surfaced {
             Ok(None)
         } else {
