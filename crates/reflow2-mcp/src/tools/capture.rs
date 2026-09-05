@@ -2182,6 +2182,36 @@ impl ReflowService {
         Parameters(req): Parameters<InterfaceSpecReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await?;
+        // Alex (2026-09-05) put an authorization ROLE in `auth` and it hard-failed
+        // as an unknown enum value. `auth` is AUTHENTICATION, read by seam
+        // pairing; who MAY access has no field yet. Say both, at the moment of
+        // the mistake, and still list the legal values.
+        // fact:defect-interface-auth-names-a-mechanism-and-authorization-roles-
+        // have-no-home-so-the-role-gate-lands-on-the-wrong-field.
+        if let Some(a) = req.auth.as_deref() {
+            let legal: Vec<String> = g
+                .schema()
+                .node_types
+                .get(reflow2_core::nodes::node::INTERFACE)
+                .and_then(|d| d.properties.get("auth"))
+                .and_then(|p| p.values.clone())
+                .unwrap_or_default();
+            if !legal.is_empty() && !legal.iter().any(|v| v == a) {
+                return Err(McpError::invalid_params(
+                    format!(
+                        "unknown Interface.auth {a:?}. `auth` is the AUTHENTICATION mechanism — \
+                         how a caller proves who it is — and seam pairing reads it (a consumer \
+                         requiring oauth2 must not pair with a provider offering none). Legal \
+                         values: {}. If you meant AUTHORIZATION — which role or actor MAY use \
+                         this interface — there is no field for that yet \
+                         (req:vocabulary-covers-personnel, deferred): record it as an Actor with \
+                         INTERACTS_WITH to this Interface, and name the role in `description`.",
+                        legal.join(", ")
+                    ),
+                    None,
+                ));
+            }
+        }
         ok_json(NodeDto::from(
             g.set_interface_spec(
                 &req.interface_id,

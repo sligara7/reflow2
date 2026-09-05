@@ -237,7 +237,9 @@ impl ReflowService {
             });
         }
         let mut g = self.write_lock().await?;
-        let report = g.create_nodes(&specs).map_err(dyno_err)?;
+        let report = g
+            .create_nodes_with(&specs, req.check_only)
+            .map_err(dyno_err)?;
         bulk_result(report, NodeDto::from)
     }
 
@@ -266,7 +268,9 @@ impl ReflowService {
             });
         }
         let mut g = self.write_lock().await?;
-        let report = g.create_edges(&specs).map_err(dyno_err)?;
+        let report = g
+            .create_edges_with(&specs, req.check_only)
+            .map_err(dyno_err)?;
         bulk_result(report, EdgeDto::from)
     }
 
@@ -338,8 +342,11 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Fetch a node by type and id — `{node: {...}}` when present, \
-                       `{node: null}` when absent. An unknown `node_type` is REFUSED rather \
+        description = "Fetch a node by id — `{node: {...}}` when present, `{node: null}` when \
+                       absent. `node_type` is OPTIONAL: the id prefix names the type by \
+                       convention and it is resolved for you; if the id is held by more than \
+                       one type the read REFUSES and names them rather than guess. When you \
+                       do pass `node_type`, an unknown one is REFUSED rather \
                        than answered `null`, because \"no such type\" and \"no such node\" are \
                        different facts and must not share one reply. Carries `discontinued`: \
                        true when an ACCEPTED Decision has withdrawn this node (OBSOLETES). \
@@ -350,9 +357,39 @@ impl ReflowService {
     )]
     pub async fn get_node(
         &self,
-        Parameters(req): Parameters<TypedIdReq>,
+        Parameters(req): Parameters<GetNodeReq>,
     ) -> Result<CallToolResult, McpError> {
         let g = self.graph.read().await;
+        // dec:idea-get-node-by-id-alone-since-the-prefix-names-the-type (Alex,
+        // dev_storyflow): the id prefix names the type by convention, so the
+        // type may be omitted — resolved by looking the id up under every type.
+        // A COLLISION is refused, never guessed: the convention is not a rule,
+        // and a silently wrong node is worse than a required field.
+        let node_type: String = match req.node_type.clone() {
+            Some(t) => t,
+            None => {
+                let holders = g.node_types_holding(&req.id).map_err(dyno_err)?;
+                match holders.len() {
+                    0 => {
+                        return ok_json(json!({ "node": JsonValue::Null }));
+                    }
+                    1 => holders.into_iter().next().unwrap_or_default(),
+                    _ => {
+                        return Err(McpError::invalid_params(
+                            format!(
+                                "id {:?} is held by MORE THAN ONE node type ({}). Refusing to \
+                                 guess — pass `node_type` to say which you mean. (Ids are meant \
+                                 to be unique across types by the typed-prefix convention; this \
+                                 one is not.)",
+                                req.id,
+                                holders.join(", ")
+                            ),
+                            None,
+                        ));
+                    }
+                }
+            }
+        };
         // A WRONG TYPE NAME and an ABSENT NODE used to answer identically: a
         // bare `null`. dev_storyflow (w-c216679a, 2026-08-09) asked for
         // `get_node("Epoch", …)` — the stored type is `DesignEpoch` — read the
@@ -364,7 +401,7 @@ impl ReflowService {
         // `null` for it is a fact the server HAS and declines to give. Same
         // class as `unmet_needs: 0` meaning "we never said we needed anything"
         // — a zero that cannot be told from an absence.
-        if g.describe_node_type(&req.node_type).is_err() {
+        if g.describe_node_type(&node_type).is_err() {
             let vocabulary = g.describe_vocabulary();
             let known: Vec<&str> = vocabulary
                 .node_types
@@ -373,7 +410,7 @@ impl ReflowService {
                 .collect();
             // `Epoch` → `DesignEpoch` is the reported case, and containment
             // either way catches the whole family of dropped/added prefixes.
-            let asked = req.node_type.to_ascii_lowercase();
+            let asked = node_type.to_ascii_lowercase();
             let near: Vec<&str> = known
                 .iter()
                 .copied()
@@ -393,13 +430,13 @@ impl ReflowService {
                      such TYPE\" rather than \"no such node\" — and those are different facts.\
                      {hint}\n\nKnown node types: {}.\n\nCall `describe_schema` for the full \
                      vocabulary.",
-                    req.node_type,
+                    node_type,
                     known.join(", ")
                 ),
                 None,
             ));
         }
-        let node = g.get_node(&req.node_type, &req.id).map_err(dyno_err)?;
+        let node = g.get_node(&node_type, &req.id).map_err(dyno_err)?;
         // One named shape both ways (BL-57): `{node: {...}}` when present,
         // `{node: null}` when absent. Before, present returned a bare object
         // and absent returned `{value: null}` (the scalar wrap) — two shapes,

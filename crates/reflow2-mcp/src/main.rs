@@ -406,6 +406,10 @@ fn read_resolutions(
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
+    // FIRST, before anything can replace the binary under us: remember what
+    // this executable looked like at start, so currency has an answer on
+    // platforms with no /proc (see shared::startup_fingerprint).
+    let _ = reflow2_mcp::shared::startup_fingerprint();
     // JSON-RPC owns stdout; all logs go to stderr.
     tracing_subscriber::fmt()
         .with_env_filter(

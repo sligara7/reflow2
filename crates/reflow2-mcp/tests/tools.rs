@@ -1436,8 +1436,8 @@ async fn a_wrong_edge_can_be_retracted_without_deleting_its_endpoints() {
     // Both endpoints survive; only the assertion between them is gone —
     // and detect sees the thread it severed.
     assert!(
-        j!(s.get_node(Parameters(TypedIdReq {
-            node_type: "Requirement".into(),
+        j!(s.get_node(Parameters(GetNodeReq {
+            node_type: Some("Requirement".into()),
             id: "req:physics".into()
         })))["node"]["node_id"]
             == "req:physics",
@@ -2173,8 +2173,8 @@ async fn temporal_resource_and_realization_tools_round_trip() {
         resource_id: "res:gpu".into(),
         criticality: Some("required".into()),
     })));
-    let requires = j!(s.get_node(Parameters(TypedIdReq {
-        node_type: "Resource".into(),
+    let requires = j!(s.get_node(Parameters(GetNodeReq {
+        node_type: Some("Resource".into()),
         id: "res:gpu".into(),
     })));
     assert_eq!(requires["node"]["node_id"], "res:gpu");
@@ -2244,8 +2244,8 @@ async fn temporal_resource_and_realization_tools_round_trip() {
         serde_json::json!(true),
         "delete_node names the outcome"
     );
-    let gone = j!(s.get_node(Parameters(TypedIdReq {
-        node_type: "Component".into(),
+    let gone = j!(s.get_node(Parameters(GetNodeReq {
+        node_type: Some("Component".into()),
         id: "cmp:typo".into(),
     })));
     // get_node returns one named shape both ways (BL-57): `{node: null}` absent.
@@ -2386,8 +2386,8 @@ async fn a_read_after_a_write_does_not_carry_a_loop_debt_hint() {
         statement: Some("Input to render under 50ms.".into()),
         distinct_from: None,
     })));
-    let after_write = j!(s.get_node(Parameters(TypedIdReq {
-        node_type: "Capability".into(),
+    let after_write = j!(s.get_node(Parameters(GetNodeReq {
+        node_type: Some("Capability".into()),
         id: "cap:flight".into()
     })));
     assert!(
@@ -2858,8 +2858,8 @@ async fn choosing_a_mode_preserves_everything_else_about_the_project() {
         project_id: "proj:m".into(),
         mode: "rigid".into(),
     })));
-    let after = j!(s.get_node(Parameters(TypedIdReq {
-        node_type: "Project".into(),
+    let after = j!(s.get_node(Parameters(GetNodeReq {
+        node_type: Some("Project".into()),
         id: "proj:m".into()
     })));
     assert_eq!(
@@ -2889,8 +2889,8 @@ async fn an_unknown_mode_fails_loud_rather_than_leaving_the_old_one() {
     .await
     .expect_err("a mode outside the enum must be refused, not accepted quietly");
 
-    let after = j!(s.get_node(Parameters(TypedIdReq {
-        node_type: "Project".into(),
+    let after = j!(s.get_node(Parameters(GetNodeReq {
+        node_type: Some("Project".into()),
         id: "proj:m".into()
     })));
     assert_eq!(
@@ -2929,6 +2929,7 @@ async fn a_rejected_bulk_write_errors_and_still_names_every_failure() {
     let s = seeded().await;
     let err = s
         .create_nodes(Parameters(CreateNodesReq {
+            check_only: false,
             nodes: vec![
                 NodeSpecReq {
                     node_type: "NotAType".into(),
@@ -3135,8 +3136,8 @@ async fn an_unknown_node_type_is_refused_rather_than_answered_null() {
 
     // THE REPRODUCTION: the type name they used.
     let err = s
-        .get_node(Parameters(TypedIdReq {
-            node_type: "Epoch".into(),
+        .get_node(Parameters(GetNodeReq {
+            node_type: Some("Epoch".into()),
             id: "epoch:real".into(),
         }))
         .await
@@ -3153,16 +3154,16 @@ async fn an_unknown_node_type_is_refused_rather_than_answered_null() {
 
     // POSITIVE CONTROL, both directions — the refusal must be about the type
     // and nothing else.
-    let found = j!(s.get_node(Parameters(TypedIdReq {
-        node_type: "DesignEpoch".into(),
+    let found = j!(s.get_node(Parameters(GetNodeReq {
+        node_type: Some("DesignEpoch".into()),
         id: "epoch:real".into()
     })));
     assert_eq!(found["node"]["node_id"], "epoch:real");
 
     // A REAL type with an absent id still answers null — that is the honest
     // "no such node", and it must not have been collateral damage.
-    let absent = j!(s.get_node(Parameters(TypedIdReq {
-        node_type: "DesignEpoch".into(),
+    let absent = j!(s.get_node(Parameters(GetNodeReq {
+        node_type: Some("DesignEpoch".into()),
         id: "epoch:nope".into()
     })));
     assert!(
@@ -3366,4 +3367,176 @@ async fn add_change_event_still_works_without_description() {
         .unwrap(),
     )));
     assert_eq!(node["event"]["properties"]["summary"], "fixed the thing");
+}
+
+// ---- Alex's five (v0.47.0, 2026-09-05) — fixes #2..#5 -----------------------
+// Written BEFORE the fixes and observed failing to compile (the fns/fields did
+// not exist), then each behaviour pinned. #1 (currency on macOS) is pinned in
+// the_server_says_when_it_is_stale.rs.
+
+#[tokio::test]
+async fn add_epoch_without_a_sequence_names_where_you_are() {
+    // fact:defect-add-epoch-requires-a-sequence-the-refusal-cannot-name-...
+    let s = ReflowService::in_memory().expect("service");
+    let e = s
+        .add_epoch(Parameters(
+            serde_json::from_value(serde_json::json!({
+                "id": "epoch:first", "name": "First", "epoch_type": "revision"
+            }))
+            .unwrap(),
+        ))
+        .await
+        .expect_err("sequence is required");
+    let m = format!("{e:?}");
+    assert!(
+        m.contains("no epochs yet"),
+        "on an empty plan the refusal says so: {m}"
+    );
+    assert!(
+        m.contains("not auto-assigned"),
+        "and says why it will not guess: {m}"
+    );
+    // With one epoch at 10, the refusal names 10 and offers 11.
+    j!(s.add_epoch(Parameters(
+        serde_json::from_value(serde_json::json!({
+            "id": "epoch:a", "name": "A", "epoch_type": "revision", "sequence": 10
+        }))
+        .unwrap()
+    )));
+    let e = s
+        .add_epoch(Parameters(
+            serde_json::from_value(serde_json::json!({
+                "id": "epoch:b", "name": "B", "epoch_type": "revision"
+            }))
+            .unwrap(),
+        ))
+        .await
+        .expect_err("still required");
+    let m = format!("{e:?}");
+    assert!(
+        m.contains("highest existing sequence is 10") && m.contains("11"),
+        "{m}"
+    );
+}
+
+#[tokio::test]
+async fn get_node_resolves_by_id_alone_and_refuses_a_collision() {
+    // dec:idea-get-node-by-id-alone-since-the-prefix-names-the-type
+    let s = ReflowService::in_memory().expect("service");
+    j!(s.add_requirement(Parameters(RequirementReq {
+        id: "req:solo".into(),
+        name: Some("Solo".into()),
+        statement: Some("A lone requirement.".into()),
+        distinct_from: None,
+    })));
+    let got = j!(s.get_node(Parameters(GetNodeReq {
+        id: "req:solo".into(),
+        node_type: None
+    })));
+    assert_eq!(
+        got["node"]["node_type"], "Requirement",
+        "resolved from the id alone: {got}"
+    );
+    // Unknown id, no type: a null node, not an error (same as the typed form).
+    let got = j!(s.get_node(Parameters(GetNodeReq {
+        id: "req:nope".into(),
+        node_type: None
+    })));
+    assert!(got["node"].is_null(), "{got}");
+    // A COLLISION (the same id under two types — a convention violation, but
+    // writable) is REFUSED, never guessed.
+    j!(s.create_node(Parameters(
+        serde_json::from_value(serde_json::json!({
+            "node_type": "Capability", "id": "req:solo",
+            "props": {"name": "Impostor", "description": "same id, other type"}
+        }))
+        .unwrap()
+    )));
+    let e = s
+        .get_node(Parameters(GetNodeReq {
+            id: "req:solo".into(),
+            node_type: None,
+        }))
+        .await
+        .expect_err("two types hold this id — refuse, do not pick");
+    let m = format!("{e:?}");
+    assert!(
+        m.contains("Requirement") && m.contains("Capability"),
+        "names both: {m}"
+    );
+}
+
+#[tokio::test]
+async fn interface_auth_refusal_says_it_is_authentication_not_authorization() {
+    // fact:defect-interface-auth-names-a-mechanism-and-authorization-roles-have-no-home-...
+    let s = ReflowService::in_memory().expect("service");
+    j!(s.add_interface(Parameters(IdName {
+        id: "ifc:x".into(),
+        name: Some("X".into())
+    })));
+    let e = s
+        .set_interface_spec(Parameters(
+            serde_json::from_value(
+                serde_json::json!({ "interface_id": "ifc:x", "auth": "admin_only" }),
+            )
+            .unwrap(),
+        ))
+        .await
+        .expect_err("admin_only is a role, not a mechanism");
+    let m = format!("{e:?}");
+    assert!(m.contains("AUTHENTICATION"), "{m}");
+    assert!(
+        m.contains("AUTHORIZATION") && m.contains("INTERACTS_WITH"),
+        "points at the workaround: {m}"
+    );
+    assert!(
+        m.contains("oauth2"),
+        "and still lists the legal values: {m}"
+    );
+}
+
+#[tokio::test]
+async fn a_bulk_write_can_be_checked_without_being_written() {
+    // dec:idea-a-bulk-write-can-be-checked-before-it-is-written, option (a).
+    let s = ReflowService::in_memory().expect("service");
+    let items = serde_json::json!([
+        {"node_type": "Requirement", "id": "req:ok", "props": {"name": "ok", "statement": "fine"}},
+        {"node_type": "Requirement", "id": "req:bad", "props": {"name": "bad", "statement": "x", "priority": "urgent-ish"}}
+    ]);
+    let out = j!(s.create_nodes(Parameters(
+        serde_json::from_value(serde_json::json!({
+            "nodes": items, "check_only": true
+        }))
+        .unwrap()
+    )));
+    assert_eq!(out["check_only"], true, "{out}");
+    assert_eq!(
+        out["would_apply"], false,
+        "one bad enum -> the batch would be rejected: {out}"
+    );
+    assert_eq!(
+        out["failures"].as_array().map(|a| a.len()),
+        Some(1),
+        "{out}"
+    );
+    // And NOTHING was written — not even the good item.
+    let got = j!(s.get_node(Parameters(GetNodeReq {
+        id: "req:ok".into(),
+        node_type: Some("Requirement".into())
+    })));
+    assert!(
+        got["node"].is_null(),
+        "check_only must write nothing: {got}"
+    );
+    // A clean batch checks green and still writes nothing.
+    let out = j!(s.create_nodes(Parameters(serde_json::from_value(serde_json::json!({
+        "nodes": [{"node_type": "Requirement", "id": "req:ok", "props": {"name": "ok", "statement": "fine"}}],
+        "check_only": true
+    })).unwrap())));
+    assert_eq!(out["would_apply"], true, "{out}");
+    let got = j!(s.get_node(Parameters(GetNodeReq {
+        id: "req:ok".into(),
+        node_type: Some("Requirement".into())
+    })));
+    assert!(got["node"].is_null(), "{got}");
 }

@@ -70,6 +70,12 @@ pub struct BulkReport<T> {
     pub written: Vec<T>,
     pub failures: Vec<BulkFailure>,
     pub applied: bool,
+    /// The caller asked for a CHECK, not a write: every item was validated and
+    /// the batch was then discarded whatever the outcome. `applied` is false
+    /// by construction here and `failures` says whether a real write would
+    /// have gone through. dec:idea-a-bulk-write-can-be-checked-before-it-is-
+    /// written (Alex, 2026-09-05): one bad enum in 21 items cost 21 resends.
+    pub check_only: bool,
 }
 
 impl<T> BulkReport<T> {
@@ -78,6 +84,7 @@ impl<T> BulkReport<T> {
             written: Vec::new(),
             failures,
             applied: false,
+            check_only: false,
         }
     }
 }
@@ -147,6 +154,7 @@ fn atomic<I, T>(
     items: &[I],
     id_of: impl Fn(&I) -> String,
     mut op: impl FnMut(&mut DesignGraph, &I) -> Result<T, DynoError>,
+    check_only: bool,
 ) -> Result<BulkReport<T>, DynoError> {
     g.begin_batch();
     let mut written = Vec::with_capacity(items.len());
@@ -165,12 +173,23 @@ fn atomic<I, T>(
         }
     }
 
+    if check_only {
+        // Validated everything, wrote nothing — by request, not by failure.
+        g.discard_batch();
+        return Ok(BulkReport {
+            written,
+            failures,
+            applied: false,
+            check_only: true,
+        });
+    }
     if failures.is_empty() {
         g.commit_batch()?;
         Ok(BulkReport {
             written,
             failures,
             applied: true,
+            check_only: false,
         })
     } else {
         g.discard_batch();
@@ -185,11 +204,21 @@ impl DesignGraph {
         &mut self,
         items: &[NodeSpec],
     ) -> Result<BulkReport<StoredNode>, DynoError> {
+        self.create_nodes_with(items, false)
+    }
+
+    /// `create_nodes`, with `check_only` (validate every item, write nothing).
+    pub fn create_nodes_with(
+        &mut self,
+        items: &[NodeSpec],
+        check_only: bool,
+    ) -> Result<BulkReport<StoredNode>, DynoError> {
         atomic(
             self,
             items,
             |n| n.id.clone(),
             |g, n| g.upsert_node(&n.node_type, &n.id, n.props.clone()),
+            check_only,
         )
     }
 
@@ -206,6 +235,15 @@ impl DesignGraph {
         &mut self,
         items: &[EdgeSpec],
     ) -> Result<BulkReport<StoredEdge>, DynoError> {
+        self.create_edges_with(items, false)
+    }
+
+    /// `create_edges`, with `check_only` (validate every item, write nothing).
+    pub fn create_edges_with(
+        &mut self,
+        items: &[EdgeSpec],
+        check_only: bool,
+    ) -> Result<BulkReport<StoredEdge>, DynoError> {
         atomic(
             self,
             items,
@@ -220,6 +258,7 @@ impl DesignGraph {
                     e.props.clone(),
                 )
             },
+            check_only,
         )
     }
 
@@ -234,6 +273,15 @@ impl DesignGraph {
         &mut self,
         items: &[ChecksumAccept<'_>],
     ) -> Result<BulkReport<(StoredNode, String)>, DynoError> {
+        self.set_artifact_checksums_with(items, false)
+    }
+
+    /// `set_artifact_checksums`, with `check_only` (validate every item, write nothing).
+    pub fn set_artifact_checksums_with(
+        &mut self,
+        items: &[ChecksumAccept<'_>],
+        check_only: bool,
+    ) -> Result<BulkReport<(StoredNode, String)>, DynoError> {
         atomic(
             self,
             items,
@@ -247,6 +295,7 @@ impl DesignGraph {
                     c.at.as_deref(),
                 )
             },
+            check_only,
         )
     }
 
@@ -262,6 +311,16 @@ impl DesignGraph {
         &mut self,
         items: &[AskedRecord],
         asked_at: Option<&str>,
+    ) -> Result<BulkReport<String>, DynoError> {
+        self.record_asked_questions_with(items, asked_at, false)
+    }
+
+    /// `record_asked_questions`, with `check_only` (validate every item, write nothing).
+    pub fn record_asked_questions_with(
+        &mut self,
+        items: &[AskedRecord],
+        asked_at: Option<&str>,
+        check_only: bool,
     ) -> Result<BulkReport<String>, DynoError> {
         atomic(
             self,
@@ -280,6 +339,7 @@ impl DesignGraph {
                     },
                 )
             },
+            check_only,
         )
     }
 
@@ -290,6 +350,15 @@ impl DesignGraph {
     /// named as the one a bulk form could make worse than the loop, so the
     /// reason stays per gap and only the round trip collapses.
     pub fn acknowledge_gaps(&mut self, items: &[GapAck]) -> Result<BulkReport<String>, DynoError> {
+        self.acknowledge_gaps_with(items, false)
+    }
+
+    /// `acknowledge_gaps`, with `check_only` (validate every item, write nothing).
+    pub fn acknowledge_gaps_with(
+        &mut self,
+        items: &[GapAck],
+        check_only: bool,
+    ) -> Result<BulkReport<String>, DynoError> {
         atomic(
             self,
             items,
@@ -303,6 +372,7 @@ impl DesignGraph {
                     a.acted_at.as_deref(),
                 )
             },
+            check_only,
         )
     }
 }

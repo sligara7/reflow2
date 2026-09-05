@@ -2,20 +2,25 @@
   "annotations": {
     "readOnlyHint": true
   },
-  "description": "Fetch a node by type and id — `{node: {...}}` when present, `{node: null}` when absent. An unknown `node_type` is REFUSED rather than answered `null`, because \"no such type\" and \"no such node\" are different facts and must not share one reply. Carries `discontinued`: true when an ACCEPTED Decision has withdrawn this node (OBSOLETES). READ IT — the stored `status` still records what was BUILT, so a withdrawn capability goes on saying `realized` and only this field tells you the thing is gone.",
+  "description": "Fetch a node by id — `{node: {...}}` when present, `{node: null}` when absent. `node_type` is OPTIONAL: the id prefix names the type by convention and it is resolved for you; if the id is held by more than one type the read REFUSES and names them rather than guess. When you do pass `node_type`, an unknown one is REFUSED rather than answered `null`, because \"no such type\" and \"no such node\" are different facts and must not share one reply. Carries `discontinued`: true when an ACCEPTED Decision has withdrawn this node (OBSOLETES). READ IT — the stored `status` still records what was BUILT, so a withdrawn capability goes on saying `realized` and only this field tells you the thing is gone.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
     "properties": {
       "id": {
+        "description": "The node id. Its prefix (`req:`, `dec:`, `ver:` …) names the type by\nconvention, so `node_type` may be omitted.",
         "type": "string"
       },
       "node_type": {
-        "type": "string"
+        "default": null,
+        "description": "Optional since 2026-09-05: when omitted the type is resolved from the id.\nIf the id is held by MORE THAN ONE type (a convention violation, but\nwritable) the read REFUSES and names them — it never guesses.",
+        "type": [
+          "string",
+          "null"
+        ]
       }
     },
     "required": [
-      "node_type",
       "id"
     ],
     "type": "object"

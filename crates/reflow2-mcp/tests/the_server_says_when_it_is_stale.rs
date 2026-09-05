@@ -243,3 +243,76 @@ fn the_next_entries_name_the_remedy_and_the_trap() {
         "unknown must not read as a clean bill: {UNKNOWN_NEXT}"
     );
 }
+
+// ---- Currency has a NON-LINUX answer (Alex, macOS, v0.47.0, 2026-09-05) ----
+//
+// `fact:defect-currency-is-read-from-proc-self-exe-so-every-non-linux-run-
+// answers-unknown-on-every-call`. The old check read `/proc/self/exe` and
+// nothing else, so every macOS call answered "unknown, verify another way".
+// The portable fingerprint (size:mtime of current_exe) already existed in
+// shared.rs for client election; the verdict below combines the two. Pinned
+// as a PURE function so the darwin case can be asserted on a Linux CI box.
+//
+// Observed failing first: these did not compile until `currency_verdict`
+// existed (E0425), which is the failing-first evidence for a fn-that-did-not-
+// exist; the behavioural cases below then pinned each branch.
+
+#[test]
+fn without_proc_a_matching_fingerprint_reads_current_not_unknown() {
+    // The macOS case: no /proc, but the executable can be fingerprinted and
+    // has not changed since start. Must be a real answer, not "unknown".
+    let (stale, note) = currency_verdict(None, Some("100:5"), Some("100:5"));
+    assert_eq!(
+        stale,
+        Some(false),
+        "same fingerprint -> current, not unknown"
+    );
+    assert!(note.starts_with("current"), "note must say current: {note}");
+}
+
+#[test]
+fn without_proc_a_changed_fingerprint_reads_stale() {
+    let (stale, note) = currency_verdict(None, Some("100:5"), Some("120:9"));
+    assert_eq!(
+        stale,
+        Some(true),
+        "fingerprint moved -> the binary was replaced"
+    );
+    assert!(note.starts_with("STALE"), "{note}");
+}
+
+#[test]
+fn unknown_only_when_neither_proc_nor_fingerprint_can_answer() {
+    let (stale, note) = currency_verdict(None, None, None);
+    assert_eq!(stale, None, "both paths failed -> honestly unknown");
+    assert_eq!(note, UNKNOWN_NOTE);
+    // And a missing START fingerprint (captured too late) is also unknown,
+    // never a guess.
+    assert_eq!(currency_verdict(None, None, Some("100:5")).0, None);
+}
+
+#[test]
+fn a_deleted_proc_link_is_stale_whatever_the_fingerprint_says() {
+    // Linux primary path: the kernel marks a replaced inode `(deleted)`. That
+    // is stronger than a fingerprint and wins even if size+mtime happen to match.
+    let (stale, _) = currency_verdict(
+        Some("/usr/bin/reflow2-mcp (deleted)"),
+        Some("100:5"),
+        Some("100:5"),
+    );
+    assert_eq!(stale, Some(true));
+}
+
+#[test]
+fn a_clean_proc_link_with_a_moved_fingerprint_is_stale_too() {
+    // Overwritten IN PLACE (cp over the file keeps the inode): /proc shows no
+    // `(deleted)` marker but the mtime moved. Either signal is enough.
+    let (stale, _) = currency_verdict(Some("/usr/bin/reflow2-mcp"), Some("100:5"), Some("100:7"));
+    assert_eq!(
+        stale,
+        Some(true),
+        "a changed fingerprint is stale even when the link is clean"
+    );
+    let (stale, _) = currency_verdict(Some("/usr/bin/reflow2-mcp"), Some("100:5"), Some("100:5"));
+    assert_eq!(stale, Some(false));
+}

@@ -107,9 +107,23 @@ pub const CURRENT_NOTE: &str =
     "current: this server's executable is still the file it was started from.";
 
 /// What it says when the question could not be asked at all.
-pub const UNKNOWN_NOTE: &str = "unknown: /proc/self/exe is unreadable (non-Linux, or a \
-     restricted environment). Unknown is not `false` — this server cannot tell you whether it is \
-     current, so verify the running version another way before trusting a rollup.";
+pub const UNKNOWN_NOTE: &str = "unknown: /proc/self/exe is unreadable AND the executable could \
+     not be fingerprinted (size+mtime), so neither currency check could run. Unknown is not \
+     `false` — this server cannot tell you whether it is current, so verify the running version \
+     another way before trusting a rollup.";
+
+/// The fingerprint path's own wording, so a reader knows WHICH check answered.
+/// Weaker than the `(deleted)` link in one way: a binary replaced by one of
+/// identical size and mtime reads current. Rare, and the link path (Linux)
+/// does not share it.
+pub const FINGERPRINT_CURRENT_NOTE: &str = "current: this server's executable has the same \
+     size and mtime it had at start (no /proc on this platform, so currency is read from the \
+     file's fingerprint).";
+pub const FINGERPRINT_STALE_NOTE: &str = "STALE: this server's executable changed size or \
+     mtime since it started (read from the file's fingerprint — no /proc on this platform), so \
+     every computed rollup it returns came from code that is no longer on disk. Graph WRITES \
+     are unaffected. TO REFRESH: `reflow2-mcp --graph-path <path> --stop-shared`, then make \
+     any tool call.";
 
 /// Has this process's own executable been replaced since it started?
 ///
@@ -147,15 +161,54 @@ pub const UNKNOWN_NOTE: &str = "unknown: /proc/self/exe is unreadable (non-Linux
 ///
 /// Non-Linux has no `/proc`, so the honest answer there is `unknown`.
 fn exe_replaced_since_start() -> (Option<bool>, &'static str) {
-    let Ok(link) = std::fs::read_link("/proc/self/exe") else {
-        return (None, UNKNOWN_NOTE);
+    let link = std::fs::read_link("/proc/self/exe")
+        .ok()
+        .map(|p| p.to_string_lossy().into_owned());
+    let now = crate::shared::exe_fingerprint();
+    currency_verdict(
+        link.as_deref(),
+        crate::shared::startup_fingerprint(),
+        now.as_deref(),
+    )
+}
+
+/// The currency verdict from BOTH signals, as a pure function so the non-Linux
+/// branch can be asserted on a Linux CI box.
+///
+/// Two independent signals, either sufficient for STALE:
+/// - the `/proc/self/exe` link text carrying ` (deleted)` (Linux; a replaced
+///   inode — the strongest signal, and it sees a replace even when size and
+///   mtime happen to match);
+/// - the executable's size:mtime fingerprint differing from the one captured
+///   at process start (portable; ALSO catches an in-place overwrite, which
+///   keeps the inode so the link stays clean).
+///
+/// CURRENT needs the link clean (or absent) AND the fingerprints equal (or
+/// unavailable). UNKNOWN only when neither signal could be read at all —
+/// "I could not look" is never reported as "I looked and I am current".
+/// A missing START fingerprint (captured too late to mean anything) counts as
+/// unavailable, never as a match.
+///
+/// `fact:defect-currency-is-read-from-proc-self-exe-so-every-non-linux-run-
+/// answers-unknown-on-every-call` — before this, every macOS `loop_status`
+/// answered unknown.
+pub fn currency_verdict(
+    proc_link: Option<&str>,
+    start_fp: Option<&str>,
+    now_fp: Option<&str>,
+) -> (Option<bool>, &'static str) {
+    let link_deleted = proc_link.map(|l| l.ends_with(" (deleted)"));
+    let fp_moved = match (start_fp, now_fp) {
+        (Some(a), Some(b)) => Some(a != b),
+        _ => None,
     };
-    // The marker is on the LINK TEXT, not the target: the inode still exists,
-    // which is exactly why the process keeps serving and nothing else notices.
-    if link.to_string_lossy().ends_with(" (deleted)") {
-        (Some(true), STALE_NOTE)
-    } else {
-        (Some(false), CURRENT_NOTE)
+    match (link_deleted, fp_moved) {
+        (Some(true), _) => (Some(true), STALE_NOTE),
+        (Some(false), Some(true)) => (Some(true), FINGERPRINT_STALE_NOTE),
+        (Some(false), _) => (Some(false), CURRENT_NOTE),
+        (None, Some(true)) => (Some(true), FINGERPRINT_STALE_NOTE),
+        (None, Some(false)) => (Some(false), FINGERPRINT_CURRENT_NOTE),
+        (None, None) => (None, UNKNOWN_NOTE),
     }
 }
 
@@ -911,6 +964,25 @@ pub(crate) fn bulk_result<T, D: serde::Serialize>(
     report: reflow2_core::bulk::BulkReport<T>,
     render: impl Fn(T) -> D,
 ) -> Result<CallToolResult, McpError> {
+    if report.check_only {
+        // A CHECK was asked for and a check is what comes back — this is not a
+        // rejected write dressed as success (dec:bulk-is-all-or-nothing-with-
+        // per-item-findings forbids that): nothing was asked to be written.
+        // `would_apply` is the answer to the question the caller asked.
+        let checked = report.written.len() + report.failures.len();
+        return ok_json(json!({
+            "check_only": true,
+            "applied": false,
+            "checked": checked,
+            "would_apply": report.failures.is_empty(),
+            "failures": report.failures,
+            "note": if report.failures.is_empty() {
+                "every item validated; send the same batch without check_only to write it"
+            } else {
+                "fix the listed items and send the WHOLE batch again — a bulk write is all or nothing, so the valid items are not written until every item passes"
+            },
+        }));
+    }
     if !report.applied {
         let summary = report
             .failures
@@ -921,7 +993,9 @@ pub(crate) fn bulk_result<T, D: serde::Serialize>(
         return Err(McpError::invalid_params(
             format!(
                 "nothing was written — {} of the items failed and a bulk write is all or \
-                 nothing. Every failure is listed so you can fix them together: {summary}",
+                 nothing, so the valid items were discarded too: fix the listed items and send \
+                 the WHOLE batch again (or send it with `check_only: true` first to validate \
+                 without writing). Every failure is listed so you can fix them together: {summary}",
                 report.failures.len()
             ),
             Some(json!({ "failures": report.failures })),
@@ -1676,6 +1750,11 @@ pub struct NodeSpecReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct CreateNodesReq {
+    /// Validate every item and WRITE NOTHING. The reply says whether the batch
+    /// would have applied and lists every failure, so a large batch is fixed
+    /// once and sent once instead of resent whole after each rejection.
+    #[serde(default)]
+    pub check_only: bool,
     pub nodes: Vec<NodeSpecReq>,
 }
 
@@ -1695,6 +1774,11 @@ pub struct EdgeSpecReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct CreateEdgesReq {
+    /// Validate every item and WRITE NOTHING. The reply says whether the batch
+    /// would have applied and lists every failure, so a large batch is fixed
+    /// once and sent once instead of resent whole after each rejection.
+    #[serde(default)]
+    pub check_only: bool,
     pub edges: Vec<EdgeSpecReq>,
 }
 
@@ -1728,6 +1812,11 @@ pub struct ChecksumAcceptReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct SetChecksumsReq {
+    /// Validate every item and WRITE NOTHING. The reply says whether the batch
+    /// would have applied and lists every failure, so a large batch is fixed
+    /// once and sent once instead of resent whole after each rejection.
+    #[serde(default)]
+    pub check_only: bool,
     pub accepts: Vec<ChecksumAcceptReq>,
 }
 
@@ -1765,6 +1854,11 @@ pub struct GapAckReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct AcknowledgeGapsReq {
+    /// Validate every item and WRITE NOTHING. The reply says whether the batch
+    /// would have applied and lists every failure, so a large batch is fixed
+    /// once and sent once instead of resent whole after each rejection.
+    #[serde(default)]
+    pub check_only: bool,
     pub gaps: Vec<GapAckReq>,
 }
 
@@ -2371,6 +2465,19 @@ pub struct TypedIdReq {
     pub id: String,
 }
 
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct GetNodeReq {
+    /// The node id. Its prefix (`req:`, `dec:`, `ver:` …) names the type by
+    /// convention, so `node_type` may be omitted.
+    pub id: String,
+    /// Optional since 2026-09-05: when omitted the type is resolved from the id.
+    /// If the id is held by MORE THAN ONE type (a convention violation, but
+    /// writable) the read REFUSES and names them — it never guesses.
+    #[serde(default)]
+    pub node_type: Option<String>,
+}
+
 #[derive(Debug, Default, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct ScanReq {
@@ -2901,8 +3008,14 @@ pub struct InterfaceSpecReq {
     /// Permitted actions — HTTP verbs, RPC methods, read/write commands.
     #[serde(default)]
     pub operations: Option<String>,
-    /// `none` / `api_key` / `oauth2` / `jwt` / `mtls` / `basic` / `signature` /
-    /// `kerberos` / `physical`.
+    /// AUTHENTICATION mechanism — how a caller PROVES WHO IT IS: `none` /
+    /// `api_key` / `oauth2` / `jwt` / `mtls` / `basic` / `signature` /
+    /// `kerberos` / `physical`. Read by seam pairing (a consumer requiring
+    /// `oauth2` must not pair with a provider offering `none`). NOT
+    /// AUTHORIZATION: which role or actor MAY use this interface has no field
+    /// yet (req:vocabulary-covers-personnel, deferred) — record that as an
+    /// Actor with INTERACTS_WITH to this Interface, and the role in
+    /// `description`. A role name here is refused as an unknown mechanism.
     #[serde(default)]
     pub auth: Option<String>,
     /// `none` / `tls` / `mtls` / `ipsec` / `vpn` / `air_gapped` / `physical`.

@@ -52,6 +52,11 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
     "properties": {
+      "check_only": {
+        "default": false,
+        "description": "Validate every item and WRITE NOTHING. The reply says whether the batch\nwould have applied and lists every failure, so a large batch is fixed\nonce and sent once instead of resent whole after each rejection.",
+        "type": "boolean"
+      },
       "gaps": {
         "items": {
           "$ref": "#/$defs/GapAckReq"

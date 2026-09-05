@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:e1e78500a8248c77957559bcaa13b5ff180550ef02b42a158a3018890ed01d91",
+  "content_hash": "sha256:0626f5a8bbdd452cf8c372039d2499122e51672935e9bd4d276d93dfdb853d0c",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -10165,6 +10165,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:dec:idea-a-bulk-write-can-be-checked-before-it-is-written",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:dec:idea-a-deliberately-open-edge-can-never-be-ranked-as-a-fit",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
@@ -11688,6 +11694,14 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-a-bulk-write-can-be-checked-before-it-is-written",
+      "properties": {
+        "role": "author"
+      },
+      "to_id": "who:alex"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-a-byte-backend-that-compiles-in-seconds",
       "properties": {
         "acted_at": "2026-08-24",
@@ -11991,6 +12005,14 @@
         "role": "author"
       },
       "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-add-epoch-assigns-the-next-sequence-or-names-it",
+      "properties": {
+        "role": "author"
+      },
+      "to_id": "who:alex"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -17403,6 +17425,16 @@
     },
     {
       "edge_type": "CAUSES",
+      "from_id": "art:schema-structure",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "schema/structure.yaml:92 names the authentication-mechanism enum `auth` — a word whose other common meaning (authorization: who may access) has no field anywhere in the schema, because req:vocabulary-covers-personnel is deferred. The narrow enum under a broad name is where the role gate lands and hard-fails.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:defect-interface-auth-names-a-mechanism-and-authorization-roles-have-no-home-so-the-role-gate-lands-on-the-wrong-field"
+    },
+    {
+      "edge_type": "CAUSES",
       "from_id": "art:schema-temporal",
       "properties": {
         "basis": "correlational",
@@ -17423,6 +17455,26 @@
     },
     {
       "edge_type": "CAUSES",
+      "from_id": "art:service",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "RequiredFields (service.rs) produces the refusal for every constructor and is type-agnostic by construction; add_epoch's handler calls __rf.i64(\"sequence\") then finish() with no epoch-specific pre-check, so the refusal cannot name the current maximum though it is one scan away.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:defect-add-epoch-requires-a-sequence-the-refusal-cannot-name-because-the-required-field-helper-is-generic"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "art:service",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "service.rs:149 exe_replaced_since_start reads /proc/self/exe via read_link with no cfg(target_os) branch and no fallback; on Err it returns (None, UNKNOWN_NOTE). On any non-Linux platform that path does not exist, so currency is unknown on every call. The portable fingerprint (shared.rs:115) sits one module away and is not consulted.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:defect-currency-is-read-from-proc-self-exe-so-every-non-linux-run-answers-unknown-on-every-call"
+    },
+    {
+      "edge_type": "CAUSES",
       "from_id": "art:tools-capture",
       "properties": {
         "basis": "correlational",
@@ -17430,6 +17482,16 @@
         "validation_status": "unvalidated"
       },
       "to_id": "fact:defect-two-prescribed-layer-pairs-are-missing-so-a-check-beside-its-ruling-is-refused-as-a-duplicate"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "art:tools-coherence",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "coherence.rs:278-300 attaches served_by to every loop_status and, when stale != Some(false), pushes stale_note into `next` each call. This is the amplifier: an unknown that would be one sentence per session becomes one per call. Not the cause of the unknown, but the reason it reads as noise.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:defect-currency-is-read-from-proc-self-exe-so-every-non-linux-run-answers-unknown-on-every-call"
     },
     {
       "edge_type": "CAUSES",
@@ -24912,6 +24974,96 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:alexs-four-surface-fixes-sequence-hint-get-node-by-id-auth-hint-and-bulk-check-only",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:bulk"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:alexs-four-surface-fixes-sequence-hint-get-node-by-id-auth-hint-and-bulk-check-only",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:alexs-four-surface-fixes-sequence-hint-get-node-by-id-auth-hint-and-bulk-check-only",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-structure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:alexs-four-surface-fixes-sequence-hint-get-node-by-id-auth-hint-and-bulk-check-only",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:alexs-four-surface-fixes-sequence-hint-get-node-by-id-auth-hint-and-bulk-check-only",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-search-first"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:alexs-four-surface-fixes-sequence-hint-get-node-by-id-auth-hint-and-bulk-check-only",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-built"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:alexs-four-surface-fixes-sequence-hint-get-node-by-id-auth-hint-and-bulk-check-only",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:alexs-four-surface-fixes-sequence-hint-get-node-by-id-auth-hint-and-bulk-check-only",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:alexs-four-surface-fixes-sequence-hint-get-node-by-id-auth-hint-and-bulk-check-only",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-query"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:alexs-four-surface-fixes-sequence-hint-get-node-by-id-auth-hint-and-bulk-check-only",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-temporal"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:allocation-follows-the-code-not-the-neighbour",
       "properties": {
         "accepted_baseline": false,
@@ -28860,6 +29012,51 @@
         "action": "modified"
       },
       "to_id": "cap:coverage"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:currency-has-a-non-linux-answer",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:main"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:currency-has-a-non-linux-answer",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:server-currency-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:currency-has-a-non-linux-answer",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:currency-has-a-non-linux-answer",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:shared"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:currency-has-a-non-linux-answer",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-no-per-design-globals"
     },
     {
       "edge_type": "CHANGED",
@@ -40940,6 +41137,16 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-a-bulk-write-can-be-checked-before-it-is-written",
+      "properties": {
+        "evidence": "This idea presupposes the standing decision and is defined relative to it: a check-only pass writes nothing (so atomicity is untouched), and apply-valid is opt-in only (an explicitly chosen state, which is the standing rationale's own exception). If the all-or-nothing decision were ever reversed this idea would be moot, not wrong — so it DEPENDS_ON that decision standing. It addresses the iteration cost that decision's rationale acknowledges it creates; read apart it could be mistaken for a reversal, which it is not.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:bulk-is-all-or-nothing-with-per-item-findings"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "dec:idea-a-byte-backend-that-compiles-in-seconds",
       "properties": {
         "evidence": "`KvBackend` lives in dynograph-foundation, not reflow2, so until the absorption's increment 5 brings dynograph-storage in-tree, swapping the byte store means changing another repository — which dec:idea-dynograph-crates-independent-in-code-coupled-in-release says reflow2's design has no standing to decide. Absorb first, then swap. The dependency also runs the other way in scope: if SQLite (option F) were taken it would subsume tantivy too, so increment 5 would absorb less than currently planned.",
@@ -43678,6 +43885,14 @@
     },
     {
       "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-a-bulk-write-can-be-checked-before-it-is-written",
+      "properties": {
+        "evidence": "Option (a), check_only, became the fix on four bulk tools; option (b), apply-valid-on-request, was not built and stays open on the idea. The corrected note (the whole batch MUST be resent after any failure) is now also what the all-or-nothing refusal says."
+      },
+      "to_id": "chg:alexs-four-surface-fixes-sequence-hint-get-node-by-id-auth-hint-and-bulk-check-only"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
       "from_id": "dec:idea-a-byte-backend-that-compiles-in-seconds",
       "properties": {
         "evidence": "The older thought, grown up. That node asks which embedded engine to pick on compile-speed grounds, and its own premise note says 'faster to compile' is true for a cold build and false for the iteration loop. This one changes what the question IS: if the store is a derived per-session cache, compile speed and durability stop being traded against each other, and picking wrong costs a re-hydrate rather than a migration."
@@ -43691,6 +43906,22 @@
         "evidence": "The idea, captured 2026-09-02 from the dev_storyflow report, turned over four options A-D. Anthony chose A on 2026-09-04 ('build the status-vs-prose sentence') and this capability is that build: one block in the reply the caller already receives, at the moment the divergence is created. The decision's status is left `proposed` deliberately - the ruling is his and recording it as accepted on his behalf is what dec:certainty-derived forbids."
       },
       "to_id": "cap:a-status-advance-says-whether-its-prose-predates-it"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-add-epoch-assigns-the-next-sequence-or-names-it",
+      "properties": {
+        "evidence": "Option (b) — name the current maximum in the refusal — became the fix. Option (a), auto-assign, was NOT taken for the reason the idea's own rationale gives (sequences are spaced on purpose) and remains open on the idea."
+      },
+      "to_id": "chg:alexs-four-surface-fixes-sequence-hint-get-node-by-id-auth-hint-and-bulk-check-only"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-get-node-by-id-alone-since-the-prefix-names-the-type",
+      "properties": {
+        "evidence": "The idea's MIDDLE PATH is what shipped: node_type optional, resolved by index, refused on collision. Promotion recorded structurally per the brainstorm skill step 5 rather than by rewriting the idea's prose."
+      },
+      "to_id": "chg:alexs-four-surface-fixes-sequence-hint-get-node-by-id-auth-hint-and-bulk-check-only"
     },
     {
       "edge_type": "EVOLVES_INTO",
@@ -51290,6 +51521,12 @@
       "from_id": "dec:external-blob-store-pressure",
       "properties": {},
       "to_id": "snap:epoch:arrival-delta:dec:external-blob-store-pressure"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:idea-a-bulk-write-can-be-checked-before-it-is-written",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:dec:idea-a-bulk-write-can-be-checked-before-it-is-written"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -125051,6 +125288,42 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:alexs-four-surface-fixes-sequence-hint-get-node-by-id-auth-hint-and-bulk-check-only",
+      "properties": {
+        "at": "2026-09-05",
+        "note": "FIXED AT THE MECHANISM THE FACT NAMED: the add_epoch handler now pre-checks `sequence` before the generic RequiredFields helper and the refusal names the current maximum (or 'no epochs yet'), so the caller no longer scans epochs to learn a number the tool already had. Pinned (add_epoch_without_a_sequence_names_where_you_are), observed failing first. NOT CLOSED: the fact's own ⑨ — whether auto-assignment is right at all — stays open on dec:idea-add-epoch-assigns-the-next-sequence-or-names-it; the shipped fix deliberately does NOT assign, because a sequence is a position claim and sequences are spaced on purpose."
+      },
+      "to_id": "fact:defect-add-epoch-requires-a-sequence-the-refusal-cannot-name-because-the-required-field-helper-is-generic"
+    },
+    {
+      "edge_type": "INVALIDATES",
+      "from_id": "chg:alexs-four-surface-fixes-sequence-hint-get-node-by-id-auth-hint-and-bulk-check-only",
+      "properties": {
+        "at": "2026-09-05",
+        "note": "THE TRIGGER IS ADDRESSED, THE CAUSE IS NOT — and the fact says which is which. Fix shape (1) shipped: set_interface_spec refuses a non-mechanism `auth` naming AUTHENTICATION, the legal values, and the AUTHORIZATION workaround (Actor INTERACTS_WITH + describe the role), and the Req doc-comment and schema description say the same. Pinned (interface_auth_refusal_says_it_is_authentication_not_authorization). BOUNDS: (a) the create_nodes / schema-validation path still refuses with legal values only — PropertyDef carries no description, so the hint cannot ride the core enum error without a schema-loader change; (b) the CAUSE — authorization roles have no home — is untouched: req:vocabulary-covers-personnel remains deferred by Anthony's word, and until it lands the role still lives in prose and an Actor edge. The fact stays open for (b)."
+      },
+      "to_id": "fact:defect-interface-auth-names-a-mechanism-and-authorization-roles-have-no-home-so-the-role-gate-lands-on-the-wrong-field"
+    },
+    {
+      "edge_type": "INVALIDATES",
+      "from_id": "chg:alexs-four-surface-fixes-sequence-hint-get-node-by-id-auth-hint-and-bulk-check-only",
+      "properties": {
+        "at": "2026-09-05",
+        "note": "THE get_node HALF IS NOW FIXED: node_type is optional and resolved from the id, with a collision refused rather than guessed (dec:idea-get-node-by-id-alone-since-the-prefix-names-the-type, built). The `description` half was fixed in #429 the same day. BOTH ARE UNRELEASED as of this note (0.47.1 is the latest cut), so Alex's report remains true of the binary he runs until the next release — which is the fact's own point about cadence, and is unchanged by this event."
+      },
+      "to_id": "fact:the-known-arg-traps-recurred-in-a-fourth-report-on-a-build-that-predates-their-fix"
+    },
+    {
+      "edge_type": "INVALIDATES",
+      "from_id": "chg:currency-has-a-non-linux-answer",
+      "properties": {
+        "at": "2026-09-05",
+        "note": "THE CAUSE IS FIXED, AT THE CAUSE: currency_verdict combines the /proc link with a startup size:mtime fingerprint, so a non-Linux server answers current/stale and 'unknown' is reserved for both signals failing. The fact's own FIX SHAPE paragraph is what shipped, including the pure function pinned failing-first. BOUNDED, and this is why it is an INVALIDATES and not a closure: (1) the fact's ⑨ still stands — NOT RUN ON macOS; the darwin case is asserted through the pure function on Linux, and Alex's next run is the real verification. (2) The AMPLIFIER clause (the note carried into `next` on every call when not current) is untouched: with an answer on macOS it no longer fires there, but a genuine UNKNOWN (both paths failing) is still carried per call — a smaller open question. (3) The class statement, the measurement, and the observation that the portable primitive sat unused one module away all remain true and are the reason the fix took the shape it did."
+      },
+      "to_id": "fact:defect-currency-is-read-from-proc-self-exe-so-every-non-linux-run-answers-unknown-on-every-call"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:degraded-follows-transport",
       "properties": {
         "at": "2026-07-26",
@@ -132664,6 +132937,14 @@
     },
     {
       "edge_type": "TRIGGERS",
+      "from_id": "fact:defect-add-epoch-requires-a-sequence-the-refusal-cannot-name-because-the-required-field-helper-is-generic",
+      "properties": {
+        "evidence": "The measured defect (a generic refusal that cannot name the sequence) is what raises this question. The fact records the mechanism; this idea records Alex's two proposed responses to it and the counter-argument from the record. A measurement and the decision it informs — the prescribed pair."
+      },
+      "to_id": "dec:idea-add-epoch-assigns-the-next-sequence-or-names-it"
+    },
+    {
+      "edge_type": "TRIGGERS",
       "from_id": "fact:genesis-phase-is-a-third-instance-of-a-deliberate-state-read-as-a-defect",
       "properties": {
         "evidence": "That measurement is what raised this question: it establishes the genesis islands are correct-by-construction AND that parks cannot reach them, which is precisely the pair of facts that makes 'should a detector read a declared phase' worth asking. Drawn from the fact to the idea — the measurement initiated the question, not the reverse."
@@ -136750,7 +137031,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:40812be0ea28e617ef517ce4d864893b0f979f5bbd32268a6a98af50d589a059",
+        "checksum": "sha256:86063e51335cd74b4e8a2fd59c6e7c9c2dbce176ab162be3923d59fd6b716196",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/bulk.rs",
         "name": "bulk.rs",
@@ -137597,7 +137878,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:58d8400fb211ccbd443b497f041f3ef7eb1ebce73e65cb41702e8b9f552423a1",
+        "checksum": "sha256:11035fe84810a7b66a0e4fc0577462d95f52b351873ed44838abaaf91aa153d0",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/graph.rs",
         "name": "crates/reflow2-core/src/graph.rs",
@@ -137965,7 +138246,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:bfb897b70007a5832915d2c1df7d72c52db17691e51eed46c5230d32b851761e",
+        "checksum": "sha256:5c3c610ae70704dda6566145c89be08d5ef91e91591c735f2aac91d72de9f676",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/main.rs",
         "name": "main.rs",
@@ -138700,7 +138981,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:c25836f58f929170a643d37cd690de1ea81c97fc09edf43c97fb980e47c691b4",
+        "checksum": "sha256:6fa38af100176db215ea6531d69ff9e032e0961cf4edd1df95a08fd9c8789cde",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/structure.yaml",
@@ -138857,7 +139138,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:42c6554f25714be6d982a8f946c3617f20dda3f32448aca7f349f114ed645bef",
+        "checksum": "sha256:1b8762d0754d990f05460f86d284a036276643685e7b346677f681429d2d4b63",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/tests/the_server_says_when_it_is_stale.rs",
         "name": "the_server_says_when_it_is_stale.rs",
@@ -138870,7 +139151,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:35438cc262c8f361a333053aa69c31cdf32a8581a2caccfd6a86edfc2164808d",
+        "checksum": "sha256:d07764e8cb664c5c889214285ab1c707f2c3fa3e6835c0a62442a15fc0dcb566",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -138907,7 +139188,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:07c14dfde457ed916d2624ec716758b3babf87003502dec8c2752431480d232b",
+        "checksum": "sha256:3105a880dc65dec1a1a7d7b38730ff0636ca5096e096c735edbbd423c25b382d",
         "location": "crates/reflow2-mcp/src/shared.rs",
         "name": "shared.rs",
         "status": "realized"
@@ -139394,7 +139675,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:fb8d7c914c3e6a8440050d4f5a09b719072e90f12a40e65222dc6f24f9752757",
+        "checksum": "sha256:a209afb5843b6531ba61a7861d41bb8323a08d215e8d5c4383eac700fe4af092",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/tests/no_per_design_process_globals.rs",
         "name": "no_per_design_process_globals.rs",
@@ -139475,7 +139756,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:84a404662909195a97f5ea03af3b507a65df768b133f3cbc6a46ae20fb31edf9",
+        "checksum": "sha256:cd6cf04d7acc586c7d46ff51b2c9bef871c9eb6ce173427feab846c6061c863e",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/tests/search_first_fires_at_the_tool.rs",
         "name": "search_first_fires_at_the_tool.rs — six cases: the refusal, the rollback, both deliberate routes, the no-false-refusal counterweight, and the cross-type catch",
@@ -139625,7 +139906,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:762dc0eabfe9f31516f14b669db5fdf97716a515055845d767c2b1bcd8dbb0d9",
+        "checksum": "sha256:503294ba5349c14c990f815f697f5b4b329f2a498b4db72d56cfaac1f65f059d",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/built.rs",
         "name": "tools/built.rs",
@@ -139638,7 +139919,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:90914c7d0373341faa31c740b92bb4cf20997189352d210d66d6d669a9a845e9",
+        "checksum": "sha256:62201942158b2d826926a2a2a3797f4f729c1f85e2b3e0f0c33c363440a48e5e",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
         "name": "crates/reflow2-mcp/src/tools/capture.rs",
@@ -139664,7 +139945,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b2cd365cc46e5f7b8508052a8c26377cc1da2d00128eed304b60f31de5714e8b",
+        "checksum": "sha256:1cd8547494646e99c83bbefe04d56ff057f02668946fc904bff870289ef185c5",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
@@ -139714,7 +139995,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:480050260d4f66e4ba54a59f5244c2e2bc96fa728311fdaf4bd33e669d324847",
+        "checksum": "sha256:c4bb2180f615036f73991077dd40f56c2da4294afe126a1db405684f42262893",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/query.rs",
         "name": "tools/query.rs",
@@ -139738,7 +140019,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:533fddeda528b8ef2a1f2cd5f4804b6e75b0d8035ed35df5577563b091d17dbc",
+        "checksum": "sha256:b3d457aca1614637074994e45c7fcba947a9907a524de39c5dc2c56b7d4bc990",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/temporal_tools.rs",
         "name": "tools/temporal_tools.rs",
@@ -145803,6 +146084,18 @@
       }
     },
     {
+      "node_id": "chg:alexs-four-surface-fixes-sequence-hint-get-node-by-id-auth-hint-and-bulk-check-only",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-09-05",
+        "name": "Four surface fixes from Alex's report: add_epoch names the sequence it needs, get_node resolves by id alone, Interface.auth says it is authentication, and a bulk write can be checked without being written",
+        "rationale": "Each is the fix the root-cause fact named, not the reporter's literal ask where those differed. (2) Alex offered auto-assign OR say-so-in-the-error; the record (chg:the-philosophy-epoch-makes-room-for-a-cut) shows sequences are spaced on purpose, so say-so shipped and auto-assign stays open on dec:idea-add-epoch-assigns-the-next-sequence-or-names-it. (3) The prefix is a convention not a rule, so a by-id read must be able to SEE a collision — node_type_index cannot (first type wins), hence the new resolver that scans every type and the refusal on >1. (4) `auth` is a mechanism because seam pairing keys on it (dec:pairing-role-placement); the real gap is the deferred personnel vocabulary, so the fix points at it rather than inventing a role field. PropertyDef carries no description, so the hint lives in the typed handler; the create_nodes/schema-validation path still only lists legal values — a bound. (5) Alex's 'resend the whole payload' is FORCED by atomicity (my first brainstorm draft said otherwise and was corrected); check_only removes the iterate-by-rejection cost without touching dec:bulk-is-all-or-nothing-with-per-item-findings — a requested check returning applied:false is not a rejected write dressed as success, which is what that decision forbids. WHAT WAS NOT DONE: the same check_only on record_asked_questions (a prompt generator, not a user-facing bulk write) and release_includes_all (already has apply:true as its dry-run). Built on Anthony's ruling of 2026-09-05: 'I want to do all five fixes.'",
+        "subject": "system",
+        "summary": "Alex (v0.47.0, 2026-09-05), items 2-5; item 1 is chg:currency-has-a-non-linux-answer. (2) add_epoch: when `sequence` is omitted on CREATE, the handler pre-checks before the generic required-field helper and refuses naming the current maximum ('highest existing sequence is N across K epochs, N+1 is next, leaving a gap keeps room'), or 'no epochs yet'. NOT auto-assigned — a sequence is a position claim and sequences are deliberately spaced. Also lists any other missing fields so it stays all-at-once. (3) get_node takes GetNodeReq: `node_type` optional; when omitted the id is resolved via the new core `node_types_holding(id)` (a sorted scan of every type); zero holders -> {node: null}; one -> that type; MORE THAN ONE -> REFUSED naming them, never guessed. delete_node keeps the strict TypedIdReq on purpose. 17 test call sites migrated. (4) set_interface_spec pre-checks `auth` against the schema's enum and refuses with: AUTHENTICATION mechanism, read by seam pairing, legal values listed, and 'if you meant AUTHORIZATION there is no field yet (req:vocabulary-covers-personnel, deferred) — Actor INTERACTS_WITH + describe the role'. The Req doc-comment and schema/structure.yaml description say the same, so the tool schema teaches before the refusal does. (5) `check_only: true` on create_nodes, create_edges, set_artifact_checksums, acknowledge_gaps: core bulk::atomic gains a check_only mode (validate every item, ALWAYS discard), BulkReport carries `check_only`, five `*_with(check_only)` core siblings (originals delegate), and bulk_result returns a CHECK payload {check_only, applied:false, checked, would_apply, failures, note}. The all-or-nothing refusal now says plainly that the valid items were discarded too and the WHOLE batch must be resent, and offers check_only. Pins in tools.rs (four tests), observed failing first (E0422/E0425 — the types and fns did not exist). core 1578/0, mcp 356/0, fmt/clippy clean, validate_schema OK, toolsnaps regenerated (6 changed)."
+      }
+    },
+    {
       "node_id": "chg:allocation-follows-the-code-not-the-neighbour",
       "node_type": "ChangeEvent",
       "properties": {
@@ -147363,6 +147656,18 @@
       "properties": {
         "change_type": "new_feature",
         "name": "The design can say what it has never heard of"
+      }
+    },
+    {
+      "node_id": "chg:currency-has-a-non-linux-answer",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-09-05",
+        "name": "served_by.stale answers on macOS: currency is read from two signals, the /proc link and a startup fingerprint, and is unknown only when neither can be read",
+        "rationale": "ROOT CAUSE, from the record (fact:defect-currency-is-read-from-proc-self-exe-so-every-non-linux-run-answers-unknown-on-every-call): a Linux-only primitive used where the portable one already sat one module away, on a project whose accepted req:platform names macOS. Three candidates were tested; the old-build one was refuted, and both the mechanism (no fallback) and the amplifier (the note carried on every call) were confirmed. This fix reaches the CAUSE: on macOS the question now has an answer, so the per-call note disappears by construction rather than by suppression. WHAT IT TRADES: the fingerprint path reads a binary replaced by one of identical size and mtime as current — rare, and the Linux link path does not share it; the note says which path answered so a reader can weigh it. WHAT IS NOT CLOSED: whether an UNKNOWN (both paths failing) should still be carried on every loop_status or once per session is a smaller separate question, untouched. NOT RUN ON macOS: the darwin behaviour is asserted through the pure function on a Linux box; Alex's next run is the real verification.",
+        "subject": "system",
+        "summary": "exe_replaced_since_start (service.rs) read /proc/self/exe and nothing else, so on any non-Linux platform loop_status answered 'unknown, verify another way' on every call (Alex, macOS, v0.47.0). It now feeds a pure `currency_verdict(proc_link, start_fp, now_fp)`: STALE if the link carries ` (deleted)` OR the executable's size:mtime fingerprint differs from the one captured at process start; CURRENT only if the link is clean-or-absent AND fingerprints match-or-unavailable; UNKNOWN only when neither signal could be read. shared.rs gains `startup_fingerprint()` (a OnceLock initialised by `exe_fingerprint`, the portable primitive client election already used), called first thing in main so the value is genuinely the START one. Two new notes say WHICH check answered (FINGERPRINT_CURRENT_NOTE / FINGERPRINT_STALE_NOTE); UNKNOWN_NOTE now says both paths failed. The fingerprint also catches an in-place overwrite (same inode, clean link, moved mtime) that the link alone missed. STARTUP_FINGERPRINT is allowlisted in no_per_design_process_globals.rs with its reason (the executable is a fact about the process, not a design). Five pins in the_server_says_when_it_is_stale.rs, OBSERVED FAILING FIRST (E0425 — the function did not exist), then each branch pinned: no-proc+match -> current; no-proc+moved -> stale; neither -> unknown; deleted link wins; clean link + moved fingerprint -> stale. mcp 352/0, fmt/clippy clean."
       }
     },
     {
@@ -152547,6 +152852,17 @@
       }
     },
     {
+      "node_id": "dec:idea-a-bulk-write-can-be-checked-before-it-is-written",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Recorded as BRAINSTORMING, not as a proposal — Alex's observation (v0.47.0, 2026-09-05), in his words: 'Bulk writes are all or nothing, which is correct but costly at scale. One bad enum value is a 21-item batch rejects all 21, so you re-send the whole payload. Fine by design; just expensive when iterating.' He accepts the design; the idea is about the iteration cost. OPTIONS: (a) DRY-RUN / VALIDATE-ONLY — a `check_only: true` flag runs every item through validation and returns the full per-item finding list WITHOUT writing, so a 21-item batch is corrected once and sent once: two sends worst case instead of N. (b) APPLY-VALID-ON-REQUEST — an explicit `apply_valid: true` writes the items that pass and returns the failures, so the resend is 1 item not 21.\n\nCORRECTED the same hour: a first draft of this node offered a third option, 'nothing new — resend only the failed item, the per-item index already lets you.' THAT WAS WRONG. All-or-nothing means the VALID items were discarded too, so the whole payload MUST be resent after any failure — Alex's 'you re-send the whole payload' is forced by the design, not a client habit. The per-item index tells you what to FIX, not what to omit. Option (c) is withdrawn; (a) is the cheapest correct answer.",
+        "kind": "exploratory",
+        "name": "OPEN — a bulk write is all-or-nothing by design, so one bad enum in 21 items means re-sending 21. Should a batch be checkable before it is written, or partially applicable on request?",
+        "rationale": "THE STANDING DECISION AND WHY IT STANDS: dec:bulk-is-all-or-nothing-with-per-item-findings — 'a partial bulk write leaves a design in a state nobody chose', and the store's atomic batch makes all-or-nothing free. That argues directly AGAINST (b) as a default and is why (b) here is opt-in only: an explicit request is a chosen state. (a) contradicts nothing — it writes nothing — and is the cheapest honest answer to the iteration cost; its cost is one flag on the bulk tools, ideally in the one shared helper they all pass through. Ranking is a finding; Anthony rules — and on 2026-09-05 he ruled: build the fixes.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-a-byte-backend-that-compiles-in-seconds",
       "node_type": "Decision",
       "properties": {
@@ -152977,6 +153293,17 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-14.\n\nHIS WORDS, restating settled doctrine first and then adding the new part: *\"we purposefully did not define every UAF/DoDAF view as those are not appropriate for every design project AND reflow2 was meant as 'design anything' and 'build anything' type construct. This is why I left rendering the reflow2 graph to be able to store any design structure/content and left the agent the responsible party for 'rendering' the drawing. It'd be like if I requested you to render me an OV-1 of reflow2 right now — you'd refer to the graph and pull what you need; then you'd build me a mermaid diagram or some html file or markdown file to show what the OV-1 is. That being said, sometimes not every systems engineering view is applicable to a given design. Feel like the agent should be able to also say, 'an OV-1 isn't applicable for your design; are you sure you want me to generate?'\"*\n\n═══ 📌 THE DOCTRINE THIS RESTS ON, RECORDED SO IT STOPS BEING RE-PROPOSED ═══\n\n**THE UAF/DoDAF VIEW CATALOGUE IS DELIBERATELY NOT IN REFLOW2.** The division is: the GRAPH stores any design structure or content; the AGENT renders the drawing, in whatever medium suits — mermaid, HTML, markdown. Enumerating standard views inside reflow2 would bind a \"design anything\" tool to one discipline's catalogue, and `req:design-anything` (ACCEPTED) is the requirement that forbids it.\n⚠️ **A SESSION PROPOSED EXACTLY THAT AN HOUR EARLIER** — option (c) of `dec:idea-a-view-can-slice-by-altitude-not-only-by-aspect` suggested rendering CV-1/CV-2/CV-3/AV-1 as first-class outputs. **Closed on his word.** It is recorded here because the pull toward hard-coding a familiar catalogue is strong and will recur.\n\n═══ ⭐⭐ THE FINDING: APPLICABILITY AND INVENTION ARE THE SAME QUESTION ═══\n\n`dec:views-are-projections` already holds that **a view is a projection of the graph and renderer fill-ins are DEFECTS**; `cap:bl-40` holds SYNTHESIZE to a no-extrapolation standard.\n\n🛑 **NOW NOTICE WHAT \"NOT APPLICABLE\" ACTUALLY MEANS.** A view does not apply to a design precisely when the graph lacks the material that view projects from. And if the material is absent, **rendering it anyway REQUIRES the agent to invent the content** — which is the defect the doctrine already forbids. So:\n\n  > *\"Is this view applicable?\"* and *\"would drawing it force me to make things up?\"* are **the same question asked at two different times.**\n\n⇒ This is not a new principle. **It is the existing no-fill-in rule moved EARLIER — from a defect caught after the fact, to a question asked before the pen touches paper.** That reframing is what makes it worth building: the rule currently has no moment at which it is enforced, because the only party who could notice is the agent that is already mid-render and motivated to produce something.\n\n⇒ AND IT MAKES APPLICABILITY COMPUTABLE RATHER THAN A JUDGEMENT. *\"Does an OV-1 apply?\"* is a matter of taste. *\"Does this graph hold operational actors, activities and the exchanges between them, and how many?\"* is a count. **The second is answerable by reflow2 without reflow2 ever knowing what an OV-1 is.**\n\n═══ THE SHAPE THAT KEEPS THE CATALOGUE OUT ═══\n\nThe agent DECLARES the projection it intends to draw — the node types and edge types it will read. reflow2 answers with what it actually holds and what is absent. The agent then either renders, or says *\"an OV-1 isn't applicable for your design; are you sure?\"* **reflow2 never learns the view's name, so the catalogue stays with the agent and the counting stays with the graph.** That division is the same one `dec:three-party-checks` already sets: the LLM speaks, the graph counts, the human decides.\n\n⚠️ AND IT MUST ASK, NEVER REFUSE. His wording is *\"are you sure you want me to generate?\"* — a warning with a way through, not a block. Consistent with `dec:ask-not-repair` and `dec:report-dont-judge`. A sparse view is sometimes exactly what the user wants to see; an empty OV-1 is itself a finding about the design.\n\nOPTIONS, NONE CHOSEN.\n(a) LEAVE IT TO THE AGENT — status quo. It can already look at the graph and judge. Counter: unrepeatable between sessions, and the party judging is the one being asked to produce a deliverable, which is the weakest possible position for saying \"this cannot honestly be drawn\".\n(b) ⭐ REFLOW2 ANSWERS A DECLARED PROJECTION — the agent names node/edge types, reflow2 returns counts and absences. Keeps the catalogue out, makes the answer computable and repeatable. Counter: an agent can declare the wrong projection and get a confident answer to the wrong question.\n(c) A SERVED SKILL carries the discipline — a render-a-view skill whose steps include checking the material before drawing. Cheapest, and consistent with skills being where disciplines live. Counter: it is another instruction, and `req:skill-use-survives-a-long-session` is the standing evidence that instructions lose to urgency.\n(d) HARD-CODE PER-VIEW APPLICABILITY RULES. **CLOSED on Anthony's word** — this is the catalogue-in-reflow2 route `req:design-anything` forbids.\n\n🛑 THE LIMIT WORTH STATING: material presence is necessary but not sufficient. A view can be structurally renderable and still be the wrong instrument for the domain — an OV-1 of a machine shop might have actors and activities to draw and still be a category error. **Counting cannot see that; only the human can.** So (b) at its best reports *\"here is what I hold and what I lack\"*, and the applicability verdict stays with the person — which is the same honest division reflow2 uses everywhere else.",
         "name": "OPEN — should reflow2 be able to tell an agent that a requested view does not apply to this design, given \"would rendering it require invention?\" is the same question as \"is it applicable?\"",
         "rationale": "Captured under the brainstorm skill. Recorded separately from the altitude-view node because they are separately answerable: reflow2 could learn to report what a declared projection would find without ever gaining an altitude view, and vice versa. The reason this is worth a node rather than a note is the equivalence at its centre — applicability and invention turn out to be one question asked at two times — which converts a matter of taste into a count, and gives the existing no-fill-in doctrine the enforcement moment it currently lacks. Anthony's restatement of why the view catalogue is deliberately absent is recorded here too, because a session proposed hard-coding it an hour earlier and the pull toward a familiar standard catalogue will recur.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-add-epoch-assigns-the-next-sequence-or-names-it",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Recorded as BRAINSTORMING, not as a proposal — Alex's idea (v0.47.0, 2026-09-05), in his words: 'Could auto assign next-in-sequence or say so in the error.' Two options he named: (a) AUTO-ASSIGN — `sequence` becomes optional and, when omitted, the tool writes max(existing)+1; one call, no scan. (b) NAME IT IN THE ERROR — `sequence` stays required, but the refusal says 'the highest existing sequence is N' so the second call can be right. WHAT IS CHEAP: (b) is a handler pre-check before the generic required-field helper, the same shape as the add_change_event description redirect (#429); no schema change, no semantics change. (a) is also cheap to code.",
+        "kind": "exploratory",
+        "name": "OPEN — add_epoch requires `sequence` but the refusal cannot say what value would work. Should the tool auto-assign next-in-sequence, or should the refusal name the current maximum?",
+        "rationale": "THE COUNTER-ARGUMENT TO (a), from the record: sequences are not just order — they are deliberately SPACED and re-ordered. chg:the-philosophy-epoch-makes-room-for-a-cut moved a planned epoch 360 -> 365 so a release cut could take the sequence at which it actually happened. An auto-assigned max+1 would pack every new epoch against the last one and leave no room for exactly that move, and it would silently choose a position the user may not mean (a planned epoch usually belongs AFTER a gap, not immediately next). So (a) trades a round-trip for a quiet positional claim — the defaults-do-not-assert concern in a new coat. (b) removes the scan without making a choice for anyone. A middle path: (b) now, and auto-assign only when the caller passes an explicit `sequence: \"next\"` — a stated request, not a default. A ranking is a finding, not a decision; Anthony rules.",
         "status": "proposed"
       }
     },
@@ -168376,6 +168703,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:preserved-on-write:dec:idea-a-bulk-write-can-be-checked-before-it-is-written",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:alex\",\"properties\":{\"role\":\"author\"}},{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Decision\",\"other_id\":\"dec:bulk-is-all-or-nothing-with-per-item-findings\",\"properties\":{\"evidence\":\"This idea presupposes the standing decision and is defined relative to it: a check-only pass writes nothing (so atomicity is untouched), and apply-valid is opt-in only (an explicitly chosen state, which is the standing rationale's own exception). If the all-or-nothing decision were ever reversed this idea would be moot, not wrong — so it DEPENDS_ON that decision standing. It addresses the iteration cost that decision's rationale acknowledges it creates; read apart it could be mistaken for a reversal, which it is not.\",\"optional\":false,\"weight_basis\":\"estimated\"}}]",
+        "state": "{\"decision\":\"Recorded as BRAINSTORMING, not as a proposal — Alex's observation (v0.47.0, 2026-09-05), in his words: 'Bulk writes are all or nothing, which is correct but costly at scale. One bad enum value is a 21-item batch rejects all 21, so you re-send the whole payload. Fine by design; just expensive when iterating.' He accepts the design; the idea is about the iteration cost. OPTIONS: (a) DRY-RUN / VALIDATE-ONLY — a `check_only: true` flag runs every item through validation and returns the full per-item finding list WITHOUT writing, so a 21-item batch is corrected once and sent once. (b) APPLY-VALID-ON-REQUEST — an explicit `apply_valid: true` writes the items that pass and returns the failures, so the resend is 1 item not 21. (c) NOTHING NEW — the current reply already carries every failure with its INDEX and id (dec:bulk-is-all-or-nothing-with-per-item-findings), so a client CAN resend only the failed item; 'resend the whole payload' is a client habit the reply already makes unnecessary, and the fix may be a sentence in the refusal saying so.\",\"kind\":\"exploratory\",\"name\":\"OPEN — a bulk write is all-or-nothing by design, so one bad enum in 21 items means re-sending 21. Should a batch be checkable before it is written, or partially applicable on request?\",\"rationale\":\"THE STANDING DECISION AND WHY IT STANDS: dec:bulk-is-all-or-nothing-with-per-item-findings — 'a partial bulk write leaves a design in a state nobody chose', and the store's atomic batch makes all-or-nothing free. That argues directly AGAINST (b) as a default and is why (b) here is opt-in only: an explicit request is a chosen state. (a) contradicts nothing — it writes nothing — and is the cheapest honest answer to the iteration cost; its cost is one more flag on the bulk tools. (c) may be the whole answer: 'you re-send the whole payload' is not forced by the tool, and the per-item index exists precisely so it need not be. Worth checking how the refusal is WORDED before building either flag — if it does not say 'resend only these', that sentence is the fix. Ranking is a finding; Anthony rules.\",\"status\":\"proposed\"}",
+        "target_id": "dec:idea-a-bulk-write-can-be-checked-before-it-is-written",
+        "target_type": "Decision"
+      }
+    },
+    {
       "node_id": "snap:epoch:preserved-on-write:dec:idea-a-deliberately-open-edge-can-never-be-ranked-as-a-fit",
       "node_type": "Snapshot",
       "properties": {
@@ -171223,6 +171560,19 @@
       }
     },
     {
+      "node_id": "fact:defect-add-epoch-requires-a-sequence-the-refusal-cannot-name-because-the-required-field-helper-is-generic",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "observation",
+        "statement": "① SYMPTOM (Alex, v0.47.0, 2026-09-05): add_epoch requires `sequence` on create, but the refusal cannot say what value to pass; the caller learns it (max existing + 1) only by separately scanning epochs. ② PRECEDENT: none for the refusal; but chg:the-philosophy-epoch-makes-room-for-a-cut (a planned epoch moved 360 -> 365 so a release cut could take the sequence it actually happened at) shows sequences are deliberately SPACED and re-ordered — they carry meaning, not just order.\n\n③ CANDIDATES: (a) the refusal is produced by the generic RequiredFields helper (service.rs), which knows the field is missing and nothing about epochs, so it cannot compute a hint; (b) sequence could be optional and auto-assigned; (c) the schema should not require it at all. ④⑤ MEASURED: the add_epoch handler calls `__rf.i64(\"sequence\", req.sequence)` then `__rf.finish()` — the same helper that produced the observed refusal '`name` is required to CREATE ChangeEvent ... pass `name`' in this session. The helper's text is type-agnostic by construction. (a) is the mechanism. (b) and (c) are design questions, not causes — recorded as dec:idea-add-epoch-assigns-the-next-sequence-or-names-it (brainstorm, Alex's idea).\n\n⑥ CLASS: a generic refusal at the point where a type-specific hint is one cheap read away. The description-redirect on add_change_event (#429) is the same shape and the same fix: a pre-check in the handler, before the generic helper, that says what WOULD have worked. Here: 'sequence is required; the highest existing is N, so N+1 (or any larger value — sequences are spaced on purpose) would place this after everything.' ⑨ NOT ESTABLISHED: whether auto-assigning is right at all — that is the brainstorm.",
+        "subject_id": "cap:planned-epochs",
+        "valid_from": "2026-09-05",
+        "value": "{\"mechanism\":\"generic RequiredFields helper cannot know an epoch hint\",\"cheap_fix\":\"handler pre-check names current max before refusing\",\"design_question\":\"auto-assign vs required (sequences are deliberately spaced)\"}"
+      }
+    },
+    {
       "node_id": "fact:defect-add-verification-cannot-reach-its-own-fields",
       "node_type": "TemporalFact",
       "properties": {
@@ -171452,6 +171802,19 @@
       }
     },
     {
+      "node_id": "fact:defect-currency-is-read-from-proc-self-exe-so-every-non-linux-run-answers-unknown-on-every-call",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "observation",
+        "statement": "① SYMPTOM, as reported by Alex (v0.47.0, macOS, 2026-09-05): loop_status reports it cannot read /proc/self/exe so it cannot confirm whether the running server is current — 'unknown, verify another way' — on every non-Linux run. Expected: a yes/no, or at worst one notice per session. Not affected: Linux, where the same call answers stale/current.\n\n② PRECEDENT: cap:the-server-knows-its-own-currency and chg:the-server-says-when-it-is-stale-20260809 built the check; fact:defect-a-running-server-cannot-say-it-is-stale is the defect it closed. None mention a platform. req:platform states 'Runs on Linux and macOS developer machines.'\n\n③ CANDIDATES: (a) the check uses a Linux-only primitive with no portable fallback; (b) the unknown answer is honest and correct, and the defect is only that the note is carried on every call rather than once; (c) the report is from a build predating the check. ④ DISCRIMINATOR: read the implementation — (a) predicts a literal /proc path with no cfg branch; (b) predicts a platform-neutral check whose note is attached unconditionally; (c) predicts the note text absent from 0.47.0.\n\n⑤ MEASURED (code, 2026-09-05): service.rs:149 exe_replaced_since_start does `std::fs::read_link(\"/proc/self/exe\")` and on Err returns (None, UNKNOWN_NOTE); the stale verdict comes from the link ending in ' (deleted)'. No cfg(target_os) branch, no fallback. So (a) is TRUE: on macOS read_link fails every time and the answer is always unknown. AND (b) is ALSO true as the amplifier: coherence.rs:278-300 attaches served_by with stale_note, and when stale != Some(false) pushes the note into `next` — on every loop_status. (c) refuted: the check shipped 2026-08-09, well before 0.47.0. ⭐ AND THE PORTABLE PRIMITIVE ALREADY EXISTS IN THE SAME MODULE: shared.rs:115 exe_fingerprint() uses std::env::current_exe() + fs::metadata (size:mtime) and is what client election compares (cap:a-client-elects-a-server-of-its-own-build). A 'replaced since start' answer is one comparison away — fingerprint at startup vs fingerprint now.\n\n⑥ CLASS: a Linux-only primitive used where the portable one already exists beside it, on a project whose accepted requirement names macOS. The instance is /proc/self/exe; the class is 'currency has no non-Linux answer'. Would this fix have prevented earlier reports? No earlier non-Linux report exists on the record — Alex is the only macOS user — which is why it went a month unnoticed.\n\nFIX SHAPE: keep the (deleted)-link check as primary on Linux (it is stronger: it sees a replaced binary even with equal size and mtime), and fall back to fingerprint-at-start vs fingerprint-now everywhere. Pin with a pure function (start_fp, now_fp) -> verdict, tested failing-first. With a real answer on macOS, the per-call note disappears by construction; whether an UNKNOWN answer (both paths failing) should still be carried on every call or once per session is a smaller second question.\n\n⑨ NOT ESTABLISHED: not run on macOS here (Linux box) — the read_link failure on darwin is inferred from the platform (no /proc), not observed. Fingerprint equality after a replace-with-identical-size-and-mtime is a false 'current'; rare, and the Linux primary path does not have it.",
+        "subject_id": "cap:the-server-knows-its-own-currency",
+        "valid_from": "2026-09-05",
+        "value": "{\"cause\":\"exe_replaced_since_start reads /proc/self/exe, no cfg branch, no fallback -> None on non-Linux\",\"amplifier\":\"loop_status carries stale_note into next on every call when stale != Some(false)\",\"portable_primitive_exists\":\"shared.rs exe_fingerprint (current_exe + size:mtime)\",\"violates\":\"req:platform (macOS)\",\"refuted\":\"old-build candidate; check shipped 2026-08-09\",\"not_run_on\":\"macOS\"}"
+      }
+    },
+    {
       "node_id": "fact:defect-designrule-has-no-constructor-reported-by-two-independent-projects",
       "node_type": "TemporalFact",
       "properties": {
@@ -171615,6 +171978,19 @@
         "subject_id": "cap:kit",
         "valid_from": "2026-08-08",
         "value": "{\"reported\":\"2026-08-08 by Alex, early adopter, started on v0.0.5\",\"symptom\":\".gitignore contains .reflow2 and git still tracks .reflow2/graph/LOG, fulltext/meta.json, fulltext/.managed.json\",\"his_question\":\"did the install script or the agent add the ignore line, and what should be committed at all\",\"answer_a\":\"the installer - tools/reflow2_init.py ensure_gitignore(), IGNORE_LINES carries .reflow2/\",\"answer_b\":\"gitignore never untracks; those files predate the rule\",\"defect\":\"reflow2_init.py:766 `if line.endswith('/'): continue` skips the already-tracked warning, and .reflow2/ is the only directory entry\",\"why_it_matters_there\":\"the store exists from first use, before the installer that ignores it - so git add . in between tracks it permanently\",\"hypothesis_corrected_by_test\":\"I assumed --error-unmatch fails on a directory and the skip was a workaround. Reproduced: it returns 0 for a tracked directory. The check works; the skip is the whole bug.\",\"fix_shape\":\"remove the endswith('/') skip; optionally name the tracked files (git ls-files -- .reflow2/) and the remedy (git rm -r --cached .reflow2)\",\"class\":\"a silent wrong answer to a user who did everything right - req:no-silent-fallback, in the first tool a new user meets\",\"untested_risk\":\"a committed fulltext/meta.json is a tantivy index descriptor; restoring a stale one over live segments may or may not corrupt the index - NOT TESTED. LOG is rocksdb noise.\"}"
+      }
+    },
+    {
+      "node_id": "fact:defect-interface-auth-names-a-mechanism-and-authorization-roles-have-no-home-so-the-role-gate-lands-on-the-wrong-field",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "observation",
+        "statement": "① SYMPTOM (Alex, v0.47.0, 2026-09-05): 'The auth field on Interface is a mechanism enum, not an authorization role. Natural to put the role gate there and it hard fails the whole bulk write. Real roles have to live in prose + actor edges.' ② PRECEDENT: question:058f1891de605d77 and dec:pairing-role-placement — `auth` is DELIBERATELY a mechanism, because it is part of the seam-pairing key (base-compatibility = medium + transport_security + auth): a consumer requiring oauth2 must not pair with a provider offering none. schema/structure.yaml:92: 'How the caller proves who it is' — authentication.\n\n③ CANDIDATES: (a) a naming trap — `auth` is read as authorization by a software engineer, and the description is not seen until the enum refuses; (b) the real need (WHO MAY ACCESS — roles) has no vocabulary anywhere, so the nearest-sounding field takes the hit; (c) the hard-fail of the whole batch is a separate matter (#5, dec:bulk-is-all-or-nothing-with-per-item-findings) and not this field's fault. ④⑤ MEASURED: schema grep — the only `role` enums are AUTHORED_BY.role (author/reviewer/approver: design authorship) and TRIGGERS.role (process influence); Actor's only edge is INTERACTS_WITH (Actor -> *), which carries no role. req:vocabulary-covers-personnel — 'which role performs a function ... has nothing to project from' — is DEFERRED. So (b) is TRUE: authorization has no home, and (a) is the trigger that makes it land on `auth`. (c) is true and handled separately.\n\n⑥ CLASS: a broad word naming a narrow enum while the word's other common meaning is unmodelled. Would renaming fix the class? No — the roles would still have nowhere to go. Would the personnel vocabulary fix it? Yes, and it is deferred by Anthony's word. FIX SHAPES, ranked: (1) cheap and honest now — the `auth` description (and the enum refusal) say 'authentication mechanism; for WHO may access, there is no field yet (req:vocabulary-covers-personnel, deferred) — record roles as Actor INTERACTS_WITH plus prose'; (2) the real fix is the deferred requirement, Anthony's call; (3) renaming `auth` to `authentication` is breaking and buys little without (2). ⑨ NOT ESTABLISHED: how many users hit this — one report; Alex calls it 'a common first attempt', which is a prediction, not a count.",
+        "subject_id": "cap:interface-spec",
+        "valid_from": "2026-09-05",
+        "value": "{\"auth_is\":\"authentication mechanism, part of the pairing key (dec:pairing-role-placement)\",\"authorization_roles_home\":\"none; req:vocabulary-covers-personnel deferred\",\"trigger\":\"naming trap\",\"fixes\":[\"description+refusal point to the deferred req and the Actor workaround\",\"personnel vocabulary (owner call)\",\"rename (breaking, low value alone)\"]}"
       }
     },
     {
@@ -173835,6 +174211,19 @@
         "statement": "MEASURED 2026-08-28 while trying to close `fact:defect-kit-manifest-drift-is-invisible-to-ci` by adding `tools/check_kit_manifest.py` to `ci.yml` and to AGENTS.md's pre-push block. IT CANNOT WORK. `.reflow2/` is gitignored and NOTHING under it is tracked — `git ls-files .reflow2/` returns zero — so a CI checkout has no installation at all. Run against such a tree the check reports 'nothing installed here' and exits 2, which would turn every build red. Both edits were reverted.",
         "subject_id": "fact:defect-kit-manifest-drift-is-invisible-to-ci",
         "valid_from": "2026-08-28"
+      }
+    },
+    {
+      "node_id": "fact:the-known-arg-traps-recurred-in-a-fourth-report-on-a-build-that-predates-their-fix",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "observation",
+        "statement": "Alex (v0.47.0, 2026-09-05) reports the get_node node_type+id trap and the ChangeEvent `description` mistake, and notes the tool descriptions already flag them: 'known footguns ... they're aware.' RECURRENCE COUNT: the description mistake is now FOUR projects (dev_storyflow, qs, dev_storyflow again after documentation, Alex); the get_node trap is on the record as dec:idea-get-node-by-id-alone-since-the-prefix-names-the-type (2026-09-05, open). WHAT IS ALREADY FIXED AND NOT IN HIS HANDS: #429 (merged 2026-09-05, main 14c1cba) makes add_change_event accept `description` only to refuse it naming summary/rationale — the refusal now teaches at the moment of failure. It is UNRELEASED; 0.47.1 is the latest cut and does not carry it. So this report is the fourth data point for the premise behind #429 (a description is not read mid-work; a refusal is) and is not a new cause. It is also a cost of release cadence: a fix merged the same day a user reports the defect it fixes is indistinguishable, to that user, from no fix. NOT ESTABLISHED: his exact version (Anthony believes 0.47.0).",
+        "subject_id": "req:a-refusal-names-what-would-have-worked",
+        "valid_from": "2026-09-05",
+        "value": "{\"description_mistake_reports\":4,\"fixed_in\":\"#429, merged 2026-09-05, unreleased\",\"get_node_trap\":\"dec:idea-get-node-by-id-alone-since-the-prefix-names-the-type (open)\",\"new_cause\":false}"
       }
     },
     {
@@ -177704,7 +178093,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:b4a00e7c342231750a094c95f8c0aa79b85343171ceb01e42a292c1ca5be4cec",
+  "prev_content_hash": "sha256:e1e78500a8248c77957559bcaa13b5ff180550ef02b42a158a3018890ed01d91",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

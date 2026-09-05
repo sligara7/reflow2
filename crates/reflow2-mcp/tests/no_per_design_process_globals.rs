@@ -49,6 +49,16 @@ use std::path::{Path, PathBuf};
 /// belongs on the design handle and this list is the wrong fix.
 const ALLOWED: &[(&str, &str, &str)] = &[
     (
+        "reflow2-mcp/src/shared.rs",
+        "STARTUP_FINGERPRINT",
+        "This process's own executable, fingerprinted (size:mtime) at start, so \
+         `served_by.stale` has an answer where there is no /proc/self/exe (macOS). \
+         A second design open in this process runs on the SAME executable, so the \
+         value could not differ per design — it is a fact about the process. \
+         fact:defect-currency-is-read-from-proc-self-exe-so-every-non-linux-run-\
+         answers-unknown-on-every-call.",
+    ),
+    (
         "reflow2-core/src/identity.rs",
         "SEAT",
         "This process's own seat id, memoised inside `seat_id()`. A seat names a \
