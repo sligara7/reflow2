@@ -964,6 +964,25 @@ pub(crate) fn bulk_result<T, D: serde::Serialize>(
     report: reflow2_core::bulk::BulkReport<T>,
     render: impl Fn(T) -> D,
 ) -> Result<CallToolResult, McpError> {
+    if report.check_only {
+        // A CHECK was asked for and a check is what comes back — this is not a
+        // rejected write dressed as success (dec:bulk-is-all-or-nothing-with-
+        // per-item-findings forbids that): nothing was asked to be written.
+        // `would_apply` is the answer to the question the caller asked.
+        let checked = report.written.len() + report.failures.len();
+        return ok_json(json!({
+            "check_only": true,
+            "applied": false,
+            "checked": checked,
+            "would_apply": report.failures.is_empty(),
+            "failures": report.failures,
+            "note": if report.failures.is_empty() {
+                "every item validated; send the same batch without check_only to write it"
+            } else {
+                "fix the listed items and send the WHOLE batch again — a bulk write is all or nothing, so the valid items are not written until every item passes"
+            },
+        }));
+    }
     if !report.applied {
         let summary = report
             .failures
@@ -974,7 +993,9 @@ pub(crate) fn bulk_result<T, D: serde::Serialize>(
         return Err(McpError::invalid_params(
             format!(
                 "nothing was written — {} of the items failed and a bulk write is all or \
-                 nothing. Every failure is listed so you can fix them together: {summary}",
+                 nothing, so the valid items were discarded too: fix the listed items and send \
+                 the WHOLE batch again (or send it with `check_only: true` first to validate \
+                 without writing). Every failure is listed so you can fix them together: {summary}",
                 report.failures.len()
             ),
             Some(json!({ "failures": report.failures })),
@@ -1729,6 +1750,11 @@ pub struct NodeSpecReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct CreateNodesReq {
+    /// Validate every item and WRITE NOTHING. The reply says whether the batch
+    /// would have applied and lists every failure, so a large batch is fixed
+    /// once and sent once instead of resent whole after each rejection.
+    #[serde(default)]
+    pub check_only: bool,
     pub nodes: Vec<NodeSpecReq>,
 }
 
@@ -1748,6 +1774,11 @@ pub struct EdgeSpecReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct CreateEdgesReq {
+    /// Validate every item and WRITE NOTHING. The reply says whether the batch
+    /// would have applied and lists every failure, so a large batch is fixed
+    /// once and sent once instead of resent whole after each rejection.
+    #[serde(default)]
+    pub check_only: bool,
     pub edges: Vec<EdgeSpecReq>,
 }
 
@@ -1781,6 +1812,11 @@ pub struct ChecksumAcceptReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct SetChecksumsReq {
+    /// Validate every item and WRITE NOTHING. The reply says whether the batch
+    /// would have applied and lists every failure, so a large batch is fixed
+    /// once and sent once instead of resent whole after each rejection.
+    #[serde(default)]
+    pub check_only: bool,
     pub accepts: Vec<ChecksumAcceptReq>,
 }
 
@@ -1818,6 +1854,11 @@ pub struct GapAckReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct AcknowledgeGapsReq {
+    /// Validate every item and WRITE NOTHING. The reply says whether the batch
+    /// would have applied and lists every failure, so a large batch is fixed
+    /// once and sent once instead of resent whole after each rejection.
+    #[serde(default)]
+    pub check_only: bool,
     pub gaps: Vec<GapAckReq>,
 }
 
@@ -2424,6 +2465,19 @@ pub struct TypedIdReq {
     pub id: String,
 }
 
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct GetNodeReq {
+    /// The node id. Its prefix (`req:`, `dec:`, `ver:` …) names the type by
+    /// convention, so `node_type` may be omitted.
+    pub id: String,
+    /// Optional since 2026-09-05: when omitted the type is resolved from the id.
+    /// If the id is held by MORE THAN ONE type (a convention violation, but
+    /// writable) the read REFUSES and names them — it never guesses.
+    #[serde(default)]
+    pub node_type: Option<String>,
+}
+
 #[derive(Debug, Default, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct ScanReq {
@@ -2954,8 +3008,14 @@ pub struct InterfaceSpecReq {
     /// Permitted actions — HTTP verbs, RPC methods, read/write commands.
     #[serde(default)]
     pub operations: Option<String>,
-    /// `none` / `api_key` / `oauth2` / `jwt` / `mtls` / `basic` / `signature` /
-    /// `kerberos` / `physical`.
+    /// AUTHENTICATION mechanism — how a caller PROVES WHO IT IS: `none` /
+    /// `api_key` / `oauth2` / `jwt` / `mtls` / `basic` / `signature` /
+    /// `kerberos` / `physical`. Read by seam pairing (a consumer requiring
+    /// `oauth2` must not pair with a provider offering `none`). NOT
+    /// AUTHORIZATION: which role or actor MAY use this interface has no field
+    /// yet (req:vocabulary-covers-personnel, deferred) — record that as an
+    /// Actor with INTERACTS_WITH to this Interface, and the role in
+    /// `description`. A role name here is refused as an unknown mechanism.
     #[serde(default)]
     pub auth: Option<String>,
     /// `none` / `tls` / `mtls` / `ipsec` / `vpn` / `air_gapped` / `physical`.

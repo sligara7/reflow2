@@ -9,7 +9,7 @@
     "properties": {
       "auth": {
         "default": null,
-        "description": "`none` / `api_key` / `oauth2` / `jwt` / `mtls` / `basic` / `signature` /\n`kerberos` / `physical`.",
+        "description": "AUTHENTICATION mechanism — how a caller PROVES WHO IT IS: `none` /\n`api_key` / `oauth2` / `jwt` / `mtls` / `basic` / `signature` /\n`kerberos` / `physical`. Read by seam pairing (a consumer requiring\n`oauth2` must not pair with a provider offering `none`). NOT\nAUTHORIZATION: which role or actor MAY use this interface has no field\nyet (req:vocabulary-covers-personnel, deferred) — record that as an\nActor with INTERACTS_WITH to this Interface, and the role in\n`description`. A role name here is refused as an unknown mechanism.",
         "type": [
           "string",
           "null"

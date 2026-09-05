@@ -961,7 +961,9 @@ impl ReflowService {
             })
             .collect();
         let mut g = self.write_lock().await?;
-        let report = g.acknowledge_gaps(&items).map_err(dyno_err)?;
+        let report = g
+            .acknowledge_gaps_with(&items, req.check_only)
+            .map_err(dyno_err)?;
         bulk_result(report, |decision_id| json!({ "decision_id": decision_id }))
     }
 

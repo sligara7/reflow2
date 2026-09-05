@@ -618,6 +618,23 @@ impl DesignGraph {
         self.engine.get_node(&self.graph_id, node_type, id)
     }
 
+    /// Every node type that holds a node with this id, sorted. Normally zero or
+    /// one — ids are unique across types by the typed-prefix convention — but
+    /// the convention is writable-around, so a reader that resolves a type from
+    /// an id alone must be able to see a collision and refuse rather than pick.
+    /// (`node_type_index` cannot say this: on a collision the first type wins.)
+    pub fn node_types_holding(&self, id: &str) -> Result<Vec<String>, DynoError> {
+        let mut types: Vec<String> = self.schema().node_types.keys().cloned().collect();
+        types.sort();
+        let mut holders = Vec::new();
+        for t in types {
+            if self.get_node(&t, id)?.is_some() {
+                holders.push(t);
+            }
+        }
+        Ok(holders)
+    }
+
     /// Count nodes of a type.
     pub fn count_nodes(&self, node_type: &str) -> Result<usize, DynoError> {
         self.engine.count_nodes(&self.graph_id, node_type)

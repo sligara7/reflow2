@@ -310,7 +310,9 @@ impl ReflowService {
             });
         }
         let mut g = self.write_lock().await?;
-        let report = g.set_artifact_checksums(&accepts).map_err(dyno_err)?;
+        let report = g
+            .set_artifact_checksums_with(&accepts, req.check_only)
+            .map_err(dyno_err)?;
         bulk_result(
             report,
             |(artifact, change_event_id)| json!({ "artifact": NodeDto::from(artifact), "change_event_id": change_event_id }),

@@ -153,8 +153,8 @@ async fn a_full_scan_says_so_as_well() {
 #[tokio::test]
 async fn get_node_says_so() {
     let s = withdrawn().await;
-    let got = j!(s.get_node(Parameters(TypedIdReq {
-        node_type: "Capability".into(),
+    let got = j!(s.get_node(Parameters(GetNodeReq {
+        node_type: Some("Capability".into()),
         id: "cap:store".into(),
     })));
     assert_eq!(got["node"]["discontinued"], true, "got {got}");
@@ -166,8 +166,8 @@ async fn get_node_says_so() {
 #[tokio::test]
 async fn the_stored_status_is_left_exactly_as_it_was() {
     let s = withdrawn().await;
-    let got = j!(s.get_node(Parameters(TypedIdReq {
-        node_type: "Capability".into(),
+    let got = j!(s.get_node(Parameters(GetNodeReq {
+        node_type: Some("Capability".into()),
         id: "cap:store".into(),
     })));
     assert_eq!(
@@ -224,8 +224,8 @@ async fn a_proposed_decision_discontinues_nothing() {
         props: None,
     })));
 
-    let got = j!(s.get_node(Parameters(TypedIdReq {
-        node_type: "Capability".into(),
+    let got = j!(s.get_node(Parameters(GetNodeReq {
+        node_type: Some("Capability".into()),
         id: "cap:maybe".into(),
     })));
     assert_eq!(
@@ -263,8 +263,8 @@ async fn obsoleted_by_a_non_decision_is_not_a_discontinuation() {
         props: None,
     })));
 
-    let got = j!(s.get_node(Parameters(TypedIdReq {
-        node_type: "Capability".into(),
+    let got = j!(s.get_node(Parameters(GetNodeReq {
+        node_type: Some("Capability".into()),
         id: "cap:old".into(),
     })));
     assert_eq!(
@@ -308,8 +308,8 @@ async fn it_is_not_a_capability_only_field() {
         props: None,
     })));
 
-    let got = j!(s.get_node(Parameters(TypedIdReq {
-        node_type: "Requirement".into(),
+    let got = j!(s.get_node(Parameters(GetNodeReq {
+        node_type: Some("Requirement".into()),
         id: "req:gone".into(),
     })));
     assert_eq!(got["node"]["discontinued"], true, "got {got}");

@@ -49,8 +49,8 @@ async fn svc_with_an_epoch_and_a_target() -> ReflowService {
 }
 
 async fn subject_of(s: &ReflowService, id: &str) -> Option<String> {
-    let node = j!(s.get_node(Parameters(TypedIdReq {
-        node_type: "ChangeEvent".into(),
+    let node = j!(s.get_node(Parameters(GetNodeReq {
+        node_type: Some("ChangeEvent".into()),
         id: id.into(),
     })));
     node["node"]["properties"]["subject"]
@@ -152,8 +152,8 @@ async fn an_axis_outside_the_enum_is_refused() {
         "the refusal must name what it rejected so the caller can fix it: {text}"
     );
 
-    let node = j!(s.get_node(Parameters(TypedIdReq {
-        node_type: "ChangeEvent".into(),
+    let node = j!(s.get_node(Parameters(GetNodeReq {
+        node_type: Some("ChangeEvent".into()),
         id: "chg:typo".into(),
     })));
     assert!(

@@ -113,8 +113,8 @@ async fn a_refused_create_leaves_no_node_behind() {
             None,
         )))
         .await;
-    let stored = j!(s.get_node(Parameters(TypedIdReq {
-        node_type: "Requirement".into(),
+    let stored = j!(s.get_node(Parameters(GetNodeReq {
+        node_type: Some("Requirement".into()),
         id: "req:cumulative-totals".into(),
     })));
     assert!(
