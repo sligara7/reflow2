@@ -719,6 +719,18 @@ reading order (Vision → Design → Process → Heritage). Then:
    ⚠️ Do NOT backfill the ~100 such claims already standing: they are ~98% true, and a test
    written today cannot catch a sentence that was already false when committed.
    `rule:a-new-refusal-claim-is-asserted-before-it-ships`.
+9. **Field feedback is processed by skill, not by reading.** When feedback arrives from a project
+   that uses reflow2 — a friction log, an appended `reflow2_feedback.md`, a first-use write-up —
+   run **`/root-cause` on every issue or gap it names** and **`/brainstorm` on every idea for an
+   improvement or new feature**. Automatically; this is the standing way feedback is read, not a
+   step to be reminded of. Set by Anthony 2026-09-05 after three consecutive reminders.
+   Because reading carefully is not the same thing: the day this was set, a triage that read the
+   code and wrote a cause down without the skill's steps got **two of four causes wrong**, and
+   running the skipped steps (competing candidates, a measurement that could refute) overturned
+   both. What compliance leaves behind: a dated `TemporalFact` per issue with a `CAUSES` edge, and
+   one exploratory `Decision` per idea with its counter-argument. A triage that leaves neither did
+   not follow this rule. `enforced` deliberately unstated — the detector that would notice absence
+   is not built. `rule:field-feedback-issues-are-root-caused-and-ideas-are-brainstormed`.
 
 ### What carries across sessions, and what does not
 
