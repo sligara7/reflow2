@@ -983,6 +983,52 @@ impl ReflowService {
     }
 
     #[tool(
+        description = "Create a DesignRule — a convention or standard the project ADOPTS (a                        tech-stack choice, a house style, a review step), as distinct from a                        Requirement (a goal to achieve) or a Constraint (a limit to respect). Two                        independent projects reached for this and found only generic create_node,                        then guessed the field names wrong; this is the typed constructor they                        wanted. Prose goes in `statement`. `enforced` is THREE-STATE and the                        default is the third: pass `true` only when the user has said breaking the                        rule stops the build, `false` for advisory, and leave it UNSET otherwise —                        absent means nobody has stated it and is never read as enforced. Ask the                        user before setting it (governance-proposal skill); do not infer it from                        the wording. CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn add_design_rule(
+        &self,
+        Parameters(req): Parameters<DesignRuleReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.write_lock().await?;
+        let node_ty = reflow2_core::nodes::node::DESIGN_RULE;
+        let prior = g.get_node(node_ty, &req.id).map_err(dyno_err)?;
+        let existed = prior.is_some();
+        let mut __rf = crate::service::RequiredFields::new(&g, node_ty, &req.id)?;
+        let name = __rf.str("name", req.name);
+        let statement = __rf.str("statement", req.statement);
+        __rf.finish()?;
+        let node = NodeDto::from(
+            g.add_design_rule(
+                &req.id,
+                &name,
+                &statement,
+                req.category.as_deref(),
+                req.enforced,
+            )
+            .map_err(dyno_err)?,
+        );
+        let found = search_first(&g, &req.id, existed, &format!("{name} {statement}"));
+        if let Err(e) =
+            refuse_unless_deliberate(&found, req.distinct_from.as_ref(), &req.id, "DesignRule")
+        {
+            if !existed {
+                let _ = g.delete_node(node_ty, &req.id);
+            }
+            return Err(e);
+        }
+        preserve_prior(&mut g, prior.as_ref(), &node);
+        let revision = revision_of(&g, prior.as_ref(), &node);
+        with_capture_notes(
+            node,
+            "loop: a rule the project follows — if breaking it should stop the build, say so with              `enforced` (governance-proposal); then run detect_gaps (detect-and-ask)",
+            found,
+            revision,
+            None,
+        )
+    }
+
+    #[tool(
         description = "Record what a Capability TAKES IN and PUTS OUT \u{2014} its functional \
                        signature, which is the black-box interface at that tier \
                        (`req:recursive-black-box-decomposition`: every element of a design is a \

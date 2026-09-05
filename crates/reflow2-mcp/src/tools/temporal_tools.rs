@@ -388,6 +388,18 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<AddChangeEventReq>,
     ) -> Result<CallToolResult, McpError> {
+        // The commonest mistake, caught where it is made. `description` is not a
+        // ChangeEvent field; accepting it (rather than letting serde refuse with
+        // a bare field list) lets the refusal name the two fields that ARE the
+        // prose. Reported by two projects, and by a third AFTER the tool
+        // description already said it — because a refusal is read at the moment
+        // of failure and a 2 KB description is not.
+        if req.description.is_some() {
+            return Err(McpError::invalid_params(
+                "a ChangeEvent has no `description`. The prose goes in `summary` (WHAT changed —                  indexed and searchable) or `rationale` (WHY, and the lesson). Re-send with one                  of those instead of `description`.",
+                None,
+            ));
+        }
         let g0 = self.write_lock().await?;
         let mut __rf = crate::service::RequiredFields::new(
             &g0,

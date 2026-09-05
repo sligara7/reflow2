@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:8ca808e9e9b81542864fbb9f077c3b8346f9270aadac5866d516693b97f40744",
+  "content_hash": "sha256:b4a00e7c342231750a094c95f8c0aa79b85343171ceb01e42a292c1ca5be4cec",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -23141,6 +23141,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-4ec8ddd180c5160e",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:a-prose-field-that-swallowed-a-parameter-says-so"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-4f25d142636f9e4c",
       "properties": {
         "accepted_baseline": true,
@@ -23348,6 +23357,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-6c7ef19fc1a25a65",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:the-export-can-be-ordered-before-its-writes"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-6cac066db6363b0c",
       "properties": {
         "accepted_baseline": true,
@@ -23498,6 +23516,15 @@
         "action": "modified"
       },
       "to_id": "art:ility"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-7e28d2f6b848d3de",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-a-near-match-of-another-type-is-named-as-a-layer"
     },
     {
       "edge_type": "CHANGED",
@@ -36935,6 +36962,60 @@
         "action": "modified"
       },
       "to_id": "dec:idea-does-a-capability-need-a-cancelled-state"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:three-additive-surface-fixes-from-field-feedback",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:adopt-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:three-additive-surface-fixes-from-field-feedback",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:three-additive-surface-fixes-from-field-feedback",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:three-additive-surface-fixes-from-field-feedback",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-link-projects"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:three-additive-surface-fixes-from-field-feedback",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:three-additive-surface-fixes-from-field-feedback",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-temporal"
     },
     {
       "edge_type": "CHANGED",
@@ -124855,6 +124936,15 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:a-status-advance-says-whether-its-prose-predates-it",
+      "properties": {
+        "at": "2026-09-04",
+        "note": "FIXED and merged in #426: cap:a-status-advance-says-whether-its-prose-predates-it. When set_capability_status / set_verification_status / set_epoch_status moves a status and the node carries prose, the reply now carries a prose_currency block naming both statuses and quoting the prose. It is option A of dec:idea-a-status-that-advances-past-its-own-prose, which was the design question this defect raised. Pinned by ver:a-status-advance-says-whether-its-prose-predates-it (observed failing first) and it fired on its own verification's planned->passing during this work. Drawn by hand because the defect fact's subject_id is the feedback artifact, not this ChangeEvent's affected nodes, so unclaimed_findings could not surface it — the documented 'change and finding hang off different nodes' limit, and the reason the fix read as open for a day after it shipped."
+      },
+      "to_id": "fact:defect-a-status-can-advance-past-its-own-prose-and-nothing-says-so"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:absorb-core-storage-text",
       "properties": {
         "at": "2026-08-24T21:45:00Z",
@@ -125050,6 +125140,33 @@
         "note": "THE DEFECT IT MEASURED IS REPAIRED, SAME DAY, AND VERIFIED ON THE SEAT IT WAS MEASURED ON. `loop_status.next` went from 8 lines to 3 against a fresh binary with `served_by.stale: false`; the five false sentences are gone and `sync` still reports all six targets, so nothing true was suppressed.\n\n🛑 WHAT SURVIVES THE REPAIR AND IS THE REASON THE NODE IS WORTH KEEPING. (1) THE CLASS — a per-item computation stated as a whole-system fact, invisible because every test drove exactly ONE item. Only this one rollup was examined; whether other served reports phrase per-target findings as seat-wide claims is unmeasured, and that is the sentence a later session should act on. (2) The refutation of the leading candidate: filtering scratch paths was already tried and reverted, and a 1545-node backup outside any temp path defeats it independently. (3) The method note — that the report described noise and the measurement found falsehood, and that a noise framing would have bought ranking or dedup while leaving every sentence just as untrue.\n\n⚠️ AND ITS OWN MEASUREMENT ADVICE OUTLIVED THE FIX: the first coupling grep read `node::DECISION` as vocabulary-free, so any re-derivation must count constants, not string literals. That warning was written for a different investigation the same day and applies to this one too.\n\n📌 NOT CLOSED BY THIS: the three standing bounds on the node-count comparison — equal counts with different ids, an edge-only divergence, and a property-only write are all still invisible. The seat-level form inherits every one of them, so this remains a reading aid and not a durability guarantee."
       },
       "to_id": "fact:defect-the-unexported-claim-was-computed-per-file-and-stated-per-seat"
+    },
+    {
+      "edge_type": "INVALIDATES",
+      "from_id": "chg:three-additive-surface-fixes-from-field-feedback",
+      "properties": {
+        "at": "2026-09-05",
+        "note": "THE CONSTRUCTOR HALF IS CLOSED: add_design_rule now exists (name, statement, optional category, optional enforced), so a DesignRule is no longer writable only through generic create_node with guessed field names. Both reporting projects (dev_storyflow 2026-08-23, qs 2026-09-04) hit exactly this. NOT CLOSED, and deliberately kept: the same fact's refutation stands — enforced was NEVER defaulted to true (schema/core.yaml, confirmed by probe), so the reporter's 'a rule claims to gate merges' impression had another cause, most likely the unstated_rule_enforcement gap wording, which is untouched. And find_tools still did not surface a design-rule constructor for the reporter's query; the discoverability leg is only half-built."
+      },
+      "to_id": "fact:defect-designrule-has-no-constructor-reported-by-two-independent-projects"
+    },
+    {
+      "edge_type": "INVALIDATES",
+      "from_id": "chg:three-additive-surface-fixes-from-field-feedback",
+      "properties": {
+        "at": "2026-09-05",
+        "note": "THE COMMONEST MISTAKE NOW TEACHES AT THE MOMENT OF FAILURE: add_change_event accepts a `description` field only to refuse it with a message naming summary and rationale, instead of a bare serde field-list. This is the fact's own point — the fix went to the tool DESCRIPTION (read once, mid-work not at all) and a third project hit it anyway; the refusal is the surface actually read at the failure. NOT CLOSED, and this is one of four: the fact records add_change_event taking FOUR round-trips (description, then affected's struct shape, then change_type enum, then subject enum). Only the first is addressed here. The other three are serde errors that already enumerate their legal values — the reporter praised two of them — so they are lower-value; the general 'report all violations at once' ask is dec:idea-should-a-refusal-teach-every-rule-it-knows-in-one-reply, still open."
+      },
+      "to_id": "fact:defect-the-commonest-changeevent-mistake-was-fixed-in-the-description-and-a-third-project-hit-it-anyway"
+    },
+    {
+      "edge_type": "INVALIDATES",
+      "from_id": "chg:three-additive-surface-fixes-from-field-feedback",
+      "properties": {
+        "at": "2026-09-05",
+        "note": "THE INSTRUCTION LEG IS NOW BUILT: link-projects and adopt (Phase 2) both point at external_dependency for 'a repository we depend on but do not own', naming source+version+parts and reconcile_dependencies. This was the fact's own diagnosis — a typed tool with the other two legs but no instruction, per fact:vocabulary-needs-three-legs. NOT CLOSED: the fact's smaller half stands — external_dependency records a pinned ref but still carries no bring-up recipe and no place for fixes pushed upstream. And find_tools still did not surface it for the reporter's query, so the discoverability gap the fact also names is only partly addressed by a skill pointer."
+      },
+      "to_id": "fact:the-external-dependency-node-exists-and-no-skill-points-at-it"
     },
     {
       "edge_type": "INVALIDATES",
@@ -136347,7 +136464,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:ff89e57ad51c7b5c49fea674abda5d9f03214014efa1a02253dc989067a6acbb",
+        "checksum": "sha256:59e7e57f68a0878d8dd197c4155f91422c6d33101eb11b1d4e7232b8b170d143",
         "location": "crates/reflow2-mcp/tests/a_prose_field_that_swallowed_a_parameter_says_so.rs",
         "name": "a_prose_field_that_swallowed_a_parameter_says_so.rs",
         "status": "realized"
@@ -136382,7 +136499,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:a2881baa471d910a8a6fadfa92a526c487d567488b1fbcf61551916dafac241a",
+        "checksum": "sha256:e4f1c9a4338985b73369e417ef1c099cc64efb12ee4e0b245366c433f7ed5472",
         "granularity": "atomic",
         "location": "getting-started/skills/adopt/SKILL.md",
         "name": "adopt/SKILL.md",
@@ -137383,7 +137500,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:936d1844b5a1e96fc4df62a303cd573113b026ab3641e2ab648ae68caff84dd9",
+        "checksum": "sha256:58d8400fb211ccbd443b497f041f3ef7eb1ebce73e65cb41702e8b9f552423a1",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/graph.rs",
         "name": "crates/reflow2-core/src/graph.rs",
@@ -138656,7 +138773,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:2ab2fc99a56392a25152e9202ada79d64fa9843403a43b3e2598642534c95ef1",
+        "checksum": "sha256:35438cc262c8f361a333053aa69c31cdf32a8581a2caccfd6a86edfc2164808d",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -138730,7 +138847,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:070ea47ddb04c34d557169e6efd126e05143d0364a9e5dff45160fd194eaf1c7",
+        "checksum": "sha256:1870c5dd57b8c45204a6169d60d0d782aade3204dd233abeff2628669aea9674",
         "granularity": "atomic",
         "location": "getting-started/skills/link-projects/SKILL.md",
         "name": "link-projects/SKILL.md",
@@ -138999,7 +139116,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:52b01de8abacb450d7d1e339dfe2f7744dc733c62b8fc0a43bfaefd8019ab03e",
+        "checksum": "sha256:9da39f69a128ab1a6ae95212b216ee73123b20717917faacadc1ecdea7926818",
         "location": "crates/reflow2-mcp/tests/a_near_match_of_another_type_is_named_as_a_layer.rs",
         "name": "a_near_match_of_another_type_is_named_as_a_layer.rs",
         "status": "realized"
@@ -139374,7 +139491,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:56d765358bc4bc6ec48643bff710598463f65ff3098803129f029eb6f5990404",
+        "checksum": "sha256:55f3106fcec89bacc5d0a5d0df957346e524da6a73f847047875f2c014c596b6",
         "location": "crates/reflow2-mcp/tests/the_export_can_be_ordered_before_its_writes.rs",
         "name": "the_export_can_be_ordered_before_its_writes.rs",
         "status": "realized"
@@ -139424,7 +139541,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:9e1cdb71c546daf9a5b0f4718df8fbf467542a3cf0154bdaf35c756d1e643352",
+        "checksum": "sha256:90914c7d0373341faa31c740b92bb4cf20997189352d210d66d6d669a9a845e9",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
         "name": "crates/reflow2-mcp/src/tools/capture.rs",
@@ -139524,7 +139641,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f00bafc65c2d72a8e6217b3b9be97af7baabb66f81030aaf4f9cef1746039716",
+        "checksum": "sha256:533fddeda528b8ef2a1f2cd5f4804b6e75b0d8035ed35df5577563b091d17dbc",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/temporal_tools.rs",
         "name": "tools/temporal_tools.rs",
@@ -143980,6 +144097,16 @@
       }
     },
     {
+      "node_id": "chg:accept-4ec8ddd180c5160e",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "detected_at": "2026-09-05",
+        "name": "Test literal gained `description: None` because AddChangeEventReq gained a `description` field (the change-event redirect). Mechanical follow-through of chg:three-additive-surface-fixes-from-field-feedback; what this test asserts is unchanged.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-4f25d142636f9e4c",
       "node_type": "ChangeEvent",
       "properties": {
@@ -144191,6 +144318,16 @@
       }
     },
     {
+      "node_id": "chg:accept-6c7ef19fc1a25a65",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "detected_at": "2026-09-05",
+        "name": "The `event()` helper's AddChangeEventReq literal gained `description: None` for the new field. Assertion unchanged.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-6cac066db6363b0c",
       "node_type": "ChangeEvent",
       "properties": {
@@ -144346,6 +144483,16 @@
         "change_type": "refactor",
         "detected_at": "2026-08-03",
         "name": "Registered before the clippy pass; the only edit since is manual_contains (iter().any() -> contains()) plus rustfmt. No behaviour and no design meaning moved — the 11 tests are unchanged and still passing."
+      }
+    },
+    {
+      "node_id": "chg:accept-7e28d2f6b848d3de",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "detected_at": "2026-09-05",
+        "name": "Test literal gained `description: None` for AddChangeEventReq's new field. Assertion unchanged.",
+        "subject": "system"
       }
     },
     {
@@ -149570,6 +149717,18 @@
       "properties": {
         "change_type": "new_feature",
         "name": "Capability.status gains a description naming OBSOLETES and saying no cancelled value exists on purpose; OBSOLETES's hint gains the Decision-as-source rule and its four readers"
+      }
+    },
+    {
+      "node_id": "chg:three-additive-surface-fixes-from-field-feedback",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-09-05",
+        "name": "A DesignRule constructor, a change-event description redirect, and a skill pointer to external_dependency",
+        "rationale": "WHAT WAS DELIBERATELY NOT BUILT, and why — the fourth item from my own recommendation was dropped after reading the code. Defaulting acknowledge_gap's `approver` to the session contributor would attach the OWNER'S authority to an acknowledgement the agent often makes on its own; that is the forgery `rule:design-intent-moves-only-on-the-owners-word` and `dec:certainty-derived` exist to prevent. The warning the qs report wanted silenced is the guard working, so it stays. This is the fix-properly discipline picking correctness over the reporter's literal ask.\n\nTHE THREE THAT SHIPPED are all additive (no schema change, no behaviour change to existing calls) and each targets a repeat: DesignRule-no-constructor (dev_storyflow 2026-08-23 + qs 2026-09-04), the change_event description mistake (three projects, the third AFTER it was documented — proof a tool description is not read mid-work while a refusal is), and external_dependency-unfindable (qs). The change_event redirect cost 11 test-literal edits because AddChangeEventReq gained a field — test-only churn, production builds via serde.\n\nWHAT IS PARTIAL: the DesignRule report also carried a FALSE claim (enforced defaults true) that measurement refuted; the constructor makes the right behaviour reachable but does not change that enforced was never defaulted. The change_event redirect fixes ONE of the four round-trips that report named (description); the other three (affected shape, change_type enum, subject enum) are serde errors that already enumerate their values and are untouched. external_dependency now has an instruction leg but still no detector-that-notices-absence, and find_tools still did not surface it for the reporter's query.",
+        "subject": "system",
+        "summary": "Three additive surface fixes clearing the multi-project repeats from the 2026-09-04 field triage. (1) `add_design_rule` — a typed constructor (name, statement, optional category, optional enforced), so a DesignRule is no longer writable only through generic create_node with guessed field names; two independent projects hit this. `enforced` stays Option and is never defaulted. (2) `add_change_event` now ACCEPTS a `description` field only to reject it with a message naming `summary` and `rationale` — the commonest mistake, made by three projects including one after it was documented, now teaches at the moment of failure instead of via a bare serde field-list. (3) link-projects and adopt now point at `external_dependency` for 'a repo we depend on but do not own' — the qs project could not find the tool that already existed. Files: graph.rs, service.rs, tools/capture.rs, tools/temporal_tools.rs, two SKILL.md (+ .claude/.grok mirrors), toolsnaps regenerated (add_design_rule new, add_change_event changed). Tests: four new in tools.rs (constructor with/without enforcement, redirect fires, redirect silent on a normal call), all observed. core 1578/0, mcp 347/0, skill_lint and toolsnap green."
       }
     },
     {
@@ -172385,6 +172544,19 @@
       }
     },
     {
+      "node_id": "fact:loop-status-after-a-write-is-distributed-intrinsic-analysis-with-no-single-lever",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "measurement",
+        "statement": "THE REMAINING ~7s OF loop_status-AFTER-A-WRITE IS DISTRIBUTED INTRINSIC GRAPH ANALYSIS, NOT A HOT SPOT — THERE IS NO CHEAP LEVER LEFT. Release phase-probes, live-store copy (3,700 nodes / 18,100 edges), load ~1.9, 2026-09-05. loop_status after a write: 7,085 ms total.\n\nACCOUNTED, release, by probe:\n  open_defects / all_defects: 3,454 ms, itself SPREAD across six sub-detectors, none dominant:\n    node_type_index 230 | parked_nodes 404 | dangling-ref scan 329 | orphan-artifact 118 |\n    zero-degree scan 457 | edge loops (CONTRADICTS/DUPLICATES/ANTICIPATES) 510 | detect_structural_defects 1,406\n    (detect_structural_defects itself = design_network build + operational_network + circular_dependencies + clusters, each a fraction)\n  the other ~3,600 ms is loop_status_for's OWN work: open_questions (detect_gaps cold after a write + a pass over 57 Question nodes), scan_nodes(DECISION) with an outgoing() per decision for assigned-decisions (~232 store scans), the answered-question ANSWERS scans, plus count_all_nodes, the verifications digest and the record_moved sync check.\n\n⭐ THE SHAPE: loop_status after a write runs ~FIVE independent full-or-partial graph analyses (defects across 6 detectors, gaps, questions, assigned decisions, verifications), each doing per-node or per-edge STORE READS, and a write correctly invalidates all of it so all of it recomputes. The cost is the sum of many ~0.3-1.4s pieces, not one ~5s piece. This is why the one-pass edge read (fact:the-one-pass-edge-read-is-correct-but-does-not-move-the-defect-scan-hypothesis-falsified) moved nothing: it fixed one 0.4s piece.\n\n🛑 SO THERE ARE ONLY TWO WAYS TO MOVE IT, AND BOTH ARE ANTHONY'S CALL, NOT A LEVER I CAN PULL:\n  (A) A PRODUCT TRADEOFF. loop_status need not compute everything on every call. It could report defect/gap COUNTS from a per-generation memo refreshed lazily, or say 'defects: not recomputed since last write — run detect_defects' rather than scanning. This trades completeness-on-every-call for speed, and completeness-on-every-call is a property the loop was deliberately built to have (dec:loop-status-state-not-history). Only the owner can decide that trade.\n  (B) A STORE-LEVEL REFACTOR. The common thread is per-node get_node/outgoing/incoming and per-type scan_nodes across every detector. Loading ONE node+edge snapshot per write generation and having all detectors read it, instead of each hitting the store, would cut the shared substrate — but that is a large change touching every detector, it reintroduces the cache-is-a-global concern at scale, and the one-pass experiment already showed edge-gathering alone is not the bulk, so the snapshot would have to cover node reads and the algorithms too. Its size needs to be seen before it is started.\n\n⭐ THE HONEST BOTTOM LINE, per the optimize skill's step 1 ('nothing here is worth optimising is a real and frequent answer'): the redundancy is gone. The multiplier — loop_status recomputed on every read after every write, 9.5x/session — was the redundancy, and it is fixed and merged (#428). What remains is the intrinsic cost of analysing a 3,700-node graph once per orientation after writes: ~7s, paid roughly once per orientation rather than 9.5x/session. There is no further redundancy to remove cheaply; the remaining moves cost either completeness or a large refactor.\n\nBOUNDS: one machine, 4 cores, release, stdio, live-store copy, load ~1.9; single-run phase probes (the SPLIT is robust to noise even if each number carries ±20%). detect_defects adds sweep_scope on top of all_defects; loop_status uses open_defects (all_defects) without sweep_scope.",
+        "subject_id": "cap:loop-status",
+        "valid_from": "2026-09-05",
+        "value": "{\"loop_status_after_write_ms\":7085,\"all_defects_ms\":3454,\"all_defects_split\":{\"node_type_index\":230,\"parked_nodes\":404,\"dangling_ref\":329,\"orphan_artifact\":118,\"zero_degree\":457,\"edge_loops\":510,\"detect_structural\":1406},\"outside_all_defects_ms\":3631,\"outside_is\":\"open_questions + assigned-decisions scans + verifications + count + record_moved\",\"conclusion\":\"distributed intrinsic analysis, no single lever\",\"options\":[\"A: product tradeoff - lazy/cached counts, trades completeness\",\"B: store-level shared snapshot refactor - large, needs sizing\"],\"redundancy_status\":\"gone - the multiplier was the redundancy, fixed in #428\"}"
+      }
+    },
+    {
       "node_id": "fact:making-the-repo-private-would-break-the-way-reflow2-ships",
       "node_type": "TemporalFact",
       "properties": {
@@ -173562,6 +173734,19 @@
         "subject_id": "cap:search-first-at-the-tool",
         "valid_from": "2026-08-29",
         "valid_to": "2026-09-01"
+      }
+    },
+    {
+      "node_id": "fact:the-one-pass-edge-read-is-correct-but-does-not-move-the-defect-scan-hypothesis-falsified",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "measurement",
+        "statement": "THE 'NEXT LEVER' HYPOTHESIS WAS WRONG: build_network's per-node edge scan is NOT the dominant cost of the defect scan, and fixing it did not move loop_status or detect_defects after a write. Recorded because the optimize skill says to expect falsified hypotheses and record them so the next session does not re-run this one.\n\nWHAT WAS BUILT (perf/one-pass-edge-read, NOT committed as of this fact): a real O(N)->O(1) fix. `build_network_of` gathered edges with one `self.outgoing(id, None)` STORE PREFIX-SCAN PER NODE (~3,700 scans); `all_edges_of_type` did the same per node, per type, across ~8 callers. Both now consume a single `scan_all_edges(graph_id)` — a prefix scan of CF_ADJ_OUT over the graph prefix, which returns every edge in one pass in (from,type,to) key order, the SAME order the per-node loop produced concatenated, so determinism is preserved by construction. All 1,578 core tests and 343 mcp tests pass unchanged, which is the proof the community assignments and defects are byte-identical.\n\nMEASURED, release, live-store copy, medians of 4 write->call boundaries, load ~1.8:\n  loop_status after a write:    6,354 -> 7,039 ms   (budget 2,000)   NOT MOVED\n  detect_defects after a write: 5,633 -> 5,817 ms                    NOT MOVED\nBoth within noise of baseline. The change did not meet its budget.\n\n⭐ THE HYPOTHESIS THAT WAS FALSIFIED, stated so it is not retried: 'build_network's per-node edge scan is the ~5 s.' The debug phase-probe had shown design_network at 1.56 s debug (~0.4 s release) — a FRACTION, not the bulk. I over-read a distributed cost as a single hot spot, and then briefly mis-read a MEMO HIT (detect_defects 2,716 ms reusing a prior scan) as the optimization working. On a quiet machine with medians and a real write between calls (which invalidates the memo and forces the scan), the win vanishes.\n\n⭐ WHERE THE COST ACTUALLY IS, still not isolated in release: the debug split was pre-structural per-type detectors 8.35 s (35%), structural 4.6 s (design_network 1.56 + clusters 0.53 + operational_network 0.63 + circular_dependencies 1.82), sweep_scope + ack filter ~11 s (46%, detect_defects-only). The one-pass change touched only the 1.56 + 0.63 network builds. The pre-structural per-type detectors and circular_dependencies were NOT touched and are the larger share. To move loop_status, the next investigation must release-profile all_defects' per-type detector loop — which walks nodes and reads properties/edges per node — not the network build.\n\n🛑 WHAT IS UNDECIDED AND IS ANTHONY'S CALL: whether to ship the one-pass change at all. It is CORRECT and removes a genuine O(N) redundancy (a bulk edge reader is a primitive reflow2 lacked), it helps debug/test time, and it has no downside — but it moves no release budget, so it is a tidiness win, not a latency win. Shipping a correct-but-not-budget-moving change is a prioritisation question the skill assigns to the person, not the loop. The merged multiplier fix (#428) remains the real session-level win; this is separate and smaller.\n\nBOUNDS: one machine, 4 cores, release, stdio, live-store copy, load 1.8-5 across the window; medians of 4. The determinism claim rests on the full test suite passing, not on a diff of outputs.",
+        "subject_id": "cap:loop-status",
+        "valid_from": "2026-09-05",
+        "value": "{\"hypothesis\":\"build_network per-node edge scan is the ~5s dominant cost\",\"verdict\":\"FALSIFIED\",\"loop_status_after_write\":\"6354 -> 7039 (not moved)\",\"detect_defects_after_write\":\"5633 -> 5817 (not moved)\",\"misread\":\"detect_defects 2716 was a memo hit, not the change\",\"change_is\":\"correct, tests pass, removes real O(N) redundancy, but moves no release budget\",\"real_cost\":\"pre-structural per-type detectors + circular_dependencies, not the network build\",\"undecided\":\"whether to ship a correct-but-not-budget-moving change - Anthony's call\",\"branch\":\"perf/one-pass-edge-read, uncommitted\"}"
       }
     },
     {
@@ -177264,7 +177449,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:aea0744156ec23c269c597c00b9fc3b4d186532127d54e31479fd4cd9691cb92",
+  "prev_content_hash": "sha256:8ca808e9e9b81542864fbb9f077c3b8346f9270aadac5866d516693b97f40744",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

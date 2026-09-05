@@ -1,0 +1,62 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Create a DesignRule — a convention or standard the project ADOPTS (a                        tech-stack choice, a house style, a review step), as distinct from a                        Requirement (a goal to achieve) or a Constraint (a limit to respect). Two                        independent projects reached for this and found only generic create_node,                        then guessed the field names wrong; this is the typed constructor they                        wanted. Prose goes in `statement`. `enforced` is THREE-STATE and the                        default is the third: pass `true` only when the user has said breaking the                        rule stops the build, `false` for advisory, and leave it UNSET otherwise —                        absent means nobody has stated it and is never read as enforced. Ask the                        user before setting it (governance-proposal skill); do not infer it from                        the wording. CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "category": {
+        "default": null,
+        "description": "`tech_stack` / `convention` / `material` / `methodology` / `standard` /\n`style`. Optional.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "distinct_from": {
+        "default": null,
+        "description": "Ids you read and judged DIFFERENT from this one, when a near match was\nreported. Omit on a first attempt.",
+        "items": {
+          "type": "string"
+        },
+        "type": [
+          "array",
+          "null"
+        ]
+      },
+      "enforced": {
+        "default": null,
+        "description": "Whether breaking the rule is GATE-BLOCKING. THREE STATES and the third is\nthe default: `true` = stops the build (and owes a detector), `false` =\nadvisory, ABSENT = nobody has said, reported as unstated and never read\nas enforced. Leave it unset unless the user has actually chosen; whether\na broken rule should stop somebody's build is a policy about consequence\nand it is theirs to state (governance-proposal skill).",
+        "type": [
+          "boolean",
+          "null"
+        ]
+      },
+      "id": {
+        "type": "string"
+      },
+      "name": {
+        "default": null,
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "statement": {
+        "default": null,
+        "description": "The rule itself — the convention or standard the project adopts.",
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "required": [
+      "id"
+    ],
+    "type": "object"
+  },
+  "name": "add_design_rule"
+}

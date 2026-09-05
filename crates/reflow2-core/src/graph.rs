@@ -910,6 +910,33 @@ impl DesignGraph {
         )
     }
 
+    /// Create or revise a `DesignRule` — a convention or standard the project
+    /// adopts (a tech-stack choice, a house style, a review step). Two projects
+    /// reached for a typed constructor and found only generic `create_node`,
+    /// then guessed the field names wrong (2026-08-23, 2026-09-04); this is that
+    /// constructor. `enforced` is deliberately `Option`: absent means nobody has
+    /// said whether breaking the rule stops the build, which is the user's call
+    /// to state and is never defaulted (schema/core.yaml, dec:does-enforced-
+    /// default-to-gate-blocking).
+    pub fn add_design_rule(
+        &mut self,
+        id: &str,
+        name: &str,
+        statement: &str,
+        category: Option<&str>,
+        enforced: Option<bool>,
+    ) -> Result<StoredNode, DynoError> {
+        self.upsert_node(
+            node::DESIGN_RULE,
+            id,
+            Props::new()
+                .set("name", name)
+                .set("statement", statement)
+                .set_opt("category", category)
+                .set_opt("enforced", enforced),
+        )
+    }
+
     /// Set a `Capability`'s lifecycle status, preserving its other properties.
     /// `status` ∈ `planned` (the default) / `in_progress` / `realized` /
     /// `verified`.

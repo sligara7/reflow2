@@ -26,6 +26,17 @@ that boundary of yours*, and reflow2's job starts there.
 This is why the middle of this skill is `seam_report` with a pair you supply, not `pair_designs`
 with a pair it guesses.
 
+## When you only DEPEND on it — you may not need this skill at all
+
+A full seam is for two designs that must AGREE on a boundary. But often a project just **depends on
+a repository it does not own** — a shared library, a simulator, a test bed — and wants to record
+*which version* it is built against, not to specify a two-sided contract. That is `external_dependency` — its core is declare_external_dependency — which records the source, the version (a tag or commit), the
+parts taken and the build switches forwarded, and `reconcile_dependencies` checks the declaration
+against what the build actually resolves. Pass `graph_id` when the thing you depend on is ITSELF a
+reflow2 design; omit it for a plain repo. Two projects reached for a place to record exactly this
+and attached it to prose instead (2026-09-04) — reach for `external_dependency` first, and come here
+only when you need the boundary specified on both sides.
+
 ## 1. Find the other design, without touching it
 
 The user names a project; you find its store. reflow2 does no file navigation:
