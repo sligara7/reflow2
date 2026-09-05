@@ -125,6 +125,11 @@ recorded.
 
 ## Phase 2 · Analyze — static, then dynamic
 
+> A dependency on a repository the system does NOT own — a vendored library, a simulator, a shared
+> test bed — is recorded with `external_dependency` (source + version + parts taken), not left in
+> prose. `reconcile_dependencies` then checks it against what the build resolves. This is the one
+> place adopters keep reaching for and not finding (2026-09-04).
+
 Static — interrogate the structure you recorded:
 
 - `detect_gaps` (expect `design_without_intent` first: structure exists, intent does not — that

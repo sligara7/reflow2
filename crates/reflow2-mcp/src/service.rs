@@ -1132,6 +1132,33 @@ pub struct RequirementReq {
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct DesignRuleReq {
+    pub id: String,
+    #[serde(default)]
+    pub name: Option<String>,
+    /// The rule itself — the convention or standard the project adopts.
+    #[serde(default)]
+    pub statement: Option<String>,
+    /// `tech_stack` / `convention` / `material` / `methodology` / `standard` /
+    /// `style`. Optional.
+    #[serde(default)]
+    pub category: Option<String>,
+    /// Whether breaking the rule is GATE-BLOCKING. THREE STATES and the third is
+    /// the default: `true` = stops the build (and owes a detector), `false` =
+    /// advisory, ABSENT = nobody has said, reported as unstated and never read
+    /// as enforced. Leave it unset unless the user has actually chosen; whether
+    /// a broken rule should stop somebody's build is a policy about consequence
+    /// and it is theirs to state (governance-proposal skill).
+    #[serde(default)]
+    pub enforced: Option<bool>,
+    /// Ids you read and judged DIFFERENT from this one, when a near match was
+    /// reported. Omit on a first attempt.
+    #[serde(default)]
+    pub distinct_from: Option<Vec<String>>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct CapabilityReq {
     pub id: String,
     #[serde(default)]
@@ -3151,6 +3178,14 @@ pub struct EpochStatusReq {
 #[serde(deny_unknown_fields)]
 pub struct AddChangeEventReq {
     pub id: String,
+    /// NOT A REAL FIELD — accepted only to catch the commonest mistake. A
+    /// ChangeEvent has no `description`; two projects (three, counting a repeat
+    /// after it was documented) sent one and met a bare serde refusal that
+    /// listed the legal fields without saying which to use. Accepting it here
+    /// lets the handler say, at the moment of the mistake, that the prose goes
+    /// in `summary` (what changed) or `rationale` (why).
+    #[serde(default)]
+    pub description: Option<String>,
     #[serde(default)]
     pub name: Option<String>,
     /// Change type key (e.g. `new_feature`, `scope_change`, `defect_fix`).

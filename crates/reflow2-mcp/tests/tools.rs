@@ -685,6 +685,7 @@ async fn the_surface_can_say_that_nothing_moved() {
     // or the ledger's count of first baselines would measure nothing.
     assert!(
         s.add_change_event(Parameters(AddChangeEventReq {
+            description: None,
             detected_at: None,
             summary: None,
             rationale: None,
@@ -2005,6 +2006,7 @@ async fn change_event_declares_what_it_changed_atomically() {
     // written — no event, no partial edge set.
     let refused = s
         .add_change_event(Parameters(AddChangeEventReq {
+            description: None,
             detected_at: None,
             summary: None,
             rationale: None,
@@ -2033,6 +2035,7 @@ async fn change_event_declares_what_it_changed_atomically() {
     // A bogus action is refused the same way.
     let bad_action = s
         .add_change_event(Parameters(AddChangeEventReq {
+            description: None,
             detected_at: None,
             summary: None,
             rationale: None,
@@ -2051,6 +2054,7 @@ async fn change_event_declares_what_it_changed_atomically() {
 
     // The valid call draws the CHANGED edges in the same write.
     let res = j!(s.add_change_event(Parameters(AddChangeEventReq {
+        description: None,
         detected_at: None,
         summary: None,
         rationale: None,
@@ -2131,6 +2135,7 @@ async fn temporal_resource_and_realization_tools_round_trip() {
     );
 
     j!(s.add_change_event(Parameters(AddChangeEventReq {
+        description: None,
         detected_at: None,
         summary: None,
         rationale: None,
@@ -3271,4 +3276,94 @@ async fn a_bad_level_is_refused_rather_than_answered_empty() {
         .expect_err("only Component carries a level")
         .to_string();
     assert!(err.contains("Component"), "{err}");
+}
+
+// ---- Additive surface fixes from field feedback (2026-09-05) -----------------
+// Three field reports, three small surfaces. Each pins the fix and, where the
+// fix is a helpful refusal, that the refusal actually helps.
+
+#[tokio::test]
+async fn add_design_rule_is_a_typed_constructor() {
+    // Two independent projects reached for this and found only create_node,
+    // then guessed the field names wrong (rule_type/enforcement/scope). The
+    // typed constructor takes name+statement, optional category, and leaves
+    // `enforced` UNSET unless stated.
+    let s = ReflowService::in_memory().expect("service");
+    j!(s.add_project(Parameters(IdName {
+        id: "prj:p".into(),
+        name: Some("P".into()),
+    })));
+    let node = j!(s.add_design_rule(Parameters(DesignRuleReq {
+        id: "rule:branch-then-pr".into(),
+        name: Some("Branch, then PR".into()),
+        statement: Some("Nothing lands on main directly; open a PR from a branch.".into()),
+        category: Some("convention".into()),
+        enforced: None,
+        distinct_from: None,
+    })));
+    assert_eq!(node["node_type"], "DesignRule");
+    assert_eq!(
+        node["properties"]["statement"].as_str().unwrap(),
+        "Nothing lands on main directly; open a PR from a branch."
+    );
+    // enforced left unset is THE default and must not be invented as false.
+    assert!(
+        node["properties"].get("enforced").is_none(),
+        "enforced must stay ABSENT when unstated, never defaulted: {node}"
+    );
+}
+
+#[tokio::test]
+async fn add_design_rule_records_a_stated_enforcement() {
+    let s = ReflowService::in_memory().expect("service");
+    let node = j!(s.add_design_rule(Parameters(DesignRuleReq {
+        id: "rule:gate".into(),
+        name: Some("Gate".into()),
+        statement: Some("The design gate must pass.".into()),
+        category: None,
+        enforced: Some(true),
+        distinct_from: None,
+    })));
+    assert_eq!(node["properties"]["enforced"], true);
+}
+
+#[tokio::test]
+async fn add_change_event_description_is_redirected_not_refused_blankly() {
+    // The commonest mistake, caught where it is made: a ChangeEvent has no
+    // `description`. Three projects sent one; the refusal must now name the two
+    // fields that ARE the prose, at the moment of the mistake.
+    let s = ReflowService::in_memory().expect("service");
+    let out = s
+        .add_change_event(Parameters(
+            serde_json::from_value(serde_json::json!({
+                "id": "chg:x",
+                "change_type": "defect_fix",
+                "description": "this prose belongs in summary",
+            }))
+            .unwrap(),
+        ))
+        .await;
+    let err = out.expect_err("a ChangeEvent with a `description` must be refused");
+    let msg = format!("{err:?}");
+    assert!(
+        msg.contains("summary") && msg.contains("rationale"),
+        "the refusal must name the two real prose fields, not just reject: {msg}"
+    );
+}
+
+#[tokio::test]
+async fn add_change_event_still_works_without_description() {
+    // Counterweight: the redirect fires ONLY on the mistake, never on a normal
+    // call — the prose in `summary` goes through untouched.
+    let s = ReflowService::in_memory().expect("service");
+    let node = j!(s.add_change_event(Parameters(
+        serde_json::from_value(serde_json::json!({
+            "id": "chg:ok",
+            "name": "a fix",
+            "change_type": "defect_fix",
+            "summary": "fixed the thing",
+        }))
+        .unwrap(),
+    )));
+    assert_eq!(node["event"]["properties"]["summary"], "fixed the thing");
 }

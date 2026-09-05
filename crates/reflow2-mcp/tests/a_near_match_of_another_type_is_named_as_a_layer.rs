@@ -89,6 +89,7 @@ fn requirement(id: &str, name: &str, statement: &str) -> RequirementReq {
 
 async fn seed_change_event(s: &ReflowService) {
     s.add_change_event(Parameters(AddChangeEventReq {
+        description: None,
         id: "chg:client-elects-its-own-build".into(),
         name: Some("A client elects a server of its own build".into()),
         change_type: Some("defect_fix".into()),

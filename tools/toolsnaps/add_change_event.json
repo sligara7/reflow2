@@ -54,6 +54,14 @@
           "null"
         ]
       },
+      "description": {
+        "default": null,
+        "description": "NOT A REAL FIELD — accepted only to catch the commonest mistake. A\nChangeEvent has no `description`; two projects (three, counting a repeat\nafter it was documented) sent one and met a bare serde refusal that\nlisted the legal fields without saying which to use. Accepting it here\nlets the handler say, at the moment of the mistake, that the prose goes\nin `summary` (what changed) or `rationale` (why).",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
       "detected_at": {
         "default": null,
         "description": "WHEN the change landed, as a plain date. Pass it — it is what lets a\nchange be ORDERED against a check's `last_run_at`, which is the\ndifference between staleness that can be computed and staleness that has\nto be claimed.\n\nIt was declared on the node and unreachable from here until 2026-08-24.\nMeasured at the time: the reconcile paths, which could set it, dated 84%\nof their events; hand-written ones, which could not, dated 8%.",

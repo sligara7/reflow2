@@ -49,6 +49,7 @@ fn epoch(id: &str) -> AddEpochReq {
 
 fn event(id: &str) -> AddChangeEventReq {
     AddChangeEventReq {
+        description: None,
         id: id.into(),
         name: Some("A change".into()),
         change_type: Some("defect_fix".into()),
