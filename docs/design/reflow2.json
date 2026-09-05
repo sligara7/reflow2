@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:b4a00e7c342231750a094c95f8c0aa79b85343171ceb01e42a292c1ca5be4cec",
+  "content_hash": "sha256:e1e78500a8248c77957559bcaa13b5ff180550ef02b42a158a3018890ed01d91",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -10213,6 +10213,18 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:fact:defect-a-verifications-level-and-method-can-be-set-only-at-birth-so-a-wrong-default-is-on-the-record-forever",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:fact:defect-two-prescribed-layer-pairs-are-missing-so-a-check-beside-its-ruling-is-refused-as-a-duplicate",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:fact:the-agent-surface-profiled-orientation-is-35-of-40-seconds-and-two-causes-are-located",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
@@ -17381,6 +17393,46 @@
     },
     {
       "edge_type": "CAUSES",
+      "from_id": "art:schema",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "schema.rs validate_node inserts a declared default for every missing property, unconditionally, on the create_node path every constructor uses (its own test: validate_node_applies_defaults). Measured 2026-09-05: a fresh Verification with no level/method EXPORTS level=unit, method=test. The injector is the cause; the missing setter is the symptom the reporter met.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:defect-a-verifications-level-and-method-can-be-set-only-at-birth-so-a-wrong-default-is-on-the-record-forever"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "art:schema-temporal",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "schema/temporal.yaml:139 enumerates SCHEDULED_FOR.from as [Requirement, Capability, Question]. Verification and Decision are absent, so schedule_for refuses them and only past-tense OCCURS_DURING remains. Same class as the VERIFIES.to list that lacked Interface until 2026-08-22.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:defect-a-planned-verification-cannot-be-scheduled-because-scheduled-for-does-not-enumerate-it"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "art:schema-verify",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "schema/verify.yaml:22,24 declare method default: test and level default: unit. The injector writes whatever a schema declares; these two declarations are the instance. Artifact.granularity/volatility had their defaults REMOVED for exactly this reason (BL-198) and Verification's were not.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:defect-a-verifications-level-and-method-can-be-set-only-at-birth-so-a-wrong-default-is-on-the-record-forever"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "art:tools-capture",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "PRESCRIBED_LAYER_PAIRS at capture.rs:128 is a hand-enumerated list of the cross-type pairs the loop prescribes to read alike. It lacks Decision-Verification and Requirement-Decision; the reporter's fires cluster on exactly those (plus one n=1 Decision-DesignEpoch). Under-enumeration is the cause; the resend-with-distinct_from is the symptom.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:defect-two-prescribed-layer-pairs-are-missing-so-a-check-beside-its-ruling-is-refused-as-a-duplicate"
+    },
+    {
+      "edge_type": "CAUSES",
       "from_id": "cap:a-decision-can-be-created-already-settled",
       "properties": {
         "basis": "correlational",
@@ -23498,6 +23550,15 @@
         "action": "modified"
       },
       "to_id": "art:test-degraded-server"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-7cad4c0b8177a583",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:kit-instructions"
     },
     {
       "edge_type": "CHANGED",
@@ -37749,6 +37810,14 @@
       "to_id": "cmp:seam"
     },
     {
+      "edge_type": "COMPLEMENTS",
+      "from_id": "rule:field-feedback-issues-are-root-caused-and-ideas-are-brainstormed",
+      "properties": {
+        "evidence": "Two rules about the same input, on different axes: the priority rule says WHICH feedback is read first; this one says HOW each piece is read once it is (issues -> root-cause, ideas -> brainstorm). Neither subsumes the other; together they are the whole feedback-triage practice. Both set by Anthony."
+      },
+      "to_id": "rule:feedback-sources-have-a-priority-order-and-anthony-set-it"
+    },
+    {
       "edge_type": "CONSTRAINS",
       "from_id": "con:a-full-orientation-pass-costs-at-most-8-seconds",
       "properties": {
@@ -43834,6 +43903,14 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "art:dev-storyflow-feedback-2026-09-04",
+      "properties": {
+        "evidence": "The dev_storyflow append-only feedback log, 2026-09-04 excerpt, is the other governed field report; its 2026-09-05 appendix was the triage whose skipped root-cause steps prompted this rule being written down."
+      },
+      "to_id": "rule:field-feedback-issues-are-root-caused-and-ideas-are-brainstormed"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "art:grok-build-tui-feedback-2026-08-27",
       "properties": {
         "note": "A dated field report from 2026-08-27. It describes nothing and implements nothing, correctly: it is true of a moment and must not track the design as it moves. Same genre and same ruling as its four siblings.",
@@ -43905,6 +43982,14 @@
         "ruling": "parks"
       },
       "to_id": "dec:a-dated-field-report-is-registered-and-parked"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "art:qs-project-feedback-2026-09-04",
+      "properties": {
+        "evidence": "A parked field report is the object this rule governs: its issues owe a root-cause fact each, its ideas an exploratory decision each. This one was triaged 2026-09-04 under the rule's practice before the rule was written down."
+      },
+      "to_id": "rule:field-feedback-issues-are-root-caused-and-ideas-are-brainstormed"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -51472,9 +51557,21 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "fact:defect-a-verifications-level-and-method-can-be-set-only-at-birth-so-a-wrong-default-is-on-the-record-forever",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:fact:defect-a-verifications-level-and-method-can-be-set-only-at-birth-so-a-wrong-default-is-on-the-record-forever"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "fact:defect-change-event-has-no-type-for-a-field-reported-defect",
       "properties": {},
       "to_id": "snap:epoch:alex-grok-feedback-triaged:fact:defect-change-event-has-no-type-for-a-field-reported-defect"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "fact:defect-two-prescribed-layer-pairs-are-missing-so-a-check-beside-its-ruling-is-refused-as-a-duplicate",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:fact:defect-two-prescribed-layer-pairs-are-missing-so-a-check-beside-its-ruling-is-refused-as-a-duplicate"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -144468,6 +144565,16 @@
       }
     },
     {
+      "node_id": "chg:accept-7cad4c0b8177a583",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "documentation",
+        "detected_at": "2026-09-05",
+        "name": "CORRECTION, not a change. getting-started/AGENTS.md did not move; this restores its real hash after a mis-accept minutes earlier stamped the ROOT AGENTS.md's hash onto it (the two are different files; the root one is unregistered). The wrong value was on the record for one export cycle and never committed. Cause: the artifact's location was read off its name, not its `location` property.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-7d9bce8ed9339737",
       "node_type": "ChangeEvent",
       "properties": {
@@ -147544,6 +147651,18 @@
       "properties": {
         "change_type": "scope_change",
         "name": "Anthony collapses the nested-graphs decision: a graph per ownership boundary, levels inside each"
+      }
+    },
+    {
+      "node_id": "chg:field-feedback-triage-becomes-a-design-rule",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-09-05",
+        "name": "Feedback triage is written down as a rule: issues get /root-cause, ideas get /brainstorm, without a reminder",
+        "rationale": "Anthony asked for it on 2026-09-05 after reminding the agent on three consecutive feedback triages: \"this should really be a design rule for reflow2 project ... then I don't have to remind this every time.\" The same day supplied the argument for why the SKILLS and not just care: a triage that read the code and wrote causes down without the root-cause skill's steps got two of four wrong, and the skipped steps overturned both. Created through generic create_node rather than the new add_design_rule constructor because this session's running server predates #429 — the exact friction the field reported, met while writing the rule the field prompted. Third leg (a detector that notices a triaged report with no CAUSES edge and no exploratory Decision) is named as owed, not built.",
+        "subject": "record",
+        "summary": "rule:field-feedback-issues-are-root-caused-and-ideas-are-brainstormed created (category methodology, enforced deliberately unstated), COMPLEMENTS rule:feedback-sources-have-a-priority-order-and-anthony-set-it, and GOVERNED_BY drawn from the two parked 2026-09-04 field-report artifacts it governs. The repository's ROOT AGENTS.md gains rule 9 pointing at it, so every agent meets the rule at session start rather than only when a search happens to surface it. A pointer only was added to machine-local memory, per Anthony's standing preference that rules live in the graph. Record axis: nothing in the system changed; the design's knowledge of how it reads feedback did.\n\nCORRECTED THE SAME HOUR: this event first claimed art:kit-instructions (getting-started/AGENTS.md, the kit copy shipped to other projects) was modified. It was NOT — the file edited is the repository's root AGENTS.md, a DIFFERENT file (56 KB vs 27 KB, carries the numbered rules list the kit copy does not), and the root file is not a registered Artifact at all. The false CHANGED edge was deleted and the kit artifact's checksum restored to its real value. Two things fall out and are recorded rather than hidden: (1) the project's own primary instruction file is unregistered, so no gate notices when it moves — worth registering; (2) the mis-accept happened because a location was read off an artifact's NAME ('AGENTS.md') instead of its `location` property, which is rule:success-is-read-from-the-authoritative-object one more time."
       }
     },
     {
@@ -152509,6 +152628,17 @@
       }
     },
     {
+      "node_id": "dec:idea-a-constraint-carries-a-structural-condition-beside-its-scalar-limit",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Recorded as BRAINSTORMING, not as a proposal — from the dev_storyflow agent's field report (2026-09-05, wish #21), in its words. The budget it wrote was '≤ 50 ms p50, AND ≤ 2 edge fetches per story node, AND zero foreign entities.' Only the first fits `limit`. The other two are what the guard actually asserts (the optimize skill's step 7 says assert STRUCTURE, not duration), so 'the field that gets rolled up by budget_report is the least durable of the three.' OPTIONS as the reporter put them: (a) a second field for the structural condition; (b) document that `limit` is the reportable scalar and `statement` carries the rest — cheap, no schema change, and arguably already true.",
+        "kind": "exploratory",
+        "name": "OPEN — a Constraint's `limit` is one f64, but a real budget is often a number AND a structure. Should it carry a structural condition too, or is the scalar declared the reportable half?",
+        "rationale": "COUNTER-ARGUMENT to (a): a structural condition is not machine-comparable the way a scalar is, so a field for it would be prose under another name, and budget_report could not roll it up either. (b) makes the existing split honest without inventing a field nobody can compute over; the optimize skill could say it in step 4 where the budget is written. A ranking here is a finding, not a decision.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-a-contract-is-declared-at-the-lowest-level-and-rolled-up",
       "node_type": "Decision",
       "properties": {
@@ -152901,6 +153031,17 @@
       }
     },
     {
+      "node_id": "dec:idea-an-epoch-that-splits-decomposes-into-child-epochs",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Recorded as BRAINSTORMING, not as a proposal — dev_storyflow field report 2026-09-05, wish #29. The reporter's sequencing decision split an epoch — Y0-Y2 before increment 2, Y3+X+Z after increment 3 — and 'a DesignEpoch carries one position. There is no honest way to draw it: precedes on the epoch would assert something false about half of it.' They recorded the split in decision text and noted on the governed_by edge that the epoch must eventually be divided. The idea: a DECOMPOSES edge between epochs (parent increment -> two child increments) so the plan can SAY it rather than narrate it. WHAT IS CHEAP: DECOMPOSES already exists; the change is endpoint enumeration (DesignEpoch -> DesignEpoch), the same one-line shape as the SCHEDULED_FOR finding.",
+        "kind": "exploratory",
+        "name": "OPEN — a sequencing decision that SPLITS an increment cannot be drawn: a DesignEpoch has one position. Should DECOMPOSES between DesignEpochs let a plan say 'this increment becomes two'?",
+        "rationale": "THE COUNTER-ARGUMENT: dec:arrival-delta computes an epoch's delta against its FIRST snapshot and refuses a lossy schedule edit — and splitting an epoch IS a schedule edit. The arrival semantics of a parent whose children arrive separately must be defined before the edge is allowed, or arrival_delta computes against a whole that no longer exists. A real design question, not a schema line. Same family as wish #7 (a Decision cannot be scheduled) and fact:defect-a-planned-verification-cannot-be-scheduled...: the plan vocabulary is thinner than the plans people actually make.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-an-increment-can-be-sliced-into-work-packages-with-an-owner",
       "node_type": "Decision",
       "properties": {
@@ -152916,6 +153057,17 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony thinking out loud 2026-08-08, immediately after `dec:an-unplanned-cut-slips-every-later-increment-by-one` was accepted and applied, and in direct response to the id-churn cost that applying it exposed. HIS WORDS: \"if we can't slip a version, just add the in-between version like v0.25.1 for the planned change, then preplanned versions can stay in place (their id stays the same) and we can add unplanned versions as v0.25.1 or v0.26.4 or whatever makes sense - I'm sure this has a drawback also as it probably doesn't fit when you should do a minor bump versus whatever the third decimal place is called.\" (The third decimal is the PATCH number, semver's MAJOR.MINOR.PATCH.) THE IDEA: an unplanned cut is numbered BETWEEN the planned ones rather than consuming one of them, so `epoch:v0260-planned` stays v0.26.0 forever, its id keeps matching its content, and nothing renumbers. WHAT IT SOLVES, and it is the real prize: the id churn is not merely reduced, it is ELIMINATED — no renaming, no risk to the snapshot history `dec:arrival-delta` reads plan movement from, and no ids that lie about their content. It also removes the cascade entirely: today's slip touched four epochs, and a scheme where planned numbers are stable touches none. THE DRAWBACK HE NAMED HIMSELF, AND IT IS REAL AND MEASURABLE ON TODAY'S CUT: patch is not a free slot. This project's CHANGELOG defines its own buckets — patch is \"bug fixes, doc fixes, tests, refactors, perf, and behavior changes that make a silent failure LOUD\", minor is \"a change to the SHAPE of the tool surface (new/changed params, changed result shapes)\". v0.25.0 was MINOR by that table for exactly two reasons: `HealProposal.would_destroy` and `HealIssue.hubs`, both new result fields. Everything else in it was fixes. So v0.25.1 would have been WRONG for what actually shipped — by a hair, and the hair matters. THE HARM IS CONCRETE RATHER THAN PURIST, and the same table states it: patch means the consumer \"updates blindly; skills and calls unchanged\"; minor means they \"may need to notice\". Numbering a shape change as a patch tells Alex he can update without looking when a result shape moved. That is a signal saying SAFE without having checked — the failure family this whole session kept finding. OTHER SHAPES, none chosen: (a) HYBRID — insert as a patch when the unplanned work genuinely IS a patch (the common case), slip only when it is genuinely minor (rarer). Keeps ids stable most of the time and keeps semver honest; costs two rules instead of one and a judgement at each cut, though that judgement is one the CHANGELOG table already forces. (b) DISSOLVE IT — name planned increments by CONTENT and assign the number at cut time from what actually shipped (`dec:idea-a-planned-increment-is-named-by-content-not-by-number`). Then neither slipping nor inserting is a problem, because no plan ever holds a number it can lose. This is the only option where the question stops existing rather than being answered. (c) REDEFINE THE BUCKETS — pre-1.0 semver gives latitude and the project has not made a stability commitment (\"Major 1.0 — Deferred\"), so it could declare that 0.x.y patch admits additive-but-non-breaking changes. Cheapest to write and the most expensive to be wrong about, since it weakens the one signal consumers act on blindly. (d) KEEP THE ACCEPTED RULE and pay the id cost, treating ids as birth numbers rather than delivery numbers. WORTH NOTING: (a) and (b) COMPOSE — content-named plans plus semver-honest numbering at cut time is arguably the same answer reached from two directions.",
         "name": "OPEN — should unplanned work take an IN-BETWEEN version (v0.25.1) so planned increments never renumber, instead of slipping them all up one?",
         "rationale": "Recorded as an idea rather than as a change because Anthony was explicitly thinking out loud, offered the counter-argument himself in the same breath, and the accepted rule it revisits was settled minutes earlier. Nothing is superseded: `dec:an-unplanned-cut-slips-every-later-increment-by-one` stands and the slip has been applied. What makes this worth a node rather than a passing remark is that it is a genuine alternative to a rule with a known cost, and the cost is what prompted it — so a later session choosing between them needs both on the record, with the semver objection attached to the idea rather than lost in conversation.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-argument-less-tools-accept-and-ignore-underscore-prefixed-fields",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Recorded as BRAINSTORMING, not as a proposal — dev_storyflow field report 2026-09-05, wish #28. 'loop_status takes NO arguments; the harness needed a parameter, the tool refuses one.' The idea: one convention — accept and ignore unknown `_`-prefixed fields. WHAT MAKES THE `_` PREFIX DEFENSIBLE: no real field starts with an underscore, so `_dummy` cannot be a typo of anything, and the honesty argument below does not apply to it. The narrow form (ignore `_`-prefixed keys ONLY, and perhaps only on zero-argument tools) keeps the existing guarantee for every field that could be a mistake.",
+        "kind": "exploratory",
+        "name": "OPEN — loop_status takes no arguments and rejects `_dummy`, but some harnesses cannot send an empty call. Should argument-less tools accept and ignore `_`-prefixed fields?",
+        "rationale": "THE TENSION IS A DELIBERATE DECISION: chg:bl57-tool-boundary-honesty made EVERY request struct deny unknown fields on purpose, so a typo'd parameter is REJECTED rather than swallowed (schemars publishes additionalProperties:false). A blanket carve-out would reopen that; the underscore-only form would not. NOT MEASURED: which harness needs this, and whether it is one harness or a class — one report, one occurrence.",
         "status": "proposed"
       }
     },
@@ -153447,6 +153599,17 @@
         "decision": "UNDECIDED — RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony's hypothetical, 2026-08-16: \"take every requirement we've defined, and start a new project called reflow3 and run /genesis with those requirements (would we end up with the same product?)\".\n\nDISTINCT FROM ITS SIBLING: the adopt hypothetical asks what reading the CODE recovers. This asks what reading the REQUIREMENTS produces. One tests recovery, the other tests SUFFICIENCY — whether the recorded intent determines the product. They point in opposite directions and neither answers the other.\n\n⭐ THE MEASURED ANSWER IS NO, AND THE GAP IS COUNTABLE (2026-08-16):\n    Requirements 175  (115 accepted · 47 proposed · 9 dropped · 4 deferred)\n    Capabilities 162\n    Decisions    389  (247 accepted · 131 proposed · 10 superseded · 1 rejected)\n    GOVERNED_BY  901 edges, of which 877 LAND ON A DECISION\n\n⇒ THE DESIGN IS GOVERNED MORE THAN TWICE AS HEAVILY BY DECISIONS AS BY REQUIREMENTS. Genesis takes a brief → Requirements → Capabilities. IT DOES NOT TAKE DECISIONS AS INPUT. So reflow3 would re-litigate every shaping choice from nothing: `dec:report-dont-judge`, `dec:certainty-derived`, `dec:edge-orthogonality`, `dec:views-are-projections`, `dec:agent-navigates-content`, `dec:bl83a-functional-decomposition`. There is no reason a fresh pass lands the same way on any of them, and those are what give reflow2 its CHARACTER rather than its feature list.\n\nTHREE CONCRETE DIVERGENCES, all measured:\n(a) 18 CAPABILITIES THAT NO REQUIREMENT ASKS FOR — 11% of the product, invisible to a requirements-only genesis. This is exactly what `unmotivated_capability` detects, the detector music_graph independently called \"the design-recovery engine\".\n(b) 43 REQUIREMENTS NOTHING DELIVERS — so reflow3 would have them in scope from day one and might come out MORE complete on that axis. (The 43 includes dropped and deferred, so the live backlog is smaller.)\n(c) THE REQUIREMENTS ARE THEMSELVES DOWNSTREAM OF DECISIONS. `req:key-interfaces` and `req:modularity-computed` exist because `dec:mosa-conformance` was thought through. Feed only the outputs and you lose the reasoning that generated them — and, worse, the reasoning that would generate the NEXT ones.\n\n⭐⭐ WHAT THE QUESTION ACTUALLY TESTS, and it is the sharpest form of the concern Anthony raised all day: IS THE DESIGN A SUFFICIENT SPECIFICATION OF THE PRODUCT? Measurably, not quite — the gap is 18 capabilities plus 389 decisions. That is not obviously a flaw in reflow2 so much as a true fact about design; what is unusual is that reflow2 can SHOW THE SIZE OF THE GAP rather than leaving it a feeling.\n\nTHE VARIANT WORTH MORE THAN THE ORIGINAL, and nothing in the design has considered it: GENESIS FROM REQUIREMENTS **AND** DECISIONS. That is a real question about whether reflow2's own record is self-sufficient, and it is a far stronger claim if it holds — \"this graph is enough to rebuild the product\" is the strongest statement a design brain could make about itself. Genesis takes a brief; whether decisions can be seeded alongside is unexamined.\n\nA PREDICTION, recorded so it can be wrong: reflow3 would be recognisably the SAME KIND of thing and differ in nearly every SPECIFIC. Which is itself an answer to whether reflow2 produces principled designs — it produces a design that determines the product's PROPERTIES, not its SHAPE.\n\nTHE OPTIONS: (a) leave it hypothetical — the measurement above already answers the interesting part without spending the effort; (b) run the requirements-only version as a cheap sufficiency probe and count what is missing; (c) run the requirements-AND-decisions version, which is the one that tests the graph's self-sufficiency; (d) do neither and instead treat \"18 capabilities no requirement asks for\" as a to-do — close the gap rather than measure it.\n\nNOT ESTABLISHED: whether the 18 unmotivated capabilities are an honest backlog or already acknowledged as deliberate. Nobody has read them. That single check would change which option is worth taking.",
         "name": "OPEN — would genesis on reflow2's own requirements rebuild reflow2? The measured answer is no, and the gap is 18 capabilities and 389 decisions",
         "rationale": "Recorded as brainstorming on Anthony's hypothetical, 2026-08-16, at his instruction to capture it. His question and his framing (\"would we end up with the same product?\"); the counts, the divergences and the prediction are mine. Kept at `proposed` rather than promoted — he asked it as a hypothetical, and the requirements-and-decisions variant is my suggestion rather than his. Its sibling is `dec:idea-run-adopt-on-reflow2-itself-as-a-ground-truth-test`.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-get-node-by-id-alone-since-the-prefix-names-the-type",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Recorded as BRAINSTORMING, not as a proposal — dev_storyflow field report 2026-09-05, wish #26. get_node cost two round-trips to learn: unknown field `node_id`, then missing `node_type`. 'Requiring node_type as well is a second round-trip for every read.' WHAT IS CHEAP: node_type_index already resolves an id to its type for every detector, so a by-id read is one existing lookup away, and the typed-prefix convention is the documented reason ids are unique across types. A MIDDLE PATH: accept node_type as optional, resolve by index when omitted, and REFUSE (never guess) when an id resolves to more than one type — the one-call read for the common case, honesty for the collision.",
+        "kind": "exploratory",
+        "name": "OPEN — get_node requires node_type as well as id, though the id prefix (`dec:`, `ver:`, `req:`) already names the type. Should a read resolve by id alone?",
+        "rationale": "THE COUNTER-ARGUMENT, and it is real: the prefix is a CONVENTION, not a rule — node_type_index's own comment says 'on a collision the first type scanned wins', so a by-id read on a graph with a convention violation would return a silently wrong node, which is worse than a required field. That is why the middle path refuses rather than picks. Part of the sibling-inconsistency class (fact:defect-sibling-constructors-disagree..., fact:defect-typed-tool-parameter-names-are-inconsistent): the read tools disagree with each other too.",
         "status": "proposed"
       }
     },
@@ -154054,6 +154217,17 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Two of Alex's Opportunities, 2026-08-14 (docs/feedback/2026-08-14-alex-grok-session.md), kept together because they are one question asked of two tools — and separable if the answer differs.\n\nHIS WORDS. On detect_gaps: \"Scoped `detect_gaps`: filter to gaps whose `affected_ids` include the seed (or its SATISFIES/REALIZES neighbors), and do not raise `unverified_capability` for `planned` + zero artifacts.\" On loop_status: \"`loop_status` session mode: 'building this Capability' hides unsurfaced project-wide gaps unless they touch the seed.\"\n\n⭐ THE SHARPENING, AND IT CHANGES THE QUESTION: SCOPING IS NOT MISSING. `cap:scoped-analysis` is built and shipped — \"A team asks the detectors about its own part, and is told what it did not see\" (`chg:scoped-analysis-built`), and `loop_status` already takes a `contributor_id`. So this is not a request for a feature that does not exist. It is a report that THE FEATURE THAT EXISTS DID NOT HELP: he called `detect_gaps(scope: Capability)` at depth 1, 2 and 3, got `in_scope` of roughly 47–51 every time, \"almost every hit `unverified_capability` on unrelated planned work\", and still could not answer \"is THIS Capability still in an `unrealized_capability` gap?\" without grepping `affected_ids` by hand.\n\nTHAT REFRAMES IT: the scope is computed by GRAPH REACHABILITY, and on a connected design a few hops reaches most of it. The question is whether scope should mean \"what the seed can reach\" or \"what is actually about the seed\".\n\nTHE OPTIONS:\n\n(a) FILTER BY `affected_ids` — exactly his proposal: a gap is in scope when the seed (or its SATISFIES/REALIZES neighbours) is in the gap's own affected set. CHEAP, and it answers the question he actually had. COUNTER: it narrows to gaps that already name the seed, so a gap about a neighbour that WILL matter to him drops out — and `cap:scoped-analysis`'s whole promise is that it \"names what it did not see\", which this makes both more necessary and more voluminous.\n\n(b) SUPPRESS `unverified_capability` FOR `planned` + ZERO ARTIFACTS — his second clause, and independently useful. CHEAP. COUNTER: it is a phase judgement baked into a detector, and this project's standing preference is to report the fact and let the reader judge (`dec:report-dont-judge`). It may also be the same finding as `dec:should-a-design-be-able-to-say-it-describes-something-that-already-exists`, one layer along — a design that has not started building does not want build gaps at all.\n\n(c) A SESSION MODE ON `loop_status` — \"I am building this Capability\". Answers the noise complaint where he actually felt it: `next[0]` was detect-and-ask all session while the work was implement → user-correct → implement. COUNTER, and it is serious: `loop_status`'s contract is that a scoped answer must never read as \"the design is clean\" — it already keeps unattributable debt under `scope.not_attributable` for exactly this reason. A mode that HIDES project-wide gaps is the one thing that contract forbids, so this option must be built as \"rank differently\", not \"hide\".\n\n(d) DO NOTHING TO THE TOOLS; THE COMPLAINT IS ABOUT PHASE — he was mid-bugfix with a user watching a broken app, and reflow2 has no notion of that. His items 3 and 9 are the same complaint from the other side. COUNTER: \"wait for a phase model\" has been the answer to several of these, and nothing is scheduled.\n\nNOT ESTABLISHED: whether depth was the wrong control or scope was the wrong concept; and whether 47–51 in_scope on his design is large relative to the design's size, which nobody measured.",
         "name": "IDEA — scoped detection is BUILT and a real session still could not ask \"is this one Capability still in a gap?\". Should scope filter by relevance rather than by reachability, and should loop_status get a session mode?",
         "rationale": "Recorded via the brainstorm skill at `proposed`. Two ideas held in one node because they are one question asked of two surfaces; noted inside that they can be answered apart if the answer differs. The reframing — that scoping exists and did not narrow — is a finding, not a decision, and is stated as such.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-search-expands-with-the-projects-own-domain-vocabulary",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Recorded as BRAINSTORMING, not as a proposal — dev_storyflow field report 2026-09-05, wish #23. Two search-before-write misses in one session were both on the AGENT's phrasing; the hits needed the USER's own vocabulary ('lens', 'seamless'). Both times the correction came from the graph — the tool worked — but only on the second try. The idea: a search_design that also expands with the Project's recorded domain terms (lens, universe, campaign, fragment) would have found the lens principle first time. WHAT IS CHEAP: the Project node and the served lens already carry domain vocabulary; expanding a query with a small synonym set from them is a retrieval-side change with no schema impact.",
+        "kind": "exploratory",
+        "name": "OPEN — search misses on the agent's phrasing and hits on the user's. Should search_design expand a query with the Project's recorded domain terms?",
+        "rationale": "THE COUNTER-ARGUMENT: query expansion trades precision for recall and can bury the exact hit under domain-term noise. And the same miss was reported against find_tools by the qs project (a design-rule constructor not surfaced), which suggests the weakness may be the ranking rather than the vocabulary. Worth measuring the miss rate before building: how often does a first phrasing fail where a second succeeds? Related open finding of the same shape: fact:the-external-dependency-node-exists-and-no-skill-points-at-it.",
         "status": "proposed"
       }
     },
@@ -159882,6 +160056,15 @@
         "enforced": false,
         "name": "Feedback sources are triaged in a stated order: dev_storyflow first, Alex level with it, music_graph after",
         "statement": "ANTHONY'S WORD, 2026-08-16, stated in passing while asking for a triage sweep: \"dev_storyflow is a higher priority\" and \"any un-addressed feedback from my brother should be addressed — it is right up there in importance next to dev_storyflow\". Recorded because it is a STANDING ordering, not a one-off instruction for that sweep, and because a future session with three logs and finite attention will otherwise re-derive it wrongly or read them in whatever order they were handed over.\n\nTHE ORDER: dev_storyflow first — Alex level with it — music_graph after.\n\nWHY IT IS NOT ARBITRARY, inferred and marked as inference rather than as his stated reasoning: dev_storyflow is the fleet Anthony runs himself, so its log is his own usage at scale and arrives fastest; Alex is the SECOND HUMAN USER, and a second user's friction is the only evidence reflow2 has about anyone who did not build it; music_graph is a single consumer project whose reports, while excellent, have so far concentrated on one surface (restore and setup). ⚠️ HE DID NOT SAY THIS — he stated the order and not the grounds, and a later session should not quote the reasoning back to him as his.\n\nWHAT IT DOES NOT MEAN, since a priority order is easy to over-read: it is not a quality ranking. music_graph's F23 was the most consumer-blocking defect of the whole increment and was fixed first, before this ordering was stated. Priority here is about which log to READ when there is not time for all of them, not about whose findings matter.\n\n📌 `enforced: false` DELIBERATELY, and the reason is that no check is possible: nothing in the graph knows which log a session read, or in what order. So this is guidance for a reader and must not be raised as an unverified enforced rule.\n\n⚠️ THIS NODE WAS CREATED WRONG THE FIRST TIME AND THE ERROR IS RECORDED RATHER THAN QUIETLY FIXED: it was written with `enforcement: \"advisory\"`, a property the schema does not declare. It was ACCEPTED AND STORED, echoed back, and the enforcement gap fired anyway — which is what exposed it. See `fact:defect-an-undeclared-property-is-stored-without-complaint`.\n\nAN INPUT TO AN OPEN QUESTION: `dec:idea-is-there-a-feedback-intake-skill-and-is-it-a-router` asks whether reflow2 should have a feedback skill that routes external input. If that is ever built, THIS is a thing it would need to know and has nowhere to read."
+      }
+    },
+    {
+      "node_id": "rule:field-feedback-issues-are-root-caused-and-ideas-are-brainstormed",
+      "node_type": "DesignRule",
+      "properties": {
+        "category": "methodology",
+        "name": "Field feedback is processed by skill, not by reading: every issue or gap it names gets /root-cause, every idea for improvement or a new feature gets /brainstorm",
+        "statement": "When reflow2 receives feedback from a project that uses it — a field report, a friction log, an appended feedback file, a first-use write-up — the agent triaging it MUST run the root-cause skill on every issue, defect or gap the feedback identifies, and MUST run the brainstorm skill on every idea for improvement or new feature it proposes. Automatically, as the standing way feedback is read; not when reminded. Set by Anthony on 2026-09-05 after reminding the agent of it on three consecutive triages (\"then I don't have to remind this every time\").\n\nWHY THE SKILLS AND NOT JUST 'READ CAREFULLY': the same day this rule was set, a triage that read the code and wrote down a cause without the skill's steps got two of four causes wrong — a 'missing setter' that was really the schema-default injector (the BL-198 class), and 'two missing pairs' that were three — and running the skipped steps overturned both (fact:defect-a-verifications-level-and-method-can-be-set-only-at-birth-so-a-wrong-default-is-on-the-record-forever, revised the same day). The skill's own text predicts this: a cause reached at speed feels like understanding.\n\nWHAT EACH HALF PRODUCES, so compliance is visible rather than claimed: root-cause leaves a dated TemporalFact per issue carrying the candidates considered, the discriminating measurement taken, a CAUSES edge from the artifact holding the cause, and a stated bound on what was not established; brainstorm leaves one exploratory Decision per idea in the reporter's words with the counter-argument beside it, linked (or carrying a written no-relation note) via review_relations. A triage that leaves neither has not followed this rule, whatever it concluded.\n\nCOMPLEMENTS rule:feedback-sources-have-a-priority-order-and-anthony-set-it, which says which feedback is read first; this says how each piece is read once it is.\n\nENFORCEMENT IS DELIBERATELY UNSTATED: whether a triage that skips the skills should block anything is a policy Anthony has not ruled on. The detector that would notice absence — a parked field-report artifact with no CAUSES edge and no exploratory Decision dated after it — is not built; that third leg of the vocabulary is owed (fact:vocabulary-needs-three-legs)."
       }
     },
     {
@@ -168273,6 +168456,26 @@
       }
     },
     {
+      "node_id": "snap:epoch:preserved-on-write:fact:defect-a-verifications-level-and-method-can-be-set-only-at-birth-so-a-wrong-default-is-on-the-record-forever",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[]",
+        "state": "{\"basis\":\"measured\",\"confidence\":1.0,\"fact_type\":\"observation\",\"statement\":\"A WRONG DEFAULT THAT CANNOT BE CORRECTED IS WORSE THAN A REQUIRED FIELD. dev_storyflow 2026-09-05: add_verification, called without level/method for a static code inspection, produced a Verification that READS level: unit, method: test. set_verification_kind cannot change either — VerificationKindReq (service.rs:1524) takes verification_id and kind ONLY. So 'the Y0 measurement — an inspection at system level — is recorded as a unit test forever unless I delete and recreate it', which the graph's own doctrine discourages. Three set_verification_kind calls were rejected learning this.\\n\\nWHERE THE READING COMES FROM: schema/verify.yaml declares method default: test, level default: unit. Whether those are WRITTEN on an omitted field or supplied by the READER (dec:the-safe-reading-lives-in-the-reader-not-the-store) was NOT established — no inject path was found by name in a quick grep, weakly favouring read-supplied, but unmeasured. It does not change the defect: either way the node reads unit/test and nothing can move it.\\n\\nTHE SAME SHAPE ON add_epoch: temporal.rs:512 sets name, epoch_type, sequence and no status; AddEpochReq (service.rs:3157) has no status and no description. An epoch reads `arrived` by schema default until set_epoch_status follows — for the node type whose purpose is planning (cap:planned-epochs) — and the reporter 'avoided the constructor entirely', building both epochs through create_node. Wishes #6/#10, reported before, still open.\\n\\nTWO FIXES, BOTH ADDITIVE: (1) set_verification_kind accepts optional level and method — wish #25. (2) add_epoch accepts status and description. The second brushes dec:idea-four-sibling-constructors-four-status-contracts (open) — but `planned` is the WEAKER claim than the `arrived` default reading, so accepting it asserts less, not more. OLDER SIBLING: fact:defect-add-verification-cannot-set-kind-or-last-run-at (2026-08-07) was the kind half; kind became settable and level/method did not follow.\",\"subject_id\":\"cap:a-check-records-what-it-found-separately-from-what-it-is\",\"valid_from\":\"2026-09-05\",\"value\":\"{\\\"setter_accepts\\\":[\\\"verification_id\\\",\\\"kind\\\"],\\\"cannot_set\\\":[\\\"level\\\",\\\"method\\\"],\\\"add_epoch\\\":\\\"no status/description; reads arrived\\\",\\\"fixes\\\":[\\\"set_verification_kind takes level+method\\\",\\\"add_epoch takes status+description\\\"]}\"}",
+        "target_id": "fact:defect-a-verifications-level-and-method-can-be-set-only-at-birth-so-a-wrong-default-is-on-the-record-forever",
+        "target_type": "TemporalFact"
+      }
+    },
+    {
+      "node_id": "snap:epoch:preserved-on-write:fact:defect-two-prescribed-layer-pairs-are-missing-so-a-check-beside-its-ruling-is-refused-as-a-duplicate",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[]",
+        "state": "{\"basis\":\"measured\",\"confidence\":1.0,\"fact_type\":\"observation\",\"statement\":\"THE NEAR-DUPLICATE GUARD FIRED NINE TIMES IN ONE SESSION AND WAS RIGHT ABOUT ZERO DUPLICATES (dev_storyflow 2026-09-05: seven in the main session, two more in the capture-intent addendum). Every fire was a genuinely distinct node beside a close one, and every one cost a resend with distinct_from — chaining for a brainstorm (idea 4 refused against ideas 1 and 3).\\n\\nTHE CAUSE IS AN UNDER-ENUMERATED LIST, and it is the same mechanism as a fix already shipped. PRESCRIBED_LAYER_PAIRS (capture.rs:128) is the set of cross-type pairs the capture loop PRESCRIBES to read alike, and chg:the-prescribed-layer-pairs-stop-refusing (2026-09-01) made those pairs warn instead of refuse. The list today: Requirement-Capability, ChangeEvent-Requirement/Decision/Capability, Decision-Capability, Decision-Component, TemporalFact-Decision. It was built from MEASURED refusals, one count per pair.\\n\\nTHE REPORTER'S TWO CROSS-TYPE CASES ARE NOT IN IT: (1) Decision-Verification — 'a check and a ruling on the same subject are supposed to read alike'; (2) Requirement-Decision — 'a requirement ruled in FROM an idea is supposed to read like the idea', which is exactly the promotion path the brainstorm skill prescribes (step 5, EVOLVES_INTO from the idea to what it became). Both are prescribed by the loop itself, both refused, and this session's count (multiple fires each, zero duplicates) is the measurement the list's own rule asks for before a pair is added.\\n\\nNOT IN THIS FINDING, deliberately: the SAME-TYPE case (brainstorm idea beside its sibling idea). That is Decision-Decision; the guard is supposed to look at same-type near-matches, and the brainstorm skill's own step 4 wants sibling ideas LINKED (related_to), which also satisfies the guard. Real friction, not a missing pair. The guard's TEXT is right and the reporter says so twice; only the pair list is short.\\n\\nFIX: two entries added to PRESCRIBED_LAYER_PAIRS, with the count above as justification, pinned the way the existing pairs are. Additive; nothing that refused before goes silent — the pair is REPORTED, not dropped.\",\"subject_id\":\"cap:search-first-at-the-tool\",\"valid_from\":\"2026-09-05\",\"value\":\"{\\\"fires\\\":9,\\\"true_duplicates\\\":0,\\\"missing_pairs\\\":[\\\"Decision-Verification\\\",\\\"Requirement-Decision\\\"],\\\"mechanism\\\":\\\"PRESCRIBED_LAYER_PAIRS under-enumerated\\\"}\"}",
+        "target_id": "fact:defect-two-prescribed-layer-pairs-are-missing-so-a-check-beside-its-ruling-is-refused-as-a-duplicate",
+        "target_type": "TemporalFact"
+      }
+    },
+    {
       "node_id": "snap:epoch:preserved-on-write:fact:the-agent-surface-profiled-orientation-is-35-of-40-seconds-and-two-causes-are-located",
       "node_type": "Snapshot",
       "properties": {
@@ -170776,6 +170979,19 @@
       }
     },
     {
+      "node_id": "fact:defect-a-planned-verification-cannot-be-scheduled-because-scheduled-for-does-not-enumerate-it",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "observation",
+        "statement": "A CHECK WRITTEN TODAY TO BE RUN IN A FUTURE INCREMENT HAS NO HONEST HOME IN THE PLAN. dev_storyflow 2026-09-05: schedule_for(Verification -> DesignEpoch) is refused ('cannot connect Verification to DesignEpoch'). The only edge the schema offers between them is OCCURS_DURING, whose hint is past tense — 'happened during an epoch'. The reporter used it anyway and 'it reads as a lie in the hint's own words.'\n\nCAUSE, READ FROM THE SCHEMA: SCHEDULED_FOR.from is [Requirement, Capability, Question] (schema/temporal.yaml:139). Verification is not enumerated. Neither is Decision — wish #7, reported earlier, same family: 'the plan can list builds and nothing else.' A plan today can carry what to BUILD and what to ASK, but not what to CHECK and not what to DECIDE, though all four are things an increment owes.\n\nTHIS IS THE SAME CLASS AS A FIX ALREADY MADE ON THE OWNER'S CALL: fact:a-contract-is-the-one-thing-reflow2-cannot-attach-evidence-to found VERIFIES could not target an Interface because the `to` list under-enumerated itself; Interface was added on 2026-08-22 on Anthony's word. An endpoint list enumerated by hand will be found short by the next honest use — that finding said so, and here is the next instance.\n\nTHE FIX IS ONE SCHEMA LINE — add Verification (and Decision) to SCHEDULED_FOR.from — and it is NOT made here: a schema endpoint change is the owner's call by precedent, and the reporter's alternative (a future-tense sibling of OCCURS_DURING) is a real second option. SCHEDULED_FOR already carries dec:arrival-delta's semantics (a commitment arrival measures against), which fits a planned check well. Needs a ruling. RELATED AND OPEN: dec:idea-how-do-triage-findings-become-plannable-work.",
+        "subject_id": "cap:planned-epochs",
+        "valid_from": "2026-09-05",
+        "value": "{\"refused\":\"schedule_for(Verification->DesignEpoch)\",\"cause\":\"SCHEDULED_FOR.from = [Requirement, Capability, Question]\",\"same_class_as\":\"Interface added to VERIFIES.to 2026-08-22\",\"fix\":\"one schema line, owner ruling\"}"
+      }
+    },
+    {
       "node_id": "fact:defect-a-pre-served-skills-install-is-stranded",
       "node_type": "TemporalFact",
       "properties": {
@@ -170978,6 +171194,19 @@
         "subject_id": "cmp:verify",
         "valid_from": "2026-08-16",
         "value": "{\"measured_on\":\"docs/design/reflow2.json, 2026-08-16\",\"verifications\":160,\"median_name_words\":79.5,\"over_100_words\":72,\"over_300_words\":17,\"longest\":654,\"written_this_session_over_300\":4,\"my_worst\":\"ver:a-claim-reads-back-with-its-age at 435 words, 5th longest in the design\",\"reported_by\":\"dev_storyflow fleet, 2026-08-08 10:12, worker w-02baf79f\",\"their_diagnosis\":\"a missing field being paid for in every future read of that node\",\"asks\":[\"give Verification a findings/report property\",\"truncate name in loop_status rollup, or return name + detail separately\"],\"not_established\":[\"whether a new field alone changes behaviour - a declared field nobody writes to leaves the corpus unchanged\",\"whether truncating at the rollup alone is enough, or lets the hoard grow unchecked\"],\"repair_limit\":\"the 160 existing names cannot be migrated cleanly - a property once written cannot be removed\"}"
+      }
+    },
+    {
+      "node_id": "fact:defect-a-verifications-level-and-method-can-be-set-only-at-birth-so-a-wrong-default-is-on-the-record-forever",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "observation",
+        "statement": "REVISED after the root-cause steps I had skipped were actually run (2026-09-05, same day). The first version of this fact named 'a missing setter' as the cause and claimed an asymmetry between Verification and DesignEpoch. BOTH WERE WRONG IN INSTRUCTIVE WAYS; the record below replaces them.\n\nTHE SYMPTOM (unchanged): dev_storyflow 2026-09-05 — add_verification without level/method for a static code inspection produced a Verification reading level: unit, method: test; set_verification_kind takes kind only (VerificationKindReq, service.rs:1524), so 'an inspection at system level is recorded as a unit test forever.' And add_epoch produces an epoch reading `arrived`; the reporter avoided the constructor.\n\nTHE DISCRIMINATING MEASUREMENT (step ④, which the first version skipped): three candidates — (a) the reading is READER-supplied per dec:the-safe-reading-lives-in-the-reader-not-the-store and nothing is stored; (b) the constructor writes the defaults; (c) schema validation INJECTS every declared default into the store on write. They predict different EXPORTS, because an export omits unset properties. Measured on a fresh graph with the current debug binary: a Verification created with no level/method EXPORTS level=unit, method=test, kind=verification, status=planned. A DesignEpoch created via add_epoch EXPORTS status=arrived. verify.rs:132 uses set_opt (writes nothing on None), so (b) is refuted. (a) is refuted by the export. (c) STANDS: schema.rs validate_node (called on the create_node path both constructors use) inserts a declared default for every missing property — unconditionally, with a test named for it — and its own doc says 'the schema's default IS the value.'\n\n⭐ SO THE ROOT CAUSE IS THE INJECTOR, NOT THE SETTER. Every property that still declares a schema default is written into the store AS IF THE USER CHOSE IT. This is the exact class BL-198 / chg:the-export-round-trip-injected-defaults identified for Artifact.granularity/volatility — and that fix REMOVED those two defaults from the schema; the injector itself was never changed. So every other declared default is still asserted on write. Verification.method default: test, level default: unit (schema/verify.yaml:22,24) are the reporter's instance. A method of `test` written onto an inspection is a false claim on the record, made by the tool, with no field the user filled.\n\nWHERE THE EPOCH DIFFERS, AND IT IS A JUDGEMENT NOT A MECHANISM: DesignEpoch.status's schema description ARGUES its injected `arrived` is 'a record, not a choice' because add_epoch had only ever created points that already exist. Whether that still holds now that planning is a first-class act (cap:planned-epochs) is a fair question, but it was decided deliberately. Verification.level/method carry no such argument.\n\nWHO READS THEM: nothing. heal.rs:1225 reads COMPONENT.level, not Verification's; no detector reads Verification.method. dec:idea-a-capability-checked-only-at-unit-level already noted the field is 'recorded and never read.' Removing the defaults therefore changes no detector.\n\nTHREE FIXES, NOW RANKED BY CAUSE: (1) ROOT — remove the schema defaults from Verification.level and .method so absence means nobody said, the Artifact precedent exactly; (2) the reporter's alternative — make add_verification REFUSE to proceed without method/level rather than default silently; (3) SYMPTOM — let set_verification_kind accept level/method so a false claim can at least be corrected. (3) is worth having regardless; (1) is the fix that stops the class. (1) touches the schema, so it is the owner's call. Whether add_epoch's `arrived` should ALSO stop being injected is a second, separate ruling.\n\nWHAT I GOT WRONG AND HOW: the first probe passed epoch_type: 'increment', which is not in the enum, so add_epoch was REFUSED, the node never existed, and I read the resulting absence as 'epochs are not injected.' The skill's candidate 'the observation itself is wrong' was correct and I had not listed it. The reading came from not checking the add_epoch reply's isError before trusting the get_node. rule:success-is-read-from-the-authoritative-object, again.",
+        "subject_id": "cap:a-check-records-what-it-found-separately-from-what-it-is",
+        "valid_from": "2026-09-05",
+        "value": "{\"root_cause\":\"validate_node injects every declared schema default into the store on write; Artifact fix removed defaults, never changed the injector\",\"measured\":\"export of fresh Verification carries level=unit, method=test, kind, status; epoch carries status=arrived\",\"refuted\":[\"reader-supplied\",\"constructor writes them\"],\"readers_of_verification_level_method\":\"none\",\"fixes_ranked\":[\"remove schema defaults on Verification.level/method (root, owner call)\",\"add_verification refuses silent default\",\"setter accepts level/method (symptom)\"],\"my_error\":\"illegal epoch_type made add_epoch refuse; read absence as asymmetry\"}"
       }
     },
     {
@@ -172025,6 +172254,19 @@
       }
     },
     {
+      "node_id": "fact:defect-the-schema-discovery-tax-enum-fields-are-strings-so-the-published-schema-cannot-name-their-values",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "observation",
+        "statement": "THE SCHEMA-DISCOVERY TAX, TALLIED BY A USER FOR ONE SESSION: ~24 rejected calls across 11+ tools (dev_storyflow, 2026-09-05), every one 'for a reason the tool already knew and could have shown up front', and 'none taught me anything about the design; all taught me the shape of a struct.' The reporter also REPRODUCED the add_change_event four-step ladder (description -> affected struct -> change_type enum -> subject enum) 'exactly, on a new day, by a caller who had read that entry' — direct evidence for chg:three-additive-surface-fixes-from-field-feedback's premise that a tool description is not read mid-work.\n\nROOT CAUSE, READ FROM THE CODE: every enum-valued constructor field is typed `Option<String>` on its Req struct (service.rs: category, direction, method, level, subject, change_type ...). The JsonSchema derive therefore publishes `string`, and the legal set lives only in the handler / the shared enum helper — so the SCHEMA, which is what a harness shows an agent before the first call, cannot know the values. Validation is in the code path, not in the type. That is the class; each field is an instance.\n\nWHAT IS ALREADY BUILT AND WORKING: req:a-refusal-names-what-would-have-worked / chg:a-refusal-names-what-would-have-worked — a REFUSED enum names its legal values, in one shared helper. The reporter confirms it. So the tax is now ONE round-trip per enum field, not a guessing game. WHAT IS NOT BUILT: wish #20 — the values in the schema BEFORE the first call, so the first call can be correct. dec:idea-should-a-refusal-teach-every-rule-it-knows-in-one-reply already holds this question, open.\n\nTHE OTHER HALF OF THE TAX IS NOT ENUMS: shape inconsistency across siblings — get_node needs node_type though the id prefix names it; depends_on takes from_id/to_id while governed_by takes from_type/from_id/to_type/to_id; add_decision rejects status while add_capability accepts it; add_verification lacks the distinct_from override add_decision has; record_change and add_change_event are different shapes for the same act. That half is fact:defect-sibling-constructors-disagree-on-how-to-name-a-node-and-what-status-it-lands-in and fact:defect-typed-tool-parameter-names-are-inconsistent (recorded twice before), and this session adds the RELATION tools to it.\n\nTHE FIX CLASS for the enum half: declare the enum in the TYPE (a Rust enum, or a schemars enum annotation on the field) so the published schema carries `enum: [...]` and the refusal helper reads the same list. One mechanism, every field gains it. Not built; needs scoping across ~15 fields. NOT MEASURED: how many harnesses actually surface the JSON schema's enum list to the agent before a call — if few do, the schema fix buys less than the refusal fix already did.",
+        "subject_id": "req:a-refusal-names-what-would-have-worked",
+        "valid_from": "2026-09-05",
+        "value": "{\"rejections_in_one_session\":24,\"tools\":11,\"root_cause\":\"enum fields typed Option<String>; legal set in handler not type; schema publishes plain string\",\"built\":\"refusal names legal values\",\"unbuilt\":\"values in schema up front (wish #20)\",\"other_half\":\"sibling shape inconsistency incl. relation tools\"}"
+      }
+    },
+    {
       "node_id": "fact:defect-the-served-instructions-put-their-standing-rules-where-a-client-cap-deletes-them",
       "node_type": "TemporalFact",
       "properties": {
@@ -172061,6 +172303,19 @@
         "subject_id": "cap:the-record-moved-is-surfaced",
         "valid_from": "2026-09-03",
         "value": "{\"observed\":\"loop_status.next 8 lines, 5 sync, claiming 185-825 nodes never exported\",\"true_lines\":0,\"committed_record\":\"docs/design/reflow2.json 3662/3662 in_step, silent\",\"discriminating_measurement\":\"set difference: all 825 claimed-unexported ids present in committed export; 0 ids in scratch and absent from record\",\"cause\":\"per-file predicate live_nodes > export_nodes, seat-level phrasing\",\"site\":\"crates/reflow2-mcp/src/tools/coherence.rs filter+map; crates/reflow2-mcp/src/sync_debt.rs SyncDebt::message in_step arm\",\"refuted_candidate\":\"filter /tmp paths - already tried and reverted in chg:the-orientation-call-stops-rereading-stale-records; also defeated by ~/reflow2-backups 1545-node target\",\"class\":\"per-item computation stated as whole-system fact, with every test using exactly one item\",\"tests_before\":\"21, all single-target\"}"
+      }
+    },
+    {
+      "node_id": "fact:defect-two-prescribed-layer-pairs-are-missing-so-a-check-beside-its-ruling-is-refused-as-a-duplicate",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "observation",
+        "statement": "REVISED the same day: the first version said 'two missing pairs' and that under-covered the reporter's own set. Corrected below.\n\nTHE SYMPTOM: the near-duplicate guard fired nine times in one dev_storyflow session (2026-09-05; seven plus two in the addendum) and the reporter judged zero to be true duplicates. Every fire cost a resend with distinct_from, chaining for a brainstorm.\n\nTHREE CANDIDATE CAUSES (step ③, run this time): (a) PRESCRIBED_LAYER_PAIRS (capture.rs:128) under-enumerates — the cross-type pairs the loop prescribes to read alike, which chg:the-prescribed-layer-pairs-stop-refusing made warn instead of refuse, are missing some; (b) the cross-type SCORE floor is too loose, so any two nodes sharing subject words match regardless of pair — adding pairs would not stop it; (c) the reporter's grading is wrong and some WERE near-duplicates worth a look. THE DISCRIMINATOR is the actual pairs reported, which (a) and (b) predict differently: (a) says the fires cluster on a few nameable prescribed pairs; (b) says they scatter.\n\nTHE REPORTED PAIRS: Decision beside Verification (a check and a ruling on one subject); Requirement beside the brainstorm Decision that spawned it, TWICE (the promotion path the brainstorm skill prescribes, step 5, EVOLVES_INTO); Decision beside the DesignEpoch it settles; and brainstorm idea beside sibling idea from the same breath. They CLUSTER on three cross-type pairs plus one same-type case — (a) is supported over (b). (c) cannot be tested from here (their graph), and is deliberately left open: the skill's own list notes the only refusals in its evidence NOT self-graded by the agent that incurred them were the three that landed on this project's own session.\n\nTHE CORRECTION: THREE cross-type pairs are missing, not two — Decision-Verification, Requirement-Decision, Decision-DesignEpoch — and the evidence is uneven: Requirement-Decision has two fires and a prescribed path behind it; Decision-Verification one fire and a strong argument (a check reads like the ruling it tests); Decision-DesignEpoch one fire, n=1. The list's own rule is a measured count per pair. The first two meet it in spirit; the third is a candidate to watch, not to add on one report.\n\nEXCLUDED, DELIBERATELY: the same-type case (idea beside sibling idea, Decision-Decision) is the guard doing its job — same-type near-matches are exactly what it exists to surface — and the brainstorm skill's step 4 wants sibling ideas LINKED (related_to), which satisfies the guard. Real friction; not a missing pair; not counted above.\n\nFIX: add Decision-Verification and Requirement-Decision to PRESCRIBED_LAYER_PAIRS, pinned like the existing pairs; record Decision-DesignEpoch as awaiting a second count. Additive — a prescribed pair is REPORTED, not dropped, so nothing that refused goes silent.",
+        "subject_id": "cap:search-first-at-the-tool",
+        "valid_from": "2026-09-05",
+        "value": "{\"fires\":9,\"true_duplicates_per_reporter\":0,\"candidates\":[\"list under-enumerates\",\"score floor too loose\",\"grading wrong\"],\"discriminator\":\"reported pairs cluster on 3 cross-type pairs + 1 same-type -> (a)\",\"missing_pairs\":{\"add_now\":[\"Decision-Verification\",\"Requirement-Decision\"],\"watch\":[\"Decision-DesignEpoch (n=1)\"]},\"excluded\":\"same-type idea-beside-idea is the guard working\"}"
       }
     },
     {
@@ -177449,7 +177704,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:8ca808e9e9b81542864fbb9f077c3b8346f9270aadac5866d516693b97f40744",
+  "prev_content_hash": "sha256:b4a00e7c342231750a094c95f8c0aa79b85343171ceb01e42a292c1ca5be4cec",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
