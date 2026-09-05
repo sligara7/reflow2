@@ -417,6 +417,20 @@ fn properties_hash(props: &HashMap<String, Value>) -> String {
 /// does not need reporting here because `revision_of` re-reads the graph a
 /// moment later and says what is actually true. Nothing is being swallowed: if
 /// the preserve failed, the note still warns exactly as it did before.
+/// The `status` a node carried BEFORE a `set_*_status` write, or `None`.
+///
+/// Read it before the write: afterwards the old value is gone and
+/// [`crate::prose_currency`] has nothing to compare against. `None` covers
+/// both "no such node" and "carries no status" — neither is an error here,
+/// and both correctly produce no currency note rather than a guessed one.
+pub(crate) fn prior_status(g: &DesignGraph, node_type: &str, id: &str) -> Option<String> {
+    let node = g.get_node(node_type, id).ok()??;
+    node.properties
+        .get("status")
+        .and_then(|v| v.as_str())
+        .map(str::to_string)
+}
+
 pub(crate) fn preserve_prior(g: &mut DesignGraph, prior: Option<&StoredNode>, now: &NodeDto) {
     let Some(prior) = prior else { return };
     let replaced: Vec<String> = now
@@ -1108,7 +1122,7 @@ impl ReflowService {
         description = "Set a Capability's lifecycle status: `planned` (the default) / \
                        `in_progress` / `realized` / `verified`. Use it as a capability moves \
                        through its life; to record one that already ships, pass `status` to \
-                       add_capability instead and save a write.",
+                       add_capability instead and save a write. CARRIES `prose_currency` WHEN THE STATUS ACTUALLY MOVES and the node holds prose: the description was written under the OLD status and this call did not touch it, so the block names both statuses and QUOTES the prose so you can judge it here rather than in another call. It never says the prose is wrong - only a person can. From a 2026-09-02 field report where a capability went `realized` twenty minutes after a description saying the fix was not installed, and nothing noticed.",
         annotations(read_only_hint = false)
     )]
     pub async fn set_capability_status(
@@ -1116,10 +1130,21 @@ impl ReflowService {
         Parameters(req): Parameters<CapabilityStatusReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await?;
-        ok_json(NodeDto::from(
+        // READ THE PRIOR STATUS BEFORE THE WRITE. After it there is nothing
+        // left to compare against, and the whole point of `prose_currency` is
+        // to say which status the description was written under.
+        let prior = prior_status(
+            &g,
+            reflow2_core::nodes::node::CAPABILITY,
+            &req.capability_id,
+        );
+        let node = NodeDto::from(
             g.set_capability_status(&req.capability_id, &req.status)
                 .map_err(dyno_err)?,
-        ))
+        );
+        ok_json(
+            crate::prose_currency::with_prose_currency(node, prior.as_deref()).map_err(ser_err)?,
+        )
     }
 
     #[tool(

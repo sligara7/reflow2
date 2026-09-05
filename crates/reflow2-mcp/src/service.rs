@@ -365,7 +365,11 @@ impl RequiredFields {
         };
         Err(McpError::invalid_params(
             format!(
-                "{named} {verb} required to CREATE {} '{}', and no such node exists yet to take                  {them} from. These are optional only when REVISING a node that already holds                  {them} — which is what lets you correct one field without re-sending the                  others. If you meant to create this node, pass {named}; if you meant to revise                  an existing one, check the id for a typo.",
+                "{named} {verb} required to CREATE {} '{}', and no such node exists yet to take \
+                 {them} from. These are optional only when REVISING a node that already \
+                 holds {them} — which is what lets you correct one field without \
+                 re-sending the others. If you meant to create this node, pass {named}; \
+                 if you meant to revise an existing one, check the id for a typo.",
                 self.node_type, self.id,
             ),
             None,

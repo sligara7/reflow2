@@ -10,6 +10,7 @@ pub mod handshake;
 pub mod latent;
 pub mod mcp_http;
 pub mod nudge;
+pub mod prose_currency;
 pub mod proxy;
 pub mod registry;
 pub mod service;

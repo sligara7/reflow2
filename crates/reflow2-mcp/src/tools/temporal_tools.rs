@@ -337,7 +337,7 @@ impl ReflowService {
                        after which history can be recorded into it and the planned-versus- \
                        delivered delta becomes answerable. The reverse exists so a premature \
                        arrival can be corrected; it is not a way to un-happen an epoch. \
-                       Everything else about the epoch is preserved.",
+                       Everything else about the epoch is preserved. CARRIES `prose_currency` WHEN THE STATUS ACTUALLY MOVES and the node holds prose: the description was written under the OLD status and this call did not touch it, so the block names both statuses and QUOTES the prose so you can judge it here rather than in another call. It never says the prose is wrong - only a person can. From a 2026-09-02 field report where a capability went `realized` twenty minutes after a description saying the fix was not installed, and nothing noticed.",
         annotations(read_only_hint = false)
     )]
     pub async fn set_epoch_status(
@@ -345,10 +345,18 @@ impl ReflowService {
         Parameters(req): Parameters<EpochStatusReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await?;
-        ok_json(NodeDto::from(
+        let prior = crate::tools::capture::prior_status(
+            &g,
+            reflow2_core::nodes::node::DESIGN_EPOCH,
+            &req.epoch_id,
+        );
+        let node = NodeDto::from(
             g.set_epoch_status(&req.epoch_id, &req.status)
                 .map_err(dyno_err)?,
-        ))
+        );
+        ok_json(
+            crate::prose_currency::with_prose_currency(node, prior.as_deref()).map_err(ser_err)?,
+        )
     }
 
     #[tool(
