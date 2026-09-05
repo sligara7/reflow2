@@ -45,6 +45,13 @@ pub struct ReadCache {
     ttl: Duration,
     hits: u64,
     misses: u64,
+    /// THE WRITE GENERATION. Bumped by every mutator on this cache — and
+    /// every backend write already calls one of them, which is why it lives
+    /// here rather than on a new field somewhere a future write path could
+    /// miss (`dec:derived-scans-are-memoised-per-write-generation`). Read by
+    /// the derived-result memos in `DesignGraph`; a mismatch means "the graph
+    /// has been written since this was computed", nothing more.
+    generation: u64,
 }
 
 impl ReadCache {
@@ -56,7 +63,14 @@ impl ReadCache {
             ttl: config.ttl,
             hits: 0,
             misses: 0,
+            generation: 0,
         }
+    }
+
+    /// How many times this store has been written, as seen by its cache.
+    /// Monotonic within a process; only ever compared for equality.
+    pub fn generation(&self) -> u64 {
+        self.generation
     }
 
     /// Look up a cached value. Returns `None` on miss or TTL expiry.
@@ -101,6 +115,7 @@ impl ReadCache {
 
     /// Invalidate a single cache entry.
     pub fn invalidate(&mut self, key: &[u8]) {
+        self.generation += 1;
         self.entries.pop(key);
     }
 
@@ -109,6 +124,7 @@ impl ReadCache {
     /// from `commit_batch` for `PrefixDelete` ops, which already
     /// rewrite multiple CFs.
     pub fn invalidate_prefix(&mut self, prefix: &[u8]) {
+        self.generation += 1;
         let to_remove: Vec<Vec<u8>> = self
             .entries
             .iter()
@@ -127,6 +143,7 @@ impl ReadCache {
 
     /// Clear the entire cache.
     pub fn clear(&mut self) {
+        self.generation += 1;
         self.entries.clear();
     }
 

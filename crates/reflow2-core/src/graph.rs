@@ -80,6 +80,54 @@ pub struct DesignGraph {
     /// adopt a restored design's name instead of silently renaming it (BL-169).
     /// `None` for an in-memory graph, which has no sidecar and nothing to adopt.
     pub(crate) store_path: Option<String>,
+    /// Derived results that every orientation rollup used to recompute —
+    /// `open_defects` (~5 s) and `detect_gaps` (~1.5 s) — remembered per write
+    /// generation. Measured 2026-09-05: loop_status, graph_report and
+    /// debt_since each re-ran the defect scan to print a COUNT, and the read
+    /// path ran it again after every write; one orientation pass paid the same
+    /// five seconds three times. A memo keyed on `engine.write_generation()`
+    /// pays it once per graph state (`dec:derived-scans-are-memoised-per-write-
+    /// generation`). Interior mutability because the scans take `&self`.
+    pub(crate) derived: std::sync::Mutex<DerivedMemo>,
+}
+
+/// What [`DesignGraph::derived`] holds. `generation` is the engine write
+/// generation the entries were computed at; a mismatch discards them all.
+/// `recomputes` counts actual scans so a test can assert STRUCTURE — once per
+/// write, not N times per rollup — rather than a duration that measures load.
+#[derive(Debug, Default)]
+pub struct DerivedMemo {
+    pub generation: Option<u64>,
+    pub defects: Option<(Vec<crate::heal::HealIssue>, crate::heal::Suppressed)>,
+    pub gaps: Option<Vec<crate::detect::GapCandidate>>,
+    pub recomputes: u64,
+}
+
+/// Memo access lives in its own ungated impl: the rollups that use it compile
+/// with and without the `rocksdb` feature, so it must too.
+impl DesignGraph {
+    /// Lock the derived memo, discarding its entries if the store has been
+    /// written since they were computed. Callers then hit or fill ONE entry.
+    pub(crate) fn derived_at_current_generation(&self) -> std::sync::MutexGuard<'_, DerivedMemo> {
+        let now = self.engine.write_generation();
+        let mut memo = self.derived.lock().expect("derived memo poisoned");
+        if memo.generation != Some(now) {
+            memo.generation = Some(now);
+            memo.defects = None;
+            memo.gaps = None;
+        }
+        memo
+    }
+
+    /// How many times a memoised derived scan has actually RUN in this
+    /// graph's lifetime. The structural assertion behind the memo: across N
+    /// rollups with no write in between this moves by one, not N.
+    pub fn derived_recomputes(&self) -> u64 {
+        self.derived
+            .lock()
+            .expect("derived memo poisoned")
+            .recomputes
+    }
 }
 
 impl DesignGraph {
@@ -114,6 +162,7 @@ impl DesignGraph {
             engine: StorageEngine::new_in_memory(schema),
             graph_id: graph_id.to_string(),
             store_path: None,
+            derived: Default::default(),
         })
     }
 
@@ -180,6 +229,7 @@ impl DesignGraph {
                 engine,
                 graph_id: identity.graph_id,
                 store_path: Some(path.to_string()),
+                derived: Default::default(),
             },
             provenance,
         ))

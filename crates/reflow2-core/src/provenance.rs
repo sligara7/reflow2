@@ -318,6 +318,31 @@ pub struct SyncState {
     /// from there.
     #[serde(default)]
     pub last_synced: std::collections::BTreeMap<String, String>,
+    /// Absolute path → what this seat OBSERVED about the file the last time it
+    /// read it in full. Enough to know from a `stat` alone whether the bytes
+    /// can have changed, so an unchanged target is never re-read
+    /// (`dec:an-unchanged-sync-target-is-not-re-parsed`). Absent for targets
+    /// recorded before this existed; the first full read fills it in.
+    #[serde(default)]
+    pub observed: std::collections::BTreeMap<String, SyncObservation>,
+}
+
+/// One full read of a sync target, remembered so the next check can skip it.
+///
+/// `len` and `mtime_unix_nanos` are the stat gate: if both match and the
+/// recorded hash is still what `last_synced` expects, the content cannot have
+/// changed short of a same-size same-mtime rewrite, which is `make`'s bet too.
+/// `nodes` is the count the in-step message needs, which is the ONLY reason
+/// the file was being parsed at all. Measured 2026-09-05: six targets, 53.7 MB,
+/// a full typed parse plus TWO canonical re-serialisations and hashes each,
+/// 3.6 s per `loop_status`, five of the six being dead scratch exports that had
+/// not changed in weeks.
+#[derive(Debug, Clone, Default, Serialize, Deserialize, PartialEq)]
+pub struct SyncObservation {
+    pub hash: String,
+    pub len: u64,
+    pub mtime_unix_nanos: i64,
+    pub nodes: usize,
 }
 
 /// Read this seat's sync record. A missing or unreadable file is "never
@@ -341,6 +366,19 @@ pub fn record_sync(graph_path: &str, target: &str, hash: &str) {
         .map(|p| p.display().to_string())
         .unwrap_or_else(|_| target.to_string());
     state.last_synced.insert(key, hash.to_string());
+    if let Ok(json) = serde_json::to_string_pretty(&state) {
+        let _ = std::fs::write(sync_path(graph_path), json + "\n");
+    }
+}
+
+/// Remember what a full read of `target` observed, so the next check can
+/// answer from a `stat`. Keyed exactly as `record_sync` keys `last_synced`.
+pub fn record_sync_observation(graph_path: &str, target: &str, obs: SyncObservation) {
+    let mut state = read_sync_state(graph_path);
+    let key = std::fs::canonicalize(target)
+        .map(|p| p.display().to_string())
+        .unwrap_or_else(|_| target.to_string());
+    state.observed.insert(key, obs);
     if let Ok(json) = serde_json::to_string_pretty(&state) {
         let _ = std::fs::write(sync_path(graph_path), json + "\n");
     }

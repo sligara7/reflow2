@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:aea0744156ec23c269c597c00b9fc3b4d186532127d54e31479fd4cd9691cb92",
+  "content_hash": "sha256:8ca808e9e9b81542864fbb9f077c3b8346f9270aadac5866d516693b97f40744",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -10159,6 +10159,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:dec:derived-scans-are-memoised-per-write-generation",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:dec:idea-a-deliberately-open-edge-can-never-be-ranked-as-a-fit",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
@@ -10202,6 +10208,24 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:dec:idea-the-load-bearing-prose-is-unchecked-against-the-code-it-describes",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:fact:the-agent-surface-profiled-orientation-is-35-of-40-seconds-and-two-causes-are-located",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:fact:the-agent-surface-profiled-orientation-is-35-of-40-seconds-and-two-causes-are-located:r2",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:fact:the-agent-surface-profiled-orientation-is-35-of-40-seconds-and-two-causes-are-located:r3",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
     },
@@ -11303,6 +11327,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:an-unchanged-sync-target-is-not-re-parsed",
+      "properties": {
+        "acted_at": "2026-09-05",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:arrival-delta",
       "properties": {
         "acted_at": "2026-07-30",
@@ -11441,6 +11474,15 @@
       "from_id": "dec:defects-are-temporal-facts",
       "properties": {
         "acted_at": "2026-08-06",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:derived-scans-are-memoised-per-write-generation",
+      "properties": {
+        "acted_at": "2026-09-05",
         "role": "approver"
       },
       "to_id": "who:ajs"
@@ -14105,6 +14147,15 @@
       "from_id": "dec:the-ility-target-is-a-governing-decision-asked-at-genesis",
       "properties": {
         "acted_at": "2026-08-25",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:the-loop-speaks-on-loop-status-not-inside-every-read",
+      "properties": {
+        "acted_at": "2026-09-05",
         "role": "approver"
       },
       "to_id": "who:ajs"
@@ -25889,6 +25940,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:baseline-9ef04ce36e8413e1",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:read-cache"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:baseline-9fadd6105aa8d3d4",
       "properties": {
         "accepted_baseline": true,
@@ -25967,6 +26027,15 @@
         "action": "modified"
       },
       "to_id": "art:ophyd-service-fork-feedback-2026-08-31"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:baseline-ca50e3a88e783c2a",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:store-engine"
     },
     {
       "edge_type": "CHANGED",
@@ -35781,6 +35850,78 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-loop-stops-recomputing-itself-on-every-read",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-loop-stops-recomputing-itself-on-every-read",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-loop-stops-recomputing-itself-on-every-read",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-loop-stops-recomputing-itself-on-every-read",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:provenance"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-loop-stops-recomputing-itself-on-every-read",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-loop-stops-recomputing-itself-on-every-read",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:sync-debt"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-loop-stops-recomputing-itself-on-every-read",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:loop-status"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-loop-stops-recomputing-itself-on-every-read",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:read-loop-hint"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-memory-backend-keeps-its-keys-ordered",
       "properties": {
         "accepted_baseline": false,
@@ -37528,6 +37669,27 @@
     },
     {
       "edge_type": "CONSTRAINS",
+      "from_id": "con:a-full-orientation-pass-costs-at-most-8-seconds",
+      "properties": {
+        "basis": "measured",
+        "contribution": 31000.0,
+        "measured_at": "2026-09-05"
+      },
+      "to_id": "cap:loop-status"
+    },
+    {
+      "edge_type": "CONSTRAINS",
+      "from_id": "con:a-read-after-a-write-costs-at-most-twice-the-same-read-warm",
+      "properties": {
+        "basis": "measured",
+        "contribution": 1.41,
+        "measured_at": "2026-09-05",
+        "note": "AFTER changes 1 and 2 (dec:the-loop-speaks-on-loop-status-not-inside-every-read; dec:an-unchanged-sync-target-is-not-re-parsed), measured on a copy of the live store with its six real sync targets, debug binary, ratio so the profile does not matter: warm get_node 3.7 ms, first read after a write 5.3 ms, RATIO 1.41 - UNDER the budget of 2. Before: 7,700 ms / 1.3 ms = ~5,900. sync_status on the same six targets: 3,556 ms -> 75 ms. Stopped here on this budget per the optimize skill; the remaining 1.6 ms is six stat calls."
+      },
+      "to_id": "cap:read-loop-hint"
+    },
+    {
+      "edge_type": "CONSTRAINS",
       "from_id": "con:a-sweep-builds-its-network-a-fixed-number-of-times",
       "properties": {
         "basis": "measured",
@@ -37545,6 +37707,16 @@
         "measured_at": "2026-08-21"
       },
       "to_id": "cap:granularity-observation"
+    },
+    {
+      "edge_type": "CONSTRAINS",
+      "from_id": "con:loop-status-warm-latency-ms",
+      "properties": {
+        "basis": "measured",
+        "contribution": 12502.0,
+        "measured_at": "2026-09-05"
+      },
+      "to_id": "cap:loop-status"
     },
     {
       "edge_type": "CONSTRAINS",
@@ -50925,6 +51097,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:derived-scans-are-memoised-per-write-generation",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:dec:derived-scans-are-memoised-per-write-generation"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "dec:does-enforced-default-to-gate-blocking",
       "properties": {},
       "to_id": "snap:epoch:enforced-is-stated-not-defaulted:dec:does-enforced-default-to-gate-blocking"
@@ -51222,6 +51400,24 @@
       "from_id": "fact:defect-typed-tool-parameter-names-are-inconsistent",
       "properties": {},
       "to_id": "snap:epoch:usgov-genesis-feedback-triaged:fact:defect-typed-tool-parameter-names-are-inconsistent"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "fact:the-agent-surface-profiled-orientation-is-35-of-40-seconds-and-two-causes-are-located",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:fact:the-agent-surface-profiled-orientation-is-35-of-40-seconds-and-two-causes-are-located"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "fact:the-agent-surface-profiled-orientation-is-35-of-40-seconds-and-two-causes-are-located",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:fact:the-agent-surface-profiled-orientation-is-35-of-40-seconds-and-two-causes-are-located:r2"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "fact:the-agent-surface-profiled-orientation-is-35-of-40-seconds-and-two-causes-are-located",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:fact:the-agent-surface-profiled-orientation-is-35-of-40-seconds-and-two-causes-are-located:r3"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -125412,6 +125608,15 @@
     },
     {
       "edge_type": "OBSOLETES",
+      "from_id": "dec:the-loop-speaks-on-loop-status-not-inside-every-read",
+      "properties": {
+        "confidence": 1.0,
+        "evidence": "dec:read-hint-shape chose option C: reads surface loop debt, state-derived, fire-on-change. Measured 2026-09-05, that choice cost a full loop_status on the first read after every write - 9.5 times a session, 1.2-1.9 minutes - for a sentence the session gets from the loop_status call anyway. Anthony reversed the loop-debt half on 2026-09-05. The record_moved half of the same read-side hint is NOT withdrawn; it has its own ruling (2026-08-13) and stays."
+      },
+      "to_id": "dec:read-hint-shape"
+    },
+    {
+      "edge_type": "OBSOLETES",
       "from_id": "epoch:planned-one-write-surface",
       "properties": {
         "confidence": 1.0
@@ -127881,6 +128086,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:read-cache",
+      "properties": {
+        "completeness": "partial",
+        "conformance": "unchecked"
+      },
+      "to_id": "cmp:byte-store"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:read-only-surface-test",
       "properties": {
         "completeness": "complete",
@@ -128601,6 +128815,15 @@
         "conformance": "verified"
       },
       "to_id": "cap:dimensions"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:store-engine",
+      "properties": {
+        "completeness": "partial",
+        "conformance": "unchecked"
+      },
+      "to_id": "cmp:byte-store"
     },
     {
       "edge_type": "REALIZES",
@@ -132819,6 +133042,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:a-derived-scan-runs-once-per-write-generation",
+      "properties": {},
+      "to_id": "con:loop-status-warm-latency-ms"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:a-design-says-what-it-is-for",
       "properties": {},
       "to_id": "cap:quality-target-is-stated-or-asked-for"
@@ -136777,7 +137006,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:4d5ca5474ffa9578a0d8558614bad57df4ce6b5be2ab6090893c14e0b72900c3",
+        "checksum": "sha256:5b93d4ad1dcb4e36f999ce816194166ad70d16631b853cf540e9408f94e16d0f",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
@@ -137154,7 +137383,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:40609832c7aad09a93afa4c19d16d8220ba85e86f8f7fad6e9484f4290737c14",
+        "checksum": "sha256:936d1844b5a1e96fc4df62a303cd573113b026ab3641e2ab648ae68caff84dd9",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/graph.rs",
         "name": "crates/reflow2-core/src/graph.rs",
@@ -137247,7 +137476,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:bd2f0ef11f0837cc7fb7663c1daaa24b3fc8e0bfbba7efaf848138c4660ed848",
+        "checksum": "sha256:2dc9215fdc63b510e11addee57097d3ec80b908dd27a10059dc8c2eeed99261a",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/heal.rs",
         "name": "heal.rs",
@@ -137838,7 +138067,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:3b1c23d871f4d8c10ca815531facdf200255db57881ff15b896f77d5983e65e0",
+        "checksum": "sha256:60956adb8a6b71bcff5e1f939adb2211b79c98e89cdbc25ef0f7955a6fd2e3f7",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/provenance.rs",
         "name": "provenance.rs",
@@ -137878,6 +138107,17 @@
         "checksum": "sha256:83b72d5821ca5ac8ee01174868ca17de9b66492bb53a558f9a55319b196382ad",
         "location": "docs/feedback/2026-09-04-qs-project-feedback.md",
         "name": "qs project — first-use feedback on reflow2",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:read-cache",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:8732dbc16f9a0e9c840be89c07b168bef0e5b783e1132839b5515c1c23941d53",
+        "location": "crates/reflow2-core/src/foundation/store/cache.rs",
+        "name": "cache.rs",
         "status": "realized"
       }
     },
@@ -138416,7 +138656,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:02e8a95acc7a64818664b2fd08b32ae3ae5c338aed85cb37350697ebef827b6d",
+        "checksum": "sha256:2ab2fc99a56392a25152e9202ada79d64fa9843403a43b3e2598642534c95ef1",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -138610,6 +138850,17 @@
       }
     },
     {
+      "node_id": "art:store-engine",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:bf6a7fbb6a1fd489ab6964675a2544b83bb1e84162e3047466179685f907a7b5",
+        "location": "crates/reflow2-core/src/foundation/store/engine/mod.rs",
+        "name": "engine/mod.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:storyflow-engineering-principles",
       "node_type": "Artifact",
       "properties": {
@@ -138700,7 +138951,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:fa6020910eddcda910b8e5beda279b48936fa24dbc89ebeec74b02ea6e44253d",
+        "checksum": "sha256:72a58c6a685b5e3726d75d7917f64edb23553ff2af60444d111f438419e4a823",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/sync_debt.rs",
         "name": "sync_debt.rs",
@@ -145862,6 +146113,16 @@
       }
     },
     {
+      "node_id": "chg:baseline-9ef04ce36e8413e1",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-09-05",
+        "name": "First baseline. Gained a write-generation counter on ReadCache, bumped by its invalidate/clear mutators - the single point every backend write already passes through (dec:derived-scans-are-memoised-per-write-generation).",
+        "subject": "record"
+      }
+    },
+    {
       "node_id": "chg:baseline-9fadd6105aa8d3d4",
       "node_type": "ChangeEvent",
       "properties": {
@@ -145946,6 +146207,16 @@
         "change_type": "baseline_established",
         "detected_at": "2026-08-31",
         "name": "First baseline. Copied byte-identical from the upload and verified NOT a strict prefix of art:ophyd-service-feedback-2026-08-19 before registering — a fresh document rather than an append, which is the opposite of dev_storyflow's pattern and had to be read off the file rather than assumed.",
+        "subject": "record"
+      }
+    },
+    {
+      "node_id": "chg:baseline-ca50e3a88e783c2a",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-09-05",
+        "name": "First baseline. Gained write_generation() exposing the ReadCache counter to the memo.",
         "subject": "record"
       }
     },
@@ -148845,6 +149116,18 @@
       }
     },
     {
+      "node_id": "chg:the-loop-stops-recomputing-itself-on-every-read",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "performance_optimization",
+        "detected_at": "2026-09-05",
+        "name": "The agent-graph read path stops recomputing loop_status, re-parsing dead sync files, and re-scanning defects per rollup",
+        "rationale": "WHAT IT TRADED, as the optimize skill requires. (1) reverses dec:read-hint-shape option C's debt half - reads no longer carry a loop-debt pointer; the trade is that mid-session debt now reaches the agent only via the loop_status call it is instructed to make and the Stop hook, not via ordinary reads. Anthony chose this knowing it. (2) and (3) each add a cache; the skill warns a cache is a global. Both hold a DERIVED result over a graph state and both invalidate at the write, so a stale entry can only ever be a stale count, never lost design - and (3)'s generation lives on the one object every write already touches, so no future write path can miss it. RESULT, measured and recorded in full on fact:the-three-perf-changes-killed-the-multiplier-and-two-budgets-hold-one-misses-on-my-own-derivation: read-after-write 5,900x -> 1.41x (the headline - the hint ran a full loop_status 9.5x a session), loop_status warm 12,502 -> 1,912 ms, sync 3,556 -> 75 ms. ONE BUDGET MISSED HONESTLY: the orientation pass is 11,103 ms cold vs an 8,000 target I derived on a scan-only model that ignored the rollups' own ~2.8 s costs. loop_status after a write is still ~6.3 s because computing the defect count once is intrinsically ~5 s - a SEPARATE optimization (make the scan faster) that was not approved and not started.",
+        "subject": "system",
+        "summary": "Three changes to the LLM-agent-to-graph leg, each with a budget written before the code (con:a-read-after-a-write-costs-at-most-twice-the-same-read-warm, con:loop-status-warm-latency-ms, con:a-full-orientation-pass-costs-at-most-8-seconds). (1) read_loop_hint no longer runs a full loop_status to append a debt sentence; the loop speaks on loop_status, and record_moved is kept on reads. (2) sync_debt answers an unchanged target from a stored (hash,len,mtime,nodes) observation instead of re-reading and re-parsing it; a stat pre-check (any_target_moved) short-circuits the read path. (3) open_defects and detect_gaps are memoised per write generation, the generation carried on ReadCache so every backend write invalidates it. Files: cache.rs, engine/mod.rs, graph.rs, heal.rs, detect.rs, provenance.rs (core); service.rs, sync_debt.rs (mcp). Tests: ver:a-derived-scan-runs-once-per-write-generation (3, structure not duration), the rewritten read-hint test in tools.rs, and the sync tests. core 1578/0, mcp 343/0, fmt and clippy clean."
+      }
+    },
+    {
       "node_id": "chg:the-memory-backend-keeps-its-keys-ordered",
       "node_type": "ChangeEvent",
       "properties": {
@@ -150943,6 +151226,34 @@
       }
     },
     {
+      "node_id": "con:a-full-orientation-pass-costs-at-most-8-seconds",
+      "node_type": "Constraint",
+      "properties": {
+        "category": "budget",
+        "concern": "core",
+        "direction": "maximum",
+        "limit": 8000.0,
+        "name": "A full orientation pass costs at most 8,000 ms",
+        "priority": "medium",
+        "quantity": "latency_ms",
+        "statement": "The four orientation rollups a session runs together - loop_status, open_questions, detect_gaps, graph_report - cost at most 8,000 ms in sum, warm. Derived: the expensive scans (open_defects ~5 s, detect_gaps ~1.5 s) are paid ONCE per graph state, not once per rollup that reports them. Measured 2026-09-05 before any change: ~31,000 ms, because open_defects is recomputed inside loop_status, graph_report and debt_since with no memo, and each rollup re-derives what its sibling just computed. Anthony accepted 2026-09-05. Bounds: release, this machine, live store, stdio. Note the ~7 s inside open_questions that is still unexplained - this budget is only meetable if that is found too."
+      }
+    },
+    {
+      "node_id": "con:a-read-after-a-write-costs-at-most-twice-the-same-read-warm",
+      "node_type": "Constraint",
+      "properties": {
+        "category": "budget",
+        "concern": "core",
+        "direction": "maximum",
+        "limit": 2.0,
+        "name": "A read after a write costs at most 2x the same read warm",
+        "priority": "medium",
+        "quantity": "read_after_write_over_warm_ratio",
+        "statement": "A read tool's reply, when it is the first read after a write, costs no more than TWICE what the same read costs warm. Derived, not picked: a read must cost what a read costs, and a courtesy appended to it must not cost more than the thing it decorates. Measured 2026-09-05 before any change: get_node warm 1.3 ms, get_node after a write 7,700 ms - a ratio of ~5,900. The cause is service.rs:3731 read_loop_hint recomputing a full loop_status on the first read after every write; the spender is every read tool in the surface. Anthony accepted this budget 2026-09-05. Bounds: release build, this machine (4 cores), live store, stdio; a ratio so both halves move together under load, per the optimize skill's rule that a duration assertion in a shared suite measures contention."
+      }
+    },
+    {
       "node_id": "con:a-sweep-builds-its-network-a-fixed-number-of-times",
       "node_type": "Constraint",
       "properties": {
@@ -150982,6 +151293,20 @@
         "priority": "medium",
         "quantity": "milliseconds to construct one DesignGraph",
         "statement": "CONSTRUCTING A DESIGN GRAPH MUST COST NO MORE THAN 1 MILLISECOND.\n\nMEASURED BEFORE THE BUDGET WAS SET, 2026-08-21: 41.3 ms per `DesignGraph::open_in_memory()`, against 54.7 microseconds for an `add_capability` write. **Construction costs 750x a write.**\n\nWHY THIS NUMBER AND NOT A ROUND ONE. The budget is derived rather than picked: construction is SETUP, not work, so a caller that builds a graph and then does twenty writes should spend most of its time on the writes. Twenty writes is about 1.1 ms, so 1 ms is the point at which setup stops dominating the thing it is setting up. Anything tighter would be arbitrary; anything looser leaves the same defect with a smaller number on it.\n\nWHAT IT IS PROTECTING. `open_in_memory` calls `schema::load_schema()`, which parses ELEVEN embedded YAML documents and merges them, every single time. 103 test files construct graphs, several dozen times each; the suite's slowest file by cost-per-test (`edges_need_both_ends.rs`, 2.44 s per test against a 0.92 s median for an entire binary) builds roughly sixteen graphs per test and does almost nothing else.\n\n⭐ THE POINT OF WRITING THIS DOWN BEFORE OPTIMISING, which is the whole experiment: **a budget is what makes optimisation STOP.** Without one there is no condition under which the work is finished, so it ends when attention runs out — which is gold-plating with a performance label on it. With one, the question \"should I also cache X?\" has an answer that is not a matter of taste.\n\n📌 HONEST LIMITS. (1) This is a DEBUG-BUILD number on one machine; it is a budget for a ratio that happens to be expressed in milliseconds, not a portable performance guarantee. (2) It says nothing about the RocksDB path, which pays a real filesystem cost no caching removes. (3) reflow2 held no other performance budget — this is the first one the project has ever stated, and the design carried exactly ONE Constraint before it, which was a semantic limit rather than a budget."
+      }
+    },
+    {
+      "node_id": "con:loop-status-warm-latency-ms",
+      "node_type": "Constraint",
+      "properties": {
+        "category": "budget",
+        "concern": "core",
+        "direction": "maximum",
+        "limit": 2000.0,
+        "name": "loop_status warm answers in at most 2,000 ms",
+        "priority": "medium",
+        "quantity": "latency_ms",
+        "statement": "A warm loop_status - the ONE CHEAP CALL cap:loop-status promises every session will run - answers in at most 2,000 ms. Derived: the orientation call may cost no more than the single most expensive DERIVED fact it reports, computed once; that fact is detect_gaps at ~1.5 s. Measured 2026-09-05 before any change: 12,502 ms warm on the live store, release. Composed of open_defects 5.8 s (uncached, run for a count), sync-target reads 3.6 s (five dead /tmp exports), detect_gaps 1.8 s, other ~1.3 s. Anthony accepted 2026-09-05. Bounds: release, this machine, live store, stdio - the shared-daemon path is slower still. An aspirational floor of 1,000 ms applies if detect_gaps is also shared across rollups."
       }
     },
     {
@@ -151293,6 +151618,17 @@
         "decision": "Anthony, 2026-08-26, accepting a ruling the agent drafted and put to him with its alternative. The last two of the thirty-three leaf parts `unallocated_component` reported as holding no function: `cmp:memory-backend` and `cmp:rocksdb-backend`.\n\n═══ WHAT THEY ARE ═══\n\nThey are the two interchangeable implementations behind `ifc:kv-backend`, both PROVIDES, sitting under `cmp:byte-store`. Neither carries an Artifact, because neither is one file. `cap:store` — \"schema-validated graph store\" — is already allocated to `cmp:schema`, `cmp:byte-store` and `cmp:nodes`.\n\n═══ THE RULING ═══\n\n**An interchangeable implementation is named by the contract it satisfies, not by a function of its own.** Both backends already say what they are for, in the design's own vocabulary: they PROVIDE `ifc:kv-backend`. Neither adds a capability the other lacks — that is what makes them swappable, and the whole point of the interface.\n\nThe alternative was to allocate `cap:store` to both. Declined: it would put one capability on five components, at which point the WHAT→WHERE binding stops binding anything and says only \"somewhere in the storage subsystem\". Schema validation is not what a byte backend does.\n\n═══ WHOSE WORD THIS IS ═══\n\n⚠️ **THE REASONING IS THE AGENT'S; THE ACCEPTANCE IS THE OWNER'S, AND THE TWO ARE RECORDED SEPARATELY ON PURPOSE.** It was drafted on 2026-08-25 from the session's own reading, deliberately left `proposed` overnight rather than accepted on his behalf, and put to him as an open question alongside the finished work. He accepted it on 2026-08-26 without amendment.\n\nThat distinction is the same one `dec:idea-a-user-carries-a-persona-that-shapes-every-reply` says is load-bearing between a SELF-DESCRIBED and an ASSIGNED reading, and it is worth keeping here for the same reason: a later reader asking \"did he actually decide this, or did an agent decide it and nobody objected?\" gets a straight answer. He did decide it. He did not originate it.\n\n📌 `cmp:rocksdb-backend` is additionally governed by `dec:the-rust-rocksdb-switch-is-parked-until-the-store-question-settles`. That parks the SWITCH between backends; this parks the question of what either one is FOR. Different questions, both live on the same node.",
         "name": "DECIDED — the two byte-store backends hold no function of their own: what they are for is the contract they provide",
         "rationale": "Kept separate from the tool-surface ruling because the justification is genuinely different, and one decision covering both would let a later reader apply the wrong reason to the wrong parts. The tool slices are empty because a surface must not hold its subject's function; these two are empty because two implementations of one contract cannot differ in what they are for without ceasing to be interchangeable.\n\nRecorded as a Decision rather than left as an acknowledgement so that the judgement carries its author and its reasoning, and so a structural detector can read the ruling rather than a reviewer having to remember it.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:an-unchanged-sync-target-is-not-re-parsed",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Anthony, 2026-09-05: yes. The five dead /tmp exports cost every loop_status ~3.5 s because sync_debt re-reads and re-parses each target on every call to produce the in-step node count. The fix is NOT a rule about where files live - chg:the-orientation-call-stops-rereading-stale-records tried a /tmp rule and reverted it against fifteen correct tests, because hermetic tests, CI and containers all put genuine shared records under a temp dir. The fix is that an UNCHANGED file is not re-parsed: the sync record already stores each target's content hash; it will also store the node count observed at that hash, and a target whose current hash matches the recorded one reuses the count without parsing. A dead file never changes, so it is parsed once and never again; a live record that moved is parsed exactly as today. No target is dropped, no policy about paths is introduced, and the not_checked disclosure stays as it is. To be MEASURED before building: the 3.6 s is more than parse plus hash should cost (python parse of all six was 1.5 s), so the cost inside sync_debt is to be timed first - the fix must be aimed at what is actually slow.",
+        "kind": "choice",
+        "name": "DECIDED - a sync target whose content has not changed is not re-parsed; its recorded node count is reused",
+        "rationale": "Chosen over 'read only targets newer than the committed record' (a policy that can silently skip a real collaborator's record) and over an explicit forget verb (which puts the burden on the user for a cost the tool created). Reusing a recorded count for an unchanged hash is a pure cache of a derived fact over immutable content and cannot change what is reported.",
         "status": "accepted"
       }
     },
@@ -151638,6 +151974,17 @@
         "decision": "Answers option (b) of dec:idea-backlog-belongs-in-the-graph WITHOUT adding a node type, which was that option's strongest objection.\n\nTHE MECHANISM. A defect found by use is recorded as a `TemporalFact`: `subject_id` = the node it indicts, `fact_type` = \"defect\", `statement` = the claim (FULLTEXT-INDEXED, so search_design finds it), `value` = JSON carrying the measurement, `basis` = \"measured\" (never \"forecast\" — a defect is observed), `confidence` = how sure the observer is. Edges: HAS_TEMPORAL_FACT from the indicted node, ABOUT_ENTITY back to it, VALID_FROM the epoch it was observed. VALID_TO is set WHEN IT IS FIXED — absent means still true.\n\nWHY THIS TYPE AND NOT A NEW ONE. Four reasons, each checked rather than assumed. (1) TemporalFact's own extraction_hint already says \"a time-bounded assertion true only between two epochs\", and a defect is exactly that: true of the build from the epoch it was found until the epoch it was fixed. (2) `fact_type` is `{ type: string, indexed: true }` — free-form and INDEXED, not an enum, so \"defect\" needs no schema change. (3) THERE IS A SHIPPING PRECEDENT for using fact_type as a discriminator a reader queries: crates/reflow2-core/src/readiness.rs:57 marks readiness assertions this way and reads them back. This is not a new convention, it is an existing one applied to a second case. (4) The prior against new vocabulary is heavy and documented — this project proposed and WITHDREW two node types in one week (Attestation to TemporalFact, Hazard to DesignRule + CONSTRAINS) — and dec:idea-backlog-belongs-in-the-graph itself flagged TemporalFact as probably already the shape.\n\nWHAT THIS FIXES, precisely. The graph had no way to say \"this capability is BUILT, VERIFIED, and does not do what it claims\". Verification answers whether a check PASSES, and every defect of this kind sat under a passing check. DriftEvent answers whether code moved away from the design, and in these cases code and design AGREED and both were wrong. HEAL's issues are computed from graph shape and vanish between runs. So the largest category of backlog row had nowhere to go, which is why it went to markdown.\n\nTHE LIFECYCLE IS THE PART MARKDOWN DID BY HAND. A row today is annotated \"DONE 2026-08-05\" in prose. Here, fixing a defect means setting VALID_TO to the epoch that fixed it, so \"is this still broken?\" is a graph question rather than a reading-comprehension one — and the history survives instead of being overwritten.\n\nMEASURED STARTING POINT: reflow2's own graph contained ZERO TemporalFacts before this decision, despite BL-68 building the measured/forecast distinction for them. The type was built, correct, and unused.\n\nWHAT IS STILL OWED, AND IT IS THE HALF THAT MATTERS. Nothing in the LOOP reads these yet. `statement` is fulltext so search_design finds them today — genuinely better than grepping a 592 KB file, and the reason this is worth doing before the reader exists — but loop_status does not count open defects, and until it does, a defect recorded here is discoverable rather than SURFACED. That reader is the next increment and it is a Rust change. Recorded so the gap is on the record rather than discovered later: writing facts nothing reads is this project's own recurring declared-and-read-by-nothing failure, and doing it knowingly with the reader scheduled is different from doing it by accident.\n\nNOT CLAIMED: that this retires docs/backlog.md. Three of the four backlog categories already had homes (unbuilt work is a planned Capability, an open question is a proposed Decision, a discovered limit is a Constraint or DesignRule) and were not being used either. This decision closes the one category that had NO home. Deriving the markdown from the graph is option (d) and remains open.",
         "name": "A defect found by USING a built capability is a TemporalFact with fact_type \"defect\" — no new vocabulary, and the lifecycle comes free",
         "rationale": "Chosen rather than left open because dec:idea-backlog-belongs-in-the-graph has held five options and no choice since 2026-08-04, and the cost of that is measured: 218 backlog rows, 592 KB, and an accepted decision (dec:export-once-per-pr) violated and re-derived for the third time in the very session that asked for the fix. Anthony called it embarrassing and asked for it as first priority; the conservative option — reuse an existing type with an existing reader precedent — is the one that can ship now. Left `proposed` with him as approver rather than accepted: dec:three-party-checks says the human decides, and this changes how the project records its own learning.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:derived-scans-are-memoised-per-write-generation",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Anthony, 2026-09-05: yes. The derived scans that every orientation rollup recomputes - open_defects (~5.2-5.8 s, ten call sites) and detect_gaps (~1.5 s) - are memoised, keyed on a write generation counter that core gains. CORRECTED BEFORE BUILDING: the first draft of this decision said the counter is bumped at the ONE place every mutation passes through, engine/batch.rs:44 commit_batch. That was asserted from an incomplete grep and is false - edges.rs:46-77 and embeddings.rs:54,86 call the engine's put and delete DIRECTLY, bypassing the batch. A memo invalidated only in commit_batch would have served a stale defect count after every edge write, which is exactly the failure a cache must never produce. So the counter is bumped in the engine's own write primitives - put, delete, prefix_delete - and in commit_batch, the four places the backend is ever written; over-bumping costs an extra recompute, under-bumping costs a wrong answer, and the bump sits on the side that can only be over. The optimize skill warns a cache is a global; the case for this one: (1) the pattern is already accepted here - service.rs read_loop_hint is a write_gen-keyed cache, and the engine already carries a read_cache invalidated on write; (2) the memo holds a DERIVED result over a graph state, never a source of truth, so a stale entry could only ever be a stale count - and the bump placement above is what makes even that impossible; (3) invalidation is at the write primitives, so no future write path can miss it without also bypassing storage. NOT decided: whether other derived rollups (SPOF analysis, granularity) join the memo. One thing at a time, re-measured against con:loop-status-warm-latency-ms and con:a-full-orientation-pass-costs-at-most-8-seconds.",
+        "kind": "choice",
+        "name": "DECIDED - open_defects and detect_gaps are memoised per write generation, invalidated at the single commit choke point",
+        "rationale": "The alternative - making each scan faster - was rejected because the measurement shows the cost is repetition, not the scan: the same result is derived three times per orientation pass and once more on every read after a write. Removing repetition is the change that removes work; speeding the scan would do the same work faster and leave the multiplier standing.",
         "status": "accepted"
       }
     },
@@ -154823,7 +155170,7 @@
         "decision": "RESOLVED 2026-07-24 on Anthony's word: OPTION C. A read carries a loop-debt pointer ONLY when loop_status would report real outstanding debt, and stays silent when the loop is clean — never the static-every-read of (B), which BL-90 already rejected as boilerplate the agent learns to skim. AXIS 2 resolved: the hint rides the orientation-shaped reads (graph_report, scan_nodes, search_design, get_node — what an agent runs to get its bearings), and fires only when the owed-set CHANGES since it was last surfaced (fire-on-change) — so it appears once when debt arises and stays quiet until the picture moves, which also bounds the per-read cost of computing what is owed. The read-side sibling of the write tools' loop_hint (dec:loop-status-state-not-history). Satisfies req:read-surfaces-debt; unbuilt until it lands in the MCP read tools' result path. Options weighed: (A) do nothing — SessionStart + Stop suffice; (B) static reminder on every read; (C, CHOSEN) state-derived conditional hint.",
         "name": "Reads surface loop debt only when it's real — option C (state-derived, orientation reads, fire-on-change)",
         "rationale": "Leaning C on axis 1, for reasons already on the record. (B) is the failure mode the user explicitly rejected in BL-90 (\"aggressive wording across ~90 tool descriptions — cancels out at that scale\"): boilerplate on every return trains the agent to skim past it, and reads differ from writes in a way that makes static wrong here — a write always advances the loop (it creates debt, so a static \"next step\" is always relevant, which is why the write-side loop_hint is static and accepted), whereas a read creates no debt, so a constant reminder is irrelevant most of the time and becomes noise. (C) respects dec:loop-status-state-not-history (debt is computed from current state, never remembered) and dec:anchored-first (a real, named problem outranks a generic nudge). (A) is the honest null option: the three existing triggers may already be enough, and the marginal value of C is specifically the mid-session read that SessionStart and Stop don't see. Axis 2 exists because loop_status is cheap but not free; the throttle is where C's cost is paid. Sibling of the write-side loop_hint; BL-74 family. Awaits the user's word on both axes before anything is built to satisfy req:read-surfaces-debt.",
-        "status": "accepted"
+        "status": "superseded"
       }
     },
     {
@@ -155198,6 +155545,17 @@
         "decision": "ANTHONY'S WORD, 2026-08-20, choosing between three placements that were each simulated against reflow2's real import graph before any was proposed. All three removed the cycle equally, so the choice was about what the boxes MEAN, not about correctness.\n\nTHE CHOICE: a NINTH system, sys:foundation, holding cmp:nodes, cmp:schema, cmp:graph, cmp:provenance and cmp:identity. sys:store keeps cmp:export and cmp:search. sys:vocabulary keeps cmp:flow and cmp:vocabulary.\n\nTHE TWO REJECTED OPTIONS, recorded so the reasoning is not re-run:\n  · fold the kernel into sys:store - fewest moving parts, stays at eight systems, but nodes and schema ARE the vocabulary, so a system called Vocabulary would hold neither of them. A name that no longer describes its contents is the same class of defect being fixed.\n  · fold the kernel into sys:vocabulary - the mirror image. The graph and store-access layer ends up under a name that describes it no better.\n\nWHY A NEW SYSTEM IS THE HONEST ANSWER: the five modules are mutually dependent, so they ARE one layer - that is the whole finding. Neither existing name covers all five, and forcing one to is how the model became misleading in the first place. Naming the layer says the true thing; folding it into a neighbour hides a layer inside a box named for something else.\n\nACCEPTED COST: two systems end up with two components each. Small boxes are not a defect.",
         "name": "The kernel is its own system — sys:foundation, because neither 'store' nor 'vocabulary' describes all five of the modules everything sits on",
         "rationale": "This is a change to the CARVING, not to the arithmetic, and that distinction is why it is a decision of its own rather than another correction on dec:bl83a-functional-decomposition. When that decision went from seven systems to eight it was catching up with a system that already existed; here a system is being created because the coupling says the layer exists and the model never named it.\n\nIt does not overturn dec:bl83a. That decision's principle - reflow2's own decomposition is the functional systems a design-graph tool IS, not its file tree - is what makes this move correct: a design-graph tool fundamentally IS a typed store of identified nodes, and that is one function, not two.\n\nTHE EVIDENCE, measured rather than argued: nodes is transitively depended on by 46 of 52 core modules, provenance by 44, identity by 44, schema by 43, graph by 42. See fact:the-modules-are-acyclic-but-the-declared-subsystems-are-not for the cycle this bisection produced and fact:ten-components-report-a-zero-blast-radius-the-source-contradicts for cmp:identity, which was in no system at all while 44 modules stood on it.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:the-loop-speaks-on-loop-status-not-inside-every-read",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Anthony, 2026-09-05: yes. This REVERSES dec:read-hint-shape option C for the loop-DEBT half of the read-side hint. service.rs:3731 read_loop_hint computed g.loop_status() on the first read after every write (cache keyed on write_gen, bumped on every write-lock). Measured: 7.7 s per write-to-read boundary on a scratch store, ~12 s on the live daemon, 9.5 boundaries per session across 61 real sessions - 1.2 to 1.9 minutes of unrequested rollup per session, decorating reads that cost 1-4 ms. The loop already speaks in two places - the loop_status tool every session is instructed to run, and the Stop hook. WHAT IS KEPT, and why this is not a full reversal: the same function also carries record_moved - the notice that a colleague's export landed - which Anthony chose on 2026-08-13 to ride on ordinary reads precisely so a session learns it without thinking to ask (cap:the-record-moved-reaches-an-ordinary-read). That half stays, gated on generation as today; its cost is the sync read, which dec:an-unchanged-sync-target-is-not-re-parsed makes near zero. cap:read-loop-hint narrows to record_moved only. The write-side static loop_hint sentence is untouched.",
+        "kind": "choice",
+        "name": "DECIDED - reads no longer recompute loop_status for a hint; the loop speaks when loop_status is called. record_moved stays on reads.",
+        "rationale": "Chosen over computing the debt hint asynchronously or from incremental counters because it is the smallest change that meets con:a-read-after-a-write-costs-at-most-twice-the-same-read-warm outright and removes work rather than doing it faster. The record_moved half is kept because it is a different feature with its own capability and its own ruling, and removing it would silently undo a choice the measurement gave no reason to revisit.",
         "status": "accepted"
       }
     },
@@ -167666,6 +168024,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:preserved-on-write:dec:derived-scans-are-memoised-per-write-generation",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-09-05\",\"role\":\"approver\"}}]",
+        "state": "{\"decision\":\"Anthony, 2026-09-05: yes. The derived scans that every orientation rollup recomputes - open_defects (~5.2-5.8 s, ten call sites) and detect_gaps (~1.5 s) - are memoised, keyed on a write generation counter. Core has no such counter today; it gains one, bumped at the ONE place every mutation passes through, engine/batch.rs:44 commit_batch, so no write path can be missed. The optimize skill warns that a cache is a global and a rule traded for speed; the case for this one is stated here rather than waved through: (1) the pattern is already accepted in this codebase - service.rs:3731 is a write_gen-keyed cache - so this reuses a precedent rather than introducing one; (2) invalidation is at a single choke point, not scattered; (3) the memo holds a DERIVED result over a graph state, never a source of truth, so a stale entry can only ever be a stale count, never lost design. What is NOT decided: whether other derived rollups (the SPOF analysis, granularity) join the memo. One thing at a time, re-measured.\",\"kind\":\"choice\",\"name\":\"DECIDED - open_defects and detect_gaps are memoised per write generation, invalidated at the single commit choke point\",\"rationale\":\"The alternative - making each scan faster - was rejected because the measurement shows the cost is repetition, not the scan: the same result is derived three times per orientation pass and once more on every read after a write. Removing repetition is the change that removes work; speeding the scan would do the same work faster and leave the multiplier standing.\",\"status\":\"accepted\"}",
+        "target_id": "dec:derived-scans-are-memoised-per-write-generation",
+        "target_type": "Decision"
+      }
+    },
+    {
       "node_id": "snap:epoch:preserved-on-write:dec:idea-a-deliberately-open-edge-can-never-be-ranked-as-a-fit",
       "node_type": "Snapshot",
       "properties": {
@@ -167743,6 +168111,36 @@
         "state": "{\"decision\":\"RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. A candidate class, generated during root-cause on the proj:chama field report of 2026-09-02 and stated so it can be refuted.\\n\\nTHREE OF THAT REPORT'S SIX FINDINGS ARE THE SAME SHAPE: a reflow2 self-description that is out of step with what the code does.\\n\\n① `loop_status` — \\\"1 answered question(s) never reached the design\\\". The computation is `questions.iter().filter(|q| q.status == \\\"answered\\\").count()`. It knows the question is answered and its gap is open; the message asserts something about whether design nodes exist. Nothing looks for them. (`fact:the-answered-question-message-recurred-in-a-third-project-with-the-computation-unchanged`)\\n② `describe_schema` — its ranking says GOVERNED_BY is no better a fit than sixteen wildcards, when it is the design's primary governance edge and the true answer to the pair being asked about. The rank is computed from endpoint enumeration and presented as modelledness. (`fact:governed-by-is-the-governance-edge-and-describe-schema-can-never-rank-it`)\\n③ `authored_by` — \\\"deliberately not a traceability edge, so it never enlarges a blast radius\\\". True about propagation, and it reads as \\\"nothing computes on this\\\" at the exact moment an agent decides whether to set `role: approver`, which is the assignment primitive that drives loop debt. (`fact:authored-by-describes-itself-as-inert-and-is-the-assignment-primitive`)\\n\\n⭐ AND A FOURTH, ALREADY FIXED ONCE, WHICH IS WHAT MAKES THIS WORTH ASKING: heal.rs records in its own comment that `unthreaded_cluster` \\\"SPOKE THE WORDS OF UNREACHABILITY AND WALKED SOMETHING NARROWER\\\" — the message claimed disconnection from the design while computing disconnection from a walk covering 1133 of 2413 nodes. Same defect, found by dev_storyflow 2026-08-17, repaired in the sentence. Nothing generalised from it.\\n\\nTHE COMMON SHAPE, stated to be attacked: **reflow2's prose is load-bearing — its own field reports say so — and it is maintained entirely by hand with nothing checking any sentence against the behaviour it describes.** The root-cause skill's own heuristic is that the cause is usually something maintained by hand with nothing checking it; here the hand-maintained thing is the feature.\\n\\n⚠️ WHY THIS MIGHT BE ONE THING: the failure is invisible by construction. A wrong sentence and a right one both compile, both ship, and the gap only appears when a user acts on the sentence — which is exactly how all four surfaced, each from a different project, none from a test.\\n\\n⚠️ AND WHY IT MIGHT NOT, which is the honest counter and is strong: these three have three different causes. ① is a message asserting past its data. ② is a ranking function whose criterion does not track the thing it is presented as ranking. ③ is a true sentence that misleads by omission. Only ① is straightforwardly \\\"the prose lies\\\". Grouping them could manufacture a systemic defect out of three ordinary ones — the over-engineering failure this project watches for, and the same reason `dec:idea-the-instruction-layer-runs-ahead-of-the-typed-tool-layer` was REJECTED on 2026-08-31 for a neighbouring grouping. That rejection is evidence against this one.\\n\\nNOT A COUNT ANYBODY HAS TAKEN: how many tool descriptions and gap texts make a checkable claim about behaviour, and what fraction are currently true. Nobody has looked.\",\"kind\":\"exploratory\",\"name\":\"OPEN — three of six chama findings are reflow2 describing itself wrongly. The prose is the acclaimed feature and nothing checks it. Is that one defect or three?\",\"rationale\":\"WHAT WOULD SETTLE IT, and it is cheap enough to be worth naming: the claims in question are a specific and small kind — a sentence asserting what a COMPUTATION does or does not do (\\\"never reached the design\\\", \\\"never enlarges a blast radius\\\", a rank presented as fit). That is narrower than \\\"is the documentation accurate\\\", and it may be testable: a test that asserts the message text alongside the state that produces it would have caught ① and would have failed the day the message was written.\\n\\nIf most load-bearing prose makes no checkable claim, these three are three bugs and this node should be rejected like its predecessor. If a meaningful fraction does, the generative question is \\\"which other sentences assert something about a computation, and which are still true?\\\" — and that is answerable by reading the tool surface rather than by waiting for a fourth project to report it.\\n\\n⚠️ THE REPAIRS ARE INDEPENDENT OF THE ANSWER. All three are cheap on their own and none waits on this question. Recorded so the fifth instance is recognised rather than diagnosed from scratch — which is precisely what ① cost three separate sessions.\",\"status\":\"proposed\"}",
         "target_id": "dec:idea-the-load-bearing-prose-is-unchecked-against-the-code-it-describes",
         "target_type": "Decision"
+      }
+    },
+    {
+      "node_id": "snap:epoch:preserved-on-write:fact:the-agent-surface-profiled-orientation-is-35-of-40-seconds-and-two-causes-are-located",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[]",
+        "state": "{\"basis\":\"measured\",\"confidence\":1.0,\"fact_type\":\"measurement\",\"statement\":\"THE TEN TOOLS AN AGENT ACTUALLY DRIVES, PROFILED ON THE RELEASE BINARY AGAINST THE LIVE STORE: FOUR ORIENTATION ROLLUPS ARE 35 OF 40 SECONDS, AND TWO OF THE CAUSES ARE NOW LOCATED. Taken 2026-09-05, reflow2-mcp 0.47.1 release, stdio direct, one process per store, median of 3 warm runs after one cold. Tool set chosen from `tools/surface_usage.py` (9,998 real calls, 61 sessions): top by volume and by PageRank. Load 2.1-4.2 on 4 cores throughout — elevated, so absolute numbers are inflated ~1.3x; RATIOS and SUBTRACTIONS are what this fact rests on.\\n\\n  RELEASE, LIVE store (104 MB / 22 SST, 3709 n / 18101 e)   cold ms   warm ms   bytes\\n    loop_status                                             11,754    12,502   4,328\\n    open_questions                                          10,553     9,670     246\\n    graph_report                                             7,654     7,377  18,431\\n    detect_defects                                           5,952     5,633  44,263\\n    claim_report                                             2,505     2,558   2,231\\n    detect_gaps                                              1,661     1,760   6,642\\n    search_design (index cold on first call)                12,481         2.7  2,860\\n    what_next                                                  350       368   2,893\\n    describe_schema                                            3.8       3.6  45,644\\n    get_node                                                   1.6       1.3     452\\n    TOTAL warm                                                        39,877 127,990\\n\\nTHE STORY IS LATENCY, NOT BYTES. 128 KB for ten calls is modest, and the two big replies (describe_schema 45 KB, detect_defects 44 KB) are reference material. Four rollups — loop_status, open_questions, graph_report, detect_defects — are 35 of the 40 seconds. Point reads are 1-4 ms. The cheap calls are cheap.\\n\\n⭐ CAUSE 1, LOCATED BY SUBTRACTION: `open_defects()` IS RE-RUN INSIDE EVERY ROLLUP, UNCACHED. `detect_defects` alone is 5.2 s (fresh) / 5.8 s (live). `heal.rs:964 open_defects()` has no memoisation and TEN call sites across six files. Three are orientation rollups: `report.rs:853 loop_status_for`, `report.rs:1348 graph_report`, `report.rs:597 debt_since` (so `loop_status(since_export: true)` pays it TWICE). It is computed to produce a COUNT. One orientation pass — loop_status, graph_report, detect_defects — runs the same five-second scan three times.\\n\\n⭐ CAUSE 2, ISOLATED DIRECTLY: FIVE DEAD SCRATCH EXPORTS COST EVERY loop_status ~3.5 SECONDS. `sync_status` alone: 3,556 ms on the live store (6 sync targets) vs 19 ms on a fresh store (0 targets). The six files total 53.7 MB; five are one-off `/tmp` exports from dead sessions and only `docs/design/reflow2.json` is a record anyone collaborates on. These are the SAME five files whose false 'never been exported' claims were fixed in v0.47.1 (`chg:the-unexported-claim-is-answered-once-for-the-seat`) — the claim went, the read stayed. loop_status is the highest-PageRank tool in the surface, so this is paid on the most-routed-through call there is.\\n\\n🛑 THREE HYPOTHESES FALSIFIED BEFORE THESE WERE LOCATED, recorded so nobody re-tests them:\\n  (a) STORE BLOAT. The live store is 104 MB / 22 SSTs; a fresh import of the identical 3,709 nodes is 17 MB / 0 SSTs — 6x the bytes. `dec:idea-is-there-performance-left-...` named this as the lead. Same binary, fresh store: open_questions 8.8 s, graph_report 7.0 s, detect_defects 5.3 s, claim_report 2.6 s — all within load noise of the live figures. The bloat costs the agent almost nothing per call. Only loop_status differed (12.0 vs 7.6), and that whole gap is Cause 2, not RocksDB.\\n  (b) GRAPH GROWTH. The v0.46.0 export (2026-09-01, 3,608 n / 17,163 e — 3% and 5% smaller) imported fresh and profiled with today's binary: open_questions 8.2 s, loop_status 7.3 s, detect_defects 5.1 s. Growth since the recorded wins explains nothing.\\n  (c) `rehydrate_gaps` RE-RUNNING DETECTION PER GAP inside open_questions (5 gaps x 1.5 s would have fitted the 7 s remainder exactly). `ask.rs:381` calls `g.detect_gaps()` ONCE and iterates. Falsified by reading.\\n\\n⚠️ WHAT REMAINS UNEXPLAINED AND IS SAID SO: open_questions is ~8.5 s of which detect_gaps is ~1.5 s. The core loop over Questions (`detect.rs:1765`) is property reads. ~7 s is unaccounted for and no hypothesis survives; it needs a timing probe INSIDE the function, which is a code change and waits for the budget. `dec:idea-is-there-performance-left-...` records open_questions at 2.95 s after the 2026-08-31 SPOF fix; whether today's 8.5 s is a code regression since v0.46.0 (five commits touched this path: #415 #416 #420 #423 #424) or a difference in measuring conditions is the one open question, and a v0.46.0 release binary is being built to settle it on the same store.\\n\\n📌 BOUNDS. One machine, 4 cores, load never below 2.1 during any run (desktop processes), release profile, stdio transport not the shared daemon. The prior fact `fact:every-cost-number-today-was-a-debug-build...` records the shared-daemon path as slower still. `search_design`'s 8-12 s COLD first call is real and unmeasured as a cause — it is the index opening — and every session's first search pays it once.\",\"subject_id\":\"cap:loop-status\",\"valid_from\":\"2026-09-05\",\"value\":\"{\\\"binary\\\":\\\"0.47.1 release\\\",\\\"store\\\":\\\"live 104MB/22SST, 3709n/18101e\\\",\\\"total_warm_ms\\\":39877,\\\"orientation_four_ms\\\":35182,\\\"total_bytes\\\":127990,\\\"cause1\\\":\\\"open_defects() uncached, 10 call sites, ~5.2-5.8s, run 3x per orientation pass\\\",\\\"cause2\\\":\\\"sync_status 3556ms live vs 19ms fresh - five dead /tmp exports, 53.7MB\\\",\\\"falsified\\\":[\\\"store bloat 6x (fresh store within noise)\\\",\\\"graph growth (v0.46.0 design same cost)\\\",\\\"rehydrate_gaps per-gap (runs detect_gaps once)\\\"],\\\"unexplained\\\":\\\"open_questions ~7s beyond detect_gaps\\\",\\\"pending\\\":\\\"v0.46.0 binary on same store - regression vs 2.95s record\\\",\\\"load_during\\\":\\\"2.1-4.2 on 4 cores\\\"}\"}",
+        "target_id": "fact:the-agent-surface-profiled-orientation-is-35-of-40-seconds-and-two-causes-are-located",
+        "target_type": "TemporalFact"
+      }
+    },
+    {
+      "node_id": "snap:epoch:preserved-on-write:fact:the-agent-surface-profiled-orientation-is-35-of-40-seconds-and-two-causes-are-located:r2",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[]",
+        "state": "{\"basis\":\"measured\",\"confidence\":1.0,\"fact_type\":\"measurement\",\"statement\":\"THE TEN TOOLS AN AGENT ACTUALLY DRIVES, PROFILED ON THE RELEASE BINARY AGAINST THE LIVE STORE: FOUR ORIENTATION ROLLUPS ARE 35 OF 40 SECONDS, TWO CAUSES ARE LOCATED, AND FOUR HYPOTHESES ARE FALSIFIED. Taken 2026-09-05, reflow2-mcp 0.47.1 release, stdio direct, one process per store, median of 3 warm runs after one cold. Tool set from `tools/surface_usage.py` (9,998 real calls, 61 sessions): top by volume and by PageRank. Load 1.8-4.2 on 4 cores throughout — elevated, so absolute numbers are inflated; RATIOS and SUBTRACTIONS are what this rests on.\\n\\n  RELEASE, LIVE store (104 MB / 22 SST, 3709 n / 18101 e)   cold ms   warm ms   bytes\\n    loop_status                                             11,754    12,502   4,328\\n    open_questions                                          10,553     9,670     246\\n    graph_report                                             7,654     7,377  18,431\\n    detect_defects                                           5,952     5,633  44,263\\n    claim_report                                             2,505     2,558   2,231\\n    detect_gaps                                              1,661     1,760   6,642\\n    search_design (index cold on first call)                12,481         2.7  2,860\\n    what_next                                                  350       368   2,893\\n    describe_schema                                            3.8       3.6  45,644\\n    get_node                                                   1.6       1.3     452\\n    TOTAL warm                                                        39,877 127,990\\n\\nTHE STORY IS LATENCY, NOT BYTES. 128 KB for ten calls is modest. Four rollups — loop_status, open_questions, graph_report, detect_defects — are 35 of the 40 seconds. Point reads are 1-4 ms.\\n\\n⭐ CAUSE 1, BY SUBTRACTION: `open_defects()` IS RE-RUN INSIDE EVERY ROLLUP, UNCACHED. `detect_defects` alone is 5.2 s fresh / 5.8 s live. `heal.rs:964 open_defects()` has no memoisation and TEN call sites across six files. Three are orientation rollups: `report.rs:853 loop_status_for`, `report.rs:1348 graph_report`, `report.rs:597 debt_since` (so `loop_status(since_export: true)` pays TWICE). Computed to produce a COUNT. One orientation pass runs the same five-second scan three times.\\n\\n⭐ CAUSE 2, ISOLATED DIRECTLY: FIVE DEAD SCRATCH EXPORTS COST EVERY loop_status ~3.5 SECONDS. `sync_status` alone: 3,556 ms live (6 targets) vs 19 ms fresh (0). 53.7 MB parsed per call; five of six are one-off `/tmp` exports from dead sessions. The SAME five files whose false claims v0.47.1 fixed — the claim went, the read stayed. loop_status is the highest-PageRank tool in the surface.\\n\\n🛑 FOUR HYPOTHESES FALSIFIED, recorded so nobody re-tests them:\\n  (a) STORE BLOAT. Live 104 MB / 22 SSTs vs a fresh import of the identical nodes at 17 MB / 0 SSTs — 6x the bytes, the lead `dec:idea-is-there-performance-left-...` named. Same binary, fresh store: every rollup within load noise of live. Only loop_status differed, and that gap IS Cause 2.\\n  (b) GRAPH GROWTH. The v0.46.0 design (3,608 n / 17,163 e) imported fresh, today's binary: open_questions 8.2 s, loop_status 7.3 s, detect_defects 5.1 s. Growth explains nothing.\\n  (c) `rehydrate_gaps` PER GAP. `ask.rs:381` calls `detect_gaps()` once. Falsified by reading.\\n  (d) CODE REGRESSION SINCE v0.46.0. Five commits touched this path (#415 #416 #420 #423 #424). A v0.46.0 RELEASE BINARY built in a worktree, on a store IT wrote from the v0.46.0 export, at load 2.0: open_questions 8,906 ms, loop_status 6,857, detect_defects 5,053, graph_report 6,286 — indistinguishable from today's binary on the same design (8,174 / 7,321 / 5,117 / 6,521). THE COST IS A PROPERTY OF THE CODE PATH AT THIS GRAPH SIZE, NOT A RECENT REGRESSION. The 2.95 s that decision records for open_questions was taken under conditions not reproduced here and should not be quoted as today's.\\n\\n⚠️ A NEAR-MISS WORTH KEEPING: the first old-binary run returned every call in 0.2 ms with 0 bytes — `-32602 tool not found`, the older binary declining a store the newer one had written. WITHOUT THE PROFILER'S `ERR` COLUMN THAT WOULD HAVE READ AS A 10,000x WIN. `rule:success-is-read-from-the-authoritative-object`, exactly. The refusal also withheld WHY, which is the class `fact:defect-refusals-and-warnings-that-withhold-the-reason-the-server-already-holds` records.\\n\\n⚠️ WHAT REMAINS UNEXPLAINED: open_questions is ~8.5 s of which detect_gaps is ~1.5 s; the remaining ~7 s is across 57 Question nodes, ~123 ms each, in a loop (`detect.rs:1765`) that reads as property gets. No hypothesis survives. It needs a timing probe INSIDE the function — a code change, which waits for the budget.\\n\\n📌 BOUNDS. One machine, 4 cores, desktop load floor ~2, release, stdio not the shared daemon (`fact:every-cost-number-today-was-a-debug-build...` records the daemon path as slower). `search_design`'s 8-12 s COLD first call is real and uninvestigated — every session's first search pays it once.\",\"subject_id\":\"cap:loop-status\",\"valid_from\":\"2026-09-05\",\"value\":\"{\\\"binary\\\":\\\"0.47.1 release\\\",\\\"store\\\":\\\"live 104MB/22SST, 3709n/18101e\\\",\\\"total_warm_ms\\\":39877,\\\"orientation_four_ms\\\":35182,\\\"total_bytes\\\":127990,\\\"cause1\\\":\\\"open_defects() uncached, 10 call sites, ~5.2-5.8s, 3x per orientation pass\\\",\\\"cause2\\\":\\\"sync_status 3556ms live vs 19ms fresh - five dead /tmp exports, 53.7MB\\\",\\\"falsified\\\":[\\\"store bloat 6x\\\",\\\"graph growth\\\",\\\"rehydrate_gaps per-gap\\\",\\\"code regression since v0.46.0 - old binary on old store matches new binary\\\"],\\\"unexplained\\\":\\\"open_questions ~7s over 57 Questions, ~123ms each\\\",\\\"near_miss\\\":\\\"old binary refused with tool-not-found; 0.2ms/0 bytes would have read as a win without the ERR flag\\\",\\\"load_during\\\":\\\"1.8-4.2 on 4 cores\\\"}\"}",
+        "target_id": "fact:the-agent-surface-profiled-orientation-is-35-of-40-seconds-and-two-causes-are-located",
+        "target_type": "TemporalFact"
+      }
+    },
+    {
+      "node_id": "snap:epoch:preserved-on-write:fact:the-agent-surface-profiled-orientation-is-35-of-40-seconds-and-two-causes-are-located:r3",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[]",
+        "state": "{\"basis\":\"measured\",\"confidence\":1.0,\"fact_type\":\"measurement\",\"statement\":\"THE TEN TOOLS AN AGENT ACTUALLY DRIVES, PROFILED ON THE RELEASE BINARY: FOUR ORIENTATION ROLLUPS ARE 35 OF 40 SECONDS, THREE CAUSES ARE LOCATED, FOUR HYPOTHESES FALSIFIED — AND THE THIRD CAUSE MULTIPLIES THE OTHER TWO ACROSS A SESSION. Taken 2026-09-05, reflow2-mcp 0.47.1 release, stdio direct, median of 3 warm runs after one cold. Tool set from `tools/surface_usage.py` (9,998 real calls, 61 sessions). Load 1.8-4.2 on 4 cores; RATIOS and SUBTRACTIONS are what this rests on.\\n\\n  RELEASE, LIVE store (104 MB / 22 SST, 3709 n / 18101 e)   cold ms   warm ms   bytes\\n    loop_status                                             11,754    12,502   4,328\\n    open_questions                                          10,553     9,670     246\\n    graph_report                                             7,654     7,377  18,431\\n    detect_defects                                           5,952     5,633  44,263\\n    claim_report                                             2,505     2,558   2,231\\n    detect_gaps                                              1,661     1,760   6,642\\n    search_design                                           12,481         2.7  2,860\\n    what_next                                                  350       368   2,893\\n    describe_schema                                            3.8       3.6  45,644\\n    get_node                                                   1.6       1.3     452\\n    TOTAL warm                                                        39,877 127,990\\n\\nTHE STORY IS LATENCY, NOT BYTES. Point reads are 1-4 ms; four rollups are 35 of 40 s.\\n\\n⭐⭐ CAUSE 3 — THE MULTIPLIER, FOUND LAST AND LARGEST: EVERY READ AFTER A WRITE RUNS A FULL loop_status TO APPEND A ONE-LINE HINT. `service.rs:3731 read_loop_hint` computes `g.loop_status()` and caches it keyed on `write_gen`; `write_gen.fetch_add` is at `service.rs:3647` in the single write-lock path, so EVERY write invalidates it and the NEXT read of ANY kind recomputes. Measured on a scratch copy, alternating create_node / get_node: reads after a write cost 7,672 / 7,770 / 6,719 ms; the writes themselves 82-127 ms; the second read 1-2 ms. TEN CALLS, 30.3 s, 29.9 s OF IT HIDDEN loop_status. Server log is silent throughout (no tantivy, no rocksdb) — it is reflow2's own rollup. On the live shared daemon, where loop_status is 12.5 s, the same mechanism costs ~12 s per write→read transition (inferred from the measured parts, not separately timed). A ~164-call session with writes interleaved pays this dozens of times: MINUTES of unrequested rollup per session, decorating 452-byte reads. `describe_schema` (no store) cold 6 ms and `claim_report` (no hint) show no spike — the subtraction that located it.\\n\\n⭐ CAUSE 1 — WHAT THAT HIDDEN loop_status IS MADE OF: `open_defects()` UNCACHED. 5.2-5.8 s per run, `heal.rs:964`, no memoisation, TEN call sites; three are orientation rollups (`report.rs:853 loop_status_for`, `:1348 graph_report`, `:597 debt_since` — so `since_export: true` pays twice). Computed to produce a COUNT.\\n\\n⭐ CAUSE 2 — FIVE DEAD SCRATCH EXPORTS COST EVERY loop_status ~3.5 s. `sync_status` alone: 3,556 ms live (6 targets) vs 19 ms fresh (0). 53.7 MB parsed per call; five are one-off `/tmp` files from dead sessions. The SAME five whose false claims v0.47.1 fixed — the claim went, the read stayed.\\n\\nTOGETHER: a write→read transition on the live daemon = open_defects 5.8 + sync 3.6 + detect_gaps 1.8 + other ≈ 12 s, paid for a hint.\\n\\n🛑 FOUR HYPOTHESES FALSIFIED, so nobody re-tests them: (a) STORE BLOAT — live 104 MB / 22 SST vs fresh 17 MB / 0 SST for identical content; every rollup within noise on the fresh store. (b) GRAPH GROWTH — v0.46.0 design (3% smaller) costs the same. (c) `rehydrate_gaps` PER GAP — `ask.rs:381` runs detect_gaps once. (d) CODE REGRESSION SINCE v0.46.0 — a v0.46.0 release binary on a store it wrote: open_questions 8,906, loop_status 6,857, detect_defects 5,053 — indistinguishable from 0.47.1 on the same design. The recorded 2.95 s for open_questions was taken under conditions not reproduced here.\\n\\n⚠️ TWO NEAR-MISSES KEPT: the v0.46.0 binary first refused a 0.47.1-written store with `-32602 tool not found` in 0.2 ms — without the profiler's ERR column that reads as a 10,000x win (`rule:success-is-read-from-the-authoritative-object`); and a 40-line cap on a log read hid the lines that mattered until re-pulled uncapped.\\n\\n⚠️ STILL UNEXPLAINED: open_questions ~7 s over 57 Questions (~123 ms each) beyond detect_gaps; needs a timing probe inside `detect.rs:1765`. ALSO OBSERVED, UNINVESTIGATED: tantivy runs a COMMIT and GARBAGE-COLLECT on every read-only open (~300 ms, deleting segment files) — every session start mutates the index directory.\\n\\n📌 BOUNDS. One machine, 4 cores, desktop load floor ~2, release, stdio. Instruments: `tools/agent_surface_profile.py`, `tools/time_one_tool.py`.\",\"subject_id\":\"cap:loop-status\",\"valid_from\":\"2026-09-05\",\"value\":\"{\\\"binary\\\":\\\"0.47.1 release\\\",\\\"store\\\":\\\"live 104MB/22SST, 3709n/18101e\\\",\\\"total_warm_ms\\\":39877,\\\"orientation_four_ms\\\":35182,\\\"cause3_multiplier\\\":\\\"read_loop_hint runs full loop_status on first read after EVERY write (write_gen); measured 7.7s per write->read on scratch copy, ~12s inferred on live daemon\\\",\\\"cause1\\\":\\\"open_defects() uncached, 10 call sites, 5.2-5.8s, 3x per orientation pass\\\",\\\"cause2\\\":\\\"sync_status 3556ms live vs 19ms fresh - five dead /tmp exports\\\",\\\"falsified\\\":[\\\"store bloat\\\",\\\"graph growth\\\",\\\"rehydrate_gaps per-gap\\\",\\\"code regression since v0.46.0\\\"],\\\"unexplained\\\":\\\"open_questions ~7s over 57 Questions; tantivy commit+GC on every open ~300ms\\\",\\\"probe_pattern\\\":\\\"10 calls (3 writes, 7 reads) = 30.3s, 29.9s hidden loop_status\\\"}\"}",
+        "target_id": "fact:the-agent-surface-profiled-orientation-is-35-of-40-seconds-and-two-causes-are-located",
+        "target_type": "TemporalFact"
       }
     },
     {
@@ -172510,6 +172908,19 @@
       }
     },
     {
+      "node_id": "fact:the-agent-surface-profiled-orientation-is-35-of-40-seconds-and-two-causes-are-located",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "measurement",
+        "statement": "THE TEN TOOLS AN AGENT ACTUALLY DRIVES, PROFILED ON THE RELEASE BINARY: FOUR ORIENTATION ROLLUPS ARE 35 OF 40 SECONDS, THREE CAUSES ARE LOCATED, FOUR HYPOTHESES FALSIFIED — AND THE THIRD CAUSE MULTIPLIES THE OTHER TWO ACROSS A SESSION, ~10 TIMES A SESSION, MEASURED. Taken 2026-09-05, reflow2-mcp 0.47.1 release, stdio direct, median of 3 warm runs after one cold. Tool set from `tools/surface_usage.py` (9,998 real calls, 61 sessions). Load 1.8-4.2 on 4 cores; RATIOS and SUBTRACTIONS are what this rests on.\n\n  RELEASE, LIVE store (104 MB / 22 SST, 3709 n / 18101 e)   cold ms   warm ms   bytes\n    loop_status                                             11,754    12,502   4,328\n    open_questions                                          10,553     9,670     246\n    graph_report                                             7,654     7,377  18,431\n    detect_defects                                           5,952     5,633  44,263\n    claim_report                                             2,505     2,558   2,231\n    detect_gaps                                              1,661     1,760   6,642\n    search_design                                           12,481         2.7  2,860\n    what_next                                                  350       368   2,893\n    describe_schema                                            3.8       3.6  45,644\n    get_node                                                   1.6       1.3     452\n    TOTAL warm                                                        39,877 127,990\n\nTHE STORY IS LATENCY, NOT BYTES. Point reads are 1-4 ms; four rollups are 35 of 40 s.\n\n⭐⭐ CAUSE 3 — THE MULTIPLIER: EVERY READ AFTER A WRITE RUNS A FULL loop_status TO APPEND A ONE-LINE HINT. `service.rs:3731 read_loop_hint` computes `g.loop_status()` and caches it keyed on `write_gen`; `write_gen.fetch_add` at `service.rs:3647` is in the single write-lock path, so EVERY write invalidates it and the NEXT read of ANY kind recomputes. Measured on a scratch copy, alternating create_node / get_node: reads after a write 7,672 / 7,770 / 6,719 ms; the writes 82-127 ms; the second read 1-2 ms. TEN CALLS 30.3 s, 29.9 s OF IT HIDDEN. Server log silent throughout — reflow2's own rollup, not storage. `describe_schema` (no store) cold 6 ms and `claim_report` (no hint) show no spike: the subtraction that located it.\n\n⭐ HOW OFTEN, COUNTED FROM 61 REAL SESSIONS rather than estimated: classifying every recorded transition by the toolsnaps' `readOnlyHint`, WRITE→READ = 579 of 6,974 transitions (8.3%) = **9.5 PER SESSION**. Sessions are ~80% writes (4,901 write→write), so the hint fires at run boundaries. HIDDEN loop_status PER SESSION: 9.5 x 7.7 s = 1.2 MINUTES measured on scratch; 9.5 x ~12 s = 1.9 MINUTES on the live daemon (inferred from the measured live loop_status). An earlier draft of this fact said 'dozens of times'; the count is 9.5 and this supersedes it. Commonest boundaries: `authored_by→loop_status` 36 (pays loop_status TWICE — once for the hint, once for the call), `set_artifact_checksums→export_graph` 36, `add_change_event→propagate_change` 23, `add_decision→get_node` 19, `create_edges→loop_status` 14.\n\n⭐ CAUSE 1 — WHAT THAT HIDDEN loop_status IS MADE OF: `open_defects()` UNCACHED. 5.2-5.8 s per run, `heal.rs:964`, no memoisation, TEN call sites; three are orientation rollups (`report.rs:853 loop_status_for`, `:1348 graph_report`, `:597 debt_since` — so `since_export: true` pays twice). Computed to produce a COUNT. 📌 THE HINT CACHE AT `service.rs:3731` IS ALREADY A write_gen-KEYED CACHE, so a generation-keyed memo of open_defects would reuse an accepted pattern, not introduce one.\n\n⭐ CAUSE 2 — FIVE DEAD SCRATCH EXPORTS COST EVERY loop_status ~3.5 s. `sync_status` alone: 3,556 ms live (6 targets) vs 19 ms fresh (0). 53.7 MB parsed per call; five are one-off `/tmp` files from dead sessions — the SAME five whose false claims v0.47.1 fixed. The claim went, the read stayed.\n\nTOGETHER, per write→read boundary on the live daemon: open_defects 5.8 + sync 3.6 + detect_gaps 1.8 + other ≈ 12 s, paid for a hint on a 452-byte read.\n\n🛑 FOUR HYPOTHESES FALSIFIED, so nobody re-tests them: (a) STORE BLOAT — live 104 MB / 22 SST vs fresh 17 MB / 0 SST for identical content; every rollup within noise on the fresh store. (b) GRAPH GROWTH — v0.46.0 design (3% smaller) costs the same. (c) `rehydrate_gaps` PER GAP — `ask.rs:381` runs detect_gaps once. (d) CODE REGRESSION SINCE v0.46.0 — a v0.46.0 release binary on a store it wrote: open_questions 8,906, loop_status 6,857, detect_defects 5,053 — indistinguishable from 0.47.1. The recorded 2.95 s for open_questions was taken under conditions not reproduced here.\n\n⚠️ TWO NEAR-MISSES KEPT: the v0.46.0 binary first refused a 0.47.1-written store with `-32602 tool not found` in 0.2 ms — without the profiler's ERR column that reads as a 10,000x win (`rule:success-is-read-from-the-authoritative-object`); and a 40-line cap on a log read hid the lines that mattered until re-pulled uncapped.\n\n⚠️ STILL UNEXPLAINED: open_questions ~7 s over 57 Questions (~123 ms each) beyond detect_gaps; needs a timing probe inside `detect.rs:1765`. ALSO OBSERVED, UNINVESTIGATED: tantivy runs a COMMIT and GARBAGE-COLLECT on every read-only open (~300 ms, deleting segment files).\n\n📌 BOUNDS. One machine, 4 cores, desktop load floor ~2, release, stdio. Instruments: `tools/agent_surface_profile.py`, `tools/time_one_tool.py`; transition count from `tools/surface_usage.py --json` classified by `tools/toolsnaps/*.json` readOnlyHint.",
+        "subject_id": "cap:loop-status",
+        "valid_from": "2026-09-05",
+        "value": "{\"binary\":\"0.47.1 release\",\"store\":\"live 104MB/22SST, 3709n/18101e\",\"total_warm_ms\":39877,\"orientation_four_ms\":35182,\"cause3_multiplier\":\"read_loop_hint runs full loop_status on first read after EVERY write (write_gen); 7.7s per boundary on scratch, ~12s live\",\"boundaries_per_session\":9.5,\"boundaries_total\":\"579 of 6974 transitions across 61 sessions (8.3%)\",\"hidden_minutes_per_session\":\"1.2 measured-scratch / 1.9 live-inferred\",\"cause1\":\"open_defects() uncached, 10 call sites, 5.2-5.8s, 3x per orientation pass\",\"cause2\":\"sync_status 3556ms live vs 19ms fresh - five dead /tmp exports\",\"falsified\":[\"store bloat\",\"graph growth\",\"rehydrate_gaps per-gap\",\"code regression since v0.46.0\"],\"unexplained\":\"open_questions ~7s over 57 Questions; tantivy commit+GC on every open ~300ms\"}"
+      }
+    },
+    {
       "node_id": "fact:the-allocation-layer-and-the-artifact-layer-disagreed-23-times-and-nothing-compared-them",
       "node_type": "TemporalFact",
       "properties": {
@@ -173548,6 +173959,19 @@
       }
     },
     {
+      "node_id": "fact:the-three-perf-changes-killed-the-multiplier-and-two-budgets-hold-one-misses-on-my-own-derivation",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "measurement",
+        "statement": "AFTER THE THREE APPROVED PERF CHANGES: THE MULTIPLIER IS GONE, TWO BUDGETS HOLD, AND THE ORIENTATION-PASS BUDGET MISSES ON A DERIVATION ERROR I MADE, NOT ON THE CODE. Measured 2026-09-05, reflow2-mcp 0.47.1 release built with all three changes, on a copy of the live store (105 MB, six real sync targets), stdio, load settling from ~2.5, medians.\n\nTHE THREE CHANGES (dec:the-loop-speaks-on-loop-status-not-inside-every-read; dec:an-unchanged-sync-target-is-not-re-parsed; dec:derived-scans-are-memoised-per-write-generation):\n  1. reads stop recomputing loop_status for a debt hint.\n  2. an unchanged sync target is answered from a stored (hash,len,mtime,nodes) observation, not re-parsed.\n  3. open_defects and detect_gaps are memoised per write generation, the generation living on ReadCache so every backend write moves it.\n\nBUDGETS:\n  ✅ con:a-read-after-a-write-costs-at-most-twice-the-same-read-warm — get_node after a write 5.3 ms vs warm 3.7 ms, RATIO 1.41 (was ~5,900). THIS IS THE HEADLINE: the read-side hint ran a full loop_status 9.5 times a session, 1.2-1.9 min/session hidden; that is gone.\n  ✅ con:loop-status-warm-latency-ms — warm loop_status 1,912 ms vs 2,000 (was 12,502).\n  ❌ con:a-full-orientation-pass-costs-at-most-8-seconds — warm sum 6,459 ms (under) BUT cold-start 11,103 ms (over). The cold pass is the honest session-start case.\n\n⭐ THE MISS IS A DERIVATION ERROR, STATED PLAINLY. I derived 8,000 ms from 'the expensive scans are paid ONCE per graph state.' They now are — the memo works, loop_status computes the defect+gap scan and open_questions/graph_report reuse it. But I budgeted as if the shared scan were the WHOLE cost, and it is not: measured with the memo hot, graph_report is 2,825 ms of its OWN rendering, open_questions 1,931 ms of its own, detect_defects 2,838 ms of its own sweep-scope walk — none of that is open_defects. The scan is paid once as designed; the pass still exceeds 8,000 because the rollups' non-scan work was never in the budget.\n\n⭐ AND THE COMMON CASE IS HONESTLY STILL ~6.3 s. loop_status AFTER A WRITE is 6,354 ms (was 12,502). The memo cannot help it — a write changed the graph, so the count must be recomputed, which is correct. Computing open_defects once over 3,709 nodes / 18,101 edges is intrinsically ~5 s. 'Warm loop_status' (1,912 ms) is the repeat-with-no-write case; most loop_status calls follow a write, so 6,354 ms is what a session usually waits.\n\n🛑 WHAT IS DELIBERATELY LEFT UNDONE, and why it is not scope-creep: making the ONE scan faster is a different optimization from stopping it being repeated. Two levers remain, each needing its own hypothesis and Anthony's ruling per the optimize skill: (a) open_defects intrinsic ~5 s — the detectors walk the whole edge set per category; (b) graph_report ~2.8 s and detect_defects ~2.8 s of own cost. None was approved; none was started.\n\nNET FOR A SESSION: the change that mattered most is the multiplier, and it is gone — a write no longer taxes the next read with a 6-12 s rollup, 9.5 times a session. loop_status itself is ~2x faster after a write and ~6.5x faster warm. The orientation pass is ~3x faster warm and ~2.8x faster cold, still over a budget that was set too low.\n\nBOUNDS: one machine, 4 cores, release, stdio, live-store copy; load was 2-6 during the window and the numbers are medians, so treat them as ±20%. Instruments: tools/agent_surface_profile.py, tools/time_one_tool.py.",
+        "subject_id": "cap:loop-status",
+        "valid_from": "2026-09-05",
+        "value": "{\"binary\":\"0.47.1 release + 3 perf changes\",\"read_after_write_ratio\":1.41,\"loop_status_warm_ms\":1912,\"loop_status_after_write_ms\":6354,\"orientation_warm_ms\":6459,\"orientation_cold_ms\":11103,\"sync_status_ms\":\"3556 -> 75\",\"budgets_met\":[\"read-after-write\",\"loop_status warm\"],\"budgets_missed\":[\"orientation pass 8000 - cold 11103\"],\"miss_cause\":\"budget derived on scan-only model; rollups have own non-scan cost (graph_report 2.8s, open_questions 1.9s, detect_defects sweep 2.8s)\",\"remaining_levers\":[\"open_defects intrinsic ~5s\",\"graph_report/detect_defects own cost\"],\"not_started\":\"both remaining levers - need their own ruling\"}"
+      }
+    },
+    {
       "node_id": "fact:the-tool-catalogue-was-unstable-under-its-own-growth",
       "node_type": "TemporalFact",
       "properties": {
@@ -173945,6 +174369,20 @@
         "level": "integration",
         "method": "test",
         "name": "A ruling parks a node, and parked nodes are counted",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:a-derived-scan-runs-once-per-write-generation",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-core/tests/a_derived_scan_is_computed_once_per_write.rs. Asserts STRUCTURE, not duration, per the optimize skill's rule that a duration in a shared suite measures contention: three rollups with no write between them share ONE defect scan and ONE gap scan (derived_recomputes moves by <=2, was >=4 before the memo); a write forces a fresh scan whose result reflects the write (the counterweight that makes the cache safe); and a memoised detect_defects reports the same sweep scope as a fresh one, so nothing is silently dropped. This is the guarantee behind con:loop-status-warm-latency-ms and con:a-full-orientation-pass-costs-at-most-8-seconds; the wall-clock is measured separately by tools/agent_surface_profile.py and recorded on fact:the-three-perf-changes-killed-the-multiplier-and-two-budgets-hold-one-misses-on-my-own-derivation, because a wall-clock assertion here would flap under load.",
+        "findings": "3 passed, 0 failed (reflow2-core, 2026-09-05). three_rollups_with_no_write_run_the_defect_scan_once, a_write_invalidates_the_memo_and_the_next_scan_is_fresh, a_memoised_sweep_reports_the_same_scope_as_a_fresh_one. Full crate suites green afterwards: reflow2-core 1578/0 (144 suites), reflow2-mcp 343/0 (44 suites). fmt and clippy clean on both crates.",
+        "kind": "verification",
+        "last_run_at": "2026-09-05",
+        "level": "integration",
+        "method": "test",
+        "name": "A derived scan runs once per write generation, and a write invalidates the memo",
         "status": "passing"
       }
     },
@@ -176826,7 +177264,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:ab03284aaa1dfa526410f51490f42f3de585a91b9ff87ac18830e97d293205b8",
+  "prev_content_hash": "sha256:aea0744156ec23c269c597c00b9fc3b4d186532127d54e31479fd4cd9691cb92",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

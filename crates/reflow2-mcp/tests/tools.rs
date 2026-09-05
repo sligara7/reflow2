@@ -2337,73 +2337,74 @@ async fn export_refuses_to_overwrite_without_opt_in() {
     std::fs::remove_file(&path).ok();
 }
 
-// ---- BL-91: read-side loop_hint (dec:read-hint-shape option C) -------------
+// ---- The read-side loop hint no longer recomputes loop_status -----------------
+//
+// dec:read-hint-shape (option C) put a loop-DEBT summary on the first read
+// after every write. Measured 2026-09-05: that summary cost a FULL loop_status
+// per write->read boundary - 7.7 s on a scratch store, ~12 s on the live
+// daemon, 9.5 boundaries per session across 61 real sessions - decorating
+// reads that cost 1-4 ms. dec:the-loop-speaks-on-loop-status-not-inside-every-read
+// reversed it on Anthony's word: the loop speaks when loop_status is called.
+// What is KEPT on reads is record_moved (a colleague's export landed), which
+// has its own ruling and is pinned in the_record_moved_and_the_session_is_told.
 
 #[tokio::test]
-async fn read_side_loop_hint_fires_on_debt_then_only_on_change() {
-    // A seeded thread leaves the capability unallocated → the loop is owed
-    // something, so an orientation read has a real debt to surface.
+async fn a_read_after_a_write_does_not_carry_a_loop_debt_hint() {
+    // A seeded thread leaves the capability unallocated -> the loop IS owed
+    // something. That debt must reach the session through loop_status, and
+    // must NOT be recomputed onto an ordinary read.
     let s = seeded().await;
 
-    // First orientation read after the seeding writes surfaces the pointer once.
+    let status = j!(s.loop_status(Parameters(Default::default())));
+    assert_eq!(status["clean"], false, "the seeded loop owes something");
+
+    // The first orientation read after the seeding writes: no debt summary.
     let first = j!(s.scan_nodes(Parameters(ScanReq {
         level: None,
         node_type: "Capability".into(),
         ..Default::default()
     })));
-    let hint = first
-        .get("loop_hint")
-        .and_then(|v| v.as_str())
-        .expect("first orientation read on an owing loop carries a loop_hint");
     assert!(
-        hint.contains("loop owes"),
-        "the hint names the debt and points at loop_status, got {hint:?}"
+        first
+            .get("loop_hint")
+            .map(|h| !h.as_str().unwrap_or("").contains("loop owes"))
+            .unwrap_or(true),
+        "a read must not carry a loop-debt summary; the loop speaks on loop_status: {first}"
     );
 
-    // A second read with no write in between stays quiet — the picture has not
-    // moved, and boilerplate on every read is the anti-pattern C rejects.
-    let second = j!(s.scan_nodes(Parameters(ScanReq {
-        level: None,
-        node_type: "Capability".into(),
-        ..Default::default()
-    })));
-    assert!(
-        second.get("loop_hint").is_none(),
-        "an unchanged owed-set does not repeat the hint, got {second}"
-    );
-
-    // A different orientation read in the same generation is also silent.
-    let node = j!(s.get_node(Parameters(TypedIdReq {
-        node_type: "Capability".into(),
-        id: "cap:flight".into()
-    })));
-    assert!(
-        node.get("loop_hint").is_none(),
-        "no write since last surfaced → still quiet on get_node, got {node}"
-    );
-
-    // A write that MOVES the owed-set — a new requirement nothing satisfies —
-    // re-arms the hint on the next orientation read, still naming real debt.
+    // A write that moves the owed-set, then a read: still no debt summary on
+    // the read - this is exactly the write->read boundary that used to cost a
+    // full loop_status.
     j!(s.add_requirement(Parameters(RequirementReq {
         id: "req:latency".into(),
         name: Some("Low latency".into()),
         statement: Some("Input to render under 50ms.".into()),
         distinct_from: None,
     })));
-    let grown = j!(s.scan_nodes(Parameters(ScanReq {
-        level: None,
+    let after_write = j!(s.get_node(Parameters(TypedIdReq {
         node_type: "Capability".into(),
-        ..Default::default()
+        id: "cap:flight".into()
     })));
     assert!(
-        grown.get("loop_hint").is_some(),
-        "a write that changed the debt surfaces the hint again, got {grown}"
+        after_write
+            .get("loop_hint")
+            .map(|h| !h.as_str().unwrap_or("").contains("loop owes"))
+            .unwrap_or(true),
+        "the first read after a write must not recompute loop_status for a hint: {after_write}"
     );
 
-    // Clearing the debt to nothing (allocate the capability, drop the extra
-    // requirement, remove the now-connected component's defect) is exercised by
-    // the clean-loop test; here the point is proven: fire once, then only when
-    // the picture moves.
+    // COUNTERWEIGHT: the WRITE-side hint is untouched - it is a static
+    // sentence and costs nothing.
+    let write = j!(s.add_requirement(Parameters(RequirementReq {
+        id: "req:throughput".into(),
+        name: Some("Throughput".into()),
+        statement: Some("Sustain 60 frames.".into()),
+        distinct_from: None,
+    })));
+    assert!(
+        write.get("loop_hint").is_some(),
+        "the write-side static loop_hint stays: {write}"
+    );
 }
 
 #[tokio::test]
