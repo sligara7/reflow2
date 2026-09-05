@@ -971,12 +971,26 @@ impl DesignGraph {
         &self,
         suppressed: &mut Suppressed,
     ) -> Result<Vec<HealIssue>, DynoError> {
+        // MEMOISED PER WRITE GENERATION. Both the defects and the suppression
+        // counts are replayed, so `detect_defects`' sweep scope reads exactly
+        // as it would from a fresh scan. The lock is released before scanning
+        // so a scan that reads the graph never holds the memo.
+        {
+            let memo = self.derived_at_current_generation();
+            if let Some((defects, counts)) = memo.defects.as_ref() {
+                *suppressed = counts.clone();
+                return Ok(defects.clone());
+            }
+        }
         let mut open = Vec::new();
         for issue in self.all_defects(suppressed)? {
             if self.defect_acknowledgement(&issue.id)?.is_none() {
                 open.push(issue);
             }
         }
+        let mut memo = self.derived_at_current_generation();
+        memo.defects = Some((open.clone(), suppressed.clone()));
+        memo.recomputes += 1;
         Ok(open)
     }
 

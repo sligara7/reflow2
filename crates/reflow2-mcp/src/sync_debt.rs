@@ -403,6 +403,31 @@ pub fn sync_debt(
             ));
             continue;
         }
+        // THE STAT GATE (`dec:an-unchanged-sync-target-is-not-re-parsed`). If
+        // this seat has read the file in full before and its size and mtime
+        // are unchanged and its hash is still the one `last_synced` expects,
+        // the bytes cannot have moved: answer in_step from the recorded count
+        // WITHOUT reading. A dead scratch export is parsed once and never
+        // again; a record that moved fails the gate and is read as before.
+        // No target is dropped and no rule about paths is introduced — the
+        // /tmp rule was tried and reverted against fifteen correct tests.
+        if let Some(obs) = state.observed.get(path)
+            && let Some((len, mtime)) = stat_of(target)
+            && obs.len == len
+            && obs.mtime_unix_nanos == mtime
+            && &obs.hash == expected
+        {
+            out.push(bare(
+                path,
+                "in_step",
+                Some(expected.clone()),
+                Some(expected.clone()),
+                live_nodes,
+                obs.nodes,
+            ));
+            continue;
+        }
+        let stat_before = stat_of(target);
         let on_disk = std::fs::read_to_string(target)
             .ok()
             .and_then(|raw| serde_json::from_str::<GraphExport>(&raw).ok());
@@ -426,9 +451,24 @@ pub fn sync_debt(
         // very case this feature exists for: work appended to the record.
         // The document is already parsed, so computing costs nothing extra.
         let found = on_disk.compute_content_hash();
-        let stamp_disagrees = on_disk.verify_content_hash() == Some(false);
+        // `verify_content_hash` recomputes the hash a SECOND time; compare the
+        // embedded stamp against the one already in hand instead.
+        let stamp_disagrees = on_disk.content_hash.as_deref().is_some_and(|h| h != found);
 
         let export_nodes = on_disk.nodes.len();
+        // Remember this read, so the next check can answer from a stat.
+        if let Some((len, mtime)) = stat_before {
+            reflow2_core::provenance::record_sync_observation(
+                graph_path,
+                path,
+                reflow2_core::provenance::SyncObservation {
+                    hash: found.clone(),
+                    len,
+                    mtime_unix_nanos: mtime,
+                    nodes: export_nodes,
+                },
+            );
+        }
 
         // THE CHEAP GATE, and the path every ordinary session takes: the file
         // is exactly where this graph left it, so any difference is the
@@ -524,6 +564,47 @@ pub fn sync_debt(
         }
     }
     out
+}
+
+/// `(len, mtime as unix nanos)` of a file, or None if it cannot be stat'ed.
+fn stat_of(target: &std::path::Path) -> Option<(u64, i64)> {
+    let md = std::fs::metadata(target).ok()?;
+    let mtime = md
+        .modified()
+        .ok()?
+        .duration_since(std::time::UNIX_EPOCH)
+        .ok()
+        .map(|d| d.as_nanos() as i64)?;
+    Some((md.len(), mtime))
+}
+
+/// Could ANY synced record have moved since this seat last looked — answered
+/// from stats alone, touching neither the files' contents nor the store.
+///
+/// This is the pre-check the READ path wants (`read_loop_hint`): on the path
+/// every ordinary read takes, nothing has moved, and six `stat` calls is the
+/// whole cost. `true` is the conservative answer — a target never observed in
+/// full, one that has vanished, or one whose size/mtime/hash differ all say
+/// "look harder", and the full `sync_debt` then runs exactly as before.
+pub fn any_target_moved(graph_path: &str) -> bool {
+    let state = reflow2_core::provenance::read_sync_state(graph_path);
+    let (checked, _) = ordered_targets(&state);
+    for (path, expected) in state
+        .last_synced
+        .iter()
+        .filter(|(p, _)| checked.contains(p))
+    {
+        let Some(obs) = state.observed.get(path) else {
+            return true;
+        };
+        let Some((len, mtime)) = stat_of(std::path::Path::new(path)) else {
+            return true;
+        };
+        if obs.len != len || obs.mtime_unix_nanos != mtime || &obs.hash != expected {
+            return true;
+        }
+    }
+    false
 }
 
 fn bare(
