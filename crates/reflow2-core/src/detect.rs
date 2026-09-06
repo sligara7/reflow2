@@ -1767,7 +1767,7 @@ impl DesignGraph {
             self.detect_gaps()?.into_iter().map(|g| g.id).collect();
 
         let mut out = Vec::new();
-        for n in self.scan_nodes(node::QUESTION)? {
+        for n in self.scan_live_nodes(node::QUESTION)? {
             let get = |k: &str| {
                 n.properties
                     .get(k)
@@ -1896,7 +1896,7 @@ impl DesignGraph {
         // was retired as a gap, and at least one trial had already accepted one —
         // that judgement is real and stays visible, rather than vanishing because
         // the code changed underneath it.
-        for d in self.scan_nodes(node::DECISION)? {
+        for d in self.scan_live_nodes(node::DECISION)? {
             let Some(hash) = d.node_id.strip_prefix("decision:ack:") else {
                 continue;
             };
@@ -2013,6 +2013,13 @@ impl DesignGraph {
         // The other half of the same boundary: described in terms another
         // design could compare, or not.
         self.detect_incomplete_published_contracts(&mut gaps)?;
+        // qs 2026-09-04: one forgotten `allocate` arrived as an unallocated gap,
+        // an unrealized gap and a cluster defect, three angles on one edge, with
+        // heavy repair prose on each. All three are TRUE, so none is dropped;
+        // the gaps that share a cause now name each other and the one call.
+        // fact:defect-one-missing-edge-arrives-as-three-findings-and-two-gaps-
+        // fire-before-they-can-be-acted-on.
+        group_shared_causes(&mut gaps);
 
         gaps.sort_by(|a, b| {
             // `false` sorts before `true`, so "has anchors" comes first.
@@ -2171,7 +2178,7 @@ impl DesignGraph {
         if pop.capabilities == 0 {
             return Ok(());
         }
-        for req in self.scan_nodes(node::REQUIREMENT)? {
+        for req in self.scan_live_nodes(node::REQUIREMENT)? {
             let status = req
                 .properties
                 .get("status")
@@ -2350,7 +2357,59 @@ impl DesignGraph {
     /// and the detectors can never disagree — and so
     /// `dec:idea-does-a-capability-need-a-cancelled-state` stays open instead of
     /// being settled by implementation.
+    /// Every id an ACCEPTED Decision has OBSOLETED — the withdrawn set — computed
+    /// once per write generation. dev_storyflow (2026-08-23) retired five
+    /// DesignRules the sanctioned way and every one went on raising a gap,
+    /// because only the three capability detectors consulted `discontinued`;
+    /// the code's own comment said so. Now EVERY detector scans through
+    /// `scan_live_nodes`, which subtracts this set, so the graph's own fact is
+    /// consulted by everything that reads it.
+    /// fact:defect-only-the-capability-detectors-consult-discontinued.
+    pub fn discontinued_ids(&self) -> Result<std::collections::HashSet<String>, DynoError> {
+        {
+            let memo = self.derived_at_current_generation();
+            if let Some(set) = &memo.discontinued {
+                return Ok(set.clone());
+            }
+        }
+        let mut set = std::collections::HashSet::new();
+        for dec in self.scan_nodes(node::DECISION)? {
+            if dec
+                .properties
+                .get("status")
+                .and_then(crate::foundation::core::Value::as_str)
+                != Some("accepted")
+            {
+                continue;
+            }
+            for e in self.outgoing(&dec.node_id, Some(edge::OBSOLETES))? {
+                set.insert(e.to_id);
+            }
+        }
+        let mut memo = self.derived_at_current_generation();
+        memo.discontinued = Some(set.clone());
+        Ok(set)
+    }
+
+    /// `scan_nodes`, minus the nodes an accepted Decision has withdrawn. The
+    /// detectors read through this so a retired node stops raising questions
+    /// that have no right answer.
+    pub fn scan_live_nodes(
+        &self,
+        node_type: &str,
+    ) -> Result<Vec<crate::foundation::store::StoredNode>, DynoError> {
+        let gone = self.discontinued_ids()?;
+        Ok(self
+            .scan_nodes(node_type)?
+            .into_iter()
+            .filter(|n| !gone.contains(&n.node_id))
+            .collect())
+    }
+
     pub fn is_discontinued(&self, node_id: &str) -> Result<bool, DynoError> {
+        if self.discontinued_ids()?.contains(node_id) {
+            return Ok(true);
+        }
         for e in self.incoming(node_id, Some(edge::OBSOLETES))? {
             let Some(src) = self.get_node(node::DECISION, &e.from_id)? else {
                 // Obsoleted by something that is not a Decision — a superseding
@@ -2383,7 +2442,7 @@ impl DesignGraph {
         if pop.requirements == 0 {
             return Ok(());
         }
-        for cap in self.scan_nodes(node::CAPABILITY)? {
+        for cap in self.scan_live_nodes(node::CAPABILITY)? {
             // Discontinued: built, then decided against. It is not
             // unfinished work and asking about it forever is how a gap list
             // becomes unreadable.
@@ -2598,7 +2657,7 @@ impl DesignGraph {
         // throughout so the pair walk below is deterministic. ALLOCATED_TO runs
         // Capability -> Component, so the component is the `to` side.
         let mut by_component: BTreeMap<String, (String, BTreeSet<String>)> = BTreeMap::new();
-        for cmp in self.scan_nodes(node::COMPONENT)? {
+        for cmp in self.scan_live_nodes(node::COMPONENT)? {
             let caps: BTreeSet<String> = self
                 .incoming(&cmp.node_id, Some(edge::ALLOCATED_TO))?
                 .into_iter()
@@ -2678,7 +2737,7 @@ impl DesignGraph {
         if pop.components == 0 && pop.flows == 0 {
             return Ok(());
         }
-        for cap in self.scan_nodes(node::CAPABILITY)? {
+        for cap in self.scan_live_nodes(node::CAPABILITY)? {
             if self
                 .outgoing(&cap.node_id, Some(edge::ALLOCATED_TO))?
                 .is_empty()
@@ -2742,7 +2801,7 @@ impl DesignGraph {
         // wearing the same words: a design that allocated only to parents has
         // empty leaves and has plainly done the step.
         let mut any_allocation = false;
-        for cmp in self.scan_nodes(node::COMPONENT)? {
+        for cmp in self.scan_live_nodes(node::COMPONENT)? {
             // A parent is allocated THROUGH its children, so only leaves are
             // asked. `CONTAINS` runs parent -> child and is also how a Project
             // holds its top-level parts, so the child must be checked for being
@@ -2909,7 +2968,7 @@ impl DesignGraph {
         // node type: prose cannot be told apart from silence.
         let mut settled = false;
         let mut leaning: Vec<String> = Vec::new();
-        for dec in self.scan_nodes(node::DECISION)? {
+        for dec in self.scan_live_nodes(node::DECISION)? {
             let Some(t) = dec
                 .properties
                 .get("quality_target")
@@ -3011,7 +3070,7 @@ impl DesignGraph {
         if pop.interfaces == 0 {
             return Ok(());
         }
-        for iface in self.scan_nodes(node::INTERFACE)? {
+        for iface in self.scan_live_nodes(node::INTERFACE)? {
             let providers = self.incoming(&iface.node_id, Some(edge::PROVIDES))?;
             let consumers = self.incoming(&iface.node_id, Some(edge::CONSUMES))?;
             let name = node_name(&iface);
@@ -3184,7 +3243,7 @@ impl DesignGraph {
     /// deficiency — and is the state reflow2's own design is in, so this detector
     /// cannot be exercised by the self-host (`rule:the-self-host-always-trails-what-it-teaches`).
     fn detect_decomposition_coverage(&self, gaps: &mut Vec<GapCandidate>) -> Result<(), DynoError> {
-        for parent in self.scan_nodes(node::REQUIREMENT)? {
+        for parent in self.scan_live_nodes(node::REQUIREMENT)? {
             let children = self.decomposed_children(&parent.node_id)?;
             if children.is_empty() {
                 continue;
@@ -3288,7 +3347,7 @@ impl DesignGraph {
         if pop.artifacts == 0 {
             return Ok(());
         }
-        for cap in self.scan_nodes(node::CAPABILITY)? {
+        for cap in self.scan_live_nodes(node::CAPABILITY)? {
             // Discontinued: built, then decided against. Not unfinished work.
             if self.is_discontinued(&cap.node_id)? {
                 continue;
@@ -3401,7 +3460,7 @@ impl DesignGraph {
     /// and an agent working the list top-down should see it first.
     fn detect_failing_verifications(&self, gaps: &mut Vec<GapCandidate>) -> Result<(), DynoError> {
         let index = self.node_type_index()?;
-        for ver in self.scan_nodes(node::VERIFICATION)? {
+        for ver in self.scan_live_nodes(node::VERIFICATION)? {
             let status = ver
                 .properties
                 .get("status")
@@ -3505,7 +3564,7 @@ impl DesignGraph {
     /// when `set_artifact_checksum` accepts the artifact, which resolves its
     /// open events (BL-33/BL-35).
     fn detect_unresolved_drift(&self, gaps: &mut Vec<GapCandidate>) -> Result<(), DynoError> {
-        for ev in self.scan_nodes(node::DRIFT_EVENT)? {
+        for ev in self.scan_live_nodes(node::DRIFT_EVENT)? {
             let resolved = ev
                 .properties
                 .get("resolved")
@@ -3561,7 +3620,7 @@ impl DesignGraph {
     /// A built Component no Release includes (see
     /// [`GapSource::UnreleasedComponent`] for the double gate).
     fn detect_unreleased_components(&self, gaps: &mut Vec<GapCandidate>) -> Result<(), DynoError> {
-        let releases = self.scan_nodes(node::RELEASE)?;
+        let releases = self.scan_live_nodes(node::RELEASE)?;
         if releases.is_empty() {
             return Ok(());
         }
@@ -3589,7 +3648,7 @@ impl DesignGraph {
                 }
             }
         }
-        for cmp in self.scan_nodes(node::COMPONENT)? {
+        for cmp in self.scan_live_nodes(node::COMPONENT)? {
             if shipped.contains(&cmp.node_id) {
                 continue;
             }
@@ -3648,10 +3707,10 @@ impl DesignGraph {
         // No epoch nodes at all means the temporal axis is simply not in use —
         // a whole-graph situation, not one gap per release. Same guard shape as
         // detect_unreleased_components' empty-`shipped` check.
-        if self.scan_nodes(node::DESIGN_EPOCH)?.is_empty() {
+        if self.scan_live_nodes(node::DESIGN_EPOCH)?.is_empty() {
             return Ok(());
         }
-        for rel in self.scan_nodes(node::RELEASE)? {
+        for rel in self.scan_live_nodes(node::RELEASE)? {
             // A PLANNED release legitimately has no epoch yet: the epoch is
             // minted when the release is cut, so asking beforehand is an alarm
             // on correct work — the `unverified_capability` disease (BL-115),
@@ -3739,7 +3798,7 @@ impl DesignGraph {
         &self,
         gaps: &mut Vec<GapCandidate>,
     ) -> Result<(), DynoError> {
-        let releases = self.scan_nodes(node::RELEASE)?;
+        let releases = self.scan_live_nodes(node::RELEASE)?;
         if releases.is_empty() {
             return Ok(());
         }
@@ -3865,7 +3924,7 @@ impl DesignGraph {
     /// already absence gaps, and double-reporting them would be the
     /// DETECT/HEAL double-count in a new costume.
     fn detect_status_contradictions(&self, gaps: &mut Vec<GapCandidate>) -> Result<(), DynoError> {
-        for cap in self.scan_nodes(node::CAPABILITY)? {
+        for cap in self.scan_live_nodes(node::CAPABILITY)? {
             if cap
                 .properties
                 .get("status")
@@ -3906,7 +3965,7 @@ impl DesignGraph {
                 ),
             });
         }
-        for req in self.scan_nodes(node::REQUIREMENT)? {
+        for req in self.scan_live_nodes(node::REQUIREMENT)? {
             if req
                 .properties
                 .get("status")
@@ -3968,7 +4027,7 @@ impl DesignGraph {
         // and no third state to compute. Either something checks this rule or
         // nothing does.
         let mut unstated = Vec::new();
-        for n in self.scan_nodes(node::DESIGN_RULE)? {
+        for n in self.scan_live_nodes(node::DESIGN_RULE)? {
             let enforced = n.properties.get("enforced").and_then(|v| v.as_bool());
             // ONLY AN EXPLICIT `true` IS BILLED FOR A DETECTOR.
             //
@@ -4098,7 +4157,7 @@ impl DesignGraph {
         // ("is component granularity enough for these?") instead of N
         // per-capability alarms at 0.55 (`dec:component-verified-computed`).
         let mut riding: BTreeMap<String, Vec<String>> = BTreeMap::new();
-        for n in self.scan_nodes(node::CAPABILITY)? {
+        for n in self.scan_live_nodes(node::CAPABILITY)? {
             // A check that has not passed is not proof. Until 2026-07-27 this
             // skipped on ANY incoming VERIFIES, so attaching a `planned`
             // Verification silenced the question — which is precisely what the
@@ -4341,7 +4400,7 @@ impl DesignGraph {
         &self,
         gaps: &mut Vec<GapCandidate>,
     ) -> Result<(), DynoError> {
-        for dec in self.scan_nodes(node::DECISION)? {
+        for dec in self.scan_live_nodes(node::DECISION)? {
             if dec
                 .properties
                 .get("status")
@@ -4395,7 +4454,7 @@ impl DesignGraph {
         // ideas and at 120 — and a detector that reports a numerator without a
         // denominator has told you almost nothing.
         let mut proposed = 0usize;
-        for dec in self.scan_nodes(node::DECISION)? {
+        for dec in self.scan_live_nodes(node::DECISION)? {
             if dec
                 .properties
                 .get("status")
@@ -4456,7 +4515,7 @@ impl DesignGraph {
     fn detect_change_axis_unstated(&self, gaps: &mut Vec<GapCandidate>) -> Result<(), DynoError> {
         let mut unstated: Vec<String> = Vec::new();
         let mut total = 0usize;
-        for ev in self.scan_nodes(node::CHANGE_EVENT)? {
+        for ev in self.scan_live_nodes(node::CHANGE_EVENT)? {
             total += 1;
             // PRESENCE IS ENOUGH, and deliberately so: `subject` is a schema
             // enum, and every write path — the typed constructors and
@@ -4516,7 +4575,7 @@ impl DesignGraph {
         &self,
         gaps: &mut Vec<GapCandidate>,
     ) -> Result<(), DynoError> {
-        let interfaces = self.scan_nodes(node::INTERFACE)?;
+        let interfaces = self.scan_live_nodes(node::INTERFACE)?;
         if interfaces.is_empty() {
             // A design with no boundaries at all has not declined to publish
             // one; it has not got there. Same reasoning as the barely-started
@@ -4663,7 +4722,7 @@ impl DesignGraph {
             ("error_model", "the failure vocabulary a consumer parses"),
         ];
 
-        for n in self.scan_nodes(node::INTERFACE)? {
+        for n in self.scan_live_nodes(node::INTERFACE)? {
             if !matches!(
                 n.properties
                     .get("designation")
@@ -4800,7 +4859,7 @@ impl DesignGraph {
     fn detect_internal_only_delivery(&self, gaps: &mut Vec<GapCandidate>) -> Result<(), DynoError> {
         let mut audience_of: std::collections::HashMap<String, String> =
             std::collections::HashMap::new();
-        for art in self.scan_nodes(node::ARTIFACT)? {
+        for art in self.scan_live_nodes(node::ARTIFACT)? {
             if let Some(a) = art
                 .properties
                 .get("audience")
@@ -4842,7 +4901,7 @@ impl DesignGraph {
         // properties are under-filled without saying which one. Pinned by
         // `tests/internal_only_delivery.rs`, which asserts both halves.
 
-        for req in self.scan_nodes(node::REQUIREMENT)? {
+        for req in self.scan_live_nodes(node::REQUIREMENT)? {
             // A need the user settled OUT is not a need. Dropping or deferring
             // something is their word too.
             let status = req
@@ -4927,7 +4986,7 @@ impl DesignGraph {
         gaps: &mut Vec<GapCandidate>,
     ) -> Result<(), DynoError> {
         let mut unvalidated: Vec<(String, String)> = Vec::new();
-        for cap in self.scan_nodes(node::CAPABILITY)? {
+        for cap in self.scan_live_nodes(node::CAPABILITY)? {
             let mut has_verification = false;
             let mut has_validation = false;
             for e in self.incoming(&cap.node_id, Some(edge::VERIFIES))? {
@@ -5006,7 +5065,7 @@ impl DesignGraph {
     ///   whether that decision actually costs the KPP is semantic, and deciding
     ///   it automatically is the judgement `dec:report-dont-judge` forbids.
     fn detect_kpp_violations(&self, gaps: &mut Vec<GapCandidate>) -> Result<(), DynoError> {
-        for c in self.scan_nodes(node::CONSTRAINT)? {
+        for c in self.scan_live_nodes(node::CONSTRAINT)? {
             if c.properties
                 .get("category")
                 .and_then(crate::foundation::core::Value::as_str)
@@ -5173,5 +5232,55 @@ fn priority_bump(priority: &str) -> f64 {
         "high" => 0.25,
         "medium" => 0.10,
         _ => 0.0,
+    }
+}
+
+/// Gaps that are one cause seen from several angles say so. Today: an
+/// `unallocated_capability` and an `unrealized_capability` on the SAME
+/// capability — both cleared by one `allocate` edge from the capability to its
+/// component (the artifacts already realize the component, which is why the
+/// unrealized finding fires). Each gains a sentence naming the sibling gap and
+/// the call; nothing is removed, because both findings are true. A gap with no
+/// sibling is left untouched. Public so the grouping is pinned on its own.
+pub fn group_shared_causes(gaps: &mut [GapCandidate]) {
+    use std::collections::HashMap;
+    let mut by_cap: HashMap<String, Vec<usize>> = HashMap::new();
+    for (i, g) in gaps.iter().enumerate() {
+        if matches!(
+            g.gap_source,
+            GapSource::UnallocatedCapability | GapSource::UnrealizedCapability
+        ) {
+            for id in &g.affected_ids {
+                by_cap.entry(id.clone()).or_default().push(i);
+            }
+        }
+    }
+    let mut notes: Vec<(usize, String)> = Vec::new();
+    for (cap, idxs) in by_cap {
+        let has_unalloc = idxs
+            .iter()
+            .any(|&i| gaps[i].gap_source == GapSource::UnallocatedCapability);
+        let has_unreal = idxs
+            .iter()
+            .any(|&i| gaps[i].gap_source == GapSource::UnrealizedCapability);
+        if !(has_unalloc && has_unreal) {
+            continue;
+        }
+        for &i in &idxs {
+            let siblings: Vec<&str> = idxs
+                .iter()
+                .filter(|&&j| j != i)
+                .map(|&j| gaps[j].id.as_str())
+                .collect();
+            notes.push((i, format!(
+                " SHARES A CAUSE with {} on '{cap}': these are one missing edge seen from more than one \
+                 angle. One `allocate` call (this capability -> its component) clears them together; \
+                 the artifacts already realize the component, which is why the unrealized finding fires.",
+                siblings.join(", ")
+            )));
+        }
+    }
+    for (i, note) in notes {
+        gaps[i].description.push_str(&note);
     }
 }

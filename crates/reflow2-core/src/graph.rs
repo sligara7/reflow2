@@ -100,6 +100,9 @@ pub struct DerivedMemo {
     pub generation: Option<u64>,
     pub defects: Option<(Vec<crate::heal::HealIssue>, crate::heal::Suppressed)>,
     pub gaps: Option<Vec<crate::detect::GapCandidate>>,
+    /// Ids an ACCEPTED Decision has OBSOLETED, computed once per write
+    /// generation so every detector can skip them at the cost of one scan.
+    pub discontinued: Option<std::collections::HashSet<String>>,
     pub recomputes: u64,
 }
 
