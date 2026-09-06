@@ -97,7 +97,7 @@ async fn seeded() -> ReflowService {
     })));
     j!(s.contains(Parameters(ContainsReq {
         project_id: "proj:sb".into(),
-        child_type: "Requirement".into(),
+        child_type: Some("Requirement".into()),
         child_id: "req:physics".into()
     })));
     j!(s.satisfies(Parameters(EdgePairReq {
@@ -243,7 +243,7 @@ async fn link_artifact_closes_the_unrealized_capability_gap() {
         name: "Ball.cs".into(),
         location: Some("src/Ball.cs".into()),
         artifact_type: Some("code".into()),
-        target_type: "Capability".into(),
+        target_type: Some("Capability".into()),
         target_id: "cap:flight".into(),
         completeness: None,
         conformance: None,
@@ -285,7 +285,7 @@ async fn link_artifact_closes_the_unrealized_capability_gap() {
         name: "Score.cs".into(),
         location: Some("src/Score.cs".into()),
         artifact_type: Some("code".into()),
-        target_type: "Capability".into(),
+        target_type: Some("Capability".into()),
         target_id: "cap:score".into(),
         completeness: None,
         conformance: None,
@@ -517,7 +517,7 @@ async fn reconcile_surfaces_a_code_change_back_to_the_design() {
         name: "BallFlight.cs".into(),
         location: Some("src/BallFlight.cs".into()),
         artifact_type: Some("code".into()),
-        target_type: "Capability".into(),
+        target_type: Some("Capability".into()),
         target_id: "cap:flight".into(),
         completeness: None,
         conformance: None,
@@ -604,7 +604,7 @@ async fn the_surface_can_say_that_nothing_moved() {
         name: "BallFlight.cs".into(),
         location: Some("src/BallFlight.cs".into()),
         artifact_type: Some("code".into()),
-        target_type: "Capability".into(),
+        target_type: Some("Capability".into()),
         target_id: "cap:flight".into(),
         completeness: None,
         conformance: None,
@@ -715,7 +715,7 @@ async fn the_write_side_can_answer_what_detect_asks_for() {
         name: "BallFlight.cs".into(),
         location: Some("src/BallFlight.cs".into()),
         artifact_type: Some("code".into()),
-        target_type: "Capability".into(),
+        target_type: Some("Capability".into()),
         target_id: "cap:flight".into(),
         completeness: None,
         conformance: None,
@@ -749,7 +749,7 @@ async fn the_write_side_can_answer_what_detect_asks_for() {
     })));
     j!(s.verifies(Parameters(VerifiesReq {
         verification_id: "ver:flight".into(),
-        target_type: "Capability".into(),
+        target_type: Some("Capability".into()),
         target_id: "cap:flight".into(),
     })));
     j!(s.add_release(Parameters(ReleaseReq {
@@ -1035,9 +1035,9 @@ async fn a_rejected_edge_names_the_alternatives() {
     let err = s
         .create_edge(Parameters(CreateEdgeReq {
             edge_type: "PACKAGES".into(), // the trial's first guess
-            from_type: "Release".into(),
+            from_type: Some("Release".into()),
             from_id: "rel:1".into(),
-            to_type: "Component".into(),
+            to_type: Some("Component".into()),
             to_id: "cmp:1".into(),
             props: None,
         }))
@@ -1516,7 +1516,7 @@ async fn documents_links_a_doc_over_the_surface_and_refuses_a_ghost() {
 
     let edge = j!(s.documents(Parameters(DocumentsReq {
         artifact_id: "art:readme".into(),
-        target_type: "Project".into(),
+        target_type: Some("Project".into()),
         target_id: "proj:sb".into(),
         doc_kind: Some("readme".into()),
     })));
@@ -1528,7 +1528,7 @@ async fn documents_links_a_doc_over_the_surface_and_refuses_a_ghost() {
     let err = s
         .documents(Parameters(DocumentsReq {
             artifact_id: "art:ghost".into(),
-            target_type: "Project".into(),
+            target_type: Some("Project".into()),
             target_id: "proj:sb".into(),
             doc_kind: None,
         }))
@@ -2015,7 +2015,7 @@ async fn change_event_declares_what_it_changed_atomically() {
             change_type: Some("new_feature".into()),
             subject: None,
             affected: Some(vec![AffectedNodeReq {
-                node_type: "Capability".into(),
+                node_type: Some("Capability".into()),
                 node_id: "cap:nope".into(),
                 action: None,
             }]),
@@ -2044,7 +2044,7 @@ async fn change_event_declares_what_it_changed_atomically() {
             change_type: Some("new_feature".into()),
             subject: None,
             affected: Some(vec![AffectedNodeReq {
-                node_type: "Requirement".into(),
+                node_type: Some("Requirement".into()),
                 node_id: "req:physics".into(),
                 action: Some("tweaked".into()),
             }]),
@@ -2064,12 +2064,12 @@ async fn change_event_declares_what_it_changed_atomically() {
         subject: None,
         affected: Some(vec![
             AffectedNodeReq {
-                node_type: "Requirement".into(),
+                node_type: Some("Requirement".into()),
                 node_id: "req:physics".into(),
                 action: Some("modified".into()),
             },
             AffectedNodeReq {
-                node_type: "Capability".into(),
+                node_type: Some("Capability".into()),
                 node_id: "cap:flight".into(),
                 action: None,
             },
@@ -2125,7 +2125,7 @@ async fn temporal_resource_and_realization_tools_round_trip() {
         later_epoch: "epoch:v2".into(),
     })));
     let pinned = j!(s.pin_at_epoch(Parameters(PinAtEpochReq {
-        node_type: "Capability".into(),
+        node_type: Some("Capability".into()),
         node_id: "cap:flight".into(),
         epoch_id: "epoch:v2".into(),
     })));
@@ -2150,7 +2150,7 @@ async fn temporal_resource_and_realization_tools_round_trip() {
         epoch_id: "epoch:v2".into(),
         change_event_id: "chg:tune".into(),
         name: "cap:flight description reworded".into(),
-        target_type: "Capability".into(),
+        target_type: Some("Capability".into()),
         target_id: "cap:flight".into(),
         change_type: "refactor".into(),
         subject: Some("system".into()),
@@ -2168,7 +2168,7 @@ async fn temporal_resource_and_realization_tools_round_trip() {
         provider: Some("cloud".into()),
     })));
     j!(s.require_resource(Parameters(RequireResourceReq {
-        from_type: "Component".into(),
+        from_type: Some("Component".into()),
         from_id: "cmp:physics".into(),
         resource_id: "res:gpu".into(),
         criticality: Some("required".into()),
@@ -2188,7 +2188,7 @@ async fn temporal_resource_and_realization_tools_round_trip() {
     })));
     j!(s.realizes(Parameters(RealizesReq {
         artifact_id: "art:flight-rs".into(),
-        target_type: "Capability".into(),
+        target_type: Some("Capability".into()),
         target_id: "cap:flight".into(),
         completeness: Some("complete".into()),
         conformance: None,

@@ -161,8 +161,14 @@ impl ReflowService {
         Parameters(req): Parameters<VerifiesReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await?;
+        let target_type = crate::service::resolve_node_type(
+            &g,
+            req.target_type.as_deref(),
+            &req.target_id,
+            "target_type",
+        )?;
         ok_json(EdgeDto::from(
-            g.verifies(&req.verification_id, &req.target_type, &req.target_id)
+            g.verifies(&req.verification_id, &target_type, &req.target_id)
                 .map_err(dyno_err)?,
         ))
     }
@@ -185,10 +191,16 @@ impl ReflowService {
         Parameters(req): Parameters<EvidenceScopeReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await?;
+        let target_type = crate::service::resolve_node_type(
+            &g,
+            req.target_type.as_deref(),
+            &req.target_id,
+            "target_type",
+        )?;
         ok_json(EdgeDto::from(
             g.set_evidence_scope(
                 &req.verification_id,
-                &req.target_type,
+                &target_type,
                 &req.target_id,
                 &req.pinned,
                 &req.swept,
@@ -216,11 +228,23 @@ impl ReflowService {
         Parameters(req): Parameters<CalibratedAgainstReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await?;
+        let evidence_type = crate::service::resolve_node_type(
+            &g,
+            req.evidence_type.as_deref(),
+            &req.evidence_id,
+            "evidence_type",
+        )?;
+        let from_type = crate::service::resolve_node_type(
+            &g,
+            req.from_type.as_deref(),
+            &req.from_id,
+            "from_type",
+        )?;
         ok_json(EdgeDto::from(
             g.calibrated_against(
-                &req.from_type,
+                &from_type,
                 &req.from_id,
-                &req.evidence_type,
+                &evidence_type,
                 &req.evidence_id,
                 req.note.as_deref(),
                 req.calibrated_at.as_deref(),
@@ -253,11 +277,23 @@ impl ReflowService {
         Parameters(req): Parameters<InvalidatesReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await?;
+        let finding_type = crate::service::resolve_node_type(
+            &g,
+            req.finding_type.as_deref(),
+            &req.finding_id,
+            "finding_type",
+        )?;
+        let from_type = crate::service::resolve_node_type(
+            &g,
+            req.from_type.as_deref(),
+            &req.from_id,
+            "from_type",
+        )?;
         ok_json(EdgeDto::from(
             g.invalidates(
-                &req.from_type,
+                &from_type,
                 &req.from_id,
-                &req.finding_type,
+                &finding_type,
                 &req.finding_id,
                 req.note.as_deref(),
                 req.at.as_deref(),

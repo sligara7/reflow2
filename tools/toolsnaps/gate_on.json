@@ -28,21 +28,27 @@
         "type": "string"
       },
       "subject_type": {
-        "description": "The increment that cannot deliver yet — a Release, Capability or\nRequirement.",
-        "type": "string"
+        "default": null,
+        "description": "The increment that cannot deliver yet — a Release, Capability or\nRequirement.\nOptional since 2026-09-06: resolved from the id when omitted (the id\nprefix names the type); an id held by more than one type is REFUSED, never\nguessed — pass it then.",
+        "type": [
+          "string",
+          "null"
+        ]
       },
       "target_id": {
         "type": "string"
       },
       "target_type": {
-        "description": "The enabling technology it waits on.",
-        "type": "string"
+        "default": null,
+        "description": "The enabling technology it waits on.\nOptional since 2026-09-06: resolved from the id when omitted (the id\nprefix names the type); an id held by more than one type is REFUSED, never\nguessed — pass it then.",
+        "type": [
+          "string",
+          "null"
+        ]
       }
     },
     "required": [
-      "subject_type",
       "subject_id",
-      "target_type",
       "target_id",
       "kind",
       "min_level"

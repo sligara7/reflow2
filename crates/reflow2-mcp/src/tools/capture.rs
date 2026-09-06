@@ -1217,8 +1217,14 @@ impl ReflowService {
         Parameters(req): Parameters<ProvenanceReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await?;
+        let node_type = crate::service::resolve_node_type(
+            &g,
+            req.node_type.as_deref(),
+            &req.node_id,
+            "node_type",
+        )?;
         ok_json(NodeDto::from(
-            g.set_provenance(&req.node_type, &req.node_id, &req.provenance)
+            g.set_provenance(&node_type, &req.node_id, &req.provenance)
                 .map_err(dyno_err)?,
         ))
     }
@@ -1585,8 +1591,14 @@ impl ReflowService {
         Parameters(req): Parameters<ContainsReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await?;
+        let child_type = crate::service::resolve_node_type(
+            &g,
+            req.child_type.as_deref(),
+            &req.child_id,
+            "child_type",
+        )?;
         ok_json(EdgeDto::from(
-            g.contains(&req.project_id, &req.child_type, &req.child_id)
+            g.contains(&req.project_id, &child_type, &req.child_id)
                 .map_err(dyno_err)?,
         ))
     }
@@ -1752,10 +1764,16 @@ impl ReflowService {
         Parameters(req): Parameters<ConstrainsReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await?;
+        let target_type = crate::service::resolve_node_type(
+            &g,
+            req.target_type.as_deref(),
+            &req.target_id,
+            "target_type",
+        )?;
         ok_json(EdgeDto::from(
             g.constrains(
                 &req.constraint_id,
-                &req.target_type,
+                &target_type,
                 &req.target_id,
                 req.contribution,
                 req.basis.as_deref(),
@@ -1817,21 +1835,25 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<ReviewRelationsReq>,
     ) -> Result<CallToolResult, McpError> {
-        let links: Vec<RelationLink> = req
-            .links
-            .unwrap_or_default()
-            .into_iter()
-            .map(|l| RelationLink {
+        let mut links: Vec<RelationLink> = Vec::new();
+        for l in req.links.unwrap_or_default() {
+            let other_type = self
+                .resolve_type(l.other_type.as_deref(), &l.other_id, "other_type")
+                .await?;
+            links.push(RelationLink {
                 relation: l.relation,
-                other_type: l.other_type,
+                other_type,
                 other_id: l.other_id,
                 evidence: l.evidence,
                 incoming: l.incoming.unwrap_or(false),
-            })
-            .collect();
+            });
+        }
+        let node_type = self
+            .resolve_type(req.node_type.as_deref(), &req.node_id, "node_type")
+            .await?;
         let mut g = self.graph.write().await;
         ok_json(
-            g.review_relations(&req.node_type, &req.node_id, &links, req.note.as_deref())
+            g.review_relations(&node_type, &req.node_id, &links, req.note.as_deref())
                 .map_err(dyno_err)?,
         )
     }
@@ -1963,18 +1985,24 @@ impl ReflowService {
             ));
         }
         if exploratory && (req.related_to.is_some() || req.no_relation_note.is_some()) {
-            let links: Vec<RelationLink> = req
-                .related_to
-                .unwrap_or_default()
-                .into_iter()
-                .map(|l| RelationLink {
+            let mut links: Vec<RelationLink> = Vec::new();
+            for l in req.related_to.unwrap_or_default() {
+                // `g` (the write lock) is already held here, so resolve IN-lock: the
+                // scoped-read sibling would deadlock against it.
+                let other_type = crate::service::resolve_node_type(
+                    &g,
+                    l.other_type.as_deref(),
+                    &l.other_id,
+                    "other_type",
+                )?;
+                links.push(RelationLink {
                     relation: l.relation,
-                    other_type: l.other_type,
+                    other_type,
                     other_id: l.other_id,
                     evidence: l.evidence,
                     incoming: l.incoming.unwrap_or(false),
-                })
-                .collect();
+                });
+            }
             g.review_relations(node_ty, &req.id, &links, req.no_relation_note.as_deref())
                 .map_err(dyno_err)?;
         }
@@ -2027,10 +2055,13 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<crate::service::AnswersReq>,
     ) -> Result<CallToolResult, McpError> {
+        let from_type = self
+            .resolve_type(req.from_type.as_deref(), &req.from_id, "from_type")
+            .await?;
         let mut g = self.write_lock().await?;
         ok_json(EdgeDto::from(
             g.answers(
-                &req.from_type,
+                &from_type,
                 &req.from_id,
                 &req.question_id,
                 req.note.as_deref(),
@@ -2058,11 +2089,19 @@ impl ReflowService {
         Parameters(req): Parameters<GovernedByReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await?;
+        let to_type =
+            crate::service::resolve_node_type(&g, req.to_type.as_deref(), &req.to_id, "to_type")?;
+        let from_type = crate::service::resolve_node_type(
+            &g,
+            req.from_type.as_deref(),
+            &req.from_id,
+            "from_type",
+        )?;
         ok_json(EdgeDto::from(
             g.governed_by(
-                &req.from_type,
+                &from_type,
                 &req.from_id,
-                &req.to_type,
+                &to_type,
                 &req.to_id,
                 req.ruling.as_deref(),
                 req.note.as_deref(),
@@ -2123,9 +2162,15 @@ impl ReflowService {
         Parameters(req): Parameters<AuthoredByReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await?;
+        let from_type = crate::service::resolve_node_type(
+            &g,
+            req.from_type.as_deref(),
+            &req.from_id,
+            "from_type",
+        )?;
         ok_json(EdgeDto::from(
             g.authored_by(
-                &req.from_type,
+                &from_type,
                 &req.from_id,
                 &req.contributor_id,
                 req.role.as_deref(),
@@ -2158,9 +2203,15 @@ impl ReflowService {
         Parameters(req): Parameters<OwnedByReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await?;
+        let from_type = crate::service::resolve_node_type(
+            &g,
+            req.from_type.as_deref(),
+            &req.from_id,
+            "from_type",
+        )?;
         ok_json(EdgeDto::from(
             g.owned_by(
-                &req.from_type,
+                &from_type,
                 &req.from_id,
                 &req.contributor_id,
                 req.note.as_deref(),

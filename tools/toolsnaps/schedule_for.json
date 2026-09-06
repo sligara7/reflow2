@@ -11,8 +11,12 @@
         "type": "string"
       },
       "item_type": {
-        "description": "`Requirement`, `Capability` or `Question` — the thing that is due.\n\nA `Question` is how the RESOLUTION OF A GAP gets scheduled. Gaps\nthemselves are recomputed every run and are not nodes, so there is\nnothing to hang a schedule on; the Question `gap_to_prompt` mints when a\ngap is put to somebody IS the durable thing, and it is delivered when it\nis answered.",
-        "type": "string"
+        "default": null,
+        "description": "`Requirement`, `Capability` or `Question` — the thing that is due.\n\nA `Question` is how the RESOLUTION OF A GAP gets scheduled. Gaps\nthemselves are recomputed every run and are not nodes, so there is\nnothing to hang a schedule on; the Question `gap_to_prompt` mints when a\ngap is put to somebody IS the durable thing, and it is delivered when it\nis answered.\nOptional since 2026-09-06: resolved from the id when omitted (the id\nprefix names the type); an id held by more than one type is REFUSED, never\nguessed — pass it then.",
+        "type": [
+          "string",
+          "null"
+        ]
       },
       "modality": {
         "default": null,
@@ -34,14 +38,16 @@
         "type": "string"
       },
       "target_type": {
-        "description": "`DesignEpoch` (time axis) or `Release` (capability-increment axis).",
-        "type": "string"
+        "default": null,
+        "description": "`DesignEpoch` (time axis) or `Release` (capability-increment axis).\nOptional since 2026-09-06: resolved from the id when omitted (the id\nprefix names the type); an id held by more than one type is REFUSED, never\nguessed — pass it then.",
+        "type": [
+          "string",
+          "null"
+        ]
       }
     },
     "required": [
-      "item_type",
       "item_id",
-      "target_type",
       "target_id"
     ],
     "type": "object"

@@ -28,8 +28,12 @@
         "type": "string"
       },
       "target_type": {
-        "description": "Node type this check verifies (e.g. `Capability`).",
-        "type": "string"
+        "default": null,
+        "description": "Node type this check verifies (e.g. `Capability`).\nOptional since 2026-09-06: resolved from the id when omitted (the id\nprefix names the type); an id held by more than one type is REFUSED, never\nguessed — pass it then.",
+        "type": [
+          "string",
+          "null"
+        ]
       },
       "verification_id": {
         "type": "string"
@@ -37,7 +41,6 @@
     },
     "required": [
       "verification_id",
-      "target_type",
       "target_id"
     ],
     "type": "object"

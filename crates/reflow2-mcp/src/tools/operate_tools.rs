@@ -162,10 +162,16 @@ impl ReflowService {
         Parameters(req): Parameters<ReleaseIncludesReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await?;
+        let target_type = crate::service::resolve_node_type(
+            &g,
+            req.target_type.as_deref(),
+            &req.target_id,
+            "target_type",
+        )?;
         ok_json(EdgeDto::from(
             g.release_includes(
                 &req.release_id,
-                &req.target_type,
+                &target_type,
                 &req.target_id,
                 req.as_checksum.as_deref(),
             )
@@ -276,11 +282,23 @@ impl ReflowService {
     ) -> Result<CallToolResult, McpError> {
         let kind = parse_readiness_kind(&req.kind)?;
         let mut g = self.write_lock().await?;
+        let target_type = crate::service::resolve_node_type(
+            &g,
+            req.target_type.as_deref(),
+            &req.target_id,
+            "target_type",
+        )?;
+        let subject_type = crate::service::resolve_node_type(
+            &g,
+            req.subject_type.as_deref(),
+            &req.subject_id,
+            "subject_type",
+        )?;
         ok_json(EdgeDto::from(
             g.gate_on(&ReadinessGate {
-                subject_type: &req.subject_type,
+                subject_type: &subject_type,
                 subject_id: &req.subject_id,
-                target_type: &req.target_type,
+                target_type: &target_type,
                 target_id: &req.target_id,
                 kind,
                 min_level: req.min_level,
@@ -306,10 +324,16 @@ impl ReflowService {
     ) -> Result<CallToolResult, McpError> {
         let kind = parse_readiness_kind(&req.kind)?;
         let mut g = self.write_lock().await?;
+        let target_type = crate::service::resolve_node_type(
+            &g,
+            req.target_type.as_deref(),
+            &req.target_id,
+            "target_type",
+        )?;
         ok_json(NodeDto::from(
             g.forecast_readiness(&ReadinessForecast {
                 id: &req.id,
-                target_type: &req.target_type,
+                target_type: &target_type,
                 target_id: &req.target_id,
                 kind,
                 level: req.level,
@@ -393,9 +417,15 @@ impl ReflowService {
         Parameters(req): Parameters<RequireResourceReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await?;
+        let from_type = crate::service::resolve_node_type(
+            &g,
+            req.from_type.as_deref(),
+            &req.from_id,
+            "from_type",
+        )?;
         ok_json(EdgeDto::from(
             g.require_resource(
-                &req.from_type,
+                &from_type,
                 &req.from_id,
                 &req.resource_id,
                 req.criticality.as_deref(),

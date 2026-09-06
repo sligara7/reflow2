@@ -118,7 +118,7 @@ async fn a_drawn_relation_is_a_complete_answer_and_lands_in_the_same_call() {
     let (s, mut second) = with_a_near_match().await;
     second.related_to = Some(vec![RelationLinkReq {
         relation: "EVOLVES_INTO".into(),
-        other_type: "Decision".into(),
+        other_type: Some("Decision".into()),
         other_id: "dec:first".into(),
         evidence: "The earlier thought, grown up: same mechanism, stated for a second reason."
             .into(),

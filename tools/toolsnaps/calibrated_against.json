@@ -18,15 +18,23 @@
         "type": "string"
       },
       "evidence_type": {
-        "description": "`Artifact` (a published anchor, a dataset, a measurement record) or\n`Verification` (the check whose output the value was fitted to).",
-        "type": "string"
+        "default": null,
+        "description": "`Artifact` (a published anchor, a dataset, a measurement record) or\n`Verification` (the check whose output the value was fitted to).\nOptional since 2026-09-06: resolved from the id when omitted (the id\nprefix names the type); an id held by more than one type is REFUSED, never\nguessed — pass it then.",
+        "type": [
+          "string",
+          "null"
+        ]
       },
       "from_id": {
         "type": "string"
       },
       "from_type": {
-        "description": "Node type of the value that was fitted (e.g. `Capability`, `Artifact`,\n`Component`, `Constraint`).",
-        "type": "string"
+        "default": null,
+        "description": "Node type of the value that was fitted (e.g. `Capability`, `Artifact`,\n`Component`, `Constraint`).\nOptional since 2026-09-06: resolved from the id when omitted (the id\nprefix names the type); an id held by more than one type is REFUSED, never\nguessed — pass it then.",
+        "type": [
+          "string",
+          "null"
+        ]
       },
       "note": {
         "description": "What was fitted, and how — the part a later reader needs in order to\njudge whether the fit still stands.",
@@ -37,9 +45,7 @@
       }
     },
     "required": [
-      "from_type",
       "from_id",
-      "evidence_type",
       "evidence_id"
     ],
     "type": "object"

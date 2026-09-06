@@ -22,8 +22,12 @@
         "type": "string"
       },
       "node_type": {
-        "description": "Its type (e.g. `Decision`).",
-        "type": "string"
+        "default": null,
+        "description": "Its type (e.g. `Decision`).\nOptional since 2026-09-06: resolved from the id when omitted (the id\nprefix names the type); an id held by more than one type is REFUSED, never\nguessed — pass it then.",
+        "type": [
+          "string",
+          "null"
+        ]
       },
       "pool_type": {
         "default": null,
@@ -35,8 +39,7 @@
       }
     },
     "required": [
-      "node_id",
-      "node_type"
+      "node_id"
     ],
     "type": "object"
   },

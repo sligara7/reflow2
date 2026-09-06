@@ -75,13 +75,17 @@
         "type": "string"
       },
       "target_type": {
-        "type": "string"
+        "default": null,
+        "description": "Optional since 2026-09-06: resolved from the id when omitted (the id\nprefix names the type); an id held by more than one type is REFUSED, never\nguessed — pass it then.",
+        "type": [
+          "string",
+          "null"
+        ]
       }
     },
     "required": [
       "artifact_id",
       "name",
-      "target_type",
       "target_id"
     ],
     "type": "object"

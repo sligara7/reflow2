@@ -358,10 +358,16 @@ impl ReflowService {
         Parameters(req): Parameters<RealizesReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await?;
+        let target_type = crate::service::resolve_node_type(
+            &g,
+            req.target_type.as_deref(),
+            &req.target_id,
+            "target_type",
+        )?;
         ok_json(EdgeDto::from(
             g.realizes(
                 &req.artifact_id,
-                &req.target_type,
+                &target_type,
                 &req.target_id,
                 req.completeness.as_deref(),
                 req.conformance.as_deref(),
@@ -384,10 +390,16 @@ impl ReflowService {
         Parameters(req): Parameters<DocumentsReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await?;
+        let target_type = crate::service::resolve_node_type(
+            &g,
+            req.target_type.as_deref(),
+            &req.target_id,
+            "target_type",
+        )?;
         ok_json(EdgeDto::from(
             g.documents(
                 &req.artifact_id,
-                &req.target_type,
+                &target_type,
                 &req.target_id,
                 req.doc_kind.as_deref(),
             )
@@ -411,7 +423,9 @@ impl ReflowService {
             name: req.name,
             location: req.location,
             artifact_type: req.artifact_type,
-            target_type: req.target_type,
+            target_type: self
+                .resolve_type(req.target_type.as_deref(), &req.target_id, "target_type")
+                .await?,
             target_id: req.target_id,
             completeness: req.completeness,
             conformance: req.conformance,

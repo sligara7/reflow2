@@ -63,7 +63,7 @@ fn event(id: &str) -> AddChangeEventReq {
 
 fn pin(node_id: &str, epoch_id: &str) -> PinAtEpochReq {
     PinAtEpochReq {
-        node_type: "ChangeEvent".into(),
+        node_type: Some("ChangeEvent".into()),
         node_id: node_id.into(),
         epoch_id: epoch_id.into(),
     }

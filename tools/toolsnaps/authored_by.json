@@ -23,8 +23,12 @@
         "type": "string"
       },
       "from_type": {
-        "description": "Type of the design node being attributed (e.g. `Decision`, `Requirement`).",
-        "type": "string"
+        "default": null,
+        "description": "Type of the design node being attributed (e.g. `Decision`, `Requirement`).\nOptional since 2026-09-06: resolved from the id when omitted (the id\nprefix names the type); an id held by more than one type is REFUSED, never\nguessed — pass it then.",
+        "type": [
+          "string",
+          "null"
+        ]
       },
       "role": {
         "default": null,
@@ -42,7 +46,6 @@
       }
     },
     "required": [
-      "from_type",
       "from_id",
       "contributor_id"
     ],
