@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:a2574843315159bd9457632674b82aa37548d52f7229a7a0cdfcf4f6ff87c58d",
+  "content_hash": "sha256:8056f9066dab9cf940f93cf61087192cf9ac779896f607e593f7131e601615fa",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -37598,6 +37598,42 @@
         "action": "modified"
       },
       "to_id": "ifc:graph-read"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:two-prescribed-pairs-every-detector-skips-withdrawn-nodes-and-shared-cause-gaps-name-each-other",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:two-prescribed-pairs-every-detector-skips-withdrawn-nodes-and-shared-cause-gaps-name-each-other",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:two-prescribed-pairs-every-detector-skips-withdrawn-nodes-and-shared-cause-gaps-name-each-other",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-a-prescribed-layer-pair-no-longer-refuses"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:two-prescribed-pairs-every-detector-skips-withdrawn-nodes-and-shared-cause-gaps-name-each-other",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
     },
     {
       "edge_type": "CHANGED",
@@ -128543,6 +128579,15 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:the-surface-says-what-it-already-knew",
+      "properties": {
+        "at": "2026-09-06",
+        "note": "CLOSED LATE, BY THE EVENT THAT ACTUALLY FIXED IT. This change built the reporter's option (b): a deferred requirement is asked a DIFFERENT, lower-ranked question ('still parked?') rather than the covered/deferred/dropped one, pinned in the_surface_says_what_it_already_knew.rs (a_deferred_requirement_is_asked_whether_it_is_still_parked; an_accepted_requirement_keeps_the_original_question_and_outranks_a_parked_one). The fact was never linked to it, so on 2026-09-06 it still read OPEN on the ledger and a session re-fixed it — wrongly, by skipping `deferred` outright, which silenced the designed question; the existing pins caught that within the hour and the change was reverted. Drawn now so the record says what the code says. The fact's ⑨ (whether reflow2's own graph shows the same 28/14/8/6 ratio) remains untaken and is the only part still open."
+      },
+      "to_id": "fact:defect-unsatisfied-requirement-fires-on-requirements-whose-status-is-the-answer"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:the-three-real-internal-seams-are-declared",
       "properties": {
         "at": "2026-08-27",
@@ -128594,6 +128639,33 @@
         "note": "THE INSTRUCTION LEG IS NOW BUILT: link-projects and adopt (Phase 2) both point at external_dependency for 'a repository we depend on but do not own', naming source+version+parts and reconcile_dependencies. This was the fact's own diagnosis — a typed tool with the other two legs but no instruction, per fact:vocabulary-needs-three-legs. NOT CLOSED: the fact's smaller half stands — external_dependency records a pinned ref but still carries no bring-up recipe and no place for fixes pushed upstream. And find_tools still did not surface it for the reporter's query, so the discoverability gap the fact also names is only partly addressed by a skill pointer."
       },
       "to_id": "fact:the-external-dependency-node-exists-and-no-skill-points-at-it"
+    },
+    {
+      "edge_type": "INVALIDATES",
+      "from_id": "chg:two-prescribed-pairs-every-detector-skips-withdrawn-nodes-and-shared-cause-gaps-name-each-other",
+      "properties": {
+        "at": "2026-09-06",
+        "note": "PARTIAL, AND SYMPTOM-SIDE BY DESIGN. Shape ① is treated on the reporting side: the unallocated and unrealized gaps on one capability now name each other and the single allocate call, so the caller sees one cause not two rows — exactly the non-lossy grouping the fact said was the right fix. NOT DONE for ①: the heal-side unthreaded-cluster defect is not cross-referenced (different rollup), and the PREVENTION of the forgotten edge — qs idea #4, a one-call 'wire this capability' — is an open decision, not built. Shapes ② (unvalidated gap fires before validation is possible) and ③ (each exploratory idea costs a gap) are UNTOUCHED: ③ turned out to be the aggregate unreviewed_ideas row, already designed as one low-severity finding whose per-idea cure is the brainstorm skill's linking step; ② is a semantics change to a gap and awaits a ruling. The fact stays open for ① prevention and ②."
+      },
+      "to_id": "fact:defect-one-missing-edge-arrives-as-three-findings-and-two-gaps-fire-before-they-can-be-acted-on"
+    },
+    {
+      "edge_type": "INVALIDATES",
+      "from_id": "chg:two-prescribed-pairs-every-detector-skips-withdrawn-nodes-and-shared-cause-gaps-name-each-other",
+      "properties": {
+        "at": "2026-09-06",
+        "note": "FIXED AT THE CLASS: every detector scan in detect.rs (31 sites) now reads through scan_live_nodes, which subtracts the set of ids an accepted Decision has OBSOLETED — computed once per write generation. The reporter's instance (a retired DesignRule still raising unstated_rule_enforcement) is pinned, and the fact's unmeasured blast radius is now bounded: 31 detectors were keyed on a node type and all of them consult the fact. BOUNDS: heal.rs (the structural detectors) still scans directly — a withdrawn node can still appear in a cluster or dead-end finding; that half is not touched here. The reporter's request 'skip, or say why it does not' is met on the detect side only."
+      },
+      "to_id": "fact:defect-only-the-capability-detectors-consult-discontinued"
+    },
+    {
+      "edge_type": "INVALIDATES",
+      "from_id": "chg:two-prescribed-pairs-every-detector-skips-withdrawn-nodes-and-shared-cause-gaps-name-each-other",
+      "properties": {
+        "at": "2026-09-06",
+        "note": "FIXED AT THE CAUSE: the two pairs the fact named (Decision-Verification, Requirement-Decision) are in PRESCRIBED_LAYER_PAIRS and pinned. The third (Decision-DesignEpoch, n=1) is deliberately NOT added, per the fact's own 'watch, not add' — one more report would justify it. Also learned while pinning: add_verification runs no near-match guard at all (and lacks distinct_from), so the reporter's Decision-beside-Verification fire was the Decision constructor's; the Verification side is silent by omission, which is a separate small gap not closed here."
+      },
+      "to_id": "fact:defect-two-prescribed-layer-pairs-are-missing-so-a-check-beside-its-ruling-is-refused-as-a-duplicate"
     },
     {
       "edge_type": "INVALIDATES",
@@ -132560,6 +132632,15 @@
         "conformance": "verified"
       },
       "to_id": "cap:a-dangling-reference-is-reported-whatever-the-nodes-degree"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:test-a-detector-consults-what-the-graph-already-holds",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:detect"
     },
     {
       "edge_type": "REALIZES",
@@ -139416,6 +139497,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:test-a-detector-consults-what-the-graph-already-holds",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-a-detector-consults-what-the-graph-already-holds"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:test-a-prescribed-layer-pair-no-longer-refuses",
       "properties": {
         "action": "created"
@@ -140564,7 +140653,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:5b93d4ad1dcb4e36f999ce816194166ad70d16631b853cf540e9408f94e16d0f",
+        "checksum": "sha256:972abf1af80a68a4ff29eca23bf58b6b0464596f69419ec8e487bee83f22126d",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
@@ -140941,7 +141030,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:11035fe84810a7b66a0e4fc0577462d95f52b351873ed44838abaaf91aa153d0",
+        "checksum": "sha256:6c803b91b2a17f4604ca788e772af5698c9446df815abec0a985703763fc857c",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/graph.rs",
         "name": "crates/reflow2-core/src/graph.rs",
@@ -142553,6 +142642,17 @@
       }
     },
     {
+      "node_id": "art:test-a-detector-consults-what-the-graph-already-holds",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:51c5f07c34b7149425c9847ee87ebf8e446617b4d24c696fb8b3c40da250fc7a",
+        "location": "crates/reflow2-core/tests/a_detector_consults_what_the_graph_already_holds.rs",
+        "name": "a_detector_consults_what_the_graph_already_holds.rs — a withdrawn rule raises no gap; gaps sharing one cause name each other; and the header records the deferred-requirement pin that was WRONG and why",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:test-a-near-match-of-another-type-is-named-as-a-layer",
       "node_type": "Artifact",
       "properties": {
@@ -142568,7 +142668,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:5edb3b20b6d030dfe73c12a99d561e0316456bfb3da485696d4b06300768f990",
+        "checksum": "sha256:193218896585cf917427db174c2b0a0f45bd666e8d00f08395a3d4194430b301",
         "location": "crates/reflow2-mcp/tests/a_prescribed_layer_pair_no_longer_refuses.rs",
         "name": "a_prescribed_layer_pair_no_longer_refuses.rs",
         "status": "realized"
@@ -142982,7 +143082,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:62201942158b2d826926a2a2a3797f4f729c1f85e2b3e0f0c33c363440a48e5e",
+        "checksum": "sha256:efe6a628e83eaaf4f12831152e4f4934a65069fd1fb906b1768616a97e14e62f",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
         "name": "crates/reflow2-mcp/src/tools/capture.rs",
@@ -153291,6 +153391,18 @@
         "change_type": "refactor",
         "name": "`coverage` and `confirm` move behind `ifc:graph-read`, taking the count from one module to three. Both were selected by MEASUREMENT rather than guess: of the 17 read-only modules, only these two make zero calls outside the contract's five operations. `confirm` is the first to exercise FOUR of the five (scan_nodes, get_node, outgoing, incoming), so it is the first real test that the contract is wide enough to stand a module on rather than merely wide enough for the easy case. Both keep a one-line inherent method, so no caller changed. Also corrected an earlier suggestion: `report` is NOT cheap — it needs 26 other DesignGraph methods.",
         "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:two-prescribed-pairs-every-detector-skips-withdrawn-nodes-and-shared-cause-gaps-name-each-other",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-09-06",
+        "name": "Two more prescribed layer pairs stop refusing; every detector skips what an accepted Decision withdrew; gaps that are one missing edge seen twice say so — and a fourth fix was reverted when existing pins showed it was already built",
+        "rationale": "Built on Anthony's 'go with your recommendation' for the buildable batch (two pairs + detector precision), and shaped by his mid-build question — 'we have done /root-cause on all the issues we're fixing? I don't want to fix a symptom or the wrong thing' — which was answered honestly and then proven right by the suite. WHERE EACH STANDS AGAINST ITS CAUSE: (1) the cause was an under-enumerated list and the fix is the list — complete, with the reporter's third pair deliberately held for a second count. (2) the cause was 'the graph holds the fact and the reader does not consult it', and the fix routes every reader through one consulting scan — the class, not the instance; the cost is one Decision scan per write generation, memoised. (3) is SYMPTOM-SIDE BY DESIGN and says so: the fact established that all three findings are correct and the complaint is aggregation, so grouping is the right treatment of the reporting; the PREVENTION of the forgotten edge is the open qs idea of a one-call 'wire this capability' (allocate+realizes+verifies), not built and awaiting a ruling. The revert is the lesson: a recorded fact is precedent to be checked (root-cause step ②), not a substitute for checking — the pins that caught it existed because someone had already done the work. WHAT IS NOT DONE: cross-referencing the heal-side cluster defect with the gaps; the third pair; the detector for 'a defect fact fixed but never INVALIDATED', now named as owed.",
+        "subject": "system",
+        "summary": "THREE FIXES. (1) PRESCRIBED_LAYER_PAIRS (capture.rs) gains Decision-Verification and Requirement-Decision: a ruling written beside the check that measures its subject, and a requirement promoted from the brainstorm idea that spawned it, are REPORTED in search_first and no longer refused. The guard fires on the Decision/Requirement constructor (add_verification runs no near-match guard at all, which is why the pins create the Verification first). Decision-DesignEpoch (n=1) is watched, not added. Two pins in a_prescribed_layer_pair_no_longer_refuses.rs. (2) detect.rs gains discontinued_ids() — every id an ACCEPTED Decision has OBSOLETED, computed once per write generation into DerivedMemo — and scan_live_nodes(), which subtracts it; all 31 detector scans in detect.rs now read through it, and is_discontinued() consults the set first. A DesignRule retired the sanctioned way stops raising unstated_rule_enforcement, and so does every other type-keyed detector — the CLASS the fact named, not the instance. (3) group_shared_causes(): a post-pass over the assembled gaps that, when an unallocated_capability and an unrealized_capability share a capability, appends to each a sentence naming the sibling gap and the one `allocate` call that clears both. Nothing is dropped — the fact insisted all three findings are true — and a gap with no sibling is untouched. The unthreaded-cluster DEFECT (heal) is not cross-referenced yet; gaps only. ONE REVERT. A fourth change made unsatisfied_requirement skip `deferred` requirements, built from fact:defect-unsatisfied-requirement-fires-on-requirements-whose-status-is-the-answer, which the ledger showed as open. Two existing pins in the_surface_says_what_it_already_knew.rs failed: chg:the-surface-says-what-it-already-knew had ALREADY built the reporter's alternative — a deferred requirement is asked a different, lower-ranked 'still parked?' question — and never closed the fact. The skip silenced that designed question; reverted within the hour; the fact closed from its real fixer; the miss recorded as fact:a-defect-fixed-but-never-closed-on-the-record-was-re-fixed-wrongly-a-day-later. Pins observed failing first for all three fixes (E0425 for the grouping fn; a withdrawn rule still raising its gap; two pair refusals). core 1580/0, mcp 358/0, fmt/clippy clean."
       }
     },
     {
@@ -165623,6 +165735,16 @@
       }
     },
     {
+      "node_id": "frag:art:test-a-detector-consults-what-the-graph-already-holds",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered a_detector_consults_what_the_graph_already_holds.rs — a withdrawn rule raises no gap; gaps sharing one cause name each other; and the header records the deferred-requirement pin that was WRONG and why"
+      }
+    },
+    {
       "node_id": "frag:art:test-a-prescribed-layer-pair-no-longer-refuses",
       "node_type": "Fragment",
       "properties": {
@@ -173091,6 +173213,19 @@
         "statement": "MEASURED 2026-08-25 at main `39dbf6d`, immediately after the write-buffer index landed (#330). Release build, **in-memory backend, tantivy `create_in_ram`, no RocksDB, nothing on disk**. reflow2's own design: 3,149 nodes / 13,414 edges / 8.10 MB document.\n\n    LOAD (session start)                        SAVE (session end)\n      parse JSON            196.1 ms              build export doc   1,137.3 ms\n      open graph             10.0 ms              serialize to JSON     31.0 ms  (7.13 MB)\n      import + index        890.6 ms              ---------------------------------\n      first search_design     1.4 ms              TOTAL save         1,168.3 ms\n      ---------------------------------\n      TOTAL to searchable 1,098.1 ms\n\n⭐⭐ THE OBJECTION THAT BLOCKED THIS IDEA IS GONE. When the question was first recorded, hydrate was 8,828 ms and the honest read was \"viable for typical designs, a research project for this one\". The write-buffer index took import from 8,398 ms to ~890 ms INCLUDING the full-text build, and the whole load is now **1.1 seconds for the biggest, densest design that exists**. Nothing about the storage architecture changed to achieve that — it was a `Vec` being linearly scanned.\n\n⭐ THE FULL-TEXT INDEX IS CHEAP, WHICH NOBODY KNEW. Every earlier figure in this line of work had `fulltext` OFF and was explicitly labelled a lower bound. Measured with it ON, building the entire tantivy index from scratch in RAM costs roughly **190–280 ms** on top of the graph import, and the first `search_design` after it returns 10 hits in **1.4 ms**. The index does NOT have to be persisted to be affordable — it is genuinely derived, and rebuilding it per session is a rounding error against a session's length.\n\n⭐ AND THE DOMINANT COST MOVED TO A PLACE NOBODY HAS LOOKED. `export_graph`'s document build is **1,137 ms**, while serializing the result is 31 ms. So the save side is now 36x more expensive than the JSON encoding it exists to produce, and it is the single largest cost in the whole model — larger than the entire load path. It is the same SHAPE as the import defect just fixed (an internal read pattern, not I/O), and it has never been profiled. **If this model is taken, that is the next measurement, and it is very likely another `Vec` somewhere.**\n\n⇒ WHAT THE ROUND TRIP ACTUALLY COSTS A SESSION: ~1.1 s in, ~1.2 s out, **~2.3 s total**, once, for a design larger than any real tenant would hold. Against a session measured in minutes or hours that is not a performance question any more. It is now purely a DURABILITY question, which is the trade `dec:idea-what-guarantees-the-export-if-the-export-is-the-only-durable-copy` holds.\n\n🛑 STILL UNMEASURED, AND EACH COULD STILL SINK IT:\n1. **Accumulated store state.** Confirmation-ledger dates, drift baselines, `write_gen`, the `.id.json` / `.sync.json` sidecars. `fact:export-import-export-is-lossless-but-not-a-fixed-point-until-one-normalising-pass` proved the DESIGN round-trips (3,140/3,140 nodes); it proved nothing about what a running seat believes. This is the way the model fails LATE.\n2. **Crash durability.** RAM dies with the process. The trade is bounded loss vs no loss and it is a judgement, not a measurement.\n3. **The shared server.** Several sessions share one graph through one process today. In-RAM state does not change that — the process IS the state — but nothing has tested what a server restart means when there is no store to reopen.\n\n📌 BOUNDS: one machine, one design, one run per figure, release build, OS page cache uncontrolled. No sub-sampled curve was taken with fulltext on, so the SHAPE of the index cost against design size is unknown — only this one point.",
         "subject_id": "dec:idea-does-reflow2-need-a-byte-store-at-all-or-only-durability",
         "valid_from": "2026-08-25"
+      }
+    },
+    {
+      "node_id": "fact:a-defect-fixed-but-never-closed-on-the-record-was-re-fixed-wrongly-a-day-later",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "observation",
+        "statement": "A FIX THAT NEVER CLOSED ITS FINDING MISLED THE NEXT FIXER. 2026-09-06: a feedback ledger computed from the graph (a defect fact is 'open' unless a ChangeEvent INVALIDATES it) listed fact:defect-unsatisfied-requirement-fires-on-requirements-whose-status-is-the-answer as open. It was not: chg:the-surface-says-what-it-already-knew had built the reporter's own alternative (a deferred requirement is asked a different, lower-ranked 'still parked?' question) and pinned it in the_surface_says_what_it_already_knew.rs — but drew no INVALIDATES edge. Trusting the recorded fact instead of searching precedent (root-cause step ②), the session made `unsatisfied_requirement` skip `deferred` outright. That silenced the designed question. Two existing pins failed within the hour; the change was reverted and the fact closed from its real fixer.\n\nWHAT THIS IS AN INSTANCE OF: a record that is true when written and silently overtaken — the same class as fact:defect-a-status-can-advance-past-its-own-prose-and-nothing-says-so, on the fix axis instead of the status axis. req:a-fix-says-whether-it-corrected-the-cause is ACCEPTED and asks that a repair record what it reached; this is the case where the repair recorded nothing about the finding at all.\n\nTHE OWNER'S QUESTION THAT CAUGHT IT: Anthony asked mid-build 'we have done /root-cause on all the issues we're fixing? I don't want to fix a symptom or the wrong thing.' The honest answer was: two of four fully; this one had a confirmed mechanism but no precedent search. The precedent search is what would have found the existing pins BEFORE the code.\n\nTHE THIRD LEG THIS NAMES: nothing detects 'a defect fact whose subject artifact has a later accepted change and no INVALIDATES from any ChangeEvent'. That detector would have flagged this fact on the day the fix landed. Not built; recorded as owed alongside the feedback-triage rule's own missing detector.\n\nBOUNDS: one instance, found by the test suite rather than by the record; how many other open-looking defect facts are already fixed is not measured — the ledger's other 'open' rows deserve the same suspicion.",
+        "subject_id": "cap:a-repair-can-say-what-it-invalidated",
+        "valid_from": "2026-09-06",
+        "value": "{\"fact_misread_as_open\":\"fact:defect-unsatisfied-requirement-fires-on-requirements-whose-status-is-the-answer\",\"real_fixer\":\"chg:the-surface-says-what-it-already-knew\",\"wrong_refix\":\"skip deferred outright\",\"caught_by\":\"existing pins in the_surface_says_what_it_already_knew.rs\",\"reverted\":true,\"detector_owed\":\"defect fact with later change on its subject and no INVALIDATES\"}"
       }
     },
     {
@@ -181206,7 +181341,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:0626f5a8bbdd452cf8c372039d2499122e51672935e9bd4d276d93dfdb853d0c",
+  "prev_content_hash": "sha256:a2574843315159bd9457632674b82aa37548d52f7229a7a0cdfcf4f6ff87c58d",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

@@ -258,3 +258,50 @@ async fn an_unmeasured_cross_type_pair_still_refuses_with_the_layer_wording() {
         "an unmeasured cross-type match keeps the 2026-08-29 layer wording: {msg}"
     );
 }
+
+// ---- Two more prescribed pairs, from dev_storyflow 2026-09-05 (9 fires, 0 duplicates) ----
+// fact:defect-two-prescribed-layer-pairs-are-missing-so-a-check-beside-its-ruling-is-refused-as-a-duplicate
+
+#[tokio::test]
+async fn a_check_beside_the_ruling_it_tests_is_not_refused() {
+    // add_verification runs no near-match guard (it has no distinct_from either —
+    // dev_storyflow noted that), so the reporter's fire was this direction: a
+    // ruling written beside the check that already measures its subject.
+    let s = svc().await;
+    j!(s.add_verification(Parameters(serde_json::from_value(serde_json::json!({
+        "id": "ver:hydrate-under-fifty-ms", "name": "The hydrate path answers in under fifty milliseconds for a story node",
+        "description": "Measures the hydrate path at p50 on the reference machine and asserts under fifty milliseconds."
+    })).unwrap())));
+    let out = j!(s.add_decision(Parameters(serde_json::from_value(serde_json::json!({
+        "id": "dec:hydrate-under-fifty-ms", "name": "The hydrate path answers in under fifty milliseconds for a story node",
+        "decision": "The hydrate path answers in under fifty milliseconds for a story node, measured at p50 on the reference machine.",
+        "rationale": "A budget written before the code."
+    })).unwrap())));
+    let reported = serde_json::to_string(&out).expect("serialisable");
+    assert!(
+        reported.contains("ver:hydrate-under-fifty-ms"),
+        "a Decision-Verification match is REPORTED, not refused: {reported}"
+    );
+}
+
+#[tokio::test]
+async fn a_requirement_promoted_from_the_idea_that_spawned_it_is_not_refused() {
+    let s = svc().await;
+    j!(s.add_decision(Parameters(serde_json::from_value(serde_json::json!({
+        "id": "dec:idea-a-campaign-is-a-story", "kind": "exploratory",
+        "name": "OPEN — a campaign is just another story with a longer arc",
+        "decision": "Recorded as brainstorming: a campaign is just another story with a longer arc and several authors.",
+        "rationale": "Counter: campaigns have participants stories do not."
+    })).unwrap())));
+    let out = j!(s.add_requirement(Parameters(RequirementReq {
+        id: "req:a-campaign-is-a-story".into(),
+        name: Some("A campaign is just another story with a longer arc".into()),
+        statement: Some("A campaign is just another story with a longer arc and several authors, and is modelled as one.".into()),
+        distinct_from: None,
+    })));
+    let reported = serde_json::to_string(&out).expect("serialisable");
+    assert!(
+        reported.contains("dec:idea-a-campaign-is-a-story"),
+        "a Requirement-Decision match (the promotion path) is REPORTED, not refused: {reported}"
+    );
+}

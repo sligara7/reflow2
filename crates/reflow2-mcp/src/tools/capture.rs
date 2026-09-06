@@ -144,6 +144,14 @@ const PRESCRIBED_LAYER_PAIRS: &[(&str, &str)] = &[
     // that recorded the count — the only refusals in the whole set NOT
     // self-reported by an agent grading its own work.
     ("TemporalFact", "Decision"),
+    // A check and the ruling it tests read alike on purpose; a requirement
+    // promoted FROM a brainstorm idea reads like the idea (brainstorm step 5,
+    // EVOLVES_INTO). dev_storyflow 2026-09-05: nine fires, zero duplicates,
+    // clustered on these two (plus one n=1 Decision-DesignEpoch, watched, not
+    // added). fact:defect-two-prescribed-layer-pairs-are-missing-so-a-check-
+    // beside-its-ruling-is-refused-as-a-duplicate.
+    ("Decision", "Verification"),
+    ("Requirement", "Decision"),
 ];
 
 /// Is this pair one the capture loop prescribes, in either direction?
