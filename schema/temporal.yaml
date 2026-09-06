@@ -136,11 +136,17 @@ schema:
       extraction_hint: A Snapshot or ChangeEvent is pinned to the epoch it belongs to.
 
     SCHEDULED_FOR:
-      from: [Requirement, Capability, Question]
+      # Verification and Decision added 2026-09-06 (Anthony): an increment owes what to
+      # CHECK and what to DECIDE as much as what to build and what to ask, and a planned
+      # check had no honest home — only past-tense OCCURS_DURING. Same class as the
+      # 2026-08-22 addition of Interface to VERIFIES.to: an endpoint list enumerated by
+      # hand is found short by the next honest use.
+      # fact:defect-a-planned-verification-cannot-be-scheduled-because-scheduled-for-does-not-enumerate-it
+      from: [Requirement, Capability, Question, Verification, Decision]
       to: [DesignEpoch, Release]
       extraction_hint: >
-        The satisfaction schedule — this requirement or capability is DUE at
-        that epoch or release. Deliberately NOT AT_EPOCH, which means "belongs
+        The satisfaction schedule — this requirement, capability, check (Verification)
+        or ruling (Decision) is DUE at that epoch or release. Deliberately NOT AT_EPOCH, which means "belongs
         to" and is declared over a wildcard source: one edge type carrying both
         belongs-to and due-at would make them indistinguishable to every
         detector (dec:schedule-is-an-edge-with-modality). Points at either of

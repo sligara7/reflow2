@@ -1047,7 +1047,7 @@ impl DesignGraph {
                     props = props.set("method", m);
                 } else {
                     st.warnings.push(format!(
-                        "verification '{}' method '{m}' not a schema value; using the default",
+                        "verification '{}' method '{m}' not a schema value; dropped — no method is stored (nothing stands in for it)",
                         v.id
                     ));
                 }
@@ -1948,8 +1948,9 @@ const MEDIUM_VALUES: &[&str] = &[
 ];
 
 /// Schema `method` values. Mirrors schema/verify.yaml; an unknown value is
-/// warned about and dropped to the default rather than written, because a
-/// method that failed validation would take the whole node down with it.
+/// warned about and DROPPED rather than written, because a method that failed
+/// validation would take the whole node down with it. Nothing stands in for it:
+/// the schema default was removed on 2026-09-06 so absence means nobody said.
 const VERIFICATION_METHODS: &[&str] = &[
     "test",
     "review",

@@ -87,7 +87,7 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Schedule a Requirement, Capability or QUESTION against the moment it is DUE \
+        description = "Schedule a Requirement, Capability, QUESTION, Verification or Decision against the moment it is DUE \
                        — the \
                        satisfaction schedule, which is what makes a roadmap answerable \
                        (req:epochs-can-be-planned). The target is a DesignEpoch for the time axis \
