@@ -25,7 +25,12 @@
             "type": "string"
           },
           "other_type": {
-            "type": "string"
+            "default": null,
+            "description": "Optional since 2026-09-06: resolved from the id when omitted (the id\nprefix names the type); an id held by more than one type is REFUSED, never\nguessed — pass it then.",
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "relation": {
             "description": "`CONTRADICTS` (both cannot hold) / `EVOLVES_INTO` (the older thought,\ngrown up) / `DEPENDS_ON` (only worth anything if the other lands first)\n/ `CAUSES` / `TRIGGERS` (taking one forces the other) / `BLOCKS` /\n`DUPLICATES` (the same thing said twice — link, do not merge; they were\nsaid for different reasons) / `ANTICIPATES` (the earlier one saw this\ncoming) / `OBSOLETES` / `RISKS` / `MITIGATES` (one is a hazard, the\nother answers it) / `MASKS` / `VIOLATES`.",
@@ -49,7 +54,6 @@
         },
         "required": [
           "relation",
-          "other_type",
           "other_id",
           "evidence"
         ],
@@ -73,8 +77,12 @@
         "type": "string"
       },
       "node_type": {
-        "description": "The node whose relations were reviewed (e.g. `Decision`).",
-        "type": "string"
+        "default": null,
+        "description": "The node whose relations were reviewed (e.g. `Decision`).\nOptional since 2026-09-06: resolved from the id when omitted (the id\nprefix names the type); an id held by more than one type is REFUSED, never\nguessed — pass it then.",
+        "type": [
+          "string",
+          "null"
+        ]
       },
       "note": {
         "default": null,
@@ -86,7 +94,6 @@
       }
     },
     "required": [
-      "node_type",
       "node_id"
     ],
     "type": "object"

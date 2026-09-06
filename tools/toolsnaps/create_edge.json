@@ -14,7 +14,12 @@
         "type": "string"
       },
       "from_type": {
-        "type": "string"
+        "default": null,
+        "description": "Optional since 2026-09-06: resolved from the id when omitted (the id\nprefix names the type); an id held by more than one type is REFUSED, never\nguessed — pass it then.",
+        "type": [
+          "string",
+          "null"
+        ]
       },
       "props": {
         "additionalProperties": true,
@@ -28,14 +33,17 @@
         "type": "string"
       },
       "to_type": {
-        "type": "string"
+        "default": null,
+        "description": "Optional since 2026-09-06: resolved from the id when omitted (the id\nprefix names the type); an id held by more than one type is REFUSED, never\nguessed — pass it then.",
+        "type": [
+          "string",
+          "null"
+        ]
       }
     },
     "required": [
       "edge_type",
-      "from_type",
       "from_id",
-      "to_type",
       "to_id"
     ],
     "type": "object"

@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:2d76546b9ff93a071b9e37b7ee04cdb2c223024c876f675517fb0a282deb7c93",
+  "content_hash": "sha256:c72dc53512064872792393fcc7c6f0329b13dee1a9d6da4352d592fcb370b54e",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -20899,6 +20899,87 @@
         "action": "modified"
       },
       "to_id": "art:heal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-node-is-named-by-its-id-and-the-type-is-optional-across-the-relation-surface",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-node-is-named-by-its-id-and-the-type-is-optional-across-the-relation-surface",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-a-node-is-named-by-its-id-and-the-type-is-optional"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-node-is-named-by-its-id-and-the-type-is-optional-across-the-relation-surface",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-assure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-node-is-named-by-its-id-and-the-type-is-optional-across-the-relation-surface",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-built"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-node-is-named-by-its-id-and-the-type-is-optional-across-the-relation-surface",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-node-is-named-by-its-id-and-the-type-is-optional-across-the-relation-surface",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-exchange"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-node-is-named-by-its-id-and-the-type-is-optional-across-the-relation-surface",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-operate"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-node-is-named-by-its-id-and-the-type-is-optional-across-the-relation-surface",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-query"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-node-is-named-by-its-id-and-the-type-is-optional-across-the-relation-surface",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-temporal"
     },
     {
       "edge_type": "CHANGED",
@@ -44248,6 +44329,14 @@
         "evidence": "Yesterday's question asked where 'these are the things I need to do next' has a cheap home, and its options were all about NODE TYPE and ceremony. This is the same need one day later with a different mechanism proposed — edges as the worklist rather than a Task type — which sidesteps the tracker objection that killed option B there. The earlier node stays live because its option C (tasks are already sayable as absences and statuses) is untested and would make this unnecessary."
       },
       "to_id": "dec:idea-a-hotspot-node-holds-the-live-worklist-and-is-deliberately-not-history"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-one-way-to-name-which-node-across-the-tool-surface",
+      "properties": {
+        "evidence": "The idea asked for one way to name a node across the surface; Anthony ruled convention (i) on 2026-09-06 and this change built it: the type is optional and resolved from the id wherever an existing node is named, refused on collision. The argument NAMES (from_id vs target_id vs node_id) are the remaining half of the idea and stay open."
+      },
+      "to_id": "chg:a-node-is-named-by-its-id-and-the-type-is-optional-across-the-relation-surface"
     },
     {
       "edge_type": "EVOLVES_INTO",
@@ -128475,6 +128564,24 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:a-node-is-named-by-its-id-and-the-type-is-optional-across-the-relation-surface",
+      "properties": {
+        "at": "2026-09-06",
+        "note": "PARTIAL, and the fact's own title says which halves: 'how to name a node' is addressed across the relation surface (type optional, resolved from the id, refused on collision) and constructors deliberately keep the type required because creation cannot resolve a type from an id that does not exist yet. 'What status it lands in' is UNTOUCHED — whether a constructor accepts an initial status when a contributor is named is convention (ii), open on dec:idea-should-a-constructor-accept-the-owners-word-in-one-call and dec:idea-four-sibling-constructors-four-status-contracts, awaiting Anthony's ruling. The fact stays open for that half."
+      },
+      "to_id": "fact:defect-sibling-constructors-disagree-on-how-to-name-a-node-and-what-status-it-lands-in"
+    },
+    {
+      "edge_type": "INVALIDATES",
+      "from_id": "chg:a-node-is-named-by-its-id-and-the-type-is-optional-across-the-relation-surface",
+      "properties": {
+        "at": "2026-09-06",
+        "note": "THE NAMING-A-NODE HALF IS FIXED: every tool that refers to an existing node by a type+id pair now takes the type as optional, resolved from the id, refused on collision — one resolver, 34 fields, 27 shapes. So 'get_node needs both' and 'depends_on vs governed_by need different amounts of information to name the same node' no longer hold. NOT CLOSED: the argument NAMES still differ between siblings (from_id/to_id in one family, from_type/from_id/to_type/to_id in another, target_type/target_id in a third) — the type is optional in all of them now, but a caller still has to know which NAME each tool uses. That is convention (iii), which Anthony has not ruled on; the fact stays open for it."
+      },
+      "to_id": "fact:defect-typed-tool-parameter-names-are-inconsistent"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:a-restore-judges-a-reference-against-the-document-not-the-walk",
       "properties": {
         "at": "2026-08-29",
@@ -132807,6 +132914,15 @@
         "conformance": "verified"
       },
       "to_id": "ver:a-cross-type-near-match-is-named-as-a-layer"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:test-a-node-is-named-by-its-id-and-the-type-is-optional",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:mcp-surface"
     },
     {
       "edge_type": "REALIZES",
@@ -139704,6 +139820,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:test-a-node-is-named-by-its-id-and-the-type-is-optional",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-a-node-is-named-by-its-id-and-the-type-is-optional"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:test-a-prescribed-layer-pair-no-longer-refuses",
       "properties": {
         "action": "created"
@@ -142529,7 +142653,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c3808516a07ba676b4ab82fdf1217cb42264d0e84a10d2f3bd5e930efe8af025",
+        "checksum": "sha256:127e543eadd1101c7cc03dd07d1b1931a40505cd95296d1b664ffe55f4086705",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -142886,6 +143010,17 @@
         "checksum": "sha256:9da39f69a128ab1a6ae95212b216ee73123b20717917faacadc1ecdea7926818",
         "location": "crates/reflow2-mcp/tests/a_near_match_of_another_type_is_named_as_a_layer.rs",
         "name": "a_near_match_of_another_type_is_named_as_a_layer.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:test-a-node-is-named-by-its-id-and-the-type-is-optional",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:07f1c32a05aa348fe2a28eaa9f18ba218d55f08288db342dbab1d5d3f1c91b4e",
+        "location": "crates/reflow2-mcp/tests/a_node_is_named_by_its_id_and_the_type_is_optional.rs",
+        "name": "a_node_is_named_by_its_id_and_the_type_is_optional.rs — verifies/governed_by resolve the type from the id; a collision is refused naming both; an unknown id says so; delete_node still requires the type",
         "status": "realized"
       }
     },
@@ -143304,7 +143439,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:8b3e9b05e56b7e574c8d53e0d9df7269dfe439223527b60628c227cebc4ab867",
+        "checksum": "sha256:2bf6eddc30a5e0238dfd0c855fc755ba092cb423cc4875ae13ae07b9d4f4ad17",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/assure.rs",
         "name": "tools/assure.rs",
@@ -143317,7 +143452,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:503294ba5349c14c990f815f697f5b4b329f2a498b4db72d56cfaac1f65f059d",
+        "checksum": "sha256:9b27fcb50ef6177760a01f99eb56c9b42b6252b98b0ac8056ebbc7a51176b6e3",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/built.rs",
         "name": "tools/built.rs",
@@ -143330,7 +143465,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:efe6a628e83eaaf4f12831152e4f4934a65069fd1fb906b1768616a97e14e62f",
+        "checksum": "sha256:02be8b0e56eddb0ecf1c7a0e77240c5b4772ae0562dcb8749827ce0892636191",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
         "name": "crates/reflow2-mcp/src/tools/capture.rs",
@@ -143369,7 +143504,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:4576905d2355e6f2a62eebb6051716caee7a51c56ab6282afe097e3ff045df15",
+        "checksum": "sha256:68d5ee2750be98e398c2a03e863fcd32c614d92b81386c5777982a86327c5adb",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/exchange.rs",
         "name": "tools/exchange.rs",
@@ -143393,7 +143528,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:837d63cabf2d194289bb4811297bcdfb2a8279e98fc4be92641c1242e054a24f",
+        "checksum": "sha256:a7d6e93758abe2fca37e82738d183bf159b67a9ba2e673366ccd9f7863a3cdda",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/operate_tools.rs",
         "name": "tools/operate_tools.rs",
@@ -143406,7 +143541,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c4bb2180f615036f73991077dd40f56c2da4294afe126a1db405684f42262893",
+        "checksum": "sha256:72307f099ab3b02a951ffe7b8a4792371cf8425f061500b5f713772a5b37befb",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/query.rs",
         "name": "tools/query.rs",
@@ -143430,7 +143565,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:e7b784ecd68866bab5503db063e94c20ffa185e245adb95ba7929b29d49be1f8",
+        "checksum": "sha256:9ec17c8888cd98c6afc277b8964b2f36550ff07ca98fe0317e0ac359836a61c3",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/temporal_tools.rs",
         "name": "tools/temporal_tools.rs",
@@ -146812,6 +146947,18 @@
       "properties": {
         "change_type": "new_feature",
         "name": "The degree-zero rule stops being a Decision rule — detect_defects can no longer answer clean over a node with no edges, and a property naming a live node counts as attachment"
+      }
+    },
+    {
+      "node_id": "chg:a-node-is-named-by-its-id-and-the-type-is-optional-across-the-relation-surface",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-09-06",
+        "name": "Convention (i): wherever a tool names an existing node by a type+id pair, the type is optional — resolved from the id, refused on collision — across 34 fields on 27 request shapes; constructors and delete_node keep it required",
+        "rationale": "This is the naming half of the sibling-inconsistency class three field reports named (fact:defect-sibling-constructors-disagree-on-how-to-name-a-node-and-what-status-it-lands-in; fact:defect-typed-tool-parameter-names-are-inconsistent; dev_storyflow's 'get_node needs both node_type and id' and 'depends_on takes from_id/to_id while governed_by takes from_type/from_id/to_type/to_id'), and the generalisation of get_node's 2026-09-05 fix (dec:idea-get-node-by-id-alone-since-the-prefix-names-the-type) to the whole relation surface, as dec:idea-one-way-to-name-which-node-across-the-tool-surface asked. WHY REFUSE ON COLLISION RATHER THAN PICK: the typed-prefix convention is writable-around, and node_type_index's own comment says 'first type scanned wins' — a by-id read that picked would return a silently wrong node, which is worse than the required field it replaces. WHY delete_node IS THE EXCEPTION: every other tool here creates or reads an edge or a record; a wrong resolution there is a wrong edge you can see and delete. A wrong resolution on delete is a lost node. WHAT IT TRADES: one node_types_holding scan (29 point reads) per omitted type; and the unknown-id message now comes from the resolver rather than from each tool's own not-found path, so a few tools' wording changed. A DEFECT INTRODUCED AND CAUGHT WHILE BUILDING IT: the scoped-read resolver (ReflowService::resolve_type takes a READ lock) was called inside add_decision's related_to loop while that handler already held the WRITE lock — a self-deadlock. The existing test a_drawn_relation_is_a_complete_answer_and_lands_in_the_same_call hung on it (a hang, not a failure — CI would have timed out rather than reported). Fixed by resolving IN-lock (resolve_node_type(&g, ...)) wherever `g` is already held; the rule is now stated on both functions: use the scoped-read form only BEFORE the write lock. NOT DONE (the other two conventions Anthony did not rule on): whether constructors accept an initial status when a contributor is named (dec:idea-should-a-constructor-accept-the-owners-word-in-one-call), and one shape for relation tools' argument names (depends_on's from_id/to_id vs the from_type/from_id/to_type/to_id family) — the type fields are now optional in both, but the NAMES still differ.",
+        "subject": "system",
+        "summary": "Ruling #3b (Anthony, 2026-09-06: 'type optional, resolved from the id, refuse on collision'). ONE RESOLVER: service.rs resolve_node_type(g, given, id, field) — given, used as-is; omitted, the id is looked up under every type (node_types_holding): zero holders is a plain 'no node with id X exists under any type' naming the field and pointing at the constructor if creation was meant; one is the answer; more than one is REFUSED naming the types and the field to pass. A scoped-read sibling ReflowService::resolve_type lets a handler resolve BEFORE it takes the write lock without deadlocking. 34 type fields on 27 request shapes flipped from String to Option<String> with #[serde(default)] and a one-line doc: ProvenanceReq, ContainsReq, CreateEdgeReq (both ends), RealizesReq, DocumentsReq, LinkArtifactReq.target_type, VerifiesReq, EvidenceScopeReq, CalibratedAgainstReq (both), InvalidatesReq (both), ReleaseIncludesReq, EdgeSpecReq (both, per bulk item), GateOnReq (both), ForecastReadinessReq, ConstrainsReq, ReviewRelationsReq, RelationLinkReq.other_type (per link, in review_relations and add_decision.related_to), PinAtEpochReq, ScheduleForReq (both), RequireResourceReq, AnswersReq, GovernedByReq (both), AuthoredByReq, OwnedByReq, AffectedNodeReq.node_type (per affected item in add_change_event), RecordChangeReq, RelationCandidatesReq. DELIBERATELY UNCHANGED: constructors (create_node, bulk NodeSpecReq) — you cannot create a thing without saying what it is; kind fields that are not node types (artifact_type, unit_type, env_type, flow_type, epoch_type, change_type, pool_type); and delete_node's TypedIdReq — the one destructive read keeps the strict form so a typo'd id that happens to exist under another type cannot delete that other thing. Existing calls that pass the type are unchanged (additive). 27 toolsnaps regenerated; 55 test struct literals moved to Some(...). Five pins in a_node_is_named_by_its_id_and_the_type_is_optional.rs, observed failing first (the fields were String). core 1582/0; skill_lint, fmt, clippy clean; CHANGELOG [Unreleased] carries the shape change."
       }
     },
     {
@@ -166060,6 +166207,16 @@
       }
     },
     {
+      "node_id": "frag:art:test-a-node-is-named-by-its-id-and-the-type-is-optional",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered a_node_is_named_by_its_id_and_the_type_is_optional.rs — verifies/governed_by resolve the type from the id; a collision is refused naming both; an unknown id says so; delete_node still requires the type"
+      }
+    },
+    {
       "node_id": "frag:art:test-a-prescribed-layer-pair-no-longer-refuses",
       "node_type": "Fragment",
       "properties": {
@@ -181676,7 +181833,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:369f6ed76e5d99a3950f5e9ac6b9a5975099622c1cbcce0e5bac2e7386e5537b",
+  "prev_content_hash": "sha256:2d76546b9ff93a071b9e37b7ee04cdb2c223024c876f675517fb0a282deb7c93",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

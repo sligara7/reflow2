@@ -258,11 +258,17 @@ impl ReflowService {
     ) -> Result<CallToolResult, McpError> {
         let mut specs = Vec::with_capacity(req.edges.len());
         for e in req.edges {
+            let from_type = self
+                .resolve_type(e.from_type.as_deref(), &e.from_id, "from_type")
+                .await?;
+            let to_type = self
+                .resolve_type(e.to_type.as_deref(), &e.to_id, "to_type")
+                .await?;
             specs.push(BulkEdgeSpec {
                 edge_type: e.edge_type,
-                from_type: e.from_type,
+                from_type,
                 from_id: e.from_id,
-                to_type: e.to_type,
+                to_type,
                 to_id: e.to_id,
                 props: parse_props(e.props)?,
             });
@@ -284,18 +290,26 @@ impl ReflowService {
     ) -> Result<CallToolResult, McpError> {
         let props = parse_props(req.props)?;
         let mut g = self.write_lock().await?;
+        let to_type =
+            crate::service::resolve_node_type(&g, req.to_type.as_deref(), &req.to_id, "to_type")?;
+        let from_type = crate::service::resolve_node_type(
+            &g,
+            req.from_type.as_deref(),
+            &req.from_id,
+            "from_type",
+        )?;
         let edge = g.create_edge(
             &req.edge_type,
-            &req.from_type,
+            &from_type,
             &req.from_id,
-            &req.to_type,
+            &to_type,
             &req.to_id,
             props,
         );
         match edge {
             Ok(e) => ok_json(EdgeDto::from(e)),
             // Say what would have worked — see `edge_error`.
-            Err(e) => Err(edge_error(&g, &req.from_type, &req.to_type, e)),
+            Err(e) => Err(edge_error(&g, &from_type, &to_type, e)),
         }
     }
 

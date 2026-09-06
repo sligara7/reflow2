@@ -19,15 +19,23 @@
         "type": "string"
       },
       "finding_type": {
-        "description": "Node type of the FINDING now stale — `Verification` (a run that found\nit) or `TemporalFact` (a measurement that recorded it).",
-        "type": "string"
+        "default": null,
+        "description": "Node type of the FINDING now stale — `Verification` (a run that found\nit) or `TemporalFact` (a measurement that recorded it).\nOptional since 2026-09-06: resolved from the id when omitted (the id\nprefix names the type); an id held by more than one type is REFUSED, never\nguessed — pass it then.",
+        "type": [
+          "string",
+          "null"
+        ]
       },
       "from_id": {
         "type": "string"
       },
       "from_type": {
-        "description": "Node type of the RECORD that did the work — `Constraint` (a repair\nwritten up), `ChangeEvent`, `Decision`, whatever your design used.",
-        "type": "string"
+        "default": null,
+        "description": "Node type of the RECORD that did the work — `Constraint` (a repair\nwritten up), `ChangeEvent`, `Decision`, whatever your design used.\nOptional since 2026-09-06: resolved from the id when omitted (the id\nprefix names the type); an id held by more than one type is REFUSED, never\nguessed — pass it then.",
+        "type": [
+          "string",
+          "null"
+        ]
       },
       "note": {
         "default": null,
@@ -39,9 +47,7 @@
       }
     },
     "required": [
-      "from_type",
       "from_id",
-      "finding_type",
       "finding_id"
     ],
     "type": "object"

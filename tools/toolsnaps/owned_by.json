@@ -15,8 +15,12 @@
         "type": "string"
       },
       "from_type": {
-        "description": "Type of the node being owned (e.g. `Component`, `Capability`).",
-        "type": "string"
+        "default": null,
+        "description": "Type of the node being owned (e.g. `Component`, `Capability`).\nOptional since 2026-09-06: resolved from the id when omitted (the id\nprefix names the type); an id held by more than one type is REFUSED, never\nguessed — pass it then.",
+        "type": [
+          "string",
+          "null"
+        ]
       },
       "note": {
         "default": null,
@@ -36,7 +40,6 @@
       }
     },
     "required": [
-      "from_type",
       "from_id",
       "contributor_id"
     ],

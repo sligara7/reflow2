@@ -11,8 +11,12 @@
         "type": "string"
       },
       "node_type": {
-        "description": "`Requirement`, `Capability`, `Component` or `Interface`.",
-        "type": "string"
+        "default": null,
+        "description": "`Requirement`, `Capability`, `Component` or `Interface`.\nOptional since 2026-09-06: resolved from the id when omitted (the id\nprefix names the type); an id held by more than one type is REFUSED, never\nguessed — pass it then.",
+        "type": [
+          "string",
+          "null"
+        ]
       },
       "provenance": {
         "description": "`authored` (default) / `planned` / `inferred` / `healed` /\n`reconciled` / `imported`.",
@@ -28,7 +32,6 @@
       }
     },
     "required": [
-      "node_type",
       "node_id",
       "provenance"
     ],

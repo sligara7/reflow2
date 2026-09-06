@@ -53,13 +53,16 @@
         "type": "string"
       },
       "target_type": {
-        "description": "The spender's node type — anything can spend (Component mass,\nInterface latency, Resource cost).",
-        "type": "string"
+        "default": null,
+        "description": "The spender's node type — anything can spend (Component mass,\nInterface latency, Resource cost).\nOptional since 2026-09-06: resolved from the id when omitted (the id\nprefix names the type); an id held by more than one type is REFUSED, never\nguessed — pass it then.",
+        "type": [
+          "string",
+          "null"
+        ]
       }
     },
     "required": [
       "constraint_id",
-      "target_type",
       "target_id"
     ],
     "type": "object"

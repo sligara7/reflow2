@@ -79,7 +79,13 @@ impl ReflowService {
         Parameters(req): Parameters<PinAtEpochReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await?;
-        g.pin_at_epoch(&req.node_type, &req.node_id, &req.epoch_id)
+        let node_type = crate::service::resolve_node_type(
+            &g,
+            req.node_type.as_deref(),
+            &req.node_id,
+            "node_type",
+        )?;
+        g.pin_at_epoch(&node_type, &req.node_id, &req.epoch_id)
             .map_err(dyno_err)?;
         ok_json(serde_json::json!({
             "pinned": req.node_id, "at_epoch": req.epoch_id
@@ -117,10 +123,22 @@ impl ReflowService {
     ) -> Result<CallToolResult, McpError> {
         let modality = req.modality.as_deref().unwrap_or("expected");
         let mut g = self.write_lock().await?;
-        g.schedule_for(
-            &req.item_type,
+        let target_type = crate::service::resolve_node_type(
+            &g,
+            req.target_type.as_deref(),
+            &req.target_id,
+            "target_type",
+        )?;
+        let item_type = crate::service::resolve_node_type(
+            &g,
+            req.item_type.as_deref(),
             &req.item_id,
-            &req.target_type,
+            "item_type",
+        )?;
+        g.schedule_for(
+            &item_type,
+            &req.item_id,
+            &target_type,
             &req.target_id,
             modality,
             req.recorded_at.as_deref(),
@@ -473,6 +491,12 @@ impl ReflowService {
         // write — event created, third entry refused — would leave a record
         // claiming less than the caller said. Refuse first, write whole.
         for a in &affected {
+            let a_type = crate::service::resolve_node_type(
+                &g,
+                a.node_type.as_deref(),
+                &a.node_id,
+                "node_type",
+            )?;
             match a.action.as_deref() {
                 None | Some("added") | Some("modified") | Some("removed") => {}
                 Some(other) => {
@@ -486,15 +510,12 @@ impl ReflowService {
                     ));
                 }
             }
-            if g.get_node(&a.node_type, &a.node_id)
-                .map_err(dyno_err)?
-                .is_none()
-            {
+            if g.get_node(&a_type, &a.node_id).map_err(dyno_err)?.is_none() {
                 return Err(McpError::invalid_params(
                     format!(
                         "affected node not found: {} {:?}. Nothing was written — every \
                          affected entry must already exist.",
-                        a.node_type, a.node_id
+                        a_type, a.node_id
                     ),
                     None,
                 ));
@@ -513,12 +534,18 @@ impl ReflowService {
             .map_err(dyno_err)?;
         let mut changed = Vec::new();
         for a in &affected {
+            let a_type = crate::service::resolve_node_type(
+                &g,
+                a.node_type.as_deref(),
+                &a.node_id,
+                "node_type",
+            )?;
             let action = a.action.as_deref().unwrap_or("modified");
             g.create_edge(
                 reflow2_core::nodes::edge::CHANGED,
                 reflow2_core::nodes::node::CHANGE_EVENT,
                 &req.id,
-                &a.node_type,
+                &a_type,
                 &a.node_id,
                 reflow2_core::nodes::Props::new().set("action", action),
             )
@@ -571,11 +598,14 @@ impl ReflowService {
             .as_deref()
             .map(|s| parse_enum::<reflow2_core::ChangeSubject>(s, "change subject"))
             .transpose()?;
+        let target_type = self
+            .resolve_type(req.target_type.as_deref(), &req.target_id, "target_type")
+            .await?;
         let rec = ChangeRecord {
             epoch_id: &req.epoch_id,
             change_event_id: &req.change_event_id,
             name: &req.name,
-            target_type: &req.target_type,
+            target_type: &target_type,
             target_id: &req.target_id,
             change_type,
             subject,

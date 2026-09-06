@@ -673,9 +673,15 @@ impl ReflowService {
         Parameters(req): Parameters<RelationCandidatesReq>,
     ) -> Result<CallToolResult, McpError> {
         let g = self.graph.read().await;
+        let node_type = crate::service::resolve_node_type(
+            &g,
+            req.node_type.as_deref(),
+            &req.node_id,
+            "node_type",
+        )?;
         ok_json(
             g.relation_candidates(
-                &req.node_type,
+                &node_type,
                 &req.node_id,
                 req.pool_type.as_deref(),
                 req.limit.unwrap_or(5),

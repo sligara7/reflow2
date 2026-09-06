@@ -99,9 +99,9 @@ async fn withdrawn() -> ReflowService {
     })));
     j!(s.create_edge(Parameters(CreateEdgeReq {
         edge_type: "OBSOLETES".into(),
-        from_type: "Decision".into(),
+        from_type: Some("Decision".into()),
         from_id: "dec:discontinue".into(),
-        to_type: "Capability".into(),
+        to_type: Some("Capability".into()),
         to_id: "cap:store".into(),
         props: None,
     })));
@@ -217,9 +217,9 @@ async fn a_proposed_decision_discontinues_nothing() {
     })));
     j!(s.create_edge(Parameters(CreateEdgeReq {
         edge_type: "OBSOLETES".into(),
-        from_type: "Decision".into(),
+        from_type: Some("Decision".into()),
         from_id: "dec:proposed".into(),
-        to_type: "Capability".into(),
+        to_type: Some("Capability".into()),
         to_id: "cap:maybe".into(),
         props: None,
     })));
@@ -256,9 +256,9 @@ async fn obsoleted_by_a_non_decision_is_not_a_discontinuation() {
     })));
     j!(s.create_edge(Parameters(CreateEdgeReq {
         edge_type: "OBSOLETES".into(),
-        from_type: "Capability".into(),
+        from_type: Some("Capability".into()),
         from_id: "cap:new".into(),
-        to_type: "Capability".into(),
+        to_type: Some("Capability".into()),
         to_id: "cap:old".into(),
         props: None,
     })));
@@ -301,9 +301,9 @@ async fn it_is_not_a_capability_only_field() {
     })));
     j!(s.create_edge(Parameters(CreateEdgeReq {
         edge_type: "OBSOLETES".into(),
-        from_type: "Decision".into(),
+        from_type: Some("Decision".into()),
         from_id: "dec:drop".into(),
-        to_type: "Requirement".into(),
+        to_type: Some("Requirement".into()),
         to_id: "req:gone".into(),
         props: None,
     })));

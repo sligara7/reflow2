@@ -25,15 +25,18 @@
         "type": "string"
       },
       "from_type": {
-        "description": "Source node type (e.g. `Component`, `Release`).",
-        "type": "string"
+        "default": null,
+        "description": "Source node type (e.g. `Component`, `Release`).\nOptional since 2026-09-06: resolved from the id when omitted (the id\nprefix names the type); an id held by more than one type is REFUSED, never\nguessed — pass it then.",
+        "type": [
+          "string",
+          "null"
+        ]
       },
       "resource_id": {
         "type": "string"
       }
     },
     "required": [
-      "from_type",
       "from_id",
       "resource_id"
     ],

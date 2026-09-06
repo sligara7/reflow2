@@ -919,6 +919,63 @@ pub(crate) fn ok_markdown(text: String) -> CallToolResult {
 /// time a variant was added, and is the reason it is done here rather than in
 /// `add_change_event`. Every enum argument on the served surface goes through
 /// this one function, so every one of them gains the list at once.
+impl ReflowService {
+    /// [`resolve_node_type`] under a read lock scoped to this call, so a handler
+    /// can resolve a type BEFORE it takes the write lock without deadlocking.
+    pub(crate) async fn resolve_type(
+        &self,
+        given: Option<&str>,
+        id: &str,
+        field: &str,
+    ) -> Result<String, McpError> {
+        let g = self.graph.read().await;
+        resolve_node_type(&g, given, id, field)
+    }
+}
+
+/// Convention (i), Anthony 2026-09-06: a tool that names an EXISTING node by a
+/// type+id pair takes the type as OPTIONAL. Given, it is used as-is. Omitted,
+/// it is resolved from the id by looking the id up under every type
+/// (`node_types_holding`): zero holders is a plain "no such node"; one is the
+/// answer; MORE THAN ONE is refused naming them — the id prefix is a
+/// convention, not a rule, and a silently wrong node is worse than a required
+/// field. `field` names the parameter in the refusal so the way through is
+/// stated. Constructors and `delete_node` do not use this: you cannot create
+/// a thing without saying what it is, and the one destructive read keeps the
+/// strict form on purpose.
+/// fact:defect-typed-tool-parameter-names-are-inconsistent,
+/// dec:idea-one-way-to-name-which-node-across-the-tool-surface.
+pub(crate) fn resolve_node_type(
+    g: &reflow2_core::DesignGraph,
+    given: Option<&str>,
+    id: &str,
+    field: &str,
+) -> Result<String, McpError> {
+    if let Some(t) = given {
+        return Ok(t.to_string());
+    }
+    let holders = g.node_types_holding(id).map_err(dyno_err)?;
+    match holders.len() {
+        0 => Err(McpError::invalid_params(
+            format!(
+                "no node with id {id:?} exists under any type, so `{field}` cannot be resolved \
+                 from it. Check the id; if you meant to CREATE this node, use its constructor."
+            ),
+            None,
+        )),
+        1 => Ok(holders.into_iter().next().unwrap_or_default()),
+        _ => Err(McpError::invalid_params(
+            format!(
+                "id {id:?} is held by MORE THAN ONE node type ({}). Refusing to guess — pass \
+                 `{field}` to say which you mean. (Ids are meant to be unique across types by \
+                 the typed-prefix convention; this one is not.)",
+                holders.join(", ")
+            ),
+            None,
+        )),
+    }
+}
+
 pub(crate) fn parse_enum<T: serde::de::DeserializeOwned>(
     s: &str,
     what: &str,
@@ -1331,7 +1388,11 @@ pub struct CapabilityStatusReq {
 #[serde(deny_unknown_fields)]
 pub struct ProvenanceReq {
     /// `Requirement`, `Capability`, `Component` or `Interface`.
-    pub node_type: String,
+    /// Optional since 2026-09-06: resolved from the id when omitted (the id
+    /// prefix names the type); an id held by more than one type is REFUSED, never
+    /// guessed — pass it then.
+    #[serde(default)]
+    pub node_type: Option<String>,
     pub node_id: String,
     /// `authored` (default) / `planned` / `inferred` / `healed` /
     /// `reconciled` / `imported`.
@@ -1370,7 +1431,11 @@ pub struct ComponentReq {
 pub struct ContainsReq {
     pub project_id: String,
     /// Child node type (e.g. `Requirement`, `Capability`, `Component`).
-    pub child_type: String,
+    /// Optional since 2026-09-06: resolved from the id when omitted (the id
+    /// prefix names the type); an id held by more than one type is REFUSED, never
+    /// guessed — pass it then.
+    #[serde(default)]
+    pub child_type: Option<String>,
     pub child_id: String,
 }
 
@@ -1422,9 +1487,17 @@ pub struct CreateNodeReq {
 #[serde(deny_unknown_fields)]
 pub struct CreateEdgeReq {
     pub edge_type: String,
-    pub from_type: String,
+    /// Optional since 2026-09-06: resolved from the id when omitted (the id
+    /// prefix names the type); an id held by more than one type is REFUSED, never
+    /// guessed — pass it then.
+    #[serde(default)]
+    pub from_type: Option<String>,
     pub from_id: String,
-    pub to_type: String,
+    /// Optional since 2026-09-06: resolved from the id when omitted (the id
+    /// prefix names the type); an id held by more than one type is REFUSED, never
+    /// guessed — pass it then.
+    #[serde(default)]
+    pub to_type: Option<String>,
     pub to_id: String,
     #[serde(default)]
     pub props: Option<JsonObject>,
@@ -1496,7 +1569,11 @@ pub struct AddArtifactReq {
 pub struct RealizesReq {
     pub artifact_id: String,
     /// Node type the artifact realizes (e.g. `Capability`, `Component`).
-    pub target_type: String,
+    /// Optional since 2026-09-06: resolved from the id when omitted (the id
+    /// prefix names the type); an id held by more than one type is REFUSED, never
+    /// guessed — pass it then.
+    #[serde(default)]
+    pub target_type: Option<String>,
     pub target_id: String,
     /// `stub` / `partial` / `complete` — how much of the thing EXISTS.
     #[serde(default)]
@@ -1518,7 +1595,11 @@ pub struct RealizesReq {
 pub struct DocumentsReq {
     pub artifact_id: String,
     /// Node type the artifact describes (e.g. `Component`, `Interface`, `Project`).
-    pub target_type: String,
+    /// Optional since 2026-09-06: resolved from the id when omitted (the id
+    /// prefix names the type); an id held by more than one type is REFUSED, never
+    /// guessed — pass it then.
+    #[serde(default)]
+    pub target_type: Option<String>,
     pub target_id: String,
     /// What kind of document: `design_doc` / `adr` / `readme` / `runbook` /
     /// `agent_instructions` / `dataflow` / `sequence_diagram` / `arch_diagram`.
@@ -1536,7 +1617,11 @@ pub struct LinkArtifactReq {
     pub location: Option<String>,
     #[serde(default)]
     pub artifact_type: Option<String>,
-    pub target_type: String,
+    /// Optional since 2026-09-06: resolved from the id when omitted (the id
+    /// prefix names the type); an id held by more than one type is REFUSED, never
+    /// guessed — pass it then.
+    #[serde(default)]
+    pub target_type: Option<String>,
     pub target_id: String,
     #[serde(default)]
     pub completeness: Option<String>,
@@ -1621,7 +1706,11 @@ pub struct VerificationKindReq {
 pub struct VerifiesReq {
     pub verification_id: String,
     /// Node type being verified (e.g. `Capability`, `Artifact`, `Component`).
-    pub target_type: String,
+    /// Optional since 2026-09-06: resolved from the id when omitted (the id
+    /// prefix names the type); an id held by more than one type is REFUSED, never
+    /// guessed — pass it then.
+    #[serde(default)]
+    pub target_type: Option<String>,
     pub target_id: String,
 }
 
@@ -1630,7 +1719,11 @@ pub struct VerifiesReq {
 pub struct EvidenceScopeReq {
     pub verification_id: String,
     /// Node type this check verifies (e.g. `Capability`).
-    pub target_type: String,
+    /// Optional since 2026-09-06: resolved from the id when omitted (the id
+    /// prefix names the type); an id held by more than one type is REFUSED, never
+    /// guessed — pass it then.
+    #[serde(default)]
+    pub target_type: Option<String>,
     pub target_id: String,
     /// Parameter names the check HELD FIXED for this claim. Passing an empty
     /// list clears them, which is how a scope recorded in error is withdrawn.
@@ -1646,11 +1739,19 @@ pub struct EvidenceScopeReq {
 pub struct CalibratedAgainstReq {
     /// Node type of the value that was fitted (e.g. `Capability`, `Artifact`,
     /// `Component`, `Constraint`).
-    pub from_type: String,
+    /// Optional since 2026-09-06: resolved from the id when omitted (the id
+    /// prefix names the type); an id held by more than one type is REFUSED, never
+    /// guessed — pass it then.
+    #[serde(default)]
+    pub from_type: Option<String>,
     pub from_id: String,
     /// `Artifact` (a published anchor, a dataset, a measurement record) or
     /// `Verification` (the check whose output the value was fitted to).
-    pub evidence_type: String,
+    /// Optional since 2026-09-06: resolved from the id when omitted (the id
+    /// prefix names the type); an id held by more than one type is REFUSED, never
+    /// guessed — pass it then.
+    #[serde(default)]
+    pub evidence_type: Option<String>,
     pub evidence_id: String,
     /// What was fitted, and how — the part a later reader needs in order to
     /// judge whether the fit still stands.
@@ -1664,11 +1765,19 @@ pub struct CalibratedAgainstReq {
 pub struct InvalidatesReq {
     /// Node type of the RECORD that did the work — `Constraint` (a repair
     /// written up), `ChangeEvent`, `Decision`, whatever your design used.
-    pub from_type: String,
+    /// Optional since 2026-09-06: resolved from the id when omitted (the id
+    /// prefix names the type); an id held by more than one type is REFUSED, never
+    /// guessed — pass it then.
+    #[serde(default)]
+    pub from_type: Option<String>,
     pub from_id: String,
     /// Node type of the FINDING now stale — `Verification` (a run that found
     /// it) or `TemporalFact` (a measurement that recorded it).
-    pub finding_type: String,
+    /// Optional since 2026-09-06: resolved from the id when omitted (the id
+    /// prefix names the type); an id held by more than one type is REFUSED, never
+    /// guessed — pass it then.
+    #[serde(default)]
+    pub finding_type: Option<String>,
     pub finding_id: String,
     /// WHY this record invalidates that finding — the sentence a later reader
     /// needs to judge whether the claim still stands. Skipping it leaves an
@@ -1742,7 +1851,11 @@ pub struct ResourceReq {
 pub struct ReleaseIncludesReq {
     pub release_id: String,
     /// `Artifact` or `Component`.
-    pub target_type: String,
+    /// Optional since 2026-09-06: resolved from the id when omitted (the id
+    /// prefix names the type); an id held by more than one type is REFUSED, never
+    /// guessed — pass it then.
+    #[serde(default)]
+    pub target_type: Option<String>,
     pub target_id: String,
     /// The artifact's content hash AS SHIPPED in this release — frozen at cut
     /// time, so later baseline moves do not rewrite what a past release
@@ -1779,9 +1892,17 @@ pub struct CreateNodesReq {
 #[serde(deny_unknown_fields)]
 pub struct EdgeSpecReq {
     pub edge_type: String,
-    pub from_type: String,
+    /// Optional since 2026-09-06: resolved from the id when omitted (the id
+    /// prefix names the type); an id held by more than one type is REFUSED, never
+    /// guessed — pass it then.
+    #[serde(default)]
+    pub from_type: Option<String>,
     pub from_id: String,
-    pub to_type: String,
+    /// Optional since 2026-09-06: resolved from the id when omitted (the id
+    /// prefix names the type); an id held by more than one type is REFUSED, never
+    /// guessed — pass it then.
+    #[serde(default)]
+    pub to_type: Option<String>,
     pub to_id: String,
     #[serde(default)]
     pub props: Option<JsonObject>,
@@ -1933,10 +2054,18 @@ pub struct AddReadinessReq {
 pub struct GateOnReq {
     /// The increment that cannot deliver yet — a Release, Capability or
     /// Requirement.
-    pub subject_type: String,
+    /// Optional since 2026-09-06: resolved from the id when omitted (the id
+    /// prefix names the type); an id held by more than one type is REFUSED, never
+    /// guessed — pass it then.
+    #[serde(default)]
+    pub subject_type: Option<String>,
     pub subject_id: String,
     /// The enabling technology it waits on.
-    pub target_type: String,
+    /// Optional since 2026-09-06: resolved from the id when omitted (the id
+    /// prefix names the type); an id held by more than one type is REFUSED, never
+    /// guessed — pass it then.
+    #[serde(default)]
+    pub target_type: Option<String>,
     pub target_id: String,
     /// `TRL` or `MRL`.
     pub kind: String,
@@ -1954,7 +2083,11 @@ pub struct GateOnReq {
 #[serde(deny_unknown_fields)]
 pub struct ForecastReadinessReq {
     pub id: String,
-    pub target_type: String,
+    /// Optional since 2026-09-06: resolved from the id when omitted (the id
+    /// prefix names the type); an id held by more than one type is REFUSED, never
+    /// guessed — pass it then.
+    #[serde(default)]
+    pub target_type: Option<String>,
     pub target_id: String,
     /// `TRL` or `MRL`.
     pub kind: String,
@@ -2124,7 +2257,11 @@ pub struct ConstrainsReq {
     pub constraint_id: String,
     /// The spender's node type — anything can spend (Component mass,
     /// Interface latency, Resource cost).
-    pub target_type: String,
+    /// Optional since 2026-09-06: resolved from the id when omitted (the id
+    /// prefix names the type); an id held by more than one type is REFUSED, never
+    /// guessed — pass it then.
+    #[serde(default)]
+    pub target_type: Option<String>,
     pub target_id: String,
     /// This target's spend, in the Constraint's quantity unit. Omitted =
     /// participates but unstated; budget_report reports it, never zeroes it.
@@ -2151,7 +2288,11 @@ pub struct ConstrainsReq {
 #[serde(deny_unknown_fields)]
 pub struct ReviewRelationsReq {
     /// The node whose relations were reviewed (e.g. `Decision`).
-    pub node_type: String,
+    /// Optional since 2026-09-06: resolved from the id when omitted (the id
+    /// prefix names the type); an id held by more than one type is REFUSED, never
+    /// guessed — pass it then.
+    #[serde(default)]
+    pub node_type: Option<String>,
     pub node_id: String,
     /// The relations you judged to be real. Empty is a valid answer — pass
     /// `note` instead.
@@ -2178,7 +2319,11 @@ pub struct RelationLinkReq {
     /// other answers it) / `MASKS` / `VIOLATES`.
     #[schemars(schema_with = "crate::enum_schema::review_relation_req")]
     pub relation: String,
-    pub other_type: String,
+    /// Optional since 2026-09-06: resolved from the id when omitted (the id
+    /// prefix names the type); an id held by more than one type is REFUSED, never
+    /// guessed — pass it then.
+    #[serde(default)]
+    pub other_type: Option<String>,
     pub other_id: String,
     /// WHY this relation is true, in a sentence. Required — a relation with no
     /// evidence is an assertion the next reader can neither check nor overturn.
@@ -2199,7 +2344,11 @@ pub struct BudgetReportReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct PinAtEpochReq {
-    pub node_type: String,
+    /// Optional since 2026-09-06: resolved from the id when omitted (the id
+    /// prefix names the type); an id held by more than one type is REFUSED, never
+    /// guessed — pass it then.
+    #[serde(default)]
+    pub node_type: Option<String>,
     pub node_id: String,
     pub epoch_id: String,
 }
@@ -2214,10 +2363,18 @@ pub struct ScheduleForReq {
     /// nothing to hang a schedule on; the Question `gap_to_prompt` mints when a
     /// gap is put to somebody IS the durable thing, and it is delivered when it
     /// is answered.
-    pub item_type: String,
+    /// Optional since 2026-09-06: resolved from the id when omitted (the id
+    /// prefix names the type); an id held by more than one type is REFUSED, never
+    /// guessed — pass it then.
+    #[serde(default)]
+    pub item_type: Option<String>,
     pub item_id: String,
     /// `DesignEpoch` (time axis) or `Release` (capability-increment axis).
-    pub target_type: String,
+    /// Optional since 2026-09-06: resolved from the id when omitted (the id
+    /// prefix names the type); an id held by more than one type is REFUSED, never
+    /// guessed — pass it then.
+    #[serde(default)]
+    pub target_type: Option<String>,
     pub target_id: String,
     /// `expected` (a plan, the default) or `required` (an obligation whose
     /// miss at arrival is a violation). There is no `achieved`.
@@ -2267,7 +2424,11 @@ pub struct DeployToReq {
 #[serde(deny_unknown_fields)]
 pub struct RequireResourceReq {
     /// Source node type (e.g. `Component`, `Release`).
-    pub from_type: String,
+    /// Optional since 2026-09-06: resolved from the id when omitted (the id
+    /// prefix names the type); an id held by more than one type is REFUSED, never
+    /// guessed — pass it then.
+    #[serde(default)]
+    pub from_type: Option<String>,
     pub from_id: String,
     pub resource_id: String,
     /// `optional` / `recommended` / `required`.
@@ -2341,7 +2502,11 @@ pub struct DecisionReq {
 pub struct AnswersReq {
     /// Type of the design record that answered it — `Decision`,
     /// `Requirement`, `Capability`, whatever the answer actually became.
-    pub from_type: String,
+    /// Optional since 2026-09-06: resolved from the id when omitted (the id
+    /// prefix names the type); an id held by more than one type is REFUSED, never
+    /// guessed — pass it then.
+    #[serde(default)]
+    pub from_type: Option<String>,
     pub from_id: String,
     /// The Question this record answered. Take it from `open_questions`'
     /// `question_id`.
@@ -2355,10 +2520,18 @@ pub struct AnswersReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct GovernedByReq {
-    pub from_type: String,
+    /// Optional since 2026-09-06: resolved from the id when omitted (the id
+    /// prefix names the type); an id held by more than one type is REFUSED, never
+    /// guessed — pass it then.
+    #[serde(default)]
+    pub from_type: Option<String>,
     pub from_id: String,
     /// Usually `Decision` or `DesignRule`.
-    pub to_type: String,
+    /// Optional since 2026-09-06: resolved from the id when omitted (the id
+    /// prefix names the type); an id held by more than one type is REFUSED, never
+    /// guessed — pass it then.
+    #[serde(default)]
+    pub to_type: Option<String>,
     pub to_id: String,
     /// What KIND of governance this is. Omit — the ordinary case — and the
     /// target simply shapes the source. Pass `parks` to record that the
@@ -2417,7 +2590,11 @@ pub struct ContributorReq {
 #[serde(deny_unknown_fields)]
 pub struct AuthoredByReq {
     /// Type of the design node being attributed (e.g. `Decision`, `Requirement`).
-    pub from_type: String,
+    /// Optional since 2026-09-06: resolved from the id when omitted (the id
+    /// prefix names the type); an id held by more than one type is REFUSED, never
+    /// guessed — pass it then.
+    #[serde(default)]
+    pub from_type: Option<String>,
     pub from_id: String,
     /// The `Contributor` whose word this node is.
     pub contributor_id: String,
@@ -2434,7 +2611,11 @@ pub struct AuthoredByReq {
 #[serde(deny_unknown_fields)]
 pub struct OwnedByReq {
     /// Type of the node being owned (e.g. `Component`, `Capability`).
-    pub from_type: String,
+    /// Optional since 2026-09-06: resolved from the id when omitted (the id
+    /// prefix names the type); an id held by more than one type is REFUSED, never
+    /// guessed — pass it then.
+    #[serde(default)]
+    pub from_type: Option<String>,
     pub from_id: String,
     /// The `Contributor` whose area this is.
     pub contributor_id: String,
@@ -3382,7 +3563,11 @@ pub struct AddChangeEventReq {
 #[serde(deny_unknown_fields)]
 pub struct AffectedNodeReq {
     /// The changed node's type (e.g. `Requirement`, `Artifact`).
-    pub node_type: String,
+    /// Optional since 2026-09-06: resolved from the id when omitted (the id
+    /// prefix names the type); an id held by more than one type is REFUSED, never
+    /// guessed — pass it then.
+    #[serde(default)]
+    pub node_type: Option<String>,
     /// The changed node's id.
     pub node_id: String,
     /// `added` / `modified` (default) / `removed`.
@@ -3397,7 +3582,11 @@ pub struct RecordChangeReq {
     pub epoch_id: String,
     pub change_event_id: String,
     pub name: String,
-    pub target_type: String,
+    /// Optional since 2026-09-06: resolved from the id when omitted (the id
+    /// prefix names the type); an id held by more than one type is REFUSED, never
+    /// guessed — pass it then.
+    #[serde(default)]
+    pub target_type: Option<String>,
     pub target_id: String,
     /// Change type key (e.g. `new_feature`).
     pub change_type: String,
@@ -3567,7 +3756,11 @@ pub struct RelationCandidatesReq {
     /// `unreviewed_ideas`.
     pub node_id: String,
     /// Its type (e.g. `Decision`).
-    pub node_type: String,
+    /// Optional since 2026-09-06: resolved from the id when omitted (the id
+    /// prefix names the type); an id held by more than one type is REFUSED, never
+    /// guessed — pass it then.
+    #[serde(default)]
+    pub node_type: Option<String>,
     /// What to rank it against. Omit to compare like with like (the same type
     /// as the subject), which is what working an idea backlog wants.
     #[serde(default)]

@@ -31,6 +31,21 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Changed
+
+- **Naming a node: the type is optional wherever a tool refers to an EXISTING node by a
+  type+id pair** (convention (i), 2026-09-06). `verifies`, `governed_by`, `authored_by`,
+  `create_edge`/`create_edges`, `invalidates`, `realizes`, `schedule_for`, `pin_at_epoch`,
+  `record_change`, `review_relations`, `add_decision.related_to`, `add_change_event.affected`
+  and the rest of the relation surface — 34 fields on 27 request shapes — now take
+  `from_type`/`to_type`/`target_type`/`node_type` as optional. Omitted, the type is resolved
+  from the id (the `req:`/`dec:`/`ver:` prefix names it by convention). An id held by MORE
+  THAN ONE type is REFUSED, naming both, never guessed. Constructors keep the type required
+  (you cannot create a thing without saying what it is), and `delete_node` keeps it
+  required on purpose: the one destructive read. *Consumer: existing calls that pass the
+  type are unchanged; you may now leave it out.*
+
+
 ## [0.48.0] — 2026-09-05
 
 Minor: the tool surface changed shape (a new tool, an optional parameter, a new flag on four bulk
