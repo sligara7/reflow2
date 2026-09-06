@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:8056f9066dab9cf940f93cf61087192cf9ac779896f607e593f7131e601615fa",
+  "content_hash": "sha256:369f6ed76e5d99a3950f5e9ac6b9a5975099622c1cbcce0e5bac2e7386e5537b",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -12717,6 +12717,14 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-how-does-root-cause-become-automatic-rule-hook-detector-or-composition",
+      "properties": {
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-how-does-the-graph-learn-what-a-session-invalidated",
       "properties": {
         "acted_at": "2026-08-23",
@@ -13113,6 +13121,14 @@
     {
       "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-retrospective-review-skill",
+      "properties": {
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-root-cause-runs-at-the-moment-a-cause-is-about-to-be-written-not-on-every-failure",
       "properties": {
         "role": "author"
       },
@@ -22046,6 +22062,42 @@
         "action": "modified"
       },
       "to_id": "art:tools-query"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absence-means-nobody-said-on-a-verification-and-a-plan-holds-a-check-and-a-ruling",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:ingest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absence-means-nobody-said-on-a-verification-and-a-plan-holds-a-check-and-a-ruling",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-temporal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absence-means-nobody-said-on-a-verification-and-a-plan-holds-a-check-and-a-ruling",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-verify"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absence-means-nobody-said-on-a-verification-and-a-plan-holds-a-check-and-a-ruling",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-temporal"
     },
     {
       "edge_type": "CHANGED",
@@ -41609,6 +41661,16 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-how-does-root-cause-become-automatic-rule-hook-detector-or-composition",
+      "properties": {
+        "evidence": "The hook option is only possible because the nudge infrastructure exists (SessionStart, PostToolUse, Stop hooks registered by reflow2_init.py); a PostToolUse on Bash would be one more tuple in that list. Without the nudge there is no in-the-moment channel to the agent.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "cap:stop-nudge-asks-the-graph"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "dec:idea-how-does-the-graph-learn-what-a-session-invalidated",
       "properties": {
         "evidence": "Options C, D and E are all instances of this proposed-and-unbuilt requirement: a discipline that applies mid-task belongs at the TOOL that triggers it, not in a catalogue read once. If it is never accepted, only options A (a detector), B (a skill edit) and F (nothing) remain reachable — so what this question can be answered WITH depends on that one landing first.",
@@ -44287,6 +44349,22 @@
         "evidence": "That requirement's own 'CANDIDATE MECHANISMS, in the order the evidence supports' section is the proto-form of this layering — it separates trigger mechanisms from measurement and names the structural ceiling on the trigger. This node generalises that into four independent failure points so a future proposal can be placed before it is built. The requirement stays live and governing; this is the analysis grown out of it, not a replacement."
       },
       "to_id": "dec:idea-where-does-tool-use-actually-fail-four-layers"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "rule:an-issue-is-root-caused-then-pinned-by-a-test-then-fixed",
+      "properties": {
+        "evidence": "The advisory rule is the older form: it states the intention once, at session start, and its own text records that the fix which prompted it skipped the load-bearing step. This idea is that thought grown up — the rule made to fire at the moment of the work rather than be remembered from the start of it."
+      },
+      "to_id": "dec:idea-root-cause-runs-at-the-moment-a-cause-is-about-to-be-written-not-on-every-failure"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "rule:field-feedback-issues-are-root-caused-and-ideas-are-brainstormed",
+      "properties": {
+        "evidence": "The 2026-09-05 rule made root-cause automatic for FIELD feedback only. Anthony now asks for the same on issues the agent meets while building and testing; this idea is the field rule generalised, with the scope caveat the field rule never needed."
+      },
+      "to_id": "dec:idea-root-cause-runs-at-the-moment-a-cause-is-about-to-be-written-not-on-every-failure"
     },
     {
       "edge_type": "EVOLVES_INTO",
@@ -128372,6 +128450,24 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:absence-means-nobody-said-on-a-verification-and-a-plan-holds-a-check-and-a-ruling",
+      "properties": {
+        "at": "2026-09-06",
+        "note": "FIXED: SCHEDULED_FOR.from enumerates Verification and Decision, on Anthony's word, exactly the one schema line the fact predicted. Both the reporter's case (a planned check) and wish #7 (a pending ruling) now have a home in the plan; the alternative (a future-tense sibling of OCCURS_DURING) was weighed and not taken. Pinned failing-first, with the counter-pin that an Artifact is still refused. NOT CLOSED: the fact's wider observation — an endpoint list enumerated by hand will be found short by the next honest use — stands as a class statement; nothing detects the NEXT missing type before someone hits it."
+      },
+      "to_id": "fact:defect-a-planned-verification-cannot-be-scheduled-because-scheduled-for-does-not-enumerate-it"
+    },
+    {
+      "edge_type": "INVALIDATES",
+      "from_id": "chg:absence-means-nobody-said-on-a-verification-and-a-plan-holds-a-check-and-a-ruling",
+      "properties": {
+        "at": "2026-09-06",
+        "note": "FIXED AT THE ROOT the fact named: the schema no longer declares defaults for Verification.method and .level, so the validator has nothing to inject and a check recorded without them stores nothing for them. Fix (1) of the fact's ranked three; fix (3), the setter, shipped in v0.48.0 as the correction tool. Pinned failing-first. BOUNDS: (a) existing Verifications keep whatever value they carry — a node that read `test` yesterday still does, and the setter is how to correct it; (b) DesignEpoch.status still defaults to `arrived` and still injects — deliberately left, its schema argues the case, Anthony did not rule on it; (c) whether 'stored vs read-supplied' was established is now moot — nothing is declared, so nothing is either."
+      },
+      "to_id": "fact:defect-a-verifications-level-and-method-can-be-set-only-at-birth-so-a-wrong-default-is-on-the-record-forever"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:absorb-core-storage-text",
       "properties": {
         "at": "2026-08-24T21:45:00Z",
@@ -132680,6 +132776,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:test-absence-means-nobody-said-and-a-plan-holds-a-check",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-check-records-what-it-found-separately-from-what-it-is"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:test-check-kit-manifest",
       "properties": {
         "completeness": "complete"
@@ -136073,6 +136178,14 @@
     },
     {
       "edge_type": "TRIGGERS",
+      "from_id": "fact:a-defect-fixed-but-never-closed-on-the-record-was-re-fixed-wrongly-a-day-later",
+      "properties": {
+        "evidence": "The same-day case: a fix built without step ② silenced a designed behaviour and was caught only by existing pins. It is the measurement behind Anthony's 'I don't want to fix a symptom or the wrong thing', and behind the tiered option here — step ② alone would have prevented it."
+      },
+      "to_id": "dec:idea-root-cause-runs-at-the-moment-a-cause-is-about-to-be-written-not-on-every-failure"
+    },
+    {
+      "edge_type": "TRIGGERS",
       "from_id": "fact:authored-by-describes-itself-as-inert-and-is-the-assignment-primitive",
       "properties": {
         "evidence": "Instance ③: the authored_by description says the edge never enlarges a blast radius — true of propagation, and read at the point of writing the edge it means 'nothing computes on this', while approver+proposed drives loop debt."
@@ -136110,6 +136223,14 @@
         "evidence": "Instance ②: describe_schema presents a ranking computed from endpoint enumeration as though it measured how well an edge models the caller's pair, and those two come apart exactly for deliberately-open edges."
       },
       "to_id": "dec:idea-the-load-bearing-prose-is-unchecked-against-the-code-it-describes"
+    },
+    {
+      "edge_type": "TRIGGERS",
+      "from_id": "fact:surfacing-a-known-cause-is-cheap-and-reaches-the-wrong-half",
+      "properties": {
+        "evidence": "The 2026-08-28 costing of a hook that surfaces a known cause at the moment of the symptom is the measurement this question turns on: infrastructure exists, latency 0.08 s, threshold on n=4, 65% coverage, ONE harness, and it triggers on failing tool calls — which the overconfident-fix case never produces. Every mechanism option here is bounded by it."
+      },
+      "to_id": "dec:idea-how-does-root-cause-become-automatic-rule-hook-detector-or-composition"
     },
     {
       "edge_type": "TRIGGERS",
@@ -139529,6 +139650,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:test-absence-means-nobody-said-and-a-plan-holds-a-check",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-absence-means-nobody-said-and-a-plan-holds-a-check"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:test-check-kit-manifest",
       "properties": {
         "action": "created"
@@ -141233,7 +141362,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:246acaadc9a84ebfb91e052266422217bc001251dff9f8d0917c555b835bb85f",
+        "checksum": "sha256:8049a646af44146e5f8f83ed7285196bc83405c0bce2f3cf2c0b8870021ab244",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/ingest.rs",
         "name": "ingest.rs",
@@ -142147,7 +142276,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:9ae6a96c7579f3b8234f2d217d29ffafc6ba78bc1e646237b2e0664fd4f686be",
+        "checksum": "sha256:b219916bc4b2a08140d471db7b068d10d50c64580f3658acc58dfa97121796c9",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/temporal.yaml",
@@ -142161,7 +142290,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:f9fc7d0374520d283a52b51c0b15ed4fb13c77be317080757d72441f3980dc09",
+        "checksum": "sha256:790b9a9e2bd44da5328a8e22f069d78f78fc8a5402f501189837a1295fa9132d",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/verify.yaml",
@@ -142708,6 +142837,17 @@
       }
     },
     {
+      "node_id": "art:test-absence-means-nobody-said-and-a-plan-holds-a-check",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:2ac46b6977a7415dc6f1fb27e031088ed3b80ab66fd988745fe9809bdcd5e285",
+        "location": "crates/reflow2-core/tests/absence_means_nobody_said_and_a_plan_holds_a_check.rs",
+        "name": "absence_means_nobody_said_and_a_plan_holds_a_check.rs — a Verification without method/level stores neither; a check and a ruling can be scheduled into an epoch; an Artifact still cannot",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:test-check-kit-manifest",
       "node_type": "Artifact",
       "properties": {
@@ -143182,7 +143322,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b3d457aca1614637074994e45c7fcba947a9907a524de39c5dc2c56b7d4bc990",
+        "checksum": "sha256:e7b784ecd68866bab5503db063e94c20ffa185e245adb95ba7929b29d49be1f8",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/temporal_tools.rs",
         "name": "tools/temporal_tools.rs",
@@ -146862,6 +147002,18 @@
       "properties": {
         "change_type": "defect_fix",
         "name": "create_node names the properties the schema does not declare, without refusing them — third theme of the triage-fixes increment"
+      }
+    },
+    {
+      "node_id": "chg:absence-means-nobody-said-on-a-verification-and-a-plan-holds-a-check-and-a-ruling",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-09-06",
+        "name": "Verification.method and .level carry no schema default, so a check recorded without them stores nothing for them; and SCHEDULED_FOR admits Verification and Decision, so a plan holds what an increment owes to check and to decide",
+        "rationale": "Both are the ROOT fixes their facts named, ruled on 2026-09-06 after a plain-English walkthrough. (1) fact:defect-a-verifications-level-and-method-can-be-set-only-at-birth-so-a-wrong-default-is-on-the-record-forever ranked three fixes; the symptom fix (a setter) shipped in v0.48.0; this is the cause fix — the schema stops declaring what the tool then asserted. DesignEpoch.status's `arrived` default is deliberately LEFT: its schema description argues it is a record not a choice, and Anthony did not rule on it. Existing stored Verifications keep whatever they carry; only new omissions store nothing. (2) fact:defect-a-planned-verification-cannot-be-scheduled-because-scheduled-for-does-not-enumerate-it: the alternative (a future-tense sibling of OCCURS_DURING) was weighed and buys nothing over the enumeration; SCHEDULED_FOR already carries dec:arrival-delta's commitment semantics, which fit a planned check. WHAT WAS NOT DONE: the Interface `medium` fallback still uses its schema default and still says so — a different field with its own argument, untouched; whether qs's 'partial verification status' needs MORE than this (a `partial` status, or per-clause findings) remains the open idea it was.",
+        "subject": "system",
+        "summary": "TWO SCHEMA RULINGS, Anthony 2026-09-06. (1) schema/verify.yaml: `default: test` removed from Verification.method and `default: unit` from Verification.level, each description saying why. The validator writes every declared default into the store, so an inspection recorded without a method READ `test` forever and no tool could correct it (Alex, v0.47.0; the injector class fixed for Artifact.granularity/volatility on 2026-08-12). Now absence means nobody said. No detector reads Verification.method or .level (every `level` reader is Component-side), so nothing else changes. One ingest test moved with it: an unknown method is still warned about and dropped, but NOTHING stands in for it — its assertion read Some(\"test\") and now reads None; the ingest warning ('using the default') and the const's comment were made true. (2) schema/temporal.yaml: SCHEDULED_FOR.from = [Requirement, Capability, Question, Verification, Decision]. A planned check and a pending ruling can be placed in the increment that owes them; before, the only edge was past-tense OCCURS_DURING and dev_storyflow called using it 'a lie in the hint's own words'. Same class as adding Interface to VERIFIES.to on 2026-08-22. The extraction hint and the schedule_for tool description name the two new from-types. The list is still a list: an Artifact is refused, pinned. Stamp UNMOVED (29 node / 65 edge type names), so no upgrade doc. Pins in absence_means_nobody_said_and_a_plan_holds_a_check.rs, observed failing first (Some(\"test\") stored; InvalidEdge Verification->DesignEpoch). validate_schema OK; core 1582/0; mcp 358/0; toolsnaps regenerated (1); fmt/clippy clean."
       }
     },
     {
@@ -157216,6 +157368,17 @@
       }
     },
     {
+      "node_id": "dec:idea-how-does-root-cause-become-automatic-rule-hook-detector-or-composition",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Recorded as BRAINSTORMING, not as a proposal — the mechanism half of Anthony's 2026-09-06 ask ('make the use of /root-cause more automatic by the agent when it finds an issue in implementing/creating design artifacts or in its testing'). Distinct from dec:idea-should-reflow2-serve-a-root-cause-analysis-method (which decided the method is served). The scope half is dec:idea-root-cause-runs-at-the-moment-a-cause-is-about-to-be-written-not-on-every-failure.\n\nFOUR MECHANISMS, not exclusive:\n(a) A RULE — extend the field-feedback rule (or add a sibling) to issues met while building and testing, with the scope caveat written in. Cheap; travels in the graph to every harness and machine; Anthony has already done this in all his projects. But a rule is read once at the start and states an intention — the skill's own argument for why it exists as a skill and not a rule.\n(b) A HARNESS HOOK — PostToolUse on Bash: detect a test failure or panic in tool_response, and inject 'you are about to explain a failure: get_skill root-cause; step ② first' (or run step ② itself and surface a recorded cause). COSTED 2026-08-28: every part exists, 0.08 s cold, infrastructure registered. A project-level .claude/settings.json hook travels with the repository, unlike a machine memory.\n(c) A DETECTOR, AFTER THE FACT — a ChangeEvent of change_type defect_fix or test_failure_fix whose affected artifacts carry no CAUSES edge and no fact:defect-* dated before it raises 'fixed without a recorded cause' (req:a-fix-says-whether-it-corrected-the-cause is ACCEPTED; this is its detector). And its mirror, found 2026-09-06: a defect fact whose subject artifact changed later with no INVALIDATES from any ChangeEvent — the fixed-but-never-closed case that misled a session into a wrong re-fix. Both directions are the same third leg.\n(d) COMPOSITION — root-cause as a STANDING attribute composed into the skills that meet failures (optimize already routes to it at its trigger; link-artifacts, check-health and capture-session could name it as the door when something fails). Reaches every harness; read at skill load, not at the moment of failure.",
+        "kind": "exploratory",
+        "name": "OPEN — by what MECHANISM does /root-cause become automatic: a rule the agent reads, a harness hook that fires on a failing command, a detector that flags a fix with no recorded cause after the fact, or composition into the skills that meet failures?",
+        "rationale": "COUNTER-ARGUMENTS beside each. (a) alone is what Anthony already has and is asking to go beyond; necessary, insufficient. (b) reaches the WRONG HALF for the case he most cares about: a symptom-fix compiles, its tests pass, it ships green — there is no failing command for a hook to see (fact:surfacing-a-known-cause-is-cheap-and-reaches-the-wrong-half). It reaches one harness (Alex's Grok Build TUI cannot take a hook — dec:idea-the-loop-nudge-exists-for-one-harness-only), its threshold is calibrated on four points and a permissive miscalibration is the wallpaper failure this project has killed three times, and a nudge on every red test teaches skimming. It DOES solve the recurring-known-error class mechanically. (c) does not prevent the wrong fix; it flags it afterwards — but that is also how a rule gets taught: a gap the agent meets at the next loop_status is a sentence read at the moment it matters, and it is the ONLY option that reaches the overconfident-fix case at all, because it keys on the RECORD (a fix with no cause) rather than on a failing command. (d) has the rule's weakness (read-at-load) with better placement. A RANKING IS A FINDING: (c) is the one leg nothing else supplies and it makes (a) enforceable; (a) generalised is one sentence; (b) is a cheap in-the-moment aid for one harness and the known-error class only, and must not be described as answering the symptom-fix problem; (d) is free and partial. The three-legs doctrine says vocabulary reaches a user's design with a typed tool + an instruction + a detector that notices absence — root-cause today has the tool (the skill) and the instruction (the rules) and no detector. Anthony rules.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-how-does-the-graph-learn-what-a-session-invalidated",
       "node_type": "Decision",
       "properties": {
@@ -157709,6 +157872,17 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-04, after the \"did we build this right?\" census (docs/built-right-review.md, sourcing BL-198..BL-203): \"this exercise of retrospective design choices I think should be a skill within reflow2. This exercise of the agent being able to see the design in the current state and say, 'you know what, we could have done this better' is a good thing... I'm not sure, but being retrospective in analyzing what you've done is probably a good thing.\" THE IDEA: a served skill that reads a design in its CURRENT state and reports where it would have been built differently — the counterpart to check-health (which asks how the design is SHAPED) and detect-and-ask (which asks what the design MEANS). HIS CANDIDATE QUESTION LIST, in his own words, four groups: STRUCTURE AND SETUP — did I use the right layout or pattern; is the setup easy to understand; can other people read and change this easily; did I keep things too joined together, or are they separate. SPEED AND EFFICIENCY — does this use too much time, space or power; where is the main slowdown or bottleneck; can I do tasks at the same time to speed things up; did I save data or results I do not need to keep. WEAK POINTS AND RISKS — what happens if a key part breaks right now; did I handle bad inputs or errors safely; where is the system likely to slow down or crash under heavy use; is private data or system access safe from outside threats. FUTURE CHANGES — how hard is it to add new features later; will this break if the size or user count grows ten times bigger; did I leave clear notes or guides for the next person. WHAT ARGUES FOR IT: the census that prompted this produced six backlog rows in one sitting, including BL-199, which explained why BL-176 had been invisible to self-host for eleven releases — so the exercise demonstrably finds things no existing instrument found. Several of his groups already have computations that exist and are not gathered anywhere: modularity and misplaced capabilities and god-components answer \"too joined together\"; granularity_report answers \"did the build separate what the design distinguishes\"; maturity_report's frontier answers \"what did we leave until last\"; ility_report already maps findings onto quality axes and reports NOT INFORMED where nothing computes. WHAT ARGUES AGAINST IT, recorded beside the idea rather than used to kill it: reflow2 has one hard-won rule against exactly this shape — BL-179, where Anthony himself objected that \"avoid monoliths\" is \"kind of a subjective ask\", and the resolution was that reflow2 does not detect monoliths, it detects that two records the design ALREADY HOLDS disagree, and RULES ON NEITHER SIDE. A skill that asks sixteen questions in prose and lets an agent answer them would reintroduce precisely the subjective grading that ruling removed. The strongest form of the idea is therefore the one where every question is backed by a computation over records the design already holds, and any question with no such computation says NOT INFORMED rather than inviting an opinion — which is ility_report's discipline applied to a skill. That is a separate open question and is recorded as dec:idea-retrospective-asks-or-computes. ALSO OPEN, NOT ASKED HERE: whether the reviewer should be the same agent that built the thing (the census was, and its blind spot was real — it took a mechanical three-way diff, not judgement, to find BL-199).",
         "name": "OPEN — should reflow2 serve a retrospective design-review skill?",
         "rationale": "Recorded so the idea is not lost while it is still an idea. Nothing here is intent: no Requirement, no Capability, and no claim that reflow2 will build this. The counter-argument is recorded beside the idea rather than used against it, per the brainstorm skill — an idea killed in conversation loses its reasoning.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-root-cause-runs-at-the-moment-a-cause-is-about-to-be-written-not-on-every-failure",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Recorded as BRAINSTORMING, not as a proposal. Distinct from dec:idea-should-reflow2-serve-a-root-cause-analysis-method, which DECIDED that reflow2 serves the method; this asks when its USE becomes automatic. Anthony, 2026-09-06, in his words: 'I now use the /root-cause skill a lot and it seems to really drive the agent to identifying the real cause and not treating a symptom or fixing the wrong thing. In all my projects now, I've made design rules that basically say, when you identify an issue, run /root-cause. That being said, I'd like to make the use of /root-cause more automatic by the agent when it finds an issue in implementing/creating design artifacts or in its testing. I know there is probably some caveats about which types of issues the /root-cause should be run on, so might not be a blanket rule to always run /root-cause.'\n\nTHE OPTIONS, as they separate:\n(a) A BLANKET RULE — every failure met while building or testing runs the skill. Simplest to state; no judgement at the moment of failure.\n(b) TRIGGER ON THE SKILL'S OWN TELL — not 'something failed' but 'I am about to write down a CAUSE'. The skill's own text says this is the moment ('that's odd', 'it must be X', 'that explains it'), and that its author missed it on a quiet number and produced four wrong causes. Failures whose remedy is IN the error text (a compile error naming the line; a refusal that names the legal values; an unknown-field refusal that lists the fields) never reach a cause — you read, fix, move on — and are exempt by construction.\n(c) A TIERED RULE — ALWAYS run step ② (search the raw error text for a recorded cause; measured cold at 0.08 s) on ANY failure, and proceed to ③–⑤ only when no precedent is found OR when you have formed an explanation. Step ② alone would have prevented both measured failures on this project: the 11-occurrence error of 2026-08-22 whose cause sat in the graph, and the 2026-09-06 re-fix of an already-fixed defect.\n\nWHICH ISSUES (the caveat Anthony named), as a first cut for him to correct: RUN IT on an unpredicted test failure; a measurement or count you cannot account for; a field-reported defect (already the rule); a surprise in your own build ('why did that pass/fail'); and any sentence containing 'because' before a measurement was taken. DO NOT run the full skill on: an error whose remedy is stated in the error itself; a known-class friction whose cause is already recorded (but COUNT the recurrence — five argument-shape refusals in one triage on 2026-09-05 were evidence, not five investigations); a typo. Whether 'known class' is judged by the agent or by step ②'s search is exactly the (b)-vs-(c) difference.",
+        "kind": "exploratory",
+        "name": "OPEN — should /root-cause run automatically when the agent meets an issue while building or testing, and on WHICH kinds of issue? (Anthony: 'probably some caveats … might not be a blanket rule')",
+        "rationale": "COUNTER-ARGUMENTS, recorded beside the options rather than used to kill them. Against (a): the skill 'costs real time', and run on every trivial refusal it becomes a ritual — the 2026-09-05 triage met five argument-shape refusals in an hour; five full investigations would have been absurd, and a step performed ritually stops being performed at all (the skill's own warning: 'if you find yourself agreeing with these steps rather than doing them, the skill has already failed'). Against the EXEMPTIONS in (b) and (c): the skill's own author-case says 'this one is obvious' is the case to run it on, not skip it for — an exemption list is a loophole with a name, and the overconfident-fix case Anthony described (fact:surfacing-a-known-cause-is-cheap-and-reaches-the-wrong-half) produces NO failing command at all, so any trigger keyed on failures misses the half he most wants. That is why (b) keys on the CAUSE moment, not the failure. For (c): it is the cheapest honest floor — 0.08 s per failure, and it catches the recorded-cause class mechanically — but it does not reach the abstract third of defect facts that no error string matches (68 of 192 measured). A RANKING IS A FINDING, NOT A DECISION: (c) as the floor, (b) as the rule of judgement above it, (a) rejected as ritual. Anthony rules; the mechanism by which any of these becomes automatic is the sibling question dec:idea-how-does-root-cause-become-automatic-rule-hook-detector-or-composition.",
         "status": "proposed"
       }
     },
@@ -165772,6 +165946,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered crates/reflow2-core/tests/a_session_with_no_seed_can_find_one.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:test-absence-means-nobody-said-and-a-plan-holds-a-check",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered absence_means_nobody_said_and_a_plan_holds_a_check.rs — a Verification without method/level stores neither; a check and a ruling can be scheduled into an epoch; an Artifact still cannot"
       }
     },
     {
@@ -181341,7 +181525,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:a2574843315159bd9457632674b82aa37548d52f7229a7a0cdfcf4f6ff87c58d",
+  "prev_content_hash": "sha256:8056f9066dab9cf940f93cf61087192cf9ac779896f607e593f7131e601615fa",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

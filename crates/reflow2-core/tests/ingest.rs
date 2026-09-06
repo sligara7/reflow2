@@ -1392,8 +1392,8 @@ fn an_extracted_check_is_planned_and_does_not_silence_the_gap() {
     );
 }
 
-/// An unknown method warns and falls back rather than taking the node down —
-/// the same bargain the interface `medium` makes.
+/// An unknown method warns and is DROPPED rather than taking the node down —
+/// the same bargain the interface `medium` makes. Nothing stands in for it.
 #[test]
 fn an_unknown_verification_method_warns_and_defaults() {
     let mut g = DesignGraph::open_in_memory().unwrap();
@@ -1406,10 +1406,15 @@ fn an_unknown_verification_method_warns_and_defaults() {
         .unwrap();
 
     let v = g.get_node(node::VERIFICATION, "ver:load").unwrap().unwrap();
+    // Since 2026-09-06 `method` has NO schema default (Anthony's ruling: a
+    // default was written into the store as if chosen and could not be
+    // corrected — fact:defect-a-verifications-level-and-method-can-be-set-only-
+    // at-birth...). An unknown method is dropped and NOTHING stands in: absence
+    // means nobody said. Before this the assertion here read `Some("test")`.
     assert_eq!(
         v.properties.get("method").and_then(|x| x.as_str()),
-        Some("test"),
-        "the schema default stands in"
+        None,
+        "an unknown method is dropped and nothing is stored in its place"
     );
     assert!(
         report.warnings.iter().any(|w| w.contains("vibes")),
