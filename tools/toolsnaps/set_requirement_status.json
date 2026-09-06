@@ -12,6 +12,13 @@
       },
       "status": {
         "description": "`proposed` (default) / `accepted` / `deferred` / `dropped` / `met`.",
+        "enum": [
+          "proposed",
+          "accepted",
+          "deferred",
+          "dropped",
+          "met"
+        ],
         "type": "string"
       }
     },

@@ -35,6 +35,12 @@
       "conformance": {
         "default": null,
         "description": "`unchecked` (default) / `reviewed` / `verified` — whether anyone\nconfirmed the artifact still does what the target requires. Registering\na file and checking it against its requirement are different acts, and\nonly the second one is evidence.",
+        "enum": [
+          "unchecked",
+          "reviewed",
+          "verified",
+          null
+        ],
         "type": [
           "string",
           "null"

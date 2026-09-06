@@ -29,6 +29,13 @@ use crate::graph::DesignGraph;
 use crate::nodes::{Props, edge, node};
 use std::collections::{BTreeMap, BTreeSet};
 
+/// What a run of a check can report. ONE list, read by the reconcile check
+/// below AND by the tool schema (`reflow2_mcp::enum_schema`), so the values a
+/// harness is shown are the values the handler accepts. It is NOT
+/// `PRODUCES.outcome` (pass/fail/partial/error) — the enum guard in
+/// tools/toolsnap.py caught exactly that mis-sourcing on 2026-09-06.
+pub const OBSERVED_OUTCOMES: &[&str] = &["passed", "failed", "skipped"];
+
 /// How a capability's claim to work is checked — three-valued on purpose
 /// (BL-73, from the first extensive field trial). A brownfield adopt with a
 /// real per-service test suite read as "0/20 capabilities verified": the
@@ -894,7 +901,7 @@ impl DesignGraph {
         let mut covered: Vec<String> = Vec::new();
 
         for obs in observed {
-            if !matches!(obs.outcome.as_str(), "passed" | "failed" | "skipped") {
+            if !OBSERVED_OUTCOMES.contains(&obs.outcome.as_str()) {
                 rejected.push(format!(
                     "{}: outcome '{}' is not one of passed/failed/skipped",
                     obs.verification_id, obs.outcome

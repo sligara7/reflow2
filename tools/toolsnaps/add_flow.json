@@ -33,6 +33,16 @@
       "flow_type": {
         "default": null,
         "description": "`process` (default) / `data_flow` / `control_flow` / `decision_flow` /\n`capture` / `retrieval` / `generation`.",
+        "enum": [
+          "process",
+          "data_flow",
+          "control_flow",
+          "decision_flow",
+          "capture",
+          "retrieval",
+          "generation",
+          null
+        ],
         "type": [
           "string",
           "null"

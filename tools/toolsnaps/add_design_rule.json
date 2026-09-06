@@ -9,7 +9,7 @@
     "properties": {
       "category": {
         "default": null,
-        "description": "`tech_stack` / `convention` / `material` / `methodology` / `standard` /\n`style`. Optional.",
+        "description": "A free-text grouping (the schema does not fix the set). Common values in\nuse, for example: tech_stack, convention, material, methodology,\nstandard, style.",
         "type": [
           "string",
           "null"

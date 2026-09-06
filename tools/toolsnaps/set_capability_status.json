@@ -12,6 +12,12 @@
       },
       "status": {
         "description": "`planned` (default) / `in_progress` / `realized` / `verified`.",
+        "enum": [
+          "planned",
+          "in_progress",
+          "realized",
+          "verified"
+        ],
         "type": "string"
       }
     },

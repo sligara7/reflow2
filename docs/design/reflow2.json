@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:369f6ed76e5d99a3950f5e9ac6b9a5975099622c1cbcce0e5bac2e7386e5537b",
+  "content_hash": "sha256:2d76546b9ff93a071b9e37b7ee04cdb2c223024c876f675517fb0a282deb7c93",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -3437,6 +3437,14 @@
         "evidence": "The earlier one saw this coming and wrote the reopening condition into its own deferral list: \"world-scoping IF SIMULTANEOUS IN-GRAPH AoA PROVES NEEDED\". Its argument against world-scoping was explicitly conditional on the benefit being \"not yet needed\". This is the first field report supplying that condition, with a measured cost rather than a preference."
       },
       "to_id": "fact:the-fork-ask-is-a-deferred-branch-whose-reopening-condition-is-now-met"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "dec:the-transition-is-two-halves-and-reads-are-the-unscheduled-one",
+      "properties": {
+        "evidence": "That decision said the failing half of 'documents to graph' is READING THE GRAPH BACK, and that reads were the unscheduled half. A topic view is exactly a read-back surface — the earlier decision saw this need coming before anyone asked for a skill by name."
+      },
+      "to_id": "dec:idea-a-topic-view-shows-what-the-design-holds-about-one-subject-read-only"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -12086,6 +12094,14 @@
         "role": "author"
       },
       "to_id": "who:alex"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-a-topic-view-shows-what-the-design-holds-about-one-subject-read-only",
+      "properties": {
+        "role": "author"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -30082,6 +30098,33 @@
         "action": "modified"
       },
       "to_id": "dec:does-enforced-default-to-gate-blocking"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:enum-fields-publish-their-legal-values-from-the-schema",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:enum-fields-publish-their-legal-values-from-the-schema",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:enum-fields-publish-their-legal-values-from-the-schema",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:verify"
     },
     {
       "edge_type": "CHANGED",
@@ -128531,6 +128574,15 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:enum-fields-publish-their-legal-values-from-the-schema",
+      "properties": {
+        "at": "2026-09-06",
+        "note": "THE ENUM HALF IS FIXED AT THE CAUSE the fact named: the published schema now carries the legal values for 38 fields, read at listing time from the one schema the validator enforces (34) or from the handler's own const (4), so the first call can be right and published-vs-enforced cannot drift by construction. A toolsnap guard fails the build when a hand-listed value set publishes no enum or lists a value the enum lacks — it reported 41 fields on the pre-change snapshots and caught a mis-sourcing inside this very change. NOT CLOSED: the fact's OTHER HALF — sibling shape inconsistency (how a tool names a node, whether a constructor takes a status, relation-tool shapes) — is untouched here; convention (i), type optional resolved from the id, is Anthony's ruling and the next PR (fact:defect-sibling-constructors-disagree-on-how-to-name-a-node-and-what-status-it-lands-in, fact:defect-typed-tool-parameter-names-are-inconsistent). Also unmeasured, as the fact said: how many harnesses show the schema enum to the agent before a call."
+      },
+      "to_id": "fact:defect-the-schema-discovery-tax-enum-fields-are-strings-so-the-published-schema-cannot-name-their-values"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:lineage-message-names-its-decision",
       "properties": {
         "at": "2026-08-20",
@@ -130896,6 +130948,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:enum-schema",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:mcp-surface"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:evidence-quality-instrument",
       "properties": {
         "completeness": "complete"
@@ -132782,6 +132843,15 @@
         "conformance": "unchecked"
       },
       "to_id": "cap:a-check-records-what-it-found-separately-from-what-it-is"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:test-an-enum-field-publishes-its-legal-values",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:mcp-surface"
     },
     {
       "edge_type": "REALIZES",
@@ -138826,6 +138896,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:enum-schema",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:enum-schema"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:evidence-quality-instrument",
       "properties": {
         "action": "created"
@@ -139655,6 +139733,14 @@
         "action": "created"
       },
       "to_id": "art:test-absence-means-nobody-said-and-a-plan-holds-a-check"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:test-an-enum-field-publishes-its-legal-values",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-an-enum-field-publishes-its-legal-values"
     },
     {
       "edge_type": "YIELDED",
@@ -140965,6 +141051,17 @@
       }
     },
     {
+      "node_id": "art:enum-schema",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:cb55f5ee7bc0a1170d393265c4109b89d361311129902de4a31fdf3e0efcbea4",
+        "location": "crates/reflow2-mcp/src/enum_schema.rs",
+        "name": "enum_schema.rs — one schema_with fn per enum request field, reading legal values from the compiled-in schema (or the handler's own const) at tool-listing time",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:evidence-quality-instrument",
       "node_type": "Artifact",
       "properties": {
@@ -142137,7 +142234,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:0daeee854ac1a2341a58771d78fb4692587d29d0c2cf724f72c6ed83d260bf05",
+        "checksum": "sha256:855c8c441514f6c182743c55055595a29e04788fcf342e3e5b0bc835745dc910",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/schema.rs",
         "name": "crates/reflow2-core/src/schema.rs",
@@ -142432,7 +142529,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:d07764e8cb664c5c889214285ab1c707f2c3fa3e6835c0a62442a15fc0dcb566",
+        "checksum": "sha256:c3808516a07ba676b4ab82fdf1217cb42264d0e84a10d2f3bd5e930efe8af025",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -142844,6 +142941,17 @@
         "checksum": "sha256:2ac46b6977a7415dc6f1fb27e031088ed3b80ab66fd988745fe9809bdcd5e285",
         "location": "crates/reflow2-core/tests/absence_means_nobody_said_and_a_plan_holds_a_check.rs",
         "name": "absence_means_nobody_said_and_a_plan_holds_a_check.rs — a Verification without method/level stores neither; a check and a ruling can be scheduled into an epoch; an Artifact still cannot",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:test-an-enum-field-publishes-its-legal-values",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:bce7143174d0a8d295bb69c2820b4c2c60d46d3acf92d932d02f6ec1df94cc28",
+        "location": "crates/reflow2-mcp/tests/an_enum_field_publishes_its_legal_values.rs",
+        "name": "an_enum_field_publishes_its_legal_values.rs — the published enum equals the schema's values, an Option field is nullable, a required one is not, a code-only set reuses the handler's const",
         "status": "realized"
       }
     },
@@ -143546,7 +143654,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:e61345f4214bae7ffcc72bde334e7c815149846565e8b37227b2b5228b4cdeab",
+        "checksum": "sha256:fd00cd40b2d3deb951af1ce05413e63b2fd843590932db8afd5bd6a61d1cbb2e",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/verify.rs",
         "name": "verify.rs",
@@ -151227,6 +151335,18 @@
       }
     },
     {
+      "node_id": "chg:enum-fields-publish-their-legal-values-from-the-schema",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-09-06",
+        "name": "Every enum-valued request field publishes its legal values in the tool schema, sourced from the compiled-in design schema at listing time — and a toolsnap guard fails when a hand-listed value set publishes no enum or drifts from it",
+        "rationale": "fact:defect-the-schema-discovery-tax-enum-fields-are-strings-so-the-published-schema-cannot-name-their-values named the cause: validation lived in the code path, not the type, so the schema a harness shows before the first call could not know the values (~24 refusals in one dev_storyflow session; Alex; qs). The fix the fact proposed was 'declare the enum in the TYPE'; this does it WITHOUT a second copy — the values are read from the one schema the validator enforces, so drift between published and enforced is impossible by construction for the 34 schema-sourced fields, and for the 4 code-only sets the enum reads the handler's own const. WHY A GUARD AND NOT JUST THE ANNOTATIONS: the annotations are a list maintained by hand (38 today), and the class of defect here is precisely 'a list maintained by hand with nothing checking it'; the guard keys on the doc comment's own hand-listed values, so a new enum field that forgets its annotation fails toolsnap, and a doc that lists a value the schema dropped fails too. It proved itself within the hour on the outcome mis-sourcing. NOT MEASURED: how many harnesses surface the JSON schema enum to the agent before a call — Claude Code does (its tool definitions carry `enum`); Alex's Grok TUI is unknown. WHAT IS NOT DONE: the sibling-inconsistency half of the same fact (naming a node, taking a status, relation shapes) — convention (i) is the next PR; the description hand-lists stay (the guard now checks them against the enum rather than replacing them), a later pass could trim them.",
+        "subject": "system",
+        "summary": "Ruling #3a, Anthony 2026-09-06. THE MECHANISM: reflow2_core::schema::enum_values(type, prop) reads a property's legal values from the compiled-in schema (node types, then edge types); reflow2_mcp::enum_schema provides one `schema_with` function per field (a macro per line) that calls it at tool-listing time and publishes {type: string|[string,null], enum: [...]}. The field stays a String for serde, so deserialization and the refusal path (which already names legal values) are unchanged — only what is PUBLISHED changes. The doc comment survives (verified: description retained beside the enum). 38 fields annotated: 34 from the schema (Capability/Requirement/Verification/Decision status, lineage, provenance, artifact_type, method, level, unit_type, env_type, flow_type, Constraint.category, Contributor.kind, the five Interface spec enums, change_type, epoch_type, quality_target; REALIZES completeness/conformance, CONSTRAINS.basis, DEPLOYED_TO.status, REQUIRES_RESOURCE.criticality, AUTHORED_BY.role, CHANGED.action) and 4 from the SAME const the handler enforces (review_relations' relation <- relate::REVIEW_RELATIONS; report_manual_work's diagnosis <- manual_work::DIAGNOSES; reconcile_verification's outcome <- a NEW verify::OBSERVED_OUTCOMES, which the handler's check now reads too; documents' doc_kind and propose_heal's strategy as consts in enum_schema). Two fields that READ like value sets are free strings in the schema by design (DesignRule.category, Component.level) — their docs were reworded as examples, not enumerated. THE GUARD: tools/toolsnap.py enum_invariants — a STRING property whose description hand-lists three or more backticked values separated by / or | must publish an enum containing every one of them; walks $defs (schemars hoists item structs there); one exemption on the record (export_graph.path lists the RESULT's values). Run against the committed pre-change snapshots it reported 41 fields — the failing-first observation. It then caught a mis-sourcing in this very change: outcome was wired to PRODUCES.outcome (pass/fail/partial/error) where the handler accepts passed/failed/skipped — fixed by the shared const. 36 toolsnaps changed. Three pins in an_enum_field_publishes_its_legal_values.rs. core 1580/0, mcp 361/0, skill_lint OK, fmt/clippy clean. No request SHAPE changed."
+      }
+    },
+    {
       "node_id": "chg:every-leaf-component-points-at-its-file",
       "node_type": "ChangeEvent",
       "properties": {
@@ -156590,6 +156710,17 @@
         "decision": "🕐 DEFERRED 2026-08-14 BY ANTHONY — THE SHAPE ONLY, AND DEFERRED IS NOT DECLINED. Asked which form vertical linking should take, he chose to **fix `req:decomposition-covers-its-parent` FIRST and decide the shape after**: every option below makes decomposition more load-bearing, the coverage hole is already measured with a field instance, and settling a tier shape on top of a broken roll-up would bake the defect into precisely the boundary where nobody can see it.\n\n⭐ **AND THE ASK IS NARROWER THAN \"OPTIONS, NONE CHOSEN\" SUGGESTS — ANTHONY CLARIFIED WHAT ALEX MEANS:** *\"I think my brother is more indicating that each tier is its own reflow2 graph that others are linked to vertically.\"* ⇒ **ALEX IS ASKING FOR OPTION (b): A GRAPH PER TIER, WITH VERTICAL LINKS BETWEEN THEM.** Not one graph with levels, and not a rendering. When this re-opens, (b) is the stated starting position rather than an open field — the others stay on the record as roads, not as equals.\n\n⇒ WHAT IS SETTLED: nothing about the shape.\n⇒ WHAT IS NOW LIVE WORK: `req:decomposition-covers-its-parent` (moved to **accepted** on his word) → `cap:decomposition-coverage-is-asked` (planned, `cmp:detect`). ⚠️ Its gap acknowledgement `decision:ack:1947285897ace4dc` — *\"deferred on Anthony's word 2026-07-28… a handshake to design rather than a check to write\"* — was WITHDRAWN, since a parked gap and a planned capability cannot both describe the same work.\n\n🎯 **RE-ASK TRIGGER, NAMED SO THIS CANNOT DEGRADE INTO NEVER ASKED AGAIN** (the shape `dec:the-other-uaf-domains-wait-for-a-project-that-needs-them` set): re-open when the coverage check is BUILT and one of — (i) a real design is split across an authority boundary and someone needs a parent's number to mean something, (ii) `dec:idea-intent-crosses-designs` is settled, since binding-versus-visible is this question in disguise, or (iii) a second user asks for tiers.\n⚠️ WHAT WOULD MAKE THIS DEFERRAL WRONG: someone building a tier hierarchy in prose or file layout while waiting — the workaround that looks like patience and costs exactly what the deferral was meant to avoid.\n📌 NOT ANSWERED BY THE RENDERING ROUTE: `dec:idea-a-view-can-slice-by-altitude-not-only-by-aspect` covers what a reader is SHOWN. It composes with this and does not substitute for it — a first version of that node claimed otherwise and was corrected.\n\n═══════════════════════════════════════════════\n\nRECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Alex (`who:alex`) 2026-08-14, sharpened by Anthony's framing.\n\nALEX'S WORDS: *\"I found myself wanting a top level graph and then graphs for the different components. The top level graph could hold information about the project as a whole and be aware of the graphs for the subcomponents of the graph (UI, API, e2e tests, etc.). In those graphs, we can put the fine details of those components, such as storing information about how migrations are performed in the database. The top level graph could contain domain knowledge that is relevant to all the graphs. This is the system of systems concept.\"*\n\nANTHONY'S FRAMING: *\"instead of being peer-to-peer, this is more tier-to-tier. If peer-to-peer linking is 'horizontal', this idea is more 'vertical' between tiers… you could have a 'leadership' level that doesn't need to know every detail… a 'management' layer that knows more… a 'worker' graph that knows details. At each layer, it is probably the exchange of breadth for depth. In the military, we had 'strategic', 'operational', and 'tactical'.\"*\n\n═══ ⭐⭐ WHY VERTICAL IS NOT HORIZONTAL REUSED ═══\n\n**HORIZONTAL is an INTERFACE.** Two designs meet at a contract; neither contains the other; the coordinate is *\"I designed against your published surface at this hash\"* (`cap:mirror-surface`). A mirror is a REFERENCE.\n**VERTICAL is a DECOMPOSITION.** The upper tier holds intent, the lower tier holds requirements decomposed FROM it, and delivery ROLLS UP — a containment-and-satisfaction relation with arithmetic attached.\n\n⇒ **reflow2 HAS decomposition INSIDE a graph and mirroring ACROSS graphs. It does not have decomposition ACROSS graphs.** That is the gap, and the existing federation work does not close it.\n\n═══ 🛑 MEASURED CORRECTION TO THE RECORD — the parent direction is NOT built ═══\n\n`dec:idea-intent-crosses-designs` asserts *\"THE MECHANISM FOR THE PARENT DIRECTION ALREADY EXISTS… ANTICIPATED and BUILT, not missing.\"* **Too strong:**\n  1. `report.rs` rolls delivery up via `decomposed_children` = `self.incoming(parent_id, DECOMPOSES)` (`graph.rs:1143`).\n  2. Reads are scoped to the bound `graph_id` and `create_edge` resolves BOTH endpoints in scope — a `DECOMPOSES` edge between two graphs cannot be created at all.\n  3. ⇒ **Nothing rolls up across a design boundary.** `cap:derived-completion` is verified WITHIN one graph.\n  4. Mirroring does not rescue it: `export_surface` publishes published Interfaces, the artifacts that SPECIFY/REALIZE them, published Requirements and the Project — **no Verifications.** Delivery = satisfied AND realized AND PASSING CHECK, so **the evidence is exactly the part that does not cross.**\n📌 That node warns *\"READ THE EXPORT, NOT THE SUMMARY\"* after making this error once, then makes it again a paragraph later about a different mechanism.\n\n═══ ⭐⭐ THE TIER FRAMING TURNS A KNOWN DEFECT INTO A WORSE ONE ═══\n\n`req:decomposition-covers-its-parent`: reflow2 rolls delivery UP and **never checks that children COVER the parent** — a parent split into two children addressing a tenth reports DELIVERED once both close. Measured instance: reflow's monolith split into 01a–01f, `context_management` and `self_improvement` present in all six originals, absent from all seven children, **unnoticed for months**.\n\n🛑 **\"EXCHANGE OF BREADTH FOR DEPTH\" IS THE MECHANISM THAT HIDES IT.** A decomposition by SUBJECT drops what belongs to no single subject; trading breadth for depth is that drop made deliberately, tier after tier. Inside one graph a reader sees both sides. **Across an authority boundary they cannot: the strategic tier sees `delivered` and is structurally unable to see what fell between the children** — and it is the tier least likely to look.\n\n═══ 📌 WHAT THE DESIGN ALREADY HOLDS ═══\n\n  · `dec:nested-graphs` (ACCEPTED 2026-07-25) — a graph per OWNERSHIP boundary, `level`s inside; *a graph per system* rejected as a RULE because every seam costs a coordinate, a roll-up and a freshness check. **Alex's UI/API/e2e split is depth under one owner, so under today's rule it is ONE graph — which is exactly the rule his ask strains.**\n  · **THE LEADERSHIP TIER IS ALREADY THERE, EXPRESSED HORIZONTALLY** — that decision calls `docs/org-scale-vision.md`'s *\"one graph the whole company plans in\"* a road not taken and replaces it with *\"the CEO's objectives are one design that others MIRROR.\"* Anthony's point is that a mirror may be the wrong shape, and the roll-up finding says he is right: mirroring gives visibility, not arithmetic.\n  · `dec:idea-intent-crosses-designs` — requirements already cross; the **Decision** cannot. Its unanswered question is this one in disguise: **is a mirrored Decision BINDING on the far side, or only VISIBLE?** Binding is what a tier means; visible is what a peer means.\n  · `dec:idea-many-graphs-one-store`, `dec:idea-one-owner-many-projects` — both open, both the ownership rule strained by people with depth and no authority boundary.\n\n🛑 MODELLING TRAP TO NAME BEFORE ANYONE BUILDS: `Component.level` (component → subsystem → system → system_of_systems → enterprise) is an **ASSEMBLY** ladder — *part of*. Strategic/operational/tactical is an **AUTHORITY and ABSTRACTION** ladder — a tactical design is not PART OF a strategic one, it REALIZES it. Reusing `level` conflates two relations, and `hierarchy_issues` already reads it the assembly way.\n\n📌 UAF, CHECKED RATHER THAN ASSUMED: `dec:the-other-uaf-domains-wait-for-a-project-that-needs-them` names its re-ask trigger for the four DOMAINS (information, materiel, personnel, states), not for layering. **This note does not trigger it.**\n\nOPTIONS — SHAPE DEFERRED, and (b) is what Alex is asking for.\n(a) ANSWER WITH THE ACCEPTED RULE — one graph, `level`s, `cap:scoped-analysis`. Correct today; occurred to neither user.\n(b) ⭐ **ALEX'S ASK** — VERTICAL AS A FIRST-CLASS RELATION: a graph per tier, cross-graph decomposition, intent down and EVIDENCE up. Cost: cross-graph edges, or a mirror carrying verification state; reopens `create_edge`'s endpoint invariant, which is deliberate and well-argued.\n(c) VERTICAL AS MIRRORING, AS TODAY. Cheapest, already decided; the parent can compute nothing about its children.\n(d) TIERS INSIDE ONE GRAPH — an abstraction ladder distinct from `Component.level`, tiers as a projection. No separate ownership or write locks, which is most of what a tier split is for.\n(e) ⭐ **CHOSEN AS SEQUENCING, NOT AS SHAPE** — fix the coverage check first.\n\n📌 ALEX'S OWN EXAMPLE IS STILL UNHOUSED: *\"how migrations are performed in the database\"* is not a requirement, capability or interface — operational know-how attached to a component, with nowhere to go today but an Artifact or a requirement's prose.",
         "name": "DEFERRED, SHAPE ONLY — vertical (tier-to-tier) linking: Alex means A GRAPH PER TIER linked vertically (option b), and the FORM waits behind the decomposition coverage check",
         "rationale": "Captured under the brainstorm skill, sharpened by Anthony's vertical/horizontal framing, deferred as to shape on his word, and then narrowed again when he clarified that Alex means a graph per tier rather than levels or a view. That clarification is recorded on the options list itself rather than only in prose, because the re-ask trigger will bring someone back to this node months from now and \"options, none chosen\" would hand them a blank field when the user has in fact stated one. The re-ask trigger follows the precedent `dec:the-other-uaf-domains-wait-for-a-project-that-needs-them` set, including naming what would make the deferral wrong. The measured correction to `dec:idea-intent-crosses-designs` lives here rather than being edited into that node, because withdrawing another node's claim deserves its own visibility rather than a quiet overwrite.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-a-topic-view-shows-what-the-design-holds-about-one-subject-read-only",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Recorded as BRAINSTORMING, not as a proposal. Anthony, 2026-09-06, in his words: 'adding /topic or /topic-search skill — some times, I just want to see what's already within the reflow2 graph and it isn't a brainstorm or link-artifacts type effort — I just want to see something about a topic.' Distinct from dec:idea-should-the-open-list-be-rendered-in-the-owners-language-rather-than-the-graphs (qs): that renders the OPEN LIST in the owner's vocabulary; this renders the design's knowledge of ONE SUBJECT. Same family (a projection in the reader's words), different question.\n\nWHAT EXISTS TODAY, and why it is not this: search_design returns ranked hits — ids and names, one dimension; get_node reads one node; where-am-i reads back the WHOLE design's state; relation_candidates and surprising_connections work outward from one node. None answers 'what do we know about X' as a digest: what is decided about it and why, what is still open, what has been measured, what realizes or checks it, and what is conspicuously absent.\n\nOPTIONS:\n(a) A SERVED SKILL `topic`: given a phrase, the agent runs search_design (top N), groups hits by node type, pulls each hit's one-hop neighbourhood and status, and renders a bounded digest in the owner's vocabulary (the lens), with a line for what the search did NOT find. No writes. Cheapest to ship; costs 5-10 calls per topic and the rendering is the agent's, so two agents could render the same topic differently.\n(b) A TOOL `topic_report(query)` computed server-side: same digest, deterministic, one call, reply-cost bounded by the server; a skill becomes a one-line instruction leg pointing at it. The SE doctrine on record — views are PURE PROJECTIONS of the graph and a renderer's fill-ins are defects — argues the projection belongs in the server, not in an agent's prose.\n(c) EXTEND where-am-i with a `topic` argument, reusing its read-back voice. Cheap; but where-am-i is the whole-design orientation and its skill text is already long — mixing scopes makes both harder to read.\n(d) NOTHING NEW: search_design + get_node already do it by hand. Counter: that is the by-hand path Anthony is asking to stop taking, and the same by-hand rendering was what the qs user asked for on the open list.",
+        "kind": "exploratory",
+        "name": "OPEN — should reflow2 serve a /topic (or /topic-search) view: what the design already holds about ONE subject, read-only, in the owner's words — when the ask is neither a brainstorm nor a link-artifacts effort, just 'show me something about X'?",
+        "rationale": "COUNTER-ARGUMENTS beside each. (a) rests entirely on search quality, and search misses on the agent's phrasing were measured this week (dec:idea-search-expands-with-the-projects-own-domain-vocabulary): a topic digest built on a miss is a confident wrong answer about what the design holds, worse than a raw hit list, so the 'what was not found' line is load-bearing, not decoration. (a) also adds reply cost — fact:defect-the-reply-costs-more-than-the-answer is open — and a digest per topic that is not bounded becomes the verbose-reply problem in a new coat. (b) is the honest home by the projection doctrine and by cost (one call, server-bounded), but it is a new tool on a surface whose sibling-inconsistency is the largest open friction class — it must take the ONE naming convention Anthony just ruled (type optional, resolved from the id) from day one. (c) is free and wrong-scoped. (d) is what he has. A RANKING IS A FINDING, NOT A DECISION: (b) with a thin skill as its instruction leg, and the not-found line mandatory; (a) as the prototype that discovers what the digest should contain before the tool freezes it. Anthony rules — and nothing here is built until he does.",
         "status": "proposed"
       }
     },
@@ -164919,6 +165050,16 @@
       }
     },
     {
+      "node_id": "frag:art:enum-schema",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered enum_schema.rs — one schema_with fn per enum request field, reading legal values from the compiled-in schema (or the handler's own const) at tool-listing time"
+      }
+    },
+    {
       "node_id": "frag:art:evidence-quality-instrument",
       "node_type": "Fragment",
       "properties": {
@@ -165956,6 +166097,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered absence_means_nobody_said_and_a_plan_holds_a_check.rs — a Verification without method/level stores neither; a check and a ruling can be scheduled into an epoch; an Artifact still cannot"
+      }
+    },
+    {
+      "node_id": "frag:art:test-an-enum-field-publishes-its-legal-values",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered an_enum_field_publishes_its_legal_values.rs — the published enum equals the schema's values, an Option field is nullable, a required one is not, a code-only set reuses the handler's const"
       }
     },
     {
@@ -181525,7 +181676,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:8056f9066dab9cf940f93cf61087192cf9ac779896f607e593f7131e601615fa",
+  "prev_content_hash": "sha256:369f6ed76e5d99a3950f5e9ac6b9a5975099622c1cbcce0e5bac2e7386e5537b",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

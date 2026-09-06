@@ -20,6 +20,12 @@
       "strategy": {
         "default": null,
         "description": "`conservative` | `balanced` | `aggressive` (default `balanced`).",
+        "enum": [
+          "conservative",
+          "balanced",
+          "aggressive",
+          null
+        ],
         "type": [
           "string",
           "null"

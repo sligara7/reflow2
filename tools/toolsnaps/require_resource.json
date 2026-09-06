@@ -10,6 +10,12 @@
       "criticality": {
         "default": null,
         "description": "`optional` / `recommended` / `required`.",
+        "enum": [
+          "optional",
+          "recommended",
+          "required",
+          null
+        ],
         "type": [
           "string",
           "null"

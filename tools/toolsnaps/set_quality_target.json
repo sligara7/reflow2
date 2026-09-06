@@ -14,6 +14,17 @@
       },
       "quality_target": {
         "description": "The quality axis this design is aiming at — `reliability` /\n`performance` / `maintainability` / `security` / `scalability` /\n`observability` / `testability` / `coupling` / `maturity`.\n\nTHERE IS NO WAY TO SAY \"none\", and that is deliberate: absence means\nnobody was asked, which is a different fact from a design that weighed\nthe question and chose one. `quality_target_unstated` reads exactly that\ndifference, and a `none` value would erase it.",
+        "enum": [
+          "reliability",
+          "performance",
+          "maintainability",
+          "security",
+          "scalability",
+          "observability",
+          "testability",
+          "coupling",
+          "maturity"
+        ],
         "type": "string"
       }
     },

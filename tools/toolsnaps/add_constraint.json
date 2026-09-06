@@ -10,6 +10,17 @@
       "category": {
         "default": null,
         "description": "`technical` (default) / `business` / `operational` / `physical` /\n`regulatory` / `budget` / `schedule` / `kpp`.",
+        "enum": [
+          "technical",
+          "business",
+          "operational",
+          "physical",
+          "regulatory",
+          "budget",
+          "schedule",
+          "kpp",
+          null
+        ],
         "type": [
           "string",
           "null"

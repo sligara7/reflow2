@@ -16,6 +16,12 @@
       "status": {
         "default": null,
         "description": "`planned` / `active` / `rolled_back`.",
+        "enum": [
+          "planned",
+          "active",
+          "rolled_back",
+          null
+        ],
         "type": [
           "string",
           "null"

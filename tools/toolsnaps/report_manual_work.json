@@ -17,6 +17,12 @@
       },
       "diagnosis": {
         "description": "WHY it was hand-rolled: `tool_missing` / `tool_not_found` / `tool_refused` / `unknown`.",
+        "enum": [
+          "tool_missing",
+          "tool_not_found",
+          "tool_refused",
+          "unknown"
+        ],
         "type": "string"
       },
       "reflow2_tool": {

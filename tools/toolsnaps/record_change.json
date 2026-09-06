@@ -9,6 +9,11 @@
     "properties": {
       "action": {
         "description": "`added` | `modified` | `removed`.",
+        "enum": [
+          "added",
+          "modified",
+          "removed"
+        ],
         "type": "string"
       },
       "change_event_id": {
