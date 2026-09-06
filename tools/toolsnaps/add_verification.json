@@ -21,6 +21,13 @@
       "level": {
         "default": null,
         "description": "`unit` (default) / `integration` / `system` / `acceptance`.",
+        "enum": [
+          "unit",
+          "integration",
+          "system",
+          "acceptance",
+          null
+        ],
         "type": [
           "string",
           "null"
@@ -29,6 +36,17 @@
       "method": {
         "default": null,
         "description": "HOW the check was made. `test` (default) / `analysis` / `inspection` /\n`demonstration` — the four canonical methods — plus `measurement`,\n`observation` (watching it run in the field, unchanged), `review` and\n`simulation`.",
+        "enum": [
+          "test",
+          "review",
+          "simulation",
+          "inspection",
+          "measurement",
+          "analysis",
+          "demonstration",
+          "observation",
+          null
+        ],
         "type": [
           "string",
           "null"

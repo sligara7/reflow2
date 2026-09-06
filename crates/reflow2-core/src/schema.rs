@@ -179,6 +179,32 @@ fn field(line: &str, name: &str) -> Option<String> {
 }
 
 /// The value the schema declares for a property when nobody said otherwise.
+/// The legal values of an enum property, read from the compiled-in schema —
+/// `node_types` first, then `edge_types`. `None` when the type or property is
+/// unknown or the property is not an enum.
+///
+/// This is how the tool surface publishes enum values WITHOUT a second copy of
+/// them in Rust: a `schema_with` function on a request field calls this at
+/// tool-listing time, so the JSON schema a harness reads carries exactly the
+/// list the validator enforces. Before this, every enum field published as a
+/// bare string and its values were learned by failing on them (~24 refusals in
+/// one dev_storyflow session; fact:defect-the-schema-discovery-tax-enum-fields-
+/// are-strings-so-the-published-schema-cannot-name-their-values).
+pub fn enum_values(type_name: &str, property: &str) -> Option<Vec<String>> {
+    let schema = PARSED_SCHEMA.as_ref().ok()?;
+    let def = schema
+        .node_types
+        .get(type_name)
+        .and_then(|n| n.properties.get(property))
+        .or_else(|| {
+            schema
+                .edge_types
+                .get(type_name)
+                .and_then(|e| e.properties.get(property))
+        })?;
+    def.values.clone()
+}
+
 pub fn schema_default(node_type: &str, property: &str) -> Option<String> {
     declared_defaults()
         .into_iter()

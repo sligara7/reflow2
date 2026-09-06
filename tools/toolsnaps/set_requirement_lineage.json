@@ -9,6 +9,11 @@
     "properties": {
       "lineage": {
         "description": "`original` (default) / `decomposed` / `derived`.",
+        "enum": [
+          "original",
+          "decomposed",
+          "derived"
+        ],
         "type": "string"
       },
       "requirement_id": {

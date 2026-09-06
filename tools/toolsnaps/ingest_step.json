@@ -43,6 +43,15 @@
       "provenance": {
         "default": null,
         "description": "How this content entered the graph (`authored` / `imported` / …).",
+        "enum": [
+          "authored",
+          "planned",
+          "inferred",
+          "healed",
+          "reconciled",
+          "imported",
+          null
+        ],
         "type": [
           "string",
           "null"

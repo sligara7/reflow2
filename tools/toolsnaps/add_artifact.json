@@ -10,6 +10,20 @@
       "artifact_type": {
         "default": null,
         "description": "`code` (default) / `spec` / `document` / `diagram` / `model` / …",
+        "enum": [
+          "code",
+          "config",
+          "document",
+          "spec",
+          "diagram",
+          "model",
+          "drawing",
+          "test_result",
+          "binary",
+          "data",
+          "asset",
+          null
+        ],
         "type": [
           "string",
           "null"

@@ -10,6 +10,19 @@
       "auth": {
         "default": null,
         "description": "AUTHENTICATION mechanism — how a caller PROVES WHO IT IS: `none` /\n`api_key` / `oauth2` / `jwt` / `mtls` / `basic` / `signature` /\n`kerberos` / `physical`. Read by seam pairing (a consumer requiring\n`oauth2` must not pair with a provider offering `none`). NOT\nAUTHORIZATION: which role or actor MAY use this interface has no field\nyet (req:vocabulary-covers-personnel, deferred) — record that as an\nActor with INTERACTS_WITH to this Interface, and the role in\n`description`. A role name here is refused as an unknown mechanism.",
+        "enum": [
+          "none",
+          "api_key",
+          "oauth2",
+          "jwt",
+          "mtls",
+          "basic",
+          "signature",
+          "kerberos",
+          "physical",
+          "unspecified",
+          null
+        ],
         "type": [
           "string",
           "null"
@@ -37,6 +50,21 @@
       "medium": {
         "default": null,
         "description": "How the contract is CARRIED: `REST` / `gRPC` / `json_rpc` / `event` /\n`graphql` / `cli` / `library` / `data` / `mechanical` / `electrical` /\n`human`.\nUnset reads as `unspecified`, which is deliberately not a claim that a\nboundary is REST. Worth setting even when the rest of the spec is\nunknown: two boundaries can only be wired together if their media match,\nand a `library` or `data` foundation is linked into its callers rather\nthan called across, so it cannot fail on its own and the structural\ndetectors need to know that to avoid reporting it as a single point of\nfailure.",
+        "enum": [
+          "REST",
+          "gRPC",
+          "json_rpc",
+          "event",
+          "graphql",
+          "cli",
+          "library",
+          "data",
+          "mechanical",
+          "electrical",
+          "human",
+          "unspecified",
+          null
+        ],
         "type": [
           "string",
           "null"
@@ -53,6 +81,14 @@
       "paradigm": {
         "default": null,
         "description": "`synchronous` / `asynchronous` / `streaming` / `batch`.",
+        "enum": [
+          "synchronous",
+          "asynchronous",
+          "streaming",
+          "batch",
+          "unspecified",
+          null
+        ],
         "type": [
           "string",
           "null"
@@ -61,6 +97,20 @@
       "payload_format": {
         "default": null,
         "description": "`json` / `xml` / `protobuf` / `avro` / `msgpack` / `binary` / `text` /\n`csv` / `form` / `none`.",
+        "enum": [
+          "json",
+          "xml",
+          "protobuf",
+          "avro",
+          "msgpack",
+          "binary",
+          "text",
+          "csv",
+          "form",
+          "none",
+          "unspecified",
+          null
+        ],
         "type": [
           "string",
           "null"
@@ -77,6 +127,17 @@
       "transport_security": {
         "default": null,
         "description": "`none` / `tls` / `mtls` / `ipsec` / `vpn` / `air_gapped` / `physical`.",
+        "enum": [
+          "none",
+          "tls",
+          "mtls",
+          "ipsec",
+          "vpn",
+          "air_gapped",
+          "physical",
+          "unspecified",
+          null
+        ],
         "type": [
           "string",
           "null"

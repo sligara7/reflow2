@@ -29,6 +29,12 @@
       "kind": {
         "default": null,
         "description": "`person` (default) / `automated_agent` / `organization`.",
+        "enum": [
+          "person",
+          "automated_agent",
+          "organization",
+          null
+        ],
         "type": [
           "string",
           "null"

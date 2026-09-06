@@ -10,6 +10,14 @@
       "epoch_type": {
         "default": null,
         "description": "`baseline` | `revision` | `milestone` | `incident_response` | `release_cut`.",
+        "enum": [
+          "baseline",
+          "revision",
+          "milestone",
+          "incident_response",
+          "release_cut",
+          null
+        ],
         "type": [
           "string",
           "null"

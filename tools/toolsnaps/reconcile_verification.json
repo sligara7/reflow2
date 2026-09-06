@@ -10,6 +10,11 @@
         "properties": {
           "outcome": {
             "description": "What the run reported: `passed` / `failed` / `skipped`. Anything else\nis rejected by name; the rest of the batch still processes.",
+            "enum": [
+              "passed",
+              "failed",
+              "skipped"
+            ],
             "type": "string"
           },
           "verification_id": {

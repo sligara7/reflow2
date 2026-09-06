@@ -17,7 +17,7 @@
       },
       "level": {
         "default": null,
-        "description": "Keep only Components at this rung of the decomposition ladder —\n`component` / `subsystem` / `system` / `system_of_systems` /\n`enterprise`. THIS IS HOW YOU ASK FOR \"the top-level boxes\".\n\nIt exists because the obvious alternative is wrong. `Component.level`\nhas always been indexed and populated, and with no way to ASK by it\nevery caller wrote their own filter — usually by walking `CONTAINS` and\ntaking the parentless nodes, which returns leaves that were never wired\nto a parent rather than top-level boxes. Measured on reflow2's own\ndesign 2026-08-18: by level, the top tier is 8 subsystems; by spine\nposition it is 2 leaves. Both queries look reasonable and they disagree.\n\nOnly `Component` carries a level; asking for one on any other type is\nrefused rather than silently returning nothing.",
+        "description": "Keep only Components at this rung of the decomposition ladder —\ncomponent, subsystem, system, system_of_systems, /// enterprise. THIS IS HOW YOU ASK FOR \"the top-level boxes\".\n\nIt exists because the obvious alternative is wrong. Component.level\nhas always been indexed and populated, and with no way to ASK by it\nevery caller wrote their own filter — usually by walking CONTAINS and\ntaking the parentless nodes, which returns leaves that were never wired\nto a parent rather than top-level boxes. Measured on reflow2's own\ndesign 2026-08-18: by level, the top tier is 8 subsystems; by spine\nposition it is 2 leaves. Both queries look reasonable and they disagree.\n\nOnly Component carries a level; asking for one on any other type is\nrefused rather than silently returning nothing.",
         "type": [
           "string",
           "null"

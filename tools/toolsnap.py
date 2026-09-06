@@ -30,6 +30,7 @@ import argparse
 import difflib
 import json
 import os
+import re
 import shutil
 import sys
 import time
@@ -209,6 +210,86 @@ def family_invariants(live: dict[str, dict]) -> int:
     return problems
 
 
+BACKTICK_TOKEN = re.compile(r"`([a-z][a-z0-9_]*)`")
+
+
+def _walk_properties(schema: object, path: str = ""):
+    """Yield (path, property-schema) for every property at any depth."""
+    if isinstance(schema, dict):
+        props = schema.get("properties")
+        if isinstance(props, dict):
+            for name, sub in props.items():
+                yield f"{path}.{name}" if path else name, sub
+                yield from _walk_properties(sub, f"{path}.{name}" if path else name)
+        for key in ("items", "anyOf", "oneOf", "allOf"):
+            if key in schema:
+                yield from _walk_properties(schema[key], path)
+        # schemars hoists item structs into $defs; their enums must be checked too.
+        for key in ("$defs", "definitions"):
+            defs = schema.get(key)
+            if isinstance(defs, dict):
+                for name, sub in defs.items():
+                    yield from _walk_properties(sub, f"{path}.{key}.{name}" if path else f"{key}.{name}")
+    elif isinstance(schema, list):
+        for sub in schema:
+            yield from _walk_properties(sub, path)
+
+
+# String properties whose description hand-lists values that are NOT the
+# property's own legal set — each with the reason, so the exemption is a
+# judgement on the record rather than a silenced check.
+ENUM_EXEMPT: dict[tuple[str, str], str] = {
+    ("export_graph", "path"): "the list is the RESULT's `wrote` values, not the input path's",
+}
+
+
+def enum_invariants(live: dict[str, dict]) -> int:
+    """A property whose description hand-lists its values publishes them as an enum.
+
+    The tell for a hand-listed set is three or more backticked lowercase tokens
+    in the description ("`test` / `analysis` / `inspection`"). Before 2026-09-06
+    every such field published as a bare string and its values were learned by
+    failing on them (~24 refusals in one dev_storyflow session). Now the enum is
+    sourced from the compiled-in schema, and this check is the guard: a field
+    that lists values but publishes no enum has been missed, and a listed value
+    absent from the enum is documentation that drifted from the schema.
+    fact:defect-the-schema-discovery-tax-enum-fields-are-strings-so-the-published-schema-cannot-name-their-values
+    """
+    problems = 0
+    for tool in sorted(live):
+        for path, prop in _walk_properties(live[tool].get("inputSchema")):
+            if not isinstance(prop, dict):
+                continue
+            # Only a STRING-typed property can be an enum; a map or array whose
+            # description names its allowed keys or values is a different shape.
+            ptype = prop.get("type")
+            types = ptype if isinstance(ptype, list) else [ptype]
+            if "string" not in types:
+                continue
+            if (tool, path) in ENUM_EXEMPT:
+                continue
+            desc = prop.get("description") or ""
+            tokens = BACKTICK_TOKEN.findall(desc)
+            listed = [t for t in tokens if t not in ("true", "false", "null")]
+            if len(listed) < 3:
+                continue
+            enum = prop.get("enum")
+            if not isinstance(enum, list):
+                # Only flag when the tokens look like a VALUE SET: separated by / or |
+                if not re.search(r"`\s*(/|\|)\s*`", desc):
+                    continue
+                problems += 1
+                print(f"\n=== ENUM DRIFT: {tool}.{path} hand-lists values but publishes no enum ===")
+                print(f"  listed: {listed[:12]}")
+                continue
+            missing = [t for t in listed if t not in enum and re.search(r"`" + re.escape(t) + r"`\s*(/|\|)|(/|\|)\s*`" + re.escape(t) + r"`", desc)]
+            if missing:
+                problems += 1
+                print(f"\n=== ENUM DRIFT: {tool}.{path} lists values the enum does not carry ===")
+                print(f"  in description but not in enum: {missing}")
+    return problems
+
+
 def check(live: dict[str, dict]) -> int:
     if not os.path.isdir(SNAP_DIR):
         print(f"no toolsnaps directory at {SNAP_DIR}\n"
@@ -243,6 +324,7 @@ def check(live: dict[str, dict]) -> int:
         print("  a committed toolsnap has no matching served tool")
 
     family = family_invariants(live)
+    family += enum_invariants(live)
 
     print("\n" + "=" * 62)
     problems = len(drifted) + len(added) + len(removed) + family

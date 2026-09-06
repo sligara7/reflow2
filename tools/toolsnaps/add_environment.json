@@ -10,6 +10,16 @@
       "env_type": {
         "default": null,
         "description": "`production` (default) / `development` / `staging` / `field` / `lab` / `physical_site`.",
+        "enum": [
+          "development",
+          "staging",
+          "production",
+          "field",
+          "lab",
+          "physical_site",
+          "simulation",
+          null
+        ],
         "type": [
           "string",
           "null"

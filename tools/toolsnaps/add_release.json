@@ -20,6 +20,15 @@
       "unit_type": {
         "default": null,
         "description": "`container` (default) / `package` / `binary` / `bundle` / `physical_build` / `publication`.",
+        "enum": [
+          "container",
+          "package",
+          "binary",
+          "bundle",
+          "physical_build",
+          "publication",
+          null
+        ],
         "type": [
           "string",
           "null"

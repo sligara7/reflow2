@@ -10,6 +10,12 @@
       "basis": {
         "default": null,
         "description": "`estimated` (default) / `evidence` / `measured`.",
+        "enum": [
+          "estimated",
+          "evidence",
+          "measured",
+          null
+        ],
         "type": [
           "string",
           "null"

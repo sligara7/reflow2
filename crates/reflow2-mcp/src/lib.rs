@@ -6,6 +6,7 @@
 
 pub mod degraded;
 pub mod dto;
+pub mod enum_schema;
 pub mod handshake;
 pub mod latent;
 pub mod mcp_http;

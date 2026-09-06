@@ -13,6 +13,17 @@
       "doc_kind": {
         "default": null,
         "description": "What kind of document: `design_doc` / `adr` / `readme` / `runbook` /\n`agent_instructions` / `dataflow` / `sequence_diagram` / `arch_diagram`.",
+        "enum": [
+          "design_doc",
+          "adr",
+          "readme",
+          "runbook",
+          "agent_instructions",
+          "dataflow",
+          "sequence_diagram",
+          "arch_diagram",
+          null
+        ],
         "type": [
           "string",
           "null"

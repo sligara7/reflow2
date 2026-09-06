@@ -13,6 +13,12 @@
       },
       "status": {
         "description": "`proposed` (opens a decision point) / `accepted` / `superseded` /\n`rejected`.",
+        "enum": [
+          "proposed",
+          "accepted",
+          "superseded",
+          "rejected"
+        ],
         "type": "string"
       }
     },

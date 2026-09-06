@@ -24,6 +24,14 @@
       },
       "status": {
         "description": "`planned` / `passing` / `failing` / `skipped` / `blocked`.",
+        "enum": [
+          "planned",
+          "passing",
+          "failing",
+          "skipped",
+          "blocked",
+          "superseded"
+        ],
         "type": "string"
       },
       "verification_id": {

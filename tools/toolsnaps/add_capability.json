@@ -39,6 +39,13 @@
       "status": {
         "default": null,
         "description": "`planned` (default) / `in_progress` / `realized` / `verified`. Leave it\nunset when designing forwards — a new capability really is planned.\nSet it when recording a capability that already exists, so the graph\ndoes not assert that a shipped system is entirely unbuilt.",
+        "enum": [
+          "planned",
+          "in_progress",
+          "realized",
+          "verified",
+          null
+        ],
         "type": [
           "string",
           "null"

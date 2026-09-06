@@ -12,6 +12,12 @@
           "action": {
             "default": null,
             "description": "`added` / `modified` (default) / `removed`.",
+            "enum": [
+              "added",
+              "modified",
+              "removed",
+              null
+            ],
             "type": [
               "string",
               "null"

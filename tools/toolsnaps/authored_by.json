@@ -29,6 +29,12 @@
       "role": {
         "default": null,
         "description": "`author` (default) / `reviewer` / `approver`.",
+        "enum": [
+          "author",
+          "reviewer",
+          "approver",
+          null
+        ],
         "type": [
           "string",
           "null"

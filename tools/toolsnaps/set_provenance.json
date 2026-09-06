@@ -16,6 +16,14 @@
       },
       "provenance": {
         "description": "`authored` (default) / `planned` / `inferred` / `healed` /\n`reconciled` / `imported`.",
+        "enum": [
+          "authored",
+          "planned",
+          "inferred",
+          "healed",
+          "reconciled",
+          "imported"
+        ],
         "type": "string"
       }
     },

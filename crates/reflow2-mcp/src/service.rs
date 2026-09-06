@@ -1213,8 +1213,9 @@ pub struct DesignRuleReq {
     /// The rule itself — the convention or standard the project adopts.
     #[serde(default)]
     pub statement: Option<String>,
-    /// `tech_stack` / `convention` / `material` / `methodology` / `standard` /
-    /// `style`. Optional.
+    /// A free-text grouping (the schema does not fix the set). Common values in
+    /// use, for example: tech_stack, convention, material, methodology,
+    /// standard, style.
     #[serde(default)]
     pub category: Option<String>,
     /// Whether breaking the rule is GATE-BLOCKING. THREE STATES and the third is
@@ -1245,6 +1246,7 @@ pub struct CapabilityReq {
     /// Set it when recording a capability that already exists, so the graph
     /// does not assert that a shipped system is entirely unbuilt.
     #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::capability_status_opt")]
     pub status: Option<String>,
     /// Ids you read and judged DIFFERENT from this one, when reflow2 has
     /// already told you something close exists. Naming them is the deliberate
@@ -1260,6 +1262,7 @@ pub struct CapabilityReq {
 pub struct RequirementStatusReq {
     pub requirement_id: String,
     /// `proposed` (default) / `accepted` / `deferred` / `dropped` / `met`.
+    #[schemars(schema_with = "crate::enum_schema::requirement_status_req")]
     pub status: String,
 }
 
@@ -1311,6 +1314,7 @@ pub struct ReleaseClaimReq {
 pub struct RequirementLineageReq {
     pub requirement_id: String,
     /// `original` (default) / `decomposed` / `derived`.
+    #[schemars(schema_with = "crate::enum_schema::requirement_lineage_req")]
     pub lineage: String,
 }
 
@@ -1319,6 +1323,7 @@ pub struct RequirementLineageReq {
 pub struct CapabilityStatusReq {
     pub capability_id: String,
     /// `planned` (default) / `in_progress` / `realized` / `verified`.
+    #[schemars(schema_with = "crate::enum_schema::capability_status_req")]
     pub status: String,
 }
 
@@ -1330,6 +1335,7 @@ pub struct ProvenanceReq {
     pub node_id: String,
     /// `authored` (default) / `planned` / `inferred` / `healed` /
     /// `reconciled` / `imported`.
+    #[schemars(schema_with = "crate::enum_schema::requirement_provenance_req")]
     pub provenance: String,
 }
 
@@ -1478,6 +1484,7 @@ pub struct AddArtifactReq {
     pub name: Option<String>,
     /// `code` (default) / `spec` / `document` / `diagram` / `model` / …
     #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::artifact_type_opt")]
     pub artifact_type: Option<String>,
     /// Path / URI / content-hash of the real deliverable (lives outside the graph).
     #[serde(default)]
@@ -1493,6 +1500,7 @@ pub struct RealizesReq {
     pub target_id: String,
     /// `stub` / `partial` / `complete` — how much of the thing EXISTS.
     #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::realizes_completeness_opt")]
     pub completeness: Option<String>,
     /// `unchecked` (default) / `reviewed` / `verified` — whether anyone
     /// confirmed the artifact still DOES WHAT THE TARGET REQUIRES. A different
@@ -1501,6 +1509,7 @@ pub struct RealizesReq {
     /// actually checked: `unchecked` is the honest reading, and the count of
     /// unchecked links is the point (`evidence_report`).
     #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::realizes_conformance_opt")]
     pub conformance: Option<String>,
 }
 
@@ -1514,6 +1523,7 @@ pub struct DocumentsReq {
     /// What kind of document: `design_doc` / `adr` / `readme` / `runbook` /
     /// `agent_instructions` / `dataflow` / `sequence_diagram` / `arch_diagram`.
     #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::doc_kind_opt")]
     pub doc_kind: Option<String>,
 }
 
@@ -1535,6 +1545,7 @@ pub struct LinkArtifactReq {
     /// a file and checking it against its requirement are different acts, and
     /// only the second one is evidence.
     #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::realizes_conformance_opt")]
     pub conformance: Option<String>,
     /// Provenance stamped on the Fragment (default `authored`).
     #[serde(default)]
@@ -1559,9 +1570,11 @@ pub struct VerificationReq {
     /// `observation` (watching it run in the field, unchanged), `review` and
     /// `simulation`.
     #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::verification_method_opt")]
     pub method: Option<String>,
     /// `unit` (default) / `integration` / `system` / `acceptance`.
     #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::verification_level_opt")]
     pub level: Option<String>,
     /// What the check IS, at length — the account a reader needs that does not
     /// fit in `name`. PUT IT HERE RATHER THAN IN `name`: on reflow2's own graph
@@ -1578,6 +1591,7 @@ pub struct VerificationReq {
 pub struct VerificationStatusReq {
     pub verification_id: String,
     /// `planned` / `passing` / `failing` / `skipped` / `blocked`.
+    #[schemars(schema_with = "crate::enum_schema::verification_status_req")]
     pub status: String,
     #[serde(default)]
     pub last_run_at: Option<String>,
@@ -1693,6 +1707,7 @@ pub struct ReleaseReq {
     pub version: Option<String>,
     /// `container` (default) / `package` / `binary` / `bundle` / `physical_build` / `publication`.
     #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::release_unit_type_opt")]
     pub unit_type: Option<String>,
 }
 
@@ -1704,6 +1719,7 @@ pub struct EnvironmentReq {
     pub name: Option<String>,
     /// `production` (default) / `development` / `staging` / `field` / `lab` / `physical_site`.
     #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::environment_env_type_opt")]
     pub env_type: Option<String>,
     /// Cloud region, host, physical site, or jurisdiction.
     #[serde(default)]
@@ -1981,6 +1997,7 @@ pub struct AddFlowReq {
     /// `process` (default) / `data_flow` / `control_flow` / `decision_flow` /
     /// `capture` / `retrieval` / `generation`.
     #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::flow_type_opt")]
     pub flow_type: Option<String>,
     /// Capability name or id where the flow begins.
     #[serde(default)]
@@ -2013,6 +2030,7 @@ pub struct ObservedVerificationReq {
     pub verification_id: String,
     /// What the run reported: `passed` / `failed` / `skipped`. Anything else
     /// is rejected by name; the rest of the batch still processes.
+    #[schemars(schema_with = "crate::enum_schema::observed_outcome_req")]
     pub outcome: String,
 }
 
@@ -2073,6 +2091,7 @@ pub struct AddConstraintReq {
     /// `technical` (default) / `business` / `operational` / `physical` /
     /// `regulatory` / `budget` / `schedule` / `kpp`.
     #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::constraint_category_opt")]
     pub category: Option<String>,
     /// For a numeric budget: unit-bearing name, e.g. `mass_kg`, `latency_ms`.
     #[serde(default)]
@@ -2113,6 +2132,7 @@ pub struct ConstrainsReq {
     pub contribution: Option<f64>,
     /// `estimated` (default) / `evidence` / `measured`.
     #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::constrains_basis_opt")]
     pub basis: Option<String>,
     /// WHEN the contribution was observed. Pass it whenever `basis` is
     /// `measured` — that is the strongest claim the schema offers and the only
@@ -2156,6 +2176,7 @@ pub struct RelationLinkReq {
     /// said for different reasons) / `ANTICIPATES` (the earlier one saw this
     /// coming) / `OBSOLETES` / `RISKS` / `MITIGATES` (one is a hazard, the
     /// other answers it) / `MASKS` / `VIOLATES`.
+    #[schemars(schema_with = "crate::enum_schema::review_relation_req")]
     pub relation: String,
     pub other_type: String,
     pub other_id: String,
@@ -2213,6 +2234,7 @@ pub struct ReportManualWorkReq {
     /// The SHAPE of the work, in your own words — what you built and what it did.
     pub what: String,
     /// WHY it was hand-rolled: `tool_missing` / `tool_not_found` / `tool_refused` / `unknown`.
+    #[schemars(schema_with = "crate::enum_schema::manual_work_diagnosis_req")]
     pub diagnosis: String,
     /// The served tool that should have done it, where you can name one. Refused
     /// if reflow2 does not serve it.
@@ -2237,6 +2259,7 @@ pub struct DeployToReq {
     pub environment_id: String,
     /// `planned` / `active` / `rolled_back`.
     #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::deployed_to_status_opt")]
     pub status: Option<String>,
 }
 
@@ -2249,6 +2272,7 @@ pub struct RequireResourceReq {
     pub resource_id: String,
     /// `optional` / `recommended` / `required`.
     #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::requires_resource_criticality_opt")]
     pub criticality: Option<String>,
 }
 
@@ -2378,6 +2402,7 @@ pub struct ContributorReq {
     pub name: Option<String>,
     /// `person` (default) / `automated_agent` / `organization`.
     #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::contributor_kind_opt")]
     pub kind: Option<String>,
     /// Short stable handle used to coordinate — e.g. the COORD board handle
     /// (`@ajs`) or an agent's name — so the same contributor is recognisable
@@ -2398,6 +2423,7 @@ pub struct AuthoredByReq {
     pub contributor_id: String,
     /// `author` (default) / `reviewer` / `approver`.
     #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::authored_by_role_opt")]
     pub role: Option<String>,
     /// ISO-8601 timestamp of the authorship act, if recorded.
     #[serde(default)]
@@ -2495,18 +2521,17 @@ pub struct ScanReq {
     #[serde(default)]
     pub brief: Option<bool>,
     /// Keep only Components at this rung of the decomposition ladder —
-    /// `component` / `subsystem` / `system` / `system_of_systems` /
-    /// `enterprise`. THIS IS HOW YOU ASK FOR "the top-level boxes".
+    /// component, subsystem, system, system_of_systems, /// enterprise. THIS IS HOW YOU ASK FOR "the top-level boxes".
     ///
-    /// It exists because the obvious alternative is wrong. `Component.level`
+    /// It exists because the obvious alternative is wrong. Component.level
     /// has always been indexed and populated, and with no way to ASK by it
-    /// every caller wrote their own filter — usually by walking `CONTAINS` and
+    /// every caller wrote their own filter — usually by walking CONTAINS and
     /// taking the parentless nodes, which returns leaves that were never wired
     /// to a parent rather than top-level boxes. Measured on reflow2's own
     /// design 2026-08-18: by level, the top tier is 8 subsystems; by spine
     /// position it is 2 leaves. Both queries look reasonable and they disagree.
     ///
-    /// Only `Component` carries a level; asking for one on any other type is
+    /// Only Component carries a level; asking for one on any other type is
     /// refused rather than silently returning nothing.
     #[serde(default)]
     pub level: Option<String>,
@@ -2970,6 +2995,7 @@ pub struct ExportGraphToReq {
 pub struct ProposeHealReq {
     /// `conservative` | `balanced` | `aggressive` (default `balanced`).
     #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::heal_strategy_opt")]
     pub strategy: Option<String>,
     /// Cap on structural operations; extras surface in `skipped_operations`.
     #[serde(default)]
@@ -2991,13 +3017,16 @@ pub struct InterfaceSpecReq {
     /// detectors need to know that to avoid reporting it as a single point of
     /// failure.
     #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::interface_medium_opt")]
     pub medium: Option<String>,
     /// `synchronous` / `asynchronous` / `streaming` / `batch`.
     #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::interface_paradigm_opt")]
     pub paradigm: Option<String>,
     /// `json` / `xml` / `protobuf` / `avro` / `msgpack` / `binary` / `text` /
     /// `csv` / `form` / `none`.
     #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::interface_payload_format_opt")]
     pub payload_format: Option<String>,
     /// Where the field-level contract lives, or the contract itself.
     #[serde(default)]
@@ -3017,9 +3046,11 @@ pub struct InterfaceSpecReq {
     /// Actor with INTERACTS_WITH to this Interface, and the role in
     /// `description`. A role name here is refused as an unknown mechanism.
     #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::interface_auth_opt")]
     pub auth: Option<String>,
     /// `none` / `tls` / `mtls` / `ipsec` / `vpn` / `air_gapped` / `physical`.
     #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::interface_transport_security_opt")]
     pub transport_security: Option<String>,
     /// Status vocabulary and the shape of a failure response.
     #[serde(default)]
@@ -3062,6 +3093,7 @@ pub struct IngestStepReq {
     pub fragment_title: Option<String>,
     /// How this content entered the graph (`authored` / `imported` / …).
     #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::requirement_provenance_opt")]
     pub provenance: Option<String>,
     /// The epoch matched-evolved snapshots pin to. Pass ONE epoch for a whole
     /// corpus run, or 500 documents open 500 epochs and the history reads as
@@ -3228,6 +3260,7 @@ pub struct SetChecksumReq {
     /// a skill's instructions) changes what somebody DOES, so it is a real
     /// change and takes a real label.
     #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::change_event_change_type_opt")]
     pub change_type: Option<String>,
     /// For `design_updated`: the ChangeEvent recorded when the design was
     /// updated. Must exist — a dangling reference is refused.
@@ -3273,6 +3306,7 @@ pub struct AddEpochReq {
     pub name: Option<String>,
     /// `baseline` | `revision` | `milestone` | `incident_response` | `release_cut`.
     #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::epoch_type_opt")]
     pub epoch_type: Option<String>,
     #[serde(default)]
     pub sequence: Option<i64>,
@@ -3353,6 +3387,7 @@ pub struct AffectedNodeReq {
     pub node_id: String,
     /// `added` / `modified` (default) / `removed`.
     #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::changed_action_opt")]
     pub action: Option<String>,
 }
 
@@ -3374,6 +3409,7 @@ pub struct RecordChangeReq {
     #[serde(default)]
     pub subject: Option<String>,
     /// `added` | `modified` | `removed`.
+    #[schemars(schema_with = "crate::enum_schema::changed_action_req")]
     pub action: String,
 }
 
@@ -3520,6 +3556,7 @@ pub struct SetDecisionStatusReq {
     pub decision_id: String,
     /// `proposed` (opens a decision point) / `accepted` / `superseded` /
     /// `rejected`.
+    #[schemars(schema_with = "crate::enum_schema::decision_status_req")]
     pub status: String,
 }
 
@@ -3555,6 +3592,7 @@ pub struct SetQualityTargetReq {
     /// nobody was asked, which is a different fact from a design that weighed
     /// the question and chose one. `quality_target_unstated` reads exactly that
     /// difference, and a `none` value would erase it.
+    #[schemars(schema_with = "crate::enum_schema::decision_quality_target_req")]
     pub quality_target: String,
 }
 

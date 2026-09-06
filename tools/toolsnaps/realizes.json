@@ -13,6 +13,12 @@
       "completeness": {
         "default": null,
         "description": "`stub` / `partial` / `complete` — how much of the thing EXISTS.",
+        "enum": [
+          "stub",
+          "partial",
+          "complete",
+          null
+        ],
         "type": [
           "string",
           "null"
@@ -21,6 +27,12 @@
       "conformance": {
         "default": null,
         "description": "`unchecked` (default) / `reviewed` / `verified` — whether anyone\nconfirmed the artifact still DOES WHAT THE TARGET REQUIRES. A different\nquestion from `completeness`, and from the Artifact's `checksum`, which\nsays only that the file has not MOVED. Leave it off unless somebody\nactually checked: `unchecked` is the honest reading, and the count of\nunchecked links is the point (`evidence_report`).",
+        "enum": [
+          "unchecked",
+          "reviewed",
+          "verified",
+          null
+        ],
         "type": [
           "string",
           "null"

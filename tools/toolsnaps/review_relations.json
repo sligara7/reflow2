@@ -29,6 +29,21 @@
           },
           "relation": {
             "description": "`CONTRADICTS` (both cannot hold) / `EVOLVES_INTO` (the older thought,\ngrown up) / `DEPENDS_ON` (only worth anything if the other lands first)\n/ `CAUSES` / `TRIGGERS` (taking one forces the other) / `BLOCKS` /\n`DUPLICATES` (the same thing said twice — link, do not merge; they were\nsaid for different reasons) / `ANTICIPATES` (the earlier one saw this\ncoming) / `OBSOLETES` / `RISKS` / `MITIGATES` (one is a hazard, the\nother answers it) / `MASKS` / `VIOLATES`.",
+            "enum": [
+              "CONTRADICTS",
+              "EVOLVES_INTO",
+              "DEPENDS_ON",
+              "CAUSES",
+              "TRIGGERS",
+              "BLOCKS",
+              "DUPLICATES",
+              "ANTICIPATES",
+              "OBSOLETES",
+              "RISKS",
+              "MITIGATES",
+              "MASKS",
+              "VIOLATES"
+            ],
             "type": "string"
           }
         },
