@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:f22895c2d799aca9a2623140690babd9600d1e77ff8aa287f8646761319ef240",
+  "content_hash": "sha256:0428fd4da6b87ef4e34c06421cc93c6e298fe566b869fde80fedfd75d3ca0de9",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -33527,6 +33527,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:reachability-is-asked-without-asking-adoption-and-the-instrument-runs-in-ci",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:vocabulary-reach"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:reading-carries-options",
       "properties": {
         "accepted_baseline": false,
@@ -50616,6 +50625,14 @@
       "from_id": "chg:a-merge-proposal-discloses-what-it-would-destroy",
       "properties": {},
       "to_id": "decision:ack:6675d6c59b2e2db3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:reachability-is-asked-without-asking-adoption-and-the-instrument-runs-in-ci",
+      "properties": {
+        "evidence": "The first item of that ruling is the field feedback triage; this is the fix the triage produced, so it belongs to that increment."
+      },
+      "to_id": "dec:v0520-takes-the-field-feedback-triage-first-then-the-cement-measure"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -139493,6 +139510,14 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:reachability-is-asked-without-asking-adoption-and-the-instrument-runs-in-ci",
+      "properties": {
+        "evidence": "The finding was that the instrument ran in no workflow step, no gate script and no build target. It runs in ci.yml now, is named in AGENTS.md, and skill_lint holds it there, so the observation no longer describes the build."
+      },
+      "to_id": "fact:the-reachability-instrument-is-wired-into-no-gate-so-its-filter-was-never-the-only-cause"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:seam-lift-finds-a-container-by-level-not-by-id-prefix",
       "properties": {
         "at": "2026-08-30",
@@ -140032,6 +140057,22 @@
         "evidence": "Delivers api-boss's own fix (3) — \"let a Decision CLOSE a Question with an edge, making the linkage first-class and surviving whichever id scheme wins\". MITIGATES rather than INVALIDATES on purpose: their PRIMARY defect is untouched. `answer_question` still derives the question id by pure string manipulation from the gap id, so a Question stored under any other id remains unreachable by that tool. What this closes is the LINKAGE half they named as durable-but-unmodelled; the id scheme half is still open."
       },
       "to_id": "fact:defect-a-question-not-created-by-gap-to-prompt-can-never-be-answered"
+    },
+    {
+      "edge_type": "MITIGATES",
+      "from_id": "chg:reachability-is-asked-without-asking-adoption-and-the-instrument-runs-in-ci",
+      "properties": {
+        "evidence": "Splits the fused filter this record named as the cause, and adds the per-type parameter view without which the second reported property was still missed."
+      },
+      "to_id": "fact:defect-a-declared-property-can-be-unreachable-and-invisible-to-the-reach-instrument-when-a-default-populates-it"
+    },
+    {
+      "edge_type": "MITIGATES",
+      "from_id": "chg:reachability-is-asked-without-asking-adoption-and-the-instrument-runs-in-ci",
+      "properties": {
+        "evidence": "Wires the instrument into the build as a regression gate, which is the second cause that record named and the one that made the first survivable."
+      },
+      "to_id": "fact:the-reachability-instrument-is-wired-into-no-gate-so-its-filter-was-never-the-only-cause"
     },
     {
       "edge_type": "MITIGATES",
@@ -144295,6 +144336,15 @@
         "conformance": "verified"
       },
       "to_id": "cap:a-coupling-has-a-typed-call-of-its-own"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:test-vocabulary-reach",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "req:declared-vocabulary-is-reachable-from-the-surface"
     },
     {
       "edge_type": "REALIZES",
@@ -151270,6 +151320,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:test-vocabulary-reach",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-vocabulary-reach"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:the-export-can-be-ordered-before-its-writes",
       "properties": {
         "action": "created"
@@ -154734,6 +154792,17 @@
       }
     },
     {
+      "node_id": "art:test-vocabulary-reach",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:115282fbd5744c9d559093dc4a2407304e60acaea41fc9c3d1affc5e8cb787ee",
+        "location": "tools/test_vocabulary_reach.py",
+        "name": "test_vocabulary_reach.py",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:the-export-can-be-ordered-before-its-writes",
       "node_type": "Artifact",
       "properties": {
@@ -155171,7 +155240,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:36120fad4c21c100d55a4ab1f2ba728eccc78c5586c3c1b4003a56a3639fe496",
+        "checksum": "sha256:e2c5bab2fe2d158335eabcbada24f3a9b78eacf96825618e54c1d40a2497365c",
         "location": "tools/vocabulary_reach.py",
         "name": "tools/vocabulary_reach.py",
         "status": "realized"
@@ -163774,6 +163843,17 @@
         "change_type": "new_feature",
         "name": "Re-decomposition becomes an operation — move_component ships, and the discoverable route to re-parenting stops being the one that creates a defect",
         "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:reachability-is-asked-without-asking-adoption-and-the-instrument-runs-in-ci",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "name": "The reachability instrument stops fusing two questions, learns which constructor belongs to which type, and runs in CI as a regression gate",
+        "rationale": "Both causes were named in the same root-cause pass and only one was about the filter. An instrument nobody runs catches nothing whatever its logic does, so the wiring is the half that makes the rest matter, and it was the cheaper half.\n\nTHE GATE IS DELIBERATELY A REGRESSION GATE. 48 properties are unreachable today. A gate that went red on all of them on day one would be switched off within a week, which is how a check becomes wallpaper. Grandfathering them is the same shape as the intent-authority gate reporting 356 grandfathered nodes beside the named ones, and the same shape as the ruling taken the same day that the 183 pre-rule fixes are grandfathered rather than backfilled. What the gate stops is the NEXT property being declared with no way to write it.\n\nWHAT THIS DOES NOT DO: it does not give either reported property a parameter. Whether add_epoch should take a description and add_requirement a priority is a judgement about whether those properties are worth writing - the reporter wanted both - and it is a separate change. This makes the class visible and stops it growing.\n\nA NOTE ON THIS RECORD ITSELF: the first attempt at writing it malformed its own tool-call markup and the rationale was swallowed into the summary. reflow2's absorbed_markup guard caught it, said the node had been written anyway, and told the caller to re-send. That is the guard doing exactly what it was built for, on the agent that was writing about a different guard failing.",
+        "subject": "system",
+        "summary": "THREE CHANGES, answering the two causes root-caused on 2026-09-07 plus one found while fixing them.\n\n(1) THE FUSED FILTER IS SPLIT. The candidate loop began `if used: continue`, so a property anything had ever written was dropped before the reachability question was asked. Reachability is now computed for every declared property independently of usage, and a new bucket reports what no typed tool accepts BUT nodes carry anyway - with the reason stated, because a schema default and a generic create_node write have different fixes. 29 properties land in that bucket; before this the report showed 14 candidates and neither reported property was among them.\n\n(2) REACHABILITY IS NOW ASKED PER TYPE. Found while fixing (1), and it is why the second reported property was STILL missed after the split: the parameter set was FLAT, one set of names across the whole surface, so DesignEpoch.description read as reachable because six other constructors take a parameter called `description`. One type's field was covering another type's hole in a report built to find exactly that. A type with a known constructor is now judged against its own parameters plus every non-constructor tool (the setters, relations and indirect writers such as record_change and link_artifact), which keeps the indirect paths counted and stops the cross-type leak. A type with no known constructor is judged against the whole surface, which under-reports rather than inventing a finding.\n\n(3) IT RUNS IN CI. The script was invoked by no workflow step, no gate script and no build target. `--check` compares against tools/vocabulary_reach_baseline.json and fails when a property becomes unreachable that the baseline does not carry; `--update-baseline` refreshes it. Wired into ci.yml beside the other design gates, and named in AGENTS.md, which skill_lint enforces.\n\nFAILING FIRST, OBSERVED: tools/test_vocabulary_reach.py was written before the fix and 4 of its 10 checks failed - both reported properties absent from the report, no reason stated beside a populated entry, and no baseline. All 10 pass now, and one check deliberately drops a baseline entry to prove the gate can actually go red and names the property when it does."
       }
     },
     {
@@ -178525,6 +178605,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered the_commonest_edge_has_a_typed_helper.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:test-vocabulary-reach",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered test_vocabulary_reach.py"
       }
     },
     {
@@ -194536,7 +194626,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:86526a9179b60bac753c72896f136c5ddfb37c4f8ad266e6226f564259751523",
+  "prev_content_hash": "sha256:f22895c2d799aca9a2623140690babd9600d1e77ff8aa287f8646761319ef240",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

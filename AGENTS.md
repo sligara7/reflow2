@@ -290,6 +290,7 @@ python3 tools/skill_lint.py                              # after any skill or to
 python3 tools/test_wall_check.py                         # the wall-check instrument's own net
 python3 tools/reflow2_check.py --export docs/design/reflow2.json   # design vs build, and the export chain
 python3 tools/check_intent_authority.py docs/design/reflow2.json    # settled intent carries the owner's name
+python3 tools/vocabulary_reach.py --check                # a NEW declared property the surface cannot write
 python3 tools/check_command_surface.py                   # the skill/command copies still agree
 ```
 
@@ -298,7 +299,7 @@ python3 tools/check_command_surface.py                   # the skill/command cop
 > `stateless_seat_probe`, `test_init`, `test_shared_sessions`, `test_merge_driver`,
 > `test_degraded_server`, `test_nudge_path`, `test_loop_nudge`, `test_render_views`,
 > `test_stale_seat`, `test_reflow2_check`, `check_doc_versions`, `test_check_doc_versions`,
-> `test_skill_lint`, `self_host_uses_documents`, `test_check_intent_authority` — so **green here is not green
+> `test_skill_lint`, `self_host_uses_documents`, `test_check_intent_authority`, `test_vocabulary_reach` — so **green here is not green
 > there**, and *"believe CI"* below is not a figure of speech. Run the ones your change touches;
 > [docs/sharpening.md](docs/sharpening.md) says which instrument covers what.
 >
