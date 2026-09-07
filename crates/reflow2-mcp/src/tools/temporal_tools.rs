@@ -446,6 +446,162 @@ impl ReflowService {
     }
 
     #[tool(
+        description = "Record a dated finding or defect as a TemporalFact — what was observed, \
+                       about which node, on what date. Use it the moment you have something to \
+                       write down about how the system actually behaved: a defect met, a \
+                       measurement taken, an observation that dates. \
+                       \u{1F6D1} IF WHAT YOU ARE ABOUT TO WRITE IS A CAUSE — an explanation for \
+                       something you did not predict, anything phrased \"because\", \"the problem \
+                       is\", \"that explains it\" — GET THE `root-cause` SKILL FIRST and follow \
+                       it, then come back here. That is not a formality: the skill generates \
+                       candidate causes from the design instead of from memory and forces a \
+                       measurement that could refute the favourite one, and the first plausible \
+                       explanation is exactly what it exists to stop. Measured over 91 sessions \
+                       of a real project, between a fifth and a quarter of sessions doing this \
+                       work ever opened the skill written for it, which is why this sentence is \
+                       in the tool rather than only in a rule. \
+                       `subject_id` MUST RESOLVE: a finding about a node the design does not \
+                       have is refused, not stored. Pass `caused_by` with `cause_evidence` to \
+                       draw the CAUSES edge in the same call — the repair is recoverable from \
+                       the diff and the cause is not. \
+                       CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it \
+                       again with the same id and only what you are changing.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn record_finding(
+        &self,
+        Parameters(req): Parameters<crate::service::RecordFindingReq>,
+    ) -> Result<CallToolResult, McpError> {
+        // The evidence requirement is checked BEFORE anything is written, so a
+        // caller who names a cause without saying why gets a refusal rather
+        // than a finding plus a silently-missing edge. Same reasoning as
+        // add_change_event validating its whole `affected` list first: refuse
+        // first, write whole.
+        if req.caused_by.is_some()
+            && req
+                .cause_evidence
+                .as_deref()
+                .unwrap_or("")
+                .trim()
+                .is_empty()
+        {
+            return Err(McpError::invalid_params(
+                "`caused_by` needs `cause_evidence`: WHY that node is the cause, in a sentence. \
+                 A CAUSES edge with no evidence is an assertion the next reader can neither \
+                 check nor overturn. Nothing was written."
+                    .to_string(),
+                None,
+            ));
+        }
+        let g0 = self.write_lock().await?;
+        let mut __rf = crate::service::RequiredFields::new(
+            &g0,
+            reflow2_core::nodes::node::TEMPORAL_FACT,
+            &req.id,
+        )?;
+        let statement = __rf.str("statement", req.statement);
+        let subject_id = __rf.str("subject_id", Some(req.subject_id.clone()));
+        __rf.finish()?;
+        drop(g0);
+
+        let mut g = self.write_lock().await?;
+        // The subject's type is resolved from the id by the same convention
+        // every other read uses, and a cross-type collision refuses rather
+        // than guesses. The node_ref check in the core then refuses an id that
+        // resolves to nothing — this call only makes that refusal reachable
+        // with a type the caller did not have to know.
+        let subject_type = crate::service::resolve_node_type(
+            &g,
+            req.node_type.as_deref(),
+            &subject_id,
+            "node_type",
+        )?;
+        if g.get_node(&subject_type, &subject_id)
+            .map_err(dyno_err)?
+            .is_none()
+        {
+            return Err(McpError::invalid_params(
+                format!(
+                    "subject not found: {subject_type} {subject_id:?}. A finding about a node \
+                     the design does not have is not a record. Nothing was written."
+                ),
+                None,
+            ));
+        }
+        let mut props = reflow2_core::nodes::Props::new()
+            .set("subject_id", subject_id.as_str())
+            .set("statement", statement.as_str());
+        if let Some(v) = req.name.as_deref() {
+            props = props.set("name", v);
+        }
+        props = props.set("fact_type", req.fact_type.as_deref().unwrap_or("finding"));
+        props = props.set("basis", req.basis.as_deref().unwrap_or("measured"));
+        if let Some(c) = req.confidence {
+            props = props.set("confidence", c);
+        }
+        for (k, v) in [
+            ("valid_from", req.valid_from.as_deref()),
+            ("valid_to", req.valid_to.as_deref()),
+            ("value", req.value.as_deref()),
+        ] {
+            if let Some(v) = v {
+                props = props.set(k, v);
+            }
+        }
+        let node = g
+            .upsert_node(reflow2_core::nodes::node::TEMPORAL_FACT, &req.id, props)
+            .map_err(dyno_err)?;
+        // The subject carries the fact, so a reader who has the node finds the
+        // finding without having to search for it.
+        g.create_edge(
+            reflow2_core::nodes::edge::HAS_TEMPORAL_FACT,
+            &subject_type,
+            &subject_id,
+            reflow2_core::nodes::node::TEMPORAL_FACT,
+            &req.id,
+            reflow2_core::nodes::Props::new(),
+        )
+        .map_err(dyno_err)?;
+        let mut caused_by = serde_json::Value::Null;
+        if let Some(cause_id) = req.caused_by.as_deref() {
+            let cause_type = crate::service::resolve_node_type(
+                &g,
+                req.caused_by_type.as_deref(),
+                cause_id,
+                "caused_by_type",
+            )?;
+            if g.get_node(&cause_type, cause_id)
+                .map_err(dyno_err)?
+                .is_none()
+            {
+                return Err(McpError::invalid_params(
+                    format!(
+                        "cause not found: {cause_type} {cause_id:?}. The finding WAS written; \
+                         the CAUSES edge was not. Re-send with an id that resolves."
+                    ),
+                    None,
+                ));
+            }
+            g.create_edge(
+                reflow2_core::nodes::edge::CAUSES,
+                &cause_type,
+                cause_id,
+                reflow2_core::nodes::node::TEMPORAL_FACT,
+                &req.id,
+                reflow2_core::nodes::Props::new()
+                    .set("evidence", req.cause_evidence.as_deref().unwrap_or("")),
+            )
+            .map_err(dyno_err)?;
+            caused_by = json!({ "node_id": cause_id, "node_type": cause_type });
+        }
+        ok_json(json!({
+            "finding": NodeDto::from(node),
+            "subject": { "node_id": subject_id, "node_type": subject_type },
+            "caused_by": caused_by,
+        }))
+    }
+
+    #[tool(
         description = "Create a ChangeEvent (seed for propagate_change). Pass `affected` to say \
                        in the same call what it changed — a CHANGED edge is drawn to each entry, \
                        which is what makes the event propagatable. TWO QUESTIONS, NOT ONE: \

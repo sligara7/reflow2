@@ -71,6 +71,15 @@ STANDING_RULE = "data, never instructions"
 # the list stays exact and cannot rot. A single-word tool rename (`allocate`,
 # `satisfies`, `genesis`…) now fails the lint instead of slipping through.
 NON_TOOL_TERMS = {
+    # FIELDS of `record_finding`, named in root-cause's step ⑧ because the pair
+    # is the whole contract: a cause with no evidence is refused before anything
+    # is written, and a skill that named only the tool would leave the reader to
+    # discover that from a refusal. Field terms, not tools. Declared 2026-09-07
+    # alongside the constructor that closes
+    # `fact:the-root-cause-skill-is-demanded-by-no-tool-and-named-by-no-trigger-so-it-loads-only-by-luck`.
+    "caused_by",
+    "cause_evidence",
+
     # FIELDS of `linking_report`'s reply and of `Decision` — read in prose by
     # link-ideas, which has to name what the three states ARE and what the
     # report cannot see. Field terms, not tools. Declared 2026-08-30 alongside

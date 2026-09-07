@@ -1,0 +1,123 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Record a dated finding or defect as a TemporalFact — what was observed, about which node, on what date. Use it the moment you have something to write down about how the system actually behaved: a defect met, a measurement taken, an observation that dates. 🛑 IF WHAT YOU ARE ABOUT TO WRITE IS A CAUSE — an explanation for something you did not predict, anything phrased \"because\", \"the problem is\", \"that explains it\" — GET THE `root-cause` SKILL FIRST and follow it, then come back here. That is not a formality: the skill generates candidate causes from the design instead of from memory and forces a measurement that could refute the favourite one, and the first plausible explanation is exactly what it exists to stop. Measured over 91 sessions of a real project, between a fifth and a quarter of sessions doing this work ever opened the skill written for it, which is why this sentence is in the tool rather than only in a rule. `subject_id` MUST RESOLVE: a finding about a node the design does not have is refused, not stored. Pass `caused_by` with `cause_evidence` to draw the CAUSES edge in the same call — the repair is recoverable from the diff and the cause is not. CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it again with the same id and only what you are changing.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "basis": {
+        "default": null,
+        "description": "`measured` (it records something that happened) or `forecast` (it\nprojects something expected to). Defaults to `measured`, which is what\na finding is.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "cause_evidence": {
+        "default": null,
+        "description": "WHY that node is the cause, in a sentence. Required when `caused_by` is\ngiven: an edge with no evidence is an assertion the next reader can\nneither check nor overturn.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "caused_by": {
+        "default": null,
+        "description": "The node whose behaviour CAUSED this — drawn as a `CAUSES` edge in the\nsame call, with `cause_evidence` as its reason. Step ⑧ of the skill:\nthe repair is recoverable from the diff and the cause is not.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "caused_by_type": {
+        "default": null,
+        "description": "Type of `caused_by`; resolved from the id when omitted.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "confidence": {
+        "default": null,
+        "description": "How much weight the author puts behind the assertion, 0.0 to 1.0.\nStated by the author, never computed. Absent reads as unstated.",
+        "format": "double",
+        "type": [
+          "number",
+          "null"
+        ]
+      },
+      "fact_type": {
+        "default": null,
+        "description": "What kind of assertion: `defect`, `finding`, `status`, `allocation`,\n`dependency`, `satisfaction`, `property`. Free text, indexed.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "id": {
+        "description": "Stable id, conventionally prefixed `fact:`.",
+        "type": "string"
+      },
+      "name": {
+        "default": null,
+        "description": "A short handle — what the gap surfaces and search results render.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "node_type": {
+        "default": null,
+        "description": "Optional type of the subject; resolved from the id when omitted, and\nrefused on a cross-type collision rather than guessed.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "statement": {
+        "default": null,
+        "description": "The assertion itself, in plain terms. This is the embedding field, so\nit is what `search_design` finds the finding by.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "subject_id": {
+        "description": "The node this finding is ABOUT. A node reference: it must resolve, and\na finding naming a node that does not exist is refused rather than\nstored, because a record about something the design does not have is\nnot a record.",
+        "type": "string"
+      },
+      "valid_from": {
+        "default": null,
+        "description": "The DATE this became true, when there is no epoch to point at.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "valid_to": {
+        "default": null,
+        "description": "The DATE it stopped being true; absent means still true.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "value": {
+        "default": null,
+        "description": "JSON of an asserted value, when the finding carries one.",
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "required": [
+      "id",
+      "subject_id"
+    ],
+    "type": "object"
+  },
+  "name": "record_finding"
+}
