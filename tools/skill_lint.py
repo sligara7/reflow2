@@ -225,6 +225,16 @@ NON_TOOL_TERMS = {
     # detect-and-ask's one-call form. Both are FIELDS, not tools.
     "approver",
     "findings",
+    # `not_found` — topic_report's mandatory miss line, which the topic skill
+    # tells the reader to read out; a FIELD, not a tool.
+    "not_found",
+    # topic_report's other reply fields and its `query` parameter, named by
+    # the topic skill so a reader knows what to read; and `detected_at`, the
+    # ChangeEvent date the skill says `latest` depends on. Fields, not tools.
+    "by_type",
+    "latest",
+    "query",
+    "detected_at",
     "shaping",
     "governs_retired",
     # ChangeEvent.subject and its two values (2026-08-22) — the revise-design

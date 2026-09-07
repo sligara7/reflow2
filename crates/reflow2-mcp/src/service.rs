@@ -1673,6 +1673,26 @@ pub struct SearchDesignReq {
 
 /// All fields optional: no args dumps the whole vocabulary, `node_type` focuses
 /// one type, `from`+`to` answers "what may connect these?".
+/// One subject, read back as a digest — `topic_report`.
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct TopicReportReq {
+    /// The subject, in your words or the owner's — "rainfall totals",
+    /// "the export lineage", "who can approve". Keyword search over every
+    /// node's name, statement and description; a miss is REPORTED in
+    /// `not_found`, never read as absence.
+    pub query: String,
+    /// Hits to consider (default 20). `count == limit` in the reply means
+    /// there may be more.
+    #[serde(default)]
+    pub limit: Option<usize>,
+    /// Characters the reply may spend before detail is withheld (default
+    /// 30,000). The reply says which tier it landed in and what it withheld;
+    /// `count` and `by_type` are never trimmed.
+    #[serde(default)]
+    pub budget_chars: Option<usize>,
+}
+
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct DescribeSchemaReq {
