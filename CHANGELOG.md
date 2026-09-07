@@ -31,6 +31,8 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.54.0] — 2026-09-07
+
 ### Added
 
 - **All fourteen unreachable holes are closed, and `add_actor` exists.** The reachability report
