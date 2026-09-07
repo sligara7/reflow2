@@ -63,6 +63,12 @@ session made false**, so a finding that motivated a fix survived the fix and wen
 that is already done. `unclaimed_findings` is the computation that now asks; this test is where you
 act on its answer.
 
+**Two findings now notice what this test leaves undone.** A defect fact the session FIXED owes an
+`INVALIDATES` from the fix (the `invalidates` tool), or `defect_overtaken_by_change` will ask
+whether the change was the fix; a fix the session recorded with no cause is what
+`fix_without_recorded_cause` counts — and the root-cause skill (`get_skill` root-cause) is where
+the cause gets written, before the fix rather than at session end.
+
 **Test 2 is how it happens.** *"Did somebody measure something? … a number in the graph is evidence
 a later session can check."* That is right, and it is exactly how a measurement gets written and
 never closed. Measured on reflow2's own design, 2026-08-23: **274 TemporalFacts, every one

@@ -56,6 +56,11 @@ changed outside the loop (someone edited by hand, a merge landed, you refactored
    - `undocumented_addition` — something is there that the design never mentioned.
    - `no_baseline` — it can't be judged, because no hash was recorded or supplied. Fix by
      re-registering with a `checksum`.
+
+   **A `checksum_change` you did not expect, or a `missing_artifact`, is a failure you are about
+   to explain.** Before writing why: `get_skill` root-cause. Its step ② — search the raw finding
+   in the design — costs 0.08 s and has found the recorded cause of a repeat more than once; the
+   full skill is owed the moment you have a cause in mind, not when the failure is loud.
 6. **Follow the change back into the design.** The result's `propagation_seeds` are the design
    nodes those files realize. Pass them to `propagate_from` — because `REALIZES` runs
    artifact→capability, propagation walks *upstream*, toward the Capability the changed code

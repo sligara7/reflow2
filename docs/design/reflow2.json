@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:0004e801a1b8d4fac1c3d922e92bef1e93fedd0cd20cd03b90f1171ebe7086f5",
+  "content_hash": "sha256:1825ff9d5f5932ae4796e96284850589b5cb58a6daab66948dafc2d5eb5d04c7",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -1162,6 +1162,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:heal"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-fix-with-no-recorded-cause-and-a-defect-its-subject-outran-are-noticed",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:detect"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -3352,6 +3360,14 @@
         "evidence": "Same 2026-08-01 review, and the sharpest instance: it observes that `cut_structure` (absorbed, in use) answers 'what is a single point of failure' and NOT 'how separable are these two parts', which needs a minimum edge cut. That gap is precisely what this requirement says the design should be able to see. ⚠️ Needs `maxflow.rs` (248 lines) — left upstream by increment 3, on the verified ground that `cut_structure` does not depend on it."
       },
       "to_id": "req:graph-theory-undergirds-the-design-brain"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "dec:idea-silence-is-reported-not-inferred",
+      "properties": {
+        "evidence": "The earlier idea asked whether reflow2 should add a detector for every newly discovered blind spot or make silence reportable — the same growth question one level down, about detectors (49 today) instead of rules (26); this idea generalises it to the ruleset and asks for the convergence measure."
+      },
+      "to_id": "dec:idea-does-a-growing-ruleset-converge-or-bloom-and-can-any-design-be-assured-of-closure"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -10311,6 +10327,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:cap:a-fix-with-no-recorded-cause-and-a-defect-its-subject-outran-are-noticed",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:cap:a-status-advance-says-whether-its-prose-predates-it",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
@@ -10426,6 +10448,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:fact:the-live-graph-does-not-branch-so-two-open-prs-collide",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:fact:the-root-cause-detectors-measured-on-reflow2s-own-design-and-the-mirror-misses-its-own-origin",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
     },
@@ -12571,6 +12599,15 @@
         "role": "author"
       },
       "to_id": "who:alex"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-does-a-growing-ruleset-converge-or-bloom-and-can-any-design-be-assured-of-closure",
+      "properties": {
+        "acted_at": "2026-09-06",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -36566,6 +36603,69 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-loop-notices-a-fix-with-no-cause-and-a-defect-its-subject-outran",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:capture-session-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-loop-notices-a-fix-with-no-cause-and-a-defect-its-subject-outran",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:check-health-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-loop-notices-a-fix-with-no-cause-and-a-defect-its-subject-outran",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-loop-notices-a-fix-with-no-cause-and-a-defect-its-subject-outran",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect-and-ask-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-loop-notices-a-fix-with-no-cause-and-a-defect-its-subject-outran",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-loop-notices-a-fix-with-no-cause-and-a-defect-its-subject-outran",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:a-fix-with-no-recorded-cause-and-a-defect-its-subject-outran-are-noticed"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-loop-notices-a-fix-with-no-cause-and-a-defect-its-subject-outran",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "ver:a-fix-without-a-cause-and-an-overtaken-defect-raise-gaps"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-loop-stops-recomputing-itself-on-every-read",
       "properties": {
         "accepted_baseline": true,
@@ -51744,6 +51844,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:a-fix-with-no-recorded-cause-and-a-defect-its-subject-outran-are-noticed",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:cap:a-fix-with-no-recorded-cause-and-a-defect-its-subject-outran-are-noticed"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "cap:a-status-advance-says-whether-its-prose-predates-it",
       "properties": {},
       "to_id": "snap:epoch:preserved-on-write:cap:a-status-advance-says-whether-its-prose-predates-it"
@@ -52455,6 +52561,12 @@
       "from_id": "fact:the-orientation-reads-cost-ten-seconds-and-the-store-is-not-why",
       "properties": {},
       "to_id": "snap:epoch:2026-08-23-record-to-record-vocabulary:fact:the-orientation-reads-cost-ten-seconds-and-the-store-is-not-why"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "fact:the-root-cause-detectors-measured-on-reflow2s-own-design-and-the-mirror-misses-its-own-origin",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:fact:the-root-cause-detectors-measured-on-reflow2s-own-design-and-the-mirror-misses-its-own-origin"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -131953,6 +132065,15 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:the-loop-notices-a-fix-with-no-cause-and-a-defect-its-subject-outran",
+      "properties": {
+        "at": "2026-09-06",
+        "note": "The detector the fact named as owed ('a defect fact whose subject artifact has a later accepted change and no INVALIDATES from any ChangeEvent') is built as defect_overtaken_by_change. Its claim that the detector 'would have flagged this fact on the day the fix landed' is REFUTED, not confirmed: the misread fact's subject was the reporting document (art:dev-storyflow-feedback-2026-09-04), not the part that was wrong, and the fixer carried no detected_at — so as specified the mirror is silent on its own origin case. What reaches that case is the other leg, fix_without_recorded_cause, which asks every fix for the INVALIDATES the fixer never drew. Measurement and bound on fact:the-root-cause-detectors-measured-on-reflow2s-own-design-and-the-mirror-misses-its-own-origin."
+      },
+      "to_id": "fact:a-defect-fixed-but-never-closed-on-the-record-was-re-fixed-wrongly-a-day-later"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:the-loop-stops-recomputing-itself-on-every-read",
       "properties": {
         "at": "2026-09-06",
@@ -134017,6 +134138,15 @@
         "completeness": "complete"
       },
       "to_id": "ver:design-dependencies-declared"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:detect",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-fix-with-no-recorded-cause-and-a-defect-its-subject-outran-are-noticed"
     },
     {
       "edge_type": "REALIZES",
@@ -137204,6 +137334,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:a-fix-with-no-recorded-cause-and-a-defect-its-subject-outran-are-noticed",
+      "properties": {},
+      "to_id": "req:finding-a-cause-is-a-served-process-not-an-improvisation"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:a-module-can-be-read-swapped-and-tested-behind-a-contract",
       "properties": {},
       "to_id": "req:recursive-black-box-decomposition"
@@ -140205,6 +140341,12 @@
       "from_id": "ver:a-finding-names-parking-and-its-boundary",
       "properties": {},
       "to_id": "req:a-finding-names-the-remedy-not-only-the-problem"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:a-fix-without-a-cause-and-an-overtaken-defect-raise-gaps",
+      "properties": {},
+      "to_id": "cap:a-fix-with-no-recorded-cause-and-a-defect-its-subject-outran-are-noticed"
     },
     {
       "edge_type": "VERIFIES",
@@ -143748,7 +143890,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:95f94a7cb3af21bae6c886ca092401684380ad43c691657e95575c521796cecc",
+        "checksum": "sha256:a358730d2a92e587c9980a358a86a7a5ca2f28096d82f39aa47d2099d97dad6e",
         "granularity": "atomic",
         "location": "getting-started/skills/capture-session/SKILL.md",
         "name": "getting-started/skills/capture-session/SKILL.md",
@@ -143822,7 +143964,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:f2bf98ac9e3377fb19f8cde12030763518674df8c971341a877bf10bc7a421ab",
+        "checksum": "sha256:45789a76ac97d4e200bc05388959497911a5a2870aed44142e3050ebe25d92d3",
         "granularity": "atomic",
         "location": "getting-started/skills/check-health/SKILL.md",
         "name": "check-health/SKILL.md",
@@ -144170,7 +144312,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:972abf1af80a68a4ff29eca23bf58b6b0464596f69419ec8e487bee83f22126d",
+        "checksum": "sha256:b63cf22c9fe0b33dbebe0f3c095d48c701e2a1c054ca8e3cf62c2babd4fdc35c",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
@@ -144183,7 +144325,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:d9d3860c7644428246dfa2344536fd9231b7a20b09721218324289f57dd1d7bd",
+        "checksum": "sha256:c574fc1578973afe71ce096501c98bfe330561bb788d127a72c2fedee5061c91",
         "location": "getting-started/skills/detect-and-ask/SKILL.md",
         "name": "detect-and-ask/SKILL.md — the ask half of the loop, and now the rule for when NOT to ask",
         "status": "realized"
@@ -145918,7 +146060,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b44b5f60b7a6116be266069c64c34251a14a2ced6426f3a9b636e4a9a9519542",
+        "checksum": "sha256:9ea737fcbfe46046db768f87d0cd09b0d7a2d9d8f6247607d86f70546b1d36a9",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -147239,6 +147381,16 @@
         "provenance": "authored",
         "status": "realized",
         "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:a-fix-with-no-recorded-cause-and-a-defect-its-subject-outran-are-noticed",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Two gap detectors, the third leg of the root-cause vocabulary (dec:idea-how-does-root-cause-become-automatic-rule-hook-detector-or-composition, mechanism (c)). `fix_without_recorded_cause`: one aggregate finding over every ChangeEvent of change_type defect_fix or test_failure_fix that sits on no CAUSES edge in either direction and carries no outgoing INVALIDATES — a repair indistinguishable from a symptom fix. A CAUSES edge on an artifact the fix touched is deliberately not counted. Forward-only by parking: a fix GOVERNED_BY ruling=parks under an accepted Decision is skipped and counted. `defect_overtaken_by_change`: one finding per open defect TemporalFact (no valid_to, no incoming INVALIDATES) whose subject_id, or an Artifact that REALIZES it, was CHANGED by a REPAIR (a ChangeEvent of change_type defect_fix or test_failure_fix) with detected_at strictly after the fact's valid_from — keyed on the fact and the later repairs, so a further repair asks again. Repairs only, measured rather than assumed: over later changes of any kind this design raised 65 findings and one hub component carried 39 members; over repairs, 45 with a median of 3. Undated changes and later non-repairs are counted in the evidence and never offered as the fix; undated facts are skipped. Neither judges whether a recorded cause was right: both report absence of a record (dec:report-dont-judge).",
+        "name": "A repair joined to no cause, and a recorded defect whose subject changed with nothing saying it was fixed, are noticed by the loop",
+        "provenance": "authored",
+        "status": "realized"
       }
     },
     {
@@ -156479,6 +156631,18 @@
       }
     },
     {
+      "node_id": "chg:the-loop-notices-a-fix-with-no-cause-and-a-defect-its-subject-outran",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-09-06",
+        "name": "The loop notices a fix with no recorded cause, and a defect its subject outran",
+        "rationale": "The third leg: the skill and the rules existed, and nothing noticed a fix that recorded no cause, so the accepted requirement that a fix say what it reached was unenforceable. Three design choices worth the record. (1) The tight definition — a CAUSES edge on an artifact the fix touched is NOT accepted — because measured on this design the loose reading whitewashed 33 fixes through one old cause on a hub artifact. (2) Forward-only by parking rather than by a date in the detector: the graph already has the word for a deliberate unattached state, and a dated cutoff would be a second mechanism for the same thing. (3) The mirror counts later REPAIRS only: read from the served surface before merge, later changes of any kind raised 65 findings and one hub component carried 39 members — a question nobody can answer — where repairs raise 45 with a median of 3; a feature or refactor is counted in the evidence and never offered as the fix. On first run this design reads 183 of 209 fixes uncaused and 45 overtaken defects; the origin case of the mirror is NOT reachable as specified (subject was the reporting document, fixer undated), recorded and closed with that bound. The link-artifacts skill is not a registered artifact, so its edit owes no checksum accept.",
+        "subject": "system",
+        "summary": "Two gap detectors land in detect.rs: fix_without_recorded_cause (aggregate over defect_fix/test_failure_fix ChangeEvents on no CAUSES edge and with no outgoing INVALIDATES; parked fixes skipped and counted) and defect_overtaken_by_change (per open defect fact whose subject or a realizing artifact was CHANGED by a dated later REPAIR, no INVALIDATES; undated changes and later non-repairs counted, never offered as the fix). Composition: a root-cause pointer in check-health, link-artifacts and capture-session; both sources named in detect-and-ask; skill lint allowlist and docs/gap-surfacing.md rows. Item 2 of v0.50.0, mechanisms (c) and (d) of the mechanism ruling."
+      }
+    },
+    {
       "node_id": "chg:the-loop-stops-recomputing-itself-on-every-read",
       "node_type": "ChangeEvent",
       "properties": {
@@ -160531,6 +160695,17 @@
         "name": "DECIDED — no cancelled state, ever: abandonment is an OBSOLETES edge, and whether the vocabulary fix was enough is a MEASUREMENT owed by Alex's fleet, not a further decision",
         "rationale": "Raised by a second consumer project rather than found here, which is the useful part: reflow2's own graph never hit it because this project retires capabilities rather than cancelling them. Kept as a decision point rather than built because it is a schema enum change that would move the stamp and therefore owe an upgrade doc — the first this week that would — and because it touches an already-open question about retirement being modelled in two places. Anthony's to settle.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:idea-does-a-growing-ruleset-converge-or-bloom-and-can-any-design-be-assured-of-closure",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Recorded as BRAINSTORMING, not as a proposal. Anthony, 2026-09-06, in his words: \"as we've gone through this design process, it seems that we continue to make more rules and more rules. wondering if there is a way to measure if a set of rules will eventually converge on a finite set of design nodes/edges or if by adding another rule, we will eventually have to add another ruleset to counter something false about a previously implemented node/edge. if so, will this continue to grow and grow? in some ways, I feel like it a decision tree that continues to fork and fork because we have some new information that requires a nuanced offshoot of a previous decision. just curious if there is some graph theory operation or mathematical proof about if something continues to grow/bloom or if it will converge to some finite set of rules that the design can actually implement … mostly me musing about if we'll ever conclude the reflow2 design implementation and more generally speaking, if any reflow2 design can be assured of closure?\"\n\nTWO QUESTIONS INSIDE IT, and they have different answers:\nQ1 — the RULESET of reflow2's own development: does it converge?\nQ2 — the CLOSURE of a design held in reflow2: can any design reach a state where the loop owes nothing, and can that be assured?\n\nTHE FRAMINGS, as they separate (none is a decision):\n\n(a) FIXED POINTS OVER A LATTICE (Tarski / Kleene). If every rule only ADDS structure (draw the missing edge, add the missing node) and the universe is finite, iterating a monotone operator converges to a least fixed point — that is a theorem. Counter-argument: the rules here are NOT monotone. Anthony's own description — \"add another ruleset to counter something false about a previously implemented node/edge\" — is non-monotonic revision (default logic, AGM belief revision), and no convergence theorem exists there in general. The measured shape agrees: 12 of this design's 26 DesignRules cite another rule in their own text, and 7 name a defect, a skipped step or a failure as the reason they exist — rules about rules are half the population.\n\n(b) UNDECIDABILITY (Rice / Gödel-shaped). The rules are about BEHAVIOUR of a system, and \"does this ruleset need no further rule\" is a non-trivial semantic property of that system — undecidable in general. So NO proof of closure can exist for an open-world design. Counter-argument: undecidable in general is not unmeasurable in particular; a specific process can be shown convergent by a potential function even when the general question has no decision procedure. This is the honest limit, not a reason to stop measuring.\n\n(c) REQUISITE VARIETY (Ashby). A regulator's rules must match the variety of what it regulates. reflow2's rules grow because USAGE supplies new variety — nearly every rule of the last month was set from a field report or a session's own failure. On this reading Q1's answer is: the ruleset converges exactly when the user population stops producing new kinds of failure — closure is a property of the environment, not of the graph. Counter-argument: that makes \"will it ever conclude\" answerable only in hindsight; but it also names the measurement — rules per unit of NEW usage, not rules per week.\n\n(d) SOFTWARE RELIABILITY GROWTH (Goel–Okumoto and kin). For a FIXED scope, defects found over time follow a saturating curve, and the curve's asymptote is estimable from the data. Measured here: defect facts recorded 126 in August, 26 in the first six days of September — about 4.1/day then 4.3/day. FLAT, NOT SATURATING. Rules: 3 in July, 18 in August, 5 in six days of September — also not decelerating. Counter-argument: the scope is not fixed (four items shipped this week), so the curve is for a moving target and says only that discovery has not slowed, not that it will not.\n\n(e) THE DECISION TREE THAT FORKS. Anthony's picture: each nuance is an offshoot of a prior decision. Structurally the graph disagrees with the picture — only 17 Decision→Decision SUPERSEDES/EVOLVES_INTO edges among 632 Decisions — so the forks live in PROSE (a decision's text saying \"distinct from X, which decided Y\") rather than as edges, and the tree's branching factor cannot be computed today. Counter-argument: that is itself a finding; if the forks were edges, the branching factor and the leaf-closure rate (forks that end in an accepted ruling vs forks that breed another fork) would be a one-line query, and that ratio is the convergence measure Anthony is asking for.\n\n(f) CLOSURE OF A USER'S DESIGN AS A WELL-FOUNDED LOOP (Q2). Define closure as: every detector silent at a fixed scope. That is a fixed point of the detect→answer operator, and it is reachable IF the detector set is WELL-FOUNDED — every honest answer to a gap strictly decreases some potential Φ(design) and creates no new gap. Today it is NOT: fact:defect-one-missing-edge-arrives-as-three-findings records that one answer can raise three findings, and adding a Capability to answer one gap raises unallocated/unrealized/unverified gaps of its own. Counter-argument on the other side: that is a DESIGNABLE property of the 49 detectors, not a law — a test could drive a random design through \"answer every gap with its minimal honest answer\" and assert termination, and a detector whose answer can raise a gap of the same kind is the one to fix. Cheap to attempt; the theorem would be reflow2's, about its own detectors, and would say nothing about whether the user's INTENT is finished.\n\nWHAT IS CHEAP: (d) and (e) are one-line measurements on the export and are already partly taken above; (f) is one property test. WHAT IS EXPENSIVE: any general proof — (b) says there is none.",
+        "kind": "exploratory",
+        "name": "OPEN — does the ruleset converge on a finite set of design nodes and edges, or does each rule breed the next? Is closure of a reflow2 design (this one, or any) provable, or only measurable?",
+        "rationale": "A RANKING IS A FINDING, NOT A DECISION. The honest answer to \"can any reflow2 design be assured of closure\" is NO in the general case (b) and YES for a narrower thing worth having (f): closure of the LOOP over a fixed scope is a well-foundedness property of the detector set, provable per detector set and testable today, whereas closure of INTENT is bounded by the variety of the world the design meets (c) and is only ever measured in hindsight (d). For Q1 the useful instrument is not \"are rules still being added\" but \"what fraction of new rules exist to correct a prior rule\" (12 of 26 now) and \"rules per unit of new usage\" — a ruleset that only grows when the world shows it something new is regulating, not blooming; one that grows to patch its own last rule is the divergent case Anthony fears. Related open question dec:idea-silence-is-reported-not-inferred asked the same thing one level down: whether to add a detector per blind spot or make \"I could not see this\" a reportable state — the detector count (49) is the ruleset's mechanical twin and has the same growth question. Nothing here is proposed for building; the one thing that would turn this from musing into an instrument is drawing the forks as edges (e) so the tree can be measured. Anthony's call whether any of it is worth a session.",
+        "status": "proposed"
       }
     },
     {
@@ -175641,6 +175816,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:preserved-on-write:cap:a-fix-with-no-recorded-cause-and-a-defect-its-subject-outran-are-noticed",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:detect\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:a-fix-without-a-cause-and-an-overtaken-defect-raise-gaps\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:detect\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:finding-a-cause-is-a-served-process-not-an-improvisation\",\"properties\":{}}]",
+        "state": "{\"description\":\"Two gap detectors, the third leg of the root-cause vocabulary (dec:idea-how-does-root-cause-become-automatic-rule-hook-detector-or-composition, mechanism (c)). `fix_without_recorded_cause`: one aggregate finding over every ChangeEvent of change_type defect_fix or test_failure_fix that sits on no CAUSES edge in either direction and carries no outgoing INVALIDATES — a repair indistinguishable from a symptom fix. A CAUSES edge on an artifact the fix touched is deliberately not counted. Forward-only by parking: a fix GOVERNED_BY ruling=parks under an accepted Decision is skipped and counted. `defect_overtaken_by_change`: one finding per open defect TemporalFact (no valid_to, no incoming INVALIDATES) whose subject_id, or an Artifact that REALIZES it, was CHANGED by a ChangeEvent with detected_at strictly after the fact's valid_from — keyed on the fact and the later changes, so a further change asks again. Undated changes are counted in the evidence and never treated as later; undated facts are skipped. Neither judges whether a recorded cause was right: both report absence of a record (dec:report-dont-judge).\",\"name\":\"A repair joined to no cause, and a recorded defect whose subject changed with nothing saying it was fixed, are noticed by the loop\",\"provenance\":\"authored\",\"status\":\"realized\"}",
+        "target_id": "cap:a-fix-with-no-recorded-cause-and-a-defect-its-subject-outran-are-noticed",
+        "target_type": "Capability"
+      }
+    },
+    {
       "node_id": "snap:epoch:preserved-on-write:cap:a-status-advance-says-whether-its-prose-predates-it",
       "node_type": "Snapshot",
       "properties": {
@@ -175837,6 +176022,16 @@
         "edges": "[{\"direction\":\"out\",\"edge_type\":\"ANTICIPATES\",\"other_type\":\"Requirement\",\"other_id\":\"req:the-graph-can-say-what-has-already-been-done\",\"properties\":{\"evidence\":\"The earlier observation saw the same shape one layer down. It found that one RocksDB store serves every git branch, so two branches share a live graph — and its sharpest note is that `parallel-work`'s trigger conditions are framed by PEOPLE, so the solo maintainer with two branches, who hits the identical collision, is the reader the skill excludes. Same failure family: the machinery for keeping two lines of work apart exists, and what neither the store nor the skill carries is whether a line of work is FINISHED.\"}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:claude-code\",\"properties\":{\"acted_at\":\"2026-08-14\",\"role\":\"author\"}}]",
         "state": "{\"basis\":\"measured\",\"confidence\":1.0,\"fact_type\":\"observation\",\"statement\":\"**ONE ROCKSDB STORE SERVES EVERY GIT BRANCH, SO THE LIVE GRAPH DOES NOT BRANCH — AND THE PRACTICAL CONSEQUENCE IS A WORKFLOW RULE NOTHING STATES: YOU CANNOT HAVE TWO OPEN PULL REQUESTS THAT BOTH MAKE GRAPH WRITES.**\\n\\nOBSERVED 2026-08-14 while holding PR #182 open (design-record writes) and being asked to build the command coverage accepted in it. `.reflow2/graph` is a single store shared by whatever branch is checked out; `git checkout <branch>` does not switch it. So any export taken on a second branch carries **the first branch's uncommitted graph writes too**, and both PRs then contain each other's nodes.\\n\\n⇒ **THE CALL MADE, AND WHY:** the command-coverage build was FOLDED INTO #182 rather than opened as a third PR. **One PR at a time while graph writes are outstanding.** The alternative — branching from main and exporting — would have produced an export containing #182's nodes with a `prev_content_hash` pointing at main, i.e. a document silently claiming work that another open PR also claims. `rule:the-export-is-written-once-per-branch` and `dec:export-once-per-pr` constrain the export WITHIN a branch and say nothing about two branches sharing one store.\\n\\n⚠️ **NOT MEASURED HERE:** the collision was avoided rather than reproduced. What is established is the mechanism (one store, no per-branch isolation) and the decision taken because of it — not an observed corrupted export. A deliberate reproduction would be cheap and has not been done.\\n\\n═══ ⭐ THE SERVED-SURFACE GAP, WHICH IS THE PART THAT REACHES ANYONE ELSE ═══\\n\\n**THE FIX ALREADY EXISTS AND IS SERVED — `parallel-work` sets up an isolated worktree with its own copy of the graph, which is exactly the isolation missing above. But the skill is framed by PEOPLE, not by BRANCHES:** *\\\"Use when two or more people (or agents) need to work on one design at the same time without colliding — 'my brother and I are both editing this'.\\\"*\\n\\n🛑 **ONE PERSON WITH TWO BRANCHES HITS THE IDENTICAL COLLISION AND WILL NOT REACH FOR A SKILL ABOUT COLLABORATING.** Every trigger phrase it lists is social; none is *\\\"I have two PRs open\\\"*. So the person most likely to hit this — a solo maintainer working two changes — is the one the skill's own trigger conditions exclude. That is AGENTS.md rule 7's shape: the lesson is real, and the served surface that would carry it does not currently invite the case.\\n\\n📌 RELATED BUT DISTINCT, so this is not filed as a duplicate of any of them: `dec:multi-writer-architecture` covers the FILE as transport between people; `ver:merge-driver` covers merging the exported document; `rule:the-export-is-written-once-per-branch` and `fact:the-lineage-gate-verdict-depends-on-when-you-run-it` cover the chain WITHIN one branch. **None addresses two branches sharing one live store**, which is the only reason the fold-into-one-PR decision was needed.\\n\\n⇒ OPEN, AND NOT PROPOSED AS A CHANGE HERE: whether `parallel-work`'s trigger conditions should name the solo-with-two-branches case, or whether something should notice that the store has writes belonging to a branch you are not on. Both are the owner's call.\",\"subject_id\":\"proj:reflow2\",\"valid_from\":\"2026-08-14\"}",
         "target_id": "fact:the-live-graph-does-not-branch-so-two-open-prs-collide",
+        "target_type": "TemporalFact"
+      }
+    },
+    {
+      "node_id": "snap:epoch:preserved-on-write:fact:the-root-cause-detectors-measured-on-reflow2s-own-design-and-the-mirror-misses-its-own-origin",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[]",
+        "state": "{\"basis\":\"measured\",\"confidence\":1.0,\"fact_type\":\"measurement\",\"name\":\"MEASURED at first run: 183 of 209 fixes are joined to no cause, 65 open defects were overtaken by a dated change — and the mirror as specified would NOT have caught the case it was written from\",\"statement\":\"MEASURED 2026-09-06 on reflow2's own export (3,794 nodes) with the shipped definitions, before the detectors were merged.\\n\\n═══ fix_without_recorded_cause ═══\\n209 ChangeEvents carry change_type defect_fix (102) or test_failure_fix (107). Under the tight definition — the event sits on no CAUSES edge in either direction and carries no outgoing INVALIDATES — 183 are joined to no cause: 99 dated (82 in 2026-08, 9 in 2026-07, 8 in 2026-09) and 84 undated. A looser definition that also accepted a CAUSES edge on any artifact the fix CHANGED gave 150; the difference (33) is fixes whitewashed by an old cause on a hub artifact, which is why the loose reading was rejected. NONE are parked, so the aggregate reads '183 of 209' on the day it ships. That is the backlog rule:an-issue-is-root-caused-then-pinned-by-a-test-then-fixed (2026-08-26) predates for most of them; whether to park it forward-only is Anthony's ruling, not taken here.\\n\\n═══ defect_overtaken_by_change ═══\\n234 TemporalFacts carry fact_type=defect; 199 are open (no valid_to, no incoming INVALIDATES). Of those, 65 have a dated ChangeEvent that CHANGED the subject (31) or an Artifact REALIZING the subject (34) strictly after valid_from. 29 more have ONLY undated changes on the subject and cannot be ordered; 79 carry no valid_from at all and are skipped. So the detector reaches 65 of a population whose true size is somewhere between 65 and 173, and the bound is dates nobody wrote.\\n\\n═══ ⭐ THE REFUTATION ═══\\nfact:a-defect-fixed-but-never-closed-on-the-record-was-re-fixed-wrongly-a-day-later says 'that detector would have flagged this fact on the day the fix landed'. Checked against the actual shape: the misread fact's subject_id was art:dev-storyflow-feedback-2026-09-04 — the DOCUMENT THAT REPORTED the defect, not the part that was wrong — and its real fixer chg:the-surface-says-what-it-already-knew CHANGED art:detect and seven other artifacts, none of them the subject or a realizer of it, and carried no detected_at. Under the specification as ruled, the mirror would have been silent on its own motivating case, twice over. The spec is kept (a hop from a report document to the code it describes is a search by words, not by structure); the claim on the origin fact is closed with this bound. What WOULD have caught it: the fixer drawing INVALIDATES at the time — which is exactly what fix_without_recorded_cause now asks of every fix.\\n\\nBOUNDS: one export, one day; the 65 are not triaged (which of them were fixed is the question the gaps now ask); the aggregate count will move only when fixes are joined to causes or parked.\",\"subject_id\":\"cap:a-fix-with-no-recorded-cause-and-a-defect-its-subject-outran-are-noticed\",\"valid_from\":\"2026-09-06\",\"value\":\"{\\\"fixes\\\":209,\\\"defect_fix\\\":102,\\\"test_failure_fix\\\":107,\\\"uncaused_tight\\\":183,\\\"uncaused_loose\\\":150,\\\"uncaused_dated\\\":99,\\\"uncaused_undated\\\":84,\\\"parked\\\":0,\\\"defect_facts\\\":234,\\\"open_defect_facts\\\":199,\\\"overtaken\\\":65,\\\"overtaken_direct\\\":31,\\\"overtaken_via_realizer\\\":34,\\\"undated_changes_only\\\":29,\\\"facts_without_valid_from\\\":79,\\\"origin_case_caught_as_specified\\\":false,\\\"origin_subject\\\":\\\"art:dev-storyflow-feedback-2026-09-04\\\",\\\"origin_fixer_dated\\\":false}\"}",
+        "target_id": "fact:the-root-cause-detectors-measured-on-reflow2s-own-design-and-the-mirror-misses-its-own-origin",
         "target_type": "TemporalFact"
       }
     },
@@ -181596,6 +181791,20 @@
       }
     },
     {
+      "node_id": "fact:the-root-cause-detectors-measured-on-reflow2s-own-design-and-the-mirror-misses-its-own-origin",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "measurement",
+        "name": "MEASURED at first run: 183 of 209 fixes are joined to no cause, 45 open defects were overtaken by a dated repair (65 by a change of any kind) — and the mirror as specified would NOT have caught the case it was written from",
+        "statement": "MEASURED 2026-09-06 on reflow2's own export (3,794 nodes) with the shipped definitions, read back from the served surface before merge.\n\n═══ fix_without_recorded_cause ═══\n209 ChangeEvents carry change_type defect_fix (102) or test_failure_fix (107). Under the tight definition — the event sits on no CAUSES edge in either direction and carries no outgoing INVALIDATES — 183 are joined to no cause: 99 dated (82 in 2026-08, 9 in 2026-07, 8 in 2026-09) and 84 undated. A looser definition that also accepted a CAUSES edge on any artifact the fix CHANGED gave 150; the difference (33) is fixes whitewashed by an old cause on a hub artifact, which is why the loose reading was rejected. NONE are parked, so the aggregate reads '183 of 209' on the day it ships. That is the backlog rule:an-issue-is-root-caused-then-pinned-by-a-test-then-fixed (2026-08-26) predates for most of them; whether to park it forward-only is Anthony's ruling, not taken here.\n\n═══ defect_overtaken_by_change ═══\n234 TemporalFacts carry fact_type=defect; 199 are open (no valid_to, no incoming INVALIDATES). Over later dated changes OF ANY KIND on the subject (or an Artifact REALIZING it), 65 fire, and the served surface showed one hub subject (cmp:service) carrying 39 members — a question nobody can answer, and the wallpaper shape this project has killed three times. Restricted to later REPAIRS (change_type defect_fix or test_failure_fix), 45 fire (22 on Components, 23 on Capabilities), largest 15 members, median 3. That is the shipped definition. 29 more open defect facts have ONLY undated changes on the subject and cannot be ordered; 79 carry no valid_from at all and are skipped. So the detector reaches 45 of a population whose true size is somewhere between 45 and 173, and the bound is dates nobody wrote.\n\n═══ ⭐ THE REFUTATION ═══\nfact:a-defect-fixed-but-never-closed-on-the-record-was-re-fixed-wrongly-a-day-later says 'that detector would have flagged this fact on the day the fix landed'. Checked against the actual shape: the misread fact's subject_id was art:dev-storyflow-feedback-2026-09-04 — the DOCUMENT THAT REPORTED the defect, not the part that was wrong — and its real fixer chg:the-surface-says-what-it-already-knew CHANGED art:detect and seven other artifacts, none of them the subject or a realizer of it, and carried no detected_at. Under the specification as ruled, the mirror would have been silent on its own motivating case, twice over. The spec is kept (a hop from a report document to the code it describes is a search by words, not by structure); the claim on the origin fact is closed with this bound. What WOULD have caught it: the fixer drawing INVALIDATES at the time — which is exactly what fix_without_recorded_cause now asks of every fix.\n\nBOUNDS: one export, one day; the 45 are not triaged (which of them were fixed is the question the gaps now ask); the aggregate count will move only when fixes are joined to causes or parked.",
+        "subject_id": "cap:a-fix-with-no-recorded-cause-and-a-defect-its-subject-outran-are-noticed",
+        "valid_from": "2026-09-06",
+        "value": "{\"fixes\":209,\"defect_fix\":102,\"test_failure_fix\":107,\"uncaused_tight\":183,\"uncaused_loose\":150,\"uncaused_dated\":99,\"uncaused_undated\":84,\"parked\":0,\"defect_facts\":234,\"open_defect_facts\":199,\"overtaken_any_change\":65,\"overtaken_any_change_max_members\":39,\"overtaken_by_repair\":45,\"overtaken_by_repair_components\":22,\"overtaken_by_repair_capabilities\":23,\"overtaken_by_repair_max_members\":15,\"overtaken_by_repair_median_members\":3,\"undated_changes_only\":29,\"facts_without_valid_from\":79,\"origin_case_caught_as_specified\":false,\"origin_subject\":\"art:dev-storyflow-feedback-2026-09-04\",\"origin_fixer_dated\":false}"
+      }
+    },
+    {
       "node_id": "fact:the-root-cause-was-on-the-record-and-a-session-re-derived-it-anyway",
       "node_type": "TemporalFact",
       "properties": {
@@ -182354,6 +182563,20 @@
         "level": "unit",
         "method": "test",
         "name": "The orphan finding names parking and its limits",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:a-fix-without-a-cause-and-an-overtaken-defect-raise-gaps",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-core/tests/fix_without_recorded_cause.rs (6 tests) and crates/reflow2-core/tests/defect_overtaken_by_change.rs (8 tests). Pins: two uncaused fixes raise one aggregate \"2 of 2\" and a refactor is not counted; an INVALIDATES from the fix or a CAUSES onto the fix clears it; a CAUSES edge on a touched artifact does NOT clear it; a parked fix is skipped and counted in the evidence; the aggregate id survives a new fix; no fixes means silence. Mirror: a dated later repair on the subject raises a gap anchored to the fact and the repair; INVALIDATES clears it; an earlier or same-day repair is not later; an undated change is counted, never assumed later; a later feature or refactor is counted in the evidence and never offered as the fix; a repair on an artifact REALIZING the subject counts; closed and undated facts are skipped; a further repair moves the gap id.",
+        "findings": "14 of 14 passed (6 + 8) after the repairs-only tightening; the earlier 13 passed inside a full reflow2-core run of 1595 / 0 and a reflow2-mcp run of 366 / 0; clippy clean. One pin was observed failing first: the title assertion failed when the mirror's wording moved from \"changed N time(s)\" to \"N later repair(s) touched\", and was corrected. The detectors themselves were not observed failing first — they did not exist, so the test files could not compile against the unfixed code; the fail-first step applies to a pinned defect, not to a new detector.",
+        "kind": "verification",
+        "last_run_at": "2026-09-06",
+        "level": "unit",
+        "method": "test",
+        "name": "A fix joined to no cause, and an open defect whose subject moved, each raise a gap; the recorded shapes clear them",
         "status": "passing"
       }
     },
@@ -185171,7 +185394,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:b74c829037637f0d9bed44ffd2653eaabb038f2251470cb32f24bf5cdc1dafe2",
+  "prev_content_hash": "sha256:0004e801a1b8d4fac1c3d922e92bef1e93fedd0cd20cd03b90f1171ebe7086f5",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

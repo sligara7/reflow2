@@ -628,6 +628,16 @@ pub enum GapSource {
     /// ONE aggregate finding, low severity, acknowledgeable — never one per
     /// boundary. The question is about the project's posture, asked once.
     NoPublishedBoundary,
+    /// A repair recorded as `defect_fix` or `test_failure_fix` that is joined
+    /// to no cause: nothing `CAUSES` it, it `CAUSES` nothing, and it
+    /// `INVALIDATES` no finding. The third leg of the root-cause vocabulary
+    /// (`dec:idea-how-does-root-cause-become-automatic-rule-hook-detector-or-composition`).
+    FixWithoutRecordedCause,
+    /// An open `defect` TemporalFact whose subject — or an artifact realizing
+    /// it — was changed by a dated ChangeEvent AFTER the fact was recorded,
+    /// with nothing saying whether that change fixed it. The mirror of the
+    /// row above: a fix that never closed its finding.
+    DefectOvertakenByChange,
 }
 
 impl GapSource {
@@ -686,6 +696,8 @@ impl GapSource {
             GapSource::DecompositionCoverage => "decomposition_coverage",
             GapSource::ChangeAxisUnstated => "change_axis_unstated",
             GapSource::InternalOnlyDelivery => "internal_only_delivery",
+            GapSource::FixWithoutRecordedCause => "fix_without_recorded_cause",
+            GapSource::DefectOvertakenByChange => "defect_overtaken_by_change",
         }
     }
 
@@ -737,6 +749,20 @@ impl GapSource {
             // anywhere else, because ChangeEvents are the fastest-growing node
             // type in any active design.
             GapSource::ChangeAxisUnstated => true,
+            // Aggregate, and forward-only by the graph's own means rather than
+            // by a date in the detector: the finding is about the PRACTICE of
+            // repairing without writing the cause down. Fixes are the second
+            // fastest-growing thing in an active design, so per-event keying
+            // would expire the standing judgement on every repair. A backlog
+            // that predates the rule is PARKED per event (GOVERNED_BY
+            // ruling=parks under one accepted Decision) and counted in the
+            // evidence, so the count keeps moving as new fixes land; one
+            // acknowledgement, by contrast, is a judgement about the practice
+            // and silences it.
+            GapSource::FixWithoutRecordedCause => true,
+            // Per fact, and keyed on the later changes too: a further change on
+            // the subject is a fresh question about a different state of it.
+            GapSource::DefectOvertakenByChange => false,
             // AGGREGATE, and the call was close enough to record the losing
             // side. Per-component keying would be the more honest key for the
             // answer people will actually give — "cmp:bulk is a namespace, not
@@ -2002,6 +2028,11 @@ impl DesignGraph {
         // Absence, not consistency: fires loudest where the axis has NEVER
         // been stated, which is the case every other detector here misses.
         self.detect_change_axis_unstated(&mut gaps)?;
+        // The third leg of the root-cause vocabulary: a repair that recorded
+        // no cause, and — the mirror — a recorded defect whose subject moved
+        // with nothing saying whether that was the fix.
+        self.detect_fix_without_recorded_cause(&mut gaps)?;
+        self.detect_defect_overtaken_by_change(&mut gaps)?;
         // The product form of the third-party rule: a stated need that nothing
         // a consumer can reach delivers. Silent unless the design has actually
         // declared some audiences.
@@ -4561,6 +4592,295 @@ impl DesignGraph {
                  is what asks."
             ),
         });
+        Ok(())
+    }
+
+    /// Repairs that recorded no cause (`GapSource::FixWithoutRecordedCause`).
+    ///
+    /// One aggregate finding over every `defect_fix` / `test_failure_fix`
+    /// ChangeEvent in the design. A fix has a cause ON THE RECORD when the
+    /// event itself sits on a `CAUSES` edge in either direction, or when it
+    /// `INVALIDATES` a finding (the finding is the record of the symptom, and
+    /// the cause lives on it or on the artifact that `CAUSES` it). Nothing
+    /// looser is accepted: a `CAUSES` edge on some artifact the fix happened
+    /// to touch is not evidence about THIS fix — one old cause on a hub file
+    /// would otherwise launder every later repair of it.
+    ///
+    /// # Why this exists
+    ///
+    /// `req:a-fix-says-whether-it-corrected-the-cause` is accepted, and the
+    /// rule that carries the root-cause discipline
+    /// (`rule:every-failure-is-searched-and-every-cause-is-root-caused-before-it-is-written`)
+    /// says what compliance leaves behind. Until this detector, nothing noticed
+    /// its absence — the tool and the instruction existed and the third leg
+    /// did not. Measured on reflow2's own design the day it was written: 209
+    /// fixes recorded, and the large majority joined to no cause.
+    ///
+    /// # What it does NOT judge
+    ///
+    /// Whether the recorded cause was the RIGHT one. This reports absence of a
+    /// record, never the quality of one (`dec:report-dont-judge`). A fix whose
+    /// finding is honestly "no cause was established" records that as a fact
+    /// and invalidates nothing — and reads here as uncaused, which is true.
+    ///
+    /// # Forward-only, without a date in the detector
+    ///
+    /// A design adopting the rule today has a backlog. The graph already has
+    /// the word for "this unattached state is deliberate": `GOVERNED_BY` with
+    /// `ruling=parks` under an accepted Decision. Parked fixes are skipped and
+    /// COUNTED, so the finding keeps moving as new fixes land. Acknowledging
+    /// the aggregate is a different act — a standing judgement that this
+    /// design does not record causes — and it silences the finding.
+    fn detect_fix_without_recorded_cause(
+        &self,
+        gaps: &mut Vec<GapCandidate>,
+    ) -> Result<(), DynoError> {
+        let mut uncaused: Vec<String> = Vec::new();
+        let mut total = 0usize;
+        let mut parked = 0usize;
+        for ev in self.scan_live_nodes(node::CHANGE_EVENT)? {
+            let change_type = ev
+                .properties
+                .get("change_type")
+                .and_then(Value::as_str)
+                .unwrap_or("");
+            if change_type != "defect_fix" && change_type != "test_failure_fix" {
+                continue;
+            }
+            total += 1;
+            if self.is_parked(&ev.node_id)? {
+                parked += 1;
+                continue;
+            }
+            let on_a_cause = !self.incoming(&ev.node_id, Some(edge::CAUSES))?.is_empty()
+                || !self.outgoing(&ev.node_id, Some(edge::CAUSES))?.is_empty();
+            if on_a_cause {
+                continue;
+            }
+            if !self
+                .outgoing(&ev.node_id, Some(edge::INVALIDATES))?
+                .is_empty()
+            {
+                continue;
+            }
+            uncaused.push(ev.node_id.clone());
+        }
+        if uncaused.is_empty() {
+            return Ok(());
+        }
+        uncaused.sort();
+        let n = uncaused.len();
+        let parked_note = if parked > 0 {
+            format!(
+                " A further {parked} fix(es) are PARKED by an accepted ruling and are not counted \
+                 — the way to carry a backlog that predates the rule."
+            )
+        } else {
+            String::new()
+        };
+        gaps.push(GapCandidate {
+            id: gap_id(GapSource::FixWithoutRecordedCause, &uncaused),
+            gap_source: GapSource::FixWithoutRecordedCause,
+            scope: GapScope::Project,
+            // Above `change_axis_unstated` (0.3): a missing axis is a lost
+            // distinction, a missing cause is the condition under which the
+            // same class of failure comes back wearing different clothes.
+            // Below every contradiction and every break in the golden thread.
+            severity: 0.35,
+            title: format!("{n} of {total} recorded fix(es) are joined to no cause"),
+            description: format!(
+                "{n} change(s) recorded as a defect fix or a test-failure fix are joined to no \
+                 cause: nothing CAUSES them, they CAUSE nothing, and they INVALIDATE no finding. \
+                 The repair is recoverable from the diff; the cause is not, and a fix with no \
+                 recorded cause is indistinguishable from a symptom fix. For each one, either draw \
+                 INVALIDATES from the fix to the finding it closed (the `invalidates` tool), or \
+                 record the cause as a dated fact and draw CAUSES between them. A fix made before \
+                 this design adopted the discipline can be parked (GOVERNED_BY, ruling=parks, under \
+                 one accepted Decision) and is then counted rather than asked about; acknowledging \
+                 this finding instead says this design does not record causes, and it will not be \
+                 asked again."
+            ),
+            affected_ids: uncaused,
+            suggested_depth: 1,
+            evidence: format!(
+                "{n} of {total} ChangeEvent(s) with change_type defect_fix or test_failure_fix sit \
+                 on no CAUSES edge in either direction and carry no outgoing INVALIDATES.{parked_note} \
+                 A CAUSES edge on an artifact the fix touched is deliberately not counted: it says \
+                 something about that artifact's past, not about this repair."
+            ),
+        });
+        Ok(())
+    }
+
+    /// Recorded defects whose subject moved after they were written, with
+    /// nothing saying whether that was the fix
+    /// (`GapSource::DefectOvertakenByChange`).
+    ///
+    /// One finding per open `defect` TemporalFact for which a dated REPAIR — a
+    /// ChangeEvent of `change_type` `defect_fix` or `test_failure_fix` —
+    /// `CHANGED` its subject, or an Artifact that `REALIZES` the subject,
+    /// strictly after the fact's `valid_from`, and no record `INVALIDATES` the
+    /// fact. Keyed on the fact AND the later repairs, so a further repair on
+    /// the same subject asks again: the world moved, and the earlier judgement
+    /// was about a different state of it.
+    ///
+    /// Repairs only, and that was measured rather than assumed: over every
+    /// later change of any kind, reflow2's own design raised 65 findings and
+    /// one hub component carried 39 members — a question nobody can answer.
+    /// Over later repairs it raises 45 with a median of 3 members. A feature
+    /// or a refactor that touched the subject is counted in the evidence and
+    /// never offered as the thing that fixed it.
+    ///
+    /// # The case it was written from
+    ///
+    /// `fact:a-defect-fixed-but-never-closed-on-the-record-was-re-fixed-wrongly-a-day-later`:
+    /// a fix landed, drew no INVALIDATES, and the fact went on reading as open
+    /// — so the next session trusted it, re-fixed the symptom a different way,
+    /// and broke two pins. A stale open defect is a live instruction to do the
+    /// wrong thing.
+    ///
+    /// # What it cannot see, stated rather than swept
+    ///
+    /// Ordering needs two dates. A change with no `detected_at` cannot be
+    /// placed before or after the fact and is COUNTED in the evidence, never
+    /// treated as later; a fact with no `valid_from` is skipped entirely. And
+    /// only the subject and its direct realizers are watched: a defect
+    /// recorded against the document that REPORTED it, rather than against the
+    /// part that was wrong, is out of reach — that was the shape of the very
+    /// case above, whose fixer was also undated, so this detector as specified
+    /// would NOT have caught it. Recorded on the fact.
+    fn detect_defect_overtaken_by_change(
+        &self,
+        gaps: &mut Vec<GapCandidate>,
+    ) -> Result<(), DynoError> {
+        let index = self.node_type_index()?;
+        for fact in self.scan_live_nodes(node::TEMPORAL_FACT)? {
+            let prop = |k: &str| fact.properties.get(k).and_then(Value::as_str);
+            if prop("fact_type") != Some("defect") {
+                continue;
+            }
+            if prop("valid_to").is_some_and(|s| !s.is_empty()) {
+                continue;
+            }
+            let Some(subject) = prop("subject_id").filter(|s| !s.is_empty()) else {
+                continue;
+            };
+            let Some(recorded_on) = prop("valid_from").and_then(crate::dates::parse_day) else {
+                continue;
+            };
+            if !self
+                .incoming(&fact.node_id, Some(edge::INVALIDATES))?
+                .is_empty()
+            {
+                continue;
+            }
+            if self.is_parked(&fact.node_id)? {
+                continue;
+            }
+            // The subject, and the artifacts that realize it: a capability's
+            // defect is only ever fixed by changing something that realizes it.
+            let mut watched = vec![subject.to_string()];
+            for e in self.incoming(subject, Some(edge::REALIZES))? {
+                watched.push(e.from_id);
+            }
+            let mut later: Vec<String> = Vec::new();
+            let mut undated = 0usize;
+            let mut not_a_repair = 0usize;
+            for w in &watched {
+                for e in self.incoming(w, Some(edge::CHANGED))? {
+                    if self.is_discontinued(&e.from_id)? {
+                        continue;
+                    }
+                    let Some(ev) = self.get_node(node::CHANGE_EVENT, &e.from_id)? else {
+                        continue;
+                    };
+                    let change_type = ev
+                        .properties
+                        .get("change_type")
+                        .and_then(Value::as_str)
+                        .unwrap_or("");
+                    let is_repair =
+                        change_type == "defect_fix" || change_type == "test_failure_fix";
+                    match ev
+                        .properties
+                        .get("detected_at")
+                        .and_then(Value::as_str)
+                        .and_then(crate::dates::parse_day)
+                    {
+                        Some(day) if day > recorded_on && is_repair => later.push(e.from_id),
+                        Some(day) if day > recorded_on => not_a_repair += 1,
+                        Some(_) => {}
+                        // Undated, so unordered — whether or not it was a
+                        // repair, it cannot be placed after the fact.
+                        None => undated += 1,
+                    }
+                }
+            }
+            later.sort();
+            later.dedup();
+            if later.is_empty() {
+                continue;
+            }
+            let n = later.len();
+            let name = node_name(&fact);
+            let subject_name = index
+                .get(subject)
+                .and_then(|t| self.get_node(t, subject).ok().flatten())
+                .map(|s| node_name(&s))
+                .unwrap_or_else(|| subject.to_string());
+            let mut affected = vec![fact.node_id.clone()];
+            affected.extend(later.iter().cloned());
+            affected.sort();
+            let mut swept = String::new();
+            if undated > 0 {
+                swept.push_str(&format!(
+                    " {undated} further change(s) on the same subject carry no detected_at and \
+                     could not be ordered against the fact; they are not counted as later."
+                ));
+            }
+            if not_a_repair > 0 {
+                swept.push_str(&format!(
+                    " {not_a_repair} later change(s) on the same subject were not repairs (a \
+                     feature, a refactor, a resync) and are not offered as the fix."
+                ));
+            }
+            gaps.push(GapCandidate {
+                id: gap_id(GapSource::DefectOvertakenByChange, &affected),
+                gap_source: GapSource::DefectOvertakenByChange,
+                scope: GapScope::Project,
+                // Above the absence gaps: a defect that reads open after its
+                // fix is a false instruction, and one already sent a session
+                // down a wrong re-fix. Below a failing check (0.8) and
+                // unresolved drift (0.75), which are reality contradicting the
+                // design rather than the record lagging it.
+                severity: 0.5,
+                title: format!(
+                    "“{name}” still reads open, and {n} later repair(s) touched “{subject_name}” after it was recorded"
+                ),
+                description: format!(
+                    "The defect “{name}” was recorded against “{subject_name}” on {} and nothing \
+                     says it was fixed — yet {n} later dated repair(s) touched that subject or an \
+                     artifact realizing it: {}. If one of them was the fix, draw INVALIDATES from \
+                     that ChangeEvent to the fact (the `invalidates` tool) so the finding stops \
+                     reading as open; a session that trusted a stale open defect re-fixed it wrongly \
+                     within a day. If the defect is genuinely still open despite the repairs, \
+                     acknowledge this once for these repairs — a further repair on the subject will \
+                     ask again.",
+                    prop("valid_from").unwrap_or(""),
+                    later.join(", ")
+                ),
+                affected_ids: affected,
+                suggested_depth: 1,
+                evidence: format!(
+                    "TemporalFact '{}' (fact_type=defect, valid_from={}, no valid_to) has no incoming \
+                     INVALIDATES; {n} ChangeEvent(s) of change_type defect_fix or test_failure_fix \
+                     with detected_at after valid_from CHANGED its subject '{subject}' or an \
+                     Artifact that REALIZES it.{swept}",
+                    fact.node_id,
+                    prop("valid_from").unwrap_or("")
+                ),
+            });
+        }
         Ok(())
     }
 

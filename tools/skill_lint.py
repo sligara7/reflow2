@@ -212,6 +212,12 @@ NON_TOOL_TERMS = {
     # A GAP SOURCE key (detect.rs), not a tool — detect-and-ask names it so a
     # reader can tell which finding is the one asking about a change's axis.
     "change_axis_unstated",
+    # Two more GAP SOURCE keys (2026-09-06), the third leg of the root-cause
+    # vocabulary — detect-and-ask names them so a reader can tell which finding
+    # is asking about a fix with no cause and which about a defect its subject
+    # outran.
+    "fix_without_recorded_cause",
+    "defect_overtaken_by_change",
     "shaping",
     "governs_retired",
     # ChangeEvent.subject and its two values (2026-08-22) — the revise-design

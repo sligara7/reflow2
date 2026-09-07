@@ -31,8 +31,12 @@ the record**: the gaps stay counted and stay loud (`req:no-idea-goes-quiet`).
    requirement was split into children and nothing has checked that they cover it, which
    matters because delivery rolls UP a decomposition and never asks), **changes that never said
    what kind of change they were** (`change_axis_unstated` — nobody recorded whether the system
-   moved or only the record of it did, and nothing can tell them apart afterwards), surprising
-   couplings, quality drift.
+   moved or only the record of it did, and nothing can tell them apart afterwards), **fixes that
+   recorded no cause** (`fix_without_recorded_cause` — a repair joined to no finding and no cause,
+   indistinguishable from a symptom fix; the root-cause skill is the door) and **defects the
+   record never closed** (`defect_overtaken_by_change` — a later repair touched the subject after the defect was
+   recorded and nothing says whether that was the fix; a stale open defect sent a session down a
+   wrong re-fix), surprising couplings, quality drift.
    If empty, the design is coherent for now — proceed to build.
 
    **On a large design, ask for your part.** Pass `scope` (a node id — the Component your team
