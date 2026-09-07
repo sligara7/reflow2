@@ -710,6 +710,39 @@ impl ReflowService {
     }
 
     #[tool(
+        description = "WHAT THE DESIGN HOLDS ABOUT ONE SUBJECT, read-only, in one call — the \
+                       /topic view. Not a brainstorm, not a link-artifacts effort: 'show me \
+                       something about X'. Searches the design for the phrase, groups the hits \
+                       by node type, and for each hit reads its status, its connections by edge \
+                       type and direction, and the LATEST DATED change that touched it or \
+                       measurement about it. Computed server-side so two agents render one \
+                       topic the same way (a view is a projection of the graph, never a \
+                       renderer's fill-in). ⭐ `not_found` IS MANDATORY AND LOAD-BEARING: it \
+                       says what was searched, which populated node types matched NOTHING, and \
+                       whether the list was cut at its limit — search is keyword-based and a \
+                       miss on the caller's phrasing must never read as the design holding \
+                       nothing. Bounded like detect_gaps: `budget` says which tier the reply \
+                       landed in and what it withheld; `count` and `by_type` are never trimmed. \
+                       Writes nothing.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn topic_report(
+        &self,
+        Parameters(req): Parameters<TopicReportReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let g = self.graph.read().await;
+        let report = g
+            .topic_report(
+                &req.query,
+                req.limit,
+                req.budget_chars
+                    .unwrap_or(reflow2_core::detect::DEFAULT_REPLY_BUDGET_CHARS),
+            )
+            .map_err(dyno_err)?;
+        self.ok_read(&g, report)
+    }
+
+    #[tool(
         description = "Delete a node by type and id (true if it existed).",
         annotations(read_only_hint = false)
     )]

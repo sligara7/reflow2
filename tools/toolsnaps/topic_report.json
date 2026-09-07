@@ -1,0 +1,41 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "WHAT THE DESIGN HOLDS ABOUT ONE SUBJECT, read-only, in one call — the /topic view. Not a brainstorm, not a link-artifacts effort: 'show me something about X'. Searches the design for the phrase, groups the hits by node type, and for each hit reads its status, its connections by edge type and direction, and the LATEST DATED change that touched it or measurement about it. Computed server-side so two agents render one topic the same way (a view is a projection of the graph, never a renderer's fill-in). ⭐ `not_found` IS MANDATORY AND LOAD-BEARING: it says what was searched, which populated node types matched NOTHING, and whether the list was cut at its limit — search is keyword-based and a miss on the caller's phrasing must never read as the design holding nothing. Bounded like detect_gaps: `budget` says which tier the reply landed in and what it withheld; `count` and `by_type` are never trimmed. Writes nothing.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "budget_chars": {
+        "default": null,
+        "description": "Characters the reply may spend before detail is withheld (default\n30,000). The reply says which tier it landed in and what it withheld;\n`count` and `by_type` are never trimmed.",
+        "format": "uint",
+        "minimum": 0,
+        "type": [
+          "integer",
+          "null"
+        ]
+      },
+      "limit": {
+        "default": null,
+        "description": "Hits to consider (default 20). `count == limit` in the reply means\nthere may be more.",
+        "format": "uint",
+        "minimum": 0,
+        "type": [
+          "integer",
+          "null"
+        ]
+      },
+      "query": {
+        "description": "The subject, in your words or the owner's — \"rainfall totals\",\n\"the export lineage\", \"who can approve\". Keyword search over every\nnode's name, statement and description; a miss is REPORTED in\n`not_found`, never read as absence.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "query"
+    ],
+    "type": "object"
+  },
+  "name": "topic_report"
+}

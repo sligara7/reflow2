@@ -91,6 +91,7 @@ pub mod structure;
 pub mod surprises;
 pub mod sync;
 pub mod temporal;
+pub mod topic;
 pub mod verify;
 pub mod vocabulary;
 

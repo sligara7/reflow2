@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:301f83d0736188641a128851008c85ff2a274b855ef788ba425351330eef2db5",
+  "content_hash": "sha256:b82d85ddf4dfbdd804a2c4aed6f0904a4355548ea87230c030d11b7e21ac3490",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2842,6 +2842,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:the-design-holds-about-one-subject-is-read-back-in-one-call",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:service"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -10409,6 +10417,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:dec:idea-a-topic-view-shows-what-the-design-holds-about-one-subject-read-only",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:dec:idea-how-does-root-cause-become-automatic-rule-hook-detector-or-composition",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
@@ -12266,7 +12280,8 @@
       "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-a-topic-view-shows-what-the-design-holds-about-one-subject-read-only",
       "properties": {
-        "role": "author"
+        "acted_at": "2026-09-06",
+        "role": "approver"
       },
       "to_id": "who:ajs"
     },
@@ -38043,6 +38058,78 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-topic-view-is-served-as-one-call-with-a-mandatory-not-found-line",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-topic-view-is-served-as-one-call-with-a-mandatory-not-found-line",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-topic-view-is-served-as-one-call-with-a-mandatory-not-found-line",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-query"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-topic-view-is-served-as-one-call-with-a-mandatory-not-found-line",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:topic"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-topic-view-is-served-as-one-call-with-a-mandatory-not-found-line",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:topic-command"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-topic-view-is-served-as-one-call-with-a-mandatory-not-found-line",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:topic-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-topic-view-is-served-as-one-call-with-a-mandatory-not-found-line",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:the-design-holds-about-one-subject-is-read-back-in-one-call"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-topic-view-is-served-as-one-call-with-a-mandatory-not-found-line",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "ver:a-topic-report-groups-hits-names-the-latest-dated-change-and-always-says-what-it-did-not-find"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-unexported-claim-is-answered-once-for-the-seat",
       "properties": {
         "accepted_baseline": true,
@@ -49507,6 +49594,14 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:the-design-holds-about-one-subject-is-read-back-in-one-call",
+      "properties": {
+        "note": "The ruling this implements: option (b), the projection computed in the server, with the skill as a thin instruction leg and the not-found line mandatory."
+      },
+      "to_id": "dec:idea-a-topic-view-shows-what-the-design-holds-about-one-subject-read-only"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:the-foundation-is-one-subsystem-not-two-halves",
       "properties": {},
       "to_id": "decision:ack:ed8660a4500b431b"
@@ -52658,6 +52753,12 @@
       "from_id": "dec:idea-a-factory-builds-the-mechanics-in-so-a-class-fix-is-one-edit",
       "properties": {},
       "to_id": "snap:epoch:composition-is-chosen-over-exhaustive-checks:dec:idea-a-factory-builds-the-mechanics-in-so-a-class-fix-is-one-edit"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:idea-a-topic-view-shows-what-the-design-holds-about-one-subject-read-only",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:dec:idea-a-topic-view-shows-what-the-design-holds-about-one-subject-read-only"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -137284,6 +137385,15 @@
         "completeness": "complete",
         "conformance": "unchecked"
       },
+      "to_id": "cap:the-design-holds-about-one-subject-is-read-back-in-one-call"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:tools-query",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
       "to_id": "cmp:tools-query"
     },
     {
@@ -137364,6 +137474,33 @@
         "conformance": "unchecked"
       },
       "to_id": "cmp:tools-temporal"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:topic",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:the-design-holds-about-one-subject-is-read-back-in-one-call"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:topic-command",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:the-design-holds-about-one-subject-is-read-back-in-one-call"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:topic-skill",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:the-design-holds-about-one-subject-is-read-back-in-one-call"
     },
     {
       "edge_type": "REALIZES",
@@ -141052,6 +141189,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:a-topic-report-groups-hits-names-the-latest-dated-change-and-always-says-what-it-did-not-find",
+      "properties": {},
+      "to_id": "cap:the-design-holds-about-one-subject-is-read-back-in-one-call"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:a-tracked-graph-store-is-reported",
       "properties": {},
       "to_id": "cap:kit"
@@ -143962,6 +144105,30 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:topic",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:topic"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:topic-command",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:topic-command"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:topic-skill",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:topic-skill"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:unreachable-decision-test",
       "properties": {
         "action": "created"
@@ -146507,7 +146674,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:7ba8fe92353b45a2ec16c4fe5f7ca1522167cfc46e9eb7c788dbc7304f2dd019",
+        "checksum": "sha256:c3c1fdd2167b605df2a3ba6c883bcea3e0c118d5e5255c6ce68a8364402d00f1",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -146594,7 +146761,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:acd2f7e6d8bbef688de5ffe66fee8a64d76e56c4b3db23e12bc44b5e49f569fc",
+        "checksum": "sha256:ccbfe0f5febd6fbdd87cff013a3d5420bb9b45fb71852189121c224bc6b9ec19",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -147395,7 +147562,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:72307f099ab3b02a951ffe7b8a4792371cf8425f061500b5f713772a5b37befb",
+        "checksum": "sha256:0d161160578d5d083f90ae367f9bb20c528cca995fb9423eab2c9eb8c2cf0f8a",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/query.rs",
         "name": "tools/query.rs",
@@ -147425,6 +147592,39 @@
         "name": "tools/temporal_tools.rs",
         "status": "realized",
         "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:topic",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:9774c5492cdd0c1d9b2c940704d156fb5760b86aa61f98c9516f02ffe9c7764a",
+        "location": "crates/reflow2-core/src/topic.rs",
+        "name": "topic.rs — the /topic view computed server-side: grouped hits, status, connections, latest dated change, mandatory not-found line, bounded reply",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:topic-command",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:e322352e25d0f6347e2f87d70074984f31e8a6b7452e86e296895cf81229a628",
+        "location": "getting-started/commands/topic.md",
+        "name": "topic.md — the /topic slash command pointing at the topic skill",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:topic-skill",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:37af03042f7e864c482c266f03dbd4924384f3224593a73fe6cbbabd6b7462b4",
+        "location": "getting-started/skills/topic/SKILL.md",
+        "name": "topic/SKILL.md — the thin instruction leg of the /topic view: one call, render in the reader's domain, always read out not_found, write nothing",
+        "status": "realized"
       }
     },
     {
@@ -150212,6 +150412,16 @@
       "properties": {
         "description": "`list_skills` carries a `shortcut` per skill — stated by the server, never derived by the reader — because eight skills answer to a word that is not their name. Every skill has one, including the unaliased majority, so \"no alias\" never has to be told apart from \"nothing said\".\n\n`tools/check_command_surface.py` compares the surfaces that used to drift: three skill directories against each other, the command source against its copy, every skill against a command that reaches it, every command against a skill that exists, and every renamed command against `COMMAND_ALIASES`. Wired into CI.\n\n⚠️ USER-SCOPE COMMANDS ARE A NOTE, NEVER A FAILURE. They live outside the repository, so CI cannot see them; claiming to have checked something invisible to the gate would be worse than silence. That is the half of the original defect this does not close.",
         "name": "Every skill states the word a person types, and the copies of the surface are compared",
+        "provenance": "authored",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "cap:the-design-holds-about-one-subject-is-read-back-in-one-call",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Item 5 of v0.50.0 (dec:idea-a-topic-view-shows-what-the-design-holds-about-one-subject-read-only, ruled 2026-09-06). `topic_report(query, limit, budget_chars)`, computed server-side in crates/reflow2-core/src/topic.rs: keyword search over the design (default 20 hits), hits grouped by node type with groups ordered by their best score; per hit the node's own status (or enforced / fact_type), whether an accepted Decision discontinued it, its claim age, its connections counted by edge type and direction (capped at 8, the rest counted), and the LATEST DATED change that touched it (a ChangeEvent with detected_at) or measurement about it (a TemporalFact with valid_from) — undated ones are never offered. `not_found` is mandatory: what was searched, which populated node types matched nothing, whether the list was cut at its limit, and whether the index has drifted; a zero-hit reply says the design may hold the subject in other words rather than reading the miss as absence. Bounded like detect_gaps: full detail, then titles only, then the best-scored prefix per group, with `count` and `by_type` never trimmed and `budget` naming the tier. Writes nothing. The `topic` skill is the thin instruction leg: one call, render in the reader's domain, always read out the not-found line, name the door if the look turns into work.",
+        "name": "What the design holds about one subject is read back in one call, grouped by type, with status, connections, the latest dated change, and a mandatory not-found line",
         "provenance": "authored",
         "status": "realized"
       }
@@ -157718,6 +157928,18 @@
       }
     },
     {
+      "node_id": "chg:the-topic-view-is-served-as-one-call-with-a-mandatory-not-found-line",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-09-06",
+        "name": "The /topic view is served: topic_report computes what the design holds about one subject, with a mandatory not-found line",
+        "rationale": "Anthony asked for a look, not a decision: \"I just want to see something about a topic.\" The projection doctrine put the digest in the server so two agents render one subject the same way, and the not-found line is load-bearing because a digest built on a search miss is a confident wrong answer. The first read of reflow2's own design through the tool found a defect in that very line — it called 436 facts NOT matched when the list had merely been cut at twenty — which is the reason the line exists, turned on itself; fixed and pinned before merge. Undated changes are never offered as latest, the same rule as the overtaken-defect detector, so a node whose changes carry no date reads as \"nothing dated on the record\" rather than as untouched.",
+        "subject": "system",
+        "summary": "Item 5 of v0.50.0. New core module topic.rs and served tool topic_report(query, limit, budget_chars): keyword search, hits grouped by node type, per hit status / discontinued / claim age / connections by edge type and direction / the latest DATED change or measurement; a mandatory not_found line naming what was searched, which populated types matched nothing (or, when the list was cut at its limit, which are not among the top N), the limit cut and index drift; a reply bounded like detect_gaps with count and by_type never trimmed. A thin `topic` skill and /topic command; skill-lint allowlist gains the reply fields; one new toolsnap golden."
+      }
+    },
+    {
       "node_id": "chg:the-unexported-claim-is-answered-once-for-the-seat",
       "node_type": "ChangeEvent",
       "properties": {
@@ -160897,11 +161119,11 @@
       "node_id": "dec:idea-a-topic-view-shows-what-the-design-holds-about-one-subject-read-only",
       "node_type": "Decision",
       "properties": {
-        "decision": "Recorded as BRAINSTORMING, not as a proposal. Anthony, 2026-09-06, in his words: 'adding /topic or /topic-search skill — some times, I just want to see what's already within the reflow2 graph and it isn't a brainstorm or link-artifacts type effort — I just want to see something about a topic.' Distinct from dec:idea-should-the-open-list-be-rendered-in-the-owners-language-rather-than-the-graphs (qs): that renders the OPEN LIST in the owner's vocabulary; this renders the design's knowledge of ONE SUBJECT. Same family (a projection in the reader's words), different question.\n\nWHAT EXISTS TODAY, and why it is not this: search_design returns ranked hits — ids and names, one dimension; get_node reads one node; where-am-i reads back the WHOLE design's state; relation_candidates and surprising_connections work outward from one node. None answers 'what do we know about X' as a digest: what is decided about it and why, what is still open, what has been measured, what realizes or checks it, and what is conspicuously absent.\n\nOPTIONS:\n(a) A SERVED SKILL `topic`: given a phrase, the agent runs search_design (top N), groups hits by node type, pulls each hit's one-hop neighbourhood and status, and renders a bounded digest in the owner's vocabulary (the lens), with a line for what the search did NOT find. No writes. Cheapest to ship; costs 5-10 calls per topic and the rendering is the agent's, so two agents could render the same topic differently.\n(b) A TOOL `topic_report(query)` computed server-side: same digest, deterministic, one call, reply-cost bounded by the server; a skill becomes a one-line instruction leg pointing at it. The SE doctrine on record — views are PURE PROJECTIONS of the graph and a renderer's fill-ins are defects — argues the projection belongs in the server, not in an agent's prose.\n(c) EXTEND where-am-i with a `topic` argument, reusing its read-back voice. Cheap; but where-am-i is the whole-design orientation and its skill text is already long — mixing scopes makes both harder to read.\n(d) NOTHING NEW: search_design + get_node already do it by hand. Counter: that is the by-hand path Anthony is asking to stop taking, and the same by-hand rendering was what the qs user asked for on the open list.",
+        "decision": "RULED by Anthony 2026-09-06 (\"go with your above recommendations for v0.50.0\"), item 5 of the v0.50.0 plan: option (b) — the digest computed server-side, one call, deterministic, reply-cost bounded by the server — with option (a)'s skill reduced to a thin instruction leg that points at the tool and renders in the reader's domain; the not-found line mandatory; the reply budgeted like detect_gaps with `count` and `by_type` never trimmed. Option (c) (a topic argument on where-am-i) rejected as wrong-scoped; (d) is what he had. The tool takes the one naming convention (query, limit, budget_chars; nothing to name a node by). Shipped as cap:the-design-holds-about-one-subject-is-read-back-in-one-call.\n\nWHAT WAS ON THE TABLE (recorded 2026-09-06 as brainstorming). Anthony, in his words: 'adding /topic or /topic-search skill — some times, I just want to see what's already within the reflow2 graph and it isn't a brainstorm or link-artifacts type effort — I just want to see something about a topic.' Distinct from dec:idea-should-the-open-list-be-rendered-in-the-owners-language-rather-than-the-graphs (qs): that renders the OPEN LIST in the owner's vocabulary; this renders the design's knowledge of ONE SUBJECT. Same family (a projection in the reader's words), different question.\n\nWHAT EXISTED, and why it was not this: search_design returns ranked hits — ids and names, one dimension; get_node reads one node; where-am-i reads back the WHOLE design's state; relation_candidates and surprising_connections work outward from one node. None answered 'what do we know about X' as a digest: what is decided about it and why, what is still open, what has been measured, what realizes or checks it, and what is conspicuously absent.\n\nOPTIONS AS RECORDED: (a) a served skill that runs search_design, groups by type, pulls each hit's neighbourhood and renders — cheapest to ship, 5-10 calls per topic, and two agents render one topic differently. (b) a tool `topic_report(query)` computed server-side — the SE doctrine on record (views are PURE PROJECTIONS of the graph and a renderer's fill-ins are defects) puts the projection in the server. (c) extend where-am-i with a topic argument. (d) nothing new.",
         "kind": "exploratory",
-        "name": "OPEN — should reflow2 serve a /topic (or /topic-search) view: what the design already holds about ONE subject, read-only, in the owner's words — when the ask is neither a brainstorm nor a link-artifacts effort, just 'show me something about X'?",
+        "name": "DECIDED — reflow2 serves the /topic view as a server-computed `topic_report(query)`: hits grouped by type, each with status, connections and the latest dated change or measurement, a MANDATORY not-found line, a bounded reply; a thin `topic` skill is its instruction leg",
         "rationale": "COUNTER-ARGUMENTS beside each. (a) rests entirely on search quality, and search misses on the agent's phrasing were measured this week (dec:idea-search-expands-with-the-projects-own-domain-vocabulary): a topic digest built on a miss is a confident wrong answer about what the design holds, worse than a raw hit list, so the 'what was not found' line is load-bearing, not decoration. (a) also adds reply cost — fact:defect-the-reply-costs-more-than-the-answer is open — and a digest per topic that is not bounded becomes the verbose-reply problem in a new coat. (b) is the honest home by the projection doctrine and by cost (one call, server-bounded), but it is a new tool on a surface whose sibling-inconsistency is the largest open friction class — it must take the ONE naming convention Anthony just ruled (type optional, resolved from the id) from day one. (c) is free and wrong-scoped. (d) is what he has. A RANKING IS A FINDING, NOT A DECISION: (b) with a thin skill as its instruction leg, and the not-found line mandatory; (a) as the prototype that discovers what the digest should contain before the tool freezes it. Anthony rules — and nothing here is built until he does.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -170715,6 +170937,36 @@
       }
     },
     {
+      "node_id": "frag:art:topic",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered topic.rs — the /topic view computed server-side: grouped hits, status, connections, latest dated change, mandatory not-found line, bounded reply"
+      }
+    },
+    {
+      "node_id": "frag:art:topic-command",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered topic.md — the /topic slash command pointing at the topic skill"
+      }
+    },
+    {
+      "node_id": "frag:art:topic-skill",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered topic/SKILL.md — the thin instruction leg of the /topic view: one call, render in the reader's domain, always read out not_found, write nothing"
+      }
+    },
+    {
       "node_id": "frag:art:unreachable-decision-test",
       "node_type": "Fragment",
       "properties": {
@@ -176604,6 +176856,16 @@
         "edges": "[]",
         "state": "{\"decision\":\"RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Generated 2026-09-02 from proj:chama's third instance of `req:a-deliberate-state-is-not-a-defect`.\\n\\nTHE ESTABLISHED ANSWER TO A DELIBERATE STATE IS `GOVERNED_BY ruling: parks`, and it is a good one: two-sided by construction, requires an ACCEPTED Decision so a musing cannot suppress a finding, keeps the node visible and counted in `swept.parked`. It answers instances (a) and (b) of that requirement.\\n\\n⭐ IT CANNOT ANSWER THE GENESIS CASE, AND THE REASON IS THE SAME ONE ALREADY WRITTEN DOWN. heal.rs:1958-1959 records that \\\"the `parks` ruling requires an ACCEPTED Decision, which is why parks cannot reach the brainstorm case at all\\\". The genesis case has the identical shape: eight islands, all correct, all transient, and asking a first-time user to write an accepted Decision ruling their own genesis normal — in their first ten minutes — is worse than the warning.\\n\\n**AND THE DESIGN ALREADY SAYS IT WITHOUT BEING ASKED.** `concept_without_design` fires only at zero Components. Its being open IS a machine-readable declaration that structure is deliberately unspecified. `unthreaded_cluster` cannot thread a design with no Components, by construction — CONTAINS is not a traceability edge. So one detector already holds the fact that would exonerate the other, and they do not speak.\\n\\nTHE QUESTION, which is bigger than the instance: **is there a class of deliberate state the design DECLARES rather than RULES, and should detectors read it?** parks is the ruled kind — a human said so. This would be the derived kind — the graph's own state says so, and nobody has to act.\\n\\nOPTIONS TURNED OVER, none preferred:\\n· **`swept.expected_at_this_phase`**, chama's suggestion, keyed on `concept_without_design` being open. Fits the existing \\\"report differently rather than hide\\\" pattern exactly.\\n· **Key on zero-Components directly** rather than on another detector's output, so two detectors do not become coupled — a second implementation of one fact is the hazard `structure.rs` already names about `isolated_in_walk`.\\n· **Leave it, and fix the FIRST-RUN EXPERIENCE instead** — the harm chama identified is a new user reading \\\"10 structural defects\\\" and concluding they erred. That could be a framing problem in what genesis reports, not a detector problem at all.\\n· **Do nothing.** It self-cleared 10 → 6 within the session. Transient noise that resolves may not be worth a mechanism, and this project's own doctrine watches for over-engineering.\\n\\n⚠️ THE STRONGEST ARGUMENT AGAINST ANY MECHANISM: `dec:idea-detect-vocabulary-that-nothing-reaches` warns that another marker nothing reads would be a further instance of the disease it documents, and `req:a-cluster-can-be-declared-deliberately-separate` is CONDITIONAL on its marker being read back for exactly that reason. A phase concept must be readable, not merely declared.\",\"kind\":\"exploratory\",\"name\":\"OPEN — parks needs a human ruling per node. A design at genesis already declares its phase machine-readably. Should a detector read that instead of waiting to be told?\",\"rationale\":\"Kept separate from `req:a-cluster-can-be-declared-deliberately-separate` (option A, still proposed) although they are neighbours: that requirement is about a HUMAN declaring a partition permanent, with a read-back condition attached. This is about a detector deriving a TRANSIENT phase with no human act at all. The read-back condition that governs the first does not obviously apply to the second, because nothing is declared to go stale.\\n\\nRecorded rather than built because the fourth option — do nothing — is live. The state resolved on its own inside one session, and the measured harm so far is one user's first impression, reported once.\",\"status\":\"proposed\"}",
         "target_id": "dec:idea-a-detector-can-read-the-phase-the-design-already-declares",
+        "target_type": "Decision"
+      }
+    },
+    {
+      "node_id": "snap:epoch:preserved-on-write:dec:idea-a-topic-view-shows-what-the-design-holds-about-one-subject-read-only",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"ANTICIPATES\",\"other_type\":\"Decision\",\"other_id\":\"dec:the-transition-is-two-halves-and-reads-are-the-unscheduled-one\",\"properties\":{\"evidence\":\"That decision said the failing half of 'documents to graph' is READING THE GRAPH BACK, and that reads were the unscheduled half. A topic view is exactly a read-back surface — the earlier decision saw this need coming before anyone asked for a skill by name.\"}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"role\":\"author\"}}]",
+        "state": "{\"decision\":\"Recorded as BRAINSTORMING, not as a proposal. Anthony, 2026-09-06, in his words: 'adding /topic or /topic-search skill — some times, I just want to see what's already within the reflow2 graph and it isn't a brainstorm or link-artifacts type effort — I just want to see something about a topic.' Distinct from dec:idea-should-the-open-list-be-rendered-in-the-owners-language-rather-than-the-graphs (qs): that renders the OPEN LIST in the owner's vocabulary; this renders the design's knowledge of ONE SUBJECT. Same family (a projection in the reader's words), different question.\\n\\nWHAT EXISTS TODAY, and why it is not this: search_design returns ranked hits — ids and names, one dimension; get_node reads one node; where-am-i reads back the WHOLE design's state; relation_candidates and surprising_connections work outward from one node. None answers 'what do we know about X' as a digest: what is decided about it and why, what is still open, what has been measured, what realizes or checks it, and what is conspicuously absent.\\n\\nOPTIONS:\\n(a) A SERVED SKILL `topic`: given a phrase, the agent runs search_design (top N), groups hits by node type, pulls each hit's one-hop neighbourhood and status, and renders a bounded digest in the owner's vocabulary (the lens), with a line for what the search did NOT find. No writes. Cheapest to ship; costs 5-10 calls per topic and the rendering is the agent's, so two agents could render the same topic differently.\\n(b) A TOOL `topic_report(query)` computed server-side: same digest, deterministic, one call, reply-cost bounded by the server; a skill becomes a one-line instruction leg pointing at it. The SE doctrine on record — views are PURE PROJECTIONS of the graph and a renderer's fill-ins are defects — argues the projection belongs in the server, not in an agent's prose.\\n(c) EXTEND where-am-i with a `topic` argument, reusing its read-back voice. Cheap; but where-am-i is the whole-design orientation and its skill text is already long — mixing scopes makes both harder to read.\\n(d) NOTHING NEW: search_design + get_node already do it by hand. Counter: that is the by-hand path Anthony is asking to stop taking, and the same by-hand rendering was what the qs user asked for on the open list.\",\"kind\":\"exploratory\",\"name\":\"OPEN — should reflow2 serve a /topic (or /topic-search) view: what the design already holds about ONE subject, read-only, in the owner's words — when the ask is neither a brainstorm nor a link-artifacts effort, just 'show me something about X'?\",\"rationale\":\"COUNTER-ARGUMENTS beside each. (a) rests entirely on search quality, and search misses on the agent's phrasing were measured this week (dec:idea-search-expands-with-the-projects-own-domain-vocabulary): a topic digest built on a miss is a confident wrong answer about what the design holds, worse than a raw hit list, so the 'what was not found' line is load-bearing, not decoration. (a) also adds reply cost — fact:defect-the-reply-costs-more-than-the-answer is open — and a digest per topic that is not bounded becomes the verbose-reply problem in a new coat. (b) is the honest home by the projection doctrine and by cost (one call, server-bounded), but it is a new tool on a surface whose sibling-inconsistency is the largest open friction class — it must take the ONE naming convention Anthony just ruled (type optional, resolved from the id) from day one. (c) is free and wrong-scoped. (d) is what he has. A RANKING IS A FINDING, NOT A DECISION: (b) with a thin skill as its instruction leg, and the not-found line mandatory; (a) as the prototype that discovers what the digest should contain before the tool freezes it. Anthony rules — and nothing here is built until he does.\",\"status\":\"proposed\"}",
+        "target_id": "dec:idea-a-topic-view-shows-what-the-design-holds-about-one-subject-read-only",
         "target_type": "Decision"
       }
     },
@@ -183830,6 +184092,20 @@
       }
     },
     {
+      "node_id": "ver:a-topic-report-groups-hits-names-the-latest-dated-change-and-always-says-what-it-did-not-find",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-mcp/tests/a_topic_report_says_what_it_holds_and_what_it_did_not_find.rs (3 tests) on a small rainfall design: a subject comes back grouped (Requirement, Capability, …) with the capability's realized status, its SATISFIES-out and VERIFIES-in connections, and the newest DATED change as latest while an undated change is never offered and a dated measurement is the other side of latest; an unrelated node does not appear; the not-found line names a populated type that matched nothing (Contributor) and a zero-hit query says NOTHING MATCHED and that the subject may be held in other words; a 600-character budget lands in titles_only with connections and latest withheld, at least one hit per group kept, and count and by_type unchanged.",
+        "findings": "3 tests (one of them now also pinning the limit-cut wording) passed; reflow2-mcp 384 / 0 and reflow2-core 1596 / 0 with the module in; clippy clean on both crates; toolsnap gained exactly one golden (topic_report). Read against reflow2's OWN design through the built binary on a copy of the store (\"root cause\", budget 8000): 20 hits across 8 of 19 populated types, titles-only tier, and the not-found line exposed a wording defect in itself — it reported 436 TemporalFacts as NOT matched when the list had merely been cut at 20. Fixed before shipping (a type absent from a list cut at its limit is \"not among the top N\") and pinned in the same test file.",
+        "kind": "verification",
+        "last_run_at": "2026-09-06",
+        "level": "integration",
+        "method": "test",
+        "name": "A topic report groups hits by type with status and connections, offers only the latest DATED change, always carries a not-found line, and trims detail before hits",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:a-tracked-graph-store-is-reported",
       "node_type": "Verification",
       "properties": {
@@ -186276,7 +186552,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:0a59286268396d396346e8c59d691df5e231393dd779beb12884bf631c598f47",
+  "prev_content_hash": "sha256:301f83d0736188641a128851008c85ff2a274b855ef788ba425351330eef2db5",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
