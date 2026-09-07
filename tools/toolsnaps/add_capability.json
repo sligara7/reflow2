@@ -29,6 +29,22 @@
       "id": {
         "type": "string"
       },
+      "is_entry_point": {
+        "default": null,
+        "description": "True when this capability STARTS a flow. Distinct from `Flow.entry_point`,\nwhich names a capability from the flow's side; this is the flag on the\ncapability itself, carried by 147 of 234 and written by nothing.",
+        "type": [
+          "boolean",
+          "null"
+        ]
+      },
+      "is_exit_point": {
+        "default": null,
+        "description": "True when this capability ENDS a flow. Sibling of the above.",
+        "type": [
+          "boolean",
+          "null"
+        ]
+      },
       "name": {
         "default": null,
         "type": [
@@ -46,6 +62,14 @@
           "verified",
           null
         ],
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "tier": {
+        "default": null,
+        "description": "Where this sits on the strategic / operational / tactical ladder.\nDeclared 2026-09-07: carried by most nodes of this type and settable by\nnothing, one of the fourteen holes the reachability split separated\nfrom the properties an operation writes.",
         "type": [
           "string",
           "null"

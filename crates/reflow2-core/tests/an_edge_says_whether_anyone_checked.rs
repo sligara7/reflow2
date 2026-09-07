@@ -174,6 +174,8 @@ fn the_link_tool_reports_the_conformance_it_wrote() {
             provenance: None,
             fragment_id: None,
             checksum: None,
+            content_ref: None,
+            note_kind: None,
         })
         .expect("link");
     // `completeness` defaults to the optimistic `complete`; `conformance` must

@@ -268,6 +268,7 @@ async fn the_handoff_lands_end_to_end() {
         approver: None,
         acted_at: None,
         priority: None,
+        concern: None,
     })));
     j!(s.add_capability(Parameters(CapabilityReq {
         id: "cap:seal".into(),
@@ -275,6 +276,9 @@ async fn the_handoff_lands_end_to_end() {
         description: Some("keeps water out".into()),
         status: None,
         distinct_from: None,
+        tier: None,
+        is_entry_point: None,
+        is_exit_point: None,
     })));
     j!(s.add_component(Parameters(
         serde_json::from_value(

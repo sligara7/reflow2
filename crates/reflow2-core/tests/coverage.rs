@@ -21,6 +21,8 @@ fn artifact(g: &mut DesignGraph, id: &str, location: &str) {
         provenance: None,
         fragment_id: None,
         checksum: None,
+        content_ref: None,
+        note_kind: None,
     })
     .unwrap();
 }

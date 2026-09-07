@@ -472,7 +472,12 @@ def main(argv: list[str] | None = None) -> int:
             ("UNCLASSIFIED", "UNCLASSIFIED — the baseline does not say which"),
         ]:
             rows = sorted(buckets.get(kind, []))
-            if not rows:
+            # PRINTED EVEN AT ZERO, for the buckets that mean something empty.
+            # "0 HOLE" is the good news and a reader has to be able to see it;
+            # a bucket that vanishes when it empties cannot be told from one
+            # the report forgot to compute. UNCLASSIFIED is the exception —
+            # there is no news in it being empty, which is the normal state.
+            if not rows and kind == "UNCLASSIFIED":
                 continue
             print(f"\n  {blurb}: {len(rows)}")
             for r in rows:

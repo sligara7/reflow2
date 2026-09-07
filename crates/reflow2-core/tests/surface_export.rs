@@ -48,6 +48,8 @@ fn program() -> DesignGraph {
         completeness: None,
         conformance: None,
         checksum: None,
+        content_ref: None,
+        note_kind: None,
     })
     .unwrap();
     g.set_interface_designation("ifc:crosslink", "published")

@@ -71,6 +71,7 @@ fn requirement(id: &str) -> RequirementReq {
         approver: None,
         acted_at: None,
         priority: None,
+        concern: None,
     }
 }
 

@@ -169,6 +169,14 @@ pub struct LinkArtifactOptions {
     /// `code` (default) / `spec` / `document` / `diagram` / `model` / …
     #[serde(default)]
     pub artifact_type: Option<String>,
+    /// A pointer to the SOURCE CONTENT — a path or hash — recorded on the
+    /// provenance Fragment rather than inlined. Declared 2026-09-07 as one of
+    /// the fourteen unreachable holes.
+    #[serde(default)]
+    pub content_ref: Option<String>,
+    /// WHOSE VOICE a note fragment is in: author / reviewer / director.
+    #[serde(default)]
+    pub note_kind: Option<String>,
     /// Node type the artifact realizes (e.g. `Capability`, `Component`).
     pub target_type: String,
     /// Node id the artifact realizes.
@@ -670,7 +678,9 @@ impl DesignGraph {
             Props::new()
                 .set("title", format!("Registered {}", opts.name))
                 .set("fragment_type", "implementation")
-                .set("provenance", provenance),
+                .set("provenance", provenance)
+                .set_opt("content_ref", opts.content_ref.as_deref())
+                .set_opt("note_kind", opts.note_kind.as_deref()),
         )?;
         // The Artifact itself.
         self.upsert_node(

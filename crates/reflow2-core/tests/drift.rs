@@ -36,6 +36,8 @@ fn built_thread() -> DesignGraph {
         provenance: None,
         fragment_id: None,
         checksum: Some("sha256:aaa".into()),
+        content_ref: None,
+        note_kind: None,
     })
     .expect("link");
     g
@@ -238,6 +240,8 @@ fn a_missing_baseline_is_surfaced_not_silently_passed() {
         provenance: None,
         fragment_id: None,
         checksum: None,
+        content_ref: None,
+        note_kind: None,
     })
     .expect("link");
 
@@ -278,6 +282,8 @@ fn a_partial_scan_is_not_evidence_of_absence() {
         provenance: None,
         fragment_id: Some("frag:other".into()),
         checksum: Some("sha256:ccc".into()),
+        content_ref: None,
+        note_kind: None,
     })
     .expect("link other");
 
@@ -353,6 +359,8 @@ fn findings_are_ranked_most_severe_first() {
             provenance: None,
             fragment_id: Some(format!("frag:{id}")),
             checksum: Some("sha256:base".into()),
+            content_ref: None,
+            note_kind: None,
         })
         .expect("link");
     }
@@ -714,6 +722,8 @@ fn a_bare_hex_digest_is_stored_in_the_dialect_drift_compares_in() {
         provenance: None,
         fragment_id: None,
         checksum: Some(digest.into()),
+        content_ref: None,
+        note_kind: None,
     })
     .expect("link");
 
@@ -781,6 +791,8 @@ fn a_fingerprint_that_is_not_a_bare_digest_is_stored_verbatim() {
             provenance: None,
             fragment_id: None,
             checksum: Some(given.into()),
+            content_ref: None,
+            note_kind: None,
         })
         .expect("link");
         let stored = g

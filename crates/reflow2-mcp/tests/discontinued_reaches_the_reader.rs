@@ -69,6 +69,8 @@ async fn withdrawn() -> ReflowService {
         id: "proj:x".into(),
         name: Some("X".into()),
         description: None,
+        spec: None,
+        decomposition_levels: None,
     })));
     j!(s.add_capability(Parameters(CapabilityReq {
         id: "cap:store".into(),
@@ -76,6 +78,9 @@ async fn withdrawn() -> ReflowService {
         description: Some("Built, shipped, and later withdrawn.".into()),
         status: Some("realized".into()),
         distinct_from: None,
+        tier: None,
+        is_entry_point: None,
+        is_exit_point: None,
     })));
     j!(s.add_capability(Parameters(CapabilityReq {
         id: "cap:live".into(),
@@ -83,6 +88,9 @@ async fn withdrawn() -> ReflowService {
         description: Some("Never withdrawn.".into()),
         status: Some("realized".into()),
         distinct_from: None,
+        tier: None,
+        is_entry_point: None,
+        is_exit_point: None,
     })));
     j!(s.add_decision(Parameters(DecisionReq {
         id: "dec:discontinue".into(),
@@ -210,6 +218,9 @@ async fn a_proposed_decision_discontinues_nothing() {
         description: Some("An agent proposed withdrawing this.".into()),
         status: Some("realized".into()),
         distinct_from: None,
+        tier: None,
+        is_entry_point: None,
+        is_exit_point: None,
     })));
     j!(s.add_decision(Parameters(DecisionReq {
         id: "dec:proposed".into(),
@@ -255,6 +266,9 @@ async fn obsoleted_by_a_non_decision_is_not_a_discontinuation() {
         description: Some("Replaced, not withdrawn.".into()),
         status: Some("realized".into()),
         distinct_from: None,
+        tier: None,
+        is_entry_point: None,
+        is_exit_point: None,
     })));
     j!(s.add_capability(Parameters(CapabilityReq {
         id: "cap:new".into(),
@@ -262,6 +276,9 @@ async fn obsoleted_by_a_non_decision_is_not_a_discontinuation() {
         description: Some("Took over.".into()),
         status: Some("realized".into()),
         distinct_from: None,
+        tier: None,
+        is_entry_point: None,
+        is_exit_point: None,
     })));
     j!(s.create_edge(Parameters(CreateEdgeReq {
         edge_type: "OBSOLETES".into(),
@@ -297,6 +314,7 @@ async fn it_is_not_a_capability_only_field() {
         approver: None,
         acted_at: None,
         priority: None,
+        concern: None,
     })));
     j!(s.add_decision(Parameters(DecisionReq {
         id: "dec:drop".into(),

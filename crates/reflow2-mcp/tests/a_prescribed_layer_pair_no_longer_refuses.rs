@@ -81,6 +81,7 @@ fn requirement(id: &str, name: &str) -> RequirementReq {
         approver: None,
         acted_at: None,
         priority: None,
+        concern: None,
     }
 }
 
@@ -91,6 +92,9 @@ fn capability(id: &str, name: &str) -> CapabilityReq {
         description: Some(IDEA.into()),
         status: None,
         distinct_from: None,
+        tier: None,
+        is_entry_point: None,
+        is_exit_point: None,
     }
 }
 
@@ -247,6 +251,7 @@ async fn an_unmeasured_cross_type_pair_still_refuses_with_the_layer_wording() {
         description: Some(IDEA.into()),
         level: None,
         distinct_from: None,
+        tier: None,
     }))
     .await
     .expect("the component lands");
@@ -309,6 +314,7 @@ async fn a_requirement_promoted_from_the_idea_that_spawned_it_is_not_refused() {
     approver: None,
     acted_at: None,
     priority: None,
+    concern: None,
     })));
     let reported = serde_json::to_string(&out).expect("serialisable");
     assert!(

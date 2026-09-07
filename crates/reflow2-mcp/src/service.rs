@@ -1309,6 +1309,19 @@ pub struct IdName {
     /// split; there is none today.
     #[serde(default)]
     pub description: Option<String>,
+    /// FREE-TEXT DETAIL the structured fields do not carry, on an Interface:
+    /// a prose note, a link to an OpenAPI document, a header layout. 13 of 22
+    /// interfaces carried one and no tool could set it. Ignored for a Project,
+    /// which declares no such property — the two constructors share this
+    /// struct and a third user would want them split.
+    #[serde(default)]
+    pub spec: Option<String>,
+    /// THIS DESIGN'S DECOMPOSITION LADDER, ordered bottom-first: index 0 is
+    /// the finest grain. On a Project. `hierarchy.rs` READS it on every level
+    /// check and nothing could write it, which made it the sharpest of the
+    /// fourteen holes. Ignored for an Interface.
+    #[serde(default)]
+    pub decomposition_levels: Option<Vec<String>>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -1357,6 +1370,10 @@ pub struct RequirementReq {
     #[serde(default)]
     #[schemars(schema_with = "crate::enum_schema::requirement_priority_opt")]
     pub priority: Option<String>,
+    /// The cross-cutting concern this need belongs to. 154 of 207 requirements
+    /// carried one written through the generic escape hatch.
+    #[serde(default)]
+    pub concern: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -1398,6 +1415,32 @@ pub struct DesignRuleReq {
     pub acted_at: Option<String>,
 }
 
+/// One Actor for `add_actor`.
+///
+/// # Why this tool exists at all
+///
+/// Actor had NO TYPED CONSTRUCTOR, so both of its properties were unreachable
+/// for one reason: there was nothing to give a parameter to. It is one of three
+/// types in that state; the other two have no instances anywhere and so never
+/// reached the unreachable list. Adding the constructor is what makes
+/// `actor_type` and `description` sayable at all.
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct ActorReq {
+    pub id: String,
+    #[serde(default)]
+    pub name: Option<String>,
+    /// `user` (default) / `operator` / `external_system` / `service` /
+    /// `device` / `stakeholder`.
+    #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::actor_type_opt")]
+    pub actor_type: Option<String>,
+    /// WHO OR WHAT THIS IS, in prose. The type's embedding field, so it is
+    /// what `search_design` finds an actor by.
+    #[serde(default)]
+    pub description: Option<String>,
+}
+
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct CapabilityReq {
@@ -1421,6 +1464,20 @@ pub struct CapabilityReq {
     /// refusal, if any, lists exactly what to put here.
     #[serde(default)]
     pub distinct_from: Option<Vec<String>>,
+    /// Where this sits on the strategic / operational / tactical ladder.
+    /// Declared 2026-09-07: carried by most nodes of this type and settable by
+    /// nothing, one of the fourteen holes the reachability split separated
+    /// from the properties an operation writes.
+    #[serde(default)]
+    pub tier: Option<String>,
+    /// True when this capability STARTS a flow. Distinct from `Flow.entry_point`,
+    /// which names a capability from the flow's side; this is the flag on the
+    /// capability itself, carried by 147 of 234 and written by nothing.
+    #[serde(default)]
+    pub is_entry_point: Option<bool>,
+    /// True when this capability ENDS a flow. Sibling of the above.
+    #[serde(default)]
+    pub is_exit_point: Option<bool>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -1542,6 +1599,12 @@ pub struct ComponentReq {
     /// refusal, if any, lists exactly what to put here.
     #[serde(default)]
     pub distinct_from: Option<Vec<String>>,
+    /// Where this sits on the strategic / operational / tactical ladder.
+    /// Declared 2026-09-07: carried by most nodes of this type and settable by
+    /// nothing, one of the fourteen holes the reachability split separated
+    /// from the properties an operation writes.
+    #[serde(default)]
+    pub tier: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -1906,6 +1969,17 @@ pub struct LinkArtifactReq {
     /// change is reported as `no_baseline` instead of being caught.
     #[serde(default)]
     pub checksum: Option<String>,
+    /// A pointer to the SOURCE CONTENT — a path or a hash — rather than
+    /// inlining it, recorded on the provenance Fragment this call mints.
+    /// Declared 2026-09-07 as one of the fourteen holes: 2 of 221 fragments
+    /// carried one, written through the generic escape hatch.
+    #[serde(default)]
+    pub content_ref: Option<String>,
+    /// WHOSE VOICE a note fragment is in: `author` intent or pseudocode,
+    /// `reviewer` feedback, or `director` instruction. Also on the Fragment.
+    #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::fragment_note_kind_opt")]
+    pub note_kind: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -2481,6 +2555,12 @@ pub struct AddFlowReq {
     /// Capability name or id where the flow ends.
     #[serde(default)]
     pub exit_point: Option<String>,
+    /// Where this sits on the strategic / operational / tactical ladder.
+    /// Declared 2026-09-07: carried by most nodes of this type and settable by
+    /// nothing, one of the fourteen holes the reachability split separated
+    /// from the properties an operation writes.
+    #[serde(default)]
+    pub tier: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -2595,6 +2675,15 @@ pub struct AddConstraintReq {
     /// refusal, if any, lists exactly what to put here.
     #[serde(default)]
     pub distinct_from: Option<Vec<String>>,
+    /// The cross-cutting concern this budget belongs to — safety, logistics,
+    /// sustainment and the rest. All seven constraints carried one and
+    /// add_constraint could not set it.
+    #[serde(default)]
+    pub concern: Option<String>,
+    /// How much this constraint matters: low / medium / high / critical.
+    /// Omitting it leaves the schema default, which is unchanged behaviour.
+    #[serde(default)]
+    pub priority: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]

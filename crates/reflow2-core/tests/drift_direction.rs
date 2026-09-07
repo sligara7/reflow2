@@ -42,6 +42,8 @@ fn grown() -> DesignGraph {
         provenance: None,
         fragment_id: None,
         checksum: Some("sha256:baseline".into()),
+        content_ref: None,
+        note_kind: None,
     })
     .unwrap();
     g

@@ -88,6 +88,7 @@ fn requirement(id: &str, name: &str, statement: &str) -> RequirementReq {
         approver: None,
         acted_at: None,
         priority: None,
+        concern: None,
     }
 }
 
@@ -127,6 +128,7 @@ async fn a_cross_type_near_match_names_the_layering_not_a_duplicate() {
             description: Some(SHIPPED.into()),
             level: None,
             distinct_from: None,
+            tier: None,
         }))
         .await
         .expect_err("an unmeasured cross-type pair still refuses, because ② survives");

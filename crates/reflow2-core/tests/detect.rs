@@ -861,6 +861,8 @@ fn an_artifact_realizing_the_component_counts_as_building_its_capabilities() {
         provenance: None,
         fragment_id: None,
         checksum: Some("sha256:aaa".into()),
+        content_ref: None,
+        note_kind: None,
     })
     .unwrap();
 
@@ -896,6 +898,8 @@ fn a_capability_in_an_unbuilt_component_is_still_reported() {
         provenance: None,
         fragment_id: None,
         checksum: Some("sha256:bbb".into()),
+        content_ref: None,
+        note_kind: None,
     })
     .unwrap();
 

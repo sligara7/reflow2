@@ -183,6 +183,8 @@ fn provenance_nodes_stay_out_of_the_topology() {
         provenance: None,
         fragment_id: None,
         checksum: Some("sha256:v1".into()),
+        content_ref: None,
+        note_kind: None,
     })
     .unwrap();
     g.reconcile_artifacts(

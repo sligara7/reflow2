@@ -46,6 +46,14 @@
           "null"
         ]
       },
+      "content_ref": {
+        "default": null,
+        "description": "A pointer to the SOURCE CONTENT — a path or a hash — rather than\ninlining it, recorded on the provenance Fragment this call mints.\nDeclared 2026-09-07 as one of the fourteen holes: 2 of 221 fragments\ncarried one, written through the generic escape hatch.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
       "fragment_id": {
         "default": null,
         "type": [
@@ -62,6 +70,20 @@
       },
       "name": {
         "type": "string"
+      },
+      "note_kind": {
+        "default": null,
+        "description": "WHOSE VOICE a note fragment is in: `author` intent or pseudocode,\n`reviewer` feedback, or `director` instruction. Also on the Fragment.",
+        "enum": [
+          "author",
+          "reviewer",
+          "director",
+          null
+        ],
+        "type": [
+          "string",
+          "null"
+        ]
       },
       "provenance": {
         "default": null,

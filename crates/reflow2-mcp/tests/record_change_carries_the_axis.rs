@@ -46,6 +46,9 @@ async fn svc_with_an_epoch_and_a_target() -> ReflowService {
         description: Some("as it stands today".into()),
         status: None,
         distinct_from: None,
+        tier: None,
+        is_entry_point: None,
+        is_exit_point: None,
     })));
     s
 }

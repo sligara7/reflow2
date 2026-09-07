@@ -36,6 +36,8 @@ fn built_thread() -> DesignGraph {
         provenance: None,
         fragment_id: None,
         checksum: Some("sha256:aaa".into()),
+        content_ref: None,
+        note_kind: None,
     })
     .expect("link");
     g
@@ -252,6 +254,8 @@ fn artifacts_reach_a_capability_through_its_allocated_component_too() {
         provenance: None,
         fragment_id: None,
         checksum: Some("sha256:eee".into()),
+        content_ref: None,
+        note_kind: None,
     })
     .expect("link");
 
@@ -284,6 +288,8 @@ fn states_do_not_bleed_between_capabilities() {
         provenance: None,
         fragment_id: None,
         checksum: Some("sha256:eee".into()),
+        content_ref: None,
+        note_kind: None,
     })
     .expect("link");
 

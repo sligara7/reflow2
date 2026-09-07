@@ -75,6 +75,8 @@ async fn seeded() -> ReflowService {
         id: "proj:sb".into(),
         name: Some("Softball".into()),
         description: None,
+        spec: None,
+        decomposition_levels: None,
     })));
     j!(s.add_requirement(Parameters(RequirementReq {
         id: "req:physics".into(),
@@ -85,6 +87,7 @@ async fn seeded() -> ReflowService {
         approver: None,
         acted_at: None,
         priority: None,
+        concern: None,
     })));
     j!(s.add_capability(Parameters(CapabilityReq {
         id: "cap:flight".into(),
@@ -92,6 +95,9 @@ async fn seeded() -> ReflowService {
         description: Some("Simulate ball trajectory.".into()),
         status: None,
         distinct_from: None,
+        tier: None,
+        is_entry_point: None,
+        is_exit_point: None,
     })));
     j!(s.add_component(Parameters(ComponentReq {
         id: "cmp:physics".into(),
@@ -99,6 +105,7 @@ async fn seeded() -> ReflowService {
         description: Some("Runs the sim.".into()),
         level: None,
         distinct_from: None,
+        tier: None,
     })));
     j!(s.contains(Parameters(ContainsReq {
         project_id: "proj:sb".into(),
@@ -207,6 +214,7 @@ async fn genesis_bootstraps_then_detect_hands_off() {
         approver: None,
         acted_at: None,
         priority: None,
+        concern: None,
     })));
     j!(s.add_capability(Parameters(CapabilityReq {
         id: "cap:flight".into(),
@@ -214,6 +222,9 @@ async fn genesis_bootstraps_then_detect_hands_off() {
         description: Some("Simulate ball trajectory.".into()),
         status: None,
         distinct_from: None,
+        tier: None,
+        is_entry_point: None,
+        is_exit_point: None,
     })));
     j!(s.satisfies(Parameters(SatisfiesReq {
         from_id: "cap:flight".into(),
@@ -243,6 +254,9 @@ async fn link_artifact_closes_the_unrealized_capability_gap() {
             description: Some("…".into()),
             status: None,
             distinct_from: None,
+            tier: None,
+            is_entry_point: None,
+            is_exit_point: None,
         })));
     }
 
@@ -259,6 +273,8 @@ async fn link_artifact_closes_the_unrealized_capability_gap() {
         provenance: None,
         fragment_id: None,
         checksum: None,
+        content_ref: None,
+        note_kind: None,
     })));
     assert_eq!(link["provenance"], "authored");
     assert_eq!(link["completeness"], "complete");
@@ -301,6 +317,8 @@ async fn link_artifact_closes_the_unrealized_capability_gap() {
         provenance: None,
         fragment_id: None,
         checksum: None,
+        content_ref: None,
+        note_kind: None,
     })));
     let gaps2 = jl!(s.detect_gaps(Parameters(GapScopeReq::default())));
     assert!(
@@ -452,11 +470,14 @@ async fn interface_tools_pair_both_sides_of_a_contract() {
         description: Some("Shows the score.".into()),
         level: None,
         distinct_from: None,
+        tier: None,
     })));
     j!(s.add_interface(Parameters(IdName {
         id: "ifc:state".into(),
         name: Some("Game state feed".into()),
         description: None,
+        spec: None,
+        decomposition_levels: None,
     })));
     j!(s.provides(Parameters(ProvidesReq {
         from_id: "cmp:physics".into(),
@@ -500,6 +521,8 @@ async fn a_contract_with_no_provider_surfaces_as_a_gap_over_the_surface() {
         id: "ifc:state".into(),
         name: Some("Game state feed".into()),
         description: None,
+        spec: None,
+        decomposition_levels: None,
     })));
     j!(s.consumes(Parameters(ConsumesReq {
         from_id: "cmp:physics".into(),
@@ -535,6 +558,8 @@ async fn reconcile_surfaces_a_code_change_back_to_the_design() {
         provenance: None,
         fragment_id: None,
         checksum: Some("sha256:v1".into()),
+        content_ref: None,
+        note_kind: None,
     })));
 
     // Unchanged: no drift.
@@ -622,6 +647,8 @@ async fn the_surface_can_say_that_nothing_moved() {
         provenance: None,
         fragment_id: None,
         checksum: None,
+        content_ref: None,
+        note_kind: None,
     })));
 
     // An accept on a checksum-less artifact is READ as the first baseline it
@@ -734,6 +761,8 @@ async fn the_write_side_can_answer_what_detect_asks_for() {
         provenance: None,
         fragment_id: None,
         checksum: Some("sha256:v1".into()),
+        content_ref: None,
+        note_kind: None,
     })));
 
     let before: Vec<String> = jl!(s.detect_gaps(Parameters(GapScopeReq::default())))
@@ -1050,6 +1079,8 @@ async fn a_rejected_edge_names_the_alternatives() {
         id: "proj:x".into(),
         name: Some("X".into()),
         description: None,
+        spec: None,
+        decomposition_levels: None,
     })));
     let err = s
         .create_edge(Parameters(CreateEdgeReq {
@@ -1117,6 +1148,7 @@ async fn a_well_formed_hierarchy_reports_no_issues() {
             description: Some("part".into()),
             level: Some(level.into()),
             distinct_from: None,
+            tier: None,
         })));
     }
     j!(s.contain_component(Parameters(ContainComponentReq {
@@ -1146,6 +1178,7 @@ async fn skipping_a_level_is_reported() {
             description: Some("part".into()),
             level: Some(level.into()),
             distinct_from: None,
+            tier: None,
         })));
     }
     j!(s.contain_component(Parameters(ContainComponentReq {
@@ -1176,6 +1209,7 @@ async fn nesting_two_defaulted_components_is_a_mismatch_not_silence() {
             description: Some("part".into()),
             level: None,
             distinct_from: None,
+            tier: None,
         })));
     }
     j!(s.contain_component(Parameters(ContainComponentReq {
@@ -1200,6 +1234,8 @@ async fn marking_a_requirement_dropped_stops_the_nagging() {
         id: "proj:p".into(),
         name: Some("P".into()),
         description: None,
+        spec: None,
+        decomposition_levels: None,
     })));
     j!(s.add_requirement(Parameters(RequirementReq {
         id: "req:maybe".into(),
@@ -1210,6 +1246,7 @@ async fn marking_a_requirement_dropped_stops_the_nagging() {
         approver: None,
         acted_at: None,
         priority: None,
+        concern: None,
     })));
 
     let flagged = |v: &serde_json::Value| {
@@ -1232,6 +1269,9 @@ async fn marking_a_requirement_dropped_stops_the_nagging() {
         description: Some("does something else".into()),
         status: None,
         distinct_from: None,
+        tier: None,
+        is_entry_point: None,
+        is_exit_point: None,
     })));
     assert!(
         flagged(&jl!(s.detect_gaps(Parameters(GapScopeReq::default())))),
@@ -1773,6 +1813,9 @@ async fn compare_designs_reports_divergence_from_a_base_export() {
         description: Some("Field the ball.".into()),
         status: None,
         distinct_from: None,
+        tier: None,
+        is_entry_point: None,
+        is_exit_point: None,
     })));
 
     let diff = j!(s.compare_designs(Parameters(CompareDesignsReq {
@@ -1830,6 +1873,9 @@ async fn loop_status_reports_debt_and_the_write_tools_point_at_the_loop() {
         description: Some("Claims to be built.".into()),
         status: Some("realized".into()),
         distinct_from: None,
+        tier: None,
+        is_entry_point: None,
+        is_exit_point: None,
     })));
     assert!(
         cap["loop_hint"]
@@ -1863,6 +1909,7 @@ async fn loop_status_reports_debt_and_the_write_tools_point_at_the_loop() {
         description: Some("Just added.".into()),
         level: None,
         distinct_from: None,
+        tier: None,
     })));
     assert!(
         cmp["loop_hint"].as_str().unwrap().contains("check-health"),
@@ -2001,6 +2048,9 @@ async fn export_files_chain_by_content_hash() {
         description: Some("Content moved.".into()),
         status: None,
         distinct_from: None,
+        tier: None,
+        is_entry_point: None,
+        is_exit_point: None,
     })));
     let second = j!(s.export_graph(Parameters(ExportGraphToReq {
         path: Some(path_str.clone()),
@@ -2271,6 +2321,7 @@ async fn temporal_resource_and_realization_tools_round_trip() {
         description: Some("created by mistake".into()),
         level: None,
         distinct_from: None,
+        tier: None,
     })));
     let deleted = j!(s.delete_node(Parameters(TypedIdReq {
         node_type: "Component".into(),
@@ -2426,6 +2477,7 @@ async fn a_read_after_a_write_does_not_carry_a_loop_debt_hint() {
         approver: None,
         acted_at: None,
         priority: None,
+        concern: None,
     })));
     let after_write = j!(s.get_node(Parameters(GetNodeReq {
         node_type: Some("Capability".into()),
@@ -2450,6 +2502,7 @@ async fn a_read_after_a_write_does_not_carry_a_loop_debt_hint() {
         approver: None,
         acted_at: None,
         priority: None,
+        concern: None,
     })));
     assert!(
         write.get("loop_hint").is_some(),
@@ -2494,6 +2547,9 @@ async fn a_read_too_large_to_return_says_what_it_left_out() {
             description: Some(prose.clone()),
             status: None,
             distinct_from: None,
+            tier: None,
+            is_entry_point: None,
+            is_exit_point: None,
         })));
     }
 
@@ -2543,6 +2599,9 @@ async fn a_single_node_larger_than_the_budget_is_still_returned() {
         description: Some("y".repeat(60_000)),
         status: None,
         distinct_from: None,
+        tier: None,
+        is_entry_point: None,
+        is_exit_point: None,
     })));
 
     let page = j!(s.scan_nodes(Parameters(ScanReq {
@@ -2563,6 +2622,9 @@ async fn brief_gives_the_shape_without_the_prose() {
         description: Some("z".repeat(5_000)),
         status: None,
         distinct_from: None,
+        tier: None,
+        is_entry_point: None,
+        is_exit_point: None,
     })));
 
     let page = j!(s.scan_nodes(Parameters(ScanReq {
@@ -2598,6 +2660,9 @@ async fn an_explicit_limit_is_reported_as_the_reason_it_stopped() {
             description: Some("small".into()),
             status: None,
             distinct_from: None,
+            tier: None,
+            is_entry_point: None,
+            is_exit_point: None,
         })));
     }
 
@@ -2733,6 +2798,8 @@ async fn claimable() -> ReflowService {
         id: "proj:seat".into(),
         name: Some("Seat".into()),
         description: None,
+        spec: None,
+        decomposition_levels: None,
     })));
     j!(s.add_contributor(Parameters(ContributorReq {
         id: "who:ann".into(),
@@ -2881,6 +2948,8 @@ async fn a_project_mode_can_be_chosen_after_genesis() {
         id: "proj:m".into(),
         name: Some("Modey".into()),
         description: None,
+        spec: None,
+        decomposition_levels: None,
     })));
 
     let set = j!(s.set_project_mode(Parameters(ProjectModeReq {
@@ -2901,6 +2970,8 @@ async fn choosing_a_mode_preserves_everything_else_about_the_project() {
         id: "proj:m".into(),
         name: Some("Modey".into()),
         description: None,
+        spec: None,
+        decomposition_levels: None,
     })));
     j!(s.set_project_mode(Parameters(ProjectModeReq {
         project_id: "proj:m".into(),
@@ -2925,6 +2996,8 @@ async fn an_unknown_mode_fails_loud_rather_than_leaving_the_old_one() {
         id: "proj:m".into(),
         name: Some("Modey".into()),
         description: None,
+        spec: None,
+        decomposition_levels: None,
     })));
     j!(s.set_project_mode(Parameters(ProjectModeReq {
         project_id: "proj:m".into(),
@@ -3247,6 +3320,7 @@ async fn scan_nodes_filters_by_decomposition_level() {
             description: Some("x".into()),
             level: level.map(str::to_string),
             distinct_from: None,
+            tier: None,
         })));
     }
 
@@ -3297,6 +3371,7 @@ async fn a_bad_level_is_refused_rather_than_answered_empty() {
         description: Some("x".into()),
         level: Some("subsystem".into()),
         distinct_from: None,
+        tier: None,
     })));
 
     let bad_level = s
@@ -3345,6 +3420,8 @@ async fn add_design_rule_is_a_typed_constructor() {
         id: "prj:p".into(),
         name: Some("P".into()),
         description: None,
+        spec: None,
+        decomposition_levels: None,
     })));
     let node = j!(s.add_design_rule(Parameters(DesignRuleReq {
         id: "rule:branch-then-pr".into(),
@@ -3526,6 +3603,7 @@ async fn get_node_resolves_by_id_alone_and_refuses_a_collision() {
         approver: None,
         acted_at: None,
         priority: None,
+        concern: None,
     })));
     let got = j!(s.get_node(Parameters(GetNodeReq {
         id: "req:solo".into(),
@@ -3572,6 +3650,8 @@ async fn interface_auth_refusal_says_it_is_authentication_not_authorization() {
         id: "ifc:x".into(),
         name: Some("X".into()),
         description: None,
+        spec: None,
+        decomposition_levels: None,
     })));
     let e = s
         .set_interface_spec(Parameters(

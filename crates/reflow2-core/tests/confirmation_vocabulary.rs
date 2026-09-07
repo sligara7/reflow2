@@ -48,6 +48,8 @@ fn unbaselined() -> DesignGraph {
         provenance: None,
         fragment_id: None,
         checksum: None,
+        content_ref: None,
+        note_kind: None,
     })
     .expect("link");
     g
@@ -77,6 +79,8 @@ fn baselined() -> DesignGraph {
         provenance: None,
         fragment_id: None,
         checksum: Some("sha256:aaa".into()),
+        content_ref: None,
+        note_kind: None,
     })
     .expect("link");
     g
@@ -422,6 +426,8 @@ fn a_partial_sweep_confirms_only_what_it_saw() {
         provenance: None,
         fragment_id: None,
         checksum: Some("sha256:bbb".into()),
+        content_ref: None,
+        note_kind: None,
     })
     .unwrap();
 

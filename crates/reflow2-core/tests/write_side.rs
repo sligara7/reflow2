@@ -39,6 +39,8 @@ fn built_thread() -> DesignGraph {
         provenance: None,
         fragment_id: None,
         checksum: Some("sha256:aaa".into()),
+        content_ref: None,
+        note_kind: None,
     })
     .expect("link");
     g
@@ -481,6 +483,8 @@ fn many_files_under_a_verified_capability_raise_no_gaps() {
             provenance: None,
             fragment_id: None,
             checksum: None,
+            content_ref: None,
+            note_kind: None,
         })
         .unwrap();
     }
@@ -761,6 +765,8 @@ fn a_built_capability_the_release_leaves_out_is_the_diff() {
         provenance: None,
         fragment_id: None,
         checksum: Some("sha256:eee".into()),
+        content_ref: None,
+        note_kind: None,
     })
     .unwrap();
     g.add_release("rel:v1", "v1.0", None, None).unwrap();
@@ -859,6 +865,8 @@ fn a_release_that_includes_a_subsystem_ships_its_contained_parts() {
         provenance: None,
         fragment_id: None,
         checksum: Some("sha256:bbb".into()),
+        content_ref: None,
+        note_kind: None,
     })
     .unwrap();
     let gaps = g.detect_gaps().unwrap();
