@@ -731,6 +731,25 @@ reading order (Vision → Design → Process → Heritage). Then:
    one exploratory `Decision` per idea with its counter-argument. A triage that leaves neither did
    not follow this rule. `enforced` deliberately unstated — the detector that would notice absence
    is not built. `rule:field-feedback-issues-are-root-caused-and-ideas-are-brainstormed`.
+10. **Every failure gets its raw error searched; the full `/root-cause` runs the moment a CAUSE is
+   about to be written.** Two tiers, set by Anthony 2026-09-06, ruling on his own ask to make
+   `/root-cause` "more automatic … probably some caveats … might not be a blanket rule".
+   **Tier 1, on ANY failure, always:** `search_design` on the exact error text and read what comes
+   back (0.08 s cold — cost is never the reason to skip it). A recorded cause is applied and its
+   recurrence COUNTED, never re-derived. **Tier 2, the whole skill (`get_skill root-cause`):** the
+   moment you have formed an explanation for something you did not predict — an unpredicted test
+   failure, a count you cannot account for, a surprise in your own build, any "because" written
+   before a measurement. The trigger is the sentence, not the failure.
+   **Exempt from tier 2, never from tier 1:** an error whose remedy is in the error itself (a
+   compile error naming the line, a refusal listing the legal fields), a known-class friction tier 1
+   found recorded (count it), a typo. Bounded by construction — errors you fix without ever writing
+   a cause. "This one is obvious" is not an exemption; it is the case the skill exists for.
+   Because tier 1 alone would have prevented both measured failures here: the 2026-08-22 error that
+   reached **eleven occurrences** with its cause in the graph, and the 2026-09-06 re-fix of an
+   already-fixed defect. And because a blanket rule becomes a ritual — five argument-shape refusals
+   in one triage on 2026-09-05 were evidence, not five investigations.
+   `enforced` deliberately unstated; the detector that notices a fix with no `CAUSES` edge is the
+   next item. `rule:every-failure-is-searched-and-every-cause-is-root-caused-before-it-is-written`.
 
 ### What carries across sessions, and what does not
 

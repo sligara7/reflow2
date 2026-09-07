@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:b74c829037637f0d9bed44ffd2653eaabb038f2251470cb32f24bf5cdc1dafe2",
+  "content_hash": "sha256:0004e801a1b8d4fac1c3d922e92bef1e93fedd0cd20cd03b90f1171ebe7086f5",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -10347,6 +10347,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:dec:idea-how-does-root-cause-become-automatic-rule-hook-detector-or-composition",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:dec:idea-how-should-the-loop-know-that-an-answer-reached-the-design",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
@@ -10360,6 +10366,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:dec:idea-is-a-replayed-gap-an-input-or-an-echo",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:dec:idea-root-cause-runs-at-the-moment-a-cause-is-about-to-be-written-not-on-every-failure",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
     },
@@ -12789,7 +12801,8 @@
       "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-how-does-root-cause-become-automatic-rule-hook-detector-or-composition",
       "properties": {
-        "role": "author"
+        "acted_at": "2026-09-06",
+        "role": "approver"
       },
       "to_id": "who:ajs"
     },
@@ -13208,7 +13221,8 @@
       "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-root-cause-runs-at-the-moment-a-cause-is-about-to-be-written-not-on-every-failure",
       "properties": {
-        "role": "author"
+        "acted_at": "2026-09-06",
+        "role": "approver"
       },
       "to_id": "who:ajs"
     },
@@ -33411,6 +33425,33 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:root-cause-is-tiered-search-every-failure-run-the-skill-before-a-cause-is-written",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:idea-how-does-root-cause-become-automatic-rule-hook-detector-or-composition"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:root-cause-is-tiered-search-every-failure-run-the-skill-before-a-cause-is-written",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:idea-root-cause-runs-at-the-moment-a-cause-is-about-to-be-written-not-on-every-failure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:root-cause-is-tiered-search-every-failure-run-the-skill-before-a-cause-is-written",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "rule:every-failure-is-searched-and-every-cause-is-root-caused-before-it-is-written"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:rule-narrowed-to-the-globals-clause",
       "properties": {
         "accepted_baseline": false,
@@ -38431,6 +38472,17 @@
         "seat": "asligar-bitecool:4176513:96c83b5f"
       },
       "to_id": "cmp:seam"
+    },
+    {
+      "edge_type": "CLAIMS",
+      "from_id": "who:claude-code",
+      "properties": {
+        "claimed_at": "2026-09-06T15:30:00Z",
+        "depth": 1,
+        "note": "v0.50.0 item 1: the tiered root-cause rule (search every failure; run the skill when a cause is about to be written) + AGENTS.md rule 10. Then item 2, the 'fixed without a recorded cause' detector.",
+        "seat": "asligar-bitecool:2417930:37e2be4f"
+      },
+      "to_id": "rule:field-feedback-issues-are-root-caused-and-ideas-are-brainstormed"
     },
     {
       "edge_type": "COMPLEMENTS",
@@ -51246,6 +51298,22 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "rule:every-failure-is-searched-and-every-cause-is-root-caused-before-it-is-written",
+      "properties": {
+        "note": "The rule is mechanism (a) of the MECHANISM ruling; mechanisms (c) the detector and (d) composition follow it, (b) the hook was skipped."
+      },
+      "to_id": "dec:idea-how-does-root-cause-become-automatic-rule-hook-detector-or-composition"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "rule:every-failure-is-searched-and-every-cause-is-root-caused-before-it-is-written",
+      "properties": {
+        "note": "The rule is the SCOPE ruling written as a standing convention: which failures get tier 1 (all), which reach tier 2 (the cause moment), which are exempt."
+      },
+      "to_id": "dec:idea-root-cause-runs-at-the-moment-a-cause-is-about-to-be-written-not-on-every-failure"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "rule:the-export-is-written-once-per-branch",
       "properties": {},
       "to_id": "dec:export-once-per-pr"
@@ -52144,6 +52212,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:idea-how-does-root-cause-become-automatic-rule-hook-detector-or-composition",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:dec:idea-how-does-root-cause-become-automatic-rule-hook-detector-or-composition"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "dec:idea-how-should-the-loop-know-that-an-answer-reached-the-design",
       "properties": {},
       "to_id": "snap:epoch:preserved-on-write:dec:idea-how-should-the-loop-know-that-an-answer-reached-the-design"
@@ -52165,6 +52239,12 @@
       "from_id": "dec:idea-is-a-replayed-gap-an-input-or-an-echo",
       "properties": {},
       "to_id": "snap:epoch:preserved-on-write:dec:idea-is-a-replayed-gap-an-input-or-an-echo"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:idea-root-cause-runs-at-the-moment-a-cause-is-about-to-be-written-not-on-every-failure",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:dec:idea-root-cause-runs-at-the-moment-a-cause-is-about-to-be-written-not-on-every-failure"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -155561,6 +155641,18 @@
       }
     },
     {
+      "node_id": "chg:root-cause-is-tiered-search-every-failure-run-the-skill-before-a-cause-is-written",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "detected_at": "2026-09-06",
+        "name": "The root-cause trigger is tiered: search every failure, run the skill before a cause is written",
+        "rationale": "A rule is read once and states an intention; that is exactly why it is only the first leg. It travels in the graph to every harness and machine, which the hook could not, and it makes the detector (item 2) enforceable by stating what compliance leaves behind: a CAUSES edge on a fix. Enforcement deliberately unstated — a gate is a later ruling once the detector has reported for a while. AGENTS.md is not a registered Artifact, so no checksum accept is owed for its edit.",
+        "subject": "system",
+        "summary": "Anthony ruled both root-cause automation brainstorms (scope: tiered — step ② on every failure, the full skill at the cause moment, exemptions bounded by construction; mechanism: rule + detector + composition, hook skipped). Both Decisions moved to accepted with the ruling written above the options they preserve. A new DesignRule carries the tiers, GOVERNED_BY both rulings, and AGENTS.md rule 10 mirrors it. Item 1 of v0.50.0."
+      }
+    },
+    {
       "node_id": "chg:rule-narrowed-to-the-globals-clause",
       "node_type": "ChangeEvent",
       "properties": {
@@ -160757,11 +160849,11 @@
       "node_id": "dec:idea-how-does-root-cause-become-automatic-rule-hook-detector-or-composition",
       "node_type": "Decision",
       "properties": {
-        "decision": "Recorded as BRAINSTORMING, not as a proposal — the mechanism half of Anthony's 2026-09-06 ask ('make the use of /root-cause more automatic by the agent when it finds an issue in implementing/creating design artifacts or in its testing'). Distinct from dec:idea-should-reflow2-serve-a-root-cause-analysis-method (which decided the method is served). The scope half is dec:idea-root-cause-runs-at-the-moment-a-cause-is-about-to-be-written-not-on-every-failure.\n\nFOUR MECHANISMS, not exclusive:\n(a) A RULE — extend the field-feedback rule (or add a sibling) to issues met while building and testing, with the scope caveat written in. Cheap; travels in the graph to every harness and machine; Anthony has already done this in all his projects. But a rule is read once at the start and states an intention — the skill's own argument for why it exists as a skill and not a rule.\n(b) A HARNESS HOOK — PostToolUse on Bash: detect a test failure or panic in tool_response, and inject 'you are about to explain a failure: get_skill root-cause; step ② first' (or run step ② itself and surface a recorded cause). COSTED 2026-08-28: every part exists, 0.08 s cold, infrastructure registered. A project-level .claude/settings.json hook travels with the repository, unlike a machine memory.\n(c) A DETECTOR, AFTER THE FACT — a ChangeEvent of change_type defect_fix or test_failure_fix whose affected artifacts carry no CAUSES edge and no fact:defect-* dated before it raises 'fixed without a recorded cause' (req:a-fix-says-whether-it-corrected-the-cause is ACCEPTED; this is its detector). And its mirror, found 2026-09-06: a defect fact whose subject artifact changed later with no INVALIDATES from any ChangeEvent — the fixed-but-never-closed case that misled a session into a wrong re-fix. Both directions are the same third leg.\n(d) COMPOSITION — root-cause as a STANDING attribute composed into the skills that meet failures (optimize already routes to it at its trigger; link-artifacts, check-health and capture-session could name it as the door when something fails). Reaches every harness; read at skill load, not at the moment of failure.",
+        "decision": "RULED by Anthony 2026-09-06 (\"go with your above recommendations for v0.50.0\"): (a) the rule — rule:every-failure-is-searched-and-every-cause-is-root-caused-before-it-is-written, with AGENTS.md rule 10 as its pointer; (c) the detector — a ChangeEvent of change_type defect_fix or test_failure_fix whose CHANGED artifacts carry no CAUSES edge raises 'fixed without a recorded cause', and its mirror, a defect TemporalFact whose subject artifact changed after it with no INVALIDATES from any record, raises 'a defect whose artifact moved with nothing saying it was fixed'; (d) composition — a one-line pointer to the root-cause skill in the skills that meet failures. (b) the harness hook is SKIPPED: costed 2026-08-28, it reaches the wrong half (a symptom-fix ships green and produces no failing command) and one harness only. Ordered for v0.50.0: the rule first, the detector and its mirror second.\n\nWHAT WAS ON THE TABLE (recorded 2026-09-06 as brainstorming, before the ruling) — the mechanism half of Anthony's 2026-09-06 ask ('make the use of /root-cause more automatic by the agent when it finds an issue in implementing/creating design artifacts or in its testing'). Distinct from dec:idea-should-reflow2-serve-a-root-cause-analysis-method (which decided the method is served). The scope half is dec:idea-root-cause-runs-at-the-moment-a-cause-is-about-to-be-written-not-on-every-failure.\n\nFOUR MECHANISMS, not exclusive:\n(a) A RULE — extend the field-feedback rule (or add a sibling) to issues met while building and testing, with the scope caveat written in. Cheap; travels in the graph to every harness and machine; Anthony has already done this in all his projects. But a rule is read once at the start and states an intention — the skill's own argument for why it exists as a skill and not a rule.\n(b) A HARNESS HOOK — PostToolUse on Bash: detect a test failure or panic in tool_response, and inject 'you are about to explain a failure: get_skill root-cause; step ② first' (or run step ② itself and surface a recorded cause). COSTED 2026-08-28: every part exists, 0.08 s cold, infrastructure registered. A project-level .claude/settings.json hook travels with the repository, unlike a machine memory.\n(c) A DETECTOR, AFTER THE FACT — a ChangeEvent of change_type defect_fix or test_failure_fix whose affected artifacts carry no CAUSES edge and no fact:defect-* dated before it raises 'fixed without a recorded cause' (req:a-fix-says-whether-it-corrected-the-cause is ACCEPTED; this is its detector). And its mirror, found 2026-09-06: a defect fact whose subject artifact changed later with no INVALIDATES from any ChangeEvent — the fixed-but-never-closed case that misled a session into a wrong re-fix. Both directions are the same third leg.\n(d) COMPOSITION — root-cause as a STANDING attribute composed into the skills that meet failures (optimize already routes to it at its trigger; link-artifacts, check-health and capture-session could name it as the door when something fails). Reaches every harness; read at skill load, not at the moment of failure.",
         "kind": "exploratory",
-        "name": "OPEN — by what MECHANISM does /root-cause become automatic: a rule the agent reads, a harness hook that fires on a failing command, a detector that flags a fix with no recorded cause after the fact, or composition into the skills that meet failures?",
+        "name": "DECIDED — /root-cause becomes automatic by a RULE the agent reads + a DETECTOR that flags a fix with no recorded cause (and its mirror, a defect fact whose artifact changed with no INVALIDATES) + COMPOSITION into the skills that meet failures; the harness HOOK is skipped",
         "rationale": "COUNTER-ARGUMENTS beside each. (a) alone is what Anthony already has and is asking to go beyond; necessary, insufficient. (b) reaches the WRONG HALF for the case he most cares about: a symptom-fix compiles, its tests pass, it ships green — there is no failing command for a hook to see (fact:surfacing-a-known-cause-is-cheap-and-reaches-the-wrong-half). It reaches one harness (Alex's Grok Build TUI cannot take a hook — dec:idea-the-loop-nudge-exists-for-one-harness-only), its threshold is calibrated on four points and a permissive miscalibration is the wallpaper failure this project has killed three times, and a nudge on every red test teaches skimming. It DOES solve the recurring-known-error class mechanically. (c) does not prevent the wrong fix; it flags it afterwards — but that is also how a rule gets taught: a gap the agent meets at the next loop_status is a sentence read at the moment it matters, and it is the ONLY option that reaches the overconfident-fix case at all, because it keys on the RECORD (a fix with no cause) rather than on a failing command. (d) has the rule's weakness (read-at-load) with better placement. A RANKING IS A FINDING: (c) is the one leg nothing else supplies and it makes (a) enforceable; (a) generalised is one sentence; (b) is a cheap in-the-moment aid for one harness and the known-error class only, and must not be described as answering the symptom-fix problem; (d) is free and partial. The three-legs doctrine says vocabulary reaches a user's design with a typed tool + an instruction + a detector that notices absence — root-cause today has the tool (the skill) and the instruction (the rules) and no detector. Anthony rules.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -161276,11 +161368,11 @@
       "node_id": "dec:idea-root-cause-runs-at-the-moment-a-cause-is-about-to-be-written-not-on-every-failure",
       "node_type": "Decision",
       "properties": {
-        "decision": "Recorded as BRAINSTORMING, not as a proposal. Distinct from dec:idea-should-reflow2-serve-a-root-cause-analysis-method, which DECIDED that reflow2 serves the method; this asks when its USE becomes automatic. Anthony, 2026-09-06, in his words: 'I now use the /root-cause skill a lot and it seems to really drive the agent to identifying the real cause and not treating a symptom or fixing the wrong thing. In all my projects now, I've made design rules that basically say, when you identify an issue, run /root-cause. That being said, I'd like to make the use of /root-cause more automatic by the agent when it finds an issue in implementing/creating design artifacts or in its testing. I know there is probably some caveats about which types of issues the /root-cause should be run on, so might not be a blanket rule to always run /root-cause.'\n\nTHE OPTIONS, as they separate:\n(a) A BLANKET RULE — every failure met while building or testing runs the skill. Simplest to state; no judgement at the moment of failure.\n(b) TRIGGER ON THE SKILL'S OWN TELL — not 'something failed' but 'I am about to write down a CAUSE'. The skill's own text says this is the moment ('that's odd', 'it must be X', 'that explains it'), and that its author missed it on a quiet number and produced four wrong causes. Failures whose remedy is IN the error text (a compile error naming the line; a refusal that names the legal values; an unknown-field refusal that lists the fields) never reach a cause — you read, fix, move on — and are exempt by construction.\n(c) A TIERED RULE — ALWAYS run step ② (search the raw error text for a recorded cause; measured cold at 0.08 s) on ANY failure, and proceed to ③–⑤ only when no precedent is found OR when you have formed an explanation. Step ② alone would have prevented both measured failures on this project: the 11-occurrence error of 2026-08-22 whose cause sat in the graph, and the 2026-09-06 re-fix of an already-fixed defect.\n\nWHICH ISSUES (the caveat Anthony named), as a first cut for him to correct: RUN IT on an unpredicted test failure; a measurement or count you cannot account for; a field-reported defect (already the rule); a surprise in your own build ('why did that pass/fail'); and any sentence containing 'because' before a measurement was taken. DO NOT run the full skill on: an error whose remedy is stated in the error itself; a known-class friction whose cause is already recorded (but COUNT the recurrence — five argument-shape refusals in one triage on 2026-09-05 were evidence, not five investigations); a typo. Whether 'known class' is judged by the agent or by step ②'s search is exactly the (b)-vs-(c) difference.",
+        "decision": "RULED by Anthony 2026-09-06 (\"go with your above recommendations for v0.50.0\"): option (c) as the floor and option (b) as the rule of judgement above it; option (a), the blanket rule, REJECTED as ritual. The rule that carries it is rule:every-failure-is-searched-and-every-cause-is-root-caused-before-it-is-written, mirrored as AGENTS.md rule 10. The mechanism half is the sibling decision, ruled the same day.\n\nWHAT WAS ON THE TABLE (recorded 2026-09-06 as brainstorming, before the ruling). Distinct from dec:idea-should-reflow2-serve-a-root-cause-analysis-method, which DECIDED that reflow2 serves the method; this asked when its USE becomes automatic. Anthony, 2026-09-06, in his words: 'I now use the /root-cause skill a lot and it seems to really drive the agent to identifying the real cause and not treating a symptom or fixing the wrong thing. In all my projects now, I've made design rules that basically say, when you identify an issue, run /root-cause. That being said, I'd like to make the use of /root-cause more automatic by the agent when it finds an issue in implementing/creating design artifacts or in its testing. I know there is probably some caveats about which types of issues the /root-cause should be run on, so might not be a blanket rule to always run /root-cause.'\n\nTHE OPTIONS, as they separate:\n(a) A BLANKET RULE — every failure met while building or testing runs the skill. Simplest to state; no judgement at the moment of failure.\n(b) TRIGGER ON THE SKILL'S OWN TELL — not 'something failed' but 'I am about to write down a CAUSE'. The skill's own text says this is the moment ('that's odd', 'it must be X', 'that explains it'), and that its author missed it on a quiet number and produced four wrong causes. Failures whose remedy is IN the error text (a compile error naming the line; a refusal that names the legal values; an unknown-field refusal that lists the fields) never reach a cause — you read, fix, move on — and are exempt by construction.\n(c) A TIERED RULE — ALWAYS run step ② (search the raw error text for a recorded cause; measured cold at 0.08 s) on ANY failure, and proceed to ③–⑤ only when no precedent is found OR when you have formed an explanation. Step ② alone would have prevented both measured failures on this project: the 11-occurrence error of 2026-08-22 whose cause sat in the graph, and the 2026-09-06 re-fix of an already-fixed defect.\n\nWHICH ISSUES (the caveat Anthony named), as ruled: RUN IT on an unpredicted test failure; a measurement or count you cannot account for; a field-reported defect (already the rule); a surprise in your own build ('why did that pass/fail'); and any sentence containing 'because' before a measurement was taken. DO NOT run the full skill on: an error whose remedy is stated in the error itself; a known-class friction whose cause is already recorded (but COUNT the recurrence — five argument-shape refusals in one triage on 2026-09-05 were evidence, not five investigations); a typo. 'Known class' is judged by step ②'s search first (tier 1) and by the agent's judgement second (tier 2) — the (b)-and-(c) composition.",
         "kind": "exploratory",
-        "name": "OPEN — should /root-cause run automatically when the agent meets an issue while building or testing, and on WHICH kinds of issue? (Anthony: 'probably some caveats … might not be a blanket rule')",
+        "name": "DECIDED — /root-cause is TIERED: step ② (search the raw error) on EVERY failure; the full skill at the moment a CAUSE is about to be written; exempt only failures whose remedy is in the error text and known-class frictions (counted, not investigated)",
         "rationale": "COUNTER-ARGUMENTS, recorded beside the options rather than used to kill them. Against (a): the skill 'costs real time', and run on every trivial refusal it becomes a ritual — the 2026-09-05 triage met five argument-shape refusals in an hour; five full investigations would have been absurd, and a step performed ritually stops being performed at all (the skill's own warning: 'if you find yourself agreeing with these steps rather than doing them, the skill has already failed'). Against the EXEMPTIONS in (b) and (c): the skill's own author-case says 'this one is obvious' is the case to run it on, not skip it for — an exemption list is a loophole with a name, and the overconfident-fix case Anthony described (fact:surfacing-a-known-cause-is-cheap-and-reaches-the-wrong-half) produces NO failing command at all, so any trigger keyed on failures misses the half he most wants. That is why (b) keys on the CAUSE moment, not the failure. For (c): it is the cheapest honest floor — 0.08 s per failure, and it catches the recorded-cause class mechanically — but it does not reach the abstract third of defect facts that no error string matches (68 of 192 measured). A RANKING IS A FINDING, NOT A DECISION: (c) as the floor, (b) as the rule of judgement above it, (a) rejected as ritual. Anthony rules; the mechanism by which any of these becomes automatic is the sibling question dec:idea-how-does-root-cause-become-automatic-rule-hook-detector-or-composition.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -167161,6 +167253,15 @@
         "enforced": true,
         "name": "Design intent moves only on the owner's word — an agent may propose anything and settle nothing",
         "statement": "A NODE THAT ASSERTS INTENT REACHES A SETTLED STATE ONLY BECAUSE ANTHONY SAID SO. An agent may create, draft, measure, argue and recommend without limit; it may not move a Requirement off `proposed`, mark a Decision `accepted`, or record a rule's enforcement on his behalf. Alex is a genuine design contributor and second user (`who:alex`), and his input is ADVISORY — it informs and gates nothing.\n\nENFORCED — Anthony, 2026-08-09, answering the consequence question directly (\"if a session recorded a decision as accepted without you saying so, should that stop the build, or is it advice?\"): stop the build.\n\n⭐ THE ASYMMETRY IS THE FINDING, and it was not predicted. Asked the same question about the branch-then-PR process rule minutes earlier, he answered ADVICE. So in a one-developer project the PROCESS rule is self-discipline and the AUTHORITY rule is inviolable — the opposite of the naive expectation that a solo project needs no authority modelling because there is only one person. What one person needs protection from is not another person; it is an AGENT WRITING IN HIS VOICE. That is a data point for `req:a-node-can-say-who-may-change-it` from the simple end of the scale, where every other data point so far came from a multi-agent fleet.\n\nWHAT IT OWES, stated plainly rather than quietly closed: a DETECTOR. `unverified_enforced_rule` will fire at 0.6 and stay until a PASSING Verification is attached — a `planned` one does not silence it. NO CHECK IS ATTACHED TODAY, deliberately: the governance-proposal skill's standing warning is that attaching a check to close a finding is green-washing, and a passing check that tests nothing is a lie the graph cannot see.\n\n=== THE DETECTOR SPEC, CORRECTED 2026-08-09 — READ THIS BEFORE WRITING THE CHECK ===\n\n⚠️ THE FIRST SPEC WAS WRONG AND IS PRESERVED IN THE SNAPSHOT AT `epoch:detector-spec-cannot-name-a-forked-identity`. It read: \"every Decision at `accepted` carries an AUTHORED_BY edge to `who:ajs`.\" THAT CHECK WOULD HAVE BEEN QUERYABLE AND WRONG, because the owner exists as TWO Contributor nodes and both carry live edges.\n\nMEASURED ON THIS GRAPH, 2026-08-09, 7 Contributors under TWO id conventions (`ctr:` and `who:`):\n  @ajs        → `ctr:anthony` (8 edges)  AND  `who:ajs` (161 edges)\n  claude-code → `ctr:claude-fable` (11 edges) AND `who:claude-code` (39 edges)\nA check keyed on `who:ajs` alone would either fire false violations on everything attributed to `ctr:anthony`, or pass while the owner's authority is silently split across two identities. The second failure is the dangerous one: it reports green.\n\n⭐ WHY THIS IS THE RULE'S PROBLEM AND NOT A TIDINESS ONE. dev_storyflow filed exactly this hours before it was found here (finding ⑮ of their generalized set, api-boss `80c01d1f`, sharpened by a correction from storybug Boss `47accf78`): \"a governance layer built on a forked attribution namespace inherits the fork, AND GAINS CONFIDENCE WHILE DOING IT.\" They hit it trying to encode a tri-boss ruling as three approver edges and could not, because two of three approvers each matched two nodes and the third had no Contributor node at all. Their conclusion travels: edges that are queryable and wrong are STRICTLY WORSE than prose that is honestly informal.\n\nTHE CORRECTED SPEC, in two parts, and the first is a PRECONDITION rather than a step:\n\n(1) PRECONDITION — THE FORK MUST BE RESOLVED OR DECLARED FIRST. Either the duplicate identities are merged (a `DUPLICATES` edge with `basis: asserted`, which per dec:ask-not-repair is the only basis licensing a merge, and the merge is Anthony's call because it is destructive), or the check is given an explicit, recorded set of ids that mean the owner. WHAT IT MUST NOT DO IS HARD-CODE THE FORK SILENTLY — a check listing two ids without saying why is a check that has absorbed a defect and made it permanent.\n\n(2) THE CHECK ITSELF, once (1) holds: every Decision at `accepted`, and every Requirement moved off `proposed`, carries an AUTHORED_BY edge to a Contributor the design recognises AS THE OWNER — resolved through (1), never by matching an id literal in the check's source. `loop_status` already computes the mirror image (a `proposed` Decision whose named approver has not answered); what is missing is the inverse — a SETTLED node with nobody's name on it.\n\n📝 HOW IT WAS FOUND, recorded because the mechanism generalises: the same session that wrote the wrong spec also minted two new `who:` Contributors WITHOUT searching the namespace first, and landed on the documented convention only by copying the neighbouring `who:alex`. storybug Boss named this precisely — `who:` is not one convention among equals, it is the form `add_contributor`'s own parameter description gives as its example, so the deviations are deviations from a documented convention that no schema, validator or detector defends. And the deviation path is COPYING A NEIGHBOUR, not carelessness — so any fix that assumes authors read the parameter description will miss it.\n\nALREADY PARTLY MECHANIZED, which is why enforcement is not a bluff: `add_decision` lands at `proposed`; `add_requirement` lands at `proposed`; `dec:certainty-derived` derives a requirement's certainty from status × provenance because every move off `proposed` records the user's word; `set_requirement_status`'s own guardrail says promoting it yourself forges their signature; and `dec:three-party-checks` states the division — the LLM speaks, the graph remembers and counts, the human decides. The rule names the policy those mechanisms serve, which until now was implemented everywhere and stated nowhere.\n\nHONEST BOUND: the tooling resists the violation but cannot presently REPORT one, which is exactly the gap the enforcement flag now makes visible instead of leaving to good behaviour — and, until the precondition above is met, the gap cannot be closed correctly rather than merely closed."
+      }
+    },
+    {
+      "node_id": "rule:every-failure-is-searched-and-every-cause-is-root-caused-before-it-is-written",
+      "node_type": "DesignRule",
+      "properties": {
+        "category": "methodology",
+        "name": "Every failure gets its raw error searched in the design; the full /root-cause skill runs at the moment a CAUSE is about to be written — not on every failure",
+        "statement": "Set by Anthony on 2026-09-06 (his words: \"I'd like to make the use of /root-cause more automatic by the agent when it finds an issue in implementing/creating design artifacts or in its testing … probably some caveats about which types of issues … might not be a blanket rule\"), ruling on dec:idea-root-cause-runs-at-the-moment-a-cause-is-about-to-be-written-not-on-every-failure: the tiered option (c) as the floor and the cause-moment trigger (b) as the judgement above it; the blanket rule (a) rejected as ritual.\n\n═══ TIER 1 — ON ANY FAILURE, ALWAYS: SEARCH BEFORE YOU THINK ═══\nWhenever a command, test, build, tool call or check fails while building or testing — however trivial it looks — run step ② of the root-cause skill first: `search_design` on the RAW error text (the exact string, not your summary of it) and READ what comes back. Measured cold at 0.08 s, so cost is never the reason to skip it. If a recorded cause matches, apply the recorded remedy and COUNT the recurrence on the record that holds the cause (revise the fact, or note the occurrence); do not re-derive it. This step alone would have prevented both measured failures on this project — the error of 2026-08-22 that reached eleven occurrences while its cause sat in the graph, and the 2026-09-06 re-fix of an already-fixed defect (fact:a-defect-fixed-but-never-closed-on-the-record-was-re-fixed-wrongly-a-day-later).\n\n═══ TIER 2 — THE FULL SKILL, AT THE MOMENT A CAUSE IS ABOUT TO BE WRITTEN ═══\nRun the whole root-cause skill (get_skill root-cause; steps ①–⑨, every step leaving an artifact) the moment you have formed an explanation for something you did not predict. The trigger is not the failure; it is the sentence: \"because\", \"the problem is\", \"it must be\", \"that explains it\". Concretely, that moment arrives on: an unpredicted test failure; a measurement or count you cannot account for (something slower, larger or emptier than it should be — the quiet case the skill's own author missed); a surprise in your own build (\"why did that pass?\"); a defect reported from the field (already rule:field-feedback-issues-are-root-caused-and-ideas-are-brainstormed); and any \"because\" written before a discriminating measurement was taken.\n\n═══ EXEMPT FROM TIER 2 — NEVER FROM TIER 1 ═══\nThe full skill is NOT run on a failure that never reaches a cause: an error whose remedy is stated in the error itself (a compile error naming the line; a refusal that lists the legal values or fields; a missing argument); a known-class friction whose cause tier 1 found already recorded — but COUNT it (five argument-shape refusals in one triage on 2026-09-05 were evidence, not five investigations); a typo. The exemption is bounded by CONSTRUCTION, not by judgement: it covers errors you read, fix and move on from without ever writing a cause. \"This one is obvious\" is not an exemption — the skill's own author-case says the obvious one is the case to run it on, and the overconfident symptom-fix that Anthony described produces no failing command at all, which is why tier 2 keys on the cause moment rather than on a failure.\n\n═══ WHY TIERED AND NOT BLANKET ═══\nThe skill costs real time, and run on every trivial refusal it becomes a ritual; a step performed ritually stops being performed at all (the skill's own warning). Tier 1 is the cheapest honest floor and catches the recorded-cause class mechanically; it does not reach the abstract third of defect facts that no error string matches (68 of 192, measured), which is what tier 2 is for.\n\n═══ WHAT COMPLIANCE LEAVES BEHIND ═══\nTier 1 leaves a counted recurrence when it hits and nothing when it misses — the floor is invisible on a miss, which is accepted. Tier 2 leaves a dated TemporalFact per cause carrying the candidates considered, the discriminating measurement, a CAUSES edge from the artifact holding the cause, and a stated bound on what was not established; and a test observed failing first (rule:an-issue-is-root-caused-then-pinned-by-a-test-then-fixed). A fix recorded as defect_fix or test_failure_fix whose touched artifacts carry no CAUSES edge did not follow this rule, whatever it concluded — that is the detector owed under dec:idea-how-does-root-cause-become-automatic-rule-hook-detector-or-composition, the third leg of fact:vocabulary-needs-three-legs.\n\nENFORCEMENT IS DELIBERATELY UNSTATED, as for its sibling rule: whether a fix with no recorded cause should block anything is a policy Anthony has not ruled on. The detector will report it as a gap first; a gate is the later question."
       }
     },
     {
@@ -175600,6 +175701,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:preserved-on-write:dec:idea-how-does-root-cause-become-automatic-rule-hook-detector-or-composition",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"role\":\"author\"}},{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Capability\",\"other_id\":\"cap:stop-nudge-asks-the-graph\",\"properties\":{\"evidence\":\"The hook option is only possible because the nudge infrastructure exists (SessionStart, PostToolUse, Stop hooks registered by reflow2_init.py); a PostToolUse on Bash would be one more tuple in that list. Without the nudge there is no in-the-moment channel to the agent.\",\"optional\":false,\"weight_basis\":\"estimated\"}}]",
+        "state": "{\"decision\":\"Recorded as BRAINSTORMING, not as a proposal — the mechanism half of Anthony's 2026-09-06 ask ('make the use of /root-cause more automatic by the agent when it finds an issue in implementing/creating design artifacts or in its testing'). Distinct from dec:idea-should-reflow2-serve-a-root-cause-analysis-method (which decided the method is served). The scope half is dec:idea-root-cause-runs-at-the-moment-a-cause-is-about-to-be-written-not-on-every-failure.\\n\\nFOUR MECHANISMS, not exclusive:\\n(a) A RULE — extend the field-feedback rule (or add a sibling) to issues met while building and testing, with the scope caveat written in. Cheap; travels in the graph to every harness and machine; Anthony has already done this in all his projects. But a rule is read once at the start and states an intention — the skill's own argument for why it exists as a skill and not a rule.\\n(b) A HARNESS HOOK — PostToolUse on Bash: detect a test failure or panic in tool_response, and inject 'you are about to explain a failure: get_skill root-cause; step ② first' (or run step ② itself and surface a recorded cause). COSTED 2026-08-28: every part exists, 0.08 s cold, infrastructure registered. A project-level .claude/settings.json hook travels with the repository, unlike a machine memory.\\n(c) A DETECTOR, AFTER THE FACT — a ChangeEvent of change_type defect_fix or test_failure_fix whose affected artifacts carry no CAUSES edge and no fact:defect-* dated before it raises 'fixed without a recorded cause' (req:a-fix-says-whether-it-corrected-the-cause is ACCEPTED; this is its detector). And its mirror, found 2026-09-06: a defect fact whose subject artifact changed later with no INVALIDATES from any ChangeEvent — the fixed-but-never-closed case that misled a session into a wrong re-fix. Both directions are the same third leg.\\n(d) COMPOSITION — root-cause as a STANDING attribute composed into the skills that meet failures (optimize already routes to it at its trigger; link-artifacts, check-health and capture-session could name it as the door when something fails). Reaches every harness; read at skill load, not at the moment of failure.\",\"kind\":\"exploratory\",\"name\":\"OPEN — by what MECHANISM does /root-cause become automatic: a rule the agent reads, a harness hook that fires on a failing command, a detector that flags a fix with no recorded cause after the fact, or composition into the skills that meet failures?\",\"rationale\":\"COUNTER-ARGUMENTS beside each. (a) alone is what Anthony already has and is asking to go beyond; necessary, insufficient. (b) reaches the WRONG HALF for the case he most cares about: a symptom-fix compiles, its tests pass, it ships green — there is no failing command for a hook to see (fact:surfacing-a-known-cause-is-cheap-and-reaches-the-wrong-half). It reaches one harness (Alex's Grok Build TUI cannot take a hook — dec:idea-the-loop-nudge-exists-for-one-harness-only), its threshold is calibrated on four points and a permissive miscalibration is the wallpaper failure this project has killed three times, and a nudge on every red test teaches skimming. It DOES solve the recurring-known-error class mechanically. (c) does not prevent the wrong fix; it flags it afterwards — but that is also how a rule gets taught: a gap the agent meets at the next loop_status is a sentence read at the moment it matters, and it is the ONLY option that reaches the overconfident-fix case at all, because it keys on the RECORD (a fix with no cause) rather than on a failing command. (d) has the rule's weakness (read-at-load) with better placement. A RANKING IS A FINDING: (c) is the one leg nothing else supplies and it makes (a) enforceable; (a) generalised is one sentence; (b) is a cheap in-the-moment aid for one harness and the known-error class only, and must not be described as answering the symptom-fix problem; (d) is free and partial. The three-legs doctrine says vocabulary reaches a user's design with a typed tool + an instruction + a detector that notices absence — root-cause today has the tool (the skill) and the instruction (the rules) and no detector. Anthony rules.\",\"status\":\"proposed\"}",
+        "target_id": "dec:idea-how-does-root-cause-become-automatic-rule-hook-detector-or-composition",
+        "target_type": "Decision"
+      }
+    },
+    {
       "node_id": "snap:epoch:preserved-on-write:dec:idea-how-should-the-loop-know-that-an-answer-reached-the-design",
       "node_type": "Snapshot",
       "properties": {
@@ -175626,6 +175737,16 @@
         "edges": "[]",
         "state": "{\"decision\":\"RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Solutions turned over 2026-09-02 for the cause in `fact:the-gap-replay-warning-exists-because-rehydrate-declines-to-run-when-the-caller-sent-text`.\\n\\nTHE SETTLED PART: `rehydrate_gaps` already resolves a gap by id against a live `detect_gaps()` and replaces the caller's copy wholesale. Its guard runs it ONLY when the caller sent an empty description and evidence. So the server has the authority and declines to use it in exactly the case where the caller's copy can be wrong. proj:chama's mangled title would have been repaired for free.\\n\\n**THE QUESTION UNDERNEATH, which decides between every option below: is the pass-2 GapCandidate an INPUT the caller may legitimately shape, or an ECHO the server should treat as untrusted transport?** Nothing in the design says. The tool's own prose says \\\"REPLAY EACH GAP OBJECT UNCHANGED\\\", which reads as echo — but the code's behaviour is input.\\n\\nOPTIONS, none preferred:\\n\\n· **A — Always rehydrate.** Resolve every gap by id, replace wholesale, delete the guard. Kills the class outright and the ⚠ warning becomes unnecessary. Cost: one `detect_gaps()` per serve pass, already batched to once per call. ⚠️ REAL BEHAVIOUR CHANGE: a gap that has CLOSED since the caller's copy was taken currently gets served; after this it refuses with `gap_is_gone`. Whether refusing is correct is a judgement nobody has been asked for — recording a Question against a gap that no longer exists is arguably worse than refusing, but it is a change consumers would feel.\\n\\n· **B — Rehydrate, fall back to the caller's copy when the id does not resolve.** Kills the mangling class and keeps today's tolerance for closed gaps. ⚠️ Its weakness is silence: a caller who edited the text deliberately loses the edit with no signal, and the two cases (mangled / closed) become indistinguishable in the reply.\\n\\n· **C — Verify rather than replace: compare the caller's copy to the server's, refuse on mismatch and name the difference.** Turns a silent degradation into a loud refusal, which is the shape this project already prefers elsewhere — `create_edges` is all-or-nothing, and `gaps_to_prompts` refuses a MIXED batch rather than half-serving it. Costs the caller a round trip. ⚠️ It also treats every difference as an error, which is only right if the answer to the input/echo question is \\\"echo\\\".\\n\\n· **D — Accept `gap_id` as chama asked, and deprecate the object form.** Their literal request. On its own it is a patch: the old path stays and stays trusting. As a DEPRECATION it is different — new callers take the safe door, the old one warns, and it is removed later, which is `rule:fix-it-properly-while-it-is-still-cheap` clause two rather than a workaround.\\n\\n· **E — Do nothing; the warning is already there.** ⚠️ Recorded because it must be argued against rather than skipped, and the argument is short: the warning is loud, specific, correctly placed, and it still did not work. A field report from a first session hit the failure anyway.\\n\\n⭐ WHAT MAKES A AND C DIFFERENT IN KIND, not just in cost: A says the server owns the text and quietly makes it right. C says the caller asserted something false and must be told. Both are defensible; they answer the input/echo question opposite ways, and choosing a mechanism without answering it first is how this guard got its current condition in the first place.\",\"kind\":\"exploratory\",\"name\":\"OPEN — on gap_to_prompt's second pass, is the GapCandidate the caller's INPUT or the server's ECHO? The whole repair follows from that and nobody has stated it\",\"rationale\":\"Recorded as an idea rather than repaired directly because the cheapest-looking fix (A, delete the guard) carries a consumer-visible behaviour change that nobody has approved, and because the reporter's own request (D) is the one option that is a patch unless it is paired with a deprecation.\\n\\n⚠️ The bound on all of this: the guard's current condition is not obviously WRONG — it was written for budgeted replies and does that job correctly. What is missing is a statement of what the second pass's argument is FOR, which would make one of these options obviously right and the rest obviously wrong.\",\"status\":\"proposed\"}",
         "target_id": "dec:idea-is-a-replayed-gap-an-input-or-an-echo",
+        "target_type": "Decision"
+      }
+    },
+    {
+      "node_id": "snap:epoch:preserved-on-write:dec:idea-root-cause-runs-at-the-moment-a-cause-is-about-to-be-written-not-on-every-failure",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"EVOLVES_INTO\",\"other_type\":\"DesignRule\",\"other_id\":\"rule:an-issue-is-root-caused-then-pinned-by-a-test-then-fixed\",\"properties\":{\"evidence\":\"The advisory rule is the older form: it states the intention once, at session start, and its own text records that the fix which prompted it skipped the load-bearing step. This idea is that thought grown up — the rule made to fire at the moment of the work rather than be remembered from the start of it.\"}},{\"direction\":\"in\",\"edge_type\":\"EVOLVES_INTO\",\"other_type\":\"DesignRule\",\"other_id\":\"rule:field-feedback-issues-are-root-caused-and-ideas-are-brainstormed\",\"properties\":{\"evidence\":\"The 2026-09-05 rule made root-cause automatic for FIELD feedback only. Anthony now asks for the same on issues the agent meets while building and testing; this idea is the field rule generalised, with the scope caveat the field rule never needed.\"}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"role\":\"author\"}}]",
+        "state": "{\"decision\":\"Recorded as BRAINSTORMING, not as a proposal. Distinct from dec:idea-should-reflow2-serve-a-root-cause-analysis-method, which DECIDED that reflow2 serves the method; this asks when its USE becomes automatic. Anthony, 2026-09-06, in his words: 'I now use the /root-cause skill a lot and it seems to really drive the agent to identifying the real cause and not treating a symptom or fixing the wrong thing. In all my projects now, I've made design rules that basically say, when you identify an issue, run /root-cause. That being said, I'd like to make the use of /root-cause more automatic by the agent when it finds an issue in implementing/creating design artifacts or in its testing. I know there is probably some caveats about which types of issues the /root-cause should be run on, so might not be a blanket rule to always run /root-cause.'\\n\\nTHE OPTIONS, as they separate:\\n(a) A BLANKET RULE — every failure met while building or testing runs the skill. Simplest to state; no judgement at the moment of failure.\\n(b) TRIGGER ON THE SKILL'S OWN TELL — not 'something failed' but 'I am about to write down a CAUSE'. The skill's own text says this is the moment ('that's odd', 'it must be X', 'that explains it'), and that its author missed it on a quiet number and produced four wrong causes. Failures whose remedy is IN the error text (a compile error naming the line; a refusal that names the legal values; an unknown-field refusal that lists the fields) never reach a cause — you read, fix, move on — and are exempt by construction.\\n(c) A TIERED RULE — ALWAYS run step ② (search the raw error text for a recorded cause; measured cold at 0.08 s) on ANY failure, and proceed to ③–⑤ only when no precedent is found OR when you have formed an explanation. Step ② alone would have prevented both measured failures on this project: the 11-occurrence error of 2026-08-22 whose cause sat in the graph, and the 2026-09-06 re-fix of an already-fixed defect.\\n\\nWHICH ISSUES (the caveat Anthony named), as a first cut for him to correct: RUN IT on an unpredicted test failure; a measurement or count you cannot account for; a field-reported defect (already the rule); a surprise in your own build ('why did that pass/fail'); and any sentence containing 'because' before a measurement was taken. DO NOT run the full skill on: an error whose remedy is stated in the error itself; a known-class friction whose cause is already recorded (but COUNT the recurrence — five argument-shape refusals in one triage on 2026-09-05 were evidence, not five investigations); a typo. Whether 'known class' is judged by the agent or by step ②'s search is exactly the (b)-vs-(c) difference.\",\"kind\":\"exploratory\",\"name\":\"OPEN — should /root-cause run automatically when the agent meets an issue while building or testing, and on WHICH kinds of issue? (Anthony: 'probably some caveats … might not be a blanket rule')\",\"rationale\":\"COUNTER-ARGUMENTS, recorded beside the options rather than used to kill them. Against (a): the skill 'costs real time', and run on every trivial refusal it becomes a ritual — the 2026-09-05 triage met five argument-shape refusals in an hour; five full investigations would have been absurd, and a step performed ritually stops being performed at all (the skill's own warning: 'if you find yourself agreeing with these steps rather than doing them, the skill has already failed'). Against the EXEMPTIONS in (b) and (c): the skill's own author-case says 'this one is obvious' is the case to run it on, not skip it for — an exemption list is a loophole with a name, and the overconfident-fix case Anthony described (fact:surfacing-a-known-cause-is-cheap-and-reaches-the-wrong-half) produces NO failing command at all, so any trigger keyed on failures misses the half he most wants. That is why (b) keys on the CAUSE moment, not the failure. For (c): it is the cheapest honest floor — 0.08 s per failure, and it catches the recorded-cause class mechanically — but it does not reach the abstract third of defect facts that no error string matches (68 of 192 measured). A RANKING IS A FINDING, NOT A DECISION: (c) as the floor, (b) as the rule of judgement above it, (a) rejected as ritual. Anthony rules; the mechanism by which any of these becomes automatic is the sibling question dec:idea-how-does-root-cause-become-automatic-rule-hook-detector-or-composition.\",\"status\":\"proposed\"}",
+        "target_id": "dec:idea-root-cause-runs-at-the-moment-a-cause-is-about-to-be-written-not-on-every-failure",
         "target_type": "Decision"
       }
     },
@@ -185050,7 +185171,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:c72dc53512064872792393fcc7c6f0329b13dee1a9d6da4352d592fcb370b54e",
+  "prev_content_hash": "sha256:b74c829037637f0d9bed44ffd2653eaabb038f2251470cb32f24bf5cdc1dafe2",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
