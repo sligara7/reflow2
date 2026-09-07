@@ -31,6 +31,68 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.50.0] — 2026-09-07
+
+Minor: the tool surface gained parameters and one tool; two gap sources, two design rules and one
+skill were added. The schema stamp did NOT move (29 node types / 65 edge types), so no upgrade doc
+is owed. Five items, each its own PR (#438–#442), all ruled by Anthony on 2026-09-06.
+
+### Added
+
+- **`topic_report(query)` and the `topic` skill — the /topic view.** What the design holds about
+  one subject in one call: hits grouped by node type, each with its status, whether an accepted
+  Decision discontinued it, its claim age, its connections by edge type and direction, and the
+  latest DATED change that touched it or measurement about it. `not_found` is mandatory and says
+  what was searched, which populated types matched nothing (or are not among the top N when the
+  list was cut), and whether the index has drifted — a search miss must never read as the design
+  holding nothing. Bounded like `detect_gaps`; `count` and `by_type` are never trimmed.
+  *Consumer: a new tool and a new served skill; `/topic <subject>` in the kit's commands.*
+- **Two gap sources, the third leg of the root-cause vocabulary.** `fix_without_recorded_cause`:
+  one aggregate over `defect_fix` / `test_failure_fix` ChangeEvents on no `CAUSES` edge and with no
+  outgoing `INVALIDATES` (a CAUSES edge on an artifact the fix touched is deliberately not
+  counted); a backlog is parked per fix (`GOVERNED_BY ruling=parks`) and counted. 
+  `defect_overtaken_by_change`: per open defect fact whose subject, or an artifact realizing it,
+  was `CHANGED` by a dated later REPAIR with no `INVALIDATES` — repairs only, measured (any-change
+  gave one hub gap with 39 members). *Consumer: expect these in `detect_gaps`; on reflow2's own
+  design they read 1 and 45 on day one.*
+- **The owner's word rides the same call as the status it signs.** `add_decision` and
+  `add_requirement` take optional `status` + `approver` + `acted_at`; `add_design_rule` takes
+  `approver` + `acted_at` beside `enforced`. A status past the landing default is REFUSED without
+  an approver, before any write; the approver is drawn as `AUTHORED_BY role=approver`.
+  `add_verification` takes `verifies`, `status`, `findings`, `last_run_at` in one call.
+  *Consumer: additive — every existing call is unchanged. `add_design_rule` with `enforced` now
+  needs `approver`; that is the intent-authority rule reaching the constructor.*
+- **Every relation tool accepts the other family's names.** One convention, taught once (a
+  role-named end plus `target_*`; `from_*`/`to_*` for peers), and serde aliases on 30 request
+  structs — `from_*`/`to_*` on the role-named tools, the role names on the from/to tools, and
+  `node_id`/`node_type` (what `search_design` hands back) for the from end. The published schema is
+  unchanged; a misspelling is still refused; both spellings of one end is a duplicate field.
+- **Two design rules, both from Anthony, both mirrored in AGENTS.md.** Rule 10: root-cause is
+  tiered — search the raw error on every failure, run the full skill the moment a cause is about
+  to be written. Rule 11: every reflow2 tool failure met while working is captured as a to-do.
+
+### Changed
+
+- **`set_decision_status` and `set_requirement_status` take `approver`.** A settling status
+  written without one is recorded but the reply carries `carries_nobodys_name` — the sentence the
+  intent gate would say later, said now.
+- **`plan_epoch` names the sequence it needs**, exactly as `add_epoch` does: the hint moved to a
+  pre-check both share after it recurred on the sibling one day after the first fix.
+- The `detect-and-ask`, `check-health`, `link-artifacts`, `capture-session`, `capture-intent`,
+  `governance-proposal`, `kpp-proposal`, `revise-design` and `adopt` skills name the one-call forms
+  and point at the root-cause skill where a failure is met.
+
+### Fixed
+
+- The plan_epoch generic refusal (recurrence #2 of `fact:defect-add-epoch-requires-a-sequence-…`).
+
+### Recorded, not built
+
+- Four brainstorms on ruleset convergence, cement, decision layers to unpeel, and the cost-of-change
+  curve, scheduled to a planned increment after this one. Three friction facts under rule 11,
+  including that a client's tool list is fixed at connection so a restarted server's new fields are
+  unreachable until reconnect.
+
 ## [0.49.0] — 2026-09-06
 
 Minor: request shapes changed (additively) and two schema declarations moved. The schema stamp did
