@@ -31,6 +31,8 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.52.0] — 2026-09-07
+
 ### Added
 
 - **Every constructor can now say what the thing it makes IS.** `add_epoch` and `plan_epoch` take
