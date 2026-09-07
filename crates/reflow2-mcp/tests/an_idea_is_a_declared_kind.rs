@@ -44,6 +44,9 @@ fn dec(id: &str, kind: Option<&str>) -> DecisionReq {
         kind: kind.map(str::to_string),
         related_to: None,
         no_relation_note: None,
+        status: None,
+        approver: None,
+        acted_at: None,
     }
 }
 

@@ -640,10 +640,29 @@ impl ReflowService {
         Parameters(req): Parameters<SetDecisionStatusReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await?;
-        ok_json(NodeDto::from(
+        crate::tools::capture::approver_must_exist(
+            &g,
+            req.approver.as_deref(),
+            "set_decision_status",
+        )?;
+        let node = NodeDto::from(
             g.set_decision_status(&req.decision_id, &req.status)
                 .map_err(dyno_err)?,
-        ))
+        );
+        crate::tools::capture::sign_as_approver(
+            &mut g,
+            reflow2_core::nodes::node::DECISION,
+            &req.decision_id,
+            req.approver.as_deref(),
+            req.acted_at.as_deref(),
+        )?;
+        // `accepted` is the settling status the intent gate reads; superseding
+        // or rejecting retires rather than settles and is not flagged.
+        let settles = req.status == "accepted";
+        crate::tools::capture::with_approval_note(
+            node,
+            crate::tools::capture::nobodys_name_note(settles, req.approver.as_deref()),
+        )
     }
 
     #[tool(

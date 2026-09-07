@@ -80,16 +80,73 @@ impl ReflowService {
             &req.id,
         )?;
         let name = __rf.str("name", req.name);
-        ok_json(NodeDto::from(
-            g.add_verification(
+        // A finding belongs to a RUN, and a run has an outcome: `findings` or
+        // `last_run_at` without `status` is refused before anything is written,
+        // because storing them would assert a run whose verdict nobody stated.
+        if req.status.is_none() && (req.findings.is_some() || req.last_run_at.is_some()) {
+            return Err(McpError::invalid_params(
+                "`add_verification`: `findings` and `last_run_at` describe a RUN, so they \
+                 need `status` — the run's outcome — in the same call. Pass all of them \
+                 together, or none and record the run later with set_verification_status. \
+                 Nothing was written.",
+                None,
+            ));
+        }
+        // Every target is resolved BEFORE the create, so an unknown or
+        // ambiguous target refuses the whole call rather than leaving a check
+        // behind that verifies only some of what was asked.
+        let mut targets: Vec<(String, String)> = Vec::new();
+        for t in req.verifies.iter().flatten() {
+            let ty = crate::service::resolve_node_type(
+                &g,
+                t.target_type.as_deref(),
+                &t.target_id,
+                "verifies[].target_type",
+            )?;
+            targets.push((ty, t.target_id.clone()));
+        }
+        g.add_verification(
+            &req.id,
+            &name,
+            req.method.as_deref(),
+            req.level.as_deref(),
+            req.description.as_deref(),
+        )
+        .map_err(dyno_err)?;
+        for (ty, id) in &targets {
+            g.verifies(&req.id, ty, id).map_err(dyno_err)?;
+        }
+        if let Some(status) = req.status.as_deref() {
+            g.set_verification_status(
                 &req.id,
-                &name,
-                req.method.as_deref(),
-                req.level.as_deref(),
-                req.description.as_deref(),
+                status,
+                req.last_run_at.as_deref(),
+                req.findings.as_deref(),
             )
-            .map_err(dyno_err)?,
-        ))
+            .map_err(dyno_err)?;
+        }
+        let node = g
+            .get_node(reflow2_core::nodes::node::VERIFICATION, &req.id)
+            .map_err(dyno_err)?
+            .map(NodeDto::from)
+            .ok_or_else(|| {
+                McpError::internal_error("verification vanished after its own create", None)
+            })?;
+        let mut v = serde_json::to_value(node).map_err(ser_err)?;
+        if let Some(obj) = v.as_object_mut()
+            && !targets.is_empty()
+        {
+            obj.insert(
+                "verifies".into(),
+                serde_json::Value::Array(
+                    targets
+                        .iter()
+                        .map(|(_, id)| serde_json::Value::String(id.clone()))
+                        .collect(),
+                ),
+            );
+        }
+        ok_json(v)
     }
 
     #[tool(

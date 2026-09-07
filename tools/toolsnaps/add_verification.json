@@ -4,6 +4,29 @@
   },
   "description": "Record a Verification — a check that something meets its intent. `method` says HOW you looked: test, analysis, inspection and demonstration are the four canonical ones, plus measurement, observation (watching it run in the field, unchanged), review and simulation. Answers the `build_without_verification` and `unverified_capability` gaps. Pair it with `verifies` to say what it checks. ⚠️ KEEP `name` SHORT — it is what a list renders. Put the account of what the check IS in `description`, and what a RUN FOUND in `findings` on set_verification_status. Measured on reflow2's own graph before those were reachable: median Verification name 76 words, longest 654, because `description` was declared and this constructor had no parameter for it, so everyone wrote reports into the name. CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it again with the same id and only what you are changing — omitted fields keep their stored value, so correcting one never means re-sending a 2 KB field you did not touch.",
   "inputSchema": {
+    "$defs": {
+      "VerifyTargetReq": {
+        "additionalProperties": false,
+        "description": "One target of a Verification, for `add_verification`'s `verifies` list.",
+        "properties": {
+          "target_id": {
+            "type": "string"
+          },
+          "target_type": {
+            "default": null,
+            "description": "Node type being verified. Optional: resolved from the id when omitted;\nan id held by more than one type is REFUSED, never guessed.",
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "target_id"
+        ],
+        "type": "object"
+      }
+    },
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
     "properties": {
@@ -15,8 +38,24 @@
           "null"
         ]
       },
+      "findings": {
+        "default": null,
+        "description": "What that run FOUND. Refused without `status`: a finding belongs to a run.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
       "id": {
         "type": "string"
+      },
+      "last_run_at": {
+        "default": null,
+        "description": "When that run happened. Refused without `status`, for the same reason.",
+        "type": [
+          "string",
+          "null"
+        ]
       },
       "level": {
         "default": null,
@@ -56,6 +95,33 @@
         "default": null,
         "type": [
           "string",
+          "null"
+        ]
+      },
+      "status": {
+        "default": null,
+        "description": "The outcome of a run you have ALREADY TAKEN — `planned` / `passing` /\n`failing` / `skipped` / `blocked` — for the common case \"I just ran it\nand here is what it found\". Omit it and the check lands `planned`.",
+        "enum": [
+          "planned",
+          "passing",
+          "failing",
+          "skipped",
+          "blocked",
+          "superseded",
+          null
+        ],
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "verifies": {
+        "description": "What this check VERIFIES, drawn in the same call — one VERIFIES edge per\nentry. `target_type` may be omitted (resolved from the id). Recording\none check used to take four to six calls\n(dec:idea-should-a-constructor-accept-the-owners-word-in-one-call).",
+        "items": {
+          "$ref": "#/$defs/VerifyTargetReq"
+        },
+        "type": [
+          "array",
           "null"
         ]
       }

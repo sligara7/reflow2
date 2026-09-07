@@ -750,6 +750,20 @@ reading order (Vision → Design → Process → Heritage). Then:
    in one triage on 2026-09-05 were evidence, not five investigations.
    `enforced` deliberately unstated; the detector that notices a fix with no `CAUSES` edge is the
    next item. `rule:every-failure-is-searched-and-every-cause-is-root-caused-before-it-is-written`.
+11. **Every failure of a reflow2 tool met while working here is captured on the record as a
+   to-do.** A refusal whose remedy you found by hand, a warning on every write, a reply that did
+   not say what you needed: record it before moving on, as a dated defect `TemporalFact` on the
+   capability or artifact the tool realizes, with the tool, the refusal (ids masked), what you
+   expected and the workaround. Rule 10's tier 1 first: search the refusal text, and a precedent
+   gets a COUNTED recurrence, not a second record. A refusal that is the loop working (a
+   near-duplicate guard, a required field the reply names correctly) is not a failure.
+   Set by Anthony 2026-09-06: *"if we are not at least capturing these failures as to-do items,
+   then this is a big issue … it'll come out when reflow2 is used in somebody else's design."*
+   Because reflow2's own sessions are its first field: three refusals were met in the session
+   this was set in and none was written down until he asked — one of them a recurrence, on the
+   sibling tool, of a fact recorded the day before. `enforced` deliberately unstated; the
+   detector leg (the server counting its own refusals) is an open idea beside the rule.
+   `rule:a-reflow2-tool-failure-met-while-working-is-captured-as-a-to-do`.
 
 ### What carries across sessions, and what does not
 

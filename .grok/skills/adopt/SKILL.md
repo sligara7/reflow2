@@ -85,7 +85,8 @@ recorded.
   endpoint; one `Verification` per suite or test area, never per test function; one `Artifact`
   per meaningful unit, not per file; a vendored or generated mass = **one opaque Component**.
 - **Register each real suite where it actually lives — on the Component** (`add_verification`
-  + `verifies` with target the component, status `passing` when it passes). The read side
+  with `verifies` naming the component and `status: "passing"` plus `last_run_at` when it
+  passes — one call). The read side
   understands what that means one hop away: capabilities allocated to a verified component
   read as *verified at component granularity* — a third state the coverage line reports —
   instead of raising one `unverified_capability` alarm each. What remains is one question per

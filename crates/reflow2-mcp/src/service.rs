@@ -1259,6 +1259,23 @@ pub struct RequirementReq {
     /// refusal, if any, lists exactly what to put here.
     #[serde(default)]
     pub distinct_from: Option<Vec<String>>,
+    /// The status to LAND IN when the owner's word is already in hand:
+    /// `proposed` (the default) / `accepted` / `deferred` / `dropped` / `met`.
+    /// A status past `proposed` is REFUSED unless `approver` is named.
+    #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::requirement_status_opt")]
+    pub status: Option<String>,
+    /// The Contributor whose word this is — the OWNER'S SIGNATURE, carried in the
+    /// same call as the status it signs. Draws `AUTHORED_BY role=approver`, the
+    /// edge `rule:design-intent-moves-only-on-the-owners-word` is checked by.
+    /// REQUIRED when the status is past the landing default; an id naming no
+    /// Contributor is REFUSED before anything is written, because a typo would
+    /// otherwise attach the owner's authority to a name nobody can check.
+    #[serde(default)]
+    pub approver: Option<String>,
+    /// When the approver acted, as a plain date. Stored on the approver edge.
+    #[serde(default)]
+    pub acted_at: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -1287,6 +1304,17 @@ pub struct DesignRuleReq {
     /// reported. Omit on a first attempt.
     #[serde(default)]
     pub distinct_from: Option<Vec<String>>,
+    /// The Contributor whose word this is — the OWNER'S SIGNATURE, carried in the
+    /// same call as the status it signs. Draws `AUTHORED_BY role=approver`, the
+    /// edge `rule:design-intent-moves-only-on-the-owners-word` is checked by.
+    /// REQUIRED when `enforced` is stated (either value): a rule's power is settled intent; an id naming no
+    /// Contributor is REFUSED before anything is written, because a typo would
+    /// otherwise attach the owner's authority to a name nobody can check.
+    #[serde(default)]
+    pub approver: Option<String>,
+    /// When the approver acted, as a plain date. Stored on the approver edge.
+    #[serde(default)]
+    pub acted_at: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -1321,6 +1349,15 @@ pub struct RequirementStatusReq {
     /// `proposed` (default) / `accepted` / `deferred` / `dropped` / `met`.
     #[schemars(schema_with = "crate::enum_schema::requirement_status_req")]
     pub status: String,
+    /// The Contributor whose word moves it — draws `AUTHORED_BY role=approver`
+    /// in the same call. Optional on this setter because it has consumers, but
+    /// a status past `proposed` written without one is REPORTED in the reply
+    /// as carrying nobody's name. An id naming no Contributor is REFUSED.
+    #[serde(default)]
+    pub approver: Option<String>,
+    /// When the approver acted, as a plain date. Stored on the approver edge.
+    #[serde(default)]
+    pub acted_at: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -1669,6 +1706,35 @@ pub struct VerificationReq {
     /// set_verification_status.
     #[serde(default)]
     pub description: Option<String>,
+    /// What this check VERIFIES, drawn in the same call — one VERIFIES edge per
+    /// entry. `target_type` may be omitted (resolved from the id). Recording
+    /// one check used to take four to six calls
+    /// (dec:idea-should-a-constructor-accept-the-owners-word-in-one-call).
+    #[serde(default)]
+    pub verifies: Option<Vec<VerifyTargetReq>>,
+    /// The outcome of a run you have ALREADY TAKEN — `planned` / `passing` /
+    /// `failing` / `skipped` / `blocked` — for the common case "I just ran it
+    /// and here is what it found". Omit it and the check lands `planned`.
+    #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::verification_status_opt")]
+    pub status: Option<String>,
+    /// What that run FOUND. Refused without `status`: a finding belongs to a run.
+    #[serde(default)]
+    pub findings: Option<String>,
+    /// When that run happened. Refused without `status`, for the same reason.
+    #[serde(default)]
+    pub last_run_at: Option<String>,
+}
+
+/// One target of a Verification, for `add_verification`'s `verifies` list.
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct VerifyTargetReq {
+    /// Node type being verified. Optional: resolved from the id when omitted;
+    /// an id held by more than one type is REFUSED, never guessed.
+    #[serde(default)]
+    pub target_type: Option<String>,
+    pub target_id: String,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -2495,6 +2561,26 @@ pub struct DecisionReq {
     /// forever. This field is the honest way through.
     #[serde(default)]
     pub no_relation_note: Option<String>,
+    /// The status to LAND IN when the owner's word is already in hand:
+    /// `proposed` (the default) / `accepted` / `superseded` / `rejected`.
+    /// A status past `proposed` is REFUSED unless `approver` is named — one
+    /// call, with the signature present rather than assumed
+    /// (dec:idea-should-a-constructor-accept-the-owners-word-in-one-call).
+    /// Before 2026-09-06 this took two calls that could not be batched.
+    #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::decision_status_opt")]
+    pub status: Option<String>,
+    /// The Contributor whose word this is — the OWNER'S SIGNATURE, carried in the
+    /// same call as the status it signs. Draws `AUTHORED_BY role=approver`, the
+    /// edge `rule:design-intent-moves-only-on-the-owners-word` is checked by.
+    /// REQUIRED when the status is past the landing default; an id naming no
+    /// Contributor is REFUSED before anything is written, because a typo would
+    /// otherwise attach the owner's authority to a name nobody can check.
+    #[serde(default)]
+    pub approver: Option<String>,
+    /// When the approver acted, as a plain date. Stored on the approver edge.
+    #[serde(default)]
+    pub acted_at: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -3747,6 +3833,16 @@ pub struct SetDecisionStatusReq {
     /// `rejected`.
     #[schemars(schema_with = "crate::enum_schema::decision_status_req")]
     pub status: String,
+    /// The Contributor whose word moves it — draws `AUTHORED_BY role=approver`
+    /// in the same call. Optional on this setter because it has consumers, but
+    /// an `accepted` written without one is REPORTED in the reply as carrying
+    /// nobody's name: that is exactly the write the intent-authority gate
+    /// fails a build on. An id naming no Contributor is REFUSED.
+    #[serde(default)]
+    pub approver: Option<String>,
+    /// When the approver acted, as a plain date. Stored on the approver edge.
+    #[serde(default)]
+    pub acted_at: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]

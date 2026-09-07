@@ -7,6 +7,22 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
     "properties": {
+      "acted_at": {
+        "default": null,
+        "description": "When the approver acted, as a plain date. Stored on the approver edge.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "approver": {
+        "default": null,
+        "description": "The Contributor whose word this is — the OWNER'S SIGNATURE, carried in the\nsame call as the status it signs. Draws `AUTHORED_BY role=approver`, the\nedge `rule:design-intent-moves-only-on-the-owners-word` is checked by.\nREQUIRED when the status is past the landing default; an id naming no\nContributor is REFUSED before anything is written, because a typo would\notherwise attach the owner's authority to a name nobody can check.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
       "distinct_from": {
         "default": null,
         "description": "Ids you read and judged DIFFERENT from this one, when reflow2 has\nalready told you something close exists. Naming them is the deliberate\ndecision: sharpen an existing node by calling with ITS id, or start a\nnew one and say what you rejected. Omit it on a first attempt — the\nrefusal, if any, lists exactly what to put here.",
@@ -31,6 +47,22 @@
       "statement": {
         "default": null,
         "description": "The requirement statement.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "status": {
+        "default": null,
+        "description": "The status to LAND IN when the owner's word is already in hand:\n`proposed` (the default) / `accepted` / `deferred` / `dropped` / `met`.\nA status past `proposed` is REFUSED unless `approver` is named.",
+        "enum": [
+          "proposed",
+          "accepted",
+          "deferred",
+          "dropped",
+          "met",
+          null
+        ],
         "type": [
           "string",
           "null"

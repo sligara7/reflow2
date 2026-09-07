@@ -60,6 +60,9 @@ fn req(
         name: Some(name.into()),
         statement: Some(statement.into()),
         distinct_from,
+        status: None,
+        approver: None,
+        acted_at: None,
     }
 }
 

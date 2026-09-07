@@ -7,6 +7,22 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
     "properties": {
+      "acted_at": {
+        "default": null,
+        "description": "When the approver acted, as a plain date. Stored on the approver edge.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "approver": {
+        "default": null,
+        "description": "The Contributor whose word this is — the OWNER'S SIGNATURE, carried in the\nsame call as the status it signs. Draws `AUTHORED_BY role=approver`, the\nedge `rule:design-intent-moves-only-on-the-owners-word` is checked by.\nREQUIRED when `enforced` is stated (either value): a rule's power is settled intent; an id naming no\nContributor is REFUSED before anything is written, because a typo would\notherwise attach the owner's authority to a name nobody can check.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
       "category": {
         "default": null,
         "description": "A free-text grouping (the schema does not fix the set). Common values in\nuse, for example: tech_stack, convention, material, methodology,\nstandard, style.",
