@@ -61,6 +61,9 @@ fn req(id: &str, name: &str, statement: &str) -> RequirementReq {
         name: Some(name.into()),
         statement: Some(statement.into()),
         distinct_from: None,
+        status: None,
+        approver: None,
+        acted_at: None,
     }
 }
 

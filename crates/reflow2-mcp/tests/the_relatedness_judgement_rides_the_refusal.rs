@@ -49,6 +49,9 @@ fn idea(id: &str) -> DecisionReq {
         kind: Some("exploratory".into()),
         related_to: None,
         no_relation_note: None,
+        status: None,
+        approver: None,
+        acted_at: None,
     }
 }
 

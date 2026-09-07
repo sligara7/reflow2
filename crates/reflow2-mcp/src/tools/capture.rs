@@ -705,6 +705,117 @@ pub(crate) fn absorbed_markup(fields: &[(&'static str, Option<&str>)]) -> Option
 /// `search_first` answers *should this be a new node at all*, `revision`
 /// answers *what did writing it cost*. A create can only face the first
 /// question and a revision can only face the second.
+/// The owner's word, carried in the SAME call as the status it signs.
+///
+/// `dec:certainty-derived` says certainty is derived from status, so an agent
+/// that promotes a status on the user's behalf forges their signature — which
+/// is why every constructor lands at its default and why moving off it was a
+/// separate call. That separate call could not be batched with the create (a
+/// harness emits a batch unordered), so the commonest capture cost a forced
+/// serial round trip, and on 2026-09-06 a session took the status half and
+/// forgot the signature half and CI's intent gate went red
+/// (`fact:an-accepted-status-written-without-its-approver-failed-the-intent-gate-in-ci`).
+///
+/// The shape that survives the rule: a settling status is REFUSED unless the
+/// approver is named, and the approver is written as the same
+/// `AUTHORED_BY role=approver` edge the gate reads. Refused BEFORE anything is
+/// written, so a refusal leaves no half-signed node behind.
+pub(crate) fn refuse_settling_without_approver(
+    settles: bool,
+    approver: Option<&str>,
+    tool: &str,
+    what: &str,
+) -> Result<(), McpError> {
+    if settles && approver.is_none() {
+        return Err(McpError::invalid_params(
+            format!(
+                "`{tool}` will not record {what} with nobody's name on it: pass `approver` — \
+                 the Contributor whose word this is — in the same call, and the signature is \
+                 drawn as AUTHORED_BY role=approver. Or omit the status and let it land at the \
+                 default; an agent may draft and recommend without limit, but moving intent \
+                 past its landing status is the owner's act \
+                 (rule:design-intent-moves-only-on-the-owners-word). Nothing was written."
+            ),
+            None,
+        ));
+    }
+    Ok(())
+}
+
+/// An approver naming no Contributor is refused before any write — the same
+/// argument `acknowledge_gap_by` makes: a typo would attach the owner's
+/// authority to a name nobody can check, which is worse than recording none.
+pub(crate) fn approver_must_exist(
+    g: &reflow2_core::graph::DesignGraph,
+    approver: Option<&str>,
+    tool: &str,
+) -> Result<(), McpError> {
+    let Some(who) = approver else {
+        return Ok(());
+    };
+    let exists = g
+        .get_node(reflow2_core::nodes::node::CONTRIBUTOR, who)
+        .map_err(dyno_err)?
+        .is_some();
+    if exists {
+        return Ok(());
+    }
+    Err(McpError::invalid_params(
+        format!(
+            "`{tool}`: no Contributor `{who}` in this design, so nothing was written. An \
+             approver who does not exist would attach the owner's authority to a name nobody \
+             can check. Create them with add_contributor first, or check the id."
+        ),
+        None,
+    ))
+}
+
+/// Draw the signature: `AUTHORED_BY role=approver`, dated when the caller says.
+pub(crate) fn sign_as_approver(
+    g: &mut reflow2_core::graph::DesignGraph,
+    node_type: &str,
+    id: &str,
+    approver: Option<&str>,
+    acted_at: Option<&str>,
+) -> Result<(), McpError> {
+    if let Some(who) = approver {
+        g.authored_by(node_type, id, who, Some("approver"), acted_at)
+            .map_err(dyno_err)?;
+    }
+    Ok(())
+}
+
+/// For the SETTERS, which have consumers and stay lenient: a settling status
+/// written with no approver is reported in the reply, never silently accepted
+/// as signed. The sentence is what the intent-authority gate will say later,
+/// said now, while the caller can still fix it in one call.
+pub(crate) fn nobodys_name_note(settles: bool, approver: Option<&str>) -> Option<String> {
+    if settles && approver.is_none() {
+        Some(
+            "This status is settled intent and carries NOBODY'S NAME: no `approver` was \
+             passed, so no AUTHORED_BY role=approver edge was drawn. Where \
+             rule:design-intent-moves-only-on-the-owners-word is enforced that is a red \
+             build. Re-issue with `approver` (the Contributor whose word this is), or draw \
+             authored_by(role='approver') yourself."
+                .to_string(),
+        )
+    } else {
+        None
+    }
+}
+
+/// A setter's reply with the nobody's-name note attached when it applies.
+pub(crate) fn with_approval_note(
+    node: NodeDto,
+    note: Option<String>,
+) -> Result<CallToolResult, McpError> {
+    let mut v = serde_json::to_value(node).map_err(ser_err)?;
+    if let (Some(note), Some(obj)) = (note, v.as_object_mut()) {
+        obj.insert("carries_nobodys_name".into(), JsonValue::String(note));
+    }
+    ok_json(v)
+}
+
 pub(crate) fn with_capture_notes<T: serde::Serialize>(
     value: T,
     hint: &str,
@@ -951,6 +1062,14 @@ impl ReflowService {
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await?;
         let node_ty = reflow2_core::nodes::node::REQUIREMENT;
+        let settles = req.status.as_deref().is_some_and(|st| st != "proposed");
+        refuse_settling_without_approver(
+            settles,
+            req.approver.as_deref(),
+            "add_requirement",
+            "a Requirement past `proposed`",
+        )?;
+        approver_must_exist(&g, req.approver.as_deref(), "add_requirement")?;
         let prior = g.get_node(node_ty, &req.id).map_err(dyno_err)?;
         let existed = prior.is_some();
         let mut __rf = crate::service::RequiredFields::new(&g, node_ty, &req.id)?;
@@ -974,6 +1093,24 @@ impl ReflowService {
             }
             return Err(e);
         }
+        // The owner's word, in the same call. Applied after every guard that
+        // could still undo the create, so a refusal never leaves a signed
+        // half-node behind.
+        if settles {
+            g.set_requirement_status(&req.id, req.status.as_deref().unwrap_or("proposed"))
+                .map_err(dyno_err)?;
+        }
+        sign_as_approver(
+            &mut g,
+            node_ty,
+            &req.id,
+            req.approver.as_deref(),
+            req.acted_at.as_deref(),
+        )?;
+        let node = match g.get_node(node_ty, &req.id).map_err(dyno_err)? {
+            Some(n) => NodeDto::from(n),
+            None => node,
+        };
         preserve_prior(&mut g, prior.as_ref(), &node);
         let revision = revision_of(&g, prior.as_ref(), &node);
         with_capture_notes(
@@ -1000,6 +1137,16 @@ impl ReflowService {
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await?;
         let node_ty = reflow2_core::nodes::node::DESIGN_RULE;
+        // A rule's POWER is settled intent — the intent gate's third case. Stating
+        // it, either way, is the owner's act and needs the owner's name.
+        let settles = req.enforced.is_some();
+        refuse_settling_without_approver(
+            settles,
+            req.approver.as_deref(),
+            "add_design_rule",
+            "a DesignRule with `enforced` stated",
+        )?;
+        approver_must_exist(&g, req.approver.as_deref(), "add_design_rule")?;
         let prior = g.get_node(node_ty, &req.id).map_err(dyno_err)?;
         let existed = prior.is_some();
         let mut __rf = crate::service::RequiredFields::new(&g, node_ty, &req.id)?;
@@ -1025,6 +1172,13 @@ impl ReflowService {
             }
             return Err(e);
         }
+        sign_as_approver(
+            &mut g,
+            node_ty,
+            &req.id,
+            req.approver.as_deref(),
+            req.acted_at.as_deref(),
+        )?;
         preserve_prior(&mut g, prior.as_ref(), &node);
         let revision = revision_of(&g, prior.as_ref(), &node);
         with_capture_notes(
@@ -1142,10 +1296,20 @@ impl ReflowService {
         Parameters(req): Parameters<RequirementStatusReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await?;
-        ok_json(NodeDto::from(
+        approver_must_exist(&g, req.approver.as_deref(), "set_requirement_status")?;
+        let node = NodeDto::from(
             g.set_requirement_status(&req.requirement_id, &req.status)
                 .map_err(dyno_err)?,
-        ))
+        );
+        sign_as_approver(
+            &mut g,
+            reflow2_core::nodes::node::REQUIREMENT,
+            &req.requirement_id,
+            req.approver.as_deref(),
+            req.acted_at.as_deref(),
+        )?;
+        let settles = req.status != "proposed";
+        with_approval_note(node, nobodys_name_note(settles, req.approver.as_deref()))
     }
 
     #[tool(
@@ -1881,6 +2045,14 @@ impl ReflowService {
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await?;
         let node_ty = reflow2_core::nodes::node::DECISION;
+        let settles = req.status.as_deref().is_some_and(|st| st != "proposed");
+        refuse_settling_without_approver(
+            settles,
+            req.approver.as_deref(),
+            "add_decision",
+            "a Decision past `proposed`",
+        )?;
+        approver_must_exist(&g, req.approver.as_deref(), "add_decision")?;
         let prior = g.get_node(node_ty, &req.id).map_err(dyno_err)?;
         let existed = prior.is_some();
         let mut __rf = crate::service::RequiredFields::new(&g, node_ty, &req.id)?;
@@ -2006,6 +2178,20 @@ impl ReflowService {
             g.review_relations(node_ty, &req.id, &links, req.no_relation_note.as_deref())
                 .map_err(dyno_err)?;
         }
+        // The owner's word, in the same call: applied after every guard that
+        // could still undo the create, so a refusal never leaves a signed
+        // half-node behind. `proposed` is the landing state and needs no write.
+        if settles {
+            g.set_decision_status(&req.id, req.status.as_deref().unwrap_or("proposed"))
+                .map_err(dyno_err)?;
+        }
+        sign_as_approver(
+            &mut g,
+            node_ty,
+            &req.id,
+            req.approver.as_deref(),
+            req.acted_at.as_deref(),
+        )?;
         // Re-read AFTER the review, so the reply shows the note it just wrote.
         // The first cut built the reply before this and echoed the pre-note
         // state — a caller following "read the result back" would have been

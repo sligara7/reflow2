@@ -69,6 +69,9 @@ fn requirement(statement: &str) -> RequirementReq {
         name: Some("How a reading reaches the store".into()),
         statement: Some(statement.into()),
         distinct_from: None,
+        status: None,
+        approver: None,
+        acted_at: None,
     }
 }
 

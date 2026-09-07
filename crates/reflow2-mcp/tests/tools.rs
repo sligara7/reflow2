@@ -80,6 +80,9 @@ async fn seeded() -> ReflowService {
         name: Some("Realistic physics".into()),
         statement: Some("Ball flight must be plausible.".into()),
         distinct_from: None,
+        status: None,
+        approver: None,
+        acted_at: None,
     })));
     j!(s.add_capability(Parameters(CapabilityReq {
         id: "cap:flight".into(),
@@ -198,6 +201,9 @@ async fn genesis_bootstraps_then_detect_hands_off() {
         name: Some("Realistic physics".into()),
         statement: Some("Ball flight must be plausible.".into()),
         distinct_from: None,
+        status: None,
+        approver: None,
+        acted_at: None,
     })));
     j!(s.add_capability(Parameters(CapabilityReq {
         id: "cap:flight".into(),
@@ -746,6 +752,10 @@ async fn the_write_side_can_answer_what_detect_asks_for() {
         method: Some("test".into()),
         level: Some("unit".into()),
         description: None,
+        verifies: None,
+        status: None,
+        findings: None,
+        last_run_at: None,
     })));
     j!(s.verifies(Parameters(VerifiesReq {
         verification_id: "ver:flight".into(),
@@ -1186,6 +1196,9 @@ async fn marking_a_requirement_dropped_stops_the_nagging() {
         name: Some("Maybe".into()),
         statement: Some("We might not do this.".into()),
         distinct_from: None,
+        status: None,
+        approver: None,
+        acted_at: None,
     })));
 
     let flagged = |v: &serde_json::Value| {
@@ -1221,6 +1234,8 @@ async fn marking_a_requirement_dropped_stops_the_nagging() {
     let updated = j!(s.set_requirement_status(Parameters(RequirementStatusReq {
         requirement_id: "req:maybe".into(),
         status: "dropped".into(),
+        approver: None,
+        acted_at: None,
     })));
     assert_eq!(updated["properties"]["status"], "dropped");
     assert_eq!(
@@ -1872,6 +1887,10 @@ async fn loop_status_digests_the_verification_roll_instead_of_rolling_it() {
             method: Some("test".into()),
             level: Some("unit".into()),
             description: None,
+            verifies: None,
+            status: None,
+            findings: None,
+            last_run_at: None,
         })));
         j!(s.set_verification_status(Parameters(VerificationStatusReq {
             verification_id: id,
@@ -2385,6 +2404,9 @@ async fn a_read_after_a_write_does_not_carry_a_loop_debt_hint() {
         name: Some("Low latency".into()),
         statement: Some("Input to render under 50ms.".into()),
         distinct_from: None,
+        status: None,
+        approver: None,
+        acted_at: None,
     })));
     let after_write = j!(s.get_node(Parameters(GetNodeReq {
         node_type: Some("Capability".into()),
@@ -2405,6 +2427,9 @@ async fn a_read_after_a_write_does_not_carry_a_loop_debt_hint() {
         name: Some("Throughput".into()),
         statement: Some("Sustain 60 frames.".into()),
         distinct_from: None,
+        status: None,
+        approver: None,
+        acted_at: None,
     })));
     assert!(
         write.get("loop_hint").is_some(),
@@ -3301,6 +3326,8 @@ async fn add_design_rule_is_a_typed_constructor() {
         category: Some("convention".into()),
         enforced: None,
         distinct_from: None,
+        approver: None,
+        acted_at: None,
     })));
     assert_eq!(node["node_type"], "DesignRule");
     assert_eq!(
@@ -3317,6 +3344,16 @@ async fn add_design_rule_is_a_typed_constructor() {
 #[tokio::test]
 async fn add_design_rule_records_a_stated_enforcement() {
     let s = ReflowService::in_memory().expect("service");
+    // A rule's power is settled intent (the intent gate's third case), so
+    // stating it carries the owner's name since 2026-09-06 — see
+    // a_constructor_accepts_the_owners_word_in_one_call.rs for the refusal.
+    j!(s.add_contributor(Parameters(ContributorReq {
+        id: "who:ann".into(),
+        name: Some("Ann".into()),
+        kind: None,
+        handle: None,
+        description: None,
+    })));
     let node = j!(s.add_design_rule(Parameters(DesignRuleReq {
         id: "rule:gate".into(),
         name: Some("Gate".into()),
@@ -3324,6 +3361,8 @@ async fn add_design_rule_records_a_stated_enforcement() {
         category: None,
         enforced: Some(true),
         distinct_from: None,
+        approver: Some("who:ann".into()),
+        acted_at: None,
     })));
     assert_eq!(node["properties"]["enforced"], true);
 }
@@ -3373,6 +3412,34 @@ async fn add_change_event_still_works_without_description() {
 // Written BEFORE the fixes and observed failing to compile (the fns/fields did
 // not exist), then each behaviour pinned. #1 (currency on macOS) is pinned in
 // the_server_says_when_it_is_stale.rs.
+
+#[tokio::test]
+async fn plan_epoch_without_a_sequence_names_where_you_are_too() {
+    // Recurrence #2 on the sibling (2026-09-06): the hint lived in add_epoch
+    // alone and plan_epoch gave the bare generic refusal. The pre-check is
+    // shared now; this pins the CLASS (both constructors), not the instance.
+    let s = ReflowService::in_memory().expect("service");
+    j!(s.add_epoch(Parameters(
+        serde_json::from_value(serde_json::json!({
+            "id": "epoch:a", "name": "A", "epoch_type": "revision", "sequence": 10
+        }))
+        .unwrap()
+    )));
+    let e = s
+        .plan_epoch(Parameters(
+            serde_json::from_value(serde_json::json!({
+                "id": "epoch:planned-b", "name": "B", "epoch_type": "milestone"
+            }))
+            .unwrap(),
+        ))
+        .await
+        .expect_err("sequence is required on a planned epoch too");
+    let m = format!("{e:?}");
+    assert!(
+        m.contains("highest existing sequence is 10") && m.contains("11"),
+        "the planned form names the maximum exactly as add_epoch does: {m}"
+    );
+}
 
 #[tokio::test]
 async fn add_epoch_without_a_sequence_names_where_you_are() {
@@ -3428,6 +3495,9 @@ async fn get_node_resolves_by_id_alone_and_refuses_a_collision() {
         name: Some("Solo".into()),
         statement: Some("A lone requirement.".into()),
         distinct_from: None,
+        status: None,
+        approver: None,
+        acted_at: None,
     })));
     let got = j!(s.get_node(Parameters(GetNodeReq {
         id: "req:solo".into(),

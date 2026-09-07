@@ -77,6 +77,9 @@ fn requirement(id: &str, name: &str) -> RequirementReq {
         name: Some(name.into()),
         statement: Some(IDEA.into()),
         distinct_from: None,
+        status: None,
+        approver: None,
+        acted_at: None,
     }
 }
 
@@ -100,6 +103,9 @@ fn decision(id: &str, name: &str, kind: Option<&str>) -> DecisionReq {
         kind: kind.map(Into::into),
         related_to: None,
         no_relation_note: Some("no honest relation; this is a test fixture".into()),
+        status: None,
+        approver: None,
+        acted_at: None,
     }
 }
 
@@ -298,6 +304,9 @@ async fn a_requirement_promoted_from_the_idea_that_spawned_it_is_not_refused() {
         name: Some("A campaign is just another story with a longer arc".into()),
         statement: Some("A campaign is just another story with a longer arc and several authors, and is modelled as one.".into()),
         distinct_from: None,
+    status: None,
+    approver: None,
+    acted_at: None,
     })));
     let reported = serde_json::to_string(&out).expect("serialisable");
     assert!(

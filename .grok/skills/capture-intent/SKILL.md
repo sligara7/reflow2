@@ -86,8 +86,11 @@ mis-file things**; this one names where it runs out, and that boundary is where 
    confirms the wording** — every move off `proposed` (`accepted`, `met`, `deferred`,
    `dropped`) records the *user's* word, never your own judgment: certainty is derived from
    this status, so promoting it yourself forges their signature. When they do confirm (often
-   in the detect-and-ask pass that follows), `set_requirement_status` to `accepted` — that
-   write *is* the confirmation record.
+   in the detect-and-ask pass that follows), `set_requirement_status` to `accepted` **with
+   `approver`** (the Contributor whose word it is) — that write *is* the confirmation record, and
+   the approver is the signature on it. When the word is already in hand as you capture, pass
+   `status: "accepted"` and `approver` to `add_requirement` itself: one call, and a settling
+   status without an approver is refused rather than recorded with nobody's name.
 3. **If you captured from a DOCUMENT, register it — now, while the file is still in front of you.**
    When the intent came out of something you read (a brief, a feedback log, a handover note, a spec
    someone sent), `add_artifact` with `artifact_type: document` and `location` set to the path, then

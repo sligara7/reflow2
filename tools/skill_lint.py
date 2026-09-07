@@ -218,6 +218,13 @@ NON_TOOL_TERMS = {
     # outran.
     "fix_without_recorded_cause",
     "defect_overtaken_by_change",
+    # `approver` (2026-09-06) — the field the constructors and status setters
+    # take so the owner's word rides the same call as the status it signs; the
+    # skills that instruct settling a status now name it, as they must.
+    # `findings` — add_verification's run-evidence field, named by
+    # detect-and-ask's one-call form. Both are FIELDS, not tools.
+    "approver",
+    "findings",
     "shaping",
     "governs_retired",
     # ChangeEvent.subject and its two values (2026-08-22) — the revise-design

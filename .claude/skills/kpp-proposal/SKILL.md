@@ -98,8 +98,8 @@ after.
 It stays exactly what it was, an ordinary Requirement or Constraint, and nothing is downgraded or
 deleted. But record the decline, or the same signals will make you ask again next session, and
 being asked the same question twice is how someone learns the tool is not listening: a short
-`add_decision` ("not inviolable: X is important but tradeable against Y"), `set_decision_status`
-`accepted`, and `governed_by` from the node they declined to promote. One small Decision is a
+`add_decision` ("not inviolable: X is important but tradeable against Y") with `status: "accepted"`
+and `approver` (their word, in the one call), and `governed_by` from the node they declined to promote. One small Decision is a
 cheap price for never re-litigating it.
 
 Attribute both outcomes with `authored_by` — a KPP is the strongest claim in the design and the

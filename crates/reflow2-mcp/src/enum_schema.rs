@@ -83,6 +83,7 @@ macro_rules! list_enum {
 schema_enum!(capability_status_opt, "Capability", "status", opt);
 schema_enum!(capability_status_req, "Capability", "status", req);
 schema_enum!(requirement_status_req, "Requirement", "status", req);
+schema_enum!(requirement_status_opt, "Requirement", "status", opt);
 schema_enum!(requirement_lineage_req, "Requirement", "lineage", req);
 schema_enum!(requirement_provenance_req, "Requirement", "provenance", req);
 schema_enum!(requirement_provenance_opt, "Requirement", "provenance", opt);
@@ -90,6 +91,7 @@ schema_enum!(artifact_type_opt, "Artifact", "artifact_type", opt);
 schema_enum!(verification_method_opt, "Verification", "method", opt);
 schema_enum!(verification_level_opt, "Verification", "level", opt);
 schema_enum!(verification_status_req, "Verification", "status", req);
+schema_enum!(verification_status_opt, "Verification", "status", opt);
 schema_enum!(release_unit_type_opt, "Release", "unit_type", opt);
 schema_enum!(environment_env_type_opt, "Environment", "env_type", opt);
 schema_enum!(flow_type_opt, "Flow", "flow_type", opt);
@@ -118,6 +120,10 @@ schema_enum!(
 );
 schema_enum!(epoch_type_opt, "DesignEpoch", "epoch_type", opt);
 schema_enum!(decision_status_req, "Decision", "status", req);
+// The one-call landing status on the constructors (2026-09-06,
+// dec:idea-should-a-constructor-accept-the-owners-word-in-one-call): optional,
+// same legal values as the setter.
+schema_enum!(decision_status_opt, "Decision", "status", opt);
 schema_enum!(
     decision_quality_target_req,
     "Decision",

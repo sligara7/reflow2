@@ -47,6 +47,72 @@ use reflow2_core::{
 use crate::dto::{EdgeDto, NodeDto};
 use crate::service::*;
 
+/// `sequence` is required to create an epoch, and the generic required-field
+/// helper cannot say what value would work — so the hint is computed here and
+/// names the current maximum. SHARED by add_epoch and plan_epoch: the first cut
+/// put it in add_epoch alone (Alex's fix, 2026-09-05) and the sibling gave the
+/// bare refusal the day after
+/// (`fact:defect-add-epoch-requires-a-sequence-the-refusal-cannot-name-because-the-required-field-helper-is-generic`,
+/// recurrence #2). A fix placed in one handler rather than where both share is
+/// how a class recurs on its sibling.
+fn refuse_without_a_sequence_hint(
+    g: &reflow2_core::graph::DesignGraph,
+    req: &AddEpochReq,
+) -> Result<(), McpError> {
+    let ty = reflow2_core::nodes::node::DESIGN_EPOCH;
+    // Alex (2026-09-05): `sequence` was required and the refusal could not
+    // say what value would work, so the caller scanned epochs to learn it.
+    // The generic required-field helper cannot know an epoch hint, so the
+    // hint is computed HERE and names the current maximum. NOT auto-
+    // assigned: a sequence is a position claim, and sequences are spaced
+    // on purpose (a planned epoch once moved 360 -> 365 to make room for a
+    // release cut), so max+1 would quietly pack and position.
+    // dec:idea-add-epoch-assigns-the-next-sequence-or-names-it.
+    if req.sequence.is_none() && g.get_node(ty, &req.id).map_err(dyno_err)?.is_none() {
+        let epochs = g.scan_nodes(ty).map_err(dyno_err)?;
+        let max = epochs
+            .iter()
+            .filter_map(|n| n.properties.get("sequence").and_then(|v| v.as_i64()))
+            .max();
+        let also: Vec<&str> = [
+            ("name", req.name.is_none()),
+            ("epoch_type", req.epoch_type.is_none()),
+        ]
+        .iter()
+        .filter(|(_, missing)| *missing)
+        .map(|(f, _)| *f)
+        .collect();
+        let also_s = if also.is_empty() {
+            String::new()
+        } else {
+            format!(" Also missing: {}.", also.join(", "))
+        };
+        let where_s = match max {
+            Some(m) => format!(
+                "the highest existing sequence is {m} across {} epoch(s), so any value \
+                 above {m} places this after everything — {} is the next integer, and \
+                 leaving a gap (sequences are commonly spaced by 10) keeps room for a \
+                 re-plan or a release cut",
+                epochs.len(),
+                m + 1
+            ),
+            None => {
+                "there are no epochs yet, so any integer works (1, or 10 to leave room)".to_string()
+            }
+        };
+        return Err(McpError::invalid_params(
+            format!(
+                "`sequence` is required to CREATE DesignEpoch '{}': {where_s}. It is not \
+                 auto-assigned because a sequence is a position claim only you can \
+                 make.{also_s}",
+                req.id
+            ),
+            None,
+        ));
+    }
+    Ok(())
+}
+
 #[tool_router(router = temporal_tools_router, vis = "pub")]
 impl ReflowService {
     #[tool(
@@ -298,55 +364,7 @@ impl ReflowService {
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await?;
         let ty = reflow2_core::nodes::node::DESIGN_EPOCH;
-        // Alex (2026-09-05): `sequence` was required and the refusal could not
-        // say what value would work, so the caller scanned epochs to learn it.
-        // The generic required-field helper cannot know an epoch hint, so the
-        // hint is computed HERE and names the current maximum. NOT auto-
-        // assigned: a sequence is a position claim, and sequences are spaced
-        // on purpose (a planned epoch once moved 360 -> 365 to make room for a
-        // release cut), so max+1 would quietly pack and position.
-        // dec:idea-add-epoch-assigns-the-next-sequence-or-names-it.
-        if req.sequence.is_none() && g.get_node(ty, &req.id).map_err(dyno_err)?.is_none() {
-            let epochs = g.scan_nodes(ty).map_err(dyno_err)?;
-            let max = epochs
-                .iter()
-                .filter_map(|n| n.properties.get("sequence").and_then(|v| v.as_i64()))
-                .max();
-            let also: Vec<&str> = [
-                ("name", req.name.is_none()),
-                ("epoch_type", req.epoch_type.is_none()),
-            ]
-            .iter()
-            .filter(|(_, missing)| *missing)
-            .map(|(f, _)| *f)
-            .collect();
-            let also_s = if also.is_empty() {
-                String::new()
-            } else {
-                format!(" Also missing: {}.", also.join(", "))
-            };
-            let where_s = match max {
-                Some(m) => format!(
-                    "the highest existing sequence is {m} across {} epoch(s), so any value \
-                     above {m} places this after everything — {} is the next integer, and \
-                     leaving a gap (sequences are commonly spaced by 10) keeps room for a \
-                     re-plan or a release cut",
-                    epochs.len(),
-                    m + 1
-                ),
-                None => "there are no epochs yet, so any integer works (1, or 10 to leave room)"
-                    .to_string(),
-            };
-            return Err(McpError::invalid_params(
-                format!(
-                    "`sequence` is required to CREATE DesignEpoch '{}': {where_s}. It is not \
-                     auto-assigned because a sequence is a position claim only you can \
-                     make.{also_s}",
-                    req.id
-                ),
-                None,
-            ));
-        }
+        refuse_without_a_sequence_hint(&g, &req)?;
         let mut __rf = crate::service::RequiredFields::new(&g, ty, &req.id)?;
         let epoch_type_s = __rf.str("epoch_type", req.epoch_type);
         let name = __rf.str("name", req.name);
@@ -383,6 +401,7 @@ impl ReflowService {
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await?;
         let ty = reflow2_core::nodes::node::DESIGN_EPOCH;
+        refuse_without_a_sequence_hint(&g, &req)?;
         let mut __rf = crate::service::RequiredFields::new(&g, ty, &req.id)?;
         let epoch_type_s = __rf.str("epoch_type", req.epoch_type);
         let name = __rf.str("name", req.name);

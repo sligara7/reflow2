@@ -70,6 +70,9 @@ fn decision(id: &str, decision: &str, rationale: Option<&str>) -> DecisionReq {
         distinct_from: None,
         related_to: None,
         no_relation_note: None,
+        status: None,
+        approver: None,
+        acted_at: None,
     }
 }
 

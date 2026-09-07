@@ -8,6 +8,22 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
     "properties": {
+      "acted_at": {
+        "default": null,
+        "description": "When the approver acted, as a plain date. Stored on the approver edge.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "approver": {
+        "default": null,
+        "description": "The Contributor whose word moves it — draws `AUTHORED_BY role=approver`\nin the same call. Optional on this setter because it has consumers, but\nan `accepted` written without one is REPORTED in the reply as carrying\nnobody's name: that is exactly the write the intent-authority gate\nfails a build on. An id naming no Contributor is REFUSED.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
       "decision_id": {
         "type": "string"
       },

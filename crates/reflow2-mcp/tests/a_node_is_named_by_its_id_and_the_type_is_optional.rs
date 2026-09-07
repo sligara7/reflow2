@@ -29,6 +29,9 @@ async fn seeded() -> ReflowService {
         name: Some("Fast".into()),
         statement: Some("Answer in under a second.".into()),
         distinct_from: None,
+        status: None,
+        approver: None,
+        acted_at: None,
     })));
     j!(s.add_verification(Parameters(
         serde_json::from_value(serde_json::json!({

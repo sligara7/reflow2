@@ -61,6 +61,11 @@ at a time, and take the first answer as the answer.
 a suggested vocabulary (`tech_stack` / `convention` / `material` / `methodology` / `standard` /
 `style`).
 
+**Whichever way they answer, pass `approver` — the Contributor whose word it is — in the same
+call as `enforced`.** A rule's power is settled intent, and `add_design_rule` refuses a stated
+`enforced` that carries nobody's name; the approver is written as the `AUTHORED_BY role=approver`
+edge the intent-authority gate reads.
+
 - **They said stop the build** → `enforced: true`, stated explicitly rather than inherited. Then
   tell them plainly that it now owes a detector, and what that means: `unverified_enforced_rule`
   will ask, at severity 0.6, what checks it — and it stays asked until a **passing** Verification
