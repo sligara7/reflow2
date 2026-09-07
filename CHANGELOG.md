@@ -31,6 +31,22 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Fixed
+
+- **A finding another record refuted no longer reads as current.** Closure had two available
+  answers and the two surfaces each read a different one: the gap detector reads the `INVALIDATES`
+  edge, while the age computation read `valid_to` alone — and an invalidation sets no `valid_to`.
+  So a refuted finding was closed for the detector and *current* for every read surface, which is
+  how an agent met one during a brainstorm, saw no marker at all, and re-derived a conclusion the
+  design had held for a week.
+
+  `ClaimAge` gains `superseded_by`, filled by `DesignGraph::claim_age_of` — one graph-aware
+  computation that both `search_design` and `topic_report` go through. Kept **distinct** from
+  `expired`: a claim that ran out on its own terms is not a claim something refuted. It carries the
+  invalidating record's id rather than a boolean, because a reader told their source was overturned
+  needs to be able to read what overturned it.
+  `fact:closure-was-one-question-with-two-answers-so-a-refuted-finding-read-as-current-on-the-surface-a-person-meets-first`.
+
 ## [0.52.0] — 2026-09-07
 
 ### Added

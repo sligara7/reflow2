@@ -40,6 +40,40 @@ pub struct SearchHit {
     pub age: crate::dates::ClaimAge,
 }
 
+impl DesignGraph {
+    /// A node's [`ClaimAge`], INCLUDING whether another record overturned it.
+    ///
+    /// The property-only [`crate::dates::claim_age`] cannot answer the second
+    /// half: supersession lives on an `INVALIDATES` edge, not in the property
+    /// bag. Every read surface that reports an age must come through here, or
+    /// it will report a refuted finding as current — which is exactly what
+    /// `search_design` did until 2026-09-07, while the gap detector reading the
+    /// same edge had correctly fallen silent.
+    ///
+    /// Costs one incoming-edge lookup per node. That is why the clock is still
+    /// read once per result by the caller rather than once per node.
+    pub fn claim_age_of(
+        &self,
+        node_id: &str,
+        props: &std::collections::HashMap<String, crate::foundation::core::Value>,
+        today: &str,
+    ) -> Result<crate::dates::ClaimAge, DynoError> {
+        let mut age = crate::dates::claim_age(props, today);
+        // The FIRST invalidator, by id, so the answer is stable across runs
+        // rather than dependent on edge ordering. More than one is legitimate
+        // — two records can each overturn a finding — and naming one of them
+        // is enough to lead the reader to the rest.
+        let mut invalidators: Vec<String> = self
+            .incoming(node_id, Some(crate::nodes::edge::INVALIDATES))?
+            .into_iter()
+            .map(|e| e.from_id)
+            .collect();
+        invalidators.sort();
+        age.superseded_by = invalidators.into_iter().next();
+        Ok(age)
+    }
+}
+
 /// A search result that owns up to what it could not do: hits the index
 /// returned whose node no longer exists in the store are reported, never
 /// silently dropped — a non-empty `stale` list means the index has drifted
@@ -84,7 +118,7 @@ impl DesignGraph {
                         .and_then(crate::foundation::core::Value::as_str)
                         .unwrap_or_default()
                         .to_string(),
-                    age: crate::dates::claim_age(&node.properties, &today),
+                    age: self.claim_age_of(&h.node_id, &node.properties, &today)?,
                     node_id: h.node_id,
                     node_type: h.node_type,
                     score: h.score,
