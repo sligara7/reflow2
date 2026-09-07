@@ -103,7 +103,7 @@ async fn seeded() -> ReflowService {
         child_type: Some("Requirement".into()),
         child_id: "req:physics".into()
     })));
-    j!(s.satisfies(Parameters(EdgePairReq {
+    j!(s.satisfies(Parameters(SatisfiesReq {
         from_id: "cap:flight".into(),
         to_id: "req:physics".into()
     })));
@@ -212,7 +212,7 @@ async fn genesis_bootstraps_then_detect_hands_off() {
         status: None,
         distinct_from: None,
     })));
-    j!(s.satisfies(Parameters(EdgePairReq {
+    j!(s.satisfies(Parameters(SatisfiesReq {
         from_id: "cap:flight".into(),
         to_id: "req:physics".into()
     })));
@@ -454,11 +454,11 @@ async fn interface_tools_pair_both_sides_of_a_contract() {
         id: "ifc:state".into(),
         name: Some("Game state feed".into()),
     })));
-    j!(s.provides(Parameters(EdgePairReq {
+    j!(s.provides(Parameters(ProvidesReq {
         from_id: "cmp:physics".into(),
         to_id: "ifc:state".into()
     })));
-    j!(s.consumes(Parameters(EdgePairReq {
+    j!(s.consumes(Parameters(ConsumesReq {
         from_id: "cmp:ui".into(),
         to_id: "ifc:state".into()
     })));
@@ -496,7 +496,7 @@ async fn a_contract_with_no_provider_surfaces_as_a_gap_over_the_surface() {
         id: "ifc:state".into(),
         name: Some("Game state feed".into()),
     })));
-    j!(s.consumes(Parameters(EdgePairReq {
+    j!(s.consumes(Parameters(ConsumesReq {
         from_id: "cmp:physics".into(),
         to_id: "ifc:state".into()
     })));
@@ -712,7 +712,7 @@ async fn the_surface_can_say_that_nothing_moved() {
 #[tokio::test]
 async fn the_write_side_can_answer_what_detect_asks_for() {
     let s = seeded().await;
-    j!(s.allocate(Parameters(EdgePairReq {
+    j!(s.allocate(Parameters(AllocateReq {
         from_id: "cap:flight".into(),
         to_id: "cmp:physics".into()
     })));
@@ -1110,11 +1110,11 @@ async fn a_well_formed_hierarchy_reports_no_issues() {
             distinct_from: None,
         })));
     }
-    j!(s.contain_component(Parameters(EdgePairReq {
+    j!(s.contain_component(Parameters(ContainComponentReq {
         from_id: "cmp:sys".into(),
         to_id: "cmp:sub".into(),
     })));
-    j!(s.contain_component(Parameters(EdgePairReq {
+    j!(s.contain_component(Parameters(ContainComponentReq {
         from_id: "cmp:sub".into(),
         to_id: "cmp:leaf".into(),
     })));
@@ -1139,7 +1139,7 @@ async fn skipping_a_level_is_reported() {
             distinct_from: None,
         })));
     }
-    j!(s.contain_component(Parameters(EdgePairReq {
+    j!(s.contain_component(Parameters(ContainComponentReq {
         from_id: "cmp:sys".into(),
         to_id: "cmp:leaf".into(),
     })));
@@ -1169,7 +1169,7 @@ async fn nesting_two_defaulted_components_is_a_mismatch_not_silence() {
             distinct_from: None,
         })));
     }
-    j!(s.contain_component(Parameters(EdgePairReq {
+    j!(s.contain_component(Parameters(ContainComponentReq {
         from_id: "cmp:a".into(),
         to_id: "cmp:b".into(),
     })));

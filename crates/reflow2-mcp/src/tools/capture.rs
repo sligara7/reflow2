@@ -1467,7 +1467,7 @@ impl ReflowService {
     )]
     pub async fn contain_component(
         &self,
-        Parameters(req): Parameters<EdgePairReq>,
+        Parameters(req): Parameters<ContainComponentReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await?;
         ok_json(EdgeDto::from(
@@ -1512,7 +1512,7 @@ impl ReflowService {
     )]
     pub async fn satisfies(
         &self,
-        Parameters(req): Parameters<EdgePairReq>,
+        Parameters(req): Parameters<SatisfiesReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await?;
         ok_json(EdgeDto::from(
@@ -1536,7 +1536,7 @@ impl ReflowService {
     )]
     pub async fn decomposes(
         &self,
-        Parameters(req): Parameters<EdgePairReq>,
+        Parameters(req): Parameters<DecomposesReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await?;
         ok_json(EdgeDto::from(
@@ -1580,7 +1580,7 @@ impl ReflowService {
     )]
     pub async fn depends_on(
         &self,
-        Parameters(req): Parameters<EdgePairReq>,
+        Parameters(req): Parameters<DependsOnReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await?;
         ok_json(EdgeDto::from(
@@ -1594,7 +1594,7 @@ impl ReflowService {
     )]
     pub async fn allocate(
         &self,
-        Parameters(req): Parameters<EdgePairReq>,
+        Parameters(req): Parameters<AllocateReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await?;
         ok_json(EdgeDto::from(
@@ -1720,7 +1720,7 @@ impl ReflowService {
     )]
     pub async fn provides(
         &self,
-        Parameters(req): Parameters<EdgePairReq>,
+        Parameters(req): Parameters<ProvidesReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await?;
         ok_json(EdgeDto::from(
@@ -1738,7 +1738,7 @@ impl ReflowService {
     )]
     pub async fn consumes(
         &self,
-        Parameters(req): Parameters<EdgePairReq>,
+        Parameters(req): Parameters<ConsumesReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await?;
         ok_json(EdgeDto::from(

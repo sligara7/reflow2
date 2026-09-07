@@ -1466,13 +1466,17 @@ pub struct ComponentReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct ContainsReq {
+    #[serde(alias = "from_id")]
+    #[serde(alias = "node_id")]
     pub project_id: String,
     /// Child node type (e.g. `Requirement`, `Capability`, `Component`).
     /// Optional since 2026-09-06: resolved from the id when omitted (the id
     /// prefix names the type); an id held by more than one type is REFUSED, never
     /// guessed — pass it then.
     #[serde(default)]
+    #[serde(alias = "to_type")]
     pub child_type: Option<String>,
+    #[serde(alias = "to_id")]
     pub child_id: String,
 }
 
@@ -1483,13 +1487,115 @@ pub struct EdgePairReq {
     pub to_id: String,
 }
 
+/// Allocate a Capability to a Component (ALLOCATED_TO). `from_id` / `to_id` is the taught spelling; the role names
+/// (`capability_id` / `component_id`) and `node_id` for the from end are accepted as aliases
+/// (dec:idea-one-way-to-name-which-node-across-the-tool-surface), so the key
+/// search_design hands back, or the name the last tool used, is not refused.
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct AllocateReq {
+    #[serde(alias = "capability_id")]
+    #[serde(alias = "node_id")]
+    pub from_id: String,
+    #[serde(alias = "component_id")]
+    pub to_id: String,
+}
+
+/// Link a Capability to the Requirement it SATISFIES. `from_id` / `to_id` is the taught spelling; the role names
+/// (`capability_id` / `requirement_id`) and `node_id` for the from end are accepted as aliases
+/// (dec:idea-one-way-to-name-which-node-across-the-tool-surface), so the key
+/// search_design hands back, or the name the last tool used, is not refused.
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct SatisfiesReq {
+    #[serde(alias = "capability_id")]
+    #[serde(alias = "node_id")]
+    pub from_id: String,
+    #[serde(alias = "requirement_id")]
+    pub to_id: String,
+}
+
+/// A Component PROVIDES an Interface. `from_id` / `to_id` is the taught spelling; the role names
+/// (`component_id` / `interface_id`) and `node_id` for the from end are accepted as aliases
+/// (dec:idea-one-way-to-name-which-node-across-the-tool-surface), so the key
+/// search_design hands back, or the name the last tool used, is not refused.
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct ProvidesReq {
+    #[serde(alias = "component_id")]
+    #[serde(alias = "node_id")]
+    pub from_id: String,
+    #[serde(alias = "interface_id")]
+    pub to_id: String,
+}
+
+/// A Component CONSUMES an Interface. `from_id` / `to_id` is the taught spelling; the role names
+/// (`component_id` / `interface_id`) and `node_id` for the from end are accepted as aliases
+/// (dec:idea-one-way-to-name-which-node-across-the-tool-surface), so the key
+/// search_design hands back, or the name the last tool used, is not refused.
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct ConsumesReq {
+    #[serde(alias = "component_id")]
+    #[serde(alias = "node_id")]
+    pub from_id: String,
+    #[serde(alias = "interface_id")]
+    pub to_id: String,
+}
+
+/// A parent Requirement DECOMPOSES into a child. `from_id` / `to_id` is the taught spelling; the role names
+/// (`parent_id` / `child_id`) and `node_id` for the from end are accepted as aliases
+/// (dec:idea-one-way-to-name-which-node-across-the-tool-surface), so the key
+/// search_design hands back, or the name the last tool used, is not refused.
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct DecomposesReq {
+    #[serde(alias = "parent_id")]
+    #[serde(alias = "node_id")]
+    pub from_id: String,
+    #[serde(alias = "child_id")]
+    pub to_id: String,
+}
+
+/// A dependent Component DEPENDS_ON its dependency. `from_id` / `to_id` is the taught spelling; the role names
+/// (`dependent_id` / `dependency_id`) and `node_id` for the from end are accepted as aliases
+/// (dec:idea-one-way-to-name-which-node-across-the-tool-surface), so the key
+/// search_design hands back, or the name the last tool used, is not refused.
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct DependsOnReq {
+    #[serde(alias = "dependent_id")]
+    #[serde(alias = "node_id")]
+    pub from_id: String,
+    #[serde(alias = "dependency_id")]
+    pub to_id: String,
+}
+
+/// A parent Component CONTAINS a child. `from_id` / `to_id` is the taught spelling; the role names
+/// (`parent_id` / `child_id`) and `node_id` for the from end are accepted as aliases
+/// (dec:idea-one-way-to-name-which-node-across-the-tool-surface), so the key
+/// search_design hands back, or the name the last tool used, is not refused.
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct ContainComponentReq {
+    #[serde(alias = "parent_id")]
+    #[serde(alias = "node_id")]
+    pub from_id: String,
+    #[serde(alias = "child_id")]
+    pub to_id: String,
+}
+
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct MoveComponentReq {
     /// The Component to move.
+    #[serde(alias = "from_id")]
+    #[serde(alias = "node_id")]
     pub child_id: String,
     /// The Component it should be contained by afterwards. Every OTHER parent
     /// it currently has is detached, and the reply names them.
+    #[serde(alias = "to_id")]
+    #[serde(alias = "parent_id")]
     pub new_parent_id: String,
 }
 
@@ -1604,13 +1710,17 @@ pub struct AddArtifactReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct RealizesReq {
+    #[serde(alias = "from_id")]
+    #[serde(alias = "node_id")]
     pub artifact_id: String,
     /// Node type the artifact realizes (e.g. `Capability`, `Component`).
     /// Optional since 2026-09-06: resolved from the id when omitted (the id
     /// prefix names the type); an id held by more than one type is REFUSED, never
     /// guessed — pass it then.
     #[serde(default)]
+    #[serde(alias = "to_type")]
     pub target_type: Option<String>,
+    #[serde(alias = "to_id")]
     pub target_id: String,
     /// `stub` / `partial` / `complete` — how much of the thing EXISTS.
     #[serde(default)]
@@ -1630,13 +1740,17 @@ pub struct RealizesReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct DocumentsReq {
+    #[serde(alias = "from_id")]
+    #[serde(alias = "node_id")]
     pub artifact_id: String,
     /// Node type the artifact describes (e.g. `Component`, `Interface`, `Project`).
     /// Optional since 2026-09-06: resolved from the id when omitted (the id
     /// prefix names the type); an id held by more than one type is REFUSED, never
     /// guessed — pass it then.
     #[serde(default)]
+    #[serde(alias = "to_type")]
     pub target_type: Option<String>,
+    #[serde(alias = "to_id")]
     pub target_id: String,
     /// What kind of document: `design_doc` / `adr` / `readme` / `runbook` /
     /// `agent_instructions` / `dataflow` / `sequence_diagram` / `arch_diagram`.
@@ -1648,6 +1762,8 @@ pub struct DocumentsReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct LinkArtifactReq {
+    #[serde(alias = "from_id")]
+    #[serde(alias = "node_id")]
     pub artifact_id: String,
     pub name: String,
     #[serde(default)]
@@ -1658,7 +1774,9 @@ pub struct LinkArtifactReq {
     /// prefix names the type); an id held by more than one type is REFUSED, never
     /// guessed — pass it then.
     #[serde(default)]
+    #[serde(alias = "to_type")]
     pub target_type: Option<String>,
+    #[serde(alias = "to_id")]
     pub target_id: String,
     #[serde(default)]
     pub completeness: Option<String>,
@@ -1770,26 +1888,34 @@ pub struct VerificationKindReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct VerifiesReq {
+    #[serde(alias = "from_id")]
+    #[serde(alias = "node_id")]
     pub verification_id: String,
     /// Node type being verified (e.g. `Capability`, `Artifact`, `Component`).
     /// Optional since 2026-09-06: resolved from the id when omitted (the id
     /// prefix names the type); an id held by more than one type is REFUSED, never
     /// guessed — pass it then.
     #[serde(default)]
+    #[serde(alias = "to_type")]
     pub target_type: Option<String>,
+    #[serde(alias = "to_id")]
     pub target_id: String,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct EvidenceScopeReq {
+    #[serde(alias = "from_id")]
+    #[serde(alias = "node_id")]
     pub verification_id: String,
     /// Node type this check verifies (e.g. `Capability`).
     /// Optional since 2026-09-06: resolved from the id when omitted (the id
     /// prefix names the type); an id held by more than one type is REFUSED, never
     /// guessed — pass it then.
     #[serde(default)]
+    #[serde(alias = "to_type")]
     pub target_type: Option<String>,
+    #[serde(alias = "to_id")]
     pub target_id: String,
     /// Parameter names the check HELD FIXED for this claim. Passing an empty
     /// list clears them, which is how a scope recorded in error is withdrawn.
@@ -1809,7 +1935,9 @@ pub struct CalibratedAgainstReq {
     /// prefix names the type); an id held by more than one type is REFUSED, never
     /// guessed — pass it then.
     #[serde(default)]
+    #[serde(alias = "node_type")]
     pub from_type: Option<String>,
+    #[serde(alias = "node_id")]
     pub from_id: String,
     /// `Artifact` (a published anchor, a dataset, a measurement record) or
     /// `Verification` (the check whose output the value was fitted to).
@@ -1817,7 +1945,9 @@ pub struct CalibratedAgainstReq {
     /// prefix names the type); an id held by more than one type is REFUSED, never
     /// guessed — pass it then.
     #[serde(default)]
+    #[serde(alias = "to_type")]
     pub evidence_type: Option<String>,
+    #[serde(alias = "to_id")]
     pub evidence_id: String,
     /// What was fitted, and how — the part a later reader needs in order to
     /// judge whether the fit still stands.
@@ -1835,7 +1965,9 @@ pub struct InvalidatesReq {
     /// prefix names the type); an id held by more than one type is REFUSED, never
     /// guessed — pass it then.
     #[serde(default)]
+    #[serde(alias = "node_type")]
     pub from_type: Option<String>,
+    #[serde(alias = "node_id")]
     pub from_id: String,
     /// Node type of the FINDING now stale — `Verification` (a run that found
     /// it) or `TemporalFact` (a measurement that recorded it).
@@ -1843,7 +1975,9 @@ pub struct InvalidatesReq {
     /// prefix names the type); an id held by more than one type is REFUSED, never
     /// guessed — pass it then.
     #[serde(default)]
+    #[serde(alias = "to_type")]
     pub finding_type: Option<String>,
+    #[serde(alias = "to_id")]
     pub finding_id: String,
     /// WHY this record invalidates that finding — the sentence a later reader
     /// needs to judge whether the claim still stands. Skipping it leaves an
@@ -1915,13 +2049,17 @@ pub struct ResourceReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct ReleaseIncludesReq {
+    #[serde(alias = "from_id")]
+    #[serde(alias = "node_id")]
     pub release_id: String,
     /// `Artifact` or `Component`.
     /// Optional since 2026-09-06: resolved from the id when omitted (the id
     /// prefix names the type); an id held by more than one type is REFUSED, never
     /// guessed — pass it then.
     #[serde(default)]
+    #[serde(alias = "to_type")]
     pub target_type: Option<String>,
+    #[serde(alias = "to_id")]
     pub target_id: String,
     /// The artifact's content hash AS SHIPPED in this release — frozen at cut
     /// time, so later baseline moves do not rewrite what a past release
@@ -2124,14 +2262,20 @@ pub struct GateOnReq {
     /// prefix names the type); an id held by more than one type is REFUSED, never
     /// guessed — pass it then.
     #[serde(default)]
+    #[serde(alias = "from_type")]
+    #[serde(alias = "node_type")]
     pub subject_type: Option<String>,
+    #[serde(alias = "from_id")]
+    #[serde(alias = "node_id")]
     pub subject_id: String,
     /// The enabling technology it waits on.
     /// Optional since 2026-09-06: resolved from the id when omitted (the id
     /// prefix names the type); an id held by more than one type is REFUSED, never
     /// guessed — pass it then.
     #[serde(default)]
+    #[serde(alias = "to_type")]
     pub target_type: Option<String>,
+    #[serde(alias = "to_id")]
     pub target_id: String,
     /// `TRL` or `MRL`.
     pub kind: String,
@@ -2209,7 +2353,10 @@ pub struct AddFlowReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct PartOfFlowReq {
+    #[serde(alias = "from_id")]
+    #[serde(alias = "node_id")]
     pub capability_id: String,
+    #[serde(alias = "to_id")]
     pub flow_id: String,
     /// Position of this capability within the flow. Steps without one are
     /// listed after the ordered ones, and the flow report says so.
@@ -2320,6 +2467,8 @@ pub struct AddConstraintReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct ConstrainsReq {
+    #[serde(alias = "from_id")]
+    #[serde(alias = "node_id")]
     pub constraint_id: String,
     /// The spender's node type — anything can spend (Component mass,
     /// Interface latency, Resource cost).
@@ -2327,7 +2476,9 @@ pub struct ConstrainsReq {
     /// prefix names the type); an id held by more than one type is REFUSED, never
     /// guessed — pass it then.
     #[serde(default)]
+    #[serde(alias = "to_type")]
     pub target_type: Option<String>,
+    #[serde(alias = "to_id")]
     pub target_id: String,
     /// This target's spend, in the Constraint's quantity unit. Omitted =
     /// participates but unstated; budget_report reports it, never zeroes it.
@@ -2414,8 +2565,11 @@ pub struct PinAtEpochReq {
     /// prefix names the type); an id held by more than one type is REFUSED, never
     /// guessed — pass it then.
     #[serde(default)]
+    #[serde(alias = "from_type")]
     pub node_type: Option<String>,
+    #[serde(alias = "from_id")]
     pub node_id: String,
+    #[serde(alias = "to_id")]
     pub epoch_id: String,
 }
 
@@ -2433,14 +2587,20 @@ pub struct ScheduleForReq {
     /// prefix names the type); an id held by more than one type is REFUSED, never
     /// guessed — pass it then.
     #[serde(default)]
+    #[serde(alias = "from_type")]
+    #[serde(alias = "node_type")]
     pub item_type: Option<String>,
+    #[serde(alias = "from_id")]
+    #[serde(alias = "node_id")]
     pub item_id: String,
     /// `DesignEpoch` (time axis) or `Release` (capability-increment axis).
     /// Optional since 2026-09-06: resolved from the id when omitted (the id
     /// prefix names the type); an id held by more than one type is REFUSED, never
     /// guessed — pass it then.
     #[serde(default)]
+    #[serde(alias = "to_type")]
     pub target_type: Option<String>,
+    #[serde(alias = "to_id")]
     pub target_id: String,
     /// `expected` (a plan, the default) or `required` (an obligation whose
     /// miss at arrival is a violation). There is no `achieved`.
@@ -2478,7 +2638,10 @@ pub struct ArrivalDeltaReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct DeployToReq {
+    #[serde(alias = "from_id")]
+    #[serde(alias = "node_id")]
     pub release_id: String,
+    #[serde(alias = "to_id")]
     pub environment_id: String,
     /// `planned` / `active` / `rolled_back`.
     #[serde(default)]
@@ -2494,8 +2657,11 @@ pub struct RequireResourceReq {
     /// prefix names the type); an id held by more than one type is REFUSED, never
     /// guessed — pass it then.
     #[serde(default)]
+    #[serde(alias = "node_type")]
     pub from_type: Option<String>,
+    #[serde(alias = "node_id")]
     pub from_id: String,
+    #[serde(alias = "to_id")]
     pub resource_id: String,
     /// `optional` / `recommended` / `required`.
     #[serde(default)]
@@ -2592,10 +2758,13 @@ pub struct AnswersReq {
     /// prefix names the type); an id held by more than one type is REFUSED, never
     /// guessed — pass it then.
     #[serde(default)]
+    #[serde(alias = "node_type")]
     pub from_type: Option<String>,
+    #[serde(alias = "node_id")]
     pub from_id: String,
     /// The Question this record answered. Take it from `open_questions`'
     /// `question_id`.
+    #[serde(alias = "to_id")]
     pub question_id: String,
     /// HOW this record answers the question — the sentence a later reader
     /// needs when the answer is not obvious from the record alone.
@@ -2610,7 +2779,9 @@ pub struct GovernedByReq {
     /// prefix names the type); an id held by more than one type is REFUSED, never
     /// guessed — pass it then.
     #[serde(default)]
+    #[serde(alias = "node_type")]
     pub from_type: Option<String>,
+    #[serde(alias = "node_id")]
     pub from_id: String,
     /// Usually `Decision` or `DesignRule`.
     /// Optional since 2026-09-06: resolved from the id when omitted (the id
@@ -2680,9 +2851,12 @@ pub struct AuthoredByReq {
     /// prefix names the type); an id held by more than one type is REFUSED, never
     /// guessed — pass it then.
     #[serde(default)]
+    #[serde(alias = "node_type")]
     pub from_type: Option<String>,
+    #[serde(alias = "node_id")]
     pub from_id: String,
     /// The `Contributor` whose word this node is.
+    #[serde(alias = "to_id")]
     pub contributor_id: String,
     /// `author` (default) / `reviewer` / `approver`.
     #[serde(default)]
@@ -2701,9 +2875,12 @@ pub struct OwnedByReq {
     /// prefix names the type); an id held by more than one type is REFUSED, never
     /// guessed — pass it then.
     #[serde(default)]
+    #[serde(alias = "node_type")]
     pub from_type: Option<String>,
+    #[serde(alias = "node_id")]
     pub from_id: String,
     /// The `Contributor` whose area this is.
+    #[serde(alias = "to_id")]
     pub contributor_id: String,
     /// What is actually owned, and any bound on it — the sentence a colleague
     /// needs when they find your name on something. "The ingest half, not the
@@ -3339,9 +3516,12 @@ pub struct ComposeReq {
 #[serde(deny_unknown_fields)]
 pub struct PerformedInReq {
     /// The check that was carried out.
+    #[serde(alias = "from_id")]
+    #[serde(alias = "node_id")]
     pub verification_id: String,
     /// The Environment it was carried out in. Its `env_type` is what says
     /// whether that place was a simulation.
+    #[serde(alias = "to_id")]
     pub environment_id: String,
 }
 
@@ -3889,8 +4069,11 @@ pub struct SetQualityTargetReq {
 #[serde(deny_unknown_fields)]
 pub struct RegisterAlternativeReq {
     /// The proposed Decision this alternative is a fork of.
+    #[serde(alias = "from_id")]
+    #[serde(alias = "node_id")]
     pub decision_id: String,
     /// Id for the alternative pointer (an Artifact), e.g. `alt:laser`.
+    #[serde(alias = "to_id")]
     pub artifact_id: String,
     pub name: String,
     /// Where the alternative's design export lives (branch-by-file).

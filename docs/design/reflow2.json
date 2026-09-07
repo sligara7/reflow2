@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:0a59286268396d396346e8c59d691df5e231393dd779beb12884bf631c598f47",
+  "content_hash": "sha256:301f83d0736188641a128851008c85ff2a274b855ef788ba425351330eef2db5",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -1218,6 +1218,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-relation-tool-accepts-the-other-familys-names",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:service"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -10425,6 +10433,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:dec:idea-one-way-to-name-which-node-across-the-tool-surface",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:dec:idea-root-cause-runs-at-the-moment-a-cause-is-about-to-be-written-not-on-every-failure",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
@@ -13240,6 +13254,15 @@
       "properties": {
         "acted_at": "2026-08-24",
         "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-one-way-to-name-which-node-across-the-tool-surface",
+      "properties": {
+        "acted_at": "2026-09-06",
+        "role": "approver"
       },
       "to_id": "who:ajs"
     },
@@ -25276,6 +25299,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-f64b7bd8793a1b7c",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-the-commonest-edge-has-a-typed-helper"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-f6e8e9dc8360b03b",
       "properties": {
         "accepted_baseline": true,
@@ -30512,6 +30544,51 @@
         "action": "modified"
       },
       "to_id": "art:wall-check-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-relation-tool-accepts-the-other-familys-names",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:kit-instructions"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-relation-tool-accepts-the-other-familys-names",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-relation-tool-accepts-the-other-familys-names",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-relation-tool-accepts-the-other-familys-names",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:a-relation-tool-accepts-the-other-familys-names"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-relation-tool-accepts-the-other-familys-names",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "ver:every-relation-tool-accepts-both-families-and-refuses-a-typo"
     },
     {
       "edge_type": "CHANGED",
@@ -45240,6 +45317,14 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:a-relation-tool-accepts-the-other-familys-names",
+      "properties": {
+        "note": "The ruling this implements: option A with a stated convention, option C folded in, B rejected, D left open."
+      },
+      "to_id": "dec:idea-one-way-to-name-which-node-across-the-tool-surface"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:a-release-that-shipped-nothing-is-reported",
       "properties": {},
       "to_id": "dec:an-empty-manifest-on-a-shipped-release-stops-the-build"
@@ -52669,6 +52754,12 @@
       "from_id": "dec:idea-is-a-replayed-gap-an-input-or-an-echo",
       "properties": {},
       "to_id": "snap:epoch:preserved-on-write:dec:idea-is-a-replayed-gap-an-input-or-an-echo"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:idea-one-way-to-name-which-node-across-the-tool-surface",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:dec:idea-one-way-to-name-which-node-across-the-tool-surface"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -136130,6 +136221,15 @@
       "edge_type": "REALIZES",
       "from_id": "art:service",
       "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-relation-tool-accepts-the-other-familys-names"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:service",
+      "properties": {
         "completeness": "partial",
         "conformance": "verified"
       },
@@ -141300,6 +141400,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:every-relation-tool-accepts-both-families-and-refuses-a-typo",
+      "properties": {},
+      "to_id": "cap:a-relation-tool-accepts-the-other-familys-names"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:every-served-report-is-reachable",
       "properties": {},
       "to_id": "cap:every-served-report-is-reachable-from-an-instruction"
@@ -145383,7 +145489,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:dc976b3a70dfae5fc0ca6fcee2ed77f7498db62408808ce2449b2eb894e27a51",
+        "checksum": "sha256:6ce194d4464eeb313b861daf1d9b170c0817c493f983b073eb5cdf53a6aeb171",
         "granularity": "atomic",
         "location": "getting-started/AGENTS.md",
         "name": "getting-started/AGENTS.md",
@@ -146401,7 +146507,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c21d3c5402d445511a1d04a7446998b3a4e3ec408895183b2067973290fd4b28",
+        "checksum": "sha256:7ba8fe92353b45a2ec16c4fe5f7ca1522167cfc46e9eb7c788dbc7304f2dd019",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -147152,7 +147258,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:dcaa41841abec920578f4954c54f6bc256ba4f2a3e6177a8a315958ee133e941",
+        "checksum": "sha256:ad464c5713ee04916c00e094d82bfd2e0a605cfd284b146688690c869909997b",
         "location": "crates/reflow2-mcp/tests/the_commonest_edge_has_a_typed_helper.rs",
         "name": "the_commonest_edge_has_a_typed_helper.rs",
         "status": "realized"
@@ -147213,7 +147319,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:cfafb7726003b0ef5c141af84d469d703cf81052f47220bb32f2d0a0968c3753",
+        "checksum": "sha256:238aad1640a165e977b772ecd5ced4b3aba2770df7bbb947b4a3f5ccbdccc98f",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
         "name": "crates/reflow2-mcp/src/tools/capture.rs",
@@ -147880,6 +147986,16 @@
         "provenance": "authored",
         "status": "realized",
         "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:a-relation-tool-accepts-the-other-familys-names",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Item 4 of v0.50.0 (dec:idea-one-way-to-name-which-node-across-the-tool-surface, ruled 2026-09-06). One convention, taught once: a relation tool whose ends play different roles names the role end by its role and the other end target_id / target_type; peers use from_id / to_id. Serde aliases on 30 request structs: from_* / to_* accepted on every role-named tool (verifies, realizes, constrains, documents, release_includes, set_evidence_scope, schedule_for, gate_on, link_artifact, deploy_to, performed_in, part_of_flow, register_alternative, contains, pin_at_epoch, move_component, authored_by, owned_by, invalidates, calibrated_against, require_resource, answers); the role names accepted on the from/to tools (capability_id/component_id on allocate, capability_id/requirement_id on satisfies, component_id/interface_id on provides and consumes, parent_id/child_id on decomposes and contain_component, dependent_id/dependency_id on depends_on) — the one shared pair struct split into seven so each can carry its own roles; node_id / node_type accepted for the from end everywhere. The published schema is unchanged (aliases are not advertised, toolsnap goldens byte-identical); deny_unknown_fields still refuses a misspelling; both spellings of one end is refused as a duplicate field. The kit instructions state the convention once.",
+        "name": "Every relation tool accepts the other family's spellings for its ends, and search_design's node_id lands on the next tool",
+        "provenance": "authored",
+        "status": "realized"
       }
     },
     {
@@ -153343,6 +153459,16 @@
       }
     },
     {
+      "node_id": "chg:accept-f64b7bd8793a1b7c",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-09-06",
+        "name": "Two depends_on literals moved from the shared EdgePairReq to DependsOnReq when the pair struct was split per tool for role aliases (chg:every-relation-tool-accepts-the-other-familys-names). The test's claim is unchanged.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-f6e8e9dc8360b03b",
       "node_type": "ChangeEvent",
       "properties": {
@@ -155348,6 +155474,18 @@
         "change_type": "new_feature",
         "name": "Every leaf component points at the file that realizes it — the mapping wall_check reads is completed",
         "subject": "record"
+      }
+    },
+    {
+      "node_id": "chg:every-relation-tool-accepts-the-other-familys-names",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-09-06",
+        "name": "Every relation tool accepts the other family's names for its ends, and the kit states the one convention",
+        "rationale": "dev_storyflow's fleet lost five calls in one workflow to spellings, and diagnosed it themselves: locally sensible, globally inconsistent. Aliases forgive the other family's name without growing the taught surface — the precedent was ContributorReq.id taking contributor_id. Two choices on the record: (1) node_id/node_type accepted for the from end, because the sharpest reported form was search_design handing back a key the next tool refused; (2) the shared pair struct split rather than aliased in place, because component_id is the from end of provides and the to end of allocate, and one struct cannot alias both ways. Option D (get_node's either/or message) is separable and still open.",
+        "subject": "system",
+        "summary": "Item 4 of v0.50.0. Serde aliases on 30 relation request structs: from_*/to_* on the role-named tools, role names on the from/to tools, node_id/node_type for the from end everywhere; the shared EdgePairReq split into seven per-tool structs so each carries its own role names; the seven handlers and twelve test literals moved to them. The kit's AGENTS.md Tools section states the convention once. Published schema unchanged (toolsnap goldens byte-identical). Five table-shaped tests plus the fleet's handoff end to end."
       }
     },
     {
@@ -161964,11 +162102,11 @@
       "node_id": "dec:idea-one-way-to-name-which-node-across-the-tool-surface",
       "node_type": "Decision",
       "properties": {
-        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Measured by the dev_storyflow fleet across three entries on 2026-09-02, growing each time — they reported four spellings, then six, then seven.\n\n| tool | names the node | names the other end |\n| --- | --- | --- |\n| `search_design` (RETURNS) | `node_id` + `node_type` | — |\n| `get_node` | `id` + `node_type` | — |\n| `create_node` | `id` + `node_type` + **`props`** (nested) | — |\n| `review_relations` | `node_id` + `node_type` | `other_id` + `other_type` + `incoming` |\n| `authored_by` | `from_id` + `from_type` | `contributor_id` |\n| `schedule_for` | `item_id` + `item_type` | `target_id` + `target_type` |\n| `set_epoch_status` | `epoch_id` | — |\n| `verifies` | `verification_id` | `target_type` / `target_id` |\n\n⭐ **THE SHARPEST FORM IS NOT THE COUNT, IT IS THE HANDOFF:** *\"`search_design` hands back `node_id`; the tool you reach for next rejects that exact key.\"* And their diagnosis of their own errors is the part worth keeping: *\"Every guess was informed by the tool I had used immediately before, and every one was wrong — which is the signature of an interface that is locally sensible and globally inconsistent rather than of a careless caller.\"* Five failed calls before any of a five-idea brainstorm landed, none of them conceptual.\n\n`set_epoch_status` taking `epoch_id` while `add_epoch` — creating the same node — takes `id` is their single sharpest case.\n\n**THE PATTERN FOR FIXING IT ALREADY EXISTS IN THIS DESIGN.** `chg:accept-1ea01d3ea7e8701a`: *\"ContributorReq.id gains a serde alias for contributor_id. The surface still teaches one name and `deny_unknown_fields` is unchanged; no design meaning moved.\"* So a precedent settled the shape — accept the alias, teach one name — for exactly one field, and nothing generalised it.\n\nOPTIONS, none preferred:\n· **A — Serde aliases everywhere, following the existing precedent.** Accept `node_id`/`id`/`from_id` wherever a node is named; keep teaching ONE name so the surface does not grow. Backwards compatible, no design meaning moves, and `deny_unknown_fields` still catches genuine typos. ⚠️ Aliases hide the inconsistency rather than removing it; a reader of the schema still sees seven shapes.\n· **B — Converge on one convention and deprecate the rest.** Pre-1.0, `rule:fix-it-properly-while-it-is-still-cheap` points here. ⚠️ A consumer-facing break across most of the surface, for churn rather than capability — and this design has 167 tools.\n· **C — Fix only the handoff.** `search_design` returns `node_id`; make the tools an agent reaches for NEXT accept it. Smallest change that removes the reported failure. ⚠️ Leaves the table above intact for anyone who reads it.\n· **D — `get_node`'s message alone.** Their #2: it says *\"unknown field `node_id`, expected `node_type` or `id`\"*, which reads as either/or, so the obvious correction (`id` alone) fails with \"missing field `node_type`\". **Two round trips, and the first message caused the second failure.** One word — `and` — fixes it. Cheapest item in the whole report.\n· **E — Do nothing.** ⚠️ Three entries in one day, each finding more, from a reporter who explicitly said they would \"not re-litigate it\".\n\n⚠️ NOT MEASURED: how many of the 167 tools actually differ, versus the eight this fleet touched. The table is one workflow's experience, not a survey, and a survey would decide between C and B.",
+        "decision": "RULED by Anthony 2026-09-06 (\"go with your above recommendations for v0.50.0\"), item 4 of the v0.50.0 plan: option A with a stated convention, and option C folded in. THE CONVENTION, taught once: a relation tool whose two ends play different roles names the role end by its role (`verification_id`, `artifact_id`, `constraint_id`, `release_id`, `contributor_id`, `resource_id` …) and the other end `target_id` / `target_type`; a relation tool whose ends are peers of one kind, or where the roles are the edge's own direction, uses `from_id` / `to_id` (allocate, satisfies, provides, consumes, decomposes, depends_on, contain_component, governed_by). EVERY relation tool ALSO ACCEPTS the other family's spellings as serde aliases — `from_*`/`to_*` on the role-named tools, the role names on the from/to tools (`capability_id`/`component_id` on allocate, `capability_id`/`requirement_id` on satisfies, `component_id`/`interface_id` on provides and consumes, `parent_id`/`child_id` on decomposes and contain_component, `dependent_id`/`dependency_id` on depends_on) — and `node_id`/`node_type`, the keys search_design hands back, are accepted for the from end, which is the documented handoff failure. The schema still teaches one name (aliases are not published), `deny_unknown_fields` still catches a genuine typo, and no existing call changes meaning. Option B (rename across the surface) REJECTED as churn without capability; option D (the get_node message) is separable and cheap and stays open. A caller passing both spellings of one end is refused as a duplicate field, which is the honest answer.\n\nWHAT WAS ON THE TABLE (recorded 2026-09-02 as brainstorming). Measured by the dev_storyflow fleet across three entries on 2026-09-02, growing each time — they reported four spellings, then six, then seven.\n\n| tool | names the node | names the other end |\n| --- | --- | --- |\n| `search_design` (RETURNS) | `node_id` + `node_type` | — |\n| `get_node` | `id` + `node_type` | — |\n| `create_node` | `id` + `node_type` + **`props`** (nested) | — |\n| `review_relations` | `node_id` + `node_type` | `other_id` + `other_type` + `incoming` |\n| `authored_by` | `from_id` + `from_type` | `contributor_id` |\n| `schedule_for` | `item_id` + `item_type` | `target_id` + `target_type` |\n| `set_epoch_status` | `epoch_id` | — |\n| `verifies` | `verification_id` | `target_type` / `target_id` |\n\n⭐ THE SHARPEST FORM IS NOT THE COUNT, IT IS THE HANDOFF: \"`search_design` hands back `node_id`; the tool you reach for next rejects that exact key.\" And their diagnosis of their own errors is the part worth keeping: \"Every guess was informed by the tool I had used immediately before, and every one was wrong — which is the signature of an interface that is locally sensible and globally inconsistent rather than of a careless caller.\" Five failed calls before any of a five-idea brainstorm landed, none of them conceptual.\n\nTHE PATTERN FOR FIXING IT ALREADY EXISTED: chg:accept-1ea01d3ea7e8701a — \"ContributorReq.id gains a serde alias for contributor_id. The surface still teaches one name and `deny_unknown_fields` is unchanged; no design meaning moved.\"\n\nOPTIONS AS RECORDED: A — serde aliases everywhere (accept, teach one name; aliases hide the inconsistency rather than removing it). B — converge and deprecate (a consumer-facing break across 167 tools for churn). C — fix only the handoff (search_design's node_id accepted by the next tool). D — get_node's message alone (one word, `and`). E — do nothing. NOT MEASURED at the time: how many of the 167 tools differ — surveyed 2026-09-06 from the toolsnaps: 44 write tools carry two or more id/type parameters, in exactly the two families the convention names, plus the from/to pair.",
         "kind": "exploratory",
-        "name": "OPEN — seven spellings of \"which node\" across one workflow, and search_design hands back a key the next tool rejects. Aliases, or one convention?",
+        "name": "DECIDED — one convention, taught once, and the other family's names accepted as serde ALIASES on every relation tool: an asymmetric relation names its role end plus `target_*`; a symmetric one uses `from_*` / `to_*`; `node_id`/`node_type` (what search_design hands back) is accepted for the from end. No renames; nothing breaks",
         "rationale": "Recorded rather than acted on because the options span three orders of magnitude — one word in an error message, aliases on a handful of request structs, or renaming across a 167-tool surface — and the reporter's own framing (\"pure interface churn — no call failed for a reason a caller could have reasoned about\") argues for the cheap end while the volume of complaint argues for the expensive one.\n\nOption D is separable from everything else here, costs one word, and would have saved a documented round trip. It does not need this question answered first.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -176510,6 +176648,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:preserved-on-write:dec:idea-one-way-to-name-which-node-across-the-tool-surface",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[]",
+        "state": "{\"decision\":\"RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Measured by the dev_storyflow fleet across three entries on 2026-09-02, growing each time — they reported four spellings, then six, then seven.\\n\\n| tool | names the node | names the other end |\\n| --- | --- | --- |\\n| `search_design` (RETURNS) | `node_id` + `node_type` | — |\\n| `get_node` | `id` + `node_type` | — |\\n| `create_node` | `id` + `node_type` + **`props`** (nested) | — |\\n| `review_relations` | `node_id` + `node_type` | `other_id` + `other_type` + `incoming` |\\n| `authored_by` | `from_id` + `from_type` | `contributor_id` |\\n| `schedule_for` | `item_id` + `item_type` | `target_id` + `target_type` |\\n| `set_epoch_status` | `epoch_id` | — |\\n| `verifies` | `verification_id` | `target_type` / `target_id` |\\n\\n⭐ **THE SHARPEST FORM IS NOT THE COUNT, IT IS THE HANDOFF:** *\\\"`search_design` hands back `node_id`; the tool you reach for next rejects that exact key.\\\"* And their diagnosis of their own errors is the part worth keeping: *\\\"Every guess was informed by the tool I had used immediately before, and every one was wrong — which is the signature of an interface that is locally sensible and globally inconsistent rather than of a careless caller.\\\"* Five failed calls before any of a five-idea brainstorm landed, none of them conceptual.\\n\\n`set_epoch_status` taking `epoch_id` while `add_epoch` — creating the same node — takes `id` is their single sharpest case.\\n\\n**THE PATTERN FOR FIXING IT ALREADY EXISTS IN THIS DESIGN.** `chg:accept-1ea01d3ea7e8701a`: *\\\"ContributorReq.id gains a serde alias for contributor_id. The surface still teaches one name and `deny_unknown_fields` is unchanged; no design meaning moved.\\\"* So a precedent settled the shape — accept the alias, teach one name — for exactly one field, and nothing generalised it.\\n\\nOPTIONS, none preferred:\\n· **A — Serde aliases everywhere, following the existing precedent.** Accept `node_id`/`id`/`from_id` wherever a node is named; keep teaching ONE name so the surface does not grow. Backwards compatible, no design meaning moves, and `deny_unknown_fields` still catches genuine typos. ⚠️ Aliases hide the inconsistency rather than removing it; a reader of the schema still sees seven shapes.\\n· **B — Converge on one convention and deprecate the rest.** Pre-1.0, `rule:fix-it-properly-while-it-is-still-cheap` points here. ⚠️ A consumer-facing break across most of the surface, for churn rather than capability — and this design has 167 tools.\\n· **C — Fix only the handoff.** `search_design` returns `node_id`; make the tools an agent reaches for NEXT accept it. Smallest change that removes the reported failure. ⚠️ Leaves the table above intact for anyone who reads it.\\n· **D — `get_node`'s message alone.** Their #2: it says *\\\"unknown field `node_id`, expected `node_type` or `id`\\\"*, which reads as either/or, so the obvious correction (`id` alone) fails with \\\"missing field `node_type`\\\". **Two round trips, and the first message caused the second failure.** One word — `and` — fixes it. Cheapest item in the whole report.\\n· **E — Do nothing.** ⚠️ Three entries in one day, each finding more, from a reporter who explicitly said they would \\\"not re-litigate it\\\".\\n\\n⚠️ NOT MEASURED: how many of the 167 tools actually differ, versus the eight this fleet touched. The table is one workflow's experience, not a survey, and a survey would decide between C and B.\",\"kind\":\"exploratory\",\"name\":\"OPEN — seven spellings of \\\"which node\\\" across one workflow, and search_design hands back a key the next tool rejects. Aliases, or one convention?\",\"rationale\":\"Recorded rather than acted on because the options span three orders of magnitude — one word in an error message, aliases on a handful of request structs, or renaming across a 167-tool surface — and the reporter's own framing (\\\"pure interface churn — no call failed for a reason a caller could have reasoned about\\\") argues for the cheap end while the volume of complaint argues for the expensive one.\\n\\nOption D is separable from everything else here, costs one word, and would have saved a documented round trip. It does not need this question answered first.\",\"status\":\"proposed\"}",
+        "target_id": "dec:idea-one-way-to-name-which-node-across-the-tool-surface",
+        "target_type": "Decision"
+      }
+    },
+    {
       "node_id": "snap:epoch:preserved-on-write:dec:idea-root-cause-runs-at-the-moment-a-cause-is-about-to-be-written-not-on-every-failure",
       "node_type": "Snapshot",
       "properties": {
@@ -184387,6 +184535,20 @@
       }
     },
     {
+      "node_id": "ver:every-relation-tool-accepts-both-families-and-refuses-a-typo",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-mcp/tests/a_relation_tool_accepts_the_other_familys_names.rs (5 tests), table-shaped over every relation request struct: the from/to family with role names and node_id (7 pair structs + governed_by); the role-named family with from_*/to_* (16 structs); the who-family with node_* and to_id (6 structs); a misspelling refused as unknown field and both spellings of one end refused as duplicate; and the fleet's handoff end to end on the served surface — allocate by capability_id/component_id, satisfies by search_design's node_id, verifies by from_id/to_id.",
+        "findings": "5 of 5 passed inside a reflow2-mcp run of 381 passed / 0 failed; clippy clean; skill lint green; toolsnap check green with ZERO goldens changed — the aliases are not advertised, which is the point. Observed failing first three times, each a fixture fault (gate_on needs kind and min_level, link_artifact needs name, register_alternative needs location): the table test found required fields the alias fixtures had omitted, which is the table doing its job.",
+        "kind": "verification",
+        "last_run_at": "2026-09-06",
+        "level": "integration",
+        "method": "test",
+        "name": "Every relation request struct deserializes from both families; a typo and a duplicate end are still refused; the reported handoff lands end to end",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:every-served-report-is-reachable",
       "node_type": "Verification",
       "properties": {
@@ -186114,7 +186276,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:1825ff9d5f5932ae4796e96284850589b5cb58a6daab66948dafc2d5eb5d04c7",
+  "prev_content_hash": "sha256:0a59286268396d396346e8c59d691df5e231393dd779beb12884bf631c598f47",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
