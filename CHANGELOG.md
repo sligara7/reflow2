@@ -31,6 +31,8 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.51.0] — 2026-09-07
+
 Field-feedback fixes (dev_storyflow 2026-09-06 and the rule-11 facts of the same day), approved as
 the v0.51.0 increment on 2026-09-07. Minor: one enum value and one declared property were added to
 the schema; the stamp does NOT move.
