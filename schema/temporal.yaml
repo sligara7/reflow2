@@ -30,6 +30,7 @@ schema:
 
     TemporalFact:
       properties:
+        name: { type: string, indexed: true, fulltext: true, description: "A short handle for the fact — what search_design and the gap surfaces render. OPTIONAL: declared 2026-09-07 after 49 of 429 facts carried one undeclared and every write warned (fact:defect-temporal-fact-name-is-undeclared-while-49-facts-carry-one); the statement stays the assertion." }
         subject_id: { type: string, required: true, indexed: true, node_ref: true, description: "Node the fact is about. A NODE REFERENCE: the id must resolve, and a write naming a node that does not exist is refused." }
         fact_type: { type: string, indexed: true, description: "status / allocation / dependency / satisfaction / property — what kind of assertion." }
         statement: { type: string, fulltext: true, description: "The time-bounded assertion in plain terms." }

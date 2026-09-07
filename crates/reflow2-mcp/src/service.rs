@@ -40,6 +40,44 @@ use reflow2_core::{
 /// skills and instructions silently driving an old surface — and nothing at
 /// the surface said so. `version` is compile-time truth; `binary_mtime_unix`
 /// is best-effort (None rather than a guess when the exe cannot be inspected).
+/// The refusal `export_graph` issues when this server's executable has been
+/// replaced since it started. A stale server can still export a correct
+/// DOCUMENT, but it stamps it with a version that is no longer on disk, and on
+/// 2026-09-06 exactly that happened while the same server's `loop_status` was
+/// reporting `served_by.stale: true`
+/// (`fact:defect-export-graph-stamps-confidently-while-the-server-reports-itself-stale`).
+/// `None` when the server is current or cannot tell.
+pub fn export_stale_refusal(stale: Option<bool>, note: &str) -> Option<McpError> {
+    if stale != Some(true) {
+        return None;
+    }
+    Some(McpError::invalid_params(
+        format!(
+            "REFUSED: this server's executable has been replaced since it started, so the export \
+             would be stamped `{}` by code that is no longer on disk — the stamp names which \
+             reflow2 wrote the record, and a wrong one was committed once. Nothing was written. \
+             Refresh with `reflow2-mcp --graph-path <path> --stop-shared`, make any tool call, \
+             then export again. {note}",
+            env!("CARGO_PKG_VERSION")
+        ),
+        None,
+    ))
+}
+
+/// The sentence appended to an unknown-field refusal, because the commonest
+/// cause on a machine that just updated is not the caller's spelling: a client
+/// keeps the tool list it fetched at connection, so a server restarted on a
+/// newer binary knows fields the client cannot send
+/// (`fact:defect-a-clients-tool-list-is-fixed-at-connection-so-a-restarted-servers-new-fields-are-unreachable`).
+pub fn stale_client_hint(message: &str) -> String {
+    format!(
+        "{message} — If this reflow2 was updated after your client connected, your client's \
+         tool list may predate the server ({}): the field may exist here and not there. \
+         Reconnect (a new session) to refresh the schema, or use the older call shape.",
+        env!("CARGO_PKG_VERSION")
+    )
+}
+
 pub(crate) fn served_by() -> serde_json::Value {
     let mtime = std::env::current_exe().ok().and_then(|p| {
         std::fs::metadata(p).ok().and_then(|m| {
@@ -160,7 +198,7 @@ pub const FINGERPRINT_STALE_NOTE: &str = "STALE: this server's executable change
 /// explicitly rather than left to be inferred from a missing field.
 ///
 /// Non-Linux has no `/proc`, so the honest answer there is `unknown`.
-fn exe_replaced_since_start() -> (Option<bool>, &'static str) {
+pub(crate) fn exe_replaced_since_start() -> (Option<bool>, &'static str) {
     let link = std::fs::read_link("/proc/self/exe")
         .ok()
         .map(|p| p.to_string_lossy().into_owned());
@@ -1151,6 +1189,24 @@ pub(crate) fn parse_disposition<'a>(
             None,
         )),
     }
+}
+
+/// Split the keys a caller sent as `null` out of a props bag: they are UNSET
+/// requests, not values. See `DesignGraph::remove_properties` for why.
+pub(crate) fn split_null_props(props: Option<JsonObject>) -> (Option<JsonObject>, Vec<String>) {
+    let Some(mut map) = props else {
+        return (None, Vec::new());
+    };
+    let mut unset: Vec<String> = map
+        .iter()
+        .filter(|(_, v)| v.is_null())
+        .map(|(k, _)| k.clone())
+        .collect();
+    unset.sort();
+    for k in &unset {
+        map.remove(k);
+    }
+    (Some(map), unset)
 }
 
 pub(crate) fn parse_props(props: Option<JsonObject>) -> Result<HashMap<String, Value>, McpError> {
@@ -2960,6 +3016,9 @@ pub struct TypedIdReq {
 pub struct GetNodeReq {
     /// The node id. Its prefix (`req:`, `dec:`, `ver:` …) names the type by
     /// convention, so `node_type` may be omitted.
+    /// `node_id` — what search_design hands back — is accepted as an alias
+    /// (dec:idea-one-way-to-name-which-node-across-the-tool-surface, option D).
+    #[serde(alias = "node_id")]
     pub id: String,
     /// Optional since 2026-09-05: when omitted the type is resolved from the id.
     /// If the id is held by MORE THAN ONE type (a convention violation, but
@@ -4548,6 +4607,25 @@ impl ReflowService {
 
 #[tool_handler(router = self.tool_router)]
 impl ServerHandler for ReflowService {
+    /// The macro's own `call_tool`, plus one sentence on an unknown-field
+    /// refusal. Overridden rather than generated because the refusal is
+    /// produced before any handler runs, and the one thing the server knows
+    /// that the client may not is its own version.
+    async fn call_tool(
+        &self,
+        request: rmcp::model::CallToolRequestParams,
+        context: rmcp::service::RequestContext<RoleServer>,
+    ) -> Result<rmcp::model::CallToolResponse, McpError> {
+        let tcc = rmcp::handler::server::tool::ToolCallContext::new(self, request, context);
+        match self.tool_router.call(tcc).await {
+            Err(e) if e.message.contains("unknown field") => {
+                let hinted = stale_client_hint(&e.message);
+                Err(McpError::invalid_params(hinted, e.data.clone()))
+            }
+            other => other,
+        }
+    }
+
     /// Record who connected, then answer exactly as rmcp's default would.
     ///
     /// ⭐ THE POINT IS THE SIDE EFFECT, NOT THE ANSWER. A client that forwards

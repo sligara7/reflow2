@@ -197,10 +197,14 @@ fn a_baseline_cannot_be_established_over_one_that_already_exists() {
 }
 
 /// **COUNTERWEIGHT, the other direction.** An accept with nothing to accept is
-/// the fiction BL-157 actually hit. Refused rather than reported, because the
-/// report would arrive after the fiction was already written.
+/// the fiction BL-157 actually hit. Since 2026-09-07 it is not refused but READ
+/// as the one disposition a checksum-less artifact can take — the first
+/// baseline — with the record saying so, and NO change is asserted: the named
+/// change event gets no CHANGED edge and is not created. The fiction is still
+/// never written; only the batch-killing refusal is gone
+/// (fact:defect-a-batch-accept-refuses-whole-for-an-artifact-whose-only-legal-disposition-is-the-first-baseline).
 #[test]
-fn an_accept_against_no_baseline_is_refused_and_names_the_disposition() {
+fn an_accept_against_no_baseline_is_read_as_the_first_baseline_and_says_so() {
     for disposition in [
         DriftDisposition::DesignHolds {
             change_type: ChangeType::Refactor,
@@ -210,22 +214,33 @@ fn an_accept_against_no_baseline_is_refused_and_names_the_disposition() {
         },
     ] {
         let mut g = unbaselined();
-        let err = g
+        let (node, event) = g
             .set_artifact_checksum("art:score", "sha256:aaa", disposition, None, None)
-            .expect_err("there is no movement to take a position on");
-        let msg = err.to_string();
-        assert!(msg.contains("no recorded checksum"), "{msg}");
+            .expect("read as a first baseline");
+        assert_eq!(
+            node.properties.get("checksum").and_then(|v| v.as_str()),
+            Some("sha256:aaa"),
+            "the first baseline is recorded"
+        );
+        assert!(event.starts_with("chg:baseline-"), "{event}");
+        let name = g
+            .get_node(node::CHANGE_EVENT, &event)
+            .unwrap()
+            .unwrap()
+            .properties
+            .get("name")
+            .and_then(|v| v.as_str())
+            .unwrap_or("")
+            .to_string();
         assert!(
-            msg.contains("baseline_established"),
-            "the refusal must name the disposition that IS right: {msg}"
+            name.contains("FIRST BASELINE"),
+            "the record says what it read: {name}"
         );
         assert!(
-            !g.get_node(node::ARTIFACT, "art:score")
+            g.get_node(node::CHANGE_EVENT, "chg:whatever")
                 .unwrap()
-                .unwrap()
-                .properties
-                .contains_key("checksum"),
-            "nothing is written by a refused accept"
+                .is_none(),
+            "no movement was asserted on the caller's behalf"
         );
     }
 }
