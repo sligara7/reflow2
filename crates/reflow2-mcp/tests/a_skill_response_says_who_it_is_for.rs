@@ -36,6 +36,8 @@ async fn service() -> ReflowService {
         id: "proj:x".into(),
         name: Some("X".to_string()),
         description: None,
+        spec: None,
+        decomposition_levels: None,
     })));
     s
 }

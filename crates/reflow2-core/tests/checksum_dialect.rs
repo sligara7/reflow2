@@ -74,6 +74,8 @@ fn thread_with_baseline(checksum: &str) -> DesignGraph {
         provenance: None,
         fragment_id: None,
         checksum: Some(checksum.into()),
+        content_ref: None,
+        note_kind: None,
     })
     .expect("link");
     g

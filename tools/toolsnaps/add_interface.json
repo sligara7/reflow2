@@ -7,6 +7,17 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
     "properties": {
+      "decomposition_levels": {
+        "default": null,
+        "description": "THIS DESIGN'S DECOMPOSITION LADDER, ordered bottom-first: index 0 is\nthe finest grain. On a Project. `hierarchy.rs` READS it on every level\ncheck and nothing could write it, which made it the sharpest of the\nfourteen holes. Ignored for an Interface.",
+        "items": {
+          "type": "string"
+        },
+        "type": [
+          "array",
+          "null"
+        ]
+      },
       "description": {
         "default": null,
         "description": "WHAT THIS IS, in prose. Added 2026-09-07. BOTH users of this struct are\nconstructors — `add_interface` and `add_project` — and both their types\ndeclare `description` as the ONLY prose field they have, so until this\nlanded the surface let a caller name an interface or a project and never\nsay what it was. Six of the eleven types declaring a description were in\nthat state, because the class was fixed one report at a time and never\nswept\n(`fact:six-constructors-cannot-write-any-prose-because-the-class-was-fixed-one-report-at-a-time-and-never-swept`).\nA third user of this struct that is NOT a constructor would want it\nsplit; there is none today.",
@@ -22,6 +33,14 @@
       "name": {
         "default": null,
         "description": "Human-readable name.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "spec": {
+        "default": null,
+        "description": "FREE-TEXT DETAIL the structured fields do not carry, on an Interface:\na prose note, a link to an OpenAPI document, a header layout. 13 of 22\ninterfaces carried one and no tool could set it. Ignored for a Project,\nwhich declares no such property — the two constructors share this\nstruct and a third user would want them split.",
         "type": [
           "string",
           "null"

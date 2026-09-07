@@ -31,6 +31,33 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **All fourteen unreachable holes are closed, and `add_actor` exists.** The reachability report
+  now reads **0 HOLE**. `add_capability` takes `tier`, `is_entry_point` and `is_exit_point` — the
+  capability's own flow flags, distinct from `Flow.entry_point` which names a capability from the
+  flow's side, carried by 147 of 234 through the generic escape hatch. `add_component` and
+  `add_flow` take `tier`. `add_constraint` takes `concern` and `priority`. `add_requirement` takes
+  `concern`, carried by 154 of 207. `add_interface` takes `spec`, the free-text detail its
+  structured fields do not carry. `add_project` takes `decomposition_levels` — the sharpest of the
+  fourteen, because `hierarchy.rs` reads the design's own ladder on every level check and nothing
+  could write it. `link_artifact` takes `content_ref` and `note_kind`, which are Fragment fields
+  and so are set where the fragment is minted.
+
+  **`add_actor` is new rather than a parameter.** Actor had no constructor at all, so its two
+  properties were unreachable for that single reason. The other two types in that state,
+  EnvironmentRule and QualityGate, have no instances anywhere and never reached the list.
+
+  **Omitting any of them changes nothing** — an unstated flag stays unstated, because absence
+  means nobody said. One shared helper writes them all, which is the point rather than tidiness:
+  this family survived because each hole was fixed where it was reported and the siblings were
+  never asked.
+
+  The remaining 28 unreachable properties stay unreachable **on purpose**: 15 are written by an
+  operation, where a caller parameter would let somebody forge a computed fact, and 13 are carried
+  by nothing at all. The report prints a bucket even at zero, so `0 HOLE` is visible rather than a
+  bucket that silently disappears when it empties.
+
 ## [0.53.0] — 2026-09-07
 
 ### Fixed

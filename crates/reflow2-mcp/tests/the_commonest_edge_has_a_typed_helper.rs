@@ -78,6 +78,7 @@ async fn component(s: &ReflowService, id: &str, name: &str) {
         description: Some(format!("The {name} part, for a coupling fixture.")),
         level: None,
         distinct_from: None,
+        tier: None,
     }))
     .await
     .expect("component lands");

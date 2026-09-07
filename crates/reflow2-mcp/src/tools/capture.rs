@@ -1024,6 +1024,33 @@ pub(crate) fn set_description(
     ))
 }
 
+/// Write optional properties a core constructor does not take, after the node
+/// lands. ONE HELPER for all of them, for the reason this family exists: the
+/// class survived because each hole was fixed where it was reported and the
+/// siblings were never asked, so a single place to change is the point.
+///
+/// Skips anything the caller did not state — absence must stay absence, since
+/// these parameters add a way to SAY and never an obligation to.
+pub(crate) fn set_optional_props(
+    g: &mut reflow2_core::graph::DesignGraph,
+    node_type: &str,
+    id: &str,
+    values: &[(&str, Option<&str>)],
+) -> Result<Option<reflow2_core::StoredNode>, McpError> {
+    let mut props = reflow2_core::nodes::Props::new();
+    let mut any = false;
+    for (k, v) in values {
+        if let Some(v) = v {
+            props = props.set(k, *v);
+            any = true;
+        }
+    }
+    if !any {
+        return Ok(None);
+    }
+    Ok(Some(g.upsert_node(node_type, id, props).map_err(dyno_err)?))
+}
+
 #[tool_router(router = capture_router, vis = "pub")]
 impl ReflowService {
     // ---- GENESIS (bootstrap the graph from a brief) ----
@@ -1077,6 +1104,69 @@ impl ReflowService {
             reflow2_core::nodes::node::PROJECT,
             &req.id,
             req.description.as_deref(),
+        )?
+        .unwrap_or(stored);
+        // The ladder is a LIST, so it cannot go through the string helper.
+        // hierarchy.rs reads it on every level check and nothing could write it.
+        let stored = match req.decomposition_levels.as_ref() {
+            Some(rungs) if !rungs.is_empty() => g
+                .upsert_node(
+                    reflow2_core::nodes::node::PROJECT,
+                    &req.id,
+                    reflow2_core::nodes::Props::new().set(
+                        "decomposition_levels",
+                        reflow2_core::Value::List(
+                            rungs
+                                .iter()
+                                .map(|r| reflow2_core::Value::String(r.clone()))
+                                .collect(),
+                        ),
+                    ),
+                )
+                .map_err(dyno_err)?,
+            _ => stored,
+        };
+        ok_json(NodeDto::from(stored))
+    }
+
+    #[tool(
+        description = "Create an Actor — a person, role, external system, service or device that \
+                       INTERACTS WITH this design without being part of it. `actor_type` says \
+                       which (user / operator / external_system / service / device / \
+                       stakeholder), and `description` is the type's embedding field, so it is \
+                       what search_design finds an actor by. \
+                       DECLARED 2026-09-07: Actor is a node type the schema has always carried \
+                       and no tool could create, so its two properties were unreachable for one \
+                       reason — there was nothing to give a parameter to. Wire it to what it \
+                       touches with interacts_with. \
+                       CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it \
+                       again with the same id and only what you are changing.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn add_actor(
+        &self,
+        Parameters(req): Parameters<crate::service::ActorReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.write_lock().await?;
+        let node_ty = reflow2_core::nodes::node::ACTOR;
+        let mut __rf = crate::service::RequiredFields::new(&g, node_ty, &req.id)?;
+        let name = __rf.str("name", req.name);
+        __rf.finish()?;
+        let stored = g
+            .upsert_node(
+                node_ty,
+                &req.id,
+                reflow2_core::nodes::Props::new().set("name", name.as_str()),
+            )
+            .map_err(dyno_err)?;
+        let stored = set_optional_props(
+            &mut g,
+            node_ty,
+            &req.id,
+            &[
+                ("actor_type", req.actor_type.as_deref()),
+                ("description", req.description.as_deref()),
+            ],
         )?
         .unwrap_or(stored);
         ok_json(NodeDto::from(stored))
@@ -1145,14 +1235,15 @@ impl ReflowService {
         // a way to state a priority and not an obligation to. An undeclared
         // value is refused by the schema before it is stored, and the refusal
         // names the legal set.
-        if let Some(priority) = req.priority.as_deref() {
-            g.upsert_node(
-                node_ty,
-                &req.id,
-                reflow2_core::nodes::Props::new().set("priority", priority),
-            )
-            .map_err(dyno_err)?;
-        }
+        set_optional_props(
+            &mut g,
+            node_ty,
+            &req.id,
+            &[
+                ("priority", req.priority.as_deref()),
+                ("concern", req.concern.as_deref()),
+            ],
+        )?;
         sign_as_approver(
             &mut g,
             node_ty,
@@ -1301,10 +1392,32 @@ impl ReflowService {
         let name = __rf.str("name", req.name);
         let description = __rf.str("description", req.description);
         __rf.finish()?;
-        let node = NodeDto::from(
-            g.add_capability(&req.id, &name, &description, req.status.as_deref())
-                .map_err(dyno_err)?,
-        );
+        let stored = g
+            .add_capability(&req.id, &name, &description, req.status.as_deref())
+            .map_err(dyno_err)?;
+        let stored =
+            set_optional_props(&mut g, node_ty, &req.id, &[("tier", req.tier.as_deref())])?
+                .unwrap_or(stored);
+        // The two flow-endpoint flags are BOOLS, so they cannot go through the
+        // string helper. 147 of 234 capabilities carried them, every one
+        // written through the generic escape hatch.
+        let mut flags = reflow2_core::nodes::Props::new();
+        let mut any_flag = false;
+        for (k, v) in [
+            ("is_entry_point", req.is_entry_point),
+            ("is_exit_point", req.is_exit_point),
+        ] {
+            if let Some(v) = v {
+                flags = flags.set(k, v);
+                any_flag = true;
+            }
+        }
+        let stored = if any_flag {
+            g.upsert_node(node_ty, &req.id, flags).map_err(dyno_err)?
+        } else {
+            stored
+        };
+        let node = NodeDto::from(stored);
         let found = search_first(&g, &req.id, existed, &format!("{name} {description}"));
         if let Err(e) =
             refuse_unless_deliberate(&found, req.distinct_from.as_ref(), &req.id, "Capability")
@@ -1478,10 +1591,13 @@ impl ReflowService {
         // `description`, which is why this survived.
         let description = __rf.str("purpose", req.description);
         __rf.finish()?;
-        let node = NodeDto::from(
-            g.add_component(&req.id, &name, &description, req.level.as_deref())
-                .map_err(dyno_err)?,
-        );
+        let stored = g
+            .add_component(&req.id, &name, &description, req.level.as_deref())
+            .map_err(dyno_err)?;
+        let stored =
+            set_optional_props(&mut g, node_ty, &req.id, &[("tier", req.tier.as_deref())])?
+                .unwrap_or(stored);
+        let node = NodeDto::from(stored);
         let found = search_first(&g, &req.id, existed, &format!("{name} {description}"));
         if let Err(e) =
             refuse_unless_deliberate(&found, req.distinct_from.as_ref(), &req.id, "Component")
@@ -1679,8 +1795,16 @@ impl ReflowService {
         let name = __rf.str("name", req.name);
         __rf.finish()?;
         let stored = g.add_interface(&req.id, &name).map_err(dyno_err)?;
-        let stored = set_description(&mut g, node_ty, &req.id, req.description.as_deref())?
-            .unwrap_or(stored);
+        let stored = set_optional_props(
+            &mut g,
+            node_ty,
+            &req.id,
+            &[
+                ("description", req.description.as_deref()),
+                ("spec", req.spec.as_deref()),
+            ],
+        )?
+        .unwrap_or(stored);
         let node = NodeDto::from(stored);
         let found = search_first(&g, &req.id, existed, &name);
         preserve_prior(&mut g, prior.as_ref(), &node);
@@ -1721,8 +1845,8 @@ impl ReflowService {
         let mut __rf =
             crate::service::RequiredFields::new(&g, reflow2_core::nodes::node::FLOW, &req.id)?;
         let name = __rf.str("name", req.name);
-        ok_json(NodeDto::from(
-            g.add_flow(
+        let stored = g
+            .add_flow(
                 &req.id,
                 &name,
                 req.description.as_deref(),
@@ -1730,8 +1854,15 @@ impl ReflowService {
                 req.entry_point.as_deref(),
                 req.exit_point.as_deref(),
             )
-            .map_err(dyno_err)?,
-        ))
+            .map_err(dyno_err)?;
+        let stored = set_optional_props(
+            &mut g,
+            reflow2_core::nodes::node::FLOW,
+            &req.id,
+            &[("tier", req.tier.as_deref())],
+        )?
+        .unwrap_or(stored);
+        ok_json(NodeDto::from(stored))
     }
 
     #[tool(
@@ -1858,8 +1989,8 @@ impl ReflowService {
         let name = __rf.str("name", req.name);
         let statement = __rf.str("statement", req.statement);
         __rf.finish()?;
-        let node = NodeDto::from(
-            g.add_constraint(
+        let stored = g
+            .add_constraint(
                 &req.id,
                 &name,
                 &statement,
@@ -1869,8 +2000,18 @@ impl ReflowService {
                 req.objective,
                 req.direction.as_deref(),
             )
-            .map_err(dyno_err)?,
-        );
+            .map_err(dyno_err)?;
+        let stored = set_optional_props(
+            &mut g,
+            reflow2_core::nodes::node::CONSTRAINT,
+            &req.id,
+            &[
+                ("concern", req.concern.as_deref()),
+                ("priority", req.priority.as_deref()),
+            ],
+        )?
+        .unwrap_or(stored);
+        let node = NodeDto::from(stored);
         let found = search_first(&g, &req.id, existed, &format!("{name} {statement}"));
         preserve_prior(&mut g, prior.as_ref(), &node);
         let revision = revision_of(&g, prior.as_ref(), &node);

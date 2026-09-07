@@ -437,6 +437,8 @@ impl ReflowService {
             provenance: req.provenance,
             fragment_id: req.fragment_id,
             checksum: req.checksum,
+            content_ref: req.content_ref.clone(),
+            note_kind: req.note_kind.clone(),
         };
         let mut g = self.write_lock().await?;
         with_loop_hint(

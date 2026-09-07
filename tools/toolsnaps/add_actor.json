@@ -1,0 +1,52 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Create an Actor — a person, role, external system, service or device that INTERACTS WITH this design without being part of it. `actor_type` says which (user / operator / external_system / service / device / stakeholder), and `description` is the type's embedding field, so it is what search_design finds an actor by. DECLARED 2026-09-07: Actor is a node type the schema has always carried and no tool could create, so its two properties were unreachable for one reason — there was nothing to give a parameter to. Wire it to what it touches with interacts_with. CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it again with the same id and only what you are changing.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "actor_type": {
+        "default": null,
+        "description": "`user` (default) / `operator` / `external_system` / `service` /\n`device` / `stakeholder`.",
+        "enum": [
+          "user",
+          "operator",
+          "external_system",
+          "service",
+          "device",
+          "stakeholder",
+          null
+        ],
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "description": {
+        "default": null,
+        "description": "WHO OR WHAT THIS IS, in prose. The type's embedding field, so it is\nwhat `search_design` finds an actor by.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "id": {
+        "type": "string"
+      },
+      "name": {
+        "default": null,
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "required": [
+      "id"
+    ],
+    "type": "object"
+  },
+  "name": "add_actor"
+}

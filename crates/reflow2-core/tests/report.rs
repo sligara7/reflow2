@@ -470,6 +470,8 @@ fn recorded_drift_is_owed_a_disposition_until_accepted() {
         provenance: None,
         fragment_id: None,
         checksum: Some("sha256:old".into()),
+        content_ref: None,
+        note_kind: None,
     })
     .unwrap();
 

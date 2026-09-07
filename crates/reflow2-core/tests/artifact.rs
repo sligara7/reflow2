@@ -54,6 +54,8 @@ fn link_artifact_creates_artifact_fragment_and_edges_with_provenance() {
             provenance: None,  // → default "authored"
             fragment_id: None, // → "frag:art:ball"
             checksum: None,    // → no drift baseline recorded
+            content_ref: None,
+            note_kind: None,
         })
         .expect("link_artifact");
 
@@ -96,6 +98,8 @@ fn link_artifact_fails_loud_on_missing_target() {
         provenance: None,
         fragment_id: None,
         checksum: None,
+        content_ref: None,
+        note_kind: None,
     });
     assert!(
         err.is_err(),
@@ -223,6 +227,8 @@ fn re_linking_an_artifact_keeps_what_the_design_already_knew() {
         conformance: None,
         provenance: None,
         fragment_id: None,
+        content_ref: None,
+        note_kind: None,
     };
     g.link_artifact(opts()).unwrap();
 

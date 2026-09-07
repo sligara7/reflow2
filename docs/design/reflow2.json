@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:56912e231d07f5b496d08f0a26e0fd3fb28780ca63cdb5082d0993af93561450",
+  "content_hash": "sha256:382a90b256dfe2ba54183c9ab8da6f57fa3e0fb4aa0de1e85a43bfc6069e1464",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -10644,6 +10644,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:dec:idea-the-load-bearing-prose-is-unchecked-against-the-code-it-describes",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:fact:a-local-feature-error-was-worked-around-instead-of-read-as-the-ci-contract",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
     },
@@ -23863,6 +23869,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-0a2c86480cda08e9",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:confirmation-vocabulary-test"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-0b2ad1a8785917f3",
       "properties": {
         "accepted_baseline": true,
@@ -23878,6 +23893,15 @@
         "action": "modified"
       },
       "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-0bc0358e5e783420",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-a-near-match-of-another-type-is-named-as-a-layer"
     },
     {
       "edge_type": "CHANGED",
@@ -23968,6 +23992,15 @@
         "action": "modified"
       },
       "to_id": "art:acknowledgement-not-structure-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-161c5eb8625a51e3",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:coverage-test"
     },
     {
       "edge_type": "CHANGED",
@@ -24214,6 +24247,24 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-379c6134a649139e",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-3969951005bbd8a6",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:lens-handler-test"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-3989c9914e441633",
       "properties": {
         "accepted_baseline": true,
@@ -24247,6 +24298,15 @@
         "action": "modified"
       },
       "to_id": "art:confirm"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-3db01462ca688c2e",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:mint-seat-liveness-test"
     },
     {
       "edge_type": "CHANGED",
@@ -24553,6 +24613,15 @@
         "action": "modified"
       },
       "to_id": "art:skills"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-56b6e8326f9bd49f",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-the-commonest-edge-has-a-typed-helper"
     },
     {
       "edge_type": "CHANGED",
@@ -25258,6 +25327,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-9f25ae73dd543885",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:checksum-dialect-test"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-a05cd36cbc1b30d9",
       "properties": {
         "accepted_baseline": true,
@@ -25330,6 +25408,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-a7ba7628cf8a9e01",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:the-export-can-be-ordered-before-its-writes"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-a8663d9d81bf09b2",
       "properties": {
         "accepted_baseline": true,
@@ -25372,6 +25459,15 @@
         "action": "modified"
       },
       "to_id": "art:acknowledgement-not-structure-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-aed760bcf45ce90a",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-search-first"
     },
     {
       "edge_type": "CHANGED",
@@ -25474,6 +25570,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-bd893a26619b7671",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-a-replaced-value-is-kept"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-bee1129a4a4fe87a",
       "properties": {
         "accepted_baseline": true,
@@ -25516,6 +25621,15 @@
         "action": "modified"
       },
       "to_id": "art:dev-storyflow-feedback-2026-09-04"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-c22709fed59c0722",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:conformance-test"
     },
     {
       "edge_type": "CHANGED",
@@ -25861,6 +25975,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-e6c96d20752a1a37",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-a-prescribed-layer-pair-no-longer-refuses"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-e6cce9fa69ea0529",
       "properties": {
         "accepted_baseline": true,
@@ -25894,6 +26017,15 @@
         "action": "modified"
       },
       "to_id": "art:search"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-ee0c9ad7cdc74b84",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-a-node-is-named-by-its-id-and-the-type-is-optional"
     },
     {
       "edge_type": "CHANGED",
@@ -36875,6 +37007,78 @@
         "action": "modified"
       },
       "to_id": "dec:idea-where-does-tool-use-actually-fail-four-layers"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-fourteen-holes-are-closed-and-actor-gets-a-constructor",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:artifact"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-fourteen-holes-are-closed-and-actor-gets-a-constructor",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:enum-schema"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-fourteen-holes-are-closed-and-actor-gets-a-constructor",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-fourteen-holes-are-closed-and-actor-gets-a-constructor",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-vocabulary-reach"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-fourteen-holes-are-closed-and-actor-gets-a-constructor",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-built"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-fourteen-holes-are-closed-and-actor-gets-a-constructor",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-fourteen-holes-are-closed-and-actor-gets-a-constructor",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:vocabulary-reach"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-fourteen-holes-are-closed-and-actor-gets-a-constructor",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:vocabulary-reach-baseline"
     },
     {
       "edge_type": "CHANGED",
@@ -54474,6 +54678,12 @@
       "from_id": "epoch:v0280-planned",
       "properties": {},
       "to_id": "snap:epoch:v0250:epoch:v0280-planned"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "fact:a-local-feature-error-was-worked-around-instead-of-read-as-the-ci-contract",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:fact:a-local-feature-error-was-worked-around-instead-of-read-as-the-ci-contract"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -150909,6 +151119,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:test-the-fourteen-holes-are-writable",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "req:declared-vocabulary-is-reachable-from-the-surface"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:test-the-two-reported-fields",
       "properties": {
         "completeness": "complete",
@@ -157932,6 +158151,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:test-the-fourteen-holes-are-writable",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-the-fourteen-holes-are-writable"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:test-the-two-reported-fields",
       "properties": {
         "action": "created"
@@ -158409,7 +158636,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:11b84d43a7ada30f4e3847497b12461df2d82f886bd009fc93b654ecac0d66d2",
+        "checksum": "sha256:2e7defd2b3d126699d3ac26d3d6b3e071edb9c2550e919c4b68a2dc718443567",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/artifact.rs",
         "name": "artifact.rs",
@@ -158668,7 +158895,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:68138446368f22bbde0b1fe44360b85edeb941b4503dbb491750506a99c1711f",
+        "checksum": "sha256:bbba45eee56b98f77e7944e56c39443ef2385c8238025fedca522667a3e134ef",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/checksum_dialect.rs",
         "name": "checksum_dialect.rs",
@@ -158792,7 +159019,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b4af5b1afd4c8f8196974e396404ac62e6a80de8e6a261b2c2c6640e0fb44ed3",
+        "checksum": "sha256:2dfe5ecb79ad7b8ea5adab34de89689800fe215b229e3eae84658c15ca6309da",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/confirmation_vocabulary.rs",
         "name": "confirmation_vocabulary.rs",
@@ -158805,7 +159032,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:7776124d5c2f276520f036b0414c9e143f6b45ae56f02d61cd672a343beb3fe0",
+        "checksum": "sha256:d4c0007a7eecf8de02d8e758fba36993c920595860407547100ad34508f560c1",
         "location": "crates/reflow2-core/tests/an_edge_says_whether_anyone_checked.rs",
         "name": "an_edge_says_whether_anyone_checked.rs",
         "status": "realized"
@@ -158868,7 +159095,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:da69705c4697580a151a6ee7355c388701d465220bf475c2ede5bac2b1469e25",
+        "checksum": "sha256:194fac616f4492c5f982f577de7f322f31e1a152bc00c54234c24ed13da63b18",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/coverage.rs",
         "name": "tests/coverage.rs",
@@ -159177,7 +159404,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:0fa50afff70c6b4dae194a5572f0b63429d01222440ba42f11c1c88263055dde",
+        "checksum": "sha256:b5154db0e50762d438652f2b89a85d0b5ae1f6ffe9ef62594411dcc5b41488bf",
         "location": "crates/reflow2-mcp/src/enum_schema.rs",
         "name": "enum_schema.rs — one schema_with fn per enum request field, reading legal values from the compiled-in schema (or the handler's own const) at tool-listing time",
         "status": "realized"
@@ -159696,7 +159923,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:3071b2c88bec353f44bc6a2e52351a93fa1e675b475c85e0e196075c41c14004",
+        "checksum": "sha256:f98d03720336c92422cc7436ced0299628ed31c6dd558077dee98dcf73e20351",
         "location": "crates/reflow2-mcp/tests/a_skill_response_says_who_it_is_for.rs",
         "name": "tests/a_skill_response_says_who_it_is_for.rs",
         "status": "realized"
@@ -159833,7 +160060,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:8791e881852a6ed931d112f72b5412256492b93163d8c9397bb7134d1e39b188",
+        "checksum": "sha256:608714022a94028fab531d33b148e3671f6f63809415f14d39afefa88eeea063",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/tests/mint_seat_liveness.rs",
         "name": "mint_seat_liveness.rs",
@@ -160651,7 +160878,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b283b8ad920effaede03baf04f9ccfcfe2f0b0182af827a32e32a0338bb3307e",
+        "checksum": "sha256:9cacdf2903bab1f70bab27dc77b24d1d987a22c82e90868f83d996ec7e61a1da",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -161005,7 +161232,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:cc59199227f385a97cd8999ea4f85c5cd7fac4ab29f4c754383c887cf0d357ed",
+        "checksum": "sha256:ed73f44735754e7052fe0017306e93d6502e9619d545e35637734dd65c3b1155",
         "location": "crates/reflow2-mcp/tests/a_near_match_of_another_type_is_named_as_a_layer.rs",
         "name": "a_near_match_of_another_type_is_named_as_a_layer.rs",
         "status": "realized"
@@ -161016,7 +161243,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:9ca6ebb966a14a655a01ba165da1ddb273032b3320f86c2508120851b0c2af61",
+        "checksum": "sha256:b9baf0f3045e5a803820cdae146793c626fbe02dfeec56960ed092d1b91307b6",
         "location": "crates/reflow2-mcp/tests/a_node_is_named_by_its_id_and_the_type_is_optional.rs",
         "name": "a_node_is_named_by_its_id_and_the_type_is_optional.rs — verifies/governed_by resolve the type from the id; a collision is refused naming both; an unknown id says so; delete_node still requires the type",
         "status": "realized"
@@ -161027,7 +161254,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:a5592e2a8f39d1f94637a8af420d8b5fc9ab86d62063e913f7e094b4fc002570",
+        "checksum": "sha256:382dad02ea8782d19e377d777f08b00d81b94cd59ff50a1361390c2cc80c0d3d",
         "location": "crates/reflow2-mcp/tests/a_prescribed_layer_pair_no_longer_refuses.rs",
         "name": "a_prescribed_layer_pair_no_longer_refuses.rs",
         "status": "realized"
@@ -161049,7 +161276,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:da86508c8113208bc712dab74ca205d4a07c3c80f306d74ec9a5be5d2c4ce806",
+        "checksum": "sha256:78bbbdc28c1e794627fbe8015a33af44c839902d892d3c41cca5cb01e9531d74",
         "location": "crates/reflow2-mcp/tests/a_replaced_value_is_kept_when_it_would_be_lost.rs",
         "name": "a_replaced_value_is_kept_when_it_would_be_lost.rs",
         "status": "realized"
@@ -161333,7 +161560,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:1885cce8599ea7c4143c662d351915547bf0a60f8fc8dd5df3118e7338cb359a",
+        "checksum": "sha256:3b4d4395ea4c4c8c440e1ec0eadd98ff369486af59ab2803c75060a0140286d5",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/tests/search_first_fires_at_the_tool.rs",
         "name": "search_first_fires_at_the_tool.rs — six cases: the refusal, the rollback, both deliberate routes, the no-false-refusal counterweight, and the cross-type catch",
@@ -161435,9 +161662,20 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:ad464c5713ee04916c00e094d82bfd2e0a605cfd284b146688690c869909997b",
+        "checksum": "sha256:a5f290cb7ff25798036c3b73509ea0c799b90db35814464b73db7f7452684e39",
         "location": "crates/reflow2-mcp/tests/the_commonest_edge_has_a_typed_helper.rs",
         "name": "the_commonest_edge_has_a_typed_helper.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:test-the-fourteen-holes-are-writable",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:da56625fb1baeacca352654bae89f1b062946f82900efdac111b58b8a70e95e7",
+        "location": "crates/reflow2-mcp/tests/the_fourteen_holes_are_writable.rs",
+        "name": "the_fourteen_holes_are_writable.rs",
         "status": "realized"
       }
     },
@@ -161457,7 +161695,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "test",
-        "checksum": "sha256:366f9cb7009c710f2071e199e9f2f096123149f690adae88576ff45dee3e422d",
+        "checksum": "sha256:d9aafa8273866d2daf9cbe7c5f61a5ef2f04867edd1d9c646da436ffcbcb037e",
         "location": "tools/test_vocabulary_reach.py",
         "name": "test_vocabulary_reach.py",
         "status": "realized"
@@ -161468,7 +161706,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:42ec51a722e9c9c9f30021c9c27e8c259a760e15377fa95916a0f5fd1b68e38d",
+        "checksum": "sha256:4f76fc487b0d7e857148b7e443a006f319846be8f8be2a4ea5a93732ff9dfec0",
         "location": "crates/reflow2-mcp/tests/the_export_can_be_ordered_before_its_writes.rs",
         "name": "the_export_can_be_ordered_before_its_writes.rs",
         "status": "realized"
@@ -161505,7 +161743,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:3ccaa93399b85aa8ecc9b8735d4b0c16dbd6eebe3ef25c6dbc4f4fc15d3509b0",
+        "checksum": "sha256:2a8fde738ea13edbe2ab71680674356440153425e3f6ace7992f0de6d0355501",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/built.rs",
         "name": "tools/built.rs",
@@ -161518,7 +161756,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b542514226b7441c3b4e4391115f2e84661b34c95ed9fd147b0ea055ff340efa",
+        "checksum": "sha256:eb3e2350e2d225ac30984737ab1e6ac3955f4ee0f07c76bbd095f9fa3a03f857",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
         "name": "crates/reflow2-mcp/src/tools/capture.rs",
@@ -161901,7 +162139,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:5f6c5044ef7b4f1707e1755e6ea52c7cfdeacf5749e6c62fb89d6ea1d24737f1",
+        "checksum": "sha256:61ff4c331ed660c26d14fef87b1e2559924ffceb345a7bb062c4dbab8f408336",
         "location": "tools/vocabulary_reach.py",
         "name": "tools/vocabulary_reach.py",
         "status": "realized"
@@ -161912,7 +162150,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "config",
-        "checksum": "sha256:7c3acf5f223e626fdbc8ceedbb8503548c288db9937ed6290e3cefa4fa322496",
+        "checksum": "sha256:8bda932df3e43cca3ef55133b3518417f0225192ea23afb15d485ced5a06023e",
         "location": "tools/vocabulary_reach_baseline.json",
         "name": "vocabulary_reach_baseline.json",
         "status": "realized"
@@ -165628,6 +165866,15 @@
       }
     },
     {
+      "node_id": "chg:accept-0a2c86480cda08e9",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Struct literals gain None for the new optional parameters; the assertion is unchanged.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-0b2ad1a8785917f3",
       "node_type": "ChangeEvent",
       "properties": {
@@ -165643,6 +165890,15 @@
         "change_type": "resync",
         "detected_at": "2026-08-05",
         "name": "Allowlist gains distinguished_by and drops token_sort_ratio, which the reworded skill no longer backticks. What skill_lint DOES is unchanged; only its data moved to stay in agreement with a skill that changed elsewhere. The stale-entry check catching the now-unused term is the guard working."
+      }
+    },
+    {
+      "node_id": "chg:accept-0bc0358e5e783420",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Struct literals gain None for the new optional parameters; the assertion is unchanged.",
+        "subject": "system"
       }
     },
     {
@@ -165736,6 +165992,15 @@
       "properties": {
         "change_type": "refactor",
         "name": "Mechanical only: two governed_by call sites take the new trailing note argument as None.",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:accept-161c5eb8625a51e3",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Struct literals gain None for the new optional parameters; the assertion is unchanged.",
         "subject": "system"
       }
     },
@@ -165996,6 +166261,24 @@
       }
     },
     {
+      "node_id": "chg:accept-379c6134a649139e",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "One redundant dereference removed from the shared helper, which clippy refuses under -D warnings. No behaviour and no design meaning moved; the local runs had covered both test shapes and not the lint, which is the fourth instance of running a subset of the gate set today.",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:accept-3969951005bbd8a6",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Struct literals gain None for the new optional parameters; the assertion is unchanged.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-3989c9914e441633",
       "node_type": "ChangeEvent",
       "properties": {
@@ -166029,6 +166312,15 @@
         "change_type": "refactor",
         "detected_at": "2026-07-21",
         "name": "Freshness examination 2026-07-21: file checksum unchanged since registration (as-built == as-designed); capability carries passing verification. No drift; design holds."
+      }
+    },
+    {
+      "node_id": "chg:accept-3db01462ca688c2e",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Struct literals gain None for the new optional parameters; the assertion is unchanged.",
+        "subject": "system"
       }
     },
     {
@@ -166348,6 +166640,15 @@
         "change_type": "refactor",
         "detected_at": "2026-08-20",
         "name": "The tool half moved to tools/skills_tools.rs, where every other tool module already lives; skills.rs keeps the compiled-in skill DATA and no longer imports ReflowService. That import was the cycle edge — service called skills::catalogue() for its own instructions while skills implemented tools on the service. `Self::skills_router()` was ALREADY summed in ReflowService::new alongside the rest, so only the file placement disagreed with the intended shape. All 152 toolsnaps match: the served surface is unchanged.",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:accept-56b6e8326f9bd49f",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Struct literals gain None for the new optional parameters; the assertion is unchanged.",
         "subject": "system"
       }
     },
@@ -167080,6 +167381,15 @@
       }
     },
     {
+      "node_id": "chg:accept-9f25ae73dd543885",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Struct literals gain None for the newly added optional parameters so the test keeps compiling. The assertion is unchanged.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-a05cd36cbc1b30d9",
       "node_type": "ChangeEvent",
       "properties": {
@@ -167156,6 +167466,15 @@
       }
     },
     {
+      "node_id": "chg:accept-a7ba7628cf8a9e01",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Struct literals gain None for the new optional parameters; the assertion is unchanged.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-a8663d9d81bf09b2",
       "node_type": "ChangeEvent",
       "properties": {
@@ -167201,6 +167520,15 @@
         "change_type": "refactor",
         "detected_at": "2026-08-17",
         "name": "governed_by call sites updated for the new `ruling` parameter; assertions unchanged.",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:accept-aed760bcf45ce90a",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Struct literals gain None for the new optional parameters; the assertion is unchanged.",
         "subject": "system"
       }
     },
@@ -167307,6 +167635,15 @@
       }
     },
     {
+      "node_id": "chg:accept-bd893a26619b7671",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Struct literals gain None for the new optional parameters; the assertion is unchanged.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-bee1129a4a4fe87a",
       "node_type": "ChangeEvent",
       "properties": {
@@ -167350,6 +167687,15 @@
         "change_type": "documentation",
         "detected_at": "2026-09-04",
         "name": "Excerpt extended with lines 7086-7103 of the source (one entry, dated 2026-09-05 by the reporter, appended 22:12 local). The source file is append-only and the prefix property was re-verified before extending: head -n 7085 of the fetched file is byte-identical to the previous capture. The artifact describes the same thing, one entry longer.",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:accept-c22709fed59c0722",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Struct literals gain None for the new optional parameters; the assertion is unchanged.",
         "subject": "system"
       }
     },
@@ -167708,6 +168054,15 @@
       }
     },
     {
+      "node_id": "chg:accept-e6c96d20752a1a37",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Struct literals gain None for the new optional parameters; the assertion is unchanged.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-e6cce9fa69ea0529",
       "node_type": "ChangeEvent",
       "properties": {
@@ -167742,6 +168097,15 @@
         "change_type": "refactor",
         "detected_at": "2026-07-21",
         "name": "Freshness examination 2026-07-21: file checksum unchanged since registration (as-built == as-designed); capability carries passing verification. No drift; design holds."
+      }
+    },
+    {
+      "node_id": "chg:accept-ee0c9ad7cdc74b84",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Struct literals gain None for the new optional parameters; the assertion is unchanged.",
+        "subject": "system"
       }
     },
     {
@@ -171386,6 +171750,17 @@
         "rationale": "Recorded ON the existing node rather than as a parallel one, following that node's own rationale: splitting \"would lose the comparison, which is the only part that does any work\".\n\nSnapshotted BEFORE the merge, which is the step this same session skipped twice on other nodes and was warned about by the tool both times (\"no snapshot holds the prior value\"). Doing it correctly here is not tidiness — the prior text of that node is the record of what the frame said before this evidence arrived, and the whole value of the addition is the comparison.",
         "subject": "record",
         "summary": "Adds two observations from the 2026-08-28 session to `dec:idea-where-does-tool-use-actually-fail-four-layers`: the author of a skill not using it an hour after writing it (layers ① and ③ saturated, failure at ②), and a systematic skip pattern the frame does not predict — capture/orient skills used, change-governing skills skipped."
+      }
+    },
+    {
+      "node_id": "chg:the-fourteen-holes-are-closed-and-actor-gets-a-constructor",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "All fourteen unreachable holes are closed: eight constructors gain parameters and Actor gets the constructor it never had",
+        "rationale": "Anthony asked for all fourteen, which also answers the question that had been left open for Actor: it should be user-writable, because two of the fourteen are its properties and there is no other way to reach them.\n\nWHAT THIS DOES NOT DO. It does not make anybody state these things. It removes the reason they could not, which is the only half a tool can honestly supply — the same bound the contract-enforcement brainstorm records for standards and typings. And the remaining 28 unreachable properties stay unreachable ON PURPOSE: 15 are written by an operation, where a caller parameter would let somebody forge a computed fact, and 13 are carried by nothing at all.",
+        "subject": "system",
+        "summary": "The reachability report now reads 0 HOLE. It was 14 before this, and 43 before the split by intent separated a hole from a property an operation writes.\n\nWHAT GAINED A PARAMETER. add_capability takes tier, is_entry_point and is_exit_point — the two flags are the capability's own, distinct from Flow.entry_point which names a capability from the flow's side, and 147 of 234 capabilities carried them through the generic escape hatch. add_component and add_flow take tier. add_constraint takes concern and priority, both carried by all seven constraints. add_requirement takes concern, carried by 154 of 207. add_interface takes spec, the free-text detail its structured fields do not carry, carried by 13 of 22. add_project takes decomposition_levels — THE SHARPEST OF THE FOURTEEN, because hierarchy.rs reads the design's own ladder on every level check and nothing could write it. link_artifact takes content_ref and note_kind, which are FRAGMENT fields and are therefore set where the fragment is minted rather than through a separate tool.\n\nAND ONE IS A NEW TOOL RATHER THAN A PARAMETER. add_actor did not exist, so Actor's two properties were unreachable for one reason: there was nothing to give a parameter to. Actor is one of three types in that state; the other two, EnvironmentRule and QualityGate, have no instances anywhere and so never reached the unreachable list at all. Whether they should get constructors is still open.\n\nONE SHARED HELPER writes every optional property a core constructor does not take. That placement is the point rather than tidiness: this whole family survived because each hole was fixed where it was reported and the siblings were never asked, so one place to change is the correction. The list and the bool pair need their own writes because the helper takes strings.\n\nOMITTING ANY OF THEM CHANGES NOTHING and a test pins it: an unstated flag stays unstated, because absence means nobody said. These add a way to SAY, never an obligation to.\n\nFAILING FIRST, OBSERVED: ten tests written before the parameters existed, failing on the missing add_actor and then on nine assertions. All ten pass. Each asserts the value reaches the STORED PROPERTY rather than that the call was accepted, because a tool that takes a field and drops it passes a signature check and still fails the caller.\n\nMECHANICAL COST, recorded because it is the risky part: 30 LinkArtifactOptions literals and 131 request-struct fields across the test suite needed the new fields. Two regex attempts corrupted struct definitions and misplaced fields past a literal's closing brace before a brace-matched patcher with a definition guard worked. Both CI job shapes were run locally before pushing this time."
       }
     },
     {
@@ -185456,6 +185831,16 @@
       }
     },
     {
+      "node_id": "frag:art:test-the-fourteen-holes-are-writable",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered the_fourteen_holes_are_writable.rs"
+      }
+    },
+    {
       "node_id": "frag:art:test-the-two-reported-fields",
       "node_type": "Fragment",
       "properties": {
@@ -191691,6 +192076,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:preserved-on-write:fact:a-local-feature-error-was-worked-around-instead-of-read-as-the-ci-contract",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"DesignRule\",\"other_id\":\"rule:fix-it-properly-while-it-is-still-cheap\",\"properties\":{\"note\":\"The obvious repair was to gate the whole test file, which would have made CI green by deleting coverage from the job that has no index. Clause 1 is why it was split instead: the half that can be checked everywhere now is.\"}}]",
+        "state": "{\"basis\":\"measured\",\"confidence\":1.0,\"fact_type\":\"defect\",\"name\":\"A test was made to pass locally by adding the feature flag its failure named — which turned the CI contract into a workaround and failed the core job\",\"statement\":\"OBSERVED 2026-09-07, on the agent, in the same session as two other instances of the same class.\\n\\nWHAT HAPPENED. A new core test called search_design and reindex_search. Run locally it failed with a precise, well-written refusal: \\\"this reflow2 was built without the `fulltext` feature, so there is no search index to rebuild\\\". The agent added `--features fulltext` to its own command line, saw green, ran the WORKSPACE suite (which builds with the feature), saw green again, and pushed. CI's core job runs `cargo test -p reflow2-core --no-default-features` and failed on all three tests.\\n\\nTHE MISREADING, precisely: the refusal was read as a fact about the local command line rather than as a fact about a SHIPPED CONFIGURATION. It says the binary was built without a feature - which is exactly what one CI job does on purpose, to prove the core works with no search index and no RocksDB. The flag that made it pass locally is the flag that job does not pass.\\n\\nTHIS IS THE THIRD INSTANCE OF ONE HABIT IN ONE SESSION, and the pattern is worth more than any of them: (1) the sequence-hint fix landed in add_epoch and not its sibling plan_epoch; (2) the reachability map covered the tools named add_* and not the setters that leak the same way; (3) this. Each time the fix was correct where it was applied and the same question was never asked one step over. The project's own memory names it - A SUBSET OF A GATE SET IS NOT THE GATE SET - with a measurement beside it: `-p reflow2-core` plus `-p reflow2-mcp` run separately is 1778 tests against `--workspace`'s 1824, forty-six short, because a workspace build unifies the rocksdb feature onto core. That note was written for exactly this and was not read.\\n\\nTHE PROPER FIX, and it is not the obvious one. The obvious fix is to gate the whole test file behind the fulltext feature, which makes CI green and DELETES the coverage from the job that has no index. Instead the test was split: `claim_age_of` needs no index at all - it reads a property bag and one incoming edge - so the shared computation is tested in EVERY job, and only the two assertions that genuinely require a search surface are gated. The half that can be checked everywhere now is.\\n\\nWHAT IS NOT ESTABLISHED: how many other tests would fail under `--no-default-features` if written today. No sweep was run; the local habit of reaching for the feature flag is what needs changing, and the only evidence it has changed will be the next test that does not do it.\",\"subject_id\":\"art:search\",\"valid_from\":\"2026-09-07\"}",
+        "target_id": "fact:a-local-feature-error-was-worked-around-instead-of-read-as-the-ci-contract",
+        "target_type": "TemporalFact"
+      }
+    },
+    {
       "node_id": "snap:epoch:preserved-on-write:fact:defect-a-verifications-level-and-method-can-be-set-only-at-birth-so-a-wrong-default-is-on-the-record-forever",
       "node_type": "Snapshot",
       "properties": {
@@ -193170,10 +193565,11 @@
         "basis": "measured",
         "confidence": 1.0,
         "fact_type": "defect",
-        "name": "A test was made to pass locally by adding the feature flag its failure named — which turned the CI contract into a workaround and failed the core job",
-        "statement": "OBSERVED 2026-09-07, on the agent, in the same session as two other instances of the same class.\n\nWHAT HAPPENED. A new core test called search_design and reindex_search. Run locally it failed with a precise, well-written refusal: \"this reflow2 was built without the `fulltext` feature, so there is no search index to rebuild\". The agent added `--features fulltext` to its own command line, saw green, ran the WORKSPACE suite (which builds with the feature), saw green again, and pushed. CI's core job runs `cargo test -p reflow2-core --no-default-features` and failed on all three tests.\n\nTHE MISREADING, precisely: the refusal was read as a fact about the local command line rather than as a fact about a SHIPPED CONFIGURATION. It says the binary was built without a feature - which is exactly what one CI job does on purpose, to prove the core works with no search index and no RocksDB. The flag that made it pass locally is the flag that job does not pass.\n\nTHIS IS THE THIRD INSTANCE OF ONE HABIT IN ONE SESSION, and the pattern is worth more than any of them: (1) the sequence-hint fix landed in add_epoch and not its sibling plan_epoch; (2) the reachability map covered the tools named add_* and not the setters that leak the same way; (3) this. Each time the fix was correct where it was applied and the same question was never asked one step over. The project's own memory names it - A SUBSET OF A GATE SET IS NOT THE GATE SET - with a measurement beside it: `-p reflow2-core` plus `-p reflow2-mcp` run separately is 1778 tests against `--workspace`'s 1824, forty-six short, because a workspace build unifies the rocksdb feature onto core. That note was written for exactly this and was not read.\n\nTHE PROPER FIX, and it is not the obvious one. The obvious fix is to gate the whole test file behind the fulltext feature, which makes CI green and DELETES the coverage from the job that has no index. Instead the test was split: `claim_age_of` needs no index at all - it reads a property bag and one incoming edge - so the shared computation is tested in EVERY job, and only the two assertions that genuinely require a search surface are gated. The half that can be checked everywhere now is.\n\nWHAT IS NOT ESTABLISHED: how many other tests would fail under `--no-default-features` if written today. No sweep was run; the local habit of reaching for the feature flag is what needs changing, and the only evidence it has changed will be the next test that does not do it.",
+        "name": "Running a SUBSET of the gate set and reading it as the whole — FOUR times in one day, each time a different subset",
+        "statement": "OBSERVED 2026-09-07, on the agent, FOUR TIMES IN ONE SESSION. Recorded as one record with a counted recurrence rather than four, because the instances differ only in which subset was mistaken for the whole.\n\nOCCURRENCE 1 (the original). A new core test called search_design and reindex_search. Run locally it failed with a precise refusal: \"this reflow2 was built without the `fulltext` feature, so there is no search index to rebuild\". The agent added `--features fulltext` to its own command line, saw green, ran the WORKSPACE suite (which builds with the feature), saw green again, and pushed. CI's core job runs `cargo test -p reflow2-core --no-default-features` and failed on all three tests. THE MISREADING, precisely: the refusal was read as a fact about the local command line rather than about a SHIPPED CONFIGURATION — one CI job builds the core without that feature on purpose, to prove it works with no search index and no RocksDB. The flag that made it pass locally is the flag that job does not pass.\n\nOCCURRENCE 2, SAME DAY, ON THE FIX FOR OCCURRENCE 1. Having learned to run both TEST shapes, the agent ran exactly those two and pushed. CI's workspace job also runs CLIPPY, which failed on `explicit_auto_deref` in the helper written that hour. Two test shapes are not the gate set either; the job runs fmt, clippy on both crates, the Python suites and the instruments beside them.\n\nTHE PATTERN ACROSS ALL FOUR, and it is the same one three other times today in a different guise: A FIX IS APPLIED WHERE THE PROBLEM WAS SEEN AND THE SAME QUESTION IS NEVER ASKED ONE STEP OVER. The sequence hint fixed in add_epoch and not plan_epoch; the reachability map covering the tools named add_* and not the setters; the test-shape lesson learned for tests and not for lint. Each correction was right where it landed.\n\nTHE PROJECT'S OWN MEMORY NAMES IT — A SUBSET OF A GATE SET IS NOT THE GATE SET — with a measurement beside it: `-p reflow2-core` plus `-p reflow2-mcp` run separately is 1778 tests against `--workspace`'s 1824, forty-six short, because a workspace build unifies the rocksdb feature onto core. That note was written for exactly this and was read only after the second failure.\n\nTHE HONEST READING, which the memory also states: the only two truthful sentences are \"I ran all of it\" and \"I ran these and not those\". Anything in between is this defect.\n\nTHE PROPER FIX for occurrence 1 was NOT the obvious one. Gating the whole test file behind the fulltext feature would have made CI green by DELETING coverage from the job with no index. The test was split instead: `claim_age_of` needs no index, so the shared computation runs in every job, and only the assertions that genuinely require a search surface are gated.\n\nWHAT IS NOT ESTABLISHED: whether the habit has changed. The only evidence will be the next change that runs the whole set before pushing rather than the part that seems relevant.",
         "subject_id": "art:search",
-        "valid_from": "2026-09-07"
+        "valid_from": "2026-09-07",
+        "value": "{\"occurrences\": 4, \"same_day\": true}"
       }
     },
     {
@@ -201589,7 +201985,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:1850d13c7c0ef8e557e386be2cb4c0c72904a7fa5858695f49fb587fb7ba700b",
+  "prev_content_hash": "sha256:56912e231d07f5b496d08f0a26e0fd3fb28780ca63cdb5082d0993af93561450",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

@@ -65,6 +65,7 @@ fn req(id: &str, name: &str, statement: &str) -> RequirementReq {
         approver: None,
         acted_at: None,
         priority: None,
+        concern: None,
     }
 }
 

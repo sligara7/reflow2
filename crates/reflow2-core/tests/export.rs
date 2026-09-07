@@ -33,6 +33,8 @@ fn a_design() -> DesignGraph {
         provenance: None,
         fragment_id: None,
         checksum: Some("sha256:abc".into()),
+        content_ref: None,
+        note_kind: None,
     })
     .unwrap();
     g.set_requirement_status("req:offline", "accepted").unwrap();

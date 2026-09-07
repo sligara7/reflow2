@@ -2,16 +2,6 @@
   "_comment": "Every Type.property the served surface cannot write, SPLIT BY INTENT. `hole` = nothing can set it and somebody would want to. `machine_written` = an operation writes it and a caller parameter would be wrong, so `written_by` names that operation. `unused` = nothing writes it and nobody has carried it. A flat count conflated the first two and could not be read as a to-do list. `vocabulary_reach.py --check` fails when a NEW unreachable property appears that this file does not classify.",
   "entries": [
     {
-      "property": "Actor.actor_type",
-      "kind": "hole",
-      "reason": "Actor has no typed constructor at all, so neither of its properties can be given a parameter until somebody decides whether Actors should be user-writable."
-    },
-    {
-      "property": "Actor.description",
-      "kind": "hole",
-      "reason": "Same: no add_actor exists to carry it."
-    },
-    {
       "property": "Artifact.created_at",
       "kind": "unused",
       "reason": "0 of 295 carry one. THE CORE TAKES NO CLOCK by design, so a creation timestamp can only ever be caller-supplied, and no caller has wanted one.",
@@ -27,36 +17,6 @@
       "property": "Artifact.signature",
       "kind": "unused",
       "reason": "0 of 295. A function signature or part number; declared, never wanted."
-    },
-    {
-      "property": "Capability.is_entry_point",
-      "kind": "hole",
-      "reason": "Marks a flow's starting capability. 147 of 234 carry one, every one written through the generic escape hatch."
-    },
-    {
-      "property": "Capability.is_exit_point",
-      "kind": "hole",
-      "reason": "Marks a flow's terminal capability. Same shape as its sibling."
-    },
-    {
-      "property": "Capability.tier",
-      "kind": "hole",
-      "reason": "153 of 234 carry a tier and nothing on the surface can set it."
-    },
-    {
-      "property": "Component.tier",
-      "kind": "hole",
-      "reason": "91 of 108 carry a tier written through create_node."
-    },
-    {
-      "property": "Constraint.concern",
-      "kind": "hole",
-      "reason": "The cross-cutting concern a budget belongs to. All 7 constraints carry one; add_constraint offers no parameter."
-    },
-    {
-      "property": "Constraint.priority",
-      "kind": "hole",
-      "reason": "All 7 carry a priority and add_constraint cannot set it."
     },
     {
       "property": "Decision.alternatives",
@@ -89,16 +49,6 @@
       "written_by": "reconcile passes (drift.rs, verify.rs, fielded.rs)"
     },
     {
-      "property": "Flow.tier",
-      "kind": "hole",
-      "reason": "Same tier family as Capability and Component; the only Flow carries one."
-    },
-    {
-      "property": "Fragment.content_ref",
-      "kind": "hole",
-      "reason": "A pointer to source content rather than inlining it. The fragment mint does not write it and 2 of 221 carry one, so the demand is real but thin."
-    },
-    {
       "property": "Fragment.created_at",
       "kind": "unused",
       "reason": "0 of 221. Same no-clock reason.",
@@ -121,11 +71,6 @@
       "reason": "0 of 221. What the unit of work was meant to accomplish; never written."
     },
     {
-      "property": "Fragment.note_kind",
-      "kind": "hole",
-      "reason": "Whose voice a note fragment is in. Same thin-but-real shape as content_ref."
-    },
-    {
       "property": "Fragment.phase",
       "kind": "unused",
       "reason": "0 of 221. Never written."
@@ -137,20 +82,10 @@
       "written_by": "link_artifact (artifact.rs), corpus ingest"
     },
     {
-      "property": "Interface.spec",
-      "kind": "hole",
-      "reason": "The free-text detail the structured fields do not carry. set_interface_spec writes the structured ones and not this; 13 of 22 interfaces carry it anyway."
-    },
-    {
       "property": "Project.created_at",
       "kind": "unused",
       "reason": "0 of 1. Same no-clock reason.",
       "written_by": "(the core never reads the system time)"
-    },
-    {
-      "property": "Project.decomposition_levels",
-      "kind": "hole",
-      "reason": "THE DESIGN'S OWN LADDER, read by hierarchy.rs on every level check and settable by no tool. A user stating their rungs is exactly the case this exists for."
     },
     {
       "property": "Project.mirror_content_hash",
@@ -203,11 +138,6 @@
       "kind": "unused",
       "reason": "0 of 54. Same no-clock reason; a release's date lives on its epoch.",
       "written_by": "(the core never reads the system time)"
-    },
-    {
-      "property": "Requirement.concern",
-      "kind": "hole",
-      "reason": "154 of 207 requirements carry a cross-cutting concern nothing on the surface can set."
     },
     {
       "property": "Resource.resource_type",
