@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:a3d491f2fba61439ff4006932a6b633e0f8fb23f925e749c0019e75ec0ddcc23",
+  "content_hash": "sha256:1850d13c7c0ef8e557e386be2cb4c0c72904a7fa5858695f49fb587fb7ba700b",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -39109,6 +39109,24 @@
         "action": "modified"
       },
       "to_id": "cap:the-record-moved-is-surfaced"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-unreachable-count-is-split-by-intent-so-only-the-holes-are-work",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-vocabulary-reach"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-unreachable-count-is-split-by-intent-so-only-the-holes-are-work",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:vocabulary-reach"
     },
     {
       "edge_type": "CHANGED",
@@ -148421,6 +148439,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:vocabulary-reach-baseline",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "req:declared-vocabulary-is-reachable-from-the-surface"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:wall-check",
       "properties": {
         "completeness": "complete",
@@ -155086,6 +155113,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:vocabulary-reach-baseline",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:vocabulary-reach-baseline"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:wall-check",
       "properties": {
         "action": "created"
@@ -158339,7 +158374,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "test",
-        "checksum": "sha256:c010977b1d386dd46317b64631b939380baa5d12414b63324b137ffb1d535726",
+        "checksum": "sha256:366f9cb7009c710f2071e199e9f2f096123149f690adae88576ff45dee3e422d",
         "location": "tools/test_vocabulary_reach.py",
         "name": "test_vocabulary_reach.py",
         "status": "realized"
@@ -158783,9 +158818,20 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:8347306eb1c87dcdfbcb0e2a0b910c9ed7195027a305a6f70faa541d7ac52e8d",
+        "checksum": "sha256:5f6c5044ef7b4f1707e1755e6ea52c7cfdeacf5749e6c62fb89d6ea1d24737f1",
         "location": "tools/vocabulary_reach.py",
         "name": "tools/vocabulary_reach.py",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:vocabulary-reach-baseline",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "config",
+        "checksum": "sha256:7c3acf5f223e626fdbc8ceedbb8503548c288db9937ed6290e3cefa4fa322496",
+        "location": "tools/vocabulary_reach_baseline.json",
+        "name": "vocabulary_reach_baseline.json",
         "status": "realized"
       }
     },
@@ -169041,6 +169087,17 @@
         "rationale": "⭐ THE REPORTED SYMPTOM WAS NOISE AND THE MEASURED DEFECT WAS FALSEHOOD, and the difference chose the fix. The report described five noisy lines burying one true one; the committed record was `in_step` at 3662/3662 and emitted nothing, so there was no true line and every one of the five was untrue. A noise framing leads to ranking, deduplication or path filtering — all of which would have left five false sentences saying the same false thing more quietly.\n\n🛑 AND THE FIX THE SYMPTOM ARGUES FOR IS ALREADY ON THE RECORD AS WRONG. Every noisy path sat under /tmp, so 'forget scratch targets' is the obvious move and was the one proposed. `chg:the-orientation-call-stops-rereading-stale-records` shipped exactly that rule five weeks ago and reverted it — fifteen tests in `the_record_moved_and_the_session_is_told` failed and were right to, because hermetic tests, CI workspaces and containers all put genuine shared records under a temp dir. It would also not have worked: this seat tracks a 1545-node backup outside any temp path that produces the identical false sentence on entering the freshest six. Step ② of the root-cause skill paid for itself here — the precedent search returned the refutation of the leading candidate before any code was touched.\n\n⭐ THE CLASS, WHICH IS WHAT MAKES THIS MORE THAN A LINE-COUNT FIX: a per-item computation phrased as a whole-system fact, invisible because every test used exactly ONE item. All 21 tests in this file drove a single sync target, at which scope the per-file answer and the seat answer are identical and the bug cannot appear. The served surface routinely carries six. The pinning tests now drive TWO targets — one current beside one stale — which is the smallest fixture in which the two scopes can disagree.\n\nOBSERVED FAILING FIRST: `a_stale_side_record_does_not_claim_the_seat_holds_unexported_work` was written against the unfixed code and panicked with the false sentence quoted in the assertion output, then passed after the change. 23 tests pass in the file; fmt and clippy clean.",
         "subject": "system",
         "summary": "`loop_status` no longer emits one 'N node(s) have never been exported' line per stale record. `sync_debt::unexported_work(&debts, live_nodes)` answers the question ONCE for the seat: it takes the most complete record the seat is accounted for against (states `in_step` or `moved_but_current` only — a `behind` record's count is inflated by another seat's work and cannot vouch for this one's), stays silent if that record already holds as much as the graph does however far every other record has fallen, and otherwise returns a single line naming that record and the number of nodes in NO record. The clause was REMOVED from `SyncDebt::message()`, whose in-step arm now always returns the node-count-bounds sentence — a message about one file may describe that file and may not speak for the graph. ON REFLOW2'S OWN SEAT this turns 5 false lines into 0."
+      }
+    },
+    {
+      "node_id": "chg:the-unreachable-count-is-split-by-intent-so-only-the-holes-are-work",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "name": "The unreachable-vocabulary baseline is split by intent: 14 holes, 15 written by an operation, 13 unused — and the count can be read as a to-do list again",
+        "rationale": "Anthony asked whether to address the 43 unreachable properties and the honest answer was no, not as a block — about two thirds of them are correctly unreachable and a parameter for them would be a forgery hazard rather than a feature. But saying that in a reply would have left the number wrong for the next reader, so the split belongs in the artifact rather than in the conversation.\n\nIT IS THE SAME FUSED-QUESTION DEFECT ONE LAYER ALONG, and that is the reason this was worth doing before the holes themselves. Earlier the same day this instrument was fixed for fusing REACHABILITY with ADOPTION. It was still fusing reachability with INTENT: it could tell that nothing writes a property and not whether anything should. Each fix answered its own question correctly and left the next one folded in behind it.\n\nWHAT IS NOT DONE: the 14 holes are not filled. That is the next piece of work and it is now a list somebody can act on rather than a number that overstates itself by two thirds. Three of the 14 belong to types with no constructor at all, which is a decision about whether those types should be user-writable and is Anthony's rather than an agent's.",
+        "subject": "system",
+        "summary": "The baseline was a flat list of 43 property names, and Anthony asked whether they should all be fixed. Reading them showed the count conflated two opposite things, so the number could not be acted on: a HOLE that somebody wants filled, and a property an OPERATION writes where a caller parameter would be actively wrong. Offering a parameter for a creation timestamp or a computed mirror hash lets a caller forge a fact the system computes.\n\nEVERY ENTRY NOW CARRIES A KIND AND A REASON A READER CAN DISAGREE WITH, and a machine_written one names the operation in `written_by` — a claim that something else writes it is unfalsifiable without naming what. The split, evidence-based rather than guessed: each property was traced to the code that sets it, per TYPE rather than per name, because property names are shared across types and a bare name grep over-attributes.\n\n14 HOLE: Actor.actor_type and .description (no constructor exists at all), Capability.is_entry_point / .is_exit_point / .tier, Component.tier, Constraint.concern / .priority, Flow.tier, Fragment.content_ref / .note_kind, Interface.spec, Project.decomposition_levels, Requirement.concern. Project.decomposition_levels is the sharpest: hierarchy.rs reads the design's own ladder on every level check and no tool can set it.\n\n15 WRITTEN BY AN OPERATION: the drift-event trio, the four mirror-coordinate fields, the two snapshot payload fields, the two provenance-fragment fields, the two question-phrasing fields, the artifact's last-confirmed date, and the decision's alternatives.\n\n13 UNUSED: six *_created_at / captured_at fields nothing carries, because THE CORE TAKES NO CLOCK by design, plus seven others declared and never written.\n\nONE WAS NEITHER, AND THE INSTRUMENT WAS SIMPLY WRONG ABOUT IT. Component.purpose reported as unreachable while add_component writes it under a parameter spelled `description`. That is a false finding, not a deliberate state, so the fix is an ALIASED map the instrument reads rather than a classification excusing it — the docstring had warned about the name-mismatch class since the first version and nothing enumerated an instance. The list is 42 now, not 43.\n\n`--update-baseline` PRESERVES classifications and INVENTS NONE: a new entry lands UNCLASSIFIED and `--check` keeps failing until a person says which kind it is and why. Refreshing the file must not be a way to make the question go away. Proven by dropping an entry and re-running both modes."
       }
     },
     {
@@ -182633,6 +182690,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered tools/vocabulary_reach.py"
+      }
+    },
+    {
+      "node_id": "frag:art:vocabulary-reach-baseline",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered vocabulary_reach_baseline.json"
       }
     },
     {
@@ -198408,7 +198475,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:a883b0499c477e4dd77339b728fc36a96d4d184122577ca4605ce67a7d2fafca",
+  "prev_content_hash": "sha256:a3d491f2fba61439ff4006932a6b633e0f8fb23f925e749c0019e75ec0ddcc23",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

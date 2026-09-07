@@ -33,6 +33,22 @@ This file is the third view: *what changed, and when*.
 
 ### Fixed
 
+- **The unreachable-vocabulary count is split by intent, so it can be read as a to-do list.** It was
+  a flat 43, which conflated two opposite things: a **hole** somebody wants filled, and a property an
+  **operation** writes where a caller parameter would be actively wrong — a parameter for a creation
+  timestamp or a computed mirror hash lets a caller forge a fact the system computes. The split, traced
+  to the code that sets each property per *type* rather than per name: **14 holes, 15 written by an
+  operation, 13 unused.** Every entry carries a reason a reader can disagree with, and a
+  machine-written one names the operation in `written_by`.
+
+  One entry was neither: `Component.purpose` was reported unreachable while `add_component` writes it
+  under a parameter spelled `description`. That is a false finding, not a deliberate state, so the
+  instrument learns the alias rather than the baseline excusing it.
+
+  `--update-baseline` now preserves classifications and invents none — a new entry lands
+  `UNCLASSIFIED` and `--check` keeps failing until a person says which kind it is and why, so
+  refreshing the file cannot make the question go away.
+
 - **A finding another record refuted no longer reads as current.** Closure had two available
   answers and the two surfaces each read a different one: the gap detector reads the `INVALIDATES`
   edge, while the age computation read `valid_to` alone — and an invalidation sets no `valid_to`.

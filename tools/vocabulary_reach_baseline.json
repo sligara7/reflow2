@@ -1,48 +1,237 @@
 {
-  "_comment": "Every Type.property the served surface cannot write, as of the last refresh. `vocabulary_reach.py --check` fails when a NEW one appears. A regression gate, not a cleanliness gate: entries here are known and grandfathered, not approved.",
-  "unreachable": [
-    "Actor.actor_type",
-    "Actor.description",
-    "Artifact.created_at",
-    "Artifact.last_confirmed_at",
-    "Artifact.signature",
-    "Capability.is_entry_point",
-    "Capability.is_exit_point",
-    "Capability.tier",
-    "Component.purpose",
-    "Component.tier",
-    "Constraint.concern",
-    "Constraint.priority",
-    "Decision.alternatives",
-    "DesignEpoch.created_at",
-    "DriftEvent.drift_type",
-    "DriftEvent.resolved",
-    "DriftEvent.severity",
-    "Flow.tier",
-    "Fragment.content_ref",
-    "Fragment.created_at",
-    "Fragment.created_by",
-    "Fragment.fragment_type",
-    "Fragment.intent",
-    "Fragment.note_kind",
-    "Fragment.phase",
-    "Fragment.title",
-    "Interface.spec",
-    "Project.created_at",
-    "Project.decomposition_levels",
-    "Project.mirror_content_hash",
-    "Project.mirror_nodes",
-    "Project.mirror_of",
-    "Project.mirrored_at",
-    "Question.context_setter",
-    "Question.prompt_id",
-    "Question.question",
-    "Question.rephrase_degraded",
-    "Release.created_at",
-    "Requirement.concern",
-    "Resource.resource_type",
-    "Snapshot.captured_at",
-    "Snapshot.edges",
-    "Snapshot.state"
+  "_comment": "Every Type.property the served surface cannot write, SPLIT BY INTENT. `hole` = nothing can set it and somebody would want to. `machine_written` = an operation writes it and a caller parameter would be wrong, so `written_by` names that operation. `unused` = nothing writes it and nobody has carried it. A flat count conflated the first two and could not be read as a to-do list. `vocabulary_reach.py --check` fails when a NEW unreachable property appears that this file does not classify.",
+  "entries": [
+    {
+      "property": "Actor.actor_type",
+      "kind": "hole",
+      "reason": "Actor has no typed constructor at all, so neither of its properties can be given a parameter until somebody decides whether Actors should be user-writable."
+    },
+    {
+      "property": "Actor.description",
+      "kind": "hole",
+      "reason": "Same: no add_actor exists to carry it."
+    },
+    {
+      "property": "Artifact.created_at",
+      "kind": "unused",
+      "reason": "0 of 295 carry one. THE CORE TAKES NO CLOCK by design, so a creation timestamp can only ever be caller-supplied, and no caller has wanted one.",
+      "written_by": "(the core never reads the system time)"
+    },
+    {
+      "property": "Artifact.last_confirmed_at",
+      "kind": "machine_written",
+      "reason": "reconcile_artifacts records when the file was last OBSERVED to match. A caller-set value would assert an observation nobody made.",
+      "written_by": "reconcile_artifacts (drift.rs)"
+    },
+    {
+      "property": "Artifact.signature",
+      "kind": "unused",
+      "reason": "0 of 295. A function signature or part number; declared, never wanted."
+    },
+    {
+      "property": "Capability.is_entry_point",
+      "kind": "hole",
+      "reason": "Marks a flow's starting capability. 147 of 234 carry one, every one written through the generic escape hatch."
+    },
+    {
+      "property": "Capability.is_exit_point",
+      "kind": "hole",
+      "reason": "Marks a flow's terminal capability. Same shape as its sibling."
+    },
+    {
+      "property": "Capability.tier",
+      "kind": "hole",
+      "reason": "153 of 234 carry a tier and nothing on the surface can set it."
+    },
+    {
+      "property": "Component.tier",
+      "kind": "hole",
+      "reason": "91 of 108 carry a tier written through create_node."
+    },
+    {
+      "property": "Constraint.concern",
+      "kind": "hole",
+      "reason": "The cross-cutting concern a budget belongs to. All 7 constraints carry one; add_constraint offers no parameter."
+    },
+    {
+      "property": "Constraint.priority",
+      "kind": "hole",
+      "reason": "All 7 carry a priority and add_constraint cannot set it."
+    },
+    {
+      "property": "Decision.alternatives",
+      "kind": "machine_written",
+      "reason": "register_alternative writes the options considered. Hand-setting the JSON would let a caller claim a fork nobody registered.",
+      "written_by": "register_alternative (alternatives.rs)"
+    },
+    {
+      "property": "DesignEpoch.created_at",
+      "kind": "unused",
+      "reason": "2 of 202, both through create_node. Same no-clock reason.",
+      "written_by": "(the core never reads the system time)"
+    },
+    {
+      "property": "DriftEvent.drift_type",
+      "kind": "machine_written",
+      "reason": "Minted by the reconcile pass that detected the drift.",
+      "written_by": "reconcile_artifacts / reconcile_verification (drift.rs, verify.rs, fielded.rs)"
+    },
+    {
+      "property": "DriftEvent.resolved",
+      "kind": "machine_written",
+      "reason": "Set when the drift is dispositioned, by the accept that resolved it.",
+      "written_by": "set_artifact_checksum (artifact.rs), reconcile passes"
+    },
+    {
+      "property": "DriftEvent.severity",
+      "kind": "machine_written",
+      "reason": "Computed by the pass that found the drift.",
+      "written_by": "reconcile passes (drift.rs, verify.rs, fielded.rs)"
+    },
+    {
+      "property": "Flow.tier",
+      "kind": "hole",
+      "reason": "Same tier family as Capability and Component; the only Flow carries one."
+    },
+    {
+      "property": "Fragment.content_ref",
+      "kind": "hole",
+      "reason": "A pointer to source content rather than inlining it. The fragment mint does not write it and 2 of 221 carry one, so the demand is real but thin."
+    },
+    {
+      "property": "Fragment.created_at",
+      "kind": "unused",
+      "reason": "0 of 221. Same no-clock reason.",
+      "written_by": "(the core never reads the system time)"
+    },
+    {
+      "property": "Fragment.created_by",
+      "kind": "unused",
+      "reason": "0 of 221. Authorship of a fragment is carried by its AUTHORED_BY edge instead."
+    },
+    {
+      "property": "Fragment.fragment_type",
+      "kind": "machine_written",
+      "reason": "A provenance fragment is minted by link_artifact; its kind is decided there, not stated by a caller.",
+      "written_by": "link_artifact (artifact.rs), corpus ingest"
+    },
+    {
+      "property": "Fragment.intent",
+      "kind": "unused",
+      "reason": "0 of 221. What the unit of work was meant to accomplish; never written."
+    },
+    {
+      "property": "Fragment.note_kind",
+      "kind": "hole",
+      "reason": "Whose voice a note fragment is in. Same thin-but-real shape as content_ref."
+    },
+    {
+      "property": "Fragment.phase",
+      "kind": "unused",
+      "reason": "0 of 221. Never written."
+    },
+    {
+      "property": "Fragment.title",
+      "kind": "machine_written",
+      "reason": "Minted with the fragment.",
+      "written_by": "link_artifact (artifact.rs), corpus ingest"
+    },
+    {
+      "property": "Interface.spec",
+      "kind": "hole",
+      "reason": "The free-text detail the structured fields do not carry. set_interface_spec writes the structured ones and not this; 13 of 22 interfaces carry it anyway."
+    },
+    {
+      "property": "Project.created_at",
+      "kind": "unused",
+      "reason": "0 of 1. Same no-clock reason.",
+      "written_by": "(the core never reads the system time)"
+    },
+    {
+      "property": "Project.decomposition_levels",
+      "kind": "hole",
+      "reason": "THE DESIGN'S OWN LADDER, read by hierarchy.rs on every level check and settable by no tool. A user stating their rungs is exactly the case this exists for."
+    },
+    {
+      "property": "Project.mirror_content_hash",
+      "kind": "machine_written",
+      "reason": "The mirror coordinate is written by mirror_surface. A hand-set hash would let a mirror claim a provenance it does not have.",
+      "written_by": "mirror_surface (export.rs)"
+    },
+    {
+      "property": "Project.mirror_nodes",
+      "kind": "machine_written",
+      "reason": "Written by mirror_surface with what the mirror actually brought in.",
+      "written_by": "mirror_surface (export.rs)"
+    },
+    {
+      "property": "Project.mirror_of",
+      "kind": "machine_written",
+      "reason": "Written by mirror_surface; it names the design mirrored FROM.",
+      "written_by": "mirror_surface (export.rs)"
+    },
+    {
+      "property": "Project.mirrored_at",
+      "kind": "machine_written",
+      "reason": "The date the mirror was taken, written by the act of taking it.",
+      "written_by": "mirror_surface (export.rs)"
+    },
+    {
+      "property": "Question.context_setter",
+      "kind": "unused",
+      "reason": "57 of 57 carry one, all written by the same gap_to_prompt path that writes `question` \u2014 but no setter appears in the source for it, so it is recorded as unwritten-by-the-surface pending a look at how it lands."
+    },
+    {
+      "property": "Question.prompt_id",
+      "kind": "unused",
+      "reason": "0 of 57. The id of the LLM request that phrased it; declared and never written."
+    },
+    {
+      "property": "Question.question",
+      "kind": "machine_written",
+      "reason": "The question AS PUT to the user, written by gap_to_prompt when it phrases one.",
+      "written_by": "gap_to_prompt (detect.rs)"
+    },
+    {
+      "property": "Question.rephrase_degraded",
+      "kind": "machine_written",
+      "reason": "Records that phrasing fell back to raw gap text \u2014 a fact about the phrasing run, not a caller's claim.",
+      "written_by": "gap_to_prompt (detect.rs)"
+    },
+    {
+      "property": "Release.created_at",
+      "kind": "unused",
+      "reason": "0 of 54. Same no-clock reason; a release's date lives on its epoch.",
+      "written_by": "(the core never reads the system time)"
+    },
+    {
+      "property": "Requirement.concern",
+      "kind": "hole",
+      "reason": "154 of 207 requirements carry a cross-cutting concern nothing on the surface can set."
+    },
+    {
+      "property": "Resource.resource_type",
+      "kind": "unused",
+      "reason": "1 of 1, written by external_dependency's own path. Left here rather than claimed as machine-written because one instance is not evidence.",
+      "written_by": "external_dependency (depends.rs)"
+    },
+    {
+      "property": "Snapshot.captured_at",
+      "kind": "unused",
+      "reason": "0 of 241. The snapshot's position in time is its epoch, not a timestamp.",
+      "written_by": "(the core never reads the system time)"
+    },
+    {
+      "property": "Snapshot.edges",
+      "kind": "machine_written",
+      "reason": "The node's edges at the epoch, captured by record_change. A caller-supplied snapshot would be a forged history.",
+      "written_by": "record_change (temporal.rs)"
+    },
+    {
+      "property": "Snapshot.state",
+      "kind": "machine_written",
+      "reason": "The node's property bag at the epoch, captured by record_change.",
+      "written_by": "record_change (temporal.rs)"
+    }
   ]
 }
