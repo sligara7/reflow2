@@ -31,6 +31,39 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.49.0] — 2026-09-06
+
+Minor: request shapes changed (additively) and two schema declarations moved. The schema stamp did
+NOT move (29 node types / 65 edge types), so no upgrade doc is owed. Three of Anthony's rulings from
+the field-feedback ledger are built, plus the detector-precision batch.
+
+### Added
+
+- **Enum request fields publish their legal values in the tool schema** — 38 fields (`method`,
+  `level`, `auth`, `change_type`, every `status`, …) now carry `enum: [...]`, read at tool-listing
+  time from the compiled-in design schema (34) or from the very const the handler checks (4). One
+  source of truth: published and enforced cannot drift. The doc comment survives beside the enum.
+  *Consumer: nothing to change; the first call can now be right instead of learning the values by
+  failing.* A toolsnap guard fails the build when a description hand-lists values but publishes no
+  enum, or lists one the enum lacks — it reported 41 fields on the pre-change snapshots and caught
+  a mis-sourcing inside the change itself.
+- **Two more prescribed near-duplicate pairs** — a Decision beside the Verification that measures
+  its subject, and a Requirement promoted from the brainstorm Decision that spawned it, are
+  REPORTED rather than refused (dev_storyflow: nine fires, zero duplicates).
+- **Gaps that share one cause name each other.** An `unallocated_capability` and an
+  `unrealized_capability` on the same capability each cite the sibling and the single `allocate`
+  call that clears both. Nothing is dropped — all the findings are true; this treats the reporting.
+
+### Changed
+
+- **`SCHEDULED_FOR` admits Verification and Decision.** A planned check and a pending ruling can be
+  placed in the increment that owes them; before, the only edge was past-tense `OCCURS_DURING`.
+  An Artifact is still refused.
+- **Every detector skips a node an accepted Decision has withdrawn.** All 31 detector scans read
+  through the OBSOLETED set (computed once per write generation), not only the three capability
+  detectors. A retired DesignRule stops raising `unstated_rule_enforcement`; so does every other
+  type-keyed finding. Heal-side structural detectors are not yet routed the same way.
+
 ### Changed
 
 - **Naming a node: the type is optional wherever a tool refers to an EXISTING node by a
@@ -45,6 +78,26 @@ This file is the third view: *what changed, and when*.
   required on purpose: the one destructive read. *Consumer: existing calls that pass the
   type are unchanged; you may now leave it out.*
 
+### Fixed
+
+- **`Verification.method` and `.level` no longer take injected defaults.** A check recorded without
+  them stores nothing for them — absence means nobody said. Before, the validator wrote `test` /
+  `unit` into the store as if chosen, and no tool could correct it (Alex: an inspection recorded as a
+  unit test forever). Existing nodes keep whatever they carry; `set_verification_kind` corrects them.
+  The ingest path still warns on an unknown method and drops it; nothing stands in.
+- **A wrong fix was reverted before it shipped.** `unsatisfied_requirement` was made to skip
+  `deferred` requirements on the strength of a recorded defect the ledger showed as open — but that
+  case had already been built (a deferred requirement is asked a different, lower-ranked question)
+  and its fact never closed. Existing pins caught it within the hour. Recorded, with the lesson: a
+  fix that does not close its finding misleads the next fixer.
+
+### Known and deliberately not done
+
+- Constructors do not yet accept an initial status with a named approver (convention ii), and the
+  relation tools still use three families of argument NAMES (convention iii) — both awaiting a ruling.
+- `delete_node` keeps `node_type` required on purpose: the one destructive read.
+- Authorization roles still have no home (`req:vocabulary-covers-personnel`, deferred); the `auth`
+  refusal points at the workaround.
 
 ## [0.48.0] — 2026-09-05
 
