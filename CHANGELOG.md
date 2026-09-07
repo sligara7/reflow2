@@ -31,6 +31,8 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.53.0] — 2026-09-07
+
 ### Fixed
 
 - **The unreachable-vocabulary count is split by intent, so it can be read as a to-do list.** It was
