@@ -108,6 +108,24 @@ GENERIC = {"create_node", "create_nodes", "create_edge", "create_edges"}
 # disappears (somebody gave the property a parameter) is progress and does not.
 BASELINE = REPO / "tools/vocabulary_reach_baseline.json"
 
+# A PROPERTY A TOOL WRITES UNDER A DIFFERENT PARAMETER NAME. The name match
+# cannot see these and reports them as unreachable, which is a FALSE finding —
+# the module docstring has warned about the class since the first version and
+# nothing enumerated the instances.
+#
+# `add_component` takes `description` and stores it as `purpose`, which is the
+# name structure.yaml has always used. That mismatch has bitten before:
+# `chg:accept-0500fc47eb120e13` records add_component's own required-field
+# resolver asking for a stored property called `description` and missing on
+# every existing Component. Teaching the instrument the alias is the fix;
+# classifying it as a deliberate hole would have been an excuse.
+#
+# KEEP THIS SHORT. Every entry is a place where the schema and the surface
+# disagree on a name, and the better answer is usually to make them agree.
+ALIASED = {
+    ("Component", "purpose"): "add_component's `description` parameter",
+}
+
 
 def declared() -> tuple[dict[str, dict], dict[str, dict]]:
     """Every declared node property and edge property, from schema/*.yaml."""
@@ -290,7 +308,7 @@ def main(argv: list[str] | None = None) -> int:
             # writable, and no amount of disuse makes an offered one unwritable.
             # Per-type when the type has a known constructor; the flat set
             # otherwise, which under-reports rather than inventing a finding.
-            offered = p in params_by_type.get(t, params)
+            offered = p in params_by_type.get(t, params) or (t, p) in ALIASED
             if used:
                 if not offered and type_counts[t]:
                     why = (
@@ -337,7 +355,9 @@ def main(argv: list[str] | None = None) -> int:
                 file=sys.stderr,
             )
             return 2
-        known = set(json.loads(BASELINE.read_text()).get("unreachable", []))
+        doc = json.loads(BASELINE.read_text())
+        entries = {e["property"]: e for e in doc.get("entries", [])}
+        known = set(entries)
         new = [x for x in unreachable_now if x not in known]
         if new:
             print("=" * 74)
@@ -349,13 +369,41 @@ def main(argv: list[str] | None = None) -> int:
             print(
                 "A property was declared that no typed tool accepts, so the only way to write\n"
                 "it is the generic escape hatch — and a schema default would make it look\n"
-                "adopted while nobody could set it. Give it a parameter on the constructor for\n"
-                "its type, or, if it is deliberately unreachable, record why and add it to\n"
-                f"{BASELINE.relative_to(REPO)} with --update-baseline in the SAME diff."
+                "adopted while nobody could set it.\n\n"
+                "EITHER give it a parameter on the constructor for its type, OR classify it in\n"
+                f"{BASELINE.relative_to(REPO)} — `hole` if nothing can write it and somebody\n"
+                "wants to, `machine_written` (naming the operation in `written_by`) if a caller\n"
+                "parameter would be wrong, `unused` if nothing writes it and nobody has carried\n"
+                "it. A kind with no reason is not a classification.\n\n"
+                "If a tool DOES write it under a different parameter name, the answer is neither:\n"
+                "add the pair to ALIASED, because the finding is false rather than deliberate."
+            )
+            return 1
+        KINDS = {"machine_written", "hole", "unused"}
+        unclassified = sorted(
+            k
+            for k, e in entries.items()
+            if e.get("kind") not in KINDS or not str(e.get("reason", "")).strip()
+        )
+        if unclassified:
+            print("=" * 74)
+            print(f"BASELINE ENTRIES WITH NO CLASSIFICATION: {len(unclassified)}")
+            print("=" * 74)
+            for k in unclassified:
+                print(f"  {k}")
+            print(
+                "\nA flat list conflates a HOLE with a property an operation writes, and the\n"
+                "count then cannot be read as a to-do list. Each entry needs a kind and a\n"
+                "reason a reader can disagree with."
             )
             return 1
         gone = sorted(known - set(unreachable_now))
-        print(f"vocabulary reach: OK — {len(unreachable_now)} unreachable, none new.")
+        by_kind = collections.Counter(entries[k]["kind"] for k in unreachable_now if k in entries)
+        print(
+            f"vocabulary reach: OK — {len(unreachable_now)} unreachable, none new "
+            f"({by_kind.get('hole', 0)} HOLE, {by_kind.get('machine_written', 0)} written by an "
+            f"operation, {by_kind.get('unused', 0)} unused)."
+        )
         if gone:
             print(
                 f"  {len(gone)} became reachable since the baseline "
@@ -364,23 +412,74 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     if update_baseline:
+        # PRESERVES CLASSIFICATIONS AND INVENTS NONE. A new entry lands
+        # unclassified on purpose, so `--check` keeps failing until a person
+        # says which kind it is and why. Refreshing the file must not be a way
+        # to make the question go away.
+        prior = {}
+        if BASELINE.exists():
+            prior = {e["property"]: e for e in json.loads(BASELINE.read_text()).get("entries", [])}
+        entries = []
+        for prop in unreachable_now:
+            entries.append(prior.get(prop, {"property": prop, "kind": "UNCLASSIFIED", "reason": ""}))
+        dropped = sorted(set(prior) - set(unreachable_now))
         BASELINE.write_text(
             json.dumps(
                 {
                     "_comment": (
-                        "Every Type.property the served surface cannot write, as of the last "
-                        "refresh. `vocabulary_reach.py --check` fails when a NEW one appears. "
-                        "A regression gate, not a cleanliness gate: entries here are known "
-                        "and grandfathered, not approved."
+                        "Every Type.property the served surface cannot write, SPLIT BY INTENT. "
+                        "`hole` = nothing can set it and somebody would want to. "
+                        "`machine_written` = an operation writes it and a caller parameter would "
+                        "be wrong, so `written_by` names that operation. `unused` = nothing "
+                        "writes it and nobody has carried it. A flat count conflated the first "
+                        "two and could not be read as a to-do list. "
+                        "`vocabulary_reach.py --check` fails when a NEW unreachable property "
+                        "appears that this file does not classify."
                     ),
-                    "unreachable": unreachable_now,
+                    "entries": entries,
                 },
                 indent=2,
             )
             + "\n"
         )
-        print(f"wrote {len(unreachable_now)} entries to {BASELINE.relative_to(REPO)}")
+        fresh = [e["property"] for e in entries if e["kind"] == "UNCLASSIFIED"]
+        print(f"wrote {len(entries)} entries to {BASELINE.relative_to(REPO)}")
+        if dropped:
+            print(f"  {len(dropped)} became reachable and were removed: {', '.join(dropped[:6])}")
+        if fresh:
+            print(f"  {len(fresh)} NEED CLASSIFYING before --check will pass: {', '.join(fresh)}")
         return 0
+
+    # WHAT THE COUNT MEANS, before the count. A reader who sees "42 unreachable"
+    # and treats it as a work queue is wrong about two thirds of it: a creation
+    # timestamp or a computed mirror hash SHOULD be unreachable, and offering a
+    # parameter for one would let a caller forge a fact the system computes.
+    # Only the holes are work.
+    if BASELINE.exists():
+        classified = {
+            e["property"]: e for e in json.loads(BASELINE.read_text()).get("entries", [])
+        }
+        buckets: dict[str, list[str]] = collections.defaultdict(list)
+        for prop in unreachable_now:
+            buckets[classified.get(prop, {}).get("kind", "UNCLASSIFIED")].append(prop)
+        print("=" * 74)
+        print("UNREACHABLE, SPLIT BY INTENT — only the first bucket is work")
+        print("=" * 74)
+        for kind, blurb in [
+            ("hole", "HOLE — nothing can write it and somebody wants to"),
+            ("machine_written", "written by an OPERATION — a caller parameter would be wrong"),
+            ("unused", "unused — nothing writes it and nobody has carried it"),
+            ("UNCLASSIFIED", "UNCLASSIFIED — the baseline does not say which"),
+        ]:
+            rows = sorted(buckets.get(kind, []))
+            if not rows:
+                continue
+            print(f"\n  {blurb}: {len(rows)}")
+            for r in rows:
+                e = classified.get(r, {})
+                by = f"  [{e['written_by']}]" if e.get("written_by") else ""
+                print(f"    {r}{by}")
+        print()
 
     print(f"declared node properties : {total_props} across {len(node_props)} types")
     print(f"declared edge types      : {len(edge_props)}")

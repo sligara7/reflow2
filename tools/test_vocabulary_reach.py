@@ -124,6 +124,49 @@ def main() -> int:
         "the adoption question must survive the split, not be replaced by it",
     )
 
+    baseline = REPO / "tools/vocabulary_reach_baseline.json"
+
+    # ── THE SPLIT BY INTENT ────────────────────────────────────────────────
+    #
+    # A flat count of unreachable properties conflates two opposite things:
+    # a HOLE (nobody can write it and somebody wants to) and a property an
+    # OPERATION writes, where a caller parameter would be actively wrong —
+    # letting somebody hand-set a creation timestamp or a computed mirror hash
+    # is a forgery hazard, not a feature. Measured 2026-09-07: of 43 entries,
+    # roughly two thirds were the second kind. The number could not be read as
+    # a to-do list, which is the same fused-question defect this instrument was
+    # already fixed for once, one layer along.
+    entries = []
+    if baseline.exists():
+        entries = json.loads(baseline.read_text()).get("entries", [])
+    check(
+        "the baseline classifies each entry rather than listing it flat",
+        bool(entries) and all(isinstance(e, dict) for e in entries),
+        "entries must be objects carrying a kind and a reason, not bare strings",
+    )
+    KINDS = {"machine_written", "hole", "unused"}
+    unclassified = [
+        e.get("property")
+        for e in entries
+        if e.get("kind") not in KINDS or not str(e.get("reason", "")).strip()
+    ]
+    check(
+        "every entry declares a kind AND a reason a reader can disagree with",
+        not unclassified,
+        f"unclassified: {unclassified[:6]}",
+    )
+    machine = [e for e in entries if e.get("kind") == "machine_written"]
+    check(
+        "a machine-written entry names the operation that writes it",
+        all("written_by" in e and str(e["written_by"]).strip() for e in machine),
+        "a claim that something else writes it is unfalsifiable without naming what",
+    )
+    check(
+        "the report separates holes from what an operation writes",
+        "HOLE" in out.upper() and "OPERATION" in out.upper(),
+        "a single count conflates a gap with a deliberate state and cannot be acted on",
+    )
+
     # --check is what makes the answer reach somebody: it is the mode CI runs.
     r2 = run("--check")
     check(
@@ -133,13 +176,12 @@ def main() -> int:
     )
 
     # And it must actually FAIL on a new one, or wiring it into CI buys nothing.
-    baseline = REPO / "tools/vocabulary_reach_baseline.json"
     check("a baseline is committed", baseline.exists(), "the check needs something to compare to")
     if baseline.exists():
         original = baseline.read_text()
         try:
             trimmed = json.loads(original)
-            entries = trimmed.get("unreachable", [])
+            entries = trimmed.get("entries", [])
             check(
                 "the baseline is not empty",
                 bool(entries),
@@ -147,8 +189,8 @@ def main() -> int:
             )
             if entries:
                 # Drop one known entry: the instrument must then report it as new.
-                dropped = entries[0]
-                trimmed["unreachable"] = entries[1:]
+                dropped = entries[0]["property"]
+                trimmed["entries"] = entries[1:]
                 baseline.write_text(json.dumps(trimmed, indent=2) + "\n")
                 r3 = run("--check")
                 check(
