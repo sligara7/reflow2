@@ -731,6 +731,12 @@ reading order (Vision → Design → Process → Heritage). Then:
    one exploratory `Decision` per idea with its counter-argument. A triage that leaves neither did
    not follow this rule. `enforced` deliberately unstated — the detector that would notice absence
    is not built. `rule:field-feedback-issues-are-root-caused-and-ideas-are-brainstormed`.
+   **Registering the report itself takes THREE writes, not one:** `add_artifact` (+ a first
+   baseline), `governed_by` with `ruling: parks` to `dec:a-dated-field-report-is-registered-and-parked`,
+   AND an `OBSOLETES` edge from `dec:field-reports-are-untracked-because-the-repository-is-public`
+   to the artifact — the file is gitignored, so without that retirement CI's coherence gate fails
+   `missing_artifact` on a build that never had it. Missed on 2026-09-07, one CI run after the
+   decision text had already said so.
 10. **Every failure gets its raw error searched; the full `/root-cause` runs the moment a CAUSE is
    about to be written.** Two tiers, set by Anthony 2026-09-06, ruling on his own ask to make
    `/root-cause` "more automatic … probably some caveats … might not be a blanket rule".

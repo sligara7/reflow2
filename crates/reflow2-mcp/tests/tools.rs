@@ -619,22 +619,23 @@ async fn the_surface_can_say_that_nothing_moved() {
         checksum: None,
     })));
 
-    // An accept is refused, and the refusal names the disposition that is right.
-    let err = s
-        .set_artifact_checksum(Parameters(SetChecksumReq {
-            artifact_id: "art:flight".into(),
-            checksum: "sha256:v1".into(),
-            disposition: "design_holds".into(),
-            change_type: None,
-            design_change_event_id: None,
-            note: None,
-            at: Some("2026-08-01".into()),
-        }))
-        .await
-        .expect_err("there is no baseline to accept a change against");
+    // An accept on a checksum-less artifact is READ as the first baseline it
+    // can only be, and the record says so — no longer refused (2026-09-07:
+    // refused inside a batch, one such item discarded the rest).
+    let first = j!(s.set_artifact_checksum(Parameters(SetChecksumReq {
+        artifact_id: "art:flight".into(),
+        checksum: "sha256:v1".into(),
+        disposition: "design_holds".into(),
+        change_type: None,
+        design_change_event_id: None,
+        note: None,
+        at: Some("2026-08-01".into()),
+    })));
     assert!(
-        format!("{err}").contains("baseline_established"),
-        "the refusal must name what IS right, got: {err}"
+        first["change_event_id"]
+            .as_str()
+            .is_some_and(|id| id.starts_with("chg:baseline-")),
+        "recorded as a first baseline, not as an accept: {first}"
     );
 
     // `change_type` alongside it is refused rather than ignored: a parameter

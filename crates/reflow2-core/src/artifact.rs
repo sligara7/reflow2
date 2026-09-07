@@ -314,6 +314,33 @@ impl DesignGraph {
             checksum = r.to_string();
         }
         let checksum = &checksum;
+        // A checksum-less artifact has exactly ONE legal disposition, so a
+        // `design_holds` / `design_updated` sent for it carries no claim the
+        // design could disagree with — only the label is wrong. Read it as the
+        // first baseline it can only be, and SAY SO in the note, rather than
+        // refuse: refused inside a batch, one such item discarded the rest
+        // (`fact:defect-a-batch-accept-refuses-whole-for-an-artifact-whose-only-legal-disposition-is-the-first-baseline`).
+        // The CHANGED edge a design_updated would draw is NOT drawn: a first
+        // baseline is "nothing moved", and an edge would assert that it did.
+        let first_baseline_note: Option<String> = match (&disposition, had_baseline) {
+            (
+                DriftDisposition::DesignHolds { .. } | DriftDisposition::DesignUpdated { .. },
+                false,
+            ) => Some(format!(
+                "Recorded as a FIRST BASELINE (baseline_established): '{artifact_id}' had no \
+                 checksum, so the disposition passed could claim nothing about a movement nobody \
+                 observed. Nothing moved and the design took no position.{}",
+                note.map(|n| format!(" Caller's note: {n}"))
+                    .unwrap_or_default()
+            )),
+            _ => None,
+        };
+        let disposition = if first_baseline_note.is_some() {
+            DriftDisposition::BaselineEstablished
+        } else {
+            disposition
+        };
+        let note: Option<&str> = first_baseline_note.as_deref().or(note);
         match (&disposition, had_baseline) {
             (DriftDisposition::BaselineEstablished, true) if would_move_baseline => {
                 return Err(DynoError::Validation {
@@ -326,21 +353,6 @@ impl DesignGraph {
                          meant, which is the silent accept `dec:two-sided-accept` exists to \
                          prevent. Pass `design_holds` (the change carries no design meaning) or \
                          `design_updated` (the design moved with it)"
-                    ),
-                });
-            }
-            (
-                DriftDisposition::DesignHolds { .. } | DriftDisposition::DesignUpdated { .. },
-                false,
-            ) => {
-                return Err(DynoError::Validation {
-                    node_type: node::ARTIFACT.into(),
-                    property: "checksum".into(),
-                    message: format!(
-                        "'{artifact_id}' has no recorded checksum, so there is no baseline to \
-                         accept a change against — both `design_holds` and `design_updated` \
-                         would be claiming something about a movement nobody observed. This is a \
-                         FIRST baseline: pass `baseline_established`"
                     ),
                 });
             }

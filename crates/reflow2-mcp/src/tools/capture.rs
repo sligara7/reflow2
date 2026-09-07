@@ -152,6 +152,11 @@ const PRESCRIBED_LAYER_PAIRS: &[(&str, &str)] = &[
     // beside-its-ruling-is-refused-as-a-duplicate.
     ("Decision", "Verification"),
     ("Requirement", "Decision"),
+    // The capability that ANSWERS a check's finding, beside the Verification
+    // that found the need: dev_storyflow 2026-09-06, refused four times in one
+    // evening (recurrence #3 of fact:the-duplicate-guard-cannot-tell-a-second-
+    // layer-from-a-second-copy).
+    ("Capability", "Verification"),
 ];
 
 /// Is this pair one the capture loop prescribes, in either direction?

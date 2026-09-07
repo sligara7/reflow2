@@ -25,6 +25,12 @@ pub struct NodeDto {
     /// (`req:a-write-says-what-it-did-not-recognise`).
     #[serde(skip_serializing_if = "Vec::is_empty", default)]
     pub undeclared: Vec<String>,
+    /// Properties this write UNSET — the keys the caller sent as `null`.
+    /// Absent when nothing was unset. A null used to be stored as a value and
+    /// read three different ways by three readers; now it removes the key and
+    /// says so here (2026-09-07).
+    #[serde(skip_serializing_if = "Vec::is_empty", default)]
+    pub unset: Vec<String>,
 }
 
 impl From<StoredNode> for NodeDto {
@@ -35,6 +41,7 @@ impl From<StoredNode> for NodeDto {
             node_id: n.node_id,
             properties: n.properties,
             undeclared: Vec::new(),
+            unset: Vec::new(),
         }
     }
 }

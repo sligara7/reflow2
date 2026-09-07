@@ -140,6 +140,12 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<ExportGraphToReq>,
     ) -> Result<CallToolResult, McpError> {
+        // A replaced executable stamps the record with a version that is no
+        // longer on disk. Refused before anything is read.
+        let (stale, note) = crate::service::exe_replaced_since_start();
+        if let Some(refusal) = crate::service::export_stale_refusal(stale, note) {
+            return Err(refusal);
+        }
         let g = self.graph.read().await;
         let mut export = g.export_graph().map_err(dyno_err)?;
         let Some(path) = req.path else {

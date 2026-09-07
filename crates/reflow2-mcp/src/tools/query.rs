@@ -148,14 +148,17 @@ impl ReflowService {
     // ---- Generic CRUD (deterministic) ----
 
     #[tool(
-        description = "Create a node of any schema type with a property object. An existing id MERGES: the props you pass overwrite, every stored property you omit survives — so a partial props object edits, it does not reset the rest to defaults. READ `undeclared` IN THE REPLY: it names any property you sent that the schema does not declare for this type. The write still SUCCEEDS — the store is a property bag on purpose, so a design can record what reflow2 never anticipated — but a typo and a deliberate extension used to be indistinguishable, and this is how you tell them apart. Absent when there is nothing to say. ⚠️ EDITING SOMETHING YOU READ? PASS `expected_content_hash` — the `revision.prior_content_hash` from when you read it. The write then becomes a COMPARE-AND-SWAP and is REFUSED if the node moved in between, naming both hashes, instead of silently overwriting whoever wrote it meanwhile. Without it a shared graph loses updates by luck: measured from both sides of one real collision, the write returned a normal success and THE WINNER WAS NEVER TOLD. The `revision` block reports an overwrite AFTER the fact; this prevents it. Opt-in, because a caller who never read the node has no honest expectation to state.",
+        description = "Create a node of any schema type with a property object. An existing id MERGES: the props you pass overwrite, every stored property you omit survives — so a partial props object edits, it does not reset the rest to defaults. A `null` UNSETS a property: the key is removed and the reply lists it under `unset`; a REQUIRED property refuses instead (a null used to be stored as a value that readers read two ways, 2026-09-07). READ `undeclared` IN THE REPLY: it names any property you sent that the schema does not declare for this type. The write still SUCCEEDS — the store is a property bag on purpose, so a design can record what reflow2 never anticipated — but a typo and a deliberate extension used to be indistinguishable, and this is how you tell them apart. Absent when there is nothing to say. ⚠️ EDITING SOMETHING YOU READ? PASS `expected_content_hash` — the `revision.prior_content_hash` from when you read it. The write then becomes a COMPARE-AND-SWAP and is REFUSED if the node moved in between, naming both hashes, instead of silently overwriting whoever wrote it meanwhile. Without it a shared graph loses updates by luck: measured from both sides of one real collision, the write returned a normal success and THE WINNER WAS NEVER TOLD. The `revision` block reports an overwrite AFTER the fact; this prevents it. Opt-in, because a caller who never read the node has no honest expectation to state.",
         annotations(read_only_hint = false)
     )]
     pub async fn create_node(
         &self,
         Parameters(req): Parameters<CreateNodeReq>,
     ) -> Result<CallToolResult, McpError> {
-        let props = parse_props(req.props)?;
+        // A `null` is an UNSET request, not a value: split it out before the
+        // bag is parsed, applied after the merge, reported in the reply.
+        let (props, unset) = crate::service::split_null_props(req.props);
+        let props = parse_props(props)?;
         let mut g = self.write_lock().await?;
         // Computed BEFORE the write, from what the caller actually sent: an
         // upsert merges, so reading the stored node afterwards would also
@@ -184,10 +187,18 @@ impl ReflowService {
             Some(expected) => g.upsert_node_if_unchanged(&req.node_type, &req.id, props, expected),
             None => g.upsert_node(&req.node_type, &req.id, props),
         };
+        let written = match written {
+            Ok(_) if !unset.is_empty() => g
+                .remove_properties(&req.node_type, &req.id, &unset)
+                .map(|n| (n, unset)),
+            Ok(n) => Ok((n, Vec::new())),
+            Err(e) => Err(e),
+        };
         match written {
-            Ok(n) => {
+            Ok((n, unset)) => {
                 let mut dto = NodeDto::from(n);
                 dto.undeclared = undeclared;
+                dto.unset = unset;
                 // The generic write path gets the same protection as the
                 // typed constructors, and arguably needs it more: this is
                 // where a node type with no constructor of its own gets

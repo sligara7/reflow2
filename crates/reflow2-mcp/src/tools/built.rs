@@ -210,9 +210,7 @@ impl ReflowService {
                        and design are one change). Silent accept does not exist: it is how a \
                        design erodes into fiction over N fix cycles while reporting zero gaps. \
                        Until you accept, the same checksum_change is reported on every reconcile. \
-                       An artifact with NO checksum yet takes neither: pass \
-                       `baseline_established`, which records a first baseline as what it is — \
-                       nothing moved — instead of a change that never happened.",
+                       An artifact with NO checksum yet has exactly one legal disposition, so whatever you pass for it is READ as `baseline_established` — a first baseline, nothing moved, the design takes no position — and the reply's change_event_id (`chg:baseline-…`) says so; no CHANGED edge is drawn. Refused inside a batch, that case used to discard the rest (2026-09-07).",
         annotations(read_only_hint = false)
     )]
     pub async fn set_artifact_checksum(

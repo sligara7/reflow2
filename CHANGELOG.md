@@ -31,6 +31,33 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+Field-feedback fixes (dev_storyflow 2026-09-06 and the rule-11 facts of the same day), approved as
+the v0.51.0 increment on 2026-09-07. Minor: one enum value and one declared property were added to
+the schema; the stamp does NOT move.
+
+### Added
+
+- **`artifact_type: test`** — the SOURCE of a check, beside `test_result`, the output of a run.
+  Reported twice as "a test file has to be filed as generic code".
+- **`TemporalFact.name` is declared** (indexed, fulltext, optional). 49 facts carried one
+  undeclared and every write warned.
+- **`get_node` accepts `node_id`**, the key `search_design` hands back.
+- **`(Capability, Verification)` is a prescribed layer pair**: the capability that answers a
+  check's finding, beside the check, is reported and not refused.
+
+### Changed
+
+- **A `null` in `create_node`'s props UNSETS the property** and the reply lists it under `unset`;
+  a required property refuses by name. A null used to be stored as a value that three readers read
+  two ways.
+- **A first baseline is read as one.** `set_artifact_checksum(s)` on an artifact with no checksum
+  records `baseline_established` whatever disposition was sent, says so in the record, and draws
+  no CHANGED edge — instead of refusing, which inside a batch discarded the rest.
+- **`export_graph` refuses when the server's executable has been replaced since it started**,
+  naming the stamp it would have written and how to refresh. A wrong stamp was written once.
+- **An unknown-field refusal says the client's tool list may predate the server** and names the
+  server's version, for anyone who updated mid-session.
+
 ## [0.50.0] — 2026-09-07
 
 Minor: the tool surface gained parameters and one tool; two gap sources, two design rules and one

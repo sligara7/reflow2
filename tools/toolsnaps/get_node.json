@@ -8,7 +8,7 @@
     "additionalProperties": false,
     "properties": {
       "id": {
-        "description": "The node id. Its prefix (`req:`, `dec:`, `ver:` …) names the type by\nconvention, so `node_type` may be omitted.",
+        "description": "The node id. Its prefix (`req:`, `dec:`, `ver:` …) names the type by\nconvention, so `node_type` may be omitted.\n`node_id` — what search_design hands back — is accepted as an alias\n(dec:idea-one-way-to-name-which-node-across-the-tool-surface, option D).",
         "type": "string"
       },
       "node_type": {

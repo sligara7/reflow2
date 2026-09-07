@@ -532,6 +532,53 @@ impl DesignGraph {
     /// the merge path every surface actually writes through — a guard on a path
     /// nobody calls is a guard that reports success and defends nothing, which
     /// is the failure this whole increment is about.
+    /// Unset properties on an existing node — the write a `null` in a
+    /// `create_node` props bag means.
+    ///
+    /// Until 2026-09-07 a null was STORED as a value, which made it a third
+    /// state between "stated" and "unstated" that every reader interpreted for
+    /// itself: the intent-authority gate read `enforced: null` as unstated, a
+    /// presence test read it as stated, a value test as unstated
+    /// (`fact:defect-a-null-sent-to-create-node-is-stored-as-a-third-state-between-stated-and-unstated`).
+    /// Removing the key is the one reading they all agree on.
+    ///
+    /// A property the schema marks `required` cannot be unset — a node with no
+    /// name is not a design node with an unstated name, it is a broken one —
+    /// so that is refused by name, and the refusal says what to do instead.
+    pub fn remove_properties(
+        &mut self,
+        node_type: &str,
+        id: &str,
+        keys: &[String],
+    ) -> Result<StoredNode, DynoError> {
+        let Some(existing) = self.get_node(node_type, id)? else {
+            return Err(DynoError::NodeNotFound {
+                node_type: node_type.to_string(),
+                node_id: id.to_string(),
+            });
+        };
+        if let Some(def) = self.schema().node_types.get(node_type) {
+            for k in keys {
+                if def.properties.get(k).is_some_and(|d| d.required) {
+                    return Err(DynoError::Validation {
+                        node_type: node_type.to_string(),
+                        property: k.clone(),
+                        message: format!(
+                            "`{k}` is REQUIRED on {node_type} and cannot be unset: a null here \
+                             would leave a node the schema cannot read. Omit the field to keep \
+                             the stored value, or pass a value."
+                        ),
+                    });
+                }
+            }
+        }
+        let mut props = existing.properties;
+        for k in keys {
+            props.remove(k);
+        }
+        self.create_node(node_type, id, props)
+    }
+
     pub fn upsert_node_if_unchanged(
         &mut self,
         node_type: &str,
