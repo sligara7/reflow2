@@ -111,6 +111,31 @@ pub struct ClaimAge {
     /// names.
     #[serde(skip_serializing_if = "std::ops::Not::not")]
     pub expired: bool,
+    /// The id of a record that INVALIDATED this claim — set when something
+    /// later overturned it, rather than when it ran out on its own terms.
+    ///
+    /// # Why this is separate from `expired`, and why it exists at all
+    ///
+    /// A claim can end two ways and they are not the same fact. `expired` means
+    /// its own `valid_to` passed: nobody argued with it, its window simply
+    /// closed. This means somebody drew an `INVALIDATES` edge saying the claim
+    /// no longer holds — a refutation, with a record behind it.
+    ///
+    /// 🛑 IT EXISTS BECAUSE CLOSURE WAS ONE QUESTION WITH TWO ANSWERS AND THE
+    /// SURFACES DISAGREED. `fact:a-contract-is-the-one-thing-reflow2-cannot-attach-evidence-to`
+    /// was invalidated on 2026-08-31 by a record that quoted its headline and
+    /// showed it false. The gap detector reads the EDGE, so it correctly went
+    /// quiet. This computation read `valid_to` alone, and the invalidation set
+    /// none — so `search_design` went on returning the finding with no marker
+    /// at all, and on 2026-09-07 an agent read it as live and re-derived a
+    /// conclusion the design had held for a week. The detector and the search
+    /// were both behaving as written; they were answering different questions.
+    ///
+    /// THE ID RATHER THAN A FLAG, deliberately: a reader who is told a claim was
+    /// overturned needs to be able to go and read what overturned it. A bare
+    /// boolean would report the same fact and strand them.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub superseded_by: Option<String>,
 }
 
 impl ClaimAge {
@@ -150,5 +175,8 @@ pub fn claim_age(
         as_of,
         age_days,
         expired,
+        // Not knowable from properties alone — it lives on an edge. The
+        // graph-aware caller fills it in; see `DesignGraph::claim_age_of`.
+        superseded_by: None,
     }
 }

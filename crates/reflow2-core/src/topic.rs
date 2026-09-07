@@ -262,7 +262,10 @@ impl DesignGraph {
                 score: h.score,
                 status,
                 discontinued: self.is_discontinued(&h.node_id)?,
-                age: crate::dates::claim_age(&n.properties, &today),
+                // Through the graph-aware helper, not the property-only one:
+                // a topic view that showed a refuted finding as current would
+                // repeat the failure on the second read surface.
+                age: self.claim_age_of(&h.node_id, &n.properties, &today)?,
                 connections: conn,
                 connections_more,
                 latest,

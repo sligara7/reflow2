@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:a883b0499c477e4dd77339b728fc36a96d4d184122577ca4605ce67a7d2fafca",
+  "content_hash": "sha256:a3d491f2fba61439ff4006932a6b633e0f8fb23f925e749c0019e75ec0ddcc23",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -13189,6 +13189,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-how-does-reflow2-enforce-the-contract-regime-a-domain-already-has",
+      "properties": {
+        "acted_at": "2026-09-07T17:00:00Z",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-how-does-root-cause-become-automatic-rule-hook-detector-or-composition",
       "properties": {
         "acted_at": "2026-09-06",
@@ -18341,6 +18350,16 @@
         "evidence": "The published-surface export cannot carry a behavioural promise, so the capability ships a document that is structurally incomplete for the job it is offered for. Found by the dynograph-foundation trial, 2026-07-28."
       },
       "to_id": "cap:publish-surface"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "art:dates",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "claim_age takes a property bag and structurally cannot see an edge, so it answered closure from valid_to alone while the detector answered it from the INVALIDATES edge. Neither was wrong about its own question; the two questions were never reconciled.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:closure-was-one-question-with-two-answers-so-a-refuted-finding-read-as-current-on-the-surface-a-person-meets-first"
     },
     {
       "edge_type": "CAUSES",
@@ -29712,6 +29731,42 @@
         "action": "modified"
       },
       "to_id": "dec:idea-need-to-know-compartments"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:closure-is-one-computation-and-both-read-surfaces-use-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:dates"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:closure-is-one-computation-and-both-read-surfaces-use-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:search"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:closure-is-one-computation-and-both-read-surfaces-use-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-a-superseded-finding-does-not-read-as-current"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:closure-is-one-computation-and-both-read-surfaces-use-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:topic"
     },
     {
       "edge_type": "CHANGED",
@@ -43410,6 +43465,26 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-how-does-reflow2-enforce-the-contract-regime-a-domain-already-has",
+      "properties": {
+        "evidence": "That question is the structural floor beneath this one: enforcing a contract regime is meaningless while a component can be claimed without stating any boundary at all. If it is answered no, most of the options here have nothing to attach to.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-a-black-box-owes-an-interface-the-way-a-capability-owes-a-requirement"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-how-does-reflow2-enforce-the-contract-regime-a-domain-already-has",
+      "properties": {
+        "evidence": "The non-coding half of this brainstorm IS that layer. EnvironmentRule's rule_type enum already carries building_code, standard, regulatory and safety, so standards for non-coding projects is not new vocabulary to design but an existing one to build and read.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-the-environment-compliance-layer-was-designed-and-never-built"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "dec:idea-how-does-root-cause-become-automatic-rule-hook-detector-or-composition",
       "properties": {
         "evidence": "The hook option is only possible because the nudge infrastructure exists (SessionStart, PostToolUse, Stop hooks registered by reflow2_init.py); a PostToolUse on Bash would be one more tuple in that list. Without the nudge there is no in-the-moment channel to the agent.",
@@ -51966,6 +52041,14 @@
       "from_id": "fact:a-dangling-reference-is-only-detected-when-the-node-is-also-edgeless",
       "properties": {},
       "to_id": "decision:ack:b282848d8c49faf3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "fact:a-local-feature-error-was-worked-around-instead-of-read-as-the-ci-contract",
+      "properties": {
+        "note": "The obvious repair was to gate the whole test file, which would have made CI green by deleting coverage from the job that has no index. Clause 1 is why it was split instead: the half that can be checked everywhere now is."
+      },
+      "to_id": "rule:fix-it-properly-while-it-is-still-cheap"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -142606,6 +142689,15 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:a-contract-can-carry-evidence",
+      "properties": {
+        "at": "2026-08-22",
+        "note": "This change admitted Interface to the VERIFIES target enumeration, which is the exact absence the finding measured. Verified 2026-09-07 against the running schema: VERIFIES now reaches Artifact, Capability, Component, Constraint, DesignRule, Interface and Requirement. The finding's central claim - that a contract is the one thing reflow2 cannot attach evidence to - stopped being true on that date and had gone 16 days without anything saying so, which is the fixed-but-never-closed class the overtaken-defect detector exists to catch. WHAT REMAINS TRUE IN IT and is worth keeping: the reasoning about why a contract is the node MOSA turns on, and the third-instance pattern about VERIFIES under-enumerating its own targets twice before. The record is stale in its verdict, not in its argument."
+      },
+      "to_id": "fact:a-contract-is-the-one-thing-reflow2-cannot-attach-evidence-to"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:a-cross-type-near-match-is-named-as-a-layer",
       "properties": {
         "at": "2026-08-29",
@@ -143378,6 +143470,14 @@
         "evidence": "Delivers api-boss's own fix (3) — \"let a Decision CLOSE a Question with an edge, making the linkage first-class and surviving whichever id scheme wins\". MITIGATES rather than INVALIDATES on purpose: their PRIMARY defect is untouched. `answer_question` still derives the question id by pure string manipulation from the gap id, so a Question stored under any other id remains unreachable by that tool. What this closes is the LINKAGE half they named as durable-but-unmodelled; the id scheme half is still open."
       },
       "to_id": "fact:defect-a-question-not-created-by-gap-to-prompt-can-never-be-answered"
+    },
+    {
+      "edge_type": "MITIGATES",
+      "from_id": "chg:closure-is-one-computation-and-both-read-surfaces-use-it",
+      "properties": {
+        "evidence": "Makes closure one computation both read surfaces call, so a finding another record refuted can no longer come back unmarked."
+      },
+      "to_id": "fact:closure-was-one-question-with-two-answers-so-a-refuted-finding-read-as-current-on-the-surface-a-person-meets-first"
     },
     {
       "edge_type": "MITIGATES",
@@ -147442,6 +147542,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:test-a-superseded-finding-does-not-read-as-current",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:claims-carry-their-age"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:test-absence-means-nobody-said-and-a-plan-holds-a-check",
       "properties": {
         "completeness": "complete",
@@ -150993,6 +151102,14 @@
     },
     {
       "edge_type": "TRIGGERS",
+      "from_id": "dec:idea-how-does-reflow2-enforce-the-contract-regime-a-domain-already-has",
+      "properties": {
+        "evidence": "That ruling parked the environment compliance domain as deliberately unused UNTIL A USER ASKS FOR IT. This brainstorm is the owner asking for it, so the parking's own stated condition has been met and the ruling is due a re-read rather than a quiet continuation."
+      },
+      "to_id": "decision:vocab:environment"
+    },
+    {
+      "edge_type": "TRIGGERS",
       "from_id": "fact:a-defect-fixed-but-never-closed-on-the-record-was-re-fixed-wrongly-a-day-later",
       "properties": {
         "evidence": "The same-day case: a fix built without step ② silenced a designed behaviour and was caught only by existing pins. It is the measurement behind Anthony's 'I don't want to fix a symptom or the wrong thing', and behind the tiered option here — step ② alone would have prevented it."
@@ -154529,6 +154646,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:test-a-superseded-finding-does-not-read-as-current",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-a-superseded-finding-does-not-read-as-current"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:test-absence-means-nobody-said-and-a-plan-holds-a-check",
       "properties": {
         "action": "created"
@@ -155651,7 +155776,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:34f6a9f1eb7384f3a8630eabee41731e22e8f5c6a7658e289e7b0cd583bf0ffd",
+        "checksum": "sha256:cdf79dc7ad6348d36c6b38232b299a8def1164c1e7ef00642bd8389376f2b4c2",
         "location": "crates/reflow2-core/src/dates.rs",
         "name": "dates.rs",
         "status": "realized"
@@ -157356,7 +157481,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:2311c6b8dd5f06f519a6425fafb5b8a79f1ebd24140847bfd20ddcd6f8f861bd",
+        "checksum": "sha256:1e3c3fd1cdda5b393c0bf6449c6112d8f4648d798bd72f1ef3c7068192ddb765",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/search.rs",
         "name": "search.rs",
@@ -157820,6 +157945,17 @@
         "checksum": "sha256:d7ad0005715563e4089ca5a4f2ff2a4a2cb2b07c8feafd611610cb278c9cf468",
         "location": "crates/reflow2-core/tests/a_session_with_no_seed_can_find_one.rs",
         "name": "crates/reflow2-core/tests/a_session_with_no_seed_can_find_one.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:test-a-superseded-finding-does-not-read-as-current",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:5fb495e40e597cfca8dcd9fe2e9003f6cfc62e75b3c4ec28894558aa86dfbf07",
+        "location": "crates/reflow2-core/tests/a_superseded_finding_does_not_read_as_current.rs",
+        "name": "a_superseded_finding_does_not_read_as_current.rs",
         "status": "realized"
       }
     },
@@ -158377,7 +158513,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:9774c5492cdd0c1d9b2c940704d156fb5760b86aa61f98c9516f02ffe9c7764a",
+        "checksum": "sha256:ac537a33576405b8079152950a5619ed7ca00d8429f0603f20e9ee3f3a1a74f3",
         "location": "crates/reflow2-core/src/topic.rs",
         "name": "topic.rs — the /topic view computed server-side: grouped hits, status, connections, latest dated change, mandatory not-found line, bounded reply",
         "status": "realized"
@@ -166065,6 +166201,17 @@
       }
     },
     {
+      "node_id": "chg:closure-is-one-computation-and-both-read-surfaces-use-it",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "name": "A refuted finding stops reading as current: closure becomes one graph-aware computation, and both read surfaces go through it",
+        "rationale": "The occasion was an agent being misled by the design's own memory. It searched during a brainstorm, met a finding another record had refuted a week earlier, saw no marker of any kind, and re-derived a settled conclusion - then reported to the owner that a detector had a sixteen-day gap. Both claims were wrong, and the measurement that showed it is what found the real defect: the detector reads the INVALIDATES edge and had been correctly silent all along.\n\nSo the fix is not where the agent first said it was. Widening the detector's fact_type filter, which is what it proposed and was asked to build, would have changed nothing here. The cause is that closure had two available answers and the two surfaces each read a different one, which is why the correction is a shared computation rather than a second filter.\n\nWHY THE READ SURFACE IS THE WORSE HALF TO GET WRONG, and the reason this was worth stopping for: a detector reports at a boundary, to somebody who ran it. A search result is met first, in the middle of thinking about something else, and a record returned with no marker is believed. The failure is not a missed alert; it is a confident wrong belief formed from the design's own record - the exact thing reflow2 exists to prevent.",
+        "subject": "system",
+        "summary": "`ClaimAge` gains `superseded_by`, and `DesignGraph::claim_age_of` is the one computation that fills it. search_design and topic_report both call it; the property-only `claim_age` remains for callers that genuinely have no graph, and returns None for the new field rather than guessing.\n\nKEPT DISTINCT FROM `expired`, deliberately. A claim that ran out on its own terms is not a claim something refuted, and a reader needs to tell them apart. The field carries the invalidating record's ID rather than a boolean, because a reader told their source was overturned needs to be able to go and read what overturned it. Where several records invalidate one finding, the first by id is named so the answer is stable across runs rather than dependent on edge ordering.\n\nFAILING FIRST, OBSERVED: crates/reflow2-core/tests/a_superseded_finding_does_not_read_as_current.rs was written before the field existed. It failed on the missing field, then on three real assertions once the fixture was corrected. All three pass now. It pins the CLASS - that both surfaces agree, and that the two kinds of closure stay distinguishable - rather than the one fact that exposed it.\n\nINCIDENTAL, AND IT CONFIRMS AN OPEN FINDING: the test fixture was refused because Component requires `purpose`, which is one of the properties no constructor can set (fact:six-constructors-cannot-write-any-prose...). A type demanding a field its own constructor cannot write is the same class, one step further along."
+      }
+    },
+    {
       "node_id": "chg:cluster-claims-built",
       "node_type": "ChangeEvent",
       "properties": {
@@ -172930,6 +173077,17 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-18, correcting the framing of a day's work: 'most of why I do any of this isn't for the sake of reflow2. it is for users who are developing a project using reflow2... we are just applying reflow2 back on itself here, but that is not the main concern. it is that reflow2 does SE for the projects that it is used on.'\n\nDISTINCT FROM THE TWO FACTS IT RESTS ON: they MEASURE (three legs; 18 candidates). This asks WHAT TO DO, and the options below conflict with each other and with settled decisions, which is why it needs a decision rather than another measurement.\n\nTHE MEASURED SHAPE is in `fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it`: vocabulary reaches a user's design only when a TYPED TOOL writes it, an INSTRUCTION says when, and a DETECTOR notices its absence. Capability.inputs/outputs has none of the three; SPECIFIES is instructed but has no tool; DECOMPOSES has all three and still cannot fire, because the detector keys on the edge being PRESENT.\n\nOPTIONS, unranked, each with its objection:\n\n(a) ADD THE MISSING LEGS CASE BY CASE — a parameter on add_capability, a `specifies` tool, an absence-detector per edge type. Concrete and shippable. OBJECTION: it is whack-a-mole, and it scales with the SCHEMA rather than with the design — three cases were found by hand this week with 18 candidates and 42 edge items behind them.\n\n(b) A DETECTOR FOR UNUSED VOCABULARY ITSELF — 'this design has never used X, and here is the tool that writes it.' One rule covering every case, present and future. OBJECTION: on a young design EVERYTHING is unused, so it fires on the whole schema at genesis and is skimmed by week two — the failure `v0.2.0-what-we-dont-know.md` names as sharpest ('a gap list you skim is worse than no gap list'). It needs a maturity threshold, and a threshold is a judgement.\n\n(c) ASK AT THE RIGHT MOMENT rather than standing as a finding. When an agent adds a Capability, ask what goes in and what comes out — the black-box question, at the one moment the user is thinking about that capability. OBJECTION: this IS `req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue`, proposed and unbuilt, and it is the same trigger problem this project has confirmed three times.\n\n(d) DERIVE RATHER THAN ASK. A capability's inputs and outputs are partly computable — what it CONSUMES and PROVIDES is already edge vocabulary. OBJECTION: `dec:report-dont-judge`. Deriving a functional signature and storing it asserts something nobody said, and the point of the property is the designer's statement of intent.\n\n(e) LET THE SCHEMA SHRINK. If nothing writes it and nobody misses it, the vocabulary is speculative. OBJECTION, decisive against doing this blindly: three of the four known unreachable fields were WANTED and got a parameter, and `req:declared-vocabulary-is-reachable-from-the-surface` explicitly forbids reading unreachable as deletable.",
         "name": "OPEN — how does an arbitrary project using reflow2 ever acquire the vocabulary nobody thought to ask it for?",
         "rationale": "Recorded via the brainstorm skill: ideas enter as ideas, nothing is promoted, objections sit beside the options.\n\nWHY THIS IS NOT THE REACHABILITY REQUIREMENT AGAIN. That asks whether a declared field CAN be written. This asks whether a user's project ever WILL — a question about skills, tool descriptions and detectors rather than about parameters, and the one Anthony says actually matters. A field with a parameter that nothing ever prompts for is reachable and still empty in every design.\n\nAN AGENT'S READING, as a finding and not an answer: (c) looks strongest because it puts the question where the user is already thinking, and (b) looks most dangerous because a list nobody reads is worse than none. But (c) depends on a requirement proposed and unbuilt since before this, so the honest first move may be to accept THAT rather than design around it.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-how-does-reflow2-enforce-the-contract-regime-a-domain-already-has",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-09-07, after a video on maintainers being unable to keep up with the volume of code AI generates, and seeing the same at work.\n\nHIS WORDS: \"One of the things the video promoted as a solution was typings and having contracts. That is in-line with the MOSA work already discussed many times. It is in line with coming up with Systems Engineering 'black boxes' where you have contracts/interfaces between different systems or components. Even in python 3.10's modern approach, you now have: def find(user_id: int) -> str | None:, which is in a way, a small contract for that function and also allows a reviewer to quickly see what the function does without reading the whole function body. This brainstorm is about how do we enforce contracts and typings for coding projects. For non-coding projects, maybe using accepted industry practices or having the agent use standards is appropriate. In a nutshell, this brainstorm is about 'enforcing' the agent to use typings, protocols, interface contracts, standards, 'building codes', etc that are appropriate for a given domain for the design project. This reduces the burden on reviewers/maintainers of a design while also increasing the 'trust-worthiness' or 'believeability' of a design produced using reflow2. In some ways, this is like making the /root-cause skill more automatic due to agents often being over-confident in identifying a fix to a problem. This is similar in that AI can quickly build a design and it can be a pile of garbage and hard to review and full of bugs. These are kind of 'checks' that reflow2 is trying to enforce upon the agent to be more rigorous and deliver designs (and code in coding projects) that is easy to review.\"\n\nTWO MEASUREMENTS TAKEN WHILE RECORDING THIS, because both change which options are open.\n\n(1) THE NON-CODING HALF IS ALREADY IN THE SCHEMA AND HAS NEVER BEEN USED. `EnvironmentRule` declares exactly this vocabulary, and its `rule_type` enum reads: regulatory, building_code, zoning, safety, environmental, standard, physical_law, interface, constraint. His phrase \"building codes\" is a value in a schema written months ago. ZERO EnvironmentRule nodes exist in this graph, no tool constructs one, and `decision:vocab:environment` PARKED the whole domain as deliberately unused UNTIL A USER ASKS FOR IT. This is a user asking for it.\n\n(2) A CONTRACT CAN NOW CARRY EVIDENCE, AND A RECORDED FACT SAYS OTHERWISE. `fact:a-contract-is-the-one-thing-reflow2-cannot-attach-evidence-to` (2026-08-21) states that VERIFIES cannot target an Interface, \"and interfaces are the nodes MOSA turns on\". Measured today: VERIFIES now legally targets Artifact, Capability, Component, Constraint, DesignRule, Interface and Requirement. That fact is STALE and should be invalidated, and its staleness matters here because it would tell the next reader that the most promising option below is impossible.\n\nOPTIONS, UNRANKED, each with what is cheap or expensive about it:\n\n(a) DECLARE THE REGIME AND CHECK NOTHING. The design states which contract vocabulary applies — Python typing, OpenAPI, MIL-STD-1553, the IBC — and reflow2 reports its absence. Cheap. And it repeats the exact failure this project measured twice today: `Verification.level` exists and nothing reads it, so a second unread property would make the design SAY more and KNOW no more.\n\n(b) BUILD THE ENVIRONMENT COMPLIANCE LAYER THAT IS ALREADY DESIGNED. `dec:idea-the-environment-compliance-layer-was-designed-and-never-built` is open and is precisely the non-coding half: a rule the design must comply with, with COMPLIES_WITH and VIOLATES edges to reach it. The vocabulary costs nothing because it exists; what it needs is a constructor (EnvironmentRule is one of three types with no typed write tool at all) and something that READS the edges. Against it: it was parked for a reason, and building a compliance layer nobody has yet used on a real design risks the same unread-property fate.\n\n(c) A BLACK BOX OWES A CONTRACT, THE WAY A CAPABILITY OWES A REQUIREMENT. Already open as `dec:idea-a-black-box-owes-an-interface-the-way-a-capability-owes-a-requirement`. This is the structural floor beneath everything else: you cannot claim a component without stating its boundary. Cheap, computable today, and it says nothing about whether the contract is any GOOD.\n\n(d) CARRY THE EXTERNAL CHECKER'S RESULT AS EVIDENCE, AND DO NOT REIMPLEMENT IT. For code the checker already exists — mypy, pyright, cargo, a schema validator — and reflow2's job is to be the place its result LANDS and STAYS ATTACHED, not to become a type checker. A Verification against the Interface, with a real last_run_at. Newly possible per measurement (2). It generalises to the non-coding case without stretching: a structural engineer's stamp, a lab certificate and a test report are all somebody else's check whose result the design must carry. It also fits `req:the-agent-never-authors-what-requires-accountable-sign-off`, which already says the agent carries the requirement into the tool and the result back as evidence. Against it: it proves a check RAN, never that the contract is honest.\n\n(e) MAKE REVIEWABILITY ITSELF THE REPORTED NUMBER — what fraction of components state a boundary, what fraction of published contracts carry a passing check, how much of the design a reviewer would have to read to trust it. Answers his actual complaint rather than a proxy for it. Expensive to define honestly, and easy to turn into a score that gets gamed.\n\n(f) DO NOTHING. Typing is the language's job and standards are the user's.\n\nTHE HONEST COUNTER-ARGUMENT TO ALL OF IT, and it bounds every option above: REFLOW2 CANNOT READ THE CODE. It can require that a contract be stated, that a check exist, and that the check have run and passed — it cannot verify that a function signature tells the truth about the body beneath it. Claiming otherwise would be the renderer-fill-in failure at the scale of a whole discipline. What reflow2 can honestly offer is the SECOND leg: not the check, but the demand for one and the record of its result.\n\nAND HIS OWN ANALOGY IS THE SHARPEST THING HERE. He compares this to making /root-cause automatic, and that comparison was tested today: the mechanism that worked was not a rule, a nudge or a reminder — it was a TOOL DESCRIPTION THAT DEMANDS THE SKILL AT THE MOMENT OF THE WRITE, because a tool description is the one thing an agent reliably reads while working. If contracts are to be enforced on an agent rather than requested of it, that is the shape with evidence behind it, and it is a different shape from any of (a) to (f).",
+        "kind": "exploratory",
+        "name": "OPEN — how does reflow2 make an agent USE the typings, protocols, contracts and standards a domain already has, so a design stays reviewable at the speed AI produces it?",
+        "rationale": "Recorded rather than acted on because the question spans a settled schema layer nobody has used, two already-open decisions, and a claim about what reflow2 may honestly assert — and because the option that looks strongest, carrying somebody else's checker result as evidence, only became possible when VERIFIES gained Interface as a target, which no record currently reflects.\n\nThe motivation is worth keeping separate from the mechanism: he is not asking for more vocabulary, he is asking that a design produced fast stay REVIEWABLE and BELIEVABLE. Any option that adds a property nobody reads makes the design longer and no more trustworthy, which is the specific failure to test each of these against.",
         "status": "proposed"
       }
     },
@@ -181918,6 +182076,16 @@
       }
     },
     {
+      "node_id": "frag:art:test-a-superseded-finding-does-not-read-as-current",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered a_superseded_finding_does_not_read_as_current.rs"
+      }
+    },
+    {
       "node_id": "frag:art:test-absence-means-nobody-said-and-a-plan-holds-a-check",
       "node_type": "Fragment",
       "properties": {
@@ -189670,7 +189838,8 @@
         "name": "VERIFIES cannot target an Interface, so no contract in any reflow2 design can carry a check — and interfaces are the nodes MOSA turns on",
         "statement": "FOUND 2026-08-21 while fixing the finding \"nothing verifies ifc:core-api\". The fix was refused by the edge validator:\n\n  Invalid edge: VERIFIES cannot connect Verification to Interface\n\nThe schema enumerates VERIFIES targets as **Capability, Requirement, Artifact, Component, DesignRule, Constraint**. Interface is absent.\n\nSO REFLOW2 CAN ATTACH EVIDENCE TO A RULE, A BUDGET, A PART, A FILE, A CAPABILITY AND A REQUIREMENT — AND NOT TO A CONTRACT. Every Interface in every design using reflow2 is unverifiable by construction. reflow2's own 17 interfaces have zero incoming VERIFIES edges, and that reads as \"nobody wrote one\" when the truth is \"nobody could\".\n\nWHY IT MATTERS MORE THAN A MISSING EDGE TYPE USUALLY WOULD. A contract is the node a modular open-systems approach turns on — `set_interface_designation`'s own description calls `published` \"the distinction a systems-engineering ICD publishes and that MOSA calls a modular system interface\". The question \"does this boundary actually hold?\" is the most natural thing anyone would want to check about a published contract, and it is the one question this vocabulary cannot express. `ifc:mcp-tools` is specified 9 of 9 fields, is the surface every user's agent calls, and cannot carry a single piece of evidence that it behaves as specified.\n\n⭐ IT MAY BE THE THIRD INSTANCE OF A PATTERN THIS EDGE HAS ALREADY RECORDED ABOUT ITSELF. `schema/verify.yaml` carries a long comment on VERIFIES under-enumerating its targets twice: the extraction hint named three types while four were true, and later the `to` list itself was derived from a census that found five types by edge count and MISSED TWO carrying one edge each — which made an existing export unimportable by the binary that wrote it for four days while every gate read green. Its own words: \"a schema tightening that silently orphans existing data is a breaking change wearing a validation error's clothes.\" Interface may simply be the next unlisted-but-wanted target, never censused because no edge existed to count — an absence cannot appear in a survey of what is present.\n\nWHAT THIS FACT DOES NOT SETTLE: whether Interface SHOULD be added. That is a schema change and Anthony's call. Two things argue for care rather than speed — the same comment warns that narrowing this list broke a real design, so widening it deserves the same scrutiny in reverse; and it is worth asking first what a check on a contract would MEAN, since a conformance test against a specified boundary is a different kind of evidence from a unit test on a capability.\n\nNOTE ON THE STAMP: the schema stamp carries node and edge TYPE NAMES, not their target lists, so adding Interface to this `to` list would not move it and would owe no upgrade note.",
         "subject_id": "cmp:verify",
-        "valid_from": "2026-08-21"
+        "valid_from": "2026-08-21",
+        "valid_to": "2026-08-22"
       }
     },
     {
@@ -189811,6 +189980,19 @@
         "statement": "THE TEST `dec:idea-does-reflow2-need-a-byte-store-at-all-or-only-durability` NAMED AS \"the way this model fails LATE\", run 2026-08-25 at main `39dbf6d`. Question: does what a RUNNING SEAT BELIEVES — as opposed to the design itself — survive being rebuilt from the export document?\n\nMETHOD: import the committed export into an empty store, then run the same tools against the hydrated store and the live one and diff the answers field by field.\n\n⭐⭐ THE CONFIRMATION LEDGER SURVIVES COMPLETELY. **208 capability claims on both sides, the same capability ids, and ZERO differing fields across all of them.**\n\n    claims 208 | confirmed 208 | drifting 0 | unexamined 0\n    stale_verification 112 | unknown_verification_freshness 90     (identical both sides)\n\nEvery per-capability field matched: `last_claim_at`, `last_confirmed_at`, `last_verified_at`, `drift_events`, `unresolved_drift_events`, `design_holds_claims`, `design_updated_claims`, `baseline_claims`, `confirmations`, `design_edits`, `state`, `verification_freshness`. **The dates, the drift history and the accept ledger are all NODES AND EDGES, so the document carries them.** The fear that a hydrated session would silently forget when it last checked something is measured and false.\n\n🛑 WHAT IS ACTUALLY LOST, AND IT IS ONE THING: `last_synced`. It lives in `.reflow2/<graph>.sync.json`, a sidecar file BESIDE the store, not in the store and not in the document. The live seat holds six entries mapping export paths to content hashes; the hydrated seat holds none:\n\n    live       sync_status -> 6 entries, each in_step with its file\n    hydrated   sync_status -> {\"behind\": [], \"checked\": 0, \"sync\": []}\n\n⚠️ AND THE FAILURE IS QUIET BY THE TOOL'S OWN ACCOUNT. `sync_status` documents that *\"AN EMPTY ANSWER MEANS THIS SEAT HAS NEVER SYNCED WITH ANY FILE — never that all is well\"*. A hydrated seat produces exactly that answer while having a full design loaded, so the reading \"this seat is new\" is TRUE of its sync state and FALSE of everything else. What rests on it: `req:stale-seat-knows` and the export-overwrite refusal, which compares a file's current hash against what this graph believes it last wrote. With an empty map there is nothing to compare, so the guard against silently deleting a colleague's work has no baseline on the first export after a hydrate.\n\n⭐ THE GAP IS NARROW AND FIXABLE, WHICH IS THE USEFUL PART. `last_synced` is a small map of path -> content hash. Making it endure is a choice between carrying it in the document, keeping the sidecar file beside the document, or recomputing it by hashing the files a seat knows about. None of those is architecture; all are bookkeeping. **The model does not fail late on accumulated state — it fails on ONE map, and that map is three lines of JSON.**\n\n📌 SECOND, SMALLER GAP, THEORETICAL TODAY: `CF_EMBEDDINGS` is a real column family and `GraphExport` has no embeddings field, so vectors would not survive a hydrate. Measured: nothing outside `engine/tests.rs` calls `set_embedding`, so the store holds none today. It becomes real the moment `dec:idea-embeddings-adoption` lands, and it is worth knowing BEFORE that rather than after.\n\n✅ REGENERATED CORRECTLY, so not gaps: `<graph>.id.json` (the empty store adopts the document's name via `adopt_on_import`) and `<graph>.meta.json` (derived from the schema).\n\n📌 BOUNDS: one design, one direction, one machine, debug binary. Two tools compared (`confirmation_ledger`, `sync_status`) plus the sidecar files on disk — NOT an exhaustive sweep of everything a seat can believe. `write_gen` was not separately exercised.",
         "subject_id": "dec:idea-does-reflow2-need-a-byte-store-at-all-or-only-durability",
         "valid_from": "2026-08-25"
+      }
+    },
+    {
+      "node_id": "fact:a-local-feature-error-was-worked-around-instead-of-read-as-the-ci-contract",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "name": "A test was made to pass locally by adding the feature flag its failure named — which turned the CI contract into a workaround and failed the core job",
+        "statement": "OBSERVED 2026-09-07, on the agent, in the same session as two other instances of the same class.\n\nWHAT HAPPENED. A new core test called search_design and reindex_search. Run locally it failed with a precise, well-written refusal: \"this reflow2 was built without the `fulltext` feature, so there is no search index to rebuild\". The agent added `--features fulltext` to its own command line, saw green, ran the WORKSPACE suite (which builds with the feature), saw green again, and pushed. CI's core job runs `cargo test -p reflow2-core --no-default-features` and failed on all three tests.\n\nTHE MISREADING, precisely: the refusal was read as a fact about the local command line rather than as a fact about a SHIPPED CONFIGURATION. It says the binary was built without a feature - which is exactly what one CI job does on purpose, to prove the core works with no search index and no RocksDB. The flag that made it pass locally is the flag that job does not pass.\n\nTHIS IS THE THIRD INSTANCE OF ONE HABIT IN ONE SESSION, and the pattern is worth more than any of them: (1) the sequence-hint fix landed in add_epoch and not its sibling plan_epoch; (2) the reachability map covered the tools named add_* and not the setters that leak the same way; (3) this. Each time the fix was correct where it was applied and the same question was never asked one step over. The project's own memory names it - A SUBSET OF A GATE SET IS NOT THE GATE SET - with a measurement beside it: `-p reflow2-core` plus `-p reflow2-mcp` run separately is 1778 tests against `--workspace`'s 1824, forty-six short, because a workspace build unifies the rocksdb feature onto core. That note was written for exactly this and was not read.\n\nTHE PROPER FIX, and it is not the obvious one. The obvious fix is to gate the whole test file behind the fulltext feature, which makes CI green and DELETES the coverage from the job that has no index. Instead the test was split: `claim_age_of` needs no index at all - it reads a property bag and one incoming edge - so the shared computation is tested in EVERY job, and only the two assertions that genuinely require a search surface are gated. The half that can be checked everywhere now is.\n\nWHAT IS NOT ESTABLISHED: how many other tests would fail under `--no-default-features` if written today. No sweep was run; the local habit of reaching for the feature flag is what needs changing, and the only evidence it has changed will be the next test that does not do it.",
+        "subject_id": "art:search",
+        "valid_from": "2026-09-07"
       }
     },
     {
@@ -190945,6 +191127,19 @@
         "subject_id": "dec:idea-two-more-projects-report-write-ergonomics-and-a-program-shaped-use",
         "valid_from": "2026-08-19",
         "value": "{\"failure_1_resend\":{\"node\":\"dec:idea-two-more-projects-report-write-ergonomics-and-a-program-shaped-use\",\"resends\":2,\"chars\":[6242,6455],\"semantic_change_each_time\":\"one sentence\",\"granularity\":\"property, not field\",\"verification\":\"intended text written to file pre-write, diffed post-write, byte-identical both times\",\"fix\":\"resolve_decision or any field-level patch\",\"projects_reporting\":4},\"failure_2_malformed_write\":{\"occurrences\":2,\"both_were\":\"FIRST writes of NEW nodes\",\"stored\":\"tool-call markup at the tail of a prose field; rationale property absent\",\"detected_by\":\"reading the reply; no layer refused or flagged it\",\"resolve_decision_would_have_prevented\":false,\"own_item\":\"dec:idea-a-prose-field-silently-absorbed-tool-call-markup\"},\"correction\":{\"date\":\"2026-08-19\",\"was\":\"resolve_decision removes both failure modes at once\",\"now\":\"resolve_decision removes failure 1 only; failure 2 is a separate finding\",\"caught_by\":\"Anthony asking for the evidence to be walked through\"},\"correlation_bound\":\"2 of 2 malformations on >4000-char params; 0 of ~30 short writes; n=2, observational, confounded\"}"
+      }
+    },
+    {
+      "node_id": "fact:closure-was-one-question-with-two-answers-so-a-refuted-finding-read-as-current-on-the-surface-a-person-meets-first",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "name": "A finding another record had refuted still read as current, because the detector reads the edge and the age computation reads the date — two surfaces answering different questions about closure",
+        "statement": "FOUND 2026-09-07, and the finding that produced it is a correction of the agent's own claim from twenty minutes earlier.\n\nWHAT WAS OBSERVED. `fact:a-contract-is-the-one-thing-reflow2-cannot-attach-evidence-to` (2026-08-21) claimed VERIFIES could not target an Interface, so no contract in any design could carry a check. Interface was added to that target list on 2026-08-22, the day after. On 2026-08-31 a session drew an INVALIDATES edge onto the finding with a thorough note quoting its headline and showing it false, measured against all three published contracts. And on 2026-09-07 an agent ran search_design while brainstorming, met the finding with NO marker of any kind, read it as live, and re-derived the conclusion the design had already held for a week.\n\nTHE AGENT'S FIRST DIAGNOSIS WAS WRONG AND IS RECORDED HERE SO IT IS NOT REPEATED. It reported to Anthony that the finding had sat wrong for sixteen days and that the overtaken-defect detector had a gap because it filters on fact_type=defect. Measured afterwards: the detector reads INCOMING INVALIDATES and skips any fact that carries one, so it was CORRECTLY SILENT the whole time. There was no sixteen-day gap and no detector defect. Widening the fact_type filter, which is what the agent proposed and was asked to build, would have changed nothing about this case.\n\nTHE ACTUAL CAUSE, and it only appears once both sides are read together: CLOSURE IS ONE QUESTION WITH TWO AVAILABLE ANSWERS, and the two surfaces each read a different one. A claim can end because its own `valid_to` passed, or because a later record INVALIDATED it. `crates/reflow2-core/src/dates.rs::claim_age` computes `expired` from `valid_to` alone - it takes a property bag and structurally CANNOT see an edge - while the gap detector reads the edge and never looks at `valid_to` for this purpose. An invalidation sets no `valid_to`, so a refuted finding is closed for the detector and current for every read surface. Both pieces of code behaved exactly as written. Neither was wrong about its own question.\n\nWHY THE READ SURFACE IS THE WORSE HALF TO GET WRONG: a detector reports to whoever runs it, at a boundary. `search_design` is what a person or an agent meets FIRST, in the middle of thinking about something else, and a record returned with no marker is read as true. The failure mode is not a missed alert; it is a confident wrong belief formed from the design's own memory.\n\nTHE FIX, at the cause rather than at the instance. `DesignGraph::claim_age_of` is one graph-aware computation that answers both halves, and both read surfaces - search_design and topic_report - go through it. `ClaimAge` gains `superseded_by`, kept DISTINCT from `expired` because a claim that ran out on its own terms is not a claim something refuted, and carrying the invalidating record's ID rather than a boolean because a reader told their source was overturned needs to be able to go and read what overturned it.\n\nFAILING FIRST, OBSERVED: crates/reflow2-core/tests/a_superseded_finding_does_not_read_as_current.rs was written before the field existed and failed on its absence, then on three real assertions once the fixture was right. All three pass now. The test pins the CLASS - that both surfaces agree, and that the two kinds of closure stay distinguishable - not the one fact.\n\nWHAT IS NOT ESTABLISHED. No sweep was run for other pairs of surfaces that compute the same question differently; this one was found by tripping over it. And nothing here decides whether an invalidation should ALSO set valid_to at write time - it is deliberately not done, because that would put the burden on every future invalidator to remember, which is the instruction-with-no-detector shape this project has measured failing more than once.",
+        "subject_id": "cmp:search",
+        "valid_from": "2026-09-07"
       }
     },
     {
@@ -198213,7 +198408,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:a68b2fb5e63e364b51bf9a2d81e2184850bac839f961147d2af3332ad581edbb",
+  "prev_content_hash": "sha256:a883b0499c477e4dd77339b728fc36a96d4d184122577ca4605ce67a7d2fafca",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
