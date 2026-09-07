@@ -7,6 +7,22 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
     "properties": {
+      "checksum": {
+        "default": null,
+        "description": "Optional hash over the anchored spec set at this epoch — an Anchor is a\nchecksummed baseline epoch, and until 2026-09-07 nothing on the surface\ncould write the field that makes one. Same class as `description` above:\ndeclared, never offered, and invisible while the reachability instrument\nfused reach with adoption.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "description": {
+        "default": null,
+        "description": "WHAT THIS EPOCH IS, in prose — the ordering, what it must not include,\nwhy it exists. THIS IS THE TYPE'S EMBEDDING FIELD, so it is what\n`search_design` finds an epoch by; keep `name` a short handle and put\nthe prose here.\n\nDeclared 2026-09-07 after the dev_storyflow agent reported it missing:\n*\"add_epoch lost `description` — the ordering and the must-nots had to\ngo into the name, which is now a paragraph.\"* It was never lost; the\nproperty has been declared since the schema had epochs and no tool ever\noffered it, so the field the search finds an epoch BY could not be\nwritten by the tool that makes one.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
       "epoch_type": {
         "default": null,
         "description": "`baseline` | `revision` | `milestone` | `incident_response` | `release_cut`.",

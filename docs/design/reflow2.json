@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:0428fd4da6b87ef4e34c06421cc93c6e298fe566b869fde80fedfd75d3ca0de9",
+  "content_hash": "sha256:a68b2fb5e63e364b51bf9a2d81e2184850bac839f961147d2af3332ad581edbb",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -3655,6 +3655,14 @@
         "evidence": "That measurement found ZERO of eight subsystems providing an interface, with every interface provided by a leaf component one level down - subsystems as groupings rather than black boxes. Four subsystems have since gained a PROVIDES edge, so the count aged; the finding did not, because none of the four carries a contract. It predicted the shape of today's answer before the edges existed."
       },
       "to_id": "dec:idea-what-would-a-provided-contract-buy-substitution-derived-tests-or-a-mock"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "fact:the-fix-properly-rule-is-the-second-half-of-root-cause-and-anthony-restated-it-when-he-saw-the-word-patches",
+      "properties": {
+        "evidence": "The restatement is the use case for that parked instrument: it is the argument the owner makes in words and would rather make with a number."
+      },
+      "to_id": "dec:idea-cost-to-change-is-read-from-lifecycle-phase-the-rule-of-tens-in-the-graph"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -23599,6 +23607,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-0353d8219d71f2ee",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:the-export-can-be-ordered-before-its-writes"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-03a23acf45b3fec0",
       "properties": {
         "accepted_baseline": true,
@@ -23704,6 +23721,15 @@
         "action": "modified"
       },
       "to_id": "art:hierarchy"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-0b2ad1a8785917f3",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-a-near-match-of-another-type-is-named-as-a-layer"
     },
     {
       "edge_type": "CHANGED",
@@ -24040,6 +24066,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-3989c9914e441633",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:mint-seat-liveness-test"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-3a37640195ff8a6f",
       "properties": {
         "accepted_baseline": true,
@@ -24328,6 +24363,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-5214ae007e7411cf",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-a-replaced-value-is-kept"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-54f8b2a0f6b7d81f",
       "properties": {
         "accepted_baseline": true,
@@ -24451,6 +24495,15 @@
         "action": "modified"
       },
       "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-6347f28b6c03cbbd",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-a-node-is-named-by-its-id-and-the-type-is-optional"
     },
     {
       "edge_type": "CHANGED",
@@ -24814,6 +24867,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-872460f004b4ddc9",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:lens-handler-test"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-87a2fdd74483062e",
       "properties": {
         "accepted_baseline": true,
@@ -24859,6 +24921,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-8b7f9de6e696f3d7",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-search-first"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-8bb3d7cc9dcc1e6d",
       "properties": {
         "accepted_baseline": true,
@@ -24883,6 +24954,15 @@
         "action": "modified"
       },
       "to_id": "art:dependency-manifest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-8d92ee4ef5a92d23",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-a-prescribed-layer-pair-no-longer-refuses"
     },
     {
       "edge_type": "CHANGED",
@@ -38773,6 +38853,78 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-two-reported-fields-get-their-parameters",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:enum-schema"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-two-reported-fields-get-their-parameters",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-two-reported-fields-get-their-parameters",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-vocabulary-reach"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-two-reported-fields-get-their-parameters",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-built"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-two-reported-fields-get-their-parameters",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-two-reported-fields-get-their-parameters",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-operate"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-two-reported-fields-get-their-parameters",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-temporal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-two-reported-fields-get-their-parameters",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:vocabulary-reach"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-unexported-claim-is-answered-once-for-the-seat",
       "properties": {
         "accepted_baseline": true,
@@ -39672,6 +39824,14 @@
         "seat": "asligar-bitecool:4176513:96c83b5f"
       },
       "to_id": "cmp:seam"
+    },
+    {
+      "edge_type": "COMPLEMENTS",
+      "from_id": "rule:every-failure-is-searched-and-every-cause-is-root-caused-before-it-is-written",
+      "properties": {
+        "evidence": "Anthony coupled them on 2026-09-07: \"as well as determining root cause, I like things to be fixed properly\". Finding the cause and correcting at the cause are one sequence; a reader meeting either rule alone gets half the doctrine, and the halves fail differently — a cause found and worked around, or a proper fix aimed at the wrong thing."
+      },
+      "to_id": "rule:fix-it-properly-while-it-is-still-cheap"
     },
     {
       "edge_type": "COMPLEMENTS",
@@ -50658,6 +50818,14 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "chg:the-two-reported-fields-get-their-parameters",
+      "properties": {
+        "evidence": "Eight declared properties move from unreachable to writable, which is this requirement being met on eight more counts."
+      },
+      "to_id": "req:declared-vocabulary-is-reachable-from-the-surface"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cmp:agent",
       "properties": {},
       "to_id": "decision:ack:f384097e7d8b01b0"
@@ -52903,6 +53071,14 @@
       "from_id": "rule:field-feedback-issues-are-root-caused-and-ideas-are-brainstormed",
       "properties": {},
       "to_id": "dec:the-four-2026-09-rules-are-advisory-because-no-detector-can-yet-see-a-violation"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "rule:fix-it-properly-while-it-is-still-cheap",
+      "properties": {
+        "evidence": "He named that brainstorm as the reason for the rule: it is harder to fix things later. The cost-of-change instrument would put a number on the claim this rule asks people to take on faith, which is what would move it from philosophy to measurement."
+      },
+      "to_id": "dec:idea-cost-to-change-is-read-from-lifecycle-phase-the-rule-of-tens-in-the-graph"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -140084,6 +140260,30 @@
     },
     {
       "edge_type": "MITIGATES",
+      "from_id": "chg:the-two-reported-fields-get-their-parameters",
+      "properties": {
+        "evidence": "Answers the report that started it: the two properties named there are now writable by the tools that make the nodes."
+      },
+      "to_id": "fact:defect-a-declared-property-can-be-unreachable-and-invisible-to-the-reach-instrument-when-a-default-populates-it"
+    },
+    {
+      "edge_type": "MITIGATES",
+      "from_id": "chg:the-two-reported-fields-get-their-parameters",
+      "properties": {
+        "evidence": "The epoch half of that record's first friction is answered: add_epoch and plan_epoch now take a checksum. The add_artifact checksum and the delete_edge shape are untouched and stay open."
+      },
+      "to_id": "fact:defect-two-more-constructor-shape-frictions-met-while-working-add-artifact-cannot-set-a-checksum-and-delete-edge-refuses-the-types-create-edge-requires"
+    },
+    {
+      "edge_type": "MITIGATES",
+      "from_id": "chg:the-two-reported-fields-get-their-parameters",
+      "properties": {
+        "evidence": "Gives the parameter to all six constructors at once rather than to the reported one, and pins the class with a schema sweep so the next type declaring a description cannot ship without one."
+      },
+      "to_id": "fact:six-constructors-cannot-write-any-prose-because-the-class-was-fixed-one-report-at-a-time-and-never-swept"
+    },
+    {
+      "edge_type": "MITIGATES",
       "from_id": "chg:write-buffer-gets-an-index-and-hydrate-drops-tenfold",
       "properties": {
         "confidence": 0.9,
@@ -144158,6 +144358,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:test-every-constructor-says-what-the-thing-is",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "req:declared-vocabulary-is-reachable-from-the-surface"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:test-graph-construction-is-setup",
       "properties": {
         "conformance": "unchecked"
@@ -144336,6 +144545,15 @@
         "conformance": "verified"
       },
       "to_id": "cap:a-coupling-has-a-typed-call-of-its-own"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:test-the-two-reported-fields",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "req:declared-vocabulary-is-reachable-from-the-surface"
     },
     {
       "edge_type": "REALIZES",
@@ -151224,6 +151442,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:test-every-constructor-says-what-the-thing-is",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-every-constructor-says-what-the-thing-is"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:test-loop-nudge",
       "properties": {
         "action": "created"
@@ -151317,6 +151543,14 @@
         "action": "created"
       },
       "to_id": "art:test-the-commonest-edge-has-a-typed-helper"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:test-the-two-reported-fields",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-the-two-reported-fields"
     },
     {
       "edge_type": "YIELDED",
@@ -152549,7 +152783,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c01c78495446550199df5ea535121b6073bbf281a321e95c9f5eeb4b86848f7b",
+        "checksum": "sha256:0fa50afff70c6b4dae194a5572f0b63429d01222440ba42f11c1c88263055dde",
         "location": "crates/reflow2-mcp/src/enum_schema.rs",
         "name": "enum_schema.rs — one schema_with fn per enum request field, reading legal values from the compiled-in schema (or the handler's own const) at tool-listing time",
         "status": "realized"
@@ -153068,7 +153302,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:d096bb47c21719759540d607e003332524568d053cec8f7853f5d9d348d5027a",
+        "checksum": "sha256:3071b2c88bec353f44bc6a2e52351a93fa1e675b475c85e0e196075c41c14004",
         "location": "crates/reflow2-mcp/tests/a_skill_response_says_who_it_is_for.rs",
         "name": "tests/a_skill_response_says_who_it_is_for.rs",
         "status": "realized"
@@ -153205,7 +153439,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:d2f9427ce71a7cb85b77e233fd24c93a0b626952e6ccb629211b8a6e34d158cb",
+        "checksum": "sha256:8791e881852a6ed931d112f72b5412256492b93163d8c9397bb7134d1e39b188",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/tests/mint_seat_liveness.rs",
         "name": "mint_seat_liveness.rs",
@@ -154023,7 +154257,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b81a6adb40af5979507555693d89c3705057aa4d2dc0d0d7378b2a06b079283e",
+        "checksum": "sha256:b283b8ad920effaede03baf04f9ccfcfe2f0b0182af827a32e32a0338bb3307e",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -154377,7 +154611,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:034d6aeebb067e3798d6f7fa96fe5422f2bb15c0103f4f1b00f784ea09e185ae",
+        "checksum": "sha256:cc59199227f385a97cd8999ea4f85c5cd7fac4ab29f4c754383c887cf0d357ed",
         "location": "crates/reflow2-mcp/tests/a_near_match_of_another_type_is_named_as_a_layer.rs",
         "name": "a_near_match_of_another_type_is_named_as_a_layer.rs",
         "status": "realized"
@@ -154388,7 +154622,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:e288eea4753edba4ef289b632f23aeeb6dfeef80bcb0f4ee9959471bb5c4dc95",
+        "checksum": "sha256:9ca6ebb966a14a655a01ba165da1ddb273032b3320f86c2508120851b0c2af61",
         "location": "crates/reflow2-mcp/tests/a_node_is_named_by_its_id_and_the_type_is_optional.rs",
         "name": "a_node_is_named_by_its_id_and_the_type_is_optional.rs — verifies/governed_by resolve the type from the id; a collision is refused naming both; an unknown id says so; delete_node still requires the type",
         "status": "realized"
@@ -154399,7 +154633,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:40d2f3d1a7a2f53382cec9a552d38f2a0dfd6967c497b73cbcf6ebe5e02a02f8",
+        "checksum": "sha256:a5592e2a8f39d1f94637a8af420d8b5fc9ab86d62063e913f7e094b4fc002570",
         "location": "crates/reflow2-mcp/tests/a_prescribed_layer_pair_no_longer_refuses.rs",
         "name": "a_prescribed_layer_pair_no_longer_refuses.rs",
         "status": "realized"
@@ -154421,7 +154655,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:04cf64b836e10d600f9e0f0485b81176b47b857ae69db1017d25b1de3dd05f49",
+        "checksum": "sha256:da86508c8113208bc712dab74ca205d4a07c3c80f306d74ec9a5be5d2c4ce806",
         "location": "crates/reflow2-mcp/tests/a_replaced_value_is_kept_when_it_would_be_lost.rs",
         "name": "a_replaced_value_is_kept_when_it_would_be_lost.rs",
         "status": "realized"
@@ -154534,6 +154768,17 @@
         "name": "edges_need_both_ends.rs",
         "status": "realized",
         "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:test-every-constructor-says-what-the-thing-is",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:e66359cfba8a409076eee66449168db3fe2b9739c5fc374521310408b78d00e5",
+        "location": "crates/reflow2-mcp/tests/every_constructor_can_say_what_the_thing_is.rs",
+        "name": "every_constructor_can_say_what_the_thing_is.rs",
+        "status": "realized"
       }
     },
     {
@@ -154683,7 +154928,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:3fae63db2df6ff387e0a2611d634f266a1d9839b926780ea55207649786f745d",
+        "checksum": "sha256:1885cce8599ea7c4143c662d351915547bf0a60f8fc8dd5df3118e7338cb359a",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/tests/search_first_fires_at_the_tool.rs",
         "name": "search_first_fires_at_the_tool.rs — six cases: the refusal, the rollback, both deliberate routes, the no-false-refusal counterweight, and the cross-type catch",
@@ -154792,11 +155037,22 @@
       }
     },
     {
+      "node_id": "art:test-the-two-reported-fields",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:3caa771c23353f9158501d475ea2f790570ece33d658eb1a2a393d4004848bab",
+        "location": "crates/reflow2-mcp/tests/the_two_reported_fields_can_be_set.rs",
+        "name": "the_two_reported_fields_can_be_set.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:test-vocabulary-reach",
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "test",
-        "checksum": "sha256:115282fbd5744c9d559093dc4a2407304e60acaea41fc9c3d1affc5e8cb787ee",
+        "checksum": "sha256:c010977b1d386dd46317b64631b939380baa5d12414b63324b137ffb1d535726",
         "location": "tools/test_vocabulary_reach.py",
         "name": "test_vocabulary_reach.py",
         "status": "realized"
@@ -154807,7 +155063,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:e4db4e2c62a9449067244dde589857efe6065b48c2bad36883dd13e87db9fffe",
+        "checksum": "sha256:42ec51a722e9c9c9f30021c9c27e8c259a760e15377fa95916a0f5fd1b68e38d",
         "location": "crates/reflow2-mcp/tests/the_export_can_be_ordered_before_its_writes.rs",
         "name": "the_export_can_be_ordered_before_its_writes.rs",
         "status": "realized"
@@ -154844,7 +155100,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:9193b9d7a442fc88180260b541ce47a56522a85b441303d4144431da93b7a898",
+        "checksum": "sha256:3ccaa93399b85aa8ecc9b8735d4b0c16dbd6eebe3ef25c6dbc4f4fc15d3509b0",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/built.rs",
         "name": "tools/built.rs",
@@ -154857,7 +155113,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:53d4d9651537da42188b94496e57b37672d1c382511d6eec9764ed72d7f10bbf",
+        "checksum": "sha256:b542514226b7441c3b4e4391115f2e84661b34c95ed9fd147b0ea055ff340efa",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
         "name": "crates/reflow2-mcp/src/tools/capture.rs",
@@ -154920,7 +155176,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:a7d6e93758abe2fca37e82738d183bf159b67a9ba2e673366ccd9f7863a3cdda",
+        "checksum": "sha256:6672a327aa86aad718d49b7f7f50e6e768eb490bf4e9684f2154e0a27bca53e1",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/operate_tools.rs",
         "name": "tools/operate_tools.rs",
@@ -154957,7 +155213,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:8213c45f9af4b8c7c9cfe48ec9428169f3d2847b0fdd03b73ff4e4feec98eaa2",
+        "checksum": "sha256:43dd766f93a7f51a185480d5e85bc6b2f3d0cb90e47bc90738077f17953c59aa",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/temporal_tools.rs",
         "name": "tools/temporal_tools.rs",
@@ -155240,7 +155496,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:e2c5bab2fe2d158335eabcbada24f3a9b78eacf96825618e54c1d40a2497365c",
+        "checksum": "sha256:8347306eb1c87dcdfbcb0e2a0b910c9ed7195027a305a6f70faa541d7ac52e8d",
         "location": "tools/vocabulary_reach.py",
         "name": "tools/vocabulary_reach.py",
         "status": "realized"
@@ -158834,6 +159090,15 @@
       }
     },
     {
+      "node_id": "chg:accept-0353d8219d71f2ee",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Struct literal gains `priority: None`; the assertion is unchanged.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-03a23acf45b3fec0",
       "node_type": "ChangeEvent",
       "properties": {
@@ -158943,6 +159208,15 @@
         "change_type": "new_feature",
         "detected_at": "2026-08-19",
         "name": "Two detectors added: multiple_parents (a Component contained by more than one parent — the spine is a tree) and level_spine_disagreement (a Component at the root of the spine declaring a level something else claims to be above). Both were invisible before, and both fire on this design: cmp:skills has two parents, cmp:packaging and cmp:registry are the spurious 'tier 1'. The second check is self-limiting — it compares against the highest level PRESENT, so a flat design reports nothing and no ladder depth is prescribed.",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:accept-0b2ad1a8785917f3",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Struct literal gains a None for the new optional parameter; the assertion is unchanged.",
         "subject": "system"
       }
     },
@@ -159297,6 +159571,15 @@
       }
     },
     {
+      "node_id": "chg:accept-3989c9914e441633",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Struct literal gains `description: None`; the assertion is unchanged.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-3a37640195ff8a6f",
       "node_type": "ChangeEvent",
       "properties": {
@@ -159598,6 +159881,15 @@
       }
     },
     {
+      "node_id": "chg:accept-5214ae007e7411cf",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Struct literal gains a None for the new optional parameter; the assertion is unchanged.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-54f8b2a0f6b7d81f",
       "node_type": "ChangeEvent",
       "properties": {
@@ -159722,6 +160014,15 @@
         "change_type": "refactor",
         "detected_at": "2026-08-01",
         "name": "FIRST baseline, not an accepted change. art:detect was registered with no checksum, so the most central file in the design — realizing cap:detect, cap:kpp, cap:aggregate-gap-keying, cap:release-pinned-to-time and cmp:detect — could never report drift, and reconcile_artifacts reported it as `no_baseline` rather than clean. Found twice on 2026-08-01 by two independent routes the same hour: an exhaustive reconcile sweep (106 of 107 unchanged, this one uncheckable) and the new derived release manifest, which named it as the sole entry in without_checksum. The file content is unchanged by this session; only the baseline is being established. `design_holds` is the honest available answer and it is an imperfect fit — the disposition vocabulary assumes there WAS a baseline, and establishing a first one is a different act from accepting a move. Filed as friction rather than worked around silently."
+      }
+    },
+    {
+      "node_id": "chg:accept-6347f28b6c03cbbd",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Struct literal gains a None for the new optional parameter; the assertion is unchanged.",
+        "subject": "system"
       }
     },
     {
@@ -160101,6 +160402,15 @@
       }
     },
     {
+      "node_id": "chg:accept-872460f004b4ddc9",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Struct literal gains `description: None` so it keeps compiling after the constructor gained the parameter. No design meaning: the test asserts the same thing about the same behaviour.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-87a2fdd74483062e",
       "node_type": "ChangeEvent",
       "properties": {
@@ -160148,6 +160458,15 @@
       }
     },
     {
+      "node_id": "chg:accept-8b7f9de6e696f3d7",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Struct literal gains `priority: None`; the assertion is unchanged.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-8bb3d7cc9dcc1e6d",
       "node_type": "ChangeEvent",
       "properties": {
@@ -160171,6 +160490,15 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "v0.29.0 cut, 2026-08-12. The design HOLDS: reflow2.toml's version string moved 0.28.0 -> 0.29.0 because a release was cut. The design meaning of a cut lives in rel:v0290 and epoch:v0290, never in a version string, so nothing in the design changed. This drift is expected on EVERY cut — reflow2.toml is the only registered artifact a version bump touches."
+      }
+    },
+    {
+      "node_id": "chg:accept-8d92ee4ef5a92d23",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Struct literal gains `priority: None`; the assertion is unchanged.",
+        "subject": "system"
       }
     },
     {
@@ -165383,6 +165711,17 @@
         "rationale": "Anthony asked for a look, not a decision: \"I just want to see something about a topic.\" The projection doctrine put the digest in the server so two agents render one subject the same way, and the not-found line is load-bearing because a digest built on a search miss is a confident wrong answer. The first read of reflow2's own design through the tool found a defect in that very line — it called 436 facts NOT matched when the list had merely been cut at twenty — which is the reason the line exists, turned on itself; fixed and pinned before merge. Undated changes are never offered as latest, the same rule as the overtaken-defect detector, so a node whose changes carry no date reads as \"nothing dated on the record\" rather than as untouched.",
         "subject": "system",
         "summary": "Item 5 of v0.50.0. New core module topic.rs and served tool topic_report(query, limit, budget_chars): keyword search, hits grouped by node type, per hit status / discontinued / claim age / connections by edge type and direction / the latest DATED change or measurement; a mandatory not_found line naming what was searched, which populated types matched nothing (or, when the list was cut at its limit, which are not among the top N), the limit cut and index drift; a reply bounded like detect_gaps with count and by_type never trimmed. A thin `topic` skill and /topic command; skill-lint allowlist gains the reply fields; one new toolsnap golden."
+      }
+    },
+    {
+      "node_id": "chg:the-two-reported-fields-get-their-parameters",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "add_epoch and plan_epoch take a description, add_requirement takes a priority — the two fields a user reported, answered",
+        "rationale": "This is the change that answers the report. The two before it - making the class visible and gating it - are worth having and neither of them would have changed anything for the person who wrote the feedback, which is the over-engineering pattern this project's owner watches for by name. A user said two fields were missing; the smallest honest answer is to add them.\n\nTHE MOVED PIN IS THE EVIDENCE. The reachability test asserted both properties WERE reported as unreachable; that assertion now reads the other way and was observed failing in the old direction before the parameters landed. A pin that moves with a fix, rather than being deleted by it, is what keeps a fix from being asserted rather than shown.",
+        "subject": "system",
+        "summary": "The dev_storyflow agent reported on 2026-09-07 that add_epoch had no description and add_requirement no priority. Neither was ever lost: both properties have been declared since their types existed and no typed tool ever offered them. This gives them parameters.\n\nDesignEpoch.description is that type's EMBEDDING FIELD, so the field search_design finds an epoch BY could not be written by the tool that makes one, and the reporter's workaround was to put a paragraph into `name`. Both add_epoch and plan_epoch take it, through one shared helper, because a fix put in one of that pair and not the other is exactly how the sequence-hint defect recurred on the sibling the next day.\n\nRequirement.priority declares `default: medium` and the default is injected at write, so every requirement carried a priority nobody chose and nobody could change through the surface: 193 of 207 sat at the injected value and the 14 that did not came through the generic escape hatch. Omitting the parameter still leaves the default, which is unchanged behaviour - the parameter adds a way to SAY, not an obligation to. Its legal values are published from the schema, and an undeclared value is refused with the set named.\n\nFAILING FIRST, OBSERVED: the four tests were written before the parameters and three failed with the serde refusals verbatim - \"unknown field `priority`, expected one of id, name, statement, distinct_from, status, approver, acted_at\" and \"unknown field `description`, expected one of id, name, epoch_type, sequence\". All four pass now. They pin that the value reaches the STORED PROPERTY, not merely that the call is accepted, because a tool that takes a field and drops it passes a signature check and still fails the caller.\n\nAND THE INSTRUMENT CAUGHT A DEFECT IN ITSELF, SAME DAY IT SHIPPED. Adding one parameter made SIX properties read as newly reachable instead of two. Cause: the tool-to-type map held only the `add_*` constructors, so plan_epoch, every setter and link_artifact were pooled as cross-type and their parameter names leaked to every type - the identical cross-type leak the map was added to stop, one tool-family along. Two fixes: the map now covers every tool that writes a type's own properties, and READ-ONLY TOOLS ARE EXCLUDED ENTIRELY, because a read cannot write anything and seven read tools were being counted as writers on the strength of parameter names like `limit` and `query` that happen to match property names.\n\nWITH THE LEAK CLOSED THE GATE IMMEDIATELY REPORTED FIVE MORE REAL HOLES the leak had been hiding: Actor.description, Interface.description, Release.description, Resource.description and DesignEpoch.checksum. They are pre-existing, not regressions, and are grandfathered into the baseline rather than fixed here - four of them are the same one-line fix as the epoch's, and that is a scope decision for the owner rather than one to take while passing."
       }
     },
     {
@@ -178488,6 +178827,16 @@
       }
     },
     {
+      "node_id": "frag:art:test-every-constructor-says-what-the-thing-is",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered every_constructor_can_say_what_the_thing_is.rs"
+      }
+    },
+    {
       "node_id": "frag:art:test-loop-nudge",
       "node_type": "Fragment",
       "properties": {
@@ -178605,6 +178954,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered the_commonest_edge_has_a_typed_helper.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:test-the-two-reported-fields",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered the_two_reported_fields_can_be_set.rs"
       }
     },
     {
@@ -190043,6 +190402,19 @@
       }
     },
     {
+      "node_id": "fact:six-constructors-cannot-write-any-prose-because-the-class-was-fixed-one-report-at-a-time-and-never-swept",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "name": "The five holes are one hole: six of eleven constructors cannot write ANY prose about the thing they create, because the class was fixed one report at a time and never swept",
+        "statement": "RUN AS THE SKILL ON REQUEST, 2026-09-07. Anthony asked, on being shown five newly visible unreachable properties: \"should we run /root-cause on these 5 holes to see if it is something deeper?\" It is.\n\nSTEP 1 - THE OBSERVATION. Five properties the reachability gate reported as newly visible once its cross-type leak was closed: Actor.description, Interface.description, Release.description, Resource.description, DesignEpoch.checksum. Four of the five are the SAME FIELD NAME on four different types, which is a pattern rather than four coincidences.\n\nSTEP 3 - CANDIDATES, generated from the surface and the schema rather than from memory:\n(a) Coincidence; four independent omissions.\n(b) The property was declared on those types AFTER their constructors were written, and nothing checks.\n(c) Those types keep their prose in a DIFFERENT field, which their constructors do take, so description is genuinely redundant on them - the shape of chg:accept-0500fc47eb120e13, where a Component stores prose as `purpose` and add_component's resolver wrongly asked for `description`.\n(d) The class was fixed one report at a time, wherever somebody hit it, and never swept.\n\nSTEP 4 AND 5 - THE MEASUREMENTS.\n(c) IS REFUTED, and this is the finding that matters. Of the eleven types declaring `description`, six have a constructor that does not take it - Artifact, Environment, Interface, Project, Release, Resource - and for every one of those six, `description` IS THE ONLY PROSE FIELD THE TYPE DECLARES. None of the six takes statement, purpose, summary or any other prose parameter either. So on six of eleven types the surface lets a user NAME a thing and never SAY WHAT IT IS, except through the generic escape hatch. That is a bigger and simpler statement than five scattered holes.\n\n(d) IS SUPPORTED BY THE HISTORY. Walking every commit that touched service.rs: CapabilityReq carried `description` from 2026-07-18, at its introduction; ContributorReq from 2026-07-22, likewise. VerificationReq DID NOT - it gained one on 2026-08-17, in a commit named \"A check records what it FOUND separately from what it IS\". That is precisely the founding case this project's own reachability instrument records in its docstring: Verification.description declared, fulltext, the type's embedding field, used ONCE in 164 nodes because add_verification had no parameter for it. So the hole was found, reported, and fixed ON THAT ONE TYPE. Nobody asked which other types had it, and nothing could answer if they had - the instrument that would have said so was itself hiding these six behind the fused filter fixed earlier today.\n\nSTEP 6 - THE CLASS, and it is the skill's own test: would the fix have stopped the earlier occurrences? Adding a parameter to add_interface stops today's. The CAUSE is that a vocabulary hole is fixed where it is reported and the same question is never asked of the sibling types, so the class survives every instance fix. That is the same shape as the sequence-hint defect recurring on plan_epoch after being fixed in add_epoch, and the same shape as the leak in the reachability map fixed hours ago, where only the tools named add_* were mapped and every setter leaked. Three instances of one habit in one day.\n\nA SECOND STRUCTURAL FINDING, from the same sweep and not asked for: NINE OF 29 NODE TYPES HAVE NO TYPED WRITE TOOL AT ALL - Actor, Anchor, DimensionAssessment, DimensionObservation, DriftEvent, EnvironmentRule, Fragment, QualityGate, Snapshot. Several are correctly machine-written (Fragment, Snapshot, DriftEvent and the two Dimension types are produced by other operations), but Actor, EnvironmentRule and QualityGate are vocabulary a user would reasonably want to write, and Actor is why Actor.description cannot simply be given a parameter: there is no add_actor to give it to. This is the same class as fact:defect-designrule-has-no-constructor-reported-by-two-independent-projects, which two projects reported independently.\n\nSTEP 9 - WHAT IS NOT ESTABLISHED. Whether each of the six types SHOULD carry prose is a judgement, not a measurement; the reporter wanted it on two types and nobody has been asked about the rest. Whether the three user-facing types with no constructor should get one is a bigger question than this record settles. And the history walk read service.rs only, so a struct that moved to another file in the BL-181 split may have gained its parameter somewhere this measurement could not see - FlowReq and AddEpochReq both returned no date for that reason, and neither conclusion above rests on them.",
+        "subject_id": "cap:mcp-surface",
+        "valid_from": "2026-09-07"
+      }
+    },
+    {
       "node_id": "fact:skill-mechanics-track-enforcement-exactly-and-they-split-into-three-kinds",
       "node_type": "TemporalFact",
       "properties": {
@@ -190486,6 +190858,19 @@
         "fact_type": "measurement",
         "statement": "CENSUS OF ANTHONY'S FIVE PROJECTS, 2026-08-09, via `describe_designs` — which reads only the sidecar beside each store, opens nothing, takes no lock and writes nothing. READ ONLY.\n\n  project                     graph_id                label              minted_by   stamp\n  A dynograph-foundation      dynograph-foundation    dynograph-foundation  0.16.0    0.16.0  (56 edge / 28 node types)\n  B reflow2                   reflow2                 reflow2               0.13.0    0.26.1  (61 / 29)\n  C flo2                      1a97fc1f1de4d5d2        flo2                  0.24.0    0.26.1  (60 / 29)\n  D dev_storyflow             reflow2   ⚠️            dev_storyflow         0.14.0    0.26.1  (61 / 29)\n  E embeddings-rs             —                       —                     —         ABSENT\n\n=== ✅ PROJECT E IS NOT A REFLOW2 PROJECT — the open question is answered ===\n\nAnthony was unsure (\"technically, there is a projectE (embeddings-rs, though I'm not sure yet if this is a reflow2 project)\"). MEASURED: the `.reflow2` directory EXISTS and `describe_designs` reports `state: absent` — \"no design here.\" So it is OPTED IN AND EMPTY: somebody created the directory and no design was ever started. That is a distinct state from both \"is a reflow2 project\" and \"is not one\", and reflow2 reports it precisely because opening the store to find out would MINT an identity and make the answer true by asking.\n\n⚠️ AND STORYFLOW ALREADY DECLARES `ifc:embeddings_api` (\"Embeddings REST API\"), so D depends on an embeddings service that has no design at all. Whether that service IS embeddings-rs is still not established.\n\n=== 🔴 THREE IDENTITY CONVENTIONS ACROSS FOUR GRAPHS, AND ONE OUTRIGHT COLLISION ===\n\n- `dynograph-foundation` — graph_id equals the label. The convention working.\n- `flo2` — graph_id is a MINTED HASH `1a97fc1f1de4d5d2`, label `flo2`. Different convention, and it is the one `minted` origin among four.\n- **`dev_storyflow` carries graph_id `reflow2` — THE SAME ID AS REFLOW2 ITSELF.** Two distinct designs, one id.\n\n⇒ This is exactly the Contributor-fork defect found earlier today (`ctr:anthony` / `who:ajs`) ONE LEVEL UP: **the field whose entire purpose is identity is the one nothing checks for duplicate identity.** It is also `rule:no-foreclosure` clause (5) in the field. Every cross-project mechanism in `dec:idea-gap-flows-to-the-dependency` and `dec:idea-a-change-upstream-reaches-the-sibling-that-never-asked` runs through composition, and **composition cannot tell B's nodes from D's by graph_id.** `label` distinguishes them; the id does not.\n\n=== ⚠️⚠️ THE PROJECT AT THE BOTTOM OF THE STACK HAS THE STALEST DESIGN ===\n\n**dynograph-foundation's graph was written by reflow2 0.16.0 and has not moved since — roughly ELEVEN releases behind the 0.27.0 cut today.** Its stamp holds 56 edge types and 28 node types against the current 61 and 29. It predates `OWNED_BY`, `GATED_ON`, `HAS_READINESS`, `SCHEDULED_FOR`, `CALIBRATED_AGAINST` and the whole `ReadinessAssessment` type.\n\nTHE SHAPE IS THE FINDING: **A is what B, C and D all rest on, and A is the least-maintained design of the four.** Every consumer's graph is current; the thing they depend on is a year of releases behind in design terms. And the practical consequence bites immediately on the question Anthony asked — filing a proposed requirement INTO A's graph with a 0.27.0 binary will MOVE A'S STAMP from 0.16.0 to 0.27.0, which is a real and irreversible side effect of what looks like a read-mostly act of filing an issue.\n\nBOUND: `describe_designs` deliberately reports NO node counts, because counting means opening, and opening mints an identity where there is none. So this census says what each design IS, never how big it is. D's and A's contents are known here only from their committed exports, not their live stores.",
         "subject_id": "dec:idea-a-change-upstream-reaches-the-sibling-that-never-asked"
+      }
+    },
+    {
+      "node_id": "fact:the-fix-properly-rule-is-the-second-half-of-root-cause-and-anthony-restated-it-when-he-saw-the-word-patches",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "finding",
+        "name": "Anthony restated the fix-properly rule as the second half of root-cause, on seeing the word \"patches\" — and named the cost-of-change curve as the reason",
+        "statement": "ANTHONY, 2026-09-07, in his own words: \"it should also be a design rule, but as well as determining root cause, I like things to be fixed properly, even if it takes longer and requires more work. in the long run, we are better off served by putting the work in now. (this touches upon that it is more difficult to fix things down the road - we had a brainstorming session on this last session). when I see the word 'patches', it makes me worry that we are fixing the root cause and that we are also not fixing the issue properly.\"\n\nWHAT IS NEW HERE, since the rule already existed and he had already made it permanent on 2026-08-17. Three things.\n\n(1) HE COUPLED THE TWO RULES EXPLICITLY. Finding the cause and fixing at the cause are one sequence, not two independent disciplines: \"as well as determining root cause\". The root-cause skill's step 8 already points at this rule, but the two RULES were joined by nothing, so a reader of either met only half the doctrine. The edges drawn with this record close that.\n\n(2) HE NAMED THE COST CURVE AS THE REASON, referring back to his own brainstorm of 2026-09-06 on the Cost of Change Curve and the Rule of Tens. That is the argument beneath clause 2 of the rule, and it means the parked cost-of-change instrument is not merely an interesting measure: it would put a number on the thing this rule asks people to believe.\n\n(3) THE TRIGGER WAS A WORD, AND THE WORD WAS THE AGENT'S. He read \"patched 25 literals\" in a progress report and reasonably heard \"worked around 25 problems\". It meant mechanical edits to test-code struct literals - adding an explicit None for a newly added optional parameter so existing tests keep compiling - which is neither a fix nor a workaround. THE LESSON IS ABOUT REPORTING, NOT ABOUT THE WORK: a word that names a known anti-pattern must not be spent on something else, because the owner cannot audit every diff and is reading the words instead. The vocabulary is the interface.\n\nWHAT THE AUDIT FOUND WHEN HE ASKED. The day's five changes were each taken at the cause rather than around it: a constructor for the moment a cause is written rather than a reminder to remember the skill; the reachability filter unfused rather than special-cased for the two reported properties; the tool-to-type map extended to every writer rather than to the one that leaked; six constructors given the parameter rather than the one reported; and a schema sweep as the test rather than a list of today's six.\n\nWHAT IS HONESTLY DEFERRED, stated because this is exactly the record where hiding it would be the failure: 43 declared properties remain unreachable from the surface and are GRANDFATHERED into a baseline rather than fixed. Three node types - Actor, EnvironmentRule, QualityGate - have no typed constructor at all, so their properties cannot be given parameters without first deciding whether those types should be user-writable. Both are visible, counted and gated against growth; neither is fixed. Under clause 1 that is a decision to carry a cost, and it is the owner's to take rather than the agent's to leave unmentioned.",
+        "subject_id": "rule:fix-it-properly-while-it-is-still-cheap",
+        "valid_from": "2026-09-07"
       }
     },
     {
@@ -194626,7 +195011,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:f22895c2d799aca9a2623140690babd9600d1e77ff8aa287f8646761319ef240",
+  "prev_content_hash": "sha256:0428fd4da6b87ef4e34c06421cc93c6e298fe566b869fde80fedfd75d3ca0de9",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

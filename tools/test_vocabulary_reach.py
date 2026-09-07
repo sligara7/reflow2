@@ -79,14 +79,31 @@ def main() -> int:
     out = r.stdout
     check("the report runs", r.returncode == 0, r.stderr[-400:])
 
-    # THE TWO REPORTED PROPERTIES. Both are declared, neither is accepted by any
-    # typed tool, and both were invisible before the two questions were split.
-    for prop in ("Requirement.priority", "DesignEpoch.description"):
+    # THE BUCKET THE FUSED FILTER COULD NOT PRODUCE, pinned on live members of
+    # it. `Actor.actor_type` is populated ONLY because it declares a schema
+    # default, and `Capability.tier` only through generic create_node — the two
+    # ways a property looks adopted while nothing on the surface can set it.
+    for prop in ("Actor.actor_type", "Capability.tier"):
         check(
-            f"{prop} is reported as unreachable",
+            f"{prop} is reported as unreachable though it is populated",
             prop in out,
             "a declared property no typed tool accepts must be reported whether or not "
-            "anything wrote it — this is the pair a user found and the instrument could not",
+            "anything wrote it — usage is not reach",
+        )
+
+    # ⭐ THE PAIR THAT PROMPTED ALL OF THIS IS NOW REACHABLE, AND THIS ASSERTION
+    # IS THE MOVED PIN. It read `prop in out` until 2026-09-07, when the two
+    # properties a user reported were given parameters on the tools that make
+    # the nodes — `description` on add_epoch and plan_epoch, `priority` on
+    # add_requirement. Both were observed failing in the old direction before
+    # the parameters landed, which is what makes the fix evidenced rather than
+    # asserted. If either reappears here, a constructor lost a parameter.
+    for prop in ("Requirement.priority", "DesignEpoch.description"):
+        check(
+            f"{prop} is NO LONGER unreachable — its constructor takes it",
+            prop not in out,
+            "a user reported this field missing and it was given a parameter; seeing it "
+            "here again means the constructor lost it",
         )
 
     # The REASON it looked adopted has to be on the line, or the reader cannot

@@ -142,7 +142,7 @@ def declared() -> tuple[dict[str, dict], dict[str, dict]]:
 # A type absent from this map has no known constructor, so its properties are
 # judged against the whole surface — the conservative reading, which under-reports
 # rather than inventing a finding.
-CONSTRUCTORS = {
+WRITES_TYPE = {
     "add_actor": "Actor",
     "add_artifact": "Artifact",
     "add_capability": "Capability",
@@ -163,6 +163,43 @@ CONSTRUCTORS = {
     "add_resource": "Resource",
     "add_verification": "Verification",
     "record_finding": "TemporalFact",
+    # SETTERS AND THE OTHER WRITERS. A setter is as type-specific as a
+    # constructor and leaks exactly the same way when it is left unmapped:
+    # measured 2026-09-07, adding `description` to add_epoch made SIX
+    # properties read as newly reachable instead of two, because `plan_epoch`
+    # was not in this map and its parameters were therefore pooled as
+    # cross-type. One type's field covering another's is the very miss this
+    # map was added to stop, so the map has to cover every tool that writes a
+    # type's own properties, not only the ones named `add_*`.
+    "plan_epoch": "DesignEpoch",
+    "link_artifact": "Artifact",
+    "set_artifact_checksum": "Artifact",
+    "set_artifact_checksums": "Artifact",
+    "set_artifact_intent": "Artifact",
+    "set_capability_delivery": "Capability",
+    "set_capability_signature": "Capability",
+    "set_capability_status": "Capability",
+    "set_interface_spec": "Interface",
+    "set_interface_designation": "Interface",
+    "set_requirement_lineage": "Requirement",
+    "set_requirement_status": "Requirement",
+    "set_requirement_designation": "Requirement",
+    "set_verification_status": "Verification",
+    "set_verification_kind": "Verification",
+    "set_decision_status": "Decision",
+    "set_quality_target": "Decision",
+    "set_epoch_status": "DesignEpoch",
+    "set_project_mode": "Project",
+    "genesis": "Project",
+    "record_change": "ChangeEvent",
+    "answer_question": "Question",
+    "withdraw_question": "Question",
+    "acknowledge_gap": "Question",
+    "acknowledge_gaps": "Question",
+    "withdraw_gap_acknowledgement": "Question",
+    "gap_to_prompt": "Question",
+    "gaps_to_prompts": "Question",
+    "external_dependency": "Resource",
 }
 
 
@@ -183,15 +220,23 @@ def tool_parameters() -> tuple[set[str], dict[str, set[str]]]:
         if f.stem in GENERIC:
             continue
         snap = json.loads(f.read_text())
+        # A READ CANNOT WRITE ANYTHING, so a read-only tool is no evidence that
+        # a property is reachable — and its parameters collide with property
+        # names by coincidence. `search_design`, `scan_nodes`, `what_next` and
+        # `find_tools` all take a `limit`; `topic_report` takes a `query`. Seven
+        # read tools were pooled as writers until this line, on the strength of
+        # names that happen to match.
+        if ((snap.get("annotations") or {}).get("readOnlyHint")) is True:
+            continue
         names = set(((snap.get("inputSchema") or {}).get("properties") or {}).keys())
         per_tool[f.stem] = names
         params |= names
     shared: set[str] = set()
     for tool, names in per_tool.items():
-        if tool not in CONSTRUCTORS:
+        if tool not in WRITES_TYPE:
             shared |= names
     by_type: dict[str, set[str]] = {}
-    for tool, node_type in CONSTRUCTORS.items():
+    for tool, node_type in WRITES_TYPE.items():
         by_type.setdefault(node_type, set()).update(per_tool.get(tool, set()))
     for node_type in by_type:
         by_type[node_type] |= shared

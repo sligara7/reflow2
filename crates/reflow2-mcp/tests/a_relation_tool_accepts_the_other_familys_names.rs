@@ -267,6 +267,7 @@ async fn the_handoff_lands_end_to_end() {
         status: None,
         approver: None,
         acted_at: None,
+        priority: None,
     })));
     j!(s.add_capability(Parameters(CapabilityReq {
         id: "cap:seal".into(),

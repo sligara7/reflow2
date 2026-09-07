@@ -32,6 +32,7 @@ async fn shared_service() -> ReflowService {
     j!(s.add_project(Parameters(IdName {
         id: "proj:seat".into(),
         name: Some("Seat".into()),
+        description: None,
     })));
     j!(s.add_contributor(Parameters(ContributorReq {
         id: "who:ann".into(),

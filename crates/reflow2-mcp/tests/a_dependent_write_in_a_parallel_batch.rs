@@ -44,6 +44,8 @@ fn epoch(id: &str) -> AddEpochReq {
         name: Some("A moment".into()),
         epoch_type: Some("milestone".into()),
         sequence: Some(1),
+        checksum: None,
+        description: None,
     }
 }
 

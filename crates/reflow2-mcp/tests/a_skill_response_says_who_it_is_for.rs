@@ -35,6 +35,7 @@ async fn service() -> ReflowService {
     j!(s.add_project(Parameters(IdName {
         id: "proj:x".into(),
         name: Some("X".to_string()),
+        description: None,
     })));
     s
 }

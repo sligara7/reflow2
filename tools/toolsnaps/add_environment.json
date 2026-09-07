@@ -7,6 +7,14 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
     "properties": {
+      "description": {
+        "default": null,
+        "description": "WHAT THIS IS, in prose. Added 2026-09-07: `description` is the only\nprose field this type declares, and no tool offered it, so the surface\nlet a caller NAME the thing and never say what it was — six of eleven\ntypes that declare a description were in that state, because the class\nwas fixed one report at a time and never swept\n(`fact:six-constructors-cannot-write-any-prose-because-the-class-was-fixed-one-report-at-a-time-and-never-swept`).",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
       "env_type": {
         "default": null,
         "description": "`production` (default) / `development` / `staging` / `field` / `lab` / `physical_site`.",

@@ -336,15 +336,22 @@ impl ReflowService {
         let mut __rf =
             crate::service::RequiredFields::new(&g, reflow2_core::nodes::node::ARTIFACT, &req.id)?;
         let name = __rf.str("name", req.name);
-        ok_json(NodeDto::from(
-            g.add_artifact(
+        let stored = g
+            .add_artifact(
                 &req.id,
                 &name,
                 req.artifact_type.as_deref(),
                 req.location.as_deref(),
             )
-            .map_err(dyno_err)?,
-        ))
+            .map_err(dyno_err)?;
+        let stored = crate::tools::capture::set_description(
+            &mut g,
+            reflow2_core::nodes::node::ARTIFACT,
+            &req.id,
+            req.description.as_deref(),
+        )?
+        .unwrap_or(stored);
+        ok_json(NodeDto::from(stored))
     }
 
     #[tool(

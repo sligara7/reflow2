@@ -74,6 +74,7 @@ async fn seeded() -> ReflowService {
     j!(s.add_project(Parameters(IdName {
         id: "proj:sb".into(),
         name: Some("Softball".into()),
+        description: None,
     })));
     j!(s.add_requirement(Parameters(RequirementReq {
         id: "req:physics".into(),
@@ -83,6 +84,7 @@ async fn seeded() -> ReflowService {
         status: None,
         approver: None,
         acted_at: None,
+        priority: None,
     })));
     j!(s.add_capability(Parameters(CapabilityReq {
         id: "cap:flight".into(),
@@ -204,6 +206,7 @@ async fn genesis_bootstraps_then_detect_hands_off() {
         status: None,
         approver: None,
         acted_at: None,
+        priority: None,
     })));
     j!(s.add_capability(Parameters(CapabilityReq {
         id: "cap:flight".into(),
@@ -453,6 +456,7 @@ async fn interface_tools_pair_both_sides_of_a_contract() {
     j!(s.add_interface(Parameters(IdName {
         id: "ifc:state".into(),
         name: Some("Game state feed".into()),
+        description: None,
     })));
     j!(s.provides(Parameters(ProvidesReq {
         from_id: "cmp:physics".into(),
@@ -495,6 +499,7 @@ async fn a_contract_with_no_provider_surfaces_as_a_gap_over_the_surface() {
     j!(s.add_interface(Parameters(IdName {
         id: "ifc:state".into(),
         name: Some("Game state feed".into()),
+        description: None,
     })));
     j!(s.consumes(Parameters(ConsumesReq {
         from_id: "cmp:physics".into(),
@@ -768,12 +773,14 @@ async fn the_write_side_can_answer_what_detect_asks_for() {
         name: Some("Softball v1".into()),
         version: Some("1.0.0".into()),
         unit_type: Some("bundle".into()),
+        description: None,
     })));
     j!(s.add_environment(Parameters(EnvironmentReq {
         id: "env:itch".into(),
         name: Some("itch.io".into()),
         env_type: Some("production".into()),
         location: None,
+        description: None,
     })));
     j!(s.deploy_to(Parameters(DeployToReq {
         release_id: "rel:v1".into(),
@@ -1042,6 +1049,7 @@ async fn a_rejected_edge_names_the_alternatives() {
     j!(s.add_project(Parameters(IdName {
         id: "proj:x".into(),
         name: Some("X".into()),
+        description: None,
     })));
     let err = s
         .create_edge(Parameters(CreateEdgeReq {
@@ -1191,6 +1199,7 @@ async fn marking_a_requirement_dropped_stops_the_nagging() {
     j!(s.add_project(Parameters(IdName {
         id: "proj:p".into(),
         name: Some("P".into()),
+        description: None,
     })));
     j!(s.add_requirement(Parameters(RequirementReq {
         id: "req:maybe".into(),
@@ -1200,6 +1209,7 @@ async fn marking_a_requirement_dropped_stops_the_nagging() {
         status: None,
         approver: None,
         acted_at: None,
+        priority: None,
     })));
 
     let flagged = |v: &serde_json::Value| {
@@ -1528,6 +1538,7 @@ async fn documents_links_a_doc_over_the_surface_and_refuses_a_ghost() {
         name: Some("README.md".into()),
         artifact_type: Some("document".into()),
         location: Some("README.md".into()),
+        description: None,
     })));
 
     let edge = j!(s.documents(Parameters(DocumentsReq {
@@ -2133,12 +2144,16 @@ async fn temporal_resource_and_realization_tools_round_trip() {
         name: Some("First cut".into()),
         epoch_type: Some("baseline".into()),
         sequence: Some(0),
+        checksum: None,
+        description: None,
     })));
     j!(s.add_epoch(Parameters(AddEpochReq {
         id: "epoch:v2".into(),
         name: Some("Second cut".into()),
         epoch_type: Some("revision".into()),
         sequence: Some(1),
+        checksum: None,
+        description: None,
     })));
     j!(s.precedes(Parameters(PrecedesReq {
         earlier_epoch: "epoch:v1".into(),
@@ -2186,6 +2201,7 @@ async fn temporal_resource_and_realization_tools_round_trip() {
         id: "res:gpu".into(),
         name: Some("GPU pool".into()),
         provider: Some("cloud".into()),
+        description: None,
     })));
     j!(s.require_resource(Parameters(RequireResourceReq {
         from_type: Some("Component".into()),
@@ -2205,6 +2221,7 @@ async fn temporal_resource_and_realization_tools_round_trip() {
         name: Some("flight.rs".into()),
         artifact_type: Some("code".into()),
         location: Some("src/flight.rs".into()),
+        description: None,
     })));
     j!(s.realizes(Parameters(RealizesReq {
         artifact_id: "art:flight-rs".into(),
@@ -2408,6 +2425,7 @@ async fn a_read_after_a_write_does_not_carry_a_loop_debt_hint() {
         status: None,
         approver: None,
         acted_at: None,
+        priority: None,
     })));
     let after_write = j!(s.get_node(Parameters(GetNodeReq {
         node_type: Some("Capability".into()),
@@ -2431,6 +2449,7 @@ async fn a_read_after_a_write_does_not_carry_a_loop_debt_hint() {
         status: None,
         approver: None,
         acted_at: None,
+        priority: None,
     })));
     assert!(
         write.get("loop_hint").is_some(),
@@ -2713,6 +2732,7 @@ async fn claimable() -> ReflowService {
     j!(s.add_project(Parameters(IdName {
         id: "proj:seat".into(),
         name: Some("Seat".into()),
+        description: None,
     })));
     j!(s.add_contributor(Parameters(ContributorReq {
         id: "who:ann".into(),
@@ -2860,6 +2880,7 @@ async fn a_project_mode_can_be_chosen_after_genesis() {
     j!(s.add_project(Parameters(IdName {
         id: "proj:m".into(),
         name: Some("Modey".into()),
+        description: None,
     })));
 
     let set = j!(s.set_project_mode(Parameters(ProjectModeReq {
@@ -2879,6 +2900,7 @@ async fn choosing_a_mode_preserves_everything_else_about_the_project() {
     j!(s.add_project(Parameters(IdName {
         id: "proj:m".into(),
         name: Some("Modey".into()),
+        description: None,
     })));
     j!(s.set_project_mode(Parameters(ProjectModeReq {
         project_id: "proj:m".into(),
@@ -2902,6 +2924,7 @@ async fn an_unknown_mode_fails_loud_rather_than_leaving_the_old_one() {
     j!(s.add_project(Parameters(IdName {
         id: "proj:m".into(),
         name: Some("Modey".into()),
+        description: None,
     })));
     j!(s.set_project_mode(Parameters(ProjectModeReq {
         project_id: "proj:m".into(),
@@ -3158,6 +3181,8 @@ async fn an_unknown_node_type_is_refused_rather_than_answered_null() {
         name: Some("a real epoch".into()),
         epoch_type: Some("revision".into()),
         sequence: Some(1),
+        checksum: None,
+        description: None,
     })));
 
     // THE REPRODUCTION: the type name they used.
@@ -3319,6 +3344,7 @@ async fn add_design_rule_is_a_typed_constructor() {
     j!(s.add_project(Parameters(IdName {
         id: "prj:p".into(),
         name: Some("P".into()),
+        description: None,
     })));
     let node = j!(s.add_design_rule(Parameters(DesignRuleReq {
         id: "rule:branch-then-pr".into(),
@@ -3499,6 +3525,7 @@ async fn get_node_resolves_by_id_alone_and_refuses_a_collision() {
         status: None,
         approver: None,
         acted_at: None,
+        priority: None,
     })));
     let got = j!(s.get_node(Parameters(GetNodeReq {
         id: "req:solo".into(),
@@ -3543,7 +3570,8 @@ async fn interface_auth_refusal_says_it_is_authentication_not_authorization() {
     let s = ReflowService::in_memory().expect("service");
     j!(s.add_interface(Parameters(IdName {
         id: "ifc:x".into(),
-        name: Some("X".into())
+        name: Some("X".into()),
+        description: None,
     })));
     let e = s
         .set_interface_spec(Parameters(
