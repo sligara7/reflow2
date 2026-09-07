@@ -154,6 +154,11 @@ Then record the answer: create the `Interface` (`add_interface` + `provides`/`co
 redirect the dependency edge, or capture the decision as a node. Re-run `detect_defects` to
 confirm the loop is gone.
 
+**A defect you are about to EXPLAIN is the root-cause skill's moment.** *"The cycle is there
+because…"* is a cause, and a cause written before a measurement is the failure that skill exists
+to stop: `get_skill` root-cause, search the finding's own words in the design first, and generate
+the candidates from the design before naming one.
+
 ## 4b. Say what the defects MEAN, not just how many there are
 
 `ility_report`. It reads the same sweep you just ran and maps the findings onto quality axes —
