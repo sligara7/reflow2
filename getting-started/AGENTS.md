@@ -328,6 +328,14 @@ reflow2 phrases the question; **you** are the language model that fills it in:
 
 ## Tools (the `reflow2` MCP server)
 
+- **Naming which node (one convention, and the other spelling forgiven):** a relation tool whose
+  two ends play different roles names the role end by its role (`verification_id`, `artifact_id`,
+  `constraint_id`, `release_id`, `contributor_id`, `resource_id` …) and the other end `target_id` /
+  `target_type`; one whose ends are peers uses `from_id` / `to_id`. Every relation tool ALSO accepts
+  the other family's names — `from_*` / `to_*` on the role-named tools, the role names
+  (`capability_id`, `component_id`, `requirement_id`, `interface_id`, `parent_id`, `child_id` …) on
+  the from/to tools — and `node_id` / `node_type`, the keys `search_design` hands back, for the
+  from end. A misspelling is still refused; both spellings of one end is refused as a duplicate.
 - **Discover the vocabulary:** `describe_schema` — no arguments for every node and edge type,
   `{"node_type": "X"}` for one type's properties and the edges it can carry, or
   `{"from": "X", "to": "Y"}` for what may join them. Call it before writing anything unusual;

@@ -91,7 +91,7 @@ async fn a_component_coupling_has_one_typed_call() {
     component(&s, "cmp:stage", "stage").await;
 
     let out = s
-        .depends_on(Parameters(EdgePairReq {
+        .depends_on(Parameters(DependsOnReq {
             from_id: "cmp:coach".into(),
             to_id: "cmp:stage".into(),
         }))
@@ -121,7 +121,7 @@ async fn a_coupling_to_a_component_that_does_not_exist_is_refused() {
     component(&s, "cmp:coach", "coach").await;
 
     let err = s
-        .depends_on(Parameters(EdgePairReq {
+        .depends_on(Parameters(DependsOnReq {
             from_id: "cmp:coach".into(),
             to_id: "cmp:nobody-made-this".into(),
         }))
