@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:86526a9179b60bac753c72896f136c5ddfb37c4f8ad266e6226f564259751523",
+  "content_hash": "sha256:f22895c2d799aca9a2623140690babd9600d1e77ff8aa287f8646761319ef240",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -37595,6 +37595,42 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-moment-a-cause-is-written-becomes-a-tool-call-and-the-tool-demands-the-skill",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:root-cause-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-moment-a-cause-is-written-becomes-a-tool-call-and-the-tool-demands-the-skill",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-moment-a-cause-is-written-becomes-a-tool-call-and-the-tool-demands-the-skill",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-moment-a-cause-is-written-becomes-a-tool-call-and-the-tool-demands-the-skill",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-temporal"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-no-documents-rule-gains-its-reasoning-and-its-exception",
       "properties": {
         "accepted_baseline": false,
@@ -50586,6 +50622,22 @@
       "from_id": "chg:the-gate-names-the-unmodelled-files-you-just-touched",
       "properties": {},
       "to_id": "dec:idea-what-watches-for-the-last-responsible-moment-to-arrive"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:the-moment-a-cause-is-written-becomes-a-tool-call-and-the-tool-demands-the-skill",
+      "properties": {
+        "evidence": "That decision is the mechanism question this answers. It costed four ways to make the skill automatic and shipped three; this is a fifth that was not on the list, and it answers the objection that killed the harness hook, since a tool description reaches every client the server serves rather than one harness."
+      },
+      "to_id": "dec:idea-how-does-root-cause-become-automatic-rule-hook-detector-or-composition"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:the-moment-a-cause-is-written-becomes-a-tool-call-and-the-tool-demands-the-skill",
+      "properties": {
+        "evidence": "Writing a TemporalFact had no typed constructor and went through the generic props-bag path, which is an instance of this requirement being unmet. The constructor closes it for that type."
+      },
+      "to_id": "req:declared-vocabulary-is-reachable-from-the-surface"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -139983,6 +140035,14 @@
     },
     {
       "edge_type": "MITIGATES",
+      "from_id": "chg:the-moment-a-cause-is-written-becomes-a-tool-call-and-the-tool-demands-the-skill",
+      "properties": {
+        "evidence": "That record is the measured cause this is built against: the skill was demanded by no tool and named by no trigger, so loading it depended on the agent remembering to want it. The demand is now declared and lint-enforced."
+      },
+      "to_id": "fact:the-root-cause-skill-is-demanded-by-no-tool-and-named-by-no-trigger-so-it-loads-only-by-luck"
+    },
+    {
+      "edge_type": "MITIGATES",
       "from_id": "chg:write-buffer-gets-an-index-and-hydrate-drops-tenfold",
       "properties": {
         "confidence": 0.9,
@@ -144128,6 +144188,15 @@
         "conformance": "verified"
       },
       "to_id": "ver:a-session-with-no-seed-can-find-one"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:test-recording-a-finding-demands-the-skill",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:mcp-surface"
     },
     {
       "edge_type": "REALIZES",
@@ -151137,6 +151206,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:test-recording-a-finding-demands-the-skill",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-recording-a-finding-demands-the-skill"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:test-search-first",
       "properties": {
         "action": "created"
@@ -153558,7 +153635,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:5c0ddb093e3e9f370151b37bcd48a5c8b83fe26287eed014479fb7c01235ffa5",
+        "checksum": "sha256:769e5d300430feb6e5f4796bbbbe8a70e6807ac229b8e25b9055b564f39e6cb3",
         "location": "getting-started/skills/root-cause/SKILL.md",
         "name": "root-cause/SKILL.md",
         "status": "realized"
@@ -153888,7 +153965,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:017d62fb4b77538ed33b1fce7904ac851362cb75bdde28b4997329036df7e3d2",
+        "checksum": "sha256:b81a6adb40af5979507555693d89c3705057aa4d2dc0d0d7378b2a06b079283e",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -153975,7 +154052,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:ccbfe0f5febd6fbdd87cff013a3d5420bb9b45fb71852189121c224bc6b9ec19",
+        "checksum": "sha256:856d04809841239c7479214ece0fca5ff03c17af860f5f734a5f6b67a83632b8",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -154511,6 +154588,17 @@
       }
     },
     {
+      "node_id": "art:test-recording-a-finding-demands-the-skill",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:15e875957734e0ac3021f0e4d41bff0c169fea82a879d550bd752d4eb583d4d1",
+        "location": "crates/reflow2-mcp/tests/recording_a_finding_is_a_tool_call_that_demands_the_skill.rs",
+        "name": "recording_a_finding_is_a_tool_call_that_demands_the_skill.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:test-review-relations",
       "node_type": "Artifact",
       "properties": {
@@ -154800,7 +154888,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f23eb503bac08d42e87dda1d9bf9293ca49177737ea04ef0af234c06d4acf8af",
+        "checksum": "sha256:8213c45f9af4b8c7c9cfe48ec9428169f3d2847b0fdd03b73ff4e4feec98eaa2",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/temporal_tools.rs",
         "name": "tools/temporal_tools.rs",
@@ -164776,6 +164864,17 @@
         "rationale": "⚖️ THE TRADE IS REAL AND WAS PUT IN THE COMMIT RATHER THAN OMITTED. `BTreeMap` insert is O(log n) where `HashMap` was O(1), and import measured 890.6 ms -> 966.8 ms, about 8% SLOWER. It is worth it on the round trip — a session's load+save goes 2,266 ms -> 1,421 ms, 37% better — but a report carrying only the 4.8x would have been selecting the evidence.\n\n🛑 SCOPE, WHICH MATTERS AND IS EASY TO OVERSTATE: THIS DOES NOT MAKE TODAY'S REFLOW2 FASTER. Production runs on RocksDB, whose prefix iterator is already a range scan. What it speeds up is (a) the 1,452-test core suite, which runs entirely on `MemoryBackend`, and (b) the database-free session model under discussion in `dec:idea-does-reflow2-need-a-byte-store-at-all-or-only-durability`, where the memory backend IS the store.\n\n⭐⭐ THIRD DEFECT OF ONE SHAPE IN ONE FILE, AND THAT IS THE FINDING — not three coincidences. A linear scan standing in where an indexed lookup belongs: twice in the write buffer (#330 — the buffered `get`, and the `prefix_scan` pre-flight) and once here in the backing store. All three were invisible at test scale and quadratic at design scale, because the cost is a product of two things that are both small in a unit test and both large in a real design.\n\n⭐ AND ALL THREE WERE FOUND THE SAME WAY: read the code, count the operations, check the arithmetic against the stopwatch BEFORE changing anything. 42M comparisons at ~25 ns predicts ~1.06 s against 1,137 ms measured. The method is transferable and the habit is the transferable part — the first hypothesis in #330 was wrong (adjacency read-modify-write) and reading the code killed it before any code was written.",
         "subject": "system",
         "summary": "Merged as #331. `MemoryBackend` held each column family in a `HashMap`, but `KvBackend` requires ORDERED prefix iteration — so `prefix_scan` iterated the whole column family, filtered by prefix, and sorted the result: O(n log n) per scan, on the backend whose entire purpose is to be the fast path. `export_graph` calls `outgoing()` once per node, so exporting reflow2's own design was 3,149 scans over a 13,414-entry adjacency map, ~42M key comparisons.\n\nSix `BTreeMap`s now, and `prefix_scan` is a range query — seek to the prefix, take while it matches. `BTreeMap` orders keys lexicographically, the same order RocksDB's default byte-wise comparator gives, so the trait's ordered-scan contract is satisfied BY CONSTRUCTION and the sort was deleted rather than optimised.\n\nMEASURED (release, in-memory backend, fulltext on, 3,149 nodes / 13,414 edges):\n\n    build export doc   1,137.3 ms -> 236.5 ms   (4.8x)\n    serialize to JSON     31.0 ms ->  28.8 ms\n    TOTAL session save 1,168.3 ms -> 265.3 ms   (4.4x)\n\nWorkspace 1760 / 0, core 1452 / 0, both clippy gates, fmt, twelve python gates and the design gate green; CI green on both jobs."
+      }
+    },
+    {
+      "node_id": "chg:the-moment-a-cause-is-written-becomes-a-tool-call-and-the-tool-demands-the-skill",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "record_finding: recording a dated finding becomes a tool call, and the tool demands the root-cause skill by name",
+        "rationale": "A FIFTH MECHANISM, not on the list that dec:idea-how-does-root-cause-become-automatic-rule-hook-detector-or-composition costed. That decision weighed four: a rule, a harness hook, an after-the-fact detector, and composition into other skills. Anthony took the rule, the detector and composition, and skipped the hook for two stated reasons — it reaches the wrong half, since a symptom-fix ships green with no failing command, and it reaches ONE HARNESS, because Alex's Grok Build TUI cannot take a hook.\n\nA DEMAND FROM THE TOOL ITSELF ANSWERS THE SECOND OBJECTION WITHOUT INHERITING THE FIRST. A tool description is served by the MCP server to every client that connects, so it reaches every harness the way a hook cannot; and it fires on the WRITE rather than on a failure, so it reaches the case where nothing failed loudly — which is exactly the half the hook was rejected for missing. It is also the channel skill_lint already measured: over 91 sessions, where no tool demanded the matching skill, between 19 and 24 percent of sessions doing the work opened it.\n\nTHE OCCASION WAS A FAILURE OF THE SHIPPED LEGS. On 2026-09-07 the field-feedback rule was broken on a live report by the agent that had recorded its own enforcement ruling hours earlier. The rule was read and did not hold; the detector fires after the fact and did, as designed, but only later; composition did not reach a skill that was never loaded. Nothing reached the moment itself, because root-cause's trigger is the only one in the set defined by the agent's internal state rather than by an event. This makes that moment an event.",
+        "subject": "system",
+        "summary": "A typed constructor for a TemporalFact. It takes the subject (which must resolve, so a finding about a node the design does not have is refused rather than stored), hangs the fact off it with HAS_TEMPORAL_FACT, and draws the CAUSES edge from `caused_by` with `cause_evidence` in the same call. Naming a cause without its evidence is refused before anything is written. The subject's type is resolved from the id, so the caller need not know it.\n\nIts description tells the caller to fetch the root-cause skill before writing a cause, and getting-started/skills/root-cause/SKILL.md now declares `demanded_by: [record_finding]`, which tools/skill_lint.py enforces: the golden must exist and its description must name the skill. Step 8 of the skill points at this tool instead of at bare create_edge.\n\nFAILING FIRST, OBSERVED: the demand was declared before the tool existed and skill_lint failed with \"root-cause: names tool 'record_finding', which has no golden\". The tool test's first assertion could not find the tool. Both pass now. Five tests in crates/reflow2-mcp/tests/recording_a_finding_is_a_tool_call_that_demands_the_skill.rs pin the demand contract rather than the tool's existence, so a rename may not quietly drop the sentence that makes the skill reachable.\n\nIT ALSO CLOSES AN UNREACHABLE-VOCABULARY INSTANCE. Writing a TemporalFact had no typed constructor at all and went through generic create_node with a props bag, which is the class dev_storyflow reported the same day on two other properties."
       }
     },
     {
@@ -178346,6 +178445,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered crates/reflow2-mcp/tests/orientation_needs_nothing_to_start.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:test-recording-a-finding-demands-the-skill",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered recording_a_finding_is_a_tool_call_that_demands_the_skill.rs"
       }
     },
     {
@@ -194427,7 +194536,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:be62646991148023e6d3ce7d2b3d9691d26758374a5f540c636226bf69f74df4",
+  "prev_content_hash": "sha256:86526a9179b60bac753c72896f136c5ddfb37c4f8ad266e6226f564259751523",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

@@ -31,6 +31,26 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **`record_finding` — recording a dated finding is a tool call now, and the tool demands the
+  `root-cause` skill by name.** Writing a defect or an observation as a `TemporalFact` had no
+  typed constructor at all: it went through generic `create_node` with a props bag, which left a
+  declared node type unreachable from the typed surface and left the skill with nowhere to be
+  demanded from. The tool takes the subject (which must resolve — a finding about a node the
+  design does not have is refused rather than stored), hangs the fact off it, and draws the
+  `CAUSES` edge from `caused_by` with `cause_evidence` in the same call. A cause named without
+  its evidence is refused before anything is written.
+
+  **Why the description names a skill.** `root-cause` is the one skill whose trigger is defined
+  by the agent's own state — *the moment you are about to write down a cause* — so nothing
+  observable could fire on it, and it was demanded by no tool and named by no trigger. Measured
+  over 91 sessions of a real project, between 19% and 24% of sessions calling a tool ever opened
+  the skill written for it where nothing demanded it. The skill now declares
+  `demanded_by: [record_finding]`, so `skill_lint` fails if the tool stops naming it. Both halves
+  were observed failing before the fix. Cause on the record as
+  `fact:the-root-cause-skill-is-demanded-by-no-tool-and-named-by-no-trigger-so-it-loads-only-by-luck`.
+
 ## [0.51.0] — 2026-09-07
 
 Field-feedback fixes (dev_storyflow 2026-09-06 and the rule-11 facts of the same day), approved as

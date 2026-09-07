@@ -3847,6 +3847,86 @@ pub struct EpochStatusReq {
     pub status: String,
 }
 
+/// One dated finding for `record_finding`.
+///
+/// # Why this constructor exists, and why its description names a skill
+///
+/// Writing a dated defect or finding is the OBSERVABLE ACT of recording a
+/// cause. Until this landed there was no tool for it — every fact in this
+/// project's own graph went through generic `create_node` with a props bag,
+/// which is two failures at once: a declared node type unreachable from the
+/// typed surface (`req:declared-vocabulary-is-reachable-from-the-surface`), and
+/// no place for the root-cause skill to be demanded from.
+///
+/// The second is the one that was measured. `tools/skill_lint.py` enforces a
+/// `demanded_by` declaration precisely because a tool description is the only
+/// thing an agent reliably reads at the moment of the work, and over 91
+/// sessions of a real project between 19% and 24% of sessions calling a tool
+/// ever opened the skill written for it. The root-cause skill was demanded by
+/// nothing and named by no trigger, and its own trigger — "the moment you are
+/// about to write down a cause" — is defined by the agent's internal state,
+/// so nothing observable could fire on it. This request struct is what makes
+/// that moment a tool call. See
+/// `fact:the-root-cause-skill-is-demanded-by-no-tool-and-named-by-no-trigger-so-it-loads-only-by-luck`.
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct RecordFindingReq {
+    /// Stable id, conventionally prefixed `fact:`.
+    pub id: String,
+    /// The node this finding is ABOUT. A node reference: it must resolve, and
+    /// a finding naming a node that does not exist is refused rather than
+    /// stored, because a record about something the design does not have is
+    /// not a record.
+    #[serde(alias = "subject", alias = "target_id")]
+    pub subject_id: String,
+    /// Optional type of the subject; resolved from the id when omitted, and
+    /// refused on a cross-type collision rather than guessed.
+    #[serde(default, alias = "subject_type", alias = "target_type")]
+    pub node_type: Option<String>,
+    /// The assertion itself, in plain terms. This is the embedding field, so
+    /// it is what `search_design` finds the finding by.
+    #[serde(default)]
+    pub statement: Option<String>,
+    /// A short handle — what the gap surfaces and search results render.
+    #[serde(default)]
+    pub name: Option<String>,
+    /// What kind of assertion: `defect`, `finding`, `status`, `allocation`,
+    /// `dependency`, `satisfaction`, `property`. Free text, indexed.
+    #[serde(default)]
+    pub fact_type: Option<String>,
+    /// `measured` (it records something that happened) or `forecast` (it
+    /// projects something expected to). Defaults to `measured`, which is what
+    /// a finding is.
+    #[serde(default)]
+    pub basis: Option<String>,
+    /// How much weight the author puts behind the assertion, 0.0 to 1.0.
+    /// Stated by the author, never computed. Absent reads as unstated.
+    #[serde(default)]
+    pub confidence: Option<f64>,
+    /// The DATE this became true, when there is no epoch to point at.
+    #[serde(default, alias = "as_of")]
+    pub valid_from: Option<String>,
+    /// The DATE it stopped being true; absent means still true.
+    #[serde(default)]
+    pub valid_to: Option<String>,
+    /// JSON of an asserted value, when the finding carries one.
+    #[serde(default)]
+    pub value: Option<String>,
+    /// The node whose behaviour CAUSED this — drawn as a `CAUSES` edge in the
+    /// same call, with `cause_evidence` as its reason. Step ⑧ of the skill:
+    /// the repair is recoverable from the diff and the cause is not.
+    #[serde(default)]
+    pub caused_by: Option<String>,
+    /// Type of `caused_by`; resolved from the id when omitted.
+    #[serde(default)]
+    pub caused_by_type: Option<String>,
+    /// WHY that node is the cause, in a sentence. Required when `caused_by` is
+    /// given: an edge with no evidence is an assertion the next reader can
+    /// neither check nor overturn.
+    #[serde(default)]
+    pub cause_evidence: Option<String>,
+}
+
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct AddChangeEventReq {

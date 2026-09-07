@@ -1,7 +1,7 @@
 ---
 name: root-cause
 description: Use when something has FAILED and somebody is about to explain it — a test that broke, a defect reported from the field, a system misbehaving after deployment, "why is X happening", "let's fix Y". ALSO use it for the quiet case, which is the one that gets missed - a number that surprises you, a measurement you cannot account for, something slower or larger or emptier than it should be, "that's odd", "why is this taking so long". The trigger is not how loud the failure is; it is that you are about to write down a CAUSE. Forces the steps of root cause analysis in order and generates the candidate causes from the design itself, so the first plausible explanation has to survive a measurement that could refute it before anything gets built. Distinct from impact-check, which asks what a change would BREAK; this asks what already broke, or what is already strange, and why.
-metadata: {composes: [STANDING, WRITES, MINTS, MEASURES]}
+metadata: {composes: [STANDING, WRITES, MINTS, MEASURES], demanded_by: [record_finding]}
 ---
 
 # Find the cause before you fix the symptom
@@ -168,7 +168,21 @@ step happened at all.
 Then write the cause down where a later session will meet it:
 
 - The **test's own comment** — the reader most likely to need it is whoever the test next fails on.
-- The **graph**: a `CAUSES` edge from the cause to the record of the symptom, drawn with `create_edge`, with the reason in the edge's evidence.
+- The **graph**: `record_finding` — it writes the dated finding, hangs it off the node it is
+  about, and draws the `CAUSES` edge from the cause with your reason in its evidence, in one
+  call. Pass `caused_by` and `cause_evidence` together; naming a cause with no evidence is
+  refused before anything is written, because an edge nobody can check is an assertion rather
+  than a finding. (`create_edge` still works for a cause you are drawing between two records
+  that already exist.)
+
+  ⭐ **THAT TOOL IS ALSO WHERE THIS SKILL GETS DEMANDED FROM, AND THAT IS DELIBERATE.** Its
+  description tells you to fetch this skill before writing a cause, because this skill's
+  trigger — the moment you are about to explain something — is the only one in the set defined
+  by your own state rather than by an event, so nothing observable could fire on it. Measured
+  over 91 sessions of a real project: where no tool demanded the matching skill, between 19%
+  and 24% of sessions doing the work ever opened it. This skill was demanded by nothing until
+  2026-09-07, when it was skipped on a field report by an agent that had recorded the rule
+  requiring it hours earlier.
 
 ⭐ **THE REPAIR IS RECOVERABLE FROM THE DIFF. THE CAUSE IS NOT.** A year later the code says what
 was done and nothing says why it was the right thing — and the next person meeting the symptom
