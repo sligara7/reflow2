@@ -45,6 +45,45 @@ a SECOND column and explicitly as a hint.
       parameter" (the candidates) from "zero but a tool accepts it" (silent,
       and probably just unused).
 
+🛑 THE TWO QUESTIONS ARE ASKED SEPARATELY, AND FUSING THEM COST A USER'S SESSION
+
+Until 2026-09-07 the candidate loop began `if used: continue` — a property that
+anything had ever written was dropped before the reachability question was ever
+asked. That is one filter answering two questions, and each half then hid what
+the other would have found:
+
+  Requirement.priority       declares `default: medium`, and dynograph injects a
+                             declared default AT WRITE. So all 207 requirements
+                             carry it, the property reads as fully adopted, and
+                             the string "priority" appears in NOT ONE of 170
+                             served tools. Usage manufactured by a default is
+                             not evidence of reach.
+  DesignEpoch.description    reads as adopted on 8 of 202 epochs, every one
+                             written through generic `create_node`. It is that
+                             type's EMBEDDING FIELD — the field search finds an
+                             epoch BY — and `add_epoch` cannot set it.
+
+Both were reported by the dev_storyflow agent, as friction, in one session. This
+instrument reported 14 candidates that day and neither was among them, because
+each had been filtered out before it was examined. REACHABILITY is a property of
+the SURFACE and needs no usage data at all; ADOPTION is a property of the GRAPH.
+They are computed independently below, and a property no typed tool accepts is
+reported whether or not anything wrote it — with the reason it looks adopted
+stated beside it, because a default and an escape-hatch write have different
+fixes. `fact:defect-a-declared-property-can-be-unreachable-and-invisible-to-the-reach-instrument-when-a-default-populates-it`.
+
+⭐ AND IT IS WIRED INTO CI NOW, WHICH IS THE HALF THAT MAKES ANY OF IT MATTER
+
+The same investigation found this script invoked by no workflow step, no gate
+script and no build target: a correct instrument nobody runs catches nothing,
+whatever its filter does. `--check` compares against a committed baseline and
+exits non-zero when a property becomes unreachable that the baseline does not
+carry. IT IS A REGRESSION GATE, NOT A CLEANLINESS GATE, and deliberately so —
+the same shape as the intent-authority gate's grandfathering, and the same
+shape as the ruling that the 183 pre-rule fixes are grandfathered rather than
+backfilled. A gate that goes red on day one over a long-standing state is a
+gate somebody switches off.
+
 Reads the committed export and the committed toolsnaps; opens no store and
 takes no lock. stdlib + PyYAML only.
 """
@@ -63,6 +102,11 @@ TOOLSNAPS = REPO / "tools/toolsnaps"
 
 # The generic escape hatches. Excluded deliberately — see (b) above.
 GENERIC = {"create_node", "create_nodes", "create_edge", "create_edges"}
+
+# What `--check` compares against. Every `Type.property` the surface cannot
+# write TODAY. A new entry is a regression and fails the build; an entry that
+# disappears (somebody gave the property a parameter) is progress and does not.
+BASELINE = REPO / "tools/vocabulary_reach_baseline.json"
 
 
 def declared() -> tuple[dict[str, dict], dict[str, dict]]:
@@ -83,20 +127,88 @@ def declared() -> tuple[dict[str, dict], dict[str, dict]]:
     return nodes, edges
 
 
-def tool_parameters() -> set[str]:
-    """Every parameter name a NON-GENERIC served tool accepts."""
+# THE CONSTRUCTOR FOR EACH TYPE, named explicitly because nothing derives it.
+#
+# 🛑 WHY A PER-TYPE SET AND NOT ONE FLAT ONE. A flat set of every parameter name
+# on the surface reads as "some tool somewhere takes a field spelled this way",
+# which is not the same question as "can I set this property on this type" — and
+# the difference was MEASURED on 2026-09-07, on the very pair that prompted this
+# work. `DesignEpoch.description` is declared, is that type's EMBEDDING FIELD,
+# and `add_epoch` offers only id/name/epoch_type/sequence. The flat set called it
+# reachable anyway, because six OTHER constructors take a parameter called
+# `description`. One type's field covered another type's hole, and the property
+# stayed invisible in a report built to find exactly it.
+#
+# A type absent from this map has no known constructor, so its properties are
+# judged against the whole surface — the conservative reading, which under-reports
+# rather than inventing a finding.
+CONSTRUCTORS = {
+    "add_actor": "Actor",
+    "add_artifact": "Artifact",
+    "add_capability": "Capability",
+    "add_change_event": "ChangeEvent",
+    "add_component": "Component",
+    "add_constraint": "Constraint",
+    "add_contributor": "Contributor",
+    "add_decision": "Decision",
+    "add_design_rule": "DesignRule",
+    "add_environment": "Environment",
+    "add_epoch": "DesignEpoch",
+    "add_flow": "Flow",
+    "add_interface": "Interface",
+    "add_project": "Project",
+    "add_readiness": "ReadinessAssessment",
+    "add_release": "Release",
+    "add_requirement": "Requirement",
+    "add_resource": "Resource",
+    "add_verification": "Verification",
+    "record_finding": "TemporalFact",
+}
+
+
+def tool_parameters() -> tuple[set[str], dict[str, set[str]]]:
+    """Parameters the surface accepts: the flat set, and the per-type view.
+
+    The flat set is every name a non-generic tool takes. The per-type view is,
+    for each type with a known constructor, that constructor's own parameters
+    PLUS every parameter of every tool that is not somebody else's constructor —
+    the setters, the relation tools and the indirect writers (`record_change`,
+    `link_artifact`, `reconcile_artifacts`), which genuinely do reach properties
+    the constructor never names. Keeping those in is what stops this becoming
+    the naive name-match the module docstring rejects for over-reporting.
+    """
     params: set[str] = set()
+    per_tool: dict[str, set[str]] = {}
     for f in sorted(TOOLSNAPS.glob("*.json")):
         if f.stem in GENERIC:
             continue
         snap = json.loads(f.read_text())
-        params |= set(((snap.get("inputSchema") or {}).get("properties") or {}).keys())
-    return params
+        names = set(((snap.get("inputSchema") or {}).get("properties") or {}).keys())
+        per_tool[f.stem] = names
+        params |= names
+    shared: set[str] = set()
+    for tool, names in per_tool.items():
+        if tool not in CONSTRUCTORS:
+            shared |= names
+    by_type: dict[str, set[str]] = {}
+    for tool, node_type in CONSTRUCTORS.items():
+        by_type.setdefault(node_type, set()).update(per_tool.get(tool, set()))
+    for node_type in by_type:
+        by_type[node_type] |= shared
+    return params, by_type
 
 
-def main() -> int:
+def main(argv: list[str] | None = None) -> int:
+    argv = list(sys.argv[1:] if argv is None else argv)
+    check_mode = "--check" in argv
+    update_baseline = "--update-baseline" in argv
+    unknown = [a for a in argv if a not in {"--check", "--update-baseline"}]
+    if unknown:
+        print(f"unknown argument(s): {' '.join(unknown)}", file=sys.stderr)
+        print("usage: vocabulary_reach.py [--check | --update-baseline]", file=sys.stderr)
+        return 2
     node_props, edge_props = declared()
-    params = tool_parameters()
+    params, params_by_type = tool_parameters()
     doc = json.loads(EXPORT.read_text())
 
     # Corpus usage.
@@ -115,12 +227,33 @@ def main() -> int:
             edge_prop_used[e["edge_type"]][k] += 1
 
     unreachable, unused_but_offered, no_instances, edge_dead = [], [], [], []
+    # THE BUCKET THE FUSED FILTER COULD NOT PRODUCE: no typed tool accepts the
+    # name, and yet the property is populated. Each entry carries WHY it looks
+    # adopted, because that decides the fix — a schema default means every node
+    # gets the value whether anyone meant it or not, while an escape-hatch write
+    # means somebody wanted the property enough to reach past the typed surface
+    # for it. Both are unreachable; only the second has a user behind it.
+    hidden: list[tuple[str, str, int, int, str]] = []
     total_props = 0
     for t, props in sorted(node_props.items()):
         for p in sorted(props):
             total_props += 1
             used = per_type[t][p]
+            spec = props[p] if isinstance(props[p], dict) else {}
+            # REACHABILITY IS ASKED FIRST AND ALONE. It is a fact about the
+            # served surface; no amount of usage makes an unoffered name
+            # writable, and no amount of disuse makes an offered one unwritable.
+            # Per-type when the type has a known constructor; the flat set
+            # otherwise, which under-reports rather than inventing a finding.
+            offered = p in params_by_type.get(t, params)
             if used:
+                if not offered and type_counts[t]:
+                    why = (
+                        f"declares `default: {spec['default']}` — every node gets it at write"
+                        if "default" in spec
+                        else "written through generic create_node"
+                    )
+                    hidden.append((t, p, used, type_counts[t], why))
                 continue
             if type_counts[t] == 0:
                 # ⭐ "0 of 0" IS A VACUOUS ZERO and this bucket exists because
@@ -144,9 +277,79 @@ def main() -> int:
                 if edge_prop_used[et][p] == 0:
                     edge_dead.append((et, p, edge_used[et]))
 
+    # What the SURFACE cannot write, regardless of what the graph happens to
+    # hold. This is the list `--check` guards, and it is the union of the two
+    # unreachable buckets: the properties nothing has written and the ones that
+    # only look written.
+    unreachable_now = sorted(
+        [f"{t}.{p}" for t, p, _ in unreachable] + [f"{t}.{p}" for t, p, _, _, _ in hidden]
+    )
+
+    if check_mode:
+        if not BASELINE.exists():
+            print(
+                f"no baseline at {BASELINE.relative_to(REPO)} — write one with --update-baseline",
+                file=sys.stderr,
+            )
+            return 2
+        known = set(json.loads(BASELINE.read_text()).get("unreachable", []))
+        new = [x for x in unreachable_now if x not in known]
+        if new:
+            print("=" * 74)
+            print(f"UNREACHABLE VOCABULARY IS NEW SINCE THE BASELINE: {len(new)}")
+            print("=" * 74)
+            for x in new:
+                print(f"  {x}")
+            print()
+            print(
+                "A property was declared that no typed tool accepts, so the only way to write\n"
+                "it is the generic escape hatch — and a schema default would make it look\n"
+                "adopted while nobody could set it. Give it a parameter on the constructor for\n"
+                "its type, or, if it is deliberately unreachable, record why and add it to\n"
+                f"{BASELINE.relative_to(REPO)} with --update-baseline in the SAME diff."
+            )
+            return 1
+        gone = sorted(known - set(unreachable_now))
+        print(f"vocabulary reach: OK — {len(unreachable_now)} unreachable, none new.")
+        if gone:
+            print(
+                f"  {len(gone)} became reachable since the baseline "
+                f"(progress; refresh with --update-baseline): {', '.join(gone[:6])}"
+            )
+        return 0
+
+    if update_baseline:
+        BASELINE.write_text(
+            json.dumps(
+                {
+                    "_comment": (
+                        "Every Type.property the served surface cannot write, as of the last "
+                        "refresh. `vocabulary_reach.py --check` fails when a NEW one appears. "
+                        "A regression gate, not a cleanliness gate: entries here are known "
+                        "and grandfathered, not approved."
+                    ),
+                    "unreachable": unreachable_now,
+                },
+                indent=2,
+            )
+            + "\n"
+        )
+        print(f"wrote {len(unreachable_now)} entries to {BASELINE.relative_to(REPO)}")
+        return 0
+
     print(f"declared node properties : {total_props} across {len(node_props)} types")
     print(f"declared edge types      : {len(edge_props)}")
     print(f"non-generic tool params  : {len(params)}  (create_node/create_edge excluded)")
+    print()
+    print("=" * 74)
+    print(f"UNREACHABLE BUT POPULATED — no typed tool accepts the name, and yet")
+    print(f"nodes carry it: {len(hidden)}")
+    print("  THE BUCKET A FUSED FILTER CANNOT PRODUCE. Usage is not reach: a schema")
+    print("  default is injected at write, and generic create_node takes anything.")
+    print("=" * 74)
+    for t, p, used, n, why in hidden:
+        print(f"  {t}.{p}".ljust(52) + f"({used} of {n})")
+        print(f"      {why}")
     print()
     print("=" * 74)
     print(f"CANDIDATES — the type IS used, the property NEVER is, and no typed tool")

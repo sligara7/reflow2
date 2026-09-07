@@ -104,6 +104,22 @@ jobs:
         run: python3 tools/reflow2_check.py --export docs/design/reflow2.json
       - name: Coherence-gate suite (hermetic — the gate's own regression net, BL-88)
         run: python3 tools/test_reflow2_check.py
+      - name: Declared vocabulary stays reachable from the surface
+        # THE HALF THAT MAKES THE INSTRUMENT MATTER. tools/vocabulary_reach.py
+        # existed for weeks and was invoked by no workflow step, no gate script
+        # and no build target, so it ran only when somebody remembered it — and
+        # a correct instrument nobody runs catches nothing. Found 2026-09-07
+        # while root-causing two unreachable properties a USER reported:
+        # `fact:the-reachability-instrument-is-wired-into-no-gate-so-its-filter-was-never-the-only-cause`.
+        #
+        # A REGRESSION GATE, NOT A CLEANLINESS GATE: it fails when a property
+        # becomes unreachable that the committed baseline does not already
+        # carry, and the 48 known ones are grandfathered rather than approved.
+        # Same shape as the intent-authority gate. A gate that goes red on day
+        # one over a long-standing state is a gate somebody switches off.
+        run: python3 tools/vocabulary_reach.py --check
+      - name: Reachability instrument's own regression net
+        run: python3 tools/test_vocabulary_reach.py
       - name: Self-host still exercises DOCUMENTS (BL-199 — the canary for BL-176)
         # Guards the RECORD, not the code. reflow2 attached 32 of its 35 document
         # artifacts with REALIZES, against its own served skill, so it never did

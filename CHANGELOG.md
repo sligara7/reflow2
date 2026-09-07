@@ -31,6 +31,33 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Fixed
+
+- **The reachability instrument stopped fusing two questions, and now runs in CI.**
+  `tools/vocabulary_reach.py` reported a property only when nothing had ever written it AND no
+  typed tool accepted it. A schema default is injected at write, so `Requirement.priority` was
+  carried by all 207 requirements while the string `priority` appeared in none of the 170 served
+  tools — fully adopted-looking, unwritable. Reachability is a fact about the surface and is now
+  computed independently of usage, with a new bucket for what nodes carry but no tool can set,
+  each entry saying *why* it looks adopted (a default, or a generic `create_node` write). That
+  bucket holds 29 properties the old report could not produce.
+
+  **Reachability is also asked per type now.** The parameter set was flat, so
+  `DesignEpoch.description` — that type's embedding field, which `add_epoch` cannot set — read as
+  reachable because six other constructors take a parameter spelled `description`. One type's
+  field was covering another's hole in the report built to find exactly that.
+
+  **And it is wired into the build.** The script was invoked by no workflow step, no gate script
+  and no build target, so a correct instrument caught nothing. `--check` fails when a property
+  becomes unreachable that `tools/vocabulary_reach_baseline.json` does not carry; the 48 known
+  entries are grandfathered, not approved. A regression gate, not a cleanliness gate — one that
+  went red on day one over a long-standing state is one somebody switches off.
+
+  Reported by the dev_storyflow agent as two "lost" fields that were never offered. Causes on the
+  record as
+  `fact:defect-a-declared-property-can-be-unreachable-and-invisible-to-the-reach-instrument-when-a-default-populates-it`
+  and `fact:the-reachability-instrument-is-wired-into-no-gate-so-its-filter-was-never-the-only-cause`.
+
 ### Added
 
 - **`record_finding` — recording a dated finding is a tool call now, and the tool demands the
