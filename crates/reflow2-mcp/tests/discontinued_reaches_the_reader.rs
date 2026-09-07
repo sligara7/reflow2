@@ -68,6 +68,7 @@ async fn withdrawn() -> ReflowService {
     j!(s.add_project(Parameters(IdName {
         id: "proj:x".into(),
         name: Some("X".into()),
+        description: None,
     })));
     j!(s.add_capability(Parameters(CapabilityReq {
         id: "cap:store".into(),
@@ -295,6 +296,7 @@ async fn it_is_not_a_capability_only_field() {
         status: None,
         approver: None,
         acted_at: None,
+        priority: None,
     })));
     j!(s.add_decision(Parameters(DecisionReq {
         id: "dec:drop".into(),

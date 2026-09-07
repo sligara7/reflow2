@@ -32,6 +32,7 @@ async fn seeded() -> ReflowService {
         status: None,
         approver: None,
         acted_at: None,
+        priority: None,
     })));
     j!(s.add_verification(Parameters(
         serde_json::from_value(serde_json::json!({

@@ -113,6 +113,39 @@ fn refuse_without_a_sequence_hint(
     Ok(())
 }
 
+/// `description` is the DesignEpoch's embedding field and neither core
+/// constructor takes it, so both `add_epoch` and `plan_epoch` set it here after
+/// the node lands. SHARED between the two on purpose: the sequence-hint helper
+/// beside it exists because a fix put in one of these handlers and not the
+/// other let the same defect recur on the sibling the next day
+/// (`fact:defect-add-epoch-requires-a-sequence-the-refusal-cannot-name-because-the-required-field-helper-is-generic`,
+/// recurrence #2). Omitted leaves whatever the node already holds, which is what
+/// makes "call again with only what you are changing" true of this field too.
+fn set_epoch_prose(
+    g: &mut reflow2_core::graph::DesignGraph,
+    id: &str,
+    description: Option<&str>,
+    checksum: Option<&str>,
+) -> Result<Option<reflow2_core::StoredNode>, McpError> {
+    let mut props = reflow2_core::nodes::Props::new();
+    let mut any = false;
+    if let Some(d) = description {
+        props = props.set("description", d);
+        any = true;
+    }
+    if let Some(c) = checksum {
+        props = props.set("checksum", c);
+        any = true;
+    }
+    if !any {
+        return Ok(None);
+    }
+    let node = g
+        .upsert_node(reflow2_core::nodes::node::DESIGN_EPOCH, id, props)
+        .map_err(dyno_err)?;
+    Ok(Some(node))
+}
+
 #[tool_router(router = temporal_tools_router, vis = "pub")]
 impl ReflowService {
     #[tool(
@@ -374,10 +407,17 @@ impl ReflowService {
         // masked by an unparseable type.
         __rf.finish()?;
         let epoch_type: EpochType = parse_enum(&epoch_type_s, "epoch type")?;
-        ok_json(NodeDto::from(
-            g.add_epoch(&req.id, &name, epoch_type, sequence)
-                .map_err(dyno_err)?,
-        ))
+        let node = g
+            .add_epoch(&req.id, &name, epoch_type, sequence)
+            .map_err(dyno_err)?;
+        let node = set_epoch_prose(
+            &mut g,
+            &req.id,
+            req.description.as_deref(),
+            req.checksum.as_deref(),
+        )?
+        .unwrap_or(node);
+        ok_json(NodeDto::from(node))
     }
 
     #[tool(
@@ -411,10 +451,17 @@ impl ReflowService {
         // masked by an unparseable type.
         __rf.finish()?;
         let epoch_type: EpochType = parse_enum(&epoch_type_s, "epoch type")?;
-        ok_json(NodeDto::from(
-            g.plan_epoch(&req.id, &name, epoch_type, sequence)
-                .map_err(dyno_err)?,
-        ))
+        let node = g
+            .plan_epoch(&req.id, &name, epoch_type, sequence)
+            .map_err(dyno_err)?;
+        let node = set_epoch_prose(
+            &mut g,
+            &req.id,
+            req.description.as_deref(),
+            req.checksum.as_deref(),
+        )?
+        .unwrap_or(node);
+        ok_json(NodeDto::from(node))
     }
 
     #[tool(

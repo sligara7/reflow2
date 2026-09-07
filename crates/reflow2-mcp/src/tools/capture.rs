@@ -997,6 +997,33 @@ fn refuse_unless_deliberate(
     ))
 }
 
+/// Write a type's `description` after the node lands, for the constructors
+/// whose core method does not take one.
+///
+/// SHARED, not repeated per handler, for the reason this whole family exists:
+/// the class survived because each hole was fixed where it was reported and the
+/// siblings were never asked. A helper is one place to change when the answer
+/// changes. Omitted leaves whatever the node already holds, which keeps "call
+/// again with only what you are changing" true of this field too.
+pub(crate) fn set_description(
+    g: &mut reflow2_core::graph::DesignGraph,
+    node_type: &str,
+    id: &str,
+    description: Option<&str>,
+) -> Result<Option<reflow2_core::StoredNode>, McpError> {
+    let Some(d) = description else {
+        return Ok(None);
+    };
+    Ok(Some(
+        g.upsert_node(
+            node_type,
+            id,
+            reflow2_core::nodes::Props::new().set("description", d),
+        )
+        .map_err(dyno_err)?,
+    ))
+}
+
 #[tool_router(router = capture_router, vis = "pub")]
 impl ReflowService {
     // ---- GENESIS (bootstrap the graph from a brief) ----
@@ -1043,9 +1070,16 @@ impl ReflowService {
         let mut __rf =
             crate::service::RequiredFields::new(&g, reflow2_core::nodes::node::PROJECT, &req.id)?;
         let name = __rf.str("name", req.name);
-        ok_json(NodeDto::from(
-            g.add_project(&req.id, &name).map_err(dyno_err)?,
-        ))
+        __rf.finish()?;
+        let stored = g.add_project(&req.id, &name).map_err(dyno_err)?;
+        let stored = set_description(
+            &mut g,
+            reflow2_core::nodes::node::PROJECT,
+            &req.id,
+            req.description.as_deref(),
+        )?
+        .unwrap_or(stored);
+        ok_json(NodeDto::from(stored))
     }
 
     #[tool(
@@ -1104,6 +1138,20 @@ impl ReflowService {
         if settles {
             g.set_requirement_status(&req.id, req.status.as_deref().unwrap_or("proposed"))
                 .map_err(dyno_err)?;
+        }
+        // `priority` reaches the store here because the core constructor does
+        // not take it. Written only when the caller SAID one: omitting it must
+        // leave the schema default exactly as it was, since this parameter adds
+        // a way to state a priority and not an obligation to. An undeclared
+        // value is refused by the schema before it is stored, and the refusal
+        // names the legal set.
+        if let Some(priority) = req.priority.as_deref() {
+            g.upsert_node(
+                node_ty,
+                &req.id,
+                reflow2_core::nodes::Props::new().set("priority", priority),
+            )
+            .map_err(dyno_err)?;
         }
         sign_as_approver(
             &mut g,
@@ -1630,7 +1678,10 @@ impl ReflowService {
         let mut __rf = crate::service::RequiredFields::new(&g, node_ty, &req.id)?;
         let name = __rf.str("name", req.name);
         __rf.finish()?;
-        let node = NodeDto::from(g.add_interface(&req.id, &name).map_err(dyno_err)?);
+        let stored = g.add_interface(&req.id, &name).map_err(dyno_err)?;
+        let stored = set_description(&mut g, node_ty, &req.id, req.description.as_deref())?
+            .unwrap_or(stored);
+        let node = NodeDto::from(stored);
         let found = search_first(&g, &req.id, existed, &name);
         preserve_prior(&mut g, prior.as_ref(), &node);
         let revision = revision_of(&g, prior.as_ref(), &node);

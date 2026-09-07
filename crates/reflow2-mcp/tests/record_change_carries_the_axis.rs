@@ -37,6 +37,8 @@ async fn svc_with_an_epoch_and_a_target() -> ReflowService {
         name: Some("e".into()),
         epoch_type: Some("revision".into()),
         sequence: Some(1),
+        checksum: None,
+        description: None,
     })));
     j!(s.add_capability(Parameters(CapabilityReq {
         id: "cap:thing".into(),

@@ -67,15 +67,22 @@ impl ReflowService {
         let mut __rf =
             crate::service::RequiredFields::new(&g, reflow2_core::nodes::node::RELEASE, &req.id)?;
         let name = __rf.str("name", req.name);
-        ok_json(NodeDto::from(
-            g.add_release(
+        let stored = g
+            .add_release(
                 &req.id,
                 &name,
                 req.version.as_deref(),
                 req.unit_type.as_deref(),
             )
-            .map_err(dyno_err)?,
-        ))
+            .map_err(dyno_err)?;
+        let stored = crate::tools::capture::set_description(
+            &mut g,
+            reflow2_core::nodes::node::RELEASE,
+            &req.id,
+            req.description.as_deref(),
+        )?
+        .unwrap_or(stored);
+        ok_json(NodeDto::from(stored))
     }
 
     #[tool(
@@ -99,15 +106,22 @@ impl ReflowService {
             &req.id,
         )?;
         let name = __rf.str("name", req.name);
-        ok_json(NodeDto::from(
-            g.add_environment(
+        let stored = g
+            .add_environment(
                 &req.id,
                 &name,
                 req.env_type.as_deref(),
                 req.location.as_deref(),
             )
-            .map_err(dyno_err)?,
-        ))
+            .map_err(dyno_err)?;
+        let stored = crate::tools::capture::set_description(
+            &mut g,
+            reflow2_core::nodes::node::ENVIRONMENT,
+            &req.id,
+            req.description.as_deref(),
+        )?
+        .unwrap_or(stored);
+        ok_json(NodeDto::from(stored))
     }
 
     #[tool(
@@ -127,10 +141,17 @@ impl ReflowService {
         let mut __rf =
             crate::service::RequiredFields::new(&g, reflow2_core::nodes::node::RESOURCE, &req.id)?;
         let name = __rf.str("name", req.name);
-        ok_json(NodeDto::from(
-            g.add_resource(&req.id, &name, req.provider.as_deref())
-                .map_err(dyno_err)?,
-        ))
+        let stored = g
+            .add_resource(&req.id, &name, req.provider.as_deref())
+            .map_err(dyno_err)?;
+        let stored = crate::tools::capture::set_description(
+            &mut g,
+            reflow2_core::nodes::node::RESOURCE,
+            &req.id,
+            req.description.as_deref(),
+        )?
+        .unwrap_or(stored);
+        ok_json(NodeDto::from(stored))
     }
 
     #[tool(

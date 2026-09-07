@@ -80,6 +80,7 @@ fn requirement(id: &str, name: &str) -> RequirementReq {
         status: None,
         approver: None,
         acted_at: None,
+        priority: None,
     }
 }
 
@@ -307,6 +308,7 @@ async fn a_requirement_promoted_from_the_idea_that_spawned_it_is_not_refused() {
     status: None,
     approver: None,
     acted_at: None,
+    priority: None,
     })));
     let reported = serde_json::to_string(&out).expect("serialisable");
     assert!(

@@ -100,6 +100,7 @@ fn requirement(id: &str, status: Option<&str>, approver: Option<&str>) -> Requir
         status: status.map(str::to_string),
         approver: approver.map(str::to_string),
         acted_at: Some("2026-09-06".into()),
+        priority: None,
     }
 }
 

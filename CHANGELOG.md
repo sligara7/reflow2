@@ -31,6 +31,29 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **Every constructor can now say what the thing it makes IS.** `add_epoch` and `plan_epoch` take
+  a `description` (and a `checksum`), `add_requirement` takes a `priority`, and
+  `add_interface`, `add_project`, `add_release`, `add_resource`, `add_environment` and
+  `add_artifact` each take a `description`. Omitting any of them changes nothing: the schema
+  default still applies, so these add a way to SAY and not an obligation to.
+
+  **This started as two fields a user reported missing and turned out to be one hole.** Of the
+  eleven types declaring a `description`, six had a constructor that would not take it — and for
+  each of those six, `description` is the *only* prose field the type declares, and the
+  constructor took no other prose field either. So on six of eleven types the surface let a caller
+  name a thing and never say what it was, except through the generic escape hatch.
+
+  **The cause is a habit, not an omission.** `CapabilityReq` carried a description from its
+  introduction; `VerificationReq` gained one only in August, when somebody hit that one type's
+  hole and reported it. The hole was fixed where it was reported and the siblings were never
+  asked. The new test is therefore a **sweep over the schema** rather than a list of today's six:
+  a type declaring a `description` whose constructor cannot take one fails it by existing. Three
+  types are exempt by name with reasons — Actor, EnvironmentRule and QualityGate have no typed
+  write tool at all, which is a separate and larger question.
+  `fact:six-constructors-cannot-write-any-prose-because-the-class-was-fixed-one-report-at-a-time-and-never-swept`.
+
 ### Fixed
 
 - **The reachability instrument stopped fusing two questions, and now runs in CI.**

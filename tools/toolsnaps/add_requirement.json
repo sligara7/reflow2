@@ -44,6 +44,21 @@
           "null"
         ]
       },
+      "priority": {
+        "default": null,
+        "description": "How much this one matters: `low` / `medium` / `high` / `critical`.\n\nOMITTING IT LEAVES THE SCHEMA DEFAULT (`medium`) AND THAT IS UNCHANGED\nBEHAVIOUR — this parameter adds a way to SAY, it does not add an\nobligation to. Declared 2026-09-07 after the dev_storyflow agent\nreported it missing. The property has always been declared, and the\ndefault was injected at write, so every requirement carried a priority\nnobody chose and nobody could change through the surface: 193 of 207 on\nthis project's own graph sat at the injected value, and the 14 that did\nnot were written through the generic escape hatch.",
+        "enum": [
+          "low",
+          "medium",
+          "high",
+          "critical",
+          null
+        ],
+        "type": [
+          "string",
+          "null"
+        ]
+      },
       "statement": {
         "default": null,
         "description": "The requirement statement.",

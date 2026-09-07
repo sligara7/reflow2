@@ -7,6 +7,14 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
     "properties": {
+      "description": {
+        "default": null,
+        "description": "WHAT THIS IS, in prose. Added 2026-09-07. BOTH users of this struct are\nconstructors — `add_interface` and `add_project` — and both their types\ndeclare `description` as the ONLY prose field they have, so until this\nlanded the surface let a caller name an interface or a project and never\nsay what it was. Six of the eleven types declaring a description were in\nthat state, because the class was fixed one report at a time and never\nswept\n(`fact:six-constructors-cannot-write-any-prose-because-the-class-was-fixed-one-report-at-a-time-and-never-swept`).\nA third user of this struct that is NOT a constructor would want it\nsplit; there is none today.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
       "id": {
         "description": "Stable node id (e.g. `req:offline`).",
         "type": "string"

@@ -63,6 +63,7 @@ fn req(
         status: None,
         approver: None,
         acted_at: None,
+        priority: None,
     }
 }
 

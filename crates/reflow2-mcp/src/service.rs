@@ -1297,6 +1297,18 @@ pub struct IdName {
     /// Human-readable name.
     #[serde(default)]
     pub name: Option<String>,
+    /// WHAT THIS IS, in prose. Added 2026-09-07. BOTH users of this struct are
+    /// constructors — `add_interface` and `add_project` — and both their types
+    /// declare `description` as the ONLY prose field they have, so until this
+    /// landed the surface let a caller name an interface or a project and never
+    /// say what it was. Six of the eleven types declaring a description were in
+    /// that state, because the class was fixed one report at a time and never
+    /// swept
+    /// (`fact:six-constructors-cannot-write-any-prose-because-the-class-was-fixed-one-report-at-a-time-and-never-swept`).
+    /// A third user of this struct that is NOT a constructor would want it
+    /// split; there is none today.
+    #[serde(default)]
+    pub description: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -1332,6 +1344,19 @@ pub struct RequirementReq {
     /// When the approver acted, as a plain date. Stored on the approver edge.
     #[serde(default)]
     pub acted_at: Option<String>,
+    /// How much this one matters: `low` / `medium` / `high` / `critical`.
+    ///
+    /// OMITTING IT LEAVES THE SCHEMA DEFAULT (`medium`) AND THAT IS UNCHANGED
+    /// BEHAVIOUR — this parameter adds a way to SAY, it does not add an
+    /// obligation to. Declared 2026-09-07 after the dev_storyflow agent
+    /// reported it missing. The property has always been declared, and the
+    /// default was injected at write, so every requirement carried a priority
+    /// nobody chose and nobody could change through the surface: 193 of 207 on
+    /// this project's own graph sat at the injected value, and the 14 that did
+    /// not were written through the generic escape hatch.
+    #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::requirement_priority_opt")]
+    pub priority: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -1781,6 +1806,14 @@ pub struct AddArtifactReq {
     /// Path / URI / content-hash of the real deliverable (lives outside the graph).
     #[serde(default)]
     pub location: Option<String>,
+    /// WHAT THIS IS, in prose. Added 2026-09-07: `description` is the only
+    /// prose field this type declares, and no tool offered it, so the surface
+    /// let a caller NAME the thing and never say what it was — six of eleven
+    /// types that declare a description were in that state, because the class
+    /// was fixed one report at a time and never swept
+    /// (`fact:six-constructors-cannot-write-any-prose-because-the-class-was-fixed-one-report-at-a-time-and-never-swept`).
+    #[serde(default)]
+    pub description: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -2094,6 +2127,14 @@ pub struct ReleaseReq {
     #[serde(default)]
     #[schemars(schema_with = "crate::enum_schema::release_unit_type_opt")]
     pub unit_type: Option<String>,
+    /// WHAT THIS IS, in prose. Added 2026-09-07: `description` is the only
+    /// prose field this type declares, and no tool offered it, so the surface
+    /// let a caller NAME the thing and never say what it was — six of eleven
+    /// types that declare a description were in that state, because the class
+    /// was fixed one report at a time and never swept
+    /// (`fact:six-constructors-cannot-write-any-prose-because-the-class-was-fixed-one-report-at-a-time-and-never-swept`).
+    #[serde(default)]
+    pub description: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -2109,6 +2150,14 @@ pub struct EnvironmentReq {
     /// Cloud region, host, physical site, or jurisdiction.
     #[serde(default)]
     pub location: Option<String>,
+    /// WHAT THIS IS, in prose. Added 2026-09-07: `description` is the only
+    /// prose field this type declares, and no tool offered it, so the surface
+    /// let a caller NAME the thing and never say what it was — six of eleven
+    /// types that declare a description were in that state, because the class
+    /// was fixed one report at a time and never swept
+    /// (`fact:six-constructors-cannot-write-any-prose-because-the-class-was-fixed-one-report-at-a-time-and-never-swept`).
+    #[serde(default)]
+    pub description: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -2120,6 +2169,14 @@ pub struct ResourceReq {
     /// Who supplies it (cloud provider, vendor, utility).
     #[serde(default)]
     pub provider: Option<String>,
+    /// WHAT THIS IS, in prose. Added 2026-09-07: `description` is the only
+    /// prose field this type declares, and no tool offered it, so the surface
+    /// let a caller NAME the thing and never say what it was — six of eleven
+    /// types that declare a description were in that state, because the class
+    /// was fixed one report at a time and never swept
+    /// (`fact:six-constructors-cannot-write-any-prose-because-the-class-was-fixed-one-report-at-a-time-and-never-swept`).
+    #[serde(default)]
+    pub description: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -3836,6 +3893,26 @@ pub struct AddEpochReq {
     pub epoch_type: Option<String>,
     #[serde(default)]
     pub sequence: Option<i64>,
+    /// WHAT THIS EPOCH IS, in prose — the ordering, what it must not include,
+    /// why it exists. THIS IS THE TYPE'S EMBEDDING FIELD, so it is what
+    /// `search_design` finds an epoch by; keep `name` a short handle and put
+    /// the prose here.
+    ///
+    /// Declared 2026-09-07 after the dev_storyflow agent reported it missing:
+    /// *"add_epoch lost `description` — the ordering and the must-nots had to
+    /// go into the name, which is now a paragraph."* It was never lost; the
+    /// property has been declared since the schema had epochs and no tool ever
+    /// offered it, so the field the search finds an epoch BY could not be
+    /// written by the tool that makes one.
+    #[serde(default)]
+    pub description: Option<String>,
+    /// Optional hash over the anchored spec set at this epoch — an Anchor is a
+    /// checksummed baseline epoch, and until 2026-09-07 nothing on the surface
+    /// could write the field that makes one. Same class as `description` above:
+    /// declared, never offered, and invisible while the reachability instrument
+    /// fused reach with adoption.
+    #[serde(default)]
+    pub checksum: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
