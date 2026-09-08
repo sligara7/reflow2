@@ -31,6 +31,53 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.55.1] — 2026-09-08
+
+**Patch.** No schema change and no tool-surface change — the stamp is unmoved at 28 node types
+and 65 edge types, so **no upgrade action is owed and nothing needs migrating**. If you are coming
+from v0.54.0 or earlier, v0.55.0's required migration still applies; see
+[docs/upgrading-to-v0.55.0.md](docs/upgrading-to-v0.55.0.md).
+
+### Fixed
+
+- **The default log filter is quiet for dependencies and loud for reflow2.** Measured on this
+  project's own server log: **368 of 473 lines — 78% — were `tantivy`'s** per-commit and
+  garbage-collect bookkeeping, against 11 lines from reflow2 itself. The default was a bare
+  `info`, which lets every dependency's info level through.
+
+  This matters beyond tidiness because **Docker's default `json-file` driver has no size limit**.
+  In a container that stream is stderr, so a long-running server grew an unbounded log made almost
+  entirely of a dependency's internal chatter — a failure that presents as *the host* dying rather
+  than as anything wrong with the container.
+
+  The default is now `warn,reflow2_mcp=info,reflow2_core=info`. Stated as "quiet everything, then
+  raise our own" rather than as `tantivy=warn`, deliberately: silencing the one dependency that
+  happens to be noisy today leaves the next one to be found the same way. `RUST_LOG` overrides all
+  of it, including back to `info` for everything.
+
+  Measured end to end on one import: **15 lines → 6**, all nine tantivy lines gone, and the error
+  still through in full — the check that matters, since a quieter log that hid failures would be a
+  worse defect than the one being fixed.
+
+### Added
+
+- **The image says to cap its own log.** The Dockerfile now carries
+  `--log-opt max-size=10m --log-opt max-file=3`, because reflow2 can only reduce the *rate*; only
+  the driver's cap bounds the *total*.
+
+### Notes
+
+- Pinned as a **shape**, not a literal: the filter is a named const, and the test asserts the
+  global default is quiet, that both reflow2 crates are raised above it, and that the string
+  parses. Asserting the exact literal would make any future addition a test edit rather than a
+  decision. Observed to fail by negative control — restoring the bare `info` fails it on exactly
+  the global-default assertion.
+- **Found by a question, not by a check.** A user's laptop had been filled by a container log — a
+  different container — and asking whether reflow2 used a particular path led to measuring what
+  reflow2's own image would do in the same situation. It shipped the same hazard.
+- **Not established:** the 78% is a *ratio* over 473 lines on a development server, not a *rate* on
+  a deployed one. The absolute growth per unit of work is unmeasured.
+
 ## [0.55.0] — 2026-09-08
 
 **Minor, and it MOVES THE SCHEMA STAMP: 29 → 28 node types — the first time this project has
