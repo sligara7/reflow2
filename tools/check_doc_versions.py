@@ -95,7 +95,36 @@ def foundation_tag() -> str:
 # --------------------------------------------------------------------------
 
 
+def schema_counts() -> tuple[str, str]:
+    """How many node and edge types the schema ACTUALLY declares.
+
+    Added 2026-09-07, when retiring `QualityGate` moved the node count 29 -> 28
+    and a sweep found the edge count in the same four sentences had ALREADY been
+    wrong for weeks — three said 60 and one said 64 against a real 65. Nothing
+    checked them, so they drifted silently in exactly the way this file's header
+    describes for versions. Same class, same remedy.
+
+    Read from `schema/*.yaml` rather than from the compiled binary so the check
+    runs without a build, like every other claim here.
+    """
+    import glob
+
+    import yaml
+
+    nodes: set[str] = set()
+    edges: set[str] = set()
+    for path in glob.glob(str(REPO / "schema" / "*.yaml")):
+        with open(path, encoding="utf-8") as fh:
+            domain = yaml.safe_load(fh)["schema"]
+        nodes |= set((domain.get("node_types") or {}).keys())
+        edges |= set((domain.get("edge_types") or {}).keys())
+    if not nodes or not edges:
+        sys.exit("FAIL: read no node or edge types from schema/*.yaml")
+    return str(len(nodes)), str(len(edges))
+
+
 def claims(reflow2: str, foundation: str) -> list[tuple[str, str, str, str]]:
+    node_types, edge_types = schema_counts()
     return [
         (
             "AGENTS.md",
@@ -114,6 +143,58 @@ def claims(reflow2: str, foundation: str) -> list[tuple[str, str, str, str]]:
             "loop-status shipping version",
             r"is built and shipping as of\s*\n?v([0-9]+\.[0-9]+\.[0-9]+)",
             reflow2,
+        ),
+        # The schema counts. Each pattern deliberately matches EVERY occurrence
+        # in its file, so a second sentence carrying the same number cannot rot
+        # while the first stays true — which is how the edge count reached 65
+        # while four sentences still said 60 and 64.
+        (
+            "AGENTS.md",
+            "schema node-type count",
+            r"\((\d+) node types, \d+ edge types",
+            node_types,
+        ),
+        (
+            "AGENTS.md",
+            "schema edge-type count",
+            r"\(\d+ node types, (\d+) edge types",
+            edge_types,
+        ),
+        (
+            "README.md",
+            "schema node-type count",
+            r"\((\d+) node(?: types?)? (?:and|/) \d+ edge types",
+            node_types,
+        ),
+        (
+            "README.md",
+            "schema edge-type count",
+            r"\(\d+ node(?: types?)? (?:and|/) (\d+) edge types",
+            edge_types,
+        ),
+        (
+            "docs/overview.md",
+            "schema node-type count",
+            r"\((\d+) node types, \d+ edge types\)",
+            node_types,
+        ),
+        (
+            "docs/overview.md",
+            "schema edge-type count",
+            r"\(\d+ node types, (\d+) edge types\)",
+            edge_types,
+        ),
+        (
+            "docs/interaction-surfaces.md",
+            "schema node-type count",
+            r"\((\d+) node types, \d+ edges\)",
+            node_types,
+        ),
+        (
+            "docs/interaction-surfaces.md",
+            "schema edge-type count",
+            r"\(\d+ node types, (\d+) edges\)",
+            edge_types,
         ),
     ]
 

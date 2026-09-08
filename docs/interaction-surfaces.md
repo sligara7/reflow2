@@ -20,7 +20,7 @@ without reworking the core.
 Everything in `schema/` and the process docs describes a **core** that knows nothing about
 how it's driven:
 
-- the **graph store** (dynograph-foundation) + the **schema** (29 node types, 60 edges);
+- the **graph store** (dynograph-foundation) + the **schema** (28 node types, 65 edges);
 - the **coherence-loop operations**: extraction, impact propagation, gap-surfacing, heal.
 
 A **surface** sits on top of the core and lets a human interact with it. Swapping surfaces

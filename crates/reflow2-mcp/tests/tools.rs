@@ -908,7 +908,7 @@ async fn describe_schema_returns_the_whole_vocabulary() {
     })));
     assert_eq!(
         v["node_types"].as_array().unwrap().len(),
-        29,
+        28,
         "every node type is discoverable"
     );
     assert_eq!(

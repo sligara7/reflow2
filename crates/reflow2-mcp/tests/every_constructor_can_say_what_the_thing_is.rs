@@ -52,23 +52,11 @@ macro_rules! j {
 /// each with the reason. Kept tiny on purpose: an exemption list is where a
 /// swept class goes back to being unswept, so anything added here needs a
 /// sentence a reader can disagree with.
-const NO_CONSTRUCTOR: &[(&str, &str)] = &[
-    (
-        "Actor",
-        "has no typed write tool at all — there is no add_actor to give a parameter to. One of \
-         nine types with no constructor, alongside EnvironmentRule and QualityGate; the rest of \
-         that nine are machine-written (Fragment, Snapshot, DriftEvent, the Dimension pair, \
-         Anchor). Whether the three user-facing ones should get constructors is a bigger \
-         question than this test settles.",
-    ),
-    ("EnvironmentRule", "no typed write tool; see Actor."),
-    ("QualityGate", "no typed write tool; see Actor."),
-    (
-        "DimensionAssessment",
-        "machine-written: an assessment is produced by the dimension pass, not typed in by a \
-         user, so it has no constructor by design.",
-    ),
-];
+const NO_CONSTRUCTOR: &[(&str, &str)] = &[(
+    "DimensionAssessment",
+    "machine-written: an assessment is produced by the dimension pass, not typed in by a user, \
+     so it has no constructor by design.",
+)];
 
 /// The one type whose constructor is not named `add_<snake(type)>`: a
 /// DesignEpoch is made by `add_epoch` (and `plan_epoch`). Stated as data rather
@@ -160,6 +148,45 @@ async fn every_type_that_declares_a_description_can_be_given_one() {
          `description` and the tool does not take one, which is the class that survived every \
          instance fix until 2026-09-07: {missing:?}. Give the parameter, or add the type to \
          NO_CONSTRUCTOR with a reason."
+    );
+
+    // THE REVERSE SWEEP, AND IT IS THE HALF THAT WAS MISSING. An exemption is a
+    // `continue`, so an entry that has stopped being true is skipped in silence
+    // — the list can only ever drift toward exempting more than it should.
+    //
+    // Measured 2026-09-07: it already had. `Actor` sat here reading "there is no
+    // add_actor to give a parameter to" while `add_actor` had shipped hours
+    // earlier taking a `description`, and `EnvironmentRule` sat here for a type
+    // that declares no `description` at all, so it could never have been swept.
+    // `QualityGate` sat here for a type that was about to leave the schema
+    // (dec:qualitygate-is-retired-the-phase-gate-dissolved-into-the-detectors).
+    // Three of four entries were dead and nothing could say so.
+    //
+    // This is the same class as constructors_preserve.rs's membership being
+    // drawn on `add_*` call names: a hand-maintained list with no check that its
+    // entries are still earned.
+    let mut stale = Vec::new();
+    for (ty, _) in NO_CONSTRUCTOR {
+        if !declaring.iter().any(|d| d == ty) {
+            stale.push(format!(
+                "{ty} (declares no `description`, so it is never swept)"
+            ));
+            continue;
+        }
+        let expected = CONSTRUCTOR_NAMES
+            .iter()
+            .find(|(t, _)| t == ty)
+            .map(|(_, tool)| (*tool).to_string())
+            .unwrap_or_else(|| format!("add_{}", to_snake(ty)));
+        if writable.contains(&expected) {
+            stale.push(format!("{ty} (`{expected}` now takes a description)"));
+        }
+    }
+    assert!(
+        stale.is_empty(),
+        "these NO_CONSTRUCTOR entries are no longer earned and are silently shrinking the \
+         sweep: {stale:?}. Delete them — an exemption nobody rechecks is how a swept class \
+         goes back to being unswept."
     );
 }
 

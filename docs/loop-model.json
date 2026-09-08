@@ -466,7 +466,6 @@
       "Fragment",
       "Interface",
       "Project",
-      "QualityGate",
       "Question",
       "ReadinessAssessment",
       "Release",
@@ -476,7 +475,7 @@
       "TemporalFact",
       "Verification"
     ],
-    "node_types": 29,
+    "node_types": 28,
     "reflow2_version": "0.33.0",
     "schema_version": 1
   }

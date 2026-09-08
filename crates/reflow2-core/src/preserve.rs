@@ -200,7 +200,6 @@ const SUPPORTING_TYPES: &[&str] = &[
     node::FRAGMENT,
     node::VERIFICATION,
     node::DRIFT_EVENT,
-    "QualityGate",
     node::RELEASE,
     node::ENVIRONMENT,
     node::RESOURCE,

@@ -22,9 +22,12 @@
 //! # The one that is not a parameter
 //!
 //! `Actor` had no typed constructor AT ALL, so its two properties could not be
-//! given parameters without first making an `add_actor`. It is one of three
-//! types in that state; the other two (EnvironmentRule, QualityGate) have no
-//! instances anywhere and so never reached the unreachable list.
+//! given parameters without first making an `add_actor`. It was one of three
+//! types in that state, and the other two never reached the unreachable list
+//! because they had no instances anywhere. Both have since been resolved in
+//! opposite directions on the same day: EnvironmentRule got its constructor
+//! when the compliance layer was built whole, and QualityGate was retired from
+//! the schema outright.
 //!
 //! # What is pinned
 //!

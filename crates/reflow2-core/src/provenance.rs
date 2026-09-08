@@ -30,11 +30,18 @@ use serde::{Deserialize, Serialize};
 
 /// Node types this reflow2 once had and has since retired. A graph that carries
 /// one in its stamp is not from the future — it predates the removal — so the
-/// honest recovery is to migrate the graph, not to update the binary. Empty so
-/// far; grows the day a node type is retired (as VALIDATES/ENABLES were on the
-/// edge side). This is what lets a set-based stamp say "retired → migrate"
-/// rather than the count-only hedge (BL-86).
-const RETIRED_NODE_TYPES: &[&str] = &[];
+/// honest recovery is to migrate the graph, not to update the binary. This is
+/// what lets a set-based stamp say "retired → migrate" rather than the
+/// count-only hedge (BL-86).
+///
+/// `QualityGate` is the first entry, added 2026-09-07 with the removal itself
+/// (dec:qualitygate-is-retired-the-phase-gate-dissolved-into-the-detectors).
+/// THE ORDER MATTERS AND WAS LEARNED THE HARD WAY: cutting the type from
+/// `schema/verify.yaml` without adding it here left the guard reading an
+/// ordinary graph as one from the future, so the message told the operator
+/// their reflow2 was BEHIND and to rebuild — the exact opposite of what to do.
+/// A retirement is two edits, not one.
+const RETIRED_NODE_TYPES: &[&str] = &["QualityGate"];
 
 /// Edge types this reflow2 retired. `VALIDATES` and `ENABLES` were removed by
 /// the edge-orthogonality change (55 → 53) without a version bump — the exact
@@ -484,6 +491,46 @@ mod tests {
             node_type_names: Some(nn),
             edge_type_names: Some(ne),
         }
+    }
+
+    /// A RETIREMENT IS TWO EDITS, AND THIS PINS THE SECOND ONE.
+    ///
+    /// NOT a duplicate of `set_based_retired_type_says_migrate_not_behind`,
+    /// which covers the EDGE registry. `unreadable_by` walks nodes and edges in
+    /// two separate loops against two separate registries, and until 2026-09-07
+    /// `RETIRED_NODE_TYPES` was empty — so the node loop's retired branch was
+    /// unreachable and had never been executed by any test.
+    ///
+    /// Cutting a type from `schema/*.yaml` without registering it here makes the
+    /// guard read every ORDINARY graph as one from the FUTURE, so the refusal
+    /// tells the operator their reflow2 is BEHIND and to rebuild — the exact
+    /// opposite of what to do, and they will do it, because the message is
+    /// confident and specific.
+    ///
+    /// Observed on 2026-09-07 while retiring `QualityGate`: the schema edit
+    /// landed first, the live graph stopped opening, and the message sent the
+    /// operator to rebuild a binary that was already current. This test is the
+    /// standing reminder that the registry entry is not bookkeeping.
+    #[test]
+    fn a_retired_type_says_migrate_the_graph_rather_than_update_the_binary() {
+        // A graph written before the retirement: it names the type, holds no
+        // instances of it, and is otherwise identical to the current schema.
+        let before = named("0.54.0", &["Project", "QualityGate"], &["SATISFIES"]);
+        let now = named("0.54.0", &["Project"], &["SATISFIES"]);
+
+        let refusal = before
+            .unreadable_by(&now)
+            .expect("a graph naming a type this binary lacks is refused");
+
+        assert!(
+            refusal.contains("RETIRED") && refusal.contains("migrate the graph"),
+            "a RETIRED type must send the operator to the migration, not to a rebuild: {refusal}"
+        );
+        assert!(
+            !refusal.contains("BEHIND"),
+            "the binary is current; telling the operator it is behind is the failure this \
+             registry exists to prevent: {refusal}"
+        );
     }
 
     #[test]
