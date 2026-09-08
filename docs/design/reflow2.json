@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:468d3814ff6e394eaa43b3451414cdac04483d8b0a4e5061b2d8c73e2936d4a7",
+  "content_hash": "sha256:843e7b6cec8aba88aa2828588fb89e546d8dca565b5a46929413f74cdb74ad0f",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -11887,6 +11887,14 @@
     {
       "edge_type": "AUTHORED_BY",
       "from_id": "chg:re-linking-an-artifact-no-longer-renames-it",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "chg:the-default-log-filter-is-quiet-for-dependencies",
       "properties": {
         "role": "approver"
       },
@@ -37221,6 +37229,24 @@
         "action": "modified"
       },
       "to_id": "proj:reflow2"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-default-log-filter-is-quiet-for-dependencies",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:dockerfile"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-default-log-filter-is-quiet-for-dependencies",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:main"
     },
     {
       "edge_type": "CHANGED",
@@ -166479,7 +166505,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f014e913ac9e61dc2112f4383c0cc94cdf9e5d78fe307bcb2ad45ae316d6e719",
+        "checksum": "sha256:660988c137b839e5e17fa68bb05c36c883b09d6754683c9b1736874a6612e65e",
         "granularity": "atomic",
         "location": "Dockerfile",
         "name": "Dockerfile",
@@ -167111,7 +167137,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:5c3c610ae70704dda6566145c89be08d5ef91e91591c735f2aac91d72de9f676",
+        "checksum": "sha256:20d8202316618bf0d31644663b13909a67d2f002725e234e56a2f05f5b923d55",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/main.rs",
         "name": "main.rs",
@@ -178941,6 +178967,16 @@
         "rationale": "⭐ THE COMPILER CAUGHT WHAT REVIEW WOULD HAVE MISSED. Adding the `UnknownLevel` variant broke three exhaustive matches in `detect.rs` — source, severity and title. That is the `#[non_exhaustive]` finding from the absorption paying off: the enum is reflow2's own now, so a new variant is a BUILD ERROR rather than a wildcard arm silently swallowing it.\n\n⭐ THE FIRST MODELLING ATTEMPT WAS WRONG AND THE CHECK CAUGHT IT, twice over. Nesting the implementations inside `cmp:byte-store` under the CLOSED ladder gave two `level_mismatch` findings, which is what exposed the floor in the first place; and promoting `byte-store` to `subsystem` would only have pushed the mismatch up into `sys:foundation`. The fix was not a workaround but the feature.\n\n🛑 AND IT SURFACED A REAL DEFECT IN A DIFFERENT COMPONENT, fixed in the same change. `add_component`'s required-field resolver looked its fallback up by STORED PROPERTY NAME and asked for `description` — but a Component stores that text as `purpose`. So the lookup always missed on an existing Component and **EVERY REVISE OF A COMPONENT WAS REFUSED with \"no such node exists yet to take it from\"**, about a node sitting right there. Found by trying to set `level` on `cmp:rocksdb-backend`; the node came straight back from `get_node` a moment later, which is what made the error's confidence visible as wrong. `Capability` is unaffected because it really does store `description` — which is why the bug survived and why a test covering only Capability would have stayed green. Regression test added that asserts the premise itself: a Component has `purpose` and has no `description`.\n\n⚠️ WHAT IS DELIBERATELY NOT DONE: `Component.level` is now a plain string, so the schema no longer rejects a typo at write time. That validation moves from the schema to `hierarchy_issues`, which REPORTS rather than refuses. This is the report-don't-judge posture and it is a real trade — a bad level now lands in the graph and is surfaced, instead of being blocked. `seam_coverage`'s `altitude` argument already takes a level string and was left alone; it compares names and never ranks, so an open ladder does not change it.",
         "subject": "system",
         "summary": "Implements `dec:the-decomposition-ladder-is-open-not-a-fixed-enum`.\n\n`Component.level` was a closed enum with `component` at rank 0 — a hard FLOOR, so a part of a component could not be expressed at all. It is now a plain string naming a rung on THIS design's ladder, declared as `Project.decomposition_levels` (a `list:string`, ordered bottom-first). Absent means the built-in `DEFAULT_RUNGS` — the same five names in the same order — so nothing that predates this moves and no data migrates.\n\n`hierarchy.rs::Level` (an enum with a `rank()` match arm) becomes `Ladder`, a struct over the declared rungs. **`Ladder::rank()` returns `None` for a name that is not on the ladder — never `Some(0)`.** The old `Level::from_key` mapped anything unrecognised to `Component`, so a typo silently became the finest rung and every containment above it read as a mismatch nobody could explain. That silent fallback is gone, and the ordering now has exactly ONE home instead of being declared in both the YAML and the Rust.\n\nNew finding `unknown_level` replaces the validation the enum used to give: an off-ladder level is reported BY NAME, and every level-arithmetic check skips that component rather than ranking it. It surfaces as a gap at severity 0.55.\n\nDEMONSTRATED ON THIS DESIGN, end to end through the MCP surface: `proj:reflow2` now declares `[part, component, subsystem, system, system_of_systems, enterprise]`, and `cmp:rocksdb-backend` / `cmp:memory-backend` moved from `sys:foundation` to `cmp:byte-store` at the new `part` rung — where they actually live, in one file. `move_component` returned `level_note: null` (exactly one rung apart) and `hierarchy_issues` is 0 across the whole design.\n\nSix new hierarchy tests, including a four-deep non-software ladder (organelle ▸ cell ▸ tissue ▸ organ ▸ organism) that nests cleanly and still catches a skipped rung — proving rank comes from POSITION, not from any name reflow2 knows.\n\nCore 1,458 / 0 (was 1,452), workspace 1,766 / 0 (was 1,760)."
+      }
+    },
+    {
+      "node_id": "chg:the-default-log-filter-is-quiet-for-dependencies",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "name": "The default log filter is quiet for dependencies and loud for reflow2 — an uncapped container log can fill a host disk",
+        "rationale": "FOUND BY A USER'S QUESTION RATHER THAN BY ANY CHECK. Anthony's laptop had been filled by a docker container log — not reflow2's — and asking whether reflow2 used a particular cache path led to measuring what reflow2's own container would do in the same situation. The answer was that it ships the same hazard: no RUST_LOG default, no logging guidance in the image, and a filter that lets a dependency dominate the stream.\n\nThe reflow2-specific lesson is that we publish a container and had never asked what its log does over time. A design that models deployment environments had nothing recorded about the one operational property most likely to take a host down.\n\nWHAT IS NOT ESTABLISHED: how large a real reflow2 container log actually grows per unit of work. The 78% figure is a ratio measured on a development server over 473 lines, not a rate measured on a deployed one. The fix is right regardless — an operator does not want a dependency's commit bookkeeping at info — but nobody has measured the absolute number.",
+        "summary": "MEASURED ON THIS PROJECT'S OWN SERVER LOG, 2026-09-08: 368 of 473 lines — 78% — were `tantivy`'s per-commit and garbage-collect bookkeeping, against 11 lines from reflow2 itself. The default filter was a bare `info`, which lets every dependency's info-level chatter through.\n\nWHY IT MATTERS BEYOND TIDINESS. In a container that stream is stderr, and Docker's default `json-file` driver has NO SIZE LIMIT, so a long-running reflow2 server grows an unbounded log almost entirely out of a dependency's internal bookkeeping. That failure presents as the whole HOST dying rather than as anything wrong with the container, which is the worst shape a failure can take.\n\nTHE FIX: the default becomes `warn,reflow2_mcp=info,reflow2_core=info`. Stated as \"quiet everything, then raise our own\" rather than as `tantivy=warn`, deliberately — silencing the one dependency that happens to be noisy today leaves the next one to be discovered the same way. RUST_LOG still overrides all of it.\n\nMEASURED END TO END on one import: 15 lines to 6, all nine tantivy lines gone, and the ERROR still comes through in full — the check that matters, since a quieter log that hides failures would be a worse defect than the one being fixed. `RUST_LOG=info` restores all 15.\n\nPINNED AS A SHAPE, NOT A LITERAL: the filter is a named const and the test asserts the global default is quiet, that both reflow2 crates are raised above it, and that the string parses as an EnvFilter. Asserting the exact string would make any future addition a test edit rather than a decision. OBSERVED TO FAIL by negative control — restoring the bare `info` this replaced fails it on exactly the global-default assertion.\n\nThe Dockerfile now tells an operator to run with `--log-opt max-size`, because reflow2 can only reduce the RATE; only the driver's cap bounds the TOTAL."
       }
     },
     {
@@ -209511,7 +209547,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:40d1ddffb3f4357d136b3a7d36fb07bf9960d4c4c9eef9cd401071497883a56b",
+  "prev_content_hash": "sha256:468d3814ff6e394eaa43b3451414cdac04483d8b0a4e5061b2d8c73e2936d4a7",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

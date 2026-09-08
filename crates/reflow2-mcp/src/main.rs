@@ -404,6 +404,12 @@ fn read_resolutions(
     Ok(out)
 }
 
+/// The default tracing filter: quiet for everything, `info` for reflow2's own
+/// crates. Named rather than inlined so the test below can hold it to that
+/// shape — a bare `info` here is the state this replaced, and it is an easy
+/// thing to restore by accident while debugging.
+const DEFAULT_LOG_FILTER: &str = "warn,reflow2_mcp=info,reflow2_core=info";
+
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
     // FIRST, before anything can replace the binary under us: remember what
@@ -411,9 +417,27 @@ async fn main() -> anyhow::Result<()> {
     // platforms with no /proc (see shared::startup_fingerprint).
     let _ = reflow2_mcp::shared::startup_fingerprint();
     // JSON-RPC owns stdout; all logs go to stderr.
+    //
+    // THE DEFAULT IS `warn` FOR EVERYTHING AND `info` FOR OUR OWN CRATES, not a
+    // bare `info`. Measured 2026-09-08 on this project's own server log: 368 of
+    // 473 lines — 78% — were `tantivy`'s per-commit and garbage-collect chatter,
+    // against 11 lines from reflow2 itself. In a container that stream is stderr,
+    // and Docker's default `json-file` driver has NO SIZE CAP, so a long-running
+    // server grows an unbounded log almost entirely out of a dependency's
+    // internal bookkeeping. A filled disk from a container log is what prompted
+    // this (a user's laptop, though not from this image).
+    //
+    // Stated as "quiet everything, then raise our own" rather than as
+    // `tantivy=warn`, deliberately: silencing the one dependency that happens to
+    // be noisy today leaves the next one to be discovered the same way. The
+    // rule that holds is that an operator wants OUR narrative at info and a
+    // dependency's only when something is wrong.
+    //
+    // RUST_LOG overrides all of it, including back to `info` for everything.
     tracing_subscriber::fmt()
         .with_env_filter(
-            EnvFilter::try_from_default_env().unwrap_or_else(|_| EnvFilter::new("info")),
+            EnvFilter::try_from_default_env()
+                .unwrap_or_else(|_| EnvFilter::new(DEFAULT_LOG_FILTER)),
         )
         .with_writer(std::io::stderr)
         .with_ansi(false)
@@ -1195,6 +1219,34 @@ where
 
 #[cfg(test)]
 mod tests {
+    /// A LOG THAT NOBODY CAPS CAN FILL A DISK, and the default filter sets the
+    /// rate. Measured 2026-09-08 on this project's own server log: 368 of 473
+    /// lines were `tantivy`'s per-commit and garbage-collect bookkeeping,
+    /// against 11 from reflow2 itself — and in a container that stream goes to
+    /// Docker's `json-file` driver, which has no size limit.
+    ///
+    /// Pinned as a SHAPE rather than as an exact string: what must hold is that
+    /// the global default is quiet and reflow2's own crates are raised above
+    /// it. Asserting the literal would make any future addition a test edit
+    /// rather than a decision.
+    #[test]
+    fn the_default_log_filter_is_quiet_for_dependencies_and_loud_for_us() {
+        let f = super::DEFAULT_LOG_FILTER;
+        assert!(
+            f.starts_with("warn"),
+            "the GLOBAL default must be quiet, or a dependency's info-level \
+             bookkeeping is back in the log: {f}"
+        );
+        assert!(
+            f.contains("reflow2_mcp=info") && f.contains("reflow2_core=info"),
+            "reflow2's own narrative must still reach an operator at info: {f}"
+        );
+        assert!(
+            f.parse::<tracing_subscriber::EnvFilter>().is_ok(),
+            "the default filter must be a valid EnvFilter directive set: {f}"
+        );
+    }
+
     use super::read_resolutions;
     use reflow2_core::Resolution;
 
