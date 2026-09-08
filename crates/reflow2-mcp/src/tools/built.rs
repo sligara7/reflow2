@@ -416,7 +416,11 @@ impl ReflowService {
         description = "Register a real file against the design WITH provenance, atomically: \
                        Artifact + a provenance Fragment (YIELDED) + a REALIZES edge to the \
                        Capability/Component it implements. Fails loud if the target is missing. \
-                       Use after building a file so as-designed vs as-built stays honest.",
+                       Use after building a file so as-designed vs as-built stays honest. \
+                       RE-LINKING IS SAFE: `name` and `description` are required only on the \
+                       FIRST link, and omitting either afterwards LEAVES THE STORED ONE ALONE \
+                       — so attaching a file to a second target never renames it or drops its \
+                       prose. Pass them again only when you mean to change them.",
         annotations(read_only_hint = false)
     )]
     pub async fn link_artifact(
@@ -427,6 +431,7 @@ impl ReflowService {
             artifact_id: req.artifact_id,
             name: req.name,
             location: req.location,
+            description: req.description,
             artifact_type: req.artifact_type,
             target_type: self
                 .resolve_type(req.target_type.as_deref(), &req.target_id, "target_type")

@@ -38,7 +38,8 @@ fn program() -> DesignGraph {
     g.consumes("cmp:terminal-b", "ifc:crosslink").unwrap();
     g.link_artifact(LinkArtifactOptions {
         artifact_id: "art:crosslink-icd".into(),
-        name: "crosslink.proto".into(),
+        name: Some("crosslink.proto".into()),
+        description: None,
         location: Some("icd/crosslink.proto".into()),
         artifact_type: Some("spec".into()),
         target_type: node::INTERFACE.into(),

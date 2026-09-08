@@ -161,11 +161,21 @@ pub enum DriftDisposition<'a> {
 pub struct LinkArtifactOptions {
     /// Stable Artifact id (e.g. `art:ball-physics`).
     pub artifact_id: String,
-    /// Artifact name.
-    pub name: String,
+    /// Artifact name. **Optional, and omitting it PRESERVES the stored one** —
+    /// re-linking a file to a second target must not rename it.
+    ///
+    /// It was mandatory until 2026-09-07, which made "leave the name alone"
+    /// inexpressible: every re-link rewrote the name to whatever the caller
+    /// happened to re-type, and the refusal that demanded it invited a stub.
+    /// Required on the FIRST link, where there is nothing to preserve.
+    #[serde(default)]
+    pub name: Option<String>,
     /// Where the artifact lives (path / URI / content-hash). Points outside the graph.
     #[serde(default)]
     pub location: Option<String>,
+    /// What the artifact IS, in prose. Omitting it preserves any stored one.
+    #[serde(default)]
+    pub description: Option<String>,
     /// `code` (default) / `spec` / `document` / `diagram` / `model` / …
     #[serde(default)]
     pub artifact_type: Option<String>,
@@ -606,6 +616,38 @@ impl DesignGraph {
             });
         }
 
+        // THE NAME IN EFFECT: the caller's if they gave one, otherwise the one
+        // the design already holds. Resolved rather than merely made optional,
+        // because the provenance Fragment's `title` is a REQUIRED property and
+        // a re-link can meet an Artifact that exists while its Fragment does
+        // not — so "omit the name" without a resolved value fails validation on
+        // a field the caller never mentioned. Found exactly that way.
+        let stored_name = self
+            .get_node(node::ARTIFACT, &opts.artifact_id)?
+            .and_then(|n| {
+                n.properties
+                    .get("name")
+                    .and_then(|v| v.as_str().map(str::to_owned))
+            });
+        let effective_name = opts.name.clone().or(stored_name);
+
+        // A FIRST link has nothing to preserve, so there the name is required.
+        // Refused rather than written as an empty string: an Artifact with no
+        // name is unreadable in every report, and the refusal names what would
+        // have worked (req:a-refusal-names-what-would-have-worked).
+        let Some(effective_name) = effective_name else {
+            return Err(DynoError::Validation {
+                node_type: node::ARTIFACT.into(),
+                property: "name".into(),
+                message: format!(
+                    "`{}` does not exist yet, so there is no name to preserve — pass `name` \
+                     to create it. Omitting `name` is for RE-linking an artifact the design \
+                     already holds, where it leaves the stored name alone.",
+                    opts.artifact_id
+                ),
+            });
+        };
+
         let provenance = opts.provenance.as_deref().unwrap_or("authored");
         let completeness = opts.completeness.as_deref().unwrap_or("complete");
         // NOT defaulted to "complete"'s optimism. Registering a file says it
@@ -621,7 +663,14 @@ impl DesignGraph {
         // All four writes land together or not at all — a failed one (e.g. a bad
         // enum value) leaves no half-linked Artifact behind.
         self.begin_batch();
-        match self.write_artifact_link(&opts, &fragment_id, provenance, completeness, conformance) {
+        match self.write_artifact_link(
+            &opts,
+            &effective_name,
+            &fragment_id,
+            provenance,
+            completeness,
+            conformance,
+        ) {
             Ok(()) => {
                 self.commit_batch()?;
                 Ok(ArtifactLink {
@@ -645,6 +694,7 @@ impl DesignGraph {
     fn write_artifact_link(
         &mut self,
         opts: &LinkArtifactOptions,
+        effective_name: &str,
         fragment_id: &str,
         provenance: &str,
         completeness: &str,
@@ -676,7 +726,7 @@ impl DesignGraph {
             node::FRAGMENT,
             fragment_id,
             Props::new()
-                .set("title", format!("Registered {}", opts.name))
+                .set("title", format!("Registered {effective_name}"))
                 .set("fragment_type", "implementation")
                 .set("provenance", provenance)
                 .set_opt("content_ref", opts.content_ref.as_deref())
@@ -687,7 +737,8 @@ impl DesignGraph {
             node::ARTIFACT,
             &opts.artifact_id,
             Props::new()
-                .set("name", opts.name.as_str())
+                .set_opt("name", opts.name.as_deref())
+                .set_opt("description", opts.description.as_deref())
                 .set_opt("artifact_type", opts.artifact_type.as_deref())
                 .set_opt("location", opts.location.as_deref())
                 .set_opt("checksum", opts.checksum.as_deref().map(canonical_checksum)),

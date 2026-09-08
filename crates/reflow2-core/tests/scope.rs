@@ -90,7 +90,8 @@ fn program() -> DesignGraph {
     g.satisfies("cap:ground-relay", "req:users").unwrap();
     g.link_artifact(LinkArtifactOptions {
         artifact_id: "art:ground-sw".into(),
-        name: "ground segment software".into(),
+        name: Some("ground segment software".into()),
+        description: None,
         location: None,
         artifact_type: None,
         target_type: node::CAPABILITY.into(),

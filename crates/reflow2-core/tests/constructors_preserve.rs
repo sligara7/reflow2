@@ -36,6 +36,18 @@
 //! Each case below sets a property off its default, re-calls the constructor
 //! the way a reviser would, and asserts the design still knows what it knew.
 //! **Written before the fix**: every one of them failed first.
+//!
+//! # The scope of this file was drawn on a NAME, and that let one through
+//!
+//! Until 2026-09-07 every case here was an `add_*` constructor, and the note on
+//! `re_adding_an_artifact_does_not_erase_its_confirmation` said `link_artifact`
+//! "was fixed for this in BL-166". It was fixed for every field a caller could
+//! OMIT and not for `name`, which was mandatory — so the one thing a re-linker
+//! could not say was "leave the name alone", and every re-link rewrote it.
+//!
+//! The class is not "calls beginning with add_". It is **any write path that
+//! builds a node from a partial property set**, and membership had been decided
+//! by how the call was spelled. That is why the linker's cases now live here.
 
 use reflow2_core::DesignGraph;
 use reflow2_core::Value;
@@ -310,5 +322,203 @@ fn an_explicit_optional_still_overwrites() {
         prop(&g, node::CAPABILITY, "cap:one", "status"),
         "in_progress",
         "passing a value explicitly must still set it"
+    );
+}
+
+// ---------------------------------------------------------------------------
+// The linker, which this file's own header believed was already safe.
+// ---------------------------------------------------------------------------
+
+/// `link_artifact` was the FIRST place this class was fixed (BL-166), and the
+/// header above says so. The fix reached every field the caller could omit and
+/// stopped at the one they could not: `name` was mandatory, so "leave the name
+/// alone" was inexpressible and every re-link rewrote it to whatever the caller
+/// happened to re-type.
+///
+/// That is the same shape as `set_verification_status` deleting `last_run_at`
+/// on omission, fixed 2026-08-09 — and the same convention three sibling
+/// setters state outright: omitting one leaves it alone.
+///
+/// **WHY THE CLASS GUARD MISSED IT.** This file's cases are all `add_*`
+/// constructors. Membership was drawn on the NAME of the call rather than on
+/// what it does — write a node from a partial property set — and `link_artifact`
+/// does exactly that under a different name. A hand-drawn boundary around a
+/// behavioural class is the thing that let a fixed defect stay half-fixed.
+#[test]
+fn re_linking_an_artifact_does_not_rename_it() {
+    let mut g = graph();
+    g.add_capability("cap:one", "One", "The first thing.", None)
+        .expect("capability");
+    g.add_capability("cap:two", "Two", "The second thing.", None)
+        .expect("capability");
+
+    let rich = "reconcile.rs — the as-built sweep, and what it refuses to \
+                decide on the caller's behalf";
+    g.link_artifact(reflow2_core::LinkArtifactOptions {
+        artifact_id: "art:one".into(),
+        name: Some(rich.into()),
+        description: Some("Walks the tree and reports drift.".into()),
+        location: Some("src/reconcile.rs".into()),
+        artifact_type: Some("code".into()),
+        content_ref: None,
+        note_kind: None,
+        target_type: node::CAPABILITY.into(),
+        target_id: "cap:one".into(),
+        completeness: None,
+        conformance: None,
+        provenance: None,
+        fragment_id: None,
+        checksum: None,
+    })
+    .expect("first link");
+
+    // The ordinary second act: the same file also realizes another capability.
+    // The caller has nothing to say about the name and should not have to.
+    g.link_artifact(reflow2_core::LinkArtifactOptions {
+        artifact_id: "art:one".into(),
+        name: None,
+        description: None,
+        location: None,
+        artifact_type: None,
+        content_ref: None,
+        note_kind: None,
+        target_type: node::CAPABILITY.into(),
+        target_id: "cap:two".into(),
+        completeness: None,
+        conformance: None,
+        provenance: None,
+        fragment_id: None,
+        checksum: None,
+    })
+    .expect("second link");
+
+    assert_eq!(
+        prop(&g, node::ARTIFACT, "art:one", "name"),
+        rich,
+        "re-linking a file to a second target must not rename it"
+    );
+    assert_eq!(
+        prop(&g, node::ARTIFACT, "art:one", "description"),
+        "Walks the tree and reports drift.",
+        "and the prose must survive too — it is the part nobody can reconstruct"
+    );
+    assert_eq!(
+        prop(&g, node::ARTIFACT, "art:one", "location"),
+        "src/reconcile.rs",
+        "the fields BL-166 already protected must still be protected"
+    );
+}
+
+/// The other direction, so the fix cannot quietly become "you may never rename".
+/// An explicitly-passed name still wins, exactly as
+/// `a_named_property_is_still_overwritten` requires of every constructor.
+#[test]
+fn an_explicit_name_still_renames_on_relink() {
+    let mut g = graph();
+    g.add_capability("cap:one", "One", "The first thing.", None)
+        .expect("capability");
+    let opts = |name: Option<String>| reflow2_core::LinkArtifactOptions {
+        artifact_id: "art:one".into(),
+        name,
+        description: None,
+        location: None,
+        artifact_type: None,
+        content_ref: None,
+        note_kind: None,
+        target_type: node::CAPABILITY.into(),
+        target_id: "cap:one".into(),
+        completeness: None,
+        conformance: None,
+        provenance: None,
+        fragment_id: None,
+        checksum: None,
+    };
+    g.link_artifact(opts(Some("old.rs".into()))).expect("link");
+    g.link_artifact(opts(Some("new.rs".into())))
+        .expect("rename");
+
+    assert_eq!(prop(&g, node::ARTIFACT, "art:one", "name"), "new.rs");
+}
+
+/// A FIRST link has nothing to preserve, so there the name is still required —
+/// and the refusal says what would have worked rather than writing an unnamed
+/// Artifact that every report would render blank.
+#[test]
+fn a_first_link_still_requires_a_name() {
+    let mut g = graph();
+    g.add_capability("cap:one", "One", "The first thing.", None)
+        .expect("capability");
+    let err = g
+        .link_artifact(reflow2_core::LinkArtifactOptions {
+            artifact_id: "art:missing".into(),
+            name: None,
+            description: None,
+            location: None,
+            artifact_type: None,
+            content_ref: None,
+            note_kind: None,
+            target_type: node::CAPABILITY.into(),
+            target_id: "cap:one".into(),
+            completeness: None,
+            conformance: None,
+            provenance: None,
+            fragment_id: None,
+            checksum: None,
+        })
+        .expect_err("a first link with no name is refused");
+    let msg = err.to_string();
+    assert!(
+        msg.contains("art:missing") && msg.contains("pass `name`"),
+        "the refusal must name the artifact and what would have worked: {msg}"
+    );
+}
+
+/// THE HOLE IN THE FIRST VERSION OF THE FIX, pinned so it cannot come back.
+///
+/// An Artifact made by `add_artifact` has no provenance Fragment, and the
+/// Fragment's `title` is a REQUIRED property. So making `name` merely optional
+/// was not enough: a re-link that omitted it produced no title and failed schema
+/// validation on a field the caller had never mentioned. The fix is to RESOLVE
+/// the name — the caller's if given, otherwise the one the design already holds
+/// — and build the title from that.
+///
+/// Found by using the fix on this very change's own bookkeeping, which is the
+/// only reason it was caught before the gate.
+#[test]
+fn re_linking_mints_a_missing_fragment_from_the_stored_name() {
+    let mut g = graph();
+    g.add_capability("cap:one", "One", "The first thing.", None)
+        .expect("capability");
+    // add_artifact, NOT link_artifact — so no Fragment exists yet.
+    g.add_artifact("art:one", "reconcile.rs", Some("code"), Some("src/one.rs"))
+        .expect("artifact");
+
+    g.link_artifact(reflow2_core::LinkArtifactOptions {
+        artifact_id: "art:one".into(),
+        name: None,
+        description: None,
+        location: None,
+        artifact_type: None,
+        content_ref: None,
+        note_kind: None,
+        target_type: node::CAPABILITY.into(),
+        target_id: "cap:one".into(),
+        completeness: None,
+        conformance: None,
+        provenance: None,
+        fragment_id: None,
+        checksum: None,
+    })
+    .expect("a nameless re-link onto an artifact with no fragment must succeed");
+
+    assert_eq!(
+        prop(&g, node::ARTIFACT, "art:one", "name"),
+        "reconcile.rs",
+        "the stored name still stands"
+    );
+    assert_eq!(
+        prop(&g, node::FRAGMENT, "frag:art:one", "title"),
+        "Registered reconcile.rs",
+        "and the fragment's required title was minted from it, not left empty"
     );
 }

@@ -26,7 +26,8 @@ fn built_thread() -> DesignGraph {
         .expect("cap");
     g.link_artifact(LinkArtifactOptions {
         artifact_id: "art:score".into(),
-        name: "Score.cs".into(),
+        name: Some("Score.cs".into()),
+        description: None,
         location: Some("src/Score.cs".into()),
         artifact_type: Some("code".into()),
         target_type: node::CAPABILITY.into(),
@@ -244,7 +245,8 @@ fn artifacts_reach_a_capability_through_its_allocated_component_too() {
     g.allocate("cap:render", "cmp:ui").expect("allocate");
     g.link_artifact(LinkArtifactOptions {
         artifact_id: "art:ui".into(),
-        name: "Ui.cs".into(),
+        name: Some("Ui.cs".into()),
+        description: None,
         location: Some("src/Ui.cs".into()),
         artifact_type: Some("code".into()),
         target_type: node::COMPONENT.into(),
@@ -278,7 +280,8 @@ fn states_do_not_bleed_between_capabilities() {
         .expect("cap");
     g.link_artifact(LinkArtifactOptions {
         artifact_id: "art:ui".into(),
-        name: "Ui.cs".into(),
+        name: Some("Ui.cs".into()),
+        description: None,
         location: Some("src/Ui.cs".into()),
         artifact_type: Some("code".into()),
         target_type: node::CAPABILITY.into(),

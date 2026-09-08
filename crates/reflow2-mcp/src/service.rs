@@ -1937,11 +1937,20 @@ pub struct LinkArtifactReq {
     #[serde(alias = "from_id")]
     #[serde(alias = "node_id")]
     pub artifact_id: String,
-    pub name: String,
+    /// Required on a FIRST link. Omitting it on a re-link PRESERVES the stored
+    /// name rather than blanking it — before 2026-09-07 this was mandatory, so
+    /// "leave the name alone" could not be said and every re-link rewrote it.
+    #[serde(default)]
+    pub name: Option<String>,
     #[serde(default)]
     pub location: Option<String>,
     #[serde(default)]
     pub artifact_type: Option<String>,
+    /// What the artifact IS, in prose. Accepted here as well as on add_artifact,
+    /// so registering a file and describing it is one call rather than two tools
+    /// with different field sets. Omitting it preserves any stored description.
+    #[serde(default)]
+    pub description: Option<String>,
     /// Optional since 2026-09-06: resolved from the id when omitted (the id
     /// prefix names the type); an id held by more than one type is REFUSED, never
     /// guessed — pass it then.

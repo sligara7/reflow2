@@ -32,7 +32,8 @@ fn grown() -> DesignGraph {
     // The design records ONE realizes edge. The file, in reality, does three.
     g.link_artifact(LinkArtifactOptions {
         artifact_id: "art:engine".into(),
-        name: "engine.rs".into(),
+        name: Some("engine.rs".into()),
+        description: None,
         location: Some("src/engine.rs".into()),
         artifact_type: Some("code".into()),
         target_type: node::CAPABILITY.into(),

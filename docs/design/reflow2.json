@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:9db48502a07833a554804cdfb225c8023c0256a10c08d466a434653cf924aed9",
+  "content_hash": "sha256:fc121453fb85ff00d29a5194876543235ec6a80142fca309b7d1bcc2c05c44c1",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -11788,6 +11788,14 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "chg:re-linking-an-artifact-no-longer-renames-it",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "chg:the-environment-compliance-layer-is-built-as-a-whole-leg",
       "properties": {
         "role": "approver"
@@ -13582,6 +13590,14 @@
       "from_id": "dec:idea-is-there-performance-left-after-the-four-wins-and-what-is-the-budget",
       "properties": {
         "acted_at": "2026-08-31",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-knot-reduction-supplies-the-invariant-question-the-core-reduction-idea-was-missing",
+      "properties": {
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -19157,6 +19173,16 @@
     },
     {
       "edge_type": "CAUSES",
+      "from_id": "fact:the-preserve-on-revise-guard-draws-its-membership-on-a-call-name-not-on-a-behaviour",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "Drawn from the CAUSE to the record of the SYMPTOM. The guard's membership was drawn on `add_*` call names rather than on the behaviour it polices, so link_artifact was never tested for the class and its half-fix went unnoticed from BL-166 until a caller tripped over the friction on 2026-09-07. The test evidence is the negative control: restoring the unconditional write fails exactly one case, and that case did not exist in the guard until this change.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:link-artifact-demands-a-name-and-location-for-an-artifact-that-already-exists"
+    },
+    {
+      "edge_type": "CAUSES",
       "from_id": "fact:the-prose-does-not-rot-it-is-born-false",
       "properties": {
         "basis": "causal",
@@ -23996,6 +24022,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-0843156a493e1864",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:coverage-test"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-088bc327b842bafe",
       "properties": {
         "accepted_baseline": true,
@@ -24698,6 +24733,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-4ea9cc8c4b76cafc",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:confirmation-vocabulary-test"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-4ec8ddd180c5160e",
       "properties": {
         "accepted_baseline": true,
@@ -25055,6 +25099,15 @@
         "action": "modified"
       },
       "to_id": "art:dependency-manifest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-78315e4da8091054",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:conformance-test"
     },
     {
       "edge_type": "CHANGED",
@@ -26405,6 +26458,15 @@
         "action": "modified"
       },
       "to_id": "art:evidence-quality-instrument"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-fddc34a32a931396",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:checksum-dialect-test"
     },
     {
       "edge_type": "CHANGED",
@@ -27845,6 +27907,15 @@
         "action": "modified"
       },
       "to_id": "art:grok-build-tui-feedback-2026-08-27"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:baseline-a6e9d880f9a177c6",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-constructors-preserve"
     },
     {
       "edge_type": "CHANGED",
@@ -34101,6 +34172,42 @@
         "action": "added"
       },
       "to_id": "cap:a-component-can-be-moved-not-just-given-another-parent"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:re-linking-an-artifact-no-longer-renames-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:artifact"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:re-linking-an-artifact-no-longer-renames-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:re-linking-an-artifact-no-longer-renames-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-constructors-preserve"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:re-linking-an-artifact-no-longer-renames-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-built"
     },
     {
       "edge_type": "CHANGED",
@@ -44074,6 +44181,16 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-knot-reduction-supplies-the-invariant-question-the-core-reduction-idea-was-missing",
+      "properties": {
+        "evidence": "Any reduced-core VIEW is a projection, and that decision is already ACCEPTED with its first slice named as centrality over the reasoning projection. The bridge-node half of this idea is not a new feature so much as a reading of a battery that already has a ruling behind it, so this idea is only worth anything if that surface lands first.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:a-projection-is-named-and-the-battery-runs-over-it"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "dec:idea-linking-half-ideas-needs-a-task-that-can-be-run",
       "properties": {
         "evidence": "That node's detector is BUILT and firing at 110 of 183, which is what makes this question askable at all — without the count there is no backlog to work and no way to tell whether working it helps. This starts where that one finished.",
@@ -46698,6 +46815,14 @@
         "evidence": "Option (b) — name the current maximum in the refusal — became the fix. Option (a), auto-assign, was NOT taken for the reason the idea's own rationale gives (sequences are spaced on purpose) and remains open on the idea."
       },
       "to_id": "chg:alexs-four-surface-fixes-sequence-hint-get-node-by-id-auth-hint-and-bulk-check-only"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-can-a-design-graph-be-reduced-to-its-essential-core",
+      "properties": {
+        "evidence": "Drawn FROM the 2026-08-18 node INTO this one: the earlier form of the same thought, three weeks on, through a different formal framework. NOT SUPERSEDED, and this is the part to read before acting on the edge — that node's measured prior-art survey is still the better half of the pair, and it is where the transitive-reduction composition-table trap is recorded. What evolved is the argument, not the evidence. DUPLICATES was the other candidate and was rejected deliberately: it marks a candidate for consolidation and apply_heal merges on an asserted one, and merging these two would destroy the fact that the same conclusion was reached twice by independent routes, which is most of what the pair is worth."
+      },
+      "to_id": "dec:idea-knot-reduction-supplies-the-invariant-question-the-core-reduction-idea-was-missing"
     },
     {
       "edge_type": "EVOLVES_INTO",
@@ -51564,6 +51689,14 @@
       "from_id": "chg:a-merge-proposal-discloses-what-it-would-destroy",
       "properties": {},
       "to_id": "decision:ack:6675d6c59b2e2db3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:re-linking-an-artifact-no-longer-renames-it",
+      "properties": {
+        "evidence": "Followed in order and the order mattered: the search for precedent found three prior fixes of the same class, which is what turned a one-line repair into a question about why the guard missed it. The pin was observed to fail by negative control before the fix was trusted."
+      },
+      "to_id": "rule:an-issue-is-root-caused-then-pinned-by-a-test-then-fixed"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -149578,6 +149711,14 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:re-linking-an-artifact-no-longer-renames-it",
+      "properties": {
+        "evidence": "The repair against the finding that measured it. The finding's own text names the fix it wanted — make name optional, use set_opt, refuse a first link with no name — and all three landed. It says the finding can no longer be read as current; the cause fact beside it stays live, because the class it names is still guarded by a hand-maintained list."
+      },
+      "to_id": "fact:link-artifact-demands-a-name-and-location-for-an-artifact-that-already-exists"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:reachability-is-asked-without-asking-adoption-and-the-instrument-runs-in-ci",
       "properties": {
         "evidence": "The finding was that the instrument ran in no workflow step, no gate script and no build target. It runs in ci.yml now, is named in AGENTS.md, and skill_lint holds it there, so the observation no longer describes the build."
@@ -150133,6 +150274,14 @@
         "evidence": "Makes closure one computation both read surfaces call, so a finding another record refuted can no longer come back unmarked."
       },
       "to_id": "fact:closure-was-one-question-with-two-answers-so-a-refuted-finding-read-as-current-on-the-surface-a-person-meets-first"
+    },
+    {
+      "edge_type": "MITIGATES",
+      "from_id": "chg:re-linking-an-artifact-no-longer-renames-it",
+      "properties": {
+        "evidence": "MITIGATES rather than INVALIDATES, and the distinction is the point. This change adds the linker to the guard and corrects its header, so the known gap is closed — but the guard's membership is still a hand-maintained list, so the cause it names is still live and the next write path added under a different call name will be outside it again. Reading this as a fix would be the 'the error is gone, so it's fixed' failure."
+      },
+      "to_id": "fact:the-preserve-on-revise-guard-draws-its-membership-on-a-call-name-not-on-a-behaviour"
     },
     {
       "edge_type": "MITIGATES",
@@ -154249,6 +154398,15 @@
         "completeness": "complete"
       },
       "to_id": "ver:kit-manifest-agrees"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:test-constructors-preserve",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "req:intent-preserved"
     },
     {
       "edge_type": "REALIZES",
@@ -161380,6 +161538,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:test-constructors-preserve",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-constructors-preserve"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:test-degraded-server",
       "properties": {
         "action": "created"
@@ -162017,7 +162183,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:2e7defd2b3d126699d3ac26d3d6b3e071edb9c2550e919c4b68a2dc718443567",
+        "checksum": "sha256:e8b9cb8b4764328fee1e96fde474e3ea3cc045ec02f9bfa8807f4a57f8570d07",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/artifact.rs",
         "name": "artifact.rs",
@@ -162276,7 +162442,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:bbba45eee56b98f77e7944e56c39443ef2385c8238025fedca522667a3e134ef",
+        "checksum": "sha256:0821236d8afe47d3f27b1d4553ae874b24ff8a2c062de175ad6c013254f4260c",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/checksum_dialect.rs",
         "name": "checksum_dialect.rs",
@@ -162400,7 +162566,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:2dfe5ecb79ad7b8ea5adab34de89689800fe215b229e3eae84658c15ca6309da",
+        "checksum": "sha256:935cc0bbab78d4c14b20409f1a03c71980531f2e479d90a69b9b6d9d5929b18b",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/confirmation_vocabulary.rs",
         "name": "confirmation_vocabulary.rs",
@@ -162413,7 +162579,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:d4c0007a7eecf8de02d8e758fba36993c920595860407547100ad34508f560c1",
+        "checksum": "sha256:71a4b80afa8feb6caad3bc7c4b597cae532fe94dc909b497ce8f18656bbd19bc",
         "location": "crates/reflow2-core/tests/an_edge_says_whether_anyone_checked.rs",
         "name": "an_edge_says_whether_anyone_checked.rs",
         "status": "realized"
@@ -162476,7 +162642,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:194fac616f4492c5f982f577de7f322f31e1a152bc00c54234c24ed13da63b18",
+        "checksum": "sha256:6f68a66b8a16c7fe96abc529cba05c0c4d3ebc8fdb145ed72b5b7df5882b5eb8",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/coverage.rs",
         "name": "tests/coverage.rs",
@@ -164259,7 +164425,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:88eb41cdf677358cd9fed17196ee8550475eacdeacd9879d0afe4a01c7a57c37",
+        "checksum": "sha256:91eda7690a02f21ba21b9b758d3828d09484cad5905e11a0de9e2cda66bff572",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -164721,6 +164887,18 @@
       }
     },
     {
+      "node_id": "art:test-constructors-preserve",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:201c2d26ef93416b356efa438304ad6241de0fbce74d39fbc1a4bbbc13f478d7",
+        "description": "The guard for the class this codebase has fixed four times: BL-46, BL-166, BL-183, and set_verification_status erasing last_run_at. Each case sets a property off its default, re-calls the write the way a reviser would, and asserts the design still knows what it knew. Every case failed before its fix.\n\nIt also carries the two controls that keep the fix honest in the other direction: a property the caller DOES name is still overwritten, and an explicitly-passed optional still wins. Without those, \"preserve on omission\" could quietly become \"you may never change this back\", which would be the same bug pointing the other way.\n\nREGISTERED ON 2026-09-07, WHICH IS LATE AND IS PART OF THE STORY. The file that guards the class was itself outside the design record, so nothing connected it to the four defects it exists to catch, and its scope error was invisible to every report. Its membership was drawn on `add_*` call names rather than on the behaviour, which is why link_artifact stayed half-fixed for three weeks while this file's own header vouched for it.",
+        "location": "crates/reflow2-core/tests/constructors_preserve.rs",
+        "name": "constructors_preserve.rs — the class guard: a write path that builds a node from a partial property set must not erase what the design already knew",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:test-degraded-server",
       "node_type": "Artifact",
       "properties": {
@@ -165136,7 +165314,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:2a8fde738ea13edbe2ab71680674356440153425e3f6ace7992f0de6d0355501",
+        "checksum": "sha256:77eb235d4509cefdd9e4c41a74ddc866c78b33c75166e9ae13f9f7bf8654a236",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/built.rs",
         "name": "tools/built.rs",
@@ -169231,6 +169409,15 @@
       }
     },
     {
+      "node_id": "chg:accept-0843156a493e1864",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "Call-site churn only from the LinkArtifactOptions signature change. What this file tests is unchanged.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-088bc327b842bafe",
       "node_type": "ChangeEvent",
       "properties": {
@@ -169963,6 +170150,15 @@
       }
     },
     {
+      "node_id": "chg:accept-4ea9cc8c4b76cafc",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "Call-site churn only from the LinkArtifactOptions signature change. What this file tests is unchanged.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-4ec8ddd180c5160e",
       "node_type": "ChangeEvent",
       "properties": {
@@ -170329,6 +170525,15 @@
         "change_type": "refactor",
         "detected_at": "2026-08-16",
         "name": "v0.32.1 cut: the version string in reflow2.toml moved 0.32.0 -> 0.32.1 and nothing else did. The design meaning of a cut lives in the Release and its epoch, not in a version string. Accepted BEFORE release_includes_all so the manifest freezes the post-bump value. `refactor` remains the least-wrong change_type and none of the twelve fits a release bookkeeping bump — the same gap #199 closed for defect_fix, still open for this case.",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:accept-78315e4da8091054",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "Call-site churn only from the LinkArtifactOptions signature change. What this file tests is unchanged.",
         "subject": "system"
       }
     },
@@ -171673,6 +171878,15 @@
       }
     },
     {
+      "node_id": "chg:accept-fddc34a32a931396",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "Call-site churn only: LinkArtifactOptions gained an optional description and its name became Option<String>, so every literal takes Some(...) and a description field. What this file tests is unchanged.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-fe9cb60db996cb7a",
       "node_type": "ChangeEvent",
       "properties": {
@@ -172378,6 +172592,15 @@
         "change_type": "baseline_established",
         "detected_at": "2026-08-28",
         "name": "First baseline. A dated field report is a frozen observation — it should never change, so any later drift is a real finding.",
+        "subject": "record"
+      }
+    },
+    {
+      "node_id": "chg:baseline-a6e9d880f9a177c6",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "name": "First baseline: the guard file was never registered as an Artifact, which is part of why its scope error went unseen. Three linker cases added and the header corrected to say why membership drawn on a call name was wrong.",
         "subject": "record"
       }
     },
@@ -174391,6 +174614,16 @@
         "change_type": "new_feature",
         "name": "Re-decomposition becomes an operation — move_component ships, and the discoverable route to re-parenting stops being the one that creates a defect",
         "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:re-linking-an-artifact-no-longer-renames-it",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "name": "link_artifact stops rewriting an artifact's name on every re-link — the half of BL-166 that was left because the field could not be omitted",
+        "rationale": "PRECEDENT, FOUND BY SEARCHING RATHER THAN REASONED FROM SCRATCH. This is at least the fourth occurrence of one class, and the class has been fixed three times before: BL-46 (a partial edit resetting a verified capability to planned), BL-166 (link_artifact re-materializing defaults through create_node, dropping last_confirmed_at), BL-183 (every add_* constructor writing a subset and resetting the rest), and set_verification_status deleting last_run_at on omission, fixed 2026-08-09. Three sibling setters state the convention outright: omitting one leaves it alone.\n\nWHY IT RECURRED, WHICH IS THE PART WORTH KEEPING. The class already has a guard — constructors_preserve.rs. Every case in it was an `add_*` constructor, and its own header asserted that link_artifact \"was fixed for this in BL-166\". Membership was drawn on HOW THE CALL IS SPELLED rather than on WHAT IT DOES: build a node from a partial property set. So a write path with identical behaviour under a different name sat outside the guard while the guard's header vouched for it. A hand-drawn boundary around a behavioural class is what let a fixed defect stay half-fixed for three weeks.\n\nAND THE GUARD FILE WAS NOT REGISTERED AS AN ARTIFACT until this change, so nothing in the design connected it to the four defects it exists to catch, and its scope error was invisible to every report that reads the artifact layer.\n\nWHAT IS NOT ESTABLISHED, stated so nobody inherits a wrong answer that looks settled. How many stored artifact names were already flattened by past re-links is unmeasured: build_design_graph.py re-links 34 artifacts on every run and would have rewritten each to whatever string that script holds, but no before-and-after record survives to compare against. And the guard's membership is still hand-maintained — nothing yet detects a NEW write path that builds a node from a partial property set, so the next member will be found the way this one was, by somebody tripping over it.",
+        "summary": "THE OBSERVATION, before any explanation. Linking an existing Artifact to a second target on 2026-09-07 was refused with `missing field name`, and the call then required the artifact's full name and location to be re-sent — text the graph already held and had returned moments earlier. NOT AFFECTED: artifact_type, location, checksum, content_ref and note_kind, all of which preserve a stored value when omitted.\n\nTHE CAUSE, READ FROM THE CODE. write_artifact_link upserts the Artifact with `.set(\"name\", …)` — unconditional — while every field beside it uses set_opt. Because the surface made `name` mandatory, \"leave the name alone\" was inexpressible: every re-link rewrote the name to whatever the caller happened to re-type, and the refusal that demanded it invited a stub. The comment directly above that write argues at length that re-registering must never erase what the design already knows. The reasoning was applied to the fields a caller could omit and stopped at the one they could not.\n\nTHE FIX, AT THE CAUSE. The name in effect is RESOLVED — the caller's if given, otherwise the one the design already holds. The Artifact's name is written only when the caller passed one, so omitting it preserves the stored value. A FIRST link, where there is nothing to resolve, is refused and the refusal names what would have worked. `description` is accepted here too, so registering a file and describing it is one call rather than two tools with different field sets for the same node.\n\n⚠️ THE FIRST VERSION OF THE FIX WAS ITSELF INCOMPLETE, and it is worth recording because it is the same shape one level down. Making `name` merely optional left the provenance Fragment's `title` — a REQUIRED property — with nothing to build from, so a re-link onto an Artifact whose Fragment did not yet exist failed schema validation on a field the caller had never mentioned. That is why the name is resolved rather than just optional. It was caught by using the fix on this change's own bookkeeping, not by a gate, and it now has its own case: `re_linking_mints_a_missing_fragment_from_the_stored_name`.\n\nOBSERVED TO FAIL FIRST, by negative control: restoring the unconditional write failed `re_linking_an_artifact_does_not_rename_it` on exactly the data-loss assertion, while the other cases — including both controls pinning that an explicitly-passed name STILL renames — stayed green.\n\nDEMONSTRATED ON REAL DATA. The guard file's own Artifact was then linked to `req:intent-preserved` with no name and no location passed, and its 108-character name, its description and its location all survived."
       }
     },
     {
@@ -180303,6 +180536,17 @@
         "kind": "exploratory",
         "name": "OPEN — is there performance left worth taking after the four big wins, and what budget would say when it is done?",
         "rationale": "Recorded under the brainstorm discipline. The wins-already-taken table is included deliberately and is the most load-bearing part of this node: the recorded failure mode for this specific question is a session re-deriving closed work from a stale finding, twice now.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-knot-reduction-supplies-the-invariant-question-the-core-reduction-idea-was-missing",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-09-07, bringing knot theory and its graph-theoretic tools to a question he already opened on 2026-08-18.\n\nKEPT BESIDE `dec:idea-can-a-design-graph-be-reduced-to-its-essential-core` RATHER THAN MERGED INTO IT. It is the same question asked a second time for a different reason, and both reasons matter: the first was four reduction techniques from knowledge-graph practice, this is a formal framework that arrives at one of the same conclusions by an independent route and adds two techniques the first did not name. Merging would lose that the conclusion was reached twice, which is most of its evidential weight.\n\n⭐ THE STRONGEST THING IN THE ANALOGY, AND IT IS AN ARGUMENT RATHER THAN A METAPHOR. A Reidemeister move changes the DIAGRAM, never the knot. Reduction to minimal crossing number does not delete anything from the knot; it finds a better drawing of the same object. Translated: the reduced core is a VIEW OF THE SAME DESIGN, not a smaller design. The earlier node reached \"projection, never a write\" from reflow2's own doctrine — intent is preserved, findings are asked not repaired, a merge needs a human-asserted DUPLICATES edge. Arriving at the same place from topology, with no knowledge of that doctrine, is the kind of agreement worth more than either argument alone.\n\n⭐⭐ AND IT SUPPLIES THE DECIDABILITY CRITERION THE EARLIER NODE WAS REACHING FOR. That node said what would make this decidable is knowing WHO the core is for. Knot theory says something sharper and checkable: name the INVARIANT. A knot invariant is what must be identical before and after; a reduction that changes it has produced a different knot, and the Jones polynomial exists precisely to catch that. A design-graph reduction with no stated invariant is not reduction, it is deletion with a justification. So the first question is not which algorithm but: what must a reduced view preserve — every requirement's reachability to a verification? every decision's rationale? the set of open questions? Each answer picks a different algorithm, and each is checkable after the fact, which \"who is it for\" is not.\n\n═══════════ THE TECHNIQUES, TRIAGED ═══════════\n\nTRANSITIVE REDUCTION — already recorded on the earlier node as the only one with no prior art, and already carrying its trap: in a design graph A→B→C and A→C are usually DIFFERENT CLAIMS, so the technique needs a composition table over the typed edge set before it needs an algorithm. Nothing here changes that; the knot framing agrees with it, since a Reidemeister move is valid only for specific configurations rather than for any crossing that looks removable.\n\nk-CORE DECOMPOSITION — NEW, not among the original four, and the one to argue with hardest. It declares the densely-connected nucleus fundamental and peels away weakly-connected leaves as trivia. For a design graph that is close to backwards. Degree measures HOW MUCH SOMEBODY WROTE, not how much a thing matters: a requirement with one edge may be the most important statement in the design and merely under-modelled. This project already knows it under-serves exactly those nodes — `disconnected_community` reports clusters of two or more, so a zero-edge node never surfaces at all, and orphaned requirements are invisible to the heal path for that reason. k-core would systematically discard the population reflow2 already fails to see, and it would look like a clean result while doing it.\n\nBETWEENNESS / BRIDGE NODES — partly built already: `betweenness_centrality` is in use and powers propagation ranking, `pagerank` is imported and unused, and `dec:a-projection-is-named-and-the-battery-runs-over-it` is DECIDED with the first slice named as centrality over the reasoning projection. \"Which nodes, if removed, fracture the design\" is a genuinely good question and it is one call from being answered on a projection that already has a ruling behind it. This is the cheapest real thing in the whole family.\n\nMINIMUM SPANNING TREE / BACKBONE — NEW, and different from centrality in a way worth keeping apart. Centrality ranks; a spanning tree gives a READING ORDER — the fewest edges that still connect everything. \"What would somebody new have to read, and in what sequence\" is a different deliverable from \"which twenty nodes matter most\", and it is closer to what `cap:onboarding` actually needs.\n\nTUTTE AND JONES POLYNOMIALS — recorded because it was raised, and honestly the weakest transfer of the set. The Tutte polynomial counts structures over a graph whose EDGES ARE INTERCHANGEABLE. A design graph's edges are typed and the type carries the meaning: SATISFIES and CONTRADICTS are not two instances of one thing. A polynomial that treats them as such produces a number no one can act on. Left on the record as considered rather than dismissed, because the equivalence it points at — that a structural signature can be invariant under re-drawing — is the useful half, and that half is already captured above as the invariant question.\n\nWHAT IS NOT PROPOSED HERE: building any of it. The earlier node's reading still stands — the useful move is probably ONE view composing what already exists rather than four new features.",
+        "kind": "exploratory",
+        "name": "OPEN — knot theory reframes graph reduction: a Reidemeister move changes the DIAGRAM, not the knot, which argues the reduction is a view; and it asks the question the earlier version could not — what is the INVARIANT?",
+        "rationale": "Recorded via the brainstorm skill: the ideas enter as ideas, nothing is promoted, and the objection sits beside each rather than replacing it.\n\nAN AGENT'S READING, offered as a finding rather than an answer. Two of the five items are worth separating from the rest. The invariant question is the real contribution, because it converts an aesthetic goal into a testable one and it applies to every technique in both nodes at once. And the k-core objection is the one place where an off-the-shelf knowledge-graph technique would actively harm this kind of graph, which is worth having written down before somebody reaches for it as the obvious first move.\n\nThe reason the knot analogy transfers as well as it does is that both objects have the same shape of problem: a thing whose identity is independent of how it is drawn, and a drawing that accumulates avoidable complexity. Where it stops transferring is that a knot has ONE identity while a design graph is a record of many people's claims over time, some of which genuinely contradict. There is no Reidemeister move for disagreement.",
         "status": "proposed"
       }
     },
@@ -189103,6 +189347,17 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered test_check_kit_manifest.py"
+      }
+    },
+    {
+      "node_id": "frag:art:test-constructors-preserve",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "note_kind": "author",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered constructors_preserve.rs — the class guard: a write path that builds a node from a partial property set must not erase what the design already knew"
       }
     },
     {
@@ -201757,6 +202012,18 @@
       }
     },
     {
+      "node_id": "fact:the-preserve-on-revise-guard-draws-its-membership-on-a-call-name-not-on-a-behaviour",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "THE CAUSE OF A RECURRENCE, NOT OF AN INSTANCE. reflow2 has one behavioural class it has fixed four times: a write path that builds a node from a PARTIAL property set and, in doing so, resets or overwrites what the caller did not name. BL-46, BL-166, BL-183, and set_verification_status erasing last_run_at on 2026-08-09. Three sibling setters state the intended convention outright: omitting one leaves it alone.\n\nTHE CLASS HAS A GUARD, AND THE GUARD'S MEMBERSHIP IS THE DEFECT. constructors_preserve.rs holds a case per member. Every case was an `add_*` constructor. Membership was therefore decided by HOW A CALL IS SPELLED rather than by WHAT IT DOES, so link_artifact — which builds an Artifact from a partial property set, exactly the behaviour the file exists to police — sat outside it. Worse, the file's own header asserted that link_artifact \"was fixed for this in BL-166\", so the guard vouched for a call it did not test.\n\nWHAT THAT COST, MEASURED. link_artifact's `name` was written unconditionally while every field beside it preserved on omission, and because the surface made `name` mandatory the preservation could not even be requested. Every re-link rewrote the name. The half-fix stood from BL-166 until 2026-09-07 and was found by a caller tripping over the friction, not by any check.\n\nWHY THIS IS THE CAUSE AND NOT THE REPAIR. Making `name` optional stops today's instance. It would not have stopped BL-183 and it will not stop the next write path added under a name that is not `add_*`. The class is 'builds a node from a partial property set', and nothing computes that set — it is a list maintained by hand, which is the shape this project's own root-cause skill names as the usual cause.\n\nWHAT WOULD ACTUALLY CLOSE IT, unbuilt and deliberately not proposed here: derive the membership rather than curate it. Every core method calling upsert_node or create_node with a Props literal naming fewer than the type's declared properties is a member, and that is computable from the source. Until something computes it, the next member will be found the way this one was.\n\nA SECOND SILENCE WORTH NAMING: the guard file was not registered as an Artifact until today, so no report connected it to the four defects it exists to catch.",
+        "subject_id": "art:test-constructors-preserve",
+        "valid_from": "2026-09-07"
+      }
+    },
+    {
       "node_id": "fact:the-prose-does-not-rot-it-is-born-false",
       "node_type": "TemporalFact",
       "properties": {
@@ -205516,7 +205783,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:6a7ac738b69bd13cc10b35a3b70265b6a0ab587db1876542bad922dcef0f0ef5",
+  "prev_content_hash": "sha256:9db48502a07833a554804cdfb225c8023c0256a10c08d466a434653cf924aed9",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

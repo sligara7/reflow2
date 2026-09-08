@@ -44,7 +44,8 @@ fn link_artifact_creates_artifact_fragment_and_edges_with_provenance() {
     let link = g
         .link_artifact(LinkArtifactOptions {
             artifact_id: "art:ball".to_string(),
-            name: "Ball.cs".to_string(),
+            name: Some("Ball.cs".to_string()),
+            description: None,
             location: Some("src/Ball.cs".to_string()),
             artifact_type: Some("code".to_string()),
             target_type: node::CAPABILITY.to_string(),
@@ -88,7 +89,8 @@ fn link_artifact_fails_loud_on_missing_target() {
     let mut g = DesignGraph::open_in_memory().unwrap();
     let err = g.link_artifact(LinkArtifactOptions {
         artifact_id: "art:x".to_string(),
-        name: "X".to_string(),
+        name: Some("X".to_string()),
+        description: None,
         location: None,
         artifact_type: None,
         target_type: node::CAPABILITY.to_string(),
@@ -217,7 +219,8 @@ fn re_linking_an_artifact_keeps_what_the_design_already_knew() {
     let mut g = graph_with_capability();
     let opts = || LinkArtifactOptions {
         artifact_id: "art:ball".into(),
-        name: "Ball.cs".into(),
+        name: Some("Ball.cs".into()),
+        description: None,
         artifact_type: Some("code".into()),
         location: Some("src/Ball.cs".into()),
         checksum: Some("sha256:abc123".into()),

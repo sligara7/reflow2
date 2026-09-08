@@ -263,7 +263,8 @@ async fn link_artifact_closes_the_unrealized_capability_gap() {
     // Realize only cap:flight. Now artifacts>0, so DETECT can flag the other.
     let link = j!(s.link_artifact(Parameters(LinkArtifactReq {
         artifact_id: "art:ball".into(),
-        name: "Ball.cs".into(),
+        name: Some("Ball.cs".into()),
+        description: None,
         location: Some("src/Ball.cs".into()),
         artifact_type: Some("code".into()),
         target_type: Some("Capability".into()),
@@ -307,7 +308,8 @@ async fn link_artifact_closes_the_unrealized_capability_gap() {
     // Realize cap:score too → the gap clears for it.
     j!(s.link_artifact(Parameters(LinkArtifactReq {
         artifact_id: "art:score".into(),
-        name: "Score.cs".into(),
+        name: Some("Score.cs".into()),
+        description: None,
         location: Some("src/Score.cs".into()),
         artifact_type: Some("code".into()),
         target_type: Some("Capability".into()),
@@ -548,7 +550,8 @@ async fn reconcile_surfaces_a_code_change_back_to_the_design() {
     let s = seeded().await;
     j!(s.link_artifact(Parameters(LinkArtifactReq {
         artifact_id: "art:flight".into(),
-        name: "BallFlight.cs".into(),
+        name: Some("BallFlight.cs".into()),
+        description: None,
         location: Some("src/BallFlight.cs".into()),
         artifact_type: Some("code".into()),
         target_type: Some("Capability".into()),
@@ -637,7 +640,8 @@ async fn the_surface_can_say_that_nothing_moved() {
     // Registered with NO checksum — the state `art:detect` was found in.
     j!(s.link_artifact(Parameters(LinkArtifactReq {
         artifact_id: "art:flight".into(),
-        name: "BallFlight.cs".into(),
+        name: Some("BallFlight.cs".into()),
+        description: None,
         location: Some("src/BallFlight.cs".into()),
         artifact_type: Some("code".into()),
         target_type: Some("Capability".into()),
@@ -751,7 +755,8 @@ async fn the_write_side_can_answer_what_detect_asks_for() {
     })));
     j!(s.link_artifact(Parameters(LinkArtifactReq {
         artifact_id: "art:flight".into(),
-        name: "BallFlight.cs".into(),
+        name: Some("BallFlight.cs".into()),
+        description: None,
         location: Some("src/BallFlight.cs".into()),
         artifact_type: Some("code".into()),
         target_type: Some("Capability".into()),
