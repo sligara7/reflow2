@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:6a7ac738b69bd13cc10b35a3b70265b6a0ab587db1876542bad922dcef0f0ef5",
+  "content_hash": "sha256:9db48502a07833a554804cdfb225c8023c0256a10c08d466a434653cf924aed9",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -918,6 +918,14 @@
       "from_id": "fact:the-diamond-meets-at-dynographs-internals-not-its-interface",
       "properties": {},
       "to_id": "dec:idea-a-change-upstream-reaches-the-sibling-that-never-asked"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:the-enum-drift-guard-caught-a-brand-new-tool-family-hand-listing-its-values",
+      "properties": {
+        "evidence": "The observation concerns this change specifically: the guard fired during its own gate run, against the six tools it had just added, and the correction was made inside it. The fact's subject_id names the requirement the guard serves; this edge names the change it was measured on, which is the part a later reader needs to reproduce it."
+      },
+      "to_id": "chg:the-environment-compliance-layer-is-built-as-a-whole-leg"
     },
     {
       "edge_type": "ABOUT_ENTITY",
@@ -10691,6 +10699,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:dec:idea-a-name-the-agent-invented-reads-exactly-like-one-it-was-told",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:dec:idea-a-topic-view-shows-what-the-design-holds-about-one-subject-read-only",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
@@ -10751,6 +10765,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:decision:vocab:environment",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:fact:a-local-feature-error-was-worked-around-instead-of-read-as-the-ci-contract",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
@@ -10776,6 +10796,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:fact:defect-two-prescribed-layer-pairs-are-missing-so-a-check-beside-its-ruling-is-refused-as-a-duplicate",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:fact:link-artifact-demands-a-name-and-location-for-an-artifact-that-already-exists",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
     },
@@ -11762,6 +11788,14 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "chg:the-environment-compliance-layer-is-built-as-a-whole-leg",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "cmp:packaging",
       "properties": {
         "acted_at": "2026-08-05T23:30:00Z",
@@ -12489,6 +12523,15 @@
       "from_id": "dec:idea-a-hub-owns-designs-it-does-not-absorb-and-that-is-a-third-relation",
       "properties": {
         "acted_at": "2026-08-26",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-a-name-the-agent-invented-reads-exactly-like-one-it-was-told",
+      "properties": {
+        "acted_at": "2026-09-07T23:50:00Z",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -14945,6 +14988,15 @@
       "edge_type": "AUTHORED_BY",
       "from_id": "dec:the-default-scope-depth-should-be-two",
       "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:the-environment-compliance-parking-is-lifted-on-the-condition-it-named",
+      "properties": {
+        "acted_at": "2026-09-07",
         "role": "approver"
       },
       "to_id": "who:ajs"
@@ -27607,6 +27659,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:baseline-4a060277f9d98d5e",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-the-compliance-layer-is-whole"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:baseline-4cf11336de05700f",
       "properties": {
         "accepted_baseline": true,
@@ -36950,6 +37011,78 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-environment-compliance-layer-is-built-as-a-whole-leg",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-environment-compliance-layer-is-built-as-a-whole-leg",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:enum-schema"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-environment-compliance-layer-is-built-as-a-whole-leg",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:nodes"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-environment-compliance-layer-is-built-as-a-whole-leg",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:operate"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-environment-compliance-layer-is-built-as-a-whole-leg",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-environment-compliance-layer-is-built-as-a-whole-leg",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-operate"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-environment-compliance-layer-is-built-as-a-whole-leg",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:vocabulary-reach"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-environment-compliance-layer-is-built-as-a-whole-leg",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:vocabulary-reach-baseline"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-export-round-trip-injected-defaults",
       "properties": {
         "accepted_baseline": false,
@@ -43590,6 +43723,26 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-a-name-the-agent-invented-reads-exactly-like-one-it-was-told",
+      "properties": {
+        "evidence": "That capability holds views to a no-extrapolation standard so a renderer cannot fill in what the design never said. This is the same doctrine one surface along, applied to a node's own name rather than to a projection of it.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "cap:bl-40"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-a-name-the-agent-invented-reads-exactly-like-one-it-was-told",
+      "properties": {
+        "evidence": "Option (d) is that requirement generalised beyond licensure: when a fact has an owner elsewhere, the agent fetches it rather than reconstructing it from memory. If that reading holds, this question is already half answered by an accepted requirement.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "req:the-agent-never-authors-what-requires-accountable-sign-off"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "dec:idea-a-nested-part-has-an-address-not-only-a-parent",
       "properties": {
         "evidence": "An address through the spine only means anything because that requirement already demands nesting as deep as the design needs. Without recursive containment there is no path to address, so this idea rests entirely on that requirement holding.",
@@ -46617,6 +46770,14 @@
         "evidence": "The older thought, grown up. Both ask what to do about the dynograph dependency, and the 2026-08-20 version was REJECTED on a cost argument — \"a demo that costs as much as the real thing is not a demo\" — because REPLACING means reimplementing. Absorbing keeps the same code and pays relocation cost instead, so the objection that killed the earlier idea does not reach this one. Drawn from the rejected node TO this one: the direction records that the question survived its own rejection in a cheaper form."
       },
       "to_id": "dec:idea-cannibalize-dynograph-foundation-into-reflow2"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-the-environment-compliance-layer-was-designed-and-never-built",
+      "properties": {
+        "evidence": "The deliberation grew up into the ruling. Its five options were laid out on 2026-09-07 and Anthony picked the whole leg — the constructor, the edges read by something, and the two detectors. Drawn in this direction because the open question is the EARLIER form: the idea becomes the decision over time, never the reverse."
+      },
+      "to_id": "dec:the-environment-compliance-parking-is-lifted-on-the-condition-it-named"
     },
     {
       "edge_type": "EVOLVES_INTO",
@@ -51414,6 +51575,14 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "chg:the-environment-compliance-layer-is-built-as-a-whole-leg",
+      "properties": {
+        "evidence": "The build exists because of this ruling and would not have been started without it. Scope came from the ruling too: all three legs together, which is why the change event carries detectors and not only constructors."
+      },
+      "to_id": "dec:the-environment-compliance-parking-is-lifted-on-the-condition-it-named"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "chg:the-gate-names-the-unmodelled-files-you-just-touched",
       "properties": {},
       "to_id": "dec:idea-what-watches-for-the-last-responsible-moment-to-arrive"
@@ -54546,6 +54715,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:idea-a-name-the-agent-invented-reads-exactly-like-one-it-was-told",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:dec:idea-a-name-the-agent-invented-reads-exactly-like-one-it-was-told"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "dec:idea-a-topic-view-shows-what-the-design-holds-about-one-subject-read-only",
       "properties": {},
       "to_id": "snap:epoch:preserved-on-write:dec:idea-a-topic-view-shows-what-the-design-holds-about-one-subject-read-only"
@@ -54774,6 +54949,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "decision:vocab:environment",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:decision:vocab:environment"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "dep:dynograph-foundation",
       "properties": {},
       "to_id": "snap:epoch:linking-repos:dep:dynograph-foundation"
@@ -54855,6 +55036,12 @@
       "from_id": "fact:defect-typed-tool-parameter-names-are-inconsistent",
       "properties": {},
       "to_id": "snap:epoch:usgov-genesis-feedback-triaged:fact:defect-typed-tool-parameter-names-are-inconsistent"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "fact:link-artifact-demands-a-name-and-location-for-an-artifact-that-already-exists",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:fact:link-artifact-demands-a-name-and-location-for-an-artifact-that-already-exists"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -150485,6 +150672,14 @@
     },
     {
       "edge_type": "OBSOLETES",
+      "from_id": "dec:the-environment-compliance-parking-is-lifted-on-the-condition-it-named",
+      "properties": {
+        "evidence": "The lift retires the parking outright. The parking's own stated reversal condition was a real user request, and that request arrived. OBSOLETES rather than CONTRADICTS: the two never disagreed on the merits — the parking was correct on the evidence it had, and this ends it rather than refuting it."
+      },
+      "to_id": "decision:vocab:environment"
+    },
+    {
+      "edge_type": "OBSOLETES",
       "from_id": "dec:the-loop-speaks-on-loop-status-not-inside-every-read",
       "properties": {
         "confidence": 1.0,
@@ -154285,6 +154480,15 @@
         "conformance": "verified"
       },
       "to_id": "cap:a-coupling-has-a-typed-call-of-its-own"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:test-the-compliance-layer-is-whole",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "chg:the-environment-compliance-layer-is-built-as-a-whole-leg"
     },
     {
       "edge_type": "REALIZES",
@@ -161320,6 +161524,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:test-the-compliance-layer-is-whole",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-the-compliance-layer-is-whole"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:test-the-fourteen-holes-are-writable",
       "properties": {
         "action": "created"
@@ -162364,7 +162576,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b63cf22c9fe0b33dbebe0f3c095d48c701e2a1c054ca8e3cf62c2babd4fdc35c",
+        "checksum": "sha256:58eab06d04d99bb1ccbf6220b1d8a1d4ff32ddf7a3184eb5e908758321b2b1f2",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
@@ -162573,7 +162785,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b5154db0e50762d438652f2b89a85d0b5ae1f6ffe9ef62594411dcc5b41488bf",
+        "checksum": "sha256:c6598739139e0d0fdf0737bf57c0c6fede93c00629d67643128eef6ebb39d809",
         "location": "crates/reflow2-mcp/src/enum_schema.rs",
         "name": "enum_schema.rs — one schema_with fn per enum request field, reading legal values from the compiled-in schema (or the handler's own const) at tool-listing time",
         "status": "realized"
@@ -163264,7 +163476,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:540116f7f2621666a28d6ecf7a83c7cbf0a1511379fd35897f12f71c1fc9c1ea",
+        "checksum": "sha256:eec80c6dc53e2f34055119b032b3ac49312cfd869178bdb676bd3790f8dc3cfb",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/nodes.rs",
         "name": "nodes.rs",
@@ -163301,7 +163513,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:327d2ec62fcba33b2b88898f6100fd09ecd29f03a484b1a6c9b460a25699cf64",
+        "checksum": "sha256:fc54bebfdcba7b88f1da94a353535f44738e48c2e46fb9b4550d1510fe2f31bf",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/operate.rs",
         "name": "operate.rs",
@@ -164047,7 +164259,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:9cacdf2903bab1f70bab27dc77b24d1d987a22c82e90868f83d996ec7e61a1da",
+        "checksum": "sha256:88eb41cdf677358cd9fed17196ee8550475eacdeacd9879d0afe4a01c7a57c37",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -164838,6 +165050,18 @@
       }
     },
     {
+      "node_id": "art:test-the-compliance-layer-is-whole",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:b73cc4347e3c9105b4a73bc722dd5805630daa57a36f731bac32f126c2f13109",
+        "description": "Five tests holding the whole leg together, which is the point of the file rather than an accident of packaging. The ruling was that the constructor, the edges and the detectors land together or not at all, so they are pinned in one place: split across three files, a later session could delete the read side and still see green.\n\nThe two judgement calls are pinned as behaviour, not as comments. An ADVISORY rule raises nothing, because asking about guidance every sweep is how a finding becomes noise. And a CONFIRMED violation — a granted variance — keeps its edge: the test asserts the edge still exists after triage, because deleting it would destroy the audit trail that is the only reason to record a violation at all.\n\nThe scoping choice is written into the header where the next reader will meet it: unchecked_compliance fires once per unanswered mandatory rule, not once per element-and-rule pair. With 234 capabilities and 10 rules the per-pair shape would raise 2,340 findings, which is the hub-shaped noise that got an earlier detector narrowed in the same week it shipped.",
+        "location": "crates/reflow2-core/tests/the_compliance_layer_is_whole.rs",
+        "name": "the_compliance_layer_is_whole.rs — the environment compliance layer pinned as one leg: the rule is recordable with its authority, the edges are writable without the escape hatch, a mandatory rule nobody answered is asked about, an advisory one is not, and a granted variance is KEPT",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:test-the-fourteen-holes-are-writable",
       "node_type": "Artifact",
       "properties": {
@@ -164988,7 +165212,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:6672a327aa86aad718d49b7f7f50e6e768eb490bf4e9684f2154e0a27bca53e1",
+        "checksum": "sha256:d8a49da25d2fb01dde814dc9a5dcd0f1403ea0fed3f73f9ba7f7d0fa7c9c96ea",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/operate_tools.rs",
         "name": "tools/operate_tools.rs",
@@ -165308,7 +165532,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:61ff4c331ed660c26d14fef87b1e2559924ffceb345a7bb062c4dbab8f408336",
+        "checksum": "sha256:df29908ef764c40941c98a1e33f2f05261e4e3750d66916efa449fdcf57b5182",
         "location": "tools/vocabulary_reach.py",
         "name": "tools/vocabulary_reach.py",
         "status": "realized"
@@ -165319,7 +165543,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "config",
-        "checksum": "sha256:8bda932df3e43cca3ef55133b3518417f0225192ea23afb15d485ced5a06023e",
+        "checksum": "sha256:6df5434dda567dd8a608ada66313aa4d7dbcc6ab206f4aae5d413b27648aea8d",
         "location": "tools/vocabulary_reach_baseline.json",
         "name": "vocabulary_reach_baseline.json",
         "status": "realized"
@@ -171954,6 +172178,15 @@
       }
     },
     {
+      "node_id": "chg:baseline-4a060277f9d98d5e",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "name": "A new file, so nothing moved — this is its first baseline. The five tests that pin the whole leg together.",
+        "subject": "record"
+      }
+    },
+    {
       "node_id": "chg:baseline-4cf11336de05700f",
       "node_type": "ChangeEvent",
       "properties": {
@@ -174881,6 +175114,17 @@
       "properties": {
         "change_type": "scope_change",
         "name": "The id-not-a-path clause becomes its own advisory rule, and the enforced clause gets the detector it now owes"
+      }
+    },
+    {
+      "node_id": "chg:the-environment-compliance-layer-is-built-as-a-whole-leg",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "The environment compliance layer is built: a design can say what rules its operating environment imposes, whether it complies, and be asked when it has not said",
+        "rationale": "The distinction this layer carries is the reason it was worth building rather than retiring: a rule the design cannot argue with is a different kind of thing from a budget it set itself or a convention it chose, and only the third is dictated by the world. reflow2 uses the middle kind heavily and had never used the third at all.\n\nWHY NOW AND NOT BEFORE. The 2026-08-26 parking was correct on its own evidence: three field reports that month mentioned environment compliance zero times, and building on a document's argument alone is the opposite of how everything else here has been decided. What changed is not the argument but the asking. The contract-and-standards brainstorm names \"building codes\" and \"standards\", both of which are values in this type's own rule_type enum, written months earlier by somebody who had the same thought.\n\nWHAT THIS DOES NOT DO. It does not make anyone record a regulation, and it cannot check that a stated rule is real or that a claimed compliance is true — a passing claim is recorded, never validated, which is the standing non-goal. What it removes is the reason a design could not say any of it.",
+        "subject": "system",
+        "summary": "Declared in schema/environment.yaml since 2026-07-17. Parked 2026-08-26 as option (e) of five, because parking was the only disposition free to reverse and no user had asked. The parking named its own condition — a real request — and on 2026-09-07 Anthony asked, then ruled: build the whole leg.\n\nALL THREE LEGS TOGETHER, because a write side without a read side is the failure this project has measured repeatedly, and the deliberation recorded that objection against the write-side-only option before the decision was taken.\n\nTHE VOCABULARY, now writable: add_environment_rule records a rule the design CANNOT NEGOTIATE, carrying authority (who issues it), jurisdiction (where it applies), reference (the citation), and mandatory. Three kinds of rule stay distinct — a Constraint is self-imposed, a DesignRule is a chosen convention, an EnvironmentRule is imposed by the world. operates_in, imposes, complies_with and violates_rule draw the four edges; every one of them previously required the generic escape hatch, and OPERATES_IN already had three edges written that way, which was the first evidence anyone had reached for this vocabulary. set_violation_status triages a flagged violation and REWRITES the edge rather than removing it, because the record of what was found and what was decided is the audit trail.\n\nTHE TWO DETECTORS. unchecked_compliance fires once per MANDATORY rule nothing has answered — neither complied with nor violated — because a design that has not said whether it meets a code has not met it. An advisory rule is not asked about; mandatory is the load-bearing flag and absent reads as mandatory, since a rule whose force nobody stated is not safely assumed to be advice. open_violation fires per flagged edge still reading `proposed`, severity-weighted, and closes when somebody grants a variance or calls it a defect.\n\nSCOPING, stated because it is a judgement: unchecked_compliance is keyed PER RULE, not per (element, rule) pair. A design with 234 capabilities and 10 rules would otherwise raise 2,340 findings, which is the hub-shaped noise that got the overtaken-defect detector narrowed the week it shipped. open_violation is deliberately NOT aggregate: a violation is a specific claim about a specific element with three possible answers, and collapsing several would ask them as one unanswerable question.\n\nFAILING FIRST, OBSERVED: five core tests written before any of it existed, failing first on the missing edge CONSTANTS — the layer was dormant down to the names.\n\nAND THE REACHABILITY MAP GAINED THE WRITERS IT WAS MISSING. Adding a `severity` parameter to violates_rule made DriftEvent.severity read as newly reachable, because an unmapped type falls back to the whole surface — the cross-type leak arriving through the fallback path rather than the pool. The reconcile family is now mapped to DriftEvent and the compliance tools to EnvironmentRule, which surfaced DriftEvent.summary as a further machine-written property and it was classified rather than let slide."
       }
     },
     {
@@ -178750,6 +178994,17 @@
       }
     },
     {
+      "node_id": "dec:idea-a-name-the-agent-invented-reads-exactly-like-one-it-was-told",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-09-07, relaying an incident from dev_storyflow and asking whether it is reflow2's problem at all.\n\nWHAT HAPPENED, in the reporting agent's own words: \"There is no story called 'Tale of Ashes'. The campaign is Tomb of Annihilation, the published D&D adventure. My memory notes carried it as 'ToA', and at some point early in this session I expanded that abbreviation into a name I made up, then kept using it as though it were real. The identifier was right throughout, so every measurement stands. The campaign at c81c39b0 really does hold 189 characters, 719 events and the 27.6-second duplicate listing. Only the name was wrong. It is in a lot of places now: several verification and change-event records in the design graph from today, some commit messages, and the evidence notes for the coverage work and the deploy.\"\n\nANTHONY'S FRAMING, which is the question rather than the incident: \"I'm not sure this is reflow2's issue, but part of why I created reflow2 to overcome some of the weaknesses of an LLM agent - in this case making something up and then propagating it as if it was fact.\"\n\n⭐ THE SHAPE OF IT, and it is uncomfortably precise. reflow2 already has a whole family of markers for HOW DO WE KNOW THIS. A Requirement carries `provenance` (authored or inferred). An edge carries `basis` (asserted or suspected), and DUPLICATES will not license a deletion without the first. A TemporalFact carries `basis` (measured or forecast) and a date, so a six-week-old observation cannot be narrated as current. A CAUSES edge carries `validation_status`. Views are held to a no-extrapolation standard (cap:bl-40) precisely so a renderer cannot fill in what the design did not say.\n\nAND A NODE'S NAME CARRIES NOTHING. The name is the string every reader actually reads, quotes, and puts in a commit message. Here the ID was correct throughout and the NAME was invented, and no part of the design could tell the difference — because a fabricated name is internally consistent, contradicts nothing, and matches no source the graph holds.\n\nOPTIONS, UNRANKED:\n\n(a) NOTHING. This is an agent-behaviour failure, not a design-brain failure. reflow2 records what it is told; a name nobody can check against a source is outside what any detector can reach. Cheapest, and it is a defensible reading of his own doubt.\n\n(b) A NAME CARRIES ITS PROVENANCE — read from a source, or supplied by the agent. Says the thing directly. And it is a property with no reader, which is the exact failure this project measured three times in one day: Verification.level exists and nothing reads it, so a second unread marker would make the design say more and know no more.\n\n(c) AN EXTERNAL THING IS RECORDED BY ITS IDENTIFIER, AND THE NAME IS LABELLED AS A LABEL. The incident's own evidence points here: the identifier c81c39b0 was right the whole time and every measurement built on it still stands. If a node mirrors something living in another system, the design could hold the foreign id as the key and treat the human-readable name as a convenience that is NOT authoritative. That is a smaller claim than (b) and it matches what actually survived.\n\n(d) THE ANSWER IS THE SAME ONE AS FOR LICENSURE. `req:the-agent-never-authors-what-requires-accountable-sign-off` already says the agent carries the requirement into the tool that owns the answer and brings the result back as evidence. A campaign's name is owned by dev_storyflow's database, not by the agent's memory of an abbreviation. Generalised: WHEN A FACT HAS AN OWNER ELSEWHERE, THE AGENT FETCHES IT RATHER THAN RECONSTRUCTING IT.\n\n(e) A RULE THAT AN ABBREVIATION IS NEVER EXPANDED WITHOUT A SOURCE. Names the exact mechanism, costs one sentence, and is an instruction with no detector — the leg this project has repeatedly measured failing on its own.\n\n(f) A DETECTOR, if one is even possible. Nothing in the graph contradicted the invented name, so no consistency check could have fired. The only computable version is narrower: a node that MIRRORS an external thing whose name has never been reconciled against the source.\n\nTHE HONEST COUNTER-ARGUMENT TO ALL OF IT: reflow2 could not have caught this one. The failure happened in the agent's head, between reading \"ToA\" in a memory note and writing a sentence, before any tool was called. What reflow2 can offer is not detection but SHAPE — making it natural to record the id and the source, and unnatural to let a remembered abbreviation become an authoritative-looking string. That is a real contribution and it is smaller than the framing \"overcome the weaknesses of an LLM agent\" might suggest.\n\n🛑 NOTHING IN THE SYSTEM CAUGHT THIS. ANTHONY DID, BY ASKING WHAT THE THING WAS.\n\nThis paragraph replaces an earlier one, written minutes before, that said \"the incident also shows the design working — the agent caught itself when asked a direct question\". He corrected it immediately: \"it didn't catch itself - I caught it and called it out.\" The distinction is the whole finding and the first draft erased it. An agent that answers honestly once challenged is not a system that detects its own fabrication; those differ by exactly the thing under discussion, which is whether anything other than a human noticed. The recovery afterwards was clean — the reporting agent separated what was wrong from what still stood, and proposed correcting the graph while leaving merged commit messages alone because rewriting history costs more than it fixes — but the CATCH was human, unaided, and prompted by nothing the design surfaced.\n\n⭐ AND THE ERROR REPEATED THE PATTERN IT WAS DESCRIBING, one layer up. A record about an agent inventing a fact and propagating it was itself written with an invented fact — a self-flattering one, about who did the catching — and would have been read by every later session as though it were what happened. Same mechanism, same session, inside the record of the mechanism. That is the strongest evidence in this node for taking the question seriously, and it argues against option (a) more than any argument for the others does.",
+        "kind": "exploratory",
+        "name": "OPEN — an agent expanded an abbreviation into a name it made up and propagated it as fact. Should a node's NAME carry where it came from, the way a claim already carries its basis?",
+        "rationale": "Recorded rather than acted on because the strongest option may be (a), and because two of the others repeat a failure this project measured three separate times today — adding a property nobody reads.\n\nWhat makes it worth keeping rather than dismissing is the asymmetry the incident exposes: reflow2 is careful about the provenance of RELATIONS, of REQUIREMENTS and of MEASUREMENTS, and careless about the provenance of NAMES, which are what a human actually reads and repeats. That asymmetry was invisible until somebody fabricated a name and nothing anywhere noticed.\n\nThe incident is dev_storyflow's; the question is reflow2's, which is why it is recorded here rather than there.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-a-nested-part-has-an-address-not-only-a-parent",
       "node_type": "Decision",
       "properties": {
@@ -181981,6 +182236,17 @@
       }
     },
     {
+      "node_id": "dec:the-environment-compliance-parking-is-lifted-on-the-condition-it-named",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Anthony, 2026-09-07: \"let's go with build the whole leg: the constructor, the edges read by something, and the two detectors that ask a human about an unchecked compliance or an open violation.\"\n\nDISTINCT FROM THE TWO NODES THE GUARD SURFACED, BY ROLE. `dec:idea-the-environment-compliance-layer-was-designed-and-never-built` is the DELIBERATION — the open question and its five options. `decision:vocab:environment` is the PARKING RULING, and its id is load-bearing because vocabulary_coverage looks the domain's park_with up by it. This is a THIRD act: the LIFT. Folding it into either would lose something — into the deliberation, that a decision was taken; into the parking, that the parking ended and why.\n\nTHE CONDITION THE PARKING NAMED WAS MET, WHICH IS WHY THIS IS NOT A REVERSAL. Its own words: a parked domain a user later asks for becomes a build with nothing undone. On 2026-09-07 the contract-and-standards brainstorm named \"building codes\" and \"standards\", both values in this type's own rule_type enum written months earlier, and the ruling followed. The parking is superseded rather than deleted: it was correct on the evidence it had — three field reports that month mentioned environment compliance zero times — and the record of why it was taken is worth as much as the record of why it ended.\n\nWHY THE WHOLE LEG AND NOT THE WRITE SIDE. The deliberation had already argued this against option (b): a write side without a read side is the unread-property failure, and this project measured that failure three separate times on the day of the ruling. So the constructor, the four edges and the two detectors land together or not at all.\n\nWHAT IS STILL OPEN and deliberately not decided here: whether QualityGate should get a constructor or be retired. It is read by nothing, has never held an instance, and its own extraction hint says the workflow authors it rather than a person. The agent's recommendation was retirement rather than a constructor; Anthony has not ruled.",
+        "kind": "choice",
+        "name": "The environment compliance parking is lifted — its own stated condition, a real request, was met",
+        "rationale": "Kept as its own node for the reason the parking gives about itself: a ruling a machine reads and a deliberation a person reads are different artifacts, and a lift is a third. The parked node keeps its id and its identity, and its status now says it was superseded rather than that it never happened.\n\nThe lift is also evidence about the mechanism rather than only about this feature. A parking that STATES ITS OWN REVERSAL CONDITION is a genuinely cheap way to defer, because the condition can later be checked by anyone rather than re-argued from scratch. That is worth remembering the next time a domain looks unused and somebody reaches for retirement instead.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:the-export-becomes-the-durable-copy-and-rocksdb-goes-later",
       "node_type": "Decision",
       "properties": {
@@ -184370,7 +184636,7 @@
         "decision": "**Anthony's word, 2026-08-26: park it.** Option (e) of `dec:idea-the-environment-compliance-layer-was-designed-and-never-built`.\n\n📌 DISTINCT FROM THAT NODE BY ROLE, NOT BY WORDING, AND THE ID IS LOAD-BEARING. That one is the DELIBERATION — the open question, its five options and the argument on each. This is the RULING, and it must carry exactly this id because `vocabulary_coverage` looks the domain's `park_with` up by it. A ruling a machine reads and a deliberation a person reads are different artifacts; merging them would leave the tool with nothing to find.\n\nWHAT IS PARKED: the compliance half of the `environment` domain — the `EnvironmentRule` node type and the `IMPOSES`, `COMPLIES_WITH` and `VIOLATES_RULE` edges. Declared in `schema/environment.yaml` since 2026-07-17, zero instances, zero typed tools, zero instructions, zero detectors.\n\nWHAT IS **NOT** PARKED, and the distinction matters: the LOCATING half of the same domain is live and working — `Environment` (3 instances, written by `add_environment`) and `DEPLOYED_TO` (63 edges, written by `deploy_to`). `OPERATES_IN` sits between them: 3 live edges, no tool. **Parking is not retirement and touches none of these.**\n\n═══ WHY PARK RATHER THAN BUILD ═══\n\nThree field reports this month — hxm_program, Alex, and the storyflow fleet — mention environment compliance **zero times**. Building a fully-specified but unrequested subsystem is answering a question the schema asked rather than one a user did, which is the over-engineering failure mode this project measures itself against.\n\nParking is the only disposition that costs nothing to reverse. A parked domain a user later asks for becomes a build with nothing undone; a subsystem built unrequested cannot be un-built and adds surface every future session reads past.\n\n═══ WHY NOT RETIRE ═══\n\nRetiring was on the table as option (c) and is now known to be partly destructive: it would remove `OPERATES_IN`, which carries live edges in this design. The design is also sound — the three-way distinction between `Constraint` (self-imposed), `DesignRule` (chosen convention) and `EnvironmentRule` (externally imposed, negotiable only by variance or waiver) is good vocabulary, and the `VIOLATES_RULE` lifecycle where `confirmed` means an accepted variance kept and documented is better thought through than much of what ships.\n\n═══ ⚠️ WHAT WOULD REOPEN THIS ═══\n\n**A user asking.** Specifically: any design in a regulated operating environment where an external authority imposes a ruleset the design can only comply with, seek a variance from, or fail. Brookhaven NSLS-II and Space Force acquisition both look like that from the outside, and neither has reached for it.\n\n📌 AND ONE PIECE OF EVIDENCE POINTS THE OTHER WAY, kept at full strength because it is the only thing on that side. `OPERATES_IN` has three edges and no tool writes them — an earlier session reached for the vocabulary and fell through to raw `create_edge`, the escape hatch the three-legs rule says must not count as reachability. That is thin, it came from inside the project rather than from a user, and it was judged insufficient to justify building. If it recurs — especially from a consumer rather than from us — this parking should be revisited rather than defended.",
         "name": "PARKED — the environment compliance vocabulary is deliberately unused until a user asks for it",
         "rationale": "Recorded as the domain's `park_with` ruling, which is the node `vocabulary_coverage` already names for this purpose: accepting it declares the domain deliberately unused, so unused environment vocabulary stops reading as a hole in every coverage report without anything being deleted.\n\nThat is the same principle as `ruling: parks` one layer down and the same principle as `dec:idea-a-proposed-decision-asserts-nothing-...` one layer up: a deliberate state must be COUNTED and explained rather than either reported as a defect or silently hidden. All three exist because a count that grows when somebody does the right thing teaches people to stop reading it.\n\nThe agent recommended parking and Anthony took it. The counter-evidence — three `OPERATES_IN` edges written through the escape hatch — is recorded on the decision rather than dropped, because it is the one fact that would justify overturning this and it should not have to be rediscovered.",
-        "status": "accepted"
+        "status": "superseded"
       }
     },
     {
@@ -189017,6 +189283,17 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered the_commonest_edge_has_a_typed_helper.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:test-the-compliance-layer-is-whole",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "note_kind": "author",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered the_compliance_layer_is_whole.rs — the environment compliance layer pinned as one leg: the rule is recordable with its authority, the edges are writable without the escape hatch, a mandatory rule nobody answered is asked about, an advisory one is not, and a granted variance is KEPT"
       }
     },
     {
@@ -195176,6 +195453,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:preserved-on-write:dec:idea-a-name-the-agent-invented-reads-exactly-like-one-it-was-told",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-09-07T23:50:00Z\",\"role\":\"author\"}},{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Capability\",\"other_id\":\"cap:bl-40\",\"properties\":{\"evidence\":\"That capability holds views to a no-extrapolation standard so a renderer cannot fill in what the design never said. This is the same doctrine one surface along, applied to a node's own name rather than to a projection of it.\",\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Requirement\",\"other_id\":\"req:the-agent-never-authors-what-requires-accountable-sign-off\",\"properties\":{\"evidence\":\"Option (d) is that requirement generalised beyond licensure: when a fact has an owner elsewhere, the agent fetches it rather than reconstructing it from memory. If that reading holds, this question is already half answered by an accepted requirement.\",\"optional\":false,\"weight_basis\":\"estimated\"}}]",
+        "state": "{\"decision\":\"RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-09-07, relaying an incident from dev_storyflow and asking whether it is reflow2's problem at all.\\n\\nWHAT HAPPENED, in the reporting agent's own words: \\\"There is no story called 'Tale of Ashes'. The campaign is Tomb of Annihilation, the published D&D adventure. My memory notes carried it as 'ToA', and at some point early in this session I expanded that abbreviation into a name I made up, then kept using it as though it were real. The identifier was right throughout, so every measurement stands. The campaign at c81c39b0 really does hold 189 characters, 719 events and the 27.6-second duplicate listing. Only the name was wrong. It is in a lot of places now: several verification and change-event records in the design graph from today, some commit messages, and the evidence notes for the coverage work and the deploy.\\\"\\n\\nANTHONY'S FRAMING, which is the question rather than the incident: \\\"I'm not sure this is reflow2's issue, but part of why I created reflow2 to overcome some of the weaknesses of an LLM agent - in this case making something up and then propagating it as if it was fact.\\\"\\n\\n⭐ THE SHAPE OF IT, and it is uncomfortably precise. reflow2 already has a whole family of markers for HOW DO WE KNOW THIS. A Requirement carries `provenance` (authored or inferred). An edge carries `basis` (asserted or suspected), and DUPLICATES will not license a deletion without the first. A TemporalFact carries `basis` (measured or forecast) and a date, so a six-week-old observation cannot be narrated as current. A CAUSES edge carries `validation_status`. Views are held to a no-extrapolation standard (cap:bl-40) precisely so a renderer cannot fill in what the design did not say.\\n\\nAND A NODE'S NAME CARRIES NOTHING. The name is the string every reader actually reads, quotes, and puts in a commit message. Here the ID was correct throughout and the NAME was invented, and no part of the design could tell the difference — because a fabricated name is internally consistent, contradicts nothing, and matches no source the graph holds.\\n\\nOPTIONS, UNRANKED:\\n\\n(a) NOTHING. This is an agent-behaviour failure, not a design-brain failure. reflow2 records what it is told; a name nobody can check against a source is outside what any detector can reach. Cheapest, and it is a defensible reading of his own doubt.\\n\\n(b) A NAME CARRIES ITS PROVENANCE — read from a source, or supplied by the agent. Says the thing directly. And it is a property with no reader, which is the exact failure this project measured three times in one day: Verification.level exists and nothing reads it, so a second unread marker would make the design say more and know no more.\\n\\n(c) AN EXTERNAL THING IS RECORDED BY ITS IDENTIFIER, AND THE NAME IS LABELLED AS A LABEL. The incident's own evidence points here: the identifier c81c39b0 was right the whole time and every measurement built on it still stands. If a node mirrors something living in another system, the design could hold the foreign id as the key and treat the human-readable name as a convenience that is NOT authoritative. That is a smaller claim than (b) and it matches what actually survived.\\n\\n(d) THE ANSWER IS THE SAME ONE AS FOR LICENSURE. `req:the-agent-never-authors-what-requires-accountable-sign-off` already says the agent carries the requirement into the tool that owns the answer and brings the result back as evidence. A campaign's name is owned by dev_storyflow's database, not by the agent's memory of an abbreviation. Generalised: WHEN A FACT HAS AN OWNER ELSEWHERE, THE AGENT FETCHES IT RATHER THAN RECONSTRUCTING IT.\\n\\n(e) A RULE THAT AN ABBREVIATION IS NEVER EXPANDED WITHOUT A SOURCE. Names the exact mechanism, costs one sentence, and is an instruction with no detector — the leg this project has repeatedly measured failing on its own.\\n\\n(f) A DETECTOR, if one is even possible. Nothing in the graph contradicted the invented name, so no consistency check could have fired. The only computable version is narrower: a node that MIRRORS an external thing whose name has never been reconciled against the source.\\n\\nTHE HONEST COUNTER-ARGUMENT TO ALL OF IT: reflow2 could not have caught this one. The failure happened in the agent's head, between reading \\\"ToA\\\" in a memory note and writing a sentence, before any tool was called. What reflow2 can offer is not detection but SHAPE — making it natural to record the id and the source, and unnatural to let a remembered abbreviation become an authoritative-looking string. That is a real contribution and it is smaller than the framing \\\"overcome the weaknesses of an LLM agent\\\" might suggest.\\n\\n⚠️ AND THE INCIDENT ALSO SHOWS THE DESIGN WORKING. The agent caught itself when asked a direct question, said plainly which parts were wrong and which measurements still stood, and proposed correcting the graph records while leaving merged commit messages alone because rewriting history costs more than it fixes. That is exactly the disposition the loop is meant to produce, and any option here should be judged against how much it adds to it.\",\"kind\":\"exploratory\",\"name\":\"OPEN — an agent expanded an abbreviation into a name it made up and propagated it as fact. Should a node's NAME carry where it came from, the way a claim already carries its basis?\",\"rationale\":\"Recorded rather than acted on because the strongest option may be (a), and because two of the others repeat a failure this project measured three separate times today — adding a property nobody reads.\\n\\nWhat makes it worth keeping rather than dismissing is the asymmetry the incident exposes: reflow2 is careful about the provenance of RELATIONS, of REQUIREMENTS and of MEASUREMENTS, and careless about the provenance of NAMES, which are what a human actually reads and repeats. That asymmetry was invisible until somebody fabricated a name and nothing anywhere noticed.\\n\\nThe incident is dev_storyflow's; the question is reflow2's, which is why it is recorded here rather than there.\",\"status\":\"proposed\"}",
+        "target_id": "dec:idea-a-name-the-agent-invented-reads-exactly-like-one-it-was-told",
+        "target_type": "Decision"
+      }
+    },
+    {
       "node_id": "snap:epoch:preserved-on-write:dec:idea-a-topic-view-shows-what-the-design-holds-about-one-subject-read-only",
       "node_type": "Snapshot",
       "properties": {
@@ -195276,6 +195563,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:preserved-on-write:decision:vocab:environment",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"EVOLVES_INTO\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-the-environment-compliance-layer-was-designed-and-never-built\",\"properties\":{\"evidence\":\"That node is the deliberation, opened 2026-08-11 and sharpened by the 2026-08-26 three-legs audit; this is the ruling it settled into when Anthony chose option (e). The question grew up into an answer, and the answer needs its own id because vocabulary_coverage looks the domain's park_with up by that exact string.\"}},{\"direction\":\"in\",\"edge_type\":\"TRIGGERS\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-how-does-reflow2-enforce-the-contract-regime-a-domain-already-has\",\"properties\":{\"evidence\":\"That ruling parked the environment compliance domain as deliberately unused UNTIL A USER ASKS FOR IT. This brainstorm is the owner asking for it, so the parking's own stated condition has been met and the ruling is due a re-read rather than a quiet continuation.\"}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-08-26\",\"role\":\"approver\"}}]",
+        "state": "{\"decision\":\"**Anthony's word, 2026-08-26: park it.** Option (e) of `dec:idea-the-environment-compliance-layer-was-designed-and-never-built`.\\n\\n📌 DISTINCT FROM THAT NODE BY ROLE, NOT BY WORDING, AND THE ID IS LOAD-BEARING. That one is the DELIBERATION — the open question, its five options and the argument on each. This is the RULING, and it must carry exactly this id because `vocabulary_coverage` looks the domain's `park_with` up by it. A ruling a machine reads and a deliberation a person reads are different artifacts; merging them would leave the tool with nothing to find.\\n\\nWHAT IS PARKED: the compliance half of the `environment` domain — the `EnvironmentRule` node type and the `IMPOSES`, `COMPLIES_WITH` and `VIOLATES_RULE` edges. Declared in `schema/environment.yaml` since 2026-07-17, zero instances, zero typed tools, zero instructions, zero detectors.\\n\\nWHAT IS **NOT** PARKED, and the distinction matters: the LOCATING half of the same domain is live and working — `Environment` (3 instances, written by `add_environment`) and `DEPLOYED_TO` (63 edges, written by `deploy_to`). `OPERATES_IN` sits between them: 3 live edges, no tool. **Parking is not retirement and touches none of these.**\\n\\n═══ WHY PARK RATHER THAN BUILD ═══\\n\\nThree field reports this month — hxm_program, Alex, and the storyflow fleet — mention environment compliance **zero times**. Building a fully-specified but unrequested subsystem is answering a question the schema asked rather than one a user did, which is the over-engineering failure mode this project measures itself against.\\n\\nParking is the only disposition that costs nothing to reverse. A parked domain a user later asks for becomes a build with nothing undone; a subsystem built unrequested cannot be un-built and adds surface every future session reads past.\\n\\n═══ WHY NOT RETIRE ═══\\n\\nRetiring was on the table as option (c) and is now known to be partly destructive: it would remove `OPERATES_IN`, which carries live edges in this design. The design is also sound — the three-way distinction between `Constraint` (self-imposed), `DesignRule` (chosen convention) and `EnvironmentRule` (externally imposed, negotiable only by variance or waiver) is good vocabulary, and the `VIOLATES_RULE` lifecycle where `confirmed` means an accepted variance kept and documented is better thought through than much of what ships.\\n\\n═══ ⚠️ WHAT WOULD REOPEN THIS ═══\\n\\n**A user asking.** Specifically: any design in a regulated operating environment where an external authority imposes a ruleset the design can only comply with, seek a variance from, or fail. Brookhaven NSLS-II and Space Force acquisition both look like that from the outside, and neither has reached for it.\\n\\n📌 AND ONE PIECE OF EVIDENCE POINTS THE OTHER WAY, kept at full strength because it is the only thing on that side. `OPERATES_IN` has three edges and no tool writes them — an earlier session reached for the vocabulary and fell through to raw `create_edge`, the escape hatch the three-legs rule says must not count as reachability. That is thin, it came from inside the project rather than from a user, and it was judged insufficient to justify building. If it recurs — especially from a consumer rather than from us — this parking should be revisited rather than defended.\",\"name\":\"PARKED — the environment compliance vocabulary is deliberately unused until a user asks for it\",\"rationale\":\"Recorded as the domain's `park_with` ruling, which is the node `vocabulary_coverage` already names for this purpose: accepting it declares the domain deliberately unused, so unused environment vocabulary stops reading as a hole in every coverage report without anything being deleted.\\n\\nThat is the same principle as `ruling: parks` one layer down and the same principle as `dec:idea-a-proposed-decision-asserts-nothing-...` one layer up: a deliberate state must be COUNTED and explained rather than either reported as a defect or silently hidden. All three exist because a count that grows when somebody does the right thing teaches people to stop reading it.\\n\\nThe agent recommended parking and Anthony took it. The counter-evidence — three `OPERATES_IN` edges written through the escape hatch — is recorded on the decision rather than dropped, because it is the one fact that would justify overturning this and it should not have to be rediscovered.\",\"status\":\"accepted\"}",
+        "target_id": "decision:vocab:environment",
+        "target_type": "Decision"
+      }
+    },
+    {
       "node_id": "snap:epoch:preserved-on-write:fact:a-local-feature-error-was-worked-around-instead-of-read-as-the-ci-contract",
       "node_type": "Snapshot",
       "properties": {
@@ -195322,6 +195619,16 @@
         "edges": "[]",
         "state": "{\"basis\":\"measured\",\"confidence\":1.0,\"fact_type\":\"observation\",\"statement\":\"THE NEAR-DUPLICATE GUARD FIRED NINE TIMES IN ONE SESSION AND WAS RIGHT ABOUT ZERO DUPLICATES (dev_storyflow 2026-09-05: seven in the main session, two more in the capture-intent addendum). Every fire was a genuinely distinct node beside a close one, and every one cost a resend with distinct_from — chaining for a brainstorm (idea 4 refused against ideas 1 and 3).\\n\\nTHE CAUSE IS AN UNDER-ENUMERATED LIST, and it is the same mechanism as a fix already shipped. PRESCRIBED_LAYER_PAIRS (capture.rs:128) is the set of cross-type pairs the capture loop PRESCRIBES to read alike, and chg:the-prescribed-layer-pairs-stop-refusing (2026-09-01) made those pairs warn instead of refuse. The list today: Requirement-Capability, ChangeEvent-Requirement/Decision/Capability, Decision-Capability, Decision-Component, TemporalFact-Decision. It was built from MEASURED refusals, one count per pair.\\n\\nTHE REPORTER'S TWO CROSS-TYPE CASES ARE NOT IN IT: (1) Decision-Verification — 'a check and a ruling on the same subject are supposed to read alike'; (2) Requirement-Decision — 'a requirement ruled in FROM an idea is supposed to read like the idea', which is exactly the promotion path the brainstorm skill prescribes (step 5, EVOLVES_INTO from the idea to what it became). Both are prescribed by the loop itself, both refused, and this session's count (multiple fires each, zero duplicates) is the measurement the list's own rule asks for before a pair is added.\\n\\nNOT IN THIS FINDING, deliberately: the SAME-TYPE case (brainstorm idea beside its sibling idea). That is Decision-Decision; the guard is supposed to look at same-type near-matches, and the brainstorm skill's own step 4 wants sibling ideas LINKED (related_to), which also satisfies the guard. Real friction, not a missing pair. The guard's TEXT is right and the reporter says so twice; only the pair list is short.\\n\\nFIX: two entries added to PRESCRIBED_LAYER_PAIRS, with the count above as justification, pinned the way the existing pairs are. Additive; nothing that refused before goes silent — the pair is REPORTED, not dropped.\",\"subject_id\":\"cap:search-first-at-the-tool\",\"valid_from\":\"2026-09-05\",\"value\":\"{\\\"fires\\\":9,\\\"true_duplicates\\\":0,\\\"missing_pairs\\\":[\\\"Decision-Verification\\\",\\\"Requirement-Decision\\\"],\\\"mechanism\\\":\\\"PRESCRIBED_LAYER_PAIRS under-enumerated\\\"}\"}",
         "target_id": "fact:defect-two-prescribed-layer-pairs-are-missing-so-a-check-beside-its-ruling-is-refused-as-a-duplicate",
+        "target_type": "TemporalFact"
+      }
+    },
+    {
+      "node_id": "snap:epoch:preserved-on-write:fact:link-artifact-demands-a-name-and-location-for-an-artifact-that-already-exists",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[]",
+        "state": "{\"basis\":\"measured\",\"confidence\":1.0,\"fact_type\":\"observation\",\"statement\":\"TOOL FRICTION MET WHILE WORKING, CAPTURED UNDER THE STANDING RULE THAT EVERY REFLOW2 TOOL FAILURE IS WRITTEN DOWN. Attaching an existing Artifact to a ChangeEvent with link_artifact on 2026-09-07 was refused with `missing field name`, then required the artifact's full name and location to be re-sent — roughly 300 characters the graph already held and had just returned from add_artifact. The call succeeded only on the third attempt.\\n\\nTHREE SEPARATE COSTS IN ONE CALL. First, name and location are mandatory even when artifact_id resolves an existing node, so the caller re-types stored state. Second, link_artifact does NOT accept `description` though add_artifact does, so creating an artifact with prose and then linking it takes two tools with different field sets for the same node. Third, and worst, re-sending a name invites a caller to send a SHORTER one than the stored value and silently overwrite good prose with a stub.\\n\\nTHE CLASS THIS BELONGS TO is the sibling-shape inconsistency already recorded twice: constructors and their linking counterparts disagree about which fields they accept for the same node type. This is one more instance, and the first measured on the artifact family.\\n\\nNOT INVESTIGATED: whether link_artifact overwrites or preserves a stored name when a different one is sent. That is the question worth answering first, because the answer decides whether this is friction or data loss.\",\"subject_id\":\"art:tools-operate\",\"valid_from\":\"2026-09-07\"}",
+        "target_id": "fact:link-artifact-demands-a-name-and-location-for-an-artifact-that-already-exists",
         "target_type": "TemporalFact"
       }
     },
@@ -200017,6 +200324,18 @@
       }
     },
     {
+      "node_id": "fact:link-artifact-demands-a-name-and-location-for-an-artifact-that-already-exists",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "observation",
+        "statement": "TOOL FRICTION MET WHILE WORKING, CAPTURED UNDER THE STANDING RULE THAT EVERY REFLOW2 TOOL FAILURE IS WRITTEN DOWN — AND IT TURNED OUT TO BE DATA LOSS, NOT FRICTION. Attaching an existing Artifact to a ChangeEvent with link_artifact on 2026-09-07 was refused with `missing field name`, then required the artifact's full name and location to be re-sent, roughly 300 characters the graph already held and had just returned from add_artifact.\n\nTHE ANSWER, READ FROM THE CODE RATHER THAN GUESSED. artifact.rs write_artifact_link upserts the Artifact with `.set(\"name\", opts.name)` — an unconditional set, while artifact_type, location and checksum beside it all use set_opt and therefore preserve a stored value when omitted. So name is the one field a re-link ALWAYS overwrites, and since the surface makes it mandatory, every re-link rewrites the name to whatever the caller happened to re-type. A caller who sends a short stub silently destroys a long descriptive name, with no refusal and no drift event.\n\nTHE CODE ALREADY ARGUES AGAINST ITSELF. The comment directly above that upsert explains at length why upsert_node was chosen over create_node: re-registering a file MUST NOT ERASE WHAT THE DESIGN ALREADY KNOWS ABOUT IT. It cites BL-165 and BL-46, and the measured evidence that re-linking had been silently dropping last_confirmed_at and downgrading a verified Artifact. The fix that came out of that reasoning was applied to the optional fields and not to `name`, which is the only one that cannot be omitted.\n\nTHE FIX AT THE CAUSE: make `name` optional on LinkArtifactReq, use set_opt in write_artifact_link so an omitted name preserves the stored one, and refuse with a clear message when the Artifact does not yet exist and no name was given. That also removes the friction, because the friction and the data loss have the same cause.\n\nTHE CLASS is the sibling-shape inconsistency recorded twice before: a constructor and its linking counterpart disagree about which fields they accept for the same node type. link_artifact also refuses `description` though add_artifact accepts it, so writing an artifact with prose and then linking it needs two tools with different field sets.\n\nDELIBERATELY NOT FIXED IN THE SAME CHANGE as the environment compliance layer, so that each lands reviewable on its own. Sequenced, not dropped.",
+        "subject_id": "art:tools-operate",
+        "valid_from": "2026-09-07"
+      }
+    },
+    {
       "node_id": "fact:loop-status-after-a-write-is-distributed-intrinsic-analysis-with-no-single-lever",
       "node_type": "TemporalFact",
       "properties": {
@@ -200956,6 +201275,18 @@
         "statement": "MEASURED from the committed export: reflow2 declares EIGHT subsystems (`sys:agent-surface`, `sys:coherence-loop`, `sys:documentation`, `sys:human-channel`, `sys:intake`, `sys:store`, `sys:time-history`, `sys:vocabulary`) and NOT ONE OF THEM PROVIDES AN INTERFACE.\n\n  subsystem            contains  PROVIDES  CONSUMES\n  sys:agent-surface       5         -         -\n  sys:coherence-loop     18         -         -\n  sys:documentation       1         -         -\n  sys:human-channel       2         -         -\n  sys:intake              3         -         -\n  sys:store               4         -         2\n  sys:time-history        5         -         -\n  sys:vocabulary          4         -         -\n\nZERO of eight provide; ONE of eight consumes anything, and both of its consumed interfaces are external (`ifc:exclusive-local-store`, `ifc:req-dyno-storage-api`) rather than a seam with a sibling subsystem. EVERY interface in the design is provided by a LEAF component one level down — `cmp:service` (ifc:mcp-tools, ifc:mcp-tools-http), `cmp:graph` (ifc:core-api), `cmp:export` (ifc:graph-export), `cmp:main` (ifc:rendezvous-sidecar), `cmp:registry` (ifc:session-graph-selector).\n\nWHAT THAT MEANS, in the systems-engineering sense Anthony raised: the eight are GROUPINGS, not black boxes. A black box is defined by its boundary — you can say what it offers and what it needs without opening it. Here you cannot say either for seven of the eight, so the decomposition carries no interface contract at any level above the leaves. `granularity_report` and `seam_report` have nothing to read at the subsystem tier.\n\nRECORDED BECAUSE IT IS THE BASELINE for a future increment doing proper SE on reflow2 itself, and because the number is the argument: 0/8 is not 'some interfaces are missing', it is 'the tier has no contracts at all'.",
         "subject_id": "proj:reflow2",
         "valid_from": "2026-08-17"
+      }
+    },
+    {
+      "node_id": "fact:the-enum-drift-guard-caught-a-brand-new-tool-family-hand-listing-its-values",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "observation",
+        "statement": "THE GUARD CAUGHT ITS OWN CLASS ON A TOOL FAMILY THAT DID NOT EXIST WHEN IT WAS WRITTEN, WITHIN HOURS. The enum-publishing work shipped in v0.53.0 with a check in tools/toolsnap.py: a request property whose DESCRIPTION hand-lists values must PUBLISH an enum containing every one of them. On 2026-09-07 the environment compliance layer added six new tools, and the same run reported two findings against violates_rule — proposer listing llm/author/check and severity listing low/medium/high/critical in prose, publishing plain string. Both were genuine. rule_type on the constructor had been wired correctly and the two edge-property fields had not, which is exactly the inconsistency a person cannot see by reading their own diff.\n\nWHY IT IS WORTH RECORDING RATHER THAN JUST FIXING. The three-legs doctrine says vocabulary reaches a user only with a typed tool, an instruction and a detector that notices absence. This is the third leg paying out on a case nobody anticipated: the guard's author was not the author of the new tools, the new tools came from a different schema domain, and no instruction pointed at the rule. A guard that only catches what its author already knew about is a test; a guard that catches the next instance is a gate.\n\nTHE FIX WAS AT THE CAUSE, NOT THE SYMPTOM. The two fields now read their values from the compiled-in schema through enum_schema, the same source the validator enforces, so nothing can drift. VIOLATES_RULE.status was published the same way in the same edit though the gate had not flagged it, because it is the same class and leaving it would have left the next reader a puzzle about why two of three fields were wired.\n\nWHAT THIS DOES NOT SHOW. The guard fires on a description that HAND-LISTS values. A field whose description names no values and publishes no enum is invisible to it, and nothing has measured how many of those exist.",
+        "subject_id": "req:a-refusal-names-what-would-have-worked",
+        "valid_from": "2026-09-07"
       }
     },
     {
@@ -205185,7 +205516,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:382a90b256dfe2ba54183c9ab8da6f57fa3e0fb4aa0de1e85a43bfc6069e1464",
+  "prev_content_hash": "sha256:6a7ac738b69bd13cc10b35a3b70265b6a0ab587db1876542bad922dcef0f0ef5",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

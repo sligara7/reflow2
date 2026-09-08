@@ -1,0 +1,69 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Flag that a design element CONTRADICTS an EnvironmentRule (VIOLATES_RULE). Flagged, never silently dropped, and it lands `proposed` — untriaged — which raises a gap until somebody answers it. Put the specific rule text and the offending detail in `evidence`. Triage with set_violation_status: `confirmed` records a granted variance, which is KEPT and documented rather than deleted, and `rejected` says it must be fixed.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "element_id": {
+        "description": "The design element that contradicts the rule; type resolved from the id.",
+        "type": "string"
+      },
+      "element_type": {
+        "default": null,
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "evidence": {
+        "default": null,
+        "description": "WHY it violates: the specific rule text and the offending detail.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "proposer": {
+        "default": null,
+        "description": "`llm` (default) / `author` / `check` — who noticed.",
+        "enum": [
+          "llm",
+          "author",
+          "check",
+          null
+        ],
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "rule_id": {
+        "type": "string"
+      },
+      "severity": {
+        "default": null,
+        "description": "`low` / `medium` / `high` (default) / `critical`.",
+        "enum": [
+          "low",
+          "medium",
+          "high",
+          "critical",
+          null
+        ],
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "required": [
+      "element_id",
+      "rule_id"
+    ],
+    "type": "object"
+  },
+  "name": "violates_rule"
+}

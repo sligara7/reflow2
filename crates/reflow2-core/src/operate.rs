@@ -69,6 +69,193 @@ impl DesignGraph {
         )
     }
 
+    /// P5 · Operation — a rule the design CANNOT NEGOTIATE, imposed by the
+    /// world the design operates in.
+    ///
+    /// # The distinction this carries, and why it is worth a node type
+    ///
+    /// Three kinds of rule, kept apart on purpose. A [`Constraint`] is
+    /// SELF-IMPOSED ("stay under $500k"). A `DesignRule` is a CHOSEN convention
+    /// ("branch before pushing"). An `EnvironmentRule` is EXTERNALLY IMPOSED —
+    /// a building code, a zoning ordinance, a safety standard, a physical law.
+    /// The design cannot argue with it; it may comply, seek a variance, or
+    /// fail. A house in Kennewick meets city ordinances and seismic provisions;
+    /// the same house on Mars faces 0.38 g and no atmosphere. Change the
+    /// environment and the whole constraint space changes.
+    ///
+    /// `mandatory` is the load-bearing flag: a mandatory rule the design has
+    /// said nothing about is asked as a gap, and an advisory one is not.
+    ///
+    /// [`Constraint`]: crate::nodes::node::CONSTRAINT
+    #[allow(clippy::too_many_arguments)]
+    pub fn add_environment_rule(
+        &mut self,
+        id: &str,
+        name: &str,
+        statement: &str,
+        rule_type: Option<&str>,
+        authority: Option<&str>,
+        jurisdiction: Option<&str>,
+        reference: Option<&str>,
+        mandatory: Option<bool>,
+    ) -> Result<StoredNode, DynoError> {
+        let mut props = Props::new()
+            .set("name", name)
+            .set("statement", statement)
+            .set_opt("rule_type", rule_type)
+            .set_opt("authority", authority)
+            .set_opt("jurisdiction", jurisdiction)
+            .set_opt("reference", reference);
+        if let Some(m) = mandatory {
+            props = props.set("mandatory", m);
+        }
+        self.upsert_node(node::ENVIRONMENT_RULE, id, props)
+    }
+
+    /// The operating environment a project's result must function in.
+    pub fn operates_in(&mut self, project_id: &str, environment_id: &str) -> Result<(), DynoError> {
+        self.create_edge(
+            edge::OPERATES_IN,
+            node::PROJECT,
+            project_id,
+            node::ENVIRONMENT,
+            environment_id,
+            Props::new(),
+        )?;
+        Ok(())
+    }
+
+    /// The rule-set an Environment imposes on anything operating in it.
+    pub fn imposes(&mut self, environment_id: &str, rule_id: &str) -> Result<(), DynoError> {
+        self.create_edge(
+            edge::IMPOSES,
+            node::ENVIRONMENT,
+            environment_id,
+            node::ENVIRONMENT_RULE,
+            rule_id,
+            Props::new(),
+        )?;
+        Ok(())
+    }
+
+    /// A design element satisfies an EnvironmentRule.
+    ///
+    /// `verified` distinguishes compliance DEMONSTRATED from compliance merely
+    /// asserted, and it defaults to false for the reason every other evidence
+    /// field in this design does: a claim is not a check.
+    pub fn complies_with(
+        &mut self,
+        from_type: &str,
+        from_id: &str,
+        rule_id: &str,
+        verified: Option<bool>,
+        evidence: Option<&str>,
+    ) -> Result<(), DynoError> {
+        let mut props = Props::new().set_opt("evidence", evidence);
+        if let Some(v) = verified {
+            props = props.set("verified", v);
+        }
+        self.create_edge(
+            edge::COMPLIES_WITH,
+            from_type,
+            from_id,
+            node::ENVIRONMENT_RULE,
+            rule_id,
+            props,
+        )?;
+        Ok(())
+    }
+
+    /// A design element contradicts an EnvironmentRule.
+    ///
+    /// FLAGGED, NEVER SILENTLY DROPPED, and triaged through a lifecycle:
+    /// `proposed` is flagged and unanswered, `confirmed` is a variance or
+    /// waiver that was GRANTED and is kept and documented, `rejected` is a
+    /// defect somebody must fix. A confirmed violation is not deleted — the
+    /// record of the waiver is the audit trail.
+    pub fn violates_rule(
+        &mut self,
+        from_type: &str,
+        from_id: &str,
+        rule_id: &str,
+        proposer: Option<&str>,
+        severity: Option<&str>,
+        evidence: Option<&str>,
+    ) -> Result<(), DynoError> {
+        self.create_edge(
+            edge::VIOLATES_RULE,
+            from_type,
+            from_id,
+            node::ENVIRONMENT_RULE,
+            rule_id,
+            Props::new()
+                .set_opt("proposer", proposer)
+                .set_opt("severity", severity)
+                .set_opt("evidence", evidence),
+        )?;
+        Ok(())
+    }
+
+    /// Triage a flagged violation: grant the variance, or say it must be fixed.
+    ///
+    /// The edge is REWRITTEN rather than removed, so the design keeps a record
+    /// of what was found and what was decided about it.
+    pub fn set_violation_status(
+        &mut self,
+        from_id: &str,
+        rule_id: &str,
+        status: &str,
+        rationale: Option<&str>,
+    ) -> Result<(), DynoError> {
+        let existing = self
+            .outgoing(from_id, Some(edge::VIOLATES_RULE))?
+            .into_iter()
+            .find(|e| e.to_id == rule_id)
+            .ok_or_else(|| DynoError::Validation {
+                node_type: node::ENVIRONMENT_RULE.into(),
+                property: "status".into(),
+                message: format!(
+                    "no VIOLATES_RULE edge from {from_id:?} to {rule_id:?} to triage — a \
+                         status records a judgement about a finding that exists"
+                ),
+            })?;
+        let mut props = Props::new()
+            .set("status", status)
+            .set_opt("rationale", rationale);
+        for (k, v) in &existing.properties {
+            if k != "status" && k != "rationale" {
+                props = props.set(k.as_str(), v.clone());
+            }
+        }
+        // The edge does not carry its own from-type, so resolve it from the id
+        // by the same convention every other read uses. A collision refuses
+        // rather than guesses, which is why this reads the holders list.
+        let holders = self.node_types_holding(from_id)?;
+        let from_type = match holders.len() {
+            1 => holders.into_iter().next().unwrap_or_default(),
+            _ => {
+                return Err(DynoError::Validation {
+                    node_type: node::ENVIRONMENT_RULE.into(),
+                    property: "status".into(),
+                    message: format!(
+                        "id {from_id:?} is held by {} node type(s); cannot tell which element \
+                         the violation is on",
+                        holders.len()
+                    ),
+                });
+            }
+        };
+        self.create_edge(
+            edge::VIOLATES_RULE,
+            &from_type,
+            from_id,
+            node::ENVIRONMENT_RULE,
+            rule_id,
+            props,
+        )?;
+        Ok(())
+    }
+
     /// P5 · Operation — a real-world thing the built system needs: a database,
     /// a queue, a secret, a GPU, power, bandwidth. `name` is required.
     pub fn add_resource(

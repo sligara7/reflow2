@@ -1,0 +1,42 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Triage a flagged violation. `confirmed` = a variance or waiver was GRANTED: the violation is KEPT and documented, because the record of what was found and what was decided about it IS the audit trail. `rejected` = it must be fixed, and the finding is retained for the same reason. Put the waiver reference, or what has to change, in `rationale`. The edge is rewritten rather than removed — nothing is deleted by triaging it.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "element_id": {
+        "type": "string"
+      },
+      "rationale": {
+        "default": null,
+        "description": "Why. On a confirmed variance this is the waiver reference; on a rejected\none it is what has to change.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "rule_id": {
+        "type": "string"
+      },
+      "status": {
+        "description": "`confirmed` — a variance or waiver was GRANTED, and the violation is\nkept and documented rather than deleted. `rejected` — it must be fixed.\n`proposed` — back to untriaged.",
+        "enum": [
+          "proposed",
+          "confirmed",
+          "rejected"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "element_id",
+      "rule_id",
+      "status"
+    ],
+    "type": "object"
+  },
+  "name": "set_violation_status"
+}

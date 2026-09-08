@@ -1,0 +1,24 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Record that a Project's result must function in an Environment (OPERATES_IN). Change the environment and the whole constraint space changes: a house in Kennewick meets city ordinances and seismic provisions; the same house on Mars faces 0.38 g and no atmosphere. A project may target more than one, and each brings its own imposed rules.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "environment_id": {
+        "type": "string"
+      },
+      "project_id": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "project_id",
+      "environment_id"
+    ],
+    "type": "object"
+  },
+  "name": "operates_in"
+}

@@ -34,6 +34,13 @@ pub mod node {
     // P5 · Operation (operate.yaml)
     pub const RELEASE: &str = "Release";
     pub const ENVIRONMENT: &str = "Environment";
+    /// A rule the design CANNOT NEGOTIATE — a building code, a zoning
+    /// ordinance, a safety standard, a physical law. Distinct from `Constraint`
+    /// (self-imposed) and `DesignRule` (a chosen convention): only this one is
+    /// dictated by the world, and the design may comply, seek a variance, or
+    /// fail. Declared 2026-07-17, parked 2026-08-26, built 2026-09-07 on the
+    /// request the parking named as its own condition.
+    pub const ENVIRONMENT_RULE: &str = "EnvironmentRule";
     pub const RESOURCE: &str = "Resource";
     // Cross-cutting · depth axis (dimensions.yaml)
     pub const DIMENSION_ASSESSMENT: &str = "DimensionAssessment";
@@ -196,6 +203,20 @@ pub mod edge {
     pub const CONTAINS_EPOCH: &str = "CONTAINS_EPOCH";
     /// `Release → Environment` — a packaged version runs in an environment.
     pub const DEPLOYED_TO: &str = "DEPLOYED_TO";
+    /// The operating environment a project's result must function in. Change
+    /// the environment and the whole constraint space changes.
+    pub const OPERATES_IN: &str = "OPERATES_IN";
+    /// The authoritative rule-set an Environment imposes on any design that
+    /// operates in it — its codes and its physics. One edge per rule.
+    pub const IMPOSES: &str = "IMPOSES";
+    /// A design element satisfies an EnvironmentRule. `verified` says whether
+    /// that was DEMONSTRATED or merely asserted, which is the difference
+    /// between evidence and a claim.
+    pub const COMPLIES_WITH: &str = "COMPLIES_WITH";
+    /// A design element contradicts an EnvironmentRule. Flagged, never silently
+    /// dropped, and triaged through a lifecycle where a CONFIRMED violation is
+    /// an accepted variance that is kept and documented rather than deleted.
+    pub const VIOLATES_RULE: &str = "VIOLATES_RULE";
     pub const INCLUDES: &str = "INCLUDES";
     /// `* → Resource` — a Component or Release consumes a real-world resource.
     pub const REQUIRES_RESOURCE: &str = "REQUIRES_RESOURCE";

@@ -1,0 +1,24 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Record that an Environment imposes an EnvironmentRule (IMPOSES) — its codes and its physics. One edge per rule.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "environment_id": {
+        "type": "string"
+      },
+      "rule_id": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "environment_id",
+      "rule_id"
+    ],
+    "type": "object"
+  },
+  "name": "imposes"
+}

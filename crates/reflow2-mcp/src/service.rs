@@ -2189,6 +2189,137 @@ pub struct UnclaimedFindingsReq {
     pub change_event_ids: Vec<String>,
 }
 
+/// One OPERATES_IN edge.
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct OperatesInReq {
+    #[serde(alias = "from_id")]
+    pub project_id: String,
+    #[serde(alias = "to_id")]
+    pub environment_id: String,
+}
+
+/// One IMPOSES edge.
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct ImposesReq {
+    #[serde(alias = "from_id")]
+    pub environment_id: String,
+    #[serde(alias = "to_id")]
+    pub rule_id: String,
+}
+
+/// One EnvironmentRule for `add_environment_rule`.
+///
+/// # The distinction this type carries
+///
+/// Three kinds of rule, kept apart on purpose. A `Constraint` is SELF-IMPOSED
+/// ("stay under $500k"). A `DesignRule` is a CHOSEN convention ("branch before
+/// pushing"). This one is EXTERNALLY IMPOSED and the design cannot argue with
+/// it — a building code, a zoning ordinance, a safety standard, a physical law.
+/// It may comply, seek a variance, or fail.
+///
+/// Declared in the schema since 2026-07-17, parked 2026-08-26 because no user
+/// had asked, and built 2026-09-07 on the request the parking named as its own
+/// condition.
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct EnvironmentRuleReq {
+    pub id: String,
+    #[serde(default)]
+    pub name: Option<String>,
+    /// What the rule requires or forbids, in plain terms.
+    #[serde(default)]
+    pub statement: Option<String>,
+    /// `regulatory` (default) / `building_code` / `zoning` / `safety` /
+    /// `environmental` / `standard` / `physical_law` / `interface` /
+    /// `constraint`.
+    #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::environment_rule_type_opt")]
+    pub rule_type: Option<String>,
+    /// WHO ISSUES OR ENFORCES IT — a city, a county, an agency, a standards
+    /// body, or "physics". The name a reader would go and ask.
+    #[serde(default)]
+    pub authority: Option<String>,
+    /// WHERE IT APPLIES — "Kennewick, WA", "Benton County", "Mars surface".
+    #[serde(default)]
+    pub jurisdiction: Option<String>,
+    /// The citation: "IBC 2021 §1607", "NFPA 101", a datasheet. What lets a
+    /// reader check the claim against the source rather than trust it.
+    #[serde(default)]
+    pub reference: Option<String>,
+    /// HARD (must comply, and a design that has said nothing is asked about it)
+    /// versus advisory. Defaults to true: a rule whose force nobody stated is
+    /// not safely assumed to be advice.
+    #[serde(default)]
+    pub mandatory: Option<bool>,
+}
+
+/// One compliance claim for `complies_with`.
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct CompliesWithReq {
+    /// The design element that complies. Its type is resolved from the id.
+    #[serde(alias = "node_id", alias = "from_id")]
+    pub element_id: String,
+    /// Optional; resolved from the id when omitted.
+    #[serde(default, alias = "node_type", alias = "from_type")]
+    pub element_type: Option<String>,
+    #[serde(alias = "to_id")]
+    pub rule_id: String,
+    /// Whether compliance was DEMONSTRATED rather than merely asserted.
+    /// Defaults to false, for the reason every evidence field here does: a
+    /// claim is not a check.
+    #[serde(default)]
+    pub verified: Option<bool>,
+    /// What demonstrates it — a calc package, a stamped drawing, a test report.
+    #[serde(default)]
+    pub evidence: Option<String>,
+}
+
+/// One flagged violation for `violates_rule`.
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct ViolatesRuleReq {
+    /// The design element that contradicts the rule; type resolved from the id.
+    #[serde(alias = "node_id", alias = "from_id")]
+    pub element_id: String,
+    #[serde(default, alias = "node_type", alias = "from_type")]
+    pub element_type: Option<String>,
+    #[serde(alias = "to_id")]
+    pub rule_id: String,
+    /// `llm` (default) / `author` / `check` — who noticed.
+    #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::violation_proposer_opt")]
+    pub proposer: Option<String>,
+    /// `low` / `medium` / `high` (default) / `critical`.
+    #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::violation_severity_opt")]
+    pub severity: Option<String>,
+    /// WHY it violates: the specific rule text and the offending detail.
+    #[serde(default)]
+    pub evidence: Option<String>,
+}
+
+/// One triage decision for `set_violation_status`.
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct ViolationStatusReq {
+    #[serde(alias = "node_id", alias = "from_id")]
+    pub element_id: String,
+    #[serde(alias = "to_id")]
+    pub rule_id: String,
+    /// `confirmed` — a variance or waiver was GRANTED, and the violation is
+    /// kept and documented rather than deleted. `rejected` — it must be fixed.
+    /// `proposed` — back to untriaged.
+    #[schemars(schema_with = "crate::enum_schema::violation_status_req")]
+    pub status: String,
+    /// Why. On a confirmed variance this is the waiver reference; on a rejected
+    /// one it is what has to change.
+    #[serde(default)]
+    pub rationale: Option<String>,
+}
+
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct ReleaseReq {
