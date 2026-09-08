@@ -96,6 +96,19 @@ EXPOSE 8080
 ENV REFLOW2_GRAPH_PATH=/data/graphs/default/graph \
     REFLOW2_BIND=0.0.0.0:8080
 
+# ⚠️ CAP THE LOG WHEN YOU RUN THIS. Docker's default `json-file` driver has NO
+# SIZE LIMIT, so any long-running container can fill a host disk with its own
+# log — a failure that presents as the whole machine dying rather than as
+# anything wrong with the container.
+#
+#     docker run --log-opt max-size=10m --log-opt max-file=3 ...
+#
+# reflow2 does its part: the default filter is `warn` for everything and `info`
+# for reflow2's own crates, because 78% of the output used to be a search-index
+# dependency's per-commit chatter. That reduces the
+# rate; only the driver's cap bounds the total. Raise verbosity per-run with
+# `-e RUST_LOG=info` when you are actually diagnosing something.
+
 # ⭐ READINESS: "the port is listening" is an HONEST readiness signal here, and
 # that was checked rather than assumed. In `main.rs` the graph is opened FIRST
 # and `serve_http` is only reached on the `Ok` arm, so the socket cannot be bound
