@@ -31,9 +31,16 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.55.0] — 2026-09-08
+
+**Minor, and it MOVES THE SCHEMA STAMP: 29 → 28 node types — the first time this project has
+removed a type rather than added one.** Every prior stamp move was additive and left an existing
+graph readable untouched. This one does not, so the upgrade action below is REQUIRED rather than
+"none", and `docs/upgrading-to-v0.55.0.md` carries it.
+
 🛑 **Upgrade action: REQUIRED, FOR EVERY EXISTING GRAPH.** `QualityGate` has been **removed from
-the schema** — the first type this project has ever removed — and **your graph will refuse to open
-until you migrate it**, whether or not it ever held a `QualityGate`.
+the schema**, and **your graph will refuse to open until you migrate it** — whether or not it ever
+held a `QualityGate`.
 
 **Why it affects everyone.** The guard reads the graph's **stamp**, not its contents, and the stamp
 records the *schema* the writing binary had. So every reflow2 graph in existence names
@@ -54,16 +61,39 @@ reflow2-mcp --graph-path ./.reflow2/graph-new --import design.json
 # 3. Check the counts match, then swap the new graph into place.
 ```
 
-Result on a 3,989-node graph: **3,989 nodes and 21,555 edges in, the same out, nothing lost**,
-stamp 29 → 28.
+Result on a 3,989-node graph: **3,989 nodes and 21,555 edges in, the same out, nothing lost**.
 
 ⚠️ **If you move a graph by hand, move its sidecar too.** The stamp lives in
 `<graph-path>.meta.json`, *beside* the store directory rather than inside it. Copying the store
 over an old sidecar reproduces the refusal on a graph you have already migrated. Importing into a
 fresh path avoids this, because it writes its own.
 
-📄 **An upgrade note is owed with this cut: the stamp MOVED, 29 → 28 node types.** Every prior stamp
-move was additive and left older graphs readable untouched. This one does not.
+**The increment in one line:** a design can finally say what rules the world imposes on it and
+whether it complies; a re-link stopped quietly renaming files; and one type that never earned its
+place left the schema. The through-line of the second and third is the same defect class —
+**a list maintained by hand with nothing checking that its entries are still true** — found four
+more times in one day.
+
+### Added
+
+- **A design can state the rules its operating environment imposes on it, say whether it complies,
+  and be asked when it has not said.** `EnvironmentRule` has been declared in the schema since
+  2026-07-17 and nothing could write one; the compliance half was deliberately parked on 2026-08-26
+  on the grounds that no user had asked for it. The parking named its own reversal condition — a
+  real request — and the condition was met, so all three legs land together:
+  - **Six typed tools.** `add_environment_rule` records the rule with the two fields that make it
+    auditable rather than a note: `authority` (who issues it) and `reference` (the citation a
+    reader can check it against). `operates_in`, `imposes`, `complies_with` and `violates_rule`
+    draw the four edges; `set_violation_status` triages a flagged violation.
+  - **Two detectors that ask a person.** `unchecked_compliance` reports a mandatory rule the design
+    has said nothing about, because a design that has not said whether it meets a code has not met
+    it. `open_violation` reports a flagged violation nobody has triaged — neither an accepted
+    variance nor a defect somebody owns.
+  - **Three kinds of rule stay apart**, which is the whole reason the type exists. A `Constraint`
+    is self-imposed, a `DesignRule` is a chosen convention, and an `EnvironmentRule` is imposed by
+    the world: the design may comply, seek a variance, or fail, and it cannot simply drop the rule.
+- **`link_artifact` accepts `description`.** Registering a file and saying what it is was two tools
+  with different field sets for the same node. Omitting it preserves any stored description.
 
 ### Removed
 
@@ -89,24 +119,6 @@ move was additive and left older graphs readable untouched. This one does not.
 
 ### Fixed
 
-- **Doc claims about the schema's size are now checked, and six were already wrong.**
-  `check_doc_versions.py` guarded three version claims; retiring a node type moved the count 29 → 28
-  and a sweep found the **edge** count in the same four sentences had been wrong for weeks — three
-  said 60 and one said 64 against a real 65. Nothing checked them. The checker now reads the counts
-  from `schema/*.yaml` and asserts them across `AGENTS.md`, `README.md`, `docs/overview.md` and
-  `docs/interaction-surfaces.md`, matching **every** occurrence in each file so a second sentence
-  cannot rot while the first stays true. Guarded claims: 3 → 11.
-- **A stale exemption in the constructor sweep can no longer hide.** `NO_CONSTRUCTOR` in
-  `every_constructor_can_say_what_the_thing_is.rs` is a `continue`, so an entry that stopped being
-  true was skipped in silence. Three of its four entries were already dead: `Actor` read *"there is
-  no add_actor to give a parameter to"* while `add_actor` had shipped hours earlier taking a
-  `description`, `EnvironmentRule` names a type that declares no `description` at all, and
-  `QualityGate` was about to leave the schema. A reverse sweep now fails on an exemption that is no
-  longer earned. Same class as the `constructors_preserve.rs` scope error fixed above: a
-  hand-maintained list with no check that its entries are still true.
-
-### Fixed
-
 - **`link_artifact` no longer rewrites an artifact's name on every re-link.** `name` was mandatory,
   so "leave the name alone" could not be said: attaching an existing file to a second target forced
   the caller to re-type the stored name, and whatever they typed was written over it. Every field
@@ -121,54 +133,53 @@ move was additive and left older graphs readable untouched. This one does not.
   so membership was decided by how a call is *spelled* rather than by what it *does*, and
   `link_artifact` sat outside it while the file's own header vouched for it. Four linker cases
   added; the header now records why the scope was wrong.
-
-### Added
-
-- **`link_artifact` accepts `description`.** Registering a file and saying what it is was two tools
-  with different field sets for the same node. Omitting it preserves any stored description.
-
-### Notes
-
-- The fix was pinned by negative control rather than by writing the test first: restoring the
-  unconditional write fails `re_linking_an_artifact_does_not_rename_it` on exactly the data-loss
-  assertion, while the two controls pinning that an explicitly-passed name *still* renames stay
-  green. A fix that made the parameter inert would be the same bug pointing the other way.
-- **The first version of the fix was itself incomplete**, which is why the name is *resolved* rather
-  than merely optional. The provenance `Fragment`'s `title` is a required property, so a re-link
-  onto an artifact whose fragment did not yet exist had nothing to build it from and failed
-  validation on a field the caller never mentioned. Caught by using the fix on this change's own
-  bookkeeping, and pinned by `re_linking_mints_a_missing_fragment_from_the_stored_name`.
-- **Not measured:** how many stored artifact names past re-links already flattened.
-  `build_design_graph.py` re-links 34 artifacts on every run, and no before-and-after record
-  survives to compare against.
-
-### Added
-
-- **A design can state the rules its operating environment imposes on it, say whether it complies,
-  and be asked when it has not said.** `EnvironmentRule` has been declared in the schema since
-  2026-07-17 and nothing could write one; the compliance half was deliberately parked on 2026-08-26
-  on the grounds that no user had asked for it. The parking named its own reversal condition — a
-  real request — and the condition was met, so all three legs land together:
-  - **Six typed tools.** `add_environment_rule` records the rule with the two fields that make it
-    auditable rather than a note: `authority` (who issues it) and `reference` (the citation a
-    reader can check it against). `operates_in`, `imposes`, `complies_with` and `violates_rule`
-    draw the four edges; `set_violation_status` triages a flagged violation.
-  - **Two detectors that ask a person.** `unchecked_compliance` reports a mandatory rule the design
-    has said nothing about, because a design that has not said whether it meets a code has not met
-    it. `open_violation` reports a flagged violation nobody has triaged — neither an accepted
-    variance nor a defect somebody owns.
-  - **Three kinds of rule stay apart**, which is the whole reason the type exists. A `Constraint`
-    is self-imposed, a `DesignRule` is a chosen convention, and an `EnvironmentRule` is imposed by
-    the world: the design may comply, seek a variance, or fail, and it cannot simply drop the rule.
+- **A stale exemption in the constructor sweep can no longer hide.** `NO_CONSTRUCTOR` in
+  `every_constructor_can_say_what_the_thing_is.rs` is a `continue`, so an entry that stopped being
+  true was skipped in silence. Three of its four entries were already dead: `Actor` read *"there is
+  no add_actor to give a parameter to"* while `add_actor` had shipped hours earlier taking a
+  `description`, `EnvironmentRule` names a type that declares no `description` at all, and
+  `QualityGate` was about to leave the schema. A reverse sweep now fails on an exemption that is no
+  longer earned. Same class as the `constructors_preserve.rs` scope error above.
+- **Doc claims about the schema's size are now checked, and six were already wrong.**
+  `check_doc_versions.py` guarded three version claims; retiring a node type moved the count 29 → 28
+  and a sweep found the **edge** count in the same four sentences had been wrong for weeks — three
+  said 60 and one said 64 against a real 65. Nothing checked them. The checker now reads the counts
+  from `schema/*.yaml` and asserts them across `AGENTS.md`, `README.md`, `docs/overview.md` and
+  `docs/interaction-surfaces.md`, matching **every** occurrence in each file so a second sentence
+  cannot rot while the first stays true. Guarded claims: 3 → 11.
 
 ### Notes
 
+- **A retirement is two edits, not one.** Removing a type from `schema/*.yaml` is half; the other
+  half is registering it in `RETIRED_NODE_TYPES`, whose own comment read *"empty so far; grows the
+  day a node type is retired."* Without that entry the guard reads an **ordinary** graph as one
+  **from the future** and tells the operator their reflow2 is BEHIND and to rebuild — the opposite
+  of the correct action, stated confidently. Learned by doing it in the wrong order and locking
+  this project out of its own graph. That branch had been unreachable since it was written and now
+  has a test.
+- **The blast radius of the retirement was measured wrong the first time and the correction is on
+  the record.** An earlier draft said it "almost certainly affects nobody" because reflow2's graph
+  holds zero instances. The binding gate is *store open*, which reads the stamp, not *import*,
+  which reads contents — so instance count never enters it.
 - `unchecked_compliance` aggregates **once per unanswered mandatory rule**, not once per element
   and rule. Per-pair on a design with 234 capabilities and 10 rules it would raise 2,340 findings,
   which is the hub-shaped noise an earlier detector had to be narrowed for in the week it shipped.
 - An **advisory** rule (`mandatory: false`) is never asked about; `mandatory` absent reads as true.
 - Triage **rewrites** the violation edge and never deletes it. A granted variance that vanishes
   from the record is the opposite of the audit trail a violation is recorded for.
+- The `link_artifact` fix was pinned by negative control rather than by writing the test first:
+  restoring the unconditional write fails `re_linking_an_artifact_does_not_rename_it` on exactly
+  the data-loss assertion, while the two controls pinning that an explicitly-passed name *still*
+  renames stay green. A fix that made the parameter inert would be the same bug pointing the other
+  way.
+- **The first version of that fix was itself incomplete**, which is why the name is *resolved*
+  rather than merely optional. The provenance `Fragment`'s `title` is a required property, so a
+  re-link onto an artifact whose fragment did not yet exist had nothing to build it from and failed
+  validation on a field the caller never mentioned. Caught by using the fix on that change's own
+  bookkeeping, and pinned by `re_linking_mints_a_missing_fragment_from_the_stored_name`.
+- **Not measured:** how many stored artifact names past re-links already flattened.
+  `build_design_graph.py` re-links 34 artifacts on every run, and no before-and-after record
+  survives to compare against.
 
 ## [0.54.0] — 2026-09-07
 
