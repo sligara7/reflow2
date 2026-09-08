@@ -26,7 +26,8 @@ fn built_thread() -> DesignGraph {
     g.allocate("cap:score", "cmp:engine").expect("allocate");
     g.link_artifact(LinkArtifactOptions {
         artifact_id: "art:score".into(),
-        name: "Score.cs".into(),
+        name: Some("Score.cs".into()),
+        description: None,
         location: Some("src/Score.cs".into()),
         artifact_type: Some("code".into()),
         target_type: node::CAPABILITY.into(),
@@ -230,7 +231,8 @@ fn a_missing_baseline_is_surfaced_not_silently_passed() {
     // Registered without a checksum — nothing to compare against later.
     g.link_artifact(LinkArtifactOptions {
         artifact_id: "art:score".into(),
-        name: "Score.cs".into(),
+        name: Some("Score.cs".into()),
+        description: None,
         location: Some("src/Score.cs".into()),
         artifact_type: None,
         target_type: node::CAPABILITY.into(),
@@ -272,7 +274,8 @@ fn a_partial_scan_is_not_evidence_of_absence() {
     let mut g = built_thread();
     g.link_artifact(LinkArtifactOptions {
         artifact_id: "art:other".into(),
-        name: "Other.cs".into(),
+        name: Some("Other.cs".into()),
+        description: None,
         location: Some("src/Other.cs".into()),
         artifact_type: None,
         target_type: node::CAPABILITY.into(),
@@ -349,7 +352,8 @@ fn findings_are_ranked_most_severe_first() {
     for (id, target) in [("art:b", "cap:score"), ("art:c", "cap:score")] {
         g.link_artifact(LinkArtifactOptions {
             artifact_id: id.into(),
-            name: format!("{id}.cs"),
+            name: Some(format!("{id}.cs")),
+            description: None,
             location: None,
             artifact_type: None,
             target_type: node::CAPABILITY.into(),
@@ -712,7 +716,8 @@ fn a_bare_hex_digest_is_stored_in_the_dialect_drift_compares_in() {
 
     g.link_artifact(LinkArtifactOptions {
         artifact_id: "art:bare".into(),
-        name: "bare.rs".into(),
+        name: Some("bare.rs".into()),
+        description: None,
         location: Some("src/bare.rs".into()),
         artifact_type: Some("code".into()),
         target_type: node::CAPABILITY.into(),
@@ -781,7 +786,8 @@ fn a_fingerprint_that_is_not_a_bare_digest_is_stored_verbatim() {
     ] {
         g.link_artifact(LinkArtifactOptions {
             artifact_id: id.into(),
-            name: id.into(),
+            name: Some(id.into()),
+            description: None,
             location: Some(format!("src/{id}.rs")),
             artifact_type: Some("code".into()),
             target_type: node::CAPABILITY.into(),

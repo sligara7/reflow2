@@ -460,7 +460,8 @@ fn recorded_drift_is_owed_a_disposition_until_accepted() {
         .unwrap();
     g.link_artifact(LinkArtifactOptions {
         artifact_id: "art:x".into(),
-        name: "x.rs".into(),
+        name: Some("x.rs".into()),
+        description: None,
         location: Some("src/x.rs".into()),
         artifact_type: Some("code".into()),
         target_type: node::CAPABILITY.into(),

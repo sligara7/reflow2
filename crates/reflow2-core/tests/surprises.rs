@@ -173,7 +173,8 @@ fn provenance_nodes_stay_out_of_the_topology() {
     // drift against it (creates a DriftEvent joined by DEPENDS_ON).
     g.link_artifact(LinkArtifactOptions {
         artifact_id: "art:a".into(),
-        name: "a.rs".into(),
+        name: Some("a.rs".into()),
+        description: None,
         location: Some("src/a.rs".into()),
         artifact_type: None,
         target_type: node::CAPABILITY.into(),

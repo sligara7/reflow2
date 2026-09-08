@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Register a real file against the design WITH provenance, atomically: Artifact + a provenance Fragment (YIELDED) + a REALIZES edge to the Capability/Component it implements. Fails loud if the target is missing. Use after building a file so as-designed vs as-built stays honest.",
+  "description": "Register a real file against the design WITH provenance, atomically: Artifact + a provenance Fragment (YIELDED) + a REALIZES edge to the Capability/Component it implements. Fails loud if the target is missing. Use after building a file so as-designed vs as-built stays honest. RE-LINKING IS SAFE: `name` and `description` are required only on the FIRST link, and omitting either afterwards LEAVES THE STORED ONE ALONE — so attaching a file to a second target never renames it or drops its prose. Pass them again only when you mean to change them.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
@@ -54,6 +54,14 @@
           "null"
         ]
       },
+      "description": {
+        "default": null,
+        "description": "What the artifact IS, in prose. Accepted here as well as on add_artifact,\nso registering a file and describing it is one call rather than two tools\nwith different field sets. Omitting it preserves any stored description.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
       "fragment_id": {
         "default": null,
         "type": [
@@ -69,7 +77,12 @@
         ]
       },
       "name": {
-        "type": "string"
+        "default": null,
+        "description": "Required on a FIRST link. Omitting it on a re-link PRESERVES the stored\nname rather than blanking it — before 2026-09-07 this was mandatory, so\n\"leave the name alone\" could not be said and every re-link rewrote it.",
+        "type": [
+          "string",
+          "null"
+        ]
       },
       "note_kind": {
         "default": null,
@@ -107,7 +120,6 @@
     },
     "required": [
       "artifact_id",
-      "name",
       "target_id"
     ],
     "type": "object"

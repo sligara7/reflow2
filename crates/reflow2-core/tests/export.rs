@@ -23,7 +23,8 @@ fn a_design() -> DesignGraph {
         .unwrap();
     g.link_artifact(LinkArtifactOptions {
         artifact_id: "art:read".into(),
-        name: "reading.py".into(),
+        name: Some("reading.py".into()),
+        description: None,
         location: Some("src/reading.py".into()),
         artifact_type: Some("code".into()),
         target_type: node::CAPABILITY.into(),

@@ -11,7 +11,8 @@ use reflow2_core::{LinkArtifactOptions, ObservedPath};
 fn artifact(g: &mut DesignGraph, id: &str, location: &str) {
     g.link_artifact(LinkArtifactOptions {
         artifact_id: id.into(),
-        name: id.into(),
+        name: Some(id.into()),
+        description: None,
         location: Some(location.into()),
         artifact_type: Some("code".into()),
         target_type: node::CAPABILITY.into(),

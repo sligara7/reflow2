@@ -164,7 +164,8 @@ fn the_link_tool_reports_the_conformance_it_wrote() {
     let link = g
         .link_artifact(reflow2_core::LinkArtifactOptions {
             artifact_id: "art:a".into(),
-            name: "a.rs".into(),
+            name: Some("a.rs".into()),
+            description: None,
             location: Some("src/a.rs".into()),
             artifact_type: Some("code".into()),
             target_type: node::CAPABILITY.into(),

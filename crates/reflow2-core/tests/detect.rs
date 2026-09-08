@@ -851,7 +851,8 @@ fn an_artifact_realizing_the_component_counts_as_building_its_capabilities() {
     g.allocate("cap:detect", "cmp:detect").unwrap();
     g.link_artifact(LinkArtifactOptions {
         artifact_id: "art:detect".into(),
-        name: "detect.rs".into(),
+        name: Some("detect.rs".into()),
+        description: None,
         location: Some("src/detect.rs".into()),
         artifact_type: Some("code".into()),
         target_type: node::COMPONENT.into(),
@@ -888,7 +889,8 @@ fn a_capability_in_an_unbuilt_component_is_still_reported() {
     }
     g.link_artifact(LinkArtifactOptions {
         artifact_id: "art:built".into(),
-        name: "built.rs".into(),
+        name: Some("built.rs".into()),
+        description: None,
         location: Some("src/built.rs".into()),
         artifact_type: Some("code".into()),
         target_type: node::COMPONENT.into(),

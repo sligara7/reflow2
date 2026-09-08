@@ -64,7 +64,8 @@ fn thread_with_baseline(checksum: &str) -> DesignGraph {
     g.satisfies("cap:score", "req:live").expect("satisfies");
     g.link_artifact(LinkArtifactOptions {
         artifact_id: "art:score".into(),
-        name: "Score.cs".into(),
+        name: Some("Score.cs".into()),
+        description: None,
         location: Some("src/Score.cs".into()),
         artifact_type: Some("code".into()),
         target_type: node::CAPABILITY.into(),

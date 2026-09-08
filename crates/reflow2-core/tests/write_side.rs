@@ -29,7 +29,8 @@ fn built_thread() -> DesignGraph {
     g.allocate("cap:score", "cmp:engine").expect("allocate");
     g.link_artifact(LinkArtifactOptions {
         artifact_id: "art:score".into(),
-        name: "Score.cs".into(),
+        name: Some("Score.cs".into()),
+        description: None,
         location: Some("src/Score.cs".into()),
         artifact_type: Some("code".into()),
         target_type: node::CAPABILITY.into(),
@@ -473,7 +474,8 @@ fn many_files_under_a_verified_capability_raise_no_gaps() {
     for i in 0..12 {
         g.link_artifact(LinkArtifactOptions {
             artifact_id: format!("art:{i}"),
-            name: format!("file{i}.rs"),
+            name: Some(format!("file{i}.rs")),
+            description: None,
             location: None,
             artifact_type: Some("code".into()),
             target_type: node::CAPABILITY.into(),
@@ -755,7 +757,8 @@ fn a_built_capability_the_release_leaves_out_is_the_diff() {
     g.allocate("cap:extra", "cmp:extra").unwrap();
     g.link_artifact(LinkArtifactOptions {
         artifact_id: "art:extra".into(),
-        name: "Extra.cs".into(),
+        name: Some("Extra.cs".into()),
+        description: None,
         location: Some("src/Extra.cs".into()),
         artifact_type: Some("code".into()),
         target_type: node::CAPABILITY.into(),
@@ -855,7 +858,8 @@ fn a_release_that_includes_a_subsystem_ships_its_contained_parts() {
         .unwrap();
     g.link_artifact(LinkArtifactOptions {
         artifact_id: "art:loose".into(),
-        name: "loose.bin".into(),
+        name: Some("loose.bin".into()),
+        description: None,
         location: Some("loose.bin".into()),
         artifact_type: Some("binary".into()),
         target_type: node::COMPONENT.into(),

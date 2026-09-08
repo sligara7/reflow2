@@ -31,6 +31,43 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Fixed
+
+- **`link_artifact` no longer rewrites an artifact's name on every re-link.** `name` was mandatory,
+  so "leave the name alone" could not be said: attaching an existing file to a second target forced
+  the caller to re-type the stored name, and whatever they typed was written over it. Every field
+  beside it — `artifact_type`, `location`, `checksum`, `content_ref`, `note_kind` — already
+  preserved on omission. The name in effect is now **resolved** — the caller's if given, otherwise
+  the one the design already holds — and the artifact's name is written only when one was actually
+  passed. A **first** link still requires one, and the refusal names what would have worked.
+- **The class guard was testing the wrong set.** `constructors_preserve.rs` guards one behaviour —
+  a write path that builds a node from a partial property set must not erase what the design
+  already knew — and it has been earned four times (BL-46, BL-166, BL-183, and
+  `set_verification_status` deleting `last_run_at`). Every case in it was an `add_*` constructor,
+  so membership was decided by how a call is *spelled* rather than by what it *does*, and
+  `link_artifact` sat outside it while the file's own header vouched for it. Four linker cases
+  added; the header now records why the scope was wrong.
+
+### Added
+
+- **`link_artifact` accepts `description`.** Registering a file and saying what it is was two tools
+  with different field sets for the same node. Omitting it preserves any stored description.
+
+### Notes
+
+- The fix was pinned by negative control rather than by writing the test first: restoring the
+  unconditional write fails `re_linking_an_artifact_does_not_rename_it` on exactly the data-loss
+  assertion, while the two controls pinning that an explicitly-passed name *still* renames stay
+  green. A fix that made the parameter inert would be the same bug pointing the other way.
+- **The first version of the fix was itself incomplete**, which is why the name is *resolved* rather
+  than merely optional. The provenance `Fragment`'s `title` is a required property, so a re-link
+  onto an artifact whose fragment did not yet exist had nothing to build it from and failed
+  validation on a field the caller never mentioned. Caught by using the fix on this change's own
+  bookkeeping, and pinned by `re_linking_mints_a_missing_fragment_from_the_stored_name`.
+- **Not measured:** how many stored artifact names past re-links already flattened.
+  `build_design_graph.py` re-links 34 artifacts on every run, and no before-and-after record
+  survives to compare against.
+
 ### Added
 
 - **A design can state the rules its operating environment imposes on it, say whether it complies,

@@ -38,7 +38,8 @@ fn unbaselined() -> DesignGraph {
         .expect("cap");
     g.link_artifact(LinkArtifactOptions {
         artifact_id: "art:score".into(),
-        name: "Score.cs".into(),
+        name: Some("Score.cs".into()),
+        description: None,
         location: Some("src/Score.cs".into()),
         artifact_type: Some("code".into()),
         target_type: node::CAPABILITY.into(),
@@ -69,7 +70,8 @@ fn baselined() -> DesignGraph {
         .expect("cap");
     g.link_artifact(LinkArtifactOptions {
         artifact_id: "art:score".into(),
-        name: "Score.cs".into(),
+        name: Some("Score.cs".into()),
+        description: None,
         location: Some("src/Score.cs".into()),
         artifact_type: Some("code".into()),
         target_type: node::CAPABILITY.into(),
@@ -416,7 +418,8 @@ fn a_partial_sweep_confirms_only_what_it_saw() {
     let mut g = baselined();
     g.link_artifact(LinkArtifactOptions {
         artifact_id: "art:other".into(),
-        name: "Other.cs".into(),
+        name: Some("Other.cs".into()),
+        description: None,
         location: Some("src/Other.cs".into()),
         artifact_type: Some("code".into()),
         target_type: node::CAPABILITY.into(),
