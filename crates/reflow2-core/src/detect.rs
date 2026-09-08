@@ -242,6 +242,13 @@ pub enum GapSource {
     /// made the pre-2026-08-08 reading wrong, where a rule nobody had thought
     /// about was billed for a check nobody agreed to.
     UnstatedRuleEnforcement,
+    /// A MANDATORY EnvironmentRule the design has said nothing about — neither
+    /// complied with nor violated. A design that has not said whether it meets
+    /// a code has not met it.
+    UncheckedCompliance,
+    /// A flagged violation nobody has triaged: neither a granted variance nor a
+    /// defect somebody owns.
+    OpenViolation,
     /// A build exists and the design records no adopted conventions at all.
     ///
     /// THE SIBLING THAT MAKES GOVERNANCE SELF-SEEDING, and without it the rest
@@ -671,6 +678,8 @@ impl GapSource {
             GapSource::UnverifiedCapability => "unverified_capability",
             GapSource::UnverifiedEnforcedRule => "unverified_enforced_rule",
             GapSource::UnstatedRuleEnforcement => "unstated_rule_enforcement",
+            GapSource::UncheckedCompliance => "unchecked_compliance",
+            GapSource::OpenViolation => "open_violation",
             GapSource::BuildWithoutGovernance => "build_without_governance",
             GapSource::ComponentGranularityVerification => "component_granularity_verification",
             GapSource::UnverifiedArtifact => "unverified_artifact",
@@ -729,6 +738,17 @@ impl GapSource {
     fn is_aggregate(self) -> bool {
         match self {
             GapSource::UnvalidatedCapability => true,
+            // PER-RULE, and that IS the aggregate: one finding says "nobody has
+            // answered this code", which is a question about the rule rather
+            // than about any one element. Per (element, rule) pair it would
+            // raise the element count times the rule count — the hub-shaped
+            // noise this project has already had to narrow once.
+            GapSource::UncheckedCompliance => true,
+            // Per flagged edge, NOT aggregate: a violation is a specific thing
+            // said about a specific element, with three possible answers, and
+            // collapsing several into one finding would ask them as a single
+            // question that cannot be answered.
+            GapSource::OpenViolation => false,
             // Per-rule, not per-pair: reflow2's own design has 73 undeclared
             // couplings, and every consumer arrives with a comparable set. The
             // standing judgement being accepted here is "our boundaries are
@@ -2003,6 +2023,7 @@ impl DesignGraph {
         self.detect_unrealized_capabilities(&pop, &mut gaps)?;
         self.detect_unverified_capabilities(&pop, &mut gaps)?;
         self.detect_unverified_enforced_rules(&pop, &mut gaps)?;
+        self.detect_compliance_gaps(&mut gaps)?;
         self.detect_failing_verifications(&mut gaps)?;
         self.detect_unresolved_drift(&mut gaps)?;
         self.detect_unreleased_components(&mut gaps)?;
@@ -4045,6 +4066,118 @@ impl DesignGraph {
     /// moment it is written, whether or not anything else has a check yet. The
     /// first draft of this lived in that function and silently never fired on a
     /// young design; the test that expected it to fire is what found that.
+    /// The two compliance detectors, together because they read one walk.
+    ///
+    /// # Scoping, which is a judgement and is stated
+    ///
+    /// `unchecked_compliance` fires ONCE PER MANDATORY RULE that nothing has
+    /// answered — not once per (element, rule) pair. A design with 234
+    /// capabilities and 10 rules would otherwise raise 2,340 findings, which is
+    /// the hub-shaped noise that got the overtaken-defect detector narrowed the
+    /// week it shipped. One finding per rule is bounded by the rules a person
+    /// actually wrote, and the question it asks — "has anybody said whether we
+    /// meet this?" — is answered once, not per element.
+    ///
+    /// ADVISORY RULES ARE NOT ASKED ABOUT. `mandatory` is the flag that
+    /// separates what the design cannot negotiate from guidance, and asking
+    /// about guidance every sweep is how a finding becomes wallpaper.
+    fn detect_compliance_gaps(&self, gaps: &mut Vec<GapCandidate>) -> Result<(), DynoError> {
+        for rule in self.scan_live_nodes(node::ENVIRONMENT_RULE)? {
+            let prop = |k: &str| rule.properties.get(k);
+            // Absent reads as MANDATORY: the schema defaults it true, and a rule
+            // whose force nobody stated is not safely assumed to be advice.
+            let mandatory = prop("mandatory").and_then(Value::as_bool).unwrap_or(true);
+            let answered = !self
+                .incoming(&rule.node_id, Some(edge::COMPLIES_WITH))?
+                .is_empty()
+                || !self
+                    .incoming(&rule.node_id, Some(edge::VIOLATES_RULE))?
+                    .is_empty();
+            let name = node_name(&rule);
+            let authority = prop("authority")
+                .and_then(Value::as_str)
+                .unwrap_or("an unnamed authority")
+                .to_string();
+
+            if mandatory && !answered {
+                gaps.push(GapCandidate {
+                    id: gap_id(
+                        GapSource::UncheckedCompliance,
+                        std::slice::from_ref(&rule.node_id),
+                    ),
+                    gap_source: GapSource::UncheckedCompliance,
+                    scope: GapScope::Project,
+                    severity: 0.6,
+                    title: format!(
+                        "Nothing in the design says whether it meets \u{201c}{name}\u{201d}"
+                    ),
+                    description: format!(
+                        "\u{201c}{name}\u{201d} is a MANDATORY rule imposed by {authority}, and no \
+                         design element has claimed compliance with it or been flagged against \
+                         it. A design that has not said whether it meets a code has not met it. \
+                         Say which element complies (complies_with, carrying the evidence when \
+                         it was demonstrated), or flag what does not (violates_rule)."
+                    ),
+                    affected_ids: vec![rule.node_id.clone()],
+                    suggested_depth: 2,
+                    evidence: format!(
+                        "EnvironmentRule '{}' is mandatory and has 0 incoming COMPLIES_WITH and \
+                         0 incoming VIOLATES_RULE.",
+                        rule.node_id
+                    ),
+                });
+            }
+
+            // An untriaged violation, one finding per flagged edge: violations
+            // should be few and each is a real question with three answers.
+            for v in self.incoming(&rule.node_id, Some(edge::VIOLATES_RULE))? {
+                let status = v
+                    .properties
+                    .get("status")
+                    .and_then(Value::as_str)
+                    .unwrap_or("proposed");
+                if status != "proposed" {
+                    continue;
+                }
+                let severity = v
+                    .properties
+                    .get("severity")
+                    .and_then(Value::as_str)
+                    .unwrap_or("high");
+                let affected = vec![rule.node_id.clone(), v.from_id.clone()];
+                gaps.push(GapCandidate {
+                    id: gap_id(GapSource::OpenViolation, &affected),
+                    gap_source: GapSource::OpenViolation,
+                    scope: GapScope::Project,
+                    severity: match severity {
+                        "critical" => 0.9,
+                        "high" => 0.75,
+                        "medium" => 0.5,
+                        _ => 0.35,
+                    },
+                    title: format!(
+                        "\u{201c}{}\u{201d} is flagged against \u{201c}{name}\u{201d} and nobody has triaged it",
+                        v.from_id
+                    ),
+                    description: format!(
+                        "A violation of \u{201c}{name}\u{201d} ({authority}) was flagged at {severity} \
+                         severity and still reads `proposed` \u{2014} neither a granted variance nor \
+                         a defect somebody owns. Triage it with set_violation_status: \
+                         `confirmed` records a waiver, which is KEPT and documented rather than \
+                         deleted, and `rejected` says it must be fixed."
+                    ),
+                    affected_ids: affected,
+                    suggested_depth: 2,
+                    evidence: format!(
+                        "VIOLATES_RULE from '{}' to '{}' reads status=proposed.",
+                        v.from_id, rule.node_id
+                    ),
+                });
+            }
+        }
+        Ok(())
+    }
+
     fn detect_unverified_enforced_rules(
         &self,
         pop: &Population,

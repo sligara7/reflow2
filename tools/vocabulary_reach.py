@@ -218,6 +218,23 @@ WRITES_TYPE = {
     "gap_to_prompt": "Question",
     "gaps_to_prompts": "Question",
     "external_dependency": "Resource",
+    # THE RECONCILE FAMILY WRITES DriftEvent. Mapped 2026-09-07 after adding
+    # `severity` to violates_rule made DriftEvent.severity read as newly
+    # reachable — an unmapped type falls back to the whole surface, so any new
+    # parameter anywhere can silently "fix" one of its properties. That is the
+    # cross-type leak this map exists to stop, arriving through the fallback
+    # path instead of the pool.
+    "reconcile_artifacts": "DriftEvent",
+    "reconcile_verification": "DriftEvent",
+    "reconcile_deployment": "DriftEvent",
+    "reconcile_dependencies": "DriftEvent",
+    # And the compliance layer's own writers, so the same thing cannot happen
+    # to EnvironmentRule as the surface grows around it.
+    "add_environment_rule": "EnvironmentRule",
+    "complies_with": "EnvironmentRule",
+    "violates_rule": "EnvironmentRule",
+    "set_violation_status": "EnvironmentRule",
+    "imposes": "EnvironmentRule",
 }
 
 

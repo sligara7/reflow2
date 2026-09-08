@@ -86,6 +86,179 @@ impl ReflowService {
     }
 
     #[tool(
+        description = "Record a rule the design CANNOT NEGOTIATE — a building code, a zoning \
+                       ordinance, a safety standard, a physical law. THREE KINDS OF RULE ARE \
+                       KEPT APART: a Constraint is self-imposed (stay under $500k), a DesignRule \
+                       is a chosen convention (branch before pushing), and this one is imposed \
+                       by the world the design operates in — it may comply, seek a variance, or \
+                       fail. Give `authority` (who issues it) and `reference` (the citation), \
+                       because those are what let a reader check the claim against the source \
+                       instead of trusting it. `mandatory` defaults TRUE and is load-bearing: a \
+                       mandatory rule the design has said nothing about is raised as a gap, an \
+                       advisory one is not. Wire it with imposes, then answer it with \
+                       complies_with or violates_rule.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn add_environment_rule(
+        &self,
+        Parameters(req): Parameters<crate::service::EnvironmentRuleReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.write_lock().await?;
+        let ty = reflow2_core::nodes::node::ENVIRONMENT_RULE;
+        let mut __rf = crate::service::RequiredFields::new(&g, ty, &req.id)?;
+        let name = __rf.str("name", req.name);
+        let statement = __rf.str("statement", req.statement);
+        __rf.finish()?;
+        let node = g
+            .add_environment_rule(
+                &req.id,
+                &name,
+                &statement,
+                req.rule_type.as_deref(),
+                req.authority.as_deref(),
+                req.jurisdiction.as_deref(),
+                req.reference.as_deref(),
+                req.mandatory,
+            )
+            .map_err(dyno_err)?;
+        ok_json(NodeDto::from(node))
+    }
+
+    #[tool(
+        description = "Record that a Project's result must function in an Environment \
+                       (OPERATES_IN). Change the environment and the whole constraint space \
+                       changes: a house in Kennewick meets city ordinances and seismic \
+                       provisions; the same house on Mars faces 0.38 g and no atmosphere. A \
+                       project may target more than one, and each brings its own imposed rules.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn operates_in(
+        &self,
+        Parameters(req): Parameters<crate::service::OperatesInReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.write_lock().await?;
+        g.operates_in(&req.project_id, &req.environment_id)
+            .map_err(dyno_err)?;
+        ok_json(json!({ "project": req.project_id, "environment": req.environment_id }))
+    }
+
+    #[tool(
+        description = "Record that an Environment imposes an EnvironmentRule (IMPOSES) — its \
+                       codes and its physics. One edge per rule.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn imposes(
+        &self,
+        Parameters(req): Parameters<crate::service::ImposesReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.write_lock().await?;
+        g.imposes(&req.environment_id, &req.rule_id)
+            .map_err(dyno_err)?;
+        ok_json(json!({ "environment": req.environment_id, "rule": req.rule_id }))
+    }
+
+    #[tool(
+        description = "Record that a design element SATISFIES an EnvironmentRule \
+                       (COMPLIES_WITH). Pass `verified: true` ONLY when compliance was \
+                       demonstrated — a calc package, a stamped drawing, a test report — and put \
+                       what demonstrates it in `evidence`. It defaults to false because a claim \
+                       is not a check, and the two must stay distinguishable to anyone reading \
+                       the record later.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn complies_with(
+        &self,
+        Parameters(req): Parameters<crate::service::CompliesWithReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.write_lock().await?;
+        let element_type = crate::service::resolve_node_type(
+            &g,
+            req.element_type.as_deref(),
+            &req.element_id,
+            "element_type",
+        )?;
+        g.complies_with(
+            &element_type,
+            &req.element_id,
+            &req.rule_id,
+            req.verified,
+            req.evidence.as_deref(),
+        )
+        .map_err(dyno_err)?;
+        ok_json(json!({
+            "element": req.element_id,
+            "element_type": element_type,
+            "rule": req.rule_id,
+            "verified": req.verified.unwrap_or(false),
+        }))
+    }
+
+    #[tool(
+        description = "Flag that a design element CONTRADICTS an EnvironmentRule \
+                       (VIOLATES_RULE). Flagged, never silently dropped, and it lands \
+                       `proposed` — untriaged — which raises a gap until somebody answers it. \
+                       Put the specific rule text and the offending detail in `evidence`. \
+                       Triage with set_violation_status: `confirmed` records a granted variance, \
+                       which is KEPT and documented rather than deleted, and `rejected` says it \
+                       must be fixed.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn violates_rule(
+        &self,
+        Parameters(req): Parameters<crate::service::ViolatesRuleReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.write_lock().await?;
+        let element_type = crate::service::resolve_node_type(
+            &g,
+            req.element_type.as_deref(),
+            &req.element_id,
+            "element_type",
+        )?;
+        g.violates_rule(
+            &element_type,
+            &req.element_id,
+            &req.rule_id,
+            req.proposer.as_deref(),
+            req.severity.as_deref(),
+            req.evidence.as_deref(),
+        )
+        .map_err(dyno_err)?;
+        ok_json(json!({
+            "element": req.element_id,
+            "rule": req.rule_id,
+            "status": "proposed",
+        }))
+    }
+
+    #[tool(
+        description = "Triage a flagged violation. `confirmed` = a variance or waiver was \
+                       GRANTED: the violation is KEPT and documented, because the record of what \
+                       was found and what was decided about it IS the audit trail. `rejected` = \
+                       it must be fixed, and the finding is retained for the same reason. Put \
+                       the waiver reference, or what has to change, in `rationale`. The edge is \
+                       rewritten rather than removed — nothing is deleted by triaging it.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn set_violation_status(
+        &self,
+        Parameters(req): Parameters<crate::service::ViolationStatusReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.write_lock().await?;
+        g.set_violation_status(
+            &req.element_id,
+            &req.rule_id,
+            &req.status,
+            req.rationale.as_deref(),
+        )
+        .map_err(dyno_err)?;
+        ok_json(json!({
+            "element": req.element_id,
+            "rule": req.rule_id,
+            "status": req.status,
+        }))
+    }
+
+    #[tool(
         description = "Record an Environment — where a Release runs: a cloud region, a lab bench, \
                        a physical site. More than a deploy target; it is the context whose rules \
                        the design must satisfy. \

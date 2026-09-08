@@ -49,6 +49,12 @@
       "written_by": "reconcile passes (drift.rs, verify.rs, fielded.rs)"
     },
     {
+      "property": "DriftEvent.summary",
+      "kind": "machine_written",
+      "reason": "The finding's own message, written by the reconcile pass that detected the drift. A caller-set summary would describe a drift nobody observed.",
+      "written_by": "reconcile_verification (verify.rs), reconcile_deployment (fielded.rs)"
+    },
+    {
       "property": "Fragment.created_at",
       "kind": "unused",
       "reason": "0 of 221. Same no-clock reason.",

@@ -1,0 +1,87 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Record a rule the design CANNOT NEGOTIATE — a building code, a zoning ordinance, a safety standard, a physical law. THREE KINDS OF RULE ARE KEPT APART: a Constraint is self-imposed (stay under $500k), a DesignRule is a chosen convention (branch before pushing), and this one is imposed by the world the design operates in — it may comply, seek a variance, or fail. Give `authority` (who issues it) and `reference` (the citation), because those are what let a reader check the claim against the source instead of trusting it. `mandatory` defaults TRUE and is load-bearing: a mandatory rule the design has said nothing about is raised as a gap, an advisory one is not. Wire it with imposes, then answer it with complies_with or violates_rule.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "authority": {
+        "default": null,
+        "description": "WHO ISSUES OR ENFORCES IT — a city, a county, an agency, a standards\nbody, or \"physics\". The name a reader would go and ask.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "id": {
+        "type": "string"
+      },
+      "jurisdiction": {
+        "default": null,
+        "description": "WHERE IT APPLIES — \"Kennewick, WA\", \"Benton County\", \"Mars surface\".",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "mandatory": {
+        "default": null,
+        "description": "HARD (must comply, and a design that has said nothing is asked about it)\nversus advisory. Defaults to true: a rule whose force nobody stated is\nnot safely assumed to be advice.",
+        "type": [
+          "boolean",
+          "null"
+        ]
+      },
+      "name": {
+        "default": null,
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "reference": {
+        "default": null,
+        "description": "The citation: \"IBC 2021 §1607\", \"NFPA 101\", a datasheet. What lets a\nreader check the claim against the source rather than trust it.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "rule_type": {
+        "default": null,
+        "description": "`regulatory` (default) / `building_code` / `zoning` / `safety` /\n`environmental` / `standard` / `physical_law` / `interface` /\n`constraint`.",
+        "enum": [
+          "regulatory",
+          "building_code",
+          "zoning",
+          "safety",
+          "environmental",
+          "standard",
+          "physical_law",
+          "interface",
+          "constraint",
+          null
+        ],
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "statement": {
+        "default": null,
+        "description": "What the rule requires or forbids, in plain terms.",
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "required": [
+      "id"
+    ],
+    "type": "object"
+  },
+  "name": "add_environment_rule"
+}

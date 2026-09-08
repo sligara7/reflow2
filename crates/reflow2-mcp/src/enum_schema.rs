@@ -90,6 +90,15 @@ schema_enum!(requirement_provenance_opt, "Requirement", "provenance", opt);
 schema_enum!(requirement_priority_opt, "Requirement", "priority", opt);
 schema_enum!(actor_type_opt, "Actor", "actor_type", opt);
 schema_enum!(fragment_note_kind_opt, "Fragment", "note_kind", opt);
+schema_enum!(
+    environment_rule_type_opt,
+    "EnvironmentRule",
+    "rule_type",
+    opt
+);
+schema_enum!(violation_proposer_opt, "VIOLATES_RULE", "proposer", opt);
+schema_enum!(violation_severity_opt, "VIOLATES_RULE", "severity", opt);
+schema_enum!(violation_status_req, "VIOLATES_RULE", "status", req);
 schema_enum!(artifact_type_opt, "Artifact", "artifact_type", opt);
 schema_enum!(verification_method_opt, "Verification", "method", opt);
 schema_enum!(verification_level_opt, "Verification", "level", opt);

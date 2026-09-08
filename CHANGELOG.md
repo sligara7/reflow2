@@ -31,6 +31,34 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **A design can state the rules its operating environment imposes on it, say whether it complies,
+  and be asked when it has not said.** `EnvironmentRule` has been declared in the schema since
+  2026-07-17 and nothing could write one; the compliance half was deliberately parked on 2026-08-26
+  on the grounds that no user had asked for it. The parking named its own reversal condition — a
+  real request — and the condition was met, so all three legs land together:
+  - **Six typed tools.** `add_environment_rule` records the rule with the two fields that make it
+    auditable rather than a note: `authority` (who issues it) and `reference` (the citation a
+    reader can check it against). `operates_in`, `imposes`, `complies_with` and `violates_rule`
+    draw the four edges; `set_violation_status` triages a flagged violation.
+  - **Two detectors that ask a person.** `unchecked_compliance` reports a mandatory rule the design
+    has said nothing about, because a design that has not said whether it meets a code has not met
+    it. `open_violation` reports a flagged violation nobody has triaged — neither an accepted
+    variance nor a defect somebody owns.
+  - **Three kinds of rule stay apart**, which is the whole reason the type exists. A `Constraint`
+    is self-imposed, a `DesignRule` is a chosen convention, and an `EnvironmentRule` is imposed by
+    the world: the design may comply, seek a variance, or fail, and it cannot simply drop the rule.
+
+### Notes
+
+- `unchecked_compliance` aggregates **once per unanswered mandatory rule**, not once per element
+  and rule. Per-pair on a design with 234 capabilities and 10 rules it would raise 2,340 findings,
+  which is the hub-shaped noise an earlier detector had to be narrowed for in the week it shipped.
+- An **advisory** rule (`mandatory: false`) is never asked about; `mandatory` absent reads as true.
+- Triage **rewrites** the violation edge and never deletes it. A granted variance that vanishes
+  from the record is the opposite of the audit trail a violation is recorded for.
+
 ## [0.54.0] — 2026-09-07
 
 ### Added
