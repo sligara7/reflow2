@@ -281,8 +281,8 @@ that made the generic escape hatch unusable.
 | WS-1b | *(no gap — a reported FACT)* `evidence_report` / `confirmation_ledger` narrowness and circularity | What a check PINNED vs SWEPT, and what a value was FITTED to | `verify.rs`: `set_evidence_scope`, `calibrated_against` + MCP tools (2026-08-01). Put on separate setters rather than on `verifies`, per BL-129's lesson that there should be one way to do it | ✅ |
 | WS-2 | `no_deploy_operate` | `Release` / `Environment` / `Resource` (+ `DEPLOYED_TO`, `REQUIRES_RESOURCE`) | `operate.rs`: `add_release`, `add_environment`, `add_resource`, `deploy_to`, `require_resource` + MCP tools | ✅ |
 | WS-3 | HEAL `contradiction` → "Decision" content stub | `Decision` (+ `GOVERNED_BY`) | `graph.rs`: `add_decision`, `governed_by` + MCP tools | ✅ |
-| WS-4 | GS-9 compliance gaps (deferred) | `EnvironmentRule` (+ `OPERATES_IN`, `IMPOSES`, `COMPLIES_WITH`, `VIOLATES_RULE`) | none | ⬜ |
-| WS-5 | — (no detector asks for it) | `QualityGate` | none | ⬜ |
+| WS-4 | `unchecked_compliance` (a mandatory rule nothing has answered), `open_violation` (an untriaged violation) | `EnvironmentRule` (+ `OPERATES_IN`, `IMPOSES`, `COMPLIES_WITH`, `VIOLATES_RULE`) | `operate.rs`: `add_environment_rule`, `operates_in`, `imposes`, `complies_with`, `violates_rule`, `set_violation_status` + MCP tools; `detect.rs`: the two gap sources · `tests/the_compliance_layer_is_whole.rs` (5) | ✅ |
+| WS-5 | — | ~~`QualityGate`~~ | **RETIRED 2026-09-07** — `dec:qualitygate-is-retired-the-phase-gate-dissolved-into-the-detectors` | ⛔ |
 | WS-7 | — (the write side of axis Y) | `Component.level` + `Component CONTAINS Component` | `graph.rs`: `add_component(level)`, `contain_component` + MCP tools — `hierarchy_issues` previously had no writer and returned `[]` for want of input | ✅ |
 | WS-8 | `unsatisfied_requirement` (suppression side) | `Requirement.status` | `graph.rs`: `set_requirement_status` + MCP tool; HEAL's orphan scan now honours it too | ✅ |
 | WS-9 | — (the loop's own memory) | a question already put to the user, and whether it was answered | `detect.rs`: `record_asked_question`, `answer_question`, `withdraw_question`, `open_questions` + MCP tools; written by `gap_to_prompt`'s serve pass so it cannot be forgotten (BL-4) | ✅ |
@@ -296,10 +296,22 @@ fires, the user records what it asked for, the gap closes — plus
 `reflow2-mcp/tests/tools.rs::the_write_side_can_answer_what_detect_asks_for` over the surface, and
 the typed tools are named per-gap in the `detect-and-ask` skill.
 
-**WS-4 and WS-5 stay deferred on purpose.** Nothing reads or asks for either type: GS-9 compliance
-detection is itself deferred, and `QualityGate` has no detector at all. Adding constructors for
-types nothing consumes would build the mirror image of the problem this section exists to record —
-a write side with no read side. Each should land with its detector, not before.
+**WS-4 and WS-5 were both deferred here on one principle — each should land with its detector,
+not before — and on 2026-09-07 that principle resolved them in opposite directions.**
+
+WS-4 SHIPPED WHOLE. The parking `decision:vocab:environment` named its own reversal condition, a
+real user request; the condition was met and Anthony ruled *"build the whole leg"*. Six typed
+tools, four edges, and two detectors that ask a person landed together rather than a write side
+first, which is exactly what this paragraph asked for.
+
+WS-5 WAS RETIRED. `QualityGate` modelled the stage gate — a dated, waivable judgement at a phase
+boundary — and it was never a duplicate of `Verification`. It went unused for structural reasons:
+it participated in **no edge type at all**, its `criteria` was a JSON array inside a string that
+nothing could read, and decisively, **nothing in the design ever carried a phase**, so the gate had
+nothing to gate. Its conditions are now computed continuously by `detect_gaps` and `detect_defects`
+— its own hint's examples, "DAG is acyclic" and "all Requirements have coverage", are literally
+what they evaluate — so a stored `passed` would be the weaker of the two. The decision records the
+condition under which it should come back.
 
 ## Dormant schema scaffolding — vocabulary with no code path yet (BL-82)
 
@@ -314,9 +326,9 @@ not-redundant → defer, and say so here.*
 | Subsystem | Schema types | Status |
 |---|---|---|
 | Bitemporal facts | `TemporalFact` + `HAS_TEMPORAL_FACT` / `ABOUT_ENTITY` / `VALID_FROM` / `VALID_TO` | ⬜ Deferred — time-bounded facts (valid-from/valid-to over epochs). Scaffold only; no constructor, no reader. |
-| Environment compliance | `EnvironmentRule` + `IMPOSES` / `COMPLIES_WITH` / `VIOLATES_RULE` | ⬜ Deferred — the P5 operating-ruleset layer (GS-9 / WS-4). Nothing writes or reads it yet. |
-| Actor interaction | `Actor` + `INTERACTS_WITH` / `OPERATES_IN` | ⬜ Deferred — `Actor` is rendered in reports but never constructed via a typed path; the interaction edges are unused. |
-| Quality gates | `QualityGate` (WS-5) | ⬜ Deferred — no constructor, no detector. |
+| Environment compliance | `EnvironmentRule` + `IMPOSES` / `COMPLIES_WITH` / `VIOLATES_RULE` | ✅ **Built 2026-09-07** as a whole leg — six typed tools, four edges, two detectors (WS-4). |
+| Actor interaction | `Actor` + `INTERACTS_WITH` / `OPERATES_IN` | ◐ Partly — `add_actor` shipped 2026-09-07 (one of the fourteen reachability holes), so the type has a typed path; the interaction edges are still unused. |
+| Quality gates | ~~`QualityGate`~~ (WS-5) | ⛔ **Retired 2026-09-07** — the gate dissolved into the detectors and nothing recorded a phase. See `dec:qualitygate-is-retired-the-phase-gate-dissolved-into-the-detectors`. |
 | Epoch nesting | `CONTAINS_EPOCH` | ⬜ Deferred — a hotfix epoch within a release epoch; unused. |
 | Reserved anchor | `Anchor` | ⬜ Deferred — zero references anywhere. |
 

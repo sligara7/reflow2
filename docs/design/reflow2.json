@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:fc121453fb85ff00d29a5194876543235ec6a80142fca309b7d1bcc2c05c44c1",
+  "content_hash": "sha256:40d1ddffb3f4357d136b3a7d36fb07bf9960d4c4c9eef9cd401071497883a56b",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -10765,6 +10765,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:dec:qualitygate-is-retired-the-phase-gate-dissolved-into-the-detectors",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:decision:vocab:environment",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
@@ -11783,6 +11789,14 @@
       "properties": {
         "acted_at": "2026-08-05T23:10:00Z",
         "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "chg:qualitygate-leaves-the-schema",
+      "properties": {
+        "role": "approver"
       },
       "to_id": "who:ajs"
     },
@@ -14863,6 +14877,14 @@
       "properties": {
         "acted_at": "2026-08-05",
         "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:qualitygate-is-retired-the-phase-gate-dissolved-into-the-detectors",
+      "properties": {
+        "role": "approver"
       },
       "to_id": "who:ajs"
     },
@@ -23902,6 +23924,15 @@
         "action": "modified"
       },
       "to_id": "art:seam"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-019038356b3c3a0c",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-the-fourteen-holes-are-writable"
     },
     {
       "edge_type": "CHANGED",
@@ -34127,6 +34158,78 @@
         "action": "added"
       },
       "to_id": "cap:publishable-promise"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:qualitygate-leaves-the-schema",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:preserve"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:qualitygate-leaves-the-schema",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:provenance"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:qualitygate-leaves-the-schema",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:readme"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:qualitygate-leaves-the-schema",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:qualitygate-leaves-the-schema",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-verify"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:qualitygate-leaves-the-schema",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:smoke-mcp"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:qualitygate-leaves-the-schema",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-every-constructor-says-what-the-thing-is"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:qualitygate-leaves-the-schema",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:vocabulary"
     },
     {
       "edge_type": "CHANGED",
@@ -51692,6 +51795,14 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "chg:qualitygate-leaves-the-schema",
+      "properties": {
+        "evidence": "The removal exists because of this ruling and its scope came from it: the type goes, the record of what it was for stays, and the condition for bringing it back is stated rather than left to be re-argued."
+      },
+      "to_id": "dec:qualitygate-is-retired-the-phase-gate-dissolved-into-the-detectors"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "chg:re-linking-an-artifact-no-longer-renames-it",
       "properties": {
         "evidence": "Followed in order and the order mattered: the search for precedent found three prior fixes of the same class, which is what turned a one-line repair into a question about why the guard missed it. The pin was observed to fail by negative control before the fix was trusted."
@@ -55025,6 +55136,12 @@
       "from_id": "dec:proposed-requirements-pruned",
       "properties": {},
       "to_id": "snap:epoch:prune-proposed:dec:proposed-requirements-pruned"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:qualitygate-is-retired-the-phase-gate-dissolved-into-the-detectors",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:dec:qualitygate-is-retired-the-phase-gate-dissolved-into-the-detectors"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -150277,6 +150394,14 @@
     },
     {
       "edge_type": "MITIGATES",
+      "from_id": "chg:qualitygate-leaves-the-schema",
+      "properties": {
+        "evidence": "Two more instances of the same class were found and closed here — the constructor sweep's exemption list, where three of four entries were already dead, and the schema-size claims in four documents, where the edge count had been wrong for weeks. MITIGATES rather than INVALIDATES: each list now checks its own entries, but nothing yet finds the NEXT hand-maintained list, so the cause the fact names is still live."
+      },
+      "to_id": "fact:the-preserve-on-revise-guard-draws-its-membership-on-a-call-name-not-on-a-behaviour"
+    },
+    {
+      "edge_type": "MITIGATES",
       "from_id": "chg:re-linking-an-artifact-no-longer-renames-it",
       "properties": {
         "evidence": "MITIGATES rather than INVALIDATES, and the distinction is the point. This change adds the linker to the guard and corrects its header, so the known gap is closed — but the guard's membership is still a hand-maintained list, so the cause it names is still live and the next write path added under a different call name will be outside it again. Reading this as a fix would be the 'the error is gone, so it's fixed' failure."
@@ -151682,7 +151807,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:acknowledgement-not-structure-test",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "ver:acknowledgement-not-structure"
     },
@@ -151690,7 +151816,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:adopt-skill",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:adopt"
     },
@@ -151698,7 +151825,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:agent",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:agent"
     },
@@ -151706,7 +151834,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:allocate",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:allocate"
     },
@@ -151714,7 +151843,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:alternatives",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:compare-alternatives"
     },
@@ -151722,7 +151852,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:alternatives",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:decision-point"
     },
@@ -151730,7 +151861,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:alternatives",
       "properties": {
-        "completeness": "partial"
+        "completeness": "partial",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:alternatives"
     },
@@ -151738,7 +151870,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:artifact",
       "properties": {
-        "completeness": "partial"
+        "completeness": "partial",
+        "conformance": "unchecked"
       },
       "to_id": "cap:nothing-moved"
     },
@@ -151755,7 +151888,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:artifact",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:artifact"
     },
@@ -151763,7 +151897,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:artifact-intent-test",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:artifact-declares-its-own-shape"
     },
@@ -151771,7 +151906,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:bl124-instrument",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "ver:acknowledgement-not-structure"
     },
@@ -151779,7 +151915,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:brainstorm-skill",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:brainstorm"
     },
@@ -151787,7 +151924,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:budget",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:budget"
     },
@@ -151795,7 +151933,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:bulk",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:bulk-forms"
     },
@@ -151830,7 +151969,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:capture-intent-skill",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:capture-registers-its-source"
     },
@@ -151838,7 +151978,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:capture-intent-skill",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:the-design-interview-precedes-the-capture"
     },
@@ -151855,7 +151996,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:capture-session-skill",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:capture-session-skill"
     },
@@ -151881,7 +152023,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:changelog-test",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "ver:changelog-view"
     },
@@ -151889,14 +152032,17 @@
       "edge_type": "REALIZES",
       "from_id": "art:check",
       "properties": {
-        "completeness": "partial"
+        "completeness": "partial",
+        "conformance": "unchecked"
       },
       "to_id": "cap:design-dependencies-declared"
     },
     {
       "edge_type": "REALIZES",
       "from_id": "art:check",
-      "properties": {},
+      "properties": {
+        "conformance": "unchecked"
+      },
       "to_id": "cap:reconcile-built"
     },
     {
@@ -151910,9 +152056,19 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:check-doc-versions",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "chg:qualitygate-leaves-the-schema"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:check-health-skill",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:heal"
     },
@@ -151938,7 +152094,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:check-kit-manifest",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "ver:kit-manifest-agrees"
     },
@@ -151946,7 +152103,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:checksum-dialect-test",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "ver:checksum-dialect"
     },
@@ -151954,7 +152112,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:claim-age-test",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "ver:a-claim-reads-back-with-its-age"
     },
@@ -151971,7 +152130,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:claims",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:claim-liveness"
     },
@@ -151979,7 +152139,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:claims",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:cluster-claims"
     },
@@ -152013,7 +152174,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:compare",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:compare"
     },
@@ -152021,7 +152183,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:compose",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:composed-analysis"
     },
@@ -152038,7 +152201,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:compose-test",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "ver:composed-analysis"
     },
@@ -152046,7 +152210,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:confirm",
       "properties": {
-        "completeness": "partial"
+        "completeness": "partial",
+        "conformance": "unchecked"
       },
       "to_id": "cap:nothing-moved"
     },
@@ -152054,7 +152219,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:confirm",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:confirm"
     },
@@ -152062,7 +152228,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:confirmation-vocabulary-test",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:nothing-moved"
     },
@@ -152079,7 +152246,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:consumption",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:built-and-consumed-by-nothing"
     },
@@ -152096,7 +152264,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:contradiction-alignment-test",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "ver:supporting-is-not-conflict"
     },
@@ -152104,7 +152273,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:corpus",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:corpus-ingest"
     },
@@ -152121,7 +152291,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:coverage",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:coverage"
     },
@@ -152138,7 +152309,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:coverage-test",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "ver:coverage"
     },
@@ -152146,7 +152318,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:cycles-test",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:cycle-names-its-basis"
     },
@@ -152154,7 +152327,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:dates",
       "properties": {
-        "completeness": "partial"
+        "completeness": "partial",
+        "conformance": "unchecked"
       },
       "to_id": "cap:claims-carry-their-age"
     },
@@ -152171,7 +152345,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:degraded",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:degraded-surface"
     },
@@ -152179,7 +152354,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:degraded",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:degraded"
     },
@@ -152196,7 +152372,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:dependency-manifest",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:design-dependencies-declared"
     },
@@ -152213,7 +152390,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:depends",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:design-dependencies-declared"
     },
@@ -152230,7 +152408,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:depends-test",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "ver:design-dependencies-declared"
     },
@@ -152265,7 +152444,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:detect",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:aggregate-gap-keying"
     },
@@ -152273,7 +152453,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:detect",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:decomposition-coverage-is-asked"
     },
@@ -152281,7 +152462,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:detect",
       "properties": {
-        "completeness": "partial"
+        "completeness": "partial",
+        "conformance": "unchecked"
       },
       "to_id": "cap:kpp"
     },
@@ -152289,7 +152471,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:detect",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:release-pinned-to-time"
     },
@@ -152306,7 +152489,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:detect",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:undeclared-seam-is-named"
     },
@@ -152323,7 +152507,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:detect",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:detect"
     },
@@ -152340,7 +152525,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:dimensions",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:dimensions"
     },
@@ -152348,7 +152534,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:discover",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:describe-design-at-path"
     },
@@ -152365,7 +152552,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:discover-test",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:describe-design-at-path"
     },
@@ -152373,21 +152561,25 @@
       "edge_type": "REALIZES",
       "from_id": "art:docker-build-script",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:release-publishes-a-container"
     },
     {
       "edge_type": "REALIZES",
       "from_id": "art:docker-smoke-script",
-      "properties": {},
+      "properties": {
+        "conformance": "unchecked"
+      },
       "to_id": "cap:release-publishes-a-container"
     },
     {
       "edge_type": "REALIZES",
       "from_id": "art:dockerfile",
       "properties": {
-        "completeness": "partial"
+        "completeness": "partial",
+        "conformance": "unchecked"
       },
       "to_id": "cap:hosted-state-on-a-volume"
     },
@@ -152395,7 +152587,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:dockerfile",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:release-publishes-a-container"
     },
@@ -152403,7 +152596,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:drift",
       "properties": {
-        "completeness": "partial"
+        "completeness": "partial",
+        "conformance": "unchecked"
       },
       "to_id": "cap:drift-direction"
     },
@@ -152411,7 +152605,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:drift",
       "properties": {
-        "completeness": "partial"
+        "completeness": "partial",
+        "conformance": "unchecked"
       },
       "to_id": "cap:nothing-moved"
     },
@@ -152419,7 +152614,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:drift",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:drift"
     },
@@ -152427,7 +152623,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:dto",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:dto"
     },
@@ -152444,7 +152641,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:enforced-rule-detector-test",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "ver:rules-can-be-verified"
     },
@@ -152461,7 +152659,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:evidence-quality-instrument",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:independent-evidence"
     },
@@ -152469,7 +152668,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:evidence-quality-test",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:evidence-scope"
     },
@@ -152477,7 +152677,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:evidence-test",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "ver:evidence-fidelity"
     },
@@ -152485,7 +152686,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:export",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:publishable-promise"
     },
@@ -152493,7 +152695,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:export",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:export"
     },
@@ -152501,7 +152704,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:export-via-binary",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:export"
     },
@@ -152509,7 +152713,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:fielded",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:fielded"
     },
@@ -152517,7 +152722,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:flow",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:flow"
     },
@@ -152543,7 +152749,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:genesis",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:genesis"
     },
@@ -152551,7 +152758,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:genesis-skill",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:genesis"
     },
@@ -152559,7 +152767,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:genesis-skill",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:the-design-interview-precedes-the-capture"
     },
@@ -152567,7 +152776,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:github-mcp-study",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:docs"
     },
@@ -152575,7 +152785,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:governance-proposal-skill",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:governance-proposal"
     },
@@ -152583,7 +152794,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:granularity",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:granularity-observation"
     },
@@ -152626,7 +152838,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:graph",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:interface-spec"
     },
@@ -152634,7 +152847,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:graph",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:plan-movement-recorded"
     },
@@ -152642,7 +152856,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:graph",
       "properties": {
-        "completeness": "partial"
+        "completeness": "partial",
+        "conformance": "unchecked"
       },
       "to_id": "cap:requirement-lineage"
     },
@@ -152650,7 +152865,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:graph",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:graph"
     },
@@ -152788,7 +153004,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:heal",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:supporting-is-not-conflict"
     },
@@ -152796,7 +153013,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:heal",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:heal"
     },
@@ -152831,7 +153049,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:hierarchy",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:hierarchy"
     },
@@ -152839,7 +153058,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:identity",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:design-identity"
     },
@@ -152847,7 +153067,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:identity",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:identity"
     },
@@ -152863,7 +153084,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:ility",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:ility-signals"
     },
@@ -152889,7 +153111,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:ingest",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:ingest"
     },
@@ -152897,7 +153120,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:ingest-handshake-test",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "ver:ingest-handshake"
     },
@@ -152905,7 +153129,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:init",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:init-asks-which-harness"
     },
@@ -152913,7 +153138,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:init",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:install-reaches-the-agent"
     },
@@ -152929,7 +153155,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:init",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:init"
     },
@@ -152937,7 +153164,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:interface-spec-test",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "ver:interface-spec"
     },
@@ -152945,7 +153173,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:kit-instructions",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:skills-served"
     },
@@ -152953,7 +153182,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:kit-pointer",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:skills-served"
     },
@@ -152961,7 +153191,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:kpp-proposal-skill",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:kpp-proposal"
     },
@@ -152969,7 +153200,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:latent",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:latent-surface"
     },
@@ -153004,7 +153236,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:llm",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:llm"
     },
@@ -153012,7 +153245,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:loop-nudge",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:loop-status"
     },
@@ -153020,7 +153254,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:loop-nudge",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:skill-loads-are-counted"
     },
@@ -153046,7 +153281,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:machine-install",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:machine-wide-install"
     },
@@ -153071,7 +153307,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:main",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:snapshot-read"
     },
@@ -153079,7 +153316,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:main",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:main"
     },
@@ -153104,7 +153342,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:maturity",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:maturity-profile"
     },
@@ -153112,7 +153351,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:maturity",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:undeclared-seam-is-named"
     },
@@ -153138,7 +153378,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:merge",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:merge-designs"
     },
@@ -153146,7 +153387,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:merge",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:merge-rerere"
     },
@@ -153154,7 +153396,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:merge",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:merge"
     },
@@ -153162,7 +153405,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:merge-driver-test",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:git-merge-driver"
     },
@@ -153170,7 +153414,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:mint-seat-liveness-test",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "ver:handed-out-seat-liveness"
     },
@@ -153196,7 +153441,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:nodes",
       "properties": {
-        "completeness": "partial"
+        "completeness": "partial",
+        "conformance": "unchecked"
       },
       "to_id": "cap:satisfaction-schedule"
     },
@@ -153204,7 +153450,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:nodes",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:nodes"
     },
@@ -153212,7 +153459,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:nudge-detect",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:nudge-absence-says-why"
     },
@@ -153220,7 +153468,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:nudge-detect",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:nudge-path-proven"
     },
@@ -153228,7 +153477,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:nudge-detect",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:nudge"
     },
@@ -153245,7 +153495,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:operate",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:derived-release-manifest"
     },
@@ -153253,7 +153504,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:operate",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:operate"
     },
@@ -153277,7 +153529,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:orphan-attachment-test",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:heal"
     },
@@ -153285,7 +153538,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:parallel-work-skill",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:parallel-work"
     },
@@ -153293,7 +153547,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:plan-increments-skill",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:plan-increments"
     },
@@ -153301,7 +153556,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:preserve",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:certify-restructuring"
     },
@@ -153318,7 +153574,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:propagate",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:propagate"
     },
@@ -153344,7 +153601,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:provenance",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:provenance"
     },
@@ -153361,7 +153619,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:publishable-promise-test",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "ver:publishable-promise"
     },
@@ -153387,7 +153646,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:readiness",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:readiness-gating"
     },
@@ -153404,7 +153664,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:readme",
       "properties": {
-        "completeness": "partial"
+        "completeness": "partial",
+        "conformance": "unchecked"
       },
       "to_id": "cap:explains-itself"
     },
@@ -153439,7 +153700,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:registry",
       "properties": {
-        "completeness": "partial"
+        "completeness": "partial",
+        "conformance": "unchecked"
       },
       "to_id": "cap:select-graph-by-id"
     },
@@ -153472,7 +153734,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:release-workflow",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:packaging"
     },
@@ -153480,7 +153743,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:render-views",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:report"
     },
@@ -153515,7 +153779,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:report",
       "properties": {
-        "completeness": "partial"
+        "completeness": "partial",
+        "conformance": "unchecked"
       },
       "to_id": "cap:derived-completion"
     },
@@ -153523,7 +153788,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:report",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:report"
     },
@@ -153576,7 +153842,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:sanitize",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:sanitize"
     },
@@ -153602,7 +153869,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:schema",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:schema"
     },
@@ -153619,7 +153887,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:schema-build",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:schema"
     },
@@ -153627,7 +153896,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:schema-core",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:schema"
     },
@@ -153635,7 +153905,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:schema-dimensions",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:schema"
     },
@@ -153643,7 +153914,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:schema-environment",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:schema"
     },
@@ -153660,7 +153932,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:schema-functional",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:schema"
     },
@@ -153668,7 +153941,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:schema-inference",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:schema"
     },
@@ -153676,7 +153950,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:schema-operate",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:schema"
     },
@@ -153684,7 +153959,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:schema-readiness",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:readiness-gating"
     },
@@ -153692,7 +153968,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:schema-readiness",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:schema"
     },
@@ -153700,7 +153977,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:schema-structure",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:schema"
     },
@@ -153717,7 +153995,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:schema-temporal",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:schema"
     },
@@ -153725,7 +154004,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:schema-verify",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:schema"
     },
@@ -153750,7 +154030,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:scope",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:scope"
     },
@@ -153758,7 +154039,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:scope-corpus-ingest",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:docs"
     },
@@ -153766,7 +154048,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:seam",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:complementary-pairing"
     },
@@ -153774,7 +154057,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:seam",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:seam-incompatibility"
     },
@@ -153800,7 +154084,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:seam-test",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "ver:seam-incompatibility"
     },
@@ -153808,7 +154093,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:search",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:search"
     },
@@ -153816,7 +154102,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:seat-liveness-shared-test",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "ver:handed-out-seat-liveness"
     },
@@ -153833,7 +154120,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:self-host-documents-guard",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:heal"
     },
@@ -153841,7 +154129,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:server-currency-test",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "ver:the-server-says-when-it-is-stale"
     },
@@ -153893,7 +154182,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:service",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:read-loop-hint"
     },
@@ -153901,7 +154191,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:service",
       "properties": {
-        "completeness": "partial"
+        "completeness": "partial",
+        "conformance": "unchecked"
       },
       "to_id": "cap:stale-seat-refusal"
     },
@@ -153954,7 +154245,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:service",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:service"
     },
@@ -153962,7 +154254,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:session-debt-test",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "ver:the-loop-says-what-this-session-added"
     },
@@ -153970,7 +154263,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:setup",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:explains-itself"
     },
@@ -153996,7 +154290,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:sibling-merge-test",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:ingest"
     },
@@ -154004,7 +154299,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:skill-ingest-corpus",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:corpus-ingest"
     },
@@ -154012,7 +154308,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:skill-link-projects",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:link-projects-skill"
     },
@@ -154020,7 +154317,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:skill-lint",
       "properties": {
-        "completeness": "partial"
+        "completeness": "partial",
+        "conformance": "unchecked"
       },
       "to_id": "ver:install-reaches-the-agent"
     },
@@ -154028,7 +154326,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:skill-lint-test",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "ver:skill-lint"
     },
@@ -154045,7 +154344,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:skills",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:skills-served"
     },
@@ -154053,7 +154353,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:skills",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:skills"
     },
@@ -154061,7 +154362,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:skills-build",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:skills"
     },
@@ -154069,7 +154371,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:skills-catalog",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:docs"
     },
@@ -154094,7 +154397,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:stateless-seat-probe",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:claim-liveness"
     },
@@ -154102,7 +154406,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:stateless-seat-probe",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:seat-handle"
     },
@@ -154128,7 +154433,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:storyflow-resolution-study",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:docs"
     },
@@ -154145,7 +154451,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:structure",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:structure"
     },
@@ -154153,7 +154460,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:surface-usage-instrument",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:docs"
     },
@@ -154161,7 +154469,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:surprises",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:surprises"
     },
@@ -154178,7 +154487,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:sync",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:stale-seat-refusal"
     },
@@ -154186,7 +154496,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:sync",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:sync"
     },
@@ -154194,7 +154505,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:sync-debt",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:the-record-moved-is-surfaced"
     },
@@ -154247,7 +154559,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:temporal",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:arrival-delta"
     },
@@ -154255,7 +154568,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:temporal",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:plan-movement-recorded"
     },
@@ -154263,7 +154577,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:temporal",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:planned-epochs"
     },
@@ -154271,7 +154586,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:temporal",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:satisfaction-schedule"
     },
@@ -154288,7 +154604,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:temporal",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:temporal"
     },
@@ -154395,7 +154712,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:test-check-kit-manifest",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "ver:kit-manifest-agrees"
     },
@@ -154412,7 +154730,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:test-degraded-server",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "ver:degraded-surface"
     },
@@ -154420,7 +154739,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:test-design-identity",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "ver:design-identity"
     },
@@ -154428,7 +154748,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:test-discontinued-is-read",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:detect"
     },
@@ -154445,7 +154766,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:test-edges-need-both-ends",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "ver:edges-need-both-ends"
     },
@@ -154470,7 +154792,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:test-init",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:init-asks-which-harness"
     },
@@ -154478,7 +154801,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:test-init",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "ver:install-reaches-the-agent"
     },
@@ -154486,7 +154810,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:test-loop-nudge",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "ver:skill-loads-are-counted"
     },
@@ -154494,7 +154819,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:test-mirror-refresh",
       "properties": {
-        "completeness": "partial"
+        "completeness": "partial",
+        "conformance": "unchecked"
       },
       "to_id": "cap:mirror-surface"
     },
@@ -154502,7 +154828,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:test-no-per-design-globals",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "ver:no-per-design-process-globals"
     },
@@ -154510,7 +154837,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:test-nudge-path",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "ver:nudge-path"
     },
@@ -154561,7 +154889,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:test-search-first",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:search-first-at-the-tool"
     },
@@ -154569,7 +154898,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:test-served-skills",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "ver:served-skills"
     },
@@ -154577,7 +154907,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:test-session-names-its-design",
       "properties": {
-        "completeness": "partial"
+        "completeness": "partial",
+        "conformance": "unchecked"
       },
       "to_id": "cap:select-graph-by-id"
     },
@@ -154585,7 +154916,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:test-sessions-cannot-cross-designs",
       "properties": {
-        "completeness": "partial"
+        "completeness": "partial",
+        "conformance": "unchecked"
       },
       "to_id": "ver:sessions-cannot-cross-designs"
     },
@@ -154593,7 +154925,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:test-shared-sessions",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "ver:remote-sessions"
     },
@@ -154601,7 +154934,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:test-shared-sessions",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "ver:shared-sessions"
     },
@@ -154609,7 +154943,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:test-stale-seat",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "ver:stale-seat"
     },
@@ -154617,7 +154952,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:test-surface-orphaned",
       "properties": {
-        "completeness": "partial"
+        "completeness": "partial",
+        "conformance": "unchecked"
       },
       "to_id": "cap:publish-surface"
     },
@@ -154696,7 +155032,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:tools-ask",
       "properties": {
-        "completeness": "partial"
+        "completeness": "partial",
+        "conformance": "unchecked"
       },
       "to_id": "cap:bulk-forms"
     },
@@ -154704,7 +155041,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:tools-ask",
       "properties": {
-        "completeness": "partial"
+        "completeness": "partial",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:service"
     },
@@ -154757,7 +155095,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:tools-assure",
       "properties": {
-        "completeness": "partial"
+        "completeness": "partial",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:service"
     },
@@ -154774,7 +155113,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:tools-built",
       "properties": {
-        "completeness": "partial"
+        "completeness": "partial",
+        "conformance": "unchecked"
       },
       "to_id": "cap:bulk-forms"
     },
@@ -154791,7 +155131,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:tools-built",
       "properties": {
-        "completeness": "partial"
+        "completeness": "partial",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:service"
     },
@@ -154844,7 +155185,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:tools-capture",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:governance-mode"
     },
@@ -154870,7 +155212,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:tools-claims",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:seat-handle"
     },
@@ -154878,7 +155221,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:tools-claims",
       "properties": {
-        "completeness": "partial"
+        "completeness": "partial",
+        "conformance": "unchecked"
       },
       "to_id": "cap:stale-seat-refusal"
     },
@@ -154904,7 +155248,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:tools-coherence",
       "properties": {
-        "completeness": "partial"
+        "completeness": "partial",
+        "conformance": "unchecked"
       },
       "to_id": "cap:bulk-forms"
     },
@@ -154921,7 +155266,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:tools-coherence",
       "properties": {
-        "completeness": "partial"
+        "completeness": "partial",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:service"
     },
@@ -154938,7 +155284,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:tools-exchange",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:complementary-pairing"
     },
@@ -154964,7 +155311,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:tools-operate",
       "properties": {
-        "completeness": "partial"
+        "completeness": "partial",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:service"
     },
@@ -154990,7 +155338,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:tools-query",
       "properties": {
-        "completeness": "partial"
+        "completeness": "partial",
+        "conformance": "unchecked"
       },
       "to_id": "cap:bulk-forms"
     },
@@ -155061,7 +155410,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:tools-temporal",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:planned-epochs"
     },
@@ -155069,7 +155419,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:tools-temporal",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cap:satisfaction-schedule"
     },
@@ -155122,7 +155473,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:unreachable-decision-test",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "ver:heal"
     },
@@ -155130,7 +155482,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:upgrade-v0110",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:docs"
     },
@@ -155138,7 +155491,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:upgrading-v0150",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:docs"
     },
@@ -155146,7 +155500,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:upgrading-v0160",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:docs"
     },
@@ -155154,7 +155509,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:upgrading-v0180",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:docs"
     },
@@ -155162,7 +155518,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:upgrading-v0190",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:docs"
     },
@@ -155240,7 +155597,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:verify",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:verify"
     },
@@ -155257,7 +155615,8 @@
       "edge_type": "REALIZES",
       "from_id": "art:vocabulary",
       "properties": {
-        "completeness": "complete"
+        "completeness": "complete",
+        "conformance": "unchecked"
       },
       "to_id": "cmp:vocabulary"
     },
@@ -160474,6 +160833,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:check-doc-versions",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:check-doc-versions"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:check-health-skill",
       "properties": {
         "action": "created"
@@ -162390,6 +162757,18 @@
       }
     },
     {
+      "node_id": "art:check-doc-versions",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:70ee71252899b6d9071934fc187021199c323241d20c0f819cbccb8bdf828199",
+        "description": "The drift class it exists for: a bump lands in a manifest and the prose still advertises the previous value, so a reader orienting from AGENTS.md gets a confident wrong answer — and confidently wrong is worse than absent, because nobody goes to check.\n\nITS ONE DELIBERATE DIFFERENCE FROM THE UPSTREAM SCRIPT IT WAS ADAPTED FROM is the thing worth knowing about it: a pattern that matches nothing FAILS rather than passing quietly. The upstream greps with `|| true` and its own header admits that rewording a doc line disables the corresponding check silently. reflow2 holds req:no-silent-fallback at critical priority, so here rewording breaks the build loudly and both sides get fixed together.\n\nEXTENDED 2026-09-07 FROM 3 CLAIMS TO 11. It guarded version strings only. Retiring QualityGate moved the node count 29 to 28, and a sweep found the EDGE count in the same four sentences had been wrong for weeks — three said 60 and one said 64 against a real 65 — because nothing checked structural claims at all. It now reads both counts from schema/*.yaml and asserts them across AGENTS.md, README.md, docs/overview.md and docs/interaction-surfaces.md.\n\nEach schema-count pattern matches EVERY occurrence in its file rather than the first, which is the specific lesson from that drift: README carried the size in two sentences and both were wrong, so a check anchored on one would have passed while the other rotted.\n\nREGISTERED LATE, on the day it was extended. It had been a CI gate outside the design record, which is the same silence that let constructors_preserve.rs guard a class while its own scope was wrong.",
+        "location": "tools/check_doc_versions.py",
+        "name": "check_doc_versions.py — the gate that asserts a doc's factual claims against what the build actually says, where a pattern matching nothing is a FAILURE",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:check-health-skill",
       "node_type": "Artifact",
       "properties": {
@@ -163788,7 +164167,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:73ec802a327e6d6dfac0e4651359a44077b654cc4d313cd4b97622e6cdfaea0e",
+        "checksum": "sha256:e51e8e9ebee8095d896342c9c2639452873ca3c3931d7d4964ba952318ceb4e2",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/preserve.rs",
         "name": "preserve.rs",
@@ -163836,7 +164215,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:60956adb8a6b71bcff5e1f939adb2211b79c98e89cdbc25ef0f7955a6fd2e3f7",
+        "checksum": "sha256:b2524baa7cdc4c7dbacfd55cd2919d5c845231a55a1625703997ae3c1f90f3f6",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/provenance.rs",
         "name": "provenance.rs",
@@ -163920,7 +164299,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:cf52dfdb70d8548665c7faac8eb96fe445c596a55871d0e803341262b75a922e",
+        "checksum": "sha256:2400856f1ce1ccf1ebb92ff1e98ccc7b3d6e9ab18516ba348f6a1446a9265d90",
         "granularity": "atomic",
         "location": "README.md",
         "name": "README.md",
@@ -164130,7 +164509,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:855c8c441514f6c182743c55055595a29e04788fcf342e3e5b0bc835745dc910",
+        "checksum": "sha256:0cf332b7cc7a404453ccac83eab937aec2b6159079df5c56bae1551ee4eccf47",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/schema.rs",
         "name": "crates/reflow2-core/src/schema.rs",
@@ -164283,7 +164662,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:790b9a9e2bd44da5328a8e22f069d78f78fc8a5402f501189837a1295fa9132d",
+        "checksum": "sha256:b8a8839af6ae96f5a8d9a46b90ad2d0687de2aec37e7089bb9fd8717d1e9fbf6",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/verify.yaml",
@@ -164588,7 +164967,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:0f68faa69f7be98caba7a90b62162f8c6a964e192800744714fd89ec03560867",
+        "checksum": "sha256:0d4a6d1006ff74826fd797c640dc15d37bd00ef1b62a6fad79841a8dc142a297",
         "location": "tools/smoke_mcp.py",
         "name": "smoke_mcp.py",
         "status": "realized"
@@ -164966,7 +165345,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "test",
-        "checksum": "sha256:e66359cfba8a409076eee66449168db3fe2b9739c5fc374521310408b78d00e5",
+        "checksum": "sha256:165aa3a49543a23668fcb50fdf421fa58c9e02c7ed413e23b67c60e8a864594d",
         "location": "crates/reflow2-mcp/tests/every_constructor_can_say_what_the_thing_is.rs",
         "name": "every_constructor_can_say_what_the_thing_is.rs",
         "status": "realized"
@@ -165244,7 +165623,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "test",
-        "checksum": "sha256:da56625fb1baeacca352654bae89f1b062946f82900efdac111b58b8a70e95e7",
+        "checksum": "sha256:1b5622c2488252c1724147236f23c1433d77d7c8548068292985440f90f9ec41",
         "location": "crates/reflow2-mcp/tests/the_fourteen_holes_are_writable.rs",
         "name": "the_fourteen_holes_are_writable.rs",
         "status": "realized"
@@ -165697,7 +166076,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:dfc114e0bc1d95adc3d397d9c152d339d8c7f17732cc162f86a9d19752e49819",
+        "checksum": "sha256:fdc87d24e87c3e839914afa992cb3195c5297078c2502528a7a9de082c628767",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/vocabulary.rs",
         "name": "crates/reflow2-core/src/vocabulary.rs",
@@ -169282,6 +169661,15 @@
         "change_type": "refactor",
         "detected_at": "2026-08-17",
         "name": "Comment reference to the renamed category; behaviour unchanged.",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:accept-019038356b3c3a0c",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "Header comment only: the two types it named as having no constructor were resolved on the same day in opposite directions. No test changed.",
         "subject": "system"
       }
     },
@@ -174605,6 +174993,16 @@
       "properties": {
         "change_type": "new_feature",
         "name": "A published surface can carry a behavioural promise: Requirement gains a `designation`, and export_surface carries the published ones alongside the boundaries"
+      }
+    },
+    {
+      "node_id": "chg:qualitygate-leaves-the-schema",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "QualityGate is removed from the schema — the first type this project has ever retired, and the first stamp move that is not additive",
+        "rationale": "Retiring a type is cheap to do and expensive to do badly, and the expensive part is not the deletion — it is everything that quietly referenced it. The references split three ways and each wanted a different answer: live code and live docs updated, dated analyses left untouched, and one comment rewritten because it cited the retired type as a PRECEDENT for a still-true fact (the schema has no list type) rather than as a live reference.\n\nThe two drifting lists found along the way are the more durable finding. Both were hand-maintained sets with no check that their entries were still earned, and both had already gone stale — the third and fourth instances of that class in one day, after `constructors_preserve.rs` drawing its membership on call names and the vocabulary-reach baseline needing the same discipline. The pattern is now specific enough to state: WHERE THIS PROJECT KEEPS A LIST OF EXCEPTIONS OR MEMBERS BY HAND, IT NEEDS AN ASSERTION THAT EACH ENTRY IS STILL TRUE, NOT ONLY THAT THE SET IS COVERED.\n\nWHAT IS NOT ESTABLISHED: whether any consumer graph anywhere holds a QualityGate instance. It cannot be checked from this repo, which is why the upgrade action states the consequence and the remedy rather than claiming the removal is safe.",
+        "summary": "The type, its entry in the preserve list, its exemption in the constructor sweep, and its rows in the live coverage matrix and the loop model are gone. Node types 29 → 28. `dec:qualitygate-is-retired-the-phase-gate-dissolved-into-the-detectors` carries the ruling, what the type was FOR, and the condition under which it should return.\n\nWHAT WAS DELIBERATELY LEFT ALONE. `docs/built-right-review.md` and `docs/reflow-v3-nuggets.md` still name it. Both are DATED ANALYSES, correct precisely because they do not track the design — the same distinction `self_host_uses_documents.py` draws between a file that must stay in step and a dated observation. Editing them would falsify a record of what was true when it was written. The CHANGELOG's historical entries are untouched for the same reason.\n\n⚠️ THE MIGRATION CONSEQUENCE IS REAL AND WAS MEASURED, NOT ASSUMED. Every prior stamp move in this project was ADDITIVE, and additive moves leave an older graph readable. This one does not. A probe document carrying an undeclared node type was refused with \"Unknown node type\" and nothing was written, because import validates types and is all-or-nothing. So an export holding a QualityGate stops importing. The CHANGELOG carries a REQUIRED upgrade action saying so, and the reason is recorded at the assertion in schema.rs where the next person to move that number will meet it.\n\nTWO OTHER HAND-MAINTAINED LISTS WERE FOUND DRIFTING WHILE DOING THIS, AND BOTH ARE THE SAME CLASS AS THE constructors_preserve.rs SCOPE ERROR FIXED HOURS EARLIER.\n\n(1) THE CONSTRUCTOR SWEEP'S EXEMPTION LIST. `NO_CONSTRUCTOR` is consumed by a `continue`, so an entry that has stopped being true is skipped in silence and the list can only ever drift toward exempting more than it should. THREE OF ITS FOUR ENTRIES WERE ALREADY DEAD: `Actor` read \"there is no add_actor to give a parameter to\" while `add_actor` had shipped hours earlier taking a description; `EnvironmentRule` named a type that declares no description at all and so could never have been swept; `QualityGate` was about to leave the schema. A reverse sweep now fails on any exemption no longer earned, and was proven by negative control — reinstating the stale `Actor` entry fails the test naming it exactly.\n\n(2) THE DOC CLAIMS ABOUT THE SCHEMA'S SIZE. Moving the node count exposed that the EDGE count in the same four sentences had been wrong for weeks — three said 60 and one said 64 against a real 65 — because nothing checked them. check_doc_versions.py guarded three version claims and no structural ones. It now reads both counts from schema/*.yaml and asserts them across AGENTS.md, README.md, docs/overview.md and docs/interaction-surfaces.md, matching EVERY occurrence per file so one sentence cannot rot while another stays true. Guarded claims 3 → 11.\n\n⭐ THE SWEEP FOR OTHER HARDCODED COUNTS IS WHY THIS DID NOT COST A CI FAILURE. Two Rust assertions failed locally and naming only those would have been the one-step-over habit this project has recorded as costing four CI failures. Grepping for the number instead found three more: two source doc-comments and `tools/smoke_mcp.py`, which is a CI gate and would have failed on the push."
       }
     },
     {
@@ -182165,6 +182563,17 @@
       }
     },
     {
+      "node_id": "dec:qualitygate-is-retired-the-phase-gate-dissolved-into-the-detectors",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Anthony, 2026-09-07: \"let's retire it. this decision will stay in the graph, so I suppose if we ever one day have a legitimate need for it, maybe we'll resurrect it.\"\n\nWHAT IT WAS FOR, WRITTEN DOWN SO A RESURRECTOR DOES NOT HAVE TO RE-DERIVE IT. QualityGate modelled the STAGE GATE — the milestone review, not a test. Its properties: `phase` (P0-P5/PM, reflow2's own lifecycle ladder), `criteria` (a JSON array of pass/fail conditions), `status` (pending/passed/failed/WAIVED) and `evaluated_at`. Its extraction hint gave the examples \"DAG is acyclic\" and \"all Requirements have coverage\" and said it was usually authored by the workflow rather than extracted from prose.\n\n`waived` is the tell, and it is the reason this was NOT a duplicate of anything else. A test does not get waived; a review board's gate does. The three neighbours all answer per-item questions — a Verification checks one target against its spec, a ReadinessAssessment records one technology's TRL/MRL rung, GATED_ON says one increment needs one technology at one level. QualityGate was the only type that asked about THE DESIGN AS A WHOLE at a boundary, with arbitrary stated conditions and a dated, waivable judgement.\n\nWHY IT WAS NEVER USED — STRUCTURAL, AND MEASURED 2026-09-07, NOT INFERRED FROM ITS EMPTINESS:\n  (1) It participates in NO EDGE TYPE AT ALL. Not one of the 65 declares it at either end. A gate could be created and then attached to nothing — not the project it gates, not the phase it guards, not the findings that cleared it. It was an island in the vocabulary.\n  (2) `criteria` is a JSON array inside a string, so nothing could evaluate it.\n  (3) Its own hint says the workflow authors it, and no workflow was ever written that does.\n  (4) DECISIVE: NOTHING IN THE DESIGN CARRIES A PHASE. All 3,984 nodes checked — zero. The P0-P5 ladder is declared on QualityGate and on Fragment and used by zero instances. A phase gate had nothing to gate.\n\nWHAT ACTUALLY REPLACED IT, AND WHY THAT IS THE REAL ARGUMENT. reflow2 computes those conditions CONTINUOUSLY. The hint's own two examples — \"DAG is acyclic\", \"all Requirements have coverage\" — are literally what detect_defects and detect_gaps evaluate on every call. A computed check never goes stale; a stored `passed` does. The gate was not abandoned, it was dissolved into the loop, and a recorded snapshot judgement would now be the weaker of the two.\n\n⭐ THE CONDITION FOR RESURRECTION, STATED SO IT CAN BE CHECKED RATHER THAN RE-ARGUED. This is the mechanism that just paid off on the environment compliance parking, which named its own reversal condition on 2026-08-26 and was lifted on 2026-09-07 when the condition was met. Bring QualityGate back when a project needs A DATED, WAIVABLE JUDGEMENT AT A BOUNDARY THAT SOMEBODY SIGNS AND IS LATER AUDITED AGAINST — the case the continuous computation cannot serve, because the auditable thing is the human's decision at a moment, not the condition's current truth. A formal program with SRR/PDR/CDR reviews is exactly that case. If it returns, it needs what it never had: at least one edge type binding it to what it gates, a phase actually recorded somewhere, and criteria in a form something can read.\n\n🛑 THE MIGRATION COST — AND THIS PARAGRAPH REPLACES A WRONG ONE, DELIBERATELY SAYING SO. The first version of this decision claimed the removal \"very likely affects nobody\" because reflow2's graph holds zero instances and the type never had a constructor. THAT WAS WRONG, and the correction is `fact:retiring-a-node-type-locks-every-existing-graph-out-until-it-is-migrated`. The binding gate is not import, it is STORE OPEN, and it reads the graph's STAMP rather than its contents. A stamp records the SCHEMA the writing binary had, so EVERY EXISTING REFLOW2 GRAPH NAMES QualityGate AND EVERY ONE REFUSES TO OPEN until migrated — reflow2's own, holding zero instances, was refused outright. The error came from probing the import path, getting a true answer, and drawing the blast radius from the wrong gate.\n\nA RETIREMENT IS THEREFORE TWO EDITS, NOT ONE. Removing the type from `schema/verify.yaml` is half; the other half is adding it to `RETIRED_NODE_TYPES` in `provenance.rs`, whose own comment had said \"empty so far; grows the day a node type is retired\". Without that entry the guard reads an ordinary graph as one from the FUTURE and tells the operator their reflow2 is BEHIND and to rebuild — the exact opposite of the correct action. With it, the message says \"predates a schema change — migrate\", which is right.\n\nTHE RECIPE WAS RUN END TO END ON THIS PROJECT'S OWN GRAPH before shipping: export with a binary that still knows the type, import into a fresh path with the binary that retired it, compare. 3,989 nodes and 21,555 edges in, the same out, nothing lost, stamp 29 to 28. One trap found by falling into it: the stamp lives in the SIDECAR `<graph-path>.meta.json`, beside the store rather than inside it, so copying a store over an old sidecar reproduces the refusal on an already-migrated graph.",
+        "kind": "choice",
+        "name": "RETIRED — QualityGate leaves the schema: the phase gate it modelled was dissolved into the detectors, and the ladder it gated was never recorded",
+        "rationale": "The agent's first recommendation was retirement on the grounds that the type is read by nothing and has zero instances. Anthony's question — \"what was QualityGate meant to capture?\" — showed that argument was about the IMPLEMENTATION and not the CONCEPT, and the concept turned out to be real SE vocabulary with no other home in the schema. The recommendation survived, but for a better reason: not that nobody used it, but that the loop already answers its question continuously and better.\n\nRecording it as a Decision rather than deleting it quietly is the whole point, and it was Anthony's stated reason for being comfortable with the retirement. A schema type removed with no record is indistinguishable from a type that never existed, and the next person to want a phase gate would rebuild it from scratch — including the four structural mistakes that kept this one empty. This node is the thing that makes the retirement reversible.\n\nTHE COST WAS UNDERSTATED WHEN THIS WAS FIRST WRITTEN AND THE RULING STILL STANDS, but the two are worth keeping apart. Anthony ruled on the merits of the type; he did not rule on a migration nobody had measured yet. The migration is one export and one import and it was proven on this project's own graph, but it is owed by EVERY consumer rather than by none, and that is a materially different thing to ship. If the cost is judged too high for the benefit, the honest lever is not to hide it — it is to reverse this decision, which the record now supports.\n\nWHAT IS STILL NOT ESTABLISHED: whether any consumer graph anywhere holds a QualityGate INSTANCE. It cannot be checked from this repo. It also no longer changes the upgrade action, since the refusal fires on the stamp regardless.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:read-hint-shape",
       "node_type": "Decision",
       "properties": {
@@ -187997,6 +188406,17 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered tools/check_command_surface.py"
+      }
+    },
+    {
+      "node_id": "frag:art:check-doc-versions",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "note_kind": "author",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered check_doc_versions.py — the gate that asserts a doc's factual claims against what the build actually says, where a pattern matching nothing is a FAILURE"
       }
     },
     {
@@ -195818,6 +196238,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:preserved-on-write:dec:qualitygate-is-retired-the-phase-gate-dissolved-into-the-detectors",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"role\":\"approver\"}}]",
+        "state": "{\"decision\":\"Anthony, 2026-09-07: \\\"let's retire it. this decision will stay in the graph, so I suppose if we ever one day have a legitimate need for it, maybe we'll resurrect it.\\\"\\n\\nWHAT IT WAS FOR, WRITTEN DOWN SO A RESURRECTOR DOES NOT HAVE TO RE-DERIVE IT. QualityGate modelled the STAGE GATE — the milestone review, not a test. Its properties: `phase` (P0-P5/PM, reflow2's own lifecycle ladder), `criteria` (a JSON array of pass/fail conditions), `status` (pending/passed/failed/WAIVED) and `evaluated_at`. Its extraction hint gave the examples \\\"DAG is acyclic\\\" and \\\"all Requirements have coverage\\\" and said it was usually authored by the workflow rather than extracted from prose.\\n\\n`waived` is the tell, and it is the reason this was NOT a duplicate of anything else. A test does not get waived; a review board's gate does. The three neighbours all answer per-item questions — a Verification checks one target against its spec, a ReadinessAssessment records one technology's TRL/MRL rung, GATED_ON says one increment needs one technology at one level. QualityGate was the only type that asked about THE DESIGN AS A WHOLE at a boundary, with arbitrary stated conditions and a dated, waivable judgement.\\n\\nWHY IT WAS NEVER USED — STRUCTURAL, AND MEASURED 2026-09-07, NOT INFERRED FROM ITS EMPTINESS:\\n  (1) It participates in NO EDGE TYPE AT ALL. Not one of the 65 declares it at either end. A gate could be created and then attached to nothing — not the project it gates, not the phase it guards, not the findings that cleared it. It was an island in the vocabulary.\\n  (2) `criteria` is a JSON array inside a string, so nothing could evaluate it.\\n  (3) Its own hint says the workflow authors it, and no workflow was ever written that does.\\n  (4) DECISIVE: NOTHING IN THE DESIGN CARRIES A PHASE. All 3,984 nodes checked — zero. The P0-P5 ladder is declared on QualityGate and on Fragment and used by zero instances. A phase gate had nothing to gate.\\n\\nWHAT ACTUALLY REPLACED IT, AND WHY THAT IS THE REAL ARGUMENT. reflow2 computes those conditions CONTINUOUSLY. The hint's own two examples — \\\"DAG is acyclic\\\", \\\"all Requirements have coverage\\\" — are literally what detect_defects and detect_gaps evaluate on every call. A computed check never goes stale; a stored `passed` does. The gate was not abandoned, it was dissolved into the loop, and a recorded snapshot judgement would now be the weaker of the two.\\n\\n⭐ THE CONDITION FOR RESURRECTION, STATED SO IT CAN BE CHECKED RATHER THAN RE-ARGUED. This is the mechanism that just paid off on the environment compliance parking, which named its own reversal condition on 2026-08-26 and was lifted on 2026-09-07 when the condition was met. Bring QualityGate back when a project needs A DATED, WAIVABLE JUDGEMENT AT A BOUNDARY THAT SOMEBODY SIGNS AND IS LATER AUDITED AGAINST — the case the continuous computation cannot serve, because the auditable thing is the human's decision at a moment, not the condition's current truth. A formal program with SRR/PDR/CDR reviews is exactly that case. If it returns, it needs what it never had: at least one edge type binding it to what it gates, a phase actually recorded somewhere, and criteria in a form something can read.\\n\\nTHE MIGRATION CONSEQUENCE, MEASURED RATHER THAN ASSUMED. Import validates node types and is all-or-nothing: a probe document carrying an undeclared type was refused with \\\"Unknown node type\\\", nothing written. So ANY EXISTING EXPORT CONTAINING A QualityGate NODE STOPS IMPORTING once the type leaves the schema. reflow2's own graph holds zero, and the type never had a typed constructor — the only way to make one was the generic create_node escape hatch — so the population is very likely zero everywhere. THAT IS AN INFERENCE ABOUT OTHER PEOPLE'S GRAPHS AND CANNOT BE VERIFIED FROM HERE, which is precisely what the upgrade note is for.\",\"kind\":\"choice\",\"name\":\"RETIRED — QualityGate leaves the schema: the phase gate it modelled was dissolved into the detectors, and the ladder it gated was never recorded\",\"rationale\":\"The agent's first recommendation was retirement on the grounds that the type is read by nothing and has zero instances. Anthony's question — \\\"what was QualityGate meant to capture?\\\" — showed that argument was about the IMPLEMENTATION and not the CONCEPT, and the concept turned out to be real SE vocabulary with no other home in the schema. The recommendation survived, but for a better reason: not that nobody used it, but that the loop already answers its question continuously and better.\\n\\nRecording it as a Decision rather than deleting it quietly is the whole point, and it was Anthony's stated reason for being comfortable with the retirement. A schema type removed with no record is indistinguishable from a type that never existed, and the next person to want a phase gate would rebuild it from scratch — including the four structural mistakes that kept this one empty. This node is the thing that makes the retirement reversible.\\n\\nWHAT IS NOT ESTABLISHED: whether any consumer graph anywhere holds a QualityGate instance. It cannot be checked from this repo. The upgrade note states the consequence so a consumer who has one can act on it, which is the honest substitute for a survey nobody can run.\",\"status\":\"accepted\"}",
+        "target_id": "dec:qualitygate-is-retired-the-phase-gate-dissolved-into-the-detectors",
+        "target_type": "Decision"
+      }
+    },
+    {
       "node_id": "snap:epoch:preserved-on-write:decision:vocab:environment",
       "node_type": "Snapshot",
       "properties": {
@@ -201064,6 +201494,18 @@
       }
     },
     {
+      "node_id": "fact:retiring-a-node-type-locks-every-existing-graph-out-until-it-is-migrated",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "observation",
+        "statement": "MEASURED ON THE LIVE GRAPH, AND IT CORRECTS AN EARLIER CLAIM IN THIS SAME CHANGE. Retiring a node type does not merely stop an export CONTAINING that type from importing. It stops EVERY EXISTING GRAPH FROM OPENING AT ALL, instances or no instances, until the graph is migrated.\n\nThe reason is that the guard reads the STAMP, not the contents. A graph's stamp records the SCHEMA the writing binary had, so every reflow2 graph in existence names QualityGate whether or not it ever held one. reflow2's own graph held ZERO QualityGate nodes and was refused outright: \"this graph names types this reflow2 cannot read, so opening it could silently show you less of your design than it holds — refused.\"\n\nWHAT I GOT WRONG, AND HOW. I probed the IMPORT path with a hand-built document carrying an undeclared type, saw it refused, and wrote the blast radius from that: \"almost certainly affects nobody, since the type never had a constructor and our graph holds zero.\" The measurement was real and it measured the wrong path. The binding gate is STORE OPEN, which fires on the stamp; instance count never enters it. This is step (5) of the root-cause discipline failing in its documented way — a call that completed, a result that was true, and an inference that did not follow.\n\nTHE RETIREMENT IS TWO EDITS, NOT ONE, AND THE CODE SAYS SO. provenance.rs carries RETIRED_NODE_TYPES with the comment \"Empty so far; grows the day a node type is retired.\" Cutting the type from schema/verify.yaml without adding it there left the guard classifying an ordinary graph as one from the FUTURE, so the refusal told the operator their reflow2 was BEHIND and to rebuild — the exact opposite of the correct action. Registering the retirement flips the message to \"predates a schema change — migrate the graph\", which is right.\n\nTHE MIGRATION RECIPE WORKS AND WAS RUN END TO END on the live graph: export with a binary that still knows the type, import into a FRESH graph with the binary that retired it, verify. Result: 3,989 nodes and 21,555 edges in, 3,989 and 21,555 out, zero nodes lost, zero edges lost, stamp 29 → 28.\n\n⚠️ ONE OPERATIONAL TRAP FOUND BY FALLING INTO IT. The stamp lives in a SIDECAR file beside the store, `<graph-path>.meta.json`, not inside the store directory. Copying the store directory into place while leaving the old sidecar reproduces the refusal exactly, on a graph that has already been migrated. Anyone moving a graph by hand must move the sidecar with it; the published recipe avoids this only because importing into a fresh path writes its own.\n\nOPEN AND NOT DECIDED HERE: whether the guard should open the store and COUNT instances before refusing. A retired type with zero instances carries no risk of showing less than the design holds, which is the guard's whole stated purpose — so the refusal is stricter than its own justification requires. Against that: counting means opening the store the guard is refusing to open, and a cheap conservative check is worth more than a clever one. Not this change's call.",
+        "subject_id": "dec:qualitygate-is-retired-the-phase-gate-dissolved-into-the-detectors",
+        "valid_from": "2026-09-07"
+      }
+    },
+    {
       "node_id": "fact:seam-report-is-named-for-something-it-does-not-do",
       "node_type": "TemporalFact",
       "properties": {
@@ -205783,7 +206225,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:9db48502a07833a554804cdfb225c8023c0256a10c08d466a434653cf924aed9",
+  "prev_content_hash": "sha256:fc121453fb85ff00d29a5194876543235ec6a80142fca309b7d1bcc2c05c44c1",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -205874,7 +206316,6 @@
       "Fragment",
       "Interface",
       "Project",
-      "QualityGate",
       "Question",
       "ReadinessAssessment",
       "Release",
@@ -205884,7 +206325,7 @@
       "TemporalFact",
       "Verification"
     ],
-    "node_types": 29,
+    "node_types": 28,
     "reflow2_version": "0.54.0",
     "schema_version": 1
   }

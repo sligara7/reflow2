@@ -73,19 +73,6 @@ schema:
         its target; `kind` says whether it checks the spec (verification) or the
         intent (validation); folds in both individual cases and suites (`level`).
 
-    QualityGate:
-      properties:
-        name: { type: string, required: true, indexed: true, fulltext: true }
-        phase: { type: enum, values: [P0, P1, P2, P3, P4, P5, PM], indexed: true }
-        criteria: { type: string, fulltext: true, description: "JSON array of pass/fail conditions." }
-        status: { type: enum, values: [pending, passed, failed, waived], default: pending, indexed: true }
-        evaluated_at: { type: string }
-      embedding_field: criteria
-      extraction_hint: >
-        A phase gate with explicit pass/fail criteria that must clear before
-        advancing (e.g. "DAG is acyclic", "all Requirements have coverage").
-        Usually authored by the workflow, not extracted from prose.
-
     DriftEvent:
       properties:
         name: { type: string, required: true, indexed: true }
@@ -229,10 +216,13 @@ schema:
         # parameter is checkable against what the design claims the capability
         # is independent of; an adjective is not.
         #
-        # Comma-separated because the schema has no list type (the
-        # QualityGate.criteria precedent). The MCP surface takes and returns
-        # proper lists; only the storage is flat, so parameter names must not
-        # themselves contain commas.
+        # Comma-separated because the schema has no list type. (The older
+        # precedent for this was QualityGate.criteria, a JSON array inside a
+        # string; that type was retired 2026-09-07 —
+        # dec:qualitygate-is-retired-the-phase-gate-dissolved-into-the-detectors
+        # — and its unreadable criteria field was one of the reasons.) The MCP
+        # surface takes and returns proper lists; only the storage is flat, so
+        # parameter names must not themselves contain commas.
         pinned: { type: string, description: "Comma-separated parameter names this check HELD FIXED — the seeds, orderings, locales and hostnames every check pins by the same instinct that made them nuisance parameters, which is why defects live there. Unset means the scope was never stated, which is reported as unscoped and never read as full coverage." }
         swept: { type: string, description: "Comma-separated parameter names this check VARIED. A parameter swept by any passing check is no longer reported as pinned-everywhere for that claim, because something did move it." }
 

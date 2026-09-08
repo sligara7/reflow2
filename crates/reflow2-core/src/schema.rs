@@ -1,7 +1,7 @@
 //! Load the reflow2 design vocabulary.
 //!
 //! The 11 composable schema domains in `schema/*.yaml` are the single source of
-//! truth for the node/edge vocabulary (29 node types, 60 edge types). They are
+//! truth for the node/edge vocabulary (28 node types, 65 edge types). They are
 //! embedded at compile time with `include_str!` so the core carries its own
 //! vocabulary — no runtime file IO, no working-directory dependence, and no
 //! second copy to drift out of sync. These are the exact files that
@@ -352,7 +352,17 @@ mod tests {
         // GATED_ON carries the threshold as an EDGE property so one increment
         // can demand TRL 7 of one technology and 4 of another. Moves the stamp:
         // the next release owes an upgrade note.
-        assert_eq!(schema.node_types.len(), 29, "expected 29 node types");
+        //
+        // 29→28 on 2026-09-07 is the FIRST REMOVAL this schema has ever made:
+        // QualityGate retired
+        // (dec:qualitygate-is-retired-the-phase-gate-dissolved-into-the-detectors).
+        // Every prior stamp move was additive, and additive moves leave an older
+        // graph readable. THIS ONE DOES NOT — import validates node types and is
+        // all-or-nothing, so an export carrying a QualityGate stops importing.
+        // Measured, not assumed: a probe document with an undeclared type was
+        // refused with "Unknown node type" and nothing was written. The upgrade
+        // note is owed and says so.
+        assert_eq!(schema.node_types.len(), 28, "expected 28 node types");
         // 65 since ANSWERS (2026-09-02) — a design record names the Question it
         // answered. The schema had DESCRIBED this edge for months without it
         // existing: `Question.answer` read "the design nodes it produced are

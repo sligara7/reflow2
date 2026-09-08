@@ -31,6 +31,80 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+🛑 **Upgrade action: REQUIRED, FOR EVERY EXISTING GRAPH.** `QualityGate` has been **removed from
+the schema** — the first type this project has ever removed — and **your graph will refuse to open
+until you migrate it**, whether or not it ever held a `QualityGate`.
+
+**Why it affects everyone.** The guard reads the graph's **stamp**, not its contents, and the stamp
+records the *schema* the writing binary had. So every reflow2 graph in existence names
+`QualityGate` even though almost none hold one. reflow2's own graph holds **zero** and was refused
+outright. You will see:
+
+> this graph names types this reflow2 cannot read, so opening it could silently show you less of
+> your design than it holds — refused.
+>  • This graph predates a schema change: it uses QualityGate, which this reflow2 RETIRED …
+
+**The migration, run end to end on reflow2's own graph before shipping this:**
+
+```bash
+# 1. Export with a reflow2 that still knows the type (v0.54.0 or your current one).
+reflow2-mcp --graph-path ./.reflow2/graph --export > design.json
+# 2. Import into a FRESH path with the new one. Any retired type is dropped and named.
+reflow2-mcp --graph-path ./.reflow2/graph-new --import design.json
+# 3. Check the counts match, then swap the new graph into place.
+```
+
+Result on a 3,989-node graph: **3,989 nodes and 21,555 edges in, the same out, nothing lost**,
+stamp 29 → 28.
+
+⚠️ **If you move a graph by hand, move its sidecar too.** The stamp lives in
+`<graph-path>.meta.json`, *beside* the store directory rather than inside it. Copying the store
+over an old sidecar reproduces the refusal on a graph you have already migrated. Importing into a
+fresh path avoids this, because it writes its own.
+
+📄 **An upgrade note is owed with this cut: the stamp MOVED, 29 → 28 node types.** Every prior stamp
+move was additive and left older graphs readable untouched. This one does not.
+
+### Removed
+
+- **`QualityGate` is retired** (`dec:qualitygate-is-retired-the-phase-gate-dissolved-into-the-detectors`).
+  It modelled the **stage gate** — a dated, waivable judgement at a phase boundary — and it was
+  never a duplicate of `Verification`: a test does not get waived, a review board's gate does. It
+  was the only type that asked about the design *as a whole* at a boundary.
+
+  It went unused for structural reasons, measured rather than inferred from its emptiness:
+  it participated in **no edge type at all**, so a gate could be created and attached to nothing;
+  its `criteria` was a JSON array inside a string that nothing could read; and decisively,
+  **nothing in the design ever carried a phase** — all 3,984 nodes checked, zero — so the gate had
+  nothing to gate.
+
+  Its conditions are now computed continuously. The two examples in its own extraction hint, *"DAG
+  is acyclic"* and *"all Requirements have coverage"*, are literally what `detect_gaps` and
+  `detect_defects` evaluate on every call, and a computed check never goes stale where a stored
+  `passed` does. The gate was not abandoned; it dissolved into the loop.
+
+  The decision records **the condition under which it should come back** — a project needing a
+  signed, auditable judgement at a boundary, which continuous computation cannot serve — and what
+  it would need that it never had.
+
+### Fixed
+
+- **Doc claims about the schema's size are now checked, and six were already wrong.**
+  `check_doc_versions.py` guarded three version claims; retiring a node type moved the count 29 → 28
+  and a sweep found the **edge** count in the same four sentences had been wrong for weeks — three
+  said 60 and one said 64 against a real 65. Nothing checked them. The checker now reads the counts
+  from `schema/*.yaml` and asserts them across `AGENTS.md`, `README.md`, `docs/overview.md` and
+  `docs/interaction-surfaces.md`, matching **every** occurrence in each file so a second sentence
+  cannot rot while the first stays true. Guarded claims: 3 → 11.
+- **A stale exemption in the constructor sweep can no longer hide.** `NO_CONSTRUCTOR` in
+  `every_constructor_can_say_what_the_thing_is.rs` is a `continue`, so an entry that stopped being
+  true was skipped in silence. Three of its four entries were already dead: `Actor` read *"there is
+  no add_actor to give a parameter to"* while `add_actor` had shipped hours earlier taking a
+  `description`, `EnvironmentRule` names a type that declares no `description` at all, and
+  `QualityGate` was about to leave the schema. A reverse sweep now fails on an exemption that is no
+  longer earned. Same class as the `constructors_preserve.rs` scope error fixed above: a
+  hand-maintained list with no check that its entries are still true.
+
 ### Fixed
 
 - **`link_artifact` no longer rewrites an artifact's name on every re-link.** `name` was mandatory,

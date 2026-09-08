@@ -517,7 +517,7 @@ mod tests {
     #[test]
     fn vocabulary_covers_the_whole_schema() {
         let v = graph().describe_vocabulary();
-        assert_eq!(v.node_types.len(), 29, "all node types are listed");
+        assert_eq!(v.node_types.len(), 28, "all node types are listed");
         // 65 since ANSWERS (2026-09-02, a record names the Question it
         // answered — vocabulary the schema had described before it existed);
         // 63 since IMPLEMENTS + COMPLEMENTS (2026-08-23, record-to-record
