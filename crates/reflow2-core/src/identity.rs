@@ -71,6 +71,20 @@ pub struct DesignIdentity {
 }
 
 /// `<graph-path>.id.json` — a sibling of the store, like the version stamp.
+/// The design id recorded beside a graph, or `None` when there is no readable
+/// identity sidecar.
+///
+/// Deliberately quiet: this is used by the version guard to decide WHICH id to
+/// count retired-type instances under, and a missing or unparseable sidecar
+/// must not be an error there — it simply means the count falls back to the
+/// default id, which is the only id a pre-identity graph could be under.
+pub fn read_graph_id(graph_path: &str) -> Option<String> {
+    let text = std::fs::read_to_string(identity_path(graph_path)).ok()?;
+    serde_json::from_str::<DesignIdentity>(&text)
+        .ok()
+        .map(|i| i.graph_id)
+}
+
 pub fn identity_path(graph_path: &str) -> PathBuf {
     let p = Path::new(graph_path);
     match p.file_name().map(|n| n.to_string_lossy().to_string()) {

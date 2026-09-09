@@ -113,7 +113,16 @@ impl GraphStamp {
     /// back to the count comparison — but still sharpen the message with the
     /// retired registry, since a count excess that the retired types fully
     /// explain is almost certainly a graph that predates the removal.
-    fn unreadable_by(&self, now: &Self) -> Option<String> {
+    /// How this graph's vocabulary differs from this binary's, partitioned by
+    /// what the caller can DO about it.
+    ///
+    /// Returning the partition rather than a finished message is the whole
+    /// point: an UNKNOWN type and a RETIRED one need opposite handling, and a
+    /// single string forced them through one test. Field-reported 2026-09-08 —
+    /// a graph holding ZERO instances of a retired type was refused, on the
+    /// grounds that opening it "could silently show you less of your design
+    /// than it holds", which is false when it holds none.
+    fn vocabulary_gap(&self, now: &Self) -> VocabularyGap {
         match (
             &self.node_type_names,
             &self.edge_type_names,
@@ -123,11 +132,16 @@ impl GraphStamp {
             (Some(gnodes), Some(gedges), Some(nnodes), Some(nedges)) => {
                 let now_nodes: BTreeSet<&str> = nnodes.iter().map(String::as_str).collect();
                 let now_edges: BTreeSet<&str> = nedges.iter().map(String::as_str).collect();
+                let mut retired_nodes = Vec::new();
                 let mut retired = Vec::new();
                 let mut unknown = Vec::new();
                 for t in gnodes.iter().filter(|t| !now_nodes.contains(t.as_str())) {
                     if RETIRED_NODE_TYPES.contains(&t.as_str()) {
                         retired.push(t.clone());
+                        // Only NODE types can be counted — an edge of a retired
+                        // type is not addressable by a node scan, so an edge
+                        // retirement keeps the old, conservative behaviour.
+                        retired_nodes.push(t.clone());
                     } else {
                         unknown.push(t.clone());
                     }
@@ -140,25 +154,57 @@ impl GraphStamp {
                     }
                 }
                 if retired.is_empty() && unknown.is_empty() {
-                    None // this binary knows every type the graph names — additive, readable
+                    return VocabularyGap::None; // additive — readable in full
+                }
+                let message = refusal_named(&retired, &unknown, self, now);
+                // ⭐ THE SPLIT. An UNKNOWN type means this binary is BEHIND: it
+                // cannot read what it has never heard of, the stamp is the only
+                // evidence there is, and refusing is correct. A RETIRED type
+                // means this binary is AHEAD — it knows the type, so it can ASK
+                // THE STORE whether any survive. Mixed goes to Behind: the
+                // unknown half is unanswerable either way.
+                if !unknown.is_empty() {
+                    VocabularyGap::Behind(message)
+                } else if retired_nodes.len() == retired.len() {
+                    VocabularyGap::Retired {
+                        node_types: retired_nodes,
+                        message,
+                    }
                 } else {
-                    Some(refusal_named(&retired, &unknown, self, now))
+                    // A retired EDGE type is in the mix and cannot be counted.
+                    VocabularyGap::Behind(message)
                 }
             }
             // A legacy count-only stamp on at least one side (in practice `self`,
-            // since `now` is always current): the names are unavailable.
+            // since `now` is always current): the names are unavailable, so there
+            // is nothing to count and the conservative refusal stands.
             _ => {
                 if !self.knows_more_than(now) {
-                    return None;
+                    return VocabularyGap::None;
                 }
                 let node_excess = self.node_types.saturating_sub(now.node_types);
                 let edge_excess = self.edge_types.saturating_sub(now.edge_types);
                 let retired_explains = node_excess <= RETIRED_NODE_TYPES.len()
                     && edge_excess <= RETIRED_EDGE_TYPES.len();
-                Some(refusal_by_count(retired_explains, self, now))
+                VocabularyGap::Behind(refusal_by_count(retired_explains, self, now))
             }
         }
     }
+}
+
+/// What a stamp comparison found, partitioned by what can be done about it.
+enum VocabularyGap {
+    /// This binary knows every type the graph names.
+    None,
+    /// Refuse. Either this binary is genuinely behind, or the stamp is too old
+    /// to say which types differ — in both cases the population is unknowable.
+    Behind(String),
+    /// This binary RETIRED these node types. Whether to refuse depends on
+    /// whether the graph actually holds any, which only the store can answer.
+    Retired {
+        node_types: Vec<String>,
+        message: String,
+    },
 }
 
 /// The recovery recipe for a graph that predates a type retirement.
@@ -409,7 +455,21 @@ pub fn last_synced(graph_path: &str, target: &str) -> Option<String> {
 ///
 /// A stamp that cannot be parsed is reported as an error rather than
 /// overwritten: it may be the only record of what wrote the graph.
-pub fn check_and_stamp(graph_path: &str, schema: &Schema) -> Result<Provenance, DynoError> {
+/// `retired_population` answers the ONE question a stamp cannot: of these
+/// retired node types, which does the graph actually HOLD? It is a closure
+/// rather than a store handle because this module must not depend on the
+/// storage layer, and because the caller is the only place that knows which
+/// design id to count under. It returns the subset with instances.
+///
+/// **A scan failure must propagate, never read as "none".** A retired type that
+/// cannot be counted is exactly the case where the conservative refusal is
+/// still right, and collapsing an I/O error to zero would open the graph the
+/// guard exists to protect.
+pub fn check_and_stamp(
+    graph_path: &str,
+    schema: &Schema,
+    retired_population: impl Fn(&[String]) -> Result<Vec<String>, DynoError>,
+) -> Result<Provenance, DynoError> {
     let now = GraphStamp::current(schema);
     let path = stamp_path(graph_path);
 
@@ -435,9 +495,36 @@ pub fn check_and_stamp(graph_path: &str, schema: &Schema) -> Result<Provenance, 
             stamped_now: now.clone(),
         },
         Some(was) if was == now => Provenance::Match { stamp: was },
-        Some(was) => match was.unreadable_by(&now) {
-            Some(message) => return Err(DynoError::Storage(message)),
-            None => Provenance::OlderGraph {
+        Some(was) => match was.vocabulary_gap(&now) {
+            VocabularyGap::Behind(message) => return Err(DynoError::Storage(message)),
+            VocabularyGap::Retired {
+                node_types,
+                message,
+            } => {
+                // ASK THE STORE. The refusal's own justification is that opening
+                // "could silently show you less of your design than it holds" —
+                // which is false when it holds none of them. Refuse only on a
+                // population, never on a declaration.
+                let populated = retired_population(&node_types)?;
+                if !populated.is_empty() {
+                    return Err(DynoError::Storage(format!(
+                        "{message}\n \u{2022} AND THE GRAPH ACTUALLY HOLDS {}: node(s) of {} \
+                         are stored here, so opening would show you less than it holds. This is \
+                         the case the refusal is for.",
+                        populated.join(", "),
+                        if populated.len() == 1 {
+                            "this type"
+                        } else {
+                            "these types"
+                        }
+                    )));
+                }
+                Provenance::OlderGraph {
+                    was,
+                    now: now.clone(),
+                }
+            }
+            VocabularyGap::None => Provenance::OlderGraph {
                 was,
                 now: now.clone(),
             },
@@ -465,6 +552,20 @@ pub fn check_and_stamp(graph_path: &str, schema: &Schema) -> Result<Provenance, 
 
 #[cfg(test)]
 mod tests {
+    /// The message a gap would refuse with, or None when it opens. The unit
+    /// tests below are about MESSAGE WORDING — which types are named, and
+    /// whether the operator is told to migrate or to rebuild — so they read the
+    /// message directly. Whether a RETIRED gap actually refuses now depends on
+    /// the store's population, which is covered end to end in
+    /// `tests/provenance.rs` rather than here.
+    fn refusal_of(was: &super::GraphStamp, now: &super::GraphStamp) -> Option<String> {
+        match was.vocabulary_gap(now) {
+            super::VocabularyGap::None => None,
+            super::VocabularyGap::Behind(m) => Some(m),
+            super::VocabularyGap::Retired { message, .. } => Some(message),
+        }
+    }
+
     use super::*;
 
     /// A legacy count-only stamp — no type-name sets (pre-BL-86).
@@ -518,9 +619,8 @@ mod tests {
         let before = named("0.54.0", &["Project", "QualityGate"], &["SATISFIES"]);
         let now = named("0.54.0", &["Project"], &["SATISFIES"]);
 
-        let refusal = before
-            .unreadable_by(&now)
-            .expect("a graph naming a type this binary lacks is refused");
+        let refusal =
+            refusal_of(&before, &now).expect("a graph naming a type this binary lacks is refused");
 
         assert!(
             refusal.contains("RETIRED") && refusal.contains("migrate the graph"),
@@ -562,7 +662,7 @@ mod tests {
             &["Requirement", "Capability", "Release"],
             &["SATISFIES", "INCLUDES"],
         );
-        assert!(graph.unreadable_by(&now).is_none());
+        assert!(refusal_of(&graph, &now).is_none());
     }
 
     #[test]
@@ -571,7 +671,7 @@ mod tests {
         // the future — migrate the graph.
         let graph = named("0.9.0", &["Capability"], &["SATISFIES", "VALIDATES"]);
         let now = named("0.10.0", &["Capability"], &["SATISFIES"]);
-        let msg = graph.unreadable_by(&now).expect("must refuse");
+        let msg = refusal_of(&graph, &now).expect("must refuse");
         assert!(msg.contains("VALIDATES"), "names the retired type: {msg}");
         assert!(msg.contains("RETIRED") && msg.to_lowercase().contains("migrate"));
         assert!(
@@ -586,7 +686,7 @@ mod tests {
         // behind — update it.
         let graph = named("0.11.0", &["Capability"], &["SATISFIES", "FUTURE_EDGE"]);
         let now = named("0.10.0", &["Capability"], &["SATISFIES"]);
-        let msg = graph.unreadable_by(&now).expect("must refuse");
+        let msg = refusal_of(&graph, &now).expect("must refuse");
         assert!(
             msg.contains("FUTURE_EDGE") && msg.contains("BEHIND"),
             "{msg}"
@@ -597,7 +697,7 @@ mod tests {
     fn set_based_mixed_names_both_paths() {
         let graph = named("0.11.0", &["Capability"], &["VALIDATES", "FUTURE_EDGE"]);
         let now = named("0.10.0", &["Capability"], &["SATISFIES"]);
-        let msg = graph.unreadable_by(&now).expect("must refuse");
+        let msg = refusal_of(&graph, &now).expect("must refuse");
         assert!(
             msg.contains("VALIDATES") && msg.contains("FUTURE_EDGE"),
             "{msg}"
@@ -611,7 +711,7 @@ mod tests {
         // the number this reflow2 retired.
         let graph = legacy("0.9.0", 3, 5);
         let now = named("0.10.0", &["A", "B", "C"], &["X", "Y", "Z"]); // 3 / 3
-        let msg = graph.unreadable_by(&now).expect("must refuse");
+        let msg = refusal_of(&graph, &now).expect("must refuse");
         assert!(
             msg.contains("VALIDATES") && msg.to_lowercase().contains("most likely"),
             "excess explained by the retired types → lead with migration: {msg}"
@@ -622,7 +722,7 @@ mod tests {
     fn legacy_count_excess_beyond_retired_stays_hedged() {
         let graph = legacy("0.9.0", 3, 8); // 5 extra edge types — more than retired
         let now = named("0.10.0", &["A", "B", "C"], &["X", "Y", "Z"]);
-        let msg = graph.unreadable_by(&now).expect("must refuse");
+        let msg = refusal_of(&graph, &now).expect("must refuse");
         assert!(
             msg.contains("cannot tell them apart"),
             "an unexplained excess keeps the honest hedge: {msg}"

@@ -208,7 +208,26 @@ impl DesignGraph {
         // interpreted — so the "knows more" refusal check_and_stamp raises next is
         // unchanged for a real on-disk graph.
         let engine = StorageEngine::new_rocksdb(schema.clone(), path)?;
-        let provenance = crate::provenance::check_and_stamp(path, &schema)?;
+        // The engine is ALREADY OPEN one line above, so the population question
+        // is answerable right here — the guard simply never asked it. Counting
+        // under the id the identity sidecar names, falling back to the default:
+        // identity is resolved below, but the sidecar is a file and readable now.
+        //
+        // WHEN THE POPULATION CANNOT BE ESTABLISHED, REFUSE. `count_nodes`
+        // propagates scan failures rather than collapsing them to zero, and this
+        // closure passes that straight through — a retired type that cannot be
+        // counted is exactly the case the conservative refusal is still right for.
+        let count_under =
+            crate::identity::read_graph_id(path).unwrap_or_else(|| DEFAULT_GRAPH_ID.to_string());
+        let provenance = crate::provenance::check_and_stamp(path, &schema, |types| {
+            let mut populated = Vec::new();
+            for t in types {
+                if engine.count_nodes(&count_under, t)? > 0 {
+                    populated.push(t.clone());
+                }
+            }
+            Ok(populated)
+        })?;
         // Who is this design? (req:design-identity.) Established on first open
         // and read on every one after, from a sibling file — the id namespaces
         // every stored key, so it has to be known before the design can be.
