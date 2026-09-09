@@ -31,6 +31,8 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.57.0] — 2026-09-09
+
 **Minor** — two new tools (`repair_report`, `relation_coverage`), two new optional
 `ChangeEvent` properties, two new capabilities. The schema **stamp does not move**: 28 node
 types, 65 edge types, so **no migration is owed**.
@@ -68,9 +70,8 @@ types, 65 edge types, so **no migration is owed**.
   the near-misses instead. An empty population returns **no fraction at all** — not 0.0, not 1.0,
   because a fraction of nothing is not a fact. Not a score, and there is no threshold.
 
-**Patch so far** — a bug fix that turns a silent 30-second timeout into an immediate, accurate
-refusal, plus one new *reporting-only* defect category. No tool surface changed (178 toolsnaps
-match), no schema property moved, no stamp change.
+Also in this release — a bug fix that turns a silent 30-second timeout into an immediate,
+accurate refusal, plus one new *reporting-only* defect category.
 
 ### Fixed
 
