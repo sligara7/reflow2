@@ -1,5 +1,28 @@
 # Upgrading to v0.55.0
 
+> ## ⚠️ SUPERSEDED BY v0.56.0 — READ THIS FIRST
+>
+> **If you are upgrading to v0.56.0 or later, the migration below is almost
+> certainly unnecessary. Try opening your graph first.**
+>
+> This document was written for a guard that refused on the schema **stamp**.
+> Every graph written before the retirement names `QualityGate` in its stamp
+> whether or not it ever held one, so every graph was refused — which is why
+> this note said the action was required of everyone.
+>
+> **v0.56.0 fixed that.** The guard now asks the store whether the retired type
+> is actually there, and refuses only when it is. By every measurement taken,
+> no design ever held a `QualityGate`: it had no typed constructor, so the only
+> way to create one was the generic escape hatch.
+>
+> **Go straight to v0.56.0 and open your graph.** If it opens, you are done and
+> nothing below applies. If it is refused, your graph genuinely holds one — and
+> then the migration below is exactly right.
+>
+> The original text is kept unchanged: it was correct for the release it was
+> written for, and a reader on v0.55.0 or v0.55.1 still needs it.
+
+
 🛑 **Every existing graph must be migrated before it will open — including yours,
 and including one that never held a `QualityGate`.** One export and one import.
 Nothing else in this release needs anything from you.
