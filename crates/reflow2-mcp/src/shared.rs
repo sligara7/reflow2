@@ -225,6 +225,101 @@ pub fn remove_rendezvous(graph_path: &str) {
     let _ = std::fs::remove_file(rendezvous_path(graph_path));
 }
 
+/// What a spawned daemon writes when it will NOT become the shared server for a
+/// reason **no other process can resolve** — a version-guard refusal, a corrupt
+/// store, an unreadable path.
+///
+/// # Why this exists at all
+///
+/// Losing the store-lock race is the failure this module was built around, and
+/// it has a property the waiting loop quietly depends on: *somebody else won*.
+/// The loser exits, says nothing, and the winner's rendezvous arrives a moment
+/// later. Every other open failure looks identical from outside — a spawned pid,
+/// no rendezvous — and has the opposite property: **there is no winner and there
+/// never will be.** Waiting the full `READY_TIMEOUT` for one is waiting for
+/// something that cannot happen.
+///
+/// # Measured, 2026-09-09, and it is a dead heat the client always wins
+///
+/// A client's connect timeout is 30 s. `READY_TIMEOUT` is 30 s. Against a store
+/// whose lock is permanently held, the degraded surface — correct, complete, and
+/// carrying the real reason in its handshake instructions — arrived at
+/// **t+30.0 s**, which is exactly when the MCP client gave up. The field report
+/// that prompted this (dev_storyflow, 2026-09-08) saw `CONNECT_TIMEOUT after
+/// 30000ms` and spent a session on networking, while
+/// `.reflow2/graph.server.log` held a precise, actionable sentence the whole
+/// time.
+///
+/// ⭐ AND SHORTENING THE DEADLINE IS NOT THE FIX. `fact:the-first-store-read-of-
+/// a-session-costs-26-to-48-seconds` measured a *legitimate* cold daemon start
+/// at ~26 s, so 30 s is already only four seconds of headroom over a graph
+/// that is merely large. Cutting it would trade a bricked graph's bad message
+/// for a healthy graph's false one. The reason has to travel instead of the
+/// clock being moved.
+///
+/// So the daemon says so, in a sidecar beside the store — the same convention as
+/// the rendezvous, `.meta.json` and `.id.json` — and the spawning session stops
+/// waiting the instant it reads one it caused.
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+pub struct Refusal {
+    /// The daemon that refused. A reader acts ONLY on a pid it spawned itself:
+    /// another session's refusal is that session's business, and a record left
+    /// by a previous run must never be mistaken for this one's.
+    pub pid: u32,
+    /// The explained reason, already through `explain_open_failure` — the same
+    /// sentence the degraded surface will carry.
+    pub reason: String,
+    /// Unix seconds, so a human reading the file can tell it apart from a stale
+    /// one without a timestamp crate in the tree.
+    pub at_unix: u64,
+}
+
+/// `<graph-path>.server.refused.json`, beside the store — see [`rendezvous_path`]
+/// for why beside and not inside.
+pub fn refusal_path(graph_path: &str) -> PathBuf {
+    let p = Path::new(graph_path);
+    match p.file_name().map(|n| n.to_string_lossy().to_string()) {
+        Some(n) => p.with_file_name(format!("{n}.server.refused.json")),
+        None => PathBuf::from(format!("{graph_path}.server.refused.json")),
+    }
+}
+
+/// Read the refusal, if there is one and it parses. Malformed reads as absent,
+/// for the same reason [`read_rendezvous`] does: the fallback is the wait we
+/// would have done anyway, and a session blocked on a corrupt sidecar would be
+/// worse than one that is merely slow.
+pub fn read_refusal(graph_path: &str) -> Option<Refusal> {
+    let raw = std::fs::read_to_string(refusal_path(graph_path)).ok()?;
+    serde_json::from_str(&raw).ok()
+}
+
+/// Record a refusal, atomically (temp + rename), so a spawning session never
+/// reads half a record.
+pub fn publish_refusal(graph_path: &str, reason: &str) -> anyhow::Result<()> {
+    let record = Refusal {
+        pid: std::process::id(),
+        reason: reason.to_string(),
+        at_unix: std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .map(|d| d.as_secs())
+            .unwrap_or(0),
+    };
+    let final_path = refusal_path(graph_path);
+    let tmp = final_path.with_extension(format!("json.tmp{}", std::process::id()));
+    let body = serde_json::to_string_pretty(&record).context("could not render the refusal")?;
+    std::fs::write(&tmp, format!("{body}\n"))
+        .with_context(|| format!("could not write {}", tmp.display()))?;
+    std::fs::rename(&tmp, &final_path)
+        .with_context(|| format!("could not publish {}", final_path.display()))?;
+    Ok(())
+}
+
+/// Remove the refusal. Best-effort, like [`remove_rendezvous`]: correctness rests
+/// on the pid check, not on the file being tidy.
+pub fn remove_refusal(graph_path: &str) {
+    let _ = std::fs::remove_file(refusal_path(graph_path));
+}
+
 /// Is something answering at this URL, and is it reflow2 serving THIS graph?
 ///
 /// A TCP connect alone is not enough and the difference is not academic: the
@@ -363,6 +458,12 @@ pub async fn ensure_server_async(
     // and the spawned process settles the race by taking the store lock or not.
     // A stale file is left alone rather than deleted first: deleting it is a
     // write that races with a server publishing a good one.
+    // Clear any record from a previous run BEFORE spawning: from here on the
+    // only refusal this session will act on is one its own daemon wrote, and the
+    // pid check below is what enforces that. Removing it first means a graph
+    // that has since been fixed cannot be condemned by a stale file.
+    remove_refusal(graph_path);
+
     let spawned = spawn_daemon(graph_path, log_to)
         .context("could not start a shared reflow2 server for this design")?;
 
@@ -370,6 +471,7 @@ pub async fn ensure_server_async(
     let mut last_seen_pid = None;
     let mut attempts = 1u32;
     let mut since_last_spawn = Duration::ZERO;
+    let mut ours = vec![spawned];
     while Instant::now() < deadline {
         if let Some(r) = read_rendezvous(graph_path)
             && is_for_this_graph(&r, graph_path)
@@ -380,6 +482,27 @@ pub async fn ensure_server_async(
                 return Ok(r.url);
             }
         }
+
+        // A daemon WE spawned has refused for a reason no peer can resolve, so
+        // there is no winner to wait for. Give up now and hand the reason back:
+        // the caller turns it into the degraded surface, and the whole point is
+        // that it arrives in about a second instead of at the same instant the
+        // MCP client's own connect timeout fires (see `Refusal`).
+        if let Some(r) = read_refusal(graph_path)
+            && ours.contains(&r.pid)
+        {
+            remove_refusal(graph_path);
+            anyhow::bail!(
+                "the shared reflow2 server for {graph_path} REFUSED TO START, and no other \
+                 process can resolve it — this is a refusal, not a timeout:\n\n{}\n\nSaid by pid \
+                 {} at unix {}. Its log is at {}.",
+                r.reason,
+                r.pid,
+                r.at_unix,
+                daemon_log_path(graph_path, log_to).display(),
+            );
+        }
+
         tokio::time::sleep(POLL).await;
         since_last_spawn += POLL;
 
@@ -406,8 +529,12 @@ pub async fn ensure_server_async(
             );
             // A failure here is not fatal: a peer may still publish, and the
             // deadline is what decides.
-            if let Err(e) = spawn_daemon(graph_path, log_to) {
-                tracing::warn!("re-spawn attempt {attempts} failed: {e:#}");
+            match spawn_daemon(graph_path, log_to) {
+                // Remember it: a refusal only counts as ours if we started the
+                // process that wrote it, and a re-spawn is just as much ours as
+                // the first one.
+                Ok(pid) => ours.push(pid),
+                Err(e) => tracing::warn!("re-spawn attempt {attempts} failed: {e:#}"),
             }
         }
     }

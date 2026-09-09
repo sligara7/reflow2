@@ -59,9 +59,14 @@ a human message, and a `suggested_fix_type`.
 | `duplicate` | two Capabilities/Components covering the same ground (`DUPLICATES`) | warning | merge (entity resolution) |
 | `missing_entity` | an entity referenced but absent (e.g. an Interface named but not modeled) | warning | generate entity |
 | `missing_embedding` | a node with no vector (breaks similarity/resolution) | info | embed |
+| `untriaged_report` | an Artifact `GOVERNED_BY` a `methodology` DesignRule with no outgoing `CAUSES` edge — a document registered under a rule about how documents get processed, where nothing records that reading it produced a finding. Typed, not textual: no id substring and no path prefix, so it works on any project rather than on the one whose folders happen to be called `feedback` | info | **none — no mechanical repair.** A generated `CAUSES` edge would assert that somebody read the document, which is the one thing the edge is evidence for |
 
 The first six are lifted almost verbatim from `story_validation.rs`; the rest cover the
 design-specific gaps DIAGNOSE/`find_gaps` already knows about in Reflow today.
+
+`untriaged_report` is the one that checks a PROCESS rather than a structure, and it reports
+at `info` because the rule it checks is advisory by ruling (Anthony, 2026-09-09). A detector
+may be stricter than nothing; it must not be stricter than the rule it enforces.
 
 ---
 

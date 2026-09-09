@@ -229,11 +229,15 @@ fn axes_for(category: HealCategory) -> &'static [&'static str] {
         // any quality of the system being described — a fact pointing at a node
         // that is not there says nothing about whether the design is reliable or
         // maintainable. Same reasoning as `orphan_node` beside it.
+        // `untriaged_report` joins them for the same reason one step out: a
+        // report nobody triaged is a fact about this project's PROCESS, not
+        // about any quality of the system the design describes.
         HealCategory::OrphanNode
         | HealCategory::Duplicate
         | HealCategory::UnresolvedSetup
         | HealCategory::DeadEnd
-        | HealCategory::DanglingReference => &[],
+        | HealCategory::DanglingReference
+        | HealCategory::UntriagedReport => &[],
     }
 }
 

@@ -31,6 +31,47 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+**Patch so far** — a bug fix that turns a silent 30-second timeout into an immediate, accurate
+refusal, plus one new *reporting-only* defect category. No tool surface changed (178 toolsnaps
+match), no schema property moved, no stamp change.
+
+### Fixed
+
+- **A deliberate startup refusal no longer reaches an MCP client as `CONNECT_TIMEOUT`.** Reported
+  from the field 2026-09-08: a graph a newer reflow2 refuses to open produced
+  `CONNECT_TIMEOUT after 30000ms`, and a whole session went looking at networking while the exact,
+  actionable reason sat in `.reflow2/graph.server.log`.
+
+  Measured 2026-09-09, and it was a dead heat the client always won: reflow2's own `READY_TIMEOUT`
+  is 30 s and the client gives up at 30 s, so the degraded surface — correct, complete, carrying
+  the reason in its handshake instructions — arrived at **t+30.0 s**, every time.
+
+  ⭐ **Shortening the deadline would have been the wrong fix**, and measurement is what said so: a
+  *legitimate* cold daemon start was measured at ~26 s in August, leaving four seconds of headroom.
+  Cutting the clock would trade a bricked graph's bad message for a healthy graph's false one. So
+  the reason travels instead. A `--serve-shared` daemon that refuses for a cause **no peer can
+  resolve** — a version-guard refusal, a corrupt store, an unreadable path — now records that
+  refusal in a sidecar beside the store, and the spawning session gives up the moment it reads one
+  written by a process it started. **t+30.0 s becomes t+0.3 s**, and the message names the actual
+  cause.
+
+  **Losing the store-lock race is deliberately untouched**: that failure means somebody else won
+  and will publish, so the wait is correct there and the counterweight test fails if this is ever
+  widened into "any open failure means stop waiting".
+
+### Added
+
+- **`untriaged_report`, a new `detect_defects` category — `info`, never blocking.** An `Artifact`
+  `GOVERNED_BY` a `methodology` `DesignRule` with no outgoing `CAUSES` edge: a document registered
+  under a rule about how documents get processed, where nothing records that reading it produced a
+  finding. The predicate is typed rather than textual — no id substring, no path prefix — so it
+  works on any project rather than on one whose folders happen to be named `feedback`.
+
+  It reports and never blocks, because the rule it checks is advisory by ruling. Parking does
+  **not** suppress it, deliberately: registering a dated report parks it, so a detector that
+  honoured parking would report zero on every graph that has any reports at all — and a detector
+  reporting zero because it had nothing to run on reads exactly like one that ran clean.
+
 ## [0.56.0] — 2026-09-09
 
 **Minor** — a new tool (`record_alias`), a new optional schema property and a new capability. The

@@ -83,6 +83,47 @@ pub enum HealCategory {
     /// A set of parts that depend on each other in a loop, directly via
     /// `DEPENDS_ON` or through the contracts they provide and consume.
     CircularDependency,
+    /// A document parked under a methodology rule that produced no finding —
+    /// a field report registered and never triaged.
+    ///
+    /// # The predicate, and why it is not "an artifact named feedback"
+    ///
+    /// An `Artifact` with a `GOVERNED_BY` edge to a `DesignRule` whose category
+    /// is `methodology`, carrying **no outgoing `CAUSES` edge**. Every term
+    /// there is typed, which is the point: matching `art:*feedback*` by its id,
+    /// or `docs/feedback/` by its path, would be a string standing in for
+    /// evidence about content — the exact shape this project refuses elsewhere,
+    /// and one that would work on reflow2's own repository and nobody else's.
+    /// Measured on reflow2's graph 2026-09-09, the typed predicate selects four
+    /// Artifacts and all four are field reports, while "governed by a
+    /// methodology rule" alone selects thirty-one nodes of eight types.
+    ///
+    /// # It reports, and never blocks
+    ///
+    /// `Info`, because `rule:field-feedback-issues-are-root-caused-and-ideas-
+    /// are-brainstormed` is advisory by Anthony's ruling of 2026-09-09. A
+    /// detector may be stricter than nothing and must not be stricter than the
+    /// rule it enforces.
+    ///
+    /// # ⚠️ PARKING DOES NOT SUPPRESS IT, and that is load-bearing
+    ///
+    /// Every field report here is parked — `GOVERNED_BY ruling: parks` is how a
+    /// dated report is registered — so a detector that honoured parking would
+    /// report zero on every graph that has any reports at all, and read exactly
+    /// like one that had run clean. Parking is a ruling about ATTACHMENT: this
+    /// node deliberately hangs off the golden thread. It says nothing about
+    /// whether anybody read the thing.
+    ///
+    /// # Why it could not be built before the edge existed
+    ///
+    /// The rule named this compliance edge from the day it was written and the
+    /// edge had been drawn ONCE across seventeen field reports (2026-09-09).
+    /// The missing leg was never the detector: nothing instructed a triage to
+    /// draw `CAUSES` back to the report, so compliance left no trace and no
+    /// check could have found it. The 2026-09-09 triage drew its own back-edges
+    /// first, which is what gave this rule a true negative to tell from its
+    /// three true positives.
+    UntriagedReport,
     /// A property the schema declares a node reference whose value names no
     /// node — a record about something the design does not have.
     ///
@@ -126,6 +167,7 @@ impl HealCategory {
         HealCategory::DeadEnd,
         HealCategory::CircularDependency,
         HealCategory::DanglingReference,
+        HealCategory::UntriagedReport,
     ];
 
     /// Stable snake_case key.
@@ -140,6 +182,7 @@ impl HealCategory {
             HealCategory::DeadEnd => "dead_end",
             HealCategory::CircularDependency => "circular_dependency",
             HealCategory::DanglingReference => "dangling_reference",
+            HealCategory::UntriagedReport => "untriaged_report",
         }
     }
 }
@@ -1186,7 +1229,57 @@ impl DesignGraph {
                 self.declared_reference_count(index)?,
                 "declared node references",
             ),
+            // COUNTED IN GOVERNED DOCUMENTS, FOR THE SAME REASON AS THE RULE
+            // ABOVE, AND HERE IT IS THE DIFFERENCE THAT MATTERS MOST. This rule
+            // fires only on an Artifact governed by a `methodology` DesignRule,
+            // and most designs have none — so a bare "0 findings" would read as
+            // "every report was triaged" on a project that has never registered
+            // a report at all. Counting the population makes the sweep's
+            // starved-rule note say which empty it is, in words.
+            pop(
+                HealCategory::UntriagedReport.as_str(),
+                self.method_governed_documents(index)?,
+                "documents governed by a methodology rule",
+            ),
         ])
+    }
+
+    /// How many Artifacts are governed by a `methodology` DesignRule — the
+    /// population `untriaged_report` walks.
+    ///
+    /// Shares its predicate with the detector by construction rather than by
+    /// intention: the detector calls this to decide what to look at, so the
+    /// count and the walk cannot come to disagree. A second copy of "what
+    /// counts as a governed document" is exactly the hand-maintained duplicate
+    /// this crate keeps finding drifted.
+    fn method_governed_documents(
+        &self,
+        index: &HashMap<String, String>,
+    ) -> Result<usize, DynoError> {
+        let mut n = 0;
+        for (node_id, node_type) in index {
+            if node_type == node::ARTIFACT && self.governed_by_a_methodology_rule(node_id)? {
+                n += 1;
+            }
+        }
+        Ok(n)
+    }
+
+    /// Does this node hang off a DesignRule whose category is `methodology`?
+    fn governed_by_a_methodology_rule(&self, node_id: &str) -> Result<bool, DynoError> {
+        for e in self.outgoing(node_id, Some(edge::GOVERNED_BY))? {
+            let Some(rule) = self.get_node(node::DESIGN_RULE, &e.to_id)? else {
+                continue;
+            };
+            if rule
+                .properties
+                .iter()
+                .any(|(k, v)| k == "category" && v.as_str() == Some("methodology"))
+            {
+                return Ok(true);
+            }
+        }
+        Ok(false)
     }
 
     /// How many declared node references this graph actually carries — the
@@ -1524,6 +1617,47 @@ impl DesignGraph {
                     hubs: Vec::new(),
                 });
             }
+        }
+
+        // untriaged_report — a document parked under a methodology rule that
+        // produced no finding. See `HealCategory::UntriagedReport` for the
+        // predicate, why parking must not suppress it, and why it could not be
+        // written until the compliance edge was actually being drawn.
+        for (node_id, node_type) in &index {
+            if node_type != node::ARTIFACT {
+                continue;
+            }
+            if !self.governed_by_a_methodology_rule(node_id)? {
+                continue;
+            }
+            if !self.outgoing(node_id, Some(edge::CAUSES))?.is_empty() {
+                continue;
+            }
+            let affected = vec![node_id.clone()];
+            issues.push(HealIssue {
+                id: issue_id(HealCategory::UntriagedReport, &affected),
+                category: HealCategory::UntriagedReport,
+                severity: HealSeverity::Info,
+                message: format!(
+                    "Artifact '{node_id}' is governed by a methodology rule and has no CAUSES \
+                     edge, so nothing in the design records that reading it produced a finding. \
+                     A registered report and a triaged one look identical without that edge. \
+                     REPORTED, NEVER BLOCKING: the rule this checks is advisory."
+                ),
+                suggested_fix_type: None,
+                repair_is_a_judgement: Some(
+                    "Nothing mechanical can fix this and inventing an edge would be worse than \
+                     the gap: a CAUSES edge to a finding nobody took would assert that the \
+                     report was triaged. Two outcomes are both possible and only a reader of \
+                     the document can tell them apart — it was never triaged (run the triage, \
+                     and draw the edge as part of it), or it WAS triaged and the back-edge was \
+                     never drawn (find the findings that came from it and link them, which is \
+                     the commoner case here: measured 2026-09-09, one edge across seventeen \
+                     reports).",
+                ),
+                affected_ids: affected,
+                hubs: Vec::new(),
+            });
         }
 
         // orphan_node — missing golden-thread links, scoped to the ones DETECT
@@ -2664,6 +2798,21 @@ impl DesignGraph {
                         issue.id
                     ),
                 }),
+                // SAME ABSENCE, SAME REASON, ONE STEP EARLIER. A stub here would
+                // have to propose a CAUSES edge to a finding — which is to say,
+                // propose that the report WAS triaged. The whole value of the
+                // edge is that it means somebody read the document, so a
+                // generated one asserts exactly the thing it is evidence for.
+                HealCategory::UntriagedReport => skipped_operations.push(SkippedOperation {
+                    reference: issue.id.clone(),
+                    reason: format!(
+                        "no repair can be proposed: {} is missing the edge that records a \
+                         document was read, and drawing one mechanically would assert the \
+                         reading happened. Either triage it, or link the findings it already \
+                         produced.",
+                        issue.id
+                    ),
+                }),
                 // Breaking a cycle is a design decision, not a mechanical edit —
                 // which edge to invert, whether to introduce an interface, whether
                 // to go event-driven. Always human-reviewed, never auto-applied.
@@ -3529,7 +3678,8 @@ mod tests {
                 | HealCategory::SinglePointOfFailure
                 | HealCategory::DeadEnd
                 | HealCategory::CircularDependency
-                | HealCategory::DanglingReference => HealCategory::ALL.contains(&c),
+                | HealCategory::DanglingReference
+                | HealCategory::UntriagedReport => HealCategory::ALL.contains(&c),
             }
         }
         for c in HealCategory::ALL {
@@ -3537,7 +3687,7 @@ mod tests {
         }
         assert_eq!(
             HealCategory::ALL.len(),
-            9,
+            10,
             "a category was added or removed — extend `ALL`, the match above, and this count \
              together, or the sweep will understate which rules it ran"
         );
