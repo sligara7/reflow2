@@ -416,6 +416,17 @@ fn every_category_states_whether_it_reads_proposed() {
             // nothing saying so, which is how the nine on reflow2's own graph
             // survived in the first place.
             HealCategory::DanglingReference => false,
+            // Does NOT read it, and the subject is a document rather than a
+            // thought. `untriaged_report` fires on an Artifact — a file that
+            // exists — governed by a rule about how documents get processed.
+            // An Artifact has no `proposed` state to read, and the parked
+            // status it DOES carry is deliberately ignored: parking is how a
+            // dated report gets registered in the first place, so honouring it
+            // would silence the rule on every graph that has any reports at
+            // all. Stated here rather than left to the reader because the
+            // adjacent categories all turn on a node's confidence in itself,
+            // and this one turns on whether anybody read a file.
+            HealCategory::UntriagedReport => false,
         };
         // The assertion is not the value — it is that somebody wrote one down.
         // Both answers are legitimate; an unconsidered category is not.

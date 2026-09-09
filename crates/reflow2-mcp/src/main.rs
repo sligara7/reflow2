@@ -369,9 +369,21 @@ fn snapshot_dir(graph_path: &str) -> anyhow::Result<GraphSnapshot> {
 /// and the raw error ("IO error: While lock file: … Resource temporarily
 /// unavailable") does not say that, or say what to do. This is the failure a
 /// script hits when it tries to restore a design into a live session.
+/// Is this open failure the single-writer lock being held by somebody else?
+///
+/// Named rather than inlined because two callers must agree on it and they draw
+/// OPPOSITE conclusions: `explain_open_failure` uses it to phrase the message,
+/// and the `--serve-shared` daemon uses it to decide whether its exit means
+/// "another process won, wait for them" or "nobody can fix this, stop waiting".
+/// Getting those two out of step is exactly how a deliberate refusal reached a
+/// user as `CONNECT_TIMEOUT`.
+fn is_lock_contention(text: &str) -> bool {
+    text.contains("lock file") || text.contains("Resource temporarily unavailable")
+}
+
 fn explain_open_failure(err: &anyhow::Error, graph_path: &str) -> anyhow::Error {
     let text = format!("{err:#}");
-    if text.contains("lock file") || text.contains("Resource temporarily unavailable") {
+    if is_lock_contention(&text) {
         return anyhow::anyhow!(
             "another process already has the design graph at {graph_path} open.\n\
              The graph is single-writer, so the MCP server holds it exclusively while it runs.\n\
@@ -860,19 +872,52 @@ async fn main() -> anyhow::Result<()> {
                 )
             })
             .map_err(|e| {
-                // A daemon that loses the store-lock race is the NORMAL outcome when
-                // several sessions start at once — exactly one wins. Say so plainly
-                // in the log, because "failed to open" reads like a defect and this
-                // is the mechanism working.
-                let explained = explain_open_failure(&e.into(), &cli.graph_path);
-                eprintln!(
-                    "reflow2: not becoming the shared server for {} — {explained:#}\nIf several \
-                 sessions started together this is expected: the store lock picks one winner and \
-                 the rest exit here. The sessions that spawned us will attach to the winner.",
-                    cli.graph_path
-                );
+                let raw: anyhow::Error = e.into();
+                let text = format!("{raw:#}");
+                let explained = explain_open_failure(&raw, &cli.graph_path);
+                if is_lock_contention(&text) {
+                    // A daemon that loses the store-lock race is the NORMAL outcome when
+                    // several sessions start at once — exactly one wins. Say so plainly
+                    // in the log, because "failed to open" reads like a defect and this
+                    // is the mechanism working.
+                    eprintln!(
+                        "reflow2: not becoming the shared server for {} — {explained:#}\nIf \
+                         several sessions started together this is expected: the store lock picks \
+                         one winner and the rest exit here. The sessions that spawned us will \
+                         attach to the winner.",
+                        cli.graph_path
+                    );
+                } else {
+                    // 🛑 NO PEER CAN FIX THIS ONE. A version-guard refusal, a corrupt
+                    // store, an unreadable path — every session that spawns us will
+                    // fail the same way, so the spawning session must be told rather
+                    // than left waiting out a deadline for a winner that cannot
+                    // exist. Before 2026-09-09 this branch exited as silently as the
+                    // lock-race one and the session's ONLY signal was 30 s of
+                    // nothing, which its MCP client reported as `CONNECT_TIMEOUT` —
+                    // sending a real user hunting networking while this exact
+                    // sentence sat in the server log (`shared::Refusal`).
+                    eprintln!(
+                        "reflow2: REFUSING to become the shared server for {} — {explained:#}\n\
+                         This is not a lost lock race: no other process can resolve it, so the \
+                         session that spawned us is being told now rather than at the timeout.",
+                        cli.graph_path
+                    );
+                    if let Err(e) = reflow2_mcp::shared::publish_refusal(
+                        &cli.graph_path,
+                        &format!("{explained:#}"),
+                    ) {
+                        eprintln!(
+                            "reflow2: could not record that refusal for the spawning session, so \
+                             it will wait out its timeout instead: {e:#}"
+                        );
+                    }
+                }
                 explained
             })?;
+        // We are about to become the server, so any refusal recorded against this
+        // graph describes a world that no longer holds.
+        reflow2_mcp::shared::remove_refusal(&cli.graph_path);
         if let Some(note) = provenance {
             eprintln!("reflow2: {note}");
         }

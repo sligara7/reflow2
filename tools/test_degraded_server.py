@@ -363,6 +363,165 @@ class SnapshotReadTest(unittest.TestCase):
         self.assertNotIn("BEST-EFFORT", r.stderr)
 
 
+class SharedRefusalIsNotATimeoutTest(unittest.TestCase):
+    """A refusal no peer can resolve reaches the session at once, not at the timeout.
+
+    THE FIELD FAILURE, dev_storyflow 2026-09-08. A graph written by reflow2
+    0.50.0 was opened by 0.55.1, the version guard refused it correctly and said
+    exactly why in `.reflow2/graph.server.log` -- and what the user saw was
+    `CONNECT_TIMEOUT after 30000ms`. A whole session went hunting networking
+    while the actionable sentence sat in a file nobody had reason to open.
+
+    MEASURED 2026-09-09, and it is a dead heat the client always wins: reflow2's
+    own READY_TIMEOUT is 30 s and the client's connect timeout is 30 s, so the
+    degraded surface -- correct, complete, carrying the reason in its handshake
+    instructions -- arrived at t+30.0 s. Right answer, unreachable by
+    construction.
+
+    SHORTENING THE DEADLINE IS NOT THE FIX and this test does not ask for one:
+    `fact:the-first-store-read-of-a-session-costs-26-to-48-seconds` measured a
+    LEGITIMATE cold daemon start at ~26 s, leaving four seconds of headroom. The
+    reason has to travel instead. So the daemon now records a refusal beside the
+    store when its failure is one no other process can resolve, and the spawning
+    session stops waiting the moment it reads one its own spawn wrote.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        if not BINARY.exists():
+            raise unittest.SkipTest(f"{BINARY} not built (cargo build -p reflow2-mcp)")
+
+    def setUp(self):
+        self.dir = pathlib.Path(tempfile.mkdtemp(prefix="reflow2-refusal-"))
+        self.graph = self.dir / "graph"
+        self.addCleanup(shutil.rmtree, self.dir, ignore_errors=True)
+
+    def make_store(self):
+        """A real store, made the way a real one is: by a server opening it."""
+        p = serve(self.graph)
+        try:
+            handshake(p, "maker")
+        finally:
+            p.terminate()
+            p.wait(timeout=20)
+
+    def forge_a_future_stamp(self):
+        """Reproduce the reported failure exactly: a stamp this binary refuses.
+
+        The report's own case -- a RETIRED type -- cannot be built any more,
+        because a retired type is by definition one this binary will not write.
+        A stamp from a FUTURE reflow2 naming a type this one has never heard of
+        drives the identical branch of the guard and the identical refusal.
+        """
+        meta = self.graph.with_name(self.graph.name + ".meta.json")
+        d = json.loads(meta.read_text())
+        d["reflow2_version"] = "99.0.0"
+        d["node_type_names"] = sorted(set(d["node_type_names"] + ["ImaginaryFutureType"]))
+        d["node_types"] = len(d["node_type_names"])
+        meta.write_text(json.dumps(d, indent=1))
+
+    def shared_session(self):
+        """Drive `--shared` as a client and time the handshake."""
+        import time
+
+        proc = subprocess.Popen(
+            [str(BINARY), "--graph-path", str(self.graph), "--shared"],
+            stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            bufsize=1,
+        )
+        self.addCleanup(proc.terminate)
+        t0 = time.time()
+        result = handshake(proc, "session")
+        return time.time() - t0, result
+
+    def test_the_refusal_reaches_the_session_well_inside_a_client_timeout(self):
+        """The fix, as a clock: 30.0 s becomes a fraction of a second."""
+        self.make_store()
+        self.forge_a_future_stamp()
+        elapsed, result = self.shared_session()
+        self.assertLess(
+            elapsed,
+            15.0,
+            "the degraded surface arrived after "
+            f"{elapsed:.1f}s; a client that gives up at 30s must hear the reason "
+            "long before that, and 15s is the loosest bound worth pinning",
+        )
+        self.assertIn("UNAVAILABLE", result["instructions"])
+
+    def test_the_session_is_told_the_actual_reason_not_a_timeout(self):
+        """A message naming the cause, where a bare timeout used to be."""
+        self.make_store()
+        self.forge_a_future_stamp()
+        _, result = self.shared_session()
+        instructions = result["instructions"]
+        self.assertIn("ImaginaryFutureType", instructions)
+        self.assertIn("99.0.0", instructions)
+        self.assertIn("REFUSED TO START", instructions)
+        self.assertNotIn(
+            "within 30s",
+            instructions,
+            "this is a refusal, and calling it a timeout is the whole reported defect",
+        )
+
+    def test_the_refusal_record_names_the_daemon_that_wrote_it(self):
+        """A reader must be able to tell OUR daemon's refusal from anyone's.
+
+        The pid is what makes the record safe to act on: another session's
+        refusal is that session's business, and a record from a previous run
+        must never condemn this one.
+        """
+        self.make_store()
+        self.forge_a_future_stamp()
+        # Run a daemon by hand so the record is not consumed by a waiting parent.
+        r = subprocess.run(
+            [str(BINARY), "--graph-path", str(self.graph), "--serve-shared"],
+            capture_output=True,
+            text=True,
+            timeout=120,
+        )
+        self.assertNotEqual(r.returncode, 0, f"expected a refusal; stderr:\n{r.stderr}")
+        self.assertIn("REFUSING to become the shared server", r.stderr)
+        record = self.graph.with_name(self.graph.name + ".server.refused.json")
+        self.assertTrue(record.exists(), "the daemon refused and said nothing to disk")
+        d = json.loads(record.read_text())
+        self.assertIsInstance(d["pid"], int)
+        self.assertIn("ImaginaryFutureType", d["reason"])
+        self.assertGreater(d["at_unix"], 0)
+
+    def test_a_lost_lock_race_still_waits_for_the_winner(self):
+        """THE COUNTERWEIGHT, and the reason this is a discrimination not a giving-up.
+
+        Losing the store lock is the one open failure that means *somebody else
+        won* -- the winner publishes a moment later and the loser's parent
+        attaches to it. If a lock loss also wrote a refusal, every simultaneous
+        multi-session start would collapse into a degraded surface, which is the
+        outage this whole module exists to prevent. So the daemon must stay
+        silent here, and this test fails if the fix is widened into a blanket
+        "any open failure means stop waiting".
+        """
+        self.make_store()
+        holder = serve(self.graph)
+        self.addCleanup(holder.terminate)
+        handshake(holder, "holder")
+        r = subprocess.run(
+            [str(BINARY), "--graph-path", str(self.graph), "--serve-shared"],
+            capture_output=True,
+            text=True,
+            timeout=120,
+        )
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn("not becoming the shared server", r.stderr)
+        self.assertNotIn("REFUSING", r.stderr)
+        record = self.graph.with_name(self.graph.name + ".server.refused.json")
+        self.assertFalse(
+            record.exists(),
+            "a lost lock race wrote a refusal, so a slow winner would never be waited for",
+        )
+
+
 if __name__ == "__main__":
     os.chdir(REPO)
     unittest.main(verbosity=2)

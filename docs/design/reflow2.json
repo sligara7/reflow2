@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:c8d5bd8061cde8c57740803101cb0921acf8e85dd325818f2bbf21d81e85484c",
+  "content_hash": "sha256:ae222bc9695b8810c2e71557f02a685077b5d750651f8395b6333de2e71264f3",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -5020,6 +5020,12 @@
       "from_id": "chg:a-refusal-names-what-would-have-worked",
       "properties": {},
       "to_id": "epoch:a-refusal-names-what-would-have-worked"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:a-refusal-no-peer-can-resolve-stops-the-wait-instead-of-timing-out",
+      "properties": {},
+      "to_id": "epoch:a-refusal-arrives-before-the-client-gives-up"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -10315,6 +10321,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:a-refusal-arrives-before-the-client-gives-up:cmp:shared",
+      "properties": {},
+      "to_id": "epoch:a-refusal-arrives-before-the-client-gives-up"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:a-refusal-names-what-would-have-worked:art:graph",
       "properties": {},
       "to_id": "epoch:a-refusal-names-what-would-have-worked"
@@ -11132,6 +11144,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:rule:a-reflow2-tool-failure-met-while-working-is-captured-as-a-to-do",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:rule:field-feedback-issues-are-root-caused-and-ideas-are-brainstormed",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
     },
@@ -18600,7 +18618,7 @@
       "edge_type": "AUTHORED_BY",
       "from_id": "rule:field-feedback-issues-are-root-caused-and-ideas-are-brainstormed",
       "properties": {
-        "acted_at": "2026-09-07T13:00:00Z",
+        "acted_at": "2026-09-09",
         "role": "approver"
       },
       "to_id": "who:ajs"
@@ -18876,6 +18894,36 @@
         "validation_status": "unvalidated"
       },
       "to_id": "fact:defect-a-declared-property-can-be-unreachable-and-invisible-to-the-reach-instrument-when-a-default-populates-it"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "art:dev-storyflow-feedback-2026-09-08",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The root-cause pass on this document's CONNECT_TIMEOUT report: measured at t+30.0s against a real unopenable store, the degraded surface is correct and arrives exactly when the client gives up.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:a-startup-refusal-and-the-clients-give-up-are-both-thirty-seconds"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "art:dev-storyflow-feedback-2026-09-08",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The root-cause pass this rule requires on the repeat-effort report this document carries: capture-session's routing table closes a retired finding and has no row for an answered Decision.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:capture-session-routes-what-a-session-produced-not-what-it-resolved"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "art:dev-storyflow-feedback-2026-09-08",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The root-cause pass on the verification-gap half of this report: three of the eight gaps it names were already built, so the finding is about discoverability rather than about the schema.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:three-of-eight-reported-verification-gaps-were-already-built"
     },
     {
       "edge_type": "CAUSES",
@@ -19180,6 +19228,16 @@
         "validation_status": "unvalidated"
       },
       "to_id": "fact:the-demand-that-enforces-root-cause-sits-downstream-of-the-moment-it-exists-to-catch"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:a-startup-refusal-and-the-clients-give-up-are-both-thirty-seconds",
+      "properties": {
+        "basis": "causal",
+        "evidence": "The measurement is why the change has the shape it has: t+30.0s against the client 30s is what refuted shortening READY_TIMEOUT and forced the reason to travel instead.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "chg:a-refusal-no-peer-can-resolve-stops-the-wait-instead-of-timing-out"
     },
     {
       "edge_type": "CAUSES",
@@ -22863,6 +22921,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:a-refusal-no-peer-can-resolve-stops-the-wait-instead-of-timing-out",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:shared"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:a-remote-located-artifact-is-not-a-missing-file",
       "properties": {
         "accepted_baseline": true,
@@ -24888,6 +24955,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-3a6f961263d78f34",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:main"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-3cc73354216aa1f4",
       "properties": {
         "accepted_baseline": true,
@@ -25176,6 +25252,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-50ade42125b3056d",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-degraded-server"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-5107770eff781f1a",
       "properties": {
         "accepted_baseline": true,
@@ -25362,6 +25447,15 @@
         "action": "modified"
       },
       "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-6414f7a4c781cef4",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:proposed-asserts-nothing-test"
     },
     {
       "edge_type": "CHANGED",
@@ -25716,6 +25810,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-86736cac03c96e21",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-86a3b2a0f17787e8",
       "properties": {
         "accepted_baseline": true,
@@ -25848,6 +25951,15 @@
         "action": "modified"
       },
       "to_id": "art:dependency-manifest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-923c35e9e4120314",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:ility"
     },
     {
       "edge_type": "CHANGED",
@@ -26046,6 +26158,15 @@
         "action": "modified"
       },
       "to_id": "art:dependency-manifest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-a6f2b1b47bc4ab52",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:shared"
     },
     {
       "edge_type": "CHANGED",
@@ -28290,6 +28411,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:baseline-90e0e447c8e0ee42",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:dev-storyflow-feedback-2026-09-08"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:baseline-9325dcf17144c0a8",
       "properties": {
         "accepted_baseline": true,
@@ -28467,6 +28597,15 @@
         "action": "modified"
       },
       "to_id": "art:by-hand-signal-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:baseline-d3d10d0bda367fa3",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:a-parked-report-that-produced-nothing-test"
     },
     {
       "edge_type": "CHANGED",
@@ -47071,6 +47210,46 @@
     },
     {
       "edge_type": "DOCUMENTS",
+      "from_id": "art:dev-storyflow-feedback-2026-09-08",
+      "properties": {
+        "evidence": "The brainstorm pass this rule requires: this exploratory Decision is wishes #42 and #46, recorded in the reporter's words from this document."
+      },
+      "to_id": "dec:idea-a-measurement-cannot-state-what-it-could-not-establish"
+    },
+    {
+      "edge_type": "DOCUMENTS",
+      "from_id": "art:dev-storyflow-feedback-2026-09-08",
+      "properties": {
+        "evidence": "The brainstorm pass this rule requires: this exploratory Decision is wish #39, recorded in the reporter's words from this document."
+      },
+      "to_id": "dec:idea-a-measurement-that-refutes-the-designs-own-rule-has-nowhere-to-point"
+    },
+    {
+      "edge_type": "DOCUMENTS",
+      "from_id": "art:dev-storyflow-feedback-2026-09-08",
+      "properties": {
+        "evidence": "The brainstorm pass this rule requires: this exploratory Decision is wishes #43 and #44, recorded in the reporter's words from this document."
+      },
+      "to_id": "dec:idea-a-measurements-subject-should-be-a-node-so-the-recalled-half-has-nowhere-to-hide"
+    },
+    {
+      "edge_type": "DOCUMENTS",
+      "from_id": "art:dev-storyflow-feedback-2026-09-08",
+      "properties": {
+        "evidence": "The brainstorm pass this rule requires: this exploratory Decision is the offline-RCA cluster, recorded in the reporter's words from this document."
+      },
+      "to_id": "dec:idea-a-session-that-cannot-reach-the-graph-has-nowhere-to-put-what-it-learned"
+    },
+    {
+      "edge_type": "DOCUMENTS",
+      "from_id": "art:dev-storyflow-feedback-2026-09-08",
+      "properties": {
+        "evidence": "The brainstorm pass this rule requires: this exploratory Decision is wish #40 and the third gap of the repeat-effort report, recorded in the reporter's words from this document."
+      },
+      "to_id": "dec:idea-the-loop-reports-a-standing-backlog-when-a-session-can-only-act-on-what-it-touched"
+    },
+    {
+      "edge_type": "DOCUMENTS",
       "from_id": "art:doc-impact-propagation",
       "properties": {
         "doc_kind": "design_doc"
@@ -47833,6 +48012,22 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "art:dev-storyflow-feedback-2026-09-07b",
       "properties": {},
+      "to_id": "rule:field-feedback-issues-are-root-caused-and-ideas-are-brainstormed"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "art:dev-storyflow-feedback-2026-09-08",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:a-dated-field-report-is-registered-and-parked"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "art:dev-storyflow-feedback-2026-09-08",
+      "properties": {
+        "note": "Triaged 2026-09-09 under the rule: two issues root-caused (capture-session routing; the CONNECT_TIMEOUT refusal), one refutation recorded (three of eight reported verification gaps were already built), and five wishes recorded as exploratory Decisions. The back-edges below are what makes that checkable rather than claimed."
+      },
       "to_id": "rule:field-feedback-issues-are-root-caused-and-ideas-are-brainstormed"
     },
     {
@@ -55407,6 +55602,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cmp:shared",
+      "properties": {},
+      "to_id": "snap:epoch:a-refusal-arrives-before-the-client-gives-up:cmp:shared"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "cmp:skills",
       "properties": {},
       "to_id": "snap:epoch:cmp-skills-gets-one-parent:cmp:skills"
@@ -56343,6 +56544,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "rule:field-feedback-issues-are-root-caused-and-ideas-are-brainstormed",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:rule:field-feedback-issues-are-root-caused-and-ideas-are-brainstormed"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "rule:fix-it-properly-while-it-is-still-cheap",
       "properties": {},
       "to_id": "snap:epoch:doing-it-right-becomes-design-intent:rule:fix-it-properly-while-it-is-still-cheap"
@@ -56838,6 +57045,12 @@
       "from_id": "cmp:service",
       "properties": {},
       "to_id": "fact:defect-typed-tool-parameter-names-are-inconsistent"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cmp:shared",
+      "properties": {},
+      "to_id": "fact:a-startup-refusal-and-the-clients-give-up-are-both-thirty-seconds"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -160587,6 +160800,14 @@
       "edge_type": "OBSOLETES",
       "from_id": "dec:field-reports-are-untracked-because-the-repository-is-public",
       "properties": {
+        "evidence": "The same accepted decision that retires the other sixteen field reports: the repository is public, so a field report is captured into the graph and the file itself is untracked and removed. Its absence from a checkout is the design and the build agreeing, not drift."
+      },
+      "to_id": "art:dev-storyflow-feedback-2026-09-08"
+    },
+    {
+      "edge_type": "OBSOLETES",
+      "from_id": "dec:field-reports-are-untracked-because-the-repository-is-public",
+      "properties": {
         "confidence": 1.0
       },
       "to_id": "art:grok-build-tui-feedback-2026-08-27"
@@ -161638,6 +161859,15 @@
         "weight_basis": "estimated"
       },
       "to_id": "ifc:temporal-api"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:a-parked-report-that-produced-nothing-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-report-nobody-recorded-reading-is-reported"
     },
     {
       "edge_type": "REALIZES",
@@ -162828,6 +163058,15 @@
         "conformance": "unchecked"
       },
       "to_id": "cap:a-node-attached-to-nothing-is-reported-whatever-its-type"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:heal",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-report-nobody-recorded-reading-is-reported"
     },
     {
       "edge_type": "REALIZES",
@@ -168956,6 +169195,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:a-refusal-arrives-before-the-client-gives-up",
+      "properties": {},
+      "to_id": "cmp:shared"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:a-refusal-names-its-own-fix",
       "properties": {},
       "to_id": "cap:cluster-claims"
@@ -169001,6 +169246,12 @@
       "from_id": "ver:a-report-is-not-a-list-of-every-check",
       "properties": {},
       "to_id": "cap:bounded-reads"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:a-report-nobody-recorded-reading-is-reported",
+      "properties": {},
+      "to_id": "cap:a-report-nobody-recorded-reading-is-reported"
     },
     {
       "edge_type": "VERIFIES",
@@ -170597,6 +170848,14 @@
         "action": "created"
       },
       "to_id": "art:setup"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:a-parked-report-that-produced-nothing-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:a-parked-report-that-produced-nothing-test"
     },
     {
       "edge_type": "YIELDED",
@@ -172365,6 +172624,17 @@
       }
     },
     {
+      "node_id": "art:a-parked-report-that-produced-nothing-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:66ac2fa5e29087d6d1e4dad6145243a6a54e7a7eb2508e9ab0ccfbd894321bc3",
+        "location": "crates/reflow2-core/tests/a_parked_report_that_produced_nothing_is_reported.rs",
+        "name": "a_parked_report_that_produced_nothing_is_reported.rs — the untriaged_report detector, its true negative, and the parking counterweight",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:a-prose-field-that-swallowed-a-parameter-says-so",
       "node_type": "Artifact",
       "properties": {
@@ -173104,6 +173374,17 @@
       }
     },
     {
+      "node_id": "art:dev-storyflow-feedback-2026-09-08",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:86c69ac8ba774eb5f7000776c422135f533dfe657393821ea15dea8f17daccf3",
+        "location": "docs/feedback/2026-09-08-dev-storyflow-agent-feedback.md",
+        "name": "dev_storyflow agent feedback — entries of 2026-09-07 (item 3 step 3 onward) and 2026-09-08, appended after peer-file line 7303: wishes #39-#46, the fabricated-proper-noun incident, the CONNECT_TIMEOUT session and the repeat-effort report",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:dimensions",
       "node_type": "Artifact",
       "properties": {
@@ -173543,7 +173824,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:2dc9215fdc63b510e11addee57097d3ec80b908dd27a10059dc8c2eeed99261a",
+        "checksum": "sha256:25a80f2f4a3319f087fe597c8637b3c44d71ef683adcdb7e8b1827872eaa5d02",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/heal.rs",
         "name": "heal.rs",
@@ -173616,7 +173897,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:7ab70f5005fe27a779fae6cc51cc8a50862402fd1b6578be258379a8d6658943",
+        "checksum": "sha256:65037b8764d25336c7d312ccfcd7d88ea319840b7c4c59c2d16754b89789eb18",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/ility.rs",
         "name": "ility.rs",
@@ -173818,7 +174099,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:20d8202316618bf0d31644663b13909a67d2f002725e234e56a2f05f5b923d55",
+        "checksum": "sha256:84d1f9f753e1c5017673d31b75209ec0003832fb2266bdfee79d4c01a9cd2a55",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/main.rs",
         "name": "main.rs",
@@ -174112,7 +174393,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:fcb7d9ba57613eafad8495fd471befeeaec9150be502c35e443f55cce207935a",
+        "checksum": "sha256:e12c29c59596cec33b128660c8221f99affb641267aece9a360f4871ab875ccd",
         "location": "crates/reflow2-core/tests/proposed_asserts_nothing.rs",
         "name": "tests/proposed_asserts_nothing.rs",
         "status": "realized"
@@ -174760,7 +175041,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:3105a880dc65dec1a1a7d7b38730ff0636ca5096e096c735edbbd423c25b382d",
+        "checksum": "sha256:7c4e153875c7256e3205e172d4c05599390d26a82a1b8297e2736afe708923b3",
         "location": "crates/reflow2-mcp/src/shared.rs",
         "name": "shared.rs",
         "status": "realized"
@@ -175213,7 +175494,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:25db9bfb196de65609c48f3aec924f55bdcac7c8492066658f310832b17156ef",
+        "checksum": "sha256:ee85d86152c99d2dcdc335a1459db6f202b495b5109b64ea828b254677ca34c0",
         "granularity": "atomic",
         "location": "tools/test_degraded_server.py",
         "name": "test_degraded_server.py",
@@ -176412,6 +176693,16 @@
         "name": "A repair can say what it invalidated, and the reader says whether a re-run is owed",
         "provenance": "authored",
         "status": "verified"
+      }
+    },
+    {
+      "node_id": "cap:a-report-nobody-recorded-reading-is-reported",
+      "node_type": "Capability",
+      "properties": {
+        "description": "An Artifact GOVERNED_BY a methodology DesignRule with no outgoing CAUSES edge is reported by detect_defects as `untriaged_report`, at info severity. It answers the question a triage rule cannot answer about itself: was this document actually read, or merely filed?\n\nTHE PREDICATE IS TYPED, NOT TEXTUAL — no id substring, no path prefix — so it works on any project rather than on one whose folders happen to be named `feedback`. Measured on reflow2 2026-09-09: the typed predicate selects four Artifacts, all field reports; dropping the category term selects thirty-one nodes of eight types.\n\nPARKING DOES NOT SUPPRESS IT, deliberately: registering a dated report is what parks it, so a detector honouring parking would report zero on every graph that has any reports at all — and a detector reporting zero because it had nothing to run on reads exactly like one that ran clean. The rule population is reported for the same reason.",
+        "name": "A registered report that produced no finding is reported, and never blocks",
+        "provenance": "authored",
+        "status": "realized"
       }
     },
     {
@@ -179348,6 +179639,15 @@
       }
     },
     {
+      "node_id": "chg:a-refusal-no-peer-can-resolve-stops-the-wait-instead-of-timing-out",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "name": "A --serve-shared daemon that refuses for a cause no peer can resolve records that refusal, and the spawning session stops waiting at once — t+30.0s becomes t+0.3s, and the reason reaches the agent instead of a CONNECT_TIMEOUT. Losing the store-lock race is deliberately untouched. Full measurement in fact:a-startup-refusal-and-the-clients-give-up-are-both-thirty-seconds.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:a-remote-located-artifact-is-not-a-missing-file",
       "node_type": "ChangeEvent",
       "properties": {
@@ -180249,6 +180549,15 @@
       }
     },
     {
+      "node_id": "chg:accept-3a6f961263d78f34",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Accepted 2026-09-09 for the refusal fix and the untriaged_report detector: the daemon records a refusal no peer can resolve, the spawning session stops waiting on it, and an Artifact governed by a methodology rule with no CAUSES edge is reported at info.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-3cc73354216aa1f4",
       "node_type": "ChangeEvent",
       "properties": {
@@ -180550,6 +180859,15 @@
       }
     },
     {
+      "node_id": "chg:accept-50ade42125b3056d",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Accepted 2026-09-09 for the refusal fix and the untriaged_report detector: the daemon records a refusal no peer can resolve, the spawning session stops waiting on it, and an Artifact governed by a methodology rule with no CAUSES edge is reported at info.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-5107770eff781f1a",
       "node_type": "ChangeEvent",
       "properties": {
@@ -180737,6 +181055,15 @@
         "change_type": "test_failure_fix",
         "detected_at": "2026-08-01",
         "name": "cap:tool-carries-convention: three tools gained their missing convention sentence — set_verification_status (planned is not confirmation), record_change (record it BEFORE you make it), export_graph (export once between commits, the lineage link is built from the file already there)."
+      }
+    },
+    {
+      "node_id": "chg:accept-6414f7a4c781cef4",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Accepted 2026-09-09 for the refusal fix and the untriaged_report detector: the daemon records a refusal no peer can resolve, the spawning session stops waiting on it, and an Artifact governed by a methodology rule with no CAUSES edge is reported at info.",
+        "subject": "system"
       }
     },
     {
@@ -181107,6 +181434,15 @@
       }
     },
     {
+      "node_id": "chg:accept-86736cac03c96e21",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Accepted 2026-09-09 for the refusal fix and the untriaged_report detector: the daemon records a refusal no peer can resolve, the spawning session stops waiting on it, and an Artifact governed by a methodology rule with no CAUSES edge is reported at info.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-86a3b2a0f17787e8",
       "node_type": "ChangeEvent",
       "properties": {
@@ -181241,6 +181577,15 @@
         "change_type": "baseline_established",
         "detected_at": "2026-08-08",
         "name": "reflow2.toml's version string bumped 0.24.0 -> 0.25.0 for the cut. The design meaning of a release lives in the Release node and its epoch, not in a version string, so the design holds. Accepted BEFORE release_includes_all so the manifest freezes the shipped value rather than the pre-bump one — the recorded v0.20.0 trap, avoided rather than repeated."
+      }
+    },
+    {
+      "node_id": "chg:accept-923c35e9e4120314",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Accepted 2026-09-09 for the refusal fix and the untriaged_report detector: the daemon records a refusal no peer can resolve, the spawning session stops waiting on it, and an Artifact governed by a methodology rule with no CAUSES edge is reported at info.",
+        "subject": "system"
       }
     },
     {
@@ -181451,6 +181796,15 @@
         "change_type": "refactor",
         "detected_at": "2026-08-02",
         "name": "v0.22.1 cut: the version string in reflow2.toml moved 0.22.0 -> 0.22.1. The design meaning of a cut lives in the Release node and its epoch, not in a version string, so the design holds unchanged. Accepted BEFORE release_includes_all so the manifest freezes the post-bump value — the ordering the v0.20.0 cut got wrong and paid for with a retry."
+      }
+    },
+    {
+      "node_id": "chg:accept-a6f2b1b47bc4ab52",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Accepted 2026-09-09 for the refusal fix and the untriaged_report detector: the daemon records a refusal no peer can resolve, the spawning session stops waiting on it, and an Artifact governed by a methodology rule with no CAUSES edge is reported at info.",
+        "subject": "system"
       }
     },
     {
@@ -182926,6 +183280,15 @@
       }
     },
     {
+      "node_id": "chg:baseline-90e0e447c8e0ee42",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "name": "Recorded as a FIRST BASELINE (baseline_established): 'art:dev-storyflow-feedback-2026-09-08' had no checksum, so the disposition passed could claim nothing about a movement nobody observed. Nothing moved and the design took no position. Caller's note: First baseline. The file is gitignored (dec:field-reports-are-untracked-because-the-repository-is-public) and removed once captured (dec:reflow2s-own-feedback-documents-are-removed-once-captured), so recording the checksum is what lets its absence read as expected_absence rather than missing_artifact — which is exactly how the other sixteen field reports are held.",
+        "subject": "record"
+      }
+    },
+    {
       "node_id": "chg:baseline-9325dcf17144c0a8",
       "node_type": "ChangeEvent",
       "properties": {
@@ -183118,6 +183481,15 @@
         "change_type": "baseline_established",
         "detected_at": "2026-08-26",
         "name": "First baseline — new in this change.",
+        "subject": "record"
+      }
+    },
+    {
+      "node_id": "chg:baseline-d3d10d0bda367fa3",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "name": "Recorded as a FIRST BASELINE (baseline_established): 'art:a-parked-report-that-produced-nothing-test' had no checksum, so the disposition passed could claim nothing about a movement nobody observed. Nothing moved and the design took no position. Caller's note: First baseline of the untriaged_report test, so later drift in it is detectable rather than merely unbaselined.",
         "subject": "record"
       }
     },
@@ -195590,6 +195962,17 @@
       }
     },
     {
+      "node_id": "epoch:a-refusal-arrives-before-the-client-gives-up",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "description": "Unreleased work after v0.56.0. Two halves of one field report: the CONNECT_TIMEOUT issue (a deliberate refusal reaching an MCP client as a transport timeout, because reflow2 waits exactly as long as the client does) and the third leg the triage rule was owed (a reporting-only detector for a registered report that produced no finding). Named descriptively rather than by version: the version is chosen at cut time, and this epoch existed before the cut did.",
+        "epoch_type": "revision",
+        "name": "A refusal arrives before the client gives up — a startup refusal no peer can resolve stops the wait instead of timing out, and a report nobody recorded reading is reported",
+        "sequence": 406,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:a-refusal-names-what-would-have-worked",
       "node_type": "DesignEpoch",
       "properties": {
@@ -197660,7 +198043,7 @@
         "category": "methodology",
         "enforced": false,
         "name": "Field feedback is processed by skill, not by reading: every issue or gap it names gets /root-cause, every idea for improvement or a new feature gets /brainstorm",
-        "statement": "When reflow2 receives feedback from a project that uses it — a field report, a friction log, an appended feedback file, a first-use write-up — the agent triaging it MUST run the root-cause skill on every issue, defect or gap the feedback identifies, and MUST run the brainstorm skill on every idea for improvement or new feature it proposes. Automatically, as the standing way feedback is read; not when reminded. Set by Anthony on 2026-09-05 after reminding the agent of it on three consecutive triages (\"then I don't have to remind this every time\").\n\nWHY THE SKILLS AND NOT JUST 'READ CAREFULLY': the same day this rule was set, a triage that read the code and wrote down a cause without the skill's steps got two of four causes wrong — a 'missing setter' that was really the schema-default injector (the BL-198 class), and 'two missing pairs' that were three — and running the skipped steps overturned both (fact:defect-a-verifications-level-and-method-can-be-set-only-at-birth-so-a-wrong-default-is-on-the-record-forever, revised the same day). The skill's own text predicts this: a cause reached at speed feels like understanding.\n\nWHAT EACH HALF PRODUCES, so compliance is visible rather than claimed: root-cause leaves a dated TemporalFact per issue carrying the candidates considered, the discriminating measurement taken, a CAUSES edge from the artifact holding the cause, and a stated bound on what was not established; brainstorm leaves one exploratory Decision per idea in the reporter's words with the counter-argument beside it, linked (or carrying a written no-relation note) via review_relations. A triage that leaves neither has not followed this rule, whatever it concluded.\n\nCOMPLEMENTS rule:feedback-sources-have-a-priority-order-and-anthony-set-it, which says which feedback is read first; this says how each piece is read once it is.\n\nENFORCEMENT IS DELIBERATELY UNSTATED: whether a triage that skips the skills should block anything is a policy Anthony has not ruled on. The detector that would notice absence — a parked field-report artifact with no CAUSES edge and no exploratory Decision dated after it — is not built; that third leg of the vocabulary is owed (fact:vocabulary-needs-three-legs)."
+        "statement": "When reflow2 receives feedback from a project that uses it — a field report, a friction log, an appended feedback file, a first-use write-up — the agent triaging it MUST run the root-cause skill on every issue, defect or gap the feedback identifies, and MUST run the brainstorm skill on every idea for improvement or new feature it proposes. Automatically, as the standing way feedback is read; not when reminded. Set by Anthony on 2026-09-05 after reminding the agent of it on three consecutive triages (\"then I don't have to remind this every time\").\n\nWHY THE SKILLS AND NOT JUST 'READ CAREFULLY': the same day this rule was set, a triage that read the code and wrote down a cause without the skill's steps got two of four causes wrong — a 'missing setter' that was really the schema-default injector (the BL-198 class), and 'two missing pairs' that were three — and running the skipped steps overturned both (fact:defect-a-verifications-level-and-method-can-be-set-only-at-birth-so-a-wrong-default-is-on-the-record-forever, revised the same day). The skill's own text predicts this: a cause reached at speed feels like understanding.\n\nWHAT EACH HALF PRODUCES, so compliance is visible rather than claimed: root-cause leaves a dated TemporalFact per issue carrying the candidates considered, the discriminating measurement taken, a CAUSES edge from the artifact holding the cause, and a stated bound on what was not established; brainstorm leaves one exploratory Decision per idea in the reporter's words with the counter-argument beside it, linked (or carrying a written no-relation note) via review_relations. A triage that leaves neither has not followed this rule, whatever it concluded.\n\nCOMPLEMENTS rule:feedback-sources-have-a-priority-order-and-anthony-set-it, which says which feedback is read first; this says how each piece is read once it is.\n\nENFORCEMENT IS ADVISORY, AND THAT WAS CHOSEN — Anthony, 2026-09-09, asked directly: a triage that skips these skills blocks nothing. Nothing is gate-blocking; the rule stands as guidance and the detector below only reports.\n\n⚠️ THE PROPERTY AND THIS PARAGRAPH USED TO DISAGREE, and that disagreement is why the ruling was put to him rather than assumed. The node already carried `enforced: false` — the schema's word for \"advisory, and somebody said so\" — while this text claimed nobody had ruled. Under this schema `false` and ABSENT are deliberately different states: `false` is a decision, absence is silence, and `dec:does-enforced-default-to-gate-blocking` removed the default precisely so the two could not be confused. A node asserting one while its own prose claimed the other is that same confusion, one layer up. It now says what it means.\n\nTHE DETECTOR IS BUILT AND IT REPORTS ONLY (`untriaged_report`, 2026-09-09): an Artifact GOVERNED_BY a `methodology` DesignRule with no outgoing CAUSES edge — a parked field report that produced no root-cause finding. Severity is a note and it never blocks, matching the ruling above.\n\n⭐ WHAT MADE IT BUILDABLE WAS MEASURING WHY IT WAS NOT. The compliance edge this rule names — CAUSES, from the report to the finding it caused — existed in the vocabulary the whole time and had been drawn ONCE across seventeen field reports (measured 2026-09-09; 7 of the 17 carry any DOCUMENTS back-edge at all, and none of the four this rule governs carried a CAUSES edge except `art:dev-storyflow-feedback-2026-09-07b`). So the third leg was not missing for want of a detector: the second leg never told anybody to draw the edge, and a rule whose compliance nothing records cannot be checked by anything. The triage of 2026-09-09 drew its own seven back-edges before the detector was written, which is what gave the detector a true negative to distinguish from its three true positives."
       }
     },
     {
@@ -198396,6 +198779,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered getting-started/SETUP.md"
+      }
+    },
+    {
+      "node_id": "frag:art:a-parked-report-that-produced-nothing-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered a_parked_report_that_produced_nothing_is_reported.rs — the untriaged_report detector, its true negative, and the parking counterweight"
       }
     },
     {
@@ -205476,6 +205869,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:a-refusal-arrives-before-the-client-gives-up:cmp:shared",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:a-client-elects-a-server-of-its-own-build\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:shared-sessions\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"CONTAINS\",\"other_type\":\"Component\",\"other_id\":\"sub:serving\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0370\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0380\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0390\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0400\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0410\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0420\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0430\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0440\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0450\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0460\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0470\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0471\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0480\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0490\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0500\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0510\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0520\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0530\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0540\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0550\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0551\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0560\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:shared\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}}]",
+        "state": "{\"kind\":\"module\",\"level\":\"component\",\"name\":\"shared\",\"provenance\":\"authored\",\"purpose\":\"The management half of shared mode: one server per design, discovered or started automatically, with the rendezvous record and liveness that make 'attach to the existing one' work.\",\"status\":\"planned\",\"tier\":\"operational\"}",
+        "target_id": "cmp:shared",
+        "target_type": "Component"
+      }
+    },
+    {
       "node_id": "snap:epoch:a-refusal-names-what-would-have-worked:art:graph",
       "node_type": "Snapshot",
       "properties": {
@@ -206846,6 +207249,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:preserved-on-write:rule:field-feedback-issues-are-root-caused-and-ideas-are-brainstormed",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Artifact\",\"other_id\":\"art:dev-storyflow-feedback-2026-09-04\",\"properties\":{\"evidence\":\"The dev_storyflow append-only feedback log, 2026-09-04 excerpt, is the other governed field report; its 2026-09-05 appendix was the triage whose skipped root-cause steps prompted this rule being written down.\"}},{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Artifact\",\"other_id\":\"art:dev-storyflow-feedback-2026-09-07\",\"properties\":{\"note\":\"Triaged 2026-09-07 under the rule: two issues root-caused with measurements (null stored as a third state; batch accept refusing a first baseline), three recurrences counted on their existing records (test artifact_type, arg-shape misses, the second-layer guard), one field confirmation (prose_currency ×3), and the wishes recorded as exploratory Decisions.\"}},{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Artifact\",\"other_id\":\"art:dev-storyflow-feedback-2026-09-07b\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Artifact\",\"other_id\":\"art:qs-project-feedback-2026-09-04\",\"properties\":{\"evidence\":\"A parked field report is the object this rule governs: its issues owe a root-cause fact each, its ideas an exploratory decision each. This one was triaged 2026-09-04 under the rule's practice before the rule was written down.\"}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-09-09\",\"role\":\"approver\"}},{\"direction\":\"out\",\"edge_type\":\"COMPLEMENTS\",\"other_type\":\"DesignRule\",\"other_id\":\"rule:feedback-sources-have-a-priority-order-and-anthony-set-it\",\"properties\":{\"evidence\":\"Two rules about the same input, on different axes: the priority rule says WHICH feedback is read first; this one says HOW each piece is read once it is (issues -> root-cause, ideas -> brainstorm). Neither subsumes the other; together they are the whole feedback-triage practice. Both set by Anthony.\"}},{\"direction\":\"out\",\"edge_type\":\"EVOLVES_INTO\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-root-cause-runs-at-the-moment-a-cause-is-about-to-be-written-not-on-every-failure\",\"properties\":{\"evidence\":\"The 2026-09-05 rule made root-cause automatic for FIELD feedback only. Anthony now asks for the same on issues the agent meets while building and testing; this idea is the field rule generalised, with the scope caveat the field rule never needed.\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:the-four-2026-09-rules-are-advisory-because-no-detector-can-yet-see-a-violation\",\"properties\":{}}]",
+        "state": "{\"category\":\"methodology\",\"enforced\":false,\"name\":\"Field feedback is processed by skill, not by reading: every issue or gap it names gets /root-cause, every idea for improvement or a new feature gets /brainstorm\",\"statement\":\"When reflow2 receives feedback from a project that uses it — a field report, a friction log, an appended feedback file, a first-use write-up — the agent triaging it MUST run the root-cause skill on every issue, defect or gap the feedback identifies, and MUST run the brainstorm skill on every idea for improvement or new feature it proposes. Automatically, as the standing way feedback is read; not when reminded. Set by Anthony on 2026-09-05 after reminding the agent of it on three consecutive triages (\\\"then I don't have to remind this every time\\\").\\n\\nWHY THE SKILLS AND NOT JUST 'READ CAREFULLY': the same day this rule was set, a triage that read the code and wrote down a cause without the skill's steps got two of four causes wrong — a 'missing setter' that was really the schema-default injector (the BL-198 class), and 'two missing pairs' that were three — and running the skipped steps overturned both (fact:defect-a-verifications-level-and-method-can-be-set-only-at-birth-so-a-wrong-default-is-on-the-record-forever, revised the same day). The skill's own text predicts this: a cause reached at speed feels like understanding.\\n\\nWHAT EACH HALF PRODUCES, so compliance is visible rather than claimed: root-cause leaves a dated TemporalFact per issue carrying the candidates considered, the discriminating measurement taken, a CAUSES edge from the artifact holding the cause, and a stated bound on what was not established; brainstorm leaves one exploratory Decision per idea in the reporter's words with the counter-argument beside it, linked (or carrying a written no-relation note) via review_relations. A triage that leaves neither has not followed this rule, whatever it concluded.\\n\\nCOMPLEMENTS rule:feedback-sources-have-a-priority-order-and-anthony-set-it, which says which feedback is read first; this says how each piece is read once it is.\\n\\nENFORCEMENT IS DELIBERATELY UNSTATED: whether a triage that skips the skills should block anything is a policy Anthony has not ruled on. The detector that would notice absence — a parked field-report artifact with no CAUSES edge and no exploratory Decision dated after it — is not built; that third leg of the vocabulary is owed (fact:vocabulary-needs-three-legs).\"}",
+        "target_id": "rule:field-feedback-issues-are-root-caused-and-ideas-are-brainstormed",
+        "target_type": "DesignRule"
+      }
+    },
+    {
       "node_id": "snap:epoch:prune-proposed:dec:proposed-requirements-pruned",
       "node_type": "Snapshot",
       "properties": {
@@ -208199,6 +208612,19 @@
         "subject_id": "req:skill-use-survives-a-long-session",
         "valid_from": "2026-08-28",
         "value": "{\"skills_served\":23,\"skills_loaded\":5,\"user_initiated\":3,\"tool_mandated\":1,\"self_invoked\":1,\"reflow2_tools_requiring_a_reflow2_skill\":0,\"refuted_hypothesis\":\"pause vs interrupt / capture vs change-governing\",\"refuted_by\":\"all 23 mirrored identically; impact-check, revise-design, link-artifacts all have slash commands\",\"blocking_interventions_obeyed\":3,\"passive_hints_acted_on\":0,\"corroborating_observation\":\"fact:an-agent-stopped-reaching-for-reflow2-and-a-second-one-reproduced-it-the-same-day\",\"step_7_pin\":\"deliberately not taken - fix not chosen\"}"
+      }
+    },
+    {
+      "node_id": "fact:a-startup-refusal-and-the-clients-give-up-are-both-thirty-seconds",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.9,
+        "fact_type": "defect",
+        "name": "A deliberate startup refusal reaches the MCP client as CONNECT_TIMEOUT, because reflow2's readiness deadline and the client's connect timeout are both 30 seconds",
+        "statement": "THE SYMPTOM AS OBSERVED (dev_storyflow, 2026-09-08): `CONNECT_TIMEOUT after 30000ms`, no reflow2 tools for a whole session, while `.reflow2/graph.server.log` held the precise reason — a graph written by reflow2 0.50.0 refused by 0.55.1. The reporter's own words: 'It is not a connection problem at all... Every diagnostic instinct that timeout provokes is wrong, and the correct message was sitting in a log nobody had reason to open.'\n\nCANDIDATES CONSIDERED, five: (1) the --serve-shared daemon exits on every open failure, so no rendezvous ever appears; (2) reflow2's READY_TIMEOUT equals the client's connect timeout, so nothing said after it can be heard; (3) the daemon's stderr goes to a log file and never reaches the session, so even a correct message has no path; (4) not-in-the-suspected-component — the peer's launch wrapper swallowed the output; (5) the observation is wrong and CONNECT_TIMEOUT came from something else.\n\nTHE DISCRIMINATING MEASUREMENT, taken 2026-09-09 against a real permanently-unopenable store: drive `--shared` as an MCP client and time the handshake reply. Candidate 3 predicts NO reply; candidates 1 and 2 predict a correct degraded reply, late.\n\nRESULT: the handshake arrived at **t+30.0 s**, carrying the correct, complete degraded surface with the reason in its instructions. So candidate 3 is REFUTED — the machinery was right all along — and 1 and 2 are both true. They are not separable by timing (both predict 30 s), and they are separable by consequence: 1 explains why no rendezvous appears, 2 explains why the correct answer is unreachable anyway. READY_TIMEOUT is 30 s and the client gives up at 30 s. It is a dead heat the client always wins.\n\nTHE CLASS, not the instance: the version guard was the trigger. The cause is that the `--serve-shared` daemon handles EVERY open failure with the path written for ONE of them. Losing the store-lock race means somebody else won and will publish; a version-guard refusal, a corrupt store or an unreadable path mean there is no winner and never will be. The waiting loop's own comment justifies the wait by assuming a winner exists, and never notices that assumption.\n\n⭐ AND SHORTENING THE DEADLINE IS NOT THE FIX — this is the measurement that killed the obvious answer. `fact:the-first-store-read-of-a-session-costs-26-to-48-seconds` measured a LEGITIMATE cold daemon start at ~26 s, so 30 s already carries four seconds of headroom. Cutting it would trade a bricked graph's bad message for a healthy graph's false one. The reason has to travel instead of the clock being moved.\n\nWHAT WAS BUILT: the daemon records a refusal beside the store (`<graph>.server.refused.json`, the same sidecar convention as the rendezvous) when its failure is one no peer can resolve; the spawning session stops waiting the instant it reads one written by a pid it spawned. Measured after: **t+30.0 s becomes t+0.3 s**, and the handshake instructions name the actual refusal.\n\nPINNED, AND OBSERVED TO FAIL FIRST: `tools/test_degraded_server.py::SharedRefusalIsNotATimeoutTest`, 4 cases. Against the unfixed binary, 3 fail — the timing case at 30.024 s, the message case because the old text said 'within 30s' and blamed the write lock, and the record case because nothing was written. The fourth, `a_lost_lock_race_still_waits_for_the_winner`, passes in BOTH states: it is the counterweight, and it fails if the fix is ever widened into a blanket 'any open failure means stop waiting'.\n\nWHAT THIS DOES NOT ESTABLISH: the reproduction used a forged future stamp and a permanently-held lock, not the reporter's retired-type case, which cannot be constructed any more — a retired type is by definition one this binary will not write. Both drive the identical guard branch and the identical refusal, so the path is the same; the exact 0.50.0 store was never re-run. The 30 s client timeout is taken from the reporter's message and from this session's own measurement of when the reply arrives; no client's configuration was inspected. And the ~26 s legitimate cold start is quoted from an August measurement of a 77 MB store, not re-measured here.",
+        "subject_id": "cmp:shared",
+        "valid_from": "2026-09-09"
       }
     },
     {
@@ -213842,6 +214268,19 @@
       }
     },
     {
+      "node_id": "ver:a-refusal-arrives-before-the-client-gives-up",
+      "node_type": "Verification",
+      "properties": {
+        "findings": "4 passed against the fixed binary. MUTATION-CHECKED: against the unfixed binary 3 FAIL — the timing case at 30.024s, the message case because the old text said 'within 30s' and blamed the write lock, and the record case because nothing was written — and the fourth, a_lost_lock_race_still_waits_for_the_winner, PASSES IN BOTH STATES. That is the counterweight, and it fails if the fix is ever widened into a blanket give-up.",
+        "kind": "verification",
+        "last_run_at": "2026-09-09",
+        "level": "integration",
+        "method": "test",
+        "name": "A refusal no peer can resolve reaches the session in 0.3s instead of 30.0s, names the actual cause, writes a pid-stamped record — and a lost lock race still waits for the winner (4 cases)",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:a-refusal-names-its-own-fix",
       "node_type": "Verification",
       "properties": {
@@ -213934,6 +214373,19 @@
         "level": "integration",
         "method": "test",
         "name": "graph_report withholds the verification roll, and the pointer back to it resolves",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:a-report-nobody-recorded-reading-is-reported",
+      "node_type": "Verification",
+      "properties": {
+        "findings": "6 passed. Confirmed against the LIVE reflow2 graph as well as the fixture: 3 untriaged_report findings, all info, and the report this session triaged and back-linked is correctly absent — the true negative that could not have existed before the compliance edge was drawn.",
+        "kind": "verification",
+        "last_run_at": "2026-09-09",
+        "level": "integration",
+        "method": "test",
+        "name": "untriaged_report fires on a governed document with no CAUSES edge, is cleared by the edge, survives parking, ignores an ungoverned document and a non-methodology rule, and never rises above info (6 cases)",
         "status": "passing"
       }
     },
@@ -216561,7 +217013,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:ec031394594ca01449690d6cc1cb9927bf675960cd76a65096e9748155db3fbc",
+  "prev_content_hash": "sha256:c8d5bd8061cde8c57740803101cb0921acf8e85dd325818f2bbf21d81e85484c",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
