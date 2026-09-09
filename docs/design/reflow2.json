@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:ae222bc9695b8810c2e71557f02a685077b5d750651f8395b6333de2e71264f3",
+  "content_hash": "sha256:b013f1d8931c6578737567ee1d195d14c491106f075550cbf8a04b83daf74d9e",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -1165,6 +1165,14 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-design-says-what-fraction-of-a-kind-carries-a-relation",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:report"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:a-design-says-which-vocabulary-it-has-never-used",
       "properties": {
         "weight_basis": "estimated"
@@ -1266,6 +1274,22 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:verify"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-repair-says-which-kind-it-was",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:report"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-report-nobody-recorded-reading-is-reported",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:heal"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -4879,6 +4903,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:a-design-says-what-fraction-carries-a-relation",
+      "properties": {},
+      "to_id": "epoch:the-design-answers-two-questions-about-itself"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:a-design-says-which-vocabulary-it-has-never-used",
       "properties": {},
       "to_id": "epoch:vocabulary-the-tools-cannot-reach"
@@ -5038,6 +5068,12 @@
       "from_id": "chg:a-repair-can-say-what-it-invalidated",
       "properties": {},
       "to_id": "epoch:v0400"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:a-repair-says-which-kind-it-was",
+      "properties": {},
+      "to_id": "epoch:the-design-answers-two-questions-about-itself"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -16197,6 +16233,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:63a3514d98ab022d",
+      "properties": {
+        "acted_at": "2026-09-09",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "decision:ack:65b894fcc73c3961",
       "properties": {
         "role": "approver"
@@ -16455,6 +16500,15 @@
       "edge_type": "AUTHORED_BY",
       "from_id": "decision:ack:8f3bacedc618f3d4",
       "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:8ff3c8e586ce5923",
+      "properties": {
+        "acted_at": "2026-09-09",
         "role": "approver"
       },
       "to_id": "who:ajs"
@@ -16920,6 +16974,15 @@
       "edge_type": "AUTHORED_BY",
       "from_id": "decision:ack:cd7e9eaaeba49218",
       "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:ce1f3c04a0ee8c4f",
+      "properties": {
+        "acted_at": "2026-09-09",
         "role": "approver"
       },
       "to_id": "who:ajs"
@@ -19598,6 +19661,16 @@
     },
     {
       "edge_type": "CAUSES",
+      "from_id": "fact:the-upgrade-path-leaves-the-shared-server-on-the-old-binary",
+      "properties": {
+        "basis": "causal",
+        "evidence": "Read both, 2026-09-09, in answer to a possible_duplicate gap. They are NOT the same finding — they are the two ends of one mechanism. B is the MECHANISM: upgrading the binary does not replace the process serving it, and every signal a user would check looks current (Alex, macOS, 2026-08-29, with the authoritative objects read). A is the CONSEQUENCE: an agent on that stale surface filed a bug that had been fixed eighteen hours earlier, because it could not name its own version. Recording CAUSES keeps both — the mechanism is what you fix, the consequence is what tells you it matters — where merging them would lose whichever half the merged text did not keep.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:an-agent-that-cannot-name-its-version-reports-fixed-bugs"
+    },
+    {
+      "edge_type": "CAUSES",
       "from_id": "fact:which-properties-are-node-references-is-a-judgement-made-once-and-never-recorded-for-the-others",
       "properties": {
         "basis": "correlational",
@@ -21217,6 +21290,15 @@
         "action": "modified"
       },
       "to_id": "art:tools-built"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-design-says-what-fraction-carries-a-relation",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:a-design-says-what-fraction-of-a-kind-carries-a-relation"
     },
     {
       "edge_type": "CHANGED",
@@ -23056,6 +23138,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:a-repair-says-which-kind-it-was",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:a-repair-says-which-kind-it-was"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:a-reply-is-not-sent-twice",
       "properties": {
         "accepted_baseline": true,
@@ -24784,6 +24875,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-1f110dd4708af6eb",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-1f6e12e8ae6095ef",
       "properties": {
         "accepted_baseline": true,
@@ -25132,6 +25232,15 @@
         "action": "modified"
       },
       "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-46e7ee1acef22069",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:changelog-test"
     },
     {
       "edge_type": "CHANGED",
@@ -25909,6 +26018,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-8cdc429d8314a57e",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-8cef54856c069f19",
       "properties": {
         "accepted_baseline": true,
@@ -26068,6 +26186,15 @@
         "action": "modified"
       },
       "to_id": "art:test-edges-need-both-ends"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-9d5a6783c47cd30d",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:enum-schema"
     },
     {
       "edge_type": "CHANGED",
@@ -26251,6 +26378,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-b140e08dc08f6591",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:temporal"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-b15edaa1e77d695c",
       "properties": {
         "accepted_baseline": true,
@@ -26266,6 +26402,15 @@
         "action": "modified"
       },
       "to_id": "art:schema-inference"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-b618dd570582ca6f",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:ingest"
     },
     {
       "edge_type": "CHANGED",
@@ -26365,6 +26510,15 @@
         "action": "modified"
       },
       "to_id": "art:dockerfile"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-bfc07677a772b044",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-temporal"
     },
     {
       "edge_type": "CHANGED",
@@ -26557,6 +26711,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-d4612713f5834a37",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-temporal"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-d470cc223bc3a3db",
       "properties": {
         "accepted_baseline": true,
@@ -26608,6 +26771,15 @@
         "action": "modified"
       },
       "to_id": "art:test-a-prescribed-layer-pair-no-longer-refuses"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-d91d8fc332394277",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:root-cause-skill"
     },
     {
       "edge_type": "CHANGED",
@@ -27031,6 +27203,15 @@
         "action": "modified"
       },
       "to_id": "art:test-a-near-match-of-another-type-is-named-as-a-layer"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-feae11cc9f4f9b96",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-assure"
     },
     {
       "edge_type": "CHANGED",
@@ -28312,6 +28493,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:baseline-5f2b85b8d1f79a95",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:a-design-says-what-fraction-carries-a-relation-test"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:baseline-62541d2bbec20b75",
       "properties": {
         "accepted_baseline": true,
@@ -28345,6 +28535,15 @@
         "action": "modified"
       },
       "to_id": "art:doc-impact-propagation"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:baseline-6a4373d565e0749c",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:relation-coverage"
     },
     {
       "edge_type": "CHANGED",
@@ -28474,6 +28673,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:baseline-a28e15cd008d0088",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:repair"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:baseline-a6e9d880f9a177c6",
       "properties": {
         "accepted_baseline": true,
@@ -28552,6 +28760,15 @@
         "action": "modified"
       },
       "to_id": "art:ophyd-service-fork-feedback-2026-08-31"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:baseline-c389615b2823d8c9",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:a-fix-says-whether-it-corrected-the-cause-test"
     },
     {
       "edge_type": "CHANGED",
@@ -161862,6 +162079,24 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:a-design-says-what-fraction-carries-a-relation-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-design-says-what-fraction-of-a-kind-carries-a-relation"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:a-fix-says-whether-it-corrected-the-cause-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-repair-says-which-kind-it-was"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:a-parked-report-that-produced-nothing-test",
       "properties": {
         "completeness": "complete",
@@ -163825,6 +164060,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:relation-coverage",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-design-says-what-fraction-of-a-kind-carries-a-relation"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:release-workflow",
       "properties": {
         "completeness": "complete",
@@ -163840,6 +164084,15 @@
         "conformance": "unchecked"
       },
       "to_id": "cap:report"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:repair",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-repair-says-which-kind-it-was"
     },
     {
       "edge_type": "REALIZES",
@@ -166046,6 +166299,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:a-design-says-what-fraction-of-a-kind-carries-a-relation",
+      "properties": {},
+      "to_id": "req:a-design-can-be-asked-what-fraction-of-a-kind-carries-a-relation"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:a-design-says-which-vocabulary-it-has-never-used",
       "properties": {},
       "to_id": "req:declared-vocabulary-is-reachable-from-the-surface"
@@ -166124,6 +166383,20 @@
       "from_id": "cap:a-repair-can-say-what-it-invalidated",
       "properties": {},
       "to_id": "req:a-dated-observation-does-not-read-as-standing-doctrine"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:a-repair-says-which-kind-it-was",
+      "properties": {},
+      "to_id": "req:a-fix-says-whether-it-corrected-the-cause"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:a-report-nobody-recorded-reading-is-reported",
+      "properties": {
+        "evidence": "The capability IS the rule third leg. The rule says every issue a field report names gets a root-cause pass and every idea a brainstorm pass; this detector is what notices when a report was registered and nothing recorded that reading it produced anything. A DesignRule rather than a Requirement is the honest target here — SATISFIES is deliberately wildcard-from-and-to for exactly this, and inventing a Requirement so the edge could point at one would be manufacturing intent to satisfy a detector."
+      },
+      "to_id": "rule:field-feedback-issues-are-root-caused-and-ideas-are-brainstormed"
     },
     {
       "edge_type": "SATISFIES",
@@ -169093,6 +169366,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:a-design-says-what-fraction-carries-a-relation",
+      "properties": {},
+      "to_id": "cap:a-design-says-what-fraction-of-a-kind-carries-a-relation"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:a-design-says-what-it-is-for",
       "properties": {},
       "to_id": "cap:quality-target-is-stated-or-asked-for"
@@ -169228,6 +169507,12 @@
       "from_id": "ver:a-repair-can-say-what-it-invalidated",
       "properties": {},
       "to_id": "cap:a-repair-can-say-what-it-invalidated"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:a-repair-says-which-kind-it-was",
+      "properties": {},
+      "to_id": "cap:a-repair-says-which-kind-it-was"
     },
     {
       "edge_type": "VERIFIES",
@@ -170851,6 +171136,22 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:a-design-says-what-fraction-carries-a-relation-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:a-design-says-what-fraction-carries-a-relation-test"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:a-fix-says-whether-it-corrected-the-cause-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:a-fix-says-whether-it-corrected-the-cause-test"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:a-parked-report-that-produced-nothing-test",
       "properties": {
         "action": "created"
@@ -171579,6 +171880,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:relation-coverage",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:relation-coverage"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:release-workflow",
       "properties": {
         "action": "created"
@@ -171592,6 +171901,14 @@
         "action": "created"
       },
       "to_id": "art:render-views"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:repair",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:repair"
     },
     {
       "edge_type": "YIELDED",
@@ -172624,6 +172941,28 @@
       }
     },
     {
+      "node_id": "art:a-design-says-what-fraction-carries-a-relation-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:4e127110709dbea79d1678e11f3f42bbd9aa9fd5c55072b50d19e04e72dc9d90",
+        "location": "crates/reflow2-core/tests/a_design_says_what_fraction_carries_a_relation.rs",
+        "name": "a_design_says_what_fraction_carries_a_relation.rs — the refusal case first",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:a-fix-says-whether-it-corrected-the-cause-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:d7cd41644a25d6624d9be6381718482cfb8db6a1e8c656738a776afe9197e76c",
+        "location": "crates/reflow2-core/tests/a_fix_says_whether_it_corrected_the_cause.rs",
+        "name": "a_fix_says_whether_it_corrected_the_cause.rs — the three clauses, and the silent-ledger case",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:a-parked-report-that-produced-nothing-test",
       "node_type": "Artifact",
       "properties": {
@@ -172913,7 +173252,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:98470594cf7626068c4781278dbcc07f66c6ba812a2943b3c1835420e798e50f",
+        "checksum": "sha256:6f43fe8421f71dfd843545d7855603e69107eba5891d7e3c077cfc583e320c29",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/changelog.rs",
         "name": "tests/changelog.rs",
@@ -173530,7 +173869,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c6598739139e0d0fdf0737bf57c0c6fede93c00629d67643128eef6ebb39d809",
+        "checksum": "sha256:ebbd178bf54b7f1841cf4e4c3f36cf410f12c7b9ff5278e3dbb33de93628eed0",
         "location": "crates/reflow2-mcp/src/enum_schema.rs",
         "name": "enum_schema.rs — one schema_with fn per enum request field, reading legal values from the compiled-in schema (or the handler's own const) at tool-listing time",
         "status": "realized"
@@ -173934,7 +174273,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:8049a646af44146e5f8f83ed7285196bc83405c0bce2f3cf2c0b8870021ab244",
+        "checksum": "sha256:54fc373ecd16a79330cac62b4feab422ac4201c4bf0a6e3c6a7efbea81bc0a11",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/ingest.rs",
         "name": "ingest.rs",
@@ -174554,6 +174893,17 @@
       }
     },
     {
+      "node_id": "art:relation-coverage",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:a32743008bb5e9d69f6ea0843b6294224fd7d81c239d27cd7e3b49d85c8c4fd0",
+        "location": "crates/reflow2-core/src/relation_coverage.rs",
+        "name": "relation_coverage.rs — of my N things of kind X, how many carry relation R",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:release-workflow",
       "node_type": "Artifact",
       "properties": {
@@ -174577,6 +174927,17 @@
         "name": "render_views.py",
         "status": "realized",
         "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:repair",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:bd0d36fec3fbd4c947cc9371049701bbe9f70124bd01eb8adc584a3af7472a67",
+        "location": "crates/reflow2-core/src/repair.rs",
+        "name": "repair.rs — what still rests on a patch",
+        "status": "realized"
       }
     },
     {
@@ -174674,7 +175035,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:769e5d300430feb6e5f4796bbbbe8a70e6807ac229b8e25b9055b564f39e6cb3",
+        "checksum": "sha256:4c7a08752f07fe7ba3ae47fbf7ce2858fdf2ca12d3f4cb214dc2580db6581c6d",
         "location": "getting-started/skills/root-cause/SKILL.md",
         "name": "root-cause/SKILL.md",
         "status": "realized"
@@ -174848,7 +175209,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:b6b94550076c4691f3ffb04fc8159486387acd7f93e0cc4a41fde6b2d4b9c975",
+        "checksum": "sha256:4521388fa08545cee32ef3ccab49b49e47318243ca8ca98916d8ff5046fc894a",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/temporal.yaml",
@@ -175004,7 +175365,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:56d6edd53b9bc6a22a3b589506897f3ec55609a1edce4863913b876b6a49d685",
+        "checksum": "sha256:3ce28fc3d9bf272d31c3ffce171106a87101a5991bc4a2bb5534ffe8c5c1f9c7",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -175091,7 +175452,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:856d04809841239c7479214ece0fca5ff03c17af860f5f734a5f6b67a83632b8",
+        "checksum": "sha256:b803de43df196ca97160e4802659548c9ddb3dd5a925377acfc05292509b9bd8",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -175312,7 +175673,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:122a7a56982f79b218cf98607c4b1744a1d54390a99809b7caf5d2e1f0818ce9",
+        "checksum": "sha256:05656ba005b8a9cf01e14c06f796ecebb10295b97d178e72016062ba1a718b29",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/temporal.rs",
         "name": "crates/reflow2-core/src/temporal.rs",
@@ -175904,7 +176265,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:533224046e1d2a31c5dc2215556fcd2297cdff46e7df2f95064dfab0e1cbd850",
+        "checksum": "sha256:e23bee2aa27cc2a963599067dbb9568e9d01ee924e6dc26c8a23c12584adb26a",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/assure.rs",
         "name": "tools/assure.rs",
@@ -176030,7 +176391,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:43dd766f93a7f51a185480d5e85bc6b2f3d0cb90e47bc90738077f17953c59aa",
+        "checksum": "sha256:1d5dbc453e9d1f0c465c9bcf085c0ff622f408d2c195f548e4191ef0eee64a0e",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/temporal_tools.rs",
         "name": "tools/temporal_tools.rs",
@@ -176561,6 +176922,16 @@
       }
     },
     {
+      "node_id": "cap:a-design-says-what-fraction-of-a-kind-carries-a-relation",
+      "node_type": "Capability",
+      "properties": {
+        "description": "relation_coverage(node_type, edge_type, direction) answers the core traceability question in the user's own words: how many of my requirements are actually verified, how many of my components declare an interface, how many of my capabilities have anything consuming them. Returns the population, the count, the fraction and the ids that are MISSING it, so the answer is actionable rather than a number.\n\n⭐ AN UNDECLARED TYPE IS REFUSED AND NEVER COUNTED AS ZERO. `Requirment` against 208 Requirements would answer '0 of 0' and read exactly like good news; the refusal names the near-misses instead. Same rule loop_status already applies to an unknown contributor_id.\n\nAN EMPTY POPULATION RETURNS NO FRACTION AT ALL — not 0.0, not 1.0. A fraction of nothing is not a fact, and either number would sit in a report looking like one.\n\n⚠️ NOT A SCORE, and there is no threshold: 12% may be perfectly healthy at a project's stage and reflow2 has no way to know.",
+        "name": "Of my N things of kind X, how many carry relation R — asked of any kind and any relation the schema declares",
+        "provenance": "authored",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "cap:a-design-says-which-vocabulary-it-has-never-used",
       "node_type": "Capability",
       "properties": {
@@ -176693,6 +177064,16 @@
         "name": "A repair can say what it invalidated, and the reader says whether a re-run is owed",
         "provenance": "authored",
         "status": "verified"
+      }
+    },
+    {
+      "node_id": "cap:a-repair-says-which-kind-it-was",
+      "node_type": "Capability",
+      "properties": {
+        "description": "record_change takes a `repair` disposition (corrected_cause / contained_symptom) with, for a containment, the sentence naming what the proper fix would be; repair_report reads it back as three counts and the standing patches.\n\nTHE UNSTATED COUNT IS A FIELD, NOT A FOOTNOTE, and that is the design rather than a nicety: a report listing the contained symptoms and stopping would have answered 'nothing rests on a patch' on a design where every historical repair said nothing. reflow2's own graph is exactly that design today.\n\nCLAUSE (b) IS ENFORCED BY THE TYPE: `Repair::ContainedSymptom` carries `stands_in_for` inside the variant, so a workaround that names nothing cannot be constructed. The JSON boundary checks the pairing both ways, since there the two arrive as separate optional fields.\n\n⚠️ IT RECORDS WHAT THE AUTHOR SAYS and cannot detect a patch reported as a correction — the same class of instrument as `provenance` and the drift dispositions. And it does not judge: a workaround is often the correct call under a deadline.",
+        "name": "A repair records whether it corrected the cause or contained a symptom, and the design can say what still rests on a patch",
+        "provenance": "authored",
+        "status": "realized"
       }
     },
     {
@@ -179411,6 +179792,15 @@
       }
     },
     {
+      "node_id": "chg:a-design-says-what-fraction-carries-a-relation",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "relation_coverage answers 'of my N things of kind X, how many carry relation R' for any declared kind and relation — and REFUSES an undeclared type rather than answering 0 of 0, which would read exactly like good news",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:a-design-says-which-vocabulary-it-has-never-used",
       "node_type": "ChangeEvent",
       "properties": {
@@ -179668,6 +180058,15 @@
         "rationale": "A finding survives the work that answered it and goes on proposing work already done. Measured cost, from dev_storyflow 2026-08-23: a session read a `failing` check dated that same day and reported its two defects to a user as the live state of the system; both had been repaired hours earlier on Constraint nodes, the user acted on the report, and the session's first act was to discover the work was done.\n\nTHE DESIGN TURNS ON ONE RESTRAINT: the claim says the RESULT is stale and nothing more. Not `RESOLVES`, no status change, and the check is NOT removed from `attention` — silencing it would swap one wrong reading for another. `rerun_owed` is three-valued so an undated claim reports as unanswerable rather than as \"already covered\".\n\nAND ONE MEASUREMENT DECIDED CLAIM-OVER-COMPUTATION: inferring staleness needs a change ordered against `last_run_at`, and only 8% of hand-written ChangeEvents carried a date because the constructor had no parameter for one. The cheap option was not cheap; it was unbuildable honestly. Fixing `detected_at` is what makes the computed bucket possible LATER, and it ships stamp-invisible alongside the edge that moves the stamp on purpose.\n\nTHIS EVENT IS THE FIRST HAND-WRITTEN ONE ABLE TO CARRY ITS OWN DATE.",
         "subject": "system",
         "summary": "A new edge type `INVALIDATES` (`* -> *`, props `note` and `at`) lets the record that did the work name the finding it answered, with `invalidates` to write it and `invalidated_findings` to read it. `loop_status.verifications` annotates each attention row with `invalidated_by`, `rerun_owed` and a sentence, plus a top-level summary; `graph_report` gets the same from shared code; `where-am-i` now gathers `Constraint` and calls `invalidated_findings` before quoting a failing verdict. `add_change_event` gains `detected_at` — declared, written 84% of the time by the reconcile paths, and unreachable from the ordinary path, which is why only 8% of hand-written events carried a date. Stamp moves 63 -> 64 edge types; `docs/upgrading-to-v0.40.0.md` updated."
+      }
+    },
+    {
+      "node_id": "chg:a-repair-says-which-kind-it-was",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "A repair records whether it corrected the cause or contained a symptom, a containment names the fix it stands in for, and repair_report says what still rests on a patch — with UNSTATED as a first-class count, because on day one it is 248 of 248",
+        "subject": "system"
       }
     },
     {
@@ -180371,6 +180770,15 @@
       }
     },
     {
+      "node_id": "chg:accept-1f110dd4708af6eb",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Accepted 2026-09-09 for the repair-disposition and relation-coverage increment: ChangeEvent gains `repair` + `stands_in_for`, record_change carries them and refuses an unpaired one, two new report tools are served, and root-cause's step 8 routes to repair_report.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-1f6e12e8ae6095ef",
       "node_type": "ChangeEvent",
       "properties": {
@@ -180734,6 +181142,15 @@
         "change_type": "new_feature",
         "detected_at": "2026-08-19",
         "name": "ScanReq gains `level`. Its doc records WHY the filter exists rather than just what it does: Component.level has always been indexed and populated, and with no way to ask by it every caller derived the top tier from the CONTAINS spine instead — which returns leaves nobody wired to a parent. Measured 2026-08-18: 8 subsystems by level, 2 leaves by spine.",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:accept-46e7ee1acef22069",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Accepted 2026-09-09 for the repair-disposition and relation-coverage increment: ChangeEvent gains `repair` + `stands_in_for`, record_change carries them and refuses an unpaired one, two new report tools are served, and root-cause's step 8 routes to repair_report.",
         "subject": "system"
       }
     },
@@ -181535,6 +181952,15 @@
       }
     },
     {
+      "node_id": "chg:accept-8cdc429d8314a57e",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Accepted 2026-09-09 for the repair-disposition and relation-coverage increment: ChangeEvent gains `repair` + `stands_in_for`, record_change carries them and refuses an unpaired one, two new report tools are served, and root-cause's step 8 routes to repair_report.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-8cef54856c069f19",
       "node_type": "ChangeEvent",
       "properties": {
@@ -181702,6 +182128,15 @@
         "change_type": "refactor",
         "detected_at": "2026-08-17",
         "name": "governed_by call sites updated for the new `ruling` parameter; assertions unchanged.",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:accept-9d5a6783c47cd30d",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Accepted 2026-09-09 for the repair-disposition and relation-coverage increment: ChangeEvent gains `repair` + `stands_in_for`, record_change carries them and refuses an unpaired one, two new report tools are served, and root-cause's step 8 routes to repair_report.",
         "subject": "system"
       }
     },
@@ -181894,6 +182329,15 @@
       }
     },
     {
+      "node_id": "chg:accept-b140e08dc08f6591",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Accepted 2026-09-09 for the repair-disposition and relation-coverage increment: ChangeEvent gains `repair` + `stands_in_for`, record_change carries them and refuses an unpaired one, two new report tools are served, and root-cause's step 8 routes to repair_report.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-b15edaa1e77d695c",
       "node_type": "ChangeEvent",
       "properties": {
@@ -181909,6 +182353,15 @@
         "change_type": "refactor",
         "detected_at": "2026-08-08",
         "name": "CAUSES.validation_status's description corrected: it offered 'observational / intervention / mechanism / temporal' against an enum of unvalidated/hypothesis/validated/refuted, zero overlap. The enum is unchanged, so no design meaning moved — only the prose that describes it, which is what describe_schema serves to agents. Second proven instance of req:schema-prose-is-checked (proposed)."
+      }
+    },
+    {
+      "node_id": "chg:accept-b618dd570582ca6f",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Accepted 2026-09-09 for the repair-disposition and relation-coverage increment: ChangeEvent gains `repair` + `stands_in_for`, record_change carries them and refuses an unpaired one, two new report tools are served, and root-cause's step 8 routes to repair_report.",
+        "subject": "system"
       }
     },
     {
@@ -182010,6 +182463,15 @@
         "change_type": "refactor",
         "detected_at": "2026-08-15",
         "name": "Accepted a new baseline: the change carries no design meaning"
+      }
+    },
+    {
+      "node_id": "chg:accept-bfc07677a772b044",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Accepted 2026-09-09 for the repair-disposition and relation-coverage increment: ChangeEvent gains `repair` + `stands_in_for`, record_change carries them and refuses an unpaired one, two new report tools are served, and root-cause's step 8 routes to repair_report.",
+        "subject": "system"
       }
     },
     {
@@ -182208,6 +182670,15 @@
       }
     },
     {
+      "node_id": "chg:accept-d4612713f5834a37",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Accepted 2026-09-09 for the repair-disposition and relation-coverage increment: ChangeEvent gains `repair` + `stands_in_for`, record_change carries them and refuses an unpaired one, two new report tools are served, and root-cause's step 8 routes to repair_report.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-d470cc223bc3a3db",
       "node_type": "ChangeEvent",
       "properties": {
@@ -182260,6 +182731,15 @@
         "change_type": "refactor",
         "detected_at": "2026-09-06",
         "name": "Same: literals gained the new optional fields as None; the test's claim is unchanged.",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:accept-d91d8fc332394277",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Accepted 2026-09-09 for the repair-disposition and relation-coverage increment: ChangeEvent gains `repair` + `stands_in_for`, record_change carries them and refuses an unpaired one, two new report tools are served, and root-cause's step 8 routes to repair_report.",
         "subject": "system"
       }
     },
@@ -182637,6 +183117,15 @@
         "change_type": "refactor",
         "detected_at": "2026-09-06",
         "name": "Same: literals gained the new optional fields as None; the test's claim is unchanged.",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:accept-feae11cc9f4f9b96",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Accepted 2026-09-09 for the repair-disposition and relation-coverage increment: ChangeEvent gains `repair` + `stands_in_for`, record_change carries them and refuses an unpaired one, two new report tools are served, and root-cause's step 8 routes to repair_report.",
         "subject": "system"
       }
     },
@@ -183174,6 +183663,15 @@
       }
     },
     {
+      "node_id": "chg:baseline-5f2b85b8d1f79a95",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "name": "Recorded as a FIRST BASELINE (baseline_established): 'art:a-design-says-what-fraction-carries-a-relation-test' had no checksum, so the disposition passed could claim nothing about a movement nobody observed. Nothing moved and the design took no position. Caller's note: First baseline for the repair-disposition and relation-coverage increment, so later drift in these files is detectable rather than merely unbaselined.",
+        "subject": "record"
+      }
+    },
+    {
       "node_id": "chg:baseline-62541d2bbec20b75",
       "node_type": "ChangeEvent",
       "properties": {
@@ -183208,6 +183706,15 @@
       "properties": {
         "change_type": "baseline_established",
         "name": "First baseline for the rendered doc. A future content change means the render was re-run — which is precisely the diff-churn caveat the page states about itself, so drift here will need reading as \"re-rendered\", not as \"the design moved\"."
+      }
+    },
+    {
+      "node_id": "chg:baseline-6a4373d565e0749c",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "name": "Recorded as a FIRST BASELINE (baseline_established): 'art:relation-coverage' had no checksum, so the disposition passed could claim nothing about a movement nobody observed. Nothing moved and the design took no position. Caller's note: First baseline for the repair-disposition and relation-coverage increment, so later drift in these files is detectable rather than merely unbaselined.",
+        "subject": "record"
       }
     },
     {
@@ -183349,6 +183856,15 @@
       }
     },
     {
+      "node_id": "chg:baseline-a28e15cd008d0088",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "name": "Recorded as a FIRST BASELINE (baseline_established): 'art:repair' had no checksum, so the disposition passed could claim nothing about a movement nobody observed. Nothing moved and the design took no position. Caller's note: First baseline for the repair-disposition and relation-coverage increment, so later drift in these files is detectable rather than merely unbaselined.",
+        "subject": "record"
+      }
+    },
+    {
       "node_id": "chg:baseline-a6e9d880f9a177c6",
       "node_type": "ChangeEvent",
       "properties": {
@@ -183432,6 +183948,15 @@
         "change_type": "baseline_established",
         "detected_at": "2026-08-31",
         "name": "First baseline. Copied byte-identical from the upload and verified NOT a strict prefix of art:ophyd-service-feedback-2026-08-19 before registering — a fresh document rather than an append, which is the opposite of dev_storyflow's pattern and had to be read off the file rather than assumed.",
+        "subject": "record"
+      }
+    },
+    {
+      "node_id": "chg:baseline-c389615b2823d8c9",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "name": "Recorded as a FIRST BASELINE (baseline_established): 'art:a-fix-says-whether-it-corrected-the-cause-test' had no checksum, so the disposition passed could claim nothing about a movement nobody observed. Nothing moved and the design took no position. Caller's note: First baseline for the repair-disposition and relation-coverage increment, so later drift in these files is detectable rather than merely unbaselined.",
         "subject": "record"
       }
     },
@@ -194482,6 +195007,16 @@
       }
     },
     {
+      "node_id": "decision:ack:63a3514d98ab022d",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:63a3514d98ab022d.",
+        "name": "Reviewed: gap:63a3514d98ab022d",
+        "rationale": "YES — the same question, and it is already recorded as such: a DUPLICATES edge was drawn between them on 2026-09-08 with the reasoning in its evidence. dec:idea-a-finding-carries-its-bounds (2026-08-07/08) asks whether a Verification gains structured BOUNDS and FINDINGS fields; wish #42 (2026-09-07) asks for `not_established` and #46 for `not_exercised`. The older node's own text already says it 'must be settled as ONE question rather than two'. They are deliberately NOT merged: the two were said a month apart for different reasons — the first because loop_status's rollup was unreadable, the second because a bounded finding was being quoted later as settled — and both reasons bear on the answer. What is owed is a DECISION, which is Anthony's, not another link.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "decision:ack:65b894fcc73c3961",
       "node_type": "Decision",
       "properties": {
@@ -194798,6 +195333,16 @@
         "decision": "Accepted the gap gap:8f3bacedc618f3d4.",
         "name": "Reviewed: gap:8f3bacedc618f3d4",
         "rationale": "ACCEPTED WHILE PLANNED, AND NOW DATED — Anthony's call 2026-07-31, taken with the other three of its kind as one judgement.\n\nThe gap's literal question — \"how will you confirm it?\" — is ALREADY ANSWERED: ver:skill-triggers is written and sits at `planned`, pinning that shape-matching fires on the situation AND stays silent otherwise (the counterweight is the half that matters, since a trigger that always fires teaches the agent to ignore it). What the gap reports is that the check has never RUN, which is true of anything unbuilt.\n\nWHY ACCEPT RATHER THAN LEAVE OPEN: these four were the only notes on the gate, so every cut printed \"5 notes\" with no way to tell signal from permanent background. When the capability is built and its check passes, the gap disappears on its own.\n\n*** CORRECTION, MADE THE SAME DAY, LEFT ON THE RECORD RATHER THAN EDITED AWAY. *** This rationale originally claimed `cap:review-expires-on-content` would bring the gap back if the capability were reworded. THAT IS FALSE — that capability is PLANNED, NOT BUILT. Expiry keys on the gap id, which hashes affected node IDS, so a review expires when the affected SET changes membership and NEVER on CONTENT change. This review does NOT self-expire; reword the capability and someone must revisit it BY HAND. Demonstrated live the same hour on the sibling acknowledgement decision:ack:4f9dcb95353889c2, where a substantial rewrite left the old judgement suppressing the gap against new text.\n\nWHY IT IS SCHEDULED AND NOT MERELY ACCEPTED: all four were scheduled against NOTHING, so quieting them would have relied on memory. Now SCHEDULED_FOR rel:v0210 as `expected`, so arrival_delta asks at v0.21.0 regardless.\n\nA SEPARATE THING NOT TO CONFUSE WITH THIS: cap:skill-triggers is also the single `unexamined` entry in confirmation_ledger, and that is BL-108, not this gap. The ledger attributes artifacts through a capability's COMPONENT, so cmp:nudge owning art:nudge-detect makes a PLANNED capability read as an unexamined BUILT claim. An exhaustive reconcile_artifacts (98/98 unchanged, 0 findings, 2026-07-31) does not clear it and must not — confirming it would assert that something unbuilt has been checked against reality.\n\nDELIBERATELY NOT IN v0.20.0, which Anthony scoped to cap:changelog-view alone.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:8ff3c8e586ce5923",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:8ff3c8e586ce5923.",
+        "name": "Reviewed: gap:8ff3c8e586ce5923",
+        "rationale": "DELIBERATELY OPEN, and the vehicle is now named. req:the-agent-never-authors-what-requires-accountable-sign-off is a PROHIBITION on the agent, and I recommended re-classifying it out of the capability question on the ground that nothing can 'provide' a thing not happening. Having read the schema rather than assuming it, that recommendation was half right: SATISFIES is deliberately wildcard at both ends, so a Constraint or an EnvironmentRule COULD close this edge — but drawing one today would close the gap without building anything, which is the manufactured-intent failure this project keeps meeting. What would genuinely deliver it is a refusal at the tool: reflow2 recognising that an artifact carries professional accountability, declining to author it, and recording the returned result as a Verification with its provenance. That is real work nobody has scheduled. EnvironmentRule is the right home for the prohibition when it is built (a licensure requirement is dictated by the world, not chosen by the design, which is exactly what separates EnvironmentRule from Constraint), and the compliance layer for it shipped in v0.54.0. Recorded so the gap reads as known and deferred rather than unnoticed.",
         "status": "accepted"
       }
     },
@@ -195348,6 +195893,16 @@
         "decision": "Accepted the gap gap:cd7e9eaaeba49218.",
         "name": "Reviewed: gap:cd7e9eaaeba49218",
         "rationale": "Built after v0.12.0 was cut, so it ships in the next release (dec:intent-preserved — a post-cut component is answered by the next manifest, never backfilled into a shipped one). Same disposition as cmp:degraded, cmp:skills, cmp:sync and cmp:identity.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:ce1f3c04a0ee8c4f",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:ce1f3c04a0ee8c4f.",
+        "name": "Reviewed: gap:ce1f3c04a0ee8c4f",
+        "rationale": "NOT duplicates, and read rather than skimmed. The name overlap is real ('version', 'binary') and the finding underneath is not: fact:the-upgrade-path-leaves-the-shared-server-on-the-old-binary is the MECHANISM (upgrading does not replace the running process, and every signal looks current), and fact:an-agent-that-cannot-name-its-version-reports-fixed-bugs is the CONSEQUENCE (a bug filed eighteen hours after it was fixed, by an agent on that stale surface). A CAUSES edge from the mechanism to the consequence has been drawn with that reasoning as its evidence, so the pair is now joined by what is actually true of it. Merging would have lost whichever half the merged text did not keep.",
         "status": "accepted"
       }
     },
@@ -196942,6 +197497,17 @@
         "epoch_type": "milestone",
         "name": "The declared walls hold — the eight subsystems become a severable hierarchy, in two moves that were simulated before either was proposed",
         "sequence": 366,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:the-design-answers-two-questions-about-itself",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "description": "Unreleased after v0.56.0. Two accepted requirements that had nothing delivering them, both of them questions a user asks in their own words rather than reflow2's. Taken together because they are the same shape: a fact about the design that somebody was answering with a hand-written script, or not at all. The first reading of each on reflow2's own graph: 248 repairs and not one states its disposition; 11 of 208 Requirements carry an incoming VERIFIES.",
+        "epoch_type": "revision",
+        "name": "The design answers two questions about itself — what still rests on a patch, and what fraction of a kind carries a relation",
+        "sequence": 407,
         "status": "arrived"
       }
     },
@@ -198782,6 +199348,26 @@
       }
     },
     {
+      "node_id": "frag:art:a-design-says-what-fraction-carries-a-relation-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered a_design_says_what_fraction_carries_a_relation.rs — the refusal case first"
+      }
+    },
+    {
+      "node_id": "frag:art:a-fix-says-whether-it-corrected-the-cause-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered a_fix_says_whether_it_corrected_the_cause.rs — the three clauses, and the silent-ledger case"
+      }
+    },
+    {
       "node_id": "frag:art:a-parked-report-that-produced-nothing-test",
       "node_type": "Fragment",
       "properties": {
@@ -199713,6 +200299,16 @@
       }
     },
     {
+      "node_id": "frag:art:relation-coverage",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered relation_coverage.rs — of my N things of kind X, how many carry relation R"
+      }
+    },
+    {
       "node_id": "frag:art:release-workflow",
       "node_type": "Fragment",
       "properties": {
@@ -199730,6 +200326,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered render_views.py"
+      }
+    },
+    {
+      "node_id": "frag:art:repair",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered repair.rs — what still rests on a patch"
       }
     },
     {
@@ -214040,6 +214646,19 @@
       }
     },
     {
+      "node_id": "ver:a-design-says-what-fraction-carries-a-relation",
+      "node_type": "Verification",
+      "properties": {
+        "findings": "6 passed, and confirmed against the LIVE reflow2 graph: 11 of 208 Requirements carry an incoming VERIFIES (5.3%), and `Requirment` is refused with 'Did you mean one of: Requirement?' rather than answering 0 of 0.",
+        "kind": "verification",
+        "last_run_at": "2026-09-09",
+        "level": "integration",
+        "method": "test",
+        "name": "A misspelled node type and an undeclared edge type are both REFUSED with near-misses, direction is part of the question, an empty population reports no fraction at all (6 cases)",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:a-design-says-what-it-is-for",
       "node_type": "Verification",
       "properties": {
@@ -214331,6 +214950,19 @@
         "level": "integration",
         "method": "test",
         "name": "A repair's claim is read back, and it never moves what it invalidated",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:a-repair-says-which-kind-it-was",
+      "node_type": "Verification",
+      "properties": {
+        "findings": "8 passed. The load-bearing case is a_silent_ledger_says_nobody_said_and_not_nothing_rests_on_a_patch: on reflow2's own graph every one of ~220 repairs is unstated, so a report that listed the zero standing patches and stopped would have answered 'nothing rests on a patch' confidently and falsely.",
+        "kind": "verification",
+        "last_run_at": "2026-09-09",
+        "level": "integration",
+        "method": "test",
+        "name": "The disposition is recorded and silence stays silence, a containment carries what it stands in for, and the report cannot read as clean when it is merely silent (8 cases)",
         "status": "passing"
       }
     },
@@ -217013,7 +217645,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:c8d5bd8061cde8c57740803101cb0921acf8e85dd325818f2bbf21d81e85484c",
+  "prev_content_hash": "sha256:ae222bc9695b8810c2e71557f02a685077b5d750651f8395b6333de2e71264f3",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

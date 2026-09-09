@@ -283,6 +283,81 @@ impl ChangeSubject {
     }
 }
 
+/// WHICH KIND OF REPAIR a change was — the cause corrected, or the symptom
+/// contained. Mirrors `temporal.yaml` `ChangeEvent.repair` + `stands_in_for`.
+///
+/// # Why the field exists, measured rather than assumed
+///
+/// `req:a-fix-says-whether-it-corrected-the-cause`, accepted on Anthony's own
+/// words: *"this is my philosophy on how to build something — so ensuring that
+/// it is built into the design of reflow2."* Measured on this project's graph
+/// 2026-08-17: **472 ChangeEvents across eleven change types, every one naming
+/// what MOVED and not one saying whether it was the RIGHT fix.** A
+/// `test_failure_fix` is equally the record of a root-cause rewrite and of a
+/// shim that made a red test green, and nothing downstream could tell them
+/// apart.
+///
+/// The obvious hypothesis was checked and refuted first, so the fix is not
+/// aimed at the wrong thing: `test_failure_fix` is the default for a
+/// `design_holds` drift accept, so perhaps the commonest fix type was merely an
+/// unchosen default. It was not — 55 of 101 were auto-minted accepts and all 55
+/// carried written reasons. **The discipline was there; the vocabulary was what
+/// was missing.**
+///
+/// # Why `stands_in_for` lives INSIDE the variant
+///
+/// The requirement's clause (b) — *"a contained symptom NAMES WHAT THE PROPER
+/// FIX WOULD BE"* — is what turns a patch from an invisible cost into a stated
+/// debt with somewhere to be read. Carried in the variant, a workaround that
+/// names nothing **cannot be constructed**: the compiler enforces the clause
+/// rather than a runtime check somebody could forget to call. A patch nobody
+/// wrote down is indistinguishable from a design decision six weeks later, and
+/// this is the cheapest possible way to make that state unreachable.
+///
+/// # ⚠️ It records, and it does not judge
+///
+/// A workaround is often the CORRECT call under a deadline. The requirement is
+/// that it be VISIBLE, never that it be forbidden (`dec:report-dont-judge`).
+/// And it records what the AUTHOR SAYS: it cannot detect a patch reported as a
+/// correction, which makes it the same class of instrument as `provenance` and
+/// the drift dispositions — worth having because the alternative is no signal
+/// at all, and worth never overselling.
+///
+/// **Optional, and absent means nobody said** (`req:defaults-do-not-assert`):
+/// whether a fix reached its cause is a judgement, and inventing an answer
+/// records a claim nobody made.
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "snake_case", tag = "repair")]
+pub enum Repair {
+    /// The cause was corrected — the class this belonged to should not recur.
+    CorrectedCause,
+    /// The symptom was contained. Carries what the proper fix would be, because
+    /// a debt nobody wrote down is not a debt anybody can find.
+    ContainedSymptom {
+        /// What the proper fix would be, in a sentence.
+        stands_in_for: String,
+    },
+}
+
+impl Repair {
+    /// The exact schema enum string for `ChangeEvent.repair`.
+    pub fn as_str(&self) -> &'static str {
+        match self {
+            Repair::CorrectedCause => "corrected_cause",
+            Repair::ContainedSymptom { .. } => "contained_symptom",
+        }
+    }
+
+    /// What the proper fix would be — `None` for a correction, which stands in
+    /// for nothing.
+    pub fn stands_in_for(&self) -> Option<&str> {
+        match self {
+            Repair::CorrectedCause => None,
+            Repair::ContainedSymptom { stands_in_for } => Some(stands_in_for),
+        }
+    }
+}
+
 /// Why the design changed — mirrors `temporal.yaml` `ChangeEvent.change_type`.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "snake_case")]
@@ -429,7 +504,11 @@ impl ChangeAction {
 /// A change to record via [`DesignGraph::record_change`]. Bundled so the call
 /// site reads as named fields rather than a long positional argument list
 /// (mirrors the `PersistInput` convention in the predecessor `ir2`).
-#[derive(Debug, Clone, Copy)]
+// `Clone` but no longer `Copy` since 2026-09-09: `repair` carries the sentence
+// naming what a patch stands in for, and a String cannot be Copy. Every call
+// site constructs this literally and passes it once, so the bound was never
+// load-bearing.
+#[derive(Debug, Clone)]
 pub struct ChangeRecord<'a> {
     /// The epoch this change happens at (the ChangeEvent/Snapshot are pinned here).
     pub epoch_id: &'a str,
@@ -457,6 +536,14 @@ pub struct ChangeRecord<'a> {
     pub target_id: &'a str,
     /// What the change did to the target.
     pub action: ChangeAction,
+    /// For a repair: whether it corrected the cause or contained the symptom,
+    /// and — for a containment — what the proper fix would be. See [`Repair`].
+    ///
+    /// `None` means nobody said, which is a true answer and the one every
+    /// change recorded before 2026-09-09 carries. It is never inferred from
+    /// `change_type`: a `test_failure_fix` is equally a root-cause rewrite and
+    /// a shim, which is the entire reason this field exists.
+    pub repair: Option<Repair>,
 }
 
 /// Deterministic id for the FIRST snapshot of `node_id` taken at `epoch_id`.
@@ -1489,6 +1576,38 @@ impl DesignGraph {
         rationale: Option<&str>,
         detected_at: Option<&str>,
     ) -> Result<StoredNode, DynoError> {
+        self.add_repaired_change_event(
+            id,
+            name,
+            change_type,
+            subject,
+            summary,
+            rationale,
+            detected_at,
+            None,
+        )
+    }
+
+    /// [`add_change_event`](Self::add_change_event), also recording WHICH KIND
+    /// OF REPAIR this was.
+    ///
+    /// A separate entry point rather than a ninth parameter on the original,
+    /// deliberately: thirty-eight call sites construct a ChangeEvent and all but
+    /// one of them would pass `None` here. Widening the common signature to
+    /// carry a field almost nobody sets is churn that makes every one of those
+    /// sites marginally harder to read, for no reader's benefit.
+    #[allow(clippy::too_many_arguments)]
+    pub fn add_repaired_change_event(
+        &mut self,
+        id: &str,
+        name: &str,
+        change_type: ChangeType,
+        subject: Option<ChangeSubject>,
+        summary: Option<&str>,
+        rationale: Option<&str>,
+        detected_at: Option<&str>,
+        repair: Option<&Repair>,
+    ) -> Result<StoredNode, DynoError> {
         self.upsert_node(
             node::CHANGE_EVENT,
             id,
@@ -1498,7 +1617,9 @@ impl DesignGraph {
                 .set_opt("subject", subject.map(ChangeSubject::as_str))
                 .set_opt("summary", summary)
                 .set_opt("rationale", rationale)
-                .set_opt("detected_at", detected_at),
+                .set_opt("detected_at", detected_at)
+                .set_opt("repair", repair.map(Repair::as_str))
+                .set_opt("stands_in_for", repair.and_then(Repair::stands_in_for)),
         )
     }
 
@@ -1573,7 +1694,7 @@ impl DesignGraph {
         // honestly either one — so it does not try. What it does now is carry
         // what the CALLER said. `None` still means nobody said, which is true;
         // what it no longer means is "nobody could".
-        let change_event = self.add_change_event(
+        let change_event = self.add_repaired_change_event(
             rec.change_event_id,
             rec.name,
             rec.change_type,
@@ -1584,6 +1705,11 @@ impl DesignGraph {
             // way of placing it in time; it carries no calendar date of its own
             // to pass on, and inventing one would be a claim nobody made.
             None,
+            // THE SAME ARGUMENT AS `subject`, one field over: this path cannot
+            // derive whether a fix reached its cause, so it does not try — it
+            // carries what the CALLER said. `None` still means nobody said;
+            // what it no longer means is "nobody could".
+            rec.repair.as_ref(),
         )?;
         self.pin_at_epoch(node::CHANGE_EVENT, rec.change_event_id, rec.epoch_id)?;
         self.changed(

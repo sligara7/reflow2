@@ -75,6 +75,8 @@ async fn the_record_axis_reaches_the_stored_event() {
         change_type: "resync".into(),
         subject: Some("record".into()),
         action: "modified".into(),
+        repair: None,
+        stands_in_for: None,
     })));
 
     assert_eq!(
@@ -99,6 +101,8 @@ async fn the_system_axis_reaches_the_stored_event() {
         change_type: "scope_change".into(),
         subject: Some("system".into()),
         action: "modified".into(),
+        repair: None,
+        stands_in_for: None,
     })));
 
     assert_eq!(
@@ -122,6 +126,8 @@ async fn omitting_the_axis_is_accepted_and_writes_nothing() {
         change_type: "resync".into(),
         subject: None,
         action: "modified".into(),
+        repair: None,
+        stands_in_for: None,
     })));
 
     assert_eq!(
@@ -147,6 +153,8 @@ async fn an_axis_outside_the_enum_is_refused() {
             change_type: "resync".into(),
             subject: Some("sistem".into()),
             action: "modified".into(),
+            repair: None,
+            stands_in_for: None,
         }))
         .await
         .expect_err("an unknown subject must be refused, not stored");

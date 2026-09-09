@@ -31,6 +31,43 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+**Minor** — two new tools (`repair_report`, `relation_coverage`), two new optional
+`ChangeEvent` properties, two new capabilities. The schema **stamp does not move**: 28 node
+types, 65 edge types, so **no migration is owed**.
+
+### Added
+
+- **A repair says whether it corrected the cause or contained a symptom, and `repair_report`
+  says what still rests on a patch.** `req:a-fix-says-whether-it-corrected-the-cause`, accepted
+  on Anthony's words — *"this is my philosophy on how to build something, so ensuring that it is
+  built into the design of reflow2"* — and until now nothing delivered it.
+
+  `record_change` takes `repair: corrected_cause | contained_symptom`, and a containment must
+  carry `stands_in_for`: the sentence naming what the proper fix would be. **The core type
+  enforces that rather than a runtime check** — `stands_in_for` lives inside the
+  `ContainedSymptom` variant, so a workaround that names nothing cannot be constructed. Absent
+  still means nobody said; it is never inferred from `change_type`, because that is the entire
+  reason the field exists (a `test_failure_fix` is equally a root-cause rewrite and a shim).
+
+  ⭐ **`unstated` is a first-class count in the report, not a footnote.** The first reading of
+  reflow2's own graph is **248 repairs, 248 unstated** — and the report says *"NOBODY HAS SAID …
+  'nothing rests on a patch' is NOT what this report means"* rather than listing zero standing
+  patches and looking clean. That case is what the field exists for.
+
+  ⚠️ It records what an author **says**, and cannot detect a patch reported as a correction. And
+  it does not judge: a workaround is often the correct call under a deadline, so nothing here
+  ranks or flags one.
+
+- **`relation_coverage` — of my N things of kind X, how many carry relation R?** The core
+  traceability question, asked of any node type and any edge type the schema declares, instead of
+  through a hand-written script. First reading on reflow2's own graph: **11 of 208 Requirements
+  carry an incoming `VERIFIES`.**
+
+  ⭐ **An undeclared type is REFUSED, never counted as zero.** `Requirment` against 208
+  Requirements would otherwise answer `0 of 0` and read exactly like good news; the refusal names
+  the near-misses instead. An empty population returns **no fraction at all** — not 0.0, not 1.0,
+  because a fraction of nothing is not a fact. Not a score, and there is no threshold.
+
 **Patch so far** — a bug fix that turns a silent 30-second timeout into an immediate, accurate
 refusal, plus one new *reporting-only* defect category. No tool surface changed (178 toolsnaps
 match), no schema property moved, no stamp change.

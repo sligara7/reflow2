@@ -43,6 +43,7 @@ fn a_change(id: &'static str, change_type: ChangeType) -> ChangeRecord<'static> 
         target_type: "Artifact",
         target_id: "art:thing",
         action: ChangeAction::Modified,
+        repair: None,
     }
 }
 

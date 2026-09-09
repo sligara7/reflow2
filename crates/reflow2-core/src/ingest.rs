@@ -1466,6 +1466,10 @@ impl DesignGraph {
             // better description of one that did not, and nothing reaching
             // this point distinguishes them. Saying nothing is the true answer.
             subject: None,
+            // UNSTATED for the same reason, one field over: a re-ingest is not
+            // a repair at all, and it certainly cannot say whether one reached
+            // its cause. Nobody said, which is true.
+            repair: None,
             target_type: node_type,
             target_id: id,
             action: ChangeAction::Modified,

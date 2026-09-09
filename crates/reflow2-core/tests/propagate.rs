@@ -155,6 +155,7 @@ fn reactive_propagation_uses_change_event_targets_as_seeds() {
         target_type: node::REQUIREMENT,
         target_id: "req:latency",
         action: ChangeAction::Modified,
+        repair: None,
     })
     .unwrap();
 

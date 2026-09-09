@@ -160,6 +160,7 @@ fn a_design_updated_accept_is_a_different_claim_than_design_holds() {
         target_type: node::CAPABILITY,
         target_id: "cap:score",
         action: ChangeAction::Modified,
+        repair: None,
     })
     .expect("record");
     g.set_artifact_checksum(

@@ -1,0 +1,34 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "Of your N things of kind X, how many carry relation R? The core                        traceability question, asked of ANY node type and ANY edge type the                        schema declares — how many Requirements have an incoming VERIFIES, how                        many Components have an outgoing PROVIDES, how many Capabilities have                        anything CONSUMES-ing them. `direction` says which end your nodes are on,                        and it matters: Requirements with INCOMING VERIFIES is 'how many are                        verified', outgoing is a question about requirements that verify things.                        Comes back with the population, the count, the fraction, and the ids that                        are MISSING it, so the answer is actionable rather than just a number. ⭐                        AN UNDECLARED TYPE IS REFUSED, NEVER COUNTED AS ZERO: `Requirment` against                        208 Requirements would otherwise answer '0 of 0' and read exactly like                        good news — the refusal names the near-misses instead. An empty population                        says so in `note` rather than reporting a fraction, because a fraction of                        nothing is not a fact. ⚠️ NOT A SCORE and there is no threshold: 12% may                        be perfectly healthy at your stage and reflow2 has no way to know.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "direction": {
+        "default": null,
+        "description": "`outgoing` (your nodes are the edge's SOURCE) or `incoming` (they are\nits TARGET). Defaults to `outgoing`, and comes back in the result so the\nreading is never left implicit.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "edge_type": {
+        "description": "The relation to look for, e.g. `VERIFIES`. Refused the same way.",
+        "type": "string"
+      },
+      "node_type": {
+        "description": "The kind of thing to count, e.g. `Requirement`. REFUSED if this design\ndoes not declare it — a typo must not answer `0 of 0`.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "node_type",
+      "edge_type"
+    ],
+    "type": "object"
+  },
+  "name": "relation_coverage"
+}

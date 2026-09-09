@@ -71,6 +71,8 @@ pub mod provenance;
 pub mod readiness;
 pub mod regions;
 pub mod relate;
+pub mod relation_coverage;
+pub mod repair;
 pub mod report;
 pub mod sanitize;
 pub mod schema;

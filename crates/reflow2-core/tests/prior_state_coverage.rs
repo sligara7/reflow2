@@ -41,6 +41,7 @@ fn snapshot(g: &mut DesignGraph, epoch_id: &str, change_event_id: &str) {
         target_type: node::DECISION,
         target_id: "dec:x",
         action: ChangeAction::Modified,
+        repair: None,
     })
     .expect("record_change");
 }

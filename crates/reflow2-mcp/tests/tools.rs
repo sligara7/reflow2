@@ -2245,6 +2245,8 @@ async fn temporal_resource_and_realization_tools_round_trip() {
         change_type: "refactor".into(),
         subject: Some("system".into()),
         action: "modified".into(),
+        repair: None,
+        stands_in_for: None,
     })));
     assert!(
         rec.is_object(),
