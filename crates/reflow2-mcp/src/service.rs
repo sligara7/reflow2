@@ -4349,6 +4349,30 @@ pub struct RecordChangeReq {
     /// `added` | `modified` | `removed`.
     #[schemars(schema_with = "crate::enum_schema::changed_action_req")]
     pub action: String,
+    /// FOR A REPAIR: `corrected_cause` (the class should not recur) or
+    /// `contained_symptom` (it can, and something is standing in the way).
+    ///
+    /// OPTIONAL, and leaving it out is a true answer — absent means nobody
+    /// said, and it is NEVER inferred from `change_type`, because that is the
+    /// whole reason this field exists: a `test_failure_fix` is equally the
+    /// record of a root-cause rewrite and of a shim that made a red test green.
+    /// Measured on reflow2's own graph 2026-08-17: 472 ChangeEvents, every one
+    /// naming what MOVED and not one saying whether it was the RIGHT fix.
+    ///
+    /// ⚠️ IT RECORDS, IT DOES NOT JUDGE. A workaround is often the correct call
+    /// under a deadline; the point is that it be VISIBLE, never that it be
+    /// forbidden. `repair_report` reads this back.
+    #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::repair_req")]
+    pub repair: Option<String>,
+    /// What the PROPER fix would be, in a sentence. REQUIRED with
+    /// `repair: contained_symptom` and refused without it.
+    ///
+    /// This is what turns a patch from an invisible cost into a stated debt
+    /// with somewhere to be read: a workaround nobody wrote down is
+    /// indistinguishable from a design decision six weeks later.
+    #[serde(default)]
+    pub stands_in_for: Option<String>,
 }
 
 /// One filled answer from the ambient agent (mirrors core `AgentAnswer` with a
@@ -4360,6 +4384,21 @@ pub struct AgentAnswerReq {
     pub id: String,
     /// The answer text (JSON string when the prompt expected JSON).
     pub text: String,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct RelationCoverageReq {
+    /// The kind of thing to count, e.g. `Requirement`. REFUSED if this design
+    /// does not declare it — a typo must not answer `0 of 0`.
+    pub node_type: String,
+    /// The relation to look for, e.g. `VERIFIES`. Refused the same way.
+    pub edge_type: String,
+    /// `outgoing` (your nodes are the edge's SOURCE) or `incoming` (they are
+    /// its TARGET). Defaults to `outgoing`, and comes back in the result so the
+    /// reading is never left implicit.
+    #[serde(default)]
+    pub direction: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]

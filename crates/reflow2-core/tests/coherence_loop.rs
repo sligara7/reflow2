@@ -228,6 +228,7 @@ fn full_coherence_loop() {
             target_type: node::REQUIREMENT,
             target_id: "req:latency",
             action: ChangeAction::Modified,
+            repair: None,
         })
         .unwrap();
     // Now actually apply the edit (create-or-replace; edges are preserved).

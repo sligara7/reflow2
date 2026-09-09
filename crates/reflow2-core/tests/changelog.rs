@@ -122,6 +122,7 @@ fn every_bucket_is_reached_by_a_named_rule_and_never_by_a_guess() {
             target_type: node::REQUIREMENT,
             target_id: target,
             action,
+            repair: None,
         })
         .unwrap();
     }
@@ -223,6 +224,7 @@ fn unreleased_is_bounded_by_the_last_deployed_release_not_the_newest_one() {
         target_type: node::REQUIREMENT,
         target_id: "req:after",
         action: ChangeAction::Added,
+        repair: None,
     })
     .unwrap();
 
@@ -351,6 +353,7 @@ fn no_entry_asserts_consumer_impact_and_the_obligation_is_named_instead() {
         target_type: node::REQUIREMENT,
         target_id: "req:x",
         action: ChangeAction::Added,
+        repair: None,
     })
     .unwrap();
 
@@ -408,6 +411,7 @@ fn the_same_window_twice_produces_the_identical_draft() {
             target_type: node::REQUIREMENT,
             target_id: target,
             action: ChangeAction::Added,
+            repair: None,
         })
         .unwrap();
     }

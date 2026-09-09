@@ -80,6 +80,20 @@ NON_TOOL_TERMS = {
     "caused_by",
     "cause_evidence",
 
+    # FIELDS and VALUES of `record_change`, named in root-cause's step ⑧ for the
+    # same reason as the pair above: `repair` and `stands_in_for` are a contract,
+    # not two independent knobs — a containment that names nothing is refused —
+    # and a skill naming only the tool would leave a reader to find that out from
+    # an error. `corrected_cause` / `contained_symptom` are its two values, and
+    # `test_failure_fix` is a `change_type` value the skill quotes to make the
+    # point that the two are not the same question. Field terms, not tools.
+    # Declared 2026-09-09 alongside `chg:a-repair-says-which-kind-it-was`.
+    "repair",
+    "stands_in_for",
+    "corrected_cause",
+    "contained_symptom",
+    "test_failure_fix",
+
     # FIELDS of `linking_report`'s reply and of `Decision` — read in prose by
     # link-ideas, which has to name what the three states ARE and what the
     # report cannot see. Field terms, not tools. Declared 2026-08-30 alongside

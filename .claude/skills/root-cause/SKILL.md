@@ -184,6 +184,22 @@ Then write the cause down where a later session will meet it:
   2026-09-07, when it was skipped on a field report by an agent that had recorded the rule
   requiring it hours earlier.
 
+- The **repair's own record**: `record_change` takes `repair` — `corrected_cause` when the class
+  should not recur, `contained_symptom` when it can and something is standing in the way. A
+  containment must also carry `stands_in_for`: the sentence naming what the proper fix would be.
+  **Leaving it off is a true answer** and means nobody said; it is never inferred from
+  `change_type`, because that is the whole reason the field exists — a `test_failure_fix` is
+  equally a root-cause rewrite and a shim that made a red test green.
+
+  This is where step ⑥ becomes durable. You have just asked *"would this fix have stopped the
+  report from three weeks ago?"*; `repair` is where the answer is written down, and
+  `repair_report` is what reads it back — **what still rests on a patch**, with the number that
+  said nothing reported beside it. On reflow2's own graph the first reading was 248 repairs and
+  248 unstated, which is the honest starting point and not a clean bill.
+
+  ⚠️ **A containment is often the correct call** under a deadline, and nothing here judges one.
+  The requirement is that it be visible, never that it be forbidden.
+
 ⭐ **THE REPAIR IS RECOVERABLE FROM THE DIFF. THE CAUSE IS NOT.** A year later the code says what
 was done and nothing says why it was the right thing — and the next person meeting the symptom
 starts from zero, which is the eleven-occurrence failure in step ②.

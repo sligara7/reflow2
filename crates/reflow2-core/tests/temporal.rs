@@ -52,6 +52,7 @@ fn record_change_preserves_pre_change_state() {
             target_type: node::REQUIREMENT,
             target_id: "req:latency",
             action: ChangeAction::Modified,
+            repair: None,
         })
         .unwrap();
 
@@ -125,6 +126,7 @@ fn added_change_takes_no_snapshot() {
             target_type: node::CAPABILITY,
             target_id: "cap:new",
             action: ChangeAction::Added,
+            repair: None,
         })
         .unwrap();
     assert!(
@@ -213,6 +215,7 @@ fn a_reallocation_keeps_the_old_owner_in_the_snapshot() {
             target_type: node::CAPABILITY,
             target_id: "cap:z",
             action: ChangeAction::Modified,
+            repair: None,
         })
         .unwrap();
     g.delete_edge(edge::ALLOCATED_TO, "cap:z", "cmp:a").unwrap();
@@ -269,6 +272,7 @@ fn snapshot_edges_exclude_bookkeeping_and_are_sorted() {
         target_type: node::CAPABILITY,
         target_id: "cap:c",
         action: ChangeAction::Modified,
+        repair: None,
     })
     .unwrap();
 
@@ -559,6 +563,7 @@ fn history_cannot_be_recorded_into_an_epoch_that_has_not_happened() {
             change_type: ChangeType::ScopeChange,
             subject: None,
             action: ChangeAction::Modified,
+            repair: None,
         })
         .expect_err("a snapshot of the present cannot belong to a point that has not happened");
     let said = format!("{err:?}");
@@ -585,6 +590,7 @@ fn an_arrived_epoch_accepts_history_again() {
         change_type: ChangeType::ScopeChange,
         subject: None,
         action: ChangeAction::Modified,
+        repair: None,
     })
     .expect("once an epoch has arrived, history belongs in it");
 }
@@ -819,6 +825,7 @@ fn record_the_plan(g: &mut DesignGraph, change_id: &str, epoch: &str) {
         target_type: node::DESIGN_EPOCH,
         target_id: epoch,
         action: ChangeAction::Modified,
+        repair: None,
     })
     .unwrap();
 }

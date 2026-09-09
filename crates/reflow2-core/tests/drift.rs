@@ -536,6 +536,7 @@ fn accepting_with_design_updated_ties_code_and_design_into_one_change() {
         change_type: ChangeType::TestFailureFix,
         subject: None,
         action: reflow2_core::temporal::ChangeAction::Modified,
+        repair: None,
     })
     .unwrap();
 
@@ -684,6 +685,7 @@ fn the_ledger_tells_a_design_updated_claim_from_a_design_holds_one() {
         change_type: ChangeType::TestFailureFix,
         subject: None,
         action: reflow2_core::temporal::ChangeAction::Modified,
+        repair: None,
     })
     .unwrap();
     g.set_artifact_checksum(

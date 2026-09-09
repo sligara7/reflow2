@@ -1,0 +1,11 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "What still rests on a patch? Counts every recorded repair and splits it                        three ways: the cause was corrected, a symptom was contained, or NOBODY                        SAID. Read `unstated` FIRST — a small `contained_symptom` beside a large                        `unstated` means the design does not know what rests on a patch, not that                        little does, and `note` states which of those an empty answer is. Each                        standing patch comes back with the sentence naming what the proper fix                        would be, which is what turns a workaround from an invisible cost into a                        debt somebody can find; a patch nobody wrote down is indistinguishable                        from a design decision six weeks later. ⚠️ IT REPORTS AND DOES NOT JUDGE:                        a workaround is often the correct call under a deadline, so nothing here                        ranks or flags one — the requirement is that it be VISIBLE, never that it                        be forbidden. And it can only reflect what an author CLAIMED, so it cannot                        detect a patch reported as a correction. Write the disposition with                        `record_change`'s `repair` argument.",
+  "inputSchema": {
+    "properties": {},
+    "type": "object"
+  },
+  "name": "repair_report"
+}

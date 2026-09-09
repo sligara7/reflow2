@@ -504,6 +504,45 @@ impl ReflowService {
     }
 
     #[tool(
+        description = "What still rests on a patch? Counts every recorded repair and splits it                        three ways: the cause was corrected, a symptom was contained, or NOBODY                        SAID. Read `unstated` FIRST — a small `contained_symptom` beside a large                        `unstated` means the design does not know what rests on a patch, not that                        little does, and `note` states which of those an empty answer is. Each                        standing patch comes back with the sentence naming what the proper fix                        would be, which is what turns a workaround from an invisible cost into a                        debt somebody can find; a patch nobody wrote down is indistinguishable                        from a design decision six weeks later. ⚠️ IT REPORTS AND DOES NOT JUDGE:                        a workaround is often the correct call under a deadline, so nothing here                        ranks or flags one — the requirement is that it be VISIBLE, never that it                        be forbidden. And it can only reflect what an author CLAIMED, so it cannot                        detect a patch reported as a correction. Write the disposition with                        `record_change`'s `repair` argument.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn repair_report(&self) -> Result<CallToolResult, McpError> {
+        let g = self.graph.read().await;
+        ok_json(g.repair_report().map_err(dyno_err)?)
+    }
+
+    #[tool(
+        description = "Of your N things of kind X, how many carry relation R? The core                        traceability question, asked of ANY node type and ANY edge type the                        schema declares — how many Requirements have an incoming VERIFIES, how                        many Components have an outgoing PROVIDES, how many Capabilities have                        anything CONSUMES-ing them. `direction` says which end your nodes are on,                        and it matters: Requirements with INCOMING VERIFIES is 'how many are                        verified', outgoing is a question about requirements that verify things.                        Comes back with the population, the count, the fraction, and the ids that                        are MISSING it, so the answer is actionable rather than just a number. ⭐                        AN UNDECLARED TYPE IS REFUSED, NEVER COUNTED AS ZERO: `Requirment` against                        208 Requirements would otherwise answer '0 of 0' and read exactly like                        good news — the refusal names the near-misses instead. An empty population                        says so in `note` rather than reporting a fraction, because a fraction of                        nothing is not a fact. ⚠️ NOT A SCORE and there is no threshold: 12% may                        be perfectly healthy at your stage and reflow2 has no way to know.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn relation_coverage(
+        &self,
+        Parameters(req): Parameters<RelationCoverageReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let direction = match req.direction.as_deref() {
+            // Outgoing is the default because it is the direction the edge is
+            // NAMED for — `SATISFIES` reads from the satisfier — so a caller
+            // who does not think about it gets the reading the vocabulary
+            // already implies. `direction` comes back in the result either way,
+            // so an unconsidered default is visible rather than silent.
+            None | Some("outgoing") => reflow2_core::relation_coverage::Direction::Outgoing,
+            Some("incoming") => reflow2_core::relation_coverage::Direction::Incoming,
+            Some(other) => {
+                return Err(McpError::invalid_params(
+                    format!("unknown direction '{other}'. Legal values: outgoing, incoming."),
+                    None,
+                ));
+            }
+        };
+        let g = self.graph.read().await;
+        ok_json(
+            g.relation_coverage(&req.node_type, &req.edge_type, direction)
+                .map_err(dyno_err)?,
+        )
+    }
+
+    #[tool(
         description = "What has the design never been told about? You sweep the tree and supply \
                        what you saw (reflow2 does no file I/O); this answers with the regions no \
                        node claims, rolled up to the shallowest wholly-unclaimed directory and \

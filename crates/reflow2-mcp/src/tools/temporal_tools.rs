@@ -35,7 +35,7 @@ use reflow2_core::bulk::{
     AskedRecord as BulkAskedRecord, ChecksumAccept as BulkChecksumAccept, EdgeSpec as BulkEdgeSpec,
     GapAck as BulkGapAck, NodeSpec as BulkNodeSpec,
 };
-use reflow2_core::temporal::ChangeRecord;
+use reflow2_core::temporal::{ChangeRecord, Repair};
 use reflow2_core::{
     AgentAnswer, AgentBackend, AskedQuestion, ChangeType, DEFAULT_SCOPE_DEPTH, DesignGraph,
     Dimension, DriftDisposition, DynoError, EpochType, GapCandidate, GenesisOptions, HealOptions,
@@ -823,6 +823,48 @@ impl ReflowService {
         let target_type = self
             .resolve_type(req.target_type.as_deref(), &req.target_id, "target_type")
             .await?;
+        // CLAUSE (b) OF `req:a-fix-says-whether-it-corrected-the-cause`,
+        // enforced at the only place a caller can get it wrong. The core type
+        // makes a containment-without-a-stand-in unconstructable; this is the
+        // JSON boundary, where the two arrive as separate optional fields and
+        // the pairing has to be checked. REFUSED BOTH WAYS: a containment with
+        // nothing named is the invisible debt the requirement exists to end,
+        // and a stand-in without a containment is a claim about a fix that says
+        // it reached its cause — incoherent, and the likelier typo.
+        let repair = match (req.repair.as_deref(), req.stands_in_for) {
+            (None, None) => None,
+            (Some("corrected_cause"), None) => Some(Repair::CorrectedCause),
+            (Some("contained_symptom"), Some(stands_in_for)) => {
+                Some(Repair::ContainedSymptom { stands_in_for })
+            }
+            (Some("contained_symptom"), None) => {
+                return Err(McpError::invalid_params(
+                    "`repair: contained_symptom` needs `stands_in_for`: what would the proper fix \
+                     be? A patch nobody wrote down is indistinguishable from a design decision six \
+                     weeks later, which is the cost this field exists to make visible. Say it in a \
+                     sentence — or pass `corrected_cause` if this fix did reach the cause.",
+                    None,
+                ));
+            }
+            (None, Some(_)) | (Some("corrected_cause"), Some(_)) => {
+                return Err(McpError::invalid_params(
+                    "`stands_in_for` only means something with `repair: contained_symptom` — it \
+                     names the fix a WORKAROUND is standing in for. A repair that corrected its \
+                     cause stands in for nothing, and one that said nothing has not claimed to be \
+                     either.",
+                    None,
+                ));
+            }
+            (Some(other), _) => {
+                return Err(McpError::invalid_params(
+                    format!(
+                        "unknown repair '{other}'. Legal values: corrected_cause, \
+                         contained_symptom. Omitting it is also a true answer and means nobody said."
+                    ),
+                    None,
+                ));
+            }
+        };
         let rec = ChangeRecord {
             epoch_id: &req.epoch_id,
             change_event_id: &req.change_event_id,
@@ -832,6 +874,7 @@ impl ReflowService {
             change_type,
             subject,
             action,
+            repair,
         };
         let mut g = self.write_lock().await?;
         let (prior, current) = g.record_change(rec).map_err(dyno_err)?;

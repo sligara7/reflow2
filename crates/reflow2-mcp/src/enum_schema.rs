@@ -131,6 +131,7 @@ schema_enum!(
     opt
 );
 schema_enum!(epoch_type_opt, "DesignEpoch", "epoch_type", opt);
+schema_enum!(repair_req, "ChangeEvent", "repair", opt);
 schema_enum!(decision_status_req, "Decision", "status", req);
 // The one-call landing status on the constructors (2026-09-06,
 // dec:idea-should-a-constructor-accept-the-owners-word-in-one-call): optional,
