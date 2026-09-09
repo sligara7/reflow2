@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:4e384fbfe4989da6206b321bc301b9009de5a832c2cf3a039082b0f580f47305",
+  "content_hash": "sha256:b59949d36c4d19fbdf0ad5c30827f160c7ad2b0ddc45627bfadd2a8450b0da7f",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -11948,6 +11948,14 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "chg:the-version-guard-refuses-on-a-population-not-a-declaration",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "cmp:packaging",
       "properties": {
         "acted_at": "2026-08-05T23:30:00Z",
@@ -19059,6 +19067,16 @@
     },
     {
       "edge_type": "CAUSES",
+      "from_id": "fact:a-skill-is-loaded-only-when-something-already-in-hand-demands-it",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The 2026-08-28 cause predicted this occurrence exactly: a skill loads only when something already in hand demands it, and unprompted self-invocation is close to absent. Measured again 2026-09-09 across a whole session: zero skills self-invoked, and both that DID run were typed by the user.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:the-demand-that-enforces-root-cause-sits-downstream-of-the-moment-it-exists-to-catch"
+    },
+    {
+      "edge_type": "CAUSES",
       "from_id": "fact:alex-grok-0240-feedback-triaged-2026-08-16",
       "properties": {
         "basis": "observed",
@@ -19067,6 +19085,16 @@
         "validation_status": "validated"
       },
       "to_id": "req:the-loop-can-say-what-this-session-owes"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:an-accepted-principle-stopped-at-the-sidecar-it-was-written-for",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The fix follows directly from the cause: carry the accepted principle to the second sidecar. The guard now asks the store what it holds, exactly as the identity decision already required for its own sidecar.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "chg:the-version-guard-refuses-on-a-population-not-a-declaration"
     },
     {
       "edge_type": "CAUSES",
@@ -40108,6 +40136,33 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-version-guard-refuses-on-a-population-not-a-declaration",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-version-guard-refuses-on-a-population-not-a-declaration",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:identity"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-version-guard-refuses-on-a-population-not-a-declaration",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:provenance"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-vocabulary-question-is-dispositioned",
       "properties": {
         "accepted_baseline": false,
@@ -52212,6 +52267,14 @@
         "evidence": "Eight declared properties move from unreachable to writable, which is this requirement being met on eight more counts."
       },
       "to_id": "req:declared-vocabulary-is-reachable-from-the-surface"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:the-version-guard-refuses-on-a-population-not-a-declaration",
+      "properties": {
+        "evidence": "This change does not decide anything new — it applies an ACCEPTED decision to the sibling sidecar it had never reached. Recording it as governed by that decision rather than by a fresh one is the honest shape."
+      },
+      "to_id": "dec:sidecar-loss-guarded-by-store-evidence"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -161385,6 +161448,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:test-provenance",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "chg:the-version-guard-refuses-on-a-population-not-a-declaration"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:test-recording-a-finding-demands-the-skill",
       "properties": {
         "completeness": "complete",
@@ -168547,6 +168619,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:test-provenance",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-provenance"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:test-recording-a-finding-demands-the-skill",
       "properties": {
         "action": "created"
@@ -170093,7 +170173,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:af0af52b1dc6843d13d55668f132649704cdce7b57ede4ffaa836eaac0e28771",
+        "checksum": "sha256:ab5ad2378cd7d02e147c380163899aba7ba0ce27f9f8ef48794ac3a859743ca3",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/graph.rs",
         "name": "crates/reflow2-core/src/graph.rs",
@@ -170246,7 +170326,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:76cb6cbceb60bed1cc48f592d6b601d9f867678f589864e23b8028bffed04e9b",
+        "checksum": "sha256:378737305f5a5ca0170a005cebd04e39b1be8d0101264bb816881ebebf4e1e83",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/identity.rs",
         "name": "identity.rs",
@@ -170777,7 +170857,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b2524baa7cdc4c7dbacfd55cd2919d5c845231a55a1625703997ae3c1f90f3f6",
+        "checksum": "sha256:5001f03d28497a1bc059b275e33baf9d3af91d2d5304ab6d8dd09e2832b09ff5",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/provenance.rs",
         "name": "provenance.rs",
@@ -172031,6 +172111,18 @@
         "checksum": "sha256:be6196c6181454d6249970f6273f7ba13272e5c4b025a73be5267009855e9db2",
         "location": "crates/reflow2-mcp/tests/orientation_needs_nothing_to_start.rs",
         "name": "crates/reflow2-mcp/tests/orientation_needs_nothing_to_start.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:test-provenance",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:5f1a30d57343660a3e9207828636281ad3cae82590a661b7782cdf9e194226d6",
+        "description": "Drives check_and_stamp against real files rather than through open_rocksdb, so it runs on the fast path.\n\nSince 2026-09-08 it also carries the field-reported zero-instance case and the three controls that stop its fix becoming \"always open\": an UNKNOWN type still refuses and still says the binary is BEHIND; a retired type that IS populated still refuses, naming what it holds; and a population that CANNOT BE COUNTED still refuses, because a scan error read as zero would open the graph the guard exists to protect.\n\nThe zero-instance test was written against the unfixed code and observed to fail, reproducing the reporter's error text verbatim including the 0.50.0/0.55.1 version pair.\n\nREGISTERED LATE, on the day the guard it tests locked a user out for the second time. The file existed and was outside the design record, so nothing connected it to the decision it enforces.",
+        "location": "crates/reflow2-core/tests/provenance.rs",
+        "name": "tests/provenance.rs — which reflow2 wrote this graph, and the four controls that keep the retired-type refusal honest",
         "status": "realized"
       }
     },
@@ -183264,6 +183356,16 @@
         "rationale": "Recorded as `documentation` / `record` because nothing about the system changed — only the number naming it, and the design's own record of the cut. The bucket is MINOR by CHANGELOG's table: a renamed served field is a result-shape change, and a new edge type is a schema change.\n\n⚠️ WHAT THIS CUT DOES NOT CLAIM: the eight ChangeEvents are the increment's, not the session's. Several sessions' worth of conversation produced them, and a good deal of that conversation produced no ChangeEvent at all and is correctly absent from the changelog — the prose survey is recorded as `subject: record` and ships nothing, and AGENTS.md rule 8 is contributor discipline with no consumer-facing behaviour.",
         "subject": "record",
         "summary": "Four version claims moved together for the v0.47.0 cut: `Cargo.toml`, `reflow2.toml`, and two in `AGENTS.md` (the version line and \"Shipping at v0.46.0\"). A sweep confirmed no `0.46.0` remains outside CHANGELOG history and the v0.46.0 upgrade doc, where it is correct history.\n\nTHE DESIGN MEANING OF A CUT LIVES IN THE RELEASE NODE AND ITS EPOCH, not in a version string — nothing these files declare about DEPENDENCIES changed, only the number naming which reflow2 declares them.\n\n📌 ACCEPTED BEFORE THE MANIFEST IS FROZEN, DELIBERATELY. `release_includes_all` freezes each artifact's CURRENT checksum, so accepting this drift afterwards would make the release record that it shipped the PRE-BUMP file. The recorded procedure learned that on the v0.20.0 cut and `flow:release-cut` carries it as a resync transition — \"budget one gate failure and a second export every time this order is got wrong\". This cut followed the order.\n\nTHE INCREMENT WAS FOUND BY DIFFING, NOT BY MEMORY, which is the other thing the flow insists on: ChangeEvent ids in the committed export against those in the v0.46.0 export. **8 in the increment** — six substantive plus two auto-generated from checksum accepts. The flow records why this matters: v0.22.0's changelog read 12 entries from memory and 47 after the diff.\n\nAN UPGRADE NOTE IS OWED AND SHIPS: the stamp MOVED, 64 → 65 edge types, because `ANSWERS` is a new edge TYPE. `deliberately_open` is an optional property and does not move it — the reading v0.45.0 took, and the flow states the test as \"owed if and only if the stamp MOVED, and a new property does not move it\"."
+      }
+    },
+    {
+      "node_id": "chg:the-version-guard-refuses-on-a-population-not-a-declaration",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "name": "The version guard asks the store whether a retired type is actually there, instead of refusing because the stamp names it",
+        "rationale": "THE CAUSE, AND I HAD IT WRONG THE FIRST TIME. I reported that the guard could not see the data because the decision was taken before the store opened. Measured: the store is opened ONE LINE EARLIER, and `holds_a_design_probe` was already probing that same engine at that same point. The engine was available throughout. The guard was a pure stamp-to-stamp function and the caller simply never passed it anything else — so this was a cheap fix wearing the costume of an expensive one, and my wrong reading would have argued for deferring it.\n\nTHE CLASS is a declaration read as evidence about content. The stamp records the SCHEMA the writing binary had, so every graph written before a retirement names the retired type whether or not it ever held one — which is why this hit universally rather than rarely.\n\n⭐ AND REFLOW2 HAD ALREADY DECIDED THIS, ONE SIDECAR OVER. `dec:sidecar-loss-guarded-by-store-evidence` is ACCEPTED and rules that a refusal must be conditioned on what the store actually holds, answered before opening. The principle was never carried to the version sidecar. That is the finding worth keeping: not that a check was too strict, but that an accepted principle stopped at the sibling it was written for.\n\nWHAT IS NOT ESTABLISHED. The POPULATED case is covered only at the closure level — creating a real QualityGate node needs a pre-retirement binary, so the end-to-end refusal was not exercised. And the transport half of the report is untouched: a deliberate startup refusal still reaches the client as CONNECT_TIMEOUT, which is what sent every session that night to look at networking, and may have cost more than the guard itself.",
+        "summary": "FIELD-REPORTED 2026-09-08 by dev_storyflow, against v0.55.1. A graph written by 0.50.0 holding ZERO QualityGate nodes across 3,130 was refused with \"opening it could silently show you less of your design than it holds\". The justification is false at zero instances: there is nothing to show less of. It cost a full working session — where-am-i, loop_status, detect-and-ask, root-cause and capture-session were all unavailable, and a production root-cause had to be written to file memory.\n\n⚠️ AND IT WAS THE SECOND TIME. That user's store still carries `graph.pre-0.10.1-unreadable-2026-07-24` beside the one bricked today. A version guard has now locked this user out twice.\n\nTHE FIX. `unreadable_by` returned a finished message, so the caller could not act on WHY. It now returns a partition — Behind / Retired / None — and `check_and_stamp` takes a closure answering the one question a stamp cannot: of these retired node types, which does the graph actually HOLD? An UNKNOWN type still refuses on the stamp, because there the binary is genuinely behind and the stamp is the only evidence there is. A RETIRED type means the binary is AHEAD — it knows the type, so it asks the store and refuses only on a real population.\n\nFOUR CONTROLS, each pinning something the fix could have broken: an unknown type still refuses and still says BEHIND; a populated retired type still refuses, naming what it holds; a population that CANNOT BE COUNTED still refuses, because a scan error must never read as zero; and retired EDGE types stay conservative, since an edge is not addressable by a node scan.\n\nOBSERVED TO FAIL FIRST: the test was written against the unfixed code and reproduced the reporter's error text verbatim, including the 0.50.0/0.55.1 version pair. Then verified end to end on a forged copy of their exact situation — stamp saying 0.50.0 and naming QualityGate, store holding none — which now opens."
       }
     },
     {
@@ -196581,6 +196683,17 @@
       }
     },
     {
+      "node_id": "frag:art:test-provenance",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "note_kind": "author",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered tests/provenance.rs — which reflow2 wrote this graph, and the four controls that keep the retired-type refusal honest"
+      }
+    },
+    {
       "node_id": "frag:art:test-recording-a-finding-demands-the-skill",
       "node_type": "Fragment",
       "properties": {
@@ -204812,6 +204925,18 @@
       }
     },
     {
+      "node_id": "fact:an-accepted-principle-stopped-at-the-sidecar-it-was-written-for",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "THE CAUSE OF THE v0.55.1 LOCKOUT, AND IT IS NOT THAT A CHECK WAS TOO STRICT.\n\nreflow2 keeps TWO sidecars beside a graph: `<path>.id.json` (identity) and `<path>.meta.json` (the version stamp). For the IDENTITY sidecar, `dec:sidecar-loss-guarded-by-store-evidence` is ACCEPTED and rules that a refusal must be conditioned on WHAT THE STORE ACTUALLY HOLDS — \"answered BEFORE the store is opened, from the filesystem alone\". For the VERSION sidecar, the guard refuses on the sidecar's DECLARATION with no evidence about contents at all.\n\nSO THE PRINCIPLE WAS SETTLED AND THEN STOPPED AT THE SIBLING IT WAS WRITTEN FOR. That is the finding. A design that had already reasoned its way to \"condition the refusal on evidence\" applied it to one of two structurally identical cases.\n\nWHY IT HIT EVERY USER RATHER THAN A FEW. The stamp records the SCHEMA the writing binary had, not the data. So every graph written before a type retirement names that type, instances or none — the population is irrelevant to the stamp by construction. Measured on the reporting user's graph: QualityGate in the stamp YES, QualityGate nodes across 3,130 ZERO.\n\n⚠️ SECOND OCCURRENCE FOR THE SAME USER. Their store carries `graph.pre-0.10.1-unreadable-2026-07-24` beside the one bricked on 2026-09-08. A version guard has locked this user out twice, which makes this a recurrence rather than an incident.\n\nAND MY OWN FIRST DIAGNOSIS WAS WRONG IN THE DIRECTION THAT WOULD HAVE DEFERRED THE FIX. I reported that the guard could not see the data because the decision ran before the store opened. Measured: `StorageEngine::new_rocksdb` runs ONE LINE EARLIER than `check_and_stamp`, and `holds_a_design_probe` was already probing that engine at that same point for the identity question. The engine was there the whole time. A cheap fix looked expensive because I described the constraint without checking it — the same shape as the guard itself, one level up.\n\nNOT ESTABLISHED: whether anyone reasoned about the retired branch and judged the stamp sufficient, or whether it was simply never considered. Measured separately that the node-side retired branch was unreachable until 2026-09-07, because RETIRED_NODE_TYPES was empty until then — so it had never executed before the day it locked a user out.",
+        "subject_id": "dec:sidecar-loss-guarded-by-store-evidence",
+        "valid_from": "2026-09-08"
+      }
+    },
+    {
       "node_id": "fact:an-accepted-status-written-without-its-approver-failed-the-intent-gate-in-ci",
       "node_type": "TemporalFact",
       "properties": {
@@ -208686,6 +208811,18 @@
         "fact_type": "defect_observation",
         "statement": "MEASURED 2026-08-12, twice in one session. `cap:degraded-surface` is VERIFIED and this does NOT falsify it — the capability did exactly what it promises. What this records is that its diagnosis CANNOT REACH a whole class of caller.\n\nWHAT WAS OBSERVED: `tools/reflow2_cli.py` began answering `error: set_artifact_checksum: tool not found` for a tool that plainly exists and had worked minutes earlier. The natural reading is that the tool was renamed or removed. Both readings are wrong.\n\nTHE MECHANISM, traced rather than guessed. A `--serve-shared` daemon (pid 728580) held the store's write lock — confirmed with `fuser .reflow2/graph/LOCK`. A second server could not open the store, so it correctly served the DEGRADED SURFACE: a handshake plus exactly one tool, `reflow2_unavailable`, whose name is the diagnosis, with the translated reason in the server instructions, the remedies in the tool payload, and an explicit do-not-conclude-reflow2-is-missing. All of that was built, and all of it was present.\n\n⇒ AND NONE OF IT WAS SEEN, because the caller never asked for it. The CLI goes straight to `tools/call` by NAME. rmcp's tool router then answers `invalid_params(\"tool not found\")` — rmcp-2.2.0 `handler/server/router/tool.rs:567`, a generic string with no context, not reflow2's text at all. The CLI printed it faithfully. THE DIAGNOSIS LIVES IN THE HANDSHAKE AND THE TOOL LIST, AND A BY-NAME CALLER READS NEITHER.\n\nSo the careful part — \"do not conclude reflow2 is missing\" — was rendered as, precisely, \"this tool does not exist\". The capability's own stated purpose is that the server explains its own absence instead of vanishing; against a direct caller it vanishes.\n\nWHY IT MATTERS BEYOND THE CLI: any client that caches a tool list, or that calls by name from a script, is in this class. The degraded surface is reachable only by a client that re-reads the surface after failing — which is the client least likely to be a script.\n\nFIX DIRECTION, NOT DECIDED: the refusal for an unknown tool name is rmcp's, so reflow2 cannot reword it in place. Either the CLI re-reads `tools/list` on any `tool not found` and surfaces `reflow2_unavailable` if that is all there is, or the degraded server declines the call in a way that carries its own text. The first is cheap, local, and needs no upstream change.\n\nNOTE ON THE LOCK ITSELF: this is NOT `fact:defect-rebuild-strands-the-shared-server`, which is a deleted-inode spawn failure. Different cause, and that one is fixed. This is ordinary single-writer contention behaving as designed, reported unrecognisably.",
         "subject_id": "cap:degraded-surface"
+      }
+    },
+    {
+      "node_id": "fact:the-demand-that-enforces-root-cause-sits-downstream-of-the-moment-it-exists-to-catch",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "THIRD KNOWN OCCURRENCE, and the first two already have recorded causes. Told that a released version had broken reconnection and pointed at the appended field feedback, the agent read 274 new lines, ran two verification commands, and wrote a cause into a chat message — \"This is my fault, and I predicted it\" — with the root-cause skill never loaded. Anthony asked whether it had been run. It had not.\n\nWHAT IS NOT AFFECTED, and it bounds this more than anything else: the BRAINSTORM half of the same rule ran correctly TWICE in the same session, each time producing an exploratory Decision with the user's own words, unranked options, a stated counter and a relation drawn with evidence. So this is not a broken skill surface and not an agent that ignores skills. Both brainstorms arrived as `/brainstorm` TYPED BY THE USER. Across the entire session the agent self-invoked ZERO skills.\n\n═══ THE CAUSE WAS ALREADY RECORDED, TWICE ═══\n\n`fact:a-skill-is-loaded-only-when-something-already-in-hand-demands-it` (2026-08-28): \"Unprompted self-invocation is close to absent.\" `fact:the-field-feedback-rule-was-broken-the-same-day-it-was-ruled-on...` (2026-09-07) records this same rule broken the same way, with the same bounding observation that the agent had read the rule hours earlier. So the question worth answering is not why it happened again — it is WHY THE FIX BUILT FOR IT DID NOT FIRE.\n\n═══ THE NEW FINDING: THE DEMAND IS DOWNSTREAM OF THE ACT IT GOVERNS ═══\n\nThe 2026-09-07 fix was `record_finding`, whose description says GET THE root-cause SKILL FIRST, with `demanded_by: [record_finding]` on the skill. Measured 2026-09-09: **exactly ONE tool of 178 demands any skill at all**, and it is that one.\n\n⭐ BUT `record_finding` IS THE TOOL YOU CALL TO RECORD A CAUSE — it is reached AFTER the cause has been formed. The skill's own trigger is \"the moment you are about to write down a cause\", and a cause is most often first written as PROSE TO THE USER, which passes through no tool at all. There is nothing between the agent and a sentence in a chat message. **So the enforcement point sits strictly downstream of the moment it exists to catch**, and would have been missed on this occurrence even with the tool available.\n\nTHE TOOL WAS ALSO ABSENT, which is a second and independent failure of the same mechanism: the reflow2 MCP client was disconnected for this entire session, so no `mcp__reflow2__*` tool existed in the agent's surface. The demand mechanism is a tool description, and the incident under investigation WAS the tool surface being down. **A demand carried on a tool cannot fire in the class of incident where the tools are what broke** — and a field report about reflow2 failing to connect is exactly that class.\n\n═══ AND THE GATE THAT WATCHES THIS WAS GREEN THROUGHOUT ═══\n\n`skill_lint` checks that a skill naming `demanded_by` is demanded back by that tool's description. It passed on every run today, through both the omission and the incident. It verifies THE DECLARATION IS PRESENT; it cannot see whether the demand ever fires. That is the same class as the defect this session was called in to investigate — the version guard refusing on a schema STAMP rather than on the POPULATION it claims to protect. **Two instances of \"a declaration was read as evidence about behaviour\" in one incident, one in the product and one in its own enforcement.**\n\n═══ ALSO MEASURED ═══\n\n`rule:field-feedback-issues-are-root-caused-and-ideas-are-brainstormed` carries NO `enforcement` value at all — the field is unset, so nobody has ruled on whether breaking it should fail anything. It has been broken on two of the two field reports since it was written.\n\n═══ WHAT COULD NOT BE ESTABLISHED (step 9) ═══\n\nWhether the agent would have loaded the skill had `record_finding` been available. It is UNTESTABLE from here and the two candidates predict the same observation on this occurrence: the tool was absent AND the cause was formed before any tool call, so neither can be separated by what happened. Naming which dominates would need an occurrence with the tools up, and that is worth waiting for rather than guessing.\n\nAlso not established: whether any enforcement point could exist upstream of prose. Nothing observable fires on \"an agent is about to explain something\", which the skill's own text says about itself — so this may be a cause with no mechanical fix, and saying so is more useful than proposing one that would sit downstream again.",
+        "subject_id": "rule:field-feedback-issues-are-root-caused-and-ideas-are-brainstormed",
+        "valid_from": "2026-09-09"
       }
     },
     {
@@ -213010,7 +213147,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:1d250fe576742f57dda1759317f70cceefd78b7cfa7ca664f496222d322f061b",
+  "prev_content_hash": "sha256:4e384fbfe4989da6206b321bc301b9009de5a832c2cf3a039082b0f580f47305",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
