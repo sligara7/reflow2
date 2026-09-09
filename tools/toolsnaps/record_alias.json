@@ -1,0 +1,36 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Record WHAT THE USER CALLS a node, in their own words — the domain nouns that mean this thing. reflow2's vocabulary is abstract on purpose so it spans a house, a spacecraft and a service, which leaves every user translating their field's words into it; this is where that translation gets recorded so it survives the session and the next reader can check it. ⭐ ONLY RECORD A WORD THE USER ACTUALLY USED — never a synonym you thought of, because a guessed alias is a false neighbour every later search repeats. ADDITIVE: terms merge, so learning a second word never costs the first, and repeating one is a no-op. It RENAMES NOTHING and GATES NOTHING — `name` stays the design's word and every computation keys on the node type, so an alias can be wrong without making anything else wrong. Declared on Requirement, Capability, Component, Interface and Flow: the five that name a THING in the user's world.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "aliases": {
+        "description": "The user's own words for this thing. MERGED with what is already\nrecorded, so a second term never costs the first, and a term already\npresent is a no-op. At least one is required: passing none does not\nclear the vocabulary, it is refused.",
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "node_id": {
+        "type": "string"
+      },
+      "node_type": {
+        "default": null,
+        "description": "`Requirement`, `Capability`, `Component`, `Interface` or `Flow`.\nResolved from the id when omitted; an id held by more than one type is\nREFUSED rather than guessed.",
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "required": [
+      "node_id",
+      "aliases"
+    ],
+    "type": "object"
+  },
+  "name": "record_alias"
+}

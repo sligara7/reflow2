@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:1d250fe576742f57dda1759317f70cceefd78b7cfa7ca664f496222d322f061b",
+  "content_hash": "sha256:4e384fbfe4989da6206b321bc301b9009de5a832c2cf3a039082b0f580f47305",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -3432,6 +3432,14 @@
         "evidence": "EnvironmentRule's zero instance count IS that decision showing up as data. It recorded that the compliance layer was designed in full and never built; measuring the vocabulary two weeks later found the type declared and never instantiated. The earlier node predicted this reading without anyone having taken it."
       },
       "to_id": "dec:idea-the-governance-layer-is-declared-and-mostly-unused"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "dec:idea-the-graph-vocabulary-never-reaches-the-user",
+      "properties": {
+        "evidence": "That decision is ACCEPTED and it saw this coming in its own words: 'a skill without a table leaves the mapping improvised, which is the failure Alex hit.' It ordered BOTH halves. The interview shipped and a routing table shipped; what this node observes is that the table routes grammatical constructions rather than domain nouns, so the half that would have answered Alex's actual question is the half still missing."
+      },
+      "to_id": "dec:idea-the-routing-table-routes-grammar-not-domain-nouns"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -13337,6 +13345,14 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-does-the-black-box-frame-reach-the-agent-at-call-time",
+      "properties": {
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-does-the-deferred-structuring-step-need-a-skill-of-its-own",
       "properties": {
         "acted_at": "2026-08-25",
@@ -14467,6 +14483,22 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-the-routing-table-routes-grammar-not-domain-nouns",
+      "properties": {
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-the-routing-table-routes-grammar-not-domain-nouns",
+      "properties": {
+        "role": "author"
+      },
+      "to_id": "who:alex"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-the-server-counts-its-own-refusals-so-no-session-has-to-remember-to",
       "properties": {
         "acted_at": "2026-09-06",
@@ -14479,6 +14511,14 @@
       "from_id": "dec:idea-the-store-becomes-a-session-cache-and-the-export-becomes-the-truth",
       "properties": {
         "acted_at": "2026-08-24T22:50:00Z",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-the-term-table-is-the-residue-of-a-capture-procedure-not-a-maintained-artifact",
+      "properties": {
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -17409,6 +17449,14 @@
         "role": "author"
       },
       "to_id": "who:storyflow-api-boss"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-node-records-what-the-user-calls-it",
+      "properties": {
+        "role": "author"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -22174,6 +22222,78 @@
         "action": "modified"
       },
       "to_id": "art:tools-temporal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-node-records-what-the-user-calls-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:capture-intent-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-node-records-what-the-user-calls-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-node-records-what-the-user-calls-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-core"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-node-records-what-the-user-calls-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-functional"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-node-records-what-the-user-calls-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-structure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-node-records-what-the-user-calls-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-node-records-what-the-user-calls-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-node-records-what-the-user-calls-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:vocabulary-reach"
     },
     {
       "edge_type": "CHANGED",
@@ -47119,6 +47239,14 @@
     },
     {
       "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-a-users-domain-vocabulary-has-no-route-into-se-vocabulary",
+      "properties": {
+        "evidence": "Drawn FROM the 2026-08-26 node INTO this one: the same question, from the same user, grown up. That node had the routing analysis and the four-defensible-types example but was written before the routing table shipped. This one adds what Alex says in his OWN words about WHY he needs the layer — three reasons, not one — and the measurement of what the shipped table actually keys on."
+      },
+      "to_id": "dec:idea-the-routing-table-routes-grammar-not-domain-nouns"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
       "from_id": "dec:idea-add-epoch-assigns-the-next-sequence-or-names-it",
       "properties": {
         "evidence": "Option (b) — name the current maximum in the refusal — became the fix. Option (a), auto-assign, was NOT taken for the reason the idea's own rationale gives (sequences are spaced on purpose) and remains open on the idea."
@@ -47140,6 +47268,14 @@
         "evidence": "The layer-count idea asked how to measure cement and found the decision edges too sparse to read; this is that idea given a weighting the graph can already read — lifecycle phase from realization and release edges, priced by the cost-of-change curve."
       },
       "to_id": "dec:idea-cost-to-change-is-read-from-lifecycle-phase-the-rule-of-tens-in-the-graph"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-does-the-black-box-frame-reach-the-agent-at-call-time",
+      "properties": {
+        "evidence": "Drawn FROM that node INTO this one: it held 'maybe the graph should keep a table of terms' as a standalone idea; this is the same thought grown up, with a procedure that would FILL the table and, more importantly, a different answer about where the table lives. Same conversation, minutes apart, and the second form is materially better than the first — which is the reason to keep both rather than overwrite."
+      },
+      "to_id": "dec:idea-the-term-table-is-the-residue-of-a-capture-procedure-not-a-maintained-artifact"
     },
     {
       "edge_type": "EVOLVES_INTO",
@@ -47252,6 +47388,14 @@
         "evidence": "The older thought grown up, minutes later. That node found GraphRead already built and framed the work as migration; this one supplies the architectural name for what went wrong (behaviour smearing in a graph-centric architecture), scores three candidate patterns against decisions already taken, and adds a fourth remedy — the crate split — that the migration framing did not surface."
       },
       "to_id": "dec:idea-the-architecture-is-graph-centric-and-the-question-is-which-decoupling"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-the-term-table-is-the-residue-of-a-capture-procedure-not-a-maintained-artifact",
+      "properties": {
+        "evidence": "The brainstormed idea became intent. That node measured four of five steps as already built and named the alias as the one with nowhere to write; this requirement is that one step, promoted on Anthony's word. Drawn from the idea to what it became, which is how a promotion is recorded."
+      },
+      "to_id": "req:a-node-records-what-the-user-calls-it"
     },
     {
       "edge_type": "EVOLVES_INTO",
@@ -51998,6 +52142,14 @@
       "from_id": "chg:a-merge-proposal-discloses-what-it-would-destroy",
       "properties": {},
       "to_id": "decision:ack:6675d6c59b2e2db3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:a-node-records-what-the-user-calls-it",
+      "properties": {
+        "evidence": "The build exists because of this requirement and took its scope from it: five types, additive, renames nothing, gates nothing."
+      },
+      "to_id": "req:a-node-records-what-the-user-calls-it"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -161018,6 +161170,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:test-a-node-records-what-the-user-calls-it",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-design-holds-the-users-own-vocabulary"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:test-a-prescribed-layer-pair-no-longer-refuses",
       "properties": {
         "completeness": "complete",
@@ -162288,6 +162449,12 @@
       "from_id": "cap:a-derived-number-carries-what-it-was-computed-over",
       "properties": {},
       "to_id": "req:a-report-says-what-it-swept-and-whether-its-checks-ran"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:a-design-holds-the-users-own-vocabulary",
+      "properties": {},
+      "to_id": "req:a-node-records-what-the-user-calls-it"
     },
     {
       "edge_type": "SATISFIES",
@@ -164697,6 +164864,14 @@
         "evidence": "That ruling parked the environment compliance domain as deliberately unused UNTIL A USER ASKS FOR IT. This brainstorm is the owner asking for it, so the parking's own stated condition has been met and the ruling is due a re-read rather than a quiet continuation."
       },
       "to_id": "decision:vocab:environment"
+    },
+    {
+      "edge_type": "TRIGGERS",
+      "from_id": "dec:idea-the-routing-table-routes-grammar-not-domain-nouns",
+      "properties": {
+        "evidence": "Drawn FROM that node INTO this one: reading the finding that the routing table keys on grammar rather than domain nouns is what produced this question in the same conversation. Taking the first question forces the second — if reflow2 is not going to own the mapping, the agent must be able to derive it, which means asking what the agent is actually told at call time."
+      },
+      "to_id": "dec:idea-does-the-black-box-frame-reach-the-agent-at-call-time"
     },
     {
       "edge_type": "TRIGGERS",
@@ -168220,6 +168395,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:test-a-node-records-what-the-user-calls-it",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-a-node-records-what-the-user-calls-it"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:test-a-prescribed-layer-pair-no-longer-refuses",
       "properties": {
         "action": "created"
@@ -169053,7 +169236,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:6a3623513f1d16e93c6e754d08d58f15ff101d2fae16961d656237945d3cbecb",
+        "checksum": "sha256:4f75cb79ae4374a80df81be8157bcc73248a14959e45066a43d0fb25431ca2b3",
         "granularity": "atomic",
         "location": "getting-started/skills/capture-intent/SKILL.md",
         "name": "capture-intent SKILL.md — the conversational capture path, now registering the document it captured from",
@@ -169910,7 +170093,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:5b6892d13df43345986053d16d58ee872e7fdbd140f5ad6da5bff2500ea4f526",
+        "checksum": "sha256:af0af52b1dc6843d13d55668f132649704cdce7b57ede4ffaa836eaac0e28771",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/graph.rs",
         "name": "crates/reflow2-core/src/graph.rs",
@@ -170915,7 +171098,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:f425ae0b4dd28f9de3b33fc397a1e335fed38d5c403a245b14506997e81d0d30",
+        "checksum": "sha256:d085c382cc9c5d0265bcb7b0a29584b5446e96446ebcc030209e9da092bbb9d7",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/core.yaml",
@@ -170957,7 +171140,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:d396318d29f8ee2d3643b2a754725e6a2b50b8c43c602c6f774b96904c0d599f",
+        "checksum": "sha256:d5bb6167c05efc1b1220077ba26cb6d502fcf2b7710326fbc8799dc35361c2fa",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/functional.yaml",
@@ -171013,7 +171196,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:6fa38af100176db215ea6531d69ff9e032e0961cf4edd1df95a08fd9c8789cde",
+        "checksum": "sha256:d60f5bf79199c0d42decf20e47ebcc0dba8308aa885fca9bb84e23a433771bea",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/structure.yaml",
@@ -171183,7 +171366,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:91eda7690a02f21ba21b9b758d3828d09484cad5905e11a0de9e2cda66bff572",
+        "checksum": "sha256:56d6edd53b9bc6a22a3b589506897f3ec55609a1edce4863913b876b6a49d685",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -171551,6 +171734,18 @@
         "checksum": "sha256:b9baf0f3045e5a803820cdae146793c626fbe02dfeec56960ed092d1b91307b6",
         "location": "crates/reflow2-mcp/tests/a_node_is_named_by_its_id_and_the_type_is_optional.rs",
         "name": "a_node_is_named_by_its_id_and_the_type_is_optional.rs — verifies/governed_by resolve the type from the id; a collision is refused naming both; an unknown id says so; delete_node still requires the type",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:test-a-node-records-what-the-user-calls-it",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:a38c17cb353e6074ddc473e97423e75ae841560e4b085e60c7320089f7b2727c",
+        "description": "Six cases, of which the MERGE is the one carrying the weight. A replacing setter here would be this codebase's most-repeated defect — a write path that builds a node from a partial property set and erases what the caller did not name, fixed four times already — arriving in the one place where the value erased is a person's own vocabulary. Proven by negative control: replacing the merge with an assignment fails exactly the two merge cases and leaves the other four green, so the tests pin the merge specifically rather than the feature generally.\n\nThe others pin the boundaries that are judgements rather than mechanics: recording an alias RENAMES NOTHING (name, description and status must be byte-identical after), passing no terms is REFUSED with a message saying that omission is not how you clear them, and a type that names a STATEMENT rather than a thing is refused with all five accepted types named in the refusal.",
+        "location": "crates/reflow2-core/tests/a_node_records_what_the_user_calls_it.rs",
+        "name": "a_node_records_what_the_user_calls_it.rs — the user's own word reaches the node, a second word never costs the first, and passing none is refused rather than treated as a clear",
         "status": "realized"
       }
     },
@@ -172085,7 +172280,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:eb3e2350e2d225ac30984737ab1e6ac3955f4ee0f07c76bbd095f9fa3a03f857",
+        "checksum": "sha256:ce4ed6e019c3b7211f09548b8f728d53ecfbfda92e2d5d907f890edd56dee68e",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
         "name": "crates/reflow2-mcp/src/tools/capture.rs",
@@ -172480,7 +172675,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:df29908ef764c40941c98a1e33f2f05261e4e3750d66916efa449fdcf57b5182",
+        "checksum": "sha256:e8b3a7430680466300943c45cd9832055c973d83ca076e535453bcedfcbb3dd4",
         "location": "tools/vocabulary_reach.py",
         "name": "tools/vocabulary_reach.py",
         "status": "realized"
@@ -172701,6 +172896,16 @@
       "properties": {
         "description": "A ratio reported by one tool must carry the caveat its SOURCE tool considers essential, so a warning cannot be stripped by the tool that repeats the number.\n\nDISTINCT FROM dec:idea-a-derived-number-carries-what-it-was-computed-over-wherever-it-is-quoted, which is the OPEN QUESTION and the four options weighed. Anthony chose (a) with (d) as a follow-on, 2026-08-30. This is what gets BUILT; that is why.\n\nTHE INSTANCE THAT PROMPTED IT, measured 2026-08-30. `seam_coverage` emits a scope_note saying a design that declares contracts at a HIGHER boundary than it records dependencies will read as uncovered at module level, and to pass `altitude`. `maturity_report`'s seams band asks the SAME question at module level with none of that warning, and `graph_report_markdown` prints `seams 18% (13/72)` barer still. The band's `not_observed_about` list is four items long and does not include the one caveat its sibling considers necessary.\n\n⭐ WHY IT IS NOT AN AGENT-BEHAVIOUR PROBLEM. An agent reading the trajectory band has nothing to be suspicious of. Anthony named the pattern — an agent announces a number and only afterwards says what it actually measured — and asked for the ordering reversed. The reversal is not achievable by instruction alone, because the caveat is not in the number's hand at the moment it is quoted.\n\nTHE BANDS WHERE A CORRECT DESIGN READS LOW: SEAMS (answered at module level; a design declaring contracts one level up reads near zero); REALIZATION (a file nobody registered as an Artifact is invisible, so a user who has built everything and never run link-artifacts reads 0%); ASSURANCE (a capability checked only at component granularity is not counted); OPERATION (a design that never modelled an Environment reads as undeployed).\n\n⚠️ ONLY THE SEAMS CAVEAT IS MEASURED. The other three are reasoned from the band definitions and are NOT verified against a real design exhibiting them. Recorded so a later session does not inherit four confirmed findings where there is one.\n\nTHE SECOND LEG (Anthony's (d), a follow-on rather than a substitute): where-am-i re-derives a band from its source tool before naming it the FRONTIER, because the frontier is the one band that drives what the user does next. An instruction with no detector behind it is the weakest leg, which is why it rides behind the tool-side fix.\n\nWHAT IT MUST NOT DO: change the numbers. Moving a band's value would break comparison against every earlier reading. The caveat is added; the ratio stays.",
         "name": "A derived number carries what it was computed over, wherever it is quoted",
+        "provenance": "authored",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "cap:a-design-holds-the-users-own-vocabulary",
+      "node_type": "Capability",
+      "properties": {
+        "description": "record_alias puts the domain nouns a user actually uses onto the node they mean, on the five types that name a thing rather than a statement. Terms MERGE, so a second word never costs the first and repeating one is a no-op; the node's `name` is untouched and nothing keys on an alias, so a wrong one cannot make anything else wrong.\n\nThe merge is the load-bearing part rather than a convenience. A replacing setter here would be this codebase's most-repeated defect — a write path that builds a node from a partial property set and erases what the caller did not name, fixed four times already — arriving in the one place where the value erased is a person's own vocabulary.",
+        "name": "The design holds the user's own vocabulary for its parts, additively",
         "provenance": "authored",
         "status": "realized"
       }
@@ -175675,6 +175880,16 @@
         "rationale": "This is the naming half of the sibling-inconsistency class three field reports named (fact:defect-sibling-constructors-disagree-on-how-to-name-a-node-and-what-status-it-lands-in; fact:defect-typed-tool-parameter-names-are-inconsistent; dev_storyflow's 'get_node needs both node_type and id' and 'depends_on takes from_id/to_id while governed_by takes from_type/from_id/to_type/to_id'), and the generalisation of get_node's 2026-09-05 fix (dec:idea-get-node-by-id-alone-since-the-prefix-names-the-type) to the whole relation surface, as dec:idea-one-way-to-name-which-node-across-the-tool-surface asked. WHY REFUSE ON COLLISION RATHER THAN PICK: the typed-prefix convention is writable-around, and node_type_index's own comment says 'first type scanned wins' — a by-id read that picked would return a silently wrong node, which is worse than the required field it replaces. WHY delete_node IS THE EXCEPTION: every other tool here creates or reads an edge or a record; a wrong resolution there is a wrong edge you can see and delete. A wrong resolution on delete is a lost node. WHAT IT TRADES: one node_types_holding scan (29 point reads) per omitted type; and the unknown-id message now comes from the resolver rather than from each tool's own not-found path, so a few tools' wording changed. A DEFECT INTRODUCED AND CAUGHT WHILE BUILDING IT: the scoped-read resolver (ReflowService::resolve_type takes a READ lock) was called inside add_decision's related_to loop while that handler already held the WRITE lock — a self-deadlock. The existing test a_drawn_relation_is_a_complete_answer_and_lands_in_the_same_call hung on it (a hang, not a failure — CI would have timed out rather than reported). Fixed by resolving IN-lock (resolve_node_type(&g, ...)) wherever `g` is already held; the rule is now stated on both functions: use the scoped-read form only BEFORE the write lock. NOT DONE (the other two conventions Anthony did not rule on): whether constructors accept an initial status when a contributor is named (dec:idea-should-a-constructor-accept-the-owners-word-in-one-call), and one shape for relation tools' argument names (depends_on's from_id/to_id vs the from_type/from_id/to_type/to_id family) — the type fields are now optional in both, but the NAMES still differ.",
         "subject": "system",
         "summary": "Ruling #3b (Anthony, 2026-09-06: 'type optional, resolved from the id, refuse on collision'). ONE RESOLVER: service.rs resolve_node_type(g, given, id, field) — given, used as-is; omitted, the id is looked up under every type (node_types_holding): zero holders is a plain 'no node with id X exists under any type' naming the field and pointing at the constructor if creation was meant; one is the answer; more than one is REFUSED naming the types and the field to pass. A scoped-read sibling ReflowService::resolve_type lets a handler resolve BEFORE it takes the write lock without deadlocking. 34 type fields on 27 request shapes flipped from String to Option<String> with #[serde(default)] and a one-line doc: ProvenanceReq, ContainsReq, CreateEdgeReq (both ends), RealizesReq, DocumentsReq, LinkArtifactReq.target_type, VerifiesReq, EvidenceScopeReq, CalibratedAgainstReq (both), InvalidatesReq (both), ReleaseIncludesReq, EdgeSpecReq (both, per bulk item), GateOnReq (both), ForecastReadinessReq, ConstrainsReq, ReviewRelationsReq, RelationLinkReq.other_type (per link, in review_relations and add_decision.related_to), PinAtEpochReq, ScheduleForReq (both), RequireResourceReq, AnswersReq, GovernedByReq (both), AuthoredByReq, OwnedByReq, AffectedNodeReq.node_type (per affected item in add_change_event), RecordChangeReq, RelationCandidatesReq. DELIBERATELY UNCHANGED: constructors (create_node, bulk NodeSpecReq) — you cannot create a thing without saying what it is; kind fields that are not node types (artifact_type, unit_type, env_type, flow_type, epoch_type, change_type, pool_type); and delete_node's TypedIdReq — the one destructive read keeps the strict form so a typo'd id that happens to exist under another type cannot delete that other thing. Existing calls that pass the type are unchanged (additive). 27 toolsnaps regenerated; 55 test struct literals moved to Some(...). Five pins in a_node_is_named_by_its_id_and_the_type_is_optional.rs, observed failing first (the fields were String). core 1582/0; skill_lint, fmt, clippy clean; CHANGELOG [Unreleased] carries the shape change."
+      }
+    },
+    {
+      "node_id": "chg:a-node-records-what-the-user-calls-it",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "record_alias — the one step of the five-step capture procedure that had nowhere to write",
+        "rationale": "This is the one step of Anthony's five-step black-box capture procedure that had no surface under it. Measured 2026-09-08: steps 1-2 are the genesis interview, step 3's first half is capture-intent's 'search before you add', step 5 is the `undeclared_seam` detector and `seam_report`. Only 'update/annotate with new name' had nowhere to write — a sweep of all 28 node types found ZERO alias-like properties.\n\nSO THE FIVE-ITEM WISH WAS A ONE-ITEM GAP, which is the whole reason this is small. Building the other four would have rebuilt what exists.\n\nNO DETECTOR, DELIBERATELY. The three-legs doctrine asks for a typed tool, an instruction and a detector that notices absence — and the third leg is wrong here. A finding for 'this node has no alias' would fire on almost every node in every design and be correct nowhere: most nodes do not need a second name, and `req:detecting-is-not-asking` plus the history of hub-shaped detectors being cut back the week they shipped both argue against it. The instruction leg is served instead, in capture-intent where the capture actually happens.\n\nWHAT IS NOT ESTABLISHED: whether this removes the need for a translator. It gives the mapping a home; it does not choose a node type for a domain noun, which is the harder half and is still open in `dec:idea-a-users-domain-vocabulary-has-no-route-into-se-vocabulary`. Nobody has run the procedure on a live project.",
+        "summary": "`aliases` (list:string) is declared on Requirement, Capability, Component, Interface and Flow, and `record_alias` writes it. An additive optional property, so the schema stamp does NOT move: 28 node types, 65 edge types, unchanged. Nothing needs migrating.\n\nTHE MERGE IS THE FEATURE. Terms are merged with what is already recorded, in the order they were learned, case-insensitively de-duplicated. Passing no terms is REFUSED rather than treated as a clear, because erasing somebody's vocabulary should not be reachable by passing nothing.\n\nOBSERVED TO FAIL BY NEGATIVE CONTROL: replacing the merge with an assignment fails `recording_a_second_word_does_not_cost_the_first` and `the_same_word_recorded_twice_is_not_repeated`, while the other four cases stay green — so the tests pin the merge specifically rather than the feature generally.\n\nSCOPE, STATED BECAUSE IT IS A JUDGEMENT: the five types name a THING in the user's world. Constraint and DesignRule are statements rather than things somebody has their own word for; an Artifact's name is the file's. The refusal for an unaccepted type names all five and says why.\n\nTHE INSTRUMENT NEEDED WIDENING TOO. `vocabulary_reach`'s tool-to-type map was tool → ONE type, and `record_alias` writes five. Mapping it to one would have left four reading as unreachable; leaving it unmapped would have pooled `aliases` across every type in the schema, which is the leak that map's own comment says it exists to stop. The map now accepts a tuple. Reachability still reads 0 HOLE."
       }
     },
     {
@@ -186855,6 +187070,17 @@
       }
     },
     {
+      "node_id": "dec:idea-does-the-black-box-frame-reach-the-agent-at-call-time",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-09-08, in his words: \"does something explain to the agent on certain calls what it is that reflow2 is doing from a systems engineering perspective and that the agent has to do the translation for the user into reflow2 jargon and systems engineering terminology? … At its most basic simplification, reflow2 is simple concept that every system is composed of 'black boxes'… I feel like the agent should be able to take this concept and be able to do the translation for the user into SE terms. However, that being said, maybe the graph should keep a table of terms and what they translate into in reflow2 jargon? Then this is always available to the agent (even between sessions).\"\n\n═══ THE FIRST QUESTION IS FACTUAL, AND IT WAS MEASURED 2026-09-08 ═══\n\n**`get_instructions` — 30,523 characters, the payload the server tells every session to call FIRST on any design work — says \"black box\" ZERO times.** It says \"systems engineering\" zero times. It mentions `interface` 7 times and `decompos*` twice, always operationally rather than as a frame.\n\n**The concept reaches the agent through exactly ONE tool description out of 177**: `set_capability_signature`, which names \"the black-box interface at that tier\" and cites `req:recursive-black-box-decomposition`. That is a tool a session may never call.\n\n**And the translate-for-the-user instruction already EXISTS — attached to 2 of 177 tools.** `get_skill` and `list_skills` return a `lens` field telling the agent to speak the reader's domain and never reflow2's, keeping their own field's words. Nothing else carries it. So an agent that never fetches a skill is never told to translate at all.\n\n⭐⭐ AND THE PRINCIPLE IS ALREADY ACCEPTED INTENT, NOT A NEW IDEA. `req:recursive-black-box-decomposition` is ACCEPTED, captured 2026-08-07 in Anthony's own words, and its own text records him saying: *\"I'm a little surprised that reflow2 does not have this as it was one of the primary things I designed it for.\"* **He is now asking the same question a second time, a month later.** A requirement that is accepted, load-bearing, and absent from the instruction surface is exactly the shape this project has recorded before as accepted-then-invisible.\n\n═══ SO THE HONEST ANSWER TO THE QUESTION AS ASKED IS: NO ═══\n\nNothing explains the SE frame to the agent on ordinary calls, and nothing tells it on ordinary calls that translation is its job. Both mechanisms exist in fragments; neither is where the work happens.\n\n═══ OPTIONS, NONE CHOSEN ═══\n\n**(a) STATE THE PRINCIPLE WHERE THE AGENT ALREADY READS — put the black-box frame in `get_instructions`.** Cheapest by a wide margin: one edit to a payload every session already fetches, and it makes accepted intent visible for the first time. ⚠️ **THE COUNTER IS THE STRONG ONE AND IT IS MEASURED: the principle does not disambiguate.** `dec:idea-a-users-domain-vocabulary-has-no-route-into-se-vocabulary` recorded a domain noun for which Interface, Capability, Requirement and Flow were ALL defensible. \"Everything is a black box with interfaces\" does not choose between them — the routing problem survives the principle intact. Stating it would be right and would not, on its own, remove the need for a translator.\n\n**(b) A TERM TABLE IN THE GRAPH — persistent across sessions.** Anthony's own second thought, and it is the same shape as option (c) of `dec:idea-the-routing-table-routes-grammar-not-domain-nouns`, reached independently in the same conversation. That convergence is itself evidence. It also keeps reflow2's refusal to infer intact: the user states the mapping once, the graph holds it, nothing is guessed. ⚠️ Counter one: **a recorded mapping ossifies an early wrong answer.** If a project's first session mis-files its central noun, the table makes that error permanent and invisible to every later session — the opposite of the intended effect, and worse than improvising each time. It would need a way to be revisited, and something that notices when a mapping is load-bearing and never re-examined. ⚠️ Counter two: this is one step from the framework registry that `req:framework-is-chosen-not-defaulted` was correctly DROPPED for — cosmetic renaming that gated capability on a self-declared label. **The line that must hold: a term table maps to reflow2's UNCHANGED node types and gates NO computation.**\n\n**(c) EXTEND THE LENS RATHER THAN INVENT A MECHANISM.** The translate-for-the-user instruction is built, tested and attached to two tools. Widening it to the capture tools costs far less than a new surface, and it is the half that tells the agent translation is its JOB. ⚠️ Counter: a lens on every reply is a per-call tax on payload size, and this project has already measured a per-call rollup costing 1.2-1.9 minutes a session before it was removed. It would want to be the constructors only, not everything.\n\n**(d) SE MEANING ON THE TOOL DESCRIPTIONS THEMSELVES.** Some already do this well — `add_environment_rule` explains the difference between a self-imposed Constraint, a chosen DesignRule and a rule the world imposes. ⚠️ Counter: 177 tools, no check that any of them says what it means in SE terms, and a hand-maintained convention across 177 surfaces is precisely the class this project has now met six times in one day.\n\n**(e) DO NOTHING AND TREAT THE TRANSLATOR AS THE ANSWER.** ⚠️ Counter: it leaves the accepted requirement undelivered for a second month, and every user rebuilds the same layer.\n\n═══ WHAT WOULD MAKE THIS DECIDABLE ═══\n\n(a) and (c) are cheap and mostly independent of the answer — the principle SHOULD be visible and the agent SHOULD be told translation is its job, whatever else is decided. **(b) is the one that needs evidence, and it is the same evidence the sibling node asks for**: whether term tables from different projects agree. Until that is known, a term table is a mechanism built for a population of one.\n\n⚠️ HONEST LIMIT: the measurement above is of what the SERVER sends. It does not measure what an agent DOES with it. An agent may translate perfectly well from a frame it was never given, because the black-box concept is not exotic — it is standard systems engineering that a competent model already knows. Nobody has tested whether stating it changes any behaviour, and the cheapest version of (a) is worth doing partly BECAUSE it would let that be measured.",
+        "kind": "exploratory",
+        "name": "OPEN — nothing tells the agent the black-box frame at call time: get_instructions never says it, one tool description carries it, and the translate-to-the-user lens is on 2 of 177 tools. State the principle, keep a term table, or both?",
+        "rationale": "Recorded via the brainstorm skill: the ideas enter as ideas, nothing is promoted, and the objection sits beside each rather than replacing it.\n\nAN AGENT'S READING, offered as a finding rather than an answer. The question was partly factual and the factual half now has an answer: no, nothing carries the frame at call time, and the two mechanisms that would (the instruction payload and the lens) each carry half of it in the wrong place. That is worth separating from the design question, because it is fixable independently of what anyone decides about term tables.\n\nThe sharpest thing to hold onto is the counter to Anthony's own instinct. He is right that the black-box concept is simple enough for an agent to reason from, and that is exactly why stating it will not be sufficient — the measured failure was not an agent that lacked the frame, it was a domain noun with four defensible homes under it. A principle that is true of everything cannot choose between four things that are all consistent with it.\n\nThe other thing worth carrying: he has now asked this twice, a month apart, and the requirement was accepted the first time. That is not a new idea being explored; it is accepted intent that never reached the surface where it would act.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-does-the-deferred-structuring-step-need-a-skill-of-its-own",
       "node_type": "Decision",
       "properties": {
@@ -188285,6 +188511,17 @@
       }
     },
     {
+      "node_id": "dec:idea-the-routing-table-routes-grammar-not-domain-nouns",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony and Alex, 2026-09-08, in dialogue. Anthony: \"It really bothers me that you have to use a 'translate' skill at your work in order for it to work with reflow2… My hope is that you shouldn't need a 'translator' skill. If it turns out I do need an additional skill, then taking what you define in your translator skill should be added directly to all reflow2 itself.\" Alex: \"Some of it is just explaining how I want it to be digested since reflow is being added after the fact. But also, I think partly for consistency.\"\n\n═══ THE FIRST THING TO SAY IS THAT THIS WAS ALREADY DECIDED, AND HALF-BUILT ═══\n\n`dec:idea-the-graph-vocabulary-never-reaches-the-user` was ACCEPTED on 2026-08-14, on Alex's first-run report, ordering BOTH a served interview step AND a served routing table. Both shipped. `cap:the-design-interview-precedes-the-capture` reads `realized`. So the honest answer to \"why didn't reflow2 define these boxes?\" is NOT that nobody thought of it — it is that what shipped answers a different question from the one Alex is asking.\n\n⭐⭐ MEASURED 2026-09-08, AND THIS IS THE FINDING: THE ROUTING TABLE IS KEYED ON ENGLISH PHRASING, NOT ON DOMAIN NOUNS. Every row of the table in `capture-intent` is a grammatical construction — \"it has to…\", \"the X part\", \"where X meets Y\", \"first this, then that\", a number with a unit. There is not one domain word in it. It routes HOW SOMEBODY SAID IT.\n\nAlex's problem is the other axis. The earlier node's worked example was a domain's first-class thing behaving like a request against a structured body of records, for which Interface, Capability, Requirement and Flow were ALL defensible. No phrasing row reaches that, because the question is not \"what does 'it has to' mean\" but \"what IS a query, in our world.\" **A table that routes grammar cannot answer a question about nouns, and that is a clean split rather than a shortfall in coverage.**\n\n═══ AND THE TRANSLATOR IS DOING AT LEAST THREE JOBS ═══\n\nAlex named three reasons in one sentence and they are not the same kind of thing:\n\n**(1) \"since reflow is being added after the fact\" — BROWNFIELD.** This is the `adopt` skill's territory, and the routing table lives in `capture-intent`, which is the greenfield capture path. A system that already exists needs its existing parts named before anything is captured; that is a different act from routing a sentence someone just said.\n\n**(2) \"partly for consistency\" — HOUSE STYLE.** He wants repeated captures to come out the same way. Nothing in reflow2 records a project's OWN conventions — how this team names things, which distinctions it always draws. That is neither vocabulary nor adoption; it is a per-project convention with no home.\n\n**(3) The domain-noun mapping** — partly served, keyed on the wrong axis, as above.\n\nOnly (3) is even partly what the accepted decision was about. **A single skill absorbing all three is exactly why it is hard to say whether reflow2 should own it.**\n\n═══ THE BLACK-BOX FRAME, TAKEN SERIOUSLY, CUTS BOTH WAYS ═══\n\nAnthony's own doctrine says a seam between two boxes needs a stated contract. Alex's translator IS that contract — between his organisation's vocabulary and reflow2's. By that doctrine the adapter existing is not a defect; **the open question is whose box it lives in.**\n\nAnd there is a virtue underneath it that must not be traded away. reflow2 deliberately refuses to infer: `dec:ask-not-repair`, no fabricated repair, detecting is not asking. A statement like \"in our world a query is an Interface\" is precisely the kind of thing reflow2 must NOT guess. **So the need for a stated mapping is created by a virtue, not by a gap.** What is missing is not the guess — it is a PLACE TO PUT THE ANSWER, so the mapping is design data the graph holds rather than a private skill each user reinvents.\n\n═══ OPTIONS, NONE CHOSEN ═══\n\n**(a) DO NOTHING — the translator is a legitimate project-local adapter.** Cheapest, and defensible under the black-box doctrine. ⚠️ Counter: every user rebuilds it, badly, and nothing can check it. Alex's mapping might contain a category error that surfaces in six months, and reflow2 would never know.\n\n**(b) ABSORB IT WHOLESALE into reflow2 — Anthony's stated hope.** ⚠️ Counter, and it is the strong one: this generalises from ONE translator, written by an EARLY ADOPTER, in ONE domain. Anthony has caught this project reasoning from a prevalence count before. Absorbing a domain-specific glossary into a domain-neutral tool is how SE vocabulary stops spanning a house and a spacecraft.\n\n**(c) MAKE THE MAPPING FIRST-CLASS AND RECORDABLE — a per-project glossary the DESIGN holds.** The user states \"in our world, X is a Component\" once; reflow2 records it, applies it, and can later show it back and check it for collisions. Keeps the never-guess virtue AND kills the out-of-band skill. ⚠️ Counter: new vocabulary for a problem measured on one or two users; and it risks becoming the framework registry that `req:framework-is-chosen-not-defaulted` was correctly DROPPED for being — cosmetic renaming that gates nothing. The distinction to hold is that a glossary must map to the UNCHANGED node types and gate NO computation.\n\n**(d) FIX THE ADOPTION PATH INSTEAD.** If reason (1) dominates, the routing table belongs in `adopt` as much as in `capture-intent`, and a brownfield system needs its parts named before its sentences are routed. ⚠️ Counter: does nothing for reasons (2) or (3).\n\n**(e) A CONVENTIONS RECORD.** If reason (2) dominates, what is missing is a place for \"how we do it here\" — which the routing table's own last row already admits reflow2 has no home for: *\"this is how we do X here — Nothing fits cleanly.\"* ⚠️ Counter: smallest of the options and the least likely to be what bothers Anthony.\n\n**(f) MEASURE FIRST, AND THIS IS THE RECOMMENDED FIRST MOVE.** The deciding question is cheap and unanswered: **do translators from DIFFERENT projects say the same thing or different things?** If the same — reflow2 is missing something general and (b) or (c) is right. If different — it is project-local and (c) is right in a weaker form, or (a) is. **One translator cannot distinguish these.** Anthony has already asked Alex for a pseudo-project, which is exactly the right instrument; the sharpening is to ask for the TRANSLATOR ITSELF, generalised, from two or three projects rather than one.\n\n═══ WHAT WOULD MAKE THIS DECIDABLE ═══\n\nDiff two or three translators. Rows that recur across domains belong in reflow2. Rows that do not belong in a per-project glossary. **Nobody has done that, and until it is done every option above is an argument rather than a finding.**\n\n⚠️ AND ONE HONEST LIMIT ON EVERYTHING ABOVE: this is a relayed second-hand account of Alex's reasoning. His actual translator has not been read. The three-jobs split is inferred from one sentence he wrote, and he may say it is wrong.",
+        "kind": "exploratory",
+        "name": "OPEN — the routing table that shipped routes ENGLISH PHRASING, not domain NOUNS, and a user's translator is doing at least three jobs of which only one is reflow2's",
+        "rationale": "Recorded via the brainstorm skill: the ideas enter as ideas, nothing is promoted, and the objection sits beside each rather than replacing it.\n\nAN AGENT'S READING, offered as a finding rather than an answer. The single most useful thing here is not an option — it is the measurement that the shipped routing table routes GRAMMAR and Alex's question is about NOUNS. That reframes \"reflow2 failed to define the boxes\" into \"reflow2 answered a different question well,\" which is a much better starting point and was not visible until the table was actually read.\n\nThe second most useful thing is that Alex's one sentence contains three different problems. Any solution aimed at \"the translator\" as a single object will over-serve two of them and under-serve one.\n\nAnthony's instinct that a translator should not be necessary is worth taking seriously AND worth resisting in one specific way: reflow2's refusal to infer is what creates the need for a stated mapping. Removing the need for a translator by making reflow2 guess would trade a load-bearing virtue for a convenience, and that trade should be made deliberately if at all.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-the-server-counts-its-own-refusals-so-no-session-has-to-remember-to",
       "node_type": "Decision",
       "properties": {
@@ -188303,6 +188540,17 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony thinking out loud 2026-08-24, reconsidering redb after raising it the same day. Nothing here is intent and nothing is planned.\n\nHIS WORDS: *\"I was thinking about going to redb, but after thinking about it, I'm starting to think about scalability, particularly if my brother and I move forward with flo2... let's say flo2 has 10000+ users (either collaborating on the same project OR each having their own project)... While the redb and others may compile faster, I'm concerned that they won't scale like rocksdb can. rocksdb was built to support huge amounts of data, so I'm thinking about sticking with it. That being said, there are alternate ways to do things. Maybe we stand up a redb db just for a session and the reflow.json file becomes the enduring thing between each session (may have to make safeguards to ensure that the reflow2 graph is exported at the conclusion of each session). There could be multiple iterations of this that get around using the db as the enduring/persistent storage of the graph and instead switching to making the reflow2.json object file the enduring piece?\"*\n\n⭐⭐ THE SHARP PART, AND IT IS HIS: HIS TWO WORRIES DISSOLVE EACH OTHER RATHER THAN TRADING OFF. The redb question was \"which store compiles faster\"; the scale question is \"which store survives 10k tenants\". Those look like a straight trade until the store stops being durable. **If the store is a per-session cache derived from the export, then neither property is being chosen at the same altitude any more:** durability and scale move to the export/object layer, and the embedded engine is judged only on hydrate-and-query speed for ONE design — which is small. reflow2's own design is the largest one anybody has, and it is 3,142 nodes / 8.4 MB. A store that \"does not scale like RocksDB\" is not being asked to.\n\n🛑 AND HE HAS ARRIVED HERE BEFORE, FROM A DIFFERENT DIRECTION — WHICH IS EVIDENCE, NOT DUPLICATION. `dec:idea-a-hosted-tier-of-many-single-writer-tenants` (2026-08-09) already records this as its FIFTH ROAD, in almost the same words: *\"OBJECT STORAGE HOLDS THE EXPORT AS THE SOURCE OF TRUTH, a node HYDRATES a RocksDB+tantivy cache on demand, and eviction is free because the cache is derived... reflow2 already has the primitive: the export is deterministic, sorted, content-hashed and self-contained — that IS a per-tenant blob, and the store is already derived rather than authoritative.\"* Two independent derivations two weeks apart, from a hosting question and from a compile-speed question, landing on one shape. READ IN FULL AND JUDGED DISTINCT rather than merged (`distinct_from`), because the reasons differ and both matter.\n\nWHAT IS NEW HERE, over the 2026-08-09 record — the grounds on which it was kept separate:\n1. **THE GRANULARITY IS THE SESSION, NOT THE TENANT.** The fifth road hydrates per tenant on demand, as part of a hosted tier. This proposes the store's lifetime be a SESSION — the same mechanism aimed at a smaller unit, and it applies to the LOCAL single-user case where there is no tenancy at all. That matters because **it is testable today, on one laptop, with no flo2 and no hosting decision.** The fifth road cannot be tried until somebody builds a tier.\n2. **IT MAKES THE BACKEND CHOICE REVERSIBLE RATHER THAN CORRECT.** If the store is derived, picking wrong costs a re-hydrate, not a migration. `dec:absorb-rocksdb-024-unchanged-then-switch-separately` and the redb question both get cheaper, and the rust-rocksdb switch stops being a one-way door.\n3. **IT NAMES THE SAFEGUARD AS PART OF THE IDEA** — recorded separately, because \"what is the enduring artifact\" and \"what makes the enduring artifact reliable\" are answered by different work.\n\n⚠️ THE COUNTER-ARGUMENT, RECORDED BESIDE THE IDEA RATHER THAN USED TO ARGUE IT DOWN. The prior node measured the thing that bites: **~9x inflation from export to store** (its figures: 1,828 nodes = 3.8 MB export = 33 MB store, RocksDB plus the tantivy index), and it flagged that `shared.rs` budgets **30 seconds for a cold open**. If hydrate-and-index is seconds rather than milliseconds, \"a store per session\" turns every session start into that cost — and the local single-user case, the one that works well today, pays it for a benefit only the hosted case collects. **That is the risk this idea has to clear, and it is measurable rather than arguable.**\n\n📌 ONE DATA POINT TAKEN TODAY, AND WHAT IT IS NOT. Opening reflow2's own 3,142-node RocksDB store cold, to a served MCP `initialize`, measured **2.4 seconds** (2026-08-24, after `--stop-shared`). ⚠️ THAT IS NOT THE HYDRATE NUMBER: it opens an EXISTING store with its tantivy index already built, which is the cheap half. The measurement the prior node asks for — import an 8.4 MB export to first query, index included — has still not been taken, and it is the one that decides this.\n\n🛑 WHAT NOBODY HAS CHECKED, and it is the way this fails LATE rather than early: whether a session hydrated from an export can still answer the questions that depend on ACCUMULATED STORE STATE rather than on the design — the confirmation ledger's dates, drift baselines, `write_gen`, the sidecar identity files (`.id.json`, `.sync.json`). The export is self-contained about the DESIGN; that it is self-contained about everything a running seat believes is a DIFFERENT claim, and nobody has tested it.\n\nRECORDED AS A QUESTION, NOT A CONCLUSION. Nothing here says the weld should be loosened; it says the trade Anthony thought he was facing may not be one.",
         "name": "OPEN — if the store is a per-session DERIVED cache and reflow2.json is the enduring artifact, does the byte-backend question dissolve rather than get answered?",
         "rationale": "Captured under the brainstorm skill: recorded as an idea, nothing promoted, nothing settled.\n\nKept separate from `dec:idea-a-byte-backend-that-compiles-in-seconds` (which asks which engine, on compile-speed grounds) and — after reading it in full — from `dec:idea-a-hosted-tier-of-many-single-writer-tenants` (which asks what a HOSTED TIER looks like at 1k/100k/1M and what must not be foreclosed). This asks a third thing settleable without either: WHAT IS THE ENDURING ARTIFACT — the store or the export? It is answerable on one laptop with no hosting tier and no tenancy, and the answer changes how much the other two cost.\n\n═══════════════════════════════════════════════\n🔻 PARTIAL SUPERSESSION — 2026-08-25. ONE PARAGRAPH OF `decision` IS NOW FALSE.\n═══════════════════════════════════════════════\n\n**Recorded HERE rather than by editing `decision`, deliberately** — the same discipline `dec:the-rust-rocksdb-switch-is-parked-until-the-store-question-settles` states in its own rationale: re-sending a 6,000-character field to append one note destroys its pre-image, which is the hazard `fact:the-revising-write-warning-fired-correctly-and-the-overwrite-happened-anyway` measured twice. **The `decision` text is untouched; read it with this note beside it.**\n\n❌ **THE PARAGRAPH BEGINNING \"🛑 WHAT NOBODY HAS CHECKED, and it is the way this fails LATE rather than early\" HAS SINCE BEEN CHECKED.** It asked whether a session hydrated from an export can still answer what depends on ACCUMULATED STORE STATE — the confirmation ledger's dates, drift baselines, `write_gen`, the sidecar identity files.\n\n⭐⭐ **THE ANSWER, measured the same day at main `39dbf6d` and recorded in full at `fact:a-hydrated-seat-keeps-every-confirmation-date-and-loses-only-its-sync-state`: IT SURVIVES ALMOST COMPLETELY.** 208 capability claims on both sides, the same ids, and **ZERO differing fields** across every per-capability date, drift count and accept-ledger entry. The dates and drift history are NODES AND EDGES, so the document carries them. **The fear this paragraph names is measured and false.**\n\n🛑 **ONE THING IS ACTUALLY LOST, and it is narrow:** `last_synced`, a path→content-hash map in the `.sync.json` sidecar — not in the store, not in the document. A hydrated seat answers `sync_status` with the same empty result it uses to mean \"never synced\", so the stale-seat export refusal (`req:stale-seat-knows`) has no baseline on the first export after a hydrate. **That map is three lines of JSON**, and carrying it is bookkeeping rather than architecture.\n\n📌 **SECOND, THEORETICAL TODAY:** `CF_EMBEDDINGS` has no field in `GraphExport`, so vectors would not survive a hydrate. Nothing outside tests writes any, so it becomes real only when `dec:idea-embeddings-adoption` lands.\n\n⚠️ **THE OTHER COUNTER-ARGUMENT IN `decision` — the ~9x store inflation and the cold-open cost — HAS ALSO MOVED,** and is NOT superseded here because it was never fully stated as a blocker in this node: `dec:the-rust-rocksdb-switch-is-parked-until-the-store-question-settles` now records **load to fully searchable with no database at all: 1,156 ms; save: 265 ms**, against the 30-second budget this node worried about.\n\n✅ **WHAT REMAINS TRUE AND IS THE WHOLE POINT OF THE NODE:** nothing here settles what the enduring artifact should BE. Three of five blockers measured away is not a decision, and the node stays `proposed`.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-the-term-table-is-the-residue-of-a-capture-procedure-not-a-maintained-artifact",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — and Anthony said so himself: \"This is me being conceptual here - so don't take it as go do exactly how I've stated - this is still me brainstorming.\" He also said it is not meant to be exhaustive.\n\nHIS FIVE STEPS, in his words: \"1) what are the internal functions of the design the user is defining? 2) what are the external interfaces of the design the user is defining. 3) does the graph already have that function or interface; if so, update/annotate with new name, if not, add. 4) does that function belong as a subsystem of a 'black box' - then it is a subsystem, 5) what boxes does an interface join? Do they have an accepted interface specification/contract? … I feel the answers of this go down in our translator table.\"\n\n═══ MEASURED 2026-09-08: FOUR OF THE FIVE LARGELY EXIST ═══\n\n**Steps 1 and 2 — partly built.** `genesis` already opens with an interview that asks in the user's own words *what must it do, what is it made of, what meets what, what counts as finished*. That is steps 1 and 2 without the SE nouns.\n\n**Step 3, first half — BUILT and explicit.** `capture-intent` says: *\"Search before you add. For each candidate, `search_design` with its key words first — the design may already say this.\"*\n\n**Step 3, second half — NOT BUILT, AND THIS IS THE FINDING. No node type in the schema has an alias.** Swept all 28: zero properties named `alias`, `synonym`, `also_known`, `local_name` or anything of that shape. **\"Update/annotate with new name\" has nowhere to put the new name.** A user whose word for a thing differs from the node's name can only overwrite the name or lose their word.\n\n**Step 4 — needs a distinction reflow2 already draws.** `ALLOCATED_TO` puts a FUNCTION in a box; `CONTAINS` puts a BOX in a box. Both are declared in `structure.yaml` and they are different axes on purpose. \"Does that function belong as a subsystem\" reads as though a function becomes a subsystem, and it cannot — it is allocated to one. (If what is meant is that a function DECOMPOSES into sub-functions whose parents become boxes, that is legitimate recursive decomposition and a different sentence.) Worth naming because a conceptual sketch that blurs the two axes would, built literally, undo the separation that makes the golden thread traceable.\n\n**Step 5 — BUILT.** `undeclared_seam` (`GapSource::UndeclaredSeam` in detect.rs) plus `seam_report` already answer \"what boxes does this join and is there an accepted contract\", and `provides`/`consumes` record both sides.\n\n⭐⭐ ═══ SO THE PROCEDURE IS MOSTLY A DESCRIPTION OF WHAT REFLOW2 DOES, AND THE ONE MISSING STEP IS EXACTLY THE TRANSLATOR ═══\n\nThat is the useful shape of this. It is not five things to build; it is one.\n\n═══ AND IT RELOCATES THE TERM TABLE, WHICH IS THE REAL CONTRIBUTION ═══\n\nThe previous node held the table as a STANDALONE artifact the graph maintains. This procedure implies something better: **the table is an ALIAS ON THE NODE, accumulated as a by-product of ordinary capture.** Three consequences, and they answer objections raised against the standalone form:\n\n· **It cannot drift from the design, because it IS the design.** A separate table can disagree with the graph; an alias on a node cannot.\n· **It is revisited whenever the node is.** The ossification counter recorded against the standalone table — that a first-session mis-filing becomes permanent and invisible — is much weaker here, because anyone revising the node meets the alias.\n· **It accumulates only for things that exist**, rather than becoming a glossary of terms with no referent.\n\n**It also answers Alex's SECOND reason, which the table alone did not.** He said he needs the layer \"partly for consistency\". A fixed sequence of questions is repeatable in a way a lookup is not — the consistency comes from asking the same things in the same order, and the aliases are the residue.\n\n═══ THE COUNTER THAT MATTERS MOST ═══\n\n🛑 **STEPS 1 AND 2, AS PHRASED, ASK THE USER IN SE VOCABULARY.** \"What are the internal functions\" and \"what are the external interfaces\" are already the jargon the translator exists to avoid. `req:the-kind-of-system-is-established-before-its-parts-are-captured` was captured from Alex saying exactly this: *\"It asked me what node types it should store them as. I didn't really know for sure… that might be confusing for someone who isn't technical.\"* Asking for \"external interfaces\" is one notch down from asking for a node type, not a different kind of question.\n\nThe fix is inside his own frame and already built: `genesis` phrases it as *what must it do, what does it have to talk to*. **Steps 1 and 2 should borrow the interview's phrasing rather than invent their own** — otherwise the procedure reintroduces the problem at step 1.\n\n═══ OPTIONS, NONE CHOSEN ═══\n\n**(a) ADD AN ALIAS PROPERTY and let capture populate it.** The smallest thing that makes the procedure real. ⚠️ Counter: a schema change, which this project has just learned is expensive for consumers — though an added optional property does NOT move the stamp the way a removal does.\n\n**(b) WRITE THE PROCEDURE AS A SKILL and let it use what exists.** No schema change; four of five steps already have tools. ⚠️ Counter: step 3's second half has nowhere to write, so the skill would describe a step it cannot perform — the failure mode of prose that outruns the surface.\n\n**(c) BOTH, IN THAT ORDER.** The property first so the procedure has somewhere to put its answers.\n\n**(d) NEITHER — treat the four built steps as sufficient and say so.** ⚠️ Counter: it leaves Alex's translator doing work reflow2 could hold, and leaves the accepted black-box requirement undelivered.\n\n⚠️ HONEST LIMITS. This was measured against the SCHEMA and the SKILLS, not against a real capture session — nobody has run the five steps on a live project to see where they actually break. And Anthony explicitly said the list is not exhaustive and not a specification; treating it as one would be the mistake he pre-empted.",
+        "kind": "exploratory",
+        "name": "OPEN — a five-step black-box capture procedure, of which four steps largely exist and ONE does not: no node type in the schema can record what the user calls it. The term table may be an alias on the node, formed as a by-product of capture",
+        "rationale": "Recorded via the brainstorm skill: the ideas enter as ideas, nothing is promoted, and the objection sits beside each rather than replacing it.\n\nAN AGENT'S READING, offered as a finding rather than an answer. Two things are worth more than the algorithm itself.\n\nFirst, measuring the five steps against what exists turned a five-item wish into a ONE-item gap: no node type can record what the user calls it. That is a much smaller and much more decidable thing than 'build a translator', and it is the only step with nowhere to write.\n\nSecond, the procedure quietly relocates the term table from a maintained artifact to an alias on the node — and that relocation defeats the strongest objection recorded against the table ten minutes earlier, which was that a stored mapping ossifies an early wrong answer where nobody revisits it. An alias is revisited whenever its node is. That is a better idea than the one it came from, arrived at by thinking about the procedure rather than about the table, and it is the reason both nodes are kept.\n\nThe counter about steps 1 and 2 is the one to carry forward: a procedure that opens by asking for 'internal functions and external interfaces' has reintroduced the jargon problem at its first step, and reflow2 already knows how to phrase that question without the jargon.",
         "status": "proposed"
       }
     },
@@ -196141,6 +196389,17 @@
       }
     },
     {
+      "node_id": "frag:art:test-a-node-records-what-the-user-calls-it",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "note_kind": "author",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered a_node_records_what_the_user_calls_it.rs — the user's own word reaches the node, a second word never costs the first, and passing none is refused rather than treated as a clear"
+      }
+    },
+    {
       "node_id": "frag:art:test-a-prescribed-layer-pair-no-longer-refuses",
       "node_type": "Fragment",
       "properties": {
@@ -198838,6 +199097,18 @@
         "rationale": "MEASURED, NOT SUPPOSED (fact:defect-write-response-describes-the-write-not-the-state): a deliberate experiment on the live 7-seat graph established that same-property concurrent writes are SILENT LAST-WRITER-WINS — no error, no warning, no version conflict, no indication a value was replaced — and, more sharply, that THE WRITE RESPONSE DESCRIBES THE WRITE RATHER THAN THE STATE: a racer received a success payload reading `statement: RACER_ONE, priority: high` when both fields were already false in the store. There is no version, rev, etag or updated_at anywhere in the payload, so a client cannot detect that it lost and has no primitive to compare-and-swap with. WHY THIS IS SHARPER THAN IT LOOKS: on a solo graph response == state, so trusting your own write-response is free, and every habit formed under the old stdio transport does exactly that. A session that writes a value and later reasons from its own return value is reasoning from something that was never durable — and nothing tells it. THE REPORTER EXPLICITLY DID NOT ASK FOR ENFORCEMENT: even an unenforced rev, merely RETURNED, lets a caller notice it was superseded, and that is most of the value. WHAT THIS MUST NOT COST, from the same experiment: per-property merge held under concurrency (a partial write EDITS and does not reset omitted fields) and concurrent writes serialize cleanly with both racers' distinct properties surviving. The reporter calls per-property merge the single most important safety property for a shared graph and lists it under what-not-to-change.",
         "statement": "A node SHALL carry a monotonic revision returned on read and on write, and writes SHOULD accept an optional if_rev precondition — so a client can detect that its value was superseded. At minimum, a write response SHALL say when the node was also written by another seat since the caller's read. Requested as the #4 fleet ask by dev_storyflow's api-boss 5d608b85, 2026-08-07.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:a-node-records-what-the-user-calls-it",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "A node records what the user calls it, in their own words, and learning a second word never costs the first",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Anthony, 2026-09-08: \"add the alias property so the procedure has somewhere to write.\"\n\nWHAT IS OWED. Any node that names a THING in the user's world — a Requirement, Capability, Component, Interface or Flow — can carry the domain nouns the user actually uses for it, recorded in the design rather than in a private layer beside it. The record is ADDITIVE: a second word never costs the first. It RENAMES NOTHING and GATES NOTHING — `name` stays the design's word and every computation keys on the node type.\n\nWHY IT IS OWED, and this is measured rather than asserted. reflow2's vocabulary is abstract on purpose so it spans a house, a spacecraft and a service. That abstraction leaves every user translating their field's nouns into it, and a user did exactly that by writing a private translator skill — putting the mapping outside the design, where nothing could read it, check it, or carry it to the next session. Swept 2026-09-08: NO node type in the schema had any alias-like property, so \"update/annotate with the new name\" had nowhere to write. That was the one step of Anthony's five-step black-box capture procedure with no surface under it; the other four already existed.\n\nTHE BOUNDARY IS PART OF THE REQUIREMENT. Constraint, DesignRule and Artifact are excluded: a constraint and a rule are STATEMENTS rather than things somebody has their own word for, and an artifact's name is the file's. A term recorded must be one the user ACTUALLY USED — a synonym the agent thought of is a false neighbour every later search repeats.\n\nWHAT THIS DOES NOT PROMISE. It does not choose a node type for a domain noun. `dec:idea-a-users-domain-vocabulary-has-no-route-into-se-vocabulary` measured a noun for which Interface, Capability, Requirement and Flow were all defensible, and recording the word does not disambiguate it — it records the answer once somebody has made that call, so the next session inherits it instead of re-deriving it.",
+        "status": "proposed"
       }
     },
     {
@@ -212739,7 +213010,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:843e7b6cec8aba88aa2828588fb89e546d8dca565b5a46929413f74cdb74ad0f",
+  "prev_content_hash": "sha256:1d250fe576742f57dda1759317f70cceefd78b7cfa7ca664f496222d322f061b",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

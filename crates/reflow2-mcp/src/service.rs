@@ -1559,6 +1559,24 @@ pub struct CapabilityStatusReq {
     pub status: String,
 }
 
+/// One vocabulary record for `record_alias`.
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct AliasReq {
+    /// `Requirement`, `Capability`, `Component`, `Interface` or `Flow`.
+    /// Resolved from the id when omitted; an id held by more than one type is
+    /// REFUSED rather than guessed.
+    #[serde(default)]
+    pub node_type: Option<String>,
+    #[serde(alias = "id")]
+    pub node_id: String,
+    /// The user's own words for this thing. MERGED with what is already
+    /// recorded, so a second term never costs the first, and a term already
+    /// present is a no-op. At least one is required: passing none does not
+    /// clear the vocabulary, it is refused.
+    pub aliases: Vec<String>,
+}
+
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct ProvenanceReq {

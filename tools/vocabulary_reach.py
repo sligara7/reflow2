@@ -209,6 +209,13 @@ WRITES_TYPE = {
     "set_epoch_status": "DesignEpoch",
     "set_project_mode": "Project",
     "genesis": "Project",
+    # A TOOL MAY WRITE MORE THAN ONE TYPE, and the value is then a tuple.
+    # `record_alias` records the user's own word for a thing on each of the five
+    # types that name a THING rather than a statement. Mapping it to one of them
+    # would leave the other four reading as unreachable; leaving it UNMAPPED
+    # would pool `aliases` across every type in the schema, which is the leak
+    # the note above says this map exists to stop.
+    "record_alias": ("Requirement", "Capability", "Component", "Interface", "Flow"),
     "record_change": "ChangeEvent",
     "answer_question": "Question",
     "withdraw_question": "Question",
@@ -271,8 +278,11 @@ def tool_parameters() -> tuple[set[str], dict[str, set[str]]]:
         if tool not in WRITES_TYPE:
             shared |= names
     by_type: dict[str, set[str]] = {}
-    for tool, node_type in WRITES_TYPE.items():
-        by_type.setdefault(node_type, set()).update(per_tool.get(tool, set()))
+    for tool, node_types in WRITES_TYPE.items():
+        if isinstance(node_types, str):
+            node_types = (node_types,)
+        for node_type in node_types:
+            by_type.setdefault(node_type, set()).update(per_tool.get(tool, set()))
     for node_type in by_type:
         by_type[node_type] |= shared
     return params, by_type

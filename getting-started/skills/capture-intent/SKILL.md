@@ -81,6 +81,15 @@ mis-file things**; this one names where it runs out, and that boundary is where 
    the design may already say this. A hit that covers the same need means you update or link
    the existing node (see **revise-design**), not create a near-duplicate that HEAL will later
    flag and someone must merge. No hits is also information: record it and create freely.
+
+   ⭐ **AND WHEN THEIR WORD IS NOT THE NODE'S NAME, RECORD THEIR WORD.** `record_alias`
+   puts the user's own noun on the node — *"we call that a query"*, *"that's the sled"* —
+   so the next session, and the next reader, meets their vocabulary instead of
+   re-deriving it. This is where a private translator would otherwise live: a mapping
+   kept outside the design, which nothing can read or check.
+   **Only a word they actually used.** A synonym you thought of is a false neighbour
+   every later search repeats. It merges rather than replaces, so a second word never
+   costs the first, and it renames nothing — `name` stays the design's word.
 2. Create each node with a stable id (`req:…`, `cap:…`, `cmp:…`, `ifc:…`) and a clear
    name/statement. **Requirements land at status `proposed` and stay there until the user
    confirms the wording** — every move off `proposed` (`accepted`, `met`, `deferred`,
