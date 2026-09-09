@@ -1157,6 +1157,107 @@ impl DesignGraph {
         self.create_node(node_type, node_id, props)
     }
 
+    /// Record what the USER calls this node, in their own words.
+    ///
+    /// reflow2's vocabulary is deliberately abstract so it spans a house, a
+    /// spacecraft and a service. That abstraction leaves every user translating
+    /// their field's nouns into it, and one of them wrote a private translator
+    /// skill to do the translating — putting the mapping outside the design,
+    /// where nothing could read it, check it, or carry it to the next session.
+    /// This is where that mapping goes instead.
+    ///
+    /// ⭐ **ADDITIVE, AND THAT IS THE WHOLE POINT.** Terms are MERGED with what
+    /// is already recorded, so learning a second word for a thing never costs
+    /// the first. A replacing setter here would be this codebase's most-repeated
+    /// defect — a write path that builds a node from a partial property set and
+    /// erases what the caller did not name — arriving in the one place where
+    /// the value being erased is a person's own vocabulary. Order is preserved
+    /// and duplicates are dropped, so recording a term twice is a no-op rather
+    /// than a growing list.
+    ///
+    /// **It renames nothing and gates nothing.** `name` stays the design's word
+    /// and every computation keys on the node TYPE, so an alias can be wrong
+    /// without making anything else wrong. That boundary is deliberate:
+    /// `req:framework-is-chosen-not-defaulted` was dropped for gating capability
+    /// on a self-declared label, and this must not become that.
+    ///
+    /// An empty term list is REFUSED rather than treated as a clear — clearing
+    /// somebody's vocabulary is a deliberate act and should not be reachable by
+    /// passing nothing.
+    pub fn record_alias(
+        &mut self,
+        node_type: &str,
+        node_id: &str,
+        aliases: &[String],
+    ) -> Result<StoredNode, DynoError> {
+        const ACCEPTS_ALIASES: [&str; 5] = [
+            node::REQUIREMENT,
+            node::CAPABILITY,
+            node::COMPONENT,
+            node::INTERFACE,
+            node::FLOW,
+        ];
+        if !ACCEPTS_ALIASES.contains(&node_type) {
+            return Err(DynoError::Validation {
+                node_type: node_type.to_string(),
+                property: "aliases".to_string(),
+                message: format!(
+                    "no such property on `{node_type}`; it is declared on {}. Those five name a \
+                     THING in the user's world — a function, a part, a seam, a process, an \
+                     obligation — which is what a domain noun lands on. A Constraint or a \
+                     DesignRule is a statement rather than a thing somebody has their own word \
+                     for, and an Artifact's name is the file's.",
+                    ACCEPTS_ALIASES.join(", ")
+                ),
+            });
+        }
+        let trimmed: Vec<String> = aliases
+            .iter()
+            .map(|a| a.trim().to_string())
+            .filter(|a| !a.is_empty())
+            .collect();
+        if trimmed.is_empty() {
+            return Err(DynoError::Validation {
+                node_type: node_type.to_string(),
+                property: "aliases".to_string(),
+                message: "pass at least one non-empty term. Omitting them does NOT clear the \
+                          recorded vocabulary — this call only ever adds, so clearing is a \
+                          deliberate act and is not reachable by passing nothing."
+                    .to_string(),
+            });
+        }
+        let Some(existing) = self.get_node(node_type, node_id)? else {
+            return Err(DynoError::NodeNotFound {
+                node_type: node_type.to_string(),
+                node_id: node_id.to_string(),
+            });
+        };
+        // MERGE. Existing terms first, in the order they were learned, then the
+        // new ones; a term already present is dropped rather than repeated.
+        let mut merged: Vec<String> = match existing.properties.get("aliases") {
+            Some(Value::List(items)) => items
+                .iter()
+                .filter_map(|t| t.as_str().map(str::to_owned))
+                .collect(),
+            _ => Vec::new(),
+        };
+        for t in trimmed {
+            if !merged.iter().any(|m| m.eq_ignore_ascii_case(&t)) {
+                merged.push(t);
+            }
+        }
+        let mut props = Props::new().set(
+            "aliases",
+            Value::List(merged.into_iter().map(Value::String).collect()),
+        );
+        for (k, v) in &existing.properties {
+            if k != "aliases" {
+                props = props.set(k, v.clone());
+            }
+        }
+        self.create_node(node_type, node_id, props)
+    }
+
     /// P2 · Structure — a buildable part. `name` and `purpose` are required.
     ///
     /// `level` is the axis-Y decomposition rank (matryoshka) — `component`,

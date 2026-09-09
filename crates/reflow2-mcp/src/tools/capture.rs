@@ -1532,6 +1532,39 @@ impl ReflowService {
     }
 
     #[tool(
+        description = "Record WHAT THE USER CALLS a node, in their own words — the domain nouns \
+                       that mean this thing. reflow2's vocabulary is abstract on purpose so it \
+                       spans a house, a spacecraft and a service, which leaves every user \
+                       translating their field's words into it; this is where that translation \
+                       gets recorded so it survives the session and the next reader can check it. \
+                       ⭐ ONLY RECORD A WORD THE USER ACTUALLY USED — never a synonym you thought \
+                       of, because a guessed alias is a false neighbour every later search \
+                       repeats. ADDITIVE: terms merge, so learning a second word never costs the \
+                       first, and repeating one is a no-op. It RENAMES NOTHING and GATES NOTHING \
+                       — `name` stays the design's word and every computation keys on the node \
+                       type, so an alias can be wrong without making anything else wrong. \
+                       Declared on Requirement, Capability, Component, Interface and Flow: the \
+                       five that name a THING in the user's world.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn record_alias(
+        &self,
+        Parameters(req): Parameters<crate::service::AliasReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.write_lock().await?;
+        let node_type = crate::service::resolve_node_type(
+            &g,
+            req.node_type.as_deref(),
+            &req.node_id,
+            "node_type",
+        )?;
+        ok_json(NodeDto::from(
+            g.record_alias(&node_type, &req.node_id, &req.aliases)
+                .map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(
         description = "Record how a node entered the graph: `authored` (the default, someone \
                        stated it) / `planned` / `inferred` (read back out of an existing system) \
                        / `healed` / `reconciled` / `imported`. Accepted on Requirement, \

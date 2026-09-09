@@ -12,6 +12,7 @@ schema:
     Capability:
       properties:
         name: { type: string, required: true, indexed: true, fulltext: true }
+        aliases: { type: "list:string", description: "WHAT THE USER CALLS THIS, in their own words — the domain nouns that mean this node. reflow2's vocabulary is deliberately abstract so it spans a house, a spacecraft and a service, which leaves every user translating their field's words into it; one wrote a private translator skill to do that, and the mapping then lived outside the design where nothing could read or check it (dec:idea-a-users-domain-vocabulary-has-no-route-into-se-vocabulary). This is where that mapping goes. Recorded ONLY when a user actually used the word — never guessed, because a fabricated alias is a false neighbour every later search repeats. ADDITIVE: record_alias merges, so learning a second word for a thing never costs the first. It renames nothing and gates nothing: `name` stays the design's word and every computation reads the node type, so an alias can be wrong without making anything else wrong (req:framework-is-chosen-not-defaulted was dropped for gating capability on a self-declared label, and this must not become that)." }
         description: { type: string, required: true, fulltext: true }
         capability_type: { type: string, indexed: true, description: "validation / transform / query / persistence / decision / actuation / io / compute — free text; domain-neutral." }
         tier: { type: enum, values: [strategic, operational, tactical], indexed: true }
@@ -33,6 +34,7 @@ schema:
     Flow:
       properties:
         name: { type: string, required: true, indexed: true, fulltext: true }
+        aliases: { type: "list:string", description: "WHAT THE USER CALLS THIS, in their own words — the domain nouns that mean this node. reflow2's vocabulary is deliberately abstract so it spans a house, a spacecraft and a service, which leaves every user translating their field's words into it; one wrote a private translator skill to do that, and the mapping then lived outside the design where nothing could read or check it (dec:idea-a-users-domain-vocabulary-has-no-route-into-se-vocabulary). This is where that mapping goes. Recorded ONLY when a user actually used the word — never guessed, because a fabricated alias is a false neighbour every later search repeats. ADDITIVE: record_alias merges, so learning a second word for a thing never costs the first. It renames nothing and gates nothing: `name` stays the design's word and every computation reads the node type, so an alias can be wrong without making anything else wrong (req:framework-is-chosen-not-defaulted was dropped for gating capability on a self-declared label, and this must not become that)." }
         description: { type: string, fulltext: true }
         flow_type: { type: enum, values: [process, data_flow, control_flow, decision_flow, capture, retrieval, generation], default: process, indexed: true }
         tier: { type: enum, values: [strategic, operational, tactical, cross_cutting], default: operational, indexed: true }
