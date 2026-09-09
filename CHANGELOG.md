@@ -31,6 +31,68 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.56.0] — 2026-09-09
+
+**Minor** — a new tool (`record_alias`), a new optional schema property and a new capability. The
+schema **stamp does not move**: 28 node types, 65 edge types, so **no migration is owed**.
+
+🛑 **If you are on v0.55.0 or v0.55.1 and your graph will not open, this release is the fix.**
+Read the next entry before running the migration those releases asked for — you almost certainly
+no longer need it.
+
+### Fixed
+
+- **The version guard refuses on a POPULATION, not on a DECLARATION.** Field-reported against
+  v0.55.1: a graph written by 0.50.0 holding **zero** `QualityGate` nodes across 3,130 was refused
+  with *"opening it could silently show you less of your design than it holds"*. At zero instances
+  that is false — there is nothing to show less of. It cost the reporter a full working session,
+  and it was the **second** time a version guard had locked that user out.
+
+  The guard now returns a partition rather than a finished message, and asks the store the one
+  question a stamp cannot: *of these retired node types, which does the graph actually hold?*
+  An **unknown** type still refuses on the stamp — there the binary really is behind, and the
+  stamp is the only evidence there is. A **retired** type means the binary is *ahead*, so it can
+  count.
+
+  ⭐ **The cause was not that a check was too strict.** `dec:sidecar-loss-guarded-by-store-evidence`
+  is already accepted and already rules that a refusal must be conditioned on what the store
+  actually holds. It stopped at the *identity* sidecar and never reached the *version* one.
+
+  Four controls keep the fix honest: an unknown type still refuses and still says BEHIND; a
+  populated retired type still refuses, naming what it holds; a population that **cannot be
+  counted** still refuses, because a scan error must never read as zero; and retired *edge* types
+  stay conservative, since an edge is not addressable by a node scan.
+
+### Added
+
+- **A node records what the user calls it.** `aliases` on Requirement, Capability, Component,
+  Interface and Flow — the five types that name a *thing* in a user's world — written by the new
+  `record_alias`. reflow2's vocabulary is abstract on purpose so it spans a house, a spacecraft and
+  a service, which leaves every user translating their field's nouns into it; one wrote a private
+  translator skill to do it, putting the mapping outside the design where nothing could read or
+  check it. This is where it goes instead.
+
+  **Terms merge**, in the order learned, case-insensitively de-duplicated — a second word never
+  costs the first, and passing none is refused rather than treated as a clear. It renames nothing
+  and gates nothing: `name` stays the design's word and every computation keys on the node type.
+
+  Only record a word the user **actually used**. A synonym the agent thought of is a false
+  neighbour every later search repeats.
+
+### Notes
+
+- **v0.55.0's required migration is now almost certainly unnecessary.** That release retired
+  `QualityGate` and every graph written before it names the type in its stamp, so every graph was
+  refused. From v0.56.0 only a graph that genuinely *holds* a `QualityGate` is refused — which, by
+  every measurement taken, is nobody. `docs/upgrading-to-v0.55.0.md` now says so at the top.
+- The guard fix was **observed to fail first**, reproducing the reporter's error text verbatim
+  including the 0.50.0/0.55.1 version pair, then verified end to end against a forged copy of their
+  exact situation.
+- **Not established:** the *populated* refusal is covered at the closure level only — creating a
+  real `QualityGate` node needs a pre-retirement binary. And a deliberate startup refusal still
+  reaches an MCP client as `CONNECT_TIMEOUT`, which is what sent every session that night looking
+  at networking. That half of the report is untouched.
+
 ## [0.55.1] — 2026-09-08
 
 **Patch.** No schema change and no tool-surface change — the stamp is unmoved at 28 node types
