@@ -31,6 +31,41 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.58.0] — 2026-09-10
+
+**Minor** — a new `settled_question_prose` block on two existing tools, so the shape of what
+they return changed. The schema **stamp does not move**: 28 node types, 65 edge types, so **no
+migration is owed** and nothing in an existing design needs touching.
+
+### Added
+
+- **`settled_question_prose` — a Decision that settles now names the prose it governs that still
+  says the question is open.** Carried on `set_decision_status` when a Decision reaches
+  `accepted`, and on `governed_by` when you link to an already-accepted one. The block names each
+  governed node, **the phrase that matched**, and quotes the prose around the match so you can
+  judge it in that reply rather than in another call.
+
+  **What you do about it:** read the quoted prose and decide whether it still reads true. Nothing
+  is written for you and nothing is refused. It never claims the text is wrong — prose that
+  *quotes* an old question is a correct node and looks identical from the outside; only a person
+  can tell. Silent on `rejected`/`superseded` (which retire rather than settle), on
+  `accepted` → `accepted`, and when the governed prose carries no marker.
+
+  The sibling of `prose_currency`, which catches a *status* outrunning its own description inside
+  one node; this catches prose outrunning a *Decision that governs it*, across an edge. From a
+  real incident: a requirement said "NOT YET DECIDED … his call to make" three weeks after the
+  call had been made, in an accepted Decision already linked to it, and the owner was asked a
+  settled question a second time.
+
+  ⚠️ **It is lexical** — nine marker phrases, chosen as words any project would write. It cannot
+  tell an assertion from a quotation of one, and it fires where the divergence is *created*, not
+  where a stale node is *read*.
+
+### Changed
+
+- `set_decision_status` and `governed_by` may now return an extra `settled_question_prose` key.
+  Additive: every existing field is unchanged, and the key is absent when there is nothing to say.
+
 ## [0.57.0] — 2026-09-09
 
 **Minor** — two new tools (`repair_report`, `relation_coverage`), two new optional
