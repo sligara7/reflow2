@@ -90,6 +90,8 @@ async fn seeded() -> ReflowService {
         concern: None,
     })));
     j!(s.add_capability(Parameters(CapabilityReq {
+        satisfies: None,
+        allocated_to: None,
         id: "cap:flight".into(),
         name: Some("Ball flight".into()),
         description: Some("Simulate ball trajectory.".into()),
@@ -217,6 +219,8 @@ async fn genesis_bootstraps_then_detect_hands_off() {
         concern: None,
     })));
     j!(s.add_capability(Parameters(CapabilityReq {
+        satisfies: None,
+        allocated_to: None,
         id: "cap:flight".into(),
         name: Some("Ball flight".into()),
         description: Some("Simulate ball trajectory.".into()),
@@ -249,6 +253,8 @@ async fn link_artifact_closes_the_unrealized_capability_gap() {
     // Two capabilities, neither realized yet.
     for (id, name) in [("cap:flight", "Ball flight"), ("cap:score", "Scoring")] {
         j!(s.add_capability(Parameters(CapabilityReq {
+            satisfies: None,
+            allocated_to: None,
             id: id.into(),
             name: Some(name.into()),
             description: Some("…".into()),
@@ -1269,6 +1275,8 @@ async fn marking_a_requirement_dropped_stops_the_nagging() {
     // traceability is gated on the relevant phase existing, so a capability
     // has to exist for the question to be meaningful at all.
     j!(s.add_capability(Parameters(CapabilityReq {
+        satisfies: None,
+        allocated_to: None,
         id: "cap:other".into(),
         name: Some("Other".into()),
         description: Some("does something else".into()),
@@ -1813,6 +1821,8 @@ async fn compare_designs_reports_divergence_from_a_base_export() {
 
     // Diverge the live graph: a new design node relative to the base.
     j!(s.add_capability(Parameters(CapabilityReq {
+        satisfies: None,
+        allocated_to: None,
         id: "cap:catch".into(),
         name: Some("Catching".into()),
         description: Some("Field the ball.".into()),
@@ -1873,6 +1883,8 @@ async fn loop_status_reports_debt_and_the_write_tools_point_at_the_loop() {
     // A capability claiming realized with no passing check is the classic
     // raw-tools-only residue; the hint rides the write result itself.
     let cap = j!(s.add_capability(Parameters(CapabilityReq {
+        satisfies: None,
+        allocated_to: None,
         id: "cap:shipped".into(),
         name: Some("Shipped".into()),
         description: Some("Claims to be built.".into()),
@@ -2048,6 +2060,8 @@ async fn export_files_chain_by_content_hash() {
 
     // Changed design: the new file names its predecessor.
     j!(s.add_capability(Parameters(CapabilityReq {
+        satisfies: None,
+        allocated_to: None,
         id: "cap:chain".into(),
         name: Some("Chained".into()),
         description: Some("Content moved.".into()),
@@ -2549,6 +2563,8 @@ async fn a_read_too_large_to_return_says_what_it_left_out() {
     let prose = "x".repeat(3_000);
     for i in 0..30 {
         j!(s.add_capability(Parameters(CapabilityReq {
+            satisfies: None,
+            allocated_to: None,
             id: format!("cap:{i}"),
             name: Some(format!("Capability {i}")),
             description: Some(prose.clone()),
@@ -2601,6 +2617,8 @@ async fn a_single_node_larger_than_the_budget_is_still_returned() {
     // and an unreachable node is a silent drop by another name.
     let s = ReflowService::in_memory().expect("in-memory service");
     j!(s.add_capability(Parameters(CapabilityReq {
+        satisfies: None,
+        allocated_to: None,
         id: "cap:huge".into(),
         name: Some("Huge".into()),
         description: Some("y".repeat(60_000)),
@@ -2624,6 +2642,8 @@ async fn a_single_node_larger_than_the_budget_is_still_returned() {
 async fn brief_gives_the_shape_without_the_prose() {
     let s = ReflowService::in_memory().expect("in-memory service");
     j!(s.add_capability(Parameters(CapabilityReq {
+        satisfies: None,
+        allocated_to: None,
         id: "cap:one".into(),
         name: Some("The one".into()),
         description: Some("z".repeat(5_000)),
@@ -2662,6 +2682,8 @@ async fn an_explicit_limit_is_reported_as_the_reason_it_stopped() {
     let s = ReflowService::in_memory().expect("in-memory service");
     for i in 0..5 {
         j!(s.add_capability(Parameters(CapabilityReq {
+            satisfies: None,
+            allocated_to: None,
             id: format!("cap:{i}"),
             name: Some(format!("Cap {i}")),
             description: Some("small".into()),

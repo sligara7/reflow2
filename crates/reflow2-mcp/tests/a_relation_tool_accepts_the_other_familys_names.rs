@@ -271,6 +271,8 @@ async fn the_handoff_lands_end_to_end() {
         concern: None,
     })));
     j!(s.add_capability(Parameters(CapabilityReq {
+        satisfies: None,
+        allocated_to: None,
         id: "cap:seal".into(),
         name: Some("Sealed housing".into()),
         description: Some("keeps water out".into()),

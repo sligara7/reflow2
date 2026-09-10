@@ -790,6 +790,29 @@ impl ReflowService {
         ]) {
             out["absorbed_markup"] = serde_json::to_value(am).map_err(ser_err)?;
         }
+        // AN UNDATED EVENT SAYS SO. F-06, hxm_program: nine events in one day,
+        // every date in the prose and none in the field, so nothing downstream
+        // could order them. This project's standing posture is that an absent
+        // property means NOBODY SAID and is REPORTED rather than defaulted —
+        // `invalidates` answers `rerun_owed: null`, `repair_report` counts
+        // `unstated` first, `detect_defects` says what it could not have found.
+        // The ChangeEvent was the one place a date went missing in silence.
+        //
+        // WARNS, NEVER REFUSES: the event above is already written, and an
+        // undated change is a true state of the record. Naming the COST rather
+        // than the absence is the difference between this and a bare "no date".
+        if req.detected_at.is_none() {
+            out["undated"] = JsonValue::String(
+                "This ChangeEvent carries no `detected_at`, so nothing can place it in time. \
+                 Two readings go quiet as a result: `changelog_view` windows entries BY EPOCH \
+                 and orders them by date, and the verification digest orders changes against a \
+                 check's `last_run_at` to say whether a run predates a repair. Neither can say \
+                 so about this event — they will simply not mention it. Re-send with \
+                 `detected_at` (a plain date is enough), or leave it: an undated change is a \
+                 true record of one nobody dated, and this is a note rather than a refusal."
+                    .to_string(),
+            );
+        }
         ok_json(out)
     }
 

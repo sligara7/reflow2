@@ -94,3 +94,30 @@ fn a_required_enum_field_is_not_nullable_and_a_code_only_set_reuses_the_handlers
         .collect();
     assert_eq!(enum_strings(&item_rel), want, "{item_rel}");
 }
+
+/// F-19, hxm_program 2026-09-09→10: *"`Requirement.concern` enum is only
+/// discoverable by being refused — `concern: "operability"` → validation error
+/// listing the eleven allowed values. One retry. The parameter description
+/// names the property but not the set."*
+///
+/// Its neighbour `priority` on the SAME request struct already publishes its
+/// values, which is what makes this an oversight rather than a policy: two
+/// fields of one type, one discoverable and one not.
+#[test]
+fn add_requirement_concern_publishes_the_eleven_values() {
+    let tools = ReflowService::capture_router().list_all();
+    let concern = prop(&tools, "add_requirement", "concern");
+    assert_eq!(
+        enum_strings(&concern),
+        schema_values("Requirement", "concern"),
+        "concern must publish the schema's own values, not a hand-copied list: {concern}"
+    );
+    // The neighbour that was already right — pinned beside it so a regression
+    // that unwires BOTH cannot pass by making them agree at zero.
+    let priority = prop(&tools, "add_requirement", "priority");
+    assert_eq!(
+        enum_strings(&priority),
+        schema_values("Requirement", "priority"),
+        "{priority}"
+    );
+}

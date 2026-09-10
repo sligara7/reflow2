@@ -290,6 +290,8 @@ async fn a_setter_draws_the_signature_when_given_one_and_reports_its_absence_whe
 async fn a_check_records_its_targets_and_the_run_it_just_had_in_one_call() {
     let s = svc().await;
     j!(s.add_capability(Parameters(CapabilityReq {
+        satisfies: None,
+        allocated_to: None,
         id: "cap:totals".into(),
         name: Some("Running totals".into()),
         description: Some("sends cumulative totals".into()),

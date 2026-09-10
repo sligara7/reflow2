@@ -73,6 +73,8 @@ async fn withdrawn() -> ReflowService {
         decomposition_levels: None,
     })));
     j!(s.add_capability(Parameters(CapabilityReq {
+        satisfies: None,
+        allocated_to: None,
         id: "cap:store".into(),
         name: Some("Store bytes beside the design".into()),
         description: Some("Built, shipped, and later withdrawn.".into()),
@@ -83,6 +85,8 @@ async fn withdrawn() -> ReflowService {
         is_exit_point: None,
     })));
     j!(s.add_capability(Parameters(CapabilityReq {
+        satisfies: None,
+        allocated_to: None,
         id: "cap:live".into(),
         name: Some("Something still in use".into()),
         description: Some("Never withdrawn.".into()),
@@ -213,6 +217,8 @@ async fn a_live_node_reports_false_rather_than_omitting_the_field() {
 async fn a_proposed_decision_discontinues_nothing() {
     let s = ReflowService::in_memory().expect("service");
     j!(s.add_capability(Parameters(CapabilityReq {
+        satisfies: None,
+        allocated_to: None,
         id: "cap:maybe".into(),
         name: Some("Argued about".into()),
         description: Some("An agent proposed withdrawing this.".into()),
@@ -261,6 +267,8 @@ async fn a_proposed_decision_discontinues_nothing() {
 async fn obsoleted_by_a_non_decision_is_not_a_discontinuation() {
     let s = ReflowService::in_memory().expect("service");
     j!(s.add_capability(Parameters(CapabilityReq {
+        satisfies: None,
+        allocated_to: None,
         id: "cap:old".into(),
         name: Some("Superseded by a newer capability".into()),
         description: Some("Replaced, not withdrawn.".into()),
@@ -271,6 +279,8 @@ async fn obsoleted_by_a_non_decision_is_not_a_discontinuation() {
         is_exit_point: None,
     })));
     j!(s.add_capability(Parameters(CapabilityReq {
+        satisfies: None,
+        allocated_to: None,
         id: "cap:new".into(),
         name: Some("The replacement".into()),
         description: Some("Took over.".into()),

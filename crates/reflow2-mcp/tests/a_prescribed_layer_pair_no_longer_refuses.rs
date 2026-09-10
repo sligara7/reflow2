@@ -87,6 +87,8 @@ fn requirement(id: &str, name: &str) -> RequirementReq {
 
 fn capability(id: &str, name: &str) -> CapabilityReq {
     CapabilityReq {
+        satisfies: None,
+        allocated_to: None,
         id: id.into(),
         name: Some(name.into()),
         description: Some(IDEA.into()),

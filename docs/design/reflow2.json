@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:af2284d11e06e283dff3cd476e6e9f2619b6c15dccdbb475fca2754be27a97c2",
+  "content_hash": "sha256:fc37f9982e6445bc553378513c0e85216b652200ad74902d24248d9af7c8a494",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -4839,6 +4839,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:a-capability-carries-its-thread-in-one-call",
+      "properties": {},
+      "to_id": "epoch:2026-09-10-three-capture-surface-fixes-from-the-field"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:a-capability-states-what-it-takes-and-gives",
       "properties": {},
       "to_id": "epoch:vocabulary-the-tools-cannot-reach"
@@ -5421,6 +5427,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-141e53b465de3671",
+      "properties": {},
+      "to_id": "epoch:2026-09-10-three-capture-surface-fixes-from-the-field"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:accept-161c5eb8625a51e3",
       "properties": {},
       "to_id": "epoch:v0540-cut"
@@ -5853,6 +5865,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-683550a33db13365",
+      "properties": {},
+      "to_id": "epoch:2026-09-10-three-capture-surface-fixes-from-the-field"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:accept-68873af158e9a5c0",
       "properties": {},
       "to_id": "epoch:v0400"
@@ -5862,6 +5880,12 @@
       "from_id": "chg:accept-68d61743ee449f31",
       "properties": {},
       "to_id": "epoch:v0370"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-6926b3bb3c354811",
+      "properties": {},
+      "to_id": "epoch:2026-09-10-three-capture-surface-fixes-from-the-field"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -6756,6 +6780,12 @@
       "from_id": "chg:an-idea-is-a-declared-kind",
       "properties": {},
       "to_id": "epoch:v0450"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:an-undated-change-event-says-so",
+      "properties": {},
+      "to_id": "epoch:2026-09-10-three-capture-surface-fixes-from-the-field"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -9018,6 +9048,12 @@
       "from_id": "chg:the-command-surface-answers-for-itself",
       "properties": {},
       "to_id": "epoch:v0460"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:the-concern-enum-publishes-its-values",
+      "properties": {},
+      "to_id": "epoch:2026-09-10-three-capture-surface-fixes-from-the-field"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -14953,6 +14989,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-the-thing-you-need-to-point-at-is-usually-not-a-node-yet",
+      "properties": {
+        "acted_at": "2026-09-10",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-trial-driven-choice-skill",
       "properties": {
         "acted_at": "2026-08-04",
@@ -19259,6 +19304,16 @@
     },
     {
       "edge_type": "CAUSES",
+      "from_id": "art:hxm-program-feedback-2026-09-10",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The report is the source of the observation, not of the defect: F-03 (2026-08-25), F-11 (2026-08-26→28) and the 2026-09-09→10 measurement row all describe the same symptom — \"loop_status repeats N structural defects outstanding to the user at every check\" while the user is mid-task — across three sessions and two reflow2 versions. Three occurrences of one symptom is what made this worth root-causing rather than answering.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:the-defect-count-is-severity-blind-so-parked-ideas-are-reported-as-outstanding-debt"
+    },
+    {
+      "edge_type": "CAUSES",
       "from_id": "art:schema",
       "properties": {
         "basis": "correlational",
@@ -19366,6 +19421,16 @@
         "validation_status": "unvalidated"
       },
       "to_id": "fact:the-parallel-batch-class-recurred-because-only-its-instance-was-fixed"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "cap:a-published-contract-says-what-two-systems-must-agree-on",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "That capability is the ONLY instrument in the design that reads an Interface's spec content, and `detect_incomplete_published_contracts` filters to `designation in (\"published\",\"both\")` and `continue`s on everything else. So the 10 `internal` interfaces are examined by nothing: seam_coverage counts them without reading their spec, and the completeness check never looks at them. Neither instrument is wrong on its own; the scopes do not meet, and the gap between them is exactly where an empty contract lives.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:seam-coverage-counts-that-a-contract-exists-and-never-that-it-says-anything"
     },
     {
       "edge_type": "CAUSES",
@@ -20335,6 +20400,24 @@
         "action": "modified"
       },
       "to_id": "art:test-no-per-design-globals"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-capability-carries-its-thread-in-one-call",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-capability-carries-its-thread-in-one-call",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
     },
     {
       "edge_type": "CHANGED",
@@ -25054,6 +25137,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-141e53b465de3671",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-search-first"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-161c5eb8625a51e3",
       "properties": {
         "accepted_baseline": true,
@@ -25891,6 +25983,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-683550a33db13365",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-a-prescribed-layer-pair-no-longer-refuses"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-68873af158e9a5c0",
       "properties": {
         "accepted_baseline": true,
@@ -25906,6 +26007,15 @@
         "action": "modified"
       },
       "to_id": "art:changelog-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-6926b3bb3c354811",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-temporal"
     },
     {
       "edge_type": "CHANGED",
@@ -28219,6 +28329,15 @@
         "action": "modified"
       },
       "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-undated-change-event-says-so",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-temporal"
     },
     {
       "edge_type": "CHANGED",
@@ -38057,6 +38176,33 @@
         "action": "modified"
       },
       "to_id": "art:tools-skills"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-concern-enum-publishes-its-values",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:enum-schema"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-concern-enum-publishes-its-values",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-concern-enum-publishes-its-values",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-an-enum-field-publishes-its-legal-values"
     },
     {
       "edge_type": "CHANGED",
@@ -48665,6 +48811,15 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "art:hxm-program-feedback-2026-09-10",
+      "properties": {
+        "note": "A dated field report from hxm_program, written from outside reflow2's development. Frozen observation: it must not be revised as reflow2 moves, so no DOCUMENTS edge is honest. Third hxm report after 2026-08-19 and 2026-08-26.",
+        "ruling": "parks"
+      },
+      "to_id": "dec:a-dated-field-report-is-registered-and-parked"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "art:main",
       "properties": {},
       "to_id": "dec:rmcp-v3-upgrade"
@@ -59082,6 +59237,12 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:a-contract-answers-at-the-altitude-you-asked",
+      "properties": {},
+      "to_id": "fact:seam-coverage-counts-that-a-contract-exists-and-never-that-it-says-anything"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "cap:a-declared-dependency-is-watched-not-imported",
       "properties": {},
       "to_id": "fact:the-upstream-watch-is-findable-only-in-reflow2s-own-words"
@@ -59118,6 +59279,12 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:change",
+      "properties": {},
+      "to_id": "fact:record-change-places-an-event-by-epoch-and-212-of-214-epochs-carry-no-date"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "cap:claim-liveness",
       "properties": {},
       "to_id": "fact:defect-a-tool-minted-seat-is-never-registered-so-gone-is-still-unreachable"
@@ -59133,6 +59300,12 @@
       "from_id": "cap:independent-evidence",
       "properties": {},
       "to_id": "fact:the-circular-validation-guard-has-never-had-a-single-edge-drawn"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:loop-status",
+      "properties": {},
+      "to_id": "fact:the-defect-count-is-severity-blind-so-parked-ideas-are-reported-as-outstanding-debt"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -169614,6 +169787,12 @@
     {
       "edge_type": "OBSOLETES",
       "from_id": "dec:field-reports-are-untracked-because-the-repository-is-public",
+      "properties": {},
+      "to_id": "art:hxm-program-feedback-2026-09-10"
+    },
+    {
+      "edge_type": "OBSOLETES",
+      "from_id": "dec:field-reports-are-untracked-because-the-repository-is-public",
       "properties": {
         "confidence": 1.0
       },
@@ -170461,6 +170640,12 @@
     },
     {
       "edge_type": "PRECEDES",
+      "from_id": "epoch:v0580-cut",
+      "properties": {},
+      "to_id": "epoch:2026-09-10-three-capture-surface-fixes-from-the-field"
+    },
+    {
+      "edge_type": "PRECEDES",
       "from_id": "epoch:v060",
       "properties": {},
       "to_id": "epoch:v061"
@@ -170641,6 +170826,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:a-capability-carries-its-thread-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:the-owners-word-rides-the-same-call-as-the-status-it-signs"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:a-design-says-what-fraction-carries-a-relation-test",
       "properties": {
         "completeness": "complete",
@@ -170755,6 +170949,15 @@
         "conformance": "unchecked"
       },
       "to_id": "cmp:alternatives"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:an-undated-change-event-says-so-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-change-event-is-written-complete-in-one-call"
     },
     {
       "edge_type": "REALIZES",
@@ -171952,6 +172155,15 @@
         "conformance": "unchecked"
       },
       "to_id": "cmp:hierarchy"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:hxm-program-feedback-2026-09-10",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:report"
     },
     {
       "edge_type": "REALIZES",
@@ -177420,6 +177632,14 @@
     },
     {
       "edge_type": "TRIGGERS",
+      "from_id": "fact:the-defect-count-is-severity-blind-so-parked-ideas-are-reported-as-outstanding-debt",
+      "properties": {
+        "evidence": "F-18's workaround has a third step whose only purpose is to dodge that finding: after minting an Artifact purely to carry a cause, the reporter drew a `realizes` edge to something \"so it is not an island\". The orphan_node line is what forces that extra write, so the reporting behaviour measured there is what makes this friction cost two writes instead of one."
+      },
+      "to_id": "dec:idea-the-thing-you-need-to-point-at-is-usually-not-a-node-yet"
+    },
+    {
+      "edge_type": "TRIGGERS",
       "from_id": "fact:the-gap-replay-warning-exists-because-rehydrate-declines-to-run-when-the-caller-sent-text",
       "properties": {
         "evidence": "That measurement — the server already rehydrates by id and the guard declines — is what raised this question and is what makes the reporter's own requested fix the weakest option rather than the obvious one. Drawn from the fact to the idea because the measurement came first."
@@ -179754,6 +179974,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:a-capability-carries-its-thread-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:a-capability-carries-its-thread-test"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:a-design-says-what-fraction-carries-a-relation-test",
       "properties": {
         "action": "created"
@@ -179831,6 +180059,14 @@
         "action": "created"
       },
       "to_id": "art:allocate"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:an-undated-change-event-says-so-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:an-undated-change-event-says-so-test"
     },
     {
       "edge_type": "YIELDED",
@@ -180263,6 +180499,14 @@
         "action": "created"
       },
       "to_id": "art:hierarchy"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:hxm-program-feedback-2026-09-10",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:hxm-program-feedback-2026-09-10"
     },
     {
       "edge_type": "YIELDED",
@@ -181575,6 +181819,18 @@
       }
     },
     {
+      "node_id": "art:a-capability-carries-its-thread-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:7d4b3af14b4f8bfecd3c0fb60cd5bcc34e915b7904c522ae6cfa965a88eb4060",
+        "description": "Three probes on `add_capability(satisfies=, allocated_to=)`. THE CASE: one call creates the node and draws both edges, read back through `propagate_from` rather than from the reply that claims to have drawn them — an echo that lies and an edge that exists must not be the same assertion. OMITTED: the parameters are additive and a capability with no thread yet is a normal thing to write. REFUSED: an id naming nothing is rejected and NOTHING PERSISTS, checked by reading the node back as null.\n\nThat third probe is the one that matters. `dec:idea-should-a-creation-call-carry-its-own-golden-thread` warned in its counter-argument (4) that \"inline links move failures earlier but make them coarser — a typo in one `satisfies` id refuses the capability itself\". This test makes that a pinned, deliberate trade rather than a hypothetical, and chooses it over the alternative (write the node, skip the edge, warn) because half a thread to a nonexistent id is worse than the retry the parameter removes.\n\nOBSERVED FAILING FIRST against the unfixed binary, 2026-09-10: `unknown field 'satisfies'` / `unknown field 'allocated_to'` on two probes, the third passing vacuously.",
+        "location": "crates/reflow2-mcp/tests/a_capability_carries_its_thread_in_one_call.rs",
+        "name": "a_capability_carries_its_thread_in_one_call.rs — the thread drawn, omitted, and refused",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:a-design-says-what-fraction-carries-a-relation-test",
       "node_type": "Artifact",
       "properties": {
@@ -181717,6 +181973,18 @@
         "name": "alternatives.rs",
         "status": "realized",
         "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:an-undated-change-event-says-so-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:3489bed4575740549db69a02b52d7f678d0d031d4b7b759c5c1ca16e8f1077fe",
+        "description": "Two probes. THE CASE: an event written with no `detected_at` carries an `undated` note that names the field AND what cannot be computed without it — the assertion deliberately requires the note to say what the absence COSTS, because a bare \"no date\" is the silent behaviour with extra words. It also checks the event was still written, so the note cannot drift into a refusal. SILENT: a dated event has nothing to report.\n\nOBSERVED FAILING FIRST against the unfixed binary, 2026-09-10: \"no `undated` block in: {changed:[], event:{...}}\". The silent probe passed vacuously, as it must when nothing fires at all.\n\n⚠️ SCOPE, so a green reading is not over-read: this covers `add_change_event`, which is the tool that HAS the field and the one hxm_program was using. `record_change` — the path the root-cause discipline sends you to — carries `repair` but no date at all and is untouched here. See `fact:record-change-places-an-event-by-epoch-and-212-of-214-epochs-carry-no-date`.",
+        "location": "crates/reflow2-mcp/tests/an_undated_change_event_says_so.rs",
+        "name": "an_undated_change_event_says_so.rs — the note, and the silence when it is dated",
+        "status": "realized"
       }
     },
     {
@@ -182515,7 +182783,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:ebbd178bf54b7f1841cf4e4c3f36cf410f12c7b9ff5278e3dbb33de93628eed0",
+        "checksum": "sha256:ded96e9214c91f27559fbef85dbd26d4eed96cfd79f108a26c3eef3786f8f69c",
         "location": "crates/reflow2-mcp/src/enum_schema.rs",
         "name": "enum_schema.rs — one schema_with fn per enum request field, reading legal values from the compiled-in schema (or the handler's own const) at tool-listing time",
         "status": "realized"
@@ -182861,6 +183129,18 @@
         "intent": "Field report from hxm_program — reflow2 used as a HUB over ~10 repos rather than as one system's design. Eleven friction items (F-01..F-11) and seven opportunities (O-01..O-07), with a measurements table. VERIFIED NOT A PREFIX of art:hxm-program-feedback-2026-08-19: the two are separate reports and both stand.",
         "location": "docs/feedback/2026-08-26-hxm-program-agent-feedback.md",
         "name": "docs/feedback/2026-08-26-hxm-program-agent-feedback.md",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:hxm-program-feedback-2026-09-10",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:bd1abef8706285c61eab97c4f71a32a6b52cee68a1a1f8ccfe48e6f395984c77",
+        "description": "The running log kept by AJ's agent sessions on `hxm_program` — a HUB over ~10 beamline repos at Brookhaven, used as program memory rather than as the design of one system. Appended through 2026-09-10 (reflow2 0.56.0 for the final session).\n\n⚠️ THE APPEND-ONLY PREFIX PROPERTY COULD NOT BE VERIFIED THIS TIME, and that is worth recording rather than glossing. The convention is that only the newest upload matters because older copies are strict prefixes, checked with `head -n <old> <new> | diff - <old>`. Both previously registered hxm reports (2026-08-19, 2026-08-26) point at `docs/feedback/`, which is GITIGNORED, so neither file exists on this machine and there was nothing to diff against. Everything from the `Session 2026-08-26 → 28` heading onward was treated as new on the strength of the dates alone.\n\n⚠️ ITS ISSUE NUMBERING COLLIDES. F-09, F-10 and F-11 each appear TWICE with different content — once in the 2026-08-25/26 block (session-end nudge, sizing defaults, coverage_report exclusions) and again in the 2026-08-26→28 block (sibling near-match chaining, CONTRADICTS misuse, ANTICIPATES defect noise). Any triage citing \"F-11\" must say which.\n\nRegistered and PARKED under `dec:a-dated-field-report-is-registered-and-parked`: a frozen observation from outside reflow2's development, which must not be revised as reflow2 moves, so no DOCUMENTS edge would be honest.",
+        "location": "docs/feedback/2026-09-10-hxm-program-agent-feedback.md",
+        "name": "hxm_program field report, 2026-09-10 — the hub-over-many-repos log",
         "status": "realized"
       }
     },
@@ -184011,7 +184291,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:3ce28fc3d9bf272d31c3ffce171106a87101a5991bc4a2bb5534ffe8c5c1f9c7",
+        "checksum": "sha256:8940e099f3735d310397329c61cecc86e6f90812f71331fd0c47a5ae0963639c",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -184399,7 +184679,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:382dad02ea8782d19e377d777f08b00d81b94cd59ff50a1361390c2cc80c0d3d",
+        "checksum": "sha256:e17343db90ca856eb3e476fa44c04207d878d6f285fa637ea3b8c2c015d40bc2",
         "location": "crates/reflow2-mcp/tests/a_prescribed_layer_pair_no_longer_refuses.rs",
         "name": "a_prescribed_layer_pair_no_longer_refuses.rs",
         "status": "realized"
@@ -184465,7 +184745,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:bce7143174d0a8d295bb69c2820b4c2c60d46d3acf92d932d02f6ec1df94cc28",
+        "checksum": "sha256:960bbd01b7f9efe6ce51f971a3a615b1f11c085ec65edb7b0e9ee991285903eb",
         "location": "crates/reflow2-mcp/tests/an_enum_field_publishes_its_legal_values.rs",
         "name": "an_enum_field_publishes_its_legal_values.rs — the published enum equals the schema's values, an Option field is nullable, a required one is not, a code-only set reuses the handler's const",
         "status": "realized"
@@ -184729,7 +185009,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:3b4d4395ea4c4c8c440e1ec0eadd98ff369486af59ab2803c75060a0140286d5",
+        "checksum": "sha256:42558a34b466762d12c58b0cfc0b7c25fab7a03c7734c573854538cd87864e1b",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/tests/search_first_fires_at_the_tool.rs",
         "name": "search_first_fires_at_the_tool.rs — six cases: the refusal, the rollback, both deliberate routes, the no-false-refusal counterweight, and the cross-type catch",
@@ -184937,7 +185217,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:9b698b6fb11e8a0b6f6624f8f99d36f8fb0c6b50fe3db08eed90a320954bf3b7",
+        "checksum": "sha256:2e102cb3e4364c0c23b9862250450941214b73f8a61fdb864c3eb5cbdf77b1cc",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
         "name": "crates/reflow2-mcp/src/tools/capture.rs",
@@ -185037,7 +185317,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:1d5dbc453e9d1f0c465c9bcf085c0ff622f408d2c195f548e4191ef0eee64a0e",
+        "checksum": "sha256:4330442b67d545bde173d7bacee715d24efb0e6d6899e90c6fe7d519c52da70e",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/temporal_tools.rs",
         "name": "tools/temporal_tools.rs",
@@ -188314,6 +188594,18 @@
       }
     },
     {
+      "node_id": "chg:a-capability-carries-its-thread-in-one-call",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-09-10",
+        "name": "add_capability draws the golden thread in the call that creates the node",
+        "rationale": "hxm_program F-02, taken on Anthony's word 2026-09-10.\n\n⚠️ ONLY HALF OF F-02 WAS BUILT, AND THE OTHER HALF WAS ALREADY FIXED. The report's headline was the duplicate guard refusing every capability written after its requirement, six times in one session. `PRESCRIBED_LAYER_PAIRS` landed 2026-08-31 with (\"Requirement\",\"Capability\") as its FIRST entry and (\"Requirement\",\"Decision\") beside it, so both cases the report names are exempt and the refusal is gone. Re-fixing it would have changed nothing.\n\n⭐ THIS ANSWERS IDEA ② OF AN OPEN DECISION, `dec:idea-should-a-creation-call-carry-its-own-golden-thread`, and DOES NOT SETTLE IT. That node holds four ideas from proj:bhome — inline project_id (①), inline satisfies (②), a genesis bulk-seed call (③), and quality_target on add_decision (④). Only ② is built, extended with `allocated_to`. The decision stays `proposed` because three of its four ideas are unanswered and only the owner's word moves it.\n\n⭐ ITS COUNTER-ARGUMENT (4) IS NOW A TESTED TRADE RATHER THAN A HYPOTHETICAL. That node warned: \"INLINE LINKS MOVE FAILURES EARLIER BUT MAKE THEM COARSER — a typo in one `satisfies` id refuses the capability itself.\" That is exactly the behaviour built, chosen deliberately over the alternative (write the node, skip the edge, warn), because a capability left carrying half a thread to an id that does not exist is worse than the retry this removes. `a_thread_end_that_names_nothing_is_refused` pins it, including that nothing persists.\n\nPRECEDENT, which is why this was a gap rather than a design question: `add_verification` already takes `verifies`, `add_decision` takes `related_to` and `approver`, `add_change_event` takes `affected` and refuses the whole call on a bad entry, and `link_artifact` creates three things atomically. The busiest constructor on the golden thread took neither of its two edges.\n\nREPAIR DISPOSITION, which could not be recorded on this path: this is `corrected_cause` for the ergonomics half. `repair` lives only on `record_change` and `detected_at` only here, so no single call can carry both — recorded as `fact:record-change-places-an-event-by-epoch-and-212-of-214-epochs-carry-no-date`.",
+        "subject": "system",
+        "summary": "`add_capability` gains `satisfies` (the Requirement it serves) and `allocated_to` (the Component that will provide it); each draws its edge in the same call, so the golden thread costs one call instead of three. An id naming nothing is REFUSED with nothing written — the node is rolled back exactly as the duplicate-guard path already does."
+      }
+    },
+    {
       "node_id": "chg:a-capability-states-what-it-takes-and-gives",
       "node_type": "ChangeEvent",
       "properties": {
@@ -189312,6 +189604,16 @@
       }
     },
     {
+      "node_id": "chg:accept-141e53b465de3671",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-09-10",
+        "name": "Same mechanical cause: a `CapabilityReq` struct literal gained the two new fields as None. The search-first behaviour under test is unchanged. The design HOLDS.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-161c5eb8625a51e3",
       "node_type": "ChangeEvent",
       "properties": {
@@ -190179,6 +190481,16 @@
       }
     },
     {
+      "node_id": "chg:accept-683550a33db13365",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-09-10",
+        "name": "Mechanical only: `CapabilityReq` gained `satisfies` and `allocated_to`, and this file builds the struct as a literal, so every literal needed the two new fields as None. The behaviour under test — that a prescribed layer pair is reported rather than refused — is unchanged and its assertions were not touched. The design HOLDS.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-68873af158e9a5c0",
       "node_type": "ChangeEvent",
       "properties": {
@@ -190194,6 +190506,16 @@
         "change_type": "refactor",
         "detected_at": "2026-08-19",
         "name": "Call-site only: one add_change_event call gained `None, None`. The test asserts the same thing it did before.",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:accept-6926b3bb3c354811",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "documentation",
+        "detected_at": "2026-09-10",
+        "name": "The `undated` mention was removed from add_change_event's TOOL DESCRIPTION after skill_lint refused it at 1901 of a 1500-character budget. The BEHAVIOUR is unchanged and still tested; the explanation now lives where it was already fuller — the `detected_at` parameter doc, and the `undated` note the reply itself carries. That placement is this project's own stated preference: a note read at the moment of the mistake beats a paragraph in a description nobody re-reads. The design HOLDS.",
         "subject": "system"
       }
     },
@@ -191960,6 +192282,18 @@
         "rationale": "Anthony accepted `dec:a-brainstormed-idea-is-a-first-class-kind` 2026-08-30, choosing shape (ii), a declared property rather than a new node type — the latter would make `what_next`, the detectors, the reports, delivery and the merge driver all learn a noun that otherwise behaves exactly like a Decision.\n\nWHY IT WAS BUILT NOW AFTER BEING TWICE JUDGED TOO SMALL: `req:a-vocabulary-distinction-proves-it-is-read` demands a computation read a distinction. A′ — the linking discipline riding the near-match refusal — is that computation, and measured 2026-08-30 it could not be scoped: 207 idea-Decisions and 363 other Decisions differed by nothing readable, `status` does not separate them (32 non-idea Decisions are also `proposed`), and the only remaining signal was the `dec:idea-` ID PREFIX — the defect closed the same morning in #390. Unscoped, A′ would land on the Requirement/Capability/ChangeEvent capture path a consumer's field report names as existing friction, so the marker is what keeps the fix off a live user's path.\n\n⚠️ NO DEFAULT, DELIBERATELY. Absent means NOBODY SAID — a third state, not a synonym for `choice` — following the doctrine `Decision.quality_target` already states. The 207 existing ideas stay UNMARKED: their only evidence of kind is the prefix being retired, so backfilling would launder it into a property. That leaves the existing population unqueryable and is the honest option; whether to backfill anyway is recorded as unsettled.\n\n⚠️ THE SCHEMA STAMP DOES NOT CARRY THIS. It records node and edge type names and counts, and no property names at all, so a consumer pinning a build gains a distinction nothing tells them about. Whether `schema_version` should move for a property addition is unresolved and is now a live question rather than a footnote.",
         "subject": "system",
         "summary": "`Decision.kind` declared in schema/structure.yaml — `exploratory` (an idea being turned over, recorded so it is not lost and NOT claimed as intent) or `choice` (a decision somebody faced), indexed, WITH NO DEFAULT. `DecisionReq` gains the field and the tool writes it INSIDE THE SAME CALL rather than through a follow-up setter, because two order-dependent calls is the hazard #392 documented and `cap:a-decision-can-be-created-already-settled` was built to remove for `status`. An undeclared value is refused, and the refusal says omitting is also valid so the obvious repair is not to guess. The brainstorm skill now sets it at capture and both mirrors were re-synced. Four tests, including that ABSENT STAYS ABSENT. Core suite 135 suites / 1548 passed / 0 failed; toolsnaps, schema, skill-lint, doc-versions and self-host gates green."
+      }
+    },
+    {
+      "node_id": "chg:an-undated-change-event-says-so",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-09-10",
+        "name": "A ChangeEvent written with no date says so, and names what cannot be computed without one",
+        "rationale": "hxm_program F-06: \"Nine events written in one day, none dated in the field (dates are in the prose). The verification digest then cannot order changes against `last_run_at`. Suggest: report an undated ChangeEvent the way an undated sweep is reported — as undated, not silently.\"\n\nTHE ASYMMETRY IS THE DEFECT, not the missing field. This project's standing posture is that an absent property means NOBODY SAID and is REPORTED rather than defaulted — `invalidates` answers `rerun_owed: null` rather than false, `repair_report` counts `unstated` as a first-class number, `detect_defects` says what it could not have found. The ChangeEvent was the one place a date went missing in silence, which is why the field went from 8% coverage on hand-written events to being reported here.\n\nREPAIR: `contained_symptom`. STANDS IN FOR: nothing tells a caller the date is missing until AFTER the event is written, and `record_change` — the path the root-cause discipline actually sends you to — still cannot be dated at all. The proper fix is a surface where a repair can carry both its date and its disposition; see `fact:record-change-places-an-event-by-epoch-and-212-of-214-epochs-carry-no-date`, which measures the assumption that path rests on (212 of 214 epochs carry no calendar date, so pinning to an epoch places an event ordinally and not temporally).\n\nMEASURED ON THIS GRAPH THE SAME DAY: 519 of 907 ChangeEvents carry no `detected_at`.",
+        "subject": "system",
+        "summary": "`add_change_event` now returns an `undated` note when `detected_at` is absent, naming the two readings that go quiet without it — `changelog_view`'s epoch windows and the verification digest's ordering against `last_run_at`. Warns, never refuses: the event is already written and a change nobody dated is a true record."
       }
     },
     {
@@ -195277,6 +195611,18 @@
         "rationale": "Anthony, 2026-09-01, asking \"I thought there were 23 skills now?\" — a question about a count that turned out to be a question about five copies of one surface (`fact:the-command-surface-has-five-copies-and-nothing-reconciles-them`).\n\n⭐ THE PROMPT WAS THIS SESSION'S OWN FAILURE. Asked what commands exist, it answered with 11 of 28 — matching command names against skill names, and reporting the eight aliased ones plus nine others as reachable only through `get_skill`. An agent with full filesystem access under-reported the tool's surface by 60% TO THE PERSON WHO BUILT IT, and he caught it. That is the same shape musicjug reported the day before, arriving from the inside.\n\n⭐ AND HIS SENTENCE IS THE FINDING BEHIND THE HELP CHANGE: \"I developed this, but I don't even know how to use most of them (I usually let the agent use them).\" If the author cannot name his own commands, the surface is not discoverable by anybody, and a person who does not know a command exists will never type it.\n\n🛑 THE GATE WAS VERIFIED TO FAIL BEFORE IT WAS WIRED, on all three drift shapes and each one that has actually happened: an alias removed (caught, naming the 2026-08-19 failure), a user-scope copy deleted (reported as a NOTE — user scope is outside the repo and CI cannot see it, so claiming to check it would be worse than silence), and a command removed (caught twice — as source-vs-copy drift AND as a skill nobody can type). A check that only passes on a clean tree proves nothing.\n\n📌 THE CAUSE, NAMED: skills are SERVED from the binary so they cannot drift from the running version; commands are COPIED FILES so they can. One half was designed against this failure and the other was not, and the copied half is the one a user in another project actually meets. The gate does not remove that asymmetry — it makes the asymmetry noisy.\n\n⚠️ WHAT IS STILL NOT COVERED: user-scope drift can only ever be a note, so the four-command gap that started this can recur on any machine and CI will stay green. Fixing that properly means generating the user-scope copies rather than copying them, which nobody has decided.",
         "subject": "system",
         "summary": "FOUR CHANGES, from one question about a count.\n\n① THE ALIAS TABLE IS COMPLETE. `COMMAND_ALIASES` gained `what-is-this` -> `help`, `where-does-it-go` -> `onboarding`, and `next` (tool-backed). It was missing three of eleven, so `get_skill(\"what-is-this\")` refused with a bare list of names — the precise 2026-08-19 failure the table was written to fix. The original repair covered the aliases that existed then and nothing made the next one join.\n\n② `list_skills` NOW CARRIES A `shortcut` PER SKILL — what a PERSON types, stated by the server rather than derived by the reader. Every skill gets one, including the unaliased majority whose command is simply its own name: returning nothing for those would put the reader back to inferring, which is the defect.\n\n③ `tools/check_command_surface.py`, WIRED INTO CI. Compares the three skill directories, the command source against its copy, every skill against a command that reaches it, every command against a skill that exists, and every renamed command against the alias table.\n\n④ THE `help` SKILL NOW SHOWS THE WHOLE SURFACE, from `list_skills` rather than from a baked list that would drift again — grouped by when a person would reach for one, with the three tool-backed commands named separately because they never appear in that call.\n\nALSO: the four commands that existed only in this repo were copied to user scope, so the other projects on this machine have them."
+      }
+    },
+    {
+      "node_id": "chg:the-concern-enum-publishes-its-values",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-09-10",
+        "name": "Requirement.concern publishes its eleven values instead of teaching them by refusal",
+        "rationale": "hxm_program F-19: \"`concern: \\\"operability\\\"` → validation error listing the eleven allowed values. One retry. The parameter description names the property but not the set.\" Its neighbour `priority`, on the SAME request struct, already published its values — two fields of one type, one discoverable and one not, which is what makes this an oversight rather than a policy.\n\nSAFE BY MEASUREMENT, NOT BY ASSUMPTION. The one way publishing an enum can break a caller is a value in use that is not in the declared list — a validating client would begin refusing something that works today. Measured across the committed export: 96 declared enum properties, and ZERO out-of-list values in 4,110 nodes and 24,102 edges. The server already validated (that is how F-19 surfaced at all), so publishing can only convert a server-side refusal into client-side knowledge.\n\nREPAIR: `contained_symptom`. STANDS IN FOR: a check that every declared enum reachable through a request field publishes its values, so the next one cannot ship unwired. THE INSTANCE IS FIXED AND THE CLASS IS NOT — wiring is per-field and manual, with nothing measuring completeness.\n\n⚠️ AND THE CLASS IS SMALLER THAN THIS SESSION FIRST REPORTED, which is worth recording because the wrong number was put to the user. A first sweep claimed ~40 unwired enums with a constructor param; that used a regex matching any same-NAMED field anywhere in service.rs, so `Constraint.concern` and `Requirement.concern` both counted off one match. Checked per request struct the real figure is about three — `Capability.tier`, `Component.tier`, `Decision.kind`. The remaining unwired ones are edge properties written through generic `props` maps with no typed parameter to hang a schema on, which is a different and larger question.",
+        "subject": "system",
+        "summary": "`add_requirement`'s `concern` parameter now publishes the schema's eleven values in its served schema, wired through `schema_enum!` so the list is read from the compiled-in schema and cannot drift from what is enforced. One line plus one attribute."
       }
     },
     {
@@ -201607,6 +201953,17 @@
       }
     },
     {
+      "node_id": "dec:idea-the-thing-you-need-to-point-at-is-usually-not-a-node-yet",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Nothing here is intent, and no option is preferred.\n\nTHE OBSERVATION, which unifies three separately-filed asks plus one this session hit unprompted. reflow2's relation vocabulary is rich and every relation requires BOTH ENDS TO BE MODELLED NODES. When the natural other end is not design content, the user must first mint a node whose only purpose is to be an edge endpoint.\n\nFOUR SIGHTINGS, three of them somebody else's:\n\n① F-18 (hxm_program, 2026-09-09→10). `record_finding(caused_by=…)` needs an existing node, and a CODE DEFECT'S NATURAL CAUSE IS A FILE. For each of three defects: `add_artifact` for the file, then `realizes` something \"so it is not an island\", then `create_edge CAUSES`. Their words: \"three new Artifact nodes this session PURELY TO CARRY A CAUSE\".\n\n② O-10 (same report). The failure CLASS named by root-cause step ⑥ has nowhere to live but prose. Three beamline incidents shared one class — a device assuming screen or plugin state that nothing sets or checks — and the only link between them is a MITIGATES edge from a later requirement. The fourth recurrence will be found by guessing search terms.\n\n③ O-09 (same report). An Artifact in another repo carries an ad-hoc location string (\"hextools:src/…, branch X, PR N, head sha\") and `reconcile_artifacts` can never examine it. The repo is not a modelled thing, so it lives in a string.\n\n④ THIS SESSION, 2026-09-10, unprompted and independently. Trying to draw the first-ever `CALIBRATED_AGAINST` edge — from a marker list to the corpus it was tuned against — the edge could not be drawn: `dec:calibration-is-an-edge` specifies the target as an Artifact or a Verification, and the fitting set was THE DESIGN ITSELF, which has no Artifact. Recorded in `fact:the-circular-validation-guard-has-never-had-a-single-edge-drawn`. That the same wall appeared in reflow2's own work the same day it was read in a field report is why this is worth a node.\n\n⭐ WHAT THE FOUR HAVE IN COMMON: a file, a failure class, a repository, and a design's own export. None of them is design content the way a Requirement is; all of them are things a user genuinely wants to point AT. The cost is not only friction — it is that the graph fills with nodes nobody wanted, which then raise structural findings of their own (see the TRIGGERS link).\n\nTHE OPTIONS, none preferred:\n\n(a) DO NOTHING. Minting a node is correct: a cause worth recording is worth a node, and a file that carries a defect probably SHOULD be registered anyway. The friction is a nudge toward modelling, not a defect. Cheapest, and it may simply be right — three of the four sightings end with a node that arguably belongs.\n\n(b) LITERAL ENDPOINTS on specific relations — store a path or a class name on the EDGE rather than as a node. Removes the ceremony exactly where the endpoint is not design content. ⚠️ COSTS THE GRAPH INVARIANT: every walk, every propagate, every export would have to handle two kinds of endpoint, and \"what does this point at\" stops having one answer. That is a large price for a convenience.\n\n(c) AUTO-REGISTER ON THE WAY — hxm's own suggestion: `record_finding(caused_by=\"repo:path/file.rs\")` mints the Artifact and draws the edge in one call. Narrowest and cheapest to build. ⚠️ AUTO-MINTING IS THE FABRICATION RISK this project guards against elsewhere; a node created as a side effect is one nobody chose, and `dec:ask-not-repair` is the standing posture against exactly that.\n\n(d) A LIGHTWEIGHT REFERENT TYPE — explicitly not design content, exempt from the structural detectors by construction. Answers ② directly, since a \"defect class\" is a referent and nothing else. ⚠️ A NEW NODE TYPE MOVES THE SCHEMA STAMP and owes a migration, and this project has just REMOVED a type (QualityGate) for not earning its place. The bar is high and this would have to clear it four times over.\n\n🛑 THE STRONGEST COUNTER-ARGUMENT, and it may kill the whole node: THESE MAY BE THREE PROBLEMS WEARING ONE SHAPE. A source file, a failure class, a repository and a design export are not obviously the same kind of thing — the first two are arguably real design content that simply was not registered yet, the third is deployment context, the fourth is the design's own record. A mechanism general enough to serve all four would be vague enough to serve none well, and \"unify these\" is the most seductive move available to somebody who has just noticed a pattern. Solving ② alone (a defect class) might be worth more than solving all four badly.\n\nWHAT WOULD SETTLE IT: count how many of the Artifacts in a mature consumer graph exist ONLY to be an edge endpoint — registered, carrying one inbound relation, realizing nothing anybody cares about. If that number is small, (a) holds and this is friction nobody should pay to remove.",
+        "kind": "exploratory",
+        "name": "OPEN — every relation needs both ends modelled, but the natural other end is often a file, a failure class or the corpus itself. Should some endpoints be literals?",
+        "rationale": "Four independent sightings in two days — three from hxm_program's field report (a file as a defect's cause, a failure class with nowhere to live, a repo-qualified location) and one hit unprompted in reflow2's own work when the first CALIBRATED_AGAINST edge could not be drawn because the corpus had no Artifact. The unification is this session's; the observations are the hxm agent's. Recorded as an idea rather than a proposal because the strongest counter-argument is that these are three different problems that merely rhyme, and because option (a) — the friction is a nudge toward modelling and should be paid — has not been ruled out.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-trial-driven-choice-skill",
       "node_type": "Decision",
       "properties": {
@@ -205115,6 +205472,17 @@
       }
     },
     {
+      "node_id": "epoch:2026-09-10-three-capture-surface-fixes-from-the-field",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "description": "F-02, F-06 and F-19 from the 2026-09-10 hxm_program report, taken on Anthony's word. Each pinned by a test observed FAILING against the unfixed binary before the fix existed.\n\nTwo of the report's items were checked and NOT re-fixed because they had already shipped: F-01 (`suggested_depth` default) and F-11 (ANTICIPATES between proposed brainstorms, exempt since v0.41.0). F-02's own headline — the duplicate guard refusing a capability written after its requirement — was also already fixed on 2026-08-31; only its ergonomics half was built here.",
+        "epoch_type": "revision",
+        "name": "Three capture-surface fixes from the hxm_program field report",
+        "sequence": 412,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:a-check-can-say-whether-a-limit-holds",
       "node_type": "DesignEpoch",
       "properties": {
@@ -208108,6 +208476,16 @@
       }
     },
     {
+      "node_id": "frag:art:a-capability-carries-its-thread-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered a_capability_carries_its_thread_in_one_call.rs — the thread drawn, omitted, and refused"
+      }
+    },
+    {
       "node_id": "frag:art:a-design-says-what-fraction-carries-a-relation-test",
       "node_type": "Fragment",
       "properties": {
@@ -208205,6 +208583,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered allocate.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:an-undated-change-event-says-so-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered an_undated_change_event_says_so.rs — the note, and the silence when it is dated"
       }
     },
     {
@@ -208766,6 +209154,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered hierarchy.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:hxm-program-feedback-2026-09-10",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered hxm_program field report, 2026-09-10 — the hub-over-many-repos log"
       }
     },
     {
@@ -221682,6 +222080,19 @@
       }
     },
     {
+      "node_id": "fact:record-change-places-an-event-by-epoch-and-212-of-214-epochs-carry-no-date",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.9,
+        "fact_type": "finding",
+        "name": "record_change deliberately dates nothing because \"the epoch places it in time\" — and 212 of 214 epochs carry no calendar date, so the placement is ordinal, not temporal",
+        "statement": "FOUND WHILE DOGFOODING the F-06 fix, 2026-09-10 — the session went to record its own three fixes with both a date and a repair disposition and could not.\n\nTHE SURFACE SPLITS THE TWO FIELDS AND NEITHER TOOL HAS BOTH:\n  `add_change_event`  has `detected_at`, has NO `repair` / `stands_in_for`\n  `record_change`     has `repair` / `stands_in_for`, has NO `detected_at`\nSo a repair recorded through the discipline `rule:an-issue-is-root-caused-then-pinned-by-a-test-then-fixed` points at is UNDATED BY CONSTRUCTION, and a dated event cannot say whether it reached its cause.\n\n⭐ THE OMISSION IS DELIBERATE AND REASONED, WHICH IS WHY THIS IS A FINDING RATHER THAN A BUG. temporal.rs states it in the call itself: *\"`record_change` pins the event to an EPOCH, which is this path's way of placing it in time; it carries no calendar date of its own to pass on, and inventing one would be a claim nobody made.\"* That argument is sound and consistent with `req:defaults-do-not-assert`.\n\n⚠️ BUT IT RESTS ON AN ASSUMPTION THAT DOES NOT HOLD ON THIS GRAPH. Measured 2026-09-10:\n    DesignEpochs                                    214\n    carrying any calendar date (created_at/at/date)   2\n    ChangeEvents                                    907\n    without detected_at                             519\nAn epoch places an event in a SEQUENCE, not on a CALENDAR. So \"the epoch places it in time\" is true ordinally and false temporally, and the comparison the date exists for — ordering a change against a check's `last_run_at`, which IS a calendar date — cannot be made for anything recorded through this path.\n\nNOT A PROPOSAL, and deliberately not fixed here. Three routes exist and they are different design choices, not one obvious repair: give `record_change` a `detected_at` (contradicting a documented decision), make `add_epoch` write a date so the epoch really does place things in time, or accept that repairs are ordinally placed and stop claiming otherwise in the comment. The last is free and the first two are not.\n\n📌 THIS ALSO BOUNDS THE F-06 FIX SHIPPED THE SAME DAY. The `undated` note was added to `add_change_event`, which is the tool that HAS the field and the one hxm_program was using. `record_change` is untouched and still cannot be dated at all — so the fix reaches the reported path and not this one, which is correct scoping rather than an oversight, and is written here so nobody reads F-06 as fully closed.",
+        "subject_id": "cap:change",
+        "valid_from": "2026-09-10"
+      }
+    },
+    {
       "node_id": "fact:reflow2-against-the-eight-anti-over-engineering-strategies",
       "node_type": "TemporalFact",
       "properties": {
@@ -221764,6 +222175,19 @@
         "statement": "MEASURED ON THE LIVE GRAPH, AND IT CORRECTS AN EARLIER CLAIM IN THIS SAME CHANGE. Retiring a node type does not merely stop an export CONTAINING that type from importing. It stops EVERY EXISTING GRAPH FROM OPENING AT ALL, instances or no instances, until the graph is migrated.\n\nThe reason is that the guard reads the STAMP, not the contents. A graph's stamp records the SCHEMA the writing binary had, so every reflow2 graph in existence names QualityGate whether or not it ever held one. reflow2's own graph held ZERO QualityGate nodes and was refused outright: \"this graph names types this reflow2 cannot read, so opening it could silently show you less of your design than it holds — refused.\"\n\nWHAT I GOT WRONG, AND HOW. I probed the IMPORT path with a hand-built document carrying an undeclared type, saw it refused, and wrote the blast radius from that: \"almost certainly affects nobody, since the type never had a constructor and our graph holds zero.\" The measurement was real and it measured the wrong path. The binding gate is STORE OPEN, which fires on the stamp; instance count never enters it. This is step (5) of the root-cause discipline failing in its documented way — a call that completed, a result that was true, and an inference that did not follow.\n\nTHE RETIREMENT IS TWO EDITS, NOT ONE, AND THE CODE SAYS SO. provenance.rs carries RETIRED_NODE_TYPES with the comment \"Empty so far; grows the day a node type is retired.\" Cutting the type from schema/verify.yaml without adding it there left the guard classifying an ordinary graph as one from the FUTURE, so the refusal told the operator their reflow2 was BEHIND and to rebuild — the exact opposite of the correct action. Registering the retirement flips the message to \"predates a schema change — migrate the graph\", which is right.\n\nTHE MIGRATION RECIPE WORKS AND WAS RUN END TO END on the live graph: export with a binary that still knows the type, import into a FRESH graph with the binary that retired it, verify. Result: 3,989 nodes and 21,555 edges in, 3,989 and 21,555 out, zero nodes lost, zero edges lost, stamp 29 → 28.\n\n⚠️ ONE OPERATIONAL TRAP FOUND BY FALLING INTO IT. The stamp lives in a SIDECAR file beside the store, `<graph-path>.meta.json`, not inside the store directory. Copying the store directory into place while leaving the old sidecar reproduces the refusal exactly, on a graph that has already been migrated. Anyone moving a graph by hand must move the sidecar with it; the published recipe avoids this only because importing into a fresh path writes its own.\n\nOPEN AND NOT DECIDED HERE: whether the guard should open the store and COUNT instances before refusing. A retired type with zero instances carries no risk of showing less than the design holds, which is the guard's whole stated purpose — so the refusal is stricter than its own justification requires. Against that: counting means opening the store the guard is refusing to open, and a cheap conservative check is worth more than a clever one. Not this change's call.",
         "subject_id": "dec:qualitygate-is-retired-the-phase-gate-dissolved-into-the-detectors",
         "valid_from": "2026-09-07"
+      }
+    },
+    {
+      "node_id": "fact:seam-coverage-counts-that-a-contract-exists-and-never-that-it-says-anything",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.95,
+        "fact_type": "defect",
+        "name": "9 of the 14 interfaces counting toward seam coverage have an EMPTY spec — the number measures declaration, not contract",
+        "statement": "ASKED 2026-09-10, after a session asserted without measuring that declaring six Interface nodes would move the seams band \"68% -> 100% either way\". The \"either way\" half is CONFIRMED and is worse than the claim: most existing coverage is already content-free.\n\nMEASURED, three ways:\n\n① CODE. `seam_sets_at` (maturity.rs) scans Interface nodes, walks incoming PROVIDES and CONSUMES, and inserts the component pair into `declared`. There is NO reference to `spec` anywhere in that path — no emptiness test, no content test. A boundary is \"covered\" when an Interface node exists with a provider and a consumer attached.\n\n② DATA. Of 22 Interfaces, 14 have both ends attached and therefore count toward coverage. NINE OF THOSE FOURTEEN HAVE A COMPLETELY EMPTY SPEC:\n  ifc:graph-read (16 consumers), ifc:ingress-trust-boundary, ifc:kv-backend,\n  ifc:llm-backend, ifc:provenance-sidecar, ifc:reasoning-channel,\n  ifc:rendezvous-sidecar, ifc:session-graph-selector, ifc:temporal-api\n`ifc:graph-read` is the most-consumed boundary in the design and says nothing at all.\n\n③ SCOPE. `detect_incomplete_published_contracts` filters to `published`/`both`. All ten `internal` interfaces — including all nine empties above — are skipped.\n\n⭐ THE CLASS, WHICH IS NOT \"seam_coverage IS WRONG\". Two instruments each measure half the question and their scopes do not meet. One asks DOES A CONTRACT EXIST (any designation, content never read); the other asks DOES IT SAY ANYTHING (content read, published only). An `internal` interface with an empty spec is counted as coverage by the first and invisible to the second. Nothing in the design can tell \"this boundary has a real contract\" from \"somebody made a node\".\n\n⭐ AND IT HAS RECURRED. `dec:idea-what-would-a-provided-contract-buy-substitution-derived-tests-or-a-mock` recorded on 2026-08-21 that `internal` interfaces were 0 of 4 with a substantive spec, and that two of the four `published` \"specs\" were provenance correction notes naming \"no operation, no input and no output\". A PERSON found that by hand and wrote it into a decision. No detector reported it then and none reports it now — which is the test for cause versus trigger: fixing the class would have caught the earlier occurrence too.\n\n⚠️ NOT ESTABLISHED, and the original claim is only half verified. Whether declaring six more interfaces reaches exactly 100% is STILL UNMEASURED — nobody has run it, and any 100% at subsystem altitude is bounded by the 7 coupling/contract pairs that `seam_coverage` reports it DROPPED because an endpoint reached no container at that level. Also unmeasured: whether the published-scoped completeness detector actually rejects the two provenance-note specs, which are non-empty strings and may pass a length-shaped test. Content-length is not content, and that is the same class one level deeper.",
+        "subject_id": "cap:a-contract-answers-at-the-altitude-you-asked",
+        "valid_from": "2026-09-10"
       }
     },
     {
@@ -222165,6 +222589,19 @@
         "subject_id": "dec:idea-what-makes-a-field-report-owed",
         "valid_from": "2026-08-28",
         "value": "{\"defect_facts\":192,\"open_at_sweep_start\":191,\"fix_language_anywhere\":28,\"self_declared_closed\":10,\"closed_with_edges\":5,\"share_that_was_bookkeeping\":\"2.6%\",\"fixed_on_main_unreleased\":2,\"self_corrected_no_source_node\":2,\"invalidates_edges_before\":9,\"invalidates_edges_after\":14}"
+      }
+    },
+    {
+      "node_id": "fact:the-defect-count-is-severity-blind-so-parked-ideas-are-reported-as-outstanding-debt",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.95,
+        "fact_type": "defect",
+        "name": "The detectors distinguish a parked idea and the loop's count throws it away — 44 of 89 \"outstanding structural defects\" are info, and 13 say \"parked\" in their own message",
+        "statement": "ROOT-CAUSED 2026-09-10 from the hxm_program report, and REPRODUCED ON REFLOW2'S OWN GRAPH at 0.58.0 rather than reasoned about.\n\nTHE SYMPTOM AS REPORTED, three times: \"Defects went 2 -> 7 over a day of doing the right thing, and loop_status repeats '7 structural defects outstanding' to the user at every check\" (F-03); \"raised the '1 structural defect' line in loop_status for the whole session, then 3 as more brainstorms linked ... the loop_status line reads as debt\" (F-11); \"defects 12 -> 16 (brainstorm ANTICIPATES + orphan proposed decision, F-03/F-11 class)\" (2026-09-09→10, on 0.56.0).\n\n⭐ THE OBVIOUS DIAGNOSIS IS WRONG, AND THAT IS THE POINT. F-03 and F-11 both propose the fix \"exempt brainstormed ideas from the defect detectors\". THAT FIX ALREADY SHIPPED. `is_parked_idea` (heal.rs) landed 2026-08-26 in v0.41.0 — a Decision with `status: proposed` and `kind != choice` — and it is consulted by the relation categories, including the `unresolved_setup` path the reports name. hxm's last session ran 0.56.0, FIFTEEN RELEASES LATER, and the symptom persisted. So the exemption is not missing, and re-filing it would have fixed nothing.\n\nMEASURED HERE, `detect_defects` on reflow2's own design at 0.58.0:\n\n    total defects                                     89\n      by severity      info      44\n                       warning   45\n      by category      contradiction      33\n                       unresolved_setup   22\n                       orphan_node        19\n                       unthreaded_cluster 11\n                       untriaged_report    3\n                       duplicate           1\n    info-level defects whose OWN MESSAGE contains \"parked\"    13\n\n    what loop_status says: \"89 structural defect(s) outstanding\"\n\n⭐⭐ THE CAUSE IS A DISTINCTION COMPUTED AND THEN DISCARDED AT THE REPORTING BOUNDARY. The detector knows. Its own message reads \"Decision 'dec:idea-...' has no links yet — A PARKED DECISION POINT, recorded but governing nothing\", severity `info`. It has identified the node as parked, labelled it as such in prose, and emitted it anyway; then `loop_status` collapses 44 info and 45 warning into ONE severity-blind number and puts it in `next` on every call. The fix in v0.41.0 was applied to the DETECTORS; the summary line was never taught the difference.\n\nTWO DISTINCT SUB-CASES, and conflating them is what made the reports read as one unfixed bug:\n  (a) `orphan_node` on an unlinked parked idea — fires by design, at info, self-labelled parked. This is hxm's \"orphan proposed decision\".\n  (b) `unresolved_setup` on ANTICIPATES between two PROPOSED brainstorms — genuinely exempt since v0.41.0. Every such finding remaining on this graph joins ACCEPTED decisions (e.g. dec:merge-survivor-provenance -> dec:a-tied-merge-breaks-by-degree-not-by-alphabet), where firing is CORRECT.\nSo F-11 as originally filed is FIXED, and the surviving complaint is (a) plus the count.\n\n⭐ THE CLASS: a computed distinction that does not survive to the surface a person reads. This project has fixed the same shape before — `swept.parked` counts parked nodes instead of filing them, `detect_gaps` reports `by_source` under budget, `report-dont-judge` keeps the judgement with the reader. The instrument here is one rung short: `detect_defects` is severity-aware and category-aware, and the one line the user actually sees on every call is neither.\n\n⚠️ NOT ESTABLISHED. Whether hxm's specific nodes carried `kind: choice` (which would defeat the exemption legitimately) is unmeasurable from here — their graph is on their machine. The 13-of-44 figure is reflow2's own design and may not be representative of a hub graph. And no fix is proposed here: whether the answer is a severity split in `next`, a session-scoped snooze (their F-14), or a `since_last_call` delta is a design question nobody has put to the owner.",
+        "subject_id": "cap:loop-status",
+        "valid_from": "2026-09-10"
       }
     },
     {
@@ -226589,7 +227026,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:2bd160a6b658473d0bd786c9c0556fc15b606c231317d96334953d27b841288a",
+  "prev_content_hash": "sha256:af2284d11e06e283dff3cd476e6e9f2619b6c15dccdbb475fca2754be27a97c2",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

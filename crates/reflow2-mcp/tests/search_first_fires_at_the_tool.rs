@@ -217,6 +217,8 @@ async fn a_capability_restating_a_requirement_is_reported_but_not_refused() {
     let s = svc().await;
     seed_first(&s).await;
     let made = j!(s.add_capability(Parameters(CapabilityReq {
+        satisfies: None,
+        allocated_to: None,
         id: "cap:cumulative".into(),
         name: Some("Send cumulative totals".into()),
         description: Some(IDEA_B.into()),

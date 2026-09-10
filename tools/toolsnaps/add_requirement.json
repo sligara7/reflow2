@@ -26,6 +26,20 @@
       "concern": {
         "default": null,
         "description": "The cross-cutting concern this need belongs to. 154 of 207 requirements\ncarried one written through the generic escape hatch.",
+        "enum": [
+          "core",
+          "logistics",
+          "sustainment",
+          "safety",
+          "security",
+          "cost",
+          "schedule",
+          "manufacturability",
+          "usability",
+          "environmental",
+          "other",
+          null
+        ],
         "type": [
           "string",
           "null"
