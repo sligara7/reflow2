@@ -638,7 +638,16 @@ impl ReflowService {
         description = "Set a Decision's lifecycle status — proposed / accepted / superseded / \
                        rejected (BL-70). Setting it to `proposed` opens it as a decision point: an \
                        undecided fork you can register alternatives under. Every other property is \
-                       preserved.",
+                       preserved. CARRIES `settled_question_prose` WHEN A DECISION REACHES \
+                       `accepted` AND SOMETHING IT GOVERNS STILL SAYS THE QUESTION IS OPEN: the \
+                       block names each such node, the phrase that matched, and quotes the prose \
+                       around it, so you can judge it here rather than in another call. It never \
+                       says the text is wrong — prose that QUOTES an old question is a correct \
+                       node and looks identical. Silent on `rejected`/`superseded`, which retire \
+                       rather than settle, and on `accepted` -> `accepted`. From a 2026-09-09 \
+                       incident where a requirement said \"NOT YET DECIDED … his call to make\" \
+                       three weeks after the call had been made, and the owner was asked the \
+                       settled question a second time.",
         annotations(read_only_hint = false, destructive_hint = false)
     )]
     pub async fn set_decision_status(
@@ -651,6 +660,15 @@ impl ReflowService {
             req.approver.as_deref(),
             "set_decision_status",
         )?;
+        // Read BEFORE the write: afterwards there is nothing left to compare
+        // against, and `accepted` -> `accepted` must stay silent.
+        let was_accepted = crate::tools::capture::prior_status(
+            &g,
+            reflow2_core::nodes::node::DECISION,
+            &req.decision_id,
+        )
+        .as_deref()
+            == Some("accepted");
         let node = NodeDto::from(
             g.set_decision_status(&req.decision_id, &req.status)
                 .map_err(dyno_err)?,
@@ -665,9 +683,20 @@ impl ReflowService {
         // `accepted` is the settling status the intent gate reads; superseding
         // or rejecting retires rather than settles and is not flagged.
         let settles = req.status == "accepted";
-        crate::tools::capture::with_approval_note(
+        // A question just closed. Anything this decision governs whose prose
+        // still says it is open is now a paragraph the next reader will believe
+        // over the decision — the 2026-09-09 incident, fired at the moment the
+        // divergence is created rather than found by a sweep later.
+        let hits = if settles && !was_accepted {
+            crate::tools::capture::governed_open_prose(&g, &req.decision_id)
+        } else {
+            Vec::new()
+        };
+        crate::tools::capture::with_approval_and_settled_question(
             node,
             crate::tools::capture::nobodys_name_note(settles, req.approver.as_deref()),
+            &req.decision_id,
+            &hits,
         )
     }
 

@@ -444,6 +444,55 @@ pub(crate) fn prior_status(g: &DesignGraph, node_type: &str, id: &str) -> Option
         .map(str::to_string)
 }
 
+/// The nodes a Decision governs whose prose still asserts the question is open.
+///
+/// Walks the `GOVERNED_BY` edges pointing AT the decision, which is the exact
+/// signal the 2026-09-09 incident had available and nothing read: the edge from
+/// the stale requirement to the deciding node existed the whole time.
+///
+/// Best-effort by design — a node the edge names but the store cannot resolve is
+/// skipped rather than failing the caller's write. This is a note attached to
+/// somebody else's call, and it must never be the reason that call fails.
+pub(crate) fn governed_open_prose(
+    g: &DesignGraph,
+    decision_id: &str,
+) -> Vec<crate::prose_currency::OpenProse> {
+    let Ok(edges) = g.incoming(decision_id, Some(reflow2_core::nodes::edge::GOVERNED_BY)) else {
+        return Vec::new();
+    };
+    let mut hits = Vec::new();
+    for e in edges {
+        let Ok(ty) = crate::service::resolve_node_type(g, None, &e.from_id, "from_type") else {
+            continue;
+        };
+        let Ok(Some(node)) = g.get_node(&ty, &e.from_id) else {
+            continue;
+        };
+        let hit = crate::prose_currency::open_prose(&e.from_id, &ty, |f| {
+            node.properties.get(f).and_then(|v| v.as_str())
+        });
+        if let Some(hit) = hit {
+            hits.push(hit);
+        }
+    }
+    hits
+}
+
+/// Attach the settled-question block to a reply, if there is one to make.
+pub(crate) fn with_settled_question_prose(
+    mut v: JsonValue,
+    decision_id: &str,
+    hits: &[crate::prose_currency::OpenProse],
+) -> JsonValue {
+    if let (Some(block), Some(obj)) = (
+        crate::prose_currency::settled_question_block(decision_id, hits),
+        v.as_object_mut(),
+    ) {
+        obj.insert("settled_question_prose".into(), JsonValue::Object(block));
+    }
+    v
+}
+
 pub(crate) fn preserve_prior(g: &mut DesignGraph, prior: Option<&StoredNode>, now: &NodeDto) {
     let Some(prior) = prior else { return };
     let replaced: Vec<String> = now
@@ -819,6 +868,22 @@ pub(crate) fn with_approval_note(
         obj.insert("carries_nobodys_name".into(), JsonValue::String(note));
     }
     ok_json(v)
+}
+
+/// [`with_approval_note`] plus the settled-question block, for the one caller
+/// that can raise both: settling a Decision is the moment the owner's name is
+/// owed AND the moment the prose it governs may have been overtaken.
+pub(crate) fn with_approval_and_settled_question(
+    node: NodeDto,
+    note: Option<String>,
+    decision_id: &str,
+    hits: &[crate::prose_currency::OpenProse],
+) -> Result<CallToolResult, McpError> {
+    let mut v = serde_json::to_value(node).map_err(ser_err)?;
+    if let (Some(note), Some(obj)) = (note, v.as_object_mut()) {
+        obj.insert("carries_nobodys_name".into(), JsonValue::String(note));
+    }
+    ok_json(with_settled_question_prose(v, decision_id, hits))
 }
 
 pub(crate) fn with_capture_notes<T: serde::Serialize>(
@@ -2497,7 +2562,13 @@ impl ReflowService {
                        across ten CORRECT writes, so the right action degraded the instrument \
                        and a later reader had an incentive to stop registering documents at all. \
                        The ruling must be an ACCEPTED Decision — a `proposed` one is somebody \
-                       thinking out loud, and a musing must not suppress a finding.",
+                       thinking out loud, and a musing must not suppress a finding. \
+                       CARRIES `settled_question_prose` WHEN YOU LINK TO AN ALREADY-ACCEPTED \
+                       DECISION AND THIS NODE'S OWN PROSE STILL SAYS THE QUESTION IS OPEN — the \
+                       other moment that divergence gets created, and the one a hook on the \
+                       status setter alone would miss. It quotes the prose and names the phrase \
+                       that matched; it never says the text is wrong, because a node that QUOTES \
+                       an old question looks identical from the outside.",
         annotations(read_only_hint = false)
     )]
     pub async fn governed_by(
@@ -2513,7 +2584,7 @@ impl ReflowService {
             &req.from_id,
             "from_type",
         )?;
-        ok_json(EdgeDto::from(
+        let edge = EdgeDto::from(
             g.governed_by(
                 &from_type,
                 &req.from_id,
@@ -2523,6 +2594,32 @@ impl ReflowService {
                 req.note.as_deref(),
             )
             .map_err(dyno_err)?,
+        );
+        // THE SECOND MOMENT THE DIVERGENCE IS CREATED, and the one a hook on
+        // the status setter alone would miss: the decision was settled first
+        // and the edge drawn afterwards. Only an ACCEPTED decision can make
+        // prose stale — linking to a `proposed` one says nothing, because a
+        // musing has settled nothing.
+        let settled = to_type == reflow2_core::nodes::node::DECISION
+            && prior_status(&g, &to_type, &req.to_id).as_deref() == Some("accepted");
+        let hits = if settled {
+            g.get_node(&from_type, &req.from_id)
+                .ok()
+                .flatten()
+                .and_then(|n| {
+                    crate::prose_currency::open_prose(&req.from_id, &from_type, |f| {
+                        n.properties.get(f).and_then(|v| v.as_str())
+                    })
+                })
+                .into_iter()
+                .collect()
+        } else {
+            Vec::new()
+        };
+        ok_json(with_settled_question_prose(
+            serde_json::to_value(edge).map_err(ser_err)?,
+            &req.to_id,
+            &hits,
         ))
     }
 

@@ -129,3 +129,211 @@ fn excerpt(s: &str) -> String {
     let head: String = trimmed.chars().take(EXCERPT_CHARS).collect();
     format!("{head}… (cut at {EXCERPT_CHARS} chars)")
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// The sibling: prose that still says the question is open, under a Decision
+// that has settled it.
+// ─────────────────────────────────────────────────────────────────────────────
+//
+// # The finding this exists to fix
+//
+// Recorded 2026-09-09 as `fact:a-settled-question-was-re-asked-because-the-
+// requirements-prose-outlived-its-decision`. A requirement's statement ended
+// "NOT YET DECIDED: … that is his call to make explicitly rather than mine to
+// infer." The call had been made three weeks earlier, in a Decision that was
+// ACCEPTED and already `GOVERNED_BY`-linked to that very requirement. A session
+// read the paragraph, believed the fork open, and put a settled question to the
+// owner a second time.
+//
+// ⭐ THE CAUSE IS NOT AN INADEQUATE SEARCH. The session did search, and
+// `search_design` returned the requirement, the rule, the capability, the
+// artifact and the verification — and not the governing Decision, whose name
+// shares few tokens with any query about the requirement. BM25 over what a node
+// SAYS does not reliably surface the node that GOVERNS it. The edge was there
+// the whole time and nothing read it.
+//
+// # Why a reply and not a detector, measured rather than assumed
+//
+// Over reflow2's own design, 43 of 640 governed nodes carry one of these
+// markers somewhere in their prose, and a good share are legitimate — a node
+// that QUOTES an old question, or discusses one elsewhere in a long statement.
+// (Measured with exactly the nine below, after the list was tightened; a looser
+// draft list gave 48, and the wider number was quoted in three places before
+// being re-measured against what actually shipped. Three of the nine —
+// `to be decided`, `not been decided`, `awaiting a decision` — match NOTHING in
+// this corpus and are kept as phrases other projects write, not as dead weight
+// this one has evidence for.)
+// As a sweep that is 48 findings of mixed quality, which is the noise that gets
+// switched off in a week. Fired at the moment somebody ACCEPTS the decision or
+// DRAWS the edge, it is one node in front of the person who just moved it, and
+// the same reasoning the status-side sibling above was built on.
+//
+// # What it deliberately does NOT do
+//
+// - **It never says the prose is wrong.** It cannot read English. A statement
+//   that quotes an old question, or leaves a genuinely different question open,
+//   is a correct node and a false positive here. It states which phrase matched
+//   and quotes the text; a person judges. `dec:report-dont-judge`.
+// - **It is silent unless the decision actually SETTLED.** `rejected` and
+//   `superseded` retire rather than settle, and `accepted` -> `accepted` moves
+//   nothing.
+// - **It is silent when the governed prose carries no marker**, which is the
+//   overwhelmingly common case and the one that decides whether this stays on.
+
+/// Phrases that ASSERT a question is still open.
+///
+/// Deliberately phrases ANY project would write, not this one's idioms —
+/// reflow2 is built for other people's designs (`rule:reflow2-is-built-for-
+/// other-projects-not-for-itself`), so "that is his call to make" is out
+/// however exactly it matched the incident. Tuned against the live design:
+/// `unresolved` and `tbd` were dropped for firing on prose about everything
+/// else, and each addition costs a false positive somewhere.
+const OPEN_QUESTION_MARKERS: [&str; 9] = [
+    "not yet decided",
+    "to be decided",
+    "not been decided",
+    "undecided",
+    "still open",
+    "remains open",
+    "open question",
+    "not settled",
+    "awaiting a decision",
+];
+
+/// Prose fields a governed node may carry, first non-empty wins.
+///
+/// Wider than [`PROSE_FIELDS`] because anything can be governed: `statement`
+/// covers Requirement and DesignRule, `description` Capability and Component,
+/// `decision` a Decision governed by another Decision.
+const GOVERNED_PROSE_FIELDS: [&str; 4] = ["statement", "description", "decision", "rationale"];
+
+/// Which markers this prose carries, in the order they are declared.
+pub fn open_question_markers(prose: &str) -> Vec<&'static str> {
+    let low = prose.to_lowercase();
+    OPEN_QUESTION_MARKERS
+        .iter()
+        .copied()
+        .filter(|m| low.contains(m))
+        .collect()
+}
+
+/// One governed node whose prose still reads as an open question.
+pub struct OpenProse {
+    pub node_id: String,
+    pub node_type: String,
+    pub field: &'static str,
+    pub markers: Vec<&'static str>,
+    pub excerpt: String,
+}
+
+/// Examine one governed node's prose. `None` when it carries none, or none of
+/// it reads open.
+///
+/// Takes a LOOKUP rather than a property map so this module keeps depending on
+/// nothing but `serde_json` — a stored node's properties are a `HashMap` and a
+/// serialised one is a `serde_json::Map`, and both callers exist.
+pub fn open_prose<'a>(
+    node_id: &str,
+    node_type: &str,
+    prose_field: impl Fn(&str) -> Option<&'a str>,
+) -> Option<OpenProse> {
+    let (field, prose) = GOVERNED_PROSE_FIELDS.iter().find_map(|f| {
+        let s = prose_field(f)?;
+        (!s.trim().is_empty()).then_some((*f, s))
+    })?;
+    let markers = open_question_markers(prose);
+    let first = *markers.first()?;
+    Some(OpenProse {
+        node_id: node_id.to_string(),
+        node_type: node_type.to_string(),
+        field,
+        excerpt: excerpt_around(prose, first),
+        markers,
+    })
+}
+
+/// The block, or `None` when nothing governed reads open.
+pub fn settled_question_block(
+    decision_id: &str,
+    hits: &[OpenProse],
+) -> Option<JsonMap<String, JsonValue>> {
+    if hits.is_empty() {
+        return None;
+    }
+    let governs: Vec<JsonValue> = hits
+        .iter()
+        .map(|h| {
+            let mut m = JsonMap::new();
+            m.insert("node_id".into(), JsonValue::String(h.node_id.clone()));
+            m.insert("node_type".into(), JsonValue::String(h.node_type.clone()));
+            m.insert("field".into(), JsonValue::String(h.field.to_string()));
+            m.insert(
+                "markers".into(),
+                JsonValue::Array(
+                    h.markers
+                        .iter()
+                        .map(|s| JsonValue::String((*s).to_string()))
+                        .collect(),
+                ),
+            );
+            m.insert("excerpt".into(), JsonValue::String(h.excerpt.clone()));
+            JsonValue::Object(m)
+        })
+        .collect();
+
+    let n = hits.len();
+    let mut note = JsonMap::new();
+    note.insert("governs".into(), JsonValue::Array(governs));
+    note.insert(
+        "decision_id".into(),
+        JsonValue::String(decision_id.to_string()),
+    );
+    note.insert(
+        "note".into(),
+        JsonValue::String(format!(
+            "`{decision_id}` is now accepted, and {n} node(s) it governs still carry prose \
+             asserting the question is open — quoted above with the phrase that matched, so you \
+             can judge it here rather than in another call. DOES THAT PROSE STILL READ TRUE? \
+             Nothing checks this and nothing here claims the text is wrong: prose that QUOTES an \
+             old question, or leaves a DIFFERENT one open, is a correct node and looks identical \
+             from the outside. Only a person can tell. If it has been overtaken, the settled \
+             answer belongs in the node where the next reader will meet it — a paragraph saying \
+             a question is open outlives the decision that closed it, and the next session \
+             believes the paragraph."
+        )),
+    );
+    Some(note)
+}
+
+/// [`EXCERPT_CHARS`] of prose CENTRED ON THE MATCH rather than taken from the
+/// front.
+///
+/// The head is the wrong window here: the incident's marker sat in the LAST
+/// paragraph of a 5 KB statement, so a leading excerpt would have quoted the
+/// opening and shown the reader nothing of what fired. `dec:idea-prose-currency-
+/// quotes-enough-to-judge-without-a-second-read` is the standing question about
+/// the sibling's own 240-char head cut; this side answers it by moving the
+/// window instead of widening it.
+fn excerpt_around(prose: &str, marker: &str) -> String {
+    let trimmed = prose.trim();
+    let chars: Vec<char> = trimmed.chars().collect();
+    if chars.len() <= EXCERPT_CHARS {
+        return trimmed.to_string();
+    }
+    // Locate the match on the lowercased CHAR sequence, so the index is a char
+    // index and slicing can never split a multi-byte character.
+    let low: Vec<char> = trimmed.to_lowercase().chars().collect();
+    let m: Vec<char> = marker.chars().collect();
+    let at = low
+        .windows(m.len())
+        .position(|w| w == m.as_slice())
+        .unwrap_or(0);
+    // Centre the window on the match, then clamp to the ends.
+    let half = EXCERPT_CHARS / 2;
+    let start = at.saturating_sub(half).min(chars.len() - EXCERPT_CHARS);
+    let end = start + EXCERPT_CHARS;
+    let body: String = chars[start..end].iter().collect();
+    let head = if start > 0 { "…" } else { "" };
+    let tail = if end < chars.len() { "…" } else { "" };
+    format!("{head}{body}{tail}")
+}

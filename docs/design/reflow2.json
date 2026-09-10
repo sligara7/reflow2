@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:0e9741467caf80476effa4e14c73e9986fd0b16330d4e19983240ed48876c47c",
+  "content_hash": "sha256:2bd160a6b658473d0bd786c9c0556fc15b606c231317d96334953d27b841288a",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -1338,6 +1338,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:regions"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-settled-decision-names-governed-prose-that-still-reads-open",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:temporal"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -5170,6 +5178,12 @@
       "from_id": "chg:a-session-names-its-design",
       "properties": {},
       "to_id": "epoch:v0290"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:a-settled-decision-names-governed-prose-that-still-reads-open",
+      "properties": {},
+      "to_id": "epoch:2026-09-09-prose-that-outlives-its-decision-says-so"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -11018,6 +11032,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:cap:a-fix-with-no-recorded-cause-and-a-defect-its-subject-outran-are-noticed",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:cap:a-settled-decision-names-governed-prose-that-still-reads-open",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
     },
@@ -23747,6 +23767,33 @@
         "action": "modified"
       },
       "to_id": "cap:select-graph-by-id"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-settled-decision-names-governed-prose-that-still-reads-open",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:a-settled-decision-names-governed-prose-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-settled-decision-names-governed-prose-that-still-reads-open",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:prose-currency"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-settled-decision-names-governed-prose-that-still-reads-open",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:a-settled-decision-names-governed-prose-that-still-reads-open"
     },
     {
       "edge_type": "CHANGED",
@@ -57651,6 +57698,12 @@
       "from_id": "cap:a-fix-with-no-recorded-cause-and-a-defect-its-subject-outran-are-noticed",
       "properties": {},
       "to_id": "snap:epoch:preserved-on-write:cap:a-fix-with-no-recorded-cause-and-a-defect-its-subject-outran-are-noticed"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:a-settled-decision-names-governed-prose-that-still-reads-open",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:cap:a-settled-decision-names-governed-prose-that-still-reads-open"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -165179,6 +165232,15 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:a-settled-decision-names-governed-prose-that-still-reads-open",
+      "properties": {
+        "at": "2026-09-09",
+        "note": "The finding's general clause — \"there is no equivalent for a Requirement whose statement claims something is undecided while an ACCEPTED Decision governing it has decided exactly that\" — is what this change answers, and it names the reachable version the finding itself specified: state which phrase matched, quote both, let a reader decide. ⚠️ THE CLAIM IS BOUNDED. The finding also observes that `search_design` does not surface a governing Decision from a query about the node it governs; NOTHING HERE TOUCHES THAT, and it remains true. A session that reads a node without accepting a decision or drawing an edge still gets no warning — this fires at the two moments the divergence is CREATED, not when it is read."
+      },
+      "to_id": "fact:a-settled-question-was-re-asked-because-the-requirements-prose-outlived-its-decision"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:a-status-advance-says-whether-its-prose-predates-it",
       "properties": {
         "at": "2026-09-04",
@@ -167368,6 +167430,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:a-settled-decision-names-governed-prose-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-settled-decision-names-governed-prose-that-still-reads-open"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:acknowledgement-approver-test",
       "properties": {
         "completeness": "complete",
@@ -169174,6 +169245,15 @@
       "from_id": "art:prose-currency",
       "properties": {
         "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-settled-decision-names-governed-prose-that-still-reads-open"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:prose-currency",
+      "properties": {
+        "completeness": "complete",
         "conformance": "verified"
       },
       "to_id": "cap:a-status-advance-says-whether-its-prose-predates-it"
@@ -170793,6 +170873,15 @@
       "edge_type": "REALIZES",
       "from_id": "art:tools-capture",
       "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-settled-decision-names-governed-prose-that-still-reads-open"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:tools-capture",
+      "properties": {
         "completeness": "partial",
         "conformance": "unchecked"
       },
@@ -170896,6 +170985,15 @@
         "conformance": "unchecked"
       },
       "to_id": "cmp:tools-coherence"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:tools-exchange",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-settled-decision-names-governed-prose-that-still-reads-open"
     },
     {
       "edge_type": "REALIZES",
@@ -171686,6 +171784,12 @@
       "from_id": "cap:a-session-with-no-seed-can-find-one",
       "properties": {},
       "to_id": "req:a-session-with-no-seed-can-still-orient"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:a-settled-decision-names-governed-prose-that-still-reads-open",
+      "properties": {},
+      "to_id": "req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue"
     },
     {
       "edge_type": "SATISFIES",
@@ -174835,6 +174939,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:a-settled-decision-names-governed-prose-that-still-reads-open",
+      "properties": {},
+      "to_id": "cap:a-settled-decision-names-governed-prose-that-still-reads-open"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:a-settling-status-carries-a-name-or-is-refused-and-a-check-lands-wired",
       "properties": {},
       "to_id": "cap:the-owners-word-rides-the-same-call-as-the-status-it-signs"
@@ -176421,6 +176531,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:a-settled-decision-names-governed-prose-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:a-settled-decision-names-governed-prose-test"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:acknowledgement-approver-test",
       "properties": {
         "action": "created"
@@ -177090,6 +177208,14 @@
         "action": "created"
       },
       "to_id": "art:propagate"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:prose-currency",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:prose-currency"
     },
     {
       "edge_type": "YIELDED",
@@ -178234,6 +178360,18 @@
         "checksum": "sha256:ee98058fda54443ade6c2f284ea3df2588a5b7712e472e98ab9f7e3bcaf375f9",
         "location": "crates/reflow2-mcp/tests/a_prose_field_that_swallowed_a_parameter_says_so.rs",
         "name": "a_prose_field_that_swallowed_a_parameter_says_so.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:a-settled-decision-names-governed-prose-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:8edd39e9957e27b892c9aa1e72f290e9c6709fbe7120be2ca15e4bf5ebb7e431",
+        "description": "Six probes. The CASE: a decision settles, the requirement it governs still says NOT YET DECIDED, and the reply names it, names the phrase that matched, and quotes the prose. The SECOND MOMENT: the edge drawn to an already-accepted decision, which a hook on the status setter alone would miss. And four silences, which decide whether the instrument stays switched on: a status that did not settle (rejected), a re-set that moves nothing (accepted -> accepted), governed prose carrying no marker, and a link to a merely proposed decision.\n\nOBSERVED FAILING FIRST, against the unfixed binary, on 2026-09-09 — the load-bearing step ② of `rule:an-issue-is-root-caused-then-pinned-by-a-test-then-fixed` and the one that rule says is most often skipped and invisible when it is. Three of six failed (the three positive cases); the three silence probes passed vacuously, because nothing fired at all.\n\n⭐ THE TEST'S OWN FIRST DRAFT DEMONSTRATED THE LIMIT OF THE THING IT PINS. It asserted `report-dont-judge` by blacklisting substrings — \"is wrong\", \"is stale\" — and failed against the note's own disclaimer, \"nothing here CLAIMS THE TEXT IS WRONG\". A substring blacklist cannot tell an assertion from its denial, which is exactly why the feature quotes the prose and asks rather than concluding. The assertion was rewritten as a positive property (the note must ask, and must say the judgement is not its own) and the episode kept in a comment rather than tidied away.",
+        "location": "crates/reflow2-mcp/tests/a_settled_decision_names_prose_that_still_says_open.rs",
+        "name": "a_settled_decision_names_prose_that_still_says_open.rs — the case, and the four silences",
         "status": "realized"
       }
     },
@@ -179996,7 +180134,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:98d5f308b74a466846aa0701aeffbd298ee24a02f0af715ceed31b3becd0133a",
+        "checksum": "sha256:1001af62ca1d5cf7b837a1b075ca2890a55aaab39d9e5b54eb9f7436e0802c36",
         "location": "crates/reflow2-mcp/src/prose_currency.rs",
         "name": "prose_currency.rs",
         "status": "realized"
@@ -181544,7 +181682,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:ce4ed6e019c3b7211f09548b8f728d53ecfbfda92e2d5d907f890edd56dee68e",
+        "checksum": "sha256:9b698b6fb11e8a0b6f6624f8f99d36f8fb0c6b50fe3db08eed90a320954bf3b7",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
         "name": "crates/reflow2-mcp/src/tools/capture.rs",
@@ -181583,7 +181721,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:118aa9ae5bac0a9d413a7aee861d5b5a4485619bd759e3c5a63577daa257d026",
+        "checksum": "sha256:a0539a9ce5c24b80574e7aee30ae59e734621432a438d050470a682fded197b5",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/exchange.rs",
         "name": "tools/exchange.rs",
@@ -182403,6 +182541,16 @@
         "outputs": "[\"regions\",\"coverage\",\"order\"]",
         "provenance": "authored",
         "status": "verified"
+      }
+    },
+    {
+      "node_id": "cap:a-settled-decision-names-governed-prose-that-still-reads-open",
+      "node_type": "Capability",
+      "properties": {
+        "description": "When a Decision reaches `accepted` from anything else, or a GOVERNED_BY edge is drawn to an already-accepted Decision, the reply carries a `settled_question_prose` block: each governed node whose prose still asserts the question is open, the phrase that matched, and an excerpt QUOTED AROUND THE MATCH so the reader sees the words that fired rather than the node's opening paragraph.\n\nTHE SIBLING OF `cap:a-status-advance-says-whether-its-prose-predates-it`, and built on its reasoning rather than beside it. That one catches a STATUS outrunning its own description inside one node. This one catches PROSE OUTRUNNING A DECISION THAT GOVERNS IT across an edge — the same rot, one relation out.\n\nBOTH TRIGGER MOMENTS ARE COVERED, and that is a design choice with a reason: the decision may be settled first and the edge drawn afterwards, which is the ordering the incident that prompted this actually had available. A hook on the status setter alone would have missed it entirely.\n\nWHY A REPLY AND NOT A DETECTOR, measured before building rather than argued: over reflow2's own design, 43 of 640 nodes governed by an accepted Decision carry one of the nine shipped markers somewhere in their prose, and a good share are legitimate — a node that QUOTES an old question, or discusses a different one in a long statement. As a sweep that is 43 findings of mixed quality, which is the noise that gets switched off in a week. Fired when somebody accepts the decision or draws the edge, it is one node in front of the person who just moved it.\n\n⚠️ HONEST LIMITS, all three real and none hidden.\n(1) IT IS LEXICAL. Nine marker phrases, chosen as words any project would write rather than this one's idioms — \"that is his call to make\" was in the incident and is deliberately NOT a marker, on `rule:reflow2-is-built-for-other-projects-not-for-itself`. It cannot tell an assertion from a quotation of one, and the test file records the moment that limit bit the test's own first draft.\n(2) IT NEVER SAYS THE PROSE IS WRONG, per `dec:report-dont-judge` — it names what matched, quotes the text, and asks. A node that quotes an old question is correct and looks identical from the outside; only a person can tell.\n(3) IT FIRES WHERE THE DIVERGENCE IS CREATED, NOT WHERE IT IS READ. A session that simply READS a stale node still gets no warning, and the other half of the originating finding — that `search_design` does not surface a governing Decision from a query about the node it governs — is untouched and still true.\n\n📌 THE CALIBRATION FIGURE IS A ONE-OFF, not a standing measurement. It was taken on 2026-09-09 and nothing re-runs it; if the markers start firing on correct nodes as the design grows, the test suite stays green while the instrument becomes noise. An earlier draft of this description quoted 48, measured with a looser marker list than the one that shipped — corrected the same day by re-measuring against the nine actually in the binary. Three of those nine (`to be decided`, `not been decided`, `awaiting a decision`) match nothing in this corpus and are kept as phrases other projects write, not as anything this one has evidence for.",
+        "name": "A Decision that settles names the prose it governs that still says the question is open",
+        "provenance": "authored",
+        "status": "realized"
       }
     },
     {
@@ -185432,6 +185580,15 @@
       "properties": {
         "change_type": "new_feature",
         "name": "crates/reflow2-mcp/src/registry.rs — a session names a design by graph_id and the server maps id to path (cap:select-graph-by-id, second half of the accepted req:a-session-chooses-its-design). RESOLUTION HALF ONLY: no transport is wired, so cap:select-graph-by-id is in_progress and NOT realized — the spec prefers an HTTP path prefix /g/<graph_id>/ and warns an attaching tool call is worst because a reconnect silently loses it. THE TRIPWIRE DID ITS JOB: the_registry_clauses_are_not_covered_here fired the moment registry.rs appeared, exactly as designed, forcing the two clauses of ver:a-session-cannot-name-another-design to be written rather than assumed met — that verification is now passing and the tripwire is retired into a pointer that fails if the coverage is deleted. ISOLATION HOLDS BY CONSTRUCTION rather than by check: attach() always treats its argument as an ID so a path is refused as an unknown id (no path_for, no attach_path — absent rather than documented), the registry ROOT is the boundary so a real design elsewhere on the machine is refused identically, and a Binding exposes one design with no operation taking another id. 8 tests written before the module; 3 of 4 mutations killed. THE SURVIVOR IS DOCUMENTED, NOT HIDDEN: the state==Design guard provably does no work because describe_at sets graph_id Some on exactly that path — clippy flagged the same redundancy independently — so it is kept as defence and labelled as belt to the Some(id) braces. UNANSWERED AND NOW LIVE: graph_ids() lists what the OPERATOR put under the root, which is right for one owner and is NOT a multi-tenant policy (dec:idea-a-session-holds-several-graphs). The root is a parameter, so neither answer is foreclosed."
+      }
+    },
+    {
+      "node_id": "chg:a-settled-decision-names-governed-prose-that-still-reads-open",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Prose that outlives the Decision governing it says so, in the reply that settled it",
+        "subject": "system"
       }
     },
     {
@@ -201660,6 +201817,17 @@
       }
     },
     {
+      "node_id": "epoch:2026-09-09-prose-that-outlives-its-decision-says-so",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "description": "Built the same day the incident that prompted it was recorded, and from that incident rather than from a hypothesis. `fact:a-settled-question-was-re-asked-because-the-requirements-prose-outlived-its-decision` observed a settled question being put to the owner a second time because a requirement's statement still said the fork was open three weeks after the Decision closed it. This epoch carries the instrument that would have caught it: `cap:a-settled-decision-names-governed-prose-that-still-reads-open`.\n\nFOLLOWS THE STATUS-SIDE SIBLING'S SHAPE DELIBERATELY — a block in the reply the caller is already reading, at the moment the divergence is created, rather than a detector that finds it later on a graph where the prose has already misled somebody. The choice was re-measured rather than inherited: 48 of 640 governed nodes would fire as a sweep, and a good share of those are legitimate.",
+        "epoch_type": "revision",
+        "name": "The prose-currency family grows a second member: prose that outlives the Decision governing it",
+        "sequence": 410,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:2026-09-09-the-cause-discipline-binds-forward",
       "node_type": "DesignEpoch",
       "properties": {
@@ -204693,6 +204861,16 @@
       }
     },
     {
+      "node_id": "frag:art:a-settled-decision-names-governed-prose-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered a_settled_decision_names_prose_that_still_says_open.rs — the case, and the four silences"
+      }
+    },
+    {
       "node_id": "frag:art:acknowledgement-approver-test",
       "node_type": "Fragment",
       "properties": {
@@ -205551,6 +205729,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered propagate.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:prose-currency",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered prose_currency.rs"
       }
     },
     {
@@ -212626,6 +212814,16 @@
         "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:detect\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:a-fix-without-a-cause-and-an-overtaken-defect-raise-gaps\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:detect\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:finding-a-cause-is-a-served-process-not-an-improvisation\",\"properties\":{}}]",
         "state": "{\"description\":\"Two gap detectors, the third leg of the root-cause vocabulary (dec:idea-how-does-root-cause-become-automatic-rule-hook-detector-or-composition, mechanism (c)). `fix_without_recorded_cause`: one aggregate finding over every ChangeEvent of change_type defect_fix or test_failure_fix that sits on no CAUSES edge in either direction and carries no outgoing INVALIDATES — a repair indistinguishable from a symptom fix. A CAUSES edge on an artifact the fix touched is deliberately not counted. Forward-only by parking: a fix GOVERNED_BY ruling=parks under an accepted Decision is skipped and counted. `defect_overtaken_by_change`: one finding per open defect TemporalFact (no valid_to, no incoming INVALIDATES) whose subject_id, or an Artifact that REALIZES it, was CHANGED by a ChangeEvent with detected_at strictly after the fact's valid_from — keyed on the fact and the later changes, so a further change asks again. Undated changes are counted in the evidence and never treated as later; undated facts are skipped. Neither judges whether a recorded cause was right: both report absence of a record (dec:report-dont-judge).\",\"name\":\"A repair joined to no cause, and a recorded defect whose subject changed with nothing saying it was fixed, are noticed by the loop\",\"provenance\":\"authored\",\"status\":\"realized\"}",
         "target_id": "cap:a-fix-with-no-recorded-cause-and-a-defect-its-subject-outran-are-noticed",
+        "target_type": "Capability"
+      }
+    },
+    {
+      "node_id": "snap:epoch:preserved-on-write:cap:a-settled-decision-names-governed-prose-that-still-reads-open",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:a-settled-decision-names-governed-prose-test\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"verified\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:prose-currency\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:tools-capture\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:tools-exchange\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:a-settled-decision-names-governed-prose-that-still-reads-open\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:temporal\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue\",\"properties\":{}}]",
+        "state": "{\"description\":\"When a Decision reaches `accepted` from anything else, or a GOVERNED_BY edge is drawn to an already-accepted Decision, the reply carries a `settled_question_prose` block: each governed node whose prose still asserts the question is open, the phrase that matched, and an excerpt QUOTED AROUND THE MATCH so the reader sees the words that fired rather than the node's opening paragraph.\\n\\nTHE SIBLING OF `cap:a-status-advance-says-whether-its-prose-predates-it`, and built on its reasoning rather than beside it. That one catches a STATUS outrunning its own description inside one node. This one catches PROSE OUTRUNNING A DECISION THAT GOVERNS IT across an edge — the same rot, one relation out.\\n\\nBOTH TRIGGER MOMENTS ARE COVERED, and that is a design choice with a reason: the decision may be settled first and the edge drawn afterwards, which is the ordering the incident that prompted this actually had available. A hook on the status setter alone would have missed it entirely.\\n\\nWHY A REPLY AND NOT A DETECTOR, measured before building rather than argued: over reflow2's own design, 48 of 640 governed nodes carry one of these markers somewhere in their prose, and a good share are legitimate — a node that QUOTES an old question, or discusses a different one in a long statement. As a sweep that is 48 findings of mixed quality, which is the noise that gets switched off in a week. Fired when somebody accepts the decision or draws the edge, it is one node in front of the person who just moved it.\\n\\n⚠️ HONEST LIMITS, both real and neither hidden. (1) IT IS LEXICAL. Nine marker phrases, chosen as words any project would write rather than this one's idioms — \\\"that is his call to make\\\" was in the incident and is deliberately NOT a marker, on `rule:reflow2-is-built-for-other-projects-not-for-itself`. It cannot tell an assertion from a quotation of one, and the test file records the moment that limit bit the test's own first draft. (2) IT NEVER SAYS THE PROSE IS WRONG, per `dec:report-dont-judge` — it names what matched, quotes the text, and asks. A node that quotes an old question is correct and looks identical from the outside; only a person can tell.\",\"name\":\"A Decision that settles names the prose it governs that still says the question is open\",\"provenance\":\"authored\",\"status\":\"realized\"}",
+        "target_id": "cap:a-settled-decision-names-governed-prose-that-still-reads-open",
         "target_type": "Capability"
       }
     },
@@ -220493,6 +220691,20 @@
       }
     },
     {
+      "node_id": "ver:a-settled-decision-names-governed-prose-that-still-reads-open",
+      "node_type": "Verification",
+      "properties": {
+        "description": "`crates/reflow2-mcp/tests/a_settled_decision_names_prose_that_still_says_open.rs`, driven through ReflowService against an in-memory graph.\n\nTWO FIRING PROBES — a Decision reaching `accepted` while a requirement it governs still says NOT YET DECIDED, and a GOVERNED_BY edge drawn to an already-accepted Decision from prose that reads open. Each asserts the node is named, the matched phrase is named, and the prose is QUOTED, plus that the note ASKS rather than concludes and says in words that the judgement is not its own.\n\nFOUR SILENCE PROBES, which are what decide whether the instrument survives contact with real use: `rejected` (retires rather than settles), `accepted` -> `accepted` (moves nothing), governed prose with no marker (the common case), and a link to a merely `proposed` Decision (a musing has settled nothing).\n\n⚠️ WHAT IT DOES NOT COVER, stated so a green reading is not over-read.\n(a) IT DOES NOT MEASURE THE FALSE POSITIVE RATE ON REAL PROSE. The calibration that shaped the marker list was a one-off over the live design — 43 of 640 nodes governed by an accepted Decision carry a shipped marker, and a share of those are legitimate quotations. Nothing re-runs that as the design grows, so if the markers start firing on correct nodes this suite stays green while the instrument becomes noise.\n(b) THREE OF THE NINE MARKERS ARE UNEXERCISED BY THE CORPUS — `to be decided`, `not been decided`, `awaiting a decision` match nothing in this design. The unit probes cover the mechanism, not those phrases against real writing.\n(c) NO PROBE DRIVES THE REAL STDIO BINARY. `smoke_mcp.py` covers the served surface generally and passed, but not this block specifically.",
+        "findings": "RUN 2026-09-09, `cargo test -p reflow2-mcp --test a_settled_decision_names_prose_that_still_says_open`: 6 passed, 0 failed.\n\nOBSERVED FAILING FIRST against the unfixed binary in the same session, which is the evidence step ② of `rule:an-issue-is-root-caused-then-pinned-by-a-test-then-fixed` asks for and the only evidence there can be: 3 of 6 failed (the two firing probes plus the re-set probe's precondition), while the three pure-silence probes passed vacuously because nothing fired at all. The pin was written before the implementation, not after it.\n\nALSO ON THIS DATE: `smoke_mcp.py` all checks passed against the freshly built binary, `cargo clippy -p reflow2-mcp --all-targets` clean, `validate_schema.py` OK, toolsnaps regenerated for the two tools whose descriptions changed.",
+        "kind": "verification",
+        "last_run_at": "2026-09-09",
+        "level": "integration",
+        "method": "test",
+        "name": "Six probes: the two firing moments, and the four silences",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:a-settling-status-carries-a-name-or-is-refused-and-a-check-lands-wired",
       "node_type": "Verification",
       "properties": {
@@ -223033,7 +223245,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:dcb1ad3bc0d0fd032183631d4d2dc4a078ee207c9730d127841785a204fec30a",
+  "prev_content_hash": "sha256:0e9741467caf80476effa4e14c73e9986fd0b16330d4e19983240ed48876c47c",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
