@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:dcb1ad3bc0d0fd032183631d4d2dc4a078ee207c9730d127841785a204fec30a",
+  "content_hash": "sha256:0e9741467caf80476effa4e14c73e9986fd0b16330d4e19983240ed48876c47c",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -8983,6 +8983,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:the-cause-discipline-binds-forward-and-the-backlog-is-parked",
+      "properties": {},
+      "to_id": "epoch:2026-09-09-the-cause-discipline-binds-forward"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:the-cheap-tranche-from-bhomes-report",
       "properties": {},
       "to_id": "epoch:v0460"
@@ -10441,6 +10447,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:2026-09-09-the-cause-discipline-binds-forward:req:a-fix-says-whether-it-corrected-the-cause",
+      "properties": {},
+      "to_id": "epoch:2026-09-09-the-cause-discipline-binds-forward"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:a-check-can-say-whether-a-limit-holds:dec:should-a-verification-be-able-to-verify-a-constraint",
       "properties": {},
       "to_id": "epoch:a-check-can-say-whether-a-limit-holds"
@@ -11017,6 +11029,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:chg:the-cause-discipline-binds-forward-and-the-backlog-is-parked",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:dec:derived-scans-are-memoised-per-write-generation",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
@@ -11114,6 +11132,18 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:dec:qualitygate-is-retired-the-phase-gate-dissolved-into-the-detectors",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:dec:the-cause-discipline-binds-forward-not-backward",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:dec:the-cause-discipline-binds-forward-not-backward:r2",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
     },
@@ -15498,6 +15528,15 @@
       "from_id": "dec:the-authority-check-guards-forward-not-backward",
       "properties": {
         "acted_at": "2026-08-11",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:the-cause-discipline-binds-forward-not-backward",
+      "properties": {
+        "acted_at": "2026-09-09",
         "role": "approver"
       },
       "to_id": "who:ajs"
@@ -37824,6 +37863,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-cause-discipline-binds-forward-and-the-backlog-is-parked",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:a-fix-says-whether-it-corrected-the-cause"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-cheap-tranche-from-bhomes-report",
       "properties": {
         "accepted_baseline": true,
@@ -52954,9 +53002,25 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "chg:a-check-and-its-findings-are-different-things",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "chg:a-check-records-what-it-found-separately-from-what-it-is",
       "properties": {},
       "to_id": "decision:ack:6675d6c59b2e2db3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:a-claim-is-not-hidden-by-its-parent",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -52978,9 +53042,41 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "chg:a-faced-choice-is-not-a-musing",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:a-field-report-can-cite-the-version-that-answered-it",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "chg:a-finding-describes-the-walk-that-produced-it",
       "properties": {},
       "to_id": "decision:ack:6675d6c59b2e2db3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:a-gap-question-keeps-the-readers-vocabulary",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:a-measurement-says-when-it-was-taken",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -52996,11 +53092,1499 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "chg:a-mirror-can-be-refreshed",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:a-name-is-not-a-report",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "chg:a-node-records-what-the-user-calls-it",
       "properties": {
         "evidence": "The build exists because of this requirement and took its scope from it: five types, additive, renames nothing, gates nothing."
       },
       "to_id": "req:a-node-records-what-the-user-calls-it"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:a-null-and-a-vacuous-zero-now-say-which-they-are",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:a-parked-idea-asserts-nothing-and-three-detectors-now-read-that",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:a-proposal-describes-its-own-sweep",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:a-remote-located-artifact-is-not-a-missing-file",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:a-reply-is-not-sent-twice",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:a-report-is-not-a-list-of-every-check",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:a-required-interface-is-not-an-unprovided-one",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:a-revising-write-says-whether-the-state-survived",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:a-served-sentence-carries-no-run-of-spaces",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:a-suppressed-finding-is-counted-rather-than-silenced",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:a-swallowed-parameter-says-so",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:a-withdrawn-decision-stops-reading-as-a-conflict",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:a-write-says-what-it-did-not-recognise",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-02f735709d987075",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-0353d8219d71f2ee",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-041e39df97343a36",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-042ef55b26adc527",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-04f1020b8000c46a",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-0500fc47eb120e13",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-0809203dbd415e07",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-0a2c86480cda08e9",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-0b2ad1a8785917f3",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-0bc0358e5e783420",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-0c440cc2eb44f74c",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-0f2ac668753c2ad4",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-100292b297046fff",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-11773dab9729328c",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-161c5eb8625a51e3",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-17c262e9eb1e7afb",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-1cc581fcc536b948",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-1f110dd4708af6eb",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-23088482226a1cba",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-299470f8b4fae678",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-2d7b12d88e41ddfc",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-2fc4b716fb999ac9",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-36009ca068952b87",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-379c6134a649139e",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-3969951005bbd8a6",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-3989c9914e441633",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-3a6f961263d78f34",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-3db01462ca688c2e",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-3f1cd5f3658574b8",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-3ff9d8ca02055a16",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-40175f24d4af1021",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-406c5df20e1172e5",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-43ae772560f9ccca",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-46e7ee1acef22069",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-46f20004007565f3",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-4728dff33e9b970b",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-47718543f09a3d5a",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-489316048746f57d",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-49a66e7c8fce0429",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-4bef64778366ed99",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-4d18322621c6c59c",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-4e39bbf40ae22fb8",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-4ec8ddd180c5160e",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-50ade42125b3056d",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-5214ae007e7411cf",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-5293fe22159c8cde",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-5517aad06e685a27",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-56b6e8326f9bd49f",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-56ea769be9fb3c84",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-57815d3b012cb271",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-58ccb64673403d1e",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-5926becab7a70367",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-6347f28b6c03cbbd",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-635435417e73d6d7",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-6414f7a4c781cef4",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-64cceb69c008a2b8",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-6c7ef19fc1a25a65",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-6cac066db6363b0c",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-733928e50c4d61b4",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-750a49f308f8c44a",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-7602b38b560e21a5",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-76bd27f1bfc5ce6a",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-7a7704979d951caf",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-7b156be2cc1f45cc",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-7bd49cad8e8337ba",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-7c6456e82bb32b5e",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-7e28d2f6b848d3de",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-80d1f87f330f26e8",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-815dd755caf58e7c",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-8309a2b33a57aac7",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-83844819d2fdeba9",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-86120115ec83ae15",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-86736cac03c96e21",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-870d9c0cae791b62",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-872460f004b4ddc9",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-8b7f9de6e696f3d7",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-8bb3d7cc9dcc1e6d",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-8cdc429d8314a57e",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-8d52c7f62d13e2a1",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-8d92ee4ef5a92d23",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-923c35e9e4120314",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-931cd2a6e2337d77",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-975fcb51ce6ec113",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-980140987a1dab8d",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-9812364d92115544",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-9a8f6ad0f6490c32",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-9d03ab6c044e6ae6",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-9d5a6783c47cd30d",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-9ed800f22aff9099",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-9f25ae73dd543885",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-a05cd36cbc1b30d9",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-a25fca9e064e8172",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-a2a035876eefa13a",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-a6f2b1b47bc4ab52",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-a7ba7628cf8a9e01",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-a89f2286daa7bfd3",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-acb06c45b63a7b6d",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-adbd03750da9c38d",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-aed760bcf45ce90a",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-af14fd0d926de4db",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-afe37467a8fd00fb",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-b140e08dc08f6591",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-b618dd570582ca6f",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-b68a94b177123593",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-b6c2d52afc751a6e",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-b75bfe9286b04eda",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-bd7518c28700aa85",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-bd7907f2d9949364",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-bd893a26619b7671",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-bee1129a4a4fe87a",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-bfc07677a772b044",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-c0465886f065332b",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-c22709fed59c0722",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-c299f999d01e4d26",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-c52c1a33c142cbcc",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-cd270db9c9c20396",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-d17a2d99810f2ba6",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-d3cbeecdecc8d059",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-d4612713f5834a37",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-d470cc223bc3a3db",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-d72f54f1c0fd4afe",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-d91d8fc332394277",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-d98d4bdc9939d8fb",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-dc0204e8ca63511c",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-de44df21bae8a0d9",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-dfd8f1bc21828db6",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-e1668bec9f44fdce",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-e52b527aba651ac4",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-e5e2eec3ed94eb2a",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-e5fb205599c26447",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-e6c96d20752a1a37",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-ee0c9ad7cdc74b84",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-ef9c822be3f2979c",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-f1e7e0f7b6d69373",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-f74ab63586b98dee",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-f813f5619f659197",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-fb54ede1d916c3e2",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-fbe9dc0dd0a2257e",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-feae11cc9f4f9b96",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:accept-ffb110df1d330c0c",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:acknowledgement-not-structure",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:allocation-follows-the-code-not-the-neighbour",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:an-acknowledgement-says-whose-judgement-it-was",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:bl160-checksum-length-dialect",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:bl163-propagate-discriminator",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:bl169-import-adopts-identity",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:bl176-orphan-attachment",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:bl183-constructors-merge",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:bl213-discriminator",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:bl58-silent-failure-batch",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:bl69-spof-cut-vertices",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:checksum-canonical-both-sides",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:closure-is-one-computation-and-both-read-surfaces-use-it",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:cmp-skills-gets-one-parent",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:content-path-no-default",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:core-api-withdrawn-from-the-published-surface",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:corpus-trial-finds-silent-merge-loss",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:deep-review-tier1",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:delivery-can-be-a-model-change",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:discontinued-reaches-the-reader",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:duplicate-merge-needs-a-human-20260808",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:hxm-field-report",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:import-adopts-identity",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:increments-4-and-5-are-one-increment",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:install-reaches-the-agent",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:intent-crossing-corrected",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:kit-manifest-check-passes-after-reinstall",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:machine-state-not-shared",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:nudge-fires-once",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:nudge-resolves-home-relative-hooks",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:nudge-state-integrity",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -53028,6 +54612,118 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "chg:record-change-can-state-its-axis",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:required-to-create-optional-to-revise",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:schedule-is-structural",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:search-nl-defect",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:search-nl-verified",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:seat-liveness-is-the-session-20260808",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:snapshot-per-revision-built",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:spawn-daemon-survives-a-replaced-binary",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:supporting-is-not-conflict",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:surface-says-what-it-orphaned",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:the-acknowledgement-family-offers-one-surface",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:the-cheap-tranche-from-bhomes-report",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:the-command-surface-answers-for-itself",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:the-default-log-filter-is-quiet-for-dependencies",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "chg:the-environment-compliance-layer-is-built-as-a-whole-leg",
       "properties": {
         "evidence": "The build exists because of this ruling and would not have been started without it. Scope came from the ruling too: all three legs together, which is why the change event carries detectors and not only constructors."
@@ -53036,9 +54732,89 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "chg:the-export-round-trip-injected-defaults",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:the-first-move-must-fit",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "chg:the-gate-names-the-unmodelled-files-you-just-touched",
       "properties": {},
       "to_id": "dec:idea-what-watches-for-the-last-responsible-moment-to-arrive"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:the-handoff-hook-is-retired-and-the-contradiction-closed",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:the-idea-cycle-was-a-mistyped-distinction",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:the-in-step-line-names-its-blind-spot",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:the-installer-says-the-graph-is-tracked-20260808",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:the-last-two-from-the-field-triage",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:the-last-two-unallocated-capabilities-get-owners",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:the-loop-can-be-asked-what-the-record-does-not-hold",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:the-loop-can-say-what-it-does-not-know",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -53058,6 +54834,54 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "chg:the-ordering-hazard-is-named-where-it-bites",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:the-replay-contract-is-pinned-by-a-round-trip-not-by-a-field",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:the-same-paragraph-fifty-times",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:the-shareable-record-is-findable",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:the-surface-gate-says-which-binary-it-read",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:the-tool-catalogue-weights-rare-words",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "chg:the-two-reported-fields-get-their-parameters",
       "properties": {
         "evidence": "Eight declared properties move from unreachable to writable, which is this requirement being met on eight more counts."
@@ -53066,11 +54890,59 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "chg:the-unreachable-count-is-split-by-intent-so-only-the-holes-are-work",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "chg:the-version-guard-refuses-on-a-population-not-a-declaration",
       "properties": {
         "evidence": "This change does not decide anything new — it applies an ACCEPTED decision to the sibling sidecar it had never reached. Recording it as governed by that decision rather than by a fresh one is the honest shape."
       },
       "to_id": "dec:sidecar-loss-guarded-by-store-evidence"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:tool-minted-seat-liveness-20260808",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:unallocated-component-reads-the-ruling",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:unresolved-setup-skips-on-either-side-not-both",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:v0380-status-corrected-to-deployed",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:vacuous-trigger-fixed",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-cause-discipline-binds-forward-not-backward"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -53981,6 +55853,14 @@
       "from_id": "dec:pointing-a-session-is-project-scope-only",
       "properties": {},
       "to_id": "dec:how-a-session-is-pointed-at-a-design"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "dec:the-cause-discipline-binds-forward-not-backward",
+      "properties": {
+        "note": "The parent ruling. It settled the retro question for the whole requirement on 2026-08-17 (forward only, no backfill); this node narrows ONE boundary under it — the cause-edge limb binds from its detector's landing on 2026-09-06, because ~90 fixes fall between the two dates and had no such instrument to comply with. It does not re-decide, contradict or supersede the parent, and a reader who has only this node should read that one first."
+      },
+      "to_id": "dec:the-patch-record-binds-forward-not-backward"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -55996,6 +57876,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "chg:the-cause-discipline-binds-forward-and-the-backlog-is-parked",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:chg:the-cause-discipline-binds-forward-and-the-backlog-is-parked"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "cmp:compare",
       "properties": {},
       "to_id": "snap:epoch:wall-check-works-on-any-project:cmp:compare"
@@ -56377,6 +58263,18 @@
       "from_id": "dec:stateless-seat-handle",
       "properties": {},
       "to_id": "snap:epoch:rmcp-v3:dec:stateless-seat-handle"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:the-cause-discipline-binds-forward-not-backward",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:dec:the-cause-discipline-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:the-cause-discipline-binds-forward-not-backward",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:dec:the-cause-discipline-binds-forward-not-backward:r2"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -56773,6 +58671,12 @@
       "from_id": "req:a-cluster-can-be-declared-deliberately-separate",
       "properties": {},
       "to_id": "snap:epoch:legitimate-islands-answered:req:a-cluster-can-be-declared-deliberately-separate"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "req:a-fix-says-whether-it-corrected-the-cause",
+      "properties": {},
+      "to_id": "snap:epoch:2026-09-09-the-cause-discipline-binds-forward:req:a-fix-says-whether-it-corrected-the-cause"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -57757,6 +59661,12 @@
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "fact:feedback-triage-status-across-three-sources-2026-08-16"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "req:a-fix-says-whether-it-corrected-the-cause",
+      "properties": {},
+      "to_id": "fact:a-settled-question-was-re-asked-because-the-requirements-prose-outlived-its-decision"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -189914,6 +191824,16 @@
       }
     },
     {
+      "node_id": "chg:the-cause-discipline-binds-forward-and-the-backlog-is-parked",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "The cause-edge boundary is fixed at its detector's landing, 228 pre-detector fixes are parked, and the requirement stops claiming a settled fork is open",
+        "subject": "system",
+        "summary": "Closes the `fix_without_recorded_cause` gap (228 of 259 fixes joined to no cause) by parking every pre-detector fix under a subordinate ruling, and corrects the stale prose that made the work harder than it should have been.\n\nWHAT CHANGED: (1) `dec:the-cause-discipline-binds-forward-not-backward` recorded and accepted — the cause-edge limb binds from 2026-09-06, the day its detector shipped, subordinate to and GOVERNED_BY the 2026-08-17 parent ruling. (2) 228 GOVERNED_BY ruling=parks edges drawn from the pre-detector fixes to it. (3) This requirement's closing paragraph, which had said the retro question was NOT YET DECIDED for three weeks after it was decided, replaced with the settled answer and a note on where the two limbs' boundaries sit.\n\nVERIFIED, not assumed: `detect_gaps` went 8 → 7 and `fix_without_recorded_cause` no longer appears in `by_source`.\n\nMEASURED BEFORE ANY WRITE: 259 fixes, 31 joined to a cause, 228 not, and ZERO of the 228 recorded on or after the detector's landing — every fix since carries its cause. That is what makes the boundary honest rather than convenient: the detector was reporting a backlog accumulated while nothing asked, not a discipline being ignored.\n\nNOT A REPAIR, so it carries no `repair` disposition: nothing was broken and nothing was fixed in the system. This is a scope ruling on what an existing detector ranges over."
+      }
+    },
+    {
       "node_id": "chg:the-cheap-tranche-from-bhomes-report",
       "node_type": "ChangeEvent",
       "properties": {
@@ -197225,6 +199145,17 @@
       }
     },
     {
+      "node_id": "dec:the-cause-discipline-binds-forward-not-backward",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "SUBORDINATE RULING. This does NOT re-decide the retro question. `dec:the-patch-record-binds-forward-not-backward` settled that on 2026-08-17 — forward only, no backfill — and this node sits under it, narrowing one boundary the parent could not have fixed because the instrument did not exist yet.\n\nWHAT THE PARENT FIXED: the requirement binds on fixes recorded from 2026-08-17.\nWHAT THIS FIXES: the CAUSE-EDGE half of it binds from 2026-09-06.\n\nTHEY ARE DIFFERENT INSTRUMENTS AND THAT IS THE WHOLE CONTENT OF THIS NODE. The requirement has two limbs and they shipped three weeks apart:\n  • the REPAIR DISPOSITION on record_change (corrected_cause / contained_symptom), read by `repair_report` — shipped 2026-09-09 in d2a0275;\n  • the CAUSE EDGE joining a fix to what it closed (CAUSES / INVALIDATES), enforced by the `fix_without_recorded_cause` detector — shipped 2026-09-06 in c681bb0.\nA fix recorded on 2026-08-28 postdates the parent's cutoff and is therefore in the requirement's scope, but there was no cause-edge detector to obey and no convention it could have followed. Parking it under the parent alone would have read as a ruling contradicting its own stated date; that is why this node exists rather than 228 edges hanging off 2026-08-17.\n\nTHE MEASUREMENT (2026-09-09, against the export at docs/design/reflow2.json, byte-identical to the live graph):\n\n  ChangeEvents of change_type defect_fix or test_failure_fix        259\n  joined to a cause (CAUSES either way, or outgoing INVALIDATES)     31\n  joined to NO cause                                                228   (88%)\n  of those 228, recorded ON OR AFTER the 2026-09-06 detector          0\n\n⭐ THE LAST LINE IS WHY THE BOUNDARY IS HONEST RATHER THAN CONVENIENT. Not one of the 228 postdates the detector, and every fix recorded since it landed carries its cause — 09-06, 09-06, 09-07 and onward, 100% compliance. The detector is not being ignored; it reported a backlog that accumulated while nothing asked. An unscoped check would go red on history rather than on violations, which is exactly the trap `dec:the-authority-check-guards-forward-not-backward` named for the third time in this project.\n\nWHY PARKED AND NOT ACKNOWLEDGED, because the detector offers both and they say different things. Acknowledging `fix_without_recorded_cause` says THIS DESIGN DOES NOT RECORD CAUSES and stops the question being asked ever again, including of fixes made tomorrow. That is false here and would discard a discipline currently at 100%. Parking says these 228 SPECIFIC events are out of scope and leaves the detector live for everything after them — `is_parked` skips them and the evidence line reports the parked count, so the backlog stays visible as a number rather than vanishing.\n\n⚠️ HOW THIS NODE CAME TO BE WRITTEN, recorded because the near-miss is the useful part. The parent decision was ACCEPTED on 2026-08-17 and the requirement's own statement was never updated to say so: it still ended \"NOT YET DECIDED: … whether it is retro-fittable … Anthony's own words read as forward-only, but that is his call to make explicitly rather than mine to infer.\" A session on 2026-09-09 read that paragraph, took the fork to be open, and put it to Anthony a second time. He gave the same answer. NO HARM LANDED — the answers agree and the parent was found before anything was built on the duplicate — but the cost was a question the owner had already answered being asked again, which is how someone learns the tool is not listening. THE CAUSE IS STALE PROSE OUTLIVING THE DECISION THAT SETTLED IT, the same class `prose_currency` was built for on set_verification_status and which nothing checks on a Requirement. The requirement's statement was corrected in the same change as this node.\n\nTHIS DOES NOT CLOSE `req:a-fix-says-whether-it-corrected-the-cause`. Its clause (c) — the design can answer what still rests on a patch — is served by `repair_report`, which on the day this was written said UNSTATED for all 259. That is day-one for a field shipped the day before, not neglect, and the parent ruling already governs it: the disposition binds forward from its own landing and the 259 are not backfilled.",
+        "kind": "choice",
+        "name": "The CAUSE-EDGE half binds from its own detector's landing on 2026-09-06 — an instrument cannot bind three weeks before it exists",
+        "rationale": "The requirement has two limbs whose instruments shipped three weeks apart, so one cutoff cannot serve both. The parent ruling fixed 2026-08-17 for the requirement; the cause-edge detector did not exist until 2026-09-06, so the ~90 fixes recorded between those dates were in the requirement's scope with no mechanism to comply with and no convention to follow. This narrows the cause-edge boundary to the detector's own landing, which the measurement supports rather than merely permits: zero of the 228 uncaused fixes postdate it and every fix since carries its cause. Parking rather than acknowledging keeps the detector live for everything after the boundary and keeps the backlog visible as a count.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:the-content-store-is-discontinued",
       "node_type": "Decision",
       "properties": {
@@ -199725,6 +201656,17 @@
         "epoch_type": "revision",
         "name": "Record-to-record relations become modelled, and capture-session gains the question that closes a finding",
         "sequence": 383,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:2026-09-09-the-cause-discipline-binds-forward",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "description": "The moment the CAUSE-EDGE boundary for `req:a-fix-says-whether-it-corrected-the-cause` was fixed at 2026-09-06 and the 228 pre-detector fixes were parked out of the detector's scope.\n\n⚠️ IT IS NOT THE MOMENT THE RETRO QUESTION WAS ANSWERED — that was 2026-08-17, in `dec:the-patch-record-binds-forward-not-backward`, and this epoch's own first draft got that wrong for the same reason the session did: the requirement's statement still ended \"NOT YET DECIDED … that is his call to make explicitly rather than mine to infer\" three weeks after the call had been made. The statement was corrected in this epoch.\n\nWhat this epoch actually carries: the subordinate ruling `dec:the-cause-discipline-binds-forward-not-backward`, which narrows the cause-edge limb to its own instrument's landing because that detector did not exist until 2026-09-06; the 228 GOVERNED_BY ruling=parks edges under it; and the correction to the requirement's stale paragraph. The discipline itself began 2026-09-06 — this is the moment the design stopped asking about what came before it.",
+        "epoch_type": "revision",
+        "name": "The cause-recording discipline is fixed as forward-only and the pre-detector backlog is parked",
+        "sequence": 409,
         "status": "arrived"
       }
     },
@@ -206904,7 +208846,7 @@
         "name": "A fix says whether it corrected the cause or worked around it, so \"how much of this is standing on a patch?\" is a question the design can answer",
         "priority": "medium",
         "provenance": "authored",
-        "statement": "A change that repairs something must record WHICH KIND OF REPAIR IT WAS — the cause corrected, or the symptom worked around — and a workaround must name the correction it is standing in for. The design must then be able to answer, without asking a person: what is still resting on a patch?\n\nDELIBERATELY DISTINCT FROM `rule:fix-it-properly-while-it-is-still-cheap`, which the guard matched, and the split is the point rather than a technicality. The RULE is how the people building reflow2 work; it binds this project and can never bind anyone else's. This REQUIREMENT is the product carrying the same philosophy, so every project using reflow2 inherits the question. Anthony asked for exactly that on 2026-08-17: \"this is my philosophy on how to build something - so ensuring that it is built into the design of reflow2.\" A rule states it; a requirement makes it something reflow2 DOES.\n\n⭐ THE QUESTION HE ASKED IS CURRENTLY UNANSWERABLE, and that is the whole case. \"I'm not sure how many fixes have been patches versus going back to the drawing board, planning how it should have been done correctly, and then re-implementing proper fix.\" MEASURED ON REFLOW2'S OWN GRAPH, 2026-08-17: 472 ChangeEvents across eleven change types — new_feature 156, test_failure_fix 101, refactor 89, scope_change 59, baseline_established 25, resync 14, defect_fix 11, requirement_creep 6, deprecation 6, constraint_change 4, performance_optimization 1. EVERY ONE OF THOSE NAMES WHAT MOVED. NOT ONE SAYS WHETHER IT WAS THE RIGHT FIX. A `test_failure_fix` is equally the record of a root-cause rewrite and of a shim that made a red test green, and nothing downstream can tell them apart.\n\nCHECKED AND FOUND NOT TO BE THE PROBLEM, so the fix is not aimed at the wrong thing: `test_failure_fix` is the DEFAULT for a `design_holds` drift accept, so the obvious hypothesis was that the commonest fix type is an unchosen default. It is not — 55 of the 101 are auto-minted accepts and ALL 55 carry written reasons, with 46 more named deliberately. The discipline is there. THE VOCABULARY IS WHAT IS MISSING.\n\n⭐ THE SHAPE IS ALREADY PROVEN ONE LAYER OVER, which is why this is buildable rather than aspirational. `dec:two-sided-accept` made accepting drift a two-sided act: you say the content moved AND you take a position (`design_holds` / `design_updated`), because \"accept the file, leave the design alone, say nothing\" is the option that erodes a design into fiction. A FIX IS THE SAME SHAPE AND IS CURRENTLY ONE-SIDED. Silent patching should be as impossible as silent drift-accept, for the identical reason.\n\nWHAT IS OWED, in the order it is worth building:\n(a) A repair records its ROOT DISPOSITION — cause corrected, or symptom contained. Not defaulted, on `req:defaults-do-not-assert`: whether a fix reached the cause is a judgement, and inventing an answer records a claim nobody made.\n(b) A contained symptom NAMES WHAT THE PROPER FIX WOULD BE. This is what turns a patch from an invisible cost into a stated debt with somewhere to be read. A workaround nobody wrote down is indistinguishable from a design decision six weeks later.\n(c) The count is REPORTABLE — what still rests on a patch, and where. That is the question above, answered by the graph rather than by anyone's memory.\n\n⚠️ WHAT THIS MUST NOT BECOME, stated now because the failure mode is predictable and this project has met it twice this month. It must NOT judge. reflow2 records the claim and counts it; the human decides whether a patch was right (`dec:report-dont-judge`, `dec:three-party-checks`). A detector that tried to INFER \"this was a patch\" from graph shape would be exactly the confident answer to a nearby question that `req:a-report-says-what-it-swept-and-whether-its-checks-ran` was written about. And a workaround is often the CORRECT call under a deadline — the requirement is that it be VISIBLE, never that it be forbidden.\n\n⚠️ HONEST LIMIT, and it bounds what can ever be claimed here: this records what the author SAYS about their fix. It cannot detect a patch someone reports as a correction. That makes it the same class of instrument as `provenance` and the drift dispositions — worth having because the alternative is no signal at all, and worth never overselling.\n\nNOT YET DECIDED: whether the root disposition belongs on the ChangeEvent, on the artifact accept, or on both; and whether it is retro-fittable to the 472 events already recorded or, like `dec:the-authority-check-guards-forward-not-backward`, binds only forward. Anthony's own words — \"I'd like to start now\" — read as forward-only, but that is his call to make explicitly rather than mine to infer.",
+        "statement": "A change that repairs something must record WHICH KIND OF REPAIR IT WAS — the cause corrected, or the symptom worked around — and a workaround must name the correction it is standing in for. The design must then be able to answer, without asking a person: what is still resting on a patch?\n\nDELIBERATELY DISTINCT FROM `rule:fix-it-properly-while-it-is-still-cheap`, which the guard matched, and the split is the point rather than a technicality. The RULE is how the people building reflow2 work; it binds this project and can never bind anyone else's. This REQUIREMENT is the product carrying the same philosophy, so every project using reflow2 inherits the question. Anthony asked for exactly that on 2026-08-17: \"this is my philosophy on how to build something - so ensuring that it is built into the design of reflow2.\" A rule states it; a requirement makes it something reflow2 DOES.\n\n⭐ THE QUESTION HE ASKED WAS UNANSWERABLE WHEN THIS WAS WRITTEN, and that is the whole case. \"I'm not sure how many fixes have been patches versus going back to the drawing board, planning how it should have been done correctly, and then re-implementing proper fix.\" MEASURED ON REFLOW2'S OWN GRAPH, 2026-08-17: 472 ChangeEvents across eleven change types — new_feature 156, test_failure_fix 101, refactor 89, scope_change 59, baseline_established 25, resync 14, defect_fix 11, requirement_creep 6, deprecation 6, constraint_change 4, performance_optimization 1. EVERY ONE OF THOSE NAMES WHAT MOVED. NOT ONE SAYS WHETHER IT WAS THE RIGHT FIX. A `test_failure_fix` is equally the record of a root-cause rewrite and of a shim that made a red test green, and nothing downstream can tell them apart.\n\nCHECKED AND FOUND NOT TO BE THE PROBLEM, so the fix is not aimed at the wrong thing: `test_failure_fix` is the DEFAULT for a `design_holds` drift accept, so the obvious hypothesis was that the commonest fix type is an unchosen default. It is not — 55 of the 101 are auto-minted accepts and ALL 55 carry written reasons, with 46 more named deliberately. The discipline is there. THE VOCABULARY IS WHAT IS MISSING.\n\n⭐ THE SHAPE IS ALREADY PROVEN ONE LAYER OVER, which is why this is buildable rather than aspirational. `dec:two-sided-accept` made accepting drift a two-sided act: you say the content moved AND you take a position (`design_holds` / `design_updated`), because \"accept the file, leave the design alone, say nothing\" is the option that erodes a design into fiction. A FIX IS THE SAME SHAPE AND IS CURRENTLY ONE-SIDED. Silent patching should be as impossible as silent drift-accept, for the identical reason.\n\nWHAT IS OWED, in the order it is worth building:\n(a) A repair records its ROOT DISPOSITION — cause corrected, or symptom contained. Not defaulted, on `req:defaults-do-not-assert`: whether a fix reached the cause is a judgement, and inventing an answer records a claim nobody made.\n(b) A contained symptom NAMES WHAT THE PROPER FIX WOULD BE. This is what turns a patch from an invisible cost into a stated debt with somewhere to be read. A workaround nobody wrote down is indistinguishable from a design decision six weeks later.\n(c) The count is REPORTABLE — what still rests on a patch, and where. That is the question above, answered by the graph rather than by anyone's memory.\n\n⚠️ WHAT THIS MUST NOT BECOME, stated now because the failure mode is predictable and this project has met it twice this month. It must NOT judge. reflow2 records the claim and counts it; the human decides whether a patch was right (`dec:report-dont-judge`, `dec:three-party-checks`). A detector that tried to INFER \"this was a patch\" from graph shape would be exactly the confident answer to a nearby question that `req:a-report-says-what-it-swept-and-whether-its-checks-ran` was written about. And a workaround is often the CORRECT call under a deadline — the requirement is that it be VISIBLE, never that it be forbidden.\n\n⚠️ HONEST LIMIT, and it bounds what can ever be claimed here: this records what the author SAYS about their fix. It cannot detect a patch someone reports as a correction. That makes it the same class of instrument as `provenance` and the drift dispositions — worth having because the alternative is no signal at all, and worth never overselling.\n\n═══ SETTLED — DO NOT RE-ASK (corrected 2026-09-09) ═══\n\n🛑 THE RETRO QUESTION IS ANSWERED AND HAS BEEN SINCE THE DAY THIS REQUIREMENT WAS WRITTEN. `dec:the-patch-record-binds-forward-not-backward`, ACCEPTED 2026-08-17 on Anthony's word: FORWARD ONLY. The events already on the record are NOT classified as patches or corrections and no backfill pass will be run over them, because nobody remembers which of them reached its cause and an agent reconstructing that from diffs would produce edges that are queryable and unfounded.\n\n⚠️ THIS PARAGRAPH REPLACES A \"NOT YET DECIDED\" ONE THAT OUTLIVED ITS OWN DECISION BY THREE WEEKS, and the cost was real: on 2026-09-09 a session read the stale text, believed the fork was open, and put it to Anthony a second time. He gave the same answer. The lesson is not about this requirement — it is that PROSE STATING AN OPEN QUESTION MUST BE RETIRED WHEN THE QUESTION IS SETTLED, and that nothing in reflow2 checks a Requirement's statement against the Decisions governing it the way `prose_currency` checks a Verification's description against its status.\n\nWHERE THE BOUNDARIES NOW SIT, because the two limbs shipped three weeks apart and one cutoff does not serve both:\n  • the REPAIR DISPOSITION (clause a/b) — on the ChangeEvent, via record_change's `repair` and `stands_in_for`, read by `repair_report`. Shipped 2026-09-09. Binds from its own landing under the parent ruling.\n  • the CAUSE EDGE (a fix joined to what it closed) — enforced by the `fix_without_recorded_cause` detector, shipped 2026-09-06. Binds from 2026-09-06 under `dec:the-cause-discipline-binds-forward-not-backward`, which parks the 228 pre-detector fixes rather than acknowledging the finding, so the detector stays live for everything after it.\n\nSTILL GENUINELY OPEN, and narrowed from the original wording rather than dropped: whether the root disposition should ALSO ride the artifact accept, not only the ChangeEvent. It landed on the ChangeEvent; nothing has decided the accept half either way.",
         "status": "accepted"
       }
     },
@@ -209728,6 +211670,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:2026-09-09-the-cause-discipline-binds-forward:req:a-fix-says-whether-it-corrected-the-cause",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"CLAIMS\",\"other_type\":\"Contributor\",\"other_id\":\"who:claude-code\",\"properties\":{\"claimed_at\":\"2026-09-09T00:00:00Z\",\"depth\":2,\"note\":\"Closing the fix-without-recorded-cause gap forward-only: recording the cutoff Decision at 2026-09-06 (the day the detector landed) and parking the 228 pre-detector fixes under it. Anthony's word, 2026-09-09.\",\"seat\":\"asligar-bitecool:1238224:57caf9d0\"}},{\"direction\":\"in\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Capability\",\"other_id\":\"cap:a-repair-says-which-kind-it-was\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-08-17\",\"role\":\"approver\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:the-patch-record-binds-forward-not-backward\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:31dba6eb43435454\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"DesignRule\",\"other_id\":\"rule:fix-it-properly-while-it-is-still-cheap\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SCHEDULED_FOR\",\"other_type\":\"DesignEpoch\",\"other_id\":\"epoch:the-philosophy-is-in-the-product\",\"properties\":{\"modality\":\"expected\",\"recorded_at\":\"2026-08-17\"}}]",
+        "state": "{\"lineage\":\"original\",\"name\":\"A fix says whether it corrected the cause or worked around it, so \\\"how much of this is standing on a patch?\\\" is a question the design can answer\",\"priority\":\"medium\",\"provenance\":\"authored\",\"statement\":\"A change that repairs something must record WHICH KIND OF REPAIR IT WAS — the cause corrected, or the symptom worked around — and a workaround must name the correction it is standing in for. The design must then be able to answer, without asking a person: what is still resting on a patch?\\n\\nDELIBERATELY DISTINCT FROM `rule:fix-it-properly-while-it-is-still-cheap`, which the guard matched, and the split is the point rather than a technicality. The RULE is how the people building reflow2 work; it binds this project and can never bind anyone else's. This REQUIREMENT is the product carrying the same philosophy, so every project using reflow2 inherits the question. Anthony asked for exactly that on 2026-08-17: \\\"this is my philosophy on how to build something - so ensuring that it is built into the design of reflow2.\\\" A rule states it; a requirement makes it something reflow2 DOES.\\n\\n⭐ THE QUESTION HE ASKED IS CURRENTLY UNANSWERABLE, and that is the whole case. \\\"I'm not sure how many fixes have been patches versus going back to the drawing board, planning how it should have been done correctly, and then re-implementing proper fix.\\\" MEASURED ON REFLOW2'S OWN GRAPH, 2026-08-17: 472 ChangeEvents across eleven change types — new_feature 156, test_failure_fix 101, refactor 89, scope_change 59, baseline_established 25, resync 14, defect_fix 11, requirement_creep 6, deprecation 6, constraint_change 4, performance_optimization 1. EVERY ONE OF THOSE NAMES WHAT MOVED. NOT ONE SAYS WHETHER IT WAS THE RIGHT FIX. A `test_failure_fix` is equally the record of a root-cause rewrite and of a shim that made a red test green, and nothing downstream can tell them apart.\\n\\nCHECKED AND FOUND NOT TO BE THE PROBLEM, so the fix is not aimed at the wrong thing: `test_failure_fix` is the DEFAULT for a `design_holds` drift accept, so the obvious hypothesis was that the commonest fix type is an unchosen default. It is not — 55 of the 101 are auto-minted accepts and ALL 55 carry written reasons, with 46 more named deliberately. The discipline is there. THE VOCABULARY IS WHAT IS MISSING.\\n\\n⭐ THE SHAPE IS ALREADY PROVEN ONE LAYER OVER, which is why this is buildable rather than aspirational. `dec:two-sided-accept` made accepting drift a two-sided act: you say the content moved AND you take a position (`design_holds` / `design_updated`), because \\\"accept the file, leave the design alone, say nothing\\\" is the option that erodes a design into fiction. A FIX IS THE SAME SHAPE AND IS CURRENTLY ONE-SIDED. Silent patching should be as impossible as silent drift-accept, for the identical reason.\\n\\nWHAT IS OWED, in the order it is worth building:\\n(a) A repair records its ROOT DISPOSITION — cause corrected, or symptom contained. Not defaulted, on `req:defaults-do-not-assert`: whether a fix reached the cause is a judgement, and inventing an answer records a claim nobody made.\\n(b) A contained symptom NAMES WHAT THE PROPER FIX WOULD BE. This is what turns a patch from an invisible cost into a stated debt with somewhere to be read. A workaround nobody wrote down is indistinguishable from a design decision six weeks later.\\n(c) The count is REPORTABLE — what still rests on a patch, and where. That is the question above, answered by the graph rather than by anyone's memory.\\n\\n⚠️ WHAT THIS MUST NOT BECOME, stated now because the failure mode is predictable and this project has met it twice this month. It must NOT judge. reflow2 records the claim and counts it; the human decides whether a patch was right (`dec:report-dont-judge`, `dec:three-party-checks`). A detector that tried to INFER \\\"this was a patch\\\" from graph shape would be exactly the confident answer to a nearby question that `req:a-report-says-what-it-swept-and-whether-its-checks-ran` was written about. And a workaround is often the CORRECT call under a deadline — the requirement is that it be VISIBLE, never that it be forbidden.\\n\\n⚠️ HONEST LIMIT, and it bounds what can ever be claimed here: this records what the author SAYS about their fix. It cannot detect a patch someone reports as a correction. That makes it the same class of instrument as `provenance` and the drift dispositions — worth having because the alternative is no signal at all, and worth never overselling.\\n\\nNOT YET DECIDED: whether the root disposition belongs on the ChangeEvent, on the artifact accept, or on both; and whether it is retro-fittable to the 472 events already recorded or, like `dec:the-authority-check-guards-forward-not-backward`, binds only forward. Anthony's own words — \\\"I'd like to start now\\\" — read as forward-only, but that is his call to make explicitly rather than mine to infer.\",\"status\":\"accepted\"}",
+        "target_id": "req:a-fix-says-whether-it-corrected-the-cause",
+        "target_type": "Requirement"
+      }
+    },
+    {
       "node_id": "snap:epoch:a-check-can-say-whether-a-limit-holds:dec:should-a-verification-be-able-to-verify-a-constraint",
       "node_type": "Snapshot",
       "properties": {
@@ -210688,6 +212640,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:preserved-on-write:chg:the-cause-discipline-binds-forward-and-the-backlog-is-parked",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"CHANGED\",\"other_type\":\"Requirement\",\"other_id\":\"req:a-fix-says-whether-it-corrected-the-cause\",\"properties\":{\"accepted_baseline\":false,\"action\":\"modified\"}}]",
+        "state": "{\"change_type\":\"scope_change\",\"name\":\"The retro question is answered forward-only, 228 pre-detector fixes are parked, and the requirement stops saying the fork is open\",\"subject\":\"system\"}",
+        "target_id": "chg:the-cause-discipline-binds-forward-and-the-backlog-is-parked",
+        "target_type": "ChangeEvent"
+      }
+    },
+    {
       "node_id": "snap:epoch:preserved-on-write:dec:derived-scans-are-memoised-per-write-generation",
       "node_type": "Snapshot",
       "properties": {
@@ -210854,6 +212816,26 @@
         "edges": "[{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"role\":\"approver\"}}]",
         "state": "{\"decision\":\"Anthony, 2026-09-07: \\\"let's retire it. this decision will stay in the graph, so I suppose if we ever one day have a legitimate need for it, maybe we'll resurrect it.\\\"\\n\\nWHAT IT WAS FOR, WRITTEN DOWN SO A RESURRECTOR DOES NOT HAVE TO RE-DERIVE IT. QualityGate modelled the STAGE GATE — the milestone review, not a test. Its properties: `phase` (P0-P5/PM, reflow2's own lifecycle ladder), `criteria` (a JSON array of pass/fail conditions), `status` (pending/passed/failed/WAIVED) and `evaluated_at`. Its extraction hint gave the examples \\\"DAG is acyclic\\\" and \\\"all Requirements have coverage\\\" and said it was usually authored by the workflow rather than extracted from prose.\\n\\n`waived` is the tell, and it is the reason this was NOT a duplicate of anything else. A test does not get waived; a review board's gate does. The three neighbours all answer per-item questions — a Verification checks one target against its spec, a ReadinessAssessment records one technology's TRL/MRL rung, GATED_ON says one increment needs one technology at one level. QualityGate was the only type that asked about THE DESIGN AS A WHOLE at a boundary, with arbitrary stated conditions and a dated, waivable judgement.\\n\\nWHY IT WAS NEVER USED — STRUCTURAL, AND MEASURED 2026-09-07, NOT INFERRED FROM ITS EMPTINESS:\\n  (1) It participates in NO EDGE TYPE AT ALL. Not one of the 65 declares it at either end. A gate could be created and then attached to nothing — not the project it gates, not the phase it guards, not the findings that cleared it. It was an island in the vocabulary.\\n  (2) `criteria` is a JSON array inside a string, so nothing could evaluate it.\\n  (3) Its own hint says the workflow authors it, and no workflow was ever written that does.\\n  (4) DECISIVE: NOTHING IN THE DESIGN CARRIES A PHASE. All 3,984 nodes checked — zero. The P0-P5 ladder is declared on QualityGate and on Fragment and used by zero instances. A phase gate had nothing to gate.\\n\\nWHAT ACTUALLY REPLACED IT, AND WHY THAT IS THE REAL ARGUMENT. reflow2 computes those conditions CONTINUOUSLY. The hint's own two examples — \\\"DAG is acyclic\\\", \\\"all Requirements have coverage\\\" — are literally what detect_defects and detect_gaps evaluate on every call. A computed check never goes stale; a stored `passed` does. The gate was not abandoned, it was dissolved into the loop, and a recorded snapshot judgement would now be the weaker of the two.\\n\\n⭐ THE CONDITION FOR RESURRECTION, STATED SO IT CAN BE CHECKED RATHER THAN RE-ARGUED. This is the mechanism that just paid off on the environment compliance parking, which named its own reversal condition on 2026-08-26 and was lifted on 2026-09-07 when the condition was met. Bring QualityGate back when a project needs A DATED, WAIVABLE JUDGEMENT AT A BOUNDARY THAT SOMEBODY SIGNS AND IS LATER AUDITED AGAINST — the case the continuous computation cannot serve, because the auditable thing is the human's decision at a moment, not the condition's current truth. A formal program with SRR/PDR/CDR reviews is exactly that case. If it returns, it needs what it never had: at least one edge type binding it to what it gates, a phase actually recorded somewhere, and criteria in a form something can read.\\n\\nTHE MIGRATION CONSEQUENCE, MEASURED RATHER THAN ASSUMED. Import validates node types and is all-or-nothing: a probe document carrying an undeclared type was refused with \\\"Unknown node type\\\", nothing written. So ANY EXISTING EXPORT CONTAINING A QualityGate NODE STOPS IMPORTING once the type leaves the schema. reflow2's own graph holds zero, and the type never had a typed constructor — the only way to make one was the generic create_node escape hatch — so the population is very likely zero everywhere. THAT IS AN INFERENCE ABOUT OTHER PEOPLE'S GRAPHS AND CANNOT BE VERIFIED FROM HERE, which is precisely what the upgrade note is for.\",\"kind\":\"choice\",\"name\":\"RETIRED — QualityGate leaves the schema: the phase gate it modelled was dissolved into the detectors, and the ladder it gated was never recorded\",\"rationale\":\"The agent's first recommendation was retirement on the grounds that the type is read by nothing and has zero instances. Anthony's question — \\\"what was QualityGate meant to capture?\\\" — showed that argument was about the IMPLEMENTATION and not the CONCEPT, and the concept turned out to be real SE vocabulary with no other home in the schema. The recommendation survived, but for a better reason: not that nobody used it, but that the loop already answers its question continuously and better.\\n\\nRecording it as a Decision rather than deleting it quietly is the whole point, and it was Anthony's stated reason for being comfortable with the retirement. A schema type removed with no record is indistinguishable from a type that never existed, and the next person to want a phase gate would rebuild it from scratch — including the four structural mistakes that kept this one empty. This node is the thing that makes the retirement reversible.\\n\\nWHAT IS NOT ESTABLISHED: whether any consumer graph anywhere holds a QualityGate instance. It cannot be checked from this repo. The upgrade note states the consequence so a consumer who has one can act on it, which is the honest substitute for a survey nobody can run.\",\"status\":\"accepted\"}",
         "target_id": "dec:qualitygate-is-retired-the-phase-gate-dissolved-into-the-detectors",
+        "target_type": "Decision"
+      }
+    },
+    {
+      "node_id": "snap:epoch:preserved-on-write:dec:the-cause-discipline-binds-forward-not-backward",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-09-09\",\"role\":\"approver\"}}]",
+        "state": "{\"decision\":\"GRANDFATHER IT. `req:a-fix-says-whether-it-corrected-the-cause` binds only on repairs recorded AFTER the cutoff. Every defect_fix / test_failure_fix recorded before it is out of the detector's scope permanently, is PARKED rather than acknowledged, and is NOT backfilled.\\n\\nCUTOFF: 2026-09-06, the day `fix_without_recorded_cause` shipped (commit c681bb0, v0.50.0 item 2) — the first moment anything asked the question. Recorded at epoch:2026-09-09-the-cause-discipline-binds-forward, which is the point on the time axis; this node is the ruling made at it.\\n\\nAnthony, 2026-09-09, answering the fork the requirement had carried open since 2026-08-17 and had explicitly reserved to him: \\\"whether it is retro-fittable to the 472 events already recorded or, like dec:the-authority-check-guards-forward-not-backward, binds only forward … that is his call to make explicitly rather than mine to infer.\\\"\\n\\nTHE MEASUREMENT THAT MADE THIS A QUESTION, taken before it was asked rather than after (2026-09-09, against the export at docs/design/reflow2.json, which was byte-identical to the live graph):\\n\\n  ChangeEvents of change_type defect_fix or test_failure_fix        259\\n  joined to a cause (CAUSES either way, or outgoing INVALIDATES)     31\\n  joined to NO cause                                                228   (88%)\\n  of those 228, recorded ON OR AFTER the 2026-09-06 cutoff             0\\n\\n⭐ THE LAST LINE IS THE ONE THAT DECIDES IT, and it is a stronger warrant than the sibling decision had. Not one of the 228 postdates the detector. Every fix recorded since the discipline existed carries its cause — 100% forward compliance, dated 09-06, 09-06, 09-07 and onward. So the detector is not failing to be obeyed; it is reporting a backlog that accumulated while nothing asked. An unscoped check would go red on history rather than on violations, which is the exact trap dec:the-authority-check-guards-forward-not-backward names one rule over, where the comparable figure was 121 of 214 (57%) with no forward evidence available at all on day one.\\n\\nWHY PARKED AND NOT ACKNOWLEDGED, because the detector offers both and they say different things. Acknowledging `fix_without_recorded_cause` says THIS DESIGN DOES NOT RECORD CAUSES and stops the question being asked ever again, including of fixes made tomorrow. That is false here and would discard a discipline currently at 100%. Parking says these 228 SPECIFIC events are out of scope and leaves the detector live for everything after them — `is_parked` skips them and the evidence line reports the parked count, so the backlog stays visible as a number rather than vanishing.\\n\\nWHAT WAS REJECTED AND WHY, recorded so neither is re-litigated:\\n\\n(1) RECONSTRUCT THE 228 CAUSES from the diffs. Rejected on the requirement's own argument, which is the reason the field exists at all: \\\"the repair is recoverable from the diff; the cause is not.\\\" The events run 2026-07-23 to 2026-09-05; reconstructing a cause weeks later means inferring it, and inferred CAUSES edges are queryable and unfounded — the worst combination, and the precise ground on which the sibling decision refused to backfill 121 approver edges. It would also make the detector green BY CONSTRUCTION, which is the green-washing cap:governance-proposal's own description forbids.\\n\\n(2) RECONSTRUCT ONLY THE RECENT EDGE — the 8 fixes dated 2026-09-01 to 09-05, where a session might still identify the finding each closed. Offered and not taken. It draws an arbitrary line inside the same pre-cutoff population, and the days involved are exactly the ones whose sessions have already ended; \\\"probably still identifiable\\\" is a hope, not evidence.\\n\\n⚠️ WHAT THIS DOES NOT DO, stated so a later reader does not over-read it.\\n\\nIt does not close `req:a-fix-says-whether-it-corrected-the-cause`. The requirement's clause (c) — the design can answer what still rests on a patch — is served by `repair_report`, and that instrument reads a DIFFERENT field: the `repair` disposition on record_change (corrected_cause / contained_symptom), shipped 2026-09-09 in d2a0275. On the day this decision was written that report said UNSTATED for all 259, which is day-one and not neglect. THE SAME BOUNDARY GOVERNS IT: the disposition binds forward from its own landing and the 259 are not backfilled, for the identical reason. It raises no gap, so nothing forces the question — this paragraph exists so it is not re-opened later as though it were an oversight.\\n\\nIt does not touch `rule:an-issue-is-root-caused-then-pinned-by-a-test-then-fixed`, which stays advisory (enforced: false) on Anthony's 2026-08-26 word, and whose load-bearing step ② — a test observed failing BEFORE the fix — remains uncheckable from any diff or CI run.</decision>\\n<parameter name=\\\"rationale\\\">228 of 259 recorded fixes carry no cause, and ZERO of them postdate the detector that asks for one — every fix recorded since 2026-09-06 is joined. The detector is therefore reporting a backlog that accumulated while nothing asked, not a discipline being ignored, and an unscoped check would go red on history rather than on violations. Reconstructing the causes would mean inferring them from diffs weeks later, producing edges that are queryable and unfounded and making the check green by construction — the ground on which the sibling authority decision refused to backfill. Parking rather than acknowledging keeps the detector live for every fix made from here, and keeps the backlog visible as a reported count instead of erasing the question.\",\"kind\":\"choice\",\"name\":\"The cause-recording discipline binds on fixes made from the detector's landing, not on the 228 that predate it\",\"status\":\"accepted\"}",
+        "target_id": "dec:the-cause-discipline-binds-forward-not-backward",
+        "target_type": "Decision"
+      }
+    },
+    {
+      "node_id": "snap:epoch:preserved-on-write:dec:the-cause-discipline-binds-forward-not-backward:r2",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-09-09\",\"role\":\"approver\"}}]",
+        "state": "{\"decision\":\"GRANDFATHER IT. `req:a-fix-says-whether-it-corrected-the-cause` binds only on repairs recorded AFTER the cutoff. Every defect_fix / test_failure_fix recorded before it is out of the detector's scope permanently, is PARKED rather than acknowledged, and is NOT backfilled.\\n\\nCUTOFF: 2026-09-06, the day `fix_without_recorded_cause` shipped (commit c681bb0, v0.50.0 item 2) — the first moment anything asked the question. Recorded at epoch:2026-09-09-the-cause-discipline-binds-forward, which is the point on the time axis; this node is the ruling made at it.\\n\\nAnthony, 2026-09-09, answering the fork the requirement had carried open since 2026-08-17 and had explicitly reserved to him: \\\"whether it is retro-fittable to the 472 events already recorded or, like dec:the-authority-check-guards-forward-not-backward, binds only forward … that is his call to make explicitly rather than mine to infer.\\\"\\n\\nTHE MEASUREMENT THAT MADE THIS A QUESTION, taken before it was asked rather than after (2026-09-09, against the export at docs/design/reflow2.json, which was byte-identical to the live graph):\\n\\n  ChangeEvents of change_type defect_fix or test_failure_fix        259\\n  joined to a cause (CAUSES either way, or outgoing INVALIDATES)     31\\n  joined to NO cause                                                228   (88%)\\n  of those 228, recorded ON OR AFTER the 2026-09-06 cutoff             0\\n\\n⭐ THE LAST LINE IS THE ONE THAT DECIDES IT, and it is a stronger warrant than the sibling decision had. Not one of the 228 postdates the detector. Every fix recorded since the discipline existed carries its cause — 100% forward compliance, dated 09-06, 09-06, 09-07 and onward. So the detector is not failing to be obeyed; it is reporting a backlog that accumulated while nothing asked. An unscoped check would go red on history rather than on violations, which is the exact trap dec:the-authority-check-guards-forward-not-backward names one rule over, where the comparable figure was 121 of 214 (57%) with no forward evidence available at all on day one.\\n\\nWHY PARKED AND NOT ACKNOWLEDGED, because the detector offers both and they say different things. Acknowledging `fix_without_recorded_cause` says THIS DESIGN DOES NOT RECORD CAUSES and stops the question being asked ever again, including of fixes made tomorrow. That is false here and would discard a discipline currently at 100%. Parking says these 228 SPECIFIC events are out of scope and leaves the detector live for everything after them — `is_parked` skips them and the evidence line reports the parked count, so the backlog stays visible as a number rather than vanishing.\\n\\nWHAT WAS REJECTED AND WHY, recorded so neither is re-litigated:\\n\\n(1) RECONSTRUCT THE 228 CAUSES from the diffs. Rejected on the requirement's own argument, which is the reason the field exists at all: \\\"the repair is recoverable from the diff; the cause is not.\\\" The events run 2026-07-23 to 2026-09-05; reconstructing a cause weeks later means inferring it, and inferred CAUSES edges are queryable and unfounded — the worst combination, and the precise ground on which the sibling decision refused to backfill 121 approver edges. It would also make the detector green BY CONSTRUCTION, which is the green-washing cap:governance-proposal's own description forbids.\\n\\n(2) RECONSTRUCT ONLY THE RECENT EDGE — the 8 fixes dated 2026-09-01 to 09-05, where a session might still identify the finding each closed. Offered and not taken. It draws an arbitrary line inside the same pre-cutoff population, and the days involved are exactly the ones whose sessions have already ended; \\\"probably still identifiable\\\" is a hope, not evidence.\\n\\n⚠️ WHAT THIS DOES NOT DO, stated so a later reader does not over-read it.\\n\\nIt does not close `req:a-fix-says-whether-it-corrected-the-cause`. The requirement's clause (c) — the design can answer what still rests on a patch — is served by `repair_report`, and that instrument reads a DIFFERENT field: the `repair` disposition on record_change (corrected_cause / contained_symptom), shipped 2026-09-09 in d2a0275. On the day this decision was written that report said UNSTATED for all 259, which is day-one and not neglect. THE SAME BOUNDARY GOVERNS IT: the disposition binds forward from its own landing and the 259 are not backfilled, for the identical reason. It raises no gap, so nothing forces the question — this paragraph exists so it is not re-opened later as though it were an oversight.\\n\\nIt does not touch `rule:an-issue-is-root-caused-then-pinned-by-a-test-then-fixed`, which stays advisory (enforced: false) on Anthony's 2026-08-26 word, and whose load-bearing step ② — a test observed failing BEFORE the fix — remains uncheckable from any diff or CI run.\",\"kind\":\"choice\",\"name\":\"The cause-recording discipline binds on fixes made from the detector's landing, not on the 228 that predate it\",\"rationale\":\"228 of 259 recorded fixes carry no cause, and ZERO of them postdate the detector that asks for one — every fix recorded since 2026-09-06 is joined. The detector is therefore reporting a backlog that accumulated while nothing asked, not a discipline being ignored, and an unscoped check would go red on history rather than on violations. Reconstructing the causes would mean inferring them from diffs weeks later, producing edges that are queryable and unfounded and making the check green by construction — the ground on which the sibling authority decision refused to backfill. Parking rather than acknowledging keeps the detector live for every fix made from here, and keeps the backlog visible as a reported count instead of erasing the question.\",\"status\":\"accepted\"}",
+        "target_id": "dec:the-cause-discipline-binds-forward-not-backward",
         "target_type": "Decision"
       }
     },
@@ -212597,6 +214579,19 @@
         "subject_id": "proj:reflow2",
         "valid_from": "2026-08-29",
         "value": "{\"observed_exit_when_read_late\":0,\"actual_exit\":7,\"false_greens_in_one_session\":2,\"kinds\":[\"PIPESTATUS clobbered by an intervening echo\",\"bare $? after a pipeline measures the last element (tail)\"],\"first_diagnosis\":\"systemd-run --scope eats exit codes\",\"first_diagnosis_verdict\":\"REFUTED by measurement: scope returns 7 for exit 7\",\"repo_scripts_affected\":\"none found; hazard is the agent shell, not committed CI\"}"
+      }
+    },
+    {
+      "node_id": "fact:a-settled-question-was-re-asked-because-the-requirements-prose-outlived-its-decision",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "name": "A settled question was put to the owner a second time because the requirement's prose still said it was open, three weeks after the Decision that closed it",
+        "statement": "OBSERVED 2026-09-09, on reflow2's own design. A session was asked to close the `fix_without_recorded_cause` gap. It read this requirement's statement, whose final paragraph said \"NOT YET DECIDED: … whether it is retro-fittable to the 472 events already recorded or … binds only forward. Anthony's own words read as forward-only, but that is his call to make explicitly rather than mine to infer.\" Taking that at face value, it put the fork to Anthony with three options and a recommendation. He chose forward-only.\n\nTHE QUESTION HAD BEEN ANSWERED ON 2026-08-17. `dec:the-patch-record-binds-forward-not-backward` — ACCEPTED, carrying his approver edge, and GOVERNED_BY-linked to this very requirement — says \"FORWARD ONLY … no backfill pass will be run over them\", with the same reasoning the session reconstructed from scratch. The answers agree, so nothing wrong was built; the cost was the owner being asked a question he had already settled, which is how a person learns the tool is not listening.\n\n⭐ WHY IT WAS NOT CAUGHT, and this is the reusable part rather than the incident. The session did search first — `search_design` for \"a fix says whether it corrected the cause repair workaround stands in for\" returned twelve hits including the requirement, the rule, the capability, the artifact and the verification, and NOT the governing decision, whose name (\"Recording whether a fix reached the cause binds from here…\") shares few tokens with the query. The decision was found only incidentally, in the edge list of a snapshot taken for an unrelated write. A BM25 search over what a node SAYS does not reliably surface the node that GOVERNS the one you are reading.\n\n⭐ THE GENERAL CLASS, which every project using reflow2 is exposed to: PROSE ASSERTING AN OPEN QUESTION OUTLIVES THE DECISION THAT SETTLES IT, and nothing notices. reflow2 already recognises this shape one type over — `set_verification_status` returns `prose_currency` when a status moves and the node's description was written under the old one, quoting the prose so a human can judge it. There is no equivalent for a Requirement whose statement claims something is undecided while an ACCEPTED Decision governing it has decided exactly that. The signal is available and cheap: this requirement had a GOVERNED_BY edge to the deciding node the whole time.\n\nNOT A CLAIM THAT PROSE CAN BE CHECKED AUTOMATICALLY FOR TRUTH — it cannot, and `dec:report-dont-judge` forbids reflow2 deciding a paragraph is wrong. The reachable version is narrower and mechanical: when a node carrying phrases like \"NOT YET DECIDED\" / \"still open\" / \"his call to make\" is GOVERNED_BY an accepted Decision, say so and quote both, the way prose_currency does. A reader decides.",
+        "subject_id": "req:a-fix-says-whether-it-corrected-the-cause",
+        "valid_from": "2026-09-09"
       }
     },
     {
@@ -221038,7 +223033,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:b013f1d8931c6578737567ee1d195d14c491106f075550cbf8a04b83daf74d9e",
+  "prev_content_hash": "sha256:dcb1ad3bc0d0fd032183631d4d2dc4a078ee207c9730d127841785a204fec30a",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
