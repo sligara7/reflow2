@@ -12,6 +12,10 @@
       },
       "delivery": {
         "description": "`artifact` (the default) — a file realizes it, and delivery needs both\nthe file and a passing check. `model` — the deliverable IS the design\nchange, so the check is the whole of the evidence. It says what KIND\ndelivers this, NEVER whether it was delivered.",
+        "enum": [
+          "artifact",
+          "model"
+        ],
         "type": "string"
       }
     },

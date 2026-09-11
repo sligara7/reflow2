@@ -61,6 +61,13 @@
       "tier": {
         "default": null,
         "description": "Where this sits on the strategic / operational / tactical ladder.\nDeclared 2026-09-07: carried by most nodes of this type and settable by\nnothing, one of the fourteen holes the reachability split separated\nfrom the properties an operation writes.",
+        "enum": [
+          "strategic",
+          "operational",
+          "tactical",
+          "cross_cutting",
+          null
+        ],
         "type": [
           "string",
           "null"

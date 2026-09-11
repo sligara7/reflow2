@@ -9,6 +9,17 @@
     "properties": {
       "dimension": {
         "description": "Quality dimension key (e.g. `reliability`, `security`).",
+        "enum": [
+          "reliability",
+          "performance",
+          "maintainability",
+          "security",
+          "scalability",
+          "observability",
+          "testability",
+          "coupling",
+          "maturity"
+        ],
         "type": "string"
       },
       "target_id": {

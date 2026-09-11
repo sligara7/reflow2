@@ -10,6 +10,11 @@
       "basis": {
         "default": null,
         "description": "`measured` (it records something that happened) or `forecast` (it\nprojects something expected to). Defaults to `measured`, which is what\na finding is.",
+        "enum": [
+          "measured",
+          "forecast",
+          null
+        ],
         "type": [
           "string",
           "null"

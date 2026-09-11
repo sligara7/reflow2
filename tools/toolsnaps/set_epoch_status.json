@@ -12,6 +12,10 @@
       },
       "status": {
         "description": "`arrived` (it has happened) or `planned` (a claim about one that has\nnot). `planned` → `arrived` is ARRIVAL.",
+        "enum": [
+          "planned",
+          "arrived"
+        ],
         "type": "string"
       }
     },

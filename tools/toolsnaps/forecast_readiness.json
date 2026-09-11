@@ -25,6 +25,10 @@
       },
       "kind": {
         "description": "`TRL` or `MRL`.",
+        "enum": [
+          "TRL",
+          "MRL"
+        ],
         "type": "string"
       },
       "level": {

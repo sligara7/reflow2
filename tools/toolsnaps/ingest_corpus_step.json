@@ -68,6 +68,15 @@
       "provenance": {
         "default": null,
         "description": "How this content entered the graph. Defaults to `imported`, because a\ncorpus is usually somebody else's writing; say `authored` if it is yours.",
+        "enum": [
+          "authored",
+          "planned",
+          "inferred",
+          "healed",
+          "reconciled",
+          "imported",
+          null
+        ],
         "type": [
           "string",
           "null"

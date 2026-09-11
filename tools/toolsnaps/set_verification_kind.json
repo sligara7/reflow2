@@ -10,6 +10,10 @@
     "properties": {
       "kind": {
         "description": "`verification` (built right — meets the spec) or `validation` (the right\nthing — meets the operational intent).",
+        "enum": [
+          "verification",
+          "validation"
+        ],
         "type": "string"
       },
       "verification_id": {

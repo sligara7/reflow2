@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:fc37f9982e6445bc553378513c0e85216b652200ad74902d24248d9af7c8a494",
+  "content_hash": "sha256:f8c7fdc3f9e11b94bb7e0e84cc498f419d2d821dcec44d5fa28c3dccf27566fb",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -7968,6 +7968,12 @@
       "from_id": "chg:enum-fields-publish-their-legal-values-from-the-schema",
       "properties": {},
       "to_id": "epoch:v0490-cut"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:every-declared-enum-is-wired-or-exempt",
+      "properties": {},
+      "to_id": "epoch:2026-09-10-every-declared-enum-is-wired-or-exempt"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -19301,6 +19307,16 @@
         "validation_status": "unvalidated"
       },
       "to_id": "fact:three-of-eight-reported-verification-gaps-were-already-built"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "art:hxm-program-feedback-2026-09-10",
+      "properties": {
+        "basis": "observed",
+        "evidence": "F-19 in that report is the one field that exposed the class; this change closes the class its contained_symptom disposition stood in for.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "chg:every-declared-enum-is-wired-or-exempt"
     },
     {
       "edge_type": "CAUSES",
@@ -33010,6 +33026,24 @@
         "action": "modified"
       },
       "to_id": "art:verify"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-declared-enum-is-wired-or-exempt",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:enum-schema"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-declared-enum-is-wired-or-exempt",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
     },
     {
       "edge_type": "CHANGED",
@@ -170088,6 +170122,12 @@
     },
     {
       "edge_type": "PRECEDES",
+      "from_id": "epoch:2026-09-10-three-capture-surface-fixes-from-the-field",
+      "properties": {},
+      "to_id": "epoch:2026-09-10-every-declared-enum-is-wired-or-exempt"
+    },
+    {
+      "edge_type": "PRECEDES",
       "from_id": "epoch:a-comparison-discloses-its-own-confound",
       "properties": {},
       "to_id": "epoch:the-loop-says-what-distribution-is-owed"
@@ -171747,6 +171787,15 @@
         "conformance": "unchecked"
       },
       "to_id": "cap:mcp-surface"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:every-declared-enum-is-wired-or-exempt-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:the-design-says-what-its-own-tools-cannot-write"
     },
     {
       "edge_type": "REALIZES",
@@ -180358,6 +180407,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:every-declared-enum-is-wired-or-exempt-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:every-declared-enum-is-wired-or-exempt-test"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:evidence-quality-instrument",
       "properties": {
         "action": "created"
@@ -182783,9 +182840,21 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:ded96e9214c91f27559fbef85dbd26d4eed96cfd79f108a26c3eef3786f8f69c",
+        "checksum": "sha256:243db118c9dfe2ef451205abda6634ea7417a7b91f5549f6e1fa8723cb5fdbb4",
         "location": "crates/reflow2-mcp/src/enum_schema.rs",
         "name": "enum_schema.rs — one schema_with fn per enum request field, reading legal values from the compiled-in schema (or the handler's own const) at tool-listing time",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:every-declared-enum-is-wired-or-exempt-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:23179bf29bcd17553ef5cce8ceb92d9a61a971ffd1c801c055b2948ef08c9eb3",
+        "description": "Two probes. FIRST: each of 31 wired request fields (30 top-level plus one nested in a list item's `$defs`) publishes exactly the values `reflow2_core::schema::enum_values` returns for its type — so the served list cannot drift from what the server enforces. SECOND, and the reason this is a class guard rather than a snapshot: every enum the schema DECLARES is either wired somewhere in enum_schema.rs or named in EXEMPT with a reason, so a newly declared enum fails the build until somebody decides which it is. A staleness check runs the other way too — an EXEMPT entry naming something the schema no longer declares is a stale excuse that would quietly shrink what the test can see.\n\n⭐ BOTH OF ITS OWN BUGS ARE RECORDED IN IT, because each was caught by the half of the test that was right. (1) It parsed `schema_enum!` LINE BY LINE, and `cargo fmt` wraps long invocations across four lines, so its first run reported 41 unwired of which a dozen were wired — a guard wrong in the SAFE direction is still wrong, and would have had somebody write exemptions for fields that did not need them. (2) The staleness half then caught four of the five original \"must not wire\" entries being name-collisions rather than declared enums, so they never belonged in a list keyed on declared enums; that reasoning moved to the module doc.\n\n⚠️ THE WIRED LIST IS HAND-MADE ON PURPOSE and the test does not derive it. Five request fields share a name with a declared enum and mean something else — `add_component`'s `level` is the deliberately-open decomposition ladder, and wiring it by name would contradict `dec:the-decomposition-ladder-is-open-not-a-fixed-enum`.",
+        "location": "crates/reflow2-mcp/tests/every_declared_enum_is_wired_or_exempt.rs",
+        "name": "every_declared_enum_is_wired_or_exempt.rs — the wired publish the schema's values, and nothing declared is unaccounted for",
         "status": "realized"
       }
     },
@@ -184291,7 +184360,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:8940e099f3735d310397329c61cecc86e6f90812f71331fd0c47a5ae0963639c",
+        "checksum": "sha256:3b1835924f434b5a05d43a5e731ebdc9732b9b30b7a872842222055e8fdc1162",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -194164,6 +194233,18 @@
         "rationale": "fact:defect-the-schema-discovery-tax-enum-fields-are-strings-so-the-published-schema-cannot-name-their-values named the cause: validation lived in the code path, not the type, so the schema a harness shows before the first call could not know the values (~24 refusals in one dev_storyflow session; Alex; qs). The fix the fact proposed was 'declare the enum in the TYPE'; this does it WITHOUT a second copy — the values are read from the one schema the validator enforces, so drift between published and enforced is impossible by construction for the 34 schema-sourced fields, and for the 4 code-only sets the enum reads the handler's own const. WHY A GUARD AND NOT JUST THE ANNOTATIONS: the annotations are a list maintained by hand (38 today), and the class of defect here is precisely 'a list maintained by hand with nothing checking it'; the guard keys on the doc comment's own hand-listed values, so a new enum field that forgets its annotation fails toolsnap, and a doc that lists a value the schema dropped fails too. It proved itself within the hour on the outcome mis-sourcing. NOT MEASURED: how many harnesses surface the JSON schema enum to the agent before a call — Claude Code does (its tool definitions carry `enum`); Alex's Grok TUI is unknown. WHAT IS NOT DONE: the sibling-inconsistency half of the same fact (naming a node, taking a status, relation shapes) — convention (i) is the next PR; the description hand-lists stay (the guard now checks them against the enum rather than replacing them), a later pass could trim them.",
         "subject": "system",
         "summary": "Ruling #3a, Anthony 2026-09-06. THE MECHANISM: reflow2_core::schema::enum_values(type, prop) reads a property's legal values from the compiled-in schema (node types, then edge types); reflow2_mcp::enum_schema provides one `schema_with` function per field (a macro per line) that calls it at tool-listing time and publishes {type: string|[string,null], enum: [...]}. The field stays a String for serde, so deserialization and the refusal path (which already names legal values) are unchanged — only what is PUBLISHED changes. The doc comment survives (verified: description retained beside the enum). 38 fields annotated: 34 from the schema (Capability/Requirement/Verification/Decision status, lineage, provenance, artifact_type, method, level, unit_type, env_type, flow_type, Constraint.category, Contributor.kind, the five Interface spec enums, change_type, epoch_type, quality_target; REALIZES completeness/conformance, CONSTRAINS.basis, DEPLOYED_TO.status, REQUIRES_RESOURCE.criticality, AUTHORED_BY.role, CHANGED.action) and 4 from the SAME const the handler enforces (review_relations' relation <- relate::REVIEW_RELATIONS; report_manual_work's diagnosis <- manual_work::DIAGNOSES; reconcile_verification's outcome <- a NEW verify::OBSERVED_OUTCOMES, which the handler's check now reads too; documents' doc_kind and propose_heal's strategy as consts in enum_schema). Two fields that READ like value sets are free strings in the schema by design (DesignRule.category, Component.level) — their docs were reworded as examples, not enumerated. THE GUARD: tools/toolsnap.py enum_invariants — a STRING property whose description hand-lists three or more backticked values separated by / or | must publish an enum containing every one of them; walks $defs (schemars hoists item structs there); one exemption on the record (export_graph.path lists the RESULT's values). Run against the committed pre-change snapshots it reported 41 fields — the failing-first observation. It then caught a mis-sourcing in this very change: outcome was wired to PRODUCES.outcome (pass/fail/partial/error) where the handler accepts passed/failed/skipped — fixed by the shared const. 36 toolsnaps changed. Three pins in an_enum_field_publishes_its_legal_values.rs. core 1580/0, mcp 361/0, skill_lint OK, fmt/clippy clean. No request SHAPE changed."
+      }
+    },
+    {
+      "node_id": "chg:every-declared-enum-is-wired-or-exempt",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-09-10",
+        "name": "31 request fields publish their enum, and a guard now fails the build when a declared enum is neither wired nor exempt",
+        "rationale": "CLOSES THE CLASS F-19's `contained_symptom` STOOD IN FOR. That repair fixed `Requirement.concern` and recorded that the proper fix was \"a check that every declared enum reachable through a request field publishes its values, so the next one cannot ship unwired\". This is that check.\n\n⚠️ THE COUNT WAS PUT TO THE USER WRONG THREE TIMES, and that is the argument for the guard rather than a footnote to it. A name-matching sweep of service.rs said ~40 — it matched any same-NAMED field on any struct, so two different `concern` fields counted off one hit. A per-struct sweep with an incomplete type map said ~3. The checked answer is 31. Each attempt was wrong in a different direction, and the difference between them was a judgement a human had to make each time; a standing check is what stops that judgement being re-made from scratch.\n\n🛑 A NAME SWEEP WOULD HAVE WIRED FIVE FIELDS WRONGLY, which is why the wired list is hand-made and the test does not derive it. The sharpest is `add_component`'s `level`: the decomposition ladder is DELIBERATELY OPEN and per-project (`Project.decomposition_levels`), settled in `dec:the-decomposition-ladder-is-open-not-a-fixed-enum`. Publishing a fixed set there would assert every domain bottoms out at the same depth AND contradict an accepted decision. The others: `DesignRule.category` is free text by design, the two readiness `level` fields are a 1-9 TRL rung refused outside range, and two more are query parameters rather than node properties at all.\n\n⭐ THE EXEMPT LIST IS ALSO A FINDING. 33 declared enums are exempt and only five are exempt for meaning something else; THE OTHER 28 ARE EXEMPT BECAUSE NO TYPED CALL CAN WRITE THEM — 17 edge properties reachable only through create_edge's free-JSON `props` map, and 11 node properties reachable only through create_node's. Declared, validated, and unreachable from the path every skill points at: the class `fact:a-third-of-declared-properties-name-nothing-any-tool-accepts` records. Publishing their values would not help because nothing can pass them; giving them parameters is a larger question. The list is where that backlog is now visible rather than implied.\n\nTHE GUARD'S OWN FIRST RUN WAS WRONG AND THE FIX IS RECORDED IN IT: it parsed `schema_enum!` line by line, and `cargo fmt` wraps long invocations across four lines, so it reported 41 unwired of which a dozen were wired. A guard wrong in the SAFE direction is still wrong — it would have had somebody write exemptions for fields that did not need them. It now reads the whole file. Its staleness half then caught a second error: four of the five \"must not wire\" entries were not declared enums at all, only name-collisions with another type's, so they never belonged in a list keyed on declared enums.\n\nREPAIR: `corrected_cause` for the class, recorded here because `repair` cannot ride this call — see `fact:record-change-places-an-event-by-epoch-and-212-of-214-epochs-carry-no-date`.",
+        "subject": "system",
+        "summary": "31 request fields across 26 tools now publish their type's declared enum values, wired through `schema_enum!` so the list is read from the compiled-in schema. The surface went from 47 to 78 top-level properties publishing an enum. A new test, `every_declared_enum_is_wired_or_exempt`, asserts both halves: every wired field publishes the schema's OWN values, and every declared enum is either wired or named EXEMPT with a reason — so a newly declared enum fails the build until somebody decides which it is."
       }
     },
     {
@@ -205472,6 +205553,17 @@
       }
     },
     {
+      "node_id": "epoch:2026-09-10-every-declared-enum-is-wired-or-exempt",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "description": "The class behind hxm_program F-19, taken on Anthony's word after three wrong counts were put to him. F-19 fixed one field (`Requirement.concern`) and recorded `contained_symptom`, standing in for \"a check that every declared enum reachable through a request field publishes its values, so the next one cannot ship unwired\". This epoch is that check, plus the 31 fields it found.",
+        "epoch_type": "revision",
+        "name": "The enum-publishing class is closed: 31 fields wired and a guard that keeps the count at zero",
+        "sequence": 413,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:2026-09-10-three-capture-surface-fixes-from-the-field",
       "node_type": "DesignEpoch",
       "properties": {
@@ -208974,6 +209066,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered enum_schema.rs — one schema_with fn per enum request field, reading legal values from the compiled-in schema (or the handler's own const) at tool-listing time"
+      }
+    },
+    {
+      "node_id": "frag:art:every-declared-enum-is-wired-or-exempt-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered every_declared_enum_is_wired_or_exempt.rs — the wired publish the schema's values, and nothing declared is unaccounted for"
       }
     },
     {
@@ -227026,7 +227128,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:af2284d11e06e283dff3cd476e6e9f2619b6c15dccdbb475fca2754be27a97c2",
+  "prev_content_hash": "sha256:fc37f9982e6445bc553378513c0e85216b652200ad74902d24248d9af7c8a494",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

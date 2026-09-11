@@ -9,6 +9,10 @@
     "properties": {
       "mode": {
         "description": "`flexible` (the schema default) / `rigid`. In `rigid`, `apply_heal`\nproposes structural repairs and stops instead of applying them.",
+        "enum": [
+          "flexible",
+          "rigid"
+        ],
         "type": "string"
       },
       "project_id": {
