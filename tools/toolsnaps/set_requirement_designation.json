@@ -9,6 +9,10 @@
     "properties": {
       "designation": {
         "description": "`internal` (the default state) or `published` — a behavioural promise a\nconsumer of this design is entitled to rely on.",
+        "enum": [
+          "internal",
+          "published"
+        ],
         "type": "string"
       },
       "requirement_id": {

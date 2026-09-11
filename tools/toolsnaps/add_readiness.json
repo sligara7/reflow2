@@ -29,6 +29,11 @@
       "kind": {
         "default": null,
         "description": "`TRL` (technology) or `MRL` (manufacturing). Required: the two ladders\nare not interchangeable, and a technology can be demonstrable and\nunmanufacturable — which is exactly the case a roadmap must state.",
+        "enum": [
+          "TRL",
+          "MRL",
+          null
+        ],
         "type": [
           "string",
           "null"

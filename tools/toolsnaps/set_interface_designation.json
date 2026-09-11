@@ -9,6 +9,12 @@
     "properties": {
       "designation": {
         "description": "`internal` (the default state), `published` (a boundary others are\nentitled to rely on), `required` (one this design needs FROM OUTSIDE), or\n`both`. Pairing matches complements: published/both against\nrequired/both (`req:complementary-pairing`).",
+        "enum": [
+          "internal",
+          "published",
+          "required",
+          "both"
+        ],
         "type": "string"
       },
       "interface_id": {

@@ -21,6 +21,11 @@
       "modality": {
         "default": null,
         "description": "`expected` (a plan, the default) or `required` (an obligation whose\nmiss at arrival is a violation). There is no `achieved`.",
+        "enum": [
+          "expected",
+          "required",
+          null
+        ],
         "type": [
           "string",
           "null"

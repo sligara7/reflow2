@@ -22,6 +22,22 @@
           "change_type": {
             "default": null,
             "description": "For `design_holds`: why the code moved (`test_failure_fix` default).",
+            "enum": [
+              "requirement_creep",
+              "new_feature",
+              "test_failure_fix",
+              "defect_fix",
+              "performance_optimization",
+              "refactor",
+              "documentation",
+              "scope_change",
+              "constraint_change",
+              "environment_change",
+              "deprecation",
+              "resync",
+              "baseline_established",
+              null
+            ],
             "type": [
               "string",
               "null"

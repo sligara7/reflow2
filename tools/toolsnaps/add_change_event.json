@@ -58,6 +58,22 @@
       "change_type": {
         "default": null,
         "description": "Change type key (e.g. `new_feature`, `scope_change`, `defect_fix`).",
+        "enum": [
+          "requirement_creep",
+          "new_feature",
+          "test_failure_fix",
+          "defect_fix",
+          "performance_optimization",
+          "refactor",
+          "documentation",
+          "scope_change",
+          "constraint_change",
+          "environment_change",
+          "deprecation",
+          "resync",
+          "baseline_established",
+          null
+        ],
         "type": [
           "string",
           "null"
@@ -100,6 +116,11 @@
       "subject": {
         "default": null,
         "description": "WHICH AXIS this event is on — `system` (the thing changed) or `record`\n(only the design's knowledge of it changed). OPTIONAL, and leaving it\nout is a true answer: absent means nobody said, and it is never inferred\nfrom `change_type`, because the mapping is not total — a `resync` can be\neither.",
+        "enum": [
+          "system",
+          "record",
+          null
+        ],
         "type": [
           "string",
           "null"

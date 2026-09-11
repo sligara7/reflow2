@@ -89,6 +89,48 @@ schema_enum!(requirement_provenance_req, "Requirement", "provenance", req);
 schema_enum!(requirement_provenance_opt, "Requirement", "provenance", opt);
 schema_enum!(requirement_priority_opt, "Requirement", "priority", opt);
 schema_enum!(requirement_concern_opt, "Requirement", "concern", opt);
+schema_enum!(artifact_audience_opt, "Artifact", "audience", opt);
+schema_enum!(artifact_granularity_opt, "Artifact", "granularity", opt);
+schema_enum!(artifact_volatility_opt, "Artifact", "volatility", opt);
+schema_enum!(capability_delivery_req, "Capability", "delivery", req);
+schema_enum!(capability_tier_opt, "Capability", "tier", opt);
+schema_enum!(
+    change_event_change_type_req,
+    "ChangeEvent",
+    "change_type",
+    req
+);
+schema_enum!(change_event_subject_opt, "ChangeEvent", "subject", opt);
+schema_enum!(component_tier_opt, "Component", "tier", opt);
+schema_enum!(constraint_concern_opt, "Constraint", "concern", opt);
+schema_enum!(constraint_direction_opt, "Constraint", "direction", opt);
+schema_enum!(constraint_priority_opt, "Constraint", "priority", opt);
+schema_enum!(decision_kind_opt, "Decision", "kind", opt);
+schema_enum!(design_epoch_status_req, "DesignEpoch", "status", req);
+schema_enum!(
+    dimension_assessment_dimension_req,
+    "DimensionAssessment",
+    "dimension",
+    req
+);
+schema_enum!(flow_tier_opt, "Flow", "tier", opt);
+schema_enum!(fragment_provenance_opt, "Fragment", "provenance", opt);
+schema_enum!(gated_on_kind_req, "GATED_ON", "kind", req);
+schema_enum!(governed_by_ruling_opt, "GOVERNED_BY", "ruling", opt);
+schema_enum!(interface_designation_req, "Interface", "designation", req);
+schema_enum!(project_mode_opt, "Project", "mode", opt);
+schema_enum!(project_mode_req, "Project", "mode", req);
+schema_enum!(readiness_kind_opt, "ReadinessAssessment", "kind", opt);
+schema_enum!(readiness_kind_req, "ReadinessAssessment", "kind", req);
+schema_enum!(
+    requirement_designation_req,
+    "Requirement",
+    "designation",
+    req
+);
+schema_enum!(scheduled_for_modality_opt, "SCHEDULED_FOR", "modality", opt);
+schema_enum!(temporal_fact_basis_opt, "TemporalFact", "basis", opt);
+schema_enum!(verification_kind_req, "Verification", "kind", req);
 schema_enum!(actor_type_opt, "Actor", "actor_type", opt);
 schema_enum!(fragment_note_kind_opt, "Fragment", "note_kind", opt);
 schema_enum!(

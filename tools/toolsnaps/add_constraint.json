@@ -29,6 +29,20 @@
       "concern": {
         "default": null,
         "description": "The cross-cutting concern this budget belongs to — safety, logistics,\nsustainment and the rest. All seven constraints carried one and\nadd_constraint could not set it.",
+        "enum": [
+          "core",
+          "logistics",
+          "sustainment",
+          "safety",
+          "security",
+          "cost",
+          "schedule",
+          "manufacturability",
+          "usability",
+          "environmental",
+          "other",
+          null
+        ],
         "type": [
           "string",
           "null"
@@ -37,6 +51,11 @@
       "direction": {
         "default": null,
         "description": "`maximum` (default: total must stay at or under) / `minimum`.",
+        "enum": [
+          "maximum",
+          "minimum",
+          null
+        ],
         "type": [
           "string",
           "null"
@@ -84,6 +103,13 @@
       "priority": {
         "default": null,
         "description": "How much this constraint matters: low / medium / high / critical.\nOmitting it leaves the schema default, which is unchanged behaviour.",
+        "enum": [
+          "low",
+          "medium",
+          "high",
+          "critical",
+          null
+        ],
         "type": [
           "string",
           "null"

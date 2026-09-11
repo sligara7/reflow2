@@ -18,6 +18,11 @@
       "mode": {
         "default": null,
         "description": "Project mode: `flexible` (default) or `rigid`.",
+        "enum": [
+          "flexible",
+          "rigid",
+          null
+        ],
         "type": [
           "string",
           "null"

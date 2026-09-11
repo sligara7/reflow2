@@ -101,6 +101,15 @@
       "provenance": {
         "default": null,
         "description": "Provenance stamped on the Fragment (default `authored`).",
+        "enum": [
+          "authored",
+          "planned",
+          "inferred",
+          "healed",
+          "reconciled",
+          "imported",
+          null
+        ],
         "type": [
           "string",
           "null"

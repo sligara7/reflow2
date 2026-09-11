@@ -13,6 +13,11 @@
       "audience": {
         "default": null,
         "description": "WHO THIS DELIVERABLE IS FOR: `consumer` (a user of the product reaches\nit) or `internal` (it serves this project's own machinery — CI, a\nrelease script, a coordination board).\n\nLeaving it unset is a true answer and is NEVER inferred — in particular\nnever from the file's PATH, because a path rule encodes one project's\nlayout and is exactly the failure\n`req:work-says-whether-it-reaches-a-consumer` exists to prevent.",
+        "enum": [
+          "consumer",
+          "internal",
+          null
+        ],
         "type": [
           "string",
           "null"
@@ -21,6 +26,12 @@
       "granularity": {
         "default": null,
         "description": "`atomic` (one deliverable — the default), `opaque` (a subtree claimed as\na unit ON PURPOSE: a settled archive, a vendored tree — do not descend),\nor `pending_expansion` (a PLACEHOLDER for items that should each become\ntheir own node). The last two read identically to every report today and\nare opposite states: a decision versus unfinished work.",
+        "enum": [
+          "atomic",
+          "opaque",
+          "pending_expansion",
+          null
+        ],
         "type": [
           "string",
           "null"
@@ -29,6 +40,12 @@
       "volatility": {
         "default": null,
         "description": "`stable` (any content change is drift — the default, and the safe\nreading), `append_only` (a log, a bus, a changelog: it grows by design),\nor `living` (a continuously-edited document). For the last two a content\nchange reports as `expected_change` and is NOT recorded, so no\ndisposition is owed on every reconcile forever. Absence still fires at\nfull severity either way.",
+        "enum": [
+          "stable",
+          "append_only",
+          "living",
+          null
+        ],
         "type": [
           "string",
           "null"
