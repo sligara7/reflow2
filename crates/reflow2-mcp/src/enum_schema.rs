@@ -88,6 +88,7 @@ schema_enum!(requirement_lineage_req, "Requirement", "lineage", req);
 schema_enum!(requirement_provenance_req, "Requirement", "provenance", req);
 schema_enum!(requirement_provenance_opt, "Requirement", "provenance", opt);
 schema_enum!(requirement_priority_opt, "Requirement", "priority", opt);
+schema_enum!(requirement_concern_opt, "Requirement", "concern", opt);
 schema_enum!(actor_type_opt, "Actor", "actor_type", opt);
 schema_enum!(fragment_note_kind_opt, "Fragment", "note_kind", opt);
 schema_enum!(

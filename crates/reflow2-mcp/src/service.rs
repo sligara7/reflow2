@@ -1373,6 +1373,7 @@ pub struct RequirementReq {
     /// The cross-cutting concern this need belongs to. 154 of 207 requirements
     /// carried one written through the generic escape hatch.
     #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::requirement_concern_opt")]
     pub concern: Option<String>,
 }
 
@@ -1475,6 +1476,23 @@ pub struct CapabilityReq {
     /// capability itself, carried by 147 of 234 and written by nothing.
     #[serde(default)]
     pub is_entry_point: Option<bool>,
+    /// THE REQUIREMENT THIS CAPABILITY SATISFIES — draws the SATISFIES edge in
+    /// this call. The golden thread's first half, and the reason it is here:
+    /// `add_verification` already takes `verifies` and `add_decision` already
+    /// takes `related_to`, while the busiest constructor on the thread took
+    /// neither of its two edges and cost three calls where one would do
+    /// (hxm_program F-02).
+    ///
+    /// An id naming no Requirement is REFUSED and NOTHING IS WRITTEN, the same
+    /// posture `approver` takes on the settling constructors: a typo must not
+    /// leave a capability behind carrying half a thread to something that does
+    /// not exist.
+    #[serde(default)]
+    pub satisfies: Option<String>,
+    /// THE COMPONENT THAT WILL PROVIDE IT — draws the ALLOCATED_TO edge in this
+    /// call. Second half of the same thread, refused the same way.
+    #[serde(default)]
+    pub allocated_to: Option<String>,
     /// True when this capability ENDS a flow. Sibling of the above.
     #[serde(default)]
     pub is_exit_point: Option<bool>,

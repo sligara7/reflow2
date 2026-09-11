@@ -41,6 +41,8 @@ async fn svc_with_an_epoch_and_a_target() -> ReflowService {
         description: None,
     })));
     j!(s.add_capability(Parameters(CapabilityReq {
+        satisfies: None,
+        allocated_to: None,
         id: "cap:thing".into(),
         name: Some("A thing".into()),
         description: Some("as it stands today".into()),

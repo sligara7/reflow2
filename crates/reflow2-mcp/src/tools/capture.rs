@@ -1432,7 +1432,12 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Create a Capability node. `status` defaults to `planned`; set it when \
+        description = "Create a Capability node. \u{2b50} DRAW THE GOLDEN THREAD IN THIS CALL: \
+                       `satisfies` (the Requirement it serves) and `allocated_to` (the Component \
+                       that will provide it) each draw their edge here, so the thread costs one \
+                       call instead of three. An id naming nothing is REFUSED and NOTHING IS \
+                       WRITTEN \u{2014} a capability left carrying half a thread to a mistyped id \
+                       is worse than the retry this removes. `status` defaults to `planned`; set it when \
                        recording something that already exists, so adopting a running system \
                        does not describe it as entirely unbuilt. CALLING THIS AGAIN WITH AN \
                        EXISTING ID REVISES that node: what you pass overwrites, and every field \
@@ -1495,6 +1500,54 @@ impl ReflowService {
                 let _ = g.delete_node(node_ty, &req.id);
             }
             return Err(e);
+        }
+        // THE GOLDEN THREAD, DRAWN IN THE CALL THAT CREATES THE NODE (F-02).
+        // Both ends are resolved and REFUSED BEFORE ANYTHING PERSISTS — a
+        // capability left behind carrying half a thread to a mistyped id is
+        // worse than the retry this removes, and `existed` guards a revision
+        // exactly as the duplicate-guard rollback above does.
+        let mut thread: Vec<(&str, &str, &str)> = Vec::new();
+        if let Some(r) = req.satisfies.as_deref() {
+            thread.push((
+                reflow2_core::nodes::edge::SATISFIES,
+                reflow2_core::nodes::node::REQUIREMENT,
+                r,
+            ));
+        }
+        if let Some(c) = req.allocated_to.as_deref() {
+            thread.push((
+                reflow2_core::nodes::edge::ALLOCATED_TO,
+                reflow2_core::nodes::node::COMPONENT,
+                c,
+            ));
+        }
+        for (_, ty, id) in &thread {
+            if g.get_node(ty, id).map_err(dyno_err)?.is_none() {
+                if !existed {
+                    let _ = g.delete_node(node_ty, &req.id);
+                }
+                return Err(McpError::invalid_params(
+                    format!(
+                        "no {ty} '{id}' in this design, so the thread cannot be drawn and \
+                         nothing was written. Create it first, or drop the parameter and \
+                         draw the edge later."
+                    ),
+                    None,
+                ));
+            }
+        }
+        let mut drawn = Vec::new();
+        for (e, ty, id) in &thread {
+            g.create_edge(
+                e,
+                node_ty,
+                &req.id,
+                ty,
+                id,
+                reflow2_core::nodes::Props::new(),
+            )
+            .map_err(dyno_err)?;
+            drawn.push(json!({ "edge_type": e, "to_id": id }));
         }
         preserve_prior(&mut g, prior.as_ref(), &node);
         let revision = revision_of(&g, prior.as_ref(), &node);
