@@ -285,6 +285,7 @@ cargo clippy -p reflow2-mcp --all-targets -- -D warnings
 cargo fmt --check
 python3 tools/validate_schema.py                         # after any schema/*.yaml edit
 python3 tools/smoke_mcp.py                               # after any tool-surface change
+python3 tools/empty_speaks.py                            # an empty answer says WHICH empty — no bare zero on the wire
 python3 tools/toolsnap.py                                # tool schemas vs committed goldens; --update to bless
 python3 tools/skill_lint.py                              # after any skill or tool-surface edit
 python3 tools/test_wall_check.py                         # the wall-check instrument's own net

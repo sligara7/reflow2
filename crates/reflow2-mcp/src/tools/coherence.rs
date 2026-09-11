@@ -79,7 +79,10 @@ impl ReflowService {
         let g = self.graph.read().await;
         let budget = req.budget_chars.unwrap_or(DEFAULT_REPLY_BUDGET_CHARS);
         match req.scope.as_deref() {
-            None => ok_json(g.detect_gaps_within(budget).map_err(dyno_err)?),
+            None => ok_json_or_why(
+                g.detect_gaps_within(budget).map_err(dyno_err)?,
+                "no open gap: every anchored gap has been put to the user or accepted — or the design holds nothing yet to have a gap about",
+            ),
             Some(seed) => ok_json(
                 g.detect_gaps_in_scope_within(
                     seed,
@@ -779,7 +782,11 @@ impl ReflowService {
     )]
     pub async fn reviewed_defects(&self) -> Result<CallToolResult, McpError> {
         let g = self.graph.read().await;
-        self.ok_read(&g, g.reviewed_defects().map_err(dyno_err)?)
+        self.ok_read_or_why(
+            &g,
+            g.reviewed_defects().map_err(dyno_err)?,
+            "no structural defect has been accepted with acknowledge_defect; open ones are in detect_defects",
+        )
     }
 
     #[tool(
@@ -852,7 +859,10 @@ impl ReflowService {
     )]
     pub async fn hierarchy_issues(&self) -> Result<CallToolResult, McpError> {
         let g = self.graph.read().await;
-        ok_json(g.hierarchy_issues().map_err(dyno_err)?)
+        ok_json_or_why(
+            g.hierarchy_issues().map_err(dyno_err)?,
+            "walked every CONTAINS edge between Components: none has two parents and no level is out of order — or there are no contained Components to walk, which reads the same and is not the same",
+        )
     }
 
     #[tool(
@@ -863,7 +873,10 @@ impl ReflowService {
     )]
     pub async fn surprising_connections(&self) -> Result<CallToolResult, McpError> {
         let g = self.graph.read().await;
-        ok_json(g.surprising_connections().map_err(dyno_err)?)
+        ok_json_or_why(
+            g.surprising_connections().map_err(dyno_err)?,
+            "no coupling crosses a community boundary — or the design has too few connected parts to form communities at all",
+        )
     }
 
     #[tool(
@@ -872,7 +885,10 @@ impl ReflowService {
     )]
     pub async fn dimension_drifts(&self) -> Result<CallToolResult, McpError> {
         let g = self.graph.read().await;
-        ok_json(g.dimension_drifts().map_err(dyno_err)?)
+        ok_json_or_why(
+            g.dimension_drifts().map_err(dyno_err)?,
+            "no node carries two dated DimensionObservation scores on any one dimension, so no decline can be seen — a zero here is the absence of a series, not a steady design",
+        )
     }
 
     #[tool(
@@ -971,7 +987,10 @@ impl ReflowService {
     )]
     pub async fn reviewed_gaps(&self) -> Result<CallToolResult, McpError> {
         let g = self.graph.read().await;
-        ok_json(g.reviewed_gaps().map_err(dyno_err)?)
+        ok_json_or_why(
+            g.reviewed_gaps().map_err(dyno_err)?,
+            "no gap has been accepted with acknowledge_gap; open ones are in detect_gaps",
+        )
     }
 
     #[tool(

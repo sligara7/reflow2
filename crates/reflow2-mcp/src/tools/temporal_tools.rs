@@ -370,7 +370,10 @@ impl ReflowService {
     )]
     pub async fn manual_work_report(&self) -> Result<CallToolResult, McpError> {
         let g = self.graph.read().await;
-        ok_json(g.manual_work_report().map_err(dyno_err)?)
+        ok_json_or_why(
+            g.manual_work_report().map_err(dyno_err)?,
+            "no session has reported work done by hand (report_manual_work) — which is not the same as no work having been done by hand",
+        )
     }
 
     // ---- Temporal / CHANGE (deterministic, mutating) ----

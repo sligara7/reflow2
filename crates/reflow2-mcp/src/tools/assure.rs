@@ -377,7 +377,10 @@ impl ReflowService {
         let out = g.invalidated_findings().map_err(dyno_err)?;
         self.ok_read(
             &g,
-            serde_json::json!({ "count": out.len(), "findings": out }),
+            crate::service::empty_speaks(
+                serde_json::json!({ "count": out.len(), "findings": out }),
+                "no TemporalFact or Verification claims to have answered a check, so nothing can have gone stale",
+            ),
         )
     }
 

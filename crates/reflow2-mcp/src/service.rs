@@ -630,6 +630,47 @@ pub(crate) fn node_error(g: &DesignGraph, node_type: &str, e: DynoError) -> McpE
 /// signpost in `content` for anyone reading the wrong field. Returning a raw
 /// `CallToolResult` registers no output schema (the wire format is the payload
 /// directly).
+/// Is this enveloped reply EMPTY — a zero count, an empty list, or a null value?
+/// The three shapes `envelope` mints for "nothing", so one test names them all.
+pub(crate) fn reply_is_empty(v: &JsonValue) -> bool {
+    let Some(o) = v.as_object() else { return false };
+    o.get("count").and_then(JsonValue::as_u64) == Some(0)
+        || o.get("items")
+            .and_then(JsonValue::as_array)
+            .is_some_and(Vec::is_empty)
+        || o.get("value").is_some_and(JsonValue::is_null)
+}
+
+/// An empty reply SAYS WHICH EMPTY IT IS. `because` is the tool's own sentence —
+/// what it swept and why nothing came back — written by the handler that knows,
+/// never by this helper, which knows nothing about the graph.
+///
+/// The class this closes, measured 2026-09-11 on an empty design: 9 of the 39
+/// no-argument read-only tools answered a bare `{"count":0,"items":[]}`. From
+/// `hierarchy_issues` that reads exactly like a clean design; from
+/// `manual_work_report` exactly like nobody did work by hand — while its own
+/// description says the opposite. The description is not the reply.
+/// `tools/empty_speaks.py` is the gate that keeps a tenth from joining them.
+pub(crate) fn empty_speaks(mut v: JsonValue, because: &str) -> JsonValue {
+    let empty = reply_is_empty(&v);
+    if let Some(o) = v.as_object_mut().filter(|_| empty) {
+        o.insert(
+            "empty_because".into(),
+            JsonValue::String(because.to_string()),
+        );
+    }
+    v
+}
+
+/// `ok_json`, except an empty answer carries `because`.
+pub(crate) fn ok_json_or_why<T: serde::Serialize>(
+    value: T,
+    because: &str,
+) -> Result<CallToolResult, McpError> {
+    let v = envelope(serde_json::to_value(value).map_err(ser_err)?);
+    json_result(empty_speaks(v, because))
+}
+
 pub(crate) fn ok_json<T: serde::Serialize>(value: T) -> Result<CallToolResult, McpError> {
     json_result(envelope(serde_json::to_value(value).map_err(ser_err)?))
 }
@@ -4982,6 +5023,24 @@ impl ReflowService {
     /// `loop_hint` attached ONLY when the coherence loop is owed something and
     /// the owed-set has changed since it was last surfaced. The caller passes
     /// the graph it already holds so no second lock is taken.
+    /// `ok_read`, except an empty answer carries `because` — the read-side twin of
+    /// `ok_json_or_why`, keeping the throttled loop hint AND never letting a zero
+    /// speak for itself.
+    pub(crate) fn ok_read_or_why<T: serde::Serialize>(
+        &self,
+        g: &DesignGraph,
+        value: T,
+        because: &str,
+    ) -> Result<CallToolResult, McpError> {
+        let mut v = empty_speaks(
+            envelope(serde_json::to_value(value).map_err(ser_err)?),
+            because,
+        );
+        if let (Some(hint), Some(obj)) = (self.read_loop_hint(g)?, v.as_object_mut()) {
+            obj.insert("loop_hint".into(), JsonValue::String(hint));
+        }
+        json_result(v)
+    }
     pub(crate) fn ok_read<T: serde::Serialize>(
         &self,
         g: &DesignGraph,
@@ -5500,5 +5559,35 @@ mod find_tools_scoring_invariants {
         assert!(by_name > 0.0, "prefix on a name part is intentional");
         let by_desc = score_tool("x", "an improper value", &[], &terms);
         assert_eq!(by_desc, 0.0, "`prop` inside `improper` must not score");
+    }
+}
+
+/// The three empty shapes `envelope` mints, and the one field that makes them
+/// speak. The CLASS is guarded on the wire by `tools/empty_speaks.py`; this
+/// pins the helper it relies on.
+#[cfg(test)]
+mod empty_speaks_pins {
+    use super::*;
+    use serde_json::json;
+
+    #[test]
+    fn the_three_empty_shapes_are_recognised_and_a_full_one_is_not() {
+        assert!(reply_is_empty(&json!({"count": 0, "items": []})));
+        assert!(reply_is_empty(&json!({"count": 0, "findings": []})));
+        assert!(reply_is_empty(&json!({"value": null})));
+        assert!(!reply_is_empty(&json!({"count": 2, "items": [1, 2]})));
+        assert!(!reply_is_empty(&json!({"value": 3})));
+        assert!(!reply_is_empty(&json!("prose")));
+    }
+
+    #[test]
+    fn an_empty_reply_gains_the_sentence_and_a_full_one_is_left_alone() {
+        let e = empty_speaks(json!({"count": 0, "items": []}), "swept nothing");
+        assert_eq!(e["empty_because"], "swept nothing");
+        let f = empty_speaks(json!({"count": 1, "items": [1]}), "swept nothing");
+        assert!(
+            f.get("empty_because").is_none(),
+            "a full reply must not carry it: {f}"
+        );
     }
 }
