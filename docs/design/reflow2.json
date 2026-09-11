@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:bfa5e6716b0c4e4f542f522063745681c27fee1caa5cd05a743c9288e5e8d9e9",
+  "content_hash": "sha256:ec24f787adfe764b1e6bc0ed30f76e84c61007b870a19150e1281709ec0c78f7",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -6789,6 +6789,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:an-absent-referent-gets-an-answer-and-three-replies-stop-overclaiming",
+      "properties": {},
+      "to_id": "epoch:an-empty-answer-says-which-empty-it-is"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:an-acknowledgement-says-whose-judgement-it-was",
       "properties": {},
       "to_id": "epoch:v0390"
@@ -10696,6 +10702,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:an-empty-answer-says-which-empty-it-is:cap:a-sweep-says-what-it-could-not-have-found",
+      "properties": {},
+      "to_id": "epoch:an-empty-answer-says-which-empty-it-is"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:an-empty-answer-says-which-empty-it-is:cap:a-sweep-says-what-it-could-not-have-found:r2",
       "properties": {},
       "to_id": "epoch:an-empty-answer-says-which-empty-it-is"
     },
@@ -19570,6 +19582,16 @@
     },
     {
       "edge_type": "CAUSES",
+      "from_id": "cap:scoped-analysis",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "Read from `regions.rs:170`: `design_regions` loops over every REGION_SEED_TYPE node — 1 Project + 108 Components on this design — and calls `self.scope_region(&n.node_id, depth)?` inside the loop, so the region walk is rebuilt from scratch per seed rather than built once and interrogated. Measured on the wire 2026-09-11: a single scoped walk (`detect_gaps` with `scope` and `depth: 1`) costs 5,173 ms; 109 of those is ~545 s, which accounts for the observed >300 s with no other cause needed. The three rollups it calls first — detect_gaps 3,881 ms, open_defects via detect_defects 10,711 ms, claims 5,143 ms — are each paid ONCE and together are ~20 s, so they are not the story.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:design-regions-is-one-expensive-region-walk-per-seed-and-there-are-109-seeds"
+    },
+    {
+      "edge_type": "CAUSES",
       "from_id": "cap:the-record-moved-is-surfaced",
       "properties": {
         "basis": "correlational",
@@ -20198,6 +20220,16 @@
         "validation_status": "unvalidated"
       },
       "to_id": "fact:the-field-feedback-rule-was-broken-the-same-day-it-was-ruled-on-and-the-half-that-held-was-the-half-already-in-context"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:the-tool-class-census-answers-the-open-questions-own-test-and-half-the-sweeps-findings-are-one-offs",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The census split the sweep's findings into six class-level and seven one-off. This change takes both halves for criterion 2: the bare-zero class extended to arg-taking reads (a class fix, with the gate widened so it cannot regrow), and four of the named one-offs — describe_designs, reconcile_dependencies, propose_allocation and the reviewed_gaps overflow — each fixed on its own terms.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "chg:an-absent-referent-gets-an-answer-and-three-replies-stop-overclaiming"
     },
     {
       "edge_type": "CAUSES",
@@ -28311,6 +28343,114 @@
         "action": "modified"
       },
       "to_id": "dec:idea-allocation-waits-for-the-last-responsible-moment"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-absent-referent-gets-an-answer-and-three-replies-stop-overclaiming",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:allocate"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-absent-referent-gets-an-answer-and-three-replies-stop-overclaiming",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:depends"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-absent-referent-gets-an-answer-and-three-replies-stop-overclaiming",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:discover"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-absent-referent-gets-an-answer-and-three-replies-stop-overclaiming",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:discover-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-absent-referent-gets-an-answer-and-three-replies-stop-overclaiming",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:empty-speaks-gate"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-absent-referent-gets-an-answer-and-three-replies-stop-overclaiming",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-absent-referent-gets-an-answer-and-three-replies-stop-overclaiming",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-assure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-absent-referent-gets-an-answer-and-three-replies-stop-overclaiming",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-absent-referent-gets-an-answer-and-three-replies-stop-overclaiming",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-exchange"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-absent-referent-gets-an-answer-and-three-replies-stop-overclaiming",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-operate"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-absent-referent-gets-an-answer-and-three-replies-stop-overclaiming",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-query"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-absent-referent-gets-an-answer-and-three-replies-stop-overclaiming",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:a-sweep-says-what-it-could-not-have-found"
     },
     {
       "edge_type": "CHANGED",
@@ -58429,6 +58569,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:a-sweep-says-what-it-could-not-have-found",
+      "properties": {},
+      "to_id": "snap:epoch:an-empty-answer-says-which-empty-it-is:cap:a-sweep-says-what-it-could-not-have-found:r2"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "cap:arrival-delta",
       "properties": {},
       "to_id": "snap:epoch:arrival-delta:cap:arrival-delta"
@@ -59770,6 +59916,12 @@
       "from_id": "cap:a-session-with-no-seed-can-find-one",
       "properties": {},
       "to_id": "fact:design-regions-exceeds-300-seconds-and-wedges-the-shared-server"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:a-session-with-no-seed-can-find-one",
+      "properties": {},
+      "to_id": "fact:design-regions-is-one-expensive-region-walk-per-seed-and-there-are-109-seeds"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -178174,6 +178326,14 @@
     },
     {
       "edge_type": "TRIGGERS",
+      "from_id": "chg:an-absent-referent-gets-an-answer-and-three-replies-stop-overclaiming",
+      "properties": {
+        "evidence": "Probing every criterion-2 verdict against the current surface is what produced the design_regions timing measurement and sent the diagnosis to its cause. That finding is the tenth verdict and is deliberately NOT repaired here: it is a core performance change, not a reply-shape one."
+      },
+      "to_id": "fact:design-regions-is-one-expensive-region-walk-per-seed-and-there-are-109-seeds"
+    },
+    {
+      "edge_type": "TRIGGERS",
       "from_id": "dec:idea-how-does-reflow2-enforce-the-contract-regime-a-domain-already-has",
       "properties": {
         "evidence": "That ruling parked the environment compliance domain as deliberately unused UNTIL A USER ASKS FOR IT. This brainstorm is the owner asking for it, so the parking's own stated condition has been met and the ruling is due a re-read rather than a quiet continuation."
@@ -182672,7 +182832,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:90fead751389dc192e7481c81a696d68c3829182f10d75d318ba196341aab2e0",
+        "checksum": "sha256:4f76eaad50c3776e8dc8c434ac7199897db2b8b0a8614b596ccb9f114c026dbe",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/allocate.rs",
         "name": "allocate.rs",
@@ -183255,7 +183415,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:9925cd3fef14ed2c4c7b0524dac5eaf710321fdfadfcbbbc6c248838469c8051",
+        "checksum": "sha256:5bd5d7bf6725d644c834115b9dc9279a958612e3eed3d82ffc4eda4fd51bbe2b",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/depends.rs",
         "name": "depends.rs",
@@ -183373,7 +183533,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b876b5fc65f8dfe8b3c514d0537a0445dfbb51df24fcf6179e8b30b762988eaf",
+        "checksum": "sha256:37383d08df9d73efdcc71041c7a1e992d09d6e6373618f7483ac5406561bb162",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/discover.rs",
         "name": "discover.rs — what design lives at a path, read from sidecars and never by opening",
@@ -183386,7 +183546,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:9a774749820828b965aef9eadc6d12d2f07a5e9dc28f05d1ddedc73eb6370a24",
+        "checksum": "sha256:8ce13281f0b54b9b1457f770a731c0b5051cce49e6424152b62f7e29eb247c7c",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/discover.rs",
         "name": "discover.rs tests — describing changes nothing",
@@ -183488,7 +183648,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "test",
-        "checksum": "sha256:957b350f281cec024a1fe9212d9fcf9773a65026e280578e177f25f1d0a63f48",
+        "checksum": "sha256:35150dd61c7b7eb34c9139056d6204f2d3117b92661dfc13feed35a01bf12ff8",
         "description": "The wire-level class gate for the bare-zero defect: starts the built binary on an EMPTY store, calls every no-argument read-only tool by name from `tools/list` — so a new tool joins the class the moment it is served — and fails if a reply whose count/items/value is empty carries neither `empty_because` nor the loop-debt `loop_hint`. Checked on the wire rather than in-process because the obligation is about what a consumer receives. Measured before the fix: 39 no-arg read-only tools, 10 empty on an empty design, 1 speaking, 9 bare. Runs in CI's workspace job after smoke_mcp and is listed in AGENTS.md's everyday gate block.",
         "location": "tools/empty_speaks.py",
         "name": "empty_speaks.py",
@@ -185081,7 +185241,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:9e58bd397cc110f07add62914f121ad8e158a4b294ce0cda1daf7ba9dcbb6ab7",
+        "checksum": "sha256:bd5be1f179f049c01cdf6c3a22287125a5d6131c89601c479f1403c22c5fd1cd",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -185981,7 +186141,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:e82bca908e867f889de57b3a2f721ee2d0c690b28ecf39b7398cc078a06d1431",
+        "checksum": "sha256:803f047049379f05ef07456b26700cf12419df06c7b5b9c79b1e9304270cdd29",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/assure.rs",
         "name": "tools/assure.rs",
@@ -186033,7 +186193,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:a4f27d173c3184ece86db813e7754fd1374cba7e88b9162eb63fc301f31f0236",
+        "checksum": "sha256:c8067265324e62999cac6fcdce3b37b819c50a7b7cd1e643ac7419d2576386fe",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
@@ -186046,7 +186206,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:6cfe0ec229b750ded5344188eb01654f95ed5703fa01c870e208786b5e26e751",
+        "checksum": "sha256:cfe57fcfdb473f30ddb2e3e3f4ba6bd3f19e84bd9d416c14427166cab479f214",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/exchange.rs",
         "name": "tools/exchange.rs",
@@ -186070,7 +186230,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:0abe8e5e058aad4475de204cf4ea77da6a4fc0e5011ffefa5d29488011acb740",
+        "checksum": "sha256:73348f5db6116367860cebef5a12b929b86081e4b74699d5ff1a318e5576a2d8",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/operate_tools.rs",
         "name": "tools/operate_tools.rs",
@@ -186083,7 +186243,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:05ae6b2da51a2245496c8c8d4eb21fcc870cdd4d1e3457717d93237335e06d64",
+        "checksum": "sha256:63180da7afde66d716375923e5b038db5c915f897b148d8ae307b3f00f2dea52",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/query.rs",
         "name": "tools/query.rs",
@@ -193039,6 +193199,16 @@
       "properties": {
         "change_type": "scope_change",
         "name": "Snapshot of the late-allocation idea while all three sub-questions still read as open, before Anthony's answers are written into it"
+      }
+    },
+    {
+      "node_id": "chg:an-absent-referent-gets-an-answer-and-three-replies-stop-overclaiming",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "name": "Nine of criterion 2's ten open verdicts: an absent referent gets an answer rather than a bare zero, three replies stop claiming more than they checked, two descriptions account for what they return, and reviewed_gaps gets a budget",
+        "repair": "corrected_cause",
+        "subject": "system"
       }
     },
     {
@@ -216802,6 +216972,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:an-empty-answer-says-which-empty-it-is:cap:a-sweep-says-what-it-could-not-have-found:r2",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:empty-speaks-gate\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"verified\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:heal\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"verified\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:structure\",\"properties\":{\"completeness\":\"partial\",\"conformance\":\"verified\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:sweep-coverage-test\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"verified\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:tools-coherence\",\"properties\":{\"completeness\":\"partial\",\"conformance\":\"verified\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:a-sweep-names-what-it-could-not-have-found\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:heal\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:a-sweep-says-what-it-could-not-have-covered\",\"properties\":{}}]",
+        "state": "{\"description\":\"DECISION 5, built 2026-08-20 on Anthony's word. DISTINCT FROM the wall-check instrument, which reads the SOURCE from outside; this is reflow2 telling you, from inside detect_defects, what its own answer does not cover.\\n\\nTHE MEASURED FAILURE: circular_dependency walked 182 dependency pairs on reflow2's own graph and found nothing - a large, healthy-looking population. ZERO of those pairs joined two subsystem-level components. So \\\"no circular dependencies\\\" was true of the flattened network and said nothing whatever about the subsystems, while reading exactly like a clean bill of health for them. The two real subsystem cycles were found with a hand-written Python script, not with reflow2.\\n\\n⭐ THE FIRST DESIGN WOULD NOT HAVE CAUGHT IT, and that is worth keeping. The approved shape was \\\"name the checks that had nothing to examine\\\". Measuring first showed it would print NOTHING on this graph - no rule has an empty population - and would have missed the motivating case entirely. Anthony was told before it was built rather than after. The failure is not a starved rule; it is that A RULE'S POPULATION CAN BE HEALTHY WHILE THE SUB-POPULATION THE READER CARES ABOUT IS EMPTY.\\n\\nWHAT SHIPPED, two mechanisms because one was not enough:\\n  · rule_populations - what each of the 8 rules actually walked, and in what unit. Computed with THE SAME EXPRESSION THE RULE USES, never re-derived, because two implementations of one number can disagree. A rule that walked nothing reports clean for the same reason an empty graph does.\\n  · coupling_by_level - components and dependency pairs AT each declared Component.level. This is the one that bites, and it generalises to any project that declares a hierarchy: the answer is computed over a flattened graph and the reader assumes it holds at the level they asked about.\\n  · coverage_note - ONE line naming both, present only when there is something to name, so its presence is the signal. A summary rather than a per-finding annotation, because the detail is already in the two lists and a sentence on every finding would crowd the findings.\\n\\nON REFLOW2'S OWN GRAPH it now says: \\\"the subsystem level has 10 component(s) and ZERO dependency pairs between them, so every topology result here - cycles, severability, single points of failure - is SILENT about that level rather than clean about it.\\\" That is the sentence that would have saved two days.\\n\\nA FALSE POSITIVE CAUGHT BY TESTING AGAINST REALITY: a level holding ONE component can never have a pair joining two components at it. That is arithmetic, not a modelling gap, and naming it would be the false positive that teaches a reader to skip the line - which is how a signal dies. Fixed before shipping, pinned by a_level_holding_one_component_is_never_called_blind.\\n\\nTHE TOOL DESCRIPTION MOVED WITH IT. detect_defects told readers that swept.rules and swept.note were the whole story, which went stale the moment these fields existed. Updating it pushed past skill_lint's 1500-char cap at 1728; the trim came from a sentence coverage_note now states better. A mechanism is not finished until the message a reader actually sees points at it.\",\"name\":\"A defect sweep says what it could NOT have found — per-rule populations, and coupling at each declared level\",\"provenance\":\"authored\",\"status\":\"realized\"}",
+        "target_id": "cap:a-sweep-says-what-it-could-not-have-found",
+        "target_type": "Capability"
+      }
+    },
+    {
       "node_id": "snap:epoch:an-export-says-whether-it-changed-anything:art:tools-exchange",
       "node_type": "Snapshot",
       "properties": {
@@ -222340,6 +222520,20 @@
         "subject_id": "cap:a-session-with-no-seed-can-find-one",
         "valid_from": "2026-09-11",
         "value": "{\"attempts\":2,\"outcome\":\"no return\",\"first_attempt_s\":\">180 then killed by my own server restart\",\"second_attempt_s\":\">300 on a fresh server\",\"server_state_after\":\"wedged; cleared with --stop-shared\",\"depth_tried\":1,\"build\":\"debug\",\"graph\":\"live, 4131 nodes / 24140 edges\"}"
+      }
+    },
+    {
+      "node_id": "fact:design-regions-is-one-expensive-region-walk-per-seed-and-there-are-109-seeds",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.8,
+        "fact_type": "defect",
+        "name": "design_regions costs ~109 × 5 s because it calls scope_region once per Project and Component — the walk is rebuilt from scratch for every seed",
+        "statement": "MEASURED 2026-09-11, closing the open half of `fact:design-regions-exceeds-300-seconds-and-wedges-the-shared-server`, which recorded the symptom and stated plainly that where the time went was NOT measured.\n\nTHE SHAPE, read from `regions.rs:170`: for every Project and Component the design has, `design_regions` calls `scope_region(seed, depth)` and then filters the gap, defect and claim lists against that region. The three rollups are hoisted correctly and paid once. **The walk is not.**\n\n    one scoped region walk            5,173 ms   (detect_gaps with scope+depth:1)\n    seeds on this design                  109   (1 Project + 108 Components)\n    implied                            ~545 s\n    observed                           >300 s twice, >150 s again today\n\n⭐ SO IT IS NOT A SLOW GRAPH, IT IS N WALKS OF ONE. The same graph answers `get_node` in 3 ms and `detect_gaps` in 3.9 s. Nothing about the question requires rebuilding the walk per seed — the graph does not change between seeds, only which node it starts from — which is the identical argument `con:a-sweep-builds-its-network-a-fixed-number-of-times` already makes for `detect_defects`: *\"the network has to be constructed once and interrogated N times; nothing about the question requires reconstructing it per candidate.\"* That Constraint exists, is accepted, and does not cover this tool.\n\n🛑 NOT ESTABLISHED, and it bounds the fix rather than the diagnosis: whether the 5,173 ms is the adjacency build, the traversal, or the per-node store reads inside it; and whether a shared structure can serve 109 different start nodes without changing what a region MEANS (`dec:the-default-scope-depth-should-be-two` records that \"a region\" already has two definitions that were once described as one — so a shared walk must not quietly merge them). A debug binary was used; `fact:every-cost-number-today-was-a-debug-build...` measures the profile alone at 2.2x, and 2.2x does not rescue 545 s.\n\nNOT FIXED HERE. Recorded so the next increment starts from the cause rather than the symptom.",
+        "subject_id": "cap:a-session-with-no-seed-can-find-one",
+        "valid_from": "2026-09-11",
+        "value": "{\"one_scoped_walk_ms\":5173,\"seeds\":109,\"implied_total_s\":545,\"observed\":\">300s twice, and >150s again on 2026-09-11\",\"paid_once\":{\"detect_gaps_ms\":3881,\"detect_defects_ms\":10711,\"claim_report_ms\":5143},\"site\":\"crates/reflow2-core/src/regions.rs:170\",\"shape\":\"scope_region called inside the per-seed loop\"}"
       }
     },
     {
@@ -228283,7 +228477,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:e6a6a30c45e11780c6b8a3b0b9d9c88c652da333e56ed53f326a5930be0f73c7",
+  "prev_content_hash": "sha256:bfa5e6716b0c4e4f542f522063745681c27fee1caa5cd05a743c9288e5e8d9e9",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

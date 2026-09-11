@@ -400,7 +400,20 @@ impl ReflowService {
                 let holders = g.node_types_holding(&req.id).map_err(dyno_err)?;
                 match holders.len() {
                     0 => {
-                        return ok_json(json!({ "node": JsonValue::Null }));
+                        // The same fact this function's own comment below
+                        // records for a wrong TYPE name: a bare null is a fact
+                        // the server HAS and declines to give. An absent id
+                        // reads identically to a node that exists and is
+                        // empty, so it says which.
+                        return ok_json(json!({
+                            "node": JsonValue::Null,
+                            "empty_because": format!(
+                                "no node with id {:?} exists under ANY declared type, so this is \
+                                 \"not in this design\" rather than \"present and blank\". Check \
+                                 the id, or find it by its words with search_design.",
+                                req.id
+                            ),
+                        }));
                     }
                     1 => holders.into_iter().next().unwrap_or_default(),
                     _ => {

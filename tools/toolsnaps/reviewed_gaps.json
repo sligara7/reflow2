@@ -4,7 +4,20 @@
   },
   "description": "Gaps that were reviewed and accepted, each with the reason given. Worth re-reading when the design shifts.",
   "inputSchema": {
-    "properties": {},
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "budget_chars": {
+        "default": null,
+        "description": "Ceiling on the reply, in characters of JSON (default 30,000 — the same\ndefault `detect_gaps` uses).\n\nEvery acknowledgement carries the REASON somebody wrote, and those run\nlong on purpose: measured 2026-09-11 this reply was 292,947 characters\nacross 188 entries, with reasons up to 3,044 characters each, and\nharnesses refuse a payload that size — so the reader saw a wall of\nclient error and never reached the answer. Over budget, the gap detail\nis dropped and each reason is trimmed to its first sentences; the\nCOUNTS never change, so a shorter answer is never a quieter one.",
+        "format": "uint",
+        "minimum": 0,
+        "type": [
+          "integer",
+          "null"
+        ]
+      }
+    },
     "type": "object"
   },
   "name": "reviewed_gaps"

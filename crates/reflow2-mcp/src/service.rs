@@ -1923,6 +1923,23 @@ pub struct DeleteEdgeReq {
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct ReviewedGapsReq {
+    /// Ceiling on the reply, in characters of JSON (default 30,000 — the same
+    /// default `detect_gaps` uses).
+    ///
+    /// Every acknowledgement carries the REASON somebody wrote, and those run
+    /// long on purpose: measured 2026-09-11 this reply was 292,947 characters
+    /// across 188 entries, with reasons up to 3,044 characters each, and
+    /// harnesses refuse a payload that size — so the reader saw a wall of
+    /// client error and never reached the answer. Over budget, the gap detail
+    /// is dropped and each reason is trimmed to its first sentences; the
+    /// COUNTS never change, so a shorter answer is never a quieter one.
+    #[serde(default)]
+    pub budget_chars: Option<usize>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct SearchDesignReq {
     /// Keywords to search for — tokenized BM25 over every node's name,
     /// statement and description (not substring or regex). Use the words the

@@ -283,3 +283,53 @@ fn two_participating_components_restore_a_real_score() {
         "genuinely cohesive, genuinely measured — the fix must not eat this"
     );
 }
+
+/// A PARTITION COMPUTED OVER ALMOST NO EDGES SAYS SO.
+///
+/// `propose_allocation` groups capabilities by the `DEPENDS_ON` edges between
+/// them. Given a design that records almost none, Leiden returns one cluster
+/// per capability — the input list wearing cluster ids — and every modularity
+/// figure is arithmetic over nothing. Measured on reflow2's own design
+/// 2026-09-11: **238 clusters for 239 capabilities from ONE edge**, reported
+/// with `requires_human_review: true` and not a word that the clustering had
+/// nothing to work with. Its sibling `propose_heal` says "none to examine —
+/// this zero is not a pass"; `not_partitionable` is that sentence.
+#[test]
+fn a_partition_built_on_almost_no_edges_says_it_means_nothing() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    for i in 0..12 {
+        cap(&mut g, &format!("cap:c{i}"), "cmp:only");
+    }
+    depends(&mut g, "cap:c0", "cap:c1", 1.0); // one edge across twelve capabilities
+    let p = g.propose_allocation(1.0).unwrap();
+    let why = p
+        .not_partitionable
+        .as_deref()
+        .unwrap_or_else(|| panic!("11 of 12 clusters are singletons and nothing said so: {p:?}"));
+    assert!(
+        why.contains("1 such edge(s)") && why.contains("12 capability(ies)"),
+        "the sentence must carry the numbers a reader can check: {why}"
+    );
+}
+
+/// AND IT DOES NOT FIRE ON A DESIGN THAT IS GENUINELY PARTITIONABLE — a
+/// warning that appears on every answer is one nobody reads.
+#[test]
+fn a_well_coupled_design_gets_no_such_warning() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    for i in 0..8 {
+        cap(&mut g, &format!("cap:a{i}"), "cmp:a");
+    }
+    // Two dense clumps: plenty of edges, and real community structure.
+    for i in 0..8 {
+        for j in (i + 1)..8 {
+            depends(&mut g, &format!("cap:a{i}"), &format!("cap:a{j}"), 1.0);
+        }
+    }
+    let p = g.propose_allocation(1.0).unwrap();
+    assert!(
+        p.not_partitionable.is_none(),
+        "a densely coupled design must not be told its partition is meaningless: {:?}",
+        p.not_partitionable
+    );
+}

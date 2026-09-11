@@ -561,6 +561,27 @@ impl ReflowService {
         Parameters(req): Parameters<ReadinessReportReq>,
     ) -> Result<CallToolResult, McpError> {
         let g = self.graph.read().await;
+        // A SUBJECT THAT DOES NOT EXIST MUST NOT GET A VERDICT. Without this,
+        // a typo answered `ungated` with the full "states no readiness
+        // threshold" summary — a confident ruling about nothing, and
+        // indistinguishable from a real subject that genuinely states none.
+        // Its siblings budget_report and flow_report already refuse; this one
+        // takes any of Release/Capability/Requirement, so it asks whether ANY
+        // type holds the id.
+        if g.node_types_holding(&req.subject_id)
+            .map_err(dyno_err)?
+            .is_empty()
+        {
+            return Err(McpError::invalid_params(
+                format!(
+                    "no node with id {:?} exists under any declared type, so there is nothing to \
+                     derive a delivery epoch for. `ungated` would be a verdict about a subject \
+                     this design does not have. Pass a Release, Capability or Requirement id.",
+                    req.subject_id
+                ),
+                None,
+            ));
+        }
         ok_json(g.readiness_report(&req.subject_id).map_err(dyno_err)?)
     }
 
