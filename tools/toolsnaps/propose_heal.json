@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": true
   },
-  "description": "Propose a HEAL plan (never mutates; review then apply_heal).",
+  "description": "Propose a HEAL plan (never mutates; review then apply_heal). Ask for this when you want suggested repairs for the structural problems the design has, to review before applying.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,

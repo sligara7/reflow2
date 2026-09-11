@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": true
   },
-  "description": "The graph report rendered as Markdown.",
+  "description": "The graph report rendered as Markdown. Ask for this when you want the design's health and status as readable prose — a plain-English rundown of how the project is doing.",
   "inputSchema": {
     "properties": {},
     "type": "object"

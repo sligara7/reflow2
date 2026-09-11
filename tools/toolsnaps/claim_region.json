@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Take a region of the design in hand so colleagues can see it is held: `contributor_id` claims everything within `depth` hops of `seed_id`. ADVISORY, NEVER A LOCK — it does not block anyone, nothing consults it before a write, and a second person who ignores it still gets a correct three-way merge. It is also only as fresh as the last pull, because the design lives as a file in each checkout with no shared server (dec:multi-writer-architecture). Claims reduce collisions; they do not prevent them. The region is COMPUTED from seed+depth rather than stored as a node list, so it follows the design as it changes. Overlapping an existing claim is allowed and reported by claim_report, never refused.",
+  "description": "Take a region of the design in hand so colleagues can see it is held: `contributor_id` claims everything within `depth` hops of `seed_id`. ADVISORY, NEVER A LOCK — it does not block anyone, nothing consults it before a write, and a second person who ignores it still gets a correct three-way merge. It is also only as fresh as the last pull, because the design lives as a file in each checkout with no shared server (dec:multi-writer-architecture). Claims reduce collisions; they do not prevent them. The region is COMPUTED from seed+depth rather than stored as a node list, so it follows the design as it changes. Overlapping an existing claim is allowed and reported by claim_report, never refused. Ask for this to mark, flag or claim that you are working on a part, region or subsystem, so nobody else collides with you or edits it at the same time.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,

@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Pin any node to a DesignEpoch (AT_EPOCH) — e.g. a Release to its release_cut epoch, so the release and the design state it was cut from are joined on axis Z. Generic: AT_EPOCH is declared from any type.",
+  "description": "Pin any node to a DesignEpoch (AT_EPOCH) — e.g. a Release to its release_cut epoch, so the release and the design state it was cut from are joined on axis Z. Generic: AT_EPOCH is declared from any type. Ask for this when you want to snapshot or freeze how an item looks today, at a point in time, so it can be compared later.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,

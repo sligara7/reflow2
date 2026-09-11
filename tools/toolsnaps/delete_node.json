@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Delete a node by type and id (true if it existed).",
+  "description": "Delete a node by type and id (true if it existed). Ask for this when you want to remove an item from the design entirely — get rid of a thing that should no longer be in the model.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,

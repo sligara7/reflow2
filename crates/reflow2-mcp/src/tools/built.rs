@@ -102,23 +102,22 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Has the design this one DEPENDS ON moved since the declaration was made? \
-                       The second check req:design-dependencies-declared names, and the half \
-                       never built — reconcile_dependencies answers the other one, against the \
-                       BUILD. Walks the declared dependencies naming another reflow2 design AND \
-                       a path to its committed export, reads each WITHOUT IMPORTING IT, and \
-                       compares against what was recorded at declaration time. Importing is the \
-                       obvious route and the wrong one: an import into a store already holding a \
-                       design keeps the HOST'S name and absorbs the incoming nodes, so watching \
-                       that way swallows the thing watched. REPORTS, and silence is reported \
-                       rather than assumed: `moved`, `unchanged`, `never_seen` (declared, nobody \
-                       has looked yet), `missing`, `unreadable`, `graph_id_mismatch` (that \
-                       export belongs to a different design), `not_watched` (names a design, \
-                       gives nothing to watch) and `not_observed` (the bounded pass skipped it). \
-                       IT NEVER UPDATES THE BASELINE — a check that refreshed what it compares \
-                       against would report a move once and then go quiet forever; read what \
-                       changed, then re-declare. An empty answer means nothing is declared to \
-                       watch, NEVER that nothing moved.",
+        description = "Has the design this one DEPENDS ON moved since the declaration was made? The second \
+                       check req:design-dependencies-declared names, and the half never built — \
+                       reconcile_dependencies answers the other one, against the BUILD. Walks the declared \
+                       dependencies naming another reflow2 design AND a path to its committed export, reads \
+                       each WITHOUT IMPORTING IT, and compares against what was recorded at declaration time. \
+                       Importing is the obvious route and the wrong one: an import into a store already holding \
+                       a design keeps the HOST'S name and absorbs the incoming nodes, so watching that way \
+                       swallows the thing watched. REPORTS, and silence is reported rather than assumed: \
+                       `moved`, `unchanged`, `never_seen` (declared, nobody has looked yet), `missing`, \
+                       `unreadable`, `graph_id_mismatch` (that export belongs to a different design), \
+                       `not_watched` (names a design, gives nothing to watch) and `not_observed` (the bounded \
+                       pass skipped it). IT NEVER UPDATES THE BASELINE — a check that refreshed what it \
+                       compares against would report a move once and then go quiet forever; read what changed, \
+                       then re-declare. An empty answer means nothing is declared to watch, NEVER that nothing \
+                       moved. Ask for this to learn whether a design or library we depend on has changed, moved \
+                       or been updated since we last checked or pinned it.",
         annotations(read_only_hint = true)
     )]
     pub async fn upstream_status(
@@ -325,7 +324,8 @@ impl ReflowService {
                        CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it \
                        again with the same id and only what you are changing \u{2014} omitted \
                        fields keep their stored value, so correcting one never means re-sending \
-                       a 2 KB field you did not touch.",
+                       a 2 KB field you did not touch. \
+                       Ask for this when you want to register a file, drawing or document in the design.",
         annotations(read_only_hint = false)
     )]
     pub async fn add_artifact(
@@ -413,14 +413,15 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Register a real file against the design WITH provenance, atomically: \
-                       Artifact + a provenance Fragment (YIELDED) + a REALIZES edge to the \
-                       Capability/Component it implements. Fails loud if the target is missing. \
-                       Use after building a file so as-designed vs as-built stays honest. \
-                       RE-LINKING IS SAFE: `name` and `description` are required only on the \
-                       FIRST link, and omitting either afterwards LEAVES THE STORED ONE ALONE \
-                       — so attaching a file to a second target never renames it or drops its \
-                       prose. Pass them again only when you mean to change them.",
+        description = "Register a real file against the design WITH provenance, atomically: Artifact + a \
+                       provenance Fragment (YIELDED) + a REALIZES edge to the Capability/Component it \
+                       implements. Fails loud if the target is missing. Use after building a file so \
+                       as-designed vs as-built stays honest. RE-LINKING IS SAFE: `name` and `description` are \
+                       required only on the FIRST link, and omitting either afterwards LEAVES THE STORED ONE \
+                       ALONE — so attaching a file to a second target never renames it or drops its prose. Pass \
+                       them again only when you mean to change them. Ask for this when you want to record that \
+                       a source file or document implements a capability or part — register the file against \
+                       the design.",
         annotations(read_only_hint = false)
     )]
     pub async fn link_artifact(

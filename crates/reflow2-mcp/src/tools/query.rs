@@ -148,7 +148,8 @@ impl ReflowService {
     // ---- Generic CRUD (deterministic) ----
 
     #[tool(
-        description = "Create a node of any schema type with a property object. An existing id MERGES: the props you pass overwrite, every stored property you omit survives — so a partial props object edits, it does not reset the rest to defaults. A `null` UNSETS a property: the key is removed and the reply lists it under `unset`; a REQUIRED property refuses instead (a null used to be stored as a value that readers read two ways, 2026-09-07). READ `undeclared` IN THE REPLY: it names any property you sent that the schema does not declare for this type. The write still SUCCEEDS — the store is a property bag on purpose, so a design can record what reflow2 never anticipated — but a typo and a deliberate extension used to be indistinguishable, and this is how you tell them apart. Absent when there is nothing to say. ⚠️ EDITING SOMETHING YOU READ? PASS `expected_content_hash` — the `revision.prior_content_hash` from when you read it. The write then becomes a COMPARE-AND-SWAP and is REFUSED if the node moved in between, naming both hashes, instead of silently overwriting whoever wrote it meanwhile. Without it a shared graph loses updates by luck: measured from both sides of one real collision, the write returned a normal success and THE WINNER WAS NEVER TOLD. The `revision` block reports an overwrite AFTER the fact; this prevents it. Opt-in, because a caller who never read the node has no honest expectation to state.",
+        description = "Create a node of any schema type with a property object. An existing id MERGES: the props you pass overwrite, every stored property you omit survives — so a partial props object edits, it does not reset the rest to defaults. A `null` UNSETS a property: the key is removed and the reply lists it under `unset`; a REQUIRED property refuses instead (a null used to be stored as a value that readers read two ways, 2026-09-07). READ `undeclared` IN THE REPLY: it names any property you sent that the schema does not declare for this type. The write still SUCCEEDS — the store is a property bag on purpose, so a design can record what reflow2 never anticipated — but a typo and a deliberate extension used to be indistinguishable, and this is how you tell them apart. Absent when there is nothing to say. ⚠️ EDITING SOMETHING YOU READ? PASS `expected_content_hash` — the `revision.prior_content_hash` from when you read it. The write then becomes a COMPARE-AND-SWAP and is REFUSED if the node moved in between, naming both hashes, instead of silently overwriting whoever wrote it meanwhile. Without it a shared graph loses updates by luck: measured from both sides of one real collision, the write returned a normal success and THE WINNER WAS NEVER TOLD. The `revision` block reports an overwrite AFTER the fact; this prevents it. Opt-in, because a caller who never read the node has no honest expectation to state. \
+                       Ask for this when you want to add an item of a type no specific tool covers.",
         annotations(read_only_hint = false)
     )]
     pub async fn create_node(
@@ -229,10 +230,11 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Create or update MANY nodes in one call — the bulk form of create_node. \
-                       ALL OF IT OR NONE OF IT: every item is attempted so you learn every \
-                       failure in one round trip, and if anything failed nothing is written. \
-                       Upsert, like create_node, so re-running after a fix is safe.",
+        description = "Create or update MANY nodes in one call — the bulk form of create_node. ALL OF IT OR \
+                       NONE OF IT: every item is attempted so you learn every failure in one round trip, and if \
+                       anything failed nothing is written. Upsert, like create_node, so re-running after a fix \
+                       is safe. Ask for this when you want to add many items at once — several nodes in one \
+                       call, a bulk create.",
         annotations(read_only_hint = false)
     )]
     pub async fn create_nodes(
@@ -292,7 +294,8 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Create an edge of any schema type between typed endpoints.",
+        description = "Create an edge of any schema type between typed endpoints. Ask for this when you want to \
+                       link two items with a relationship no typed tool covers — a generic edge of any kind.",
         annotations(read_only_hint = false)
     )]
     pub async fn create_edge(
@@ -377,7 +380,8 @@ impl ReflowService {
                        true when an ACCEPTED Decision has withdrawn this node (OBSOLETES). \
                        READ IT — the stored `status` still records what was BUILT, so a \
                        withdrawn capability goes on saying `realized` and only this field \
-                       tells you the thing is gone.",
+                       tells you the thing is gone. \
+                       Ask for this when you want everything recorded about one item — pull up the full record for a requirement, a component, any single node.",
         annotations(read_only_hint = true)
     )]
     pub async fn get_node(
@@ -474,24 +478,22 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "List nodes of a type. Answers with as many as fit in one reply and says \
-                       what it left out — `total` is how many exist, `omitted` how many did not \
-                       come back, `next_offset` where to resume, and `capped_by` why it stopped \
-                       (`size` when the payload was full, `limit` when you asked for fewer). A \
-                       cap is never silent, but it is also never a surprise: pass `brief: true` \
-                       for id/name/status only when you want the shape of a large type, or \
-                       `limit`/`offset` to page deliberately. On a mature design the full \
-                       properties of one type can be tens of thousands of characters — read \
-                       brief first, then fetch the few nodes you actually need with get_node. \
-                       Every node carries `discontinued` (brief included): true when an \
-                       ACCEPTED Decision has withdrawn it. The stored `status` records what was \
-                       BUILT and does not move on withdrawal, so filtering a list on `status` \
-                       alone will count things that no longer exist. PASS `level` TO ASK FOR ONE \
-                       RUNG OF THE DECOMPOSITION LADDER — `component` / `subsystem` / `system` / \
-                       `system_of_systems` / `enterprise`. That is how you ask for \"the \
-                       top-level boxes\": deriving them from the CONTAINS spine instead returns \
-                       leaves nobody wired to a parent, which is a different set and a \
-                       confidently wrong one.",
+        description = "List nodes of a type. Answers with as many as fit in one reply and says what it left out \
+                       — `total` is how many exist, `omitted` how many did not come back, `next_offset` where \
+                       to resume, and `capped_by` why it stopped (`size` when the payload was full, `limit` \
+                       when you asked for fewer). A cap is never silent, but it is also never a surprise: pass \
+                       `brief: true` for id/name/status only when you want the shape of a large type, or \
+                       `limit`/`offset` to page deliberately. On a mature design the full properties of one \
+                       type can be tens of thousands of characters — read brief first, then fetch the few nodes \
+                       you actually need with get_node. Every node carries `discontinued` (brief included): \
+                       true when an ACCEPTED Decision has withdrawn it. The stored `status` records what was \
+                       BUILT and does not move on withdrawal, so filtering a list on `status` alone will count \
+                       things that no longer exist. PASS `level` TO ASK FOR ONE RUNG OF THE DECOMPOSITION \
+                       LADDER — `component` / `subsystem` / `system` / `system_of_systems` / `enterprise`. That \
+                       is how you ask for \"the top-level boxes\": deriving them from the CONTAINS spine \
+                       instead returns leaves nobody wired to a parent, which is a different set and a \
+                       confidently wrong one. Ask for this to list all the requirements, or every component, \
+                       interface or other kind of item — show all of one type.",
         annotations(read_only_hint = true)
     )]
     pub async fn scan_nodes(
@@ -754,7 +756,8 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Delete a node by type and id (true if it existed).",
+        description = "Delete a node by type and id (true if it existed). \
+                       Ask for this when you want to remove an item from the design entirely — get rid of a thing that should no longer be in the model.",
         annotations(read_only_hint = false)
     )]
     pub async fn delete_node(

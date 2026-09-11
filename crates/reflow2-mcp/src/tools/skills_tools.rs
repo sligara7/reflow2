@@ -71,7 +71,8 @@ impl ReflowService {
                        an agent matches on to decide whether a skill applies. Skills are served by \
                        the server rather than installed into the project, so this list always \
                        matches the running reflow2. Read one with get_skill BEFORE doing the work \
-                       it covers.",
+                       it covers. \
+                       Ask for this when you want to see which playbooks, procedures or step-by-step guides are available for working on this design.",
         annotations(read_only_hint = true)
     )]
     pub async fn list_skills(
@@ -107,7 +108,8 @@ impl ReflowService {
     #[tool(
         description = "Read one reflow2 skill in full, by name (see list_skills). Returns the \
                        whole SKILL.md — follow it as written. Call this BEFORE the work the skill \
-                       covers, not after: these describe how to do the step, not how to report it.",
+                       covers, not after: these describe how to do the step, not how to report it. \
+                       Ask for this when you want the full playbook, procedure or step-by-step guide for a kind of task — how to do it properly, not just what exists.",
         annotations(read_only_hint = true)
     )]
     pub async fn get_skill(
@@ -240,7 +242,8 @@ impl ReflowService {
                        stored key and appears in every export, so two designs can tell each other \
                        apart when they compose (mirror_surface). Pass `label` to RENAME the design; \
                        the id is untouched. Read this when a session needs to say WHICH design it \
-                       is working in.",
+                       is working in. \
+                       Ask for this when you want to know which design or project's model this session is connected to right now.",
         annotations(read_only_hint = false)
     )]
     pub async fn design_identity(

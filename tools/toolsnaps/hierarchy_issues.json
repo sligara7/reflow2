@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": true
   },
-  "description": "Decomposition/hierarchy issues (matryoshka level checks).",
+  "description": "Decomposition/hierarchy issues (matryoshka level checks). Ask for this when you want to know whether the component tree is consistent — a part with two parents, or a child at the wrong level.",
   "inputSchema": {
     "properties": {},
     "type": "object"

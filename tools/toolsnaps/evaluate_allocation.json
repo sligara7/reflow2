@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": true
   },
-  "description": "Evaluate how capabilities are allocated across components.",
+  "description": "Evaluate how capabilities are allocated across components. Ask for this when you want to know how modular the decomposition is — whether the coupling sits where you think it does, and the modularity score.",
   "inputSchema": {
     "properties": {},
     "type": "object"

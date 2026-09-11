@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Register a real file against the design WITH provenance, atomically: Artifact + a provenance Fragment (YIELDED) + a REALIZES edge to the Capability/Component it implements. Fails loud if the target is missing. Use after building a file so as-designed vs as-built stays honest. RE-LINKING IS SAFE: `name` and `description` are required only on the FIRST link, and omitting either afterwards LEAVES THE STORED ONE ALONE — so attaching a file to a second target never renames it or drops its prose. Pass them again only when you mean to change them.",
+  "description": "Register a real file against the design WITH provenance, atomically: Artifact + a provenance Fragment (YIELDED) + a REALIZES edge to the Capability/Component it implements. Fails loud if the target is missing. Use after building a file so as-designed vs as-built stays honest. RE-LINKING IS SAFE: `name` and `description` are required only on the FIRST link, and omitting either afterwards LEAVES THE STORED ONE ALONE — so attaching a file to a second target never renames it or drops its prose. Pass them again only when you mean to change them. Ask for this when you want to record that a source file or document implements a capability or part — register the file against the design.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,

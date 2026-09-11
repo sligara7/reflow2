@@ -1125,7 +1125,8 @@ impl ReflowService {
                        and return a next-steps checklist. Guarded and idempotent — a no-op that \
                        reports already_initialized if a Project exists (unless rescan). Call this \
                        first, then seed the brief into Requirements/Capabilities via the add_* \
-                       tools and run detect_gaps.",
+                       tools and run detect_gaps. \
+                       Ask for this when you want to start a brand-new design from scratch — set up a fresh project.",
         annotations(read_only_hint = false)
     )]
     pub async fn genesis(
@@ -1247,7 +1248,8 @@ impl ReflowService {
                        CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it \
                        again with the same id and only what you are changing \u{2014} omitted \
                        fields keep their stored value, so correcting one never means re-sending \
-                       a 2 KB field you did not touch.",
+                       a 2 KB field you did not touch. \
+                       Ask for this when you want to write down something the system must do or must never do — a need, a shall-statement, a constraint the customer stated — so it is captured as intent.",
         annotations(read_only_hint = false)
     )]
     pub async fn add_requirement(
@@ -1337,7 +1339,19 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Create a DesignRule — a convention or standard the project ADOPTS (a                        tech-stack choice, a house style, a review step), as distinct from a                        Requirement (a goal to achieve) or a Constraint (a limit to respect). Two                        independent projects reached for this and found only generic create_node,                        then guessed the field names wrong; this is the typed constructor they                        wanted. Prose goes in `statement`. `enforced` is THREE-STATE and the                        default is the third: pass `true` only when the user has said breaking the                        rule stops the build, `false` for advisory, and leave it UNSET otherwise —                        absent means nobody has stated it and is never read as enforced. Ask the                        user before setting it (governance-proposal skill); do not infer it from                        the wording. CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE.",
+        description = "Create a DesignRule — a convention or standard the project ADOPTS (a                     \
+                       tech-stack choice, a house style, a review step), as distinct from a                     \
+                       Requirement (a goal to achieve) or a Constraint (a limit to respect). Two                \
+                       independent projects reached for this and found only generic create_node,                \
+                       then guessed the field names wrong; this is the typed constructor they                   \
+                       wanted. Prose goes in `statement`. `enforced` is THREE-STATE and the                     \
+                       default is the third: pass `true` only when the user has said breaking the               \
+                       rule stops the build, `false` for advisory, and leave it UNSET otherwise —               \
+                       absent means nobody has stated it and is never read as enforced. Ask the                 \
+                       user before setting it (governance-proposal skill); do not infer it from                 \
+                       the wording. CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE. Ask for this \
+                       when you want to record a rule about how the team always or never does things — a \
+                       convention or standard you hold yourselves to.",
         annotations(read_only_hint = false)
     )]
     pub async fn add_design_rule(
@@ -1827,7 +1841,8 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Link a Capability to a Requirement it SATISFIES.",
+        description = "Link a Capability to a Requirement it SATISFIES. Ask for this when you want to record \
+                       that a capability fulfils, meets or satisfies a requirement.",
         annotations(read_only_hint = false)
     )]
     pub async fn satisfies(
@@ -2034,13 +2049,13 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Read a Flow back as facts: steps in stated order, the TRIGGERS \
-                       transitions among them with their roles, and the cycles. Cycles are \
-                       REPORTED, never judged — a process's loops are its design, so they do \
-                       not appear in detect_defects (whose circular_dependency stays scoped to \
-                       DEPENDS_ON and contracts, where a cycle really is a defect). Anything \
-                       the model left unstated (an unmatched entry/exit point, steps without \
-                       step_order, transitions without a role) is confessed by name.",
+        description = "Read a Flow back as facts: steps in stated order, the TRIGGERS transitions among them \
+                       with their roles, and the cycles. Cycles are REPORTED, never judged — a process's loops \
+                       are its design, so they do not appear in detect_defects (whose circular_dependency stays \
+                       scoped to DEPENDS_ON and contracts, where a cycle really is a defect). Anything the \
+                       model left unstated (an unmatched entry/exit point, steps without step_order, \
+                       transitions without a role) is confessed by name. Ask for this when you want to walk \
+                       through an end-to-end process step by step and see what is missing from it.",
         annotations(read_only_hint = true)
     )]
     pub async fn flow_report(
@@ -2067,11 +2082,11 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Record that a Component CONSUMES an Interface — it is the side that \
-                       depends on the contract. `from_id` is the Component, `to_id` the \
-                       Interface. Once both sides are recorded, `propagate_change` on either \
-                       Component reaches the other, and `detect_gaps` reports a contract that \
-                       is consumed but never provided.",
+        description = "Record that a Component CONSUMES an Interface — it is the side that depends on the \
+                       contract. `from_id` is the Component, `to_id` the Interface. Once both sides are \
+                       recorded, `propagate_change` on either Component reaches the other, and `detect_gaps` \
+                       reports a contract that is consumed but never provided. Ask for this when you want to \
+                       record that a component uses, calls or depends on an interface.",
         annotations(read_only_hint = false)
     )]
     pub async fn consumes(
@@ -2264,11 +2279,12 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Record that a Constraint CONSTRAINS a target, with the target's \
-                       `contribution` to the budget (in the Constraint's quantity unit) and the \
-                       `basis` for the number (estimated/evidence/measured). An edge without a \
-                       contribution is reported by budget_report as unstated — never treated as \
-                       zero.",
+        description = "Record that a Constraint CONSTRAINS a target, with the target's `contribution` to the \
+                       budget (in the Constraint's quantity unit) and the `basis` for the number \
+                       (estimated/evidence/measured). An edge without a contribution is reported by \
+                       budget_report as unstated — never treated as zero. Ask for this when you want to say how \
+                       much a part contributes to a budget or limit — its share of the mass, latency, cost or \
+                       other quantity.",
         annotations(read_only_hint = false)
     )]
     pub async fn constrains(
@@ -2303,7 +2319,8 @@ impl ReflowService {
                        coverage (estimated vs measured), and an honest verdict — `incomplete` \
                        when any contribution is unstated, because a partial sum passed off as a \
                        total is how budgets lie. Contributors with no stated number are listed, \
-                       never zeroed.",
+                       never zeroed. \
+                       Ask for this when you want to know whether a declared limit or allowance is being exceeded — a budget for latency, mass, cost or any quantity — and which contributors take it over.",
         annotations(read_only_hint = true)
     )]
     pub async fn budget_report(
@@ -2371,20 +2388,19 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Record a Decision and why it was made (an ADR). Use this whenever the user \
-                       chooses between real alternatives — the rationale is what stops the choice \
-                       being silently reversed later. Link it with `governed_by`. It lands \
-                       `proposed`: recording a choice is not the same as settling it, so reaching \
-                       `accepted` is a separate act (`set_decision_status`, or `collapse_decision` \
-                       when a fork is chosen). That is deliberate — an accepted Decision is what \
-                       where-am-i reads back to the user as \"what you decided\", so asserting it \
-                       on their behalf would be the forgery dec:certainty-derived forbids for \
-                       requirement status. BEHAVIOUR CHANGED 2026-07-25: this used to default to \
-                       `accepted`. \
-                       CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it \
-                       again with the same id and only what you are changing \u{2014} omitted \
-                       fields keep their stored value, so correcting one never means re-sending \
-                       a 2 KB field you did not touch.",
+        description = "Record a Decision and why it was made (an ADR). Use this whenever the user chooses \
+                       between real alternatives — the rationale is what stops the choice being silently \
+                       reversed later. Link it with `governed_by`. It lands `proposed`: recording a choice is \
+                       not the same as settling it, so reaching `accepted` is a separate act \
+                       (`set_decision_status`, or `collapse_decision` when a fork is chosen). That is \
+                       deliberate — an accepted Decision is what where-am-i reads back to the user as \"what \
+                       you decided\", so asserting it on their behalf would be the forgery \
+                       dec:certainty-derived forbids for requirement status. BEHAVIOUR CHANGED 2026-07-25: this \
+                       used to default to `accepted`. CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO \
+                       REVISE: call it again with the same id and only what you are changing \u{2014} omitted \
+                       fields keep their stored value, so correcting one never means re-sending a 2 KB field \
+                       you did not touch. Ask for this when you want to write down a decision that was made and \
+                       the reasoning behind it — an architecture decision record.",
         annotations(read_only_hint = false)
     )]
     pub async fn add_decision(
@@ -2605,23 +2621,22 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Link a node to the Decision or DesignRule that shapes it (GOVERNED_BY). \
-                       PASS `ruling: parks` WHEN THE RULING DECLARES THIS NODE'S UNATTACHED OR \
-                       UNSATISFIED STATE CORRECT — a registered document that deliberately draws \
-                       no claim edges, a requirement an accepted Decision forbids satisfying. \
-                       Detectors then report it as PARKED and count it in detect_defects's \
-                       `swept.parked`, instead of filing a deliberate state as a defect. \
-                       Measured cost of not having this: a fleet watched defects go 88 -> 97 \
-                       across ten CORRECT writes, so the right action degraded the instrument \
-                       and a later reader had an incentive to stop registering documents at all. \
-                       The ruling must be an ACCEPTED Decision — a `proposed` one is somebody \
-                       thinking out loud, and a musing must not suppress a finding. \
-                       CARRIES `settled_question_prose` WHEN YOU LINK TO AN ALREADY-ACCEPTED \
-                       DECISION AND THIS NODE'S OWN PROSE STILL SAYS THE QUESTION IS OPEN — the \
-                       other moment that divergence gets created, and the one a hook on the \
-                       status setter alone would miss. It quotes the prose and names the phrase \
-                       that matched; it never says the text is wrong, because a node that QUOTES \
-                       an old question looks identical from the outside.",
+        description = "Link a node to the Decision or DesignRule that shapes it (GOVERNED_BY). PASS `ruling: \
+                       parks` WHEN THE RULING DECLARES THIS NODE'S UNATTACHED OR UNSATISFIED STATE CORRECT — a \
+                       registered document that deliberately draws no claim edges, a requirement an accepted \
+                       Decision forbids satisfying. Detectors then report it as PARKED and count it in \
+                       detect_defects's `swept.parked`, instead of filing a deliberate state as a defect. \
+                       Measured cost of not having this: a fleet watched defects go 88 -> 97 across ten CORRECT \
+                       writes, so the right action degraded the instrument and a later reader had an incentive \
+                       to stop registering documents at all. The ruling must be an ACCEPTED Decision — a \
+                       `proposed` one is somebody thinking out loud, and a musing must not suppress a finding. \
+                       CARRIES `settled_question_prose` WHEN YOU LINK TO AN ALREADY-ACCEPTED DECISION AND THIS \
+                       NODE'S OWN PROSE STILL SAYS THE QUESTION IS OPEN — the other moment that divergence gets \
+                       created, and the one a hook on the status setter alone would miss. It quotes the prose \
+                       and names the phrase that matched; it never says the text is wrong, because a node that \
+                       QUOTES an old question looks identical from the outside. Ask for this to record that an \
+                       item is subject to, governed by or falls under a decision or design rule — link it to \
+                       whatever governs it.",
         annotations(read_only_hint = false)
     )]
     pub async fn governed_by(
@@ -2677,17 +2692,15 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Record a Contributor — who authors and decides the DESIGN \
-                       itself: a person, an automated coding agent, or an \
-                       organization. Distinct from an Actor (add via create_node), \
-                       which is who the designed system SERVES. Create one per \
-                       session for whoever is driving, then attribute their design \
-                       nodes with authored_by — the structured 'who' behind \
-                       provenance's 'how'. \
-                       CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it \
-                       again with the same id and only what you are changing \u{2014} omitted \
-                       fields keep their stored value, so correcting one never means re-sending \
-                       a 2 KB field you did not touch.",
+        description = "Record a Contributor — who authors and decides the DESIGN itself: a person, an automated \
+                       coding agent, or an organization. Distinct from an Actor (add via create_node), which is \
+                       who the designed system SERVES. Create one per session for whoever is driving, then \
+                       attribute their design nodes with authored_by — the structured 'who' behind provenance's \
+                       'how'. CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it again with \
+                       the same id and only what you are changing \u{2014} omitted fields keep their stored \
+                       value, so correcting one never means re-sending a 2 KB field you did not touch. Ask for \
+                       this when you want to record who is working on this design — a person or an agent \
+                       contributing to it.",
         annotations(read_only_hint = false)
     )]
     pub async fn add_contributor(
@@ -2761,7 +2774,8 @@ impl ReflowService {
                        `note` is what is actually owned and any bound on it. AN UNOWNED NODE IS \
                        NOT A GAP: most of a mature design legitimately has no owner, so absence \
                        is never reported. Once recorded, `loop_status` with a `contributor_id` \
-                       lists the open gaps standing on that person's ground.",
+                       lists the open gaps standing on that person's ground. \
+                       Ask for this when you want to record who owns or is accountable for a part.",
         annotations(read_only_hint = false)
     )]
     pub async fn owned_by(
