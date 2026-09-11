@@ -8,9 +8,11 @@
     "additionalProperties": false,
     "properties": {
       "from_id": {
+        "description": "The PARENT `Component`.\n⚠️ Direction is the opposite of `decomposes`, which takes the child first.",
         "type": "string"
       },
       "to_id": {
+        "description": "The CHILD `Component` being contained.",
         "type": "string"
       }
     },

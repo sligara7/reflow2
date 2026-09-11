@@ -79,6 +79,7 @@
         ]
       },
       "target_id": {
+        "description": "The node the change is about; its type is `target_type`.",
         "type": "string"
       },
       "target_type": {

@@ -8,6 +8,7 @@
     "additionalProperties": false,
     "properties": {
       "from_id": {
+        "description": "The governed node; its type is `from_type`.",
         "type": "string"
       },
       "from_type": {
@@ -39,6 +40,7 @@
         ]
       },
       "to_id": {
+        "description": "The governing node; its type is `to_type`.",
         "type": "string"
       },
       "to_type": {

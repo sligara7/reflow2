@@ -15,6 +15,7 @@
         ]
       },
       "evidence_id": {
+        "description": "The evidence fitted to; its type is `evidence_type`.",
         "type": "string"
       },
       "evidence_type": {
@@ -26,6 +27,7 @@
         ]
       },
       "from_id": {
+        "description": "The fitted node; its type is `from_type`.",
         "type": "string"
       },
       "from_type": {

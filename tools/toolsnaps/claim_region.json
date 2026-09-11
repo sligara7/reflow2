@@ -46,7 +46,7 @@
         ]
       },
       "seed_id": {
-        "description": "The node the region is computed from.",
+        "description": "The node the region is computed from.\nAny node type — the region is walked outward from it.",
         "type": "string"
       }
     },

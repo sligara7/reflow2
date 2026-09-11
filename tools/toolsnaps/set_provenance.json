@@ -8,6 +8,7 @@
     "additionalProperties": false,
     "properties": {
       "node_id": {
+        "description": "The node whose provenance is set; its type is `node_type`.",
         "type": "string"
       },
       "node_type": {

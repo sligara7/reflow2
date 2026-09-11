@@ -74,6 +74,7 @@
         ]
       },
       "node_id": {
+        "description": "The reviewed node; its type is `node_type`.",
         "type": "string"
       },
       "node_type": {

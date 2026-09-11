@@ -90,7 +90,7 @@
         ]
       },
       "subject_id": {
-        "description": "The node this finding is ABOUT. A node reference: it must resolve, and\na finding naming a node that does not exist is refused rather than\nstored, because a record about something the design does not have is\nnot a record.",
+        "description": "The node this finding is ABOUT. A node reference: it must resolve, and\na finding naming a node that does not exist is refused rather than\nstored, because a record about something the design does not have is\nnot a record.\nIts type is `node_type`, resolved from the id when omitted.",
         "type": "string"
       },
       "valid_from": {

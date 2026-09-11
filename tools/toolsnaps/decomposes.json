@@ -8,9 +8,11 @@
     "additionalProperties": false,
     "properties": {
       "from_id": {
+        "description": "The CHILD `Requirement` — the smaller piece.\n⚠️ Direction is the opposite of `contain_component`, which takes the parent\nfirst. Here the child comes first: `from_id` DECOMPOSES `to_id`.",
         "type": "string"
       },
       "to_id": {
+        "description": "The PARENT `Requirement` being split.",
         "type": "string"
       }
     },

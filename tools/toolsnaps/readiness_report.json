@@ -8,7 +8,7 @@
     "additionalProperties": false,
     "properties": {
       "subject_id": {
-        "description": "The increment to derive a delivery epoch for.",
+        "description": "The increment to derive a delivery epoch for.\nA `Release`, `Capability` or `Requirement` — whatever carries the\n`GATED_ON` edges.",
         "type": "string"
       }
     },

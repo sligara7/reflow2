@@ -1534,6 +1534,7 @@ pub struct ClaimReq {
     /// The `Contributor` taking the region in hand.
     pub contributor_id: String,
     /// The node the region is computed from.
+    /// Any node type — the region is walked outward from it.
     pub seed_id: String,
     /// How far from the seed the region reaches, in hops (default 2).
     #[serde(default)]
@@ -1559,6 +1560,7 @@ pub struct ClaimReq {
 #[serde(deny_unknown_fields)]
 pub struct ReleaseClaimReq {
     pub contributor_id: String,
+    /// The `seed_id` of the claim being released; any node type.
     pub seed_id: String,
 }
 
@@ -1589,6 +1591,7 @@ pub struct AliasReq {
     /// REFUSED rather than guessed.
     #[serde(default)]
     pub node_type: Option<String>,
+    /// The node gaining the aliases; its type is `node_type`.
     #[serde(alias = "id")]
     pub node_id: String,
     /// The user's own words for this thing. MERGED with what is already
@@ -1607,6 +1610,7 @@ pub struct ProvenanceReq {
     /// guessed — pass it then.
     #[serde(default)]
     pub node_type: Option<String>,
+    /// The node whose provenance is set; its type is `node_type`.
     pub node_id: String,
     /// `authored` (default) / `planned` / `inferred` / `healed` /
     /// `reconciled` / `imported`.
@@ -1660,6 +1664,7 @@ pub struct ContainsReq {
     #[serde(default)]
     #[serde(alias = "to_type")]
     pub child_type: Option<String>,
+    /// The contained node; its type is `child_type`.
     #[serde(alias = "to_id")]
     pub child_id: String,
 }
@@ -1678,9 +1683,11 @@ pub struct EdgePairReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct AllocateReq {
+    /// The `Capability` being allocated.
     #[serde(alias = "capability_id")]
     #[serde(alias = "node_id")]
     pub from_id: String,
+    /// The `Component` it is allocated to.
     #[serde(alias = "component_id")]
     pub to_id: String,
 }
@@ -1692,9 +1699,11 @@ pub struct AllocateReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct SatisfiesReq {
+    /// The `Capability` that satisfies it.
     #[serde(alias = "capability_id")]
     #[serde(alias = "node_id")]
     pub from_id: String,
+    /// The `Requirement` being satisfied.
     #[serde(alias = "requirement_id")]
     pub to_id: String,
 }
@@ -1706,9 +1715,11 @@ pub struct SatisfiesReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct ProvidesReq {
+    /// The `Component` providing the contract.
     #[serde(alias = "component_id")]
     #[serde(alias = "node_id")]
     pub from_id: String,
+    /// The `Interface` it provides.
     #[serde(alias = "interface_id")]
     pub to_id: String,
 }
@@ -1720,9 +1731,11 @@ pub struct ProvidesReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct ConsumesReq {
+    /// The consuming `Component`.
     #[serde(alias = "component_id")]
     #[serde(alias = "node_id")]
     pub from_id: String,
+    /// The `Interface` it consumes.
     #[serde(alias = "interface_id")]
     pub to_id: String,
 }
@@ -1734,9 +1747,13 @@ pub struct ConsumesReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct DecomposesReq {
+    /// The CHILD `Requirement` — the smaller piece.
+    /// ⚠️ Direction is the opposite of `contain_component`, which takes the parent
+    /// first. Here the child comes first: `from_id` DECOMPOSES `to_id`.
     #[serde(alias = "parent_id")]
     #[serde(alias = "node_id")]
     pub from_id: String,
+    /// The PARENT `Requirement` being split.
     #[serde(alias = "child_id")]
     pub to_id: String,
 }
@@ -1748,9 +1765,11 @@ pub struct DecomposesReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct DependsOnReq {
+    /// The `Component` that depends.
     #[serde(alias = "dependent_id")]
     #[serde(alias = "node_id")]
     pub from_id: String,
+    /// The `Component` depended on.
     #[serde(alias = "dependency_id")]
     pub to_id: String,
 }
@@ -1762,9 +1781,12 @@ pub struct DependsOnReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct ContainComponentReq {
+    /// The PARENT `Component`.
+    /// ⚠️ Direction is the opposite of `decomposes`, which takes the child first.
     #[serde(alias = "parent_id")]
     #[serde(alias = "node_id")]
     pub from_id: String,
+    /// The CHILD `Component` being contained.
     #[serde(alias = "child_id")]
     pub to_id: String,
 }
@@ -1819,12 +1841,14 @@ pub struct CreateEdgeReq {
     /// guessed — pass it then.
     #[serde(default)]
     pub from_type: Option<String>,
+    /// The source node; its type is `from_type`.
     pub from_id: String,
     /// Optional since 2026-09-06: resolved from the id when omitted (the id
     /// prefix names the type); an id held by more than one type is REFUSED, never
     /// guessed — pass it then.
     #[serde(default)]
     pub to_type: Option<String>,
+    /// The target node; its type is `to_type`.
     pub to_id: String,
     #[serde(default)]
     pub props: Option<JsonObject>,
@@ -1835,7 +1859,9 @@ pub struct CreateEdgeReq {
 #[serde(deny_unknown_fields)]
 pub struct DeleteEdgeReq {
     pub edge_type: String,
+    /// The source node of the edge; any node type, resolved from the id.
     pub from_id: String,
+    /// The target node of the edge; any node type, resolved from the id.
     pub to_id: String,
 }
 
@@ -1932,6 +1958,7 @@ pub struct RealizesReq {
     #[serde(default)]
     #[serde(alias = "to_type")]
     pub target_type: Option<String>,
+    /// The realized node; its type is `target_type`.
     #[serde(alias = "to_id")]
     pub target_id: String,
     /// `stub` / `partial` / `complete` — how much of the thing EXISTS.
@@ -1962,6 +1989,7 @@ pub struct DocumentsReq {
     #[serde(default)]
     #[serde(alias = "to_type")]
     pub target_type: Option<String>,
+    /// The documented node; its type is `target_type`.
     #[serde(alias = "to_id")]
     pub target_id: String,
     /// What kind of document: `design_doc` / `adr` / `readme` / `runbook` /
@@ -1997,6 +2025,7 @@ pub struct LinkArtifactReq {
     #[serde(default)]
     #[serde(alias = "to_type")]
     pub target_type: Option<String>,
+    /// The node the artifact realizes; its type is `target_type`.
     #[serde(alias = "to_id")]
     pub target_id: String,
     #[serde(default)]
@@ -2132,6 +2161,7 @@ pub struct VerifiesReq {
     #[serde(default)]
     #[serde(alias = "to_type")]
     pub target_type: Option<String>,
+    /// The checked node; its type is `target_type`.
     #[serde(alias = "to_id")]
     pub target_id: String,
 }
@@ -2149,6 +2179,7 @@ pub struct EvidenceScopeReq {
     #[serde(default)]
     #[serde(alias = "to_type")]
     pub target_type: Option<String>,
+    /// The node the claim is about; its type is `target_type`.
     #[serde(alias = "to_id")]
     pub target_id: String,
     /// Parameter names the check HELD FIXED for this claim. Passing an empty
@@ -2171,6 +2202,7 @@ pub struct CalibratedAgainstReq {
     #[serde(default)]
     #[serde(alias = "node_type")]
     pub from_type: Option<String>,
+    /// The fitted node; its type is `from_type`.
     #[serde(alias = "node_id")]
     pub from_id: String,
     /// `Artifact` (a published anchor, a dataset, a measurement record) or
@@ -2181,6 +2213,7 @@ pub struct CalibratedAgainstReq {
     #[serde(default)]
     #[serde(alias = "to_type")]
     pub evidence_type: Option<String>,
+    /// The evidence fitted to; its type is `evidence_type`.
     #[serde(alias = "to_id")]
     pub evidence_id: String,
     /// What was fitted, and how — the part a later reader needs in order to
@@ -2201,6 +2234,7 @@ pub struct InvalidatesReq {
     #[serde(default)]
     #[serde(alias = "node_type")]
     pub from_type: Option<String>,
+    /// The node doing the invalidating; its type is `from_type`.
     #[serde(alias = "node_id")]
     pub from_id: String,
     /// Node type of the FINDING now stale — `Verification` (a run that found
@@ -2211,6 +2245,7 @@ pub struct InvalidatesReq {
     #[serde(default)]
     #[serde(alias = "to_type")]
     pub finding_type: Option<String>,
+    /// The finding being invalidated; its type is `finding_type`.
     #[serde(alias = "to_id")]
     pub finding_id: String,
     /// WHY this record invalidates that finding — the sentence a later reader
@@ -2256,6 +2291,7 @@ pub struct OperatesInReq {
 pub struct ImposesReq {
     #[serde(alias = "from_id")]
     pub environment_id: String,
+    /// The `EnvironmentRule` the environment imposes.
     #[serde(alias = "to_id")]
     pub rule_id: String,
 }
@@ -2311,11 +2347,14 @@ pub struct EnvironmentRuleReq {
 #[serde(deny_unknown_fields)]
 pub struct CompliesWithReq {
     /// The design element that complies. Its type is resolved from the id.
+    /// The complying node; its type is `element_type`.
     #[serde(alias = "node_id", alias = "from_id")]
     pub element_id: String,
     /// Optional; resolved from the id when omitted.
     #[serde(default, alias = "node_type", alias = "from_type")]
     pub element_type: Option<String>,
+    /// The `EnvironmentRule` complied with.
+    /// 🛑 NOT a `DesignRule` — see `violates_rule.rule_id`.
     #[serde(alias = "to_id")]
     pub rule_id: String,
     /// Whether compliance was DEMONSTRATED rather than merely asserted.
@@ -2333,10 +2372,17 @@ pub struct CompliesWithReq {
 #[serde(deny_unknown_fields)]
 pub struct ViolatesRuleReq {
     /// The design element that contradicts the rule; type resolved from the id.
+    /// The node in violation; its type is `element_type`.
     #[serde(alias = "node_id", alias = "from_id")]
     pub element_id: String,
     #[serde(default, alias = "node_type", alias = "from_type")]
     pub element_type: Option<String>,
+    /// The `EnvironmentRule` being violated.
+    /// 🛑 NOT a `DesignRule`. This resolves to `EnvironmentRule` only, so a
+    /// `rule:` node created by `add_design_rule` is REFUSED here — measured
+    /// 2026-09-11 with 27 DesignRules and 0 EnvironmentRules in this design, and
+    /// no served path from one to the other
+    /// (`fact:the-27-design-rules-are-unreachable-by-the-violation-vocabulary-because-it-resolves-to-environment-rule`).
     #[serde(alias = "to_id")]
     pub rule_id: String,
     /// `llm` (default) / `author` / `check` — who noticed.
@@ -2356,8 +2402,14 @@ pub struct ViolatesRuleReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct ViolationStatusReq {
+    /// The node in violation — the SOURCE of an existing `VIOLATES_RULE` edge.
+    /// Any node type, resolved from the id. Unlike `violates_rule`, this
+    /// request carries no `element_type`: the edge already exists and is what
+    /// is being triaged, so a status for a pair with no edge is REFUSED.
     #[serde(alias = "node_id", alias = "from_id")]
     pub element_id: String,
+    /// The `EnvironmentRule` of the violation being triaged.
+    /// 🛑 NOT a `DesignRule` — see `violates_rule.rule_id`.
     #[serde(alias = "to_id")]
     pub rule_id: String,
     /// `confirmed` — a variance or waiver was GRANTED, and the violation is
@@ -2448,6 +2500,7 @@ pub struct ReleaseIncludesReq {
     #[serde(default)]
     #[serde(alias = "to_type")]
     pub target_type: Option<String>,
+    /// The included node; its type is `target_type`.
     #[serde(alias = "to_id")]
     pub target_id: String,
     /// The artifact's content hash AS SHIPPED in this release — frozen at cut
@@ -2656,6 +2709,7 @@ pub struct GateOnReq {
     #[serde(alias = "from_type")]
     #[serde(alias = "node_type")]
     pub subject_type: Option<String>,
+    /// The gated increment; its type is `subject_type`.
     #[serde(alias = "from_id")]
     #[serde(alias = "node_id")]
     pub subject_id: String,
@@ -2666,6 +2720,7 @@ pub struct GateOnReq {
     #[serde(default)]
     #[serde(alias = "to_type")]
     pub target_type: Option<String>,
+    /// The technology gated on; its type is `target_type`.
     #[serde(alias = "to_id")]
     pub target_id: String,
     /// `TRL` or `MRL`.
@@ -2690,6 +2745,7 @@ pub struct ForecastReadinessReq {
     /// guessed — pass it then.
     #[serde(default)]
     pub target_type: Option<String>,
+    /// The technology forecast; its type is `target_type`.
     pub target_id: String,
     /// `TRL` or `MRL`.
     #[schemars(schema_with = "crate::enum_schema::readiness_kind_req")]
@@ -2712,6 +2768,8 @@ pub struct ForecastReadinessReq {
 #[serde(deny_unknown_fields)]
 pub struct ReadinessReportReq {
     /// The increment to derive a delivery epoch for.
+    /// A `Release`, `Capability` or `Requirement` — whatever carries the
+    /// `GATED_ON` edges.
     pub subject_id: String,
 }
 
@@ -2890,6 +2948,7 @@ pub struct ConstrainsReq {
     #[serde(default)]
     #[serde(alias = "to_type")]
     pub target_type: Option<String>,
+    /// The constrained node; its type is `target_type`.
     #[serde(alias = "to_id")]
     pub target_id: String,
     /// This target's spend, in the Constraint's quantity unit. Omitted =
@@ -2922,6 +2981,7 @@ pub struct ReviewRelationsReq {
     /// guessed — pass it then.
     #[serde(default)]
     pub node_type: Option<String>,
+    /// The reviewed node; its type is `node_type`.
     pub node_id: String,
     /// The relations you judged to be real. Empty is a valid answer — pass
     /// `note` instead.
@@ -2979,6 +3039,7 @@ pub struct PinAtEpochReq {
     #[serde(default)]
     #[serde(alias = "from_type")]
     pub node_type: Option<String>,
+    /// The node being pinned; its type is `node_type`.
     #[serde(alias = "from_id")]
     pub node_id: String,
     #[serde(alias = "to_id")]
@@ -3002,6 +3063,7 @@ pub struct ScheduleForReq {
     #[serde(alias = "from_type")]
     #[serde(alias = "node_type")]
     pub item_type: Option<String>,
+    /// The scheduled item; its type is `item_type`.
     #[serde(alias = "from_id")]
     #[serde(alias = "node_id")]
     pub item_id: String,
@@ -3012,6 +3074,7 @@ pub struct ScheduleForReq {
     #[serde(default)]
     #[serde(alias = "to_type")]
     pub target_type: Option<String>,
+    /// The moment scheduled for; its type is `target_type`.
     #[serde(alias = "to_id")]
     pub target_id: String,
     /// `expected` (a plan, the default) or `required` (an obligation whose
@@ -3072,6 +3135,7 @@ pub struct RequireResourceReq {
     #[serde(default)]
     #[serde(alias = "node_type")]
     pub from_type: Option<String>,
+    /// The node requiring it; its type is `from_type`.
     #[serde(alias = "node_id")]
     pub from_id: String,
     #[serde(alias = "to_id")]
@@ -3174,6 +3238,7 @@ pub struct AnswersReq {
     #[serde(default)]
     #[serde(alias = "node_type")]
     pub from_type: Option<String>,
+    /// The answering node; its type is `from_type`.
     #[serde(alias = "node_id")]
     pub from_id: String,
     /// The Question this record answered. Take it from `open_questions`'
@@ -3195,6 +3260,7 @@ pub struct GovernedByReq {
     #[serde(default)]
     #[serde(alias = "node_type")]
     pub from_type: Option<String>,
+    /// The governed node; its type is `from_type`.
     #[serde(alias = "node_id")]
     pub from_id: String,
     /// Usually `Decision` or `DesignRule`.
@@ -3203,6 +3269,7 @@ pub struct GovernedByReq {
     /// guessed — pass it then.
     #[serde(default)]
     pub to_type: Option<String>,
+    /// The governing node; its type is `to_type`.
     pub to_id: String,
     /// What KIND of governance this is. Omit — the ordinary case — and the
     /// target simply shapes the source. Pass `parks` to record that the
@@ -3268,6 +3335,7 @@ pub struct AuthoredByReq {
     #[serde(default)]
     #[serde(alias = "node_type")]
     pub from_type: Option<String>,
+    /// The node being attributed; its type is `from_type`.
     #[serde(alias = "node_id")]
     pub from_id: String,
     /// The `Contributor` whose word this node is.
@@ -3292,6 +3360,7 @@ pub struct OwnedByReq {
     #[serde(default)]
     #[serde(alias = "node_type")]
     pub from_type: Option<String>,
+    /// The node being owned; its type is `from_type`.
     #[serde(alias = "node_id")]
     pub from_id: String,
     /// The `Contributor` whose area this is.
@@ -3312,6 +3381,9 @@ pub struct OwnedByReq {
 #[serde(deny_unknown_fields)]
 pub struct AcknowledgeGapReq {
     /// The gap's `id`, exactly as `detect_gaps` reported it.
+    /// NOT a node id — the `gap_id` a gap carries in `detect_gaps`.
+    /// The acknowledgement is keyed on the gap's SHAPE, so it expires by
+    /// construction when the shape changes.
     pub gap_id: String,
     /// The gap's `affected_ids`, so the review is reachable from the design.
     #[serde(default)]
@@ -3340,6 +3412,7 @@ pub struct AcknowledgeGapReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct GapIdReq {
+    /// NOT a node id — the gap key that `detect_gaps` reports and `reviewed_gaps` lists.
     pub gap_id: String,
 }
 
@@ -3427,6 +3500,7 @@ pub struct ExportSurfaceReq {
 #[serde(deny_unknown_fields)]
 pub struct AcknowledgeDefectReq {
     /// The defect's `id`, exactly as `detect_defects` reported it.
+    /// NOT a node id — the `heal:…` id a defect carries in `detect_defects`.
     pub defect_id: String,
     /// The defect's `affected_ids`, so the review is reachable from the design.
     #[serde(default)]
@@ -3460,6 +3534,7 @@ pub struct AcknowledgeDefectReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct DefectIdReq {
+    /// NOT a node id — the `heal:…` key that `detect_defects` reports and `reviewed_defects` lists.
     pub defect_id: String,
 }
 
@@ -3794,6 +3869,7 @@ pub struct FindToolsReq {
 #[serde(deny_unknown_fields)]
 pub struct PropagateFromReq {
     /// Seed node ids to propagate impact from.
+    /// Any node type — the blast radius is walked outward from these.
     pub seed_ids: Vec<String>,
     /// Max traversal depth (default 5).
     #[serde(default)]
@@ -4165,6 +4241,8 @@ pub struct ProposeAllocationReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct DimensionDriftReq {
+    /// The assessed node — any node type carrying `HAS_OBSERVATION` edges
+    /// to `DimensionObservation` records.
     pub target_id: String,
     /// Quality dimension key (e.g. `reliability`, `security`).
     #[schemars(schema_with = "crate::enum_schema::dimension_assessment_dimension_req")]
@@ -4245,6 +4323,7 @@ pub struct RecordFindingReq {
     /// a finding naming a node that does not exist is refused rather than
     /// stored, because a record about something the design does not have is
     /// not a record.
+    /// Its type is `node_type`, resolved from the id when omitted.
     #[serde(alias = "subject", alias = "target_id")]
     pub subject_id: String,
     /// Optional type of the subject; resolved from the id when omitted, and
@@ -4383,6 +4462,7 @@ pub struct RecordChangeReq {
     /// guessed — pass it then.
     #[serde(default)]
     pub target_type: Option<String>,
+    /// The node the change is about; its type is `target_type`.
     pub target_id: String,
     /// Change type key (e.g. `new_feature`).
     #[schemars(schema_with = "crate::enum_schema::change_event_change_type_req")]
@@ -4601,6 +4681,7 @@ pub struct SetDecisionStatusReq {
 pub struct RelationCandidatesReq {
     /// The node to find candidates FOR — usually an idea from
     /// `unreviewed_ideas`.
+    /// Its type is `node_type`, resolved from the id when omitted.
     pub node_id: String,
     /// Its type (e.g. `Decision`).
     /// Optional since 2026-09-06: resolved from the id when omitted (the id
@@ -4662,6 +4743,8 @@ pub struct AlternativesForReq {
 pub struct CollapseDecisionReq {
     pub decision_id: String,
     /// The winning alternative's id.
+    /// The winning alternative's `Artifact` id, as listed by
+    /// `alternatives_for`.
     pub winner_id: String,
     /// Why — recorded in the Decision's alternatives field with the outcome.
     #[serde(default)]
@@ -4687,6 +4770,8 @@ pub struct AnswerQuestionReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct WithdrawQuestionReq {
+    /// NOT a node id, and NOT a question id — the `gap_id` the question was
+    /// asked ABOUT, as carried by `open_questions`.
     pub gap_id: String,
 }
 

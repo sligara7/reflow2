@@ -26,7 +26,7 @@
         ]
       },
       "seed_ids": {
-        "description": "Seed node ids to propagate impact from.",
+        "description": "Seed node ids to propagate impact from.\nAny node type — the blast radius is walked outward from these.",
         "items": {
           "type": "string"
         },

@@ -8,9 +8,11 @@
     "additionalProperties": false,
     "properties": {
       "from_id": {
+        "description": "The `Capability` that satisfies it.",
         "type": "string"
       },
       "to_id": {
+        "description": "The `Requirement` being satisfied.",
         "type": "string"
       }
     },

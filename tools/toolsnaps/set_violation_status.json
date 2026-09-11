@@ -8,6 +8,7 @@
     "additionalProperties": false,
     "properties": {
       "element_id": {
+        "description": "The node in violation — the SOURCE of an existing `VIOLATES_RULE` edge.\nAny node type, resolved from the id. Unlike `violates_rule`, this\nrequest carries no `element_type`: the edge already exists and is what\nis being triaged, so a status for a pair with no edge is REFUSED.",
         "type": "string"
       },
       "rationale": {
@@ -19,6 +20,7 @@
         ]
       },
       "rule_id": {
+        "description": "The `EnvironmentRule` of the violation being triaged.\n🛑 NOT a `DesignRule` — see `violates_rule.rule_id`.",
         "type": "string"
       },
       "status": {

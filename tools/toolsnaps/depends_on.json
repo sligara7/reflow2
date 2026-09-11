@@ -8,9 +8,11 @@
     "additionalProperties": false,
     "properties": {
       "from_id": {
+        "description": "The `Component` that depends.",
         "type": "string"
       },
       "to_id": {
+        "description": "The `Component` depended on.",
         "type": "string"
       }
     },

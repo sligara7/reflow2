@@ -8,9 +8,11 @@
     "additionalProperties": false,
     "properties": {
       "from_id": {
+        "description": "The `Capability` being allocated.",
         "type": "string"
       },
       "to_id": {
+        "description": "The `Component` it is allocated to.",
         "type": "string"
       }
     },

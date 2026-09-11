@@ -11,6 +11,7 @@
         "type": "string"
       },
       "seed_id": {
+        "description": "The `seed_id` of the claim being released; any node type.",
         "type": "string"
       }
     },

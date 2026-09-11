@@ -11,9 +11,11 @@
         "type": "string"
       },
       "from_id": {
+        "description": "The source node of the edge; any node type, resolved from the id.",
         "type": "string"
       },
       "to_id": {
+        "description": "The target node of the edge; any node type, resolved from the id.",
         "type": "string"
       }
     },

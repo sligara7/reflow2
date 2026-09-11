@@ -20,6 +20,7 @@
         "type": "string"
       },
       "from_id": {
+        "description": "The node being attributed; its type is `from_type`.",
         "type": "string"
       },
       "from_type": {

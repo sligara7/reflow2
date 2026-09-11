@@ -8,6 +8,7 @@
     "additionalProperties": false,
     "properties": {
       "defect_id": {
+        "description": "NOT a node id — the `heal:…` key that `detect_defects` reports and `reviewed_defects` lists.",
         "type": "string"
       }
     },

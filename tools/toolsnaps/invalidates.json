@@ -16,6 +16,7 @@
         ]
       },
       "finding_id": {
+        "description": "The finding being invalidated; its type is `finding_type`.",
         "type": "string"
       },
       "finding_type": {
@@ -27,6 +28,7 @@
         ]
       },
       "from_id": {
+        "description": "The node doing the invalidating; its type is `from_type`.",
         "type": "string"
       },
       "from_type": {

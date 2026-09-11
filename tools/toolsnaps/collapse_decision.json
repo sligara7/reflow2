@@ -20,7 +20,7 @@
         ]
       },
       "winner_id": {
-        "description": "The winning alternative's id.",
+        "description": "The winning alternative's id.\nThe winning alternative's `Artifact` id, as listed by\n`alternatives_for`.",
         "type": "string"
       }
     },

@@ -8,9 +8,11 @@
     "additionalProperties": false,
     "properties": {
       "from_id": {
+        "description": "The `Component` providing the contract.",
         "type": "string"
       },
       "to_id": {
+        "description": "The `Interface` it provides.",
         "type": "string"
       }
     },

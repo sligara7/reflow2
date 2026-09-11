@@ -11,6 +11,7 @@
         "type": "string"
       },
       "from_id": {
+        "description": "The source node; its type is `from_type`.",
         "type": "string"
       },
       "from_type": {
@@ -30,6 +31,7 @@
         ]
       },
       "to_id": {
+        "description": "The target node; its type is `to_type`.",
         "type": "string"
       },
       "to_type": {
