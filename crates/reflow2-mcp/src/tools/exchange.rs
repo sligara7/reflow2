@@ -604,10 +604,29 @@ impl ReflowService {
         Parameters(req): Parameters<RecallResolutionsReq>,
     ) -> Result<CallToolResult, McpError> {
         let g = self.graph.read().await;
-        ok_json(
-            g.recall_resolutions(&req.resolution_keys)
-                .map_err(dyno_err)?,
-        )
+        let recalled = g
+            .recall_resolutions(&req.resolution_keys)
+            .map_err(dyno_err)?;
+        // A BARE `{}` ECHOED NOTHING — not the keys asked about, not a count,
+        // so "no resolution recorded" and "I did not understand your keys"
+        // shared one reply. Both are named now.
+        let not_recorded: Vec<&String> = req
+            .resolution_keys
+            .iter()
+            .filter(|k| !recalled.contains_key(*k))
+            .collect();
+        ok_json(serde_json::json!({
+            "count": recalled.len(),
+            "asked_about": req.resolution_keys.len(),
+            "recalled": recalled,
+            "not_recorded": not_recorded,
+            "empty_because": (recalled.is_empty()).then(|| format!(
+                "none of the {} key(s) asked about has a recorded resolution. A resolution is \
+                 written when apply_merge settles a conflict, and the key is the conflict's \
+                 CONTENT — so a key from a different conflict shape will never match.",
+                req.resolution_keys.len()
+            )),
+        }))
     }
 
     #[tool(
@@ -805,7 +824,27 @@ impl ReflowService {
         Parameters(req): Parameters<AlternativesForReq>,
     ) -> Result<CallToolResult, McpError> {
         let g = self.graph.read().await;
-        ok_json(g.alternatives_for(&req.decision_id).map_err(dyno_err)?)
+        let exists = g
+            .get_node(reflow2_core::nodes::node::DECISION, &req.decision_id)
+            .map_err(dyno_err)?
+            .is_some();
+        if !exists {
+            return Err(McpError::invalid_params(
+                format!(
+                    "no Decision {:?} in this design, so it can hold no alternatives. An empty \
+                     list would read as \"this decision point has none\", which is a different \
+                     fact.",
+                    req.decision_id
+                ),
+                None,
+            ));
+        }
+        ok_json_or_why(
+            g.alternatives_for(&req.decision_id).map_err(dyno_err)?,
+            "this Decision exists and no Artifact is GOVERNED_BY it, so no alternative has been \
+             registered under it (register_alternative does that) — the decision point is real \
+             and unforked",
+        )
     }
 
     #[tool(

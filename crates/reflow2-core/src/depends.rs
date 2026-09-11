@@ -396,10 +396,25 @@ impl DesignGraph {
              on nothing\" — an empty declaration set is indistinguishable from one never written, \
              which is why it is stated rather than left to inference."
                 .to_string()
+        } else if observed.is_empty() {
+            // NOTHING OBSERVED IS NOT AGREEMENT. `findings` is empty both when
+            // the build agreed and when there was no build reading to disagree
+            // WITH, and the reply claimed agreement for both — while the
+            // `observed` parameter explicitly offers being omitted "to report
+            // the declarations without checking them". A caller who omits it
+            // was told the build agreed (measured 2026-09-11).
+            format!(
+                "{} dependency(ies) declared and NOTHING WAS OBSERVED, so nothing was checked \
+                 against the build. This is the declarations read back, never a statement that \
+                 they hold: pass `observed`, read fresh from the build files, to find out.",
+                declared.len()
+            )
         } else if findings.is_empty() {
             format!(
-                "{} dependency(ies) declared, and the build agrees with every one.",
-                declared.len()
+                "{} dependency(ies) declared, and the build agrees with every one \
+                 ({} observed).",
+                declared.len(),
+                observed.len()
             )
         } else {
             format!(

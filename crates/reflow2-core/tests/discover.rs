@@ -151,13 +151,31 @@ fn an_opted_in_but_empty_directory_says_so() {
 
 /// Nothing there is nothing there — the one case where "no design" is the whole
 /// truth.
+///
+/// ⚠️ THE PROSE CHANGED 2026-09-11 AND THE PIN MOVED WITH IT, deliberately.
+/// It used to read exactly "no design here." That was fine while `absent` only
+/// ever meant "nothing, and no `.reflow2` either" — but `opted_in` was decided
+/// by whether the graph path's PARENT existed, so any path under any real
+/// directory read `opted_in` instead, and `absent` was unreachable for them.
+/// Fixing that (a `.reflow2` parent is now required) routes those paths here,
+/// where the reading must say WHY it is not an opt-in. The state assertion is
+/// unchanged; only the sentence grew.
 #[test]
 fn a_path_with_nothing_is_absent() {
     let dir = scratch("absent");
     let store = dir.join("nowhere").join("graph");
     let d = describe_at(store.to_str().unwrap());
     assert_eq!(d.state, DesignPathState::Absent, "{d:?}");
-    assert_eq!(d.reading, "no design here.");
+    assert!(
+        d.reading.starts_with("no design here"),
+        "the terse verdict stays first: {}",
+        d.reading
+    );
+    assert!(
+        d.reading.contains(".reflow2"),
+        "and it says why this is not an opt-in: {}",
+        d.reading
+    );
 }
 
 /// The sweep case this is built for: several paths, mixed states, one answer
@@ -188,4 +206,46 @@ fn a_sweep_answers_every_path_including_the_uninteresting_ones() {
     assert_eq!(results[2].state, DesignPathState::Absent);
     // Each row carries its own path, so a caller need not track correspondence.
     assert_eq!(results[1].path, b.to_str().unwrap());
+}
+
+/// A PATH THAT DOES NOT EXIST IS `absent`, NOT `opted_in`.
+///
+/// `opted_in` is computed from whether the graph path's PARENT exists, which
+/// is right for the canonical `<root>/.reflow2/graph` — the project made a
+/// `.reflow2` directory and has not written a design yet. It is wrong for any
+/// other path: given `/repo/does-not-exist`, the parent is the repo, which
+/// exists, so the reply read `opted_in` with the prose *"the .reflow2
+/// directory exists and nothing has been written yet"* — a false statement
+/// about the filesystem, in the tool whose stated job is answering "which
+/// design am I in?". Measured 2026-09-11; `absent` is defined in the tool's
+/// own legend and was unreachable for this case.
+#[test]
+fn a_path_whose_parent_is_not_a_reflow2_directory_is_absent() {
+    let tmp = tempfile::tempdir().expect("tmp");
+    let bogus = tmp.path().join("does-not-exist");
+    let d = describe_at(bogus.to_str().expect("utf8"));
+    assert_eq!(
+        d.state,
+        DesignPathState::Absent,
+        "a path with no `.reflow2` parent must be absent, got {:?} — reading: {}",
+        d.state,
+        d.reading
+    );
+    assert!(
+        !d.reading.contains(".reflow2 directory exists"),
+        "the reading must not claim a directory exists that does not: {}",
+        d.reading
+    );
+}
+
+/// And the canonical shape still reads `opted_in`: a real `.reflow2` directory
+/// with no graph written yet is exactly what that state is for.
+#[test]
+fn a_real_reflow2_directory_with_no_graph_is_opted_in() {
+    let tmp = tempfile::tempdir().expect("tmp");
+    let dot = tmp.path().join(".reflow2");
+    std::fs::create_dir_all(&dot).expect("mkdir");
+    let graph = dot.join("graph");
+    let d = describe_at(graph.to_str().expect("utf8"));
+    assert_eq!(d.state, DesignPathState::OptedIn, "reading: {}", d.reading);
 }

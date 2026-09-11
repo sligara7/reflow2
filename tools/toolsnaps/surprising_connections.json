@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": true
   },
-  "description": "Surprising cross-community couplings (mined from the graph). Ask for this when you want to see unexpected or surprising couplings between parts that should be separate — cross-community links the design did not intend.",
+  "description": "Coupling edges that tie together parts the design otherwise keeps apart (DETECT). Leiden groups the design network into communities; a LATERAL coupling — `DEPENDS_ON` or `PART_OF_FLOW` only — whose ends land in different communities is surprising, because those parts are otherwise structurally distant. The vertical golden-thread edges are excluded by design: a cross-community SATISFIES is the intended structure, not a surprise, and PROVIDES/CONSUMES are excluded too or every properly-declared contract would read as a bridge — the discipline penalising itself. EVERY FINDING IS EXPLAINED: `reasons` draws from `bridges separate communities`, `sole bridge between these communities`, `peripheral node reaches a hub`, `coupled through a shared contract`, and `via` names the Interface when one is involved. RANKED BY `surprise`, WHICH IS RELATIVE, NOT ABSOLUTE: it amplifies rarity (the sole bridge between two communities outranks one of many) and periphery-to-hub reach. There is no threshold and no unit — compare rows against each other, never against a number. It reads two ways and does not choose: a hidden coupling worth removing, or a creative link the design leans on. Ask for this when you want to see unexpected or surprising couplings between parts that should be separate — cross-community links the design did not intend.",
   "inputSchema": {
     "properties": {},
     "type": "object"

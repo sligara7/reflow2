@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": true
   },
-  "description": "Where did each capability's evidence actually come from? Lists the environments its PASSING checks were performed in, and flags the ones proven ONLY in simulation — the risk that simulating first is supposed to buy down, which only works if you can still tell model from reality afterwards. REPORTS, NEVER RANKS: it will not claim lab beats staging beats field, because which of those is 'more real' is domain-specific and a wrong ordering gets worked around rather than corrected. A check naming no environment is counted as UNPLACED, never assumed real — silence is not evidence of the field.",
+  "description": "Where did each capability's evidence actually come from? Lists the environments its PASSING checks were performed in, and flags the ones proven ONLY in simulation — the risk that simulating first is supposed to buy down, which only works if you can still tell model from reality afterwards. REPORTS, NEVER RANKS: it will not claim lab beats staging beats field, because which of those is 'more real' is domain-specific and a wrong ordering gets worked around rather than corrected. A check naming no environment is counted as UNPLACED, never assumed real — silence is not evidence of the field. ALSO RETURNS A SECOND AXIS THE NAME DOES NOT SUGGEST: `conformance` counts artifacts by whether anyone CONFIRMED they still do what their target requires (`unchecked` / `reviewed` / `verified`) — registering a file and checking it are different acts. `with_unplaced_checks` and `with_unscoped_checks` count capabilities whose evidence names no environment and no swept parameters.",
   "inputSchema": {
     "properties": {},
     "type": "object"

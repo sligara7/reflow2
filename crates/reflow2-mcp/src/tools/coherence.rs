@@ -602,15 +602,17 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "The confirmation ledger (BL-35): for every capability with built \
-                       artifacts, when was its claim last checked against reality, and what was \
-                       the answer — drift events and whether each was resolved, accept claims \
-                       split into design_holds vs design_updated, first baselines counted \
-                       apart from both (they are not accepts), clean-reconcile confirmations \
-                       with when they last happened, design edits on the record, and a state \
-                       per capability: drifting (an observed divergence is unanswered), \
-                       confirmed (examined, with the claim history visible), or unexamined \
-                       (nobody has ever looked — NOT the same as confirmed).",
+        description = "The confirmation ledger (BL-35): for every capability with built artifacts, when was its \
+                       claim last checked against reality, and what was the answer — drift events and whether \
+                       each was resolved, accept claims split into design_holds vs design_updated, first \
+                       baselines counted apart from both (they are not accepts), clean-reconcile confirmations \
+                       with when they last happened, design edits on the record, and a state per capability: \
+                       drifting (an observed divergence is unanswered), confirmed (examined, with the claim \
+                       history visible), or unexamined (nobody has ever looked — NOT the same as confirmed). \
+                       TWO FRESHNESS COUNTS RIDE ALONGSIDE THE THREE STATES: `stale_verification` is claims \
+                       whose check last ran before the artifact last moved, and \
+                       `unknown_verification_freshness` is those where one of the two dates is missing so \
+                       neither can be said — never read the second as fresh.",
         annotations(read_only_hint = true)
     )]
     pub async fn confirmation_ledger(&self) -> Result<CallToolResult, McpError> {
@@ -866,9 +868,22 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Surprising cross-community couplings (mined from the graph). Ask for this when you want \
-                       to see unexpected or surprising couplings between parts that should be separate — \
-                       cross-community links the design did not intend.",
+        description = "Coupling edges that tie together parts the design otherwise keeps apart (DETECT). Leiden \
+                       groups the design network into communities; a LATERAL coupling — `DEPENDS_ON` or \
+                       `PART_OF_FLOW` only — whose ends land in different communities is surprising, because \
+                       those parts are otherwise structurally distant. The vertical golden-thread edges are \
+                       excluded by design: a cross-community SATISFIES is the intended structure, not a \
+                       surprise, and PROVIDES/CONSUMES are excluded too or every properly-declared contract \
+                       would read as a bridge — the discipline penalising itself. EVERY FINDING IS EXPLAINED: \
+                       `reasons` draws from `bridges separate communities`, `sole bridge between these \
+                       communities`, `peripheral node reaches a hub`, `coupled through a shared contract`, and \
+                       `via` names the Interface when one is involved. RANKED BY `surprise`, WHICH IS RELATIVE, \
+                       NOT ABSOLUTE: it amplifies rarity (the sole bridge between two communities outranks one \
+                       of many) and periphery-to-hub reach. There is no threshold and no unit — compare rows \
+                       against each other, never against a number. It reads two ways and does not choose: a \
+                       hidden coupling worth removing, or a creative link the design leans on. Ask for this \
+                       when you want to see unexpected or surprising couplings between parts that should be \
+                       separate — cross-community links the design did not intend.",
         annotations(read_only_hint = true)
     )]
     pub async fn surprising_connections(&self) -> Result<CallToolResult, McpError> {
@@ -901,7 +916,44 @@ impl ReflowService {
     ) -> Result<CallToolResult, McpError> {
         let dim: Dimension = parse_enum(&req.dimension, "dimension")?;
         let g = self.graph.read().await;
-        ok_json(g.dimension_drift(&req.target_id, dim).map_err(dyno_err)?)
+        let drift = g.dimension_drift(&req.target_id, dim).map_err(dyno_err)?;
+        // `{"value": null}` answered THREE different questions identically:
+        // the node is not here, it carries no score on this dimension, or it
+        // carries exactly one and a trend needs two.
+        if drift.is_none() {
+            let known = !g
+                .node_types_holding(&req.target_id)
+                .map_err(dyno_err)?
+                .is_empty();
+            let scored = g
+                .outgoing(
+                    &req.target_id,
+                    Some(reflow2_core::nodes::edge::HAS_OBSERVATION),
+                )
+                .map_err(dyno_err)?
+                .len();
+            let why = if !known {
+                format!(
+                    "no node with id {:?} exists under any declared type — this is \"not in this \
+                     design\", not \"no drift\".",
+                    req.target_id
+                )
+            } else if scored == 0 {
+                format!(
+                    "{:?} exists and carries no DimensionObservation at all, so no dimension can \
+                     show a trend — nothing has ever been scored on it.",
+                    req.target_id
+                )
+            } else {
+                format!(
+                    "{:?} carries {scored} observation(s) but not two dated scores on \
+                     `{}`, and a trend needs two points.",
+                    req.target_id, req.dimension
+                )
+            };
+            return ok_json(serde_json::json!({ "value": JsonValue::Null, "empty_because": why }));
+        }
+        ok_json(drift)
     }
 
     #[tool(
@@ -985,12 +1037,61 @@ impl ReflowService {
                        re-reading when the design shifts.",
         annotations(read_only_hint = true)
     )]
-    pub async fn reviewed_gaps(&self) -> Result<CallToolResult, McpError> {
+    pub async fn reviewed_gaps(
+        &self,
+        Parameters(req): Parameters<crate::service::ReviewedGapsReq>,
+    ) -> Result<CallToolResult, McpError> {
         let g = self.graph.read().await;
-        ok_json_or_why(
-            g.reviewed_gaps().map_err(dyno_err)?,
-            "no gap has been accepted with acknowledge_gap; open ones are in detect_gaps",
-        )
+        let reviewed = g.reviewed_gaps().map_err(dyno_err)?;
+        let of = reviewed.len();
+        let budget = req.budget_chars.unwrap_or(30_000);
+        let full = serde_json::to_value(&reviewed).map_err(crate::service::ser_err)?;
+        let chars = full.to_string().len();
+        if chars <= budget {
+            return ok_json_or_why(
+                full,
+                "no gap has been accepted with acknowledge_gap; open ones are in detect_gaps",
+            );
+        }
+        // Over budget: keep every row and every id, trim the PROSE. The counts
+        // are the part a reader acts on; the reasons are what made this reply
+        // 292,947 characters and unreadable by the client it is for.
+        let trimmed: Vec<serde_json::Value> = reviewed
+            .iter()
+            .map(|r| {
+                let reason: String = r.reason.chars().take(240).collect();
+                serde_json::json!({
+                    "gap_id": r.gap_id,
+                    "decision_id": r.decision_id,
+                    "retired": r.retired,
+                    "reason": if r.reason.chars().count() > 240 {
+                        format!("{reason}…")
+                    } else {
+                        reason
+                    },
+                })
+            })
+            .collect();
+        let body = serde_json::json!({
+            "count": of,
+            "items": trimmed,
+            "budget": {
+                "detail": "reasons_trimmed",
+                "budget_chars": budget,
+                "listed": of,
+                "of": of,
+                "full_chars": chars,
+                "note": format!(
+                    "EVERY reviewed gap is listed and none is hidden — what was withheld is \
+                     PROSE: each acknowledgement's reason is cut to 240 characters and the gap \
+                     detail dropped, because the full answer is {chars} characters against a \
+                     budget of {budget} and a client that refuses the payload shows the reader \
+                     nothing at all. Raise `budget_chars` for the whole reasons, or read one \
+                     with get_node on its `decision_id`."
+                ),
+            },
+        });
+        ok_json(body)
     }
 
     #[tool(

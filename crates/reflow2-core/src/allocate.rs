@@ -150,6 +150,20 @@ pub struct ProposedAllocation {
     pub unweighted_dependencies: usize,
     /// Always true — a proposal to review, not an applied allocation.
     pub requires_human_review: bool,
+    /// WHY THIS PARTITION MAY MEAN NOTHING, when it does not — present only
+    /// when the coupling graph is too thin for community detection to say
+    /// anything, so its presence is the signal.
+    ///
+    /// Leiden partitions a graph by its EDGES. Given a design whose
+    /// capabilities barely depend on one another it returns one cluster per
+    /// capability — the input list wearing cluster ids — and every modularity
+    /// score is arithmetic over nothing. Measured on reflow2's own design
+    /// 2026-09-11: 238 clusters for 239 capabilities from ONE `DEPENDS_ON`
+    /// edge, reported with `requires_human_review: true` and no word that the
+    /// clustering had nothing to work with. Its sibling `propose_heal` says
+    /// "none to examine — this zero is not a pass"; this is that sentence.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub not_partitionable: Option<String>,
 }
 
 impl DesignGraph {
@@ -324,7 +338,7 @@ impl DesignGraph {
                 grouped.entry(label).or_default().push(c.clone());
             }
         }
-        let clusters = grouped
+        let clusters: Vec<ProposedComponent> = grouped
             .into_iter()
             .map(|(label, mut ids)| {
                 ids.sort();
@@ -340,7 +354,31 @@ impl DesignGraph {
         let (_, _, proposed_modularity) = score_modularity(&proposed, &deps);
         let (_, _, current_modularity) = score_modularity(&current_map, &deps);
 
+        // A partition is only as meaningful as the edges it was computed over.
+        let singletons = clusters
+            .iter()
+            .filter(|c| c.capability_ids.len() == 1)
+            .count();
+        let not_partitionable =
+            (deps.len() < caps.len() / 4 || singletons * 4 >= clusters.len() * 3).then(|| {
+                format!(
+                    "THIS PARTITION IS ARITHMETIC OVER TOO FEW EDGES TO MEAN ANYTHING. Leiden \
+                     groups by DEPENDS_ON between capabilities, and this design has {} such \
+                     edge(s) across {} capability(ies) — so {} of the {} cluster(s) hold exactly \
+                     one capability, which is the input list wearing cluster ids. The modularity \
+                     figures are computed over the same {} edge(s) and carry no more weight. \
+                     Record the couplings you know about (depends_on) and ask again; do not read \
+                     this as \"the design is already optimally decomposed\".",
+                    deps.len(),
+                    caps.len(),
+                    singletons,
+                    clusters.len(),
+                    deps.len(),
+                )
+            });
+
         Ok(ProposedAllocation {
+            not_partitionable,
             clusters,
             leiden_modularity: communities.modularity,
             proposed_modularity,

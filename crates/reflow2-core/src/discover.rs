@@ -151,9 +151,19 @@ pub fn describe_at(graph_path: &str) -> DesignAtPath {
                 .to_string(),
         },
         None => {
-            let opted_in = Path::new(graph_path)
-                .parent()
-                .is_some_and(|d| !d.as_os_str().is_empty() && d.exists());
+            // OPTED IN MEANS A `.reflow2` DIRECTORY IS THERE AND EMPTY — the
+            // project made the opt-in gesture and has not written a design.
+            // Testing only that the parent EXISTS made any path under any real
+            // directory read `opted_in`: `/repo/does-not-exist` has `/repo` as
+            // its parent, so the reply claimed ".reflow2 directory exists"
+            // about a directory that does not, in the tool whose job is
+            // answering "which design am I in?". `absent` is in this enum and
+            // was unreachable for that case (measured 2026-09-11).
+            let opted_in = Path::new(graph_path).parent().is_some_and(|d| {
+                !d.as_os_str().is_empty()
+                    && d.exists()
+                    && d.file_name().is_some_and(|n| n == ".reflow2")
+            });
             DesignAtPath {
                 path: graph_path.to_string(),
                 state: if opted_in {
@@ -171,7 +181,9 @@ pub fn describe_at(graph_path: &str) -> DesignAtPath {
                      written yet. Starting a design here is expected."
                         .to_string()
                 } else {
-                    "no design here.".to_string()
+                    "no design here: nothing is at this path, and its parent is not a \
+                     `.reflow2` directory, so nobody has opted in here either."
+                        .to_string()
                 },
             }
         }
