@@ -108,3 +108,165 @@ fn a_memoised_sweep_reports_the_same_scope_as_a_fresh_one() {
     );
     assert_eq!(fresh.defects.len(), memoised.defects.len());
 }
+
+/// THE SAME INVARIANT, ONE SCAN OVER: the whole-network scans a region walk
+/// needs are computed once per graph state, not once per walk.
+///
+/// MEASURED 2026-09-11: `design_regions` calls `scope_region` for every Project
+/// and Component — 109 seeds on reflow2's own design — and each calls
+/// `propagate_from`. The tool cost >300 s twice and >150 s again, wedging the
+/// shared daemon each time, while its own description bills it as *"the one
+/// orientation read that asks for no seed… call it at check-in"*.
+///
+/// ⭐ THE COST WAS NOT WHERE IT LOOKED. Two hypotheses were measured and
+/// REFUTED before the third held: the node-type index (memoised here too —
+/// real, but a full build is only ~500 ms across 28 types), and the walk
+/// itself (indexed prefix scans, cheap). `propagate_from` stayed at ~4.3 s on
+/// EVERY call, unchanged by repetition, which is what ruled both out. The
+/// cause is the last line before it returns: it rebuilt the design network and
+/// re-ran an all-pairs BETWEENNESS over 4,176 nodes and 24,242 edges, purely
+/// to rank the impacted set. After memoising it: `propagate_from` 4,815 ms
+/// cold then ~250 ms, and `design_regions` >300 s → 29.6 s.
+///
+/// The argument is `con:a-sweep-builds-its-network-a-fixed-number-of-times`
+/// verbatim, one tool over: *"the network has to be constructed once and
+/// interrogated N times; nothing about the question requires reconstructing it
+/// per candidate."* The graph does not change between seeds — only which node
+/// the walk starts from.
+///
+/// STRUCTURE, NOT DURATION, for the reason this file's header gives.
+#[test]
+fn many_region_walks_build_the_node_type_index_once() {
+    let mut g = DesignGraph::open_in_memory().expect("in-memory graph");
+    for i in 0..12 {
+        let id = format!("cmp:c{i}");
+        g.add_component(&id, &id, "a part", None).unwrap();
+    }
+    let before = g.index_builds();
+    for i in 0..12 {
+        g.scope_region(&format!("cmp:c{i}"), 2).expect("region");
+    }
+    let built = g.index_builds() - before;
+    assert!(
+        built <= 1,
+        "12 region walks with no write between them must share ONE node-type index, built {built}"
+    );
+}
+
+/// COUNTERWEIGHT: a write invalidates it, so a walk after a write sees the new
+/// node. A memo that answered from a stale index would hide a node that exists.
+#[test]
+fn a_write_rebuilds_the_index_and_the_next_walk_sees_the_new_node() {
+    let mut g = DesignGraph::open_in_memory().expect("in-memory graph");
+    g.add_component("cmp:a", "A", "does a", None).unwrap();
+    g.scope_region("cmp:a", 2).expect("warm the index");
+
+    g.add_component("cmp:b", "B", "does b", None).unwrap();
+    g.depends_on("cmp:a", "cmp:b").unwrap();
+    let region = g.scope_region("cmp:a", 2).expect("region after write");
+    assert!(
+        region.contains("cmp:b"),
+        "a node added after the index was built must still be reachable: {region:?}"
+    );
+}
+
+/// The betweenness memo, asserted the same structural way.
+#[test]
+fn many_walks_compute_network_betweenness_once() {
+    let mut g = DesignGraph::open_in_memory().expect("in-memory graph");
+    for i in 0..10 {
+        let id = format!("cmp:n{i}");
+        g.add_component(&id, &id, "a part", None).unwrap();
+    }
+    for i in 0..9 {
+        g.depends_on(&format!("cmp:n{i}"), &format!("cmp:n{}", i + 1))
+            .unwrap();
+    }
+    let before = g.betweenness_builds();
+    for i in 0..10 {
+        g.scope_region(&format!("cmp:n{i}"), 2).expect("region");
+    }
+    let built = g.betweenness_builds() - before;
+    assert!(
+        built <= 1,
+        "ten region walks must share ONE betweenness computation, ran {built}"
+    );
+}
+
+/// COUNTERWEIGHT: a write invalidates the betweenness too, so a walk after a
+/// structural change ranks against the NEW network rather than the old one.
+#[test]
+fn a_write_rebuilds_the_betweenness() {
+    let mut g = DesignGraph::open_in_memory().expect("in-memory graph");
+    g.add_component("cmp:a", "A", "does a", None).unwrap();
+    g.add_component("cmp:b", "B", "does b", None).unwrap();
+    g.depends_on("cmp:a", "cmp:b").unwrap();
+    g.scope_region("cmp:a", 2).expect("warm");
+    let after_warm = g.betweenness_builds();
+
+    g.add_component("cmp:c", "C", "does c", None).unwrap();
+    g.depends_on("cmp:b", "cmp:c").unwrap();
+    g.scope_region("cmp:a", 2).expect("after write");
+    assert!(
+        g.betweenness_builds() > after_warm,
+        "a write must invalidate the memo and force a rebuild"
+    );
+}
+
+/// THE THIRD SCAN, AND THE ONE THAT WAS THE REAL COST: the adjacency is read
+/// once per graph state, not once per node VISIT.
+///
+/// MEASURED 2026-09-11, after the betweenness memo had already taken
+/// `design_regions` from never-returning to 29.6 s. `impact_neighbors` did TWO
+/// store prefix scans per visited node, and region walks OVERLAP — the tool's
+/// own coverage block says 589 of 846 covered nodes lie in more than one
+/// region. Counted: 108 walks made **4,502 node visits over 589 distinct
+/// nodes, 7.6x redundant**, at ~4 ms a visit. So 18.0 s of the 21.6 s spent
+/// walking was re-reading adjacency already read.
+///
+/// Reading every edge in ONE scan (the outgoing keys are prefixed by graph id)
+/// and serving every visit from it: `propagate_from` 250 ms → 60 ms warm, and
+/// `design_regions` 29.6 s → 12.5 s.
+///
+/// 🛑 THIS ASSERTION IS WHAT STOPS THE MEMO BEING REMOVED. Verified to fail
+/// with the memo bypassed: rebuilding per call makes this 10, not 1.
+#[test]
+fn many_walks_read_the_adjacency_once() {
+    let mut g = DesignGraph::open_in_memory().expect("in-memory graph");
+    for i in 0..10 {
+        let id = format!("cmp:adj{i}");
+        g.add_component(&id, &id, "a part", None).unwrap();
+    }
+    for i in 0..9 {
+        g.depends_on(&format!("cmp:adj{i}"), &format!("cmp:adj{}", i + 1))
+            .unwrap();
+    }
+    let before = g.adjacency_builds();
+    for i in 0..10 {
+        g.scope_region(&format!("cmp:adj{i}"), 2).expect("region");
+    }
+    let built = g.adjacency_builds() - before;
+    assert!(
+        built <= 1,
+        "ten region walks must share ONE adjacency read, built {built}"
+    );
+}
+
+/// COUNTERWEIGHT, and the one that makes an adjacency cache safe: a new EDGE
+/// must be visible to the next walk. An adjacency that outlived a write would
+/// hide a real dependency, which is worse than any latency.
+#[test]
+fn a_new_edge_is_visible_to_the_next_walk() {
+    let mut g = DesignGraph::open_in_memory().expect("in-memory graph");
+    g.add_component("cmp:x", "X", "does x", None).unwrap();
+    g.add_component("cmp:y", "Y", "does y", None).unwrap();
+    let before = g.scope_region("cmp:x", 2).expect("region");
+    assert!(!before.contains("cmp:y"), "not linked yet: {before:?}");
+
+    g.depends_on("cmp:x", "cmp:y").unwrap();
+    let after = g.scope_region("cmp:x", 2).expect("region after the edge");
+    assert!(
+        after.contains("cmp:y"),
+        "an edge written after the adjacency was cached must still be walked: {after:?}"
+    );
+}
