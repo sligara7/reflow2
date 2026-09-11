@@ -78,6 +78,88 @@ pub fn stale_client_hint(message: &str) -> String {
     )
 }
 
+/// Turn a deserialiser's bare `missing field` string into a refusal that names
+/// the tool, the field, and what the schema says the field is FOR.
+///
+/// # Why this lives beside [`stale_client_hint`] and not in 139 handlers
+///
+/// The refusal is produced by the deserialiser BEFORE any handler runs, so no
+/// handler could improve it. Its sibling case (`unknown field`) was intercepted
+/// in `call_tool` for exactly that reason; this is the twin that was never
+/// written. **139 of 180 served tools declare at least one required parameter,
+/// across 230 required parameters**, and until now every one of them answered a
+/// missing argument with a string naming neither the tool nor the obligation.
+///
+/// # It names EVERY required field, on purpose
+///
+/// Serde reports only the first field it finds missing, so a caller who omitted
+/// three learns about them one refusal at a time — a round trip each. The
+/// published `required` list is right here, so the whole obligation is stated
+/// once. ⚠️ The list is what the tool REQUIRES, not what this call was missing:
+/// the deserialiser does not say which others were supplied, and claiming they
+/// were all absent would be a guess dressed as a diagnosis.
+///
+/// Anything that is not a missing-field deserialisation error is returned
+/// unchanged — this must never rewrite an ordinary refusal.
+pub fn missing_field_hint(message: &str, tool: &str, schema: &serde_json::Value) -> String {
+    let Some(field) = message
+        .split_once("missing field `")
+        .and_then(|(_, rest)| rest.split_once('`'))
+        .map(|(f, _)| f)
+    else {
+        return message.to_string();
+    };
+
+    /// Descriptions in this schema run to paragraphs; a refusal wants the
+    /// opening sentence, not the essay. The full text is one `tools/list` away.
+    fn brief(schema: &serde_json::Value, field: &str) -> Option<String> {
+        let d = schema["properties"][field]["description"].as_str()?;
+        let d = d.split_whitespace().collect::<Vec<_>>().join(" ");
+        Some(if d.chars().count() > 240 {
+            let cut: String = d.chars().take(240).collect();
+            format!("{}…", cut.trim_end())
+        } else {
+            d
+        })
+    }
+
+    let required: Vec<String> = schema["required"]
+        .as_array()
+        .map(|a| {
+            a.iter()
+                .filter_map(|v| v.as_str().map(String::from))
+                .collect()
+        })
+        .unwrap_or_default();
+
+    let mut out = format!("`{tool}` was called without the required argument `{field}`");
+    match brief(schema, field) {
+        Some(d) => out.push_str(&format!(" — {d}\n")),
+        // A required field with no published description is itself a defect,
+        // and saying so is more use than saying nothing.
+        None => out.push_str(
+            ". Its own schema publishes no description of it, so what it wants \
+             cannot be quoted here.\n",
+        ),
+    }
+
+    if required.len() > 1 {
+        out.push_str(
+            "\nEVERY argument this tool requires, listed together because the deserialiser \
+             reports only the FIRST one missing and learning them one refusal at a time costs a \
+             round trip each. This is what the tool requires, NOT a claim that you omitted all \
+             of them:\n",
+        );
+        for f in &required {
+            match brief(schema, f) {
+                Some(d) => out.push_str(&format!("  · {f} — {d}\n")),
+                None => out.push_str(&format!("  · {f}\n")),
+            }
+        }
+    }
+    out
+}
+
 pub(crate) fn served_by() -> serde_json::Value {
     let mtime = std::env::current_exe().ok().and_then(|p| {
         std::fs::metadata(p).ok().and_then(|m| {
@@ -5268,6 +5350,18 @@ impl ReflowService {
     /// behind a trait, which makes "what protocol do we actually claim?" awkward
     /// to assert — and an unassertable claim is how the previous value sat four
     /// releases stale without anyone noticing.
+    /// The published input schema of one served tool, as JSON — `Null` when the
+    /// name is not ours. Used only on the refusal path, so the `list_all` scan
+    /// it costs is paid once per rejected call and never on a successful one.
+    fn schema_of(&self, tool: &str) -> JsonValue {
+        self.tool_router
+            .list_all()
+            .into_iter()
+            .find(|t| t.name == tool)
+            .and_then(|t| serde_json::to_value(&t.input_schema).ok())
+            .unwrap_or(JsonValue::Null)
+    }
+
     pub fn describe_protocol_version() -> ProtocolVersion {
         ProtocolVersion::LATEST
     }
@@ -5284,11 +5378,54 @@ impl ServerHandler for ReflowService {
         request: rmcp::model::CallToolRequestParams,
         context: rmcp::service::RequestContext<RoleServer>,
     ) -> Result<rmcp::model::CallToolResponse, McpError> {
+        // Captured before `request` moves: an argument refusal must name the
+        // tool, and by the time the router answers, the name is gone.
+        let tool_name = request.name.to_string();
         let tcc = rmcp::handler::server::tool::ToolCallContext::new(self, request, context);
-        match self.tool_router.call(tcc).await {
+        let answer = self.tool_router.call(tcc).await;
+
+        // 🛑 A DESERIALISATION REFUSAL ARRIVES AS `Ok(Complete { is_error })`,
+        // NOT AS `Err`. rmcp 3 turns the deserialiser's failure into a normal
+        // tool result carrying `isError: true`, so the `Err` arms below reach
+        // nothing on the wire. MEASURED 2026-09-11 against a real binary: this
+        // whole interception was dead from the day it was written, because its
+        // test called `stale_client_hint` as a pure function and never asked a
+        // server. The `Err` arms are kept for transports or rmcp versions that
+        // do surface it that way; the `Ok` arm is the one that fires here.
+        match answer {
             Err(e) if e.message.contains("unknown field") => {
                 let hinted = stale_client_hint(&e.message);
                 Err(McpError::invalid_params(hinted, e.data.clone()))
+            }
+            Err(e) if e.message.contains("missing field") => {
+                let hinted =
+                    missing_field_hint(&e.message, &tool_name, &self.schema_of(&tool_name));
+                Err(McpError::invalid_params(hinted, e.data.clone()))
+            }
+            Ok(rmcp::model::CallToolResponse::Complete(r)) if r.is_error == Some(true) => {
+                let text = r
+                    .content
+                    .first()
+                    .and_then(|b| b.as_text())
+                    .map(|t| t.text.clone())
+                    .unwrap_or_default();
+                let rewritten = if text.contains("unknown field") {
+                    Some(stale_client_hint(&text))
+                } else if text.contains("missing field") {
+                    Some(missing_field_hint(
+                        &text,
+                        &tool_name,
+                        &self.schema_of(&tool_name),
+                    ))
+                } else {
+                    None
+                };
+                match rewritten {
+                    Some(t) => Ok(rmcp::model::CallToolResponse::Complete(
+                        CallToolResult::error(vec![ContentBlock::text(t)]),
+                    )),
+                    None => Ok(rmcp::model::CallToolResponse::Complete(r)),
+                }
             }
             other => other,
         }
