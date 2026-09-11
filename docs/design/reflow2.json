@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:99d2a9ea60441317f3dfacf5f2a351d6aa546d078b96b5f1ed545dbdd929e90d",
+  "content_hash": "sha256:dc4c63aff484b78a1fa12bfa88ac55a05c78536c523c0a8fd41901fb5c00fcbf",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -5016,6 +5016,12 @@
       "from_id": "chg:a-mirror-can-be-refreshed",
       "properties": {},
       "to_id": "epoch:v0290"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:a-missing-argument-names-the-tool-and-what-it-wants",
+      "properties": {},
+      "to_id": "epoch:a-missing-argument-names-the-tool-and-what-it-wants"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -10644,6 +10650,12 @@
       "from_id": "snap:epoch:a-finding-has-somewhere-to-put-its-evidence:art:verify",
       "properties": {},
       "to_id": "epoch:a-finding-has-somewhere-to-put-its-evidence"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:a-missing-argument-names-the-tool-and-what-it-wants:art:service",
+      "properties": {},
+      "to_id": "epoch:a-missing-argument-names-the-tool-and-what-it-wants"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -20306,6 +20318,16 @@
       "to_id": "dec:idea-a-gap-can-be-scheduled-into-an-increment-like-any-other-work"
     },
     {
+      "edge_type": "CAUSES",
+      "from_id": "sub:tool-surface",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The cause is in this subsystem's own assumption about its dependency's error shape: call_tool matched `Err(e)` for a refusal rmcp 3 delivers as `Ok(Complete { is_error: true })`. Named here rather than on an external node because nothing outside reflow2 changed — rmcp behaved as documented throughout, and the mismatch was a belief about it held in one file and checked by nothing.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:the-unknown-field-interception-was-dead-from-the-day-it-shipped-and-its-test-could-not-see-it"
+    },
+    {
       "edge_type": "CHANGED",
       "from_id": "ce:half-idea-linking-closed-2026-08-25",
       "properties": {
@@ -22212,6 +22234,15 @@
         "action": "modified"
       },
       "to_id": "cap:mirror-surface"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-missing-argument-names-the-tool-and-what-it-wants",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
     },
     {
       "edge_type": "CHANGED",
@@ -58541,6 +58572,12 @@
       "edge_type": "HAS_SNAPSHOT",
       "from_id": "art:service",
       "properties": {},
+      "to_id": "snap:epoch:a-missing-argument-names-the-tool-and-what-it-wants:art:service"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "art:service",
+      "properties": {},
       "to_id": "snap:epoch:service-split:art:service"
     },
     {
@@ -60411,6 +60448,12 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cmp:propagate",
+      "properties": {},
+      "to_id": "fact:the-walk-memo-takes-effect-on-the-daemon-path-and-not-on-plain-stdio-same-bytes-same-binary"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "cmp:provenance",
       "properties": {},
       "to_id": "fact:bl-200"
@@ -60908,6 +60951,12 @@
       "from_id": "rule:success-is-read-from-the-authoritative-object",
       "properties": {},
       "to_id": "fact:the-root-cause-was-on-the-record-and-a-session-re-derived-it-anyway"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "sub:tool-surface",
+      "properties": {},
+      "to_id": "fact:the-unknown-field-interception-was-dead-from-the-day-it-shipped-and-its-test-could-not-see-it"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -185357,7 +185406,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:bd5be1f179f049c01cdf6c3a22287125a5d6131c89601c479f1403c22c5fd1cd",
+        "checksum": "sha256:5c03524ada3d8a8c26c1a2a2dc353fe3e797e9f956f1b9b9b4fe27879f941c39",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -189906,6 +189955,16 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "mirror_surface gains a REFRESH. FOUND BY RUNNING THE TOOL TWICE, 2026-08-12: a second mirror of the SAME design collided with its own first — 12 of 13 ids refused as collisions, mirrored_edges 0, mirror_content_hash null — leaving the stale node in place with the host edge still pointing at it while `mirrors` reported the OLD pin. So the staleness register read FRESH after a failed refresh, which is worse than never refreshing. Re-mirroring one mirror_of is a DIFFERENT OPERATION from mirroring a new design: replace-what-I-hold-at-a-new-pin versus add-a-stranger-and-refuse-clashes, and only the second existed. THE QUESTION SETTLED FIRST: what happens to a host edge whose foreign target is gone from the new surface? It REFUSES and names both the withdrawn boundary and the host edge pointing at it — reflow2 refuses dangling edges anyway, and a partner retiring a contract you consume is a conversation between two owners, not a cleanup this tool may do (dec:ask-not-repair). A refused refresh changes NOTHING and the pin does not advance, which is the lie the whole fix is about. MECHANISM: the mirrored Project now records `mirror_nodes`, the ids this mirror brought, because the set cannot be recovered afterwards — provenance:imported is also set by corpus ingest, and the project CONTAINS edges do not span the mirrored set (5 of 13, measured). One property on one node type that already carries three mirror properties, following the schema comma-list precedent (pinned/swept on VERIFIES). VERIFIED ON THE REAL PAIR: the exact flo2 scenario that produced the defect now gives 13 nodes, 19 edges, ZERO collisions, refreshed=true, withdrawn naming ifc:reflow2-design-api, the stale node gone and the renamed one present with its corrected medium. 7 tests written first, 4 mutations killed. NOTE FOR THE NEXT RELEASE: adding mirror_nodes moves no stamp count (29/61) but an older binary REFUSES an unknown property — the third instance today of the stamp being blind to a real compatibility event."
+      }
+    },
+    {
+      "node_id": "chg:a-missing-argument-names-the-tool-and-what-it-wants",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "name": "call_tool intercepts a missing-argument refusal and names the tool, the field and its purpose — and starts matching the Ok(is_error) shape rmcp actually returns, which the unknown-field branch beside it never did",
+        "repair": "corrected_cause",
+        "subject": "system"
       }
     },
     {
@@ -206810,6 +206869,17 @@
       }
     },
     {
+      "node_id": "epoch:a-missing-argument-names-the-tool-and-what-it-wants",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "description": "Criterion 3 of the 2026-09-11 tool sweep, and the increment that found a shipped feature had never run.\n\n**THE CLASS.** `unclaimed_findings` called with no arguments answered `failed to deserialize parameters: missing field ` + \"`change_event_ids`\" + `` — naming neither the tool nor the obligation. Filed as a one-off; it is not. **139 of 180 served tools declare at least one required parameter, across 230 required parameters**, and every one answered in that shape, because the refusal is produced by the deserialiser BEFORE any handler runs. One interception, in the one place they all pass through: the refusal now names the tool, the field, and quotes the schema's own description of it. It lists EVERY required field too, which closes the separate complaint that validation teaches one field per round trip — serde reports only the first.\n\n⭐ **AND THE BRANCH IT WAS MODELLED ON HAD NEVER FIRED.** `call_tool` has intercepted `unknown field` refusals since v0.51.0 to add a reconnect sentence for a stale client. rmcp 3 returns a deserialisation failure as `Ok(CallToolResponse::Complete)` with `is_error: true`, **not** as `Err`, so the `Err` arm matched nothing on the wire. Nothing caught it because the test calls `stale_client_hint` as a PURE FUNCTION and has passed every day since it was written: it proves the sentence and says nothing about whether a caller receives it. A unit test of a helper standing in for a test of the wiring, green throughout, invisible to all 217 suites.\n\n**THE LESSON, and it is why the pin is a wire-level gate.** `tools/refusal_speaks.py` asks a real server. Run against the UNFIXED binary it reported **140 failures — 139 tools plus the dead branch** — and zero against the fixed one. The Rust tests are kept for the sentence, with a header saying in as many words that they are not sufficient.\n\n**WHAT IT SURFACED AND DID NOT FIX.** Quoting the schema only helps when the schema has something to say: **76 of 230 required parameters (33%), across 68 tools, publish no description at all** — 21 of them a constructor's own `id`, ~55 not. The refusal says so out loud rather than inventing a sentence. Measured, recorded, not started.",
+        "epoch_type": "revision",
+        "name": "A missing argument names the tool and what it wants — and the interception beside it had been dead since v0.51.0",
+        "sequence": 428,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:a-node-with-no-edges-is-not-clean",
       "node_type": "DesignEpoch",
       "properties": {
@@ -217069,6 +217139,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:a-missing-argument-names-the-tool-and-what-it-wants:art:service",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0100\",\"properties\":{\"as_checksum\":\"sha256:f5adfb4ad655e5f8\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0101\",\"properties\":{\"as_checksum\":\"sha256:f5adfb4ad655e5f8\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0110\",\"properties\":{\"as_checksum\":\"sha256:d10660c4fce94f91\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0120\",\"properties\":{\"as_checksum\":\"sha256:b4d9cfc07a00a23eb177af08456bf4cfa7a4225e68cb5a70427d24f26a239129\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0130\",\"properties\":{\"as_checksum\":\"sha256:2d3f53e0adc81c65e712be4489e1b889a92c2a75bfdb99566df166c4aa9a2c36\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0140\",\"properties\":{\"as_checksum\":\"sha256:ebef7c8a6a4789265fdaafdd1154cd0b22b33a25f73e4944a12e191d29c70384\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0150\",\"properties\":{\"as_checksum\":\"sha256:ea68b64a0ace91de3882a84df2579b43831ac14d153bdee3b3d29dd37df30b50\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0160\",\"properties\":{\"as_checksum\":\"sha256:b5c6a0fda0f4f7e83c8b522b61e477ca0bee926d906c09582f53e0e90a1ab54e\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0170\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0180\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0190\",\"properties\":{\"as_checksum\":\"sha256:8539f6864f883aad\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0200\",\"properties\":{\"as_checksum\":\"sha256:e8efc39625da0407\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0210\",\"properties\":{\"as_checksum\":\"sha256:3f3cea7e7df234b5\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0220\",\"properties\":{\"as_checksum\":\"sha256:e5434a1817ae559f0fcb14ca39ac37931d1c25a5b9394495624736de15ff92ae\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0221\",\"properties\":{\"as_checksum\":\"sha256:f9826d4fac181a58978ecb09e37b439a4090bcbba3798fe18983e06f8a34e3c0\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0230\",\"properties\":{\"as_checksum\":\"sha256:677aa0cf869c05f351b9f9396d94e5db6823cff06cdf2dab69d0f7dcc020e50f\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0240\",\"properties\":{\"as_checksum\":\"sha256:bc9c2a3cef87a2545c83cb14e5d058c19c19a729022d4f387945c927c0b90a86\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0250\",\"properties\":{\"as_checksum\":\"sha256:40407c67d5f51959483e88ae3390f796a5a9b5fdd756a2dca76c0283d9751847\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0260\",\"properties\":{\"as_checksum\":\"sha256:86386eef65516f34f9018a5c651a6a654e70cdf56cf9a993da07ef60ba361ffa\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0261\",\"properties\":{\"as_checksum\":\"sha256:86386eef65516f34f9018a5c651a6a654e70cdf56cf9a993da07ef60ba361ffa\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0270\",\"properties\":{\"as_checksum\":\"sha256:406c1a320b66b3079c8b30cbe18c815832a89f581e0eebfb813932305783c572\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0280\",\"properties\":{\"as_checksum\":\"sha256:b767c5da7864d4cd230f0b0cfc9dbe936c860cdb27809adc68d7ec6da77d861e\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0290\",\"properties\":{\"as_checksum\":\"sha256:b767c5da7864d4cd230f0b0cfc9dbe936c860cdb27809adc68d7ec6da77d861e\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0300\",\"properties\":{\"as_checksum\":\"sha256:b767c5da7864d4cd230f0b0cfc9dbe936c860cdb27809adc68d7ec6da77d861e\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0310\",\"properties\":{\"as_checksum\":\"sha256:8fb1db82fbd38c45d2323710b43f91f541f43d2732b72b3a997b768bdcd8ca90\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0320\",\"properties\":{\"as_checksum\":\"sha256:0cc254e5e29b72187e24e46f5fdebc9dd0220125a2ec38e32faac9a9782d51c5\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0321\",\"properties\":{\"as_checksum\":\"sha256:0cc254e5e29b72187e24e46f5fdebc9dd0220125a2ec38e32faac9a9782d51c5\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0330\",\"properties\":{\"as_checksum\":\"sha256:c5fe05b922857d22df4460966310fb497932e4125b473e8a4c227fce52a7d497\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0340\",\"properties\":{\"as_checksum\":\"sha256:74490fdd329c65fc8c14df6185cd30b6422f32b1a3ea9d12a2029616895faa79\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0350\",\"properties\":{\"as_checksum\":\"sha256:fd65be03a690e1819ea995565906e050db5e055badad33665ee808a001987e26\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0360\",\"properties\":{\"as_checksum\":\"sha256:fd65be03a690e1819ea995565906e050db5e055badad33665ee808a001987e26\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0370\",\"properties\":{\"as_checksum\":\"sha256:286f0b33532f87bcb4364790a7ed7c914320e1b2ed7e879e8bc240fa077bfb2e\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0380\",\"properties\":{\"as_checksum\":\"sha256:d9ae95e3244b50c92f73ad3f9327a4b97cf231ffcfe77b192e8e29493c0bfa76\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0390\",\"properties\":{\"as_checksum\":\"sha256:1d421b6efa44459d20732c4aa8c0873036e3a5d0473679f004f5fb2df9a11d5d\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v040\",\"properties\":{\"as_checksum\":\"sha256:06a920acb1904585\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0400\",\"properties\":{\"as_checksum\":\"sha256:597dba5304fa1631cc84a2283461a420618d469c17f8187b6899a57aab2f5d37\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0410\",\"properties\":{\"as_checksum\":\"sha256:943ba39eea00d06a5cf9f909ee0f2a764baf2c52da7891c7f2b85e8fa3eac392\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0420\",\"properties\":{\"as_checksum\":\"sha256:b8780a6de4877f12456b8462bea20b2a0c3b7062ec2b3c966105d19fa57d6046\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0430\",\"properties\":{\"as_checksum\":\"sha256:522431d330b0e7ba6893e06e9a72d41edd5e300c337796c4b7dee512ec21e387\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0440\",\"properties\":{\"as_checksum\":\"sha256:522431d330b0e7ba6893e06e9a72d41edd5e300c337796c4b7dee512ec21e387\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0450\",\"properties\":{\"as_checksum\":\"sha256:f108e6ac27b58731710264c67aa4e0baded4a1d941f7457786be823171f98d43\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0460\",\"properties\":{\"as_checksum\":\"sha256:1d88437219d649c0a0564f0f00004a1ba4371a514aaf4314d965b440898b5a12\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0470\",\"properties\":{\"as_checksum\":\"sha256:0ea01f0bc899884118eb28ae93b616195864c7266367ae60ee1f9215439729db\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0471\",\"properties\":{\"as_checksum\":\"sha256:0ea01f0bc899884118eb28ae93b616195864c7266367ae60ee1f9215439729db\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0480\",\"properties\":{\"as_checksum\":\"sha256:d07764e8cb664c5c889214285ab1c707f2c3fa3e6835c0a62442a15fc0dcb566\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0490\",\"properties\":{\"as_checksum\":\"sha256:127e543eadd1101c7cc03dd07d1b1931a40505cd95296d1b664ffe55f4086705\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v050\",\"properties\":{\"as_checksum\":\"sha256:dd075fc2b016c95c\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0500\",\"properties\":{\"as_checksum\":\"sha256:c3c1fdd2167b605df2a3ba6c883bcea3e0c118d5e5255c6ce68a8364402d00f1\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0510\",\"properties\":{\"as_checksum\":\"sha256:017d62fb4b77538ed33b1fce7904ac851362cb75bdde28b4997329036df7e3d2\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0520\",\"properties\":{\"as_checksum\":\"sha256:b283b8ad920effaede03baf04f9ccfcfe2f0b0182af827a32e32a0338bb3307e\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0530\",\"properties\":{\"as_checksum\":\"sha256:b283b8ad920effaede03baf04f9ccfcfe2f0b0182af827a32e32a0338bb3307e\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0540\",\"properties\":{\"as_checksum\":\"sha256:9cacdf2903bab1f70bab27dc77b24d1d987a22c82e90868f83d996ec7e61a1da\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0550\",\"properties\":{\"as_checksum\":\"sha256:91eda7690a02f21ba21b9b758d3828d09484cad5905e11a0de9e2cda66bff572\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0551\",\"properties\":{\"as_checksum\":\"sha256:91eda7690a02f21ba21b9b758d3828d09484cad5905e11a0de9e2cda66bff572\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0560\",\"properties\":{\"as_checksum\":\"sha256:56d6edd53b9bc6a22a3b589506897f3ec55609a1edce4863913b876b6a49d685\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0570\",\"properties\":{\"as_checksum\":\"sha256:3ce28fc3d9bf272d31c3ffce171106a87101a5991bc4a2bb5534ffe8c5c1f9c7\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0580\",\"properties\":{\"as_checksum\":\"sha256:3ce28fc3d9bf272d31c3ffce171106a87101a5991bc4a2bb5534ffe8c5c1f9c7\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v060\",\"properties\":{\"as_checksum\":\"sha256:f691ee260346fbeb\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v061\",\"properties\":{\"as_checksum\":\"sha256:f691ee260346fbeb\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v070\",\"properties\":{\"as_checksum\":\"sha256:f691ee260346fbeb\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v080\",\"properties\":{\"as_checksum\":\"sha256:8cf6bd3694ffafe2\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v090\",\"properties\":{\"as_checksum\":\"sha256:7b4c8bada025ba92\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:a-capability-declares-what-kind-of-thing-delivers-it\",\"properties\":{\"completeness\":\"partial\",\"conformance\":\"verified\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:a-finding-describes-the-walk-that-produced-it\",\"properties\":{\"conformance\":\"unchecked\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:a-relation-tool-accepts-the-other-familys-names\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:a-repair-can-say-what-it-invalidated\",\"properties\":{\"completeness\":\"partial\",\"conformance\":\"verified\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:a-surface-can-refuse-every-write\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"verified\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:read-loop-hint\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:stale-seat-refusal\",\"properties\":{\"completeness\":\"partial\",\"conformance\":\"unchecked\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:the-handshake-is-written-down-beside-the-graph\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"verified\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:the-orientation-call-says-whether-its-own-answers-are-current\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"verified\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:the-owners-word-rides-the-same-call-as-the-status-it-signs\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:the-resolution-of-a-gap-can-be-scheduled-into-an-increment\",\"properties\":{\"completeness\":\"partial\",\"conformance\":\"verified\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:work-declares-who-it-reaches\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Component\",\"other_id\":\"cmp:service\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:a-refusal-names-what-would-have-worked\",\"properties\":{\"coverage\":\"full\",\"evidence\":\"parse_enum in crates/reflow2-mcp/src/service.rs is the single helper every served enum argument passes through; the test a_rejected_enum_lists_the_legal_values fails against the prior map_err(|_| ...) implementation\"}}]",
+        "state": "{\"artifact_type\":\"code\",\"checksum\":\"sha256:bd5be1f179f049c01cdf6c3a22287125a5d6131c89601c479f1403c22c5fd1cd\",\"granularity\":\"atomic\",\"location\":\"crates/reflow2-mcp/src/service.rs\",\"name\":\"service.rs\",\"status\":\"realized\",\"volatility\":\"stable\"}",
+        "target_id": "art:service",
+        "target_type": "Artifact"
+      }
+    },
+    {
       "node_id": "snap:epoch:a-node-with-no-edges-is-not-clean:art:heal",
       "node_type": "Snapshot",
       "properties": {
@@ -225299,6 +225379,19 @@
       }
     },
     {
+      "node_id": "fact:the-unknown-field-interception-was-dead-from-the-day-it-shipped-and-its-test-could-not-see-it",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "name": "A shipped, tested, accepted fix never ran once: the unknown-field refusal hint was dead from v0.51.0 to 2026-09-11, because rmcp returns a deserialisation failure as Ok(isError), not Err",
+        "statement": "MEASURED 2026-09-11 AGAINST A REAL BINARY, AND IT IS NOT THE DEFECT I WAS LOOKING FOR — I found it while wiring a sibling branch beside it.\n\n`ReflowService::call_tool` has, since v0.51.0, overridden rmcp's generated handler for exactly one purpose: to add a sentence to an `unknown field` refusal telling a caller their client's tool list may predate the server, and to reconnect. Its own doc comment explains why it must live there — *\"the refusal is produced before any handler runs\"* — and that reasoning is correct.\n\n**THE BRANCH NEVER FIRED. NOT ONCE.**\n\n    match self.tool_router.call(tcc).await {\n        Err(e) if e.message.contains(\"unknown field\") => { ...hint... }\n        other => other,\n    }\n\nrmcp 3 does not return a deserialisation failure as `Err`. It returns `Ok(CallToolResponse::Complete(r))` with `r.is_error == Some(true)` and the message in `content[0].text`. The `Err` arm matches nothing on the wire.\n\nProbed directly, before any fix:\n\n    tools/call loop_status {\"no_such_field\": 1}\n    -> {\"content\":[{\"text\":\"failed to deserialize parameters: unknown field\n        `no_such_field`, expected `contributor_id` or `since_export`\"}],\n        \"isError\": true}\n\nNo reconnect sentence. The feature was inert for its entire life.\n\n═══ WHY NOTHING CAUGHT IT, AND THIS IS THE PART WORTH KEEPING ═══\n\nThere IS a test. `crates/reflow2-mcp/tests/the_v0510_field_feedback_fixes_land.rs:184` asserts the hint's wording — by calling `stale_client_hint(\"failed to deserialize parameters: unknown field `findings`\")` **as a pure function**. It has passed every day since it was written. It proves the SENTENCE is correct and says nothing about whether any caller receives it.\n\n⭐ **THE CLASS IS: A UNIT TEST OF A HELPER STANDING IN FOR A TEST OF THE WIRING.** The helper is right, the wiring is wrong, and the suite is green. This is the vacuous-green failure this project has repeatedly found in other people's code — the `swept.note` work and `empty_speaks` both exist because a clean result was indistinguishable from no result. Found here in reflow2's own tool surface, and invisible to all 217 suites.\n\n═══ HOW IT WAS FOUND, WHICH WAS LUCK PLUS ONE HABIT ═══\n\nNot by review. I wrote the twin branch for `missing field`, ran the unit tests (3 passed), then probed a real binary because the class this belongs to is *\"a description is not the reply\"*. The probe returned the bare serde string. Had I trusted the green unit tests — which tested exactly what I had written, correctly — the new branch would have shipped dead beside the old one.\n\n═══ WHAT IS FIXED, AND WHAT IS NOT ═══\n\nFIXED: `call_tool` now also matches `Ok(Complete { is_error: true })`, reads the text, and rewrites both the `unknown field` and `missing field` cases. The `Err` arms are KEPT, for transports or rmcp versions that do surface it that way — removing them would be a guess about every future version.\n\nPINNED: `tools/refusal_speaks.py`, a wire-level gate in CI that asks a real server. Run against the unfixed binary it reported **140 failures — 139 tools declaring a required argument, plus the dead `unknown field` branch**; against the fixed one, zero.\n\n⚠️ NOT ESTABLISHED: how many OTHER interceptions in this codebase match on a shape rmcp does not produce. This was found in one place by probing one thing. Nothing has swept for the class, and a sweep is the obvious next question rather than an answered one.",
+        "subject_id": "sub:tool-surface",
+        "valid_from": "2026-09-11"
+      }
+    },
+    {
       "node_id": "fact:the-unmaintained-premise-under-the-rocksdb-switch-has-moved",
       "node_type": "TemporalFact",
       "properties": {
@@ -225372,6 +225465,19 @@
         "statement": "A TWO-ARM TRIAL RUN ON REFLOW2 ITSELF, at Anthony's direction and in his framing: 'reflow2 is like a doctor who develops a new medicine, but tries it on himself first before the public.' The candidate was option (b) of `dec:idea-how-does-a-users-project-acquire-vocabulary-it-never-uses` — report vocabulary a design has never used — reshaped as a COVERAGE STATEMENT rather than a gap list. Computed portably: schema read from the SERVER via `describe_schema`, corpus from the graph's own export, nothing about reflow2's file layout involved, so this is what any project would get.\n\n  ARM 1 — MATURE (reflow2's own, 2535 nodes / 10362 edges)\n    node types 22/29 (75%)   edge types 37/61 (60%)   properties 141/169 (83%)\n    flat list would be 59 items\n  ARM 2 — DAY ONE (immediately after `genesis`, 2 nodes / 0 edges)\n    node types 2/29 (6%)     edge types 0/61 (0%)     properties 9/18 (50%)\n    flat list would be 97 items\n\n⭐ THE TRIAL CONFIRMED THE OBJECTION AND SPLIT THE FEATURE IN TWO. The FIGURES pass both arms: '0 of 61 edge types' on a day-one design is not noise, it is a true and useful statement that nothing has yet been said about how anything relates. The FLAT LIST fails arm 2 outright — 97 items handed to a user thirty seconds into their project, MORE than the 59 a mature design produces. So the list ships as drill-down on request, never as standing output. Had this been shipped on the argument alone it would have been at its worst for exactly the users it was meant to help.\n\n⭐⭐ TWO THINGS THE TRIAL PRODUCED THAT NO AMOUNT OF ARGUING HAD:\n\n(1) THE UNUSED VOCABULARY CLUSTERS INTO WHOLE SUBSYSTEMS, and reads as about four findings rather than 31. Flow: `Flow` node type plus PART_OF_FLOW / PERFORMED_IN / PRODUCES / TRIGGERS. Dimensions and readiness: `DimensionObservation`, `DimensionAssessment`, `ReadinessAssessment` plus HAS_OBSERVATION / HAS_READINESS / OBSERVED_IN / CALIBRATED_AGAINST. Quality gates: `QualityGate` plus GATED_ON. Governance and risk: COMPLIES_WITH / IMPOSES / MITIGATES / VIOLATES_RULE. So the output should GROUP, and a grouped answer on a mature design is short enough to read every time.\n\n(2) THE REPORT MUST BE PARKABLE OR IT WILL NAG ABOUT A SETTLED DECISION. `OWNED_BY` is in the unused list, and its absence is DELIBERATE — `dec:ownership-reads-claims-before-adding-an-edge` says OWNED_BY is added only if claims prove insufficient. A coverage report that cannot be told 'this one is on purpose' would report a correct decision as a hole forever, which is `req:a-deliberate-state-is-not-a-defect` exactly. The `ruling: parks` mechanism shipped 2026-08-17 is what it needs, and neither piece was designed with the other in mind.\n\nNOT BUILT. The trial was run to decide the SHAPE before building, which was the agreement. What it decided: ship the figures, group the list, make it parkable, and keep the flat list behind a request.",
         "subject_id": "dec:idea-how-does-a-users-project-acquire-vocabulary-it-never-uses",
         "valid_from": "2026-08-18"
+      }
+    },
+    {
+      "node_id": "fact:the-walk-memo-takes-effect-on-the-daemon-path-and-not-on-plain-stdio-same-bytes-same-binary",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.9,
+        "fact_type": "defect",
+        "name": "The memoised walk is 60 ms through the shared daemon and a flat 5.8 s on plain stdio — same bytes, same binary, memo not taking effect on one of the two paths. Cause NOT established",
+        "statement": "🛑 **A BOUND ON WHAT PR #479 ACTUALLY DELIVERED, FOUND HOURS AFTER MERGING IT, AND THE CAUSE IS NOT ESTABLISHED.**\n\n#479 memoised three derived scans per write generation and reported `propagate_from` at ~60 ms warm and `design_regions` at 12.5 s. Those numbers were taken **through the shared daemon**, and they are real — `design_regions` was re-run through it today, after the merge, and returned in seconds.\n\nDriving the SAME binary over plain stdio against the SAME bytes tells a different story.\n\n    four consecutive propagate_from calls, one process, no write between\n    freshly imported copy   5506 / 5681 / 5488 / 5545 ms\n    FILE-LEVEL copy of the\n    live store              5858 / 5877 / 5712 / 5797 ms\n\n**FLAT.** That is the exact signature used in #479 to identify work redone on every call — a memo that is hit drops after the first call and this does not drop at all. `design_regions` on that path ran past ten minutes and was stopped, which is consistent with ~5.8 s × 109 walks.\n\n═══ WHAT THE MEASUREMENTS RULE OUT ═══\n\n· **NOT the import, and NOT an uncompacted store.** The first run was a fresh `import_graph` copy, which made \"bulk-loaded RocksDB with everything in L0\" the obvious candidate. A **file-level `cp -r` of the live store — the identical bytes the fast daemon serves — behaves the same.** That kills it.\n· **NOT the data.** Same 4,189 nodes either way.\n· **NOT CPU contention.** A concurrent clippy finished partway through and the timings did not move.\n· **NOT all reads.** On the same fresh copy a warm `get_node` is **3 ms, identical to the live store**, and a type scan is 54 ms against ~10 ms. Point reads are fine; only the walk collapses. So a blanket \"that store is slow\" does not fit either.\n\n═══ WHAT IS LEFT, AND IT IS NOT A DIAGNOSIS ═══\n\nThe difference that survives is the **server process**, not the data: the daemon holds one long-lived graph and the memo persists across calls; a plain stdio server appears not to benefit even across four calls inside ONE process, which is the part that does not yet make sense and is why no cause is written here.\n\n⚠️ **NO CAUSE IS CLAIMED.** Four candidates were measured and killed; the remaining shape has not been isolated, and this project's own root-cause discipline says the first plausible explanation at the end of a long session is exactly what not to write down. The next step is the procedure, not a guess.\n\n═══ WHY IT MATTERS TO A CONSUMER ═══\n\nA session that attaches to the shared daemon gets the improvement. Anything driving reflow2 as a plain stdio child — a script, a CI step, a harness, possibly a first session before a daemon exists — may not. **#479's headline numbers are therefore true of one path and unverified on the other**, and that is a narrower claim than the PR made.\n\nFound only because a coverage sweep wedged on `design_regions` and the 8-minute wall clock did not match the 12.5 s on the record — i.e. by a number looking odd, which is the trigger the root-cause skill names.",
+        "subject_id": "cmp:propagate",
+        "valid_from": "2026-09-11"
       }
     },
     {
@@ -228742,7 +228848,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:ec24f787adfe764b1e6bc0ed30f76e84c61007b870a19150e1281709ec0c78f7",
+  "prev_content_hash": "sha256:99d2a9ea60441317f3dfacf5f2a351d6aa546d078b96b5f1ed545dbdd929e90d",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
