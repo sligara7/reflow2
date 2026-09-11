@@ -248,10 +248,11 @@ impl DesignGraph {
         &self,
         node_id: &str,
         inference_edges: &HashSet<String>,
+        adj: &crate::graph::Adjacency,
     ) -> Result<Vec<Neighbor>, DynoError> {
         let mut out = Vec::new();
 
-        for e in self.outgoing(node_id, None)? {
+        for e in adj.outgoing(node_id, None) {
             if let Some(dir) = direction_for(&e.edge_type, true, inference_edges) {
                 out.push(Neighbor {
                     id: e.to_id.clone(),
@@ -265,7 +266,7 @@ impl DesignGraph {
                 });
             }
         }
-        for e in self.incoming(node_id, None)? {
+        for e in adj.incoming(node_id, None) {
             if let Some(dir) = direction_for(&e.edge_type, false, inference_edges) {
                 out.push(Neighbor {
                     id: e.from_id.clone(),
@@ -308,6 +309,8 @@ impl DesignGraph {
         // The published boundaries, resolved once: a change is contained if it
         // never passes through one of these (req:key-interfaces).
         let published = self.published_interfaces()?;
+        // One build per graph state, shared by every visit in every walk.
+        let adjacency = self.adjacency()?;
         let mut boundary_crossings: BTreeSet<String> = BTreeSet::new();
 
         // BFS. `visited` maps id -> its best (shortest, first-found) impact.
@@ -325,7 +328,7 @@ impl DesignGraph {
         }
 
         while let Some((id, depth, via, crosses_risk, crosses_boundary)) = queue.pop_front() {
-            let neighbors = self.impact_neighbors(&id, &inference_edges)?;
+            let neighbors = self.impact_neighbors(&id, &inference_edges, &adjacency)?;
             for nb in neighbors {
                 // Skip edges to nodes that don't exist, and back to seeds.
                 let Some(node_type) = index.get(&nb.id) else {
@@ -386,7 +389,7 @@ impl DesignGraph {
         // Centrality-weighted ranking (IP-9): attach each impacted node's
         // betweenness in the design network — a change landing on a routing hub
         // has a wider secondary blast radius.
-        let centrality = self.design_network()?.betweenness()?;
+        let centrality = self.network_betweenness()?;
         for node in visited.values_mut() {
             node.centrality = centrality.get(&node.node_id).copied().unwrap_or(0.0);
         }

@@ -103,7 +103,86 @@ pub struct DerivedMemo {
     /// Ids an ACCEPTED Decision has OBSOLETED, computed once per write
     /// generation so every detector can skip them at the cost of one scan.
     pub discontinued: Option<std::collections::HashSet<String>>,
+    /// id → node type for every node, the scan `propagate_from` opens with.
+    ///
+    /// MEASURED 2026-09-11: it had 30 call sites and no memo, and
+    /// `design_regions` reaches it once per seed — 109 Projects and Components
+    /// on this design, each a full scan of every node of every declared type.
+    /// One region walk cost 5,173 ms; the tool cost ~545 s and could not be
+    /// made to return. The graph does not change between seeds, which is
+    /// `con:a-sweep-builds-its-network-a-fixed-number-of-times`' argument
+    /// exactly, one tool over.
+    pub node_types: Option<std::collections::HashMap<String, String>>,
+    /// Betweenness centrality over the whole design network, which
+    /// `propagate_from` attaches to every impacted node to rank the blast
+    /// radius.
+    ///
+    /// MEASURED 2026-09-11, and it is the real cost behind `design_regions`:
+    /// `propagate_from` rebuilt the network and re-ran an all-pairs
+    /// betweenness over 4,176 nodes and 24,242 edges ON EVERY CALL — ~4.3 s,
+    /// unchanged across repeated calls, while the walk itself is indexed and
+    /// the node scans total ~500 ms. `design_regions` calls it once per seed
+    /// (109 Projects and Components), so the tool cost ~520 s and could not be
+    /// made to return.
+    ///
+    /// `con:a-sweep-builds-its-network-a-fixed-number-of-times` already makes
+    /// this argument for `detect_defects` — *"the network has to be
+    /// constructed once and interrogated N times; nothing about the question
+    /// requires reconstructing it per candidate"* — and the graph does not
+    /// change between seeds.
+    pub betweenness: Option<std::collections::HashMap<String, f64>>,
+    /// The whole adjacency — every edge, indexed both ways — so a traversal
+    /// reads a node's neighbours from memory instead of the store.
+    ///
+    /// MEASURED 2026-09-11: `impact_neighbors` did TWO store prefix scans per
+    /// node VISIT, and visits repeat across walks that overlap. 108 region
+    /// walks made 4,502 visits over 589 distinct nodes — 7.6x redundant — at
+    /// ~4 ms each, so 18.0 s of `design_regions`' 21.6 s of walking was
+    /// re-reading adjacency it had already read. Built in ONE scan of the
+    /// outgoing column family, since its keys are prefixed by graph id.
+    pub adjacency: Option<std::sync::Arc<Adjacency>>,
     pub recomputes: u64,
+    /// How many times the node-type index was actually BUILT. Separate from
+    /// `recomputes` so a test can assert the index invariant without the
+    /// defect and gap scans moving the number under it.
+    pub index_builds: u64,
+    /// The same, for the betweenness. ITS OWN COUNTER FOR THE REASON ABOVE:
+    /// reusing `index_builds` made a 12-walk test that asserted "one build"
+    /// fail at two, because a second memoised scan was moving the number
+    /// underneath the invariant it was pinning.
+    pub betweenness_builds: u64,
+    /// How many times the adjacency was actually BUILT. Its own counter, for
+    /// the reason the two above have theirs.
+    pub adjacency_builds: u64,
+}
+
+/// Every edge of a graph, indexed by both endpoints. One build serves every
+/// traversal until the next write.
+#[derive(Debug, Default)]
+pub struct Adjacency {
+    pub out: std::collections::HashMap<String, Vec<StoredEdge>>,
+    pub inn: std::collections::HashMap<String, Vec<StoredEdge>>,
+}
+
+impl Adjacency {
+    /// Outgoing edges of `id`, optionally filtered by type. Empty when the
+    /// node has none — the same answer the store gives.
+    pub fn outgoing(&self, id: &str, edge_type: Option<&str>) -> Vec<StoredEdge> {
+        Self::pick(self.out.get(id), edge_type)
+    }
+
+    /// Incoming edges of `id`, optionally filtered by type.
+    pub fn incoming(&self, id: &str, edge_type: Option<&str>) -> Vec<StoredEdge> {
+        Self::pick(self.inn.get(id), edge_type)
+    }
+
+    fn pick(v: Option<&Vec<StoredEdge>>, edge_type: Option<&str>) -> Vec<StoredEdge> {
+        let Some(v) = v else { return Vec::new() };
+        match edge_type {
+            None => v.clone(),
+            Some(t) => v.iter().filter(|e| e.edge_type == t).cloned().collect(),
+        }
+    }
 }
 
 /// Memo access lives in its own ungated impl: the rollups that use it compile
@@ -118,6 +197,10 @@ impl DesignGraph {
             memo.generation = Some(now);
             memo.defects = None;
             memo.gaps = None;
+            memo.discontinued = None;
+            memo.node_types = None;
+            memo.betweenness = None;
+            memo.adjacency = None;
         }
         memo
     }
@@ -130,6 +213,70 @@ impl DesignGraph {
             .lock()
             .expect("derived memo poisoned")
             .recomputes
+    }
+
+    /// How many times the node-type index has actually been BUILT. The
+    /// structural assertion behind its memo: across N region walks with no
+    /// write between them this moves by one, not N.
+    /// Betweenness over the design network, computed once per graph state.
+    /// The scan is dropped before the guard is taken, as `open_defects` does.
+    pub(crate) fn network_betweenness(
+        &self,
+    ) -> Result<std::collections::HashMap<String, f64>, DynoError> {
+        {
+            let memo = self.derived_at_current_generation();
+            if let Some(b) = memo.betweenness.as_ref() {
+                return Ok(b.clone());
+            }
+        }
+        let b = self.design_network()?.betweenness()?;
+        let mut memo = self.derived_at_current_generation();
+        memo.betweenness = Some(b.clone());
+        memo.betweenness_builds += 1;
+        Ok(b)
+    }
+
+    pub fn index_builds(&self) -> u64 {
+        self.derived
+            .lock()
+            .expect("derived memo poisoned")
+            .index_builds
+    }
+
+    /// How many times the network betweenness has actually been COMPUTED.
+    /// The whole adjacency, built once per graph state from ONE store scan.
+    pub(crate) fn adjacency(&self) -> Result<std::sync::Arc<Adjacency>, DynoError> {
+        {
+            let memo = self.derived_at_current_generation();
+            if let Some(a) = memo.adjacency.as_ref() {
+                return Ok(a.clone());
+            }
+        }
+        let mut adj = Adjacency::default();
+        for e in self.engine.scan_all_edges(&self.graph_id)? {
+            adj.inn.entry(e.to_id.clone()).or_default().push(e.clone());
+            adj.out.entry(e.from_id.clone()).or_default().push(e);
+        }
+        let adj = std::sync::Arc::new(adj);
+        let mut memo = self.derived_at_current_generation();
+        memo.adjacency = Some(adj.clone());
+        memo.adjacency_builds += 1;
+        Ok(adj)
+    }
+
+    /// How many times the adjacency has actually been BUILT.
+    pub fn adjacency_builds(&self) -> u64 {
+        self.derived
+            .lock()
+            .expect("derived memo poisoned")
+            .adjacency_builds
+    }
+
+    pub fn betweenness_builds(&self) -> u64 {
+        self.derived
+            .lock()
+            .expect("derived memo poisoned")
+            .betweenness_builds
     }
 }
 
@@ -837,6 +984,26 @@ impl DesignGraph {
     /// prefix id convention, e.g. `req:`, `cap:`); on a collision the first
     /// type scanned wins.
     pub(crate) fn node_type_index(
+        &self,
+    ) -> Result<std::collections::HashMap<String, String>, DynoError> {
+        // Hit the memo first, and DROP THE GUARD before scanning: the scan
+        // reads the graph and must never hold the memo while it does, which is
+        // the same rule `open_defects` follows.
+        {
+            let memo = self.derived_at_current_generation();
+            if let Some(index) = memo.node_types.as_ref() {
+                return Ok(index.clone());
+            }
+        }
+        let index = self.build_node_type_index()?;
+        let mut memo = self.derived_at_current_generation();
+        memo.node_types = Some(index.clone());
+        memo.index_builds += 1;
+        Ok(index)
+    }
+
+    /// The scan itself, unmemoised.
+    fn build_node_type_index(
         &self,
     ) -> Result<std::collections::HashMap<String, String>, DynoError> {
         let mut index = std::collections::HashMap::new();

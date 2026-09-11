@@ -94,6 +94,40 @@ impl StorageEngine {
     }
 
     /// Scan outgoing edges from a node, optionally filtered by edge type.
+    /// EVERY edge in the graph, in ONE prefix scan of the outgoing adjacency.
+    ///
+    /// The adjacency is keyed `graph_id \0 from_id \0 edge_type \0 to_id`, so
+    /// the graph prefix alone walks all of them. Built for callers that need
+    /// the whole adjacency rather than one node's: a traversal that reads
+    /// neighbours node-by-node pays a round trip per VISIT, and visits repeat
+    /// across overlapping walks — measured 2026-09-11, 108 region walks made
+    /// 4,502 node visits over 589 distinct nodes, 7.6x redundant.
+    pub fn scan_all_edges(&self, graph_id: &str) -> Result<Vec<StoredEdge>, DynoError> {
+        let prefix = crate::foundation::store::keys::graph_prefix(graph_id);
+        let entries = self.prefix_scan(CF_ADJ_OUT, &prefix)?;
+        let mut results = Vec::with_capacity(entries.len());
+        for (key, bytes) in entries {
+            let after_prefix = &key[prefix.len()..];
+            let parts: Vec<&[u8]> = after_prefix.splitn(3, |&b| b == 0x00).collect();
+            if parts.len() != 3 {
+                continue;
+            }
+            let from_id = decode_key_segment(parts[0], "adj_out key from_id")?;
+            let edge_type = decode_key_segment(parts[1], "adj_out key edge_type")?;
+            let to_id = decode_key_segment(parts[2], "adj_out key to_id")?;
+            let properties: HashMap<String, Value> = rmp_serde::from_slice(&bytes)
+                .map_err(|e| DynoError::Serialization(e.to_string()))?;
+            results.push(StoredEdge {
+                graph_id: graph_id.to_string(),
+                edge_type,
+                from_id,
+                to_id,
+                properties,
+            });
+        }
+        Ok(results)
+    }
+
     pub fn scan_outgoing_edges(
         &self,
         graph_id: &str,
