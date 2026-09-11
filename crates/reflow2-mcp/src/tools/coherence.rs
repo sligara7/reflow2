@@ -53,27 +53,23 @@ impl ReflowService {
     // ---- DETECT / analyze (deterministic, read-only) ----
 
     #[tool(
-        description = "Find gaps in the design to ask the human about (DETECT). Pass `scope` (a \
-                       node id) to answer for ONE PART of the design instead of all of it — the \
-                       question a team that owns a subsystem asks day to day. The region is that \
-                       seed's containment closure plus the propagation radius around it (`depth`, \
-                       default 2). NOT the same computation as claim_region, which takes the \
-                       radius alone and defaults differently. A scoped answer always reports \
-                       what it left out: `total` across the whole design against `in_scope`, plus \
-                       `out_of_scope` and `region_size`. IT ALSO REPORTS WHETHER IT NARROWED AT \
-                       ALL: `share_of_anchored` is how much of everything the design has to say \
-                       is in this answer, and a `narrowing_note` appears in words when that is \
-                       over half — at the old default of 3, all 56 Components of reflow2's own \
-                       design returned 50-60 of its 83 gaps and nothing said so. Project-level rollups still appear when they touch \
-                       your part, counted as `project_level` and carrying `scope: project` \
-                       themselves — filtering is not the tool deciding what you may worry \
-                       about. THE REPLY IS BOUNDED SO A CLIENT CANNOT REFUSE IT: unscoped on \
-                       this design it was 79,566 characters and harnesses refused the call \
-                       outright, so the session saw a wall of harness text and reflow2 never got \
-                       to suggest scoping. `budget` says which tier this reply landed in and \
-                       exactly what it withheld; `count` and `by_source` cover every gap either \
-                       way, so a shorter answer is never a quieter one. Raise `budget_chars` if \
-                       your client has the room.",
+        description = "Find gaps in the design to ask the human about (DETECT). Pass `scope` (a node id) to \
+                       answer for ONE PART of the design instead of all of it. The region is that seed's \
+                       containment closure plus the propagation radius around it (`depth`, default 2). NOT the \
+                       same computation as claim_region, which takes the radius alone and defaults differently. \
+                       A scoped answer always reports what it left out: `total` across the whole design against \
+                       `in_scope`, plus `out_of_scope` and `region_size`. IT ALSO REPORTS WHETHER IT NARROWED \
+                       AT ALL: `share_of_anchored` is how much of everything the design has to say is in this \
+                       answer, and a `narrowing_note` appears in words when that is over half — at the old \
+                       default of 3, all 56 Components of reflow2's own design returned 50-60 of its 83 gaps \
+                       and nothing said so. Project-level rollups still appear when they touch your part, \
+                       counted as `project_level` and carrying `scope: project` themselves — filtering is not \
+                       the tool deciding what you may worry about. THE REPLY IS BOUNDED SO A CLIENT CANNOT \
+                       REFUSE IT: unscoped on this design it was 79,566 characters and harnesses refused the \
+                       call outright. `budget` says which tier this reply landed in and exactly what it \
+                       withheld; `count` and `by_source` cover every gap either way, so a shorter answer is \
+                       never a quieter one. Raise `budget_chars` if your client has the room. Ask for this when \
+                       you want to know what is missing or unanswered in the design.",
         annotations(read_only_hint = true)
     )]
     pub async fn detect_gaps(
@@ -96,23 +92,22 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Which boundaries between parts are covered by a contract \u{2014} ANSWERED AT \
-                       THE ALTITUDE YOU ASK AT. Pass `altitude` (a Component `level`: `subsystem`, \
-                       `system`, \u{2026}) and every coupling and every contract is lifted to the \
-                       nearest container at that level before they are compared, so the question \
-                       becomes \"is this coupling covered by a contract declared at or BELOW it?\" \
-                       rather than \"do these two exact modules share one?\". Omit it for the raw \
-                       module-level answer. WHY IT MATTERS: a design that declares its contracts at \
-                       the subsystem boundary and its dependencies between modules reads as having \
-                       NO contracts at all \u{2014} measured on reflow2 itself, 64 of 72 couplings \
-                       undeclared at module level and NOTHING undeclared once lifted to subsystem. \
-                       `covered_by` names the LEAF pair where each contract actually lives, because \
-                       \"yes, there is an interface\" without saying where it is declared sends the \
-                       reader hunting. \u{1F6D1} READ `scope_note`: a zero here means every coupling \
-                       VISIBLE AT THIS ALTITUDE is covered, and says nothing about the finer ones \
-                       underneath. NOTHING IS WRITTEN BACK \u{2014} this is derived on every call, \
-                       because storing a rolled-up edge would make the graph assert a contract \
-                       nobody declared.",
+        description = "Which boundaries between parts are covered by a contract \u{2014} ANSWERED AT THE \
+                       ALTITUDE YOU ASK AT. Pass `altitude` (a Component `level`: `subsystem`, `system`, \
+                       \u{2026}) and every coupling and every contract is lifted to the nearest container at \
+                       that level before they are compared, so the question becomes \"is this coupling covered \
+                       by a contract declared at or BELOW it?\" rather than \"do these two exact modules share \
+                       one?\". Omit it for the raw module-level answer. WHY IT MATTERS: a design that declares \
+                       its contracts at the subsystem boundary and its dependencies between modules reads as \
+                       having NO contracts at all \u{2014} measured on reflow2 itself, 64 of 72 couplings \
+                       undeclared at module level and NOTHING undeclared once lifted to subsystem. `covered_by` \
+                       names the LEAF pair where each contract actually lives, because \"yes, there is an \
+                       interface\" without saying where it is declared sends the reader hunting. \u{1F6D1} READ \
+                       `scope_note`: a zero here means every coupling VISIBLE AT THIS ALTITUDE is covered, and \
+                       says nothing about the finer ones underneath. NOTHING IS WRITTEN BACK \u{2014} this is \
+                       derived on every call, because storing a rolled-up edge would make the graph assert a \
+                       contract nobody declared. Ask for this when you want to know how many of the boundaries \
+                       between components have a stated contract.",
         annotations(read_only_hint = true)
     )]
     pub async fn seam_coverage(
@@ -187,28 +182,24 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "The coherence loop's outstanding debt, cheaply: what \
-                       capture→detect→ask→decide steps are owed now, computed from graph state, \
-                       never run history. Anchored gaps never put to the user, questions waiting \
-                       or answered-but-unwritten, open decisions a named person was ASKED to \
-                       settle (a `proposed` Decision carrying an AUTHORED_BY `role=approver`; \
-                       one with no approver is somebody thinking out loud and stays quiet), \
-                       structural defects, capabilities claiming realized/verified with no \
-                       passing check, drift awaiting a disposition, and built capabilities \
-                       nobody has checked against reality. `clean: true` means nothing is owed, \
-                       and those decisions are LISTED in `assigned_decisions`. Pass \
-                       `contributor_id` to ask WHAT NEEDS THIS PERSON. Scoped, TWO things are \
-                       attributed: decisions they were asked to settle, and open gaps standing \
-                       on ground they OWN (`gaps_on_owned_ground`, each naming which owned nodes \
-                       it touches). Every other debt class is a fact about the DESIGN and comes \
-                       back design-wide under `scope.not_attributable` rather than filtered to \
-                       zero, because \"nothing is owed to you\"and \"I cannot tell whose this \
-                       is\"must never be the same answer — so scoped, `clean` means nothing is \
-                       owed BY THAT PERSON, not that the design is clean. An unknown \
-                       contributor_id is REFUSED: a typo would otherwise give the most \
-                       reassuring reply there is. `verifications` is a DIGEST: counts by status, \
-                       how many never ran, and every check not currently passing. `graph_report` \
-                       carries every check with its last run.",
+        description = "The coherence loop's outstanding debt, cheaply: what capture→detect→ask→decide steps are \
+                       owed now, computed from graph state, never run history. Anchored gaps never put to the \
+                       user, questions waiting or answered-but-unwritten, open decisions a named person was \
+                       ASKED to settle (one carrying an approver edge), structural defects, capabilities \
+                       claiming realized/verified with no passing check, drift awaiting a disposition, and \
+                       built capabilities nobody has checked against reality. `clean: true` means nothing is \
+                       owed, and those decisions are LISTED in `assigned_decisions`. Pass `contributor_id` to \
+                       ask WHAT NEEDS THIS PERSON. Scoped, TWO things are attributed: decisions they were asked \
+                       to settle, and open gaps standing on ground they OWN (`gaps_on_owned_ground`, each \
+                       naming which owned nodes it touches). Every other debt class is a fact about the DESIGN \
+                       and comes back design-wide under `scope.not_attributable` rather than filtered to zero, \
+                       because \"nothing is owed to you\"and \"I cannot tell whose this is\"must never be the \
+                       same answer — so scoped, `clean` means nothing is owed BY THAT PERSON, not that the \
+                       design is clean. An unknown contributor_id is REFUSED: a typo would otherwise give the \
+                       most reassuring reply there is. `verifications` is a DIGEST: counts by status, how many \
+                       never ran, and every check not currently passing. `graph_report` carries every check \
+                       with its last run. Ask for this to learn what the design process still needs from you, \
+                       and what to do next.",
         annotations(read_only_hint = true)
     )]
     pub async fn loop_status(
@@ -519,15 +510,15 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Blast radius of a recorded ChangeEvent along the golden thread. Returns \
-                       a summary (counts by distance, the distance-1 ring, risk crossings); \
-                       pass full=true for every impacted node with its hop chain. ALSO READS THE \
-                       EDGES' OWN PROSE: `stale_edge_evidence` names edges whose `evidence` or \
-                       `note` still uses language the changed node has DROPPED — the case where \
-                       a reader following an edge is misled by text that reads as current. It is \
-                       lexical, never a refusal, and it says so; a node with no snapshot gets a \
-                       `coverage_note` saying the check was SILENT about its edges rather than \
-                       clean on them.",
+        description = "Blast radius of a recorded ChangeEvent along the golden thread. Returns a summary \
+                       (counts by distance, the distance-1 ring, risk crossings); pass full=true for every \
+                       impacted node with its hop chain. ALSO READS THE EDGES' OWN PROSE: `stale_edge_evidence` \
+                       names edges whose `evidence` or `note` still uses language the changed node has DROPPED \
+                       — the case where a reader following an edge is misled by text that reads as current. It \
+                       is lexical, never a refusal, and it says so; a node with no snapshot gets a \
+                       `coverage_note` saying the check was SILENT about its edges rather than clean on them. \
+                       Ask for this when you want to know what a change will break downstream — the blast \
+                       radius of a change you recorded.",
         annotations(read_only_hint = true)
     )]
     pub async fn propagate_change(
@@ -642,7 +633,8 @@ impl ReflowService {
                        session makes to ask what to look at, spent on a list that says \
                        \"196 passing, 1 planned\". What comes back instead is the same digest \
                        `loop_status` returns: counts by status, how many never ran, and every \
-                       check NOT currently passing, in full.",
+                       check NOT currently passing, in full. \
+                       Ask for this when you want the overall health summary of the design — how healthy it is right now, how the project is doing.",
         annotations(read_only_hint = true)
     )]
     pub async fn graph_report(
@@ -680,7 +672,8 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "The graph report rendered as Markdown.",
+        description = "The graph report rendered as Markdown. \
+                       Ask for this when you want the design's health and status as readable prose — a plain-English rundown of how the project is doing.",
         annotations(read_only_hint = true)
     )]
     pub async fn graph_report_markdown(&self) -> Result<CallToolResult, McpError> {
@@ -697,27 +690,24 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Detect structural defects the machine can repair (HEAL). Pass `scope` (a \
-                       node id, `depth` default 2) to ask it of one part of the design: not \
-                       \"what is my team owed\" but \"is my part of the architecture sound\" — a \
-                       cycle wholly inside one subsystem is that subsystem's to fix. Reports \
-                       `total` against `in_scope` so a quiet corner never implies a quiet design. \
-                       UNSCOPED, IT RETURNS `{swept, defects}` RATHER THAN A BARE LIST, since \
-                       2026-08-17: `swept.nodes` is what it examined, `swept.rules` names the \
-                       checks that ran, and `swept.note` appears only when the sweep COULD NOT \
-                       have found anything — so a zero is never read as permission before \
-                       `apply_heal`, which deletes nodes. \
-                       `swept.design_network_nodes` is deliberately SMALLER than `swept.nodes`: \
-                       the topology rules walk a narrower graph that drops provenance types, \
-                       review records and CONTAINS, and that gap is reported rather than hidden. \
-                       ⭐ READ `swept.coverage_note` FIRST WHEN PRESENT — one line naming what \
-                       this sweep could NOT have found. `rule_populations` says what each rule \
-                       walked (a rule that walked NOTHING reports clean for the same reason an \
-                       empty graph does); `coupling_by_level` says how much coupling exists AT \
-                       each declared level, and that is the one that bites — measured here, the \
-                       cycle rule walked 182 pairs and found none while ZERO joined two \
-                       subsystems, so a clean result was SILENT about the subsystems rather \
-                       than clean about them.",
+        description = "Detect structural defects the machine can repair (HEAL). Pass `scope` (a node id, \
+                       `depth` default 2) to ask it of one part of the design: not \"what is my team owed\" but \
+                       \"is my part of the architecture sound\" — a cycle wholly inside one subsystem is that \
+                       subsystem's to fix. Reports `total` against `in_scope` so a quiet corner never implies a \
+                       quiet design. UNSCOPED, IT RETURNS `{swept, defects}` RATHER THAN A BARE LIST, since \
+                       2026-08-17: `swept.nodes` is what it examined, `swept.rules` names the checks that ran, \
+                       and `swept.note` appears only when the sweep COULD NOT have found anything — so a zero \
+                       is never read as permission before `apply_heal`, which deletes nodes. \
+                       `swept.design_network_nodes` is deliberately SMALLER than `swept.nodes`: the topology \
+                       rules walk a narrower graph that drops provenance types, review records and CONTAINS, \
+                       and that gap is reported rather than hidden. ⭐ READ `swept.coverage_note` FIRST WHEN \
+                       PRESENT — one line naming what this sweep could NOT have found. `rule_populations` says \
+                       what each rule walked (a rule that walked NOTHING reports clean for the same reason an \
+                       empty graph does); `coupling_by_level` says how much coupling exists AT each declared \
+                       level, and that is the one that bites — measured here, the cycle rule walked 182 pairs \
+                       and found none while ZERO joined two subsystems, so a clean result was SILENT about the \
+                       subsystems rather than clean about them. Ask for this to find structural problems — \
+                       loops, a single point of failure, contradictions.",
         annotations(read_only_hint = true)
     )]
     pub async fn detect_defects(
@@ -811,7 +801,8 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Propose a HEAL plan (never mutates; review then apply_heal).",
+        description = "Propose a HEAL plan (never mutates; review then apply_heal). \
+                       Ask for this when you want suggested repairs for the structural problems the design has, to review before applying.",
         annotations(read_only_hint = true)
     )]
     pub async fn propose_heal(
@@ -831,7 +822,9 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Evaluate how capabilities are allocated across components.",
+        description = "Evaluate how capabilities are allocated across components. Ask for this when you want to \
+                       know how modular the decomposition is — whether the coupling sits where you think it \
+                       does, and the modularity score.",
         annotations(read_only_hint = true)
     )]
     pub async fn evaluate_allocation(&self) -> Result<CallToolResult, McpError> {
@@ -840,7 +833,8 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Propose a capability→component allocation via Leiden clustering.",
+        description = "Propose a capability→component allocation via Leiden clustering. \
+                       Ask for this when you want a suggested grouping of capabilities into components, derived from their dependencies.",
         annotations(read_only_hint = true)
     )]
     pub async fn propose_allocation(
@@ -852,7 +846,8 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Decomposition/hierarchy issues (matryoshka level checks).",
+        description = "Decomposition/hierarchy issues (matryoshka level checks). \
+                       Ask for this when you want to know whether the component tree is consistent — a part with two parents, or a child at the wrong level.",
         annotations(read_only_hint = true)
     )]
     pub async fn hierarchy_issues(&self) -> Result<CallToolResult, McpError> {
@@ -861,7 +856,9 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Surprising cross-community couplings (mined from the graph).",
+        description = "Surprising cross-community couplings (mined from the graph). Ask for this when you want \
+                       to see unexpected or surprising couplings between parts that should be separate — \
+                       cross-community links the design did not intend.",
         annotations(read_only_hint = true)
     )]
     pub async fn surprising_connections(&self) -> Result<CallToolResult, McpError> {
@@ -1041,7 +1038,8 @@ impl ReflowService {
                        order, because real designs run ahead of themselves. A band with nothing \
                        to measure reads as unmeasured, never as zero. No stage name is emitted: \
                        a label no computation reads would be a distinction that does not earn \
-                       its keep. Pure arithmetic over edges already in the graph — no file I/O.",
+                       its keep. Pure arithmetic over edges already in the graph — no file I/O. \
+                       Ask for this when you want to know how mature the design is overall and what stage it is at — how far along from idea to operating system.",
         annotations(read_only_hint = true)
     )]
     pub async fn maturity_report(
@@ -1127,22 +1125,21 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "What did this design BUILD that it records no consumer for? Reports one \
-                       fact and refuses a verdict. A Capability at `realized`/`verified` with no \
-                       incoming DEPENDS_ON, no PART_OF_FLOW and no Actor INTERACTS_WITH is \
-                       reported as 'THIS DESIGN RECORDS NOTHING THAT CONSUMES IT' — and NEVER as \
-                       'unused', 'dead' or 'delete it'. THAT WORDING IS THE FEATURE: reflow2 \
-                       reads a design, never a running system, so a capability real users call \
-                       daily whose consumer nobody modelled is INDISTINGUISHABLE here from one \
-                       dead since it shipped, and a detector that collapsed the two would \
-                       recommend deleting working code. ABSENCE IS ONLY INFORMATIVE WHEN PRESENCE \
-                       IS THE HABIT: if the design records a consumer for fewer than half of what \
-                       it built, the list is WITHHELD and the ratio itself is the finding, \
-                       because naming everything would report the modelling style rather than \
-                       what was built (measured on reflow2's own design, where the raw signal \
-                       named 100 of 110). `signals_read` names the edges counted so a missing one \
-                       can be argued for, and `not_observed_about` names what it cannot see. Pure \
-                       arithmetic over existing edges — no file I/O.",
+        description = "What did this design BUILD that it records no consumer for? Reports one fact and refuses \
+                       a verdict. A Capability at `realized`/`verified` with no incoming DEPENDS_ON, no \
+                       PART_OF_FLOW and no Actor INTERACTS_WITH is reported as 'THIS DESIGN RECORDS NOTHING \
+                       THAT CONSUMES IT' — and NEVER as 'unused', 'dead' or 'delete it'. THAT WORDING IS THE \
+                       FEATURE: reflow2 reads a design, never a running system, so a capability real users call \
+                       daily whose consumer nobody modelled is INDISTINGUISHABLE here from one dead since it \
+                       shipped, and a detector that collapsed the two would recommend deleting working code. \
+                       ABSENCE IS ONLY INFORMATIVE WHEN PRESENCE IS THE HABIT: if the design records a consumer \
+                       for fewer than half of what it built, the list is WITHHELD and the ratio itself is the \
+                       finding, because naming everything would report the modelling style rather than what was \
+                       built (measured on reflow2's own design, where the raw signal named 100 of 110). \
+                       `signals_read` names the edges counted so a missing one can be argued for, and \
+                       `not_observed_about` names what it cannot see. Pure arithmetic over existing edges — no \
+                       file I/O. Ask for this when you want to know what has been built that nothing actually \
+                       uses — capabilities with no consumer, unused work.",
         annotations(read_only_hint = true)
     )]
     pub async fn consumption_report(

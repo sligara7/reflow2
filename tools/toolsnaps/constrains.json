@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Record that a Constraint CONSTRAINS a target, with the target's `contribution` to the budget (in the Constraint's quantity unit) and the `basis` for the number (estimated/evidence/measured). An edge without a contribution is reported by budget_report as unstated — never treated as zero.",
+  "description": "Record that a Constraint CONSTRAINS a target, with the target's `contribution` to the budget (in the Constraint's quantity unit) and the `basis` for the number (estimated/evidence/measured). An edge without a contribution is reported by budget_report as unstated — never treated as zero. Ask for this when you want to say how much a part contributes to a budget or limit — its share of the mass, latency, cost or other quantity.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,

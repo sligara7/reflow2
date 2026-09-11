@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": true
   },
-  "description": "Propose a capability→component allocation via Leiden clustering.",
+  "description": "Propose a capability→component allocation via Leiden clustering. Ask for this when you want a suggested grouping of capabilities into components, derived from their dependencies.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,

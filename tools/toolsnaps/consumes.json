@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Record that a Component CONSUMES an Interface — it is the side that depends on the contract. `from_id` is the Component, `to_id` the Interface. Once both sides are recorded, `propagate_change` on either Component reaches the other, and `detect_gaps` reports a contract that is consumed but never provided.",
+  "description": "Record that a Component CONSUMES an Interface — it is the side that depends on the contract. `from_id` is the Component, `to_id` the Interface. Once both sides are recorded, `propagate_change` on either Component reaches the other, and `detect_gaps` reports a contract that is consumed but never provided. Ask for this when you want to record that a component uses, calls or depends on an interface.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,

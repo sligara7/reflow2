@@ -152,7 +152,8 @@ impl ReflowService {
         description = "Order one DesignEpoch after another (earlier PRECEDES later) — the chain \
                        axis Z exists to record. Epochs also carry a `sequence` integer, but the \
                        explicit edge is what makes the history walkable as a graph rather than \
-                       sortable as a list.",
+                       sortable as a list. \
+                       Ask for this when you want to record that one point in the design's history comes before another.",
         annotations(read_only_hint = false)
     )]
     pub async fn precedes(
@@ -170,7 +171,8 @@ impl ReflowService {
     #[tool(
         description = "Pin any node to a DesignEpoch (AT_EPOCH) — e.g. a Release to its \
                        release_cut epoch, so the release and the design state it was cut from \
-                       are joined on axis Z. Generic: AT_EPOCH is declared from any type.",
+                       are joined on axis Z. Generic: AT_EPOCH is declared from any type. \
+                       Ask for this when you want to snapshot or freeze how an item looks today, at a point in time, so it can be compared later.",
         annotations(read_only_hint = false)
     )]
     pub async fn pin_at_epoch(
@@ -192,28 +194,24 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Schedule a Requirement, Capability, QUESTION, Verification or Decision against the moment it is DUE \
-                       — the \
-                       satisfaction schedule, which is what makes a roadmap answerable \
-                       (req:epochs-can-be-planned). The target is a DesignEpoch for the time axis \
-                       or a Release for the capability-increment axis: two paired views of one \
-                       architecture, so one edge serves both. `modality` says which kind of claim \
-                       this is — `expected` is a plan, `required` is an obligation whose miss at \
-                       arrival is a computed violation rather than a slip (the scheduling face of \
-                       a KPP). THERE IS NO `achieved` MODALITY: delivery is computed from the \
-                       golden thread and never asserted, so a schedule that recorded its own \
-                       success would be a second source of truth able to disagree with the first. \
-                       DELIBERATELY NOT add_epoch's AT_EPOCH, which means `belongs to` rather \
-                       than `due at`. To reschedule, record the change against the epoch rather \
-                       than re-pointing this edge — moving it silently would erase the slip and \
-                       let the plan rewrite its own history. ⭐ SCHEDULING A `Question` IS HOW THE \
-                       RESOLUTION OF A GAP GETS PLANNED: gaps are recomputed every run and are not \
-                       nodes, so there is nothing to schedule, but the Question `gap_to_prompt` \
-                       mints when a gap is put to somebody IS durable — and it is DELIVERED WHEN \
-                       ANSWERED, needing no artifact and no check, because the whole content of \
-                       closing a gap is that the person whose judgement it needed gave one. A \
-                       WITHDRAWN question reports `discontinued`, not `outstanding` — somebody \
-                       said.",
+        description = "Schedule a Requirement, Capability, QUESTION, Verification or Decision against the \
+                       moment it is DUE — the satisfaction schedule, which is what makes a roadmap answerable \
+                       (req:epochs-can-be-planned). The target is a DesignEpoch for the time axis or a Release \
+                       for the capability-increment axis: two paired views of one architecture, so one edge \
+                       serves both. `modality` says which kind of claim this is — `expected` is a plan, \
+                       `required` is an obligation whose miss at arrival is a computed violation rather than a \
+                       slip. THERE IS NO `achieved` MODALITY: delivery is computed from the golden thread and \
+                       never asserted, so a schedule that recorded its own success would be a second source of \
+                       truth able to disagree with the first. DELIBERATELY NOT add_epoch's AT_EPOCH, which \
+                       means `belongs to` rather than `due at`. To reschedule, record the change against the \
+                       epoch rather than re-pointing this edge — moving it silently would erase the slip. ⭐ \
+                       SCHEDULING A `Question` IS HOW THE RESOLUTION OF A GAP GETS PLANNED: gaps are recomputed \
+                       every run and are not nodes, so there is nothing to schedule, but the Question \
+                       `gap_to_prompt` mints when a gap is put to somebody IS durable — and it is DELIVERED \
+                       WHEN ANSWERED, needing no artifact and no check, because the whole content of closing a \
+                       gap is that the person whose judgement it needed gave one. A WITHDRAWN question reports \
+                       `discontinued`, not `outstanding`. Ask for this to put a piece of work into a release, \
+                       increment or milestone.",
         annotations(read_only_hint = false)
     )]
     pub async fn schedule_for(
@@ -251,24 +249,23 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "What was PLANNED for an epoch or release against what was actually \
-                       DELIVERED — the planned-versus-delivered delta (dec:arrival-delta). Ask it \
-                       when a moment arrives: 'what didn't we achieve that we were supposed to in \
-                       increment 10?'. Every item comes back with one of five outcomes — \
-                       `delivered` (the plan held), `deferred` (still intended, the date moved, \
-                       and where to), `discontinued` (no longer intended at all), or `outstanding` \
-                       (still pointed here, not delivered, and NOBODY HAS SAID which of the \
-                       previous two it is — that is the question to put to the user, never to \
-                       default). Work scheduled after the baseline is reported separately, because \
-                       a delta measured only against the plan cannot see the work that was not in \
-                       it. `missed_obligations` are `required` claims that did not land: computed \
-                       violations rather than slips. NOTHING HERE IS STORED — the plan lives in \
-                       the epoch's snapshots and delivery is computed from the golden thread, so \
-                       recording the outcome would create a second source of truth able to \
-                       disagree with the first. The baseline is the target's FIRST snapshot, with \
-                       every later one returned as the movement trail; where none exists the plan \
-                       never moved and the live edges are the baseline. Read `notes` — it says \
-                       what this computation cannot see.",
+        description = "What was PLANNED for an epoch or release against what was actually DELIVERED — the \
+                       planned-versus-delivered delta (dec:arrival-delta). Ask it when a moment arrives: 'what \
+                       didn't we achieve that we were supposed to in increment 10?'. Every item comes back with \
+                       one of five outcomes — `delivered` (the plan held), `deferred` (still intended, the date \
+                       moved, and where to), `discontinued` (no longer intended at all), or `outstanding` \
+                       (still pointed here, not delivered, and NOBODY HAS SAID which of the previous two it is \
+                       — that is the question to put to the user, never to default). Work scheduled after the \
+                       baseline is reported separately, because a delta measured only against the plan cannot \
+                       see the work that was not in it. `missed_obligations` are `required` claims that did not \
+                       land: computed violations rather than slips. NOTHING HERE IS STORED — the plan lives in \
+                       the epoch's snapshots and delivery is computed from the golden thread, so recording the \
+                       outcome would create a second source of truth able to disagree with the first. The \
+                       baseline is the target's FIRST snapshot, with every later one returned as the movement \
+                       trail; where none exists the plan never moved and the live edges are the baseline. Read \
+                       `notes` — it says what this computation cannot see. Ask for this when you want to know \
+                       what was planned for a release or increment that did not actually ship — the \
+                       planned-versus-delivered gap.",
         annotations(read_only_hint = true)
     )]
     pub async fn arrival_delta(
@@ -388,7 +385,8 @@ impl ReflowService {
                        CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it \
                        again with the same id and only what you are changing \u{2014} omitted \
                        fields keep their stored value, so correcting one never means re-sending \
-                       a 2 KB field you did not touch.",
+                       a 2 KB field you did not touch. \
+                       Ask for this when you want to mark a point in time in the design's history.",
         annotations(read_only_hint = false)
     )]
     pub async fn add_epoch(
@@ -649,28 +647,24 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Create a ChangeEvent (seed for propagate_change). Pass `affected` to say \
-                       in the same call what it changed — a CHANGED edge is drawn to each entry, \
-                       which is what makes the event propagatable. TWO QUESTIONS, NOT ONE: \
-                       `change_type` says WHY, and `subject` says WHICH AXIS — `system` (the \
-                       thing changed) or `record` (the thing did not change and only the design's \
-                       knowledge of it did, e.g. a first baseline, a re-sync, a question settled). \
-                       Leaving `subject` out is a true answer and is never inferred from \
-                       `change_type`, because the mapping is not total. Use `defect_fix` when the \
-                       design was right and the code was wrong, and `test_failure_fix` only when a \
-                       check actually caught it — the difference is provenance, and it is the one \
-                       five sessions each guessed differently before these existed. Use \
-                       `documentation` when the thing was right and only its description of itself \
-                       was wrong; the test is behavioural, not file-shaped, so a normative document \
-                       that changes what somebody DOES takes a real label instead. \
-                       TEXT GOES IN `summary` (what changed — indexed and searchable) and \
-                       `rationale` (why, and the lesson). THERE IS NO `description` FIELD: \
-                       reaching for one is the commonest mistake here, and it is refused \
-                       rather than stored, so write the two that exist. \
-                       CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it \
-                       again with the same id and only what you are changing \u{2014} omitted \
-                       fields keep their stored value, so correcting one never means re-sending \
-                       a 2 KB field you did not touch.",
+        description = "Create a ChangeEvent (seed for propagate_change). Pass `affected` to say in the same \
+                       call what it changed — a CHANGED edge is drawn to each entry, which is what makes the \
+                       event propagatable. TWO QUESTIONS, NOT ONE: `change_type` says WHY, and `subject` says \
+                       WHICH AXIS — `system` (the thing changed) or `record` (the thing did not change and only \
+                       the design's knowledge of it did, e.g. a first baseline, a re-sync, a question settled). \
+                       Leaving `subject` out is a true answer and is never inferred from `change_type`, because \
+                       the mapping is not total. Use `defect_fix` when the design was right and the code was \
+                       wrong, and `test_failure_fix` only when a check actually caught it. Use `documentation` \
+                       when the thing was right and only its description of itself was wrong; the test is \
+                       behavioural, not file-shaped, so a normative document that changes what somebody DOES \
+                       takes a real label instead. TEXT GOES IN `summary` (what changed — indexed and \
+                       searchable) and `rationale` (why, and the lesson). THERE IS NO `description` FIELD: \
+                       reaching for one is the commonest mistake here, and it is refused rather than stored, so \
+                       write the two that exist. CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: \
+                       call it again with the same id and only what you are changing \u{2014} omitted fields \
+                       keep their stored value, so correcting one never means re-sending a 2 KB field you did \
+                       not touch. Ask for this to record that something changed and why — log a change and the \
+                       reason.",
         annotations(read_only_hint = false)
     )]
     pub async fn add_change_event(

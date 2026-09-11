@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Link a Capability to a Requirement it SATISFIES.",
+  "description": "Link a Capability to a Requirement it SATISFIES. Ask for this when you want to record that a capability fulfils, meets or satisfies a requirement.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,

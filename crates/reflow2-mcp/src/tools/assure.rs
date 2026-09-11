@@ -163,7 +163,8 @@ impl ReflowService {
                        VALIDATED: reflow2 records what you say a run found and never judges it, \
                        so `passing` beside findings describing a failure is a contradiction only \
                        a reader can catch — which is a real 2026-08-07 field report, where a \
-                       check recorded \"EXIT 0, verdict STALE\" and stayed passing forever. CARRIES `prose_currency` WHEN THE STATUS ACTUALLY MOVES and the node holds prose: the description was written under the OLD status and this call did not touch it, so the block names both statuses and QUOTES the prose so you can judge it here rather than in another call. It never says the prose is wrong - only a person can. From a 2026-09-02 field report where a capability went `realized` twenty minutes after a description saying the fix was not installed, and nothing noticed.",
+                       check recorded \"EXIT 0, verdict STALE\" and stayed passing forever. CARRIES `prose_currency` WHEN THE STATUS ACTUALLY MOVES and the node holds prose: the description was written under the OLD status and this call did not touch it, so the block names both statuses and QUOTES the prose so you can judge it here rather than in another call. It never says the prose is wrong - only a person can. \
+                       Ask for this when you want to record that a test passed or failed, went red or green, and when.",
         annotations(read_only_hint = false)
     )]
     pub async fn set_verification_status(
@@ -210,7 +211,8 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Link a Verification to what it checks (VERIFIES).",
+        description = "Link a Verification to what it checks (VERIFIES). \
+                       Ask for this when you want to record that a test or check covers a particular capability or part.",
         annotations(read_only_hint = false)
     )]
     pub async fn verifies(
@@ -311,22 +313,21 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Say that work you just did ANSWERED a finding, so the finding stops \
-                       proposing work already done (INVALIDATES). Draw it from whatever \
-                       recorded the work \u{2014} the Constraint carrying the repair, the \
-                       ChangeEvent, the Decision \u{2014} to whatever recorded the finding: a \
-                       Verification whose last run found it, or a TemporalFact that measured \
-                       it. \u{2b50} IT CLAIMS THE RESULT IS STALE AND NOTHING MORE. A repair \
-                       does not make a check pass; only a re-run can say what is true now, so \
-                       this NEVER touches the target's status and the check stays listed and \
-                       counted in `loop_status`. What changes is that the row now says a claim \
-                       stands against the verdict. PASS `at`: it is compared against the \
-                       target's own `last_run_at` to tell a re-run OWED from one already \
-                       TAKEN, and an undated claim is reported as undated rather than assumed \
-                       fresh. THE COST OF NOT HAVING THIS, measured: a session read a `failing` \
-                       check dated that same day and reported its defects to the user as the \
-                       live state of the system \u{2014} both had been repaired hours earlier \
-                       and recorded on other nodes, and nothing joined the two.",
+        description = "Say that work you just did ANSWERED a finding, so the finding stops proposing work \
+                       already done (INVALIDATES). Draw it from whatever recorded the work \u{2014} the \
+                       Constraint carrying the repair, the ChangeEvent, the Decision \u{2014} to whatever \
+                       recorded the finding: a Verification whose last run found it, or a TemporalFact that \
+                       measured it. \u{2b50} IT CLAIMS THE RESULT IS STALE AND NOTHING MORE. A repair does not \
+                       make a check pass; only a re-run can say what is true now, so this NEVER touches the \
+                       target's status and the check stays listed and counted in `loop_status`. What changes is \
+                       that the row now says a claim stands against the verdict. PASS `at`: it is compared \
+                       against the target's own `last_run_at` to tell a re-run OWED from one already TAKEN, and \
+                       an undated claim is reported as undated rather than assumed fresh. THE COST OF NOT \
+                       HAVING THIS, measured: a session read a `failing` check dated that same day and reported \
+                       its defects to the user as the live state of the system \u{2014} both had been repaired \
+                       hours earlier and recorded on other nodes, and nothing joined the two. Ask for this when \
+                       you want to record that a fix or change made an earlier finding no longer true — close \
+                       it out.",
         annotations(read_only_hint = false)
     )]
     pub async fn invalidates(
@@ -367,7 +368,8 @@ impl ReflowService {
                        point: true = the repair postdates the last run, false = the run already \
                        reflects it, and NULL = one side carries no date, so nobody can say \
                        \u{2014} never read null as false. Findings here keep their own recorded \
-                       status untouched: this says a verdict is STALE, never that it turned.",
+                       status untouched: this says a verdict is STALE, never that it turned. \
+                       Ask for this when you want to know which recorded test results or verdicts have gone stale and need re-running because something changed since.",
         annotations(read_only_hint = true)
     )]
     pub async fn invalidated_findings(&self) -> Result<CallToolResult, McpError> {
@@ -432,7 +434,8 @@ impl ReflowService {
                        believed proven what is actually broken. With record_events each \
                        divergence is a persistent DriftEvent (and unresolved_drift gap), \
                        auto-resolved when a later run agrees; the design-side answer is \
-                       set_verification_status with what the run actually said.",
+                       set_verification_status with what the run actually said. \
+                       Ask for this when you have fresh test results and want the design's checks updated to match them.",
         annotations(read_only_hint = false)
     )]
     pub async fn reconcile_verification(
@@ -504,7 +507,8 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "What still rests on a patch? Counts every recorded repair and splits it                        three ways: the cause was corrected, a symptom was contained, or NOBODY                        SAID. Read `unstated` FIRST — a small `contained_symptom` beside a large                        `unstated` means the design does not know what rests on a patch, not that                        little does, and `note` states which of those an empty answer is. Each                        standing patch comes back with the sentence naming what the proper fix                        would be, which is what turns a workaround from an invisible cost into a                        debt somebody can find; a patch nobody wrote down is indistinguishable                        from a design decision six weeks later. ⚠️ IT REPORTS AND DOES NOT JUDGE:                        a workaround is often the correct call under a deadline, so nothing here                        ranks or flags one — the requirement is that it be VISIBLE, never that it                        be forbidden. And it can only reflect what an author CLAIMED, so it cannot                        detect a patch reported as a correction. Write the disposition with                        `record_change`'s `repair` argument.",
+        description = "What still rests on a patch? Counts every recorded repair and splits it                        three ways: the cause was corrected, a symptom was contained, or NOBODY                        SAID. Read `unstated` FIRST — a small `contained_symptom` beside a large                        `unstated` means the design does not know what rests on a patch, not that                        little does, and `note` states which of those an empty answer is. Each                        standing patch comes back with the sentence naming what the proper fix                        would be, which is what turns a workaround from an invisible cost into a                        debt somebody can find; a patch nobody wrote down is indistinguishable                        from a design decision six weeks later. ⚠️ IT REPORTS AND DOES NOT JUDGE:                        a workaround is often the correct call under a deadline, so nothing here                        ranks or flags one — the requirement is that it be VISIBLE, never that it                        be forbidden. And it can only reflect what an author CLAIMED, so it cannot                        detect a patch reported as a correction. Write the disposition with                        `record_change`'s `repair` argument. \
+                       Ask for this when you want to know which fixes were real fixes and which are workarounds still standing in for one.",
         annotations(read_only_hint = true)
     )]
     pub async fn repair_report(&self) -> Result<CallToolResult, McpError> {
@@ -513,7 +517,23 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Of your N things of kind X, how many carry relation R? The core                        traceability question, asked of ANY node type and ANY edge type the                        schema declares — how many Requirements have an incoming VERIFIES, how                        many Components have an outgoing PROVIDES, how many Capabilities have                        anything CONSUMES-ing them. `direction` says which end your nodes are on,                        and it matters: Requirements with INCOMING VERIFIES is 'how many are                        verified', outgoing is a question about requirements that verify things.                        Comes back with the population, the count, the fraction, and the ids that                        are MISSING it, so the answer is actionable rather than just a number. ⭐                        AN UNDECLARED TYPE IS REFUSED, NEVER COUNTED AS ZERO: `Requirment` against                        208 Requirements would otherwise answer '0 of 0' and read exactly like                        good news — the refusal names the near-misses instead. An empty population                        says so in `note` rather than reporting a fraction, because a fraction of                        nothing is not a fact. ⚠️ NOT A SCORE and there is no threshold: 12% may                        be perfectly healthy at your stage and reflow2 has no way to know.",
+        description = "Of your N things of kind X, how many carry relation R? The core                        \
+                       traceability question, asked of ANY node type and ANY edge type the                      \
+                       schema declares — how many Requirements have an incoming VERIFIES, how                   \
+                       many Components have an outgoing PROVIDES, how many Capabilities have                    \
+                       anything CONSUMES-ing them. `direction` says which end your nodes are on,                \
+                       and it matters: Requirements with INCOMING VERIFIES is 'how many are                     \
+                       verified', outgoing is a question about requirements that verify things.                 \
+                       Comes back with the population, the count, the fraction, and the ids that                \
+                       are MISSING it, so the answer is actionable rather than just a number. ⭐                 \
+                       AN UNDECLARED TYPE IS REFUSED, NEVER COUNTED AS ZERO: `Requirment` against               \
+                       208 Requirements would otherwise answer '0 of 0' and read exactly like                   \
+                       good news — the refusal names the near-misses instead. An empty population               \
+                       says so in `note` rather than reporting a fraction, because a fraction of                \
+                       nothing is not a fact. ⚠️ NOT A SCORE and there is no threshold: 12% may                 \
+                       be perfectly healthy at your stage and reflow2 has no way to know. Ask for this when you \
+                       want to know what fraction of one kind of item carries a given link — how many decisions \
+                       link to another decision, how many components have an interface attached.",
         annotations(read_only_hint = true)
     )]
     pub async fn relation_coverage(

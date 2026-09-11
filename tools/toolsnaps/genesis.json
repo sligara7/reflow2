@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Bootstrap the design graph: create the Project + a genesis Epoch anchor and return a next-steps checklist. Guarded and idempotent — a no-op that reports already_initialized if a Project exists (unless rescan). Call this first, then seed the brief into Requirements/Capabilities via the add_* tools and run detect_gaps.",
+  "description": "Bootstrap the design graph: create the Project + a genesis Epoch anchor and return a next-steps checklist. Guarded and idempotent — a no-op that reports already_initialized if a Project exists (unless rescan). Call this first, then seed the brief into Requirements/Capabilities via the add_* tools and run detect_gaps. Ask for this when you want to start a brand-new design from scratch — set up a fresh project.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,

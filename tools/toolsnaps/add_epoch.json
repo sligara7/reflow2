@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Create a `DesignEpoch` that HAS HAPPENED — a point on the time axis you are recording, which is what an epoch has always meant here. NOTE THE STORED TYPE NAME is `DesignEpoch`, not `Epoch`: that is the string `get_node` and `scan_nodes` want. For a point that has NOT happened yet, use plan_epoch instead; planning is a deliberate act and reads better as its own verb than as a flag. CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it again with the same id and only what you are changing — omitted fields keep their stored value, so correcting one never means re-sending a 2 KB field you did not touch.",
+  "description": "Create a `DesignEpoch` that HAS HAPPENED — a point on the time axis you are recording, which is what an epoch has always meant here. NOTE THE STORED TYPE NAME is `DesignEpoch`, not `Epoch`: that is the string `get_node` and `scan_nodes` want. For a point that has NOT happened yet, use plan_epoch instead; planning is a deliberate act and reads better as its own verb than as a flag. CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it again with the same id and only what you are changing — omitted fields keep their stored value, so correcting one never means re-sending a 2 KB field you did not touch. Ask for this when you want to mark a point in time in the design's history.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,

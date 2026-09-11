@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Link a Verification to what it checks (VERIFIES).",
+  "description": "Link a Verification to what it checks (VERIFIES). Ask for this when you want to record that a test or check covers a particular capability or part.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,

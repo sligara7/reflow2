@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Record a PROJECTED readiness level valid from a future epoch — 'this converter reaches TRL 7 in 2035' — as a TemporalFact marked basis=forecast (BL-68). It is deliberately not a DimensionObservation: `observed_at` says OBSERVED, and nobody observed anything in 2035. CONVENTION: confidence is YOURS to state and reflow2 never derives one from the horizon, because a decay curve is a judgement about risk appetite. The epoch must already exist — plan_epoch it first.",
+  "description": "Record a PROJECTED readiness level valid from a future epoch — 'this converter reaches TRL 7 in 2035' — as a TemporalFact marked basis=forecast (BL-68). It is deliberately not a DimensionObservation: `observed_at` says OBSERVED, and nobody observed anything in 2035. CONVENTION: confidence is YOURS to state and reflow2 never derives one from the horizon, because a decay curve is a judgement about risk appetite. The epoch must already exist — plan_epoch it first. Ask for this when you want to put on record when a technology is expected to reach a maturity or readiness level (a TRL) by some date.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,

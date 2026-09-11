@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Record that a design element SATISFIES an EnvironmentRule (COMPLIES_WITH). Pass `verified: true` ONLY when compliance was demonstrated — a calc package, a stamped drawing, a test report — and put what demonstrates it in `evidence`. It defaults to false because a claim is not a check, and the two must stay distinguishable to anyone reading the record later.",
+  "description": "Record that a design element SATISFIES an EnvironmentRule (COMPLIES_WITH). Pass `verified: true` ONLY when compliance was demonstrated — a calc package, a stamped drawing, a test report — and put what demonstrates it in `evidence`. It defaults to false because a claim is not a check, and the two must stay distinguishable to anyone reading the record later. Ask for this when you want to record that a part meets a regulation or rule the environment imposes.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,

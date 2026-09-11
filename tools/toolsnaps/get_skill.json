@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": true
   },
-  "description": "Read one reflow2 skill in full, by name (see list_skills). Returns the whole SKILL.md — follow it as written. Call this BEFORE the work the skill covers, not after: these describe how to do the step, not how to report it.",
+  "description": "Read one reflow2 skill in full, by name (see list_skills). Returns the whole SKILL.md — follow it as written. Call this BEFORE the work the skill covers, not after: these describe how to do the step, not how to report it. Ask for this when you want the full playbook, procedure or step-by-step guide for a kind of task — how to do it properly, not just what exists.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,

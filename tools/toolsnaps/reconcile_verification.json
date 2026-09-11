@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Compare what a real test run REPORTED against what each Verification records — the P4 reconcile, last of the three feedback loops (BL-30): reconcile_artifacts asks about the code, this about the outcomes, reconcile_deployment about what runs. Supply one entry per check the run executed ('passed'/'failed'/'skipped'). A recorded 'passing' that the run failed is the dangerous direction and sorts first — the design believed proven what is actually broken. With record_events each divergence is a persistent DriftEvent (and unresolved_drift gap), auto-resolved when a later run agrees; the design-side answer is set_verification_status with what the run actually said.",
+  "description": "Compare what a real test run REPORTED against what each Verification records — the P4 reconcile, last of the three feedback loops (BL-30): reconcile_artifacts asks about the code, this about the outcomes, reconcile_deployment about what runs. Supply one entry per check the run executed ('passed'/'failed'/'skipped'). A recorded 'passing' that the run failed is the dangerous direction and sorts first — the design believed proven what is actually broken. With record_events each divergence is a persistent DriftEvent (and unresolved_drift gap), auto-resolved when a later run agrees; the design-side answer is set_verification_status with what the run actually said. Ask for this when you have fresh test results and want the design's checks updated to match them.",
   "inputSchema": {
     "$defs": {
       "ObservedVerificationReq": {

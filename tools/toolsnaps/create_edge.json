@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Create an edge of any schema type between typed endpoints.",
+  "description": "Create an edge of any schema type between typed endpoints. Ask for this when you want to link two items with a relationship no typed tool covers — a generic edge of any kind.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,

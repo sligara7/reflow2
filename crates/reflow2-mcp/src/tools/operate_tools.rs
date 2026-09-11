@@ -163,7 +163,8 @@ impl ReflowService {
                        demonstrated — a calc package, a stamped drawing, a test report — and put \
                        what demonstrates it in `evidence`. It defaults to false because a claim \
                        is not a check, and the two must stay distinguishable to anyone reading \
-                       the record later.",
+                       the record later. \
+                       Ask for this when you want to record that a part meets a regulation or rule the environment imposes.",
         annotations(read_only_hint = false)
     )]
     pub async fn complies_with(
@@ -509,7 +510,8 @@ impl ReflowService {
                        `observed_at` says OBSERVED, and nobody observed anything in 2035. \
                        CONVENTION: confidence is YOURS to state and reflow2 never derives one \
                        from the horizon, because a decay curve is a judgement about risk \
-                       appetite. The epoch must already exist — plan_epoch it first.",
+                       appetite. The epoch must already exist — plan_epoch it first. \
+                       Ask for this when you want to put on record when a technology is expected to reach a maturity or readiness level (a TRL) by some date.",
         annotations(read_only_hint = false)
     )]
     pub async fn forecast_readiness(
@@ -550,7 +552,8 @@ impl ReflowService {
                        `achievable_now`, `gated_until`, and `indeterminate` (a gate has no \
                        level and no clearing forecast, so no date can be derived — reported \
                        loudly rather than dropped from the max, which would return an \
-                       optimistic date built by ignoring the inconvenient evidence).",
+                       optimistic date built by ignoring the inconvenient evidence). \
+                       Ask for this when you want to know when a release can ship given the technology maturity it depends on.",
         annotations(read_only_hint = true)
     )]
     pub async fn readiness_report(

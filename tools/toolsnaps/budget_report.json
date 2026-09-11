@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": true
   },
-  "description": "Roll a budget Constraint up (BL-11): total of stated contributions vs the limit, the worst dependency path among contributors (the path-cumulative rollup — end-to-end latency, mass down a chain), basis coverage (estimated vs measured), and an honest verdict — `incomplete` when any contribution is unstated, because a partial sum passed off as a total is how budgets lie. Contributors with no stated number are listed, never zeroed.",
+  "description": "Roll a budget Constraint up (BL-11): total of stated contributions vs the limit, the worst dependency path among contributors (the path-cumulative rollup — end-to-end latency, mass down a chain), basis coverage (estimated vs measured), and an honest verdict — `incomplete` when any contribution is unstated, because a partial sum passed off as a total is how budgets lie. Contributors with no stated number are listed, never zeroed. Ask for this when you want to know whether a declared limit or allowance is being exceeded — a budget for latency, mass, cost or any quantity — and which contributors take it over.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,

@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": true
   },
-  "description": "Fetch a node by id — `{node: {...}}` when present, `{node: null}` when absent. `node_type` is OPTIONAL: the id prefix names the type by convention and it is resolved for you; if the id is held by more than one type the read REFUSES and names them rather than guess. When you do pass `node_type`, an unknown one is REFUSED rather than answered `null`, because \"no such type\" and \"no such node\" are different facts and must not share one reply. Carries `discontinued`: true when an ACCEPTED Decision has withdrawn this node (OBSOLETES). READ IT — the stored `status` still records what was BUILT, so a withdrawn capability goes on saying `realized` and only this field tells you the thing is gone.",
+  "description": "Fetch a node by id — `{node: {...}}` when present, `{node: null}` when absent. `node_type` is OPTIONAL: the id prefix names the type by convention and it is resolved for you; if the id is held by more than one type the read REFUSES and names them rather than guess. When you do pass `node_type`, an unknown one is REFUSED rather than answered `null`, because \"no such type\" and \"no such node\" are different facts and must not share one reply. Carries `discontinued`: true when an ACCEPTED Decision has withdrawn this node (OBSOLETES). READ IT — the stored `status` still records what was BUILT, so a withdrawn capability goes on saying `realized` and only this field tells you the thing is gone. Ask for this when you want everything recorded about one item — pull up the full record for a requirement, a component, any single node.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,

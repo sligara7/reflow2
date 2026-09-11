@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Which design this graph holds: its durable id and its human label. The id is assigned once, with no coordination, and never changes — it namespaces every stored key and appears in every export, so two designs can tell each other apart when they compose (mirror_surface). Pass `label` to RENAME the design; the id is untouched. Read this when a session needs to say WHICH design it is working in.",
+  "description": "Which design this graph holds: its durable id and its human label. The id is assigned once, with no coordination, and never changes — it namespaces every stored key and appears in every export, so two designs can tell each other apart when they compose (mirror_surface). Pass `label` to RENAME the design; the id is untouched. Read this when a session needs to say WHICH design it is working in. Ask for this when you want to know which design or project's model this session is connected to right now.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,

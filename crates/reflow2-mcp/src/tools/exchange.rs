@@ -50,25 +50,24 @@ use crate::service::*;
 #[tool_router(router = exchange_router, vis = "pub")]
 impl ReflowService {
     #[tool(
-        description = "Compute the seam between this design and another by COMPLEMENTARY ROLE, \
-                       instead of hand-asserting which boundaries correspond. Each boundary \
-                       declares a role on `Interface.designation` and pairing matches \
-                       COMPLEMENTS — `published`/`both` against `required`/`both` — never like \
-                       with like, the way a base pairs with its complement and not a copy of \
-                       itself. Two boundaries pair when their NAMES match fuzzily AND they agree \
-                       on medium, transport_security and auth. FIVE OUTCOMES, all useful: paired \
-                       (the seam, computed); CONFLICTS, where the names match but the axes refuse \
-                       — reported with EVERY refusing axis, never dropped as a non-match, because \
-                       \"you publish this, I need this, and we cannot connect as either is built\" \
-                       is the finding worth having; unmet needs (we require it, nobody publishes \
-                       it — the loudest signal); dead surface (they publish it, nobody here needs \
-                       it); and duplicate providers (two publishers of one need is a conflict, \
-                       not a match). Uncertain name matches are CANDIDATES to ask about, never \
-                       actions. Boundaries carrying no role are counted and NAMED, because \
-                       `internal` is the DEFAULT and cannot tell \"deliberately internal\" from \
-                       \"never classified\" — otherwise a design that did no labelling reports a \
-                       clean seam. Feed `paired` to seam_report to learn whether the full \
-                       contracts agree (req:complementary-pairing).",
+        description = "Compute the seam between this design and another by COMPLEMENTARY ROLE, instead of \
+                       hand-asserting which boundaries correspond. Each boundary declares a role on \
+                       `Interface.designation` and pairing matches COMPLEMENTS — `published`/`both` against \
+                       `required`/`both` — never like with like, the way a base pairs with its complement and \
+                       not a copy of itself. Two boundaries pair when their NAMES match fuzzily AND they agree \
+                       on medium, transport_security and auth. FIVE OUTCOMES, all useful: paired (the seam, \
+                       computed); CONFLICTS, where the names match but the axes refuse — reported with EVERY \
+                       refusing axis, never dropped as a non-match, because \"you publish this, I need this, \
+                       and we cannot connect as either is built\" is the finding worth having; unmet needs (we \
+                       require it, nobody publishes it — the loudest signal); dead surface (they publish it, \
+                       nobody here needs it); and duplicate providers (two publishers of one need is a \
+                       conflict, not a match). Uncertain name matches are CANDIDATES to ask about, never \
+                       actions. Boundaries carrying no role are counted and NAMED, because `internal` is the \
+                       DEFAULT and cannot tell \"deliberately internal\" from \"never classified\" — otherwise \
+                       a design that did no labelling reports a clean seam. Feed `paired` to seam_report to \
+                       learn whether the full contracts agree (req:complementary-pairing). Ask for this when \
+                       you want to match up the interfaces you require with what another system or team \
+                       publishes — find the seam.",
         annotations(read_only_hint = true)
     )]
     pub async fn pair_designs(
@@ -350,7 +349,8 @@ impl ReflowService {
                        never merged: an id that already exists here is left untouched and \
                        reported, because upsert would otherwise overwrite your design with \
                        somebody else's node, and two designs using one id for different things is \
-                       a naming conversation between owners.",
+                       a naming conversation between owners. \
+                       Ask for this when you want to bring in a pinned or frozen copy of what another team's design publishes — its public interfaces.",
         annotations(read_only_hint = false)
     )]
     pub async fn mirror_surface(
@@ -381,30 +381,24 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Load an exported design into this graph. THE DOCUMENT SHAPE, which an export of an \
-                       empty graph cannot teach you: \
-                       {\"nodes\":[{\"node_type\":\"Requirement\",\"node_id\":\"req:x\",\
-                       \"properties\":{...}}],\"edges\":[{\"edge_type\":\"SATISFIES\",\
-                       \"from_id\":\"cap:x\",\"to_id\":\"req:x\",\"properties\":{}}]}. \
-                       That is the whole required envelope — `graph_id`, `stamp`, `content_hash` \
-                       and `prev_content_hash` are all OPTIONAL on the way in, and `edges` may be \
-                       omitted entirely. Endpoint types are not stored on an edge; they are \
-                       recovered from the nodes in the same document or from this graph. Use \
-                       describe_schema for the properties each node_type takes. \
-                       EACH NODE MUST BE COMPLETE: validation applies to the whole node, so a \
-                       partial node is refused rather than merged into the one already there — \
-                       unlike create_node, where a partial props object edits. Re-importing a \
-                       corrected node means sending all of its properties, not just the changed \
-                       one. \
-                       Upsert, not replace: ids already present are overwritten and anything not \
-                       in the document is left alone, so clear the graph first if you want a \
-                       clean restore. Atomic — a document that fails validation leaves the graph \
-                       untouched rather than half-loaded — and EVERY invalid item is reported in \
-                       one response with its position. Reports any edge whose endpoints were missing \
-                       rather than dropping it. \
-                       IDENTITY: an EMPTY store adopts the document's `graph_id` (reported as \
-                       `adopted_identity`) instead of renaming the design; a store already \
-                       holding one keeps its name.",
+        description = "Load an exported design into this graph. THE DOCUMENT SHAPE, which an export of an empty \
+                       graph cannot teach you: \
+                       {\"nodes\":[{\"node_type\":\"Requirement\",\"node_id\":\"req:x\",\"properties\":{...}}],\"edges\":[{\"edge_type\":\"SATISFIES\",\"from_id\":\"cap:x\",\"to_id\":\"req:x\",\"properties\":{}}]}. \
+                       That is the whole required envelope — `graph_id`, `stamp`, `content_hash` and \
+                       `prev_content_hash` are all OPTIONAL on the way in, and `edges` may be omitted entirely. \
+                       Endpoint types are not stored on an edge; they are recovered from the nodes in the same \
+                       document or from this graph. Use describe_schema for the properties each node_type \
+                       takes. EACH NODE MUST BE COMPLETE: validation applies to the whole node, so a partial \
+                       node is refused rather than merged into the one already there — unlike create_node, \
+                       where a partial props object edits. Upsert, not replace: ids already present are \
+                       overwritten and anything not in the document is left alone, so clear the graph first if \
+                       you want a clean restore. Atomic — a document that fails validation leaves the graph \
+                       untouched rather than half-loaded — and EVERY invalid item is reported in one response \
+                       with its position. Reports any edge whose endpoints were missing rather than dropping \
+                       it. IDENTITY: an EMPTY store adopts the document's `graph_id` (reported as \
+                       `adopted_identity`) instead of renaming the design; a store already holding one keeps \
+                       its name. Ask for this when you want to load a design or model file that someone \
+                       exported or sent you.",
         annotations(read_only_hint = false)
     )]
     pub async fn import_graph(
@@ -495,7 +489,8 @@ impl ReflowService {
                        and a scope change are the same bytes) and comes back with both values \
                        for a human. `not_certified_about` is on every certificate INCLUDING a \
                        clean one: this reads two design records and has read no code, so it \
-                       never claims the implementation preserved behaviour.",
+                       never claims the implementation preserved behaviour. \
+                       Ask for this when you want to know whether a restructuring or reorganisation changed what the system does or only how it is organised — proof that no function was lost.",
         annotations(read_only_hint = true)
     )]
     pub async fn certify_preservation(

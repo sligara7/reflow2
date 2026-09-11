@@ -50,16 +50,17 @@ use crate::service::*;
 #[tool_router(router = claims_tools_router, vis = "pub")]
 impl ReflowService {
     #[tool(
-        description = "Take a region of the design in hand so colleagues can see it is held: \
-                       `contributor_id` claims everything within `depth` hops of `seed_id`. \
-                       ADVISORY, NEVER A LOCK — it does not block anyone, nothing consults it \
-                       before a write, and a second person who ignores it still gets a correct \
-                       three-way merge. It is also only as fresh as the last pull, because the \
-                       design lives as a file in each checkout with no shared server \
-                       (dec:multi-writer-architecture). Claims reduce collisions; they do not \
-                       prevent them. The region is COMPUTED from seed+depth rather than stored as \
-                       a node list, so it follows the design as it changes. Overlapping an \
-                       existing claim is allowed and reported by claim_report, never refused.",
+        description = "Take a region of the design in hand so colleagues can see it is held: `contributor_id` \
+                       claims everything within `depth` hops of `seed_id`. ADVISORY, NEVER A LOCK — it does not \
+                       block anyone, nothing consults it before a write, and a second person who ignores it \
+                       still gets a correct three-way merge. It is also only as fresh as the last pull, because \
+                       the design lives as a file in each checkout with no shared server \
+                       (dec:multi-writer-architecture). Claims reduce collisions; they do not prevent them. The \
+                       region is COMPUTED from seed+depth rather than stored as a node list, so it follows the \
+                       design as it changes. Overlapping an existing claim is allowed and reported by \
+                       claim_report, never refused. Ask for this to mark, flag or claim that you are working on \
+                       a part, region or subsystem, so nobody else collides with you or edits it at the same \
+                       time.",
         annotations(read_only_hint = false)
     )]
     pub async fn claim_region(
@@ -107,7 +108,8 @@ impl ReflowService {
                        one and you can omit `seat` entirely — calling this anyway is harmless and \
                        works the same, which is why an agent that always mints is never wrong. \
                        Writes NOTHING: a seat is a name assigned with no coordination \
-                       (dec:identity-out-of-band), never a lock, and it grants no rights.",
+                       (dec:identity-out-of-band), never a lock, and it grants no rights. \
+                       Ask for this when you want a durable name for this session so its claims are attributed.",
         annotations(read_only_hint = true)
     )]
     pub async fn mint_seat(&self) -> Result<CallToolResult, McpError> {

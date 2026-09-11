@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": true
   },
-  "description": "Surprising cross-community couplings (mined from the graph).",
+  "description": "Surprising cross-community couplings (mined from the graph). Ask for this when you want to see unexpected or surprising couplings between parts that should be separate — cross-community links the design did not intend.",
   "inputSchema": {
     "properties": {},
     "type": "object"
