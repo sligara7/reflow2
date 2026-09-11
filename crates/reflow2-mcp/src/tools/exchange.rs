@@ -377,7 +377,11 @@ impl ReflowService {
     )]
     pub async fn mirrors(&self) -> Result<CallToolResult, McpError> {
         let g = self.graph.read().await;
-        self.ok_read(&g, g.mirrors().map_err(dyno_err)?)
+        self.ok_read_or_why(
+            &g,
+            g.mirrors().map_err(dyno_err)?,
+            "no other design has been composed with this one (mirror_surface takes the pinned copy)",
+        )
     }
 
     #[tool(

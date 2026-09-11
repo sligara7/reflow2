@@ -49,8 +49,12 @@ def _unwrap(value):
     # list alone would silently throw away the half that says the list is
     # incomplete. Presence-not-exact-set was right when the only sibling was a
     # hint and wrong the moment one mattered.
+    # `empty_because` (2026-09-11) is the same kind of sibling as `loop_hint`:
+    # inert prose that says WHICH empty an empty list is, added by
+    # `empty_speaks` in service.rs. It never carries payload, so it may ride
+    # along without defeating the unwrap.
     if isinstance(value, dict) and {"count", "items"} <= value.keys() <= {
-        "count", "items", "loop_hint"
+        "count", "items", "loop_hint", "empty_because"
     }:
         return value["items"]
     return value

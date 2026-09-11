@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:e6a6a30c45e11780c6b8a3b0b9d9c88c652da333e56ed53f326a5930be0f73c7",
+  "content_hash": "sha256:bfa5e6716b0c4e4f542f522063745681c27fee1caa5cd05a743c9288e5e8d9e9",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -6801,6 +6801,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:an-empty-answer-says-which-empty-it-is",
+      "properties": {},
+      "to_id": "epoch:an-empty-answer-says-which-empty-it-is"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:an-idea-is-a-declared-kind",
       "properties": {},
       "to_id": "epoch:v0450"
@@ -10686,6 +10692,12 @@
       "from_id": "snap:epoch:allocation-subquestions-narrowed:dec:idea-allocation-waits-for-the-last-responsible-moment",
       "properties": {},
       "to_id": "epoch:allocation-subquestions-narrowed"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:an-empty-answer-says-which-empty-it-is:cap:a-sweep-says-what-it-could-not-have-found",
+      "properties": {},
+      "to_id": "epoch:an-empty-answer-says-which-empty-it-is"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -20189,6 +20201,16 @@
     },
     {
       "edge_type": "CAUSES",
+      "from_id": "fact:the-tool-class-census-answers-the-open-questions-own-test-and-half-the-sweeps-findings-are-one-offs",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The census named the bare-zero reply as one of the six class-level findings of the sweep and measured the house style it violates: four read-only tools carry `not_observed_about` or its equivalent and are excellent at it, while others answer a bare zero. This change is that class fixed at the reply shape, with a wire gate so a fortieth tool cannot join it.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "chg:an-empty-answer-says-which-empty-it-is"
+    },
+    {
+      "edge_type": "CAUSES",
       "from_id": "fact:the-upgrade-path-leaves-the-shared-server-on-the-old-binary",
       "properties": {
         "basis": "causal",
@@ -28478,6 +28500,69 @@
         "action": "modified"
       },
       "to_id": "art:verify"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-empty-answer-says-which-empty-it-is",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-empty-answer-says-which-empty-it-is",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:smoke-mcp"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-empty-answer-says-which-empty-it-is",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-assure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-empty-answer-says-which-empty-it-is",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-empty-answer-says-which-empty-it-is",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-exchange"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-empty-answer-says-which-empty-it-is",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-temporal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-empty-answer-says-which-empty-it-is",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:a-sweep-says-what-it-could-not-have-found"
     },
     {
       "edge_type": "CHANGED",
@@ -58335,6 +58420,12 @@
       "from_id": "cap:a-status-advance-says-whether-its-prose-predates-it",
       "properties": {},
       "to_id": "snap:epoch:preserved-on-write:cap:a-status-advance-says-whether-its-prose-predates-it"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:a-sweep-says-what-it-could-not-have-found",
+      "properties": {},
+      "to_id": "snap:epoch:an-empty-answer-says-which-empty-it-is:cap:a-sweep-says-what-it-could-not-have-found"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -172225,6 +172316,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:empty-speaks-gate",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-sweep-says-what-it-could-not-have-found"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:enforced-rule-detector-test",
       "properties": {
         "completeness": "complete",
@@ -180912,6 +181012,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:empty-speaks-gate",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:empty-speaks-gate"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:enforced-rule-detector-test",
       "properties": {
         "action": "created"
@@ -183376,6 +183484,18 @@
       }
     },
     {
+      "node_id": "art:empty-speaks-gate",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:957b350f281cec024a1fe9212d9fcf9773a65026e280578e177f25f1d0a63f48",
+        "description": "The wire-level class gate for the bare-zero defect: starts the built binary on an EMPTY store, calls every no-argument read-only tool by name from `tools/list` — so a new tool joins the class the moment it is served — and fails if a reply whose count/items/value is empty carries neither `empty_because` nor the loop-debt `loop_hint`. Checked on the wire rather than in-process because the obligation is about what a consumer receives. Measured before the fix: 39 no-arg read-only tools, 10 empty on an empty design, 1 speaking, 9 bare. Runs in CI's workspace job after smoke_mcp and is listed in AGENTS.md's everyday gate block.",
+        "location": "tools/empty_speaks.py",
+        "name": "empty_speaks.py",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:enforced-rule-detector-test",
       "node_type": "Artifact",
       "properties": {
@@ -184961,7 +185081,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:4bc46aa008e28a3ed8ad25e2a8577bdf9f58071d10791e20383d37961b9196c1",
+        "checksum": "sha256:9e58bd397cc110f07add62914f121ad8e158a4b294ce0cda1daf7ba9dcbb6ab7",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -185124,7 +185244,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:0d4a6d1006ff74826fd797c640dc15d37bd00ef1b62a6fad79841a8dc142a297",
+        "checksum": "sha256:e926fb42575b6a8af92dd374431c9d96808d298e0fb9b979d4130f92d26fbc14",
         "location": "tools/smoke_mcp.py",
         "name": "smoke_mcp.py",
         "status": "realized"
@@ -185861,7 +185981,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:df4af3d1da02cd1aba6615e1a902939184b80eabda04bf3a32f8b74dfb6496b8",
+        "checksum": "sha256:e82bca908e867f889de57b3a2f721ee2d0c690b28ecf39b7398cc078a06d1431",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/assure.rs",
         "name": "tools/assure.rs",
@@ -185913,7 +186033,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:3fa8e32cbeb7e2077fe3a4959f800f829c84314de4bc1af771ac92d5687e052a",
+        "checksum": "sha256:a4f27d173c3184ece86db813e7754fd1374cba7e88b9162eb63fc301f31f0236",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
@@ -185926,7 +186046,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:39ba53c93ee46456f64658272be95baf1c86035561f949a7b20f7c0d9d1af3c0",
+        "checksum": "sha256:6cfe0ec229b750ded5344188eb01654f95ed5703fa01c870e208786b5e26e751",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/exchange.rs",
         "name": "tools/exchange.rs",
@@ -185987,7 +186107,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:3ea7a67ca73874dbaff64fcc80fd727e9a87f10edfc0c64cea807e9395c72f25",
+        "checksum": "sha256:92dc255cee322300c826e359873a77fd72f2e4448d18ae643594658d5e33b4a4",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/temporal_tools.rs",
         "name": "tools/temporal_tools.rs",
@@ -192940,6 +193060,16 @@
         "rationale": "A real user found a real bug that every green signal in the design agreed was fine. That is the failure the served instructions warn about — a green gate is evidence about what it covers and silent about the rest — arriving from outside rather than from a detector. Anthony chose to make the absence first-class rather than merely documented, and required that the property ship with the report that reads it, so the count is the deliverable.",
         "subject": "system",
         "summary": "Implements `dec:should-a-realizes-edge-say-that-nobody-checked-the-file-still-obeys-the-rule`, option (b), settled on Anthony's word 2026-08-16.\n\nWHAT CHANGED. `REALIZES` gains `conformance: unchecked | reviewed | verified`, defaulting to `unchecked` (`schema/build.yaml`). `realizes()` and `link_artifact` take it; `ArtifactLink` returns what was stored. `DesignGraph::conformance_tally()` counts every realizing link by bucket and names up to ten unchecked ones, and `evidence_report` carries the tally so the number is reachable from the served surface.\n\n⭐ THE MEASURED ANSWER ON REFLOW2'S OWN DESIGN, taken end-to-end through a restarted server: 223 REALIZING LINKS, 223 UNCHECKED, 0 reviewed, 0 verified, 0 unrecognised. That sentence could not be produced at all before this change, and it is the entire deliverable — not the ceremony of setting a field, but the count that makes the silence visible.\n\nWHY IT EXISTS, and the evidence came from OUTSIDE the project: a Requirement said the calendar day is the person's CIVIL date; the code used UTC; the Capability said `realized`; the artifact's checksum matched so `reconcile_artifacts` was silent. Every signal in the graph was green and A USER FOUND THE BUG IN THE PRODUCT. Nothing distinguished a file CHECKED AGAINST THE RULE from a file MERELY HASHED, and the two produced identical reports. Alex's Grok session, 2026-08-14, item 5.\n\nWHY IT IS NOT A DETECTOR: reflow2 reads a DESIGN, never a running system, and judging whether code implements a civil-date rule is program analysis it deliberately stays out of (`dec:agent-navigates-content`). This RECORDS what a person knows; it computes nothing about code.\n\n⭐ WHY (b) BEAT (a), documenting the hole — and this is the general principle rather than a preference: A DOCUMENTED HOLE IS SOMETHING A READER MUST REMEMBER; A DEFAULT OF `unchecked` IS SOMETHING THE GRAPH SAYS OUT LOUD EVERY TIME, WITH NOBODY REMEMBERING ANYTHING. The same move landed twice already this month and was right both times: #200 stopped INJECTING a default nobody chose, #213 started REPORTING the property nobody declared.\n\nWHERE THE READER LIVES, and both alternatives were rejected for stated reasons. NOT `coverage_report`: it requires a caller-supplied file sweep, and making somebody sweep a tree to learn that nobody has checked anything puts a cost in front of the one number that should be free. NOT `loop_status`: every edge starts `unchecked`, so a large figure that never moves is exactly the signal-trained-to-be-ignored failure `req:the-loop-can-say-what-this-session-owes` was built to end — hours earlier, in this same session. `evidence_report` takes no arguments, is read on demand rather than nagged, and already speaks in this idiom.\n\nDELIBERATE SHAPE:\n- `conformance` DOES NOT FOLLOW `completeness` INTO OPTIMISM. `completeness` defaults to `complete`; conformance defaults to `unchecked`, because registering a file says it exists and never that anyone checked it.\n- THE SAMPLE IS CAPPED AT TEN AND THE COUNT IS NOT. A truncated list that also truncated the count would under-report the problem, the one direction this must never fail in.\n- A MISSING VALUE COUNTS AS `unchecked`, never as a separate unknown bucket — otherwise the number that matters shrinks for a reason that is not progress.\n- AN UNRECOGNISED VALUE IS NAMED, not folded into a bucket: silently counting it as checked would be the flattering reading of an unreadable one.\n\n⚠️ WHAT MUTATION TESTING TAUGHT, and it changed what could be tested. Mutating the fallback to report a missing conformance as `verified` killed only ONE case, which was suspicious — and the reason is that the schema `default:` MATERIALISES the property at write time. A probe confirmed it: a freshly written edge stores `conformance: \"unchecked\"` explicitly. So the in-code fallback covers ONLY edges written before the property existed, and that shape CANNOT be constructed through the API, because a property once written cannot be removed (`fact:defect-a-property-once-written-cannot-be-removed`, found earlier the same day). It is therefore proven against the real graph rather than in a unit test — all 223 links predate the property and all 223 report `unchecked`.\n\nVERIFIED. 11 cases, all passing. Three mutations, each killing the right case: capping the count as well as the sample; defaulting link_artifact to optimism; and the fallback mutation above, whose partial kill was itself the finding. Two counterweights pin the distinction that defines the feature — a COMPLETE artifact is still unchecked, and a MATCHING CHECKSUM is still unchecked, which is precisely the shipped-bug case: complete, hashed, green, wrong.\n\nNO SCHEMA STAMP MOVEMENT: an edge PROPERTY is not counted by the version stamp — 29 node types, 61 edge types, unchanged — so no upgrade document is owed.\n\nNOT DONE, named rather than left to be discovered. Nothing MOVES an edge off `unchecked` except a caller saying so, and nothing forces that; the honest claim is that the silence is now countable, not that it will be broken. Option (d), raising unchecked links as a gap, is deliberately deferred — 223 gaps on day one is noise, and it costs almost nothing later because the data now exists. And the 223 are not triaged here; this change measures them, it does not fix them."
+      }
+    },
+    {
+      "node_id": "chg:an-empty-answer-says-which-empty-it-is",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "name": "Nine read-only tools stop answering a bare zero: each empty reply now carries empty_because, the sentence saying what was swept and why nothing came back, and a wire-level CI gate refuses a bare zero from any no-argument read-only tool",
+        "repair": "corrected_cause",
+        "subject": "system"
       }
     },
     {
@@ -206480,6 +206610,17 @@
       }
     },
     {
+      "node_id": "epoch:an-empty-answer-says-which-empty-it-is",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "description": "2026-09-11, after PR #476. The bare-zero class from the tool sweep (D-06/D-12/C-02), for criterion 2 (req:every-tool-description-is-accurate-about-what-the-tool-does): measured on an EMPTY design, 9 of the 39 no-argument read-only tools answered a bare {\"count\":0,\"items\":[]} — indistinguishable from a clean design — while one (open_questions) already said which empty through ok_read_empty_speaks, built after a field report and called by nothing else. The fix is a helper (empty_speaks / ok_json_or_why / ok_read_or_why) and one true sentence per tool about what it swept, plus a wire-level gate (tools/empty_speaks.py, in CI) that calls every no-arg read-only tool on an empty store and refuses a bare zero, so a fortieth tool cannot join the class. Must NOT include get_node's {\"node\":null} on a missing id — an argument-taking read outside this gate's reach, taken with the description-accuracy pass. Sequence 417 follows epoch:a-tool-says-when-you-would-ask-for-it (416).",
+        "epoch_type": "revision",
+        "name": "An empty answer says which empty it is",
+        "sequence": 417,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:an-export-says-whether-it-changed-anything",
       "node_type": "DesignEpoch",
       "properties": {
@@ -209732,6 +209873,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered crates/reflow2-core/src/edge_prose.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:empty-speaks-gate",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered empty_speaks.py"
       }
     },
     {
@@ -216638,6 +216789,16 @@
         "state": "{\"decision\":\"RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — Anthony thinking out loud, 2026-08-08. Nothing here is intent and nothing has been chosen. THE IDEA, his words: \\\"the allocation of functions to systems/services should be done as late as possible (agreeing that doing it at genesis is too early). I feel like doing it at the last possible moment before functional allocation to system/service is the right call.\\\" It is the answer he reached to a caution raised against the sibling idea (dec:idea-the-ility-chooses-the-allocation-graph), which proposed ASKING at genesis what quality attribute the system is for: the objection was that at genesis you frequently do not know yet, and premature commitment can cost as much as late discovery. His resolution keeps the question and moves WHEN it is asked — not at genesis, but at the moment allocation actually has to be committed. WHAT THIS WOULD MEAN CONCRETELY: the quality-attribute question rides the ALLOCATION event rather than the project's beginning, so a design accumulates requirements and capabilities freely and is asked what it is optimising for only when something is about to be bound to a component. THE HOOK MAY ALREADY EXIST, and this is the cheap part worth checking before anything is built: `unallocated_capability` is already a detected gap, so the graph can already see capabilities that exist and are bound to nothing. The transition from \\\"capabilities exist, none allocated\\\" to \\\"the first allocation is being made\\\" is observable from graph state alone, which is the same state-not-history discipline dec:loop-status-state-not-history already commits to. If that is the trigger, nothing new needs remembering. OPEN SUB-QUESTIONS, none answered here: (a) is the moment per-PROJECT or per-CAPABILITY — a mature design allocates new capabilities continuously, so \\\"the last responsible moment\\\" may recur rather than happen once, which would make this a repeating prompt rather than a milestone; (b) does deferring allocation conflict with reflow2's own trajectory model, where `allocation` currently reads 100% and sits ahead of the `seams` frontier at 0% — if allocation is supposed to be late, a design showing allocation complete and seams empty may be describing a real inversion rather than healthy progress; (c) what happens to a design that never reaches the moment, since a demonstrator may sit unallocated forever and be right (maturity_report already refuses to say where a design SHOULD be). COUNTER-ARGUMENT, recorded beside rather than against: the last-responsible-moment principle assumes the cost of deciding late is lower than the cost of deciding wrong, which holds when deferral is free — and here it may not be, because artifacts get written against an assumed structure long before anyone calls `allocate`. If real files already embody a de facto allocation, then \\\"deferring the decision\\\" defers only the RECORD of it, and the graph would be late to something the build already did. That is the same as-designed-versus-as-built gap that granularity_report exists to surface, and it argues the trigger should watch ARTIFACTS appearing rather than the `allocate` call.\",\"name\":\"OPEN — is allocating functions to systems/services something to defer to the last responsible moment, and can reflow2 tell when that moment has come?\",\"rationale\":\"Recorded under the brainstorm skill, separately from the ility idea, because the two are genuinely different questions — WHAT drives allocation and WHEN it happens — and can be answered independently; one node holding both could only ever be half-answered. Worth keeping because it converts a raised objection into a design position rather than losing it: the caution was \\\"at genesis you do not know yet\\\", and this answers it without abandoning the question. The `unallocated_capability` hook and the artifacts-versus-allocate-call counter-argument are the two things a later session would otherwise have to re-derive.\",\"status\":\"proposed\"}",
         "target_id": "dec:idea-allocation-waits-for-the-last-responsible-moment",
         "target_type": "Decision"
+      }
+    },
+    {
+      "node_id": "snap:epoch:an-empty-answer-says-which-empty-it-is:cap:a-sweep-says-what-it-could-not-have-found",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:heal\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"verified\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:structure\",\"properties\":{\"completeness\":\"partial\",\"conformance\":\"verified\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:sweep-coverage-test\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"verified\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:tools-coherence\",\"properties\":{\"completeness\":\"partial\",\"conformance\":\"verified\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:a-sweep-names-what-it-could-not-have-found\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:heal\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:a-sweep-says-what-it-could-not-have-covered\",\"properties\":{}}]",
+        "state": "{\"description\":\"DECISION 5, built 2026-08-20 on Anthony's word. DISTINCT FROM the wall-check instrument, which reads the SOURCE from outside; this is reflow2 telling you, from inside detect_defects, what its own answer does not cover.\\n\\nTHE MEASURED FAILURE: circular_dependency walked 182 dependency pairs on reflow2's own graph and found nothing - a large, healthy-looking population. ZERO of those pairs joined two subsystem-level components. So \\\"no circular dependencies\\\" was true of the flattened network and said nothing whatever about the subsystems, while reading exactly like a clean bill of health for them. The two real subsystem cycles were found with a hand-written Python script, not with reflow2.\\n\\n⭐ THE FIRST DESIGN WOULD NOT HAVE CAUGHT IT, and that is worth keeping. The approved shape was \\\"name the checks that had nothing to examine\\\". Measuring first showed it would print NOTHING on this graph - no rule has an empty population - and would have missed the motivating case entirely. Anthony was told before it was built rather than after. The failure is not a starved rule; it is that A RULE'S POPULATION CAN BE HEALTHY WHILE THE SUB-POPULATION THE READER CARES ABOUT IS EMPTY.\\n\\nWHAT SHIPPED, two mechanisms because one was not enough:\\n  · rule_populations - what each of the 8 rules actually walked, and in what unit. Computed with THE SAME EXPRESSION THE RULE USES, never re-derived, because two implementations of one number can disagree. A rule that walked nothing reports clean for the same reason an empty graph does.\\n  · coupling_by_level - components and dependency pairs AT each declared Component.level. This is the one that bites, and it generalises to any project that declares a hierarchy: the answer is computed over a flattened graph and the reader assumes it holds at the level they asked about.\\n  · coverage_note - ONE line naming both, present only when there is something to name, so its presence is the signal. A summary rather than a per-finding annotation, because the detail is already in the two lists and a sentence on every finding would crowd the findings.\\n\\nON REFLOW2'S OWN GRAPH it now says: \\\"the subsystem level has 10 component(s) and ZERO dependency pairs between them, so every topology result here - cycles, severability, single points of failure - is SILENT about that level rather than clean about it.\\\" That is the sentence that would have saved two days.\\n\\nA FALSE POSITIVE CAUGHT BY TESTING AGAINST REALITY: a level holding ONE component can never have a pair joining two components at it. That is arithmetic, not a modelling gap, and naming it would be the false positive that teaches a reader to skip the line - which is how a signal dies. Fixed before shipping, pinned by a_level_holding_one_component_is_never_called_blind.\\n\\nTHE TOOL DESCRIPTION MOVED WITH IT. detect_defects told readers that swept.rules and swept.note were the whole story, which went stale the moment these fields existed. Updating it pushed past skill_lint's 1500-char cap at 1728; the trim came from a sentence coverage_note now states better. A mechanism is not finished until the message a reader actually sees points at it.\",\"name\":\"A defect sweep says what it could NOT have found — per-rule populations, and coupling at each declared level\",\"provenance\":\"authored\",\"status\":\"realized\"}",
+        "target_id": "cap:a-sweep-says-what-it-could-not-have-found",
+        "target_type": "Capability"
       }
     },
     {
@@ -228122,7 +228283,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:d701643649aba8262b29a54c4107c392e0b27c62a1d6fc69545defe3a189f5fa",
+  "prev_content_hash": "sha256:e6a6a30c45e11780c6b8a3b0b9d9c88c652da333e56ed53f326a5930be0f73c7",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
