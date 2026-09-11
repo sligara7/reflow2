@@ -723,18 +723,29 @@ pub(crate) fn term_weights<'a>(
     terms: &[&'a str],
     corpus: &[(String, String)],
 ) -> Vec<(&'a str, f64)> {
-    let n = corpus.len().max(1) as f64;
+    let n = corpus.len() as f64;
     terms
         .iter()
         .map(|term| {
             let df = corpus
                 .iter()
-                .filter(|(name, desc)| name.contains(term) || desc.contains(term))
-                .count()
-                .max(1) as f64;
-            (*term, (1.0 + n / df).ln())
+                .filter(|(name, desc)| name.contains(term) || has_word(desc, term))
+                .count() as f64;
+            // ln((n+1)/(df+1)): a term in EVERY entry separates nothing and
+            // weighs exactly 0 — the old ln(1 + n/df) floored at ln 2, which is
+            // how "the", "in" and "of" outscored the tool a query named.
+            (*term, ((n + 1.0) / (df + 1.0)).ln().max(0.0))
         })
         .collect()
+}
+
+/// Whole-word membership: `term` equals some maximal run of alphanumerics in
+/// `hay`. Underscores split too, so `capability_id` yields `capability` and
+/// `id`. This is the ONLY way a description or parameter may match a term —
+/// `contains` let "in" match "interface" and "cap" match "capability", and on
+/// a 180-query corpus that crowded 41 tools out of their own top 5.
+pub(crate) fn has_word(hay: &str, term: &str) -> bool {
+    hay.split(|c: char| !c.is_alphanumeric()).any(|w| w == term)
 }
 
 /// Score one tool against a weighted query.
@@ -760,16 +771,20 @@ pub(crate) fn score_tool(
         } else if name_lc.contains(term) {
             score += 5.0 * weight;
         } else if name_lc.split('_').any(|part| part.starts_with(term)) {
-            score += 1.5 * weight;
+            score += 1.5 * weight; // a typed prefix (`prop` → propagate_change) stays
         }
-        if desc_lc.contains(term) {
+        if has_word(&desc_lc, term) {
             score += 2.0 * weight;
         }
-        if params.iter().any(|p| p.to_lowercase().contains(term)) {
+        if params.iter().any(|p| has_word(&p.to_lowercase(), term)) {
             score += 1.0 * weight;
         }
     }
-    score
+    // Length normalisation: a 1,500-char description accumulates whole-word
+    // hits a 200-char one cannot, and on the corpus that alone crowded tools
+    // out of their own top 5. A heuristic, not an invariant — kept because
+    // the corpus measured it (see tests/find_tools_ranks_what_the_query_means).
+    score / (2.0 + desc_lc.len() as f64 / 200.0).ln()
 }
 
 /// First sentence (or the first 200 characters) of a tool description. The whole
@@ -5423,5 +5438,67 @@ mod tests {
             ProtocolVersion::LATEST.as_str(),
             ProtocolVersion::STANDARD_HEADERS.as_str()
         );
+    }
+}
+
+/// The two CORRECTNESS invariants of tool search, pinned where the functions
+/// live because they are `pub(crate)`.
+///
+/// Measured 2026-09-11 over a 180-query corpus in a user's words: 53 tools
+/// missed the top 10, and 41 of those were crowded out by tools whose long
+/// descriptions merely CONTAINED more of the query — because `contains` is a
+/// substring test ("in" matches everything) and a term present in every
+/// description still carried weight ln(2). Ablated one factor at a time on a
+/// replica agreeing with the live server on 164/180 ranks: stopwords 56→45,
+/// whole-word alone 56→60 (it needs the stopword fix to help), both 56→42.
+/// `fact:find-tools-misses-split-into-a-vocabulary-gap-no-ranking-can-close-and-a-scorer-that-lets-long-descriptions-crowd`.
+///
+/// Length normalisation is deliberately NOT pinned here: it is a heuristic
+/// (ablation 42→39), not an invariant, and the served-surface fixtures in
+/// `tests/find_tools_ranks_what_the_query_means.rs` decide whether it earns
+/// its place.
+#[cfg(test)]
+mod find_tools_scoring_invariants {
+    use super::*;
+
+    /// A term that occurs in EVERY corpus entry separates nothing and must
+    /// weigh nothing. Today it weighs ln(1 + n/n) = ln 2.
+    #[test]
+    fn a_term_present_in_every_entry_weighs_zero() {
+        let corpus: Vec<(String, String)> = (0..20)
+            .map(|i| (format!("tool_{i}"), format!("the design of thing {i}")))
+            .collect();
+        let w = term_weights(&["the", "design", "thing"], &corpus);
+        for (term, weight) in w {
+            assert_eq!(
+                weight,
+                0.0,
+                "`{term}` is in all {} entries and must weigh 0, got {weight}",
+                corpus.len()
+            );
+        }
+    }
+
+    /// A term matches WHOLE WORDS in the description, never substrings:
+    /// "cap" must not match "capability", "in" must not match "interface".
+    #[test]
+    fn a_description_matches_whole_words_only() {
+        let terms = [("cap", 1.0), ("in", 1.0)];
+        let s = score_tool("x", "a capability behind an interface", &[], &terms);
+        assert_eq!(s, 0.0, "substring matches scored {s}; whole words only");
+        let s = score_tool("x", "cap the total; in scope", &[], &terms);
+        assert!(s > 0.0, "genuine whole-word matches must still score");
+    }
+
+    /// And the same rule for the name's parts — `starts_with` on a part is a
+    /// deliberate prefix match for typing (`prop` → `propagate_change`) and
+    /// stays; but a description substring must not score.
+    #[test]
+    fn name_prefix_matching_is_kept_and_description_substring_is_not() {
+        let terms = [("prop", 1.0)];
+        let by_name = score_tool("propagate_change", "", &[], &terms);
+        assert!(by_name > 0.0, "prefix on a name part is intentional");
+        let by_desc = score_tool("x", "an improper value", &[], &terms);
+        assert_eq!(by_desc, 0.0, "`prop` inside `improper` must not score");
     }
 }
