@@ -15,6 +15,7 @@
         "type": "array"
       },
       "node_id": {
+        "description": "The node gaining the aliases; its type is `node_type`.",
         "type": "string"
       },
       "node_type": {

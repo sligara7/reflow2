@@ -23,6 +23,7 @@
         "type": "string"
       },
       "target_id": {
+        "description": "The assessed node — any node type carrying `HAS_OBSERVATION` edges\nto `DimensionObservation` records.",
         "type": "string"
       }
     },

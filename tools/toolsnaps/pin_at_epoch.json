@@ -11,6 +11,7 @@
         "type": "string"
       },
       "node_id": {
+        "description": "The node being pinned; its type is `node_type`.",
         "type": "string"
       },
       "node_type": {

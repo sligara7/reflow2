@@ -50,6 +50,7 @@
         ]
       },
       "target_id": {
+        "description": "The constrained node; its type is `target_type`.",
         "type": "string"
       },
       "target_type": {

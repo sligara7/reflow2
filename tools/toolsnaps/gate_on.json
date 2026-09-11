@@ -29,6 +29,7 @@
         ]
       },
       "subject_id": {
+        "description": "The gated increment; its type is `subject_type`.",
         "type": "string"
       },
       "subject_type": {
@@ -40,6 +41,7 @@
         ]
       },
       "target_id": {
+        "description": "The technology gated on; its type is `target_type`.",
         "type": "string"
       },
       "target_type": {

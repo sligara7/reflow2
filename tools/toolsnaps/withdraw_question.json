@@ -8,6 +8,7 @@
     "additionalProperties": false,
     "properties": {
       "gap_id": {
+        "description": "NOT a node id, and NOT a question id — the `gap_id` the question was\nasked ABOUT, as carried by `open_questions`.",
         "type": "string"
       }
     },

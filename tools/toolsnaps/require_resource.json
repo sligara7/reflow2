@@ -22,6 +22,7 @@
         ]
       },
       "from_id": {
+        "description": "The node requiring it; its type is `from_type`.",
         "type": "string"
       },
       "from_type": {

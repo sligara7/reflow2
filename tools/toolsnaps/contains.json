@@ -8,6 +8,7 @@
     "additionalProperties": false,
     "properties": {
       "child_id": {
+        "description": "The contained node; its type is `child_type`.",
         "type": "string"
       },
       "child_type": {

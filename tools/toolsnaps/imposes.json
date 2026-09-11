@@ -11,6 +11,7 @@
         "type": "string"
       },
       "rule_id": {
+        "description": "The `EnvironmentRule` the environment imposes.",
         "type": "string"
       }
     },

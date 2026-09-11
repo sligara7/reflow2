@@ -8,6 +8,7 @@
     "additionalProperties": false,
     "properties": {
       "item_id": {
+        "description": "The scheduled item; its type is `item_type`.",
         "type": "string"
       },
       "item_type": {
@@ -40,6 +41,7 @@
         ]
       },
       "target_id": {
+        "description": "The moment scheduled for; its type is `target_type`.",
         "type": "string"
       },
       "target_type": {

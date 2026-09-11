@@ -18,7 +18,7 @@
         ]
       },
       "node_id": {
-        "description": "The node to find candidates FOR — usually an idea from\n`unreviewed_ideas`.",
+        "description": "The node to find candidates FOR — usually an idea from\n`unreviewed_ideas`.\nIts type is `node_type`, resolved from the id when omitted.",
         "type": "string"
       },
       "node_type": {

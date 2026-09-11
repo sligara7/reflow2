@@ -32,7 +32,7 @@
         ]
       },
       "defect_id": {
-        "description": "The defect's `id`, exactly as `detect_defects` reported it.",
+        "description": "The defect's `id`, exactly as `detect_defects` reported it.\nNOT a node id — the `heal:…` id a defect carries in `detect_defects`.",
         "type": "string"
       },
       "reason": {

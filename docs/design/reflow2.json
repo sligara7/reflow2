@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:f8c7fdc3f9e11b94bb7e0e84cc498f419d2d821dcec44d5fa28c3dccf27566fb",
+  "content_hash": "sha256:10625af0d0962688072fa2d86f9be505c57aca0d82d868ebd3daf249fb564609",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -894,6 +894,14 @@
       "from_id": "fact:the-author-of-a-skill-did-not-use-it-an-hour-later",
       "properties": {},
       "to_id": "dec:idea-where-does-tool-use-actually-fail-four-layers"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:the-builder-reads-source-where-a-consumer-has-only-the-surface-and-find-tools-returned-the-negation",
+      "properties": {
+        "note": "A THIRD measured retrieval failure for that open question, and the first where the ranked hit was the query's semantic OPPOSITE rather than merely wrong. Its two recorded cases were a miss (set_interface_designation for a coupling question) and a confidently-wrong hit that causes a defect (contain_component for 'move a component'). This one: 'record when a point in time actually happened' returned plan_epoch, which creates a point that has NOT happened, because the description contains the negation of the query term — and the right tool, add_epoch, was absent from the top five of 180."
+      },
+      "to_id": "dec:idea-a-problem-in-the-users-words-should-retrieve-the-tool-that-answers-it"
     },
     {
       "edge_type": "ABOUT_ENTITY",
@@ -3546,6 +3554,14 @@
     },
     {
       "edge_type": "ANTICIPATES",
+      "from_id": "dec:mosa-conformance",
+      "properties": {
+        "evidence": "dec:mosa-conformance (2026-07-25) named this gap 18 months of design-time before it was measured: under WHAT IS GENUINELY MISSING it records '(2) NOTHING CHECKS STANDARDS COMPLIANCE, and the vocabulary for it is present and unused: DesignRule is defined as a chosen standard or convention with an `enforced` flag, and there are zero DesignRules in any graph.' The population has since gone 0 -> 27 while the check stayed at zero, and this finding supplies the mechanism it could not have known: VIOLATES_RULE and COMPLIES_WITH resolve to EnvironmentRule, so no served path reaches a DesignRule at all."
+      },
+      "to_id": "fact:the-27-design-rules-are-unreachable-by-the-violation-vocabulary-because-it-resolves-to-environment-rule"
+    },
+    {
+      "edge_type": "ANTICIPATES",
       "from_id": "dec:orientation-is-computed-not-written",
       "properties": {},
       "to_id": "dec:a-projection-is-named-and-the-battery-runs-over-it"
@@ -3703,6 +3719,14 @@
         "evidence": "That fact measured 177 of 178 ALLOCATED_TO edges landing on a module and DECOMPOSES at zero, and named the missing function layer as a real allocation-recording gap. It saw this question coming; this idea states what the missing layer would be. Drawn FROM the fact TO this decision."
       },
       "to_id": "dec:idea-a-capability-is-a-set-of-functions-and-a-black-box-delivers-functions"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "fact:skill-mechanics-track-enforcement-exactly-and-they-split-into-three-kinds",
+      "properties": {
+        "evidence": "The skills measurement (2026-08-28) answered the factory test in the SKILL domain — 'every skill states its honest limits = 15 of 23 edits' — and stated in the same breath that the identical test 'posed for tools, was unanswered'. This census answers it for the 180-tool surface (idempotentHint 179 edits, destructiveHint 173, required-param descriptions 93), and inherits that node's three-kind split as the frame for judging which classes are worth a contract."
+      },
+      "to_id": "fact:the-tool-class-census-answers-the-open-questions-own-test-and-half-the-sweeps-findings-are-one-offs"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -7989,6 +8013,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:every-required-reference-parameter-says-its-type",
+      "properties": {},
+      "to_id": "epoch:reference-parameters-name-their-type"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:every-skill-has-a-command",
       "properties": {},
       "to_id": "epoch:every-skill-has-a-command"
@@ -11145,6 +11175,18 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:dec:idea-a-tool-is-exercised-as-a-consumer-before-it-is-changed",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:dec:idea-a-tool-is-exercised-as-a-consumer-before-it-is-changed:r2",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:dec:idea-a-topic-view-shows-what-the-design-holds-about-one-subject-read-only",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
@@ -11568,6 +11610,12 @@
       "from_id": "snap:epoch:reads-are-the-failing-half:dec:the-transition-is-two-halves-and-reads-are-the-unscheduled-one",
       "properties": {},
       "to_id": "epoch:reads-are-the-failing-half"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:reference-parameters-name-their-type:cap:tool-carries-convention",
+      "properties": {},
+      "to_id": "epoch:reference-parameters-name-their-type"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -18389,6 +18437,33 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:every-finding-of-the-tool-sweep-is-addressed-or-ruled-on",
+      "properties": {
+        "acted_at": "2026-09-11",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:every-served-tool-is-reachable-by-find-tools-on-a-users-words",
+      "properties": {
+        "acted_at": "2026-09-11",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:every-tool-description-is-accurate-about-what-the-tool-does",
+      "properties": {
+        "acted_at": "2026-09-11",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:explains-itself",
       "properties": {
         "acted_at": "2026-07-24",
@@ -19606,6 +19681,16 @@
       "edge_type": "CAUSES",
       "from_id": "fact:a-skill-is-loaded-only-when-something-already-in-hand-demands-it",
       "properties": {
+        "basis": "observed",
+        "evidence": "That root cause is why the question in this node arises at all, and it bounds the answer: it records that a written discipline is the weakest of the available shapes, because passive hints measured zero against three obeyed blocks. It also states in its own limits that it says NOTHING about consumers, since both observed sessions had far more reflow2 context than any consumer will — which is the one thing this node adds rather than repeats.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "dec:idea-a-tool-is-exercised-as-a-consumer-before-it-is-changed"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:a-skill-is-loaded-only-when-something-already-in-hand-demands-it",
+      "properties": {
         "basis": "correlational",
         "evidence": "That fact is the measured root cause this idea answers: 'No reflow2 tool makes any reflow2 skill a precondition of itself', with one counter-example where a NON-reflow2 tool (Artifact) demanded a skill and the skill was duly loaded. Building governance into the tool is the shape that measurement points at, so the finding produced the idea rather than merely resembling it.",
         "validation_status": "unvalidated"
@@ -19636,6 +19721,16 @@
       "edge_type": "CAUSES",
       "from_id": "fact:a-skill-is-loaded-only-when-something-already-in-hand-demands-it",
       "properties": {
+        "basis": "observed",
+        "evidence": "CORRECTED 2026-09-10, having first been drawn `validated` against this node's STRONG form. `fact:agents-do-self-invoke-skills-at-scale-and-the-hook-not-the-catalogue-predicts-which` refutes that form at n=93 sessions: 88% of skill loads had no slash command behind them, so agents DO self-invoke. The WEAK form survives and is what explains today — loading is driven by AN INSTRUCTION ALREADY IN CONTEXT, and the always-injected SessionStart hook is that instruction. Today fits it cleanly: everything the hook named was used (open_questions, loop_status, where-am-i, unclaimed_findings, link_artifact, detect_gaps) and find_tools, which the hook does not name, was not called once across a full day of changing the tool surface. Downgraded to `hypothesis` because one session is one data point and the session is also the instrument.",
+        "validation_status": "hypothesis"
+      },
+      "to_id": "fact:the-builder-reads-source-where-a-consumer-has-only-the-surface-and-find-tools-returned-the-negation"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:a-skill-is-loaded-only-when-something-already-in-hand-demands-it",
+      "properties": {
         "basis": "correlational",
         "evidence": "The 2026-08-28 cause predicted this occurrence exactly: a skill loads only when something already in hand demands it, and unprompted self-invocation is close to absent. Measured again 2026-09-09 across a whole session: zero skills self-invoked, and both that DID run were typed by the user.",
         "validation_status": "unvalidated"
@@ -19651,6 +19746,16 @@
         "validation_status": "unvalidated"
       },
       "to_id": "chg:a-refusal-no-peer-can-resolve-stops-the-wait-instead-of-timing-out"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:agents-do-self-invoke-skills-at-scale-and-the-hook-not-the-catalogue-predicts-which",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The better-powered explanation, and today is a further data point for it — arguably the cleanest available test of the confound this node names about itself. It warns that `where-am-i`'s dominance may be hook-presence OR intrinsic usefulness, since the two are confounded. `find_tools` separates them: it is intrinsically useful for exactly the job this session had, it is NOT named in the SessionStart hook, and it was not called once in a day spent changing the very surface it indexes. Hook-named tools were used throughout the same session. One session, and the session is the instrument, so this is offered as a data point rather than as the discriminating experiment that node asks for.",
+        "validation_status": "hypothesis"
+      },
+      "to_id": "fact:the-builder-reads-source-where-a-consumer-has-only-the-surface-and-find-tools-returned-the-negation"
     },
     {
       "edge_type": "CAUSES",
@@ -33110,6 +33215,24 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:every-required-reference-parameter-says-its-type",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-required-reference-parameter-says-its-type",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:tool-carries-convention"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:every-skill-has-a-command",
       "properties": {
         "accepted_baseline": true,
@@ -45298,6 +45421,16 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-a-tool-is-exercised-as-a-consumer-before-it-is-changed",
+      "properties": {
+        "evidence": "Sibling question, deliberately separate. That one asks HOW a problem in a user's words finds its tool; this asks HOW A FAILURE TO FIND IT WOULD EVER BE NOTICED, given the builder has a second channel the consumer does not. Better retrieval reduces what this must catch, and a discipline for noticing is worth little if retrieval never improves — so this is only worth anything alongside that.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-a-problem-in-the-users-words-should-retrieve-the-tool-that-answers-it"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "dec:idea-a-verification-says-which-surface-it-was-proven-at",
       "properties": {
         "evidence": "That record measured the same hole one property along: Verification.level already exists and nothing reads it, so a surface property added now would be unread for the same reason. This idea is only worth building if that is answered first.",
@@ -46494,6 +46627,16 @@
         "weight_basis": "estimated"
       },
       "to_id": "dec:idea-should-the-spine-be-re-derived-from-the-actual-structure"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "fact:the-tool-class-census-answers-the-open-questions-own-test-and-half-the-sweeps-findings-are-one-offs",
+      "properties": {
+        "evidence": "That decision is ACCEPTED for skills — composed of attribute classes, not stamped by one factory and not swept by one exhaustive check. Whether this census argues for extending that settled mechanism to the tool surface is only meaningful given its ruling; the census measures class sizes and deliberately chooses nothing, so it rests on that decision rather than reopening it.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-a-factory-builds-the-mechanics-in-so-a-class-fix-is-one-edit"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -58185,6 +58328,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:tool-carries-convention",
+      "properties": {},
+      "to_id": "snap:epoch:reference-parameters-name-their-type:cap:tool-carries-convention"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "cap:what-next",
       "properties": {},
       "to_id": "snap:epoch:arrival-delta:cap:what-next"
@@ -58398,6 +58547,18 @@
       "from_id": "dec:idea-a-name-the-agent-invented-reads-exactly-like-one-it-was-told",
       "properties": {},
       "to_id": "snap:epoch:preserved-on-write:dec:idea-a-name-the-agent-invented-reads-exactly-like-one-it-was-told"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:idea-a-tool-is-exercised-as-a-consumer-before-it-is-changed",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:dec:idea-a-tool-is-exercised-as-a-consumer-before-it-is-changed"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:idea-a-tool-is-exercised-as-a-consumer-before-it-is-changed",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:dec:idea-a-tool-is-exercised-as-a-consumer-before-it-is-changed:r2"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -59295,6 +59456,12 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:a-session-with-no-seed-can-find-one",
+      "properties": {},
+      "to_id": "fact:design-regions-exceeds-300-seconds-and-wedges-the-shared-server"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "cap:adopt",
       "properties": {},
       "to_id": "fact:adopt-never-builds-a-hierarchy-so-every-adopted-design-comes-out-flat"
@@ -59310,6 +59477,12 @@
       "from_id": "cap:an-unconnected-idea-is-visible-as-one",
       "properties": {},
       "to_id": "fact:the-review-relations-redo-was-a-no-op-once-somebody-read-the-code"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:budget",
+      "properties": {},
+      "to_id": "fact:the-budget-edges-still-carry-the-pre-fix-numbers-so-budget-report-says-exceeded-for-a-budget-that-holds"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -59345,7 +59518,19 @@
       "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "cap:mcp-surface",
       "properties": {},
+      "to_id": "fact:reading-the-published-schema-turned-13-constructor-refusals-into-zero"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:mcp-surface",
+      "properties": {},
       "to_id": "fact:the-decision-race-is-caller-ordering-not-read-after-write"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:shared-sessions",
+      "properties": {},
+      "to_id": "fact:the-shared-stdio-client-never-reaps-its-children-and-accumulates-zombies"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -59358,6 +59543,12 @@
       "from_id": "cap:the-record-moved-is-surfaced",
       "properties": {},
       "to_id": "fact:defect-nothing-in-the-loop-reports-unexported-work-and-in-step-is-read-as-if-it-did"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:tool-search",
+      "properties": {},
+      "to_id": "fact:the-builder-reads-source-where-a-consumer-has-only-the-surface-and-find-tools-returned-the-negation"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -59901,6 +60092,12 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "dec:idea-a-tool-class-should-carry-a-contract-that-something-checks",
+      "properties": {},
+      "to_id": "fact:the-tool-class-census-answers-the-open-questions-own-test-and-half-the-sweeps-findings-are-one-offs"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "dec:idea-detect-vocabulary-that-nothing-reaches",
       "properties": {},
       "to_id": "fact:precedes-is-unused-in-storyflow-and-flowless-here"
@@ -59964,6 +60161,12 @@
       "from_id": "dec:idea-should-reflow2-serve-a-root-cause-analysis-method",
       "properties": {},
       "to_id": "fact:surfacing-a-known-cause-is-cheap-and-reaches-the-wrong-half"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "dec:idea-the-governance-layer-is-declared-and-mostly-unused",
+      "properties": {},
+      "to_id": "fact:the-27-design-rules-are-unreachable-by-the-violation-vocabulary-because-it-resolves-to-environment-rule"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -171799,6 +172002,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:every-reference-parameter-names-its-type-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "reviewed"
+      },
+      "to_id": "cap:tool-carries-convention"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:evidence-quality-instrument",
       "properties": {
         "completeness": "complete",
@@ -177665,6 +177877,14 @@
     },
     {
       "edge_type": "TRIGGERS",
+      "from_id": "fact:the-27-design-rules-are-unreachable-by-the-violation-vocabulary-because-it-resolves-to-environment-rule",
+      "properties": {
+        "evidence": "The finding that `rule_id` silently resolves to EnvironmentRule, with no description saying so, is what prompted this change — and this change addresses only the SAYING half: violates_rule, complies_with and set_violation_status now state the type on the served surface. The finding stays OPEN because its other half, that no edge path reaches a DesignRule at all, is untouched and is a separate decision."
+      },
+      "to_id": "chg:every-required-reference-parameter-says-its-type"
+    },
+    {
+      "edge_type": "TRIGGERS",
       "from_id": "fact:the-answered-question-message-recurred-in-a-third-project-with-the-computation-unchanged",
       "properties": {
         "evidence": "The recurrence measurement — same computation, third project, seventeen days on — is what turned a known wording defect into a live question about whether the cheap repair is worth making at all. Drawn from the fact to the idea because the measurement came first."
@@ -177678,6 +177898,14 @@
         "evidence": "Instance ① of the candidate class: the message asserts an answer never reached the design from a count that knows only that a question is answered and its gap is open. Confirmed unchanged in source 2026-09-02, seventeen days after the cause was recorded."
       },
       "to_id": "dec:idea-the-load-bearing-prose-is-unchecked-against-the-code-it-describes"
+    },
+    {
+      "edge_type": "TRIGGERS",
+      "from_id": "fact:the-builder-reads-source-where-a-consumer-has-only-the-surface-and-find-tools-returned-the-negation",
+      "properties": {
+        "evidence": "That measurement is what prompted the question: a full day of work on the tool surface, every behavioural fact discovered by reading Rust, find_tools never called — then called, and returning the semantic opposite of what was asked."
+      },
+      "to_id": "dec:idea-a-tool-is-exercised-as-a-consumer-before-it-is-changed"
     },
     {
       "edge_type": "TRIGGERS",
@@ -177702,6 +177930,14 @@
         "evidence": "Instance ⑤, and the first where the prose describes a STRUCTURE that does not exist rather than over-reaching a computation. Question.answer promised that the design nodes an answer produced are \"linked separately\"; no such link existed in any form."
       },
       "to_id": "dec:idea-the-load-bearing-prose-is-unchecked-against-the-code-it-describes"
+    },
+    {
+      "edge_type": "TRIGGERS",
+      "from_id": "fact:the-tool-class-census-answers-the-open-questions-own-test-and-half-the-sweeps-findings-are-one-offs",
+      "properties": {
+        "evidence": "The census named the required-reference-with-no-stated-type class (40 tools by hand estimate; 49 once the derived test ran) as the one class worth a contract first, because presence is correctness for it and it had two confirmed casualties. This change is that contract."
+      },
+      "to_id": "chg:every-required-reference-parameter-says-its-type"
     },
     {
       "edge_type": "TRIGGERS",
@@ -180415,6 +180651,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:every-reference-parameter-names-its-type-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:every-reference-parameter-names-its-type-test"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:evidence-quality-instrument",
       "properties": {
         "action": "created"
@@ -182859,6 +183103,18 @@
       }
     },
     {
+      "node_id": "art:every-reference-parameter-names-its-type-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:429aed138b99595ab8434fe1ad7e03f36bfbec7622120fa920e2561e9ac1f3f9",
+        "description": "The per-class contract for required reference parameters: every required `*_id` whose NAME does not resolve to exactly one declared node type must say its type in its description or name the sibling `*_type` parameter that supplies it — or be EXEMPT with a reason. Membership is DERIVED from the schema (strip `_id`, match declared node types), so a 181st tool joins the class the moment it is served. Failed on 66 parameters across 49 tools when first run; caught its own author copying `element_type` onto a request that has no such field. The generalisation of the shape `every_declared_enum_is_wired_or_exempt` proved on one class.",
+        "location": "crates/reflow2-mcp/tests/every_reference_parameter_names_its_type.rs",
+        "name": "every_reference_parameter_names_its_type.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:evidence-quality-instrument",
       "node_type": "Artifact",
       "properties": {
@@ -184360,7 +184616,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:3b1835924f434b5a05d43a5e731ebdc9732b9b30b7a872842222055e8fdc1162",
+        "checksum": "sha256:8193135de837fe4a611bf4ec2e62fb826996e377523c823937f9e51308f71421",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -194269,6 +194525,16 @@
       }
     },
     {
+      "node_id": "chg:every-required-reference-parameter-says-its-type",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "name": "Every required reference parameter says what node type it points at, and a schema-derived contract test keeps it so — 66 parameters on 49 tools, and the rule_id that silently meant EnvironmentRule",
+        "repair": "corrected_cause",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:every-skill-has-a-command",
       "node_type": "ChangeEvent",
       "properties": {
@@ -199907,6 +200173,17 @@
         "decision": "**RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL.** Anthony, 2026-08-26, thinking out loud after the third instance of one defect class landed in a single week.\n\nHis words: *\"we do some type of classing or typing of skills/tools? like read vs write could be one kind. there are probably other types. then do some standardization of what each of those types skills/tools needs and make sure all the type has those same required attributes for its type?\"*\n\n📌 DISTINCT FROM `dec:idea-a-proposed-decision-asserts-nothing-so-what-may-a-structural-detector-say-about-it`, which the guard offered: that one is an ANSWERED question about one status and three finding kinds. This asks what a declared KIND obliges of its members in general, and it outlives that instance.\n\n═══ ⭐ THE PREMISE IS HALF-TRUE, AND THE MEASUREMENT IS THE INTERESTING PART ═══\n\nMeasured on the served surface 2026-08-26, over **173 declared tools**:\n\n| axis | declared on | |\n|---|---|---|\n| `read_only_hint` | **161** (93%) | the read/write class ALREADY EXISTS and is near-uniform |\n| `destructive_hint` | **7** (4%) | |\n| `idempotent_hint` | **1** (0.6%) | |\n| `open_world_hint` | **0** | |\n| `title` | 9 (5%) | |\n\n**And ZERO of them are checked by anything** — no Python gate, no Rust test, nothing in `toolsnap.py` reads any of these annotations. So the 93% is a HABIT, not a construction. The 12 tools declaring nothing at all are invisible to everything, and a 174th declaring nothing would be equally invisible.\n\n⇒ So the live question is not *\"should tools be classed\"* — they are. It is **whether a declared kind obliges its members to state the same things, and whether anything checks.** On today's evidence the answer to both halves is no.\n\n📌 A SECOND OBSERVATION FROM THE SAME SWEEP, offered as a lead rather than a finding: **6 tools in the `query` slice declare `read_only_hint = false`.** That may be entirely correct — a query that records a confirmation is not read-only — but the slice NAME and the read/write CLASS disagree there, and a per-class contract is exactly the thing that would make somebody say which is wrong.\n\n═══ WHY THIS ARRIVED NOW ═══\n\nAnthony: *\"for instance, you just found a whole class of issues. this isn't the first time this has occurred in this development... too many times, we've discovered more when we have peeled back the layers of the onion.\"*\n\nThree instances inside one week, each a rule maintained by hand with nothing checking it: `unallocated_component` never read a parking ruling though two siblings did; F-01's replay contract was stated in a doc comment and enforced field by field; and three defect detectors never read `proposed` though a fourth did. The fix each time was per-instance. `chg:unallocated-component-reads-the-ruling` predicted the recurrence in writing and was right within a day.\n\n═══ OPTIONS, none chosen ═══\n\n**(a) A CONTRACT PER AXIS, checked by the existing lint.** `skill_lint.py` is already 1126 lines enforcing both directions between served tools and skills, and verbatim phrases that must survive rewording. Extend it: every `#[tool]` must declare the full annotation set. ⚠️ Counter: it is another hand-maintained list in a file that is already the biggest hand-maintained list in the repo — the disease treating itself.\n\n**(b) COMPILE-TIME, the shape used twice in `heal.rs` today.** `every_category_is_listed_in_all` and the new `every_category_states_whether_it_reads_proposed` are exhaustive matches: a new variant cannot compile until its author has answered. ⚠️ Counter: works for a closed enum, and the tool surface is 173 proc-macro attributes rather than an enum. Whether the same trick reaches them is an open technical question, not a given.\n\n**(c) LEAVE READ/WRITE ALONE AND CLASS BY SOMETHING ELSE.** Read/write is near-uniform already, so the payoff is in the axes nobody fills. ⚠️ Counter: which axes? Naming them is the actual work, and this option quietly assumes it is done.\n\n**(d) DO NOTHING AND KEEP FIXING INSTANCES.** ⚠️ Counter: three in a week, each predicted by the last. But stated honestly — the per-instance fixes were cheap, correct, and each left a pin behind. The class fix is speculative until somebody shows a fourth instance it would have caught.\n\n═══ ⚠️ THE HONEST COUNTERWEIGHT, WHICH IS ANTHONY'S OWN ═══\n\nHe watches for over-engineering from the acquisitions side. A per-class contract with a registry, a factory and a validator is exactly the shape an engineer reaches for and exactly the shape he distrusts. **The cheapest thing that would have caught all three instances is probably not a taxonomy — it is one test per class saying \"every member answers this question\", which is what `heal.rs` now does twice.** That is option (b) at its smallest, and it needs no new vocabulary at all.",
         "name": "OPEN — the tool class already exists and carries no contract: should a declared kind oblige its members to state the same things, checked?",
         "rationale": "Recorded as its own question because it asks what a declared KIND obliges, which is separate from whether the three legs were applied uniformly (a specific contract) and from whether construction should go through a factory (a mechanism). Answering any one of those does not answer the others.\n\nThe measurement was taken BEFORE the options were written, and it moved the question: the first framing assumed tools were unclassed, and `read_only_hint` at 93% says otherwise. What is missing is not the class but the obligation and the check — the same shape as `fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it`, where a leg can be present and still deliver nothing.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-a-tool-is-exercised-as-a-consumer-before-it-is-changed",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Nothing here is intent and no option is preferred.\n\nANTHONY, 2026-09-10: *\"how in this design effort, that the agent has try out every tool and skill prior to updating anything about it. If you're calling the wrong tool, then why would in another project, would an agent not also do the same? This is actually a very big deal for me that we've gone back to the agent using grep and not reflow2 where appropriate.\"*\n\n═══ ⭐ WHAT THE DESIGN ALREADY HELD, READ AFTER HE SAID SO AND BEFORE THIS NODE WAS FINISHED ═══\n\nThis question is NOT new here and this node must not read as if it were. `topic_report` on adoption returned 20 nodes across 7 types. The load-bearing ones:\n\n· `req:skill-use-survives-a-long-session` (ACCEPTED) — \"Skill use is triggered by the SITUATION, not remembered — and THE USER MUST NEVER BE THE TRIGGER.\" The standing intent this whole question sits under.\n· `fact:a-skill-is-loaded-only-when-something-already-in-hand-demands-it` (2026-08-28, root_cause) — an agent loads a skill when something already in hand makes it a precondition, \"and otherwise substantially not at all\".\n· `fact:agents-do-self-invoke-skills-at-scale-and-the-hook-not-the-catalogue-predicts-which` (2026-08-29, n=93 sessions, 5,680 reflow2 calls) — REFUTES THE STRONG FORM OF THE ABOVE. 88% of skill loads had no slash command behind them; agents self-invoke constantly. The WEAK form survives: loading is driven by AN INSTRUCTION ALREADY IN CONTEXT.\n· `dec:idea-where-does-tool-use-actually-fail-four-layers` — the four-layer diagnostic this all hangs off.\n· `dec:idea-search-first-fires-without-being-remembered` — the same question for one specific discipline, written into five skills and still depending on somebody loading one.\n· `dec:the-graph-asks-what-a-session-made-false` (ACCEPTED) — \"BUILD THE TWO MISSING LEGS, NOT A SEVENTH MECHANISM.\"\n· `fact:reflow2s-mechanisms-for-reaching-an-agent-are-mostly-claude-code-shaped`, and `rule:mcp-and-the-graph-are-the-only-common-ground`, which bound where any answer may live.\n\n═══ ⭐⭐ AND THE 93-SESSION MEASUREMENT NAMES THE LEVER, WHICH CHANGES THIS NODE'S OPTIONS ═══\n\n    skill            loads   /cmd typed   ratio\n    where-am-i          42        5        8.4x   ← THE ONLY WORKING SKILL NAMED IN THE SessionStart HOOK\n    brainstorm          22       10        2.2x\n    capture-session     19       18        1.1x\n    link-artifacts      15        0         —\n\nIts own conclusion: the MCP instructions name ALL 23 skills and usage across them runs 42..0, so A CATALOGUE THAT LISTS EVERYTHING PREDICTS NOTHING; the SessionStart hook names three, and the one of those with a recurring situation is the most-loaded skill in the set by a factor of two.\n\n⭐ TODAY FITS THAT EXACTLY, WHICH IS WHY IT IS EVIDENCE AND NOT JUST AN APOLOGY. The 2026-09-10 SessionStart hook named `open_questions`, `where-am-i`, `loop_status`, `unclaimed_findings`, `link-artifacts`, `detect-and-ask` — EVERY ONE OF WHICH THIS SESSION USED, most of them repeatedly. It did not name `find_tools`, which was not called once across a whole day of changing the tool surface it indexes. That is also the cheapest available test of the confound the measurement names against itself (is it the hook, or is `where-am-i` simply the most useful skill?): `find_tools` was intrinsically useful for exactly this job and still went untouched.\n\n═══ THE OPTIONS, none preferred ═══\n\n(g) NAME THE TOOL IN THE ALWAYS-INJECTED HOOK — the option the evidence actually points at, and the one absent before the prior work was read. It is also the discriminating experiment `fact:agents-do-self-invoke...` explicitly asks for: \"a second skill added to the hook would test it, and that is the cheap discriminating experiment.\" Adding `find_tools` would both plausibly fix the behaviour AND settle the hook-versus-usefulness confound. ⚠️ The hook is finite and every addition dilutes it; a hook that names everything becomes the catalogue that predicts nothing.\n\n(a) NOTHING. The instructions already say to search before writing and to run `find_tools` before reporting a tool missing. Cheapest, and the option to beat — but it is what was in place on the day it failed, and the 93-session data says a catalogue is the weakest surface there is.\n\n(b) A WRITTEN DISCIPLINE: exercise a tool as a consumer before changing it. ⚠️ THE EVIDENCE IS AGAINST THIS ONE. Passive hints measured 0 acted-on against 3 obeyed blocks, and it is the step-② shape `rule:an-issue-is-root-caused-then-pinned-by-a-test-then-fixed` says is invisible when skipped.\n\n(c) A MECHANICAL GATE on changes touching a tool's description or parameters. Verifiable, unlike (b). ⚠️ Hollow to satisfy: calling a tool once proves nothing about whether it was FINDABLE, which is the failure that occurred.\n\n(d) MEASURE THE SURFACE RATHER THAN THE AGENT — ask `find_tools` a corpus of user-phrased questions and score whether the right tool comes back. Turns the question into a number that moves. ⚠️ Its trap was measured on this design the same week: whoever writes the questions writes ones the current descriptions happen to answer, a fit validated by its own fitting set. The questions must come from the FIELD REPORTS, where users already wrote what they were trying to do before knowing which tool to call.\n\n(e) PUT BEHAVIOURAL INVARIANTS IN THE DESCRIPTION. `record_change` refuses to record history into a `planned` epoch and its served description says \"planned\" zero times, so a consumer learns it only by being refused. Narrowest true statement; does not generalise to \"the agent reached for grep\".\n\n(f) REMOVE THE CRUTCH FOR ONE PIECE OF WORK — one change to the tool surface with the source deliberately out of reach. Produces evidence no instruction can, once rather than standing.\n\n═══ 🛑 COUNTER-ARGUMENTS ═══\n\n⚠️ **\"NOT A SEVENTH MECHANISM.\"** `dec:the-graph-asks-what-a-session-made-false` settled a neighbouring case by building the two MISSING LEGS of an existing mechanism rather than adding another. Options (b), (c) and (d) are all new mechanisms; (g) is a missing leg of one that demonstrably works. That asymmetry should count.\n\n⚠️ \"EVERY TOOL AND SKILL\" IS LARGER THAN IT SOUNDS: 180 tools, 23 skills. Exercising all of them before any change is not a discipline anyone keeps, and a rule nobody keeps is worse than none. Scoped to THE TOOL BEING CHANGED it is keepable.\n\n⚠️ THE BUILDER'S SOURCE ACCESS IS GENUINELY USEFUL. The problem is not that the source was read; it is that the surface was never tried FIRST, so its failure produced no signal. Any option should preserve the reading and add the trying.\n\n⚠️ AND THE HONEST LIMIT OF ALL SEVEN: none makes a lexical catalogue able to tell a claim from its denial. `find_tools` ranked the NEGATION of the query. Every option here would surface that sooner without fixing it, and that is the question `dec:idea-embeddings-adoption` has carried since 2026-08-01.\n\n═══ WHAT THIS NODE ADDS, AFTER ALL THAT ═══\n\nOne thing, and it is the thing the prior work says it does NOT cover. `fact:a-skill-is-loaded-only-when-something-already-in-hand-demands-it` states in its own limits: *\"It says nothing about consumers. Both observed sessions had far more reflow2 context than any consumer's agent will have, which makes them a BEST case.\"* THE ASYMMETRY IS THAT GAP: a reflow2 developer who hits a surface failure pays nothing, because the source is one grep away, SO THE FAILURE IS NEVER FILED. A consumer pays the task and has no second channel to notice. The crutch does not merely mask the defect — it removes the feedback that would report it.",
+        "kind": "exploratory",
+        "name": "OPEN — should a session USE a tool as a consumer would before changing it? The builder's grep is a crutch no consumer has, so the surface can fail him for free and he never files it",
+        "rationale": "Anthony's question, then his correction that the graph already held the discussion — which it did, across 20 nodes including an accepted requirement, a root cause, and a 93-session measurement that refutes that root cause's strong form and names the actual lever: a skill or tool named in the always-injected SessionStart hook gets used, a catalogue listing everything predicts nothing. Today fits that cleanly — every hook-named tool was used, find_tools was not named and was not called once. That adds option (g), which is both the evidence-backed repair and the discriminating experiment the measurement itself asks for. The one thing this node contributes rather than repeats is the consumer asymmetry, which the root cause explicitly excludes from its own scope.",
         "status": "proposed"
       }
     },
@@ -206499,6 +206776,17 @@
       }
     },
     {
+      "node_id": "epoch:reference-parameters-name-their-type",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "description": "2026-09-11, after v0.58.0 and PR #473. The first CLASS fix taken from the tool sweep of 2026-09-10/11: every REQUIRED parameter that references another node now says what type it references — in its name, in its description, or by naming the sibling `*_type` parameter — and a contract test derived from the schema keeps a new tool from joining the surface without doing so. Ordered after the enum guard (#473), whose hand-listed WIRED/EXEMPT shape this generalises with derived membership. Must NOT include the missing DesignRule edge path (W-01's second half), the reply-bound class, the inline-payload class or the bare-zero class — each is its own increment. Sequence 414 follows the last recorded epoch (413). No calendar date field exists on this build's `add_epoch`; the date is stated here.",
+        "epoch_type": "revision",
+        "name": "Reference parameters name their type",
+        "sequence": 414,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:reflow-workflow-review",
       "node_type": "DesignEpoch",
       "properties": {
@@ -209076,6 +209364,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered every_declared_enum_is_wired_or_exempt.rs — the wired publish the schema's values, and nothing declared is unaccounted for"
+      }
+    },
+    {
+      "node_id": "frag:art:every-reference-parameter-names-its-type-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered every_reference_parameter_names_its_type.rs"
       }
     },
     {
@@ -214044,6 +214342,45 @@
       }
     },
     {
+      "node_id": "req:every-finding-of-the-tool-sweep-is-addressed-or-ruled-on",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "lineage": "original",
+        "name": "Every finding from the 2026-09-10/11 tool sweep is either fixed by a merged change or closed by a recorded decision not to — never by a belief",
+        "priority": "high",
+        "provenance": "authored",
+        "statement": "Anthony, 2026-09-11, stating the success criteria for the tool-sweep effort: \"that all issues identified in the earlier tranches have been addressed properly\". The sweep exercised all 180 served tools (430 scripted calls plus the interactive tranches) and recorded 24 D-/C- findings, 6 W- findings and 4 F- findings, tracked in docs/local/tool-sweep/REMEDIATION.md. Each row shall reach one of two states: a merged pull request that fixes it, or a Decision on the record saying why it is not being fixed. Where a finding belongs to a CLASS (a required reference parameter with no stated type: 40 tools; a read-only reply with no size bound: 58 of 68; a caller-assembled inline payload with no file handle: 22; a bare-zero reply that cannot say which empty it is), it is addressed at the class with one contract test that fails on a new member, not one tool at a time — dec:idea-a-factory-builds-the-mechanics-in-so-a-class-fix-is-one-edit is the settled shape. Where a finding is a one-off (seven of thirteen distinct deficiencies), it is an ordinary fix. F-02 (both budgets breached) was withdrawn as a stale-edge misreading and is already closed.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "req:every-served-tool-is-reachable-by-find-tools-on-a-users-words",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "lineage": "original",
+        "name": "Every served tool is reachable through find_tools from a description of the job in the user's own words",
+        "priority": "high",
+        "provenance": "authored",
+        "statement": "Anthony, 2026-09-11, stating the success criteria for the tool-sweep effort: \"keep going until all 180 tools are actually available to the agent (I believe using find_tool)\". For every served tool there shall be a query phrased as a user would phrase the job — not as the tool is named — for which find_tools ranks that tool in its top results. The evidence that prompted it: asked \"which of my declared limits is being exceeded\", find_tools ranked add_actor second and never returned budget_report, the tool whose reply is literally `verdict: \"exceeded\"`, while reporting 166 of 180 tools as matched. Not yet measured for the other 179 tools; that measurement is the acceptance test.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "req:every-tool-description-is-accurate-about-what-the-tool-does",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "lineage": "original",
+        "name": "Every served tool's description is accurate about what the tool actually does — its behaviour, its reply shape, and what an empty answer means",
+        "priority": "high",
+        "provenance": "authored",
+        "statement": "Anthony, 2026-09-11, stating the success criteria for the tool-sweep effort: \"that each tool description is accurate about what it actually does\". A tool's served description shall let a consumer predict what the tool returns, including what an empty or zero result means, before calling it. Measured 2026-09-11 by predicting each tool's behaviour from its served text and then calling it: 13 of 37 blind-scored read-only tools scored MISS or PARTIAL — hierarchy_issues (8 words, indistinguishable clean from vacuous), dimension_drift (`{\"value\":null}` on a legal call), propose_allocation (238 clusters from one edge with no warning), describe_designs (reports a verified-absent path as `opted_in`), reconcile_dependencies (says \"the build agrees\" when no build was observed), compose_and_analyse (empty seam on a purpose-built one). Those thirteen are the initial acceptance list; the description-vs-behaviour prediction test is the method.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:evidence-carries-the-date-it-was-taken",
       "node_type": "Requirement",
       "properties": {
@@ -216706,6 +217043,26 @@
       }
     },
     {
+      "node_id": "snap:epoch:preserved-on-write:dec:idea-a-tool-is-exercised-as-a-consumer-before-it-is-changed",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-a-problem-in-the-users-words-should-retrieve-the-tool-that-answers-it\",\"properties\":{\"evidence\":\"Sibling question, deliberately separate. That one asks HOW a problem in a user's words finds its tool; this asks HOW A FAILURE TO FIND IT WOULD EVER BE NOTICED, given the builder has a second channel the consumer does not. Better retrieval reduces what this must catch, and a discipline for noticing is worth little if retrieval never improves — so this is only worth anything alongside that.\",\"optional\":false,\"weight_basis\":\"estimated\"}}]",
+        "state": "{\"decision\":\"RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Nothing here is intent and no option is preferred.\\n\\nANTHONY, 2026-09-10: *\\\"how in this design effort, that the agent has try out every tool and skill prior to updating anything about it. If you're calling the wrong tool, then why would in another project, would an agent not also do the same? This is actually a very big deal for me that we've gone back to the agent using grep and not reflow2 where appropriate.\\\"*\\n\\nTWO NEAR-MATCHES WERE READ AND JUDGED DIFFERENT. `dec:idea-a-problem-in-the-users-words-should-retrieve-the-tool-that-answers-it` asks HOW a problem stated in a user's words finds its tool, and holds five options for improving retrieval; this asks HOW A RETRIEVAL FAILURE WOULD EVER REACH SOMEBODY WHO COULD FIX IT. Both open, different answer shapes, and the measurement behind this one is attached to that node as well, because it is also a third data point for it. `dec:idea-should-reflow2-serve-a-root-cause-analysis-method` is DECIDED and is about serving an RCA method; it matched on the wording of \\\"method\\\" and \\\"steps\\\" and has nothing to do with exercising a surface before changing it.\\n\\n⭐ THE OBSERVATION IS AN ASYMMETRY, NOT A LAPSE. A reflow2 developer can answer any question about reflow2 by reading its Rust. A consumer agent cannot. So when the served surface fails the developer IT COSTS NOTHING — the source is one grep away — and the failure never registers as one worth filing. The same failure costs a consumer the task, with no second channel to discover the mistake. The crutch does not merely mask the defect: IT REMOVES THE FEEDBACK THAT WOULD REPORT IT. Measured 2026-09-10 — a full day changing the tool surface with every behavioural fact taken from source and `find_tools` never called; then called, and it ranked the semantic opposite of the query while omitting the right tool.\\n\\nTHE OPTIONS, none preferred:\\n\\n(a) NOTHING. The instructions already say to search before writing and to run `find_tools` before reporting a tool missing. The failure was a session not following what was in its context. Cheapest, and IT IS THE OPTION TO BEAT — but it is also exactly what was in place on the day it failed.\\n\\n(b) A WRITTEN DISCIPLINE: before changing a tool or skill, exercise it as a consumer would and record what happened. Cheap. ⚠️ AND IT IS THE STEP-② SHAPE THIS PROJECT ALREADY KNOWS GETS SKIPPED — `rule:an-issue-is-root-caused-then-pinned-by-a-test-then-fixed` says its load-bearing step is invisible when skipped, and its own originating fix skipped it. An unverifiable \\\"I dogfooded\\\" is worth little.\\n\\n(c) A MECHANICAL GATE: a change touching a tool's description or parameters must carry a recorded exercise of it. Verifiable, unlike (b). ⚠️ Hollow to satisfy: calling a tool once with valid arguments proves nothing about whether it was FINDABLE, which is the failure that actually occurred.\\n\\n(d) MEASURE THE SURFACE RATHER THAN THE AGENT. A standing check that asks `find_tools` a corpus of user-phrased questions and scores whether the right tool comes back. Turns \\\"did you dogfood?\\\" into a number that moves, and degrades visibly rather than silently. ⚠️ ITS TRAP WAS MEASURED ON THIS DESIGN THE SAME WEEK: whoever writes the questions writes ones the current descriptions happen to answer — a fit validated by its own fitting set, which `cap:independent-evidence` and `dec:calibration-is-an-edge` exist for, and `CALIBRATED_AGAINST` still has zero edges. The questions must come from somewhere other than the person tuning the descriptions. THE FIELD REPORTS ARE THE OBVIOUS SOURCE: hxm_program and dev_storyflow already write down what they were trying to do, in their own words, before they knew which tool to call.\\n\\n(e) FIX WHAT THE MEASUREMENT FOUND AND TREAT DISCIPLINE AS SECONDARY: a behavioural invariant that changes what a call DOES must live in the description, not only in the code. `record_change` refuses to record history into a `planned` epoch and its served description mentions \\\"planned\\\" zero times, so a consumer learns it only by being refused. Narrowest true statement, same class as three fixes shipped this week — but it does not generalise to \\\"the agent reached for grep\\\".\\n\\n(f) REMOVE THE CRUTCH FOR ONE PIECE OF WORK. Do one change to the tool surface with the source deliberately out of reach, as a consumer would. Produces evidence no instruction can, once rather than standing, and is the cheapest way to learn whether (b)-(d) are worth building at all.\\n\\n🛑 COUNTER-ARGUMENTS, recorded beside rather than used to argue it down.\\n\\n⚠️ \\\"EVERY TOOL AND SKILL\\\" IS LARGER THAN IT SOUNDS: 180 tools and 23 skills. Exercising all of them before any change is not a discipline anyone keeps, and a rule nobody keeps is worse than none — the project's own reason for leaving `rule:a-design-is-named-by-an-id-not-a-path` advisory. Scoped to THE TOOL BEING CHANGED it is keepable; as a sweep it is not.\\n\\n⚠️ THE BUILDER'S SOURCE ACCESS IS GENUINELY USEFUL, and a rule forbidding it would slow correct work to prevent an error of attention. The problem is not that the source was read — it is that the surface was never tried FIRST, so its failure produced no signal. Any option should preserve the reading and add the trying.\\n\\n⚠️ AND THE HONEST LIMIT OF ALL SIX: none makes a lexical catalogue able to tell a claim from its denial. `find_tools` ranked the negation. Every option here would have surfaced that sooner without fixing it, and whether the catalogue needs something other than bag-of-words is the question `dec:idea-embeddings-adoption` has carried since 2026-08-01.</decision>\\n<parameter name=\\\"rationale\\\">A day of work on reflow2's tool surface was done entirely by reading its Rust, and find_tools — asked afterwards in a user's words — returned the semantic opposite of what was wanted while omitting the right tool. The asymmetry is the content: a consumer has only the served surface, so every gap a reflow2 session routes around by grepping is a wall for the people the tool is for, and routing around it is what stops it being found. Kept separate from the retrieval question because that asks how to make finding work and this asks how a failure to find would ever reach someone who could fix it. Recorded as an idea because the cheapest option is that the instructions already said this and were not followed, and because the most promising carries the circular-validation trap measured on this same design this week.\",\"kind\":\"exploratory\",\"name\":\"OPEN — should a session USE a tool as a consumer would before changing it? The builder's grep is a crutch no consumer has, so the surface can fail him for free and he never files it\",\"status\":\"proposed\"}",
+        "target_id": "dec:idea-a-tool-is-exercised-as-a-consumer-before-it-is-changed",
+        "target_type": "Decision"
+      }
+    },
+    {
+      "node_id": "snap:epoch:preserved-on-write:dec:idea-a-tool-is-exercised-as-a-consumer-before-it-is-changed:r2",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-a-problem-in-the-users-words-should-retrieve-the-tool-that-answers-it\",\"properties\":{\"evidence\":\"Sibling question, deliberately separate. That one asks HOW a problem in a user's words finds its tool; this asks HOW A FAILURE TO FIND IT WOULD EVER BE NOTICED, given the builder has a second channel the consumer does not. Better retrieval reduces what this must catch, and a discipline for noticing is worth little if retrieval never improves — so this is only worth anything alongside that.\",\"optional\":false,\"weight_basis\":\"estimated\"}}]",
+        "state": "{\"decision\":\"RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Nothing here is intent and no option is preferred.\\n\\nANTHONY, 2026-09-10: *\\\"how in this design effort, that the agent has try out every tool and skill prior to updating anything about it. If you're calling the wrong tool, then why would in another project, would an agent not also do the same? This is actually a very big deal for me that we've gone back to the agent using grep and not reflow2 where appropriate.\\\"*\\n\\nTWO NEAR-MATCHES WERE READ AND JUDGED DIFFERENT. `dec:idea-a-problem-in-the-users-words-should-retrieve-the-tool-that-answers-it` asks HOW a problem stated in a user's words finds its tool, and holds five options for improving retrieval; this asks HOW A RETRIEVAL FAILURE WOULD EVER REACH SOMEBODY WHO COULD FIX IT. Both open, different answer shapes, and the measurement behind this one is attached to that node as well, because it is also a third data point for it. `dec:idea-should-reflow2-serve-a-root-cause-analysis-method` is DECIDED and is about serving an RCA method; it matched on the wording of \\\"method\\\" and \\\"steps\\\" and has nothing to do with exercising a surface before changing it.\\n\\n⭐ THE OBSERVATION IS AN ASYMMETRY, NOT A LAPSE. A reflow2 developer can answer any question about reflow2 by reading its Rust. A consumer agent cannot. So when the served surface fails the developer IT COSTS NOTHING — the source is one grep away — and the failure never registers as one worth filing. The same failure costs a consumer the task, with no second channel to discover the mistake. The crutch does not merely mask the defect: IT REMOVES THE FEEDBACK THAT WOULD REPORT IT. Measured 2026-09-10 — a full day changing the tool surface with every behavioural fact taken from source and `find_tools` never called; then called, and it ranked the semantic opposite of the query while omitting the right tool.\\n\\nTHE OPTIONS, none preferred:\\n\\n(a) NOTHING. The instructions already say to search before writing and to run `find_tools` before reporting a tool missing. The failure was a session not following what was in its context. Cheapest, and IT IS THE OPTION TO BEAT — but it is also exactly what was in place on the day it failed.\\n\\n(b) A WRITTEN DISCIPLINE: before changing a tool or skill, exercise it as a consumer would and record what happened. Cheap. ⚠️ AND IT IS THE STEP-② SHAPE THIS PROJECT ALREADY KNOWS GETS SKIPPED — `rule:an-issue-is-root-caused-then-pinned-by-a-test-then-fixed` says its load-bearing step is invisible when skipped, and its own originating fix skipped it. An unverifiable \\\"I dogfooded\\\" is worth little.\\n\\n(c) A MECHANICAL GATE: a change touching a tool's description or parameters must carry a recorded exercise of it. Verifiable, unlike (b). ⚠️ Hollow to satisfy: calling a tool once with valid arguments proves nothing about whether it was FINDABLE, which is the failure that actually occurred.\\n\\n(d) MEASURE THE SURFACE RATHER THAN THE AGENT. A standing check that asks `find_tools` a corpus of user-phrased questions and scores whether the right tool comes back. Turns \\\"did you dogfood?\\\" into a number that moves, and degrades visibly rather than silently. ⚠️ ITS TRAP WAS MEASURED ON THIS DESIGN THE SAME WEEK: whoever writes the questions writes ones the current descriptions happen to answer — a fit validated by its own fitting set, which `cap:independent-evidence` and `dec:calibration-is-an-edge` exist for, and `CALIBRATED_AGAINST` still has zero edges. The questions must come from somewhere other than the person tuning the descriptions. THE FIELD REPORTS ARE THE OBVIOUS SOURCE: hxm_program and dev_storyflow already write down what they were trying to do, in their own words, before they knew which tool to call.\\n\\n(e) FIX WHAT THE MEASUREMENT FOUND AND TREAT DISCIPLINE AS SECONDARY: a behavioural invariant that changes what a call DOES must live in the description, not only in the code. `record_change` refuses to record history into a `planned` epoch and its served description mentions \\\"planned\\\" zero times, so a consumer learns it only by being refused. Narrowest true statement, same class as three fixes shipped this week — but it does not generalise to \\\"the agent reached for grep\\\".\\n\\n(f) REMOVE THE CRUTCH FOR ONE PIECE OF WORK. Do one change to the tool surface with the source deliberately out of reach, as a consumer would. Produces evidence no instruction can, once rather than standing, and is the cheapest way to learn whether (b)-(d) are worth building at all.\\n\\n🛑 COUNTER-ARGUMENTS, recorded beside rather than used to argue it down.\\n\\n⚠️ \\\"EVERY TOOL AND SKILL\\\" IS LARGER THAN IT SOUNDS: 180 tools and 23 skills. Exercising all of them before any change is not a discipline anyone keeps, and a rule nobody keeps is worse than none — the project's own reason for leaving `rule:a-design-is-named-by-an-id-not-a-path` advisory. Scoped to THE TOOL BEING CHANGED it is keepable; as a sweep it is not.\\n\\n⚠️ THE BUILDER'S SOURCE ACCESS IS GENUINELY USEFUL, and a rule forbidding it would slow correct work to prevent an error of attention. The problem is not that the source was read — it is that the surface was never tried FIRST, so its failure produced no signal. Any option should preserve the reading and add the trying.\\n\\n⚠️ AND THE HONEST LIMIT OF ALL SIX: none makes a lexical catalogue able to tell a claim from its denial. `find_tools` ranked the negation. Every option here would have surfaced that sooner without fixing it, and whether the catalogue needs something other than bag-of-words is the question `dec:idea-embeddings-adoption` has carried since 2026-08-01.\",\"kind\":\"exploratory\",\"name\":\"OPEN — should a session USE a tool as a consumer would before changing it? The builder's grep is a crutch no consumer has, so the surface can fail him for free and he never files it\",\"rationale\":\"A day of work on reflow2's tool surface was done entirely by reading its Rust, and find_tools — asked afterwards in a user's words — returned the semantic opposite of what was wanted while omitting the right tool. The asymmetry is the content: a consumer has only the served surface, so every gap a reflow2 session routes around by grepping is a wall for the people the tool is for, and routing around it is what stops it being found. Kept separate from the retrieval question because that asks how to make finding work and this asks how a failure to find would ever reach someone who could fix it. Recorded as an idea because the cheapest option is that the instructions already said this and were not followed, and because the most promising carries the circular-validation trap measured on this same design this week.\",\"status\":\"proposed\"}",
+        "target_id": "dec:idea-a-tool-is-exercised-as-a-consumer-before-it-is-changed",
+        "target_type": "Decision"
+      }
+    },
+    {
       "node_id": "snap:epoch:preserved-on-write:dec:idea-a-topic-view-shows-what-the-design-holds-about-one-subject-read-only",
       "node_type": "Snapshot",
       "properties": {
@@ -217413,6 +217770,16 @@
         "state": "{\"decision\":\"RECORDED AS A REFRAME PLUS A MEASUREMENT, NOT AS A PROPOSAL. Anthony, 2026-08-04, stating the root question that unifies the dev_storyflow corpus and the reflow2-dogfooding threads: \\\"how do we transition documents to graph entities? whether that is a huge corpus of documents in dev_storyflow or getting away from using documents in reflow2, it is how do we make decisions based on graph content, not documents.\\\" Nothing here is settled.\\n\\nTHE SPLIT. (IN) documents become graph entities — ingest_step, provenance Fragments, the content store, cross-document convergence. Partly built, and every remaining piece is scheduled across epoch:v0240-planned..v0280-planned. (OUT) a person or agent DECIDES from graph content instead of from a document. Almost nothing is scheduled. The whole increment plan is capture, detection, seams and write-surface.\\n\\n⭐ THE MEASUREMENT, AND ALL OF IT IS FIRST-HAND FROM ONE SESSION ON 2026-08-04 RATHER THAN RECALLED. `reviewed_gaps` returned 130,922 CHARACTERS and could not be read at all — it was written to a file and queried with `jq`. That is the tool answering \\\"what have we already decided to accept\\\", which is a decision-making read, and it was unusable AS a read. It joins: `loop_status` at 72,886 characters until [BL-205] fixed it the day before, and it is the call the SessionStart hook and the server instructions both call \\\"the one cheap call\\\"; `describe_schema` on ONE node type at ~30 KB ([BL-142]); and `scan_nodes` on 241 Decisions, where the where-am-i skill's own guidance forced reading names only and confessing that exactly one had been read in full. Add the standing limit: 52 properties are `fulltext: true` and `Decision.rationale` is not one of them.\\n\\nTHEY ARE ALL ONE DEFECT: A READ THAT RETURNS EVERYTHING IT KNOWS INSTEAD OF WHAT WAS ASKED. The graph holds the content correctly. It cannot serve it back at the size it now holds. That is neither a vocabulary problem nor an ingest problem, which is why every framing so far has missed it — `dec:idea-backlog-belongs-in-the-graph` reasoned about what a node can HOLD, and the binding constraint is what a read can RETURN.\\n\\nTHE CONSEQUENCE THAT SHOULD NOT BE SOFTENED: TODAY A DOCUMENT BEATS THE GRAPH FOR MAKING A DECISION, AND IT IS A FAIR FIGHT THE GRAPH LOSES. A document can be skimmed, searched with ctrl-F, and read end to end. The graph offers 130 KB or a list of names. Reaching for the markdown is therefore RATIONAL BEHAVIOUR RESPONDING TO A REAL DIFFERENCE, not a bad habit to be disciplined out of, and no improvement to capture changes it.\\n\\nTHE SHAPE OF AN ANSWER, offered because the in-house precedent is already built and shipped rather than as advocacy: the transition is not documents → graph, it is DOCUMENTS → GRAPH → DERIVED DOCUMENTS. `cap:changelog-view` (\\\"a changelog is a derivable view of the graph's own delta\\\") shipped in v0.20.0 and CHANGELOG.md is generated today; `dec:views-are-projections` is accepted; `tools/render_views.py` is 44 KB of renderer producing docs/viewpoints.md and has existed since 2026-07-19. The renderer, the doctrine and the proof all exist — the backlog simply is not one of its views. This also explains why option (d) on `dec:idea-backlog-belongs-in-the-graph` kept losing: it was judged as a RIVAL to the capture options when it is the OUT half of the same answer, and that node already half-saw it (\\\"solves RETRIEVAL and not CAPTURE — it composes with (a)/(b) rather than competing\\\").\\n\\n⭐ THE TEST THIS YIELDS, AND IT IS ANTHONY'S OWN DELETION INSTINCT MADE SAFE. He asked: \\\"should I delete the documents and force us to use the reflow2 graph?\\\" Deletion is the right TEST and the wrong COMMITMENT. The test is: CAN YOU DELETE THIS DOCUMENT AND REGENERATE IT FROM THE GRAPH? Yes → the graph is the source and the document was a view. No → the document is still the source, and WHAT CANNOT BE REGENERATED IS PRECISELY WHAT THE GRAPH IS MISSING. Run it per document, never on the repo at once, and regenerate BEFORE deleting so nothing is ever at risk. Where each stands today, assessed 2026-08-04: CHANGELOG.md PASSES (already derived); docs/viewpoints.md PASSES; COORD.md's in-progress table passes the day `claim_region` is used for real, because the computation exists and is served (`dec:coord-board-in-graph`); docs/backlog.md FAILS, and the rows that cannot regenerate are the exact statement of what vocabulary is absent; AGENTS.md FAILS PERMANENTLY AND CORRECTLY, because an agent reads it before it knows reflow2 exists. That last row is why this is not a march toward zero documents — it is a march toward zero documents that are SOURCES, and the test says which is which instead of leaving it to taste.\\n\\nFOR A CORPUS THE TEST POINTS THE OTHER WAY. Source documents cannot be regenerated and must not be — `req:sources-are-kept-not-just-parsed` says so. The test applies instead to the READING: after ingest, can \\\"what did I want to build, and what of it exists\\\" be answered without opening a document? A no means the ingest landed prose rather than structure, which is exactly what the 52-fulltext-properties limit predicts for rows imported as long descriptions.\\n\\nWHAT IS NOT DECIDED HERE. Whether the OUT half is a v0.24.0 obligation, its own increment, or a discipline applied to every read as it is touched. Which reads to fix first, and by what rule — `reviewed_gaps` is the loudest but `scan_nodes` on a mature type may be the most consequential. Whether \\\"answer-shaped rather than type-shaped\\\" needs new tools or bounded forms of the existing ones. And whether the backlog renderer is a `render_views.py` view, a served tool, or neither.\\n\\nNOT VERIFIED, AND IT WOULD CHANGE THE PRIORITY: how many of the ~140 served tools return unbounded results. Four are named above because four were hit by hand in one session; nobody has counted. If it is four, this is a bug list. If it is forty, it is an increment.\",\"name\":\"OPEN — \\\"documents to graph entities\\\" is TWO problems, and the failing one is reading the graph back, not getting content into it\",\"rationale\":\"Recorded because the measurement is perishable in the exact way this project keeps rediscovering: \\\"reviewed_gaps returned 130,922 characters\\\" becomes \\\"reads felt big once\\\" within a session or two, and then the next reader re-derives it or, worse, does not. The four numbers are first-hand from a single sitting and are written down so the next session argues from them.\\n\\nKept as its own node rather than appended to `dec:idea-backlog-belongs-in-the-graph` because it CONTRADICTS that node's framing rather than extending it. That node asks what a node and an edge can hold and concludes the answer turns on how much of a row becomes structure; this one says the binding constraint is downstream of that entirely — a perfectly structured graph nobody can read back is still a graph nobody decides from. Folding the correction into the node it corrects would hide it.\\n\\nDeliberately does NOT register alternatives, so this stays a question rather than becoming a fork the loop asks Anthony to choose between. The unchecked item — how many served tools return unbounded results — is stated as unchecked so its absence reads as a hole rather than as a completed analysis, and it is named as the thing that decides whether this is a bug list or an increment.\",\"status\":\"proposed\"}",
         "target_id": "dec:the-transition-is-two-halves-and-reads-are-the-unscheduled-one",
         "target_type": "Decision"
+      }
+    },
+    {
+      "node_id": "snap:epoch:reference-parameters-name-their-type:cap:tool-carries-convention",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:every-reference-parameter-names-its-type-test\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"reviewed\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:tool-carries-convention\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:service\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:a3a499e09447e1e3\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:conventions-ride-the-tool-not-only-the-skill\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SCHEDULED_FOR\",\"other_type\":\"Release\",\"other_id\":\"rel:v0210\",\"properties\":{\"modality\":\"expected\",\"recorded_at\":\"2026-07-31\"}}]",
+        "state": "{\"description\":\"Each served tool's description carries at most one sentence of reflow2 CONVENTION — the fraction a capable agent reconstructs incorrectly or not at all, such as the distinction between answering a gap and acknowledging one, or that a check left at `planned` is not confirmation. It arrives with the call, so it cannot be skipped by an agent that never loads the skill. Deliberately bounded at a sentence per tool: descriptions are context paid for on every session, and `cap:tool-search` exists because the surface is already large. Does not reverse `dec:skills-served` — the served skill keeps the depth, the worked examples and the reasoning; the tool carries only the irreducible minimum. PLANNED.\",\"is_entry_point\":false,\"is_exit_point\":false,\"name\":\"The tool carries what an agent would never guess\",\"provenance\":\"authored\",\"status\":\"verified\",\"tier\":\"operational\"}",
+        "target_id": "cap:tool-carries-convention",
+        "target_type": "Capability"
       }
     },
     {
@@ -221339,6 +221706,20 @@
       }
     },
     {
+      "node_id": "fact:design-regions-exceeds-300-seconds-and-wedges-the-shared-server",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "name": "design_regions did not return in 300 s on a freshly started server, twice, and left the shared daemon needing --stop-shared",
+        "statement": "OBSERVED 2026-09-11 while exercising all 180 served tools. `design_regions` is the one tool in the surface that could not be made to return.\n\nIts own description bills it as the cheapest possible orientation read: *\"What parts this design has, so a session that holds NOTHING can pick where to stand. The one orientation read that asks for no seed, no scope and no topic — call it at check-in, before you have a lane.\"*\n\nTWO ATTEMPTS, BOTH ON THE LIVE GRAPH (4,131 nodes / 24,140 edges), debug binary:\n  1. Default arguments — still running at 180 s. That attempt was killed by MY OWN restart of the shared server mid-sweep, so it proves only \">180 s\" and the failure is not attributable to the tool.\n  2. `depth: 1` on a FRESHLY STARTED server, nothing else in flight — the shared server accepted the request and **did not answer within 300 s**, then reported itself possibly wedged; `reflow2-mcp --graph-path <graph> --stop-shared` cleared it.\n\n⭐ WHY THIS IS NOT COVERED BY THE EXISTING LATENCY WORK. `fact:the-agent-surface-profiled-orientation-is-35-of-40-seconds-and-two-causes-are-located` profiled the TEN tools an agent actually drives, taken from real session usage. `design_regions` is not among them — which is consistent with it being new enough, or slow enough, that nobody drives it. So the four located causes there say nothing about this, and this is a separate observation rather than another instance of them.\n\n⚠️ WHAT `depth` SHOULD HAVE DONE. The parameter's own documentation says depth 1 is the CHEAP setting and explains the choice with measured numbers — *\"at 3 … all 56 Components cover 595–903 nodes … At 1 the same parts cover 17–139 nodes\"*. Passing 1 did not help, so whatever dominates is not the per-part walk the parameter controls.\n\n🛑 BOUNDS, and they matter. This is a DEBUG binary; `fact:every-cost-number-today-was-a-debug-build-and-the-live-store-is-7x-its-content` measures the profile alone at 2.2x on `loop_status`, so a release build would be faster — but 2.2x does not rescue a >300 s call, and no release measurement was taken. The machine was also under memory pressure during part of the sweep. NOT MEASURED: where the time goes, whether it terminates at all, or whether it is superlinear in nodes, edges or Components. No profiling was done inside the call and the root-cause skill was not run.",
+        "subject_id": "cap:a-session-with-no-seed-can-find-one",
+        "valid_from": "2026-09-11",
+        "value": "{\"attempts\":2,\"outcome\":\"no return\",\"first_attempt_s\":\">180 then killed by my own server restart\",\"second_attempt_s\":\">300 on a fresh server\",\"server_state_after\":\"wedged; cleared with --stop-shared\",\"depth_tried\":1,\"build\":\"debug\",\"graph\":\"live, 4131 nodes / 24140 edges\"}"
+      }
+    },
+    {
       "node_id": "fact:dev-storyflow-2026-09-06-entries-five-of-nine-asks-were-already-shipped-on-a-later-build",
       "node_type": "TemporalFact",
       "properties": {
@@ -221950,6 +222331,18 @@
       }
     },
     {
+      "node_id": "fact:manual-work-b5043d3878c85a8e",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "manual_work",
+        "statement": "Built a Python harness that drives the built binary over stdio JSON-RPC and runs a scripted PLAN of tool calls against an ISOLATED COPY of the design — copy seeded by importing the committed export into a fresh store, with an assertion refusing any path that resolves to the live store — recording every call, reply, refusal and latency to JSONL for later analysis. Used it for 430 calls exercising all 180 served tools, in tranches: predict from the published schema, call, diff prediction against outcome, then re-run the failures with values read from the schema instead of guessed. Nothing served does this: there is no way to ask reflow2 to exercise its own surface, no way to run a batch of calls against a scratch copy of a design, and no way to get a machine-readable record of what a call returned. The two things that come closest answer different questions — one finds a tool by description, the other reports what a session did by hand. The sweep's central measurement (guessing enum values refused 13 of 20 constructors; reading the published schema refused 0) is only obtainable by actually issuing both sets of calls, so the harness was the instrument, not a convenience.",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-09-11",
+        "value": "{\"diagnosis\":\"tool_missing\",\"reflow2_tool\":null}"
+      }
+    },
+    {
       "node_id": "fact:manual-work-b838754c8eac2946",
       "node_type": "TemporalFact",
       "properties": {
@@ -222179,6 +222572,20 @@
         "statement": "RECORDED AS EVIDENCE ON AN OPEN QUESTION, NOT AS A PROPOSAL. It does not settle `dec:idea-embeddings-adoption` and it does not argue for adopting embeddings.\n\nSOURCE: Anthony brought arXiv 2504.19874v1, \"TurboQuant: Online Vector Quantization with Near-optimal Distortion Rate\" (Zandieh, Daliri, Hadian, Mirrokni — Google Research / NYU / DeepMind), and asked whether anything in it was useful here. Its claim is a DATA-OBLIVIOUS quantizer — random rotation, then per-coordinate Lloyd-Max scalar quantizers whose codebooks are derived analytically from the resulting Beta distribution rather than fitted to any corpus — within a ~2.7 constant of the information-theoretic distortion bound at every bit-width.\n\nMEASURED HERE, against this design's own numbers (4102 nodes, 15.07 MB export, dim 768 for nomic-embed-text-v1.5, which is the model the existing `embeddings-rs` sidecar serves; base64 inflation included because the export is JSON):\n\n  float32   3072 B/node    16.80 MB    111.5% of the export\n  8-bit      768 B/node     4.20 MB     27.9%\n  4-bit      384 B/node     2.10 MB     13.9%\n  2-bit      192 B/node     1.05 MB      7.0%\n  1-bit       96 B/node     0.53 MB      3.5%\n\nPaper's reported distortion on unit vectors: MSE ~0.117 and inner-product error ~0.56/d at 2 bits; ~0.03 and ~0.18/d at 3.\n\n⭐ WHY THE TOP ROW MATTERS MORE THAN THE REST. Carrying full-precision vectors in the record is not a trade-off, it is off the table — the embeddings would be larger than the entire design. That is presumably why nobody has ever proposed it, and it is why the question \"could the vectors live IN the export?\" has not been asked. At 2 bits it becomes an ordinary question with an ordinary cost.\n\n⚠️ WHAT THIS DOES NOT TOUCH, and it is the strongest leg of the case-against: THE MODEL DEPENDENCY. Quantization compresses vectors somebody else produced. It says nothing about whether reflow2 may depend on an embedding model, nothing about `req:thin-install`, and nothing about the one-binary posture. Point 5's per-path distinction and the sidecar-versus-provider argument in point 1 are untouched.\n\n⚠️ AND IT IS NOT THE ANSWER TO THIS WEEK'S RETRIEVAL FAILURE. `fact:a-settled-question-was-re-asked-because-the-requirements-prose-outlived-its-decision` was a search miss, but of a specific kind: BM25 did not surface the Decision that GOVERNS the node being read, because that Decision is ABOUT A DIFFERENT SUBJECT than the query. Semantic similarity would likely have missed it for the same reason — the relation was structural, not lexical or semantic, and the edge was already in the graph. The fix for that was reading the edge. Nothing in this paper would have helped, and treating it as retrieval evidence would be reading the wrong lesson from a real incident.\n\nCONFIDENCE 0.8 on the sizing, which is arithmetic; the distortion figures are the paper's own and have not been reproduced here.",
         "subject_id": "dec:idea-embeddings-adoption",
         "valid_from": "2026-09-10"
+      }
+    },
+    {
+      "node_id": "fact:reading-the-published-schema-turned-13-constructor-refusals-into-zero",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "measurement",
+        "name": "Guessing enum values refused 13 of 20 constructors; reading the published schema refused 0 — the surface published the answer and the agent did not read it",
+        "statement": "MEASURED 2026-09-11 by exercising ALL 180 served tools — 430 scripted calls over stdio against an isolated copy of the design (fresh store seeded from the committed export, 4,131 nodes / 24,140 edges; the live graph was never opened).\n\n⭐ THE RESULT IS ABOUT THE AGENT, NOT THE SURFACE. Building each `add_*` payload by GUESSING enum values from the parameter name: **13 of 20 constructors refused.** Rebuilding the identical payloads by READING the enum out of the published tool schema: **0 of 20 refused.** Same tools, same graph, same session, minutes apart.\n\nEvery \"defect\" raised against the write surface in the first pass dissolved on reading the schema that was already in hand: `add_constraint.objective` is typed `double` and a sentence was sent; `set_evidence_scope.swept` is an ARRAY OF PARAMETER NAMES and `true` was sent; `set_artifact_checksum.disposition` names its three legal values in its own description. `add_change_event.description` was reported as \"a published field the tool refuses\" — its description reads *\"NOT A REAL FIELD — accepted only to catch the commonest mistake\"*, with the field evidence attached. Then PARAMETER NAMES were guessed wrong too, for `create_node`, `delete_node`, `delete_edge`, `record_change`, `record_alias`, `apply_heal`, `reconcile_*` and `withdraw_question`. Four tranches, same failure.\n\n📌 THIS IS THE ANSWER TO A QUESTION ANTHONY ASKED IN THE SAME SESSION — *\"if you're calling the wrong tool, why would an agent in another project not also do the same?\"* It does. This one did, repeatedly, with the schema available on every call. The failure mode is not an under-documented surface; it is an agent treating a parameter name as sufficient.\n\n═══ WHAT THE SAME SWEEP FOUND ON THE OTHER SIDE, and it is why guessing still converges ═══\n\nThe write surface's safety properties held under deliberate abuse:\n  · 38 edge-drawers given a nonexistent id → **37 refused.** The one exception (`release_claim` → `{\"released\": false}`) is a correct \"no claim to release\", not a dangling edge.\n  · 20 mutators given a nonexistent target → **20 refused, 0 wrote.**\n  · All 20 constructors revised with `name` alone → **0 lost or altered a field** (3–10 properties each).\n  · `create_nodes` with 1 invalid of 2 → the valid item correctly discarded; read-back null.\n  · 15 bad enum values → 15 refused, **14 naming the legal set**.\n\nAnd the refusals teach: `create_edge` lists which of 18 edge types accept the pair asked for; `add_design_rule` names the missing approver and says \"Nothing was written\"; the not-found message warns that a node missing in a PARALLEL BATCH may simply not exist yet. The surface is built to be learned by being refused — which is why an agent that guesses still arrives, and why the cost is round trips rather than wrong data.\n\n🛑 BOUNDS. This measures ONE agent on ONE design in ONE session; it is not a rate over agents or projects. The guessed values were chosen by that agent and a different agent would guess differently. What it does establish is that the information needed to succeed was published and unread — not absent.",
+        "subject_id": "cap:mcp-surface",
+        "valid_from": "2026-09-11",
+        "value": "{\"constructors_refused_when_guessing\":13,\"constructors_refused_when_reading\":0,\"of\":20,\"dangling_edge_probes\":38,\"dangling_edge_refused\":37,\"mutator_unknown_target_probes\":20,\"mutator_unknown_target_refused\":20,\"constructors_losing_a_field_on_revise\":0,\"bad_enum_refusals_naming_the_legal_set\":\"14/15\",\"calls\":430}"
       }
     },
     {
@@ -222444,6 +222851,20 @@
       }
     },
     {
+      "node_id": "fact:the-27-design-rules-are-unreachable-by-the-violation-vocabulary-because-it-resolves-to-environment-rule",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "name": "VIOLATES_RULE and COMPLIES_WITH read zero not because nobody bothered but because no path reaches DesignRule — the edge types name EnvironmentRule, of which this design has none",
+        "statement": "MEASURED 2026-09-11 while exercising all 180 served tools. THIS SHARPENS THE DECISION IT HANGS ON, which asked whether the governance vocabulary is immature or is a distinction nothing reads. The measurement of 2026-08-30 recorded VIOLATES_RULE 0, COMPLIES_WITH 0, EnvironmentRule 0 and read them as UNUSED. They are not merely unused: for the rule type this design actually has, they are UNREACHABLE.\n\n⭐ ALL THREE TOOLS RESOLVE `rule_id` TO AN EnvironmentRule. Probed against a real rule:\n    violates_rule{element_id: \"cmp:service\", rule_id: \"rule:success-is-read-from-the-authoritative-object\"}\n    → \"Node not found: EnvironmentRule rule:success-is-read-from-the-authoritative-object\"\nSame for `complies_with`, and `set_violation_status` refuses on the same type.\n\n🛑 AND IT IS NOT ONLY THE TYPED TOOLS — the generic escape hatch is closed too. `create_edge` refuses at the schema level: *\"Invalid edge: VIOLATES_RULE cannot connect Component to DesignRule. No edge type names both Component and DesignRule.\"* So there is NO served path, typed or generic.\n\nCOUNTS TODAY (the 2026-08-30 figures have grown): **DesignRule 27** (was 21), **EnvironmentRule 0**, **Constraint 7** (was 4), VIOLATES_RULE **0**, COMPLIES_WITH **0**.\n\nThe 27 include `rule:success-is-read-from-the-authoritative-object`, `rule:design-intent-moves-only-on-the-owners-word` and `rule:an-issue-is-root-caused-then-pinned-by-a-test-then-fixed` — the rules this project governs itself by. Nothing served can record that a component violated one, or complied with one.\n\n⭐ WHY THIS MATTERS TO THE OPEN QUESTION IT HANGS ON: `dec:bl-155` states outright that a usage count CANNOT TELL UNUSED FROM UNREACHABLE. For these two edge types the question is now settled in favour of unreachable, which removes them from the \"is the vocabulary wrong?\" column — a zero produced by a missing path is no evidence at all about whether the distinction earns its keep. The remaining zeroes (QualityGate, GATED_ON, IMPOSES) were not probed this way and this says nothing about them.\n\n⚠️ ALSO: all three tools declare `rule_id` as a bare `{\"type\": \"string\"}` with NO DESCRIPTION AT ALL, so nothing on the served surface says which rule type is meant. An agent holding 27 DesignRules has no way to learn from the schema that they are the wrong kind.\n\n🛑 WHAT THIS DOES NOT ESTABLISH. It does not say the binding to EnvironmentRule is WRONG — `chg:the-environment-compliance-layer-is-built-as-a-whole-leg` built that leg deliberately, and a compliance regime aimed at an operating environment may be exactly right. Nor has anyone asked whether a DesignRule OUGHT to be violable; `rule:the-self-host-always-trails-what-it-teaches` cuts against reading reflow2's own shape as the test. What is established is only that the path does not exist, that no schema text says so, and that the zeroes have a mechanical explanation nobody had recorded. No cause beyond that was investigated and the root-cause skill was not run.",
+        "subject_id": "dec:idea-the-governance-layer-is-declared-and-mostly-unused",
+        "valid_from": "2026-09-11",
+        "value": "{\"DesignRule_nodes\":27,\"EnvironmentRule_nodes\":0,\"VIOLATES_RULE_edges\":0,\"COMPLIES_WITH_edges\":0,\"tools_resolving_rule_id_to_EnvironmentRule\":[\"violates_rule\",\"complies_with\",\"set_violation_status\"],\"rule_id_schema\":\"bare string, no description\",\"generic_create_edge\":\"refuses Component -> DesignRule for VIOLATES_RULE\"}"
+      }
+    },
+    {
       "node_id": "fact:the-77-gap-pass-and-the-value-i-nearly-destroyed",
       "node_type": "TemporalFact",
       "properties": {
@@ -222545,6 +222966,20 @@
       }
     },
     {
+      "node_id": "fact:the-budget-edges-still-carry-the-pre-fix-numbers-so-budget-report-says-exceeded-for-a-budget-that-holds",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "name": "budget_report reports `exceeded` on a contribution the same day's own measurement superseded — the perf fix updated the fact and never the CONSTRAINS edge",
+        "statement": "FOUND 2026-09-11. `budget_report` on `con:loop-status-warm-latency-ms` returns **total 12,502 ms against a 2,000 ms limit, verdict `exceeded`**, from a CONSTRAINS edge stamped `measured_at: 2026-09-05`.\n\n🛑 THE SAME DAY'S OWN MEASUREMENT SAYS THAT BUDGET HOLDS. `fact:the-three-perf-changes-killed-the-multiplier-and-two-budgets-hold-one-misses-on-my-own-derivation` (valid_from 2026-09-05) records, after the three approved perf changes: *\"✅ con:loop-status-warm-latency-ms — warm loop_status 1,912 ms vs 2,000 (**was 12,502**).\"* It names 12,502 explicitly as the PRE-FIX figure.\n\n**The fix landed, the fact was written, and the CONSTRAINS edge was never updated.** Both budget edges are in this state: the orientation-pass edge carries `contribution: 31000` while the same fact records warm 6,459 / cold 11,103.\n\n⭐ WHY THIS IS THE EXPENSIVE KIND OF STALENESS. A superseded FACT is at least visible as a dated claim someone can re-read. This number lives on an EDGE, is read by a tool that renders a verdict, and the verdict is the opposite of the truth. Nothing reconciles the two: `budget_report` reads the edge and never looks for a later measurement of the same quantity, and the fact that supersedes it does not touch the edge.\n\n📌 IT ALREADY CAUSED A WRONG REPORT, IN THIS SESSION. A tool sweep on 2026-09-10/11 called `budget_report` on both constraints, read `exceeded`, and reported to Anthony that \"both declared performance constraints are breached\" — presenting a pre-fix number as current, five days after the fix. That is the same shape the capture-session skill names as its central example, and it arrived through a different door: not an unread fact, but a fact that was written correctly while the structured value it superseded stayed put.\n\n⚠️ WHAT I AM NOT DOING, AND WHY. I am NOT rewriting the contributions. Which figure belongs in the budget is a judgement, not a lookup: the same fact records warm 1,912 ms, after-write 6,354 ms, and says plainly that *\"most loop_status calls follow a write, so 6,354 ms is what a session usually waits.\"* A budget named \"warm\" could honestly take either. That choice is Anthony's, and asserting one silently would be inventing a measurement nobody made.\n\n🛑 NOT ESTABLISHED: whether any other CONSTRAINS edge carries a superseded contribution — only these two were checked — or whether `budget_report` could reasonably be expected to notice. No root-cause pass was run.",
+        "subject_id": "cap:budget",
+        "valid_from": "2026-09-11",
+        "value": "{\"con:loop-status-warm-latency-ms\":{\"limit\":2000,\"edge_contribution\":12502,\"edge_measured_at\":\"2026-09-05\",\"post_fix_measurement_same_day\":1912,\"budget_report_verdict\":\"exceeded\",\"fact_says\":\"budget holds\"},\"con:a-full-orientation-pass-costs-at-most-8-seconds\":{\"limit\":8000,\"edge_contribution\":31000,\"post_fix_warm\":6459,\"post_fix_cold\":11103}}"
+      }
+    },
+    {
       "node_id": "fact:the-build-list-is-suppressed-by-realized-via-component",
       "node_type": "TemporalFact",
       "properties": {
@@ -222554,6 +222989,19 @@
         "statement": "\"WHAT IS LEFT TO BUILD?\" HAS NO ANSWER IN REFLOW2, AND THE REASON IS NARROWER AND WORSE THAN THE REPORT THAT PROMPTED THE CHECK.\n\nORIGIN: item 1 of the Grok 4.6 agent feedback of 2026-08-13 (`fact:agent-feedback-corroborated-2026-08-14`) — *\"'What is left to build?' is not a first-class query. `what_next` ranks open Decisions.\"* Verified on reflow2's own committed export at `c18a4a1`, 2026-08-14, per `req:agent-authored-feedback-is-reproducible-and-never-leaves-unasked`.\n\n═══ ✅ THEIR CLAIM CONFIRMED ═══\n\n`what_next` (no args) on reflow2's graph returned **12 items: 3 marked + 4 ranked + 1 unexplored + 4 shaping — every one a Decision.** `open_total: 118`, `unranked_pool: 87`. Zero Requirements, zero Capabilities. Its own description says so honestly (*\"which decisions to settle next\"*), so this is a scope fact rather than a bug. `arrival_delta` requires a DesignEpoch or Release `target_id`, so it cannot answer for a design whose remaining work is not scheduled onto one.\n\nTHE HONEST ANSWER, computed directly from the export:\n```\nRequirements 164   accepted 115  proposed 36  dropped 9  deferred 4\nCapabilities 161   verified 77  realized 41  planned 40  in_progress 3\naccepted + live + NOT delivered ............ 9\nlive planned/in_progress capabilities ..... 43\n```\n**None of those 43 appears in any tool's answer to \"what next\".**\n\n═══ 🛑🛑 THE MECHANISM, AND IT IS THE REAL FINDING ═══\n\n`unrealized_capability` LOOKS like the build list — *\"Nothing builds capability X\"* — but fires only 3 times against 43 planned capabilities. `detect.rs` suppresses it three ways, and the decisive one is **`realized_via_component`**:\n\n```rust\nfn realized_via_component(&self, cap_id) -> bool {\n    for alloc in outgoing(cap_id, ALLOCATED_TO) {\n        if !incoming(alloc.to_id, REALIZES).is_empty() { return true }\n    }\n    false\n}\n```\n\n⭐ **IT ASKS WHETHER THE COMPONENT HAS ANY ARTIFACT — NOT WHETHER THE CAPABILITY DOES.** Measured over the 39 live planned capabilities holding no artifact of their own:\n```\nsuppressed by realized_via_component ....... 34   <-- the guard\nsuppressed by owner_claims_built ...........  2\nwould actually raise the gap ...............  5\n```\n⇒ **IN A MATURE PROJECT EVERY COMPONENT ALREADY HAS CODE, SO EVERY NEW PLANNED CAPABILITY IS BORN PRE-SUPPRESSED.** The four captured earlier the same day prove it: `cap:init-asks-which-harness` → `cmp:packaging` (1 artifact), `cap:nudge-absence-says-why` → `cmp:packaging` + `cmp:service` (6), `cap:decomposition-coverage-is-asked` → `cmp:detect` (1), `cap:the-design-interview-precedes-the-capture` → `cmp:skills` (2). All four are `planned`, none has an artifact, **and reflow2 will never ask what gets built for any of them.**\n\n⚠️ THE SUPPRESSION IS DELIBERATE AND WELL-ARGUED, WHICH IS WHY THIS IS A DESIGN QUESTION RATHER THAN A BUG. The BL-42 comment in `detect.rs` records the reasoning: a storyflow adopt trial produced *\"13 of 51 gaps, every one produced by following the adopt skill's own instruction to model artifacts coarsely over a system that is entirely built\"*, and its stated bargain is *\"the question is dropped and the number is kept (`realization` in `graph_report`)\"*. **The guard solves the brownfield-adopt noise problem and creates the greenfield-increment blindness problem, and nothing recorded the second half.**\n\n═══ ⚠️ A WRONG FIRST DIAGNOSIS, KEPT ON THE RECORD ═══\n\nThis session first blamed `owner_claims_built` — the guard that skips a capability whose owning Component is marked `realized`. **Measurement refuted it: only 2 of 39, and the four components involved are all `planned`, not `realized`.** The correct guard was found only by reading `realized_via_component` and counting. Recorded because the same failure — asserting a mechanism from a plausible description instead of measuring it — is the one `dec:idea-intent-crosses-designs` already documents twice about this project.\n\n═══ 📌 WHAT WAS NOT CHECKED ═══\n\nThe computation predicts **5** capabilities would raise the gap; the gate reported **3** *\"Nothing builds capability\"* notes. The 2-item discrepancy was NOT run down — likely `is_discontinued` handling or scope filtering differing from the approximation used here (OBSOLETES targets). **The direction and magnitude of the finding do not depend on it, but the exact figure should not be quoted as though it were reconciled.** Also unchecked: whether `graph_report`'s `realization` number — the half of BL-42's bargain that was kept — is actually reachable by an agent asking what to build next.",
         "subject_id": "proj:reflow2",
         "valid_from": "2026-08-14"
+      }
+    },
+    {
+      "node_id": "fact:the-builder-reads-source-where-a-consumer-has-only-the-surface-and-find-tools-returned-the-negation",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.95,
+        "fact_type": "defect",
+        "name": "find_tools ranked plan_epoch for a query about what HAPPENED, because its description contains \"has NOT happened\" — and add_epoch did not appear at all",
+        "statement": "MEASURED 2026-09-10, after Anthony asked whether this session was using reflow2 at all or discovering its behaviour some other way. It was not using reflow2. Every behavioural fact reported across a day of work came from READING RUST: `record_change` refusing history into a planned epoch (temporal.rs), the brainstorm exemption (heal.rs), the prescribed layer pairs (capture.rs), seam_coverage counting existence rather than content (maturity.rs), the unwritable `created_at` (grep over schema/temporal.yaml against the toolsnap JSON). `find_tools` was not called once.\n\nTHE TEST, run in his own terms — ask it the question a USER would ask, in their words. Query: \"record when a point in time actually happened so changes pinned to it can be ordered by date\".\n\n  1  relation_candidates    unrelated\n  2  invalidates            unrelated\n  3  set_evidence_scope     unrelated\n  4  invalidated_findings   unrelated\n  5  plan_epoch             THE OPPOSITE TOOL — it creates a point that has NOT happened\n\n`add_epoch`, the correct answer, did not appear in the top five of 180 searched. And the reason `plan_epoch` ranked is legible: its description reads \"an Epoch that has NOT happened yet\", the query said \"happened\", and a bag-of-words match scored the negation as a hit.\n\n⭐ THIRD INSTANCE OF ONE CLASS IN ONE DAY, and that is what makes it structural rather than a bad query. (a) `settled_question_prose`'s markers cannot tell a node ASSERTING a question is open from one QUOTING an old one. (b) The test written for it blacklisted substrings and failed on its own note's disclaimer, \"nothing here CLAIMS THE TEXT IS WRONG\". (c) This. A LEXICAL INSTRUMENT CANNOT DISTINGUISH A CLAIM FROM ITS DENIAL, and reflow2 leans on lexical matching in its catalogue, its search and its newest detector.\n\n⭐⭐ AND THE ASYMMETRY IS THE REAL FINDING, which is Anthony's point rather than this session's. A REFLOW2 DEVELOPER HAS A CRUTCH NO CONSUMER HAS. When the surface failed today it cost nothing, because the source was one grep away — so the failure never registered as a failure. A consumer agent on hxm_program or dev_storyflow has ONLY the served surface: it cannot grep reflow2's Rust, it would have called `plan_epoch`, and it would have had no second channel to discover the mistake. Every gap this project's own sessions route around by reading source is a WALL for the people the tool is for, and routing around it is precisely what stops it being found. `rule:reflow2-is-built-for-other-projects-not-for-itself` names the posture; this measures what happens when the posture slips.\n\n📌 A SECOND MEASUREMENT, taken with it, showing the same thing from the description side: the rule that `record_change` REFUSES to record history into a `planned` epoch is real, enforced, and behaviour-changing. `record_change`'s served description mentions \"planned\" ZERO times. `add_epoch`'s mentions it zero times. So a consumer can only learn that invariant by being refused — the surface teaching by refusal rather than by description, which is the same defect fixed three times narrowly this week (`concern`'s values, `detected_at`'s absence, `suggested_depth`'s default) and never as a class.\n\n⚠️ NOT ESTABLISHED. One query is one data point; whether `find_tools` is broadly poor or badly served by this particular phrasing is unmeasured, and building a verdict on n=1 would be the error this project names elsewhere. What IS established without further measurement: the correct tool was absent from the top five, the ranked hit was its semantic opposite, and nobody would have noticed had the source not been to hand.",
+        "subject_id": "cap:tool-search",
+        "valid_from": "2026-09-10"
       }
     },
     {
@@ -223539,6 +223987,20 @@
       }
     },
     {
+      "node_id": "fact:the-shared-stdio-client-never-reaps-its-children-and-accumulates-zombies",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.8,
+        "fact_type": "defect",
+        "name": "12 defunct reflow2-mcp processes, all children of one --shared client, accumulating about one every two hours of session life",
+        "statement": "FOUND SIDEWAYS 2026-09-11, while checking whether an overnight tool sweep had leaked processes after the harness reported low system memory. It had not — every server the harness opened exited cleanly. This was underneath.\n\n**12 defunct (zombie) `reflow2-mcp` processes, every one a child of the same parent**: the session's `reflow2-mcp --graph-path ./.reflow2/graph --shared` stdio client. Ages spanned 1 h to 25 h across a ~25 h session — roughly one every two hours. The `--shared` client spawns a child when it starts or replaces a detached server and does not appear to `wait()` on it.\n\n⚠️ BOUNDED HONESTLY, BECAUSE THE OBVIOUS READING IS WRONG: **this is not a memory problem.** A zombie holds a process-table entry and 0.0 MB RSS. The memory pressure that led me here came from the sweep's own servers, each hydrating a 4,131-node graph alongside the 576 MB shared daemon, and it cleared when they exited (7 GB of 11 available afterwards). What leaks is PIDs and process-table slots.\n\n⭐ WHY IT IS WORTH RECORDING ANYWAY: the deployment shape `--serve-shared` exists for is the LONG-LIVED one — several sessions against one daemon, for days. A leak of one PID per two hours is invisible in a short session and is exactly the kind of thing that surfaces only in the configuration the feature was built for.\n\n🛑 WHAT I COULD NOT ESTABLISH, and it is most of it. I observed this from outside the process with `ps`. I did not read the spawn path, so I cannot say whether the parent reaps on its own exit (which would make this harmless), whether it is one child per server start or per something else, or whether the same shape appears on `--serve-shared` rather than only on `--shared`. Confidence is 0.8 on the observation and much lower on the mechanism. No root-cause pass was run.",
+        "subject_id": "cap:shared-sessions",
+        "valid_from": "2026-09-11",
+        "value": "{\"zombies\":12,\"all_children_of\":\"reflow2-mcp --graph-path ./.reflow2/graph --shared\",\"ages\":\"1h to 25h\",\"rate\":\"~1 per 2h of session life\",\"rss_each_mb\":0.0,\"memory_impact\":\"none - process table entry only\"}"
+      }
+    },
+    {
       "node_id": "fact:the-signpost-instructs-a-party-that-cannot-act-and-the-absent-client-was-named",
       "node_type": "TemporalFact",
       "properties": {
@@ -223696,6 +224158,20 @@
         "statement": "FOUND BY BREAKING IT, 2026-08-18. Adding one tool (`set_capability_signature`) turned a green workspace red: `find_tools` stopped returning `link_artifact` for the query 'register a file that realizes a capability'.\\n\\nTHE MEASUREMENT. The top six scored 28, 27, 26, 26, 25, 24 \\u2014 a one-point near-tie across the whole visible band, with the default limit of 5. So the fifth and sixth places were separated by noise, and any new tool mentioning a common word displaced whatever was fifth.\\n\\nTHE CAUSE was in `score_tool`: every query term contributed the same weight regardless of how many tools mentioned it. 'capability' appears in dozens of descriptions; 'file' in a handful. Treating them equally is what compressed the band. There was no inverse document frequency anywhere in the catalogue, while `search_design` next door has used BM25 over Tantivy for months.\\n\\nWHY IT MATTERS BEYOND ONE TEST: THE CATALOGUE WAS UNSTABLE UNDER ITS OWN GROWTH. With 152 tools and rising, any addition could silently evict the right answer for a query nobody was thinking about \\u2014 and `req:agent-native` promises every capability is reachable over one surface, which is only true if an agent can FIND the tool. The failure mode is silent by construction: nothing tells you the answer you needed was sixth.\\n\\nFIXED AT THE ROOT rather than by widening the assertion or trimming the new tool's description, both of which were available and both of which would have hidden it. Term weights are now ln(1 + N/df). Measured after: 49.5, 38.3, 32.1, 29.1, 29.1, 28.8 \\u2014 the band spread out, and `link_artifact` moved from 6th to 3rd.\\n\\n\\u26a0\\ufe0f AND THE EVIDENCE WAS NEARLY LOST. The first workspace run was piped through `awk` to total the results, which discarded every failure line and left only 'workspace: 1314 passed, 1 failed' \\u2014 no test name, no assertion. Same class as the remembered `cargo test | grep | head` trap in a new costume: A SUMMARISING PIPELINE IS A TRUNCATING PIPELINE. Re-run with full output to a file, the name and the assertion were both there.",
         "subject_id": "req:agent-native",
         "valid_from": "2026-08-18"
+      }
+    },
+    {
+      "node_id": "fact:the-tool-class-census-answers-the-open-questions-own-test-and-half-the-sweeps-findings-are-one-offs",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.9,
+        "fact_type": "measurement",
+        "name": "Census over all 180 tools: the class change this decision asked for exists and needs 173 edits — but about half the sweep's findings belong to no class at all",
+        "statement": "MEASURED 2026-09-11 over all 180 committed toolsnaps, after a sweep that exercised every served tool (430 calls). THIS ANSWERS THE TEST THIS DECISION POSED AND LEFT OPEN. Its own words: *\"name a change that WOULD have required editing all 173 tools. If one exists, the factory earns itself.\"* — and then: **\"Posed for tools, it was unanswered.\"** It is answerable now.\n\n═══ ⭐ THE TEST IS ANSWERED: SEVERAL SUCH CHANGES EXIST ═══\n\n    every tool declares `idempotentHint`              179 edits\n    every tool declares `destructiveHint`             173 edits\n    every REQUIRED param carries a description         93 edits\n    every read-only tool can bound its reply           58 edits\n    every caller-assembled payload has a file handle   22 edits\n\nThe first two are the decision's OWN axes, still at 1/180 and 7/180 three weeks later. So the answer to *\"does a change exist that needs editing across the whole surface\"* is yes, it is not hypothetical, and it is the annotation set this node already measured.\n\n═══ THE 2026-08-26 MEASUREMENT, RE-TAKEN — ONE AXIS CLOSED, ONE REGRESSED ═══\n\n    readOnlyHint     161/173 (93%)  →  **180/180 (100%)**\n    destructiveHint    7/173        →  7/180\n    idempotentHint     1/173        →  1/180\n    openWorldHint      0/173        →  0/180\n    title              9/173        →  **0/180  ← REGRESSED TO ZERO**\n\n⭐ `readOnlyHint` reaching 100% is the decision's premise confirmed and then some: the read/write class is now universal. It is still **checked by nothing**, so it remains a habit rather than a construction — but a habit at 180/180 is evidence that the cheap end works. `title` going 9 → 0 is the same evidence inverted: an unchecked convention can also decay to nothing, and nobody noticed.\n\n═══ 🛑 AND THE PART THAT ARGUES AGAINST A TAXONOMY ═══\n\nOf roughly thirteen distinct deficiencies the sweep found, **six belong to a class and seven do not.**\n\nCLASS-LEVEL (a fix reaches many):\n  · a required param with no description — **93 tools**. This is not abstract: it is why `violates_rule`, `complies_with` and `set_violation_status` declare `rule_id` as a bare string and never say the 27 DesignRules are the wrong type (`fact:the-27-design-rules-are-unreachable-by-the-violation-vocabulary...`).\n  · no way to bound a reply — **58 of 68 read-only tools**; seven replies overflowed a client during the sweep.\n  · a caller-assembled inline payload with no file handle — **22 tools**.\n  · a bare-zero reply that cannot say WHICH empty — see the correlation below.\n  · constructors that mint a node from `id` alone — 7 of the 20 `add_*`.\n  · acknowledge/withdraw accepting a referent that was never raised — 4 tools.\n\nONE-OFF (no class fix reaches them): `propose_allocation` returning 238 clusters built on one edge; `reconcile_dependencies` claiming \"the build agrees\" when no build was observed; `describe_designs` reporting a verified-absent path as `opted_in`; `compose_and_analyse` returning an empty seam because namespacing keeps the two halves apart; `design_regions` exceeding 300 s; `add_interface` unable to state a contract because it shares one request struct with `add_project`; `find_tools` failing to retrieve on a consumer's words.\n\n⚠️ **THAT SPLIT IS THE HONEST ANSWER TO \"FIX THE CLASS, NOT THE INSTANCE\".** It works for six and buys nothing for seven, which is the counterweight this decision already records in Anthony's own terms — a registry, a factory and a validator is the shape an engineer reaches for, and roughly half these findings would survive it untouched.\n\n═══ THE BARE-ZERO CORRELATION, AND ITS LIMIT ═══\n\n19 of 68 read-only descriptions promise to distinguish an empty answer or name their own blind spot; 49 do not. Median description length: **1,113 chars where it promises, 695 where it does not.** Stronger at the short end — **all 8 read-only tools with descriptions under 65 chars are silent**, and all 7 tools the sweep empirically caught returning an unexplained zero (`hierarchy_issues`, `dimension_drift`, `dimension_drifts`, `mirrors`, `alternatives_for`, `recall_resolutions`, `get_node`) are in that silent set.\n\n🛑 **BUT THE PROXY IS CRUDE AND OVERSTATES ITS CASE.** \"Silent\" here means a regex over the description found no empty-handling phrase; `loop_status`, `detect_gaps` and `what_next` are flagged silent at ~1,490 chars each and manifestly do handle it. Treat the short end as measured and the long tail as unclassified. **And note the fix is on the REPLY SHAPE, not the description** — rewriting `hierarchy_issues`'s description does not stop it returning `{\"count\":0,\"items\":[]}`.\n\n🛑 NOT ESTABLISHED: which classes are WORTH a contract; whether `destructiveHint`/`idempotentHint` would be filled honestly or just filled (this node already names that trap, and `fact:skill-mechanics-track-enforcement-exactly-and-they-split-into-three-kinds` splits mechanics into boilerplate, judgement and tool-side for exactly this reason); and whether a proc-macro surface can carry the exhaustive-match trick that works on a closed enum. No option here is chosen and none was implemented.",
+        "subject_id": "dec:idea-a-tool-class-should-carry-a-contract-that-something-checks",
+        "valid_from": "2026-09-11",
+        "value": "{\"tools\":180,\"required_param_with_no_description\":93,\"any_param_with_no_description\":{\"tools\":94,\"params\":166},\"description_under_220_chars\":26,\"read_only_with_no_size_or_scope_control\":\"58 of 68\",\"required_inline_object_assembled_by_caller\":22,\"annotations\":{\"readOnlyHint\":\"180/180 (was 161/173)\",\"destructiveHint\":\"7/180\",\"idempotentHint\":\"1/180\",\"openWorldHint\":\"0/180\",\"title\":\"0/180 (was 9/173)\"},\"class_changes_and_their_edit_counts\":{\"every tool declares idempotentHint\":179,\"every tool declares destructiveHint\":173,\"every required param has a description\":93,\"every read-only tool can bound its reply\":58,\"every caller-assembled payload has a file handle\":22},\"sweep_findings_class_level\":6,\"sweep_findings_one_off\":7}"
       }
     },
     {
@@ -227128,7 +227604,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:fc37f9982e6445bc553378513c0e85216b652200ad74902d24248d9af7c8a494",
+  "prev_content_hash": "sha256:f8c7fdc3f9e11b94bb7e0e84cc498f419d2d821dcec44d5fa28c3dccf27566fb",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
