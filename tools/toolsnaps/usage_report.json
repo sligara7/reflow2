@@ -1,0 +1,27 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "What this project's sessions actually asked reflow2 to do, and where reflow2 declined — computed from the usage ledger the server keeps beside the design (`<graph>.usage.jsonl`), never from an agent's memory. Calls by tool, the served tools NEVER called in the window, refusals by class and by tool (near_match, missing_argument, unknown_argument, unresolved_reference, refused, other), errors, skills fetched, the harnesses that connected, and the metadata the server knows without asking: reflow2's version, OS and architecture, the negotiated protocol revision, the design's node count. THE LEDGER HOLDS THE VERB, NEVER THE OBJECT — no argument, no node id, no message is ever recorded (req:telemetry-carries-usage-never-design-content), so this report can leave the machine without carrying the design. The window is SINCE THE PREVIOUS REPORT by default, and this call leaves the marker that closes it — the unit is the project across every session and harness, not one session. Pass `since` (YYYY-MM-DD) to name the start instead; `peek` to look without closing the window. An in-memory design has no ledger and says so. What it cannot see: anything outside reflow2's own tool calls — a shell error, a git failure — and WHICH MODEL the agent is, which no harness sends. Ask for this when you want a tally of which reflow2 tools were used and which calls failed, for feedback on reflow2 itself.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "peek": {
+        "default": false,
+        "description": "Look without leaving a marker. Off by default: an ordinary report\ncloses its window so the next one starts after it, and a report that\ndid not would count the same calls twice.",
+        "type": "boolean"
+      },
+      "since": {
+        "default": null,
+        "description": "Start of the window as a plain date, `YYYY-MM-DD`. Omit it for\n\"since the previous report\" — the marker the last `usage_report` left\nin the ledger — which falls back to the whole ledger when there has\nnever been one. A named date wins over the marker.",
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "type": "object"
+  },
+  "name": "usage_report"
+}

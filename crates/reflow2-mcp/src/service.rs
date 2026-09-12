@@ -5506,6 +5506,67 @@ impl ReflowService {
     }
 }
 
+impl ReflowService {
+    /// Append one line to the usage ledger beside the store — see
+    /// [`crate::usage`] for what a line may carry and why. Best effort and
+    /// never able to fail the call it records; nothing at all for an
+    /// in-memory design, which has no "beside".
+    ///
+    /// The outcome is classed from the reply's shape, and a failed reply's
+    /// text is read ONLY to pick a refusal class from the server's own
+    /// phrasings — it is not stored, because it may quote the design.
+    fn record_usage(
+        &self,
+        tool: &str,
+        answer: &Result<rmcp::model::CallToolResponse, McpError>,
+        took: std::time::Duration,
+        client: String,
+        client_version: String,
+        skill: Option<String>,
+    ) {
+        let Some(graph_path) = self.graph_path.as_deref() else {
+            return;
+        };
+        let (outcome, refusal) = match answer {
+            Ok(rmcp::model::CallToolResponse::Complete(r)) if r.is_error == Some(true) => {
+                let text = r
+                    .content
+                    .first()
+                    .and_then(|b| b.as_text())
+                    .map(|t| t.text.as_str())
+                    .unwrap_or_default();
+                crate::usage::classify(text)
+            }
+            Ok(_) => (crate::usage::Outcome::Ok, None),
+            Err(e) => {
+                // rmcp's own codes: a parameter refusal is INVALID_PARAMS, and
+                // anything the handler did not choose (a store failure, a
+                // panic caught at the boundary) is INTERNAL_ERROR.
+                if e.code == rmcp::model::ErrorCode::INTERNAL_ERROR {
+                    (crate::usage::Outcome::Error, None)
+                } else {
+                    crate::usage::classify(&e.message)
+                }
+            }
+        };
+        crate::usage::append(
+            graph_path,
+            &crate::usage::UsageLine {
+                at: crate::usage::now_unix(),
+                kind: "call".into(),
+                tool: Some(tool.to_string()),
+                outcome: Some(outcome),
+                refusal,
+                ms: Some(took.as_millis() as u64),
+                client: Some(client),
+                client_version: Some(client_version).filter(|v| !v.is_empty()),
+                seat: Some(self.seat.id().to_string()),
+                skill,
+            },
+        );
+    }
+}
+
 #[tool_handler(router = self.tool_router)]
 impl ServerHandler for ReflowService {
     /// The macro's own `call_tool`, plus one sentence on an unknown-field
@@ -5520,8 +5581,41 @@ impl ServerHandler for ReflowService {
         // Captured before `request` moves: an argument refusal must name the
         // tool, and by the time the router answers, the name is gone.
         let tool_name = request.name.to_string();
+        // THE USAGE LEDGER (`crate::usage`) reads the verb and never the
+        // object: the tool, who connected, and — for `get_skill` alone, whose
+        // argument is reflow2's own vocabulary — which skill. No other
+        // argument is looked at, let alone kept.
+        let skill_fetched = (tool_name == "get_skill")
+            .then(|| {
+                request
+                    .arguments
+                    .as_ref()
+                    .and_then(|a| a.get("name"))
+                    .and_then(|v| v.as_str())
+                    .map(String::from)
+            })
+            .flatten();
+        let (client, client_version) = context
+            .peer
+            .peer_info()
+            .map(|info| {
+                (
+                    info.client_info.name.clone(),
+                    info.client_info.version.clone(),
+                )
+            })
+            .unwrap_or_else(|| ("unknown".to_string(), String::new()));
+        let started = std::time::Instant::now();
         let tcc = rmcp::handler::server::tool::ToolCallContext::new(self, request, context);
         let answer = self.tool_router.call(tcc).await;
+        self.record_usage(
+            &tool_name,
+            &answer,
+            started.elapsed(),
+            client,
+            client_version,
+            skill_fetched,
+        );
 
         // 🛑 A DESERIALISATION REFUSAL ARRIVES AS `Ok(Complete { is_error })`,
         // NOT AS `Err`. rmcp 3 turns the deserialiser's failure into a normal

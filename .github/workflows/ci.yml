@@ -165,6 +165,13 @@ jobs:
         run: python3 tools/test_shared_sessions.py
       - name: --export-to reaches the daemon, not just the client
         run: python3 tools/test_export_to_reaches_the_daemon.py
+      - name: The usage ledger holds the verb and never the object (req:feedback-on-reflow2-is-computed-from-a-record-the-server-kept)
+        # The ledger is written in the server's call_tool, which only a wire
+        # call passes: this drives the real binary, writes a requirement with
+        # an unmistakable id and statement, and requires that neither appears
+        # anywhere in the ledger or the report — shown to fail on an
+        # argument-leak mutation before it was trusted.
+        run: python3 tools/test_feedback_is_a_computed_tally.py
       - name: Nudge-path suite (the REGISTERED hook, run as registered)
         # req:nudge-path-proven: test_loop_nudge covers the script's logic given
         # its inputs, and passed the whole time nobody had checked the hook was
