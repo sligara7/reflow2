@@ -31,6 +31,81 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.59.0] — 2026-09-12
+
+**Minor** — the schema **stamp moves** (`Decision.status` gains `deferred`, and the stamp now
+records every enum vocabulary), one new tool, one new skill, three new optional parameters, and a
+changed default for what a session serves. **Upgrade everywhere, together** — see
+[docs/upgrading-to-v0.59.0.md](docs/upgrading-to-v0.59.0.md): a v0.58.0 binary opening a graph that
+holds a `deferred` decision shows that decision as *gone*, silently, because its guard could not see
+enum values. 28 node types, 65 edge types, unchanged.
+
+### Added
+
+- **`/feedback` — feedback on reflow2 is computed, not recalled** (#490). The server keeps a usage
+  ledger beside the design's store (`<graph>.usage.jsonl`), one line per tool call: the tool, the
+  outcome class, the refusal class, the duration, the harness that connected, the seat — **the
+  verb, never the object**: no argument, node id, statement or message is ever written. New tool
+  `usage_report` renders the window since the previous report (or a named date) with the
+  environment the server knows; the served skill `feedback` (`/feedback` in every harness) adds the
+  self-reported model, invites a one-line disposition per refusal row, and appends it all to the
+  project's own `reflow2_feedback.md`. Sent nowhere. The unit is the project, not the session.
+- **A lesson is served at the step it concerns** (#492). `record_finding` and `add_design_rule`
+  take `steps` — the served skill and/or tool names the lesson is about; a name nothing serves is
+  refused with the nearest. `get_skill` then carries the design's lessons for that skill beside
+  its body, and `tools/list` appends them to the named tool's description — the moment before
+  the call. An empty design serves the surface unchanged. A finding whose `valid_to` is set is
+  history, not a lesson, and is not served.
+- **`Decision.status` gains `deferred`** (#487). A decision set aside on the owner's word stops
+  counting as work somebody owes: it leaves `loop_status` and `what_next`, neither gap detector
+  raises it, and it cannot be forked. `deferred` is the owner's act, exactly like `accepted`.
+- **The server keeps the export current** (#485). `--export-to <FILE>` (emitted by the installer,
+  forwarded to the shared daemon) writes the design export after two seconds of quiet, ten at the
+  outside; a hand edit on disk is never overwritten — the write-through declines and
+  `loop_status` says so in `next`.
+- **Every declared enum is wired or exempt** (#473): 31 fields now publish their values in the
+  tool schema, and a guard keeps the unwired count at zero. **Every required reference parameter
+  says what node type it points at** (#474), and **every required parameter carries a
+  description** (#489) — 76 across 68 tools were bare. Both are schema-derived class gates.
+- **`find_tools` scores what a query means** (#475): whole-word matching, a term in every entry
+  weighs zero, length no longer buys rank. **Every tool says when you would ask for it** (#476),
+  and the 180-query corpus phrased in a user's words is the test that it was said honestly —
+  181 of 181 tools reach the top five for their query.
+- **A missing argument names the tool and what it wants** (#480). Two schema fields with declared
+  enums that no tool could set, and the version guard, now refuse **by name** (#486): the stamp
+  records enum values, and an older binary opening a graph that stores a value it does not know
+  is refused with the value and both versions, never with a bare number.
+- `docs/skills-and-tools.md` is generated from the served surface (`tools/render_skills_and_tools.py`)
+  and `--check` is a CI gate (#489).
+
+### Changed
+
+- **A session serves the release binary** (#483). `tools/reflow2-mcp-launch.sh` serves
+  `target/release/reflow2-mcp` and never builds in release mode on its own: a missing binary is a
+  refusal naming `tools/reflow2-rebuild.sh`, a stale one is a banner. `REFLOW2_PROFILE=debug`
+  restores the content-hash auto-rebuild. Measured 93× faster on the region walk.
+- **The export's lineage anchors at the merge-base with the default branch, not at the file on
+  disk** (#484, #487): one PR is one hop by construction, and `tools/reflow2_check.py` reads the
+  same anchor.
+- **Empty answers say which empty they are** (#477, #478): nine bare zeros gained a sentence, an
+  absent referent gets an answer, three replies stopped claiming more than they checked.
+- **`design_regions` no longer recomputes the whole network per hop** (#479): never returned →
+  12.5 s; the wider memoisation of edge reads is recorded as open work, not claimed.
+- Five storage decisions open since 2026-08-24 are settled on the owner's word (#481): RocksDB
+  stays, the release profile ships, the server guarantees the export, lineage chains from `main`,
+  an engine swap is rejected with a named trigger.
+- rmcp 3.1.2 → 3.3.0 (#488); the base router is declared empty on purpose (`allow_empty`).
+- Three capture-surface fixes from the hxm_program field report (#472); the `plan_epoch` revise
+  path no longer resets an arrived epoch to `planned` (#493).
+- The v0.51.0 unknown-field interception, dead since the day it shipped, now fires on the wire
+  (#480). `tools/toolsnap.py --update` refuses to bless a surface that violates an invariant.
+
+### Fixed
+
+- Seven project lessons that lived only in an agent's memory file are graph nodes hung on what
+  they concern (#491); the `plan_epoch` status-reset defect is fixed at the root and its finding
+  closed (#493).
+
 ## [0.58.0] — 2026-09-10
 
 **Minor** — a new `settled_question_prose` block on two existing tools, so the shape of what
