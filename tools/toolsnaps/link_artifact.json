@@ -8,6 +8,7 @@
     "additionalProperties": false,
     "properties": {
       "artifact_id": {
+        "description": "The id to register the file under — `art:…` by convention. Re-linking an existing id to a second target is safe and keeps its stored name and prose.",
         "type": "string"
       },
       "artifact_type": {

@@ -37,6 +37,7 @@
         ]
       },
       "verification_id": {
+        "description": "The Verification (`ver:…`) whose evidence scope is being set — which Environment its runs count for, and whether simulation-only.",
         "type": "string"
       }
     },

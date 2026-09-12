@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Withdraw a gap's acceptance: the Decision is marked superseded (kept, not deleted) and the gap returns to the open list.",
+  "description": "Withdraw a gap's acceptance: the Decision `acknowledge_gap` minted is marked `superseded` — kept, not deleted, so the record shows the gap was once judged fine and then reconsidered — and the gap returns to `detect_gaps`' open list on its next run. Withdrawing an acknowledgement that does not exist returns `withdrawn: false` and names that, exactly as documented; it does not invent one to withdraw. Ask for this when a review turns out to have been wrong and a parked gap needs attention again.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,

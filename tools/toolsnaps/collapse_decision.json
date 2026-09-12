@@ -9,6 +9,7 @@
     "additionalProperties": false,
     "properties": {
       "decision_id": {
+        "description": "The `proposed` Decision being settled — the decision point whose alternatives were registered with `register_alternative`.",
         "type": "string"
       },
       "note": {

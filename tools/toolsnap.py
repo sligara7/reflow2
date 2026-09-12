@@ -76,6 +76,20 @@ def snap_path(name: str) -> str:
 
 
 def update(live: dict[str, dict]) -> int:
+    # The invariants are checked on the LIVE surface, not on the goldens, so
+    # blessing a surface that violates one produces goldens CI will reject
+    # anyway — and a local `--update` that reads as success while CI is about
+    # to fail is exactly what happened on 2026-09-12 (PR #489: a description
+    # reading "`from`/`to`" tripped the enum-drift check on CI after a clean
+    # re-bless). Refuse here, before anything is written, so the failure is
+    # met at the desk and not in the pipeline.
+    bad = family_invariants(live) + enum_invariants(live)
+    if bad:
+        print("\n" + "=" * 62)
+        print(f"NOT BLESSED: {bad} invariant problem(s) above are on the served surface itself, "
+              f"and no golden can make them pass. Fix the surface, then --update.")
+        print(BINARY_PROVENANCE)
+        return 1
     os.makedirs(SNAP_DIR, exist_ok=True)
     # Remove goldens for tools that no longer exist, so a deleted tool cannot
     # leave a stale snapshot behind (a silent drop of its own kind).

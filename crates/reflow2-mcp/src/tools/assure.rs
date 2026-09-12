@@ -192,11 +192,7 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Set a Verification's kind: `verification` (built right — checks the spec) \
-                       or `validation` (the right thing — checks the operational intent). A \
-                       distinct axis from method/level. A capability with a passing verification \
-                       but no passing validation raises the `unvalidated_capability` gap — this is \
-                       how you answer it (or acknowledge). Replaces the retired VALIDATES edge.",
+        description = "Set a Verification's kind: `verification` (built right — checks the spec) or `validation` (the right thing — checks the operational intent). A distinct axis from method/level. A capability with a passing verification but no passing validation raises the `unvalidated_capability` gap — this is how you answer it (or acknowledge). Replaces the retired VALIDATES edge. Ask for this when you want to say whether this check verifies the build or validates the need.",
         annotations(read_only_hint = false, destructive_hint = false)
     )]
     pub async fn set_verification_kind(
@@ -211,8 +207,7 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Link a Verification to what it checks (VERIFIES). \
-                       Ask for this when you want to record that a test or check covers a particular capability or part.",
+        description = "Link a Verification to what it checks (VERIFIES) — a Capability, Component, Requirement or Artifact. This is the assurance half of the golden thread: a capability with no VERIFIES edge is raised as `unverified_capability`, one proven only at its component's granularity is reported as such, and delivery counts a capability only when its OWN check is passing. `add_verification` draws these in the same call via `verifies`. Recording the check is not running it — `set_verification_status` records the outcome, and a check left `planned` counts as no confirmation. Ask for this when you want to record that a test, analysis, inspection or demonstration covers a particular capability or part.",
         annotations(read_only_hint = false)
     )]
     pub async fn verifies(

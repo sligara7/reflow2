@@ -2,15 +2,17 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Record that a Capability is a step of a Flow (PART_OF_FLOW), with its position (`step_order`). A step without one is listed after the ordered steps, and `flow_report` says so rather than inventing an order.",
+  "description": "Record that a Capability is a step of a Flow (PART_OF_FLOW), with its position in `step_order`. A flow is an ordered sequence of capabilities — a use case, a process, a data path — and `flow_report` walks it in order. A step recorded WITHOUT `step_order` is listed after the ordered steps and the report says so rather than inventing a position; `is_entry_point` / `is_exit_point` on the capability mark where the flow starts and ends. A capability may be a step of several flows. Ask for this when you want to record that a capability is one step in a larger sequence.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
     "properties": {
       "capability_id": {
+        "description": "The Capability (`cap:…`) that is a step of the flow.",
         "type": "string"
       },
       "flow_id": {
+        "description": "The Flow (`flow:…`, from `add_flow`) the capability is a step of.",
         "type": "string"
       },
       "step_order": {

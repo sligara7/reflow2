@@ -8,9 +8,11 @@
     "additionalProperties": false,
     "properties": {
       "environment_id": {
+        "description": "The Environment (`env:…`, from `add_environment`) it operates in. Deployment of a RELEASE to an environment is `deploy_to`; this is the project-level statement.",
         "type": "string"
       },
       "project_id": {
+        "description": "The Project (`proj:…`) that operates in the environment — the source of the OPERATES_IN edge.",
         "type": "string"
       }
     },

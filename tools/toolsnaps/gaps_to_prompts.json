@@ -59,6 +59,7 @@
         ]
       },
       "gaps": {
+        "description": "One entry per gap — `{gap, answers}` where `gap` is a GapCandidate exactly as `detect_gaps` returned it (only its `id` is read; the server resolves the rest afresh) and `answers` is empty on the prepare pass and filled on the serve pass.",
         "items": {
           "$ref": "#/$defs/GapPromptReq"
         },

@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": true
   },
-  "description": "Decomposition/hierarchy issues (matryoshka level checks). Ask for this when you want to know whether the component tree is consistent — a part with two parents, or a child at the wrong level.",
+  "description": "Decomposition and hierarchy issues — the matryoshka checks over Component.level and the CONTAINS spine: a part with two parents, a child at a level not finer than its parent's, a level that is not on this design's declared ladder (`unknown_level`), and a spine that skips a rung. Ranked by POSITION on the project's `decomposition_levels` list, not by a compiled-in order, so a domain that bottoms out at a bought engine or a code module is not told it is wrong. AN EMPTY LIST SAYS WHICH EMPTY: no components carry a level (nothing could be checked), components carry levels and every check held, or there is no CONTAINS spine at all — the reply names which, because clean and vacuous must never read the same. Ask for this when you want to know whether the component tree is consistent.",
   "inputSchema": {
     "properties": {},
     "type": "object"

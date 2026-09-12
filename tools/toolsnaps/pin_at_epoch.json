@@ -8,6 +8,7 @@
     "additionalProperties": false,
     "properties": {
       "epoch_id": {
+        "description": "The DesignEpoch (`epoch:…`) a Release is pinned to (AT_EPOCH) — what puts it on the time axis, and without which `changelog_view` cannot bound a window.",
         "type": "string"
       },
       "node_id": {

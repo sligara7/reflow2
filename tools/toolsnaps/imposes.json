@@ -2,12 +2,13 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Record that an Environment imposes an EnvironmentRule (IMPOSES) — its codes and its physics. One edge per rule.",
+  "description": "Record that an Environment imposes an EnvironmentRule (IMPOSES) — the codes, standards and physical laws a place holds the design to, one edge per rule. An EnvironmentRule is imposed from OUTSIDE (a building code, a radiation environment, a regulatory regime); a rule the project sets for itself is a DesignRule and is recorded with `governed_by`/`violates_rule` instead. `reconcile_deployment` and the environment reports read these edges to ask whether a release deployed somewhere meets what that somewhere imposes. Ask for this when you want to record that an environment holds the design to a code, standard or physical constraint.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
     "properties": {
       "environment_id": {
+        "description": "The Environment (`env:…`, from `add_environment`) that imposes the rule — the source of the IMPOSES edge.",
         "type": "string"
       },
       "rule_id": {

@@ -8,6 +8,7 @@
     "additionalProperties": false,
     "properties": {
       "artifact_id": {
+        "description": "The registered Artifact (`art:…`) whose drift baseline is being accepted — the one `reconcile_artifacts` or `reflow2_check` reported as `checksum_change`.",
         "type": "string"
       },
       "at": {

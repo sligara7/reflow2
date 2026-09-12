@@ -73,6 +73,7 @@
         ]
       },
       "id": {
+        "description": "The constraint's id — `con:<slug>` by convention, so the prefix names the type wherever the id appears. Calling again with an EXISTING id REVISES that node: what you pass overwrites, what you omit survives.",
         "type": "string"
       },
       "limit": {

@@ -22,6 +22,7 @@
         ]
       },
       "constraint_id": {
+        "description": "The Constraint (`con:…`) that limits the target — the source of the CONSTRAINS edge.",
         "type": "string"
       },
       "contribution": {

@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Link a Verification to what it checks (VERIFIES). Ask for this when you want to record that a test or check covers a particular capability or part.",
+  "description": "Link a Verification to what it checks (VERIFIES) — a Capability, Component, Requirement or Artifact. This is the assurance half of the golden thread: a capability with no VERIFIES edge is raised as `unverified_capability`, one proven only at its component's granularity is reported as such, and delivery counts a capability only when its OWN check is passing. `add_verification` draws these in the same call via `verifies`. Recording the check is not running it — `set_verification_status` records the outcome, and a check left `planned` counts as no confirmation. Ask for this when you want to record that a test, analysis, inspection or demonstration covers a particular capability or part.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
@@ -20,6 +20,7 @@
         ]
       },
       "verification_id": {
+        "description": "The Verification (`ver:…`, from `add_verification`) that checks the target — the source of the VERIFIES edge.",
         "type": "string"
       }
     },

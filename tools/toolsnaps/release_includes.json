@@ -16,6 +16,7 @@
         ]
       },
       "release_id": {
+        "description": "The Release (`rel:…`) that ships the item — one INCLUDES edge per artifact or component, which is what makes the as-released view exist.",
         "type": "string"
       },
       "target_id": {

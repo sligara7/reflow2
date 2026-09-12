@@ -315,6 +315,7 @@ python3 tools/check_intent_authority.py docs/design/reflow2.json    # settled in
 python3 tools/vocabulary_reach.py --check                # a NEW declared property the surface cannot write
 python3 tools/check_command_surface.py                   # the skill/command copies still agree
 python3 tools/launch_serves_release.py                   # the launcher serves release and builds nothing there
+python3 tools/render_skills_and_tools.py --check         # docs/skills-and-tools.md rows and counts vs the served surface
 ```
 
 > **This list is a SUBSET and `ci.yml` is the authority.** The full job also runs the instruments

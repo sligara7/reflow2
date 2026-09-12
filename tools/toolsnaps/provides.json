@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Record that a Component PROVIDES an Interface — it is the side that implements the contract. `from_id` is the Component, `to_id` the Interface.",
+  "description": "Record that a Component PROVIDES an Interface — it is the side that implements the contract. `from_id` is the Component, `to_id` the Interface; the consuming side is `consumes`. Together the two edges are what `seam_coverage`, `seam_report` and `pair_designs` read to find where two parts, or two designs, meet — an Interface nothing provides is raised as `unprovided_interface` when something consumes it, and one nothing consumes is dead surface. The Interface's own contract axes (medium, paradigm, payload, auth …) live on it via `set_interface_spec`; this edge only says who implements it. Ask for this when you want to record that this component offers that interface — which component implements it.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,

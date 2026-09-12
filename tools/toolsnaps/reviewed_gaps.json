@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": true
   },
-  "description": "Gaps that were reviewed and accepted, each with the reason given. Worth re-reading when the design shifts.",
+  "description": "Gaps that were reviewed and accepted, each with the reason somebody gave — the record `acknowledge_gap` writes, kept as a Decision node so it outlives the session. Worth re-reading when the design shifts: an acknowledgement is keyed on the gap's SHAPE and expires by construction when the affected nodes change, and an entry whose gap no current detector raises is reported as such rather than silently kept. THE REPLY IS BOUNDED: measured 2026-09-11 at 292,947 characters across 188 entries, which harnesses refuse outright, so over `budget_chars` (default 30,000) each reason is trimmed to its first sentences and the gap detail dropped — the COUNTS never change. Ask for this when you want to know what was raised and consciously accepted, and why.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,

@@ -143,8 +143,7 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Record that an Environment imposes an EnvironmentRule (IMPOSES) — its \
-                       codes and its physics. One edge per rule.",
+        description = "Record that an Environment imposes an EnvironmentRule (IMPOSES) — the codes, standards and physical laws a place holds the design to, one edge per rule. An EnvironmentRule is imposed from OUTSIDE (a building code, a radiation environment, a regulatory regime); a rule the project sets for itself is a DesignRule and is recorded with `governed_by`/`violates_rule` instead. `reconcile_deployment` and the environment reports read these edges to ask whether a release deployed somewhere meets what that somewhere imposes. Ask for this when you want to record that an environment holds the design to a code, standard or physical constraint.",
         annotations(read_only_hint = false)
     )]
     pub async fn imposes(
@@ -329,7 +328,7 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Deploy a Release to an Environment (planned/active/rolled_back).",
+        description = "Deploy a Release to an Environment (DEPLOYED_TO), with the deployment's state — `planned`, `active` or `rolled_back`. This is what puts a release on the operation band: a Release with no DEPLOYED_TO edge reads as never fielded, however much of it is running, and `reconcile_deployment` compares these edges against what is actually observed. Deployment is per RELEASE; a project's standing relationship to an environment is `operates_in`. Ask for this when you want to record that this release runs in that environment — is running, was, or is planned to.",
         annotations(read_only_hint = false)
     )]
     pub async fn deploy_to(
@@ -626,8 +625,7 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Record that a Component or Release needs a Resource, with how critical it \
-                       is (optional/recommended/required).",
+        description = "Record that a Component or Release needs a Resource (REQUIRES_RESOURCE), with how critical it is — `optional`, `recommended` or `required`. A Resource (`add_resource`) is something the design consumes from outside itself — power, bandwidth, a licence, a person-hour budget, a physical facility — and the `no_deploy_operate` gap asks for these alongside environments and deployments so an operate-phase design does not read as complete with nothing to run on. Ask for this when you want to record what a part or a release depends on having available.",
         annotations(read_only_hint = false)
     )]
     pub async fn require_resource(

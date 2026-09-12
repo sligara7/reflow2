@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": true
   },
-  "description": "Propose a HEAL plan (never mutates; review then apply_heal). Ask for this when you want suggested repairs for the structural problems the design has, to review before applying.",
+  "description": "Propose a HEAL plan for the structural defects `detect_defects` finds — circular dependencies, single points of failure, duplicates, disconnected communities — as a list of repairs with what each would change. NEVER MUTATES: review the plan, then `apply_heal` applies the ones you accept, and a project in `rigid` mode makes even that stop at a proposal. Some repairs DELETE nodes (a duplicate merge keeps one and removes the other), so read what each proposes before applying; the check-health skill is the workflow around this. AN EMPTY PLAN SAYS WHICH EMPTY: no defects were found, or defects were found but none has a mechanical repair (a SPOF is a design question, not a heal) — the reply names which. Ask for this when you want suggested repairs for the design's structural problems, to review before anything changes.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,

@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:e31e269e1e9daff01ca58bf1ebc8788a24e9cc7c949bc817b528162d73a86ed0",
+  "content_hash": "sha256:61bed01b3d5dcdcfb6839432a8a6f6e6146f43f63243b01dcf8ed6c47309ccda",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -8189,6 +8189,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:every-required-parameter-and-every-thin-description-says-what-it-is",
+      "properties": {},
+      "to_id": "epoch:planned-the-tool-surface-predicts-itself"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:every-required-reference-parameter-says-its-type",
       "properties": {},
       "to_id": "epoch:reference-parameters-name-their-type"
@@ -11390,6 +11396,12 @@
       "from_id": "snap:epoch:planned-a-vocabulary-change-is-never-silent:cap:a-reader-that-cannot-read-the-vocabulary-is-told-what-it-lacks",
       "properties": {},
       "to_id": "epoch:planned-a-vocabulary-change-is-never-silent"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:planned-the-tool-surface-predicts-itself:cap:a-tool-description-predicts-what-the-tool-does",
+      "properties": {},
+      "to_id": "epoch:planned-the-tool-surface-predicts-itself"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -27073,6 +27085,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-8c9c475cb4ccb492",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skills-and-tools"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-8cdc429d8314a57e",
       "properties": {
         "accepted_baseline": true,
@@ -27943,6 +27964,15 @@
         "action": "modified"
       },
       "to_id": "art:verify"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-e1950ccf2fc091ca",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
     },
     {
       "edge_type": "CHANGED",
@@ -34001,6 +34031,123 @@
         "action": "added"
       },
       "to_id": "ver:every-relation-tool-accepts-both-families-and-refuses-a-typo"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-required-parameter-and-every-thin-description-says-what-it-is",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:every-tool-is-found-by-a-query-in-the-users-words-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-required-parameter-and-every-thin-description-says-what-it-is",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-required-parameter-and-every-thin-description-says-what-it-is",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skills-and-tools"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-required-parameter-and-every-thin-description-says-what-it-is",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-assure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-required-parameter-and-every-thin-description-says-what-it-is",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-built"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-required-parameter-and-every-thin-description-says-what-it-is",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-required-parameter-and-every-thin-description-says-what-it-is",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-claims"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-required-parameter-and-every-thin-description-says-what-it-is",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-required-parameter-and-every-thin-description-says-what-it-is",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-exchange"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-required-parameter-and-every-thin-description-says-what-it-is",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-operate"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-required-parameter-and-every-thin-description-says-what-it-is",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-query"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-required-parameter-and-every-thin-description-says-what-it-is",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-temporal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-required-parameter-and-every-thin-description-says-what-it-is",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:a-tool-description-predicts-what-the-tool-does"
     },
     {
       "edge_type": "CHANGED",
@@ -59377,6 +59524,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:a-tool-description-predicts-what-the-tool-does",
+      "properties": {},
+      "to_id": "snap:epoch:planned-the-tool-surface-predicts-itself:cap:a-tool-description-predicts-what-the-tool-does"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "cap:arrival-delta",
       "properties": {},
       "to_id": "snap:epoch:arrival-delta:cap:arrival-delta"
@@ -61414,6 +61567,12 @@
       "from_id": "dec:a-stale-finding-is-closed-by-a-claim-not-a-computation",
       "properties": {},
       "to_id": "fact:only-8-percent-of-hand-written-change-events-carried-a-date"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "dec:a-tool-carries-the-users-phrasing-and-the-corpus-is-the-test",
+      "properties": {},
+      "to_id": "fact:after-the-description-pass-180-of-180-reach-the-top-five-and-the-held-out-set-reads-34-of-42"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -173491,6 +173650,24 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:every-required-parameter-is-described-gate",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-tool-description-predicts-what-the-tool-does"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:every-tool-is-found-by-a-query-in-the-users-words-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:every-tool-carries-the-users-phrasing-and-the-corpus-is-the-test"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:every-tool-is-found-by-a-query-in-the-users-words-test",
       "properties": {
         "completeness": "complete",
@@ -174689,6 +174866,15 @@
         "conformance": "unchecked"
       },
       "to_id": "cmp:packaging"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:render-skills-and-tools",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-tool-description-predicts-what-the-tool-does"
     },
     {
       "edge_type": "REALIZES",
@@ -181674,6 +181860,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:the-tool-surface-predicts-itself",
+      "properties": {},
+      "to_id": "cap:a-tool-description-predicts-what-the-tool-does"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:the-v0510-field-feedback-fixes-are-pinned",
       "properties": {},
       "to_id": "cap:artifact-declares-its-own-shape"
@@ -182448,6 +182640,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:every-required-parameter-is-described-gate",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:every-required-parameter-is-described-gate"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:every-tool-is-found-by-a-query-in-the-users-words-test",
       "properties": {
         "action": "created"
@@ -182933,6 +183133,14 @@
         "action": "created"
       },
       "to_id": "art:release-workflow"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:render-skills-and-tools",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:render-skills-and-tools"
     },
     {
       "edge_type": "YIELDED",
@@ -185040,12 +185248,24 @@
       }
     },
     {
+      "node_id": "art:every-required-parameter-is-described-gate",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:6f0b8be258b9fb487d57e3e0b44465516278e7f0e9c326a7a0eb43c9ad460f5a",
+        "description": "The class gate for NEW-02: every required parameter on the served surface carries a non-empty description, with membership DERIVED from the served schema (sibling of every_reference_parameter_names_its_type) so a 181st tool joins it the moment it is served. Measured 76 of 230 bare on 2026-09-11; zero after increment 434. EXEMPT is empty and kept as a list, with a second test that refuses an entry naming a parameter no longer bare. Shown to fail — naming exactly `verifies.verification_id` — when one description was stripped, before it was trusted.",
+        "location": "crates/reflow2-mcp/tests/every_required_parameter_is_described.rs",
+        "name": "every_required_parameter_is_described.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:every-tool-is-found-by-a-query-in-the-users-words-test",
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "test",
-        "checksum": "sha256:d66b5daa4fe89415a08da951a4617777a6343c2e823f1d3c62e7dcac69daac6b",
-        "description": "The criterion-1 acceptance test, on Anthony's condition that the corpus is the test: every served tool must reach find_tools' default top 5 for its query in tests/fixtures/find_tools_corpus.json. Three tools are EXEMPT at rank 6 with the measured reason, and a second test fails if an exemption goes stale in either direction. A third test refuses any served tool absent from the corpus, so a new tool cannot ship unfindable by omission. Its header names the trap it cannot see — a sentence tuned to its query — and points at the held-out paraphrase corpus that guards it, kept deliberately out of CI.",
+        "checksum": "sha256:90b6b9277566bb5d4984ad03ce967ddbd9f9fb10261a13c2d2a4396b8fb3b27a",
+        "description": "The criterion-1 acceptance test, on Anthony's condition that the corpus is the test: every served tool must reach find_tools' default top 5 for its query in tests/fixtures/find_tools_corpus.json. TWO tools are EXEMPT at rank 6 with the measured reason (consumption_report, governed_by — scan_nodes rose into the top 5 during increment 434 and its exemption came out), and a second test fails if an exemption goes stale in either direction. A third test refuses any served tool absent from the corpus, so a new tool cannot ship unfindable by omission. Its header names the trap it cannot see — a sentence tuned to its query — and points at the held-out paraphrase corpus that guards it, kept deliberately out of CI. It earned its place a second time on 2026-09-12: a description pass that rewrote tools \"from purpose\" dropped eight from their top 5, and this test refused the branch until the user-phrased sentence was back on each.",
         "location": "crates/reflow2-mcp/tests/every_tool_is_found_by_a_query_in_the_users_words.rs",
         "name": "every_tool_is_found_by_a_query_in_the_users_words.rs",
         "status": "realized"
@@ -186201,6 +186421,18 @@
       }
     },
     {
+      "node_id": "art:render-skills-and-tools",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:db09b1f72da46dbab073672b58d9427ab2abe263051cb888131a80f3fb1ebdf2",
+        "description": "Rewrites docs/skills-and-tools.md's tool rows and header counts from the committed toolsnaps — kind from readOnlyHint, the line from the description's first sentence, family from the slice that serves the tool — and leaves the human prose alone. `--check` is a CI gate that fails on drift; shown to fail on one altered row before it was trusted. Exists because the page called itself \"generated from the running server\" and had been generated by hand once, a month before, at 21 skills and 155 tools against 26 and 180.",
+        "location": "tools/render_skills_and_tools.py",
+        "name": "render_skills_and_tools.py",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:render-views",
       "node_type": "Artifact",
       "properties": {
@@ -186649,7 +186881,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c536cfa2e5bb9e562823f2c8bccdf736eaf70d024ca56ffaaba1b7fb3a1b47ad",
+        "checksum": "sha256:d840c7c703ddf66f57760500b2cdb253c14d649004bff0df8229add0f37d91cb",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -186775,7 +187007,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:46750e11c7477cb410786e7fb7430763ead734453ddbbad58faa1ef74d2de9f2",
+        "checksum": "sha256:15883e363b1a308359960d9f5334969628eccb79dfd57d98a86f64148cba6389",
         "location": "docs/skills-and-tools.md",
         "name": "skills-and-tools.md",
         "status": "realized"
@@ -187573,7 +187805,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:803f047049379f05ef07456b26700cf12419df06c7b5b9c79b1e9304270cdd29",
+        "checksum": "sha256:4cd3039b97fc6ba8721c7682724c9305f84cf4cd3ea8e0328db49db9bb38828d",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/assure.rs",
         "name": "tools/assure.rs",
@@ -187586,7 +187818,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:02977146e18bc4c464d89a8baad989c4f19102c99eed42e0a179256c2b3b6186",
+        "checksum": "sha256:f70a53329b881719d669cd47f6411ffa43258e3ae3422aea0cb463a4490660cb",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/built.rs",
         "name": "tools/built.rs",
@@ -187599,7 +187831,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:3163d6ea712df0721be99cde3b1c718d0efa4ce04cac95a1f70f75eaf96f86b0",
+        "checksum": "sha256:eed1ee2ea23180587ff2ffe7c014ea78b0899935fc2015b3319dbe90ddd18a3c",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
         "name": "crates/reflow2-mcp/src/tools/capture.rs",
@@ -187612,7 +187844,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:dd4e8b049e80dc8a8cf52d59d6764238107c3539e02a58a96de60f4dba324f77",
+        "checksum": "sha256:97189f77fc8e8eb8b36e8a3bba9eb889f280b9af23d8b3d4e3c4cb97f9b209d8",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/claims_tools.rs",
         "name": "tools/claims_tools.rs",
@@ -187625,7 +187857,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:eb55e7acbe7a29390317c525bd3636bf09148805d7dc8e88f862fcb40cf3e6fc",
+        "checksum": "sha256:0f16541f3d653acd9169bee06050d1b7d8099d3eb9efc2dff86edf7359f59e96",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
@@ -187638,7 +187870,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b490f3abe57cc8340326c767389f19358f398a04d915682d0b45e3f936c8d809",
+        "checksum": "sha256:1bc9f431b0298c9a90711b704df0bc55e4d99de3f11ebcd2b56356ca924458db",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/exchange.rs",
         "name": "tools/exchange.rs",
@@ -187662,7 +187894,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:73348f5db6116367860cebef5a12b929b86081e4b74699d5ff1a318e5576a2d8",
+        "checksum": "sha256:b27238a727106eeee6f651ff364168ba8ee446cb3637e7d7f05419605f8ff482",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/operate_tools.rs",
         "name": "tools/operate_tools.rs",
@@ -187675,7 +187907,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:63180da7afde66d716375923e5b038db5c915f897b148d8ae307b3f00f2dea52",
+        "checksum": "sha256:6271cce178e7f2e4d28845a8cfad070f7605d6d7af0ded23e2e49ff98bc5d975",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/query.rs",
         "name": "tools/query.rs",
@@ -187699,7 +187931,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:92dc255cee322300c826e359873a77fd72f2e4448d18ae643594658d5e33b4a4",
+        "checksum": "sha256:2a8ef3754e12cf2582a0931fe09c16f87f9589882db2bef7fd48d737d2de2e7f",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/temporal_tools.rs",
         "name": "tools/temporal_tools.rs",
@@ -188547,10 +188779,10 @@
       "node_id": "cap:a-tool-description-predicts-what-the-tool-does",
       "node_type": "Capability",
       "properties": {
-        "description": "A consumer reading a tool's served text can predict the tool's behaviour, its reply shape, and what a zero or empty result means, before spending a call on it. The method is the test: predict from the description blind, then call, and score the prediction.\n\nMEASURED 2026-09-11 by that method: 13 of 37 blind-scored read-only tools came back MISS or PARTIAL.\n\nCLOSED SINCE, by merged PRs #477 and #478 — hierarchy_issues, dimension_drift, dimension_drifts, surprising_connections, propose_allocation, alternatives_for, recall_resolutions, mirrors, describe_designs, reconcile_dependencies and reviewed_gaps. One of the thirteen (sync_status) was never a defect: the prediction was wrong, not the tool.\n\nSTILL OPEN, and two of them are larger than the original list: compose_and_analyse returns an empty seam set on a purpose-built seam; evidence_report and confirmation_ledger carry undocumented fields; 26 descriptions sit under 220 characters (the bimodal tail); and 76 of 230 required parameters across 68 tools publish NO description at all — surfaced only because the new missing-argument refusal quotes the schema and found nothing to quote. About 21 of those are a constructor's own id and arguably self-evident; roughly 55 are not.\n\nTHE CLASS DISCIPLINE THAT APPLIES: where a finding belongs to a class, it is fixed at the class with one contract test that fails on a new member, not one tool at a time.",
+        "description": "A consumer reading a tool's served text can predict the tool's behaviour, its reply shape, and what a zero or empty result means, before spending a call on it. The method is the test: predict from the description blind, then call, and score the prediction.\n\n⭐ BUILT 2026-09-12 (epoch:planned-the-tool-surface-predicts-itself), from the measurement. All 76 required parameters that published no description now carry one, as doc comments on their request-struct fields; the toolsnaps moved by exactly 76 insertions across 68 files. All 24 descriptions under 220 characters were rewritten from purpose, inside the 1,500-character budget, each saying what the tool computes, when to ask, and — where it applies — what an empty answer means. docs/skills-and-tools.md is now generated for real, by tools/render_skills_and_tools.py from the committed toolsnaps, and its --check is a gate.\n\nTHE CLASS IS HELD BY A GATE: every_required_parameter_is_described, with membership DERIVED from the served schema like its sibling every_reference_parameter_names_its_type, so a 181st tool cannot ship an undescribed required parameter. Shown to fail on one stripped description before it was trusted.\n\nTHE THIRTEEN THE BLIND TEST FAILED ON 2026-09-11: eleven were closed by #477 and #478; sync_status was never a defect (the prediction was wrong). Of the three one-offs the tracker still carried, two were ALREADY CLOSED by that same work and the tracker was stale. The third — compose_and_analyse returning an empty seam on a seam built for it — is a root cause (the namespacing that prevents id collisions keeps the halves from touching), so its description now states that limit honestly and points at pair_designs; the cause stays open as its own item.\n\nWHAT THIS DOES NOT CLAIM: that the descriptions are GOOD. The gates pin presence and consistency. Quality is the blind prediction test, a judgement, and the next sweep is what measures whether this pass moved it.",
         "name": "A tool's served description lets a caller predict what it returns before calling it, including what an empty answer means",
         "provenance": "authored",
-        "status": "in_progress",
+        "status": "verified",
         "tier": "operational"
       }
     },
@@ -193407,6 +193639,15 @@
       }
     },
     {
+      "node_id": "chg:accept-8c9c475cb4ccb492",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "documentation",
+        "name": "Re-rendered by tools/render_skills_and_tools.py --write after the graph_report_markdown description was trimmed (826→490 chars) following the previous render; the --check gate on CI caught the one stale row. Lesson for the chain: the render is the LAST step after any description edit.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-8cdc429d8314a57e",
       "node_type": "ChangeEvent",
       "properties": {
@@ -194310,6 +194551,15 @@
         "change_type": "defect_fix",
         "detected_at": "2026-08-22",
         "name": "DOC COMMENT ONLY — no behaviour moved, so the design HOLDS; the code was always right and only its description of itself was stale. `verifies()` carried `/// target_type is required because the schema allows any target`, true until 2026-08-08 when `to: \"*\"` became an enumeration precisely so `unverified_enforced_rule` could be asked. Admitting Interface makes it doubly wrong: a reader taking it at face value would conclude no schema edit was needed for that change at all. Replaced with the true reason (the target type is not inferable from the id) and a pointer to schema/verify.yaml as the authority, where the list now carries the reasoning for every type on it and for Project being deliberately off it. Recorded as `defect_fix` rather than `refactor` because nothing was restructured — a false statement was corrected. There is no `documentation` change type; the legal list has no room for \"the code was right and the comment lied\", which is worth noticing given how this project keeps finding records that disagree with what they describe.",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:accept-e1950ccf2fc091ca",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "documentation",
+        "name": "Increment 434 follow-up from CI on PR #489: create_edge.edge_type's new description read \"`from`/`to`\", which the toolsnap enum-drift heuristic takes as a hand-listed value set with no published enum. Reworded to \"`from` and `to`\" — the description says the same thing; no behaviour moved. Caught by CI, not locally: the toolsnap re-bless (--update) does not run the drift check.",
         "subject": "system"
       }
     },
@@ -196714,6 +196964,15 @@
         "rationale": "dev_storyflow's fleet lost five calls in one workflow to spellings, and diagnosed it themselves: locally sensible, globally inconsistent. Aliases forgive the other family's name without growing the taught surface — the precedent was ContributorReq.id taking contributor_id. Two choices on the record: (1) node_id/node_type accepted for the from end, because the sharpest reported form was search_design handing back a key the next tool refused; (2) the shared pair struct split rather than aliased in place, because component_id is the from end of provides and the to end of allocate, and one struct cannot alias both ways. Option D (get_node's either/or message) is separable and still open.",
         "subject": "system",
         "summary": "Item 4 of v0.50.0. Serde aliases on 30 relation request structs: from_*/to_* on the role-named tools, role names on the from/to tools, node_id/node_type for the from end everywhere; the shared EdgePairReq split into seven per-tool structs so each carries its own role names; the seven handlers and twelve test literals moved to them. The kit's AGENTS.md Tools section states the convention once. Published schema unchanged (toolsnap goldens byte-identical). Five table-shaped tests plus the fleet's handoff end to end."
+      }
+    },
+    {
+      "node_id": "chg:every-required-parameter-and-every-thin-description-says-what-it-is",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "documentation",
+        "name": "76 required parameters and 24 thin descriptions rewritten from the measurement; a derived-membership gate stops a 77th; the tools doc is generated for real",
+        "subject": "system"
       }
     },
     {
@@ -209164,11 +209423,11 @@
       "node_id": "epoch:planned-the-tool-surface-predicts-itself",
       "node_type": "DesignEpoch",
       "properties": {
-        "description": "PLANNED — the second half of the tool-surface pass Anthony ordered on 2026-09-11 (\"run 6 and 7 together as one measurement-then-fix pass\"). Findability and description accuracy are one underlying problem — the served sentence — and the findability half ALREADY ARRIVED at epoch:a-tool-says-when-you-would-ask-for-it (177 of 180 in the top 5, committed corpus, acceptance test). What remains is accuracy.\n\nWHAT IS LEFT, after PRs #477 and #478 closed 11 of the 13 tools the blind prediction test failed: compose_and_analyse returning an empty seam set on a purpose-built seam (D-10); undocumented fields on evidence_report and confirmation_ledger (D-04); get_node's bare {\"node\":null} on a missing id (D-18); and two classes that are bigger than the original thirteen — 26 descriptions under 220 characters (C-03), and 76 of 230 required parameters across 68 tools publishing no description at all (NEW-02), of which ~21 are a constructor's own id and ~55 are not.\n\nTHE METHOD IS THE TEST: predict the behaviour from the served text blind, then call, then score. Where a finding belongs to a class it is fixed at the class with one contract test that fails on a new member, never one tool at a time.\n\nINDEPENDENT OF THE OTHER FOUR: nothing here touches the store, the export or the stamp, so it can run alongside them rather than after.\n\nNO VERSION NUMBER BY DESIGN.",
+        "description": "ARRIVED 2026-09-12. The second half of the tool-surface pass Anthony ordered on 2026-09-11 (\"run 6 and 7 together as one measurement-then-fix pass\"); the findability half had already arrived at epoch:a-tool-says-when-you-would-ask-for-it. What remained was ACCURACY, and it was done from the measurement rather than from memory.\n\nWHAT WAS MEASURED, from the committed goldens on the day: 24 descriptions under 220 characters; 76 of 230 required parameters across 68 tools publishing NO description at all (21 of them a constructor's own id); three one-offs from the blind prediction test; and docs/skills-and-tools.md — \"generated from the running server\" by hand, once, on 2026-08-21 — saying 21 skills and 155 tools against 26 and 180 served.\n\nWHAT WAS DONE:\n· All 76 parameters described, as doc comments on their request-struct fields, each a true sentence about what the field IS and where a caller gets one. The toolsnaps moved by exactly 76 insertions across 68 files — one line per parameter, the measurement to the number.\n· A CLASS GATE, `every_required_parameter_is_described`, with DERIVED membership like its sibling `every_reference_parameter_names_its_type`: a 181st tool cannot ship an undescribed required parameter. Shown to fail on one stripped description before it was trusted. EXEMPT is empty and kept as a list, with a second test that refuses a stale entry.\n· All 24 thin descriptions rewritten from purpose, under the 1,500-character budget skill_lint enforces — each saying what the tool computes, when to ask for it, and where it applies WHAT AN EMPTY ANSWER MEANS.\n· The three one-offs, from what the sweep actually observed: TWO WERE ALREADY CLOSED by #477/#478 and the tracker was stale (get_node says which null via `empty_because`; both ledgers name conformance, stale_verification and unknown_verification_freshness). The third, compose_and_analyse's empty seam on a seam built for it, is a ROOT CAUSE — the namespacing that prevents id collisions also keeps the two halves from touching — so its description now states that limit honestly and points at pair_designs; the cause itself stays open as its own item.\n· docs/skills-and-tools.md regenerated by a new instrument, tools/render_skills_and_tools.py, which rewrites the tool rows and counts from the committed toolsnaps and leaves the prose alone; `--check` is a CI gate, shown to fail on an altered row. The document now says what it claimed to be.\n\n⭐ THE CATCH, AND IT IS THE LESSON OF THE INCREMENT: the findability acceptance corpus from the previous half FAILED on the first rewrite — 8 of 180 tools fell out of their top 5. Six had lost the one sentence stating the job in a user's words (\"remove an item from the design\", \"this release runs in that environment\", \"offers that interface\"): rewriting \"from purpose\" had paraphrased it away, which is exactly the discipline dec:a-tool-carries-the-users-phrasing-and-the-corpus-is-the-test exists to hold. Two others, untouched, slid to rank 6 as their neighbours grew. Putting the sentence back recovered all eight — 180 of 180, and scan_nodes rose INTO the top 5 so its rank-6 exemption came out. The held-out paraphrase set, the honesty check, reads 34 of 42 from 36: no query newly misses; two former passes sit at ranks 6–8 and one former miss rose to rank 8. Stated, and deliberately NOT tuned to (fact:after-the-description-pass-180-of-180-reach-the-top-five-and-the-held-out-set-reads-34-of-42). Accuracy and findability are one surface, and a description can be made truer and less findable in the same edit.\n\nWHAT IT DOES NOT CLAIM: that the descriptions are GOOD. The gates pin presence, consistency and findability; quality is the blind prediction test, which is a judgement, and the next sweep is what measures whether this pass moved it.\n\nNO VERSION NUMBER BY DESIGN.",
         "epoch_type": "revision",
         "name": "A tool's description predicts what the tool does",
         "sequence": 434,
-        "status": "planned"
+        "status": "arrived"
       }
     },
     {
@@ -211895,6 +212154,16 @@
       }
     },
     {
+      "node_id": "frag:art:every-required-parameter-is-described-gate",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered every_required_parameter_is_described.rs"
+      }
+    },
+    {
       "node_id": "frag:art:every-tool-is-found-by-a-query-in-the-users-words-test",
       "node_type": "Fragment",
       "properties": {
@@ -212502,6 +212771,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered release.yml"
+      }
+    },
+    {
+      "node_id": "frag:art:render-skills-and-tools",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered render_skills_and_tools.py"
       }
     },
     {
@@ -219800,6 +220079,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:planned-the-tool-surface-predicts-itself:cap:a-tool-description-predicts-what-the-tool-does",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:every-required-parameter-is-described-gate\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:render-skills-and-tools\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:service\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:every-tool-description-is-accurate-about-what-the-tool-does\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SCHEDULED_FOR\",\"other_type\":\"DesignEpoch\",\"other_id\":\"epoch:planned-the-tool-surface-predicts-itself\",\"properties\":{\"modality\":\"expected\",\"recorded_at\":\"2026-09-11\"}}]",
+        "state": "{\"description\":\"A consumer reading a tool's served text can predict the tool's behaviour, its reply shape, and what a zero or empty result means, before spending a call on it. The method is the test: predict from the description blind, then call, and score the prediction.\\n\\nMEASURED 2026-09-11 by that method: 13 of 37 blind-scored read-only tools came back MISS or PARTIAL.\\n\\nCLOSED SINCE, by merged PRs #477 and #478 — hierarchy_issues, dimension_drift, dimension_drifts, surprising_connections, propose_allocation, alternatives_for, recall_resolutions, mirrors, describe_designs, reconcile_dependencies and reviewed_gaps. One of the thirteen (sync_status) was never a defect: the prediction was wrong, not the tool.\\n\\nSTILL OPEN, and two of them are larger than the original list: compose_and_analyse returns an empty seam set on a purpose-built seam; evidence_report and confirmation_ledger carry undocumented fields; 26 descriptions sit under 220 characters (the bimodal tail); and 76 of 230 required parameters across 68 tools publish NO description at all — surfaced only because the new missing-argument refusal quotes the schema and found nothing to quote. About 21 of those are a constructor's own id and arguably self-evident; roughly 55 are not.\\n\\nTHE CLASS DISCIPLINE THAT APPLIES: where a finding belongs to a class, it is fixed at the class with one contract test that fails on a new member, not one tool at a time.\",\"name\":\"A tool's served description lets a caller predict what it returns before calling it, including what an empty answer means\",\"provenance\":\"authored\",\"status\":\"in_progress\",\"tier\":\"operational\"}",
+        "target_id": "cap:a-tool-description-predicts-what-the-tool-does",
+        "target_type": "Capability"
+      }
+    },
+    {
       "node_id": "snap:epoch:planning-axis-intent:dec:where-plans-live",
       "node_type": "Snapshot",
       "properties": {
@@ -222108,6 +222397,20 @@
         "statement": "RUN 2026-08-25 at Anthony's instruction, into a SCRATCH graph; the live design was untouched throughout (3,162 nodes before and after). No repo copy was needed — adopt reads source and writes a graph, so only the GRAPH must be separate, which `--graph-path` gives.\n\n── PHASE 1, TWICE, AT TWO GRANULARITIES ──\nFirst by directory (29 nodes), then at CONTRACT granularity per the skill's own rule (94 nodes — 1 Project, 81 Components, 6 Interfaces, 3 Verifications, 3 Artifacts; 182 DEPENDS_ON from imports). The skill calibrates reflow2 at ~100 nodes; the contract-granularity pass landed at 94 without that number being aimed at.\n\nScope DERIVED, not listed (`dec:coverage-scope-is-declared`): 625 of 697 tracked files, two named exclusions — the design graph itself (a design cannot be its own subject) and harness config.\n\n⭐⭐ THE ANSWER TO THE QUESTION ASKED: **DEPTH IS RECOVERABLE, AND ADOPT SIMPLY NEVER ASKS FOR IT.**\n\n    ADOPT trial (recovered)        81 comps  depth {1:1, 2:5, 3:73, 4:2}   hierarchy_issues 0   span-of-control 0 over 7 ✓\n    live design (dec:bl83a)        95 comps  depth {1:13, 2:80, 3:2}       hierarchy_issues 0   span-of-control 4 OVER 7\n                                                                            (coherence-loop 28, agent-surface 25, reflow2 13, foundation 10)\n\nNo capability was added to adopt — the nesting step it omits was simply performed. `system ▸ subsystem ▸ component ▸ part` fell out of the artifact, and the recovered design obeys span of control EVERYWHERE while the deliberately-built functional one violates it in four places. **The structure derived by inspection is better-shaped than the one derived by hand**, and this is the first time reflow2's own decomposition has been checked against that rule.\n\n📌 It is also the first non-toy use of the open ladder (#334): `part` is a rung that did not exist the previous day, and the trial's Project declares `[part, component, subsystem, system]`.\n\n── AND `dec:bl83a` IS CONFIRMED EMPIRICALLY, BY TWO INDEPENDENT ROUTES ──\nThat decision (accepted 2026-07-23) says *\"a functional carving comes from the product's PURPOSE... so adopt on the code can only re-derive the module view.\"* Both routes agree:\n1. **BY DIRECTORY** — 86 of reflow2-core's modules sit loose in one directory. The filesystem has no grouping for them.\n2. **BY IMPORTS** — the dependency graph is STAR-SHAPED, not hierarchical. Fan-in: `foundation` 49, `graph` 42, `nodes` 41, then a long tail; **45% of core modules import ONLY those three hubs and nothing else.** Clustering that yields three hubs and a hundred leaves, never the eight functional subsystems.\n\n⭐ AND THE STAR TOPOLOGY HAS A NAME. `impl DesignGraph` spans **44 of 57 top-level core modules (77%)**, and `graph.rs` alone carries **54 pub fns**. The coupling is star-shaped because nearly every operation is a method on one struct. That is a god-object finding about reflow2's own code that no previous pass surfaced, and it is exactly the class of structural finding adopt exists to produce.\n\n🛑 A DETECTOR THAT IS BLIND TO ADOPT'S OWN OUTPUT. `evaluate_allocation` returned **all zeros** — `components: 0`, `modularity: null`, `unweighted_dependencies: 0` — on a design holding 81 components and 182 dependency edges. Cause read from source: it starts at `current_allocation_map()` (capability → component), so with no Capabilities every downstream number is zero. **Adopt Phase 1 produces structure without capabilities, and Phase 2 of the same skill instructs you to run a tool that must return zeros on it.** Related to but distinct from `fact:defect-allocation-health-is-green-over-an-empty-structure`: that one is about a green score over sparse data; this is a total blind spot over data of the wrong SHAPE.\n\n── PHASE 4 DISCIPLINE APPLIED, AND IT CAUGHT MY OWN METHOD ──\n`detect_defects` reported 20 findings, all `dead_end`. Held to the skill's test — *true of the system, or an error in the model?* — **most are MODEL ERROR.** `main.rs`, `shared.rs` and `nudge.rs` each declare modules with `mod` and use `use crate::` ZERO times, and my extraction only matched `use crate::`. So module DECLARATIONS were never turned into edges, and a binary entry point reads as unconnected. The finding is about the scan, not about reflow2.\n\n⚠️ WHAT THIS TRIAL IS NOT. Phase 3 was deliberately skipped — **no Requirement was inferred from the code that would satisfy it**, which is the skill's one inviolable discipline. No dynamic phase (tests not run into `reconcile_verification`), no `coverage_report` sweep, checksums on three artifacts only. Interfaces were authored from knowledge of the system rather than extracted, so they are the weakest part of the model. This answers \"can depth be recovered\" and nothing more.",
         "subject_id": "cap:adopt",
         "valid_from": "2026-08-25"
+      }
+    },
+    {
+      "node_id": "fact:after-the-description-pass-180-of-180-reach-the-top-five-and-the-held-out-set-reads-34-of-42",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.9,
+        "fact_type": "finding",
+        "name": "Criterion 1 re-measured after increment 434: 180 of 180 in the top 5 with no exemption left for scan_nodes, held-out paraphrases 34 of 42 (from 36) — three former passes at ranks 6–8, one former miss risen to rank 8, no new miss",
+        "statement": "MEASURED 2026-09-12 on the real server over stdio, both corpora, after increment 434 rewrote 24 thin descriptions from purpose and described 76 required parameters.\n\n    find_tools top-5, committed corpus (180)\n      after 434's first rewrite                       172   ← 8 tools fell out\n      after restoring the user-phrased sentence       180   (scan_nodes rose INTO the top 5; its rank-6 exemption removed)\n    held-out paraphrases (42, never consulted while writing)\n      before 434 (fact of 2026-09-11)                  36 pass /  0 near / 6 miss\n      after 434                                        34 pass /  3 near / 5 miss\n\nWHAT THE FIRST REWRITE BROKE, AND WHY IT IS THE RULING WORKING: six of the eight that fell — delete_node, deploy_to, graph_report_markdown, propagate_from, propose_allocation, provides — had lost the one sentence stating the job in a user's words (\"remove an item from the design\", \"this release runs in that environment\", \"offers that interface\"); rewriting \"from purpose\" had paraphrased it away. The other two — manual_work_report, set_verification_kind — were untouched and slid to rank 6 as their neighbours' descriptions grew. Putting the sentence back on each recovered all eight. That is the discipline dec:a-tool-carries-the-users-phrasing-and-the-corpus-is-the-test names, applied a second time, and the committed corpus catching its absence is what the corpus is for.\n\nTHE HELD-OUT MOVEMENT, named: the five misses are the previous six minus design_identity, which rose from miss to rank 8. hierarchy_issues (rewritten in 434, 191 → ~900 chars) and certify_preservation (untouched) slid from the top 5 to ranks 8 and 6. No query newly misses. The net is two former passes now near, one former miss now near — the same class the 2026-09-11 measurement records as the ceiling of word-matching on this surface, where shorter descriptions win on incidental words.\n\nDELIBERATELY NOT TUNED. The held-out set exists to be reported, not chased: adjusting hierarchy_issues to recover a paraphrase would make the held-out set the next thing people tune to, which is the one failure the check was built to prevent. The number is stated instead. graph_report_markdown WAS shortened (826 → 490 chars) — but on the committed corpus, where its substance is documented on graph_report and the long form duplicated it; that is a description being made right, not a score being chased.\n\nBOUNDS: same as the prior fact — both corpora by one author on one day, one phrasing per tool per corpus, the acceptance bar the default top 5. The scorer now also names the near rows (docs/local/tool-sweep/findability/score.py, local), which the prior run could not.",
+        "subject_id": "dec:a-tool-carries-the-users-phrasing-and-the-corpus-is-the-test",
+        "valid_from": "2026-09-12",
+        "value": "{\"main\":{\"after_first_rewrite\":172,\"after_restoring_phrasing\":180,\"of\":180,\"rank6_exempt\":[\"consumption_report\",\"governed_by\"],\"exemption_removed\":[\"scan_nodes\"],\"fell_and_recovered\":[\"delete_node\",\"deploy_to\",\"graph_report_markdown\",\"manual_work_report\",\"propagate_from\",\"propose_allocation\",\"provides\",\"set_verification_kind\"]},\"held_out\":{\"before\":{\"pass\":36,\"near\":0,\"miss\":6},\"after\":{\"pass\":34,\"near\":3,\"miss\":5},\"of\":42,\"near_named\":{\"certify_preservation\":6,\"design_identity\":8,\"hierarchy_issues\":8},\"still_missing\":[\"complies_with\",\"detect_defects\",\"detect_gaps\",\"loop_status\",\"scan_nodes\"],\"newly_missing\":[],\"risen_from_miss\":[\"design_identity\"]},\"tuned_to_held_out\":false}"
       }
     },
     {
@@ -229143,9 +229446,9 @@
       "node_type": "Verification",
       "properties": {
         "description": "Two tests over a committed corpus of one query per served tool (crates/reflow2-mcp/tests/fixtures/find_tools_corpus.json), phrased as somebody states the job rather than as the tool is named.\n\nFIRST: every tool must appear in find_tools' DEFAULT top 5 — the default because 5 is what a consumer actually sees. Tools one place outside it are listed with the measured reason they are there, and the list is refused when it goes stale.\n\nSECOND: the test walks the served surface and refuses any tool absent from the corpus, so a newly added tool cannot ship unfindable by omission.\n\nWHAT THIS TEST CANNOT SEE: a description that merely copies its corpus query passes here and still fails a user who words it differently. The guard against that is a held-out paraphrase corpus scored separately, deliberately not wired into CI so it does not become the next thing people tune to.",
-        "findings": "177 of 180 served tools in the top 5, from a baseline of 114 (53 of which were not in the top 10 at all). Three tools at rank 6, exempt with the measured reason: consumption_report, governed_by and reviewed_gaps, each outranked by shorter descriptions sharing incidental words. Held-out paraphrase corpus, scored separately and not gated: 36 of 42, from 16 before the rewrite it forced.",
+        "findings": "Re-run 2026-09-12 after increment 434's description pass. FIRST RUN FAILED: 8 of 180 tools fell out of their top 5 (delete_node, deploy_to, graph_report_markdown, manual_work_report, propagate_from, propose_allocation, provides, set_verification_kind) — six had lost their user-phrased sentence to a rewrite \"from purpose\", two were crowded to rank 6 by longer neighbours — and scan_nodes rose INTO the top 5, so the second test refused its stale exemption. After restoring the sentence on each and removing that exemption: 180 of 180 in the top 5, two exemptions remaining at rank 6 (consumption_report, governed_by), all three tests passing. Held-out paraphrases, scored separately and not gated: 34 of 42 pass, 3 near (certify_preservation 6, design_identity 8, hierarchy_issues 8), 5 miss — from 36/0/6; no query newly misses. Recorded on fact:after-the-description-pass-180-of-180-reach-the-top-five-and-the-held-out-set-reads-34-of-42, and deliberately not tuned to.",
         "kind": "verification",
-        "last_run_at": "2026-09-11",
+        "last_run_at": "2026-09-12",
         "level": "acceptance",
         "method": "test",
         "name": "Every served tool reaches find_tools' top 5 on one query in a user's words",
@@ -230684,6 +230987,20 @@
       }
     },
     {
+      "node_id": "ver:the-tool-surface-predicts-itself",
+      "node_type": "Verification",
+      "properties": {
+        "description": "Three executable checks, each with derived membership or a mechanical comparison, so a 181st tool cannot regress the class silently:\n\n1. `crates/reflow2-mcp/tests/every_required_parameter_is_described.rs` — every required parameter on the served surface carries a non-empty description; EXEMPT is empty and a second test refuses a stale entry. Membership derived from the served schema, like its sibling every_reference_parameter_names_its_type.\n2. `tools/render_skills_and_tools.py --check` — docs/skills-and-tools.md's tool rows, kinds and header counts match the committed toolsnaps; `--write` regenerates them. Wired into CI's core gates.\n3. `crates/reflow2-mcp/tests/every_tool_is_found_by_a_query_in_the_users_words.rs` — the findability acceptance corpus from the previous increment, unchanged, which this increment's rewrites had to keep passing.\n\nPlus skill_lint's 1,500-character budget on every rewritten description, and toolsnap's re-blessed goldens as the record of exactly what moved.\n\nWHAT IT DOES NOT COVER: whether a description is GOOD. Presence, consistency and findability are pinned; quality is the blind prediction test, a judgement the next sweep re-runs. And the held-out paraphrase corpus is deliberately not a gate — it is scored and stated (34 of 42), never enforced, so it stays an honesty check rather than the next thing tuned to.",
+        "findings": "All three gates pass on the final source. Each was shown to fail before being trusted: stripping one doc comment made gate 1 name exactly `verifies.verification_id`; flipping one row's kind made gate 2 refuse; and gate 3 FAILED FOR REAL on the first rewrite — 8 of 180 tools fell out of their top 5 because rewriting \"from purpose\" had paraphrased away the user-phrased sentence, and scan_nodes rose into the top 5 making its exemption stale — then passed 180 of 180 once the sentence was restored on each and the exemption removed. Toolsnaps: 82 files re-blessed, 76 of the insertions being one parameter description each. Full mcp suite 66 binaries green with --no-fail-fast; smoke_mcp, empty_speaks, refusal_speaks, check_command_surface, check_doc_versions, validate_schema, skill_lint all green. Held-out paraphrases 34 of 42 (from 36): no new miss, two former passes at ranks 6–8, one former miss risen to rank 8 — stated on fact:after-the-description-pass-180-of-180-reach-the-top-five-and-the-held-out-set-reads-34-of-42 and not tuned to.",
+        "kind": "verification",
+        "last_run_at": "2026-09-12",
+        "level": "integration",
+        "method": "test",
+        "name": "Every required parameter is described, the tools doc matches the surface, and every tool is still findable — three gates, each shown to fail first",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:the-v0510-field-feedback-fixes-are-pinned",
       "node_type": "Verification",
       "properties": {
@@ -230894,7 +231211,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:d9d2927989583a6db2e62cc2ead126a75a1c195435d171be17007669fbaa5fc1",
+  "prev_content_hash": "sha256:e31e269e1e9daff01ca58bf1ebc8788a24e9cc7c949bc817b528162d73a86ed0",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

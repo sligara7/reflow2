@@ -1474,6 +1474,7 @@ pub struct IdName {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct RequirementReq {
+    /// The requirement's id — `req:<slug>` by convention, so the prefix names the type wherever the id appears. Calling again with an EXISTING id REVISES that node: what you pass overwrites, what you omit survives.
     pub id: String,
     #[serde(default)]
     pub name: Option<String>,
@@ -1527,6 +1528,7 @@ pub struct RequirementReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct DesignRuleReq {
+    /// The rule's id — `rule:<slug>` by convention, so the prefix names the type wherever the id appears. Calling again with an EXISTING id REVISES that node: what you pass overwrites, what you omit survives.
     pub id: String,
     #[serde(default)]
     pub name: Option<String>,
@@ -1575,6 +1577,7 @@ pub struct DesignRuleReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct ActorReq {
+    /// The actor's id — `actor:<slug>` by convention. An actor is a party OUTSIDE the design that interacts with it (a user, an operator, an external system); a person who works ON the design is a Contributor. Calling again with an existing id REVISES it.
     pub id: String,
     #[serde(default)]
     pub name: Option<String>,
@@ -1592,6 +1595,7 @@ pub struct ActorReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct CapabilityReq {
+    /// The capability's id — `cap:<slug>` by convention, so the prefix names the type wherever the id appears. Calling again with an EXISTING id REVISES that node: what you pass overwrites, what you omit survives.
     pub id: String,
     #[serde(default)]
     pub name: Option<String>,
@@ -1649,6 +1653,7 @@ pub struct CapabilityReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct RequirementStatusReq {
+    /// The Requirement (`req:…`) whose lifecycle status moves. Every move off `proposed` records the USER's word — pass `approver`.
     pub requirement_id: String,
     /// `proposed` (default) / `accepted` / `deferred` / `dropped` / `met`.
     #[schemars(schema_with = "crate::enum_schema::requirement_status_req")]
@@ -1667,6 +1672,7 @@ pub struct RequirementStatusReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct ProjectModeReq {
+    /// The Project (`proj:…`) whose governance mode is being set — `flexible` lets `apply_heal` apply structural repairs, `rigid` makes it propose and stop.
     pub project_id: String,
     /// `flexible` (the schema default) / `rigid`. In `rigid`, `apply_heal`
     /// proposes structural repairs and stops instead of applying them.
@@ -1705,6 +1711,7 @@ pub struct ClaimReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct ReleaseClaimReq {
+    /// The Contributor (`who:…`) who holds the claim being released — the same id passed to `claim_region`.
     pub contributor_id: String,
     /// The `seed_id` of the claim being released; any node type.
     pub seed_id: String,
@@ -1713,6 +1720,7 @@ pub struct ReleaseClaimReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct RequirementLineageReq {
+    /// The Requirement (`req:…`) whose lineage is being set — `original`, `decomposed` (a 1:1 split of a parent) or `derived` (technical necessity a Decision created).
     pub requirement_id: String,
     /// `original` (default) / `decomposed` / `derived`.
     #[schemars(schema_with = "crate::enum_schema::requirement_lineage_req")]
@@ -1722,6 +1730,7 @@ pub struct RequirementLineageReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct CapabilityStatusReq {
+    /// The Capability (`cap:…`) whose lifecycle status moves. A status past `planned` with no passing check is reported as an unproven claim by `loop_status`.
     pub capability_id: String,
     /// `planned` (default) / `in_progress` / `realized` / `verified`.
     #[schemars(schema_with = "crate::enum_schema::capability_status_req")]
@@ -1768,6 +1777,7 @@ pub struct ProvenanceReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct ComponentReq {
+    /// The component's id — `cmp:<slug>` by convention, so the prefix names the type wherever the id appears. Calling again with an EXISTING id REVISES that node: what you pass overwrites, what you omit survives. (`sub:` / `sys:` for the higher rungs)
     pub id: String,
     #[serde(default)]
     pub name: Option<String>,
@@ -1802,6 +1812,7 @@ pub struct ComponentReq {
 pub struct ContainsReq {
     #[serde(alias = "from_id")]
     #[serde(alias = "node_id")]
+    /// The Project (`proj:…`) that CONTAINS the child. This is project membership, not decomposition — a Component inside another Component is `contain_component` / `move_component`.
     pub project_id: String,
     /// Child node type (e.g. `Requirement`, `Capability`, `Component`).
     /// Optional since 2026-09-06: resolved from the id when omitted (the id
@@ -1954,7 +1965,9 @@ pub struct MoveComponentReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct CreateNodeReq {
+    /// The schema type name as declared, e.g. `Requirement`, `DesignEpoch` — `describe_schema` lists them. Prefer the typed `add_*` constructor when one exists: it supplies the required properties and draws the golden-thread edges.
     pub node_type: String,
+    /// The new node's id. Use the prefix convention the typed constructors use (`req:`, `cap:`, `dec:` …) so the type is readable from the id anywhere it appears.
     pub id: String,
     /// Property object; validated against the schema.
     #[serde(default)]
@@ -1981,6 +1994,7 @@ pub struct CreateNodeReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct CreateEdgeReq {
+    /// The edge type as declared, e.g. `SATISFIES`, `DEPENDS_ON`. `describe_schema` with `from` and `to` names which types may join two node types; prefer the typed helper (`satisfies`, `allocate`, `depends_on` …) when one exists.
     pub edge_type: String,
     /// Optional since 2026-09-06: resolved from the id when omitted (the id
     /// prefix names the type); an id held by more than one type is REFUSED, never
@@ -2004,6 +2018,7 @@ pub struct CreateEdgeReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct DeleteEdgeReq {
+    /// The edge type of the assertion to retract, as declared (`SATISFIES`, `GOVERNED_BY` …). Both endpoint nodes survive; only the edge goes.
     pub edge_type: String,
     /// The source node of the edge; any node type, resolved from the id.
     pub from_id: String,
@@ -2088,6 +2103,7 @@ pub struct DescribeSchemaReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct AddArtifactReq {
+    /// The artifact's id — `art:<slug>` by convention, so the prefix names the type wherever the id appears. Calling again with an EXISTING id REVISES that node: what you pass overwrites, what you omit survives.
     pub id: String,
     #[serde(default)]
     pub name: Option<String>,
@@ -2113,6 +2129,7 @@ pub struct AddArtifactReq {
 pub struct RealizesReq {
     #[serde(alias = "from_id")]
     #[serde(alias = "node_id")]
+    /// The registered Artifact (`art:…`) that implements the target in code or hardware. For a document that describes rather than implements, use `documents`.
     pub artifact_id: String,
     /// Node type the artifact realizes (e.g. `Capability`, `Component`).
     /// Optional since 2026-09-06: resolved from the id when omitted (the id
@@ -2144,6 +2161,7 @@ pub struct RealizesReq {
 pub struct DocumentsReq {
     #[serde(alias = "from_id")]
     #[serde(alias = "node_id")]
+    /// The Artifact (`art:…`) that DOCUMENTS the target — a spec, an ICD, a page — as opposed to one that REALIZES it in code (`realizes`).
     pub artifact_id: String,
     /// Node type the artifact describes (e.g. `Component`, `Interface`, `Project`).
     /// Optional since 2026-09-06: resolved from the id when omitted (the id
@@ -2167,6 +2185,7 @@ pub struct DocumentsReq {
 pub struct LinkArtifactReq {
     #[serde(alias = "from_id")]
     #[serde(alias = "node_id")]
+    /// The id to register the file under — `art:…` by convention. Re-linking an existing id to a second target is safe and keeps its stored name and prose.
     pub artifact_id: String,
     /// Required on a FIRST link. Omitting it on a re-link PRESERVES the stored
     /// name rather than blanking it — before 2026-09-07 this was mandatory, so
@@ -2227,6 +2246,7 @@ pub struct LinkArtifactReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct VerificationReq {
+    /// The verification's id — `ver:<slug>` by convention, so the prefix names the type wherever the id appears. Calling again with an EXISTING id REVISES that node: what you pass overwrites, what you omit survives.
     pub id: String,
     #[serde(default)]
     pub name: Option<String>,
@@ -2283,6 +2303,7 @@ pub struct VerifyTargetReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct VerificationStatusReq {
+    /// The Verification (`ver:…`) whose run outcome is being recorded. Pass the real outcome: a check left at `planned` counts as no confirmation.
     pub verification_id: String,
     /// `planned` / `passing` / `failing` / `skipped` / `blocked`.
     #[schemars(schema_with = "crate::enum_schema::verification_status_req")]
@@ -2304,6 +2325,7 @@ pub struct VerificationStatusReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct VerificationKindReq {
+    /// The Verification (`ver:…`) being marked `verification` (built right) or `validation` (built the right thing).
     pub verification_id: String,
     /// `verification` (built right — meets the spec) or `validation` (the right
     /// thing — meets the operational intent).
@@ -2316,6 +2338,7 @@ pub struct VerificationKindReq {
 pub struct VerifiesReq {
     #[serde(alias = "from_id")]
     #[serde(alias = "node_id")]
+    /// The Verification (`ver:…`, from `add_verification`) that checks the target — the source of the VERIFIES edge.
     pub verification_id: String,
     /// Node type being verified (e.g. `Capability`, `Artifact`, `Component`).
     /// Optional since 2026-09-06: resolved from the id when omitted (the id
@@ -2334,6 +2357,7 @@ pub struct VerifiesReq {
 pub struct EvidenceScopeReq {
     #[serde(alias = "from_id")]
     #[serde(alias = "node_id")]
+    /// The Verification (`ver:…`) whose evidence scope is being set — which Environment its runs count for, and whether simulation-only.
     pub verification_id: String,
     /// Node type this check verifies (e.g. `Capability`).
     /// Optional since 2026-09-06: resolved from the id when omitted (the id
@@ -2443,8 +2467,10 @@ pub struct UnclaimedFindingsReq {
 #[serde(deny_unknown_fields)]
 pub struct OperatesInReq {
     #[serde(alias = "from_id")]
+    /// The Project (`proj:…`) that operates in the environment — the source of the OPERATES_IN edge.
     pub project_id: String,
     #[serde(alias = "to_id")]
+    /// The Environment (`env:…`, from `add_environment`) it operates in. Deployment of a RELEASE to an environment is `deploy_to`; this is the project-level statement.
     pub environment_id: String,
 }
 
@@ -2453,6 +2479,7 @@ pub struct OperatesInReq {
 #[serde(deny_unknown_fields)]
 pub struct ImposesReq {
     #[serde(alias = "from_id")]
+    /// The Environment (`env:…`, from `add_environment`) that imposes the rule — the source of the IMPOSES edge.
     pub environment_id: String,
     /// The `EnvironmentRule` the environment imposes.
     #[serde(alias = "to_id")]
@@ -2475,6 +2502,7 @@ pub struct ImposesReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct EnvironmentRuleReq {
+    /// The rule's id — `envrule:<slug>` by convention. An EnvironmentRule is a code, standard or physical law an Environment IMPOSES (`imposes`); a rule the project sets for itself is a DesignRule (`add_design_rule`). Calling again with an existing id REVISES it.
     pub id: String,
     #[serde(default)]
     pub name: Option<String>,
@@ -2589,6 +2617,7 @@ pub struct ViolationStatusReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct ReleaseReq {
+    /// The release's id — `rel:<slug>` by convention, so the prefix names the type wherever the id appears. Calling again with an EXISTING id REVISES that node: what you pass overwrites, what you omit survives.
     pub id: String,
     #[serde(default)]
     pub name: Option<String>,
@@ -2611,6 +2640,7 @@ pub struct ReleaseReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct EnvironmentReq {
+    /// The environment's id — `env:<slug>` by convention, so the prefix names the type wherever the id appears. Calling again with an EXISTING id REVISES that node: what you pass overwrites, what you omit survives.
     pub id: String,
     #[serde(default)]
     pub name: Option<String>,
@@ -2634,6 +2664,7 @@ pub struct EnvironmentReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct ResourceReq {
+    /// The resource's id — `res:<slug>` by convention, so the prefix names the type wherever the id appears. Calling again with an EXISTING id REVISES that node: what you pass overwrites, what you omit survives.
     pub id: String,
     #[serde(default)]
     pub name: Option<String>,
@@ -2655,6 +2686,7 @@ pub struct ResourceReq {
 pub struct ReleaseIncludesReq {
     #[serde(alias = "from_id")]
     #[serde(alias = "node_id")]
+    /// The Release (`rel:…`) that ships the item — one INCLUDES edge per artifact or component, which is what makes the as-released view exist.
     pub release_id: String,
     /// `Artifact` or `Component`.
     /// Optional since 2026-09-06: resolved from the id when omitted (the id
@@ -2693,6 +2725,7 @@ pub struct CreateNodesReq {
     /// once and sent once instead of resent whole after each rejection.
     #[serde(default)]
     pub check_only: bool,
+    /// The nodes to create in one write — each `{node_type, id, properties}`, the same shape `create_node` takes. Applied together; an id naming an existing node REVISES it.
     pub nodes: Vec<NodeSpecReq>,
 }
 
@@ -2725,6 +2758,7 @@ pub struct CreateEdgesReq {
     /// once and sent once instead of resent whole after each rejection.
     #[serde(default)]
     pub check_only: bool,
+    /// The edges to create in one write — each `{from_type, from_id, edge_type, to_type, to_id, properties?}`, the same shape `create_edge` takes one at a time. Applied together so a dependent pair cannot land half-done.
     pub edges: Vec<EdgeSpecReq>,
 }
 
@@ -2764,6 +2798,7 @@ pub struct SetChecksumsReq {
     /// once and sent once instead of resent whole after each rejection.
     #[serde(default)]
     pub check_only: bool,
+    /// One accepted baseline per artifact — each `{artifact_id, checksum, disposition, change_type?, design_change_event_id?, note?, at?}`, the same fields `set_artifact_checksum` takes one at a time. Each item carries its OWN disposition; all-or-nothing.
     pub accepts: Vec<ChecksumAcceptReq>,
 }
 
@@ -2806,12 +2841,14 @@ pub struct AcknowledgeGapsReq {
     /// once and sent once instead of resent whole after each rejection.
     #[serde(default)]
     pub check_only: bool,
+    /// The gaps to accept in one call — each `{gap_id, reason, affected_ids?, approver?}`, the same fields `acknowledge_gap` takes one at a time. Every item carries its OWN reason: a batch under one shared reason would be the silent bulk accept this refuses to be.
     pub gaps: Vec<GapAckReq>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct ReleaseIncludesAllReq {
+    /// The Release (`rel:…`) that ships everything realized since the previous cut — the roll-call `release_includes` would otherwise need one call per item.
     pub release_id: String,
     /// Artifact or Component ids this release does NOT ship. An id that names
     /// nothing in the design is refused rather than ignored — a caller who
@@ -2829,12 +2866,14 @@ pub struct ReleaseIncludesAllReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct ReleaseReportReq {
+    /// The Release (`rel:…`) to report — what it includes, where it is deployed, and what it is pinned to.
     pub release_id: String,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct AddReadinessReq {
+    /// The readiness assessment's id — `rdy:<slug>` by convention, so the prefix names the type wherever the id appears. Calling again with an EXISTING id REVISES that node: what you pass overwrites, what you omit survives.
     pub id: String,
     /// The enabling technology this level is about — usually a Component or an
     /// Artifact.
@@ -2902,6 +2941,7 @@ pub struct GateOnReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct ForecastReadinessReq {
+    /// The node whose readiness to forecast — a Component or Capability id carrying ReadinessAssessment observations (`add_readiness`).
     pub id: String,
     /// Optional since 2026-09-06: resolved from the id when omitted (the id
     /// prefix names the type); an id held by more than one type is REFUSED, never
@@ -2939,13 +2979,16 @@ pub struct ReadinessReportReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct PrecedesReq {
+    /// The DesignEpoch (`epoch:…`) that comes first — the source of the PRECEDES edge.
     pub earlier_epoch: String,
+    /// The DesignEpoch (`epoch:…`) that follows it.
     pub later_epoch: String,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct AddFlowReq {
+    /// The flow's id — `flow:<slug>` by convention, so the prefix names the type wherever the id appears. Calling again with an EXISTING id REVISES that node: what you pass overwrites, what you omit survives.
     pub id: String,
     #[serde(default)]
     pub name: Option<String>,
@@ -2976,8 +3019,10 @@ pub struct AddFlowReq {
 pub struct PartOfFlowReq {
     #[serde(alias = "from_id")]
     #[serde(alias = "node_id")]
+    /// The Capability (`cap:…`) that is a step of the flow.
     pub capability_id: String,
     #[serde(alias = "to_id")]
+    /// The Flow (`flow:…`, from `add_flow`) the capability is a step of.
     pub flow_id: String,
     /// Position of this capability within the flow. Steps without one are
     /// listed after the ordered ones, and the flow report says so.
@@ -2988,6 +3033,7 @@ pub struct PartOfFlowReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct FlowReportReq {
+    /// The Flow (`flow:…`) to report — its steps in `step_order`, with unordered steps listed after and said so.
     pub flow_id: String,
 }
 
@@ -3050,6 +3096,7 @@ pub struct ReconcileDeploymentReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct AddConstraintReq {
+    /// The constraint's id — `con:<slug>` by convention, so the prefix names the type wherever the id appears. Calling again with an EXISTING id REVISES that node: what you pass overwrites, what you omit survives.
     pub id: String,
     #[serde(default)]
     pub name: Option<String>,
@@ -3102,6 +3149,7 @@ pub struct AddConstraintReq {
 pub struct ConstrainsReq {
     #[serde(alias = "from_id")]
     #[serde(alias = "node_id")]
+    /// The Constraint (`con:…`) that limits the target — the source of the CONSTRAINS edge.
     pub constraint_id: String,
     /// The spender's node type — anything can spend (Component mass,
     /// Interface latency, Resource cost).
@@ -3190,6 +3238,7 @@ pub struct RelationLinkReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct BudgetReportReq {
+    /// The Constraint (`con:…`) holding the limit to roll up against — one with a `quantity`, `limit` and `direction`, typically a KPP (`category: kpp`).
     pub constraint_id: String,
 }
 
@@ -3206,6 +3255,7 @@ pub struct PinAtEpochReq {
     #[serde(alias = "from_id")]
     pub node_id: String,
     #[serde(alias = "to_id")]
+    /// The DesignEpoch (`epoch:…`) a Release is pinned to (AT_EPOCH) — what puts it on the time axis, and without which `changelog_view` cannot bound a window.
     pub epoch_id: String,
 }
 
@@ -3279,8 +3329,10 @@ pub struct ArrivalDeltaReq {
 pub struct DeployToReq {
     #[serde(alias = "from_id")]
     #[serde(alias = "node_id")]
+    /// The Release (`rel:…`, from `add_release`) being deployed.
     pub release_id: String,
     #[serde(alias = "to_id")]
+    /// The Environment (`env:…`, from `add_environment`) it is deployed to. A Release with no DEPLOYED_TO edge reads as never fielded in the operation band.
     pub environment_id: String,
     /// `planned` / `active` / `rolled_back`.
     #[serde(default)]
@@ -3302,6 +3354,7 @@ pub struct RequireResourceReq {
     #[serde(alias = "node_id")]
     pub from_id: String,
     #[serde(alias = "to_id")]
+    /// The Resource (`res:…`, from `add_resource`) the component or release needs.
     pub resource_id: String,
     /// `optional` / `recommended` / `required`.
     #[serde(default)]
@@ -3312,6 +3365,7 @@ pub struct RequireResourceReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct DecisionReq {
+    /// The decision's id — `dec:<slug>` by convention, so the prefix names the type wherever the id appears. Calling again with an EXISTING id REVISES that node: what you pass overwrites, what you omit survives. An exploratory idea is conventionally `dec:idea-…`.
     pub id: String,
     #[serde(default)]
     pub name: Option<String>,
@@ -3583,7 +3637,9 @@ pub struct GapIdReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct TypedIdReq {
+    /// The schema type name of the node to delete, as declared (`Requirement`, `Decision` …). Deleting removes EVERY edge attached to it and there is no undo — see the retire-from-design skill before using this on anything with history.
     pub node_type: String,
+    /// The id of the node to delete. Returns true if it existed; a missing id is reported, not an error.
     pub id: String,
 }
 
@@ -3606,6 +3662,7 @@ pub struct GetNodeReq {
 #[derive(Debug, Default, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct ScanReq {
+    /// The schema type to list, as declared — `Requirement`, `Component`, `DesignEpoch` (not `Epoch`) … `describe_schema` names them all; an unknown one is refused rather than answered empty.
     pub node_type: String,
     /// Maximum nodes to return. Omitted means "as many as fit in one reply" —
     /// see `capped_by` in the result.
@@ -3705,6 +3762,7 @@ pub struct DefectIdReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct CapabilityDeliveryReq {
+    /// The Capability (`cap:…`) whose delivery form is being set — `artifact` (realised by a file) or `model` (realised by the design itself).
     pub capability_id: String,
     /// `artifact` (the default) — a file realizes it, and delivery needs both
     /// the file and a passing check. `model` — the deliverable IS the design
@@ -3717,6 +3775,7 @@ pub struct CapabilityDeliveryReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct InterfaceDesignationReq {
+    /// The Interface (`ifc:…`) whose role at the boundary is being set — `internal`, `published`, `required` or `both`. Read by `export_surface` and `pair_designs`.
     pub interface_id: String,
     /// `internal` (the default state), `published` (a boundary others are
     /// entitled to rely on), `required` (one this design needs FROM OUTSIDE), or
@@ -3758,6 +3817,7 @@ pub struct SeamPairDto {
 pub struct ExternalDependencyReq {
     /// Stable id, e.g. `dep:dynograph-foundation`.
     pub id: String,
+    /// The dependency as a person names it — the crate, package, service or standard (`rmcp`, `RocksDB`, `MIL-STD-882`). It is the id's stem and what `search_design` finds it by.
     pub name: String,
     /// Where it comes from — a git URL, a registry, a path.
     pub source: String,
@@ -3826,6 +3886,7 @@ pub struct ObservedDependencyDto {
 #[derive(Debug, Default, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct RequirementDesignationReq {
+    /// The Requirement (`req:…`) being marked `published` (a promise a consumer may rely on, carried by `export_surface`) or `internal`.
     pub requirement_id: String,
     /// `internal` (the default state) or `published` — a behavioural promise a
     /// consumer of this design is entitled to rely on.
@@ -4110,6 +4171,7 @@ pub struct ProposeHealReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct InterfaceSpecReq {
+    /// The Interface (`ifc:…`) whose contract axes are being stated — medium, paradigm, payload format, auth, transport security, operations, error model, schema.
     pub interface_id: String,
     /// How the contract is CARRIED: `REST` / `gRPC` / `json_rpc` / `event` /
     /// `graphql` / `cli` / `library` / `data` / `mechanical` / `electrical` /
@@ -4309,6 +4371,7 @@ pub struct ReconcileArtifactsReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct ArtifactIntentReq {
+    /// The registered Artifact (`art:…`, from `link_artifact` or `add_artifact`) whose intent and note are being set.
     pub artifact_id: String,
     /// `atomic` (one deliverable — the default), `opaque` (a subtree claimed as
     /// a unit ON PURPOSE: a settled archive, a vendored tree — do not descend),
@@ -4343,6 +4406,7 @@ pub struct ArtifactIntentReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct SetChecksumReq {
+    /// The registered Artifact (`art:…`) whose drift baseline is being accepted — the one `reconcile_artifacts` or `reflow2_check` reported as `checksum_change`.
     pub artifact_id: String,
     /// The accepted content hash — the new drift baseline.
     pub checksum: String,
@@ -4416,6 +4480,7 @@ pub struct DimensionDriftReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct AddEpochReq {
+    /// The epoch's id — `epoch:<slug>` by convention, so the prefix names the type wherever the id appears. Calling again with an EXISTING id REVISES that node: what you pass overwrites, what you omit survives. `plan_epoch` on an existing id ALSO resets its status to `planned` — revise prose first, then set_epoch_status.
     pub id: String,
     #[serde(default)]
     pub name: Option<String>,
@@ -4450,6 +4515,7 @@ pub struct AddEpochReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct EpochStatusReq {
+    /// The DesignEpoch (`epoch:…`) moving between `planned` and `arrived`. Note the stored type name is `DesignEpoch`, not `Epoch`.
     pub epoch_id: String,
     /// `arrived` (it has happened) or `planned` (a claim about one that has
     /// not). `planned` → `arrived` is ARRIVAL.
@@ -4542,6 +4608,7 @@ pub struct RecordFindingReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct AddChangeEventReq {
+    /// The change event's id — `chg:<slug>` by convention, so the prefix names the type wherever the id appears. Calling again with an EXISTING id REVISES that node: what you pass overwrites, what you omit survives.
     pub id: String,
     /// NOT A REAL FIELD — accepted only to catch the commonest mistake. A
     /// ChangeEvent has no `description`; two projects (three, counting a repeat
@@ -4618,8 +4685,11 @@ pub struct AffectedNodeReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct RecordChangeReq {
+    /// The ARRIVED DesignEpoch (`epoch:…`) the change is recorded into. A planned epoch is refused: a snapshot captures the present and cannot belong to a point that has not happened.
     pub epoch_id: String,
+    /// The id for the new ChangeEvent — `chg:…` by convention. It is the record a later fix can INVALIDATE and a checksum acceptance can name.
     pub change_event_id: String,
+    /// What changed, in one sentence a later reader can act on — the ChangeEvent's name. Put the WHY in `change_type` and the axis in `subject`, not here.
     pub name: String,
     /// Optional since 2026-09-06: resolved from the id when omitted (the id
     /// prefix names the type); an id held by more than one type is REFUSED, never
@@ -4823,6 +4893,7 @@ pub struct AnalyzeAlternativesReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct SetDecisionStatusReq {
+    /// The Decision whose lifecycle status moves. `dec:…` by convention; `search_design` finds one by its words.
     pub decision_id: String,
     /// `proposed` (opens a decision point) / `accepted` / `deferred` (set aside,
     /// not debt — carries an approver like `accepted`) / `superseded` /
@@ -4892,6 +4963,7 @@ pub struct RegisterAlternativeReq {
     /// Id for the alternative pointer (an Artifact), e.g. `alt:laser`.
     #[serde(alias = "to_id")]
     pub artifact_id: String,
+    /// A short human name for the alternative — the road, not the file — as it will appear in `alternatives_for` and `analyze_alternatives`.
     pub name: String,
     /// Where the alternative's design export lives (branch-by-file).
     pub location: String,
@@ -4900,12 +4972,14 @@ pub struct RegisterAlternativeReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct AlternativesForReq {
+    /// The Decision whose registered alternatives to list — a `proposed` decision point that `register_alternative` has been called on.
     pub decision_id: String,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct CollapseDecisionReq {
+    /// The `proposed` Decision being settled — the decision point whose alternatives were registered with `register_alternative`.
     pub decision_id: String,
     /// The winning alternative's id.
     /// The winning alternative's `Artifact` id, as listed by
@@ -4970,6 +5044,7 @@ pub struct GapPromptReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct GapsToPromptsReq {
+    /// One entry per gap — `{gap, answers}` where `gap` is a GapCandidate exactly as `detect_gaps` returned it (only its `id` is read; the server resolves the rest afresh) and `answers` is empty on the prepare pass and filled on the serve pass.
     pub gaps: Vec<GapPromptReq>,
     /// Timestamp to record against the questions, if you have one.
     #[serde(default)]

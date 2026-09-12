@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": true
   },
-  "description": "All declining quality dimensions across the design, worst first.",
+  "description": "All declining quality dimensions across the design, worst first — every node whose latest recorded observation on some `-ility` is worse than the one before, ranked by how far it fell. AN EMPTY LIST SAYS WHICH EMPTY: no observations have been recorded at all (nothing could drift), observations exist but none declined, or every decline is already dispositioned — the reply names which, because \"nothing is getting worse\" and \"nobody is measuring\" must never read the same. `dimension_drift` (singular) reads one node. Ask for this when you want to know what in the design is getting worse.",
   "inputSchema": {
     "properties": {},
     "type": "object"

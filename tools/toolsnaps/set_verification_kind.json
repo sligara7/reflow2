@@ -3,7 +3,7 @@
     "destructiveHint": false,
     "readOnlyHint": false
   },
-  "description": "Set a Verification's kind: `verification` (built right — checks the spec) or `validation` (the right thing — checks the operational intent). A distinct axis from method/level. A capability with a passing verification but no passing validation raises the `unvalidated_capability` gap — this is how you answer it (or acknowledge). Replaces the retired VALIDATES edge.",
+  "description": "Set a Verification's kind: `verification` (built right — checks the spec) or `validation` (the right thing — checks the operational intent). A distinct axis from method/level. A capability with a passing verification but no passing validation raises the `unvalidated_capability` gap — this is how you answer it (or acknowledge). Replaces the retired VALIDATES edge. Ask for this when you want to say whether this check verifies the build or validates the need.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
@@ -17,6 +17,7 @@
         "type": "string"
       },
       "verification_id": {
+        "description": "The Verification (`ver:…`) being marked `verification` (built right) or `validation` (built the right thing).",
         "type": "string"
       }
     },

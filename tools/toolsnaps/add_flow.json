@@ -49,6 +49,7 @@
         ]
       },
       "id": {
+        "description": "The flow's id — `flow:<slug>` by convention, so the prefix names the type wherever the id appears. Calling again with an EXISTING id REVISES that node: what you pass overwrites, what you omit survives.",
         "type": "string"
       },
       "name": {

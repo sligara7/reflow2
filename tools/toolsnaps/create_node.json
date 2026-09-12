@@ -16,9 +16,11 @@
         ]
       },
       "id": {
+        "description": "The new node's id. Use the prefix convention the typed constructors use (`req:`, `cap:`, `dec:` …) so the type is readable from the id anywhere it appears.",
         "type": "string"
       },
       "node_type": {
+        "description": "The schema type name as declared, e.g. `Requirement`, `DesignEpoch` — `describe_schema` lists them. Prefer the typed `add_*` constructor when one exists: it supplies the required properties and draws the golden-thread edges.",
         "type": "string"
       },
       "props": {

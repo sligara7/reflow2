@@ -21,6 +21,7 @@
         "type": "string"
       },
       "id": {
+        "description": "The node whose readiness to forecast — a Component or Capability id carrying ReadinessAssessment observations (`add_readiness`).",
         "type": "string"
       },
       "kind": {

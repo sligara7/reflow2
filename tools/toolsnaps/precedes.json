@@ -8,9 +8,11 @@
     "additionalProperties": false,
     "properties": {
       "earlier_epoch": {
+        "description": "The DesignEpoch (`epoch:…`) that comes first — the source of the PRECEDES edge.",
         "type": "string"
       },
       "later_epoch": {
+        "description": "The DesignEpoch (`epoch:…`) that follows it.",
         "type": "string"
       }
     },

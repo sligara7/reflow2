@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": true
   },
-  "description": "The graph report rendered as Markdown. Ask for this when you want the design's health and status as readable prose — a plain-English rundown of how the project is doing.",
+  "description": "The graph report rendered as Markdown — `graph_report`'s computed snapshot (counts, requirement certainty, the delivery line, top gaps, allocation, confirmation, coverage, the maturity trajectory) as prose a person reads rather than JSON an agent parses; the substance is documented on `graph_report`. Withholds the per-check roll for the same reason it does. Ask for this when you want the design's health and status as readable prose — a plain-English rundown of how the project is doing.",
   "inputSchema": {
     "properties": {},
     "type": "object"

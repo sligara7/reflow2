@@ -8,6 +8,7 @@
     "additionalProperties": false,
     "properties": {
       "flow_id": {
+        "description": "The Flow (`flow:…`) to report — its steps in `step_order`, with unordered steps listed after and said so.",
         "type": "string"
       }
     },

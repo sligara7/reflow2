@@ -8,6 +8,7 @@
     "additionalProperties": false,
     "properties": {
       "epoch_id": {
+        "description": "The DesignEpoch (`epoch:…`) moving between `planned` and `arrived`. Note the stored type name is `DesignEpoch`, not `Epoch`.",
         "type": "string"
       },
       "status": {
