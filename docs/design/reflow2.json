@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:d9d2927989583a6db2e62cc2ead126a75a1c195435d171be17007669fbaa5fc1",
+  "content_hash": "sha256:e31e269e1e9daff01ca58bf1ebc8788a24e9cc7c949bc817b528162d73a86ed0",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -27151,6 +27151,15 @@
         "action": "modified"
       },
       "to_id": "art:where-am-i-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-938cfeb07716ec88",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
     },
     {
       "edge_type": "CHANGED",
@@ -186640,7 +186649,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c03166a7ee1a1ace0cf24cd214e75acbed3593d45500500a3c35260404410c8d",
+        "checksum": "sha256:c536cfa2e5bb9e562823f2c8bccdf736eaf70d024ca56ffaaba1b7fb3a1b47ad",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -193477,6 +193486,16 @@
         "change_type": "defect_fix",
         "detected_at": "2026-08-28",
         "name": "`composes` moved into `metadata` for harness portability. No design meaning changed.",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:accept-938cfeb07716ec88",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-09-12",
+        "name": "rmcp 3.1.2 → 3.3.0. The macro now refuses an empty #[tool_router]; the base `impl ReflowService` block (constructors and shared helpers, no #[tool] fn, the twelve slices summed onto it) is empty by design and now says so with `allow_empty` and a comment. No function moved and the served surface is byte-identical — 180 toolsnaps match — so the design holds. CAUGHT BY THE GATE IN CI: I had accepted no checksum because Cargo.lock is unregistered, and forgot the bump also touched this registered file.",
         "subject": "system"
       }
     },
@@ -230875,7 +230894,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:ebb574db946c9383acb1a5e70fffc7dba6886e38fb0bdcee58c8e213281492a7",
+  "prev_content_hash": "sha256:d9d2927989583a6db2e62cc2ead126a75a1c195435d171be17007669fbaa5fc1",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

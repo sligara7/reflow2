@@ -4978,7 +4978,15 @@ pub struct GapsToPromptsReq {
 
 // ---- tools ------------------------------------------------------------------
 
-#[tool_router(router = tool_router)]
+// EMPTY BY DESIGN, and rmcp 3.3.0 refuses an empty router unless told so. This
+// block holds the constructors and the helpers every slice shares; it serves
+// no tool of its own. `Self::tool_router()` is the base the twelve slice
+// routers are summed onto in `new` — ask, assure, built, capture, claims,
+// coherence, exchange, ingest, operate, query, skills, temporal — and the
+// surface a client sees is byte-identical to before the split (BL-181), which
+// tools/toolsnap.py proves rather than claims. `allow_empty` says this is the
+// intended shape, not a `#[tool]` fn the macro failed to see.
+#[tool_router(router = tool_router, allow_empty)]
 impl ReflowService {
     /// Open an on-disk (RocksDB) design graph at `path`.
     /// Open on disk, reporting which reflow2 wrote the graph.
