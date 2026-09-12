@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:1ce6cb8d8e38580cad8f00c1fd0ef4c5f324324c7d965ed4cdb3ce74f7ee4e7b",
+  "content_hash": "sha256:2b662b500563699049cd40e55fd818deb33f485819e962c754cc3628e0cd3962",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -13083,6 +13083,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:a-moved-record-is-diffed-by-membership-against-the-store",
+      "properties": {
+        "acted_at": "2026-09-12",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:a-projection-is-named-and-the-battery-runs-over-it",
       "properties": {
         "acted_at": "2026-08-10",
@@ -18446,6 +18455,15 @@
         "role": "author"
       },
       "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "fact:the-optimize-skill-hands-cause-finding-to-nothing-and-a-session-fell-through-it",
+      "properties": {
+        "acted_at": "2026-09-12",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -43977,8 +43995,9 @@
       "from_id": "con:a-full-orientation-pass-costs-at-most-8-seconds",
       "properties": {
         "basis": "measured",
-        "contribution": 31000.0,
-        "measured_at": "2026-09-05"
+        "contribution": 4192.0,
+        "measured_at": "2026-09-12",
+        "note": "CORRECTS THE SECOND STALE EDGE NAMED BY fact:the-budget-edges-still-carry-the-pre-fix-numbers-so-budget-report-says-exceeded-for-a-budget-that-holds — this edge carried 31,000 ms, the PRE-fix figure, while the same day's fact recorded 6,459 warm / 11,103 cold after the fix. Re-measured 2026-09-12 on a physical copy of the live store, 0.59.0 release, direct stdio, quiet box, WARM (tools/agent_surface_profile.py): loop_status 1,299 + open_questions 1,271 + detect_gaps 0.7 + graph_report 1,621 = 4,192 ms — under the 8,000 limit, which the budget's own statement scopes as warm. NOT RE-MEASURED TODAY: the cold-start pass, which was 11,103 on 2026-09-05 and over the limit; that half of the 09-05 reading stands until somebody takes it again."
       },
       "to_id": "cap:loop-status"
     },
@@ -61647,6 +61666,12 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "art:auto-export",
+      "properties": {},
+      "to_id": "fact:a-test-server-with-export-to-at-the-real-record-wrote-probe-nodes-into-it-and-nothing-could-refuse"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "art:main",
       "properties": {},
       "to_id": "fact:defect-main-rs-realizes-the-wrong-capability"
@@ -61668,6 +61693,12 @@
       "from_id": "cap:a-design-says-which-vocabulary-it-has-never-used",
       "properties": {},
       "to_id": "fact:naming-properties-grows-the-list-where-it-can-be-acted-on"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:a-repair-can-say-what-it-invalidated",
+      "properties": {},
+      "to_id": "fact:every-one-of-88-invalidated-findings-answers-rerun-owed-null"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -61770,6 +61801,12 @@
       "from_id": "cap:mcp-surface",
       "properties": {},
       "to_id": "fact:the-first-frequency-times-cost-ranking-of-the-tool-surface"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:optimize-skill",
+      "properties": {},
+      "to_id": "fact:the-optimize-skill-hands-cause-finding-to-nothing-and-a-session-fell-through-it"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -174613,6 +174650,15 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:a-moved-record-is-diffed-against-the-store-not-an-export",
+      "properties": {
+        "at": "2026-09-12",
+        "note": "Together with chg:a-moved-record-that-sat-still-is-parsed-once-per-design this retires the finding's headline: the fixed ~1.1 s is now ~0.4 s on a 16 MB moved record and ~50 ms on a small one (measured the same day, same copy, same method: 388/410/394 and 50/57/51 ms). The MECHANISM the finding describes — first store read after any write, once per generation, not the text index — was correct and located the cause; its numbers are what moved. The finding's own `value` carries the after figures beside the before."
+      },
+      "to_id": "fact:the-first-store-read-after-any-write-pays-a-fixed-1-1s-tax-whichever-tool-it-is"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:a-node-is-named-by-its-id-and-the-type-is-optional-across-the-relation-surface",
       "properties": {
         "at": "2026-09-06",
@@ -175286,6 +175332,15 @@
         "note": "RE-MEASURED THE SAME DAY, ON THE SAME DOCUMENT, AFTER THE CAUSE IT DIAGNOSED WAS FIXED. Its table is now the BEFORE column: total to queryable 8,828 ms -> 909 ms, import 8,398 ms -> 705 ms, on 3,140 nodes / 13,390 edges, release, in-memory backend, no full-text index.\n\nWHICH PART MOVED: the numbers, and the superlinearity. The O(E^1.7) shape was caused by a linear scan of the write buffer on every buffered read, which is gone — the buffer carries a BTreeMap index over its own ops now, so a lookup is a range/point query rather than a walk.\n\nWHICH PART STILL STANDS, and is the reason this is an INVALIDATES rather than a closure: the observation's HEADLINE was that the byte store is not the bottleneck, measured with no byte store present at all. That is not only still true, it is more firmly true — the remaining 705 ms is serialization, schema validation and puts, none of it storage. Its bounds also still stand: the full-text index was off, so every figure on both sides of this comparison is a lower bound for a hydrate that must answer search_design.\n\n⚠️ AND ITS DIAGNOSIS OF THE MECHANISM WAS WRONG, which the node should not be read for. It attributed the superlinearity to adjacency lists being read-modify-write per edge insert. Reading the code killed that: adj_out_key includes the target id, so every edge is its own key — three puts, no reads. The cost was on the READ side. chg:write-buffer-gets-an-index-and-hydrate-drops-tenfold carries the correct account.\n\n🛑 NOT FOUND BY unclaimed_findings, and worth knowing why: that computation reached subjects_examined=1 (cmp:byte-store, what the ChangeEvent touched) and returned nothing, because this observation's subject_id is a Decision. The change and the finding hang off different nodes, so nothing joined them. Closed by judgement instead — an empty shortlist is not evidence that nothing went stale."
       },
       "to_id": "fact:hydrate-cost-is-superlinear-in-edges-and-the-byte-store-is-not-the-bottleneck"
+    },
+    {
+      "edge_type": "INVALIDATES",
+      "from_id": "con:loop-status-after-a-write-answers-under-one-second",
+      "properties": {
+        "at": "2026-09-12",
+        "note": "Both edges this defect named are corrected on 2026-09-12 with dated measurements: con:loop-status-warm-latency-ms → cap:loop-status now carries 1,291 ms (was the pre-fix 12,502; the budget HOLDS), and con:a-full-orientation-pass-costs-at-most-8-seconds → cap:loop-status carries 4,192 ms warm (was 31,000; holds warm — cold not re-measured). The judgement the previous session parked — which figure a budget named \"warm\" should carry, 1,912 or 6,354 — was dissolved rather than decided: this second constraint carries the after-write case, so the warm budget takes the warm number and nothing else. The CLASS (a superseded measurement on a CONSTRAINS edge makes budget_report lie, and nothing reconciles the edge with a later fact) is NOT fixed; it recurred a third time the same day (con:a-read-after-a-write…, 1.41 → ~1,100) and stays open on the constraint notes and the handoff."
+      },
+      "to_id": "fact:the-budget-edges-still-carry-the-pre-fix-numbers-so-budget-report-says-exceeded-for-a-budget-that-holds"
     },
     {
       "edge_type": "INVALIDATES",
@@ -206129,6 +206184,17 @@
       }
     },
     {
+      "node_id": "dec:a-moved-record-is-diffed-by-membership-against-the-store",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "sync_debt's moved branch takes a `LiveDesign` oracle. The server paths pass `StoreMembership` (get_node per record node, one cached `outgoing(from, type)` scan per distinct pair for edges). The closure-taking `sync_debt` stays as a wrapper over `ExportedDesign`, an export-backed oracle built lazily and at most once, so every prior caller and test keeps exact behaviour. assess_overwrite remains the WRITE path's judgement (export_graph refusing to overwrite), where both documents genuinely exist.",
+        "kind": "choice",
+        "name": "DECIDED — a moved record's \"what does the live design lack\" is answered by store membership, one id at a time, never by exporting the graph to compare two documents",
+        "rationale": "Anthony chose this shape on 2026-09-12 when offered it against doing it later or not at all (\"Now, in this session\"), after the split was measured: with the parse cached, a moved record still cost ~490 ms per write generation, all of it the live export (tiny target 497-586 ms; in-step 41).\n\nTHE ROADS NOT TAKEN, and why each lost:\n1. Cache the live export per write generation (on ReadCache, beside the derived memos). No gain — the tax is already paid exactly once per generation; caching what is rebuilt once per generation changes nothing.\n2. Cache the read-path DEBT RESULT per (path, file hash) and recompute only on import. Removes the cost, but a manual add of an id the record holds would leave the hint stale by one node until the next export — a courtesy hint answering from yesterday's live graph. Rejected as a workaround under rule:fix-it-properly-while-it-is-still-cheap: the question is membership; answer it by membership.\n3. Keep assess_overwrite and feed it a cheaper \"export\" (ids only). Still walks the whole store per generation to build the id sets; the cost is the walk, not the struct.\n4. Do nothing — 633 ms was under the objective. Lost because two-person shared designs LIVE in the moved state between a pull and the next export, and loop_status pays it per CALL there, not per generation.\n\nMeasured after: tiny moved 50-57 ms; 16 MB moved 388-410 (from 1,114-1,189 in the morning). What is left is the diff itself (~350 ms on 25k edges); an incremental cross-generation diff would be its own pass and was not started. Parity note: ExportedDesign matches nodes by id alone, as assess_overwrite did; StoreMembership matches (type, id), so an id reused under a different type reads as absent — conservative, and ids are unique in practice.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:a-projection-is-named-and-the-battery-runs-over-it",
       "node_type": "Decision",
       "properties": {
@@ -227410,6 +227476,19 @@
       }
     },
     {
+      "node_id": "fact:a-test-server-with-export-to-at-the-real-record-wrote-probe-nodes-into-it-and-nothing-could-refuse",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "finding",
+        "name": "A throwaway server on a COPY of the design, launched with --export-to pointed at the real committed record, wrote 8 probe nodes into it — and nothing could have refused, because the copy carries the live design's identity",
+        "statement": "HAPPENED 2026-09-12, caught by the loop hint (\"the shared record holds 8 node(s) this graph does not: rul:perf-probe-…\"), restored from HEAD. An A/B harness measuring the live server's configuration launched a server on a copy of the store with the live flags, including `--export-to ./docs/design/reflow2.json`; the copy's own throwaway writes were auto-exported into the real record.\n\nWHY NO GUARD FIRED, and why one may not be able to: the copy was built by importing the committed export, so it ADOPTED the live design's identity (adopted_identity: reflow2). To the export path the target was legitimately \"its\" record — same graph id, a lineage it could chain from. A stale-seat refusal compares hashes and the copy was ahead, not behind. The only thing that noticed was the node-count comparison on the NEXT live read.\n\nA LIMIT TO STATE, NOT A DEFECT TO FIX BLINDLY: two stores sharing one identity are by design (that is what an import is for). What might be cheap and honest is for `--export-to` to say at startup, once, which graph directory it will write FROM — so a person reading a harness log sees the mismatch. Recorded as the shape of the trap; no change proposed here.",
+        "subject_id": "art:auto-export",
+        "valid_from": "2026-09-12"
+      }
+    },
+    {
       "node_id": "fact:a-third-of-declared-properties-name-nothing-any-tool-accepts",
       "node_type": "TemporalFact",
       "properties": {
@@ -230323,6 +230402,20 @@
       }
     },
     {
+      "node_id": "fact:every-one-of-88-invalidated-findings-answers-rerun-owed-null",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "finding",
+        "name": "On 2026-09-12 invalidated_findings returned 88 rows and every one of them had rerun_owed = null — a date is missing on one side of every claim, so the three-valued answer has never once been able to say true or false on this design",
+        "statement": "Read during the where-am-i pass, 2026-09-12: `invalidated_findings` — 88 findings carrying an INVALIDATES claim; rerun_owed true: 0, false: 0, null: 88. The tool's own contract says null means one side carries no date and nobody can say, and warns never to read it as \"no\". On this design that is the ONLY value it has ever produced, so the reader that was built to distinguish \"re-run owed\" from \"already reflects the fix\" distinguishes nothing.\n\nNOT ESTABLISHED which side is undated — the INVALIDATES edges (callers omitting `at`) or the findings (TemporalFacts with no last_run_at equivalent, or Verifications never run). Either is fixable at the constructor: `invalidates` could refuse an undated claim, or default `at` from the ChangeEvent's `detected_at` when it names one. Recorded as a sideways measurement; no change made.",
+        "subject_id": "cap:a-repair-can-say-what-it-invalidated",
+        "valid_from": "2026-09-12",
+        "value": "{\"rows\":88,\"rerun_owed_true\":0,\"rerun_owed_false\":0,\"rerun_owed_null\":88}"
+      }
+    },
+    {
       "node_id": "fact:every-reply-was-sent-twice",
       "node_type": "TemporalFact",
       "properties": {
@@ -230947,6 +231040,18 @@
       }
     },
     {
+      "node_id": "fact:manual-work-b80153a8b362591b",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "manual_work",
+        "statement": "Joined two instruments by hand to rank the tool surface by frequency x cost: call volume per tool from the transcript scanner (tools/surface_usage.py, 47 sessions) against a controlled per-tool cost run on a copy of the store (hard-coded arguments for the top 40, reads timed cold and warm, refusals recorded as unmeasured), then weighted reads by how often they actually follow a write. Nothing serves a cost-weighted ranking; the two halves live in two scripts and the join was a third.",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-09-12",
+        "value": "{\"diagnosis\":\"tool_missing\",\"reflow2_tool\":null}"
+      }
+    },
+    {
       "node_id": "fact:manual-work-b838754c8eac2946",
       "node_type": "TemporalFact",
       "properties": {
@@ -231016,6 +231121,18 @@
         "subject_id": "proj:reflow2",
         "valid_from": "2026-09-03",
         "value": "{\"diagnosis\":\"tool_not_found\",\"reflow2_tool\":\"changelog_view\"}"
+      }
+    },
+    {
+      "node_id": "fact:manual-work-e86b93a8f4d76ea0",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "manual_work",
+        "statement": "Wrote a script over the usage ledger to get per-tool COST — median and max ms per tool, total time share, the slowest single calls, a per-call timeline across the day, and which calls overlapped in time (which is how the duplicate same-second pairs were found). The ledger already stores `ms` on every call; usage_report renders counts, refusals and never-called, but none of the durations it holds. The whole prioritisation of the optimisation campaign came from that hand-rolled read.",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-09-12",
+        "value": "{\"diagnosis\":\"tool_missing\",\"reflow2_tool\":\"usage_report\"}"
       }
     },
     {
@@ -231620,11 +231737,12 @@
       "properties": {
         "basis": "measured",
         "confidence": 1.0,
-        "fact_type": "defect",
+        "fact_type": "finding",
         "name": "budget_report reports `exceeded` on a contribution the same day's own measurement superseded — the perf fix updated the fact and never the CONSTRAINS edge",
         "statement": "FOUND 2026-09-11. `budget_report` on `con:loop-status-warm-latency-ms` returns **total 12,502 ms against a 2,000 ms limit, verdict `exceeded`**, from a CONSTRAINS edge stamped `measured_at: 2026-09-05`.\n\n🛑 THE SAME DAY'S OWN MEASUREMENT SAYS THAT BUDGET HOLDS. `fact:the-three-perf-changes-killed-the-multiplier-and-two-budgets-hold-one-misses-on-my-own-derivation` (valid_from 2026-09-05) records, after the three approved perf changes: *\"✅ con:loop-status-warm-latency-ms — warm loop_status 1,912 ms vs 2,000 (**was 12,502**).\"* It names 12,502 explicitly as the PRE-FIX figure.\n\n**The fix landed, the fact was written, and the CONSTRAINS edge was never updated.** Both budget edges are in this state: the orientation-pass edge carries `contribution: 31000` while the same fact records warm 6,459 / cold 11,103.\n\n⭐ WHY THIS IS THE EXPENSIVE KIND OF STALENESS. A superseded FACT is at least visible as a dated claim someone can re-read. This number lives on an EDGE, is read by a tool that renders a verdict, and the verdict is the opposite of the truth. Nothing reconciles the two: `budget_report` reads the edge and never looks for a later measurement of the same quantity, and the fact that supersedes it does not touch the edge.\n\n📌 IT ALREADY CAUSED A WRONG REPORT, IN THIS SESSION. A tool sweep on 2026-09-10/11 called `budget_report` on both constraints, read `exceeded`, and reported to Anthony that \"both declared performance constraints are breached\" — presenting a pre-fix number as current, five days after the fix. That is the same shape the capture-session skill names as its central example, and it arrived through a different door: not an unread fact, but a fact that was written correctly while the structured value it superseded stayed put.\n\n⚠️ WHAT I AM NOT DOING, AND WHY. I am NOT rewriting the contributions. Which figure belongs in the budget is a judgement, not a lookup: the same fact records warm 1,912 ms, after-write 6,354 ms, and says plainly that *\"most loop_status calls follow a write, so 6,354 ms is what a session usually waits.\"* A budget named \"warm\" could honestly take either. That choice is Anthony's, and asserting one silently would be inventing a measurement nobody made.\n\n🛑 NOT ESTABLISHED: whether any other CONSTRAINS edge carries a superseded contribution — only these two were checked — or whether `budget_report` could reasonably be expected to notice. No root-cause pass was run.",
         "subject_id": "cap:budget",
         "valid_from": "2026-09-11",
+        "valid_to": "2026-09-12",
         "value": "{\"con:loop-status-warm-latency-ms\":{\"limit\":2000,\"edge_contribution\":12502,\"edge_measured_at\":\"2026-09-05\",\"post_fix_measurement_same_day\":1912,\"budget_report_verdict\":\"exceeded\",\"fact_says\":\"budget holds\"},\"con:a-full-orientation-pass-costs-at-most-8-seconds\":{\"limit\":8000,\"edge_contribution\":31000,\"post_fix_warm\":6459,\"post_fix_cold\":11103}}"
       }
     },
@@ -232051,6 +232169,7 @@
         ],
         "subject_id": "cap:store",
         "valid_from": "2026-09-12",
+        "valid_to": "2026-09-12",
         "value": "{\"tax_ms_fixed_before\":1100,\"tax_ms_after_parse_cache\":646,\"tax_ms_after_membership_diff\":397,\"tiny_record_moved_ms\":{\"before\":530,\"after_parse_cache\":517,\"after_membership_diff\":53},\"in_step_ms\":41,\"after_1_write_ms\":1189,\"after_5_writes_ms\":1094,\"after_20_writes_ms\":1097,\"after_relation_write_only_ms\":[1131,1061,1106],\"split_before\":{\"parse_16mb_ms\":620,\"live_export_and_diff_ms\":490,\"base_ms\":40},\"remaining\":{\"membership_diff_16mb_ms\":350,\"base_first_read_ms\":40,\"left_deliberately\":\"under the 1,000 ms objective; an incremental cross-generation diff would be its own measured pass\"},\"paid_by\":[\"get_node\",\"search_design\",\"scan_nodes\",\"export_graph\",\"loop_status\",\"detect_gaps\",\"detect_defects\"],\"not_paid_by\":[\"describe_schema\"],\"falsified\":[\"tantivy commit on text writes (fires on a 1 ms create_edge too)\",\"DerivedMemo reset (detect_gaps recomputes separately, 906 ms)\"],\"located\":\"sync_debt.rs stat gate: observed.hash == last_synced clause; observed refreshed on check, last_synced only on export/import; then the moved branch's whole-graph export for a membership question\",\"repaired_by\":[\"chg:a-moved-record-that-sat-still-is-parsed-once-per-design\",\"chg:a-moved-record-is-diffed-against-the-store-not-an-export\"],\"occurrences_47_sessions\":417,\"cost_s_47_sessions\":459,\"share_of_measured_tool_time\":0.27,\"prior_budget_claim\":{\"constraint\":\"con:a-read-after-a-write-costs-at-most-twice-the-same-read-warm\",\"claimed_ratio\":1.41,\"measured_today_ratio\":1100,\"ratio_after_parse_cache\":646,\"ratio_after_membership_diff\":397}}"
       }
     },
@@ -232403,6 +232522,22 @@
         "subject_id": "cap:loop-status",
         "valid_from": "2026-09-05",
         "value": "{\"hypothesis\":\"build_network per-node edge scan is the ~5s dominant cost\",\"verdict\":\"FALSIFIED\",\"loop_status_after_write\":\"6354 -> 7039 (not moved)\",\"detect_defects_after_write\":\"5633 -> 5817 (not moved)\",\"misread\":\"detect_defects 2716 was a memo hit, not the change\",\"change_is\":\"correct, tests pass, removes real O(N) redundancy, but moves no release budget\",\"real_cost\":\"pre-structural per-type detectors + circular_dependencies, not the network build\",\"undecided\":\"whether to ship a correct-but-not-budget-moving change - Anthony's call\",\"branch\":\"perf/one-pass-edge-read, uncommitted\"}"
+      }
+    },
+    {
+      "node_id": "fact:the-optimize-skill-hands-cause-finding-to-nothing-and-a-session-fell-through-it",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.9,
+        "fact_type": "defect",
+        "name": "The optimize skill's step 3 says \"find the cause by measuring, never by guessing\" and hands off to nothing — a session ran four ad-hoc hypotheses under it before Anthony pointed at /root-cause",
+        "statement": "ANTHONY'S CORRECTION, 2026-09-12, mid-investigation: \"Should be able to do /root-cause on any of these investigations.\" What he had watched: under /optimize, investigating why loop_status cost 12 s, the agent formed and tested four causes in a row (debug binary, shared transport, store compaction, the instrument) without opening the root-cause skill — the exact pattern that skill's own text records its author falling into \"one hour after writing it\". Every hypothesis WAS measured and falsified, so the work was not wrong; it was unstructured, and step ② (search the design for a precedent) was skipped — a prior finding that \"the store is not why\" (fact:the-orientation-reads-cost-ten-seconds-and-the-store-is-not-why) surfaced only later, from propagate_change.\n\nTHE SEAM: record_finding's description DEMANDS the root-cause skill before a cause is written, and that demand is what eventually caught the session. optimize's step 3 — \"Write the hypothesis down, then design the cheapest experiment that could falsify it\" — is root-cause's steps ③-⑤ restated, with no hand-off to the skill that holds them. So the moment the trigger fires (\"that's odd\", \"it must be X\") is inside a skill that describes the discipline without invoking it. The fix shape is the one 438 built for tools: the hand-off belongs IN the step, not in a catalogue (req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue).\n\nNOT ESTABLISHED: whether the same seam exists in other skills that contain an investigative step (check-health's \"what is wrong here\", impact-check's \"what rotted\"). Only optimize was measured, once.",
+        "steps": [
+          "optimize"
+        ],
+        "subject_id": "cap:optimize-skill",
+        "valid_from": "2026-09-12"
       }
     },
     {
