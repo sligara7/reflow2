@@ -169,6 +169,18 @@ pub fn lessons_by_step(g: &reflow2_core::graph::DesignGraph) -> BTreeMap<String,
             let Some(Value::List(steps)) = n.properties.get("steps") else {
                 continue;
             };
+            // A finding with a `valid_to` has stopped being true — a closed
+            // defect, a measurement since superseded — and serving it at the
+            // step would teach a lesson the design has already retracted.
+            // Found the day this shipped: the plan_epoch defect was fixed and
+            // closed, and its fact went on being delivered at `plan_epoch`.
+            if n.properties
+                .get("valid_to")
+                .and_then(Value::as_str)
+                .is_some_and(|v| !v.trim().is_empty())
+            {
+                continue;
+            }
             let text = |k: &str| {
                 n.properties
                     .get(k)
