@@ -117,7 +117,7 @@ schema:
         # fork layer treats as binding, and what the KPP contradiction check reads
         # as a trade already made. Reaching `accepted` is now a separate act
         # (`set_decision_status`, or `collapse_decision` choosing a fork).
-        status: { type: enum, values: [proposed, accepted, superseded, rejected], default: proposed, indexed: true }
+        status: { type: enum, values: [proposed, accepted, deferred, superseded, rejected], default: proposed, indexed: true, description: "`deferred` is a decision SET ASIDE — the idea is sound and the moment is wrong — and it is NOT debt: loop_status and what_next stop counting it as work somebody owes, while `proposed` stays the live question. Neither rejected (the design said no) nor superseded (something replaced it). Measured 2026-09-11: ten decisions said DEFERRED in prose against a field that could not hold it, one literally in its name. Scoped to deferred and not withdrawn on the test that decides any new state — what would READ it: for deferral the loop changes behaviour; for withdrawn nothing would. Moving a decision here is the owner's word and carries an approver, like accepted (req:an-idea-that-stopped-is-not-counted-as-debt-somebody-owes)." }
         # WHAT KIND OF THING THIS DECISION IS — a choice somebody faced, or an
         # idea somebody was turning over. Accepted 2026-08-30 on Anthony's word
         # (`dec:a-brainstormed-idea-is-a-first-class-kind`).

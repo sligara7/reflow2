@@ -478,13 +478,44 @@ def _export_at(rev: str, root: str, rel: str) -> dict | None:
         return None
 
 
+def _lineage_anchor(root: str) -> str | None:
+    """The commit an export's lineage chains FROM: the merge-base with the
+    default branch, when this checkout has one and HEAD is not already on it.
+
+    THE SAME ANCHOR THE EXPORT TOOL USES (crates/reflow2-mcp/src/git.rs, since
+    2026-09-12). Until then both sides chained from the last file at the path,
+    and `dec:export-once-per-pr` — one exporting commit per branch, last — was
+    the discipline that kept that honest. The tool moved to the merge-base so
+    the rule holds by construction, and THIS CHECK DID NOT MOVE WITH IT: it
+    went on expecting HEAD~1, so the first branch with two export commits was
+    refused by the gate for doing exactly what the tool now guarantees. A
+    mechanism wired into the one place that motivated it, siblings left alone.
+
+    Returns None when HEAD IS the merge-base (a commit on the trunk itself, or
+    no default branch resolvable): there the predecessor is HEAD's parent, as
+    before, and a squash-merge lands one hop from the previous trunk commit.
+    """
+    for base in ("origin/HEAD", "origin/main", "origin/master", "main", "master"):
+        merge_base = _git(["merge-base", "HEAD", base], root)
+        if not merge_base:
+            continue
+        merge_base = merge_base.strip()
+        head = _git(["rev-parse", "HEAD"], root)
+        if head and head.strip() == merge_base:
+            return None
+        return merge_base
+    return None
+
+
 def _export_pair(path: str, doc: dict) -> tuple[dict, dict] | None:
     """This export and the one it replaced, or None when unanswerable.
 
     Two contexts, one rule. Before a commit the working file is new and its
-    predecessor is HEAD's version; in CI the working file IS HEAD's version, so
-    the pair is HEAD against HEAD~1. Either way we return a document and the one
-    it replaced.
+    predecessor is the committed anchor's version; in CI the working file IS
+    HEAD's version, so the pair is HEAD against the anchor. THE ANCHOR is the
+    merge-base with the default branch when the branch has one (see
+    `_lineage_anchor`), otherwise HEAD or HEAD~1 as it always was. Either way we
+    return a document and the one it replaced.
 
     Shared by every check that compares an export with its predecessor, rather
     than being reimplemented per check. Two copies of a predicate drift, and
@@ -499,10 +530,16 @@ def _export_pair(path: str, doc: dict) -> tuple[dict, dict] | None:
     head = _export_at("HEAD", root, rel)
     if head is None:
         return None  # untracked, no commits yet, or the commit introducing it
+    anchor = _lineage_anchor(root)
     if head.get("content_hash") != doc.get("content_hash"):
-        current, previous = doc, head  # a new export, not yet committed
+        # A new export, not yet committed: it chains from the anchor if the
+        # branch has one, else from HEAD's version.
+        previous = _export_at(anchor, root, rel) if anchor else head
+        if previous is None:
+            return None  # the anchor commit does not carry this export yet
+        current = doc
     else:
-        previous = _export_at("HEAD~1", root, rel)
+        previous = _export_at(anchor or "HEAD~1", root, rel)
         if previous is None:
             return None  # HEAD is the first commit carrying this export
         current = head
@@ -643,16 +680,18 @@ def check_export_chain(path: str, doc: dict) -> str | None:
     """Verify this export links to its predecessor (`dec:export-hash-chain`).
 
     The chain gives the design a history independent of git: each export records
-    the `content_hash` of the one it replaced. `export_graph --path` builds that
-    link from **whatever file is already at the target path**, so exporting to a
-    scratch path and copying the result into place severs it — silently, which is
-    how six consecutive commits lost the link in July 2026 with the gate green,
-    the loop clean and zero gaps every time (BL-107).
+    the `content_hash` of the one it replaced. Inside a git repository
+    `export_graph --path` builds that link from the file AS COMMITTED AT THE
+    MERGE-BASE with the default branch (since 2026-09-12); outside one, from
+    whatever file is already at the target path, so exporting to a scratch path
+    and copying the result into place severs it — silently, which is how six
+    consecutive commits lost the link in July 2026 with the gate green, the loop
+    clean and zero gaps every time (BL-107).
 
     Two contexts, one rule. Before a commit the working file is new and its
-    predecessor is HEAD's version; in CI the working file IS HEAD's version, so
-    the pair to check is HEAD against HEAD~1. Either way we compare a document
-    with the one it replaced.
+    predecessor is the anchor's version; in CI the working file IS HEAD's
+    version, so the pair to check is HEAD against the anchor. Either way we
+    compare a document with the one it replaced — see `_export_pair`.
 
     Returns a failure message, or None when sound OR when there is nothing to
     check against — an unanswerable question is skipped, never guessed. The
@@ -672,23 +711,23 @@ def check_export_chain(path: str, doc: dict) -> str | None:
         f"LINEAGE  '{path}' does not link to the export it replaced: it records "
         f"{was} where {expected} is expected. The design's history is independent "
         f"of git and this severs it.\n"
-        f"      THE RULE THIS ENFORCES is `dec:export-once-per-pr`, accepted "
-        f"2026-08-01: a branch may hold as many commits as it likes, exactly ONE "
-        f"of them may write {path}, and it should be the last. This check is the "
-        f"only thing that says so out loud, so if you did not know the rule, that "
-        f"is what you have just met.\n"
-        f"      THREE CAUSES. (1) The export was written somewhere else and "
-        f"copied into place — the link is built from the file already at the "
-        f"target, so there was nothing to link to. (2) The design was exported "
-        f"MORE THAN ONCE since the last commit, chaining through an intermediate "
-        f"that will never be committed. Both are fixed the same way: restore the "
-        f"committed file (`git checkout {path}`) and export straight onto it, "
-        f"ONCE. (3) THIS PR ALREADY HAS AN EARLIER EXPORTING COMMIT, and your "
-        f"chain is sound — `git log --name-only origin/main..HEAD -- {path}` "
-        f"names them. Restoring and re-exporting does NOT fix this one; FOLD the "
-        f"exporting commits into a single last commit instead. Cause (3) is why "
-        f"the wording used to mislead: it listed only the first two, and its "
-        f"advice was already what the author had done."
+        f"      THE RULE THIS ENFORCES is `dec:export-once-per-pr`: a pull request "
+        f"lands exactly ONE hop of the chain. Since 2026-09-12 that holds by "
+        f"construction — inside a git repository `export_graph` chains from "
+        f"{path} as COMMITTED AT THE MERGE-BASE with the default branch, so any "
+        f"number of exports on a branch each chain from the same ancestor and "
+        f"this check expects that ancestor's hash. Multiple exporting commits on "
+        f"one branch are fine; the chain being anchored anywhere else is not.\n"
+        f"      TWO CAUSES. (1) The export was written by a reflow2 older than "
+        f"2026-09-12, or outside this repository and copied in: it chained from "
+        f"whatever file was at the path — an intermediate that was never on the "
+        f"default branch. Restore the committed file (`git checkout {path}`) and "
+        f"export straight onto it with a current reflow2. (2) The default branch "
+        f"could not be resolved from this checkout (no `origin`, or a trunk with "
+        f"another name), so the tool fell back to on-disk chaining and this check "
+        f"fell back to HEAD's parent, and the two picked different ancestors. "
+        f"Read `chained_from` in the export receipt: `origin/main@<sha>` means "
+        f"the anchor was used, `disk` means it was not, and `chain_note` says why."
     )
 
 

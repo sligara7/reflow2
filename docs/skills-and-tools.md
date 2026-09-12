@@ -279,7 +279,7 @@ description, which an agent sees in the tool schema; this table is for a person 
 | `recall_resolutions` | read | Recall recorded conflict resolutions (rerere) by their content keys — the advisory half of merge (BL-80 #5) |
 | `register_alternative` | **write** | Register an alternative under a proposed decision point (BL-70): a lightweight Artifact pointer that names where the alternative's design export lives (branch-by-file), GOVERNED_BY the Decision and CONTRADICTS its siblings |
 | `seam_report` | read | Compare paired boundaries across a seam and say where two designs DISAGREE — the check the ordinary detectors cannot do, because they reason about structure and a contract mismatch is a comparison of PROPERTIES ACROSS A PAIR |
-| `set_decision_status` | **write** | Set a Decision's lifecycle status — proposed / accepted / superseded / rejected (BL-70) |
+| `set_decision_status` | **write** | Set a Decision's lifecycle status — proposed / accepted / deferred / superseded / rejected (BL-70) |
 
 ### Ask — turning findings into questions a person answers
 

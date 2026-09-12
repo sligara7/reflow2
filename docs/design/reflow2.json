@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:ebb574db946c9383acb1a5e70fffc7dba6886e38fb0bdcee58c8e213281492a7",
+  "content_hash": "sha256:d9d2927989583a6db2e62cc2ead126a75a1c195435d171be17007669fbaa5fc1",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -7979,6 +7979,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:decision-status-gains-deferred",
+      "properties": {},
+      "to_id": "epoch:planned-a-set-aside-decision-is-not-debt"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:decomposition-count-corrected",
       "properties": {},
       "to_id": "epoch:decomposition-count-corrected"
@@ -9516,6 +9522,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "chg:the-lineage-anchor-moves-from-the-file-to-the-commit",
+      "properties": {},
+      "to_id": "epoch:the-export-chains-from-main"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:the-lineage-gate-moves-to-the-merge-base-too",
       "properties": {},
       "to_id": "epoch:the-export-chains-from-main"
     },
@@ -11369,6 +11381,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:planned-a-set-aside-decision-is-not-debt:cap:a-set-aside-decision-is-recorded-where-the-loop-can-read-it",
+      "properties": {},
+      "to_id": "epoch:planned-a-set-aside-decision-is-not-debt"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:planned-a-vocabulary-change-is-never-silent:cap:a-reader-that-cannot-read-the-vocabulary-is-told-what-it-lacks",
       "properties": {},
       "to_id": "epoch:planned-a-vocabulary-change-is-never-silent"
@@ -11400,6 +11418,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:cap:a-session-serves-a-release-binary",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:cap:a-set-aside-decision-is-recorded-where-the-loop-can-read-it",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
     },
@@ -12186,6 +12210,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:the-export-chains-from-main:cap:the-server-writes-the-export-through-and-chains-it-from-main",
+      "properties": {},
+      "to_id": "epoch:the-export-chains-from-main"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:the-export-chains-from-main:cap:the-server-writes-the-export-through-and-chains-it-from-main:r2",
       "properties": {},
       "to_id": "epoch:the-export-chains-from-main"
     },
@@ -32929,6 +32959,78 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:decision-status-gains-deferred",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:a-vocabulary-change-is-never-silent-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:decision-status-gains-deferred",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:alternatives"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:decision-status-gains-deferred",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:check-intent-authority"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:decision-status-gains-deferred",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-structure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:decision-status-gains-deferred",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:decision-status-gains-deferred",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skills-and-tools"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:decision-status-gains-deferred",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-exchange"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:decision-status-gains-deferred",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:a-set-aside-decision-is-recorded-where-the-loop-can-read-it"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:decisions-pass",
       "properties": {
         "accepted_baseline": true,
@@ -40500,6 +40602,33 @@
     {
       "edge_type": "CHANGED",
       "from_id": "chg:the-lineage-anchor-moves-from-the-file-to-the-commit",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:the-server-writes-the-export-through-and-chains-it-from-main"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-lineage-gate-moves-to-the-merge-base-too",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:check"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-lineage-gate-moves-to-the-merge-base-too",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:coherence-gate-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-lineage-gate-moves-to-the-merge-base-too",
       "properties": {
         "accepted_baseline": false,
         "action": "modified"
@@ -59203,6 +59332,18 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:a-set-aside-decision-is-recorded-where-the-loop-can-read-it",
+      "properties": {},
+      "to_id": "snap:epoch:planned-a-set-aside-decision-is-not-debt:cap:a-set-aside-decision-is-recorded-where-the-loop-can-read-it"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:a-set-aside-decision-is-recorded-where-the-loop-can-read-it",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:cap:a-set-aside-decision-is-recorded-where-the-loop-can-read-it"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "cap:a-settled-decision-names-governed-prose-that-still-reads-open",
       "properties": {},
       "to_id": "snap:epoch:preserved-on-write:cap:a-settled-decision-names-governed-prose-that-still-reads-open"
@@ -59440,6 +59581,12 @@
       "from_id": "cap:the-server-writes-the-export-through-and-chains-it-from-main",
       "properties": {},
       "to_id": "snap:epoch:the-export-chains-from-main:cap:the-server-writes-the-export-through-and-chains-it-from-main"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:the-server-writes-the-export-through-and-chains-it-from-main",
+      "properties": {},
+      "to_id": "snap:epoch:the-export-chains-from-main:cap:the-server-writes-the-export-through-and-chains-it-from-main:r2"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -172402,6 +172549,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:a-set-aside-decision-is-not-debt-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-set-aside-decision-is-recorded-where-the-loop-can-read-it"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:a-settled-decision-names-governed-prose-test",
       "properties": {
         "completeness": "complete",
@@ -180255,6 +180411,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:a-set-aside-decision-is-not-debt",
+      "properties": {},
+      "to_id": "cap:a-set-aside-decision-is-recorded-where-the-loop-can-read-it"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:a-settled-decision-names-governed-prose-that-still-reads-open",
       "properties": {},
       "to_id": "cap:a-settled-decision-names-governed-prose-that-still-reads-open"
@@ -181882,6 +182044,14 @@
         "action": "created"
       },
       "to_id": "art:a-prose-field-that-swallowed-a-parameter-says-so"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:a-set-aside-decision-is-not-debt-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:a-set-aside-decision-is-not-debt-test"
     },
     {
       "edge_type": "YIELDED",
@@ -183874,6 +184044,18 @@
       }
     },
     {
+      "node_id": "art:a-set-aside-decision-is-not-debt-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:ac89469647eeae5031fb5f4951bfd668a717ba5d72754aaae1de018347810430",
+        "description": "Four tests through the served tools. The same decision is debt while proposed and not while deferred — measured on ONE node before and after in loop_status' assigned decisions and what_next's open pool, so the test cannot pass by the lists being empty for another reason. Neither gap detector raises a deferred decision. Deferring wants the owner's name: refused at the constructor, reported at the setter. A deferred choice cannot have alternatives registered. Mutating the two readers to count deferred as owed makes exactly the first test fail, on the assertion that names the point.",
+        "location": "crates/reflow2-mcp/tests/a_set_aside_decision_is_not_debt.rs",
+        "name": "a_set_aside_decision_is_not_debt.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:a-settled-decision-names-governed-prose-test",
       "node_type": "Artifact",
       "properties": {
@@ -183890,8 +184072,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "test",
-        "checksum": "sha256:112f8774f6d5cfe2877807e5fe8a2b10133922eb93399dd3edd258b8101b33b6",
-        "description": "Five tests pinning the enum half of the version guard against real stamp files and the shipped schema: a declared-but-unstored value opens, a stored one is refused by name, a pre-enum stamp opens, an uncountable population refuses, and the collector really records the vocabulary (Decision.status does NOT yet hold deferred — the next increment adds it). Blinding the comparison fails exactly the two refusal tests.",
+        "checksum": "sha256:e912878324db0ab31e3b810b7376bbcb8b013ad752c29b8ffdec22dab18ea625",
+        "description": "Five tests pinning the enum half of the version guard against real stamp files and the shipped schema: a declared-but-unstored value opens, a stored one is refused by name, a pre-enum stamp opens, an uncountable population refuses, and the collector really records the vocabulary. Blinding the comparison fails exactly the two refusal tests. THE UNKNOWN VALUE IS ONE NO REFLOW2 WILL EVER DECLARE: until 2026-09-12 it was `deferred`, and the day increment 433 added that to the schema two of these tests failed — correctly, there was nothing left to refuse — so they were generalised, and the collector test now asserts `deferred` IS present as the pin on the real case.",
         "location": "crates/reflow2-core/tests/a_vocabulary_change_is_never_silent.rs",
         "name": "a_vocabulary_change_is_never_silent.rs",
         "status": "realized"
@@ -183978,7 +184160,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:56af14025270ab8dfbf519b77152789523658acf3a8e50ad8cfa208d3da6ca09",
+        "checksum": "sha256:f4da350a3ec3fb73f2de5e7f59e44413eb7ef4638e77780474eeaa38c49a30fc",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/alternatives.rs",
         "name": "alternatives.rs",
@@ -184202,7 +184384,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:679e180a9517fadd15e65959b8410f4e94f6d0c8abbcf4bb2afc4bd3dc7f0211",
+        "checksum": "sha256:93ccb5fb29fb532bd55eb6da2903d2320d2987734caaf24943461a6644f7702e",
         "granularity": "atomic",
         "location": "tools/reflow2_check.py",
         "name": "reflow2_check.py",
@@ -184251,7 +184433,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b3bdbe2e9cb92ce48ef5180dc76e346b959d30fb2a2fd21f7aab4c902ee054b1",
+        "checksum": "sha256:c497061760b34902a7fb0d33e7ec0978b1a0fa26a5d7b602674b5704472d3c95",
         "location": "tools/check_intent_authority.py",
         "name": "check_intent_authority.py",
         "status": "realized"
@@ -184334,7 +184516,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:20ae406a84e6182ba2911a667016e90d94203c49d4217e8d15571f205bf9a0dd",
+        "checksum": "sha256:061a77d5a07ca717105b036d9923de90d3cb2ddc04c923211573178fc7521390",
         "location": "tools/test_reflow2_check.py",
         "name": "test_reflow2_check.py",
         "status": "realized"
@@ -186288,7 +186470,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:d60f5bf79199c0d42decf20e47ebcc0dba8308aa885fca9bb84e23a433771bea",
+        "checksum": "sha256:342ae3d59a44940ed12bb5a785b24baabcf27f02486a35fcf947e2e09c85c33c",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/structure.yaml",
@@ -186458,7 +186640,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:93b59ac317c3c570c34532b28edccbf971615bbd39490ccbbb7b0b250075b0b4",
+        "checksum": "sha256:c03166a7ee1a1ace0cf24cd214e75acbed3593d45500500a3c35260404410c8d",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -186584,7 +186766,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:7332ba541db49bb736ef757cd3c0e232ccd5d1b8764c9ca6aff87feb8c13870e",
+        "checksum": "sha256:46750e11c7477cb410786e7fb7430763ead734453ddbbad58faa1ef74d2de9f2",
         "location": "docs/skills-and-tools.md",
         "name": "skills-and-tools.md",
         "status": "realized"
@@ -187447,7 +187629,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:932e359082278c2455a4b7b503ddd99e46be6a330bfbd9e79d129ce71ccf4565",
+        "checksum": "sha256:b490f3abe57cc8340326c767389f19358f398a04d915682d0b45e3f936c8d809",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/exchange.rs",
         "name": "tools/exchange.rs",
@@ -188295,10 +188477,10 @@
       "node_id": "cap:a-set-aside-decision-is-recorded-where-the-loop-can-read-it",
       "node_type": "Capability",
       "properties": {
-        "description": "A Decision whose idea is sound and whose moment is wrong can be recorded as set aside in a field the coherence loop reads, so it leaves the \"what needs me\" list without being rejected, superseded, or quietly left to look live.\n\nMEASURED 2026-09-11: 690 Decisions against a status vocabulary of proposed | accepted | superseded | rejected. Ten say DEFERRED in prose and twenty say WITHDRAWN, against four carrying `rejected` in the field — and one node is literally named \"DEFERRED, SHAPE ONLY —\" while its status reads `proposed`. People are recording the state; they are recording it where nothing can read it. (The thirty is a substring count over decision text — a floor on the pressure, not a census.)\n\nWHY IT IS NOT COSMETIC: a `proposed` Decision carrying an approver edge is DEBT — loop_status reports it as owed and what_next ranks it. A deferred idea is not debt, and today it sits in the same bucket as a live question somebody is waiting on. Every deferred idea makes the list slightly less true, and a list that degrades is how a person learns to stop reading it.\n\nSCOPED TO `deferred`, NOT TO `withdrawn`, DELIBERATELY: the test for a candidate state is not whether the distinction is real but WHAT WOULD READ IT. For deferral there is an answer — loop_status and what_next both change behaviour. For withdrawn there may not be one.\n\nSEQUENCED BEHIND THE VOCABULARY GUARD: adding an enum value moves nothing the version guard reads, so shipping this first would demonstrate that exact bug on reflow2's own graph.",
+        "description": "A Decision whose idea is sound and whose moment is wrong can be recorded as set aside in a field the coherence loop reads, so it leaves the \"what needs me\" list without being rejected, superseded, or quietly left to look live.\n\n⭐ BUILT 2026-09-12 (epoch:planned-a-set-aside-decision-is-not-debt). Decision.status gained `deferred`. loop_status, what_next and every gap detector already asked == \"proposed\", so a deferred decision drops out of every debt list by construction — the tests make that a contract. Setting aside is the owner's act like accepting: `deferred` carries an approver (refused at the constructor without one, reported at the setter), but it does not trigger the settled-question prose check, which only `accepted` earns. A deferred choice cannot have alternatives registered under it.\n\nMEASURED 2026-09-11, the pressure that asked for it: 690 Decisions against proposed | accepted | superseded | rejected. Ten said DEFERRED in prose and twenty WITHDRAWN, against four carrying `rejected` in the field — and one node is literally named \"DEFERRED, SHAPE ONLY —\" while its status reads `proposed`. (The thirty is a substring count — a floor on the pressure, not a census.)\n\nWHY IT IS NOT COSMETIC: a `proposed` Decision carrying an approver edge is DEBT. A deferred idea is not, and every one that sat in the same bucket made the list slightly less true — a list that degrades is how a person learns to stop reading it.\n\nSCOPED TO `deferred`, NOT `withdrawn`, DELIBERATELY: the test for a candidate state is what would READ it. For deferral, loop_status and what_next change behaviour. For withdrawn nothing would.\n\nIT LANDED BEHIND THE VOCABULARY GUARD, as sequenced: adding an enum value is exactly the change the old stamp could not see. The guard caught its own arrival — two of its tests failed the day `deferred` became known, correctly, and were generalised.",
         "name": "A decision set aside is recorded in a field a computation can read, so the loop stops counting it as work somebody owes",
         "provenance": "authored",
-        "status": "planned",
+        "status": "verified",
         "tier": "operational"
       }
     },
@@ -196227,6 +196409,15 @@
       }
     },
     {
+      "node_id": "chg:decision-status-gains-deferred",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Decision.status gains `deferred` — set aside, not debt, and the owner's word like accepted",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:decisions-pass",
       "node_type": "ChangeEvent",
       "properties": {
@@ -198392,6 +198583,16 @@
       "properties": {
         "change_type": "new_feature",
         "name": "The export's lineage anchor moves off the working-tree file and onto the merge-base with the default branch",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:the-lineage-gate-moves-to-the-merge-base-too",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "name": "The lineage gate (reflow2_check.py) moves to the merge-base anchor — it had been left on HEAD~1 when the export tool moved, and refused the first branch that did what the tool guarantees",
+        "repair": "corrected_cause",
         "subject": "system"
       }
     },
@@ -208861,11 +209062,11 @@
       "node_id": "epoch:planned-a-set-aside-decision-is-not-debt",
       "node_type": "DesignEpoch",
       "properties": {
-        "description": "PLANNED — fourth of the four Anthony ordered on 2026-09-11, and held behind the vocabulary guard. A Decision that has been set aside becomes recordable in a field loop_status and what_next can read, so a deferred idea stops sitting in the same bucket as a live question somebody is waiting on.\n\nTHE PRESSURE, MEASURED: 690 Decisions; 10 say DEFERRED in prose and 20 say WITHDRAWN, against 4 carrying rejected in the field, with one node named \"DEFERRED, SHAPE ONLY —\" while its status reads proposed.\n\nSCOPE, AND THE TEST THAT SET IT: deferred only. The bar for a new state is not whether the distinction is real but what would READ it — loop_status and what_next both change behaviour for deferral, and for withdrawn there may be no reader at all. Whether the author-stopped-this case is a status or belongs in the rationale, and whether deferral could instead be DERIVED (Decisions carry no timestamp at all, so nothing like PEP-1's \"not updated in a year\" is available here), stay open going in.\n\nDEPENDS ON epoch:planned-a-vocabulary-change-is-never-silent.\n\nNO VERSION NUMBER BY DESIGN.",
+        "description": "ARRIVED 2026-09-12. Fourth of the four Anthony ordered on 2026-09-11, and the one held behind the vocabulary guard. A Decision that has been set aside is now recordable as `deferred` — a field loop_status and what_next read — so a deferred idea stops sitting in the same bucket as a live question somebody is waiting on.\n\nWHAT CHANGED: one value on Decision.status (schema/structure.yaml), the four-value list the core validator reads, the setter's served description, and the owner's-word rule. NOTHING in the readers changed, and that is the finding: loop_status' assigned decisions, what_next's open pool, undecided_decision_point, unreviewed_ideas, the parked-idea check and register_alternative's refusal to fork all test == \"proposed\", so a deferred decision drops out of every debt list by construction. The tests pin that as a contract rather than leave it a coincidence — measured on ONE node before and after, so they cannot pass by the lists being empty for some other reason.\n\nTHE OWNER'S WORD, extended deliberately: setting aside is the owner's act exactly as accepting is, so `deferred` carries an approver — landing a decision straight there with nobody's name is REFUSED, and moving one there through the setter without a name is REPORTED in the reply. But it does NOT trigger the settled-question prose check, which only means anything for `accepted`: a deferred decision's governed prose saying \"still open\" is TRUE. One flag became two. check_intent_authority.py reads it the same way.\n\nSCOPED TO deferred AND NOT withdrawn, as the requirement said: the test for a new state is what would READ it, and for withdrawn nothing would.\n\nTHE GUARD IT WAITED FOR DID ITS JOB THE SAME DAY: two of the previous increment's tests used `deferred` as their unknown value and FAILED the moment it became known — correctly, there was nothing left to refuse. They now use a value no reflow2 will ever declare; the collector test keeps `deferred` as the pin on the real case.\n\nWHAT IT DID NOT DO: move any existing decision. Ten say DEFERRED in prose and one — the tier-linking idea, \"DEFERRED, SHAPE ONLY —\" — is literally the measured case and still reads `proposed`. Moving it is the owner's word, and is put to Anthony rather than done.\n\nNO VERSION NUMBER BY DESIGN.",
         "epoch_type": "revision",
         "name": "A decision set aside stops counting as debt",
         "sequence": 433,
-        "status": "planned"
+        "status": "arrived"
       }
     },
     {
@@ -211161,6 +211362,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered a_prose_field_that_swallowed_a_parameter_says_so.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:a-set-aside-decision-is-not-debt-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered a_set_aside_decision_is_not_debt.rs"
       }
     },
     {
@@ -219550,6 +219761,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:planned-a-set-aside-decision-is-not-debt:cap:a-set-aside-decision-is-recorded-where-the-loop-can-read-it",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:a-set-aside-decision-is-not-debt-test\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:schema\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:an-idea-that-stopped-is-not-counted-as-debt-somebody-owes\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SCHEDULED_FOR\",\"other_type\":\"DesignEpoch\",\"other_id\":\"epoch:planned-a-set-aside-decision-is-not-debt\",\"properties\":{\"modality\":\"expected\",\"recorded_at\":\"2026-09-11\"}}]",
+        "state": "{\"description\":\"A Decision whose idea is sound and whose moment is wrong can be recorded as set aside in a field the coherence loop reads, so it leaves the \\\"what needs me\\\" list without being rejected, superseded, or quietly left to look live.\\n\\n⭐ BUILT 2026-09-12 (epoch:planned-a-set-aside-decision-is-not-debt). Decision.status gained `deferred`. loop_status, what_next and every gap detector already asked == \\\"proposed\\\", so a deferred decision drops out of every debt list by construction — the tests make that a contract. Setting aside is the owner's act like accepting: `deferred` carries an approver (refused at the constructor without one, reported at the setter), but it does not trigger the settled-question prose check, which only `accepted` earns. A deferred choice cannot have alternatives registered under it.\\n\\nMEASURED 2026-09-11, the pressure that asked for it: 690 Decisions against proposed | accepted | superseded | rejected. Ten said DEFERRED in prose and twenty WITHDRAWN, against four carrying `rejected` in the field — and one node is literally named \\\"DEFERRED, SHAPE ONLY —\\\" while its status reads `proposed`. (The thirty is a substring count — a floor on the pressure, not a census.)\\n\\nWHY IT IS NOT COSMETIC: a `proposed` Decision carrying an approver edge is DEBT. A deferred idea is not, and every one that sat in the same bucket made the list slightly less true — a list that degrades is how a person learns to stop reading it.\\n\\nSCOPED TO `deferred`, NOT `withdrawn`, DELIBERATELY: the test for a candidate state is what would READ it. For deferral, loop_status and what_next change behaviour. For withdrawn nothing would.\\n\\nIT LANDED BEHIND THE VOCABULARY GUARD, as sequenced: adding an enum value is exactly the change the old stamp could not see. The guard caught its own arrival — two of its tests failed the day `deferred` became known, correctly, and were generalised.\",\"name\":\"A decision set aside is recorded in a field a computation can read, so the loop stops counting it as work somebody owes\",\"provenance\":\"authored\",\"status\":\"planned\",\"tier\":\"operational\"}",
+        "target_id": "cap:a-set-aside-decision-is-recorded-where-the-loop-can-read-it",
+        "target_type": "Capability"
+      }
+    },
+    {
       "node_id": "snap:epoch:planned-a-vocabulary-change-is-never-silent:cap:a-reader-that-cannot-read-the-vocabulary-is-told-what-it-lacks",
       "node_type": "Snapshot",
       "properties": {
@@ -219606,6 +219827,16 @@
         "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:launch-serves-release-gate\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:reflow2-mcp-launch\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:reflow2-rebuild\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:launch-serves-release\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:packaging\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:a-session-runs-a-release-binary\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SCHEDULED_FOR\",\"other_type\":\"DesignEpoch\",\"other_id\":\"epoch:planned-a-session-serves-a-release-binary\",\"properties\":{\"modality\":\"expected\",\"recorded_at\":\"2026-09-11\"}}]",
         "state": "{\"description\":\"The launch path serves a binary built with the release profile, and the rebuild is a deliberate act rather than a per-launch consequence of a source change.\\n\\nWHAT IT MUST DO: serve release to a session; rebuild only when the builder asks; leave the edit-compile loop on debug, so an ordinary source edit never triggers the 33-minute librocksdb-sys C++ compile; and say which profile is being served, so a cost number measured in a session can be attributed to the right binary. Consumers who install a prebuilt binary through the one-liner never build at all and are already on release.\\n\\nWHY IT IS FIRST: measured 2026-09-11 on the same bytes, same path, profile the only difference — a propagate walk 5,851 ms → 62 ms warm (93x), design_regions 12.5 s → 2.0 s warm. It needs no design work, and every other performance number in the 2026-09-10/11 sweep was taken on the debug binary, so nothing else in that backlog can be judged until this lands.\\n\\nWHAT IT DOES NOT CLAIM: that the profile is the whole cost. The adjacency memo serving one caller while 142 edge reads still go to the store is a separate, unattributed waste.\",\"name\":\"The server a session talks to is a release-profile binary, rebuilt on the builder's word rather than on every launch\",\"provenance\":\"authored\",\"status\":\"verified\",\"tier\":\"operational\"}",
         "target_id": "cap:a-session-serves-a-release-binary",
+        "target_type": "Capability"
+      }
+    },
+    {
+      "node_id": "snap:epoch:preserved-on-write:cap:a-set-aside-decision-is-recorded-where-the-loop-can-read-it",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:a-set-aside-decision-is-not-debt-test\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:schema\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:an-idea-that-stopped-is-not-counted-as-debt-somebody-owes\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SCHEDULED_FOR\",\"other_type\":\"DesignEpoch\",\"other_id\":\"epoch:planned-a-set-aside-decision-is-not-debt\",\"properties\":{\"modality\":\"expected\",\"recorded_at\":\"2026-09-11\"}}]",
+        "state": "{\"description\":\"A Decision whose idea is sound and whose moment is wrong can be recorded as set aside in a field the coherence loop reads, so it leaves the \\\"what needs me\\\" list without being rejected, superseded, or quietly left to look live.\\n\\nMEASURED 2026-09-11: 690 Decisions against a status vocabulary of proposed | accepted | superseded | rejected. Ten say DEFERRED in prose and twenty say WITHDRAWN, against four carrying `rejected` in the field — and one node is literally named \\\"DEFERRED, SHAPE ONLY —\\\" while its status reads `proposed`. People are recording the state; they are recording it where nothing can read it. (The thirty is a substring count over decision text — a floor on the pressure, not a census.)\\n\\nWHY IT IS NOT COSMETIC: a `proposed` Decision carrying an approver edge is DEBT — loop_status reports it as owed and what_next ranks it. A deferred idea is not debt, and today it sits in the same bucket as a live question somebody is waiting on. Every deferred idea makes the list slightly less true, and a list that degrades is how a person learns to stop reading it.\\n\\nSCOPED TO `deferred`, NOT TO `withdrawn`, DELIBERATELY: the test for a candidate state is not whether the distinction is real but WHAT WOULD READ IT. For deferral there is an answer — loop_status and what_next both change behaviour. For withdrawn there may not be one.\\n\\nSEQUENCED BEHIND THE VOCABULARY GUARD: adding an enum value moves nothing the version guard reads, so shipping this first would demonstrate that exact bug on reflow2's own graph.\",\"name\":\"A decision set aside is recorded in a field a computation can read, so the loop stops counting it as work somebody owes\",\"provenance\":\"authored\",\"status\":\"planned\",\"tier\":\"operational\"}",
+        "target_id": "cap:a-set-aside-decision-is-recorded-where-the-loop-can-read-it",
         "target_type": "Capability"
       }
     },
@@ -220915,6 +221146,16 @@
       "properties": {
         "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:git-anchor\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:the-export-chains-from-main-test\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:the-export-chains-from-main\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:export\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:the-server-keeps-the-working-tree-export-current\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SCHEDULED_FOR\",\"other_type\":\"DesignEpoch\",\"other_id\":\"epoch:planned-the-server-guarantees-the-export\",\"properties\":{\"modality\":\"expected\",\"recorded_at\":\"2026-09-11\"}}]",
         "state": "{\"description\":\"The shared server — not the session, and not a harness hook — keeps the working-tree export current after every graph change, coalescing bursts through a debounce, and sets the export's prev_content_hash from the export as committed on the default branch when a git repository is present.\\n\\n⭐ HALF BUILT, 2026-09-12 (epoch:the-export-chains-from-main). THE LINEAGE HALF IS DONE: a written export chains from its own path at the merge-base with the default branch, so every export on a branch chains from the same committed ancestor and a squash-merge lands one hop. The receipt carries `chained_from`, and outside git the previous on-disk chaining stands with a stated reason. THE WRITE-THROUGH HALF IS NOT BUILT: the server still exports only when asked.\\n\\nWHY THE SERVER OWNS THE REMAINING HALF: the session is the thing that might not come back. The Stop hook fires once and exists in one harness, so a consumer of reflow2 in any other client would never see it.\\n\\nWHY THE LINEAGE MOVED FIRST: continuous writing collides with one-export-per-PR only while the chain is built from the FILE on disk, so the anchor had to move before the writing could become automatic. It is also useful on its own — `dec:export-once-per-pr`'s \\\"and it must be LAST\\\" clause is now automatic rather than remembered.\\n\\nOF THE FOUR QUESTIONS THE INCREMENT CARRIED, TWO ARE ANSWERED: the git query is the MERGE-BASE with the default branch, not the tip, because on a long-lived branch the tip moves underneath you and the export would claim descent from work it never contained; and the no-git fallback is today's on-disk chaining, reported rather than silent, so reflow2 assumes nothing about git. TWO REMAIN OPEN and belong to the write-through half: the debounce interval, and what happens when the working tree holds a hand edit of the export.\\n\\nAFFORDABILITY, MEASURED: a full export of the largest design in existence is 265 ms (2026-08-25, down from 1,168 ms), and the debounce means a burst of ten changes costs one export.\",\"name\":\"The server writes the design export through to the working tree on every change, debounced, and chains its lineage from what is committed on main\",\"provenance\":\"authored\",\"status\":\"in_progress\",\"tier\":\"operational\"}",
+        "target_id": "cap:the-server-writes-the-export-through-and-chains-it-from-main",
+        "target_type": "Capability"
+      }
+    },
+    {
+      "node_id": "snap:epoch:the-export-chains-from-main:cap:the-server-writes-the-export-through-and-chains-it-from-main:r2",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:auto-export\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:export-to-reaches-the-daemon-gate\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:export-write\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:git-anchor\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:the-export-chains-from-main-test\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:the-server-keeps-the-export-current-test\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:the-export-chains-from-main\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:the-server-keeps-the-export-current\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:export\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:the-server-keeps-the-working-tree-export-current\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SCHEDULED_FOR\",\"other_type\":\"DesignEpoch\",\"other_id\":\"epoch:planned-the-server-guarantees-the-export\",\"properties\":{\"modality\":\"expected\",\"recorded_at\":\"2026-09-11\"}}]",
+        "state": "{\"description\":\"The shared server — not the session, and not a harness hook — keeps the working-tree export current after every graph change, coalescing bursts through a debounce, and sets the export's prev_content_hash from the export as committed on the default branch when a git repository is present.\\n\\n⭐ BUILT AND VERIFIED 2026-09-12, in two halves: epoch:the-export-chains-from-main (the lineage anchor) and epoch:the-server-keeps-the-export-current (the write-through).\\n\\nHOW IT WORKS: `--export-to <FILE>` turns it on — explicit, because deriving the path from export history would let one export to a scratch path silently re-target the server's writes. `reflow2_init.py` emits the flag for all three harnesses, pointed at the docs/design/<project>.json that design_record_path names. After a write the task waits two seconds of quiet, with a ten-second ceiling so a steady stream cannot starve it, then exports once.\\n\\nWHY THE SERVER OWNS IT: the session is the thing that might not come back. The Stop hook that used to carry this fires once and exists in one harness, so a consumer of reflow2 in any other client never saw it.\\n\\nTHE LINEAGE: a written export chains from its own path at the merge-base with the default branch — not the tip, which moves underneath a long-lived branch and would make the export claim descent from work it never contained. Every export on a branch chains from the same committed ancestor, so a squash-merge lands one hop and dec:export-once-per-pr holds by construction. Outside git the previous on-disk chaining stands, with the reason stated in `chain_note`.\\n\\nIT DECLINES RATHER THAN OVERWRITE. A file that no longer matches what reflow2 last wrote — a hand edit, a half-resolved merge, conflict markers that will not parse — is left alone, and the reason surfaces in loop_status' `next` rather than in a log line, because a guarantee that has silently stopped guaranteeing is worse than none. A read-only server is refused the write-through outright.\\n\\nAFFORDABILITY, MEASURED: a full export of the largest design in existence is 265 ms (2026-08-25, down from 1,168 ms), and the debounce means a burst of ten changes costs one export.\",\"name\":\"The server writes the design export through to the working tree on every change, debounced, and chains its lineage from what is committed on main\",\"provenance\":\"authored\",\"status\":\"verified\",\"tier\":\"operational\"}",
         "target_id": "cap:the-server-writes-the-export-through-and-chains-it-from-main",
         "target_type": "Capability"
       }
@@ -227996,6 +228237,20 @@
       }
     },
     {
+      "node_id": "ver:a-set-aside-decision-is-not-debt",
+      "node_type": "Verification",
+      "properties": {
+        "description": "`crates/reflow2-mcp/tests/a_set_aside_decision_is_not_debt.rs`, four tests through the served tools.\n\n1. ONE decision, measured before and after in the two readers the requirement names: while `proposed` with an approver edge it appears in loop_status' assigned decisions and what_next counts it open; after the owner sets it to `deferred` it appears in neither and unsettled_assigned_decisions reads zero. Measured on one node so the test cannot pass by the lists being empty for some other reason.\n2. Neither undecided_decision_point nor unreviewed_ideas raises a deferred decision — asserted after first proving at least one of them DID raise it while proposed, or the test would prove nothing.\n3. Deferring is the owner's act: landing a decision straight at `deferred` with no approver is REFUSED and the refusal names `approver`; with a name it lands `deferred`; moving one there through the setter without a name carries the NOBODY'S NAME note in the reply.\n4. A deferred decision cannot have alternatives registered — register_alternative refuses and names `proposed`.\n\nSHOWN TO FAIL BEFORE IT WAS TRUSTED: mutating the two readers to count `deferred` alongside `proposed` makes exactly test 1 fail, on the assertion that names the point; the other three stay green.\n\nWHAT IT DOES NOT COVER: the migration of existing decisions that say DEFERRED in prose — none were moved, because moving them is the owner's word. And whether `withdrawn` should exist, which the requirement scoped out on the ground that nothing would read it.",
+        "findings": "All four pass. Mutation: with loop_status' assigned-decision filter and what_next's open pool widened to accept `deferred`, the_same_decision_is_debt_while_proposed_and_not_while_deferred fails on \"THE POINT: once deferred it is no longer work somebody owes\"; the other three pass. Alongside: core suite 157 binaries green, mcp suite 65 binaries green, clippy -D warnings clean on both crates, schema validates, toolsnap reports exactly the two intended changes (add_decision, set_decision_status) re-blessed, every_declared_enum_is_wired_or_exempt passes, smoke/empty/refusal/command-surface/doc-versions/intent-authority gates green. The previous increment's guard tests failed on this change the moment `deferred` became known — the guard working — and were generalised.",
+        "kind": "verification",
+        "last_run_at": "2026-09-12",
+        "level": "integration",
+        "method": "test",
+        "name": "The same decision is debt while proposed and not while deferred, and deferring wants the owner's name",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:a-settled-decision-names-governed-prose-that-still-reads-open",
       "node_type": "Verification",
       "properties": {
@@ -230620,7 +230875,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:69bdc6e96af2f513384b5785091bd9491b43424bb64f067fbb511b50d590cd6f",
+  "prev_content_hash": "sha256:ebb574db946c9383acb1a5e70fffc7dba6886e38fb0bdcee58c8e213281492a7",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -230862,6 +231117,7 @@
       ],
       "Decision.status": [
         "accepted",
+        "deferred",
         "proposed",
         "rejected",
         "superseded"

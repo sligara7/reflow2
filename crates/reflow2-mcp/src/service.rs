@@ -3369,7 +3369,8 @@ pub struct DecisionReq {
     #[serde(default)]
     pub no_relation_note: Option<String>,
     /// The status to LAND IN when the owner's word is already in hand:
-    /// `proposed` (the default) / `accepted` / `superseded` / `rejected`.
+    /// `proposed` (the default) / `accepted` / `deferred` / `superseded` / `rejected`.
+    /// `deferred` is set aside and NOT debt — the loop stops counting it as owed.
     /// A status past `proposed` is REFUSED unless `approver` is named — one
     /// call, with the signature present rather than assumed
     /// (dec:idea-should-a-constructor-accept-the-owners-word-in-one-call).
@@ -4823,7 +4824,8 @@ pub struct AnalyzeAlternativesReq {
 #[serde(deny_unknown_fields)]
 pub struct SetDecisionStatusReq {
     pub decision_id: String,
-    /// `proposed` (opens a decision point) / `accepted` / `superseded` /
+    /// `proposed` (opens a decision point) / `accepted` / `deferred` (set aside,
+    /// not debt — carries an approver like `accepted`) / `superseded` /
     /// `rejected`.
     #[schemars(schema_with = "crate::enum_schema::decision_status_req")]
     pub status: String,

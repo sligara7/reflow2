@@ -13,12 +13,19 @@
 //! could silently show you less of your design than it holds"* — arriving
 //! through the door the guard did not watch.
 //!
-//! # The live case, which is why this landed before the next increment
+//! # The live case, and why these tests no longer name it
 //!
-//! `req:an-idea-that-stopped-is-not-counted-as-debt-somebody-owes` adds
-//! `deferred` to `Decision.status`. Shipping that first would have demonstrated
-//! this bug on reflow2's own graph, which is why the two were sequenced this way
-//! on Anthony's word.
+//! `req:an-idea-that-stopped-is-not-counted-as-debt-somebody-owes` added
+//! `deferred` to `Decision.status` on 2026-09-12, the increment after this one.
+//! Shipping it first would have demonstrated this bug on reflow2's own graph,
+//! which is why the two were sequenced this way on Anthony's word.
+//!
+//! ⚠️ UNTIL THAT DAY THE TESTS BELOW USED `deferred` AS THEIR UNKNOWN VALUE, and
+//! the day it landed two of them FAILED — correctly: the value was no longer
+//! unknown, so there was nothing to refuse. That is the guard doing its job,
+//! not the tests breaking. They now use a value no reflow2 will ever declare,
+//! so they describe the general situation an older binary meets; the LAST test
+//! keeps `deferred` as the pin on the real case.
 //!
 //! # What these pin
 //!
@@ -44,8 +51,9 @@ fn holds_no_retired_type(_t: &[String]) -> Result<Vec<String>, reflow2_core::Dyn
     Ok(Vec::new())
 }
 
-/// A stamp from a reflow2 whose `Decision.status` already had one more value
-/// than this binary's does — the shape `deferred` will have.
+/// A stamp from a reflow2 whose `Decision.status` has one more value than this
+/// binary's — the shape any future value has, and the shape `deferred` had
+/// until 2026-09-12.
 fn stamp_with_extra_value(schema: &Schema, field: &str, extra: &str) -> GraphStamp {
     let mut s = GraphStamp::current(schema);
     let mut values = s
@@ -86,7 +94,7 @@ fn a_value_the_graph_does_not_hold_opens() {
     let schema = load_schema().unwrap();
     write_stamp(
         &g,
-        &stamp_with_extra_value(&schema, "Decision.status", "deferred"),
+        &stamp_with_extra_value(&schema, "Decision.status", "set-aside-by-a-newer-reflow2"),
     );
 
     let v = check_and_stamp(
@@ -112,7 +120,7 @@ fn a_value_the_graph_holds_is_refused_and_named() {
     let schema = load_schema().unwrap();
     write_stamp(
         &g,
-        &stamp_with_extra_value(&schema, "Decision.status", "deferred"),
+        &stamp_with_extra_value(&schema, "Decision.status", "set-aside-by-a-newer-reflow2"),
     );
 
     let err = check_and_stamp(
@@ -125,7 +133,7 @@ fn a_value_the_graph_holds_is_refused_and_named() {
 
     let msg = err.to_string();
     assert!(
-        msg.contains("Decision.status") && msg.contains("deferred"),
+        msg.contains("Decision.status") && msg.contains("set-aside-by-a-newer-reflow2"),
         "the refusal must NAME the value — a version number alone is what this \
          whole change exists to stop: {msg}"
     );
@@ -163,7 +171,7 @@ fn an_uncountable_population_refuses() {
     let schema = load_schema().unwrap();
     write_stamp(
         &g,
-        &stamp_with_extra_value(&schema, "Decision.status", "deferred"),
+        &stamp_with_extra_value(&schema, "Decision.status", "set-aside-by-a-newer-reflow2"),
     );
 
     let err = check_and_stamp(g.to_str().unwrap(), &schema, holds_no_retired_type, |_| {
@@ -193,10 +201,10 @@ fn the_stamp_actually_records_the_declared_enum_values() {
         "and it records the real values: {status:?}"
     );
     assert!(
-        !status.contains(&"deferred".to_string()),
-        "deferred is NOT in the schema yet — the next increment adds it, and this \
-         assertion is what makes the tests above describe a real future rather than \
-         a hypothetical one"
+        status.contains(&"deferred".to_string()),
+        "deferred IS in the schema since 2026-09-12 (increment 433). Until that day this \
+         assertion was inverted, so the refusal tests above described a real future; \
+         now they describe what an older binary meets when it opens this design"
     );
     // The vocabulary is broad enough to be worth recording at all.
     assert!(
