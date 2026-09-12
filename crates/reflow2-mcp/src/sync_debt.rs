@@ -376,10 +376,64 @@ pub fn not_checked(graph_path: &str) -> Option<SyncNotChecked> {
     })
 }
 
+/// The last document parsed from each sync target, by the content hash it
+/// parsed to — so a record that MOVED and then sat still is read once per
+/// design handle, not once per check.
+///
+/// ⭐ WHY THIS EXISTS, measured 2026-09-12. The stat gate in [`sync_debt_with`]
+/// skipped the parse only when the file was unchanged AND in step. A record
+/// that had moved once — a colleague's export pulled in — failed the hash
+/// clause on every check and was re-read and re-parsed whole each time: ~620
+/// ms for reflow2's own 16 MB record, on the FIRST READ AFTER EVERY WRITE,
+/// until this seat next exported. That was the entire cost of `get_node` and
+/// `search_design` in a working session, and 27% of all tool time over 47
+/// sessions (`fact:the-first-store-read-after-any-write-pays-a-fixed-1-1s-tax-
+/// whichever-tool-it-is`).
+///
+/// PER-DESIGN STATE, so it lives on the design's read cache and never in a
+/// `static`: `rule:per-design-state-is-never-a-process-global` is ENFORCED
+/// (`ver:no-per-design-process-globals` refused the first cut of this, which
+/// was a `static` — a second design open in the same process holds its own
+/// records, and that is exactly the rule's question). Keyed by the path as
+/// `last_synced` keys it, one document per target — the newest content wins,
+/// so the bound is one parsed record per target that has ever moved. An
+/// in-step target never enters: its gate answers from a stat.
+///
+/// A hit is valid on the same reasoning as the stat gate itself: unchanged
+/// `len` and `mtime` mean unchanged bytes, and `observed.hash` IS the hash of
+/// those bytes, computed on the read that populated this.
+#[derive(Default)]
+pub struct ParsedRecords(std::collections::HashMap<String, (String, std::sync::Arc<GraphExport>)>);
+
+impl ParsedRecords {
+    fn get(&self, path: &str, hash: &str) -> Option<std::sync::Arc<GraphExport>> {
+        self.0
+            .get(path)
+            .filter(|(h, _)| h == hash)
+            .map(|(_, doc)| doc.clone())
+    }
+
+    fn put(&mut self, path: &str, hash: &str, doc: std::sync::Arc<GraphExport>) {
+        self.0.insert(path.to_string(), (hash.to_string(), doc));
+    }
+}
+
+/// [`sync_debt_with`] and a cache that lives for this call only — every
+/// target is parsed at most once per call, which is what every caller had
+/// before 2026-09-12. Hold a [`ParsedRecords`] across calls to do better.
 pub fn sync_debt(
     graph_path: &str,
     live_nodes: usize,
     mine: &dyn Fn() -> Option<GraphExport>,
+) -> Vec<SyncDebt> {
+    sync_debt_with(graph_path, live_nodes, mine, &mut ParsedRecords::default())
+}
+
+pub fn sync_debt_with(
+    graph_path: &str,
+    live_nodes: usize,
+    mine: &dyn Fn() -> Option<GraphExport>,
+    parsed: &mut ParsedRecords,
 ) -> Vec<SyncDebt> {
     let mut built: Option<Option<GraphExport>> = None;
     let state = reflow2_core::provenance::read_sync_state(graph_path);
@@ -405,16 +459,24 @@ pub fn sync_debt(
         }
         // THE STAT GATE (`dec:an-unchanged-sync-target-is-not-re-parsed`). If
         // this seat has read the file in full before and its size and mtime
-        // are unchanged and its hash is still the one `last_synced` expects,
-        // the bytes cannot have moved: answer in_step from the recorded count
-        // WITHOUT reading. A dead scratch export is parsed once and never
-        // again; a record that moved fails the gate and is read as before.
+        // are unchanged, the bytes cannot have moved since that read. TWO
+        // QUESTIONS, NOT ONE, and conflating them was the defect this gate
+        // shipped with: "unchanged since I last read it" and "in step with
+        // what I last wrote" are different facts. A record that is BOTH is
+        // answered in_step from the recorded count without reading. A record
+        // that is unchanged but NOT in step — moved once, sitting still, the
+        // exact state this feature exists to report — is answered from the
+        // document already parsed (`ParsedRecords`), never re-read. Until 2026-09-12
+        // it failed the in-step clause and was re-parsed whole on every check.
         // No target is dropped and no rule about paths is introduced — the
         // /tmp rule was tried and reverted against fifteen correct tests.
-        if let Some(obs) = state.observed.get(path)
-            && let Some((len, mtime)) = stat_of(target)
-            && obs.len == len
-            && obs.mtime_unix_nanos == mtime
+        let stat_now = stat_of(target);
+        let unchanged_since_observed = match (state.observed.get(path), stat_now) {
+            (Some(obs), Some((len, mtime))) => obs.len == len && obs.mtime_unix_nanos == mtime,
+            _ => false,
+        };
+        if unchanged_since_observed
+            && let Some(obs) = state.observed.get(path)
             && &obs.hash == expected
         {
             out.push(bare(
@@ -427,37 +489,60 @@ pub fn sync_debt(
             ));
             continue;
         }
-        let stat_before = stat_of(target);
-        let on_disk = std::fs::read_to_string(target)
-            .ok()
-            .and_then(|raw| serde_json::from_str::<GraphExport>(&raw).ok());
-        let Some(on_disk) = on_disk else {
-            out.push(bare(
-                path,
-                "unreadable",
-                Some(expected.clone()),
-                None,
-                live_nodes,
-                0,
-            ));
-            continue;
+        // Moved, or never seen: get the document, PARSING ONLY IF THE BYTES ARE
+        // NEW. `freshly_read` carries the stat of a real read so the
+        // observation below is recorded only when one happened.
+        let cached = if unchanged_since_observed
+            && let Some(obs) = state.observed.get(path)
+            && let Some(doc) = parsed.get(path, &obs.hash)
+        {
+            Some((doc, obs.hash.clone()))
+        } else {
+            None
         };
-        // ⚠️ COMPUTED, NEVER the hash the file states about itself.
-        // `effective_content_hash` TRUSTS the embedded `content_hash` and only
-        // computes when it is absent — so a document edited by anything other
-        // than `export_graph` (a merge, a hand-fix, another tool) keeps its old
-        // stamp and would read as "exactly where this graph left it" while its
-        // content had moved. Caught end-to-end on 2026-08-11 by simulating the
-        // very case this feature exists for: work appended to the record.
-        // The document is already parsed, so computing costs nothing extra.
-        let found = on_disk.compute_content_hash();
+        let (on_disk, found, freshly_read) = match cached {
+            Some((doc, hash)) => (doc, hash, None),
+            None => {
+                let stat_before = stat_of(target);
+                let document = std::fs::read_to_string(target)
+                    .ok()
+                    .and_then(|raw| serde_json::from_str::<GraphExport>(&raw).ok());
+                let Some(document) = document else {
+                    out.push(bare(
+                        path,
+                        "unreadable",
+                        Some(expected.clone()),
+                        None,
+                        live_nodes,
+                        0,
+                    ));
+                    continue;
+                };
+                // ⚠️ COMPUTED, NEVER the hash the file states about itself.
+                // `effective_content_hash` TRUSTS the embedded `content_hash`
+                // and only computes when it is absent — so a document edited
+                // by anything other than `export_graph` (a merge, a hand-fix,
+                // another tool) keeps its old stamp and would read as "exactly
+                // where this graph left it" while its content had moved.
+                // Caught end-to-end on 2026-08-11 by simulating the very case
+                // this feature exists for: work appended to the record. The
+                // document is already parsed, so computing costs nothing extra.
+                let found = document.compute_content_hash();
+                let doc = std::sync::Arc::new(document);
+                parsed.put(path, &found, doc.clone());
+                (doc, found, stat_before)
+            }
+        };
+        let on_disk: &GraphExport = &on_disk;
         // `verify_content_hash` recomputes the hash a SECOND time; compare the
         // embedded stamp against the one already in hand instead.
         let stamp_disagrees = on_disk.content_hash.as_deref().is_some_and(|h| h != found);
 
         let export_nodes = on_disk.nodes.len();
-        // Remember this read, so the next check can answer from a stat.
-        if let Some((len, mtime)) = stat_before {
+        // Remember this read, so the next check can answer from a stat. Only a
+        // REAL read is recorded: a cache hit changes nothing on disk and must
+        // not cost a sidecar write per check.
+        if let Some((len, mtime)) = freshly_read {
             reflow2_core::provenance::record_sync_observation(
                 graph_path,
                 path,
@@ -520,7 +605,7 @@ pub fn sync_debt(
         // content moved, so handing it the shortcut would let a stale stamp
         // send it straight back to `Clear`. Passing None asks for the full
         // document comparison, which is the whole reason we got here.
-        match reflow2_core::sync::assess_overwrite(Some(&on_disk), mine, None) {
+        match reflow2_core::sync::assess_overwrite(Some(on_disk), mine, None) {
             SyncVerdict::Clear => {
                 let mut d = bare(
                     path,

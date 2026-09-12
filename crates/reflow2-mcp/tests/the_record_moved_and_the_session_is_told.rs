@@ -34,7 +34,7 @@
 use std::io::Write;
 
 use reflow2_core::{DesignGraph, GraphExport};
-use reflow2_mcp::sync_debt::{SyncDebt, SyncState, sync_debt};
+use reflow2_mcp::sync_debt::{ParsedRecords, SyncDebt, SyncState, sync_debt, sync_debt_with};
 
 /// A fresh scratch dir plus a graph-store path inside it. The sync record is a
 /// sibling file of the store, so both need a home. Follows the repo's existing
@@ -973,4 +973,73 @@ fn no_served_sentence_contains_a_run_of_spaces() {
              literal whose backslash was eaten reads exactly like this: {s:?}"
         );
     }
+}
+
+// ⭐ THE TAX EVERY WORKING SESSION PAID, found by measurement on 2026-09-12.
+//
+// The stat gate above (`dec:an-unchanged-sync-target-is-not-re-parsed`) skips
+// the parse only when the file is unchanged AND `observed.hash == last_synced`
+// — i.e. unchanged AND in step. A record that has MOVED once and then sits
+// still — the exact state this feature exists to report — fails the hash clause
+// on every check, and every check re-reads and re-parses the whole file (16 MB
+// on reflow2's own design: ~620 ms) and rebuilds the live export (~490 ms).
+// The read path runs this check once per write generation, so a session that
+// pulled a colleague's export paid ~1.1 s on its first read after EVERY write
+// until it next exported. Measured as 27% of all tool time over 47 sessions
+// (`fact:the-first-store-read-after-any-write-pays-a-fixed-1-1s-tax-whichever-tool-it-is`).
+//
+// `observed` is refreshed on the CHECK path; `last_synced` only on the ACT path
+// (export/import). Between the two events the gate can never close.
+//
+// This pins the STRUCTURE, never a duration: after one full read of a moved
+// record, a second check on the byte-identical file must answer from what it
+// already read. The file's bytes are corrupted UNDER THE SAME LENGTH AND MTIME
+// between the two checks, so a check that re-reads cannot pass by accident —
+// it would find garbage and answer "unreadable".
+#[test]
+fn a_record_that_moved_and_then_sat_still_is_read_once() {
+    let (dir, gp) = scratch("moved-once");
+    let file = dir.path().join("reflow2.json");
+    let mine = design(&["cap:one"]);
+    put(&file, &mine);
+    mark_synced(&gp, &file, &mine);
+
+    // Somebody else's work lands; the record has moved.
+    put(&file, &design(&["cap:one", "cap:theirs"]));
+    let mut parsed = ParsedRecords::default();
+    let first = sync_debt_with(&gp, 0, &|| Some(mine.clone()), &mut parsed);
+    assert_eq!(
+        first[0].state, "behind",
+        "the move is seen on the first check"
+    );
+    assert_eq!(first[0].nodes_not_here_total, 1);
+
+    // Now corrupt the bytes without moving the stat: same length, same mtime.
+    let meta = std::fs::metadata(&file).unwrap();
+    let (len, mtime) = (meta.len() as usize, meta.modified().unwrap());
+    std::fs::write(&file, "x".repeat(len)).unwrap();
+    std::fs::File::options()
+        .write(true)
+        .open(&file)
+        .unwrap()
+        .set_modified(mtime)
+        .unwrap();
+    let again = std::fs::metadata(&file).unwrap();
+    assert_eq!(
+        (again.len() as usize, again.modified().unwrap()),
+        (len, mtime),
+        "the corruption must be invisible to a stat, or the test proves nothing"
+    );
+
+    // Unchanged by stat -> answered from the first read, never re-parsed.
+    let second = sync_debt_with(&gp, 0, &|| Some(mine.clone()), &mut parsed);
+    assert_eq!(
+        second[0].state, "behind",
+        "a moved record that has not changed since it was last read must not be \
+         read again — a re-read here would find garbage and answer `unreadable`"
+    );
+    assert_eq!(
+        second[0].nodes_not_here_total, 1,
+        "and it still knows what it holds"
+    );
 }
