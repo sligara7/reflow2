@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:3696e170725a9f9374a619ec027a56974a486f7a92996a4211503f58b23ab5a9",
+  "content_hash": "sha256:f6788ef6c38c8a3560cb29009ed093e23494110d77fecf0460fdd87b020740ee",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -1253,6 +1253,14 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-reader-that-cannot-read-the-vocabulary-is-told-what-it-lacks",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:provenance"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:a-refusal-maps-a-command-alias-to-what-is-served",
       "properties": {
         "weight_basis": "estimated"
@@ -1341,11 +1349,27 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-session-serves-a-release-binary",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:packaging"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:a-session-with-no-seed-can-find-one",
       "properties": {
         "weight_basis": "estimated"
       },
       "to_id": "cmp:regions"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-set-aside-decision-is-recorded-where-the-loop-can-read-it",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:schema"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -1386,6 +1410,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:heal"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-tool-description-predicts-what-the-tool-does",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:service"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -1946,6 +1978,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:every-tool-carries-the-users-phrasing-and-the-corpus-is-the-test",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:service"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -3045,6 +3085,14 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:the-server-writes-the-export-through-and-chains-it-from-main",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:export"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:the-skill-response-carries-the-lens",
       "properties": {
         "weight_basis": "estimated"
@@ -3263,6 +3311,62 @@
         "resolved": false
       },
       "to_id": "art:usgov-genesis-feedback-2026-08-15"
+    },
+    {
+      "edge_type": "ANSWERS",
+      "from_id": "cap:a-reader-that-cannot-read-the-vocabulary-is-told-what-it-lacks",
+      "properties": {
+        "note": "His \"build it, third, before the set-aside status\" became this capability; the mechanism choice stays open on the increment."
+      },
+      "to_id": "question:28fbfa926be9cbe6"
+    },
+    {
+      "edge_type": "ANSWERS",
+      "from_id": "cap:a-session-serves-a-release-binary",
+      "properties": {
+        "note": "His \"build it, first\" became this capability, allocated to the shipping subsystem and scheduled into the first increment."
+      },
+      "to_id": "question:afc66a528788b6f9"
+    },
+    {
+      "edge_type": "ANSWERS",
+      "from_id": "cap:a-set-aside-decision-is-recorded-where-the-loop-can-read-it",
+      "properties": {
+        "note": "His \"build it, fourth, held behind the version guard\" became this capability, scheduled into the increment that the vocabulary-guard increment precedes."
+      },
+      "to_id": "question:5faa9f03e6dbe450"
+    },
+    {
+      "edge_type": "ANSWERS",
+      "from_id": "cap:a-tool-description-predicts-what-the-tool-does",
+      "properties": {
+        "note": "His \"fix the remainder and make the prediction test standing\" became this capability, which names what #477 and #478 already closed and what is genuinely left."
+      },
+      "to_id": "question:be9376ce5a6bc63b"
+    },
+    {
+      "edge_type": "ANSWERS",
+      "from_id": "cap:every-tool-carries-the-users-phrasing-and-the-corpus-is-the-test",
+      "properties": {
+        "note": "The answer to this one was already on disk: the capability records what PR #476 delivered, and the acceptance test that holds it, rather than planning the measurement a second time."
+      },
+      "to_id": "question:502e1e2cfa17b79a"
+    },
+    {
+      "edge_type": "ANSWERS",
+      "from_id": "cap:the-server-writes-the-export-through-and-chains-it-from-main",
+      "properties": {
+        "note": "His \"build it, second\" became this capability; the four details the rulings left open are carried on it and on the increment rather than settled here."
+      },
+      "to_id": "question:ed65f4279c56e786"
+    },
+    {
+      "edge_type": "ANSWERS",
+      "from_id": "chg:the-sweep-findings-requirement-is-withdrawn-as-a-requirement",
+      "properties": {
+        "note": "His \"retire it\" became this withdrawal; the remediation tracker stays the row-level record and the discipline survives on the fix-says-whether-it-corrected-the-cause requirement."
+      },
+      "to_id": "question:4bb3e2c5d3bb8947"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -3975,6 +4079,12 @@
     },
     {
       "edge_type": "ASKS_ABOUT",
+      "from_id": "question:28fbfa926be9cbe6",
+      "properties": {},
+      "to_id": "req:a-vocabulary-change-a-consumers-binary-cannot-read-is-never-silent"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
       "from_id": "question:31748fe70566dfa2",
       "properties": {},
       "to_id": "req:export-says-what-it-cannot-carry"
@@ -4008,6 +4118,12 @@
       "from_id": "question:48648a70e7adca25",
       "properties": {},
       "to_id": "req:skill-use-survives-a-long-session"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:4bb3e2c5d3bb8947",
+      "properties": {},
+      "to_id": "req:every-finding-of-the-tool-sweep-is-addressed-or-ruled-on"
     },
     {
       "edge_type": "ASKS_ABOUT",
@@ -4059,6 +4175,12 @@
     },
     {
       "edge_type": "ASKS_ABOUT",
+      "from_id": "question:502e1e2cfa17b79a",
+      "properties": {},
+      "to_id": "req:every-served-tool-is-reachable-by-find-tools-on-a-users-words"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
       "from_id": "question:52b1ed1377382961",
       "properties": {},
       "to_id": "req:plans-move-honestly"
@@ -4080,6 +4202,12 @@
       "from_id": "question:5c02d9fc4c3ab022",
       "properties": {},
       "to_id": "cap:artifact-declares-its-own-shape"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:5faa9f03e6dbe450",
+      "properties": {},
+      "to_id": "req:an-idea-that-stopped-is-not-counted-as-debt-somebody-owes"
     },
     {
       "edge_type": "ASKS_ABOUT",
@@ -4239,6 +4367,12 @@
     },
     {
       "edge_type": "ASKS_ABOUT",
+      "from_id": "question:afc66a528788b6f9",
+      "properties": {},
+      "to_id": "req:a-session-runs-a-release-binary"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
       "from_id": "question:b0ef8ce1e452f881",
       "properties": {},
       "to_id": "req:defaults-do-not-assert"
@@ -4308,6 +4442,12 @@
       "from_id": "question:baa3d7b03a08dedb",
       "properties": {},
       "to_id": "dec:epoch-roadmap-storage"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:be9376ce5a6bc63b",
+      "properties": {},
+      "to_id": "req:every-tool-description-is-accurate-about-what-the-tool-does"
     },
     {
       "edge_type": "ASKS_ABOUT",
@@ -4764,6 +4904,12 @@
       "from_id": "question:e68c76afcb57424c",
       "properties": {},
       "to_id": "cap:explains-itself"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:ed65f4279c56e786",
+      "properties": {},
+      "to_id": "req:the-server-keeps-the-working-tree-export-current"
     },
     {
       "edge_type": "ASKS_ABOUT",
@@ -9627,6 +9773,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:the-sweep-findings-requirement-is-withdrawn-as-a-requirement",
+      "properties": {},
+      "to_id": "epoch:2026-09-11-the-seven-unsatisfied-requirements-are-ruled-on"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:the-third-leg-notices-an-unconnected-idea",
       "properties": {},
       "to_id": "epoch:the-co-change-experiment-is-run"
@@ -10587,6 +10739,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:2026-09-11-the-seven-unsatisfied-requirements-are-ruled-on:req:every-finding-of-the-tool-sweep-is-addressed-or-ruled-on",
+      "properties": {},
+      "to_id": "epoch:2026-09-11-the-seven-unsatisfied-requirements-are-ruled-on"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:a-check-can-say-whether-a-limit-holds:dec:should-a-verification-be-able-to-verify-a-constraint",
       "properties": {},
       "to_id": "epoch:a-check-can-say-whether-a-limit-holds"
@@ -11206,6 +11364,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:cap:a-status-advance-says-whether-its-prose-predates-it",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:cap:every-tool-carries-the-users-phrasing-and-the-corpus-is-the-test",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
     },
@@ -18572,7 +18736,7 @@
       "from_id": "req:every-finding-of-the-tool-sweep-is-addressed-or-ruled-on",
       "properties": {
         "acted_at": "2026-09-11",
-        "role": "author"
+        "role": "approver"
       },
       "to_id": "who:ajs"
     },
@@ -41447,6 +41611,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-sweep-findings-requirement-is-withdrawn-as-a-requirement",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "removed"
+      },
+      "to_id": "req:every-finding-of-the-tool-sweep-is-addressed-or-ruled-on"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-third-leg-notices-an-unconnected-idea",
       "properties": {
         "accepted_baseline": true,
@@ -58895,6 +59068,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:every-tool-carries-the-users-phrasing-and-the-corpus-is-the-test",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:cap:every-tool-carries-the-users-phrasing-and-the-corpus-is-the-test"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "cap:gap-carries-a-reading",
       "properties": {},
       "to_id": "snap:epoch:reading-carries-options:cap:gap-carries-a-reading"
@@ -59954,6 +60133,12 @@
       "from_id": "req:edge-defaults-do-not-assert",
       "properties": {},
       "to_id": "snap:epoch:prune-proposed:req:edge-defaults-do-not-assert"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "req:every-finding-of-the-tool-sweep-is-addressed-or-ruled-on",
+      "properties": {},
+      "to_id": "snap:epoch:2026-09-11-the-seven-unsatisfied-requirements-are-ruled-on:req:every-finding-of-the-tool-sweep-is-addressed-or-ruled-on"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -171251,6 +171436,18 @@
     },
     {
       "edge_type": "PRECEDES",
+      "from_id": "epoch:planned-a-session-serves-a-release-binary",
+      "properties": {},
+      "to_id": "epoch:planned-the-server-guarantees-the-export"
+    },
+    {
+      "edge_type": "PRECEDES",
+      "from_id": "epoch:planned-a-vocabulary-change-is-never-silent",
+      "properties": {},
+      "to_id": "epoch:planned-a-set-aside-decision-is-not-debt"
+    },
+    {
+      "edge_type": "PRECEDES",
       "from_id": "epoch:planned-read-half",
       "properties": {},
       "to_id": "epoch:planned-status-accounting"
@@ -171278,6 +171475,12 @@
       "from_id": "epoch:planned-status-accounting",
       "properties": {},
       "to_id": "epoch:planned-seams"
+    },
+    {
+      "edge_type": "PRECEDES",
+      "from_id": "epoch:planned-the-server-guarantees-the-export",
+      "properties": {},
+      "to_id": "epoch:planned-a-vocabulary-change-is-never-silent"
     },
     {
       "edge_type": "PRECEDES",
@@ -176278,6 +176481,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:a-reader-that-cannot-read-the-vocabulary-is-told-what-it-lacks",
+      "properties": {},
+      "to_id": "req:a-vocabulary-change-a-consumers-binary-cannot-read-is-never-silent"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:a-refusal-maps-a-command-alias-to-what-is-served",
       "properties": {
         "coverage": "partial",
@@ -176343,9 +176552,21 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:a-session-serves-a-release-binary",
+      "properties": {},
+      "to_id": "req:a-session-runs-a-release-binary"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:a-session-with-no-seed-can-find-one",
       "properties": {},
       "to_id": "req:a-session-with-no-seed-can-still-orient"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:a-set-aside-decision-is-recorded-where-the-loop-can-read-it",
+      "properties": {},
+      "to_id": "req:an-idea-that-stopped-is-not-counted-as-debt-somebody-owes"
     },
     {
       "edge_type": "SATISFIES",
@@ -176376,6 +176597,12 @@
       "from_id": "cap:a-sweep-says-what-it-could-not-have-found",
       "properties": {},
       "to_id": "req:a-sweep-says-what-it-could-not-have-covered"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:a-tool-description-predicts-what-the-tool-does",
+      "properties": {},
+      "to_id": "req:every-tool-description-is-accurate-about-what-the-tool-does"
     },
     {
       "edge_type": "SATISFIES",
@@ -176796,6 +177023,12 @@
       "from_id": "cap:every-served-report-is-reachable-from-an-instruction",
       "properties": {},
       "to_id": "req:the-surface-routes-to-what-the-tool-is-for-not-only-to-its-hygiene"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:every-tool-carries-the-users-phrasing-and-the-corpus-is-the-test",
+      "properties": {},
+      "to_id": "req:every-served-tool-is-reachable-by-find-tools-on-a-users-words"
     },
     {
       "edge_type": "SATISFIES",
@@ -177693,6 +177926,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:the-server-writes-the-export-through-and-chains-it-from-main",
+      "properties": {},
+      "to_id": "req:the-server-keeps-the-working-tree-export-current"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:the-skill-response-carries-the-lens",
       "properties": {},
       "to_id": "req:the-reminder-rides-the-response"
@@ -177780,6 +178019,42 @@
         "recorded_at": "2026-08-30"
       },
       "to_id": "epoch:planned-seams"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
+      "from_id": "cap:a-reader-that-cannot-read-the-vocabulary-is-told-what-it-lacks",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-09-11"
+      },
+      "to_id": "epoch:planned-a-vocabulary-change-is-never-silent"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
+      "from_id": "cap:a-session-serves-a-release-binary",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-09-11"
+      },
+      "to_id": "epoch:planned-a-session-serves-a-release-binary"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
+      "from_id": "cap:a-set-aside-decision-is-recorded-where-the-loop-can-read-it",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-09-11"
+      },
+      "to_id": "epoch:planned-a-set-aside-decision-is-not-debt"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
+      "from_id": "cap:a-tool-description-predicts-what-the-tool-does",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-09-11"
+      },
+      "to_id": "epoch:planned-the-tool-surface-predicts-itself"
     },
     {
       "edge_type": "SCHEDULED_FOR",
@@ -177951,6 +178226,15 @@
         "recorded_at": "2026-08-20"
       },
       "to_id": "epoch:the-declared-walls-hold"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
+      "from_id": "cap:the-server-writes-the-export-through-and-chains-it-from-main",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-09-11"
+      },
+      "to_id": "epoch:planned-the-server-guarantees-the-export"
     },
     {
       "edge_type": "SCHEDULED_FOR",
@@ -178134,12 +178418,30 @@
     },
     {
       "edge_type": "SCHEDULED_FOR",
+      "from_id": "req:a-session-runs-a-release-binary",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-09-11"
+      },
+      "to_id": "epoch:planned-a-session-serves-a-release-binary"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
       "from_id": "req:a-session-with-no-seed-can-still-orient",
       "properties": {
         "modality": "expected",
         "recorded_at": "2026-08-16"
       },
       "to_id": "epoch:instruments-stop-overstating"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
+      "from_id": "req:a-vocabulary-change-a-consumers-binary-cannot-read-is-never-silent",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-09-11"
+      },
+      "to_id": "epoch:planned-a-vocabulary-change-is-never-silent"
     },
     {
       "edge_type": "SCHEDULED_FOR",
@@ -178161,12 +178463,30 @@
     },
     {
       "edge_type": "SCHEDULED_FOR",
+      "from_id": "req:an-idea-that-stopped-is-not-counted-as-debt-somebody-owes",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-09-11"
+      },
+      "to_id": "epoch:planned-a-set-aside-decision-is-not-debt"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
       "from_id": "req:declared-vocabulary-is-reachable-from-the-surface",
       "properties": {
         "modality": "expected",
         "recorded_at": "2026-08-18T00:20:00Z"
       },
       "to_id": "epoch:vocabulary-the-tools-cannot-reach"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
+      "from_id": "req:every-tool-description-is-accurate-about-what-the-tool-does",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-09-11"
+      },
+      "to_id": "epoch:planned-the-tool-surface-predicts-itself"
     },
     {
       "edge_type": "SCHEDULED_FOR",
@@ -178212,6 +178532,15 @@
         "recorded_at": "2026-08-16"
       },
       "to_id": "epoch:triage-fixes"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
+      "from_id": "req:the-server-keeps-the-working-tree-export-current",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-09-11"
+      },
+      "to_id": "epoch:planned-the-server-guarantees-the-export"
     },
     {
       "edge_type": "SPECIFIES",
@@ -179968,6 +180297,12 @@
       "from_id": "ver:every-skill-meets-the-classes-it-composes",
       "properties": {},
       "to_id": "cap:skills-are-composed-of-attribute-classes"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:every-tool-is-found-by-a-query-in-the-users-words",
+      "properties": {},
+      "to_id": "cap:every-tool-carries-the-users-phrasing-and-the-corpus-is-the-test"
     },
     {
       "edge_type": "VERIFIES",
@@ -187215,6 +187550,17 @@
       }
     },
     {
+      "node_id": "cap:a-reader-that-cannot-read-the-vocabulary-is-told-what-it-lacks",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Opening a design written under a vocabulary this binary does not know ends in one of two states: the reader is told precisely what it lacks, or the open is refused. It never succeeds quietly and then shows less than the file holds.\n\nTHE MEASURED HOLE, 2026-09-11: the stamp carries reflow2_version, schema_version, node/edge type COUNTS and node/edge type NAMES — and names only TYPES. Three classes of vocabulary change move none of them: a new ENUM VALUE on an existing field (a Decision status gaining `deferred` is the live case), a PROPERTY added to an existing type, and a SEMANTIC change where a field's meaning moved and its name did not. An older binary meets any of these, warns nobody, compares against the vocabulary it knows, and the item disappears from its reports.\n\nTWO THIRDS OF THE MECHANISM EXISTS: the guard already refuses rather than degrading, and already probes the store for a real population rather than trusting a declaration.\n\nWHAT THIS CAPABILITY DOES NOT DECIDE: whether the answer is a wider stamp, per-change identities with names, or a severity per change — that stays open, and a wider stamp is in direct tension with the stamp's own stated reason for being small (it must not depend on the vocabulary it is describing). The obligation is fixed here; the mechanism is the increment's question.\n\nTHE BOUND THAT ARGUES FOR IT: being told to migrate is an inconvenience, and migration has been shown lossless here (3,989 nodes and 21,555 edges in, same out). Only the SILENT case argues for any of this.",
+        "name": "A reader whose binary does not know a design's vocabulary is told what it lacks, or refused — never shown less of the design than it holds",
+        "provenance": "authored",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:a-refusal-maps-a-command-alias-to-what-is-served",
       "node_type": "Capability",
       "properties": {
@@ -187329,6 +187675,17 @@
       }
     },
     {
+      "node_id": "cap:a-session-serves-a-release-binary",
+      "node_type": "Capability",
+      "properties": {
+        "description": "The launch path serves a binary built with the release profile, and the rebuild is a deliberate act rather than a per-launch consequence of a source change.\n\nWHAT IT MUST DO: serve release to a session; rebuild only when the builder asks; leave the edit-compile loop on debug, so an ordinary source edit never triggers the 33-minute librocksdb-sys C++ compile; and say which profile is being served, so a cost number measured in a session can be attributed to the right binary. Consumers who install a prebuilt binary through the one-liner never build at all and are already on release.\n\nWHY IT IS FIRST: measured 2026-09-11 on the same bytes, same path, profile the only difference — a propagate walk 5,851 ms → 62 ms warm (93x), design_regions 12.5 s → 2.0 s warm. It needs no design work, and every other performance number in the 2026-09-10/11 sweep was taken on the debug binary, so nothing else in that backlog can be judged until this lands.\n\nWHAT IT DOES NOT CLAIM: that the profile is the whole cost. The adjacency memo serving one caller while 142 edge reads still go to the store is a separate, unattributed waste.",
+        "name": "The server a session talks to is a release-profile binary, rebuilt on the builder's word rather than on every launch",
+        "provenance": "authored",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:a-session-with-no-seed-can-find-one",
       "node_type": "Capability",
       "properties": {
@@ -187339,6 +187696,17 @@
         "outputs": "[\"regions\",\"coverage\",\"order\"]",
         "provenance": "authored",
         "status": "verified"
+      }
+    },
+    {
+      "node_id": "cap:a-set-aside-decision-is-recorded-where-the-loop-can-read-it",
+      "node_type": "Capability",
+      "properties": {
+        "description": "A Decision whose idea is sound and whose moment is wrong can be recorded as set aside in a field the coherence loop reads, so it leaves the \"what needs me\" list without being rejected, superseded, or quietly left to look live.\n\nMEASURED 2026-09-11: 690 Decisions against a status vocabulary of proposed | accepted | superseded | rejected. Ten say DEFERRED in prose and twenty say WITHDRAWN, against four carrying `rejected` in the field — and one node is literally named \"DEFERRED, SHAPE ONLY —\" while its status reads `proposed`. People are recording the state; they are recording it where nothing can read it. (The thirty is a substring count over decision text — a floor on the pressure, not a census.)\n\nWHY IT IS NOT COSMETIC: a `proposed` Decision carrying an approver edge is DEBT — loop_status reports it as owed and what_next ranks it. A deferred idea is not debt, and today it sits in the same bucket as a live question somebody is waiting on. Every deferred idea makes the list slightly less true, and a list that degrades is how a person learns to stop reading it.\n\nSCOPED TO `deferred`, NOT TO `withdrawn`, DELIBERATELY: the test for a candidate state is not whether the distinction is real but WHAT WOULD READ IT. For deferral there is an answer — loop_status and what_next both change behaviour. For withdrawn there may not be one.\n\nSEQUENCED BEHIND THE VOCABULARY GUARD: adding an enum value moves nothing the version guard reads, so shipping this first would demonstrate that exact bug on reflow2's own graph.",
+        "name": "A decision set aside is recorded in a field a computation can read, so the loop stops counting it as work somebody owes",
+        "provenance": "authored",
+        "status": "planned",
+        "tier": "operational"
       }
     },
     {
@@ -187389,6 +187757,17 @@
         "name": "A defect sweep says what it could NOT have found — per-rule populations, and coupling at each declared level",
         "provenance": "authored",
         "status": "realized"
+      }
+    },
+    {
+      "node_id": "cap:a-tool-description-predicts-what-the-tool-does",
+      "node_type": "Capability",
+      "properties": {
+        "description": "A consumer reading a tool's served text can predict the tool's behaviour, its reply shape, and what a zero or empty result means, before spending a call on it. The method is the test: predict from the description blind, then call, and score the prediction.\n\nMEASURED 2026-09-11 by that method: 13 of 37 blind-scored read-only tools came back MISS or PARTIAL.\n\nCLOSED SINCE, by merged PRs #477 and #478 — hierarchy_issues, dimension_drift, dimension_drifts, surprising_connections, propose_allocation, alternatives_for, recall_resolutions, mirrors, describe_designs, reconcile_dependencies and reviewed_gaps. One of the thirteen (sync_status) was never a defect: the prediction was wrong, not the tool.\n\nSTILL OPEN, and two of them are larger than the original list: compose_and_analyse returns an empty seam set on a purpose-built seam; evidence_report and confirmation_ledger carry undocumented fields; 26 descriptions sit under 220 characters (the bimodal tail); and 76 of 230 required parameters across 68 tools publish NO description at all — surfaced only because the new missing-argument refusal quotes the schema and found nothing to quote. About 21 of those are a constructor's own id and arguably self-evident; roughly 55 are not.\n\nTHE CLASS DISCIPLINE THAT APPLIES: where a finding belongs to a class, it is fixed at the class with one contract test that fails on a new member, not one tool at a time.",
+        "name": "A tool's served description lets a caller predict what it returns before calling it, including what an empty answer means",
+        "provenance": "authored",
+        "status": "in_progress",
+        "tier": "operational"
       }
     },
     {
@@ -188258,6 +188637,17 @@
         "name": "A report nobody is routed to fails the build, or says in writing why it needs no route",
         "provenance": "authored",
         "status": "realized"
+      }
+    },
+    {
+      "node_id": "cap:every-tool-carries-the-users-phrasing-and-the-corpus-is-the-test",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Every served tool's description states the job the way somebody states it when they want it done — not the way the tool is named — and a committed corpus of one query per tool is the standing check that the sentence was written from the job rather than tuned to the test.\n\nDELIVERED 2026-09-11 (PR #476, merged): 68 sentences written from purpose, 8 descriptions trimmed to budget, corpus committed as crates/reflow2-mcp/tests/fixtures/find_tools_corpus.json with an acceptance test. Measured on main: 177 of 180 tools in find_tools' default top 5, up from a 114 baseline where 53 tools did not appear in the top 10 at all. Three tools sit at rank 6 and are exempt WITH THE MEASURED REASON, each beaten by short descriptions sharing incidental words. A second test walks the served surface and refuses any tool absent from the corpus, so a 181st tool cannot ship unfindable by omission.\n\nTHE HONESTY CHECK, AND WHY IT IS NOT A GATE: a sentence that merely copies its corpus query passes the committed test and still fails a user who words it differently. The guard is a held-out paraphrase corpus written from a different angle and never consulted while the sentences were written — 36 of 42, up from 16 after the rewrite it forced. It is deliberately NOT wired into CI, because folding it in would make it the next thing people tune to.\n\nTWO SCORER REFINEMENTS WERE TRIED AND REVERTED on measurement — a 4-character floor on the name-prefix rule (neutral) and a gentler length normalisation (worse) — because a change the corpus does not reward is noise.",
+        "name": "Every served tool carries the job in a user's own words, and a committed 180-query corpus is the acceptance test that it was carried honestly",
+        "provenance": "authored",
+        "status": "realized",
+        "tier": "operational"
       }
     },
     {
@@ -189635,6 +190025,17 @@
         "name": "The server says whether its own executable has been replaced since it started",
         "provenance": "authored",
         "status": "realized",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:the-server-writes-the-export-through-and-chains-it-from-main",
+      "node_type": "Capability",
+      "properties": {
+        "description": "The shared server — not the session, and not a harness hook — keeps the working-tree export current after every graph change, coalescing bursts through a debounce, and sets the export's prev_content_hash from the export as committed on the default branch when a git repository is present.\n\nWHY THE SERVER OWNS IT: the session is the thing that might not come back. The Stop hook fires once and exists in one harness, so a consumer of reflow2 in any other client would never see it.\n\nWHY THE LINEAGE MOVES: continuous writing collides with one-export-per-PR only while the chain is built from the FILE on disk. Anchored at main, any number of commits on a branch each chain from main, and squash-and-merge lands exactly one hop per PR — which is what that rule always wanted. The \"and it must be LAST\" clause becomes automatic.\n\nFOUR THINGS THE INCREMENT MUST STILL DECIDE, named on the rulings and deliberately not settled here: the debounce interval; the git query that finds main's version (merge-base survives a long-lived branch where head-of-default does not); the behaviour when the working tree holds a hand edit of the export; and the no-git fallback, which stays today's on-disk chaining so reflow2 assumes nothing about git.\n\nAFFORDABILITY, MEASURED: a full export of the largest design in existence is 265 ms (2026-08-25, down from 1,168 ms), and the debounce means a burst of ten changes costs one export.",
+        "name": "The server writes the design export through to the working tree on every change, debounced, and chains its lineage from what is committed on main",
+        "provenance": "authored",
+        "status": "planned",
         "tier": "operational"
       }
     },
@@ -197835,6 +198236,15 @@
         "rationale": "THE FOUR SHARE NO SUBSYSTEM AND ONE SHAPE: reflow2 HELD the information and the reply withheld it, so a session had to reconstruct by hand what was already computed. That is the same failure as a vacuous zero reading as a pass, one layer over — which is why they shipped together rather than as four patches.\n\nTwo of them were caught only because the reporter did work the tool should have done: the degrade cause was found by DIFFING TWO OF ITS OWN CALLS, and `unused_answers` would have named it on the first read. The lesson is that a flag which reports a failure without its reason moves the diagnosis onto the caller.\n\nThe `deferred` fix is deliberately NOT a silencing. Adding `deferred` to the `dropped`/`met` skip was the obvious repair and the wrong one: those two are FINISHED and this one is POSTPONED, parking is a decision that expires, and dropping the row would make live intent go quiet (`req:no-idea-goes-quiet`). The gap id is a hash of source + affected ids, so existing acknowledgements survive the rewording.",
         "subject": "system",
         "summary": "Four fixes from dev_storyflow's 2026-08-23 reports, each verified against the code before it was taken. (1) `constrains` and `governed_by` accept `note`, which both edge types declared and neither typed constructor could reach. (2) A `deferred` requirement is asked whether it is STILL parked, at reduced severity, instead of being asked \"is it covered, deferred, or dropped?\" — a question its own status answers; 8 of 28 gaps in that class were deferred. (3) `rephrase_degraded` gains `degrade_reason`, and `unused_answers` is surfaced from both prompt tools; the explaining LlmError was discarded by an `Err(_)` and `AgentBackend::unused_answers` had no caller anywhere in reflow2-mcp. (4) `graph_report_markdown` cuts gap titles at 20 words and prose at 40 and says so, the truncation `loop_status` already had. No schema change; stamp unmoved at 29 node / 63 edge types."
+      }
+    },
+    {
+      "node_id": "chg:the-sweep-findings-requirement-is-withdrawn-as-a-requirement",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "The sweep-findings success criterion is withdrawn as a requirement — it is a to-do list with a completion condition, not a property of the product",
+        "subject": "record"
       }
     },
     {
@@ -206907,6 +207317,17 @@
       }
     },
     {
+      "node_id": "epoch:2026-09-11-the-seven-unsatisfied-requirements-are-ruled-on",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "description": "2026-09-11. The seven requirements carrying nothing that satisfies them were put to Anthony one at a time, each with a recommendation, its hinge and the consequence of every option. He answered \"go with your suggested order\": release binary first, then the server-guaranteed export, then the vocabulary guard, then the set-aside decision status; findability and description accuracy run together as one pass; and the sweep-findings requirement retired as a requirement.\n\nWHAT THIS EPOCH RECORDS: six requirements gained a capability that delivers them and an increment they are due in, and one was withdrawn. Two corrections were found while writing the answers and are on the record rather than quietly absorbed — the findability requirement was already delivered and merged (#476), and eleven of the thirteen description failures had already been closed by #477 and #478, so both questions were put to him describing more open work than actually existed.",
+        "epoch_type": "milestone",
+        "name": "The seven unsatisfied requirements are ruled on and ordered",
+        "sequence": 429,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:a-check-can-say-whether-a-limit-holds",
       "node_type": "DesignEpoch",
       "properties": {
@@ -207776,6 +208197,39 @@
       }
     },
     {
+      "node_id": "epoch:planned-a-session-serves-a-release-binary",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "description": "PLANNED — first of the four Anthony ordered on 2026-09-11 (\"go with your suggested order\"). The launch path stops serving target/debug and serves a release-profile binary, rebuilt on the builder's word rather than on every launch.\n\nWHY FIRST: no design work stands in front of it, and it is the largest measured user-visible win on the board — a propagate walk 5,851 ms → 62 ms warm (93x), design_regions 12.5 s → 2.0 s warm, same bytes and same path with only the profile changed. Every performance number in the 2026-09-10/11 sweep was taken on the debug binary, so nothing else in that backlog can be judged until this lands.\n\nTHE CONSTRAINT THAT SHAPES IT: a release build took 33 min 39 s on this box, dominated by librocksdb-sys compiling C++ from source. A release-by-default wrapper that rebuilt on every source change would make any edit a half-hour cold start — so the shape is serve release, rebuild deliberately, and the edit-compile loop keeps debug. How the wrapper decides \"deliberately\" is this increment's question.\n\nMUST NOT INCLUDE: the adjacency memo work. 142 edge-read call sites still go to the store against 1 using the index built in #479, and that waste is real, separate, and unattributed as a share of the seconds — mixing it in here would make the profile's contribution unmeasurable, which is the whole point of doing this one alone.\n\nNO VERSION NUMBER BY DESIGN (dec:idea-a-planned-increment-is-named-by-content-not-by-number).",
+        "epoch_type": "revision",
+        "name": "A session serves a release binary",
+        "sequence": 430,
+        "status": "planned"
+      }
+    },
+    {
+      "node_id": "epoch:planned-a-set-aside-decision-is-not-debt",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "description": "PLANNED — fourth of the four Anthony ordered on 2026-09-11, and held behind the vocabulary guard. A Decision that has been set aside becomes recordable in a field loop_status and what_next can read, so a deferred idea stops sitting in the same bucket as a live question somebody is waiting on.\n\nTHE PRESSURE, MEASURED: 690 Decisions; 10 say DEFERRED in prose and 20 say WITHDRAWN, against 4 carrying rejected in the field, with one node named \"DEFERRED, SHAPE ONLY —\" while its status reads proposed.\n\nSCOPE, AND THE TEST THAT SET IT: deferred only. The bar for a new state is not whether the distinction is real but what would READ it — loop_status and what_next both change behaviour for deferral, and for withdrawn there may be no reader at all. Whether the author-stopped-this case is a status or belongs in the rationale, and whether deferral could instead be DERIVED (Decisions carry no timestamp at all, so nothing like PEP-1's \"not updated in a year\" is available here), stay open going in.\n\nDEPENDS ON epoch:planned-a-vocabulary-change-is-never-silent.\n\nNO VERSION NUMBER BY DESIGN.",
+        "epoch_type": "revision",
+        "name": "A decision set aside stops counting as debt",
+        "sequence": 433,
+        "status": "planned"
+      }
+    },
+    {
+      "node_id": "epoch:planned-a-vocabulary-change-is-never-silent",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "description": "PLANNED — third of the four Anthony ordered on 2026-09-11. A reader whose binary does not know a design's vocabulary is told what it lacks or refused, and never opens the graph to show less of the design than it holds.\n\nTHE HOLE THIS CLOSES: the stamp names TYPES only — versions, schema version, node and edge type counts and names. A new enum value on an existing field, a property added to an existing type, and a semantic change where a field's meaning moved and its name did not all pass it without moving anything.\n\nTHE QUESTION THIS INCREMENT SETTLES: wider stamp, per-change identities with names, or a severity per change. A wider stamp is in tension with the stamp's own reason for being small — it must not depend on the vocabulary it describes — so the choice is real and is not made yet.\n\nWHY IT PRECEDES THE SET-ASIDE STATUS: that work adds an enum value, which is exactly the change this guard cannot currently see. Shipping it first would demonstrate the bug on reflow2's own graph.\n\nNO VERSION NUMBER BY DESIGN.",
+        "epoch_type": "revision",
+        "name": "A vocabulary change is never silent",
+        "sequence": 432,
+        "status": "planned"
+      }
+    },
+    {
       "node_id": "epoch:planned-cement-convergence-and-cost-of-change-instruments",
       "node_type": "DesignEpoch",
       "properties": {
@@ -207822,6 +208276,28 @@
         "epoch_type": "release_cut",
         "name": "PLANNED — status accounting: WHEN was this true? The biggest conceptual gap either source found, and EIA-649 names it. BL-187 external anchor and BL-185 test-first both add Verification properties (ONE schema touch), BL-189 the retirement half. Evidence: half of one corpus pins to commits no longer ancestors of main; 11 of this project's own verifications sat green on one two-day-old run. NO VERSION NUMBER BY DESIGN (dec:idea-a-planned-increment-is-named-by-content-not-by-number). Supersedes epoch:v0260-planned.",
         "sequence": 265,
+        "status": "planned"
+      }
+    },
+    {
+      "node_id": "epoch:planned-the-server-guarantees-the-export",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "description": "PLANNED — second of the four Anthony ordered on 2026-09-11. The shared server writes the design export to the working tree after every graph change, debounced, and chains its prev_content_hash from the export as committed on the default branch rather than from whatever was last written to disk.\n\nWHY IT IS HERE: it removes a class of loss rather than an instance — the forgotten export — and the guarantee has to live in the server because the session is the thing that might not come back. It also makes dec:export-once-per-pr automatic: chained from main, any number of commits on a branch each chain from main, and squash-and-merge lands one hop per PR.\n\nTHE FOUR QUESTIONS THIS INCREMENT MUST SETTLE, named on the rulings and deliberately left open: the debounce interval; the git query that finds main's version (merge-base survives a long-lived branch where head-of-default does not); the behaviour when the working tree holds a hand edit of the export; and the no-git fallback, which stays today's on-disk chaining so reflow2 assumes nothing about git.\n\nMUST NOT INCLUDE: any change to durability. The store stays RocksDB — this makes the git RECORD reliable, it does not make the export the only copy.\n\nNO VERSION NUMBER BY DESIGN.",
+        "epoch_type": "revision",
+        "name": "The server guarantees the export, and the lineage chains from main",
+        "sequence": 431,
+        "status": "planned"
+      }
+    },
+    {
+      "node_id": "epoch:planned-the-tool-surface-predicts-itself",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "description": "PLANNED — the second half of the tool-surface pass Anthony ordered on 2026-09-11 (\"run 6 and 7 together as one measurement-then-fix pass\"). Findability and description accuracy are one underlying problem — the served sentence — and the findability half ALREADY ARRIVED at epoch:a-tool-says-when-you-would-ask-for-it (177 of 180 in the top 5, committed corpus, acceptance test). What remains is accuracy.\n\nWHAT IS LEFT, after PRs #477 and #478 closed 11 of the 13 tools the blind prediction test failed: compose_and_analyse returning an empty seam set on a purpose-built seam (D-10); undocumented fields on evidence_report and confirmation_ledger (D-04); get_node's bare {\"node\":null} on a missing id (D-18); and two classes that are bigger than the original thirteen — 26 descriptions under 220 characters (C-03), and 76 of 230 required parameters across 68 tools publishing no description at all (NEW-02), of which ~21 are a constructor's own id and ~55 are not.\n\nTHE METHOD IS THE TEST: predict the behaviour from the served text blind, then call, then score. Where a finding belongs to a class it is fixed at the class with one contract test that fails on a new member, never one tool at a time.\n\nINDEPENDENT OF THE OTHER FOUR: nothing here touches the store, the export or the stamp, so it can run alongside them rather than after.\n\nNO VERSION NUMBER BY DESIGN.",
+        "epoch_type": "revision",
+        "name": "A tool's description predicts what the tool does",
+        "sequence": 434,
         "status": "planned"
       }
     },
@@ -212797,6 +213273,19 @@
       }
     },
     {
+      "node_id": "question:28fbfa926be9cbe6",
+      "node_type": "Question",
+      "properties": {
+        "answer": "BUILD IT THIRD, AND BEFORE THE DEFERRED-DECISION STATUS. Anthony, 2026-09-11: \"go with your suggested order\". The failure mode is a silent wrong answer — an older binary showing less of a design than it holds — which outranks the inconvenience of being told to migrate, and this project has already shown migration is lossless. It goes before the deferred status because adding an enum value is exactly the change the guard cannot currently see. The mechanism (wider stamp vs per-change identities vs severity per change) stays open and is settled inside the increment.",
+        "asked_at": "2026-09-11",
+        "context_setter": "Nothing satisfies requirement “A vocabulary change a consumer's binary cannot read is never silent”",
+        "gap_id": "gap:28fbfa926be9cbe6",
+        "question": "You have written down that an older reflow2 must never open a newer design and quietly show less of it than it holds — but nothing is yet being built to deliver that. Do you want it built in an increment now, held until the vocabulary question behind it is settled, or dropped?",
+        "rephrase_degraded": false,
+        "status": "answered"
+      }
+    },
+    {
       "node_id": "question:31748fe70566dfa2",
       "node_type": "Question",
       "properties": {
@@ -212874,6 +213363,19 @@
       }
     },
     {
+      "node_id": "question:4bb3e2c5d3bb8947",
+      "node_type": "Question",
+      "properties": {
+        "answer": "RETIRE IT AS A REQUIREMENT. Anthony, 2026-09-11: \"go with your suggested order\", which included retiring this one. The reasoning put to him and accepted: this is not a property of the product, it is a to-do list with a completion condition, and the graph has machinery for that (scheduled work in increments) that it does not have for a requirement nothing can ever satisfy. The DISCIPLINE it states — a finding is closed by a merged change or a recorded decision, never by a belief — survives; it is already carried by dec:a-fix-says-whether-it-corrected-the-cause and by the remediation tracker, which stays the row-level record.",
+        "asked_at": "2026-09-11",
+        "context_setter": "Nothing satisfies requirement “Every finding from the 2026-09-10/11 tool sweep is either fixed by a merged change or closed by a recorded decision not to — never by a belief”",
+        "gap_id": "gap:4bb3e2c5d3bb8947",
+        "question": "You set the success criterion that every finding from the tool sweep ends in a merged fix or a written decision not to fix it — but nothing is yet allocated to deliver that, and the remediation list currently lives only in a markdown file. Should the remaining sweep findings become tracked work now, be held, or be dropped?",
+        "rephrase_degraded": false,
+        "status": "answered"
+      }
+    },
+    {
       "node_id": "question:4c33841a4e6fef45",
       "node_type": "Question",
       "properties": {
@@ -212906,6 +213408,19 @@
         "context_setter": "Declared level disagrees with spine position",
         "gap_id": "gap:4e24a202aa6f1737",
         "question": "Packaging is declared a leaf component, but nothing contains it — it sits at the top of the decomposition alongside the nine subsystems. So \"what are the top-level parts of reflow2?\" gives two different answers depending on whether you ask by declared level or by position in the spine. Which is right: does packaging belong inside a subsystem (the agent surface, or documentation), should it be raised to a subsystem in its own right, or is it correctly outside the product decomposition altogether — a build concern rather than a part of the delivered system?",
+        "rephrase_degraded": false,
+        "status": "answered"
+      }
+    },
+    {
+      "node_id": "question:502e1e2cfa17b79a",
+      "node_type": "Question",
+      "properties": {
+        "answer": "RUN IT WITH THE DESCRIPTION-ACCURACY WORK AS ONE MEASUREMENT-THEN-FIX PASS. Anthony, 2026-09-11: \"go with your suggested order\" — reachability and description accuracy are the same underlying problem (the served sentence), so they are one increment. ⚠️ CORRECTION ON THE WAY IN: the recommendation put to him was \"build the measurement, not the fix\", and the measurement HAS ALREADY LANDED. PR #476 merged: 180-query corpus committed as tests/fixtures/find_tools_corpus.json with an acceptance test, 177 of 180 in find_tools' top 5 (from a 114 baseline), three tools exempt at rank 6 with the measured reason, held-out paraphrase corpus at 36 of 42, and a second test that refuses any newly served tool absent from the corpus. What remains is the standing obligation, not the first measurement.",
+        "asked_at": "2026-09-11",
+        "context_setter": "Nothing satisfies requirement “Every served tool is reachable through find_tools from a description of the job in the user's own words”",
+        "gap_id": "gap:502e1e2cfa17b79a",
+        "question": "You set the success criterion that every one of the 180 served tools can be found from a plain description of the job — but only one tool has actually been tested that way, and nothing is yet allocated to do the rest. Do you want that measurement built and run now, held, or dropped?",
         "rephrase_degraded": false,
         "status": "answered"
       }
@@ -212956,6 +213471,19 @@
         "context_setter": "Nothing asked for capability “An artifact declares what it stands for and how its content behaves, so a report can tell two opposite states apart”",
         "gap_id": "gap:5c02d9fc4c3ab022",
         "question": "When a file or folder is registered, reflow2 now lets you say what it stands for — whether it's one finished thing, a whole folder you're deliberately treating as a single item, or a placeholder you still mean to break up — and whether its contents are expected to keep changing. Nothing in your written-down needs actually asked for that. Was it worth adding, and if so, what problem of yours does it solve? Or should it come back out?",
+        "rephrase_degraded": false,
+        "status": "answered"
+      }
+    },
+    {
+      "node_id": "question:5faa9f03e6dbe450",
+      "node_type": "Question",
+      "properties": {
+        "answer": "BUILD IT FOURTH, HELD BEHIND THE VERSION GUARD. Anthony, 2026-09-11: \"go with your suggested order\". A decision set aside is not debt, and today it sits in the same bucket as a live question somebody is waiting on — 30 decisions say so in prose against 4 carrying it in a field a computation can read. It is held behind the vocabulary-change guard because adding an enum value would otherwise demonstrate that very bug on reflow2's own graph.",
+        "asked_at": "2026-09-11",
+        "context_setter": "Nothing satisfies requirement “An idea that stopped is not counted as debt somebody owes”",
+        "gap_id": "gap:5faa9f03e6dbe450",
+        "question": "You wrote down that a decision you have set aside should be recordable as set-aside, so it stops being counted as work you owe — thirty decisions say so in prose today and nothing can read it. Build it, hold it behind the version-guard work it would trip, or drop it?",
         "rephrase_degraded": false,
         "status": "answered"
       }
@@ -213202,6 +213730,19 @@
       }
     },
     {
+      "node_id": "question:afc66a528788b6f9",
+      "node_type": "Question",
+      "properties": {
+        "answer": "BUILD IT FIRST. Anthony, 2026-09-11: \"go with your suggested order\" — the recommended order being release binary → server-guaranteed export → version guard → deferred-decision status, with findability and description accuracy run together as one measurement-then-fix pass, and the sweep-findings requirement retired. The release-profile binary is first because it is a wrapper change with no design work behind it, it is the largest user-visible win measured (93x on a graph walk, 12.5s → 2.0s warm on the region report), and every other cost number in the sweep was measured on the debug binary and cannot be judged until this lands.",
+        "asked_at": "2026-09-11",
+        "context_setter": "Nothing satisfies requirement “A session runs a release-profile binary, rebuilt deliberately rather than per launch”",
+        "gap_id": "gap:afc66a528788b6f9",
+        "question": "You accepted that a session must run a release-profile binary, rebuilt deliberately rather than on every launch — measured at 93x on one walk — but nothing is yet allocated to change the launch wrapper. Build it in the next increment, hold it, or drop it?",
+        "rephrase_degraded": false,
+        "status": "answered"
+      }
+    },
+    {
       "node_id": "question:b0ef8ce1e452f881",
       "node_type": "Question",
       "properties": {
@@ -213260,6 +213801,19 @@
         "context_setter": "117 of 166 open idea(s) connect to nothing",
         "gap_id": "gap:baa3d7b03a08dedb",
         "question": "117 of 166 open ideas connect to nothing, so a search that lands on one returns it alone and the reasoning it belongs to is unreachable from it. Relate them, or accept that a parked idea legitimately governs nothing yet?",
+        "rephrase_degraded": false,
+        "status": "answered"
+      }
+    },
+    {
+      "node_id": "question:be9376ce5a6bc63b",
+      "node_type": "Question",
+      "properties": {
+        "answer": "FIX THE REMAINDER AND MAKE THE PREDICTION TEST STANDING — run together with the findability work as one pass. Anthony, 2026-09-11: \"go with your suggested order\". ⚠️ CORRECTION ON THE WAY IN: the recommendation was put to him as \"thirteen tools failed\"; reading the remediation tracker afterwards, ELEVEN of the thirteen are already closed by merged PRs #477 and #478. What is genuinely open is compose_and_analyse's empty seam (D-10), the undocumented fields on evidence_report/confirmation_ledger (D-04), and two measured classes that are larger than the thirteen: 26 descriptions under 220 characters (C-03) and 76 of 230 required parameters across 68 tools publishing no description at all (NEW-02).",
+        "asked_at": "2026-09-11",
+        "context_setter": "Nothing satisfies requirement “Every served tool's description is accurate about what the tool actually does — its behaviour, its reply shape, and what an empty answer means”",
+        "gap_id": "gap:be9376ce5a6bc63b",
+        "question": "You set the success criterion that every tool's served description lets a caller predict what it returns, including what an empty answer means — thirteen tools already failed that test. Do you want the thirteen fixed and the prediction test made a standing check now, held, or dropped?",
         "rephrase_degraded": false,
         "status": "answered"
       }
@@ -213386,6 +213940,19 @@
         "context_setter": "Capability “Explain itself to someone who has not been convinced yet” isn't assigned to any part",
         "gap_id": "gap:e68c76afcb57424c",
         "question": "You want reflow2 to explain plainly what it is and how to run it, before it explains what it believes. Nothing currently owns that job — the README, the getting-started guide and the diagrams are written by hand and belong to no part of the system. Should one part be responsible for explaining reflow2 to a newcomer, or is that simply documentation that lives outside the design?",
+        "rephrase_degraded": false,
+        "status": "answered"
+      }
+    },
+    {
+      "node_id": "question:ed65f4279c56e786",
+      "node_type": "Question",
+      "properties": {
+        "answer": "BUILD IT SECOND. Anthony, 2026-09-11: \"go with your suggested order\". The server-guaranteed export follows the release binary because it removes a whole class of loss (the forgotten export) and makes the one-export-per-PR rule automatic instead of remembered. The four details the rulings left open — debounce interval, the git query that finds main's version, the hand-edited working-tree export, and the no-git fallback — are settled inside the increment, not before it.",
+        "asked_at": "2026-09-11",
+        "context_setter": "Nothing satisfies requirement “The server keeps the working-tree export current, and its lineage chains from what is committed”",
+        "gap_id": "gap:ed65f4279c56e786",
+        "question": "You accepted that the server itself must keep the exported design file current and chain its lineage from what is committed on main — but nothing is yet allocated to build it, and four details were left for the increment to decide. Build it next, hold it, or drop it?",
         "rephrase_degraded": false,
         "status": "answered"
       }
@@ -215537,7 +216104,7 @@
         "priority": "high",
         "provenance": "authored",
         "statement": "Anthony, 2026-09-11, stating the success criteria for the tool-sweep effort: \"that all issues identified in the earlier tranches have been addressed properly\". The sweep exercised all 180 served tools (430 scripted calls plus the interactive tranches) and recorded 24 D-/C- findings, 6 W- findings and 4 F- findings, tracked in docs/local/tool-sweep/REMEDIATION.md. Each row shall reach one of two states: a merged pull request that fixes it, or a Decision on the record saying why it is not being fixed. Where a finding belongs to a CLASS (a required reference parameter with no stated type: 40 tools; a read-only reply with no size bound: 58 of 68; a caller-assembled inline payload with no file handle: 22; a bare-zero reply that cannot say which empty it is), it is addressed at the class with one contract test that fails on a new member, not one tool at a time — dec:idea-a-factory-builds-the-mechanics-in-so-a-class-fix-is-one-edit is the settled shape. Where a finding is a one-off (seven of thirteen distinct deficiencies), it is an ordinary fix. F-02 (both budgets breached) was withdrawn as a stale-edge misreading and is already closed.",
-        "status": "proposed"
+        "status": "dropped"
       }
     },
     {
@@ -217201,6 +217768,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:2026-09-11-the-seven-unsatisfied-requirements-are-ruled-on:req:every-finding-of-the-tool-sweep-is-addressed-or-ruled-on",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-09-11\",\"role\":\"author\"}}]",
+        "state": "{\"concern\":\"core\",\"lineage\":\"original\",\"name\":\"Every finding from the 2026-09-10/11 tool sweep is either fixed by a merged change or closed by a recorded decision not to — never by a belief\",\"priority\":\"high\",\"provenance\":\"authored\",\"statement\":\"Anthony, 2026-09-11, stating the success criteria for the tool-sweep effort: \\\"that all issues identified in the earlier tranches have been addressed properly\\\". The sweep exercised all 180 served tools (430 scripted calls plus the interactive tranches) and recorded 24 D-/C- findings, 6 W- findings and 4 F- findings, tracked in docs/local/tool-sweep/REMEDIATION.md. Each row shall reach one of two states: a merged pull request that fixes it, or a Decision on the record saying why it is not being fixed. Where a finding belongs to a CLASS (a required reference parameter with no stated type: 40 tools; a read-only reply with no size bound: 58 of 68; a caller-assembled inline payload with no file handle: 22; a bare-zero reply that cannot say which empty it is), it is addressed at the class with one contract test that fails on a new member, not one tool at a time — dec:idea-a-factory-builds-the-mechanics-in-so-a-class-fix-is-one-edit is the settled shape. Where a finding is a one-off (seven of thirteen distinct deficiencies), it is an ordinary fix. F-02 (both budgets breached) was withdrawn as a stale-edge misreading and is already closed.\",\"status\":\"proposed\"}",
+        "target_id": "req:every-finding-of-the-tool-sweep-is-addressed-or-ruled-on",
+        "target_type": "Requirement"
+      }
+    },
+    {
       "node_id": "snap:epoch:a-check-can-say-whether-a-limit-holds:dec:should-a-verification-be-able-to-verify-a-constraint",
       "node_type": "Snapshot",
       "properties": {
@@ -218237,6 +218814,16 @@
         "edges": "[]",
         "state": "{\"description\":\"When a set_*_status call actually MOVES a status and the node carries prose, the reply carries a prose_currency block naming both statuses, the field, and an excerpt - so the caller can judge whether the description still reads true here rather than in another call. Silent when the status did not move and silent when there is no prose. It never judges the text: it states that the prose was written under the OLD status and asks, per dec:report-dont-judge. Built from a 2026-09-02 field report; the reporter's reasoning is why it is a reply and not a detector - the call already knows the description was not touched, so the divergence is caught while the author is still in the room.</description>\\n</invoke>\\n\",\"name\":\"A status that moves past the prose describing it says so, in the reply that moved it\",\"provenance\":\"authored\",\"status\":\"realized\"}",
         "target_id": "cap:a-status-advance-says-whether-its-prose-predates-it",
+        "target_type": "Capability"
+      }
+    },
+    {
+      "node_id": "snap:epoch:preserved-on-write:cap:every-tool-carries-the-users-phrasing-and-the-corpus-is-the-test",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:service\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:every-served-tool-is-reachable-by-find-tools-on-a-users-words\",\"properties\":{}}]",
+        "state": "{\"description\":\"Every served tool's description states the job the way somebody states it when they want it done — not the way the tool is named — and a committed corpus of one query per tool is the standing check that the sentence was written from the job rather than tuned to the test.\\n\\nDELIVERED 2026-09-11 (PR #476, merged): 68 sentences written from purpose, 8 descriptions trimmed to budget, corpus committed as crates/reflow2-mcp/tests/fixtures/find_tools_corpus.json with an acceptance test. Measured on main: 177 of 180 tools in find_tools' default top 5, up from a 114 baseline where 53 tools did not appear in the top 10 at all. Three tools sit at rank 6 and are exempt WITH THE MEASURED REASON, each beaten by short descriptions sharing incidental words. A second test walks the served surface and refuses any tool absent from the corpus, so a 181st tool cannot ship unfindable by omission.\\n\\nTHE HONESTY CHECK, AND WHY IT IS NOT A GATE: a sentence that merely copies its corpus query passes the committed test and still fails a user who words it differently. The guard is a held-out paraphrase corpus written from a different angle and never consulted while the sentences were written — 36 of 42, up from 16 after the rewrite it forced. It is deliberately NOT wired into CI, because folding it in would make it the next thing people tune to.\\n\\nTWO SCORER REFINEMENTS WERE TRIED AND REVERTED on measurement — a 4-character floor on the name-prefix rule (neutral) and a gentler length normalisation (worse) — because a change the corpus does not reward is noise.</description>\\n<parameter name=\\\"satisfies\\\">req:every-served-tool-is-reachable-by-find-tools-on-a-users-words\",\"name\":\"Every served tool carries the job in a user's own words, and a committed 180-query corpus is the acceptance test that it was carried honestly\",\"provenance\":\"authored\",\"status\":\"realized\",\"tier\":\"operational\"}",
+        "target_id": "cap:every-tool-carries-the-users-phrasing-and-the-corpus-is-the-test",
         "target_type": "Capability"
       }
     },
@@ -227418,6 +228005,20 @@
         "level": "system",
         "method": "analysis",
         "name": "Every skill declares its attribute classes, and meets the obligations of the ones it declares",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:every-tool-is-found-by-a-query-in-the-users-words",
+      "node_type": "Verification",
+      "properties": {
+        "description": "Two tests over a committed corpus of one query per served tool (crates/reflow2-mcp/tests/fixtures/find_tools_corpus.json), phrased as somebody states the job rather than as the tool is named.\n\nFIRST: every tool must appear in find_tools' DEFAULT top 5 — the default because 5 is what a consumer actually sees. Tools one place outside it are listed with the measured reason they are there, and the list is refused when it goes stale.\n\nSECOND: the test walks the served surface and refuses any tool absent from the corpus, so a newly added tool cannot ship unfindable by omission.\n\nWHAT THIS TEST CANNOT SEE: a description that merely copies its corpus query passes here and still fails a user who words it differently. The guard against that is a held-out paraphrase corpus scored separately, deliberately not wired into CI so it does not become the next thing people tune to.",
+        "findings": "177 of 180 served tools in the top 5, from a baseline of 114 (53 of which were not in the top 10 at all). Three tools at rank 6, exempt with the measured reason: consumption_report, governed_by and reviewed_gaps, each outranked by shorter descriptions sharing incidental words. Held-out paraphrase corpus, scored separately and not gated: 36 of 42, from 16 before the rewrite it forced.",
+        "kind": "verification",
+        "last_run_at": "2026-09-11",
+        "level": "acceptance",
+        "method": "test",
+        "name": "Every served tool reaches find_tools' top 5 on one query in a user's words",
         "status": "passing"
       }
     },
