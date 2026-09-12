@@ -108,6 +108,10 @@ Three records, three questions — kept separate on purpose:
   to a collaborator as-is.
 
 ### 3½ · Upgrade notes — *read before updating a consumer project*
+- [upgrading-to-v0.59.0.md](upgrading-to-v0.59.0.md) — **upgrade everywhere, together**: the stamp
+  moves by an ENUM VALUE (`Decision.status` gains `deferred`) that an older binary cannot see — it
+  opens the graph with no warning and shows a deferred decision as gone. Nothing to migrate; only
+  every seat updated. Also `/feedback`, lessons served at the step, `--export-to`.
 - [upgrading-to-v0.27.0.md](upgrading-to-v0.27.0.md) — **upgrade everywhere, together**: one new edge
   type (`OWNED_BY`) moves the version stamp, so an older reflow2 is locked out of a design written by
   this one. Purely additive — nothing is reinterpreted or migrated. **But four served tools are gone:**
