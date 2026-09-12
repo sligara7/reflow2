@@ -22,7 +22,7 @@
 //! seeing less than is there. That is refused loudly. Everything else opens,
 //! and the difference is reported rather than hidden.
 
-use std::collections::BTreeSet;
+use std::collections::{BTreeMap, BTreeSet};
 use std::path::{Path, PathBuf};
 
 use crate::foundation::core::{DynoError, Schema};
@@ -74,6 +74,73 @@ pub struct GraphStamp {
     /// *Which* edge types the schema carried, sorted. See `node_type_names`.
     #[serde(default)]
     pub edge_type_names: Option<Vec<String>>,
+    /// The ENUM VALUES the schema declared, keyed `Type.property`, each list
+    /// sorted. `None` on any stamp written before this existed.
+    ///
+    /// # Why the stamp grew a third time, and why this class and not the others
+    ///
+    /// Types were all a stamp named, so the guard was blind to every change
+    /// that is not a type appearing or disappearing. Three such classes exist,
+    /// and they are NOT equally harmful:
+    ///
+    /// · **An enum value** is the severe one, and it is the one here.
+    ///   `Decision.status` gaining `deferred` moves no count and no name. An
+    ///   older binary opens the graph with no warning and compares
+    ///   `status == "proposed"` — so the decision does not error, it VANISHES
+    ///   from `loop_status` and `what_next`. Silently showing less of the
+    ///   design than it holds is the precise harm this guard's own refusal
+    ///   message names.
+    /// · **A property added to an existing type** is NOT here, deliberately.
+    ///   An older reader ignores what it does not know and mis-filters nothing,
+    ///   and this project adds properties constantly — recording them would
+    ///   turn almost every release into a migration for a harm that is "you saw
+    ///   fewer fields", which the reader can already tell.
+    /// · **A semantic change**, where a field's meaning moved and its name did
+    ///   not, is beyond ANY structural fingerprint and is not addressed by this
+    ///   or by any widening of it. `dec:change-type-splits-into-two-axes` is one
+    ///   that already happened. It needs per-change identities, which stays open.
+    ///
+    /// SIZE IS NOT THE OBJECTION IT LOOKS LIKE: this is a few hundred short
+    /// strings, and it does not enter `content_hash`, which covers nodes, edges
+    /// and graph id only — so lineage is untouched by it.
+    #[serde(default)]
+    pub enum_values: Option<BTreeMap<String, Vec<String>>>,
+}
+
+/// Every enum vocabulary the schema declares, keyed `Type.property`.
+///
+/// NODE types only, and edge properties deliberately left out: the population
+/// probe that decides whether a refusal is warranted can address a node by its
+/// type, and an edge property is not reachable that way — the same asymmetry
+/// `vocabulary_gap` already lives with for retired edge types. An edge enum
+/// would therefore have to refuse unconditionally, which is the universal
+/// refusal that locked a user out twice.
+fn declared_enum_values(schema: &Schema) -> BTreeMap<String, Vec<String>> {
+    let mut out = BTreeMap::new();
+    for (type_name, def) in &schema.node_types {
+        for (prop_name, prop) in &def.properties {
+            if let Some(values) = &prop.values {
+                if values.is_empty() {
+                    continue;
+                }
+                let mut sorted = values.clone();
+                sorted.sort();
+                out.insert(format!("{type_name}.{prop_name}"), sorted);
+            }
+        }
+    }
+    out
+}
+
+/// One enum value a graph's stamp declares and this binary does not know.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct UnknownEnumValue {
+    /// The node type carrying the property.
+    pub node_type: String,
+    /// The property whose vocabulary grew.
+    pub property: String,
+    /// The value this binary has never heard of.
+    pub value: String,
 }
 
 impl GraphStamp {
@@ -90,6 +157,7 @@ impl GraphStamp {
             edge_types: schema.edge_types.len(),
             node_type_names: Some(node_names),
             edge_type_names: Some(edge_names),
+            enum_values: Some(declared_enum_values(schema)),
         }
     }
 
@@ -122,6 +190,49 @@ impl GraphStamp {
     /// a graph holding ZERO instances of a retired type was refused, on the
     /// grounds that opening it "could silently show you less of your design
     /// than it holds", which is false when it holds none.
+    /// Enum values this graph's stamp declares that `now` has never heard of.
+    ///
+    /// Empty when either stamp predates the enum vocabulary — an absent record
+    /// is NOT a claim that nothing changed, and the caller must not read it as
+    /// one. It is the same three-valued honesty `verify_content_hash` keeps.
+    ///
+    /// ⚠️ THIS DOES NOT SAY WHICH DIRECTION THE CHANGE WENT, and cannot. A value
+    /// this binary lacks is either one it has not caught up to or one it
+    /// REMOVED, and reflow2 keeps no registry of removed enum values, so there
+    /// is nothing to partition against — unlike types, where `RETIRED_NODE_TYPES`
+    /// makes the split exact. The message says both possibilities and gives the
+    /// reader the one discriminator available (the stamps' own versions) rather
+    /// than asserting the commoner case and being confidently wrong on the day
+    /// somebody removes a value. When that day comes, the fix is the registry
+    /// types already have, and this comment is where to start.
+    pub fn unknown_enum_values(&self, now: &Self) -> Vec<UnknownEnumValue> {
+        let (Some(theirs), Some(ours)) = (&self.enum_values, &now.enum_values) else {
+            return Vec::new();
+        };
+        let mut out = Vec::new();
+        for (field, values) in theirs {
+            // A field this binary does not have AT ALL is a property-level
+            // difference, not an enum one: it is either on a type already
+            // reported above, or a property addition, which this deliberately
+            // does not police. Skipping it keeps the two classes apart.
+            let Some(known) = ours.get(field) else {
+                continue;
+            };
+            let known: BTreeSet<&str> = known.iter().map(String::as_str).collect();
+            let Some((node_type, property)) = field.split_once('.') else {
+                continue;
+            };
+            for value in values.iter().filter(|v| !known.contains(v.as_str())) {
+                out.push(UnknownEnumValue {
+                    node_type: node_type.to_string(),
+                    property: property.to_string(),
+                    value: value.clone(),
+                });
+            }
+        }
+        out
+    }
+
     fn vocabulary_gap(&self, now: &Self) -> VocabularyGap {
         match (
             &self.node_type_names,
@@ -190,6 +301,37 @@ impl GraphStamp {
             }
         }
     }
+}
+
+/// The refusal for an enum value this binary cannot read, and that the graph
+/// actually holds.
+///
+/// Names the VALUE, not just a version, because the action differs: catching up
+/// is right when the binary is behind, migrating is right when the value was
+/// removed, and nothing here can tell those apart (see `unknown_enum_values`).
+/// So it states both and hands over the only discriminator there is.
+fn enum_refusal(stored: &[UnknownEnumValue], was: &GraphStamp, now: &GraphStamp) -> String {
+    let listed = stored
+        .iter()
+        .map(|u| format!("{}.{} = \"{}\"", u.node_type, u.property, u.value))
+        .collect::<Vec<_>>()
+        .join(", ");
+    format!(
+        "REFUSED: this graph holds {listed} — {} value(s) this reflow2 does not know, on a \
+         property it DOES know. Opening it would not fail; it would quietly answer as if those \
+         nodes held something else, because every comparison this binary makes on that property \
+         tests against the values it has. That is the silent case this guard exists for: you \
+         would be reading a design that says something other than what you are shown.\n \
+         \u{2022} The graph was stamped by reflow2 {}; you are running {}. If that is NEWER than \
+         yours, you are behind — update reflow2 and open it again. If it is not, the value was \
+         REMOVED by a later reflow2, and the fix is to {}.\n \
+         \u{2022} reflow2 keeps no registry of removed ENUM values, unlike removed TYPES, so it \
+         cannot tell you which of those two it is. It refuses rather than guess.",
+        stored.len(),
+        was.reflow2_version,
+        now.reflow2_version,
+        migrate_recipe()
+    )
 }
 
 /// What a stamp comparison found, partitioned by what can be done about it.
@@ -469,6 +611,7 @@ pub fn check_and_stamp(
     graph_path: &str,
     schema: &Schema,
     retired_population: impl Fn(&[String]) -> Result<Vec<String>, DynoError>,
+    enum_population: impl Fn(&[UnknownEnumValue]) -> Result<Vec<UnknownEnumValue>, DynoError>,
 ) -> Result<Provenance, DynoError> {
     let now = GraphStamp::current(schema);
     let path = stamp_path(graph_path);
@@ -531,6 +674,30 @@ pub fn check_and_stamp(
         },
     };
 
+    // ═══ THE ENUM VOCABULARY, checked after the types and for the same reason
+    // the types are checked: opening must never show less of the design than
+    // the file holds.
+    //
+    // AFTER, not before, because a type-level gap is strictly more severe and
+    // its message is the one to show. By here the types agree, so any remaining
+    // difference is finer-grained.
+    //
+    // AND ON A POPULATION, NEVER A DECLARATION — the rule
+    // `chg:the-version-guard-refuses-on-a-population-not-a-declaration` bought
+    // with two lockouts. A schema that grew `deferred` matters only if some
+    // Decision actually carries it; refusing on the declaration alone would
+    // repeat exactly the mistake that made a graph holding ZERO instances of a
+    // retired type unopenable.
+    if let Provenance::OlderGraph { was, now } = &verdict {
+        let unknown = was.unknown_enum_values(now);
+        if !unknown.is_empty() {
+            let stored = enum_population(&unknown)?;
+            if !stored.is_empty() {
+                return Err(DynoError::Storage(enum_refusal(&stored, was, now)));
+            }
+        }
+    }
+
     // Refresh on the way through, so the stamp tracks the newest reflow2 that
     // has held this graph. Never write over an unreadable one — that path
     // returned above.
@@ -577,6 +744,7 @@ mod tests {
             edge_types: e,
             node_type_names: None,
             edge_type_names: None,
+            enum_values: None,
         }
     }
 
@@ -591,6 +759,7 @@ mod tests {
             edge_types: ne.len(),
             node_type_names: Some(nn),
             edge_type_names: Some(ne),
+            enum_values: None,
         }
     }
 

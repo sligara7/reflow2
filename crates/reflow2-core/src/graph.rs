@@ -366,15 +366,41 @@ impl DesignGraph {
         // counted is exactly the case the conservative refusal is still right for.
         let count_under =
             crate::identity::read_graph_id(path).unwrap_or_else(|| DEFAULT_GRAPH_ID.to_string());
-        let provenance = crate::provenance::check_and_stamp(path, &schema, |types| {
-            let mut populated = Vec::new();
-            for t in types {
-                if engine.count_nodes(&count_under, t)? > 0 {
-                    populated.push(t.clone());
+        let provenance = crate::provenance::check_and_stamp(
+            path,
+            &schema,
+            |types| {
+                let mut populated = Vec::new();
+                for t in types {
+                    if engine.count_nodes(&count_under, t)? > 0 {
+                        populated.push(t.clone());
+                    }
                 }
-            }
-            Ok(populated)
-        })?;
+                Ok(populated)
+            },
+            // The same question one level finer, for an ENUM VALUE this binary
+            // does not know: is any node actually STORING it? A declaration that
+            // grew a value nobody has used is not a reason to refuse anybody —
+            // exactly the lesson the type-level probe above was bought with.
+            //
+            // Scan failures propagate here for the same reason: a value that
+            // cannot be counted is the case where refusing is still right.
+            |unknown| {
+                let mut stored = Vec::new();
+                for u in unknown {
+                    let hits = engine.scan_nodes_by_property(
+                        &count_under,
+                        &u.node_type,
+                        &u.property,
+                        &Value::String(u.value.clone()),
+                    )?;
+                    if !hits.is_empty() {
+                        stored.push(u.clone());
+                    }
+                }
+                Ok(stored)
+            },
+        )?;
         // Who is this design? (req:design-identity.) Established on first open
         // and read on every one after, from a sibling file — the id namespaces
         // every stored key, so it has to be known before the design can be.
