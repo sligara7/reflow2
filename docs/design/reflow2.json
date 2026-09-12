@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:61bed01b3d5dcdcfb6839432a8a6f6e6146f43f63243b01dcf8ed6c47309ccda",
+  "content_hash": "sha256:b97cbc59db62ed51fb43d8e5769ca9ad7efda4686d8e09138dd90f790e17b24d",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2013,6 +2013,14 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:feedback-is-a-computed-tally",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:fork-alternatives",
       "properties": {
         "weight_basis": "estimated"
@@ -4020,6 +4028,38 @@
         "evidence": "The earlier one saw this coming. That accepted requirement asks for nesting 'as deep as the design needs' — and 'as the design needs' is precisely the quantity span of control computes, rather than the open-ended invitation it has been read as. Its own measurement already flagged 'DEPTH IS TWO, not as deep as the design needs' as the shortfall; a fan-out rule is what would say how deep is actually needed instead of leaving it to judgement."
       },
       "to_id": "dec:idea-depth-is-derived-from-fan-out-not-declared-by-a-ladder"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "req:telemetry-carries-usage-never-design-content",
+      "properties": {
+        "evidence": "That requirement already draws the line for what a usage payload may carry (verbs, outcome classes, durations — never content); a /feedback tally is that payload delivered by hand, so the line it drew applies unchanged."
+      },
+      "to_id": "dec:idea-slash-feedback-emits-a-computed-tally-not-an-agents-recollection"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "rule:a-reflow2-tool-failure-met-while-working-is-captured-as-a-to-do",
+      "properties": {
+        "evidence": "The 2026-09-06 rule already instructs the agent to write down every reflow2 tool failure it meets; Anthony's 2026-09-12 observation is that the instruction alone does not survive the task at hand — which is the gap this idea is about, and the ledger idea is that rule's own stated detector leg."
+      },
+      "to_id": "dec:idea-a-failure-met-mid-task-is-parked-where-a-boundary-revisits-it"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "rule:a-rule-the-project-follows-lives-in-the-graph-not-in-an-agents-memory",
+      "properties": {
+        "evidence": "His 2026-09-04 rule already answers this idea's own counter-argument (\"Memory.md serves the purpose\"): a memory file is machine-local, so the notepad belongs in the graph with memory holding only a pointer."
+      },
+      "to_id": "dec:idea-does-the-agent-keep-a-notepad-in-the-graph-for-the-next-agent"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "rule:an-identified-issue-is-enduring-never-dropped",
+      "properties": {
+        "evidence": "His 2026-08-20 rule already demands that an identified issue become a node, a named Question, or a recurring finding before moving on; this idea is about giving that rule a MOMENT and a mechanism mid-task, where the agent is least likely to stop."
+      },
+      "to_id": "dec:idea-a-failure-met-mid-task-is-parked-where-a-boundary-revisits-it"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -9749,6 +9789,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:the-server-keeps-a-usage-ledger-and-feedback-renders-it",
+      "properties": {},
+      "to_id": "epoch:planned-feedback-is-a-computed-tally"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:the-server-says-when-it-is-stale-20260809",
       "properties": {},
       "to_id": "epoch:v0260"
@@ -11454,6 +11500,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:cap:every-tool-carries-the-users-phrasing-and-the-corpus-is-the-test",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:cap:feedback-is-a-computed-tally",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
     },
@@ -13491,6 +13543,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-a-failure-met-mid-task-is-parked-where-a-boundary-revisits-it",
+      "properties": {
+        "acted_at": "2026-09-12",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-a-gap-can-be-scheduled-into-an-increment-like-any-other-work",
       "properties": {
         "acted_at": "2026-08-20",
@@ -14226,6 +14287,15 @@
       "from_id": "dec:idea-does-serving-flo2-cost-the-local-case",
       "properties": {
         "acted_at": "2026-08-21",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-does-the-agent-keep-a-notepad-in-the-graph-for-the-next-agent",
+      "properties": {
+        "acted_at": "2026-09-12",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -15157,6 +15227,15 @@
       "from_id": "dec:idea-silence-is-reported-not-inferred",
       "properties": {
         "acted_at": "2026-08-14",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-slash-feedback-emits-a-computed-tally-not-an-agents-recollection",
+      "properties": {
+        "acted_at": "2026-09-12",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -18883,6 +18962,15 @@
         "role": "author"
       },
       "to_id": "ctr:claude-fable"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:feedback-on-reflow2-is-computed-from-a-record-the-server-kept",
+      "properties": {
+        "acted_at": "2026-09-12",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -26923,6 +27011,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-810483679909e413",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:feedback-is-a-computed-tally-report-test"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-815dd755caf58e7c",
       "properties": {
         "accepted_baseline": true,
@@ -27265,6 +27362,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-9c9c4b8d3fb4e701",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-9d03ab6c044e6ae6",
       "properties": {
         "accepted_baseline": true,
@@ -27487,6 +27593,15 @@
         "action": "modified"
       },
       "to_id": "art:readme"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-b1853f74f24284bf",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
     },
     {
       "edge_type": "CHANGED",
@@ -28279,6 +28394,15 @@
         "action": "modified"
       },
       "to_id": "art:adopt-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-fa632e44a9185e67",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:usage-ledger"
     },
     {
       "edge_type": "CHANGED",
@@ -41729,6 +41853,51 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-server-keeps-a-usage-ledger-and-feedback-renders-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:find-tools-corpus-fixture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-server-keeps-a-usage-ledger-and-feedback-renders-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-server-keeps-a-usage-ledger-and-feedback-renders-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skills-and-tools"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-server-keeps-a-usage-ledger-and-feedback-renders-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-skills"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-server-keeps-a-usage-ledger-and-feedback-renders-it",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:feedback-is-a-computed-tally"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-server-says-when-it-is-stale-20260809",
       "properties": {
         "accepted_baseline": true,
@@ -46659,6 +46828,16 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-a-failure-met-mid-task-is-parked-where-a-boundary-revisits-it",
+      "properties": {
+        "evidence": "Option A of this idea — the server tallies its own refusals and surfaces them at a boundary — IS that earlier idea; the lean here (A first, then a disposition on top) only stands if that ledger lands. Surfaced by the near-match guard on capture, which is itself the kind of failure this idea is about.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-the-server-counts-its-own-refusals-so-no-session-has-to-remember-to"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "dec:idea-a-hub-owns-designs-it-does-not-absorb-and-that-is-a-third-relation",
       "properties": {
         "evidence": "That requirement establishes a design as a unit that composes with the designs around it, which is the ground the hub relation stands on. The hub case asks for a THIRD composition mode beside peer linking and merging — ownership and roll-up without absorption — so it extends that requirement rather than contradicting it, and is unbuildable without it.",
@@ -46857,6 +47036,16 @@
         "weight_basis": "estimated"
       },
       "to_id": "dec:one-process-many-stores"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-does-the-agent-keep-a-notepad-in-the-graph-for-the-next-agent",
+      "properties": {
+        "evidence": "A lesson for the next agent can only be written about a failure somebody came back to; the notepad idea has no content unless mid-task failures survive the task.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-a-failure-met-mid-task-is-parked-where-a-boundary-revisits-it"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -47197,6 +47386,16 @@
         "weight_basis": "estimated"
       },
       "to_id": "dec:idea-is-the-restructure-target-the-shared-struct-rather-than-the-subsystem-contracts"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-slash-feedback-emits-a-computed-tally-not-an-agents-recollection",
+      "properties": {
+        "evidence": "The tally /feedback renders is the refusal ledger that idea proposes, widened to every call; without the server keeping it there is nothing objective to render.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-the-server-counts-its-own-refusals-so-no-session-has-to-remember-to"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -49889,6 +50088,14 @@
     },
     {
       "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-agent-to-agent-feedback-is-a-formal-channel",
+      "properties": {
+        "evidence": "The 2026-08-14 idea established that agent feedback yields real defects and left the delivery mechanism open; this is that idea grown into a specific mechanism — a computed tally rendered by a served skill."
+      },
+      "to_id": "dec:idea-slash-feedback-emits-a-computed-tally-not-an-agents-recollection"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
       "from_id": "dec:idea-can-a-design-graph-be-reduced-to-its-essential-core",
       "properties": {
         "evidence": "Drawn FROM the 2026-08-18 node INTO this one: the earlier form of the same thought, three weeks on, through a different formal framework. NOT SUPERSEDED, and this is the part to read before acting on the edge — that node's measured prior-art survey is still the better half of the pair, and it is where the transitive-reduction composition-table trap is recorded. What evolved is the argument, not the evidence. DUPLICATES was the other candidate and was rejected deliberately: it marks a candidate for consolidation and apply_heal merges on an asserted one, and merging these two would destroy the fact that the same conclusion was reached twice by independent routes, which is most of what the pair is worth."
@@ -49958,6 +50165,14 @@
         "evidence": "The idea asked for one way to name a node across the surface; Anthony ruled convention (i) on 2026-09-06 and this change built it: the type is optional and resolved from the id wherever an existing node is named, refused on collision. The argument NAMES (from_id vs target_id vs node_id) are the remaining half of the idea and stay open."
       },
       "to_id": "chg:a-node-is-named-by-its-id-and-the-type-is-optional-across-the-relation-surface"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-slash-feedback-emits-a-computed-tally-not-an-agents-recollection",
+      "properties": {
+        "evidence": "Anthony promoted the idea to intent on 2026-09-12 (\"I want to continue with implementing /feedback\"); the requirement is the idea's lean (A + B, unit = the project since the last report) stated as what is owed."
+      },
+      "to_id": "req:feedback-on-reflow2-is-computed-from-a-record-the-server-kept"
     },
     {
       "edge_type": "EVOLVES_INTO",
@@ -50070,6 +50285,14 @@
         "evidence": "That node argued optimisation as the fourth return from a contract and measured the three things it needs - a wall, a target, a measurement. This node is the same thought after the procedure was actually RUN, and the run contradicts one part of it: optimisation succeeded with the wall ABSENT because the target and the measurement were supplied. The idea grew up by being executed."
       },
       "to_id": "dec:idea-should-optimize-be-a-served-skill-any-project-can-run"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-where-do-lessons-learned-live-and-can-a-user-state-a-precondition",
+      "properties": {
+        "evidence": "The 2026-08-30 idea asked where lessons live and found them scattered with no view; this one is the same question thirteen days on, sharpened to the next agent as the audience and to whether a note is read at all."
+      },
+      "to_id": "dec:idea-does-the-agent-keep-a-notepad-in-the-graph-for-the-next-agent"
     },
     {
       "edge_type": "EVOLVES_INTO",
@@ -59638,6 +59861,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:feedback-is-a-computed-tally",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:cap:feedback-is-a-computed-tally"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "cap:gap-carries-a-reading",
       "properties": {},
       "to_id": "snap:epoch:reading-carries-options:cap:gap-carries-a-reading"
@@ -61753,6 +61982,12 @@
       "from_id": "fact:every-reply-was-sent-twice",
       "properties": {},
       "to_id": "fact:the-signpost-instructs-a-party-that-cannot-act-and-the-absent-client-was-named"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "fact:twelve-near-match-refusals-across-two-designs-and-not-one-was-a-duplicate",
+      "properties": {},
+      "to_id": "fact:the-fifteenth-and-sixteenth-near-match-refusals-were-cross-type-and-distinct-too"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -173749,6 +173984,42 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:feedback-command",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "reviewed"
+      },
+      "to_id": "cap:feedback-is-a-computed-tally"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:feedback-is-a-computed-tally-report-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:feedback-is-a-computed-tally"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:feedback-is-a-computed-tally-wire-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:feedback-is-a-computed-tally"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:feedback-skill",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "reviewed"
+      },
+      "to_id": "cap:feedback-is-a-computed-tally"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:fielded",
       "properties": {
         "completeness": "complete",
@@ -176778,6 +177049,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:usage-ledger",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:feedback-is-a-computed-tally"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:verify",
       "properties": {
         "conformance": "unchecked"
@@ -177000,6 +177280,14 @@
         "severity": "medium"
       },
       "to_id": "dec:idea-depth-is-derived-from-fan-out-not-declared-by-a-ladder"
+    },
+    {
+      "edge_type": "RISKS",
+      "from_id": "fact:the-gate-caught-the-agent-six-times-and-five-were-the-same-two-habits",
+      "properties": {
+        "evidence": "That fact measured a lesson written in prose being repeated twenty minutes later; it is the hazard this idea has to answer before a notepad can be claimed to teach anything."
+      },
+      "to_id": "dec:idea-does-the-agent-keep-a-notepad-in-the-graph-for-the-next-agent"
     },
     {
       "edge_type": "SATISFIES",
@@ -177767,6 +178055,12 @@
       "from_id": "cap:explains-itself",
       "properties": {},
       "to_id": "req:explains-itself"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:feedback-is-a-computed-tally",
+      "properties": {},
+      "to_id": "req:feedback-on-reflow2-is-computed-from-a-record-the-server-kept"
     },
     {
       "edge_type": "SATISFIES",
@@ -178859,6 +179153,15 @@
     },
     {
       "edge_type": "SCHEDULED_FOR",
+      "from_id": "cap:feedback-is-a-computed-tally",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-09-12"
+      },
+      "to_id": "epoch:planned-feedback-is-a-computed-tally"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
       "from_id": "cap:gap-carries-a-reading",
       "properties": {
         "modality": "expected",
@@ -179216,6 +179519,15 @@
         "recorded_at": "2026-08-16"
       },
       "to_id": "epoch:triage-fixes"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
+      "from_id": "req:feedback-on-reflow2-is-computed-from-a-record-the-server-kept",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-09-12"
+      },
+      "to_id": "epoch:planned-feedback-is-a-computed-tally"
     },
     {
       "edge_type": "SCHEDULED_FOR",
@@ -181776,6 +182088,18 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:the-ledger-holds-the-verb-and-never-the-object",
+      "properties": {},
+      "to_id": "cap:feedback-is-a-computed-tally"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:the-ledger-holds-the-verb-and-never-the-object",
+      "properties": {},
+      "to_id": "req:feedback-on-reflow2-is-computed-from-a-record-the-server-kept"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:the-loop-says-what-this-session-added",
       "properties": {},
       "to_id": "cap:loop-status"
@@ -182709,6 +183033,38 @@
         "action": "created"
       },
       "to_id": "art:export-write"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:feedback-command",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:feedback-command"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:feedback-is-a-computed-tally-report-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:feedback-is-a-computed-tally-report-test"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:feedback-is-a-computed-tally-wire-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:feedback-is-a-computed-tally-wire-test"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:feedback-skill",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:feedback-skill"
     },
     {
       "edge_type": "YIELDED",
@@ -184072,6 +184428,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:usage-ledger",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:usage-ledger"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:verify",
       "properties": {
         "action": "created"
@@ -185361,6 +185725,54 @@
       }
     },
     {
+      "node_id": "art:feedback-command",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:a8487fcbbe68241067371ce65859777c421472bd9915401b4e9dc9dfcb360d04",
+        "description": "What a person types: /feedback [since YYYY-MM-DD]. Names the feedback skill, restates the four constraints in the person's voice (computed not remembered; model self-reported and every refusal dispositioned; the design kept out; appended locally and sent nowhere).",
+        "location": "getting-started/commands/feedback.md",
+        "name": "feedback.md (command)",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:feedback-is-a-computed-tally-report-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:5f56b945f7593ad8af45b3821f1ae22d24171bc6c1d9a7cbdfc9afb3c4dfc346",
+        "description": "The reading side, on a direct handler call: an in-memory design reports no ledger in words; a report closes its window and a peek does not; a named date reaches back past the marker and a malformed one is refused with its shape; never_called is measured against the live served surface.",
+        "location": "crates/reflow2-mcp/tests/feedback_is_a_computed_tally.rs",
+        "name": "feedback_is_a_computed_tally.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:feedback-is-a-computed-tally-wire-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:5b07038e52fe79ae18183e61d926a1798e49e15379df33fac34e49035c9e98f0",
+        "description": "The wire-level pin, against the real binary over stdio: one classed line per call, the harness named from the handshake, get_skill's name kept and no other argument, the requirement's id and statement absent from the ledger and the report, the window closing behind a report and not behind a peek. Shown to fail on an argument-leak mutation (4 pins) before it was trusted; a reply-text leak did NOT trip it, because reflow2's reply text does not carry the id — a limit worth knowing.",
+        "location": "tools/test_feedback_is_a_computed_tally.py",
+        "name": "test_feedback_is_a_computed_tally.py",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:feedback-skill",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:9c13d01cd9fd0c0f970fd0788c1f9758b58234662ff9eea01b986d3ccbd2d9ed",
+        "description": "The served skill behind /feedback: get the tally from usage_report, add the self-reported model, disposition every refusal row (guard working / real defect / unexplained), read never_called honestly, append to the project's reflow2_feedback.md and show it — send it nowhere. Mirrored byte-for-byte into .claude/skills and .grok/skills as skill_lint requires; the command file is getting-started/commands/feedback.md.",
+        "location": "getting-started/skills/feedback/SKILL.md",
+        "name": "feedback SKILL.md",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:fielded",
       "node_type": "Artifact",
       "properties": {
@@ -185378,7 +185790,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "test",
-        "checksum": "sha256:3f025d7758026c12a839311c8e8872dc2dbcc540a17c5a71debcabb0b3760efd",
+        "checksum": "sha256:c2359fe2b023195b244391a4f2d1bcb99400bb3a4a6029453fc2aec9a8fc71f7",
         "description": "The 180-query criterion-1 corpus: one query per served tool, phrased as a user states the job — never the tool's name, never a phrase lifted from its description. Authored 2026-09-11 by an agent that had read every description, so informed rather than blind; a query from a field report supersedes the one here. Read by every_tool_is_found_by_a_query_in_the_users_words.rs via include_str!, so adding a tool without a query fails the build.",
         "location": "crates/reflow2-mcp/tests/fixtures/find_tools_corpus.json",
         "name": "find_tools_corpus.json",
@@ -186881,7 +187293,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:d840c7c703ddf66f57760500b2cdb253c14d649004bff0df8229add0f37d91cb",
+        "checksum": "sha256:1d69dc546e7343b61a663f17b84558746d9e6c174d9146f80f4b9c05af13dcf3",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -186968,7 +187380,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:6b1c6bed4fdf40047f2f48abfd8e4791a5f1e19edba657dcc59a8227aba7f0f4",
+        "checksum": "sha256:6adca7bec350a78078643c8ef25be183b2d4a029ed7f85294dc8fd4b8d56c6ac",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -187007,7 +187419,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:15883e363b1a308359960d9f5334969628eccb79dfd57d98a86f64148cba6389",
+        "checksum": "sha256:95e05cff58f5d6ad762e0663661fed09e318e4ffec8f5c9adb6f8f8558051c92",
         "location": "docs/skills-and-tools.md",
         "name": "skills-and-tools.md",
         "status": "realized"
@@ -187920,7 +188332,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:4afd692c0f0606ce50068db1f4cfb974aab1aa91ed1ae1e878226def3720d848",
+        "checksum": "sha256:07ce5cce81908e31930ec97d9ef9530651cfb1ce434379651381e56858bdbc28",
         "location": "crates/reflow2-mcp/src/tools/skills_tools.rs",
         "name": "skills_tools.rs",
         "status": "realized"
@@ -188179,6 +188591,18 @@
         "checksum": "sha256:258f9f6edd97fe586f71cbf9c9b6a12459f39b4243ed54d21ace4d5b63a5ac0b",
         "location": "crates/reflow2-mcp/tests/an_upstream_export_is_read_without_being_imported.rs",
         "name": "tests/an_upstream_export_is_read_without_being_imported.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:usage-ledger",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:f97070598dd6f9bc2fb480185c70ac34513a6df45b3acf1249641a3a18546ce3",
+        "description": "The usage ledger: the line shape (verb, never object), the refusal-class table over the server's own phrasings, best-effort append beside the store, the since-last-report window, and the tally. Written into by the server's call_tool; read by usage_report. Unit tests pin the classing, the window, the tally and torn-line tolerance.",
+        "location": "crates/reflow2-mcp/src/usage.rs",
+        "name": "usage.rs",
         "status": "realized"
       }
     },
@@ -189702,6 +190126,17 @@
         "name": "Explain itself to someone who has not been convinced yet",
         "provenance": "authored",
         "status": "realized",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:feedback-is-a-computed-tally",
+      "node_type": "Capability",
+      "properties": {
+        "description": "BUILT AND VERIFIED, 2026-09-12 (increment 437). Three parts, one capability because they are useless apart.\n\nTHE LEDGER. Every tool call the server answers appends one line to `<graph-path>.usage.jsonl` beside the design's store — the sidecar convention `.meta.json`, `.server.json` and `.client.json` already follow. A line carries: the moment, the tool name, the outcome class (`ok`, `refused`, `error`), the refusal class when refused (near_match, missing_argument, unknown_argument, unresolved_reference, refused, other — derived from a fixed table of the server's own phrasings, so the message itself is never stored), the duration, the harness name and version from the handshake, the seat, and for `get_skill` alone the skill name (reflow2's vocabulary, not the user's). NEVER an argument, a node id, a statement, or a message. An in-memory design writes nothing; a write that fails never fails the call (the handshake's own rule). Hooked in `call_tool` (crates/reflow2-mcp/src/service.rs), the one place every wire call passes; the module is crates/reflow2-mcp/src/usage.rs.\n\nTHE REPORT. A read tool, `usage_report` (skills slice), renders the ledger since the previous report's marker or since a date the caller names: calls by tool, the served tools never called in the window, refusals by class and by tool, errors, skills fetched, harnesses seen, the window's bounds — plus what the server knows without asking: reflow2's version, OS and architecture, the negotiated protocol revision, the design's node count. It appends a marker line so the next report starts after it (`peek` looks without leaving one), which is what makes \"since last time\" real. The unit is the PROJECT, not the session: the ledger is written by every session that ever served this design, from any harness.\n\nTHE SKILL. `feedback`, served with the `/feedback` shortcut and a command file in the kit for every harness. It calls the tool, adds the model as the agent's self-report labelled as such (the one field no harness sends over the protocol), invites one line of disposition per refusal row (guard working / real defect / unexplained) and any reproduction, appends the whole to the project's own `reflow2_feedback.md`, and shows it to the person. It never files or sends anything: typing the command is consent to compose, not to send.\n\nWHAT IT DOES NOT SEE: anything outside reflow2's own tool calls. A shell pipe, a git error, a red CI — `report-friction` remains the form for those, with the agent as witness. And the pin on \"never the object\" watches the ARGUMENTS: a reply-text leak did not trip it, because reflow2's reply text does not carry the id.",
+        "name": "/feedback renders a tally the server kept — tools used, refusals by class, harness and version metadata — for the person to carry",
+        "provenance": "authored",
+        "status": "verified",
         "tier": "operational"
       }
     },
@@ -193473,6 +193908,15 @@
       }
     },
     {
+      "node_id": "chg:accept-810483679909e413",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "rustfmt only.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-815dd755caf58e7c",
       "node_type": "ChangeEvent",
       "properties": {
@@ -193828,6 +194272,15 @@
       }
     },
     {
+      "node_id": "chg:accept-9c9c4b8d3fb4e701",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "rustfmt only — CI's Format gate caught that the 437 edits were never formatted. No behaviour moved.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-9d03ab6c044e6ae6",
       "node_type": "ChangeEvent",
       "properties": {
@@ -194060,6 +194513,15 @@
         "change_type": "refactor",
         "detected_at": "2026-08-02",
         "name": "The hand-kept vocabulary counts only (10 domains / 28 node / 57 edge -> 11 / 29 / 60). Several were ALREADY stale before this change, which is BL-159's two-records-of-one-contract shape in the prose layer."
+      }
+    },
+    {
+      "node_id": "chg:accept-b1853f74f24284bf",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "documentation",
+        "name": "Four field terms the feedback skill names (never_called, other, refusals_by_tool, unexplained) registered in NON_TOOL_TERMS so the lint does not read them as tool names. No rule changed.",
+        "subject": "system"
       }
     },
     {
@@ -194814,6 +195276,15 @@
         "change_type": "defect_fix",
         "detected_at": "2026-08-28",
         "name": "`composes` moved from a TOP-LEVEL frontmatter key into `metadata`. reflow2_init's harness-portability check refused the top-level form and was right to: skill frontmatter is a SHARED SURFACE and OpenCode reads only {name, description, license, compatibility, metadata}. No design meaning changed — the same classes are declared, in the one place every harness tolerates.",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:accept-fa632e44a9185e67",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "rustfmt only.",
         "subject": "system"
       }
     },
@@ -199253,6 +199724,15 @@
       }
     },
     {
+      "node_id": "chg:the-server-keeps-a-usage-ledger-and-feedback-renders-it",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "The server keeps a usage ledger beside the store, usage_report renders it, and /feedback carries it — feedback computed, not recalled",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:the-server-says-when-it-is-stale-20260809",
       "node_type": "ChangeEvent",
       "properties": {
@@ -202442,6 +202922,17 @@
       }
     },
     {
+      "node_id": "dec:idea-a-failure-met-mid-task-is-parked-where-a-boundary-revisits-it",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-09-12, watching the session's tool tally read \"7 tools used (1 failed)\": *\"I want to be able to come back to this failure to make sure we understand what happened and why it failed, but sometimes mid-task I feel we are focused on the task and this failure is never revisited.\"*\n\nTHE INSTANCE HE WAS LOOKING AT: `add_decision` refused by the search-first guard (a Decision and a DesignRule read close to the idea being written); the agent judged both distinct and resent with `distinct_from`. A guard working as designed — and still a failure nobody would have written down. It is the fifteenth near-match refusal on the record and the fifteenth judged distinct (`fact:twelve-near-match-refusals-across-two-designs-and-not-one-was-a-duplicate` counted fourteen on 2026-08-31), and that count only exists because agents self-reported.\n\n═══ WHAT THE GRAPH ALREADY HOLDS ═══\n\n· `rule:an-identified-issue-is-enduring-never-dropped` (his word, 2026-08-20): before moving on, an identified issue is a durable node, an asked Question with a name on it, or a computed finding that fires again — never only a sentence in a conversation. The rule exists; what it lacks is a moment. Mid-task, \"before moving on\" is exactly the moment the agent is least likely to stop.\n· `record_finding` writes a dated observation on the node it concerns, in one call. `report_manual_work` records hand-rolled work with a closed diagnosis. Both are the right durable form; both depend on the agent noticing and choosing to call them while focused on something else — the same dependency that left the near-match count unmeasured until users reported it.\n· `req:detecting-is-not-asking` gives the shape: record unconditionally at the moment, invite attention at a boundary (capture-session, an increment close, a `loop_status` read).\n\n═══ THE IDEAS, WITH COSTS AND COUNTERS ═══\n\nA. ⭐ THE SERVER KEEPS ITS OWN REFUSAL LEDGER. reflow2 is the one that issued the refusal; it does not need the agent to remember. Every refusal a session meets (which tool, which guard, what it said) is tallied by the server and surfaced at a boundary: `loop_status` / capture-session says \"this session met 4 refusals: 3 near-match (judged distinct), 1 missing-argument — revisit?\". Zero agent effort, works for any project and any agent, and it is the only option that captures the failure the agent did NOT notice. COUNTER: it sees only reflow2's own refusals. A `gh` error, a shell pipe, a CI red are outside its sight. And a tally is a detection, not an understanding — \"why it failed\" still needs a person or an agent to look, which is the boundary's job.\n\nB. A ONE-WORD PARK. A single cheap call — or a flag on any tool call — meaning \"this failed, come back to it\": lands a Question or a finding with the failure text attached and nobody's name yet, so the enduring-issue rule is satisfied in one motion instead of a judgement. COUNTER: still requires the agent to make the call mid-task, which is the behaviour being measured as unreliable; cheaper than today, not automatic.\n\nC. A FAILURE IS A GAP THE LOOP OWES. Treat an unrevisited refusal like an unsurfaced gap: it counts in `loop_status` until somebody dispositions it (guard-working / real-defect / unexplained), the way drift needs a disposition. Makes the failure impossible to skim past. COUNTER: a guard that works correctly fires often (14 of 14 near-match refusals were the guard being right), so without A's tally to feed it and a cheap \"guard working\" disposition, this becomes noise that teaches the reader to acknowledge in bulk — the exact erosion the two-sided accept forbids.\n\nD. THE HARNESS-SIDE HOOK. A Stop/PostToolUse hook that notices a failed reflow2 call and nudges, as the existing Stop hook nudges for `loop_status`. COUNTER: harness-specific (Claude Code only), which fails his \"any agent/model\" scope; and the nudge is prose again.\n\n═══ WHERE IT LEANS (a finding, not a decision) ═══\n\nA first, because it is the only one that costs the agent nothing and catches what the agent did not notice; C on top of A so a refusal is dispositioned rather than merely counted; B as the manual form for failures outside reflow2's sight (shell, git, CI), where the agent is the only witness. Not D. And the disposition vocabulary matters more than the tally: \"guard working\" must be one word, or the ledger becomes a list nobody reads.",
+        "kind": "exploratory",
+        "name": "OPEN — when a tool call fails mid-task, how does that failure get revisited instead of lost to the task at hand?",
+        "rationale": "Captured under the brainstorm skill mid-session, while PR #489 is in CI; nothing built. A separate node from the notepad idea because it is a different question — that one asks where a LESSON lives and whether an agent reads it; this asks how a FAILURE survives the moment it happens. The two meet: a notepad has nothing to say about failures nobody revisited.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-a-finding-carries-its-bounds",
       "node_type": "Decision",
       "properties": {
@@ -203372,6 +203863,17 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony thinking out loud, 2026-08-21, before any flo2-driven change is made. Nothing here is intent and nothing is settled.\n\nHIS CONCERN, in his words: \"my concern is that by making the changes to reflow2 required by flo2, that it wouldn't be able to support its original use case (which is how we are currently using it now). that's why I was thinking we need to consider this early because I would hate to break the current use case because we made a whole bunch of changes to make reflow2 work for flo2.\"\n\n⭐ IDEA A — THE LOCAL CASE IS DEFENDED BY INTENT BUT NOT BY A GUARD, AND THAT IS THE GAP. Three things already stand between flo2's work and a broken local path: `req:persistence` (accepted — the design lives at ./.reflow2/graph inside the repo, travelling with it), `req:invocation` (accepted — an MCP server over stdio), and `dec:one-process-many-stores`' own instruction that \"the overwhelmingly common case is one project, one directory, --graph-path, and it must keep working exactly as it does\", with the framing \"single-graph mode is multi-graph mode with a registry of one, pre-populated at startup and with selection defaulted — NOT a second code path\". That framing is the right shape and it is a DESIGN PRINCIPLE, not a check. Nothing today fails when it stops being true. The cheap answer to a regression worry is a guard, not a promise.\n\n⭐ IDEA B — HIS STATED SCALE MAY EXCEED WHAT THE ACCEPTED DECISION COVERS. flo2 is a web app at flo2.io, collaborative (many people on the SAME project at once) and expecting on the order of 10,000 simultaneously logged-in users across DIFFERENT projects. `dec:one-process-many-stores` accepts N open RocksDB stores in one process, each carrying its own block cache, file handles and tantivy index, and names resource exhaustion as an accepted risk requiring \"a cap on simultaneously open graphs, with a clear error at the cap rather than silent thrashing\". 10,000 open stores in one process is not that shape. At that number the answer is partitioning across many processes — which is item #8, blast radius, which flo2's own tracker says to decide BEFORE designing the registry because \"retrofitting it onto a registry designed for one process is a rewrite of the piece everything else is gated on\". The decision was accepted without a number attached; the number changes which question is being answered.\n\n⭐ IDEA C — AND THAT MAY CUT THE OTHER WAY, WHICH IS THE HOPEFUL VERSION. A sharded shape — many processes, each holding few graphs — is CLOSER to today's local behaviour than one fat process holding everything. If the answer at 10k is partitioning, the invasiveness to the local path may go DOWN rather than up, because each process keeps roughly the shape it has now. Recorded as a possibility, not a claim; nobody has designed it.\n\n⭐ IDEA D — THE COLLABORATIVE AXIS MAY ALREADY BE MET AND IS WORTH NOT REBUILDING. \"Many people on the same project at once\" is `req:sessions-share-a-graph` (accepted) delivered by `cap:shared-sessions` (VERIFIED — \"several sessions work one design at once, through one server\"). Single-writer is not relaxed by any of this: one process holds the lock, many sessions speak to it. So flo2's collaboration requirement may need nothing new, and the genuinely unbuilt axis is the many-PROJECTS one.\n\nWHAT IS NOT IN DOUBT, so it does not get re-litigated here: whether flo2 gets its own fork. `dec:one-process-many-stores` answers that — one reflow2, N single-writer stores, the directory stays the unit of a design — and it explicitly rejected many-designs-in-one-store. The open questions above are about SHAPE and PROOF, not about forking.\n\n🛑 A SEPARATE DEFECT NOTICED WHILE READING, not part of this question: `dec:one-process-many-stores` carries `status: accepted` and a name beginning \"ACCEPTED 2026-08-06 (conditional)\", while its own body opens \"PROPOSED, NOT SETTLED.\" The status moved and the text did not. A reader can honestly conclude either. Left alone — whether it is settled is Anthony's to say.\n\nDISTINCT FROM the three nodes the guard surfaced. `dec:one-process-many-stores` decides the SHAPE of hosting and assumes it is worth doing; this asks what it COSTS the existing case and whether a stated scale still fits. `req:many-people-and-many-projects-compose` requires the two axes to hold together; this asks what would PROVE a third thing — the local path — still holds while they do. `dec:the-registry-root-is-the-tenant-boundary` settles where the tenant line falls inside the registry; this asks whether a registry of that shape survives 10k.",
         "name": "OPEN — what would PROVE that building for flo2 has not broken the local single-project case, and does 10k tenants even fit the accepted shape?",
         "rationale": "Captured under the brainstorm skill: recorded as ideas so nothing is lost and nothing is claimed as intent. Anthony raised it deliberately EARLY — before the flo2-driven changes are made rather than after — which is the whole point of recording it now.\n\nThe four ideas are kept apart because they have different answers: A wants a check written, B wants a number decided, C is a possibility nobody has explored, and D may need nothing at all. Collapsing them into one node would make it answerable only in halves.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-does-the-agent-keep-a-notepad-in-the-graph-for-the-next-agent",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-09-12, after watching \"near miss\" and small repeated slips across the whole development: *\"if they are reoccurring little issues, the agent should capture them in its own notes so that it can learn from its past mistakes … notes in the governance/management nodes, strictly to speak past agent to present agent … little oddities like how to properly do tag and release, little issues that continue to bite us in GitHub, or guard issues.\"* His own counter: *\"Claude already has its own Memory.md/Claude.md, which I feel already serves similar purposes.\"* His scope: *\"this isn't just for reflow2 — for anybody that uses reflow2 on their own design project using any agent/model; specific about passing design details from past agent to present agent across sessions.\"* His final question: *\"would an agent even use it, or would it be helpful for the agent to have its own notepad?\"*\n\n═══ WHAT WAS FOUND BY LOOKING, 2026-09-12 ═══\n\n① THE NOTEPAD ALREADY EXISTS, AND HE ALREADY RULED ON THE MEMORY-FILE HALF. `rule:a-rule-the-project-follows-lives-in-the-graph-not-in-an-agents-memory` (his word, 2026-09-04): a habit, convention, trap or way of doing a step goes in the graph as a DesignRule, Decision or TemporalFact hung off the node it concerns; the memory file holds a pointer, never the content. Reason: memory is machine-local and harness-local; the graph travels with the repo and is the only place that can ACT on a rule. The Memory.md go-back is therefore already answered, by him.\n\n② THE RULE IS BEING BROKEN AS THIS IS WRITTEN. The agent's memory file on this machine holds roughly ten \"little oddities\" of exactly the kind he describes and none of them is in the graph: `gh pr checks --json` is unsupported and reads as a false all-clear; `gh pr edit` fails on a Projects-classic GraphQL error and changes nothing (REST PATCH works); `plan_epoch` on an existing epoch resets its status to `planned`; a shell chain `gate | tail -1 && git commit` commits on a red gate; `--stop-shared` then any tool call refreshes a stale daemon before an export; `pkill -f` on a pattern matching your own shell kills it. Every one is portable to another machine and another agent, and today none of them travel.\n\n③ THE MEASURED ANSWER TO \"WOULD AN AGENT USE IT\" IS: NOT BY READING. `fact:the-gate-caught-the-agent-six-times-and-five-were-the-same-two-habits` (2026-08-26): the agent wrote the lesson out in prose and made the same shell construction twenty minutes later — *\"a lesson recorded in conversation does not change the next command; a gate does.\"* `rule:success-is-read-from-the-authoritative-object` sits in the graph AND in memory and was still broken five ways on 2026-09-04. And today (2026-09-12) the `| tail` pipe committed on a red gate again — a trap first recorded on 2026-08-14 as `fact:a-piped-gate-reports-the-pipes-exit-code-not-the-gates`. The same lesson has now been written three times in three places and repeated anyway. What DID stop each recurrence was a check at the step: the intent-authority gate, the lineage gate, the duplicate guard, and today `toolsnap.py --update` refusing to bless a bad surface.\n\n④ THE PRIOR BRAINSTORM ON THIS FOUND THE GAP IS A VIEW, NOT CAPTURE. `dec:idea-where-do-lessons-learned-live-and-can-a-user-state-a-precondition` (2026-08-30): the release lessons ARE in the graph, scattered across DesignRule, Flow and TemporalFact, with no single home and no single view — which node type a lesson lands in depends on the session that wrote it.\n\n═══ THE IDEAS, WITH THEIR COSTS AND HONEST COUNTERS ═══\n\nA. A NOTEPAD NODE TYPE (`Note` / `Lesson`), or a `note_kind: agent` on Fragment. Cheap to add; his instinct. COUNTER: a vocabulary distinction has to be READ by some computation to earn its place (the bar `Decision.kind` cleared), and nothing would read a Note that does not already read a DesignRule or TemporalFact. It would be a fourth home for a lesson when the finding in ④ is that three is already too many. Over-engineering by his own measure.\n\nB. NO NEW TYPE — ONE VIEW. A `lessons` report / `find_tools`-style query that gathers every DesignRule, TemporalFact and Decision carrying a lesson, so a session can read \"what has bitten this project\" in one call. Closes ④'s gap. COUNTER: ③ says a page of lessons read at session start does not change the command typed an hour later. Necessary for a human; insufficient for an agent.\n\nC. ⭐ A LESSON IS SERVED AT THE STEP IT CONCERNS. The lesson is hung off the node it is about (the Flow step, the Capability, the tool) — the rule already says so — and the served surface DELIVERS it at the moment of use: `get_skill(\"release\")` returns the lessons hung on `flow:release-cut`; a tool whose description or refusal carries the trap (\"`| tail` returns the pipe's exit code\"); `get_instructions` carrying the project's own enforced rules. This is what reflow2 already does for its tool descriptions (\"MEASURED: the export was early in 91 of 200 trials\") and it is the one form of note that reaches the agent with its hands on the step. Works for any project, because the hook is the served skill, not a file in a harness. COUNTER: only helps for steps that go through reflow2; a GitHub or shell oddity has no reflow2 step to hang on unless the project models its release flow (reflow2 does: `flow:release-cut`).\n\nD. THE STRONGEST LESSONS BECOME CHECKS — `rule:an-issue-is-root-caused-then-pinned-by-a-test-then-fixed` step ②. Measured to be the only thing that stopped a recurrence. COUNTER: not every oddity can be a check (an external CLI's broken subcommand cannot be gated locally); D covers the severe ones, C the rest.\n\nE. HIS \"SPEAK PAST AGENT TO PRESENT AGENT\" AS A DISTINCT AUDIENCE. Today a lesson node is written for anybody. A note whose audience is explicitly the next agent could be terser and more operational (\"do X, not Y, because Z bit us on <date>\"). COUNTER: `req:agent-authored-feedback-is-reproducible-and-never-leaves-unasked` already says agent-to-agent text is written for reproduction, and a note nobody but agents read is the memory-file failure with a different file name — his ① reason again. An audience field is cheap; whether it changes anything is unmeasured.\n\n═══ WHERE THIS LEANS (a finding, not a decision) ═══\n\nNot A. The notepad exists; a fourth home makes ④ worse. The working answer is B + C + D together: one view for the human (B), delivery at the step for the agent (C), and a check for anything that has bitten twice (D). The immediate, cheap act is to honour ① — move the ten oddities out of the memory file and into the graph, each hung on the node it concerns — and then measure whether C's delivery is what finally stops a repeat, since the graph now has three recorded recurrences to compare against.",
+        "kind": "exploratory",
+        "name": "OPEN — should the agent keep notes to its future self in the graph (a notepad past-agent → present-agent), and would an agent actually read it?",
+        "rationale": "Captured under the brainstorm skill while PR #489 (increment 434) is in CI; nothing built. Recorded separately from the 2026-08-30 lessons-learned idea because it adds two questions that one did not ask: whether the audience of a lesson is the next AGENT specifically, and whether an agent would read a notepad at all — which the graph turns out to be able to answer with three measured recurrences.",
         "status": "proposed"
       }
     },
@@ -204580,6 +205082,17 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-14, deliberately stepping back from a specific fix.\n\nHIS WORDS: *\"sometimes I like to take a step back and ask what is the big picture and what do we want reflow2 to do. as the saying of 'missing the wood for the trees' says, I don't want to be hyper focused on solving this by creating another requirement which then causes another issue later on. I don't want this to become like a decision tree where it is so specialized to some training data that it is no longer generalizable.\"*\n\n⭐⭐⭐ **THE OVERFITTING CONCERN IS EXACTLY RIGHT, AND THE PROJECT HAS ALREADY WRITTEN IT DOWN AND ALREADY FAILED IT TWICE.** `req:the-tool-finds-its-own-blind-spots` (ACCEPTED 2026-08-07) says in its own text:\n  · *\"a detector that reaches zero findings by only asking questions the graph can already answer HAS BEEN TUNED TO THE INSTRUMENT. Satisfying this requirement by adding checks that happen to pass is the failure mode, not the fix.\"*\n  · *\"One detector was added for that one case. **THE GENERAL PRINCIPLE WAS NEVER MADE A REQUIREMENT, so the next instance had to be found by hand again**, which is what happened today.\"*\n\nTHREE INSTANCES OF THE SAME PATTERN, EACH FOUND BY A HUMAN OR AN AGENT WORKING BY HAND:\n  1. `chg:orphan-decision-degree-zero` (2026-08-01) — *\"GETTING A CLEAN BILL FROM EVERY DETECTOR — detect_defects 0, hierarchy_issues 0, dimension_drifts 0, propose_heal 0 — and then counting zero-degree nodes by hand\"*. One detector was added for that one case.\n  2. `req:the-tool-finds-its-own-blind-spots` itself (2026-08-07) — six blind spots, every one found by a human querying by hand.\n  3. **2026-08-14, today** — 43 live planned capabilities invisible to every tool; the Grok agent *\"had to leave the graph and grep the tree\"* (`fact:the-build-list-is-suppressed-by-realized-via-component`).\n⇒ **Fixing #3 with a detector would be the third time the special case is patched and the general principle is not.** That is the decision-tree overfit he is describing, arrived at empirically rather than as a worry.\n\n═══ ⭐⭐ THE WOOD: ONE SHAPE UNDER MANY FINDINGS ═══\n\n**REFLOW2 REPEATEDLY CANNOT DISTINGUISH \"NOTHING IS WRONG\" FROM \"I COULD NOT SEE IT.\"** Every instance below was found separately, and they are the same defect:\n\n  · `unrealized_capability` suppressed by `realized_via_component` reads identically to a capability that is fine — 34 of 39 silenced (today).\n  · The loop nudge state `absent` means BOTH *\"not installed\"* and *\"this harness cannot have one\"* — only one is actionable (today, `req:an-unavailable-loop-trigger-is-named-as-unavailable`).\n  · `loop_status`'s sync reported the record `in_step` while `compare_designs` reported `identical: false` on the same file (today).\n  · `dec:loop-status-cannot-say-it-never-looked` — ALREADY RECORDED: *\"clean\" and \"never scanned\" are one answer.*\n  · `coverage_report` exists **solely** to fix this for ARTIFACTS: *\"a design covering 30% of a system reports the same 0 open gaps as one covering all of it.\"* It is a point solution to the general problem.\n  · AGENTS.md already states the rule and leaves it to the agent's virtue: *\"`0 gaps` means NOTHING WAS DETECTED — never nothing is wrong.\"*\n\n⇒ **THE GENERALISABLE MOVE IS NOT ANOTHER DETECTOR. IT IS MAKING NON-OBSERVATION A FIRST-CLASS RESULT** — every reported clean state carrying what it did not look at, what it suppressed and why. `coverage_report` proves the shape works; nothing generalises it.\n\n═══ 🛑 AND THE SECOND HALF OF THE BIG PICTURE: WHO IS ASKING ═══\n\nThe other thread running through today is that **reflow2's reports have no notion of AUDIENCE OR PURPOSE**, so unrelated concerns share one surface:\n  · `loop_status.next` leads with 78 never-asked gaps when the user's question was *\"what do we build next?\"* — the Grok report's item 8: *\"the loop and the delivery plan share a dashboard and they should not.\"*\n  · Gap ranking mixes design hygiene with unbuilt accepted scope (their item 3).\n  · All ten rendered views slice by ASPECT and none by ALTITUDE (`dec:idea-a-view-can-slice-by-altitude-not-only-by-aspect`).\n⇒ Coherence maintenance and delivery planning are two jobs sharing one dashboard. **A remaining-work answer may therefore be a VIEW over what the graph already computes rather than a new detector** — which is also the anti-overfit route, since a view adds no new judgement to the instrument.\n\n═══ SO WHAT IS REFLOW2 FOR? THE ANSWER THE GRAPH ALREADY GIVES ═══\n\nAssembled from accepted nodes rather than invented here: reflow2 is the **persistent coherent design memory** that outlives a context window — it CAPTURES intent, COMPUTES what follows from it (`req:completion-computed`: delivery is computed from the golden thread, never asserted), REPORTS rather than judges (`dec:report-dont-judge`), ASKS rather than repairs (`dec:ask-not-repair`), and leaves the deciding to the human (`dec:three-party-checks`). **Nothing in that charter says reflow2 must enumerate every possible defect kind.** It says its answers must be honest about their own reach — which is the requirement above, and which no amount of detector-adding satisfies.\n\nOPTIONS, NONE CHOSEN.\n(a) **REPORT SUPPRESSION AS DATA** — wherever a detector deliberately declines to fire, count it and say so (*\"34 capabilities not asked about: their component already has an artifact\"*). Generalises across every detector, adds no new judgement, and directly serves `req:the-tool-finds-its-own-blind-spots`. Counter: needs a convention every detector honours, and an unhonoured convention is worse than none.\n(b) **A DELIVERY VIEW SEPARATE FROM THE LOOP SURFACE** — remaining work as a projection over data already held, leaving detectors untouched. Answers the narrow question and the audience half. Counter: does not stop the next blind spot being found by hand.\n(c) **A REQUIREMENT THAT EVERY REPORTED CLEAN STATE CARRIES ITS OWN REACH.** The strongest general form and the hardest: it constrains every existing report at once, and `req:a-vocabulary-distinction-proves-it-is-read` would demand something compute it.\n(d) **ADD A DETECTOR FOR THE BUILD LIST.** The narrow fix. **Named as the option this node exists to question**, and the one that has already been taken twice with the recorded result that the next instance was found by hand.\n(e) **NOTHING — accept that agents must read `0 gaps` sceptically.** Counter: AGENTS.md already asks exactly that, in bold, and three agents in three weeks still had to find blind spots by hand. **An instruction that has failed three times is evidence about instructions, not about the agents.**\n\n⚠️ THE HONEST RISK IN (a) AND (c): a report that lists everything it did not look at can drown the thing it did find. `req:the-tool-finds-its-own-blind-spots` already warns about the mirror failure — reaching zero findings by asking only easy questions — so both directions have a way to look good while being useless, and whichever is taken needs a measurement rather than a feeling.",
         "name": "OPEN — the general question behind five separate findings: should reflow2 make \"I could not see this\" a reportable state, instead of adding a detector each time a blind spot is discovered?",
         "rationale": "Captured under the brainstorm skill at Anthony's explicit request to step back before fixing. Recorded as its own question rather than folded into the remaining-work decision because the two are separately answerable and answering only the narrow one is the failure this node names. The load-bearing evidence is that the project already accepted the general principle in `req:the-tool-finds-its-own-blind-spots` and has now failed it three times — so the overfitting concern is measured history rather than a hypothetical, and the third instance was in hand before he raised it. The \"what is reflow2 for\" summary is deliberately assembled from already-accepted nodes rather than composed fresh, since a charter invented in one session to justify one fix would be the same overfit at a higher level.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-slash-feedback-emits-a-computed-tally-not-an-agents-recollection",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-09-12, expanding the refusal-tally idea: *\"I continue to ask agents to provide their own feedback on reflow2 (on other projects). I then provide this feedback to you. What if instead, I just typed /feedback and the agent just provided me a specific tally of which tools were used and which failures it experienced. Then it isn't subjective to the agent or limited by what the agent remembers from the current session (and past sessions). This could be a more automatic feedback for all reflow2 projects (should also have all the metadata like which agent, which OS, which agentic platform, etc) then feedback is straightforward.\"*\n\n═══ WHAT ALREADY EXISTS, FOUND BY LOOKING ═══\n\n· THE PAYLOAD SHAPE IS ALREADY SPECIFIED. `req:telemetry-carries-usage-never-design-content` (his constraint, 2026-08-09): tool name, skill name, outcome class, duration — yes; node ids, statements, search queries, error text quoting the user, tool arguments — never. A /feedback tally is exactly that payload, carried by hand instead of by telemetry — which sidesteps the opt-in problem that has kept telemetry absent.\n· THE CONSENT RULE IS ALREADY SATISFIED BY THE GESTURE. `req:agent-authored-feedback-is-reproducible-and-never-leaves-unasked` (accepted): the human whose project it is decides whether feedback leaves. A human TYPING /feedback is that decision.\n· THE CHANNEL IDEA IS OPEN AND LACKED A MECHANISM. `dec:idea-agent-to-agent-feedback-is-a-formal-channel` (2026-08-14) records that the informal prompt yielded four independently reproduced defects, and leaves delivery open. This idea is a delivery mechanism.\n· THE METADATA HALF IS PARTLY ON DISK ALREADY. At initialize the server receives the harness's `clientInfo` (name, version) and writes a handshake diagnostic beside the graph (`handshake.rs`), so harness and protocol version are known to the server without asking the agent. reflow2's own version and the OS it runs on are known to it too. THE MODEL IS NOT: no harness sends the model name over MCP, so \"which agent\" can only be the agent's self-report — the one subjective field, and it should be labelled as such.\n· USAGE HAS BEEN MEASURED ONLY OFFLINE AND ONLY FOR ONE HARNESS. `tools/surface_usage.py` reads Claude Code transcripts (6,095 calls across 10 projects for `dec:bl-155`). It cannot see a Cursor, Codex or Grok session, and it needs the transcripts on this machine. A server-side count sees every harness equally and lives where the project lives.\n\n═══ WHAT THE SERVER DOES NOT DO TODAY ═══\n\nIt keeps no tally. No per-session or per-seat count of calls by tool, no count of refusals by class, no record of which skills were fetched. Everything the tally needs passes through one place (`call_tool`) and nothing is kept.\n\n═══ THE IDEAS, WITH COSTS AND COUNTERS ═══\n\nA. ⭐ A SERVER-KEPT USAGE LEDGER, READ BY A `/feedback` SKILL. The server appends one line per tool call to a usage file beside the graph (never in the design): timestamp, tool, outcome class (ok / refused:<guard> / error), duration, and the seat that made it. `/feedback` (a served skill, so it exists for every harness) renders it: calls by tool, never-called tools, refusals by class with the tool that issued them, skills fetched, plus the metadata block — reflow2 version, harness name+version from the handshake, OS, graph size, and the agent's self-reported model marked \"self-reported\". Written to the project's feedback file for the human to carry. COUNTER: the unit of the tally is a real design question — in --shared mode one daemon serves many clients, so \"this session\" needs the seat or the client connection carried through the proxy, or the tally is per-daemon-lifetime. And a count says WHERE reflow2 failed, never WHY; the four reproduced defects of 2026-08-14 came with reproduction steps a tally cannot write.\n\nB. TALLY + ANNOTATION, NOT TALLY INSTEAD OF PROSE. The computed part is the spine (objective, complete, cheap); each refusal row invites the agent's one-line disposition (guard working / real defect / unexplained) and any reproduction it has. The subjective part is then bounded to rows the server chose, so the agent cannot forget a failure — it can only decline to explain one. COUNTER: two moving parts; the annotation step is the one that gets skipped, but skipping it still leaves the objective spine.\n\nC. THE TALLY ONLY, NO SKILL — a `usage_report` tool the human calls. Cheapest. COUNTER: a tool the human has to know exists is the discoverability failure `dec:bl-155` measured; a typed `/feedback` is the gesture he already uses and the one users will find.\n\nD. TELEMETRY. Ship the same payload automatically from every consumer. COUNTER: opt-in, absent, and it removes the consenting human from the loop — the one human the accepted requirement says may not be removed.\n\n═══ WHERE IT LEANS (a finding, not a decision) ═══\n\nA + B: the server keeps the ledger (it is the only witness that does not forget and the only one that sees every harness), `/feedback` renders it with the metadata the server already has, and the agent annotates the refusal rows rather than composing feedback from memory. Not D. The first thing to settle before building is the unit of the tally in shared mode — seat, connection, or daemon — because that decides whether \"this session's\" numbers are real. The refusal-counter idea (`dec:idea-the-server-counts-its-own-refusals-so-no-session-has-to-remember-to`) is the same ledger seen from the failure side; this is it seen from the feedback side, and one mechanism serves both.",
+        "kind": "exploratory",
+        "name": "OPEN — should `/feedback` on any reflow2 project emit a COMPUTED tally (tools used, refusals met, harness/OS/version metadata) instead of the agent's own recollection?",
+        "rationale": "Captured under the brainstorm skill, third facet of the 2026-09-12 thread (notepad → mid-task failure → objective feedback). Kept as its own node because it asks a question the other two do not: whether the FEEDBACK CHANNEL itself should be computed rather than authored — and it is the first of the three that reaches every reflow2 project rather than reflow2's own development, which is the scope Anthony keeps insisting on.",
         "status": "proposed"
       }
     },
@@ -209369,6 +209882,17 @@
       }
     },
     {
+      "node_id": "epoch:planned-feedback-is-a-computed-tally",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "description": "Anthony's word, 2026-09-12: \"I want to continue with implementing /feedback.\" The first increment after the five ordered on 2026-09-11 (430–434, all arrived).\n\nIN: (1) the server appends one line per tool call to a usage ledger beside the design's store — tool, outcome class, refusal class where refused, duration, timestamp, harness name/version, seat — never an argument, a node id or a message; nothing is written for an in-memory design; a write that fails never fails the call. (2) A read tool that renders the ledger since the previous report (or a named date): calls by tool, never-called served tools, refusals by class and tool, skills fetched, harnesses seen, plus the metadata the server knows — reflow2 version, OS and architecture, protocol revision, design size — and writes a report marker so the next report starts after it. (3) A served skill `feedback` with the `/feedback` shortcut and its command file in the kit for every harness: it calls the tool, adds the agent's self-reported model labelled as self-reported, invites one line of disposition per refusal row, appends the whole to the project's own feedback file and shows it to the person — never sends it anywhere. (4) Tests shown to fail first: the ledger holds the verbs and never the objects; a refused call is classed, not quoted; an in-memory service writes nothing; the report covers exactly the window since the marker; the skill and command pass skill_lint and the kit manifest check; the new tool is found by a query in the user's words.\n\nNOT IN: telemetry of any kind (nothing leaves the machine); a per-session unit in shared mode (the unit is the project, since the last report — decided, see the requirement); the refusal ledger as graph NODES (never in the design); capturing failures outside reflow2's sight (shell, git, CI — report-friction stays the form); the notepad and serve-the-lesson-at-the-step ideas from the same day's thread, which remain open.",
+        "epoch_type": "revision",
+        "name": "Increment 437 — feedback is a computed tally",
+        "sequence": 437,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:planned-one-write-surface",
       "node_type": "DesignEpoch",
       "properties": {
@@ -212244,6 +212768,46 @@
       }
     },
     {
+      "node_id": "frag:art:feedback-command",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered feedback.md (command)"
+      }
+    },
+    {
+      "node_id": "frag:art:feedback-is-a-computed-tally-report-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered feedback_is_a_computed_tally.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:feedback-is-a-computed-tally-wire-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered test_feedback_is_a_computed_tally.py"
+      }
+    },
+    {
+      "node_id": "frag:art:feedback-skill",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered feedback SKILL.md"
+      }
+    },
+    {
       "node_id": "frag:art:fielded",
       "node_type": "Fragment",
       "properties": {
@@ -213956,6 +214520,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered tests/an_upstream_export_is_read_without_being_imported.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:usage-ledger",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered usage.rs"
       }
     },
     {
@@ -217472,6 +218046,19 @@
       }
     },
     {
+      "node_id": "req:feedback-on-reflow2-is-computed-from-a-record-the-server-kept",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "usability",
+        "lineage": "original",
+        "name": "Feedback on reflow2 from any project is computed from a record the server kept, never from the agent's recollection",
+        "priority": "high",
+        "provenance": "authored",
+        "statement": "Anthony, 2026-09-12, promoting `dec:idea-slash-feedback-emits-a-computed-tally-not-an-agents-recollection`: *\"What if instead, I just typed /feedback and the agent just provided me a specific tally of which tools were used and which failures it experienced. Then it isn't subjective to the agent or limited by what the agent remembers from the current session (and past sessions). This could be a more automatic feedback for all reflow2 projects (should also have all the metadata like which agent, which OS, which agentic platform, etc).\"*\n\nTHE REQUIREMENT. On any project reflow2 serves, a person can type `/feedback` and receive a report whose spine is COMPUTED from a record the server itself kept of every tool call it answered — which tools were called and how often, which calls were refused or failed and under which class of refusal, which skills were fetched, which served tools were never touched — together with the metadata the server can know without asking anybody: reflow2's version, the operating system, the harness that connected (name and version, from the handshake), the protocol revision, and the size of the design. The one field the server cannot know, the model behind the agent, is carried as the agent's self-report and labelled as such.\n\nWHAT THE RECORD MAY CARRY, AND MAY NOT. The line is `req:telemetry-carries-usage-never-design-content`, unchanged: tool name, skill name, outcome class, duration, timestamp — yes. Node ids, statements, search queries, tool arguments, error text that could quote the user's design — never. A refusal is recorded as its CLASS (near-match, missing argument, unknown argument, unresolved reference, refused, error), never as its message.\n\nWHAT THE UNIT IS. The record is per PROJECT — one ledger beside the design's store, appended by every session that serves that design, whatever harness or agent it came from — and a report covers everything since the previous report (or since a date the person names), not \"this session\". That is deliberate: the request was for feedback not limited to what one agent remembers of one session, and a project's ledger is the only thing that sees every session equally.\n\nWHAT THE AGENT STILL DOES. It annotates, it does not recollect: each refusal row invites one line of disposition (guard working / real defect / unexplained) and any reproduction the agent has. The subjective part is bounded to rows the server chose.\n\nWHAT LEAVES THE MACHINE. Nothing, unless the person carries it. The report is written into the project's own feedback file for the person to read and send on — `req:agent-authored-feedback-is-reproducible-and-never-leaves-unasked` holds: typing `/feedback` is the consent to compose it, not the consent to send it.\n\nHONEST LIMIT. The ledger sees only reflow2's own tool calls. A `gh` error, a shell pipe, a red CI happen outside its sight; for those the agent remains the only witness and `report-friction` remains the form.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "req:finding-a-cause-is-a-served-process-not-an-improvisation",
       "node_type": "Requirement",
       "properties": {
@@ -220175,6 +220762,16 @@
         "edges": "[{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:service\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:every-served-tool-is-reachable-by-find-tools-on-a-users-words\",\"properties\":{}}]",
         "state": "{\"description\":\"Every served tool's description states the job the way somebody states it when they want it done — not the way the tool is named — and a committed corpus of one query per tool is the standing check that the sentence was written from the job rather than tuned to the test.\\n\\nDELIVERED 2026-09-11 (PR #476, merged): 68 sentences written from purpose, 8 descriptions trimmed to budget, corpus committed as crates/reflow2-mcp/tests/fixtures/find_tools_corpus.json with an acceptance test. Measured on main: 177 of 180 tools in find_tools' default top 5, up from a 114 baseline where 53 tools did not appear in the top 10 at all. Three tools sit at rank 6 and are exempt WITH THE MEASURED REASON, each beaten by short descriptions sharing incidental words. A second test walks the served surface and refuses any tool absent from the corpus, so a 181st tool cannot ship unfindable by omission.\\n\\nTHE HONESTY CHECK, AND WHY IT IS NOT A GATE: a sentence that merely copies its corpus query passes the committed test and still fails a user who words it differently. The guard is a held-out paraphrase corpus written from a different angle and never consulted while the sentences were written — 36 of 42, up from 16 after the rewrite it forced. It is deliberately NOT wired into CI, because folding it in would make it the next thing people tune to.\\n\\nTWO SCORER REFINEMENTS WERE TRIED AND REVERTED on measurement — a 4-character floor on the name-prefix rule (neutral) and a gentler length normalisation (worse) — because a change the corpus does not reward is noise.</description>\\n<parameter name=\\\"satisfies\\\">req:every-served-tool-is-reachable-by-find-tools-on-a-users-words\",\"name\":\"Every served tool carries the job in a user's own words, and a committed 180-query corpus is the acceptance test that it was carried honestly\",\"provenance\":\"authored\",\"status\":\"realized\",\"tier\":\"operational\"}",
         "target_id": "cap:every-tool-carries-the-users-phrasing-and-the-corpus-is-the-test",
+        "target_type": "Capability"
+      }
+    },
+    {
+      "node_id": "snap:epoch:preserved-on-write:cap:feedback-is-a-computed-tally",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:feedback-command\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"reviewed\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:feedback-is-a-computed-tally-report-test\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"verified\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:feedback-is-a-computed-tally-wire-test\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"verified\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:feedback-skill\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"reviewed\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:usage-ledger\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"verified\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:the-ledger-holds-the-verb-and-never-the-object\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:service\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:feedback-on-reflow2-is-computed-from-a-record-the-server-kept\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SCHEDULED_FOR\",\"other_type\":\"DesignEpoch\",\"other_id\":\"epoch:planned-feedback-is-a-computed-tally\",\"properties\":{\"modality\":\"expected\",\"recorded_at\":\"2026-09-12\"}}]",
+        "state": "{\"description\":\"PLANNED, 2026-09-12 (increment 437). Three parts, one capability because they are useless apart.\\n\\nTHE LEDGER. Every tool call the server answers appends one line to `<graph-path>.usage.jsonl` beside the design's store — the sidecar convention `.meta.json`, `.server.json` and `.client.json` already follow. A line carries: the moment, the tool name, the outcome class (`ok`, `refused`, `error`), the refusal class when refused (near_match, missing_argument, unknown_argument, unresolved_reference, refused, other — derived from a fixed table of the server's own phrasings, so the message itself is never stored), the duration, the harness name and version from the handshake, the seat, and for `get_skill` alone the skill name (reflow2's vocabulary, not the user's). NEVER an argument, a node id, a statement, or a message. An in-memory design writes nothing; a write that fails never fails the call (the handshake's own rule).\\n\\nTHE REPORT. A read tool, `usage_report`, renders the ledger since the previous report's marker or since a date the caller names: calls by tool, the served tools never called in the window, refusals by class and by tool, skills fetched, harnesses seen, the window's bounds — plus what the server knows without asking: reflow2's version, OS and architecture, the negotiated protocol revision, the design's node count. It appends a marker line so the next report starts after it, which is what makes \\\"since last time\\\" real. The unit is the PROJECT, not the session: the ledger is written by every session that ever served this design, from any harness.\\n\\nTHE SKILL. `feedback`, served with the `/feedback` shortcut and a command file in the kit for every harness. It calls the tool, adds the model as the agent's self-report labelled as such (the one field no harness sends over the protocol), invites one line of disposition per refusal row (guard working / real defect / unexplained) and any reproduction, appends the whole to the project's own `reflow2_feedback.md`, and shows it to the person. It never files or sends anything: typing the command is consent to compose, not to send.\\n\\nWHAT IT DOES NOT SEE: anything outside reflow2's own tool calls. A shell pipe, a git error, a red CI — `report-friction` remains the form for those, with the agent as witness.\",\"name\":\"/feedback renders a tally the server kept — tools used, refusals by class, harness and version metadata — for the person to carry\",\"provenance\":\"authored\",\"status\":\"verified\",\"tier\":\"operational\"}",
+        "target_id": "cap:feedback-is-a-computed-tally",
         "target_type": "Capability"
       }
     },
@@ -226742,6 +227339,20 @@
       }
     },
     {
+      "node_id": "fact:the-fifteenth-and-sixteenth-near-match-refusals-were-cross-type-and-distinct-too",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "finding",
+        "name": "Near-match refusals 15 and 16, both 2026-09-12, both cross-type, both judged distinct — the count is now 16 of 16",
+        "statement": "Two more search-first refusals on 2026-09-12, recorded the moment they happened because Anthony was watching the tool tally (\"7 tools used (1 failed)\") and asked that a mid-task failure not be lost to the task. Both were `add_decision` writing a brainstormed idea: (15) refused against a Decision and a DesignRule — the prior lessons-learned idea and his rule that project rules live in the graph; (16) not refused (distinct_from was given) but the guard named a third near-match, the existing refusal-ledger idea, which turned out to be the new idea's own option A. Both judged distinct; the first re-sent with `distinct_from`, the second linked DEPENDS_ON. Cross-type pairings again (Decision ↔ DesignRule, Decision ↔ Decision of the same kind), so the running count since the 2026-08-31 measurement is 16 refusals / 16 distinct / 0 duplicates. What the guard is actually doing well: it found the earlier idea the agent had not searched for, and the link is the better outcome than the write going through clean.",
+        "subject_id": "fact:twelve-near-match-refusals-across-two-designs-and-not-one-was-a-duplicate",
+        "valid_from": "2026-09-12",
+        "value": "{\"date\":\"2026-09-12\",\"refusals_running_total\":16,\"judged_distinct\":16,\"real_duplicates\":0,\"pairings\":[\"Decision<->DesignRule\",\"Decision<->Decision(exploratory)\"]}"
+      }
+    },
+    {
       "node_id": "fact:the-first-move-of-a-session-did-not-fit",
       "node_type": "TemporalFact",
       "properties": {
@@ -230847,6 +231458,20 @@
       }
     },
     {
+      "node_id": "ver:the-ledger-holds-the-verb-and-never-the-object",
+      "node_type": "Verification",
+      "properties": {
+        "description": "Three layers, each pinning what the one below cannot reach. (1) Unit tests in usage.rs: refusals are classed from the server's own phrasings (six cases incl. the nobody's-name settlement), the window starts after the last marker unless a date is named, the tally counts by tool / by class / by tool×class / skills / clients / seats and measures never_called against the served surface, a torn line is skipped. (2) Direct handler tests (feedback_is_a_computed_tally.rs): an in-memory design reports no ledger in words, a report closes its window and a peek does not, a named date reaches back and a bad one is refused with its shape, never_called is against the live surface. (3) The wire test against the real binary (tools/test_feedback_is_a_computed_tally.py), because the ledger is written in call_tool, which only a wire call passes: one classed line per call (ok / refused:missing_argument / refused:refused), the harness named from the handshake on every line, get_skill's name kept and no other argument, the requirement's unmistakable id and statement absent from the ledger AND the report, the second report starting after the first's marker. MUTATION: leaking the call's arguments into the ledger broke 4 pins; leaking the reply's first text block broke none — reflow2's reply text does not carry the id, so that path is not what the pin watches. Surface gates: toolsnap 181/181, every_tool_is_found_by_a_query 181/181 (usage_report in the top five for its user-phrased query), every_required_parameter_is_described, skill_lint (27 skills, feedback composes STANDING/REPORTS/MEASURES), check_command_surface 27 skills / 30 commands, render --check, smoke_mcp, refusal_speaks, empty_speaks, test_init, check_doc_versions.",
+        "findings": "2026-09-12, increment 437: 4 unit + 4 handler + 1 wire test (22 pins) green; the argument-leak mutation broke 4 pins and the restore re-proved green; every surface gate listed in the description green; the full mcp suite ran to completion detached from the harness (the harness killed the first run under its low-memory rule) — 67 test binaries, 0 failures, rc=0.",
+        "kind": "verification",
+        "last_run_at": "2026-09-12",
+        "level": "integration",
+        "method": "test",
+        "name": "The usage ledger holds the verb and never the object, and /feedback renders it",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:the-loop-says-what-this-session-added",
       "node_type": "Verification",
       "properties": {
@@ -231211,7 +231836,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:e31e269e1e9daff01ca58bf1ebc8788a24e9cc7c949bc817b528162d73a86ed0",
+  "prev_content_hash": "sha256:61bed01b3d5dcdcfb6839432a8a6f6e6146f43f63243b01dcf8ed6c47309ccda",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

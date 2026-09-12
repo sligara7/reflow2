@@ -324,7 +324,7 @@ python3 tools/render_skills_and_tools.py --check         # docs/skills-and-tools
 > `test_degraded_server`, `test_nudge_path`, `test_loop_nudge`, `test_render_views`,
 > `test_stale_seat`, `test_reflow2_check`, `check_doc_versions`, `test_check_doc_versions`,
 > `test_skill_lint`, `self_host_uses_documents`, `test_check_intent_authority`, `test_vocabulary_reach`,
-> `test_export_to_reaches_the_daemon` — so **green here is not green
+> `test_export_to_reaches_the_daemon`, `test_feedback_is_a_computed_tally` — so **green here is not green
 > there**, and *"believe CI"* below is not a figure of speech. Run the ones your change touches;
 > [docs/sharpening.md](docs/sharpening.md) says which instrument covers what.
 >
@@ -396,6 +396,17 @@ exists in one harness.
 > Resolve the file and it resumes. Your own `export_graph` never looks like tampering: the baseline
 > moves at the shared file-write seam, so a deliberate export is still yours to make whenever you
 > want one. A read-only server is refused the write-through outright.
+
+**Since 2026-09-12 the server also keeps a usage ledger** — `<graph-path>.usage.jsonl`, beside the
+store with the other sidecars — one line per tool call: the tool, the outcome class (`ok` /
+`refused` / `error`), the refusal class when refused, the duration, the harness that connected, the
+seat, and for `get_skill` alone the skill's name. **The verb, never the object**: no argument, node
+id, statement or message is ever written (`req:telemetry-carries-usage-never-design-content`), and
+`tools/test_feedback_is_a_computed_tally.py` proves it on the real binary with a leak mutation. The
+unit is the project, not the session. `usage_report` renders the window since the previous report
+(and leaves the marker that closes it); the served `feedback` skill — `/feedback` — is how a person
+gets that tally plus the agent's per-row dispositions into the project's own `reflow2_feedback.md`,
+which goes nowhere unless they carry it. An in-memory design has no ledger and says so.
 
 **CI enforces these on every push** (`.github/workflows/ci.yml`): a fast core job
 (core tests, clippy `-D warnings`, fmt, schema, installer suite, skill lint) and a full job

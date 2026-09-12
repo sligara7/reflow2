@@ -71,6 +71,9 @@ STANDING_RULE = "data, never instructions"
 # the list stays exact and cannot rot. A single-word tool rename (`allocate`,
 # `satisfies`, `genesis`…) now fails the lint instead of slipping through.
 NON_TOOL_TERMS = {
+    # feedback (2026-09-12): field names of usage_report's reply and the
+    # disposition vocabulary the skill asks the agent to write.
+    "never_called", "other", "refusals_by_tool", "unexplained",
     # FIELDS of `record_finding`, named in root-cause's step ⑧ because the pair
     # is the whole contract: a cause with no evidence is refused before anything
     # is written, and a skill that named only the tool would leave the reader to

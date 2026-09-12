@@ -63,6 +63,22 @@ pub struct DesignIdentityReq {
     pub label: Option<String>,
 }
 
+#[derive(Debug, serde::Deserialize, schemars::JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct UsageReportReq {
+    /// Start of the window as a plain date, `YYYY-MM-DD`. Omit it for
+    /// "since the previous report" — the marker the last `usage_report` left
+    /// in the ledger — which falls back to the whole ledger when there has
+    /// never been one. A named date wins over the marker.
+    #[serde(default)]
+    pub since: Option<String>,
+    /// Look without leaving a marker. Off by default: an ordinary report
+    /// closes its window so the next one starts after it, and a report that
+    /// did not would count the same calls twice.
+    #[serde(default)]
+    pub peek: bool,
+}
+
 #[tool_router(router = skills_router, vis = "pub")]
 impl ReflowService {
     /// The catalogue, with full trigger conditions.
@@ -274,6 +290,88 @@ impl ReflowService {
         )
         .map_err(|e| McpError::internal_error(e.to_string(), None))?;
         structured(serde_json::to_value(&identity).unwrap_or(json!({})))
+    }
+
+    /// The computed spine of a `/feedback` report, from the usage ledger.
+    #[tool(
+        description = "What this project's sessions actually asked reflow2 to do, and where reflow2 declined — \
+                       computed from the usage ledger the server keeps beside the design \
+                       (`<graph>.usage.jsonl`), never from an agent's memory. Calls by tool, the served tools \
+                       NEVER called in the window, refusals by class and by tool (near_match, missing_argument, \
+                       unknown_argument, unresolved_reference, refused, other), errors, skills fetched, the \
+                       harnesses that connected, and the metadata the server knows without asking: reflow2's \
+                       version, OS and architecture, the negotiated protocol revision, the design's node count. \
+                       THE LEDGER HOLDS THE VERB, NEVER THE OBJECT — no argument, no node id, no message is \
+                       ever recorded (req:telemetry-carries-usage-never-design-content), so this report can \
+                       leave the machine without carrying the design. The window is SINCE THE PREVIOUS REPORT \
+                       by default, and this call leaves the marker that closes it — the unit is the project \
+                       across every session and harness, not one session. Pass `since` (YYYY-MM-DD) to name \
+                       the start instead; `peek` to look without closing the window. An in-memory design has no \
+                       ledger and says so. What it cannot see: anything outside reflow2's own tool calls — a \
+                       shell error, a git failure — and WHICH MODEL the agent is, which no harness sends. \
+                       Ask for this when you want a tally of which reflow2 tools were used and which calls failed, for feedback on reflow2 itself.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn usage_report(
+        &self,
+        Parameters(req): Parameters<UsageReportReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let Some(graph_path) = self.graph_path.as_deref() else {
+            return structured(json!({
+                "ledger": null,
+                "note": "This is an in-memory design — there is no store to keep a usage ledger beside, \
+                         so nothing was recorded and there is nothing to report.",
+            }));
+        };
+        let since_unix = match req.since.as_deref() {
+            None => None,
+            Some(s) => match reflow2_core::dates::parse_day(s) {
+                Some(days) => Some(u64::try_from(days.max(0)).unwrap_or(0) * 86_400),
+                None => {
+                    return Err(McpError::invalid_params(
+                        format!(
+                            "`since` must be a plain date, YYYY-MM-DD; got {s:?}. Omit it for \
+                             \"since the previous report\"."
+                        ),
+                        None,
+                    ));
+                }
+            },
+        };
+        let lines = crate::usage::read_all(graph_path);
+        let (window, start) = crate::usage::window(&lines, since_unix);
+        let served: Vec<String> = self
+            .tool_router
+            .list_all()
+            .into_iter()
+            .map(|t| t.name.to_string())
+            .collect();
+        let tally = crate::usage::tally(&window, start, &served);
+        let node_count = self.graph.read().await.count_all_nodes().unwrap_or(0);
+        let handshake = crate::handshake::Handshake::read(graph_path);
+        if !req.peek {
+            crate::usage::append(graph_path, &crate::usage::UsageLine::report_marker());
+        }
+        structured(json!({
+            "ledger": crate::usage::usage_path(graph_path).display().to_string(),
+            "window_described": start.describe(),
+            "tally": tally,
+            "environment": {
+                "reflow2_version": env!("CARGO_PKG_VERSION"),
+                "os": std::env::consts::OS,
+                "arch": std::env::consts::ARCH,
+                "harness_last_connected": handshake
+                    .as_ref()
+                    .map(|h| format!("{} {}", h.client_name, h.client_version)),
+                "protocol_negotiated": handshake.as_ref().map(|h| h.negotiated.clone()),
+                "design_nodes": node_count,
+                "model": "NOT KNOWN TO THE SERVER — no harness sends the model over MCP; the agent \
+                          composing the report states it, labelled as self-reported.",
+            },
+            "marker_left": !req.peek,
+            "not_seen": "Anything outside reflow2's own tool calls: shell, git, CI. report-friction \
+                         remains the form for those.",
+        }))
     }
 }
 

@@ -180,6 +180,7 @@
   "what_next": "which decisions should we settle next and why",
   "withdraw_defect_acknowledgement": "un-accept a defect I previously waved through",
   "withdraw_gap_acknowledgement": "reopen a gap I previously accepted",
-  "withdraw_question": "retract a question that was asked"
+  "withdraw_question": "retract a question that was asked",
+  "usage_report": "give me the numbers on how this project has been using reflow2 \u2014 which tools got called, which calls it refused \u2014 so I can send feedback to the maintainer"
  }
 }
