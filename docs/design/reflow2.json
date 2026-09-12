@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:780e58c281541d09e37017699062c38d75188aa14733e0c48a71ec1ed59f9107",
+  "content_hash": "sha256:3696e170725a9f9374a619ec027a56974a486f7a92996a4211503f58b23ab5a9",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -61084,6 +61084,12 @@
       "from_id": "rule:success-is-read-from-the-authoritative-object",
       "properties": {},
       "to_id": "fact:the-root-cause-was-on-the-record-and-a-session-re-derived-it-anyway"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "sub:tool-surface",
+      "properties": {},
+      "to_id": "fact:179-of-180-tools-have-a-machine-record-of-a-real-call-and-zero-crashed"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -169684,6 +169690,15 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:a-walk-does-not-recompute-the-whole-network",
+      "properties": {
+        "at": "2026-09-11",
+        "note": "#479 (merged 94f1fa68) memoised the betweenness and the adjacency per write generation; design_regions returns in 12.5 s on the debug daemon it was measured on, and in 5.5 s cold / 2.0 s warm on a release build. The >300 s observation is wholly false now and this ChangeEvent is what made it so. NOT drawn to the sibling finding (fact:design-regions-is-one-expensive-region-walk-per-seed-…) because that one is only half false — there are still 109 seeds and one walk each; what changed is that the walk is no longer rebuilt from scratch — and a partially superseded finding stays open."
+      },
+      "to_id": "fact:design-regions-exceeds-300-seconds-and-wedges-the-shared-server"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:absence-means-nobody-said-on-a-verification-and-a-plan-holds-a-check-and-a-ruling",
       "properties": {
         "at": "2026-09-06",
@@ -219938,6 +219953,19 @@
       }
     },
     {
+      "node_id": "fact:179-of-180-tools-have-a-machine-record-of-a-real-call-and-zero-crashed",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "finding",
+        "name": "179 of 180 served tools have a machine record of a real call — 479 calls over stdio JSON-RPC against isolated copies, 134 answered, 45 refused for want of real ids, 0 crashed. The one without a record is the most-exercised tool of the day",
+        "statement": "THE ANSWER TO ANTHONY'S THIRD QUESTION OF 2026-09-11 — *\"how many of the 180 tools have you actually exercised and work properly per the tool description?\"* — reconstructed from the harness's own JSONL rather than from prose, after a first attempt showed why prose cannot answer it.\n\n    tool calls recorded on the wire (tools/sweep_harness.py, stdio JSON-RPC)   479\n    DISTINCT tools with a machine record                                       179 of 180\n      returned a successful reply at least once                                134\n      only ever refused — because the probe supplied no real ids               45\n      crashed at any point                                                       0\n    no machine record                                                            1   design_regions\n\n⭐ **THE ONE GAP IS THE MOST-EXERCISED TOOL OF THE DAY.** `design_regions` is the subject of PR #479 and was timed repeatedly through the live daemon; it is absent only from the HARNESS record, because on the plain-stdio path it ran past ten minutes and was stopped (the daemon/stdio gap, still open). So the honest count of tools exercised is 180, and the honest count with a machine record is 179 — and the difference is worth keeping visible rather than rounding.\n\n⚠️ **WHAT \"EXERCISED\" MEANS AND DOES NOT.** A call was made, a reply came back, and the reply was read. It does NOT mean each tool's behaviour was verified against its description — that was the blind-prediction work of criterion 2, which covered the tools that were predicted, not all 180. Every description-accuracy failure that WAS tested for is fixed (#477, #478, #479); \"all 180 descriptions are accurate\" is not a claim this measurement supports.\n\n═══ HOW THE FIRST ATTEMPT WENT WRONG, so the method survives ═══\n\nThe harness JSONL covered 146 tools. To reach the rest I first regexed backticked tool names out of the tranche prose and took the union — **180 of 180**. That number was inflated: a tool NAMED in prose is not a tool CALLED, and the regex counted every mention. So the 34 without a record were RUN instead of estimated, against an isolated copy, with real ids from the export. 23 answered, 6 refused in the NEW missing-argument format (which is how the refusal class was seen working in the wild), and design_regions wedged.\n\nSix of those refusals are also the first field sighting of `missing_field_hint` — the refusal named the tool and quoted the schema — which is incidental proof the #480 class fix reaches a real caller.\n\n═══ THE METHOD FINDING ═══\n\n**The sweep kept no consolidated ledger of which tools it had called.** Four tranches, five harness runs, and the answer to \"which tools did you exercise\" had to be reconstructed from scattered JSONL after the fact. `dec:idea-the-server-counts-its-own-refusals-so-no-session-has-to-remember-to` is the open question this lands on: a usage ledger kept by the server would have answered the question in one call, and would have caught the prose-inflation mistake by construction.",
+        "subject_id": "sub:tool-surface",
+        "valid_from": "2026-09-11"
+      }
+    },
+    {
       "node_id": "fact:a-broken-export-lineage-is-invisible-to-git-and-the-merge-driver-repaired-it",
       "node_type": "TemporalFact",
       "properties": {
@@ -223639,6 +223667,18 @@
         "subject_id": "proj:reflow2",
         "valid_from": "2026-08-30",
         "value": "{\"diagnosis\":\"tool_missing\",\"reflow2_tool\":null}"
+      }
+    },
+    {
+      "node_id": "fact:manual-work-64e7efc935da711d",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "manual_work",
+        "statement": "Wrote a Python script — three separate times in one session — that loads the committed export and the working-tree export, diffs their node-id sets and per-node property maps, and prints ADDED / REMOVED / PROPERTIES CHANGED, to check an export for cross-branch drift before committing it. Used it before every export commit today. compare_designs does exactly this with the committed file as base_path; the where-am-i skill even names it first. I reached for the script because I wanted node-id sets I could eyeball, and did not think to ask whether the served tool already returned them.",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-09-11",
+        "value": "{\"diagnosis\":\"tool_not_found\",\"reflow2_tool\":\"compare_designs\"}"
       }
     },
     {
@@ -229081,7 +229121,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:dc4c63aff484b78a1fa12bfa88ac55a05c78536c523c0a8fd41901fb5c00fcbf",
+  "prev_content_hash": "sha256:780e58c281541d09e37017699062c38d75188aa14733e0c48a71ec1ed59f9107",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
