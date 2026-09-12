@@ -322,7 +322,8 @@ python3 tools/launch_serves_release.py                   # the launcher serves r
 > `stateless_seat_probe`, `test_init`, `test_shared_sessions`, `test_merge_driver`,
 > `test_degraded_server`, `test_nudge_path`, `test_loop_nudge`, `test_render_views`,
 > `test_stale_seat`, `test_reflow2_check`, `check_doc_versions`, `test_check_doc_versions`,
-> `test_skill_lint`, `self_host_uses_documents`, `test_check_intent_authority`, `test_vocabulary_reach` — so **green here is not green
+> `test_skill_lint`, `self_host_uses_documents`, `test_check_intent_authority`, `test_vocabulary_reach`,
+> `test_export_to_reaches_the_daemon` — so **green here is not green
 > there**, and *"believe CI"* below is not a figure of speech. Run the ones your change touches;
 > [docs/sharpening.md](docs/sharpening.md) says which instrument covers what.
 >
@@ -379,6 +380,21 @@ Outside git, or before the export path is committed, the old on-disk behaviour s
 and both of its silent breakages still apply — exporting somewhere else and copying the file into
 place (there was nothing to link to), or exporting twice between commits. reflow2 assumes nothing
 about git; the improvement is to the anchor, never a requirement.
+
+**Since 2026-09-12 the server also keeps that file current on its own** — `--export-to <FILE>`,
+which this repo's `.mcp.json` and every project `reflow2_init.py` installs now pass. After each
+change the write-through waits for two seconds of quiet (ten at the outside, so a steady stream of
+writes cannot starve it) and exports once, so a burst of thirty writes costs one export and a
+forgotten export stops being a class of loss. The guarantee lives in the server because **the
+session is the thing that might not come back**: the Stop hook that used to carry it fires once and
+exists in one harness.
+
+> 🛑 **IT WILL NOT OVERWRITE A HAND EDIT, AND THAT MEANS IT CAN STOP.** If the file no longer
+> matches what reflow2 last wrote — you edited it, or a merge left it unparseable — the
+> write-through declines and **`loop_status` says so in `next`**, not in a log line nobody reads.
+> Resolve the file and it resumes. Your own `export_graph` never looks like tampering: the baseline
+> moves at the shared file-write seam, so a deliberate export is still yours to make whenever you
+> want one. A read-only server is refused the write-through outright.
 
 **CI enforces these on every push** (`.github/workflows/ci.yml`): a fast core job
 (core tests, clippy `-D warnings`, fmt, schema, installer suite, skill lint) and a full job

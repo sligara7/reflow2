@@ -377,6 +377,7 @@ fn is_for_this_graph(r: &Rendezvous, graph_path: &str) -> bool {
 pub async fn ensure_server_async(
     graph_path: &str,
     log_to: Option<&Path>,
+    export_to: Option<&str>,
 ) -> anyhow::Result<String> {
     // Already up? Attach and we are done — the overwhelmingly common case once
     // the first session of the day has started.
@@ -464,7 +465,7 @@ pub async fn ensure_server_async(
     // that has since been fixed cannot be condemned by a stale file.
     remove_refusal(graph_path);
 
-    let spawned = spawn_daemon(graph_path, log_to)
+    let spawned = spawn_daemon(graph_path, log_to, export_to)
         .context("could not start a shared reflow2 server for this design")?;
 
     let deadline = Instant::now() + READY_TIMEOUT;
@@ -529,7 +530,7 @@ pub async fn ensure_server_async(
             );
             // A failure here is not fatal: a peer may still publish, and the
             // deadline is what decides.
-            match spawn_daemon(graph_path, log_to) {
+            match spawn_daemon(graph_path, log_to, export_to) {
                 // Remember it: a refusal only counts as ours if we started the
                 // process that wrote it, and a re-spawn is just as much ours as
                 // the first one.
@@ -639,7 +640,11 @@ fn relaunchable_exe_from(raw: PathBuf) -> anyhow::Result<PathBuf> {
 /// the session that happened to start it does not take the shared server down
 /// with it; and no stdio inherited, so it cannot write a stray byte into a
 /// session's JSON-RPC channel.
-fn spawn_daemon(graph_path: &str, log_to: Option<&Path>) -> anyhow::Result<u32> {
+fn spawn_daemon(
+    graph_path: &str,
+    log_to: Option<&Path>,
+    export_to: Option<&str>,
+) -> anyhow::Result<u32> {
     let exe = relaunchable_exe_from(
         std::env::current_exe().context("could not find the running reflow2-mcp binary")?,
     )?;
@@ -654,6 +659,20 @@ fn spawn_daemon(graph_path: &str, log_to: Option<&Path>) -> anyhow::Result<u32> 
     cmd.arg("--graph-path")
         .arg(graph_path)
         .arg("--serve-shared")
+        // FORWARD THE WRITE-THROUGH, because the DAEMON is what holds the graph
+        // and does the writing. A `--shared` client is a proxy: giving it
+        // `--export-to` and stopping there would mean the flag every installed
+        // project now passes has no effect at all in the default configuration,
+        // which is the shape of bug this repo keeps meeting — a mechanism wired
+        // into the one place that motivated it.
+        //
+        // FIRST START WINS. A daemon already up was started with whatever flags
+        // it was given; a later client cannot change it, and `--stop-shared`
+        // plus any tool call is the documented way to replace one.
+        .args(match export_to {
+            Some(p) => vec![String::from("--export-to"), p.to_string()],
+            None => Vec::new(),
+        })
         // Pass the log through so a caller that redirected it (the test suite)
         // gets the daemon's diagnostics in the same place it is watching.
         .args(match log_to {

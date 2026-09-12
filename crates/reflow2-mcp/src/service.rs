@@ -386,6 +386,14 @@ pub struct ReflowService {
     /// surfaced. Together they stop the hint both recomputing every read and
     /// repeating itself while the picture has not moved.
     read_hint: Arc<std::sync::Mutex<ReadHintCache>>,
+    /// The server's own write-through, when it was started with `--export-to`
+    /// (`req:the-server-keeps-the-working-tree-export-current`). `None` is the
+    /// ordinary case and means the export happens only when somebody asks.
+    ///
+    /// SHARED ACROSS SESSIONS like the graph, never fresh per session: it is a
+    /// property of the SERVER — one file, one task — and a per-session copy
+    /// would mean N tasks racing to write one path.
+    auto_export: Option<Arc<crate::auto_export::AutoExport>>,
 }
 
 /// See [`ReflowService::read_hint`]. `computed_gen: None` means nothing has been
@@ -5038,7 +5046,46 @@ impl ReflowService {
                 + Self::claims_tools_router(),
             write_gen: Arc::new(AtomicU64::new(0)),
             read_hint: Arc::new(std::sync::Mutex::new(ReadHintCache::default())),
+            auto_export: None,
         }
+    }
+
+    /// Turn on the server's own write-through and start its task.
+    ///
+    /// Separate from the constructors on purpose: spawning needs a runtime, and
+    /// `new`/`in_memory` are called from places that have none (the CLI's
+    /// one-shot modes, and every test that builds a service before `#[tokio::test]`
+    /// has one). Call it once, from `main`, after the runtime exists.
+    ///
+    /// A READ-ONLY SERVER IS REFUSED A WRITE-THROUGH rather than silently
+    /// given one: the mode exists so a surface with no authentication cannot
+    /// change anything, and a task writing files on its behalf is exactly the
+    /// kind of exception that makes a guarantee stop meaning what it says.
+    pub fn start_auto_export(&mut self, path: String) -> Result<(), String> {
+        if self.read_only {
+            return Err(
+                "this server is read-only, so it will not write the export through. Start it \
+                 without --read-only, or export deliberately."
+                    .to_string(),
+            );
+        }
+        let auto = crate::auto_export::AutoExport::new(path);
+        crate::auto_export::spawn(
+            Arc::clone(&auto),
+            Arc::clone(&self.graph),
+            self.graph_path.clone(),
+        );
+        self.auto_export = Some(auto);
+        Ok(())
+    }
+
+    /// What the write-through has done, for the reports. `None` when the server
+    /// was not started with `--export-to`, which is a different fact from
+    /// "it has done nothing" and must not share a reply with it.
+    pub fn auto_export_status(&self) -> Option<(String, crate::auto_export::Status)> {
+        self.auto_export
+            .as_ref()
+            .map(|a| (a.path.clone(), a.status()))
     }
 
     /// Another session on the SAME design.
@@ -5073,6 +5120,7 @@ impl ReflowService {
             // nudge on whichever session read next.
             seat: std::sync::Arc::new(reflow2_core::identity::SeatLease::attach()),
             read_hint: Arc::new(std::sync::Mutex::new(ReadHintCache::default())),
+            auto_export: self.auto_export.clone(),
         }
     }
 
@@ -5114,6 +5162,12 @@ impl ReflowService {
             ));
         }
         self.write_gen.fetch_add(1, Ordering::Relaxed);
+        // Ring the write-through's doorbell. Non-blocking by construction — it
+        // sets a notification and returns — so the guarantee that the export
+        // stays current never sits in front of a tool call.
+        if let Some(auto) = &self.auto_export {
+            auto.poke();
+        }
         Ok(self.graph.write().await)
     }
 

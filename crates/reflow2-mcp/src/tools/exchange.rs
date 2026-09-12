@@ -165,132 +165,34 @@ impl ReflowService {
                 None,
             ));
         }
-        // The file-write seam is where lineage lives (dec:export-hash-chain):
-        // replacing an export file links the new document to the old one's
-        // content hash — advancing only when content actually changed, so an
-        // unchanged design still writes byte-identical files. A file that is
-        // not a reflow2 export records no chain, and says so in the receipt.
-        let mut chain_note = None;
-        let mut sync_note = None;
-        // WHERE THE LINEAGE ANCHORS, asked once and used by every branch below.
-        //
-        // The chain used to grow from the file being replaced, which made every
-        // intermediate save a hop and put `dec:export-once-per-pr` on the author
-        // to remember. Anchored at the merge-base with the default branch
-        // instead, any number of commits on a branch each chain from the same
-        // committed ancestor and a squash-merge lands exactly one hop per PR —
-        // `dec:idea-does-the-graph-write-itself-through-to-the-repo-on-every-change`,
-        // road (a). Outside a git repository nothing changes: `Err` carries the
-        // reason and every branch falls back to the file on disk.
-        let committed = crate::git::committed_predecessor(target);
-        let mut chained_from = match &committed {
-            Ok(c) => c.source.clone(),
-            Err(_) => "disk".to_string(),
+        // THE FILE-WRITE SEAM LIVES IN `export_write`, shared with the
+        // server's own write-through (`crate::auto_export`). Two callers must
+        // agree on where the lineage anchors, whether the write would drop
+        // design the file already holds, what `wrote` reports and recording
+        // that this seat is in step — a second copy that drifts is the failure
+        // this project keeps meeting.
+        let written = match crate::export_write::chain_and_write(
+            &mut export,
+            &path,
+            self.graph_path.as_deref(),
+            req.accept_divergence.unwrap_or(false),
+        ) {
+            Ok(w) => w,
+            // A caller-supplied path that cannot be written, or a write that
+            // would lose work, is the caller's to resolve — not a server fault.
+            Err(refusal) => {
+                return Err(McpError::invalid_params(
+                    refusal.message().to_string(),
+                    None,
+                ));
+            }
         };
-        // WHAT THIS WRITE ACTUALLY DID, because the receipt could not say.
-        //
-        // `content_hash` and `prev_content_hash` DO NOT ANSWER IT. Measured on
-        // 0.31.0 across a five-export chain: an export that changed the file and
-        // one that changed nothing return **byte-identical receipts** — same
-        // content hash, same prev hash — because `chain_after` gives an
-        // unchanged export the predecessor's own `prev`. In both cases
-        // `content_hash != prev_content_hash`, so that difference discriminates
-        // nothing.
-        //
-        // It matters because of who hits it. On a `--shared` server a peer's
-        // export publishes YOUR in-flight work (measured: 28 nodes once, 17 the
-        // next), and your own export afterwards is then a no-op — which read to
-        // the seat that hit it as a FAILED SAVE. Reported five times by three
-        // seats before this existed. `sync_status` answers the other direction
-        // and says out loud that it declines this one.
-        //
-        // Same principle as the `revision` block on the constructors and the
-        // who-edge refusals: two different facts must not share one reply.
-        let mut wrote = "created";
-        if target.exists() {
-            match std::fs::read_to_string(target)
-                .ok()
-                .and_then(|raw| serde_json::from_str::<reflow2_core::GraphExport>(&raw).ok())
-            {
-                Some(predecessor) => {
-                    // req:stale-seat-knows. Before the lineage link, the
-                    // question git answers with a non-fast-forward refusal:
-                    // would writing this drop design the file already holds?
-                    // Only the lossy case stops — see reflow2_core::sync.
-                    let last = self
-                        .graph_path
-                        .as_deref()
-                        .and_then(|g| reflow2_core::provenance::last_synced(g, &path));
-                    let verdict = reflow2_core::sync::assess_overwrite(
-                        Some(&predecessor),
-                        &export,
-                        last.as_deref(),
-                    );
-                    if verdict.is_loss() && !req.accept_divergence.unwrap_or(false) {
-                        return Err(McpError::invalid_params(
-                            verdict.message(&path).unwrap_or_default(),
-                            None,
-                        ));
-                    }
-                    sync_note = verdict.message(&path);
-                    wrote = if predecessor.effective_content_hash()
-                        == export.effective_content_hash()
-                    {
-                        "unchanged"
-                    } else {
-                        "changed"
-                    };
-                    match &committed {
-                        Ok(c) => export.chain_after(&c.doc),
-                        Err(reason) => {
-                            export.chain_after(&predecessor);
-                            chain_note = Some(reason.reason());
-                        }
-                    }
-                }
-                None => {
-                    wrote = "changed";
-                    // The file on disk is not an export — but the COMMITTED
-                    // version of this path may still be one, and it is the
-                    // honest ancestor either way.
-                    match &committed {
-                        Ok(c) => export.chain_after(&c.doc),
-                        Err(_) => {
-                            chained_from = "nothing".to_string();
-                            chain_note = Some(
-                                "the file being replaced was not a reflow2 export — no lineage \
-                                 recorded",
-                            );
-                        }
-                    }
-                }
-            }
-        } else {
-            // Nothing at this path — but a committed version can still exist
-            // (somebody deleted it, or this is a fresh checkout). Writing a
-            // record whose ancestry says "none" when git knows otherwise is the
-            // silent wrong answer this whole change exists to remove.
-            match &committed {
-                Ok(c) => export.chain_after(&c.doc),
-                Err(_) => chained_from = "nothing".to_string(),
-            }
-        }
-        // Through `serde_json::Value` so keys serialize sorted (its object is a
-        // BTreeMap) — the same convention as the committed design export, so a
-        // file this writes diffs cleanly against one written before it.
-        let v = serde_json::to_value(&export).map_err(ser_err)?;
-        let text = format!("{}\n", serde_json::to_string_pretty(&v).map_err(ser_err)?);
-        std::fs::write(target, &text).map_err(|e| {
-            // A path the caller supplied that cannot be written is the caller's
-            // mistake, not a server fault.
-            McpError::invalid_params(format!("cannot write export to {path}: {e}"), None)
-        })?;
-        // This seat is now in step with what it just wrote — so the next
-        // export takes the one-hash fast path instead of comparing documents,
-        // and a file that moves after this is detectable (req:stale-seat-knows).
-        if let (Some(graph_path), Some(hash)) = (self.graph_path.as_deref(), &export.content_hash) {
-            reflow2_core::provenance::record_sync(graph_path, &path, hash);
-        }
+        let (wrote, chained_from, chain_note, sync_note) = (
+            written.wrote,
+            written.chained_from,
+            written.chain_note,
+            written.sync_note,
+        );
         // Report where it actually landed: a relative path resolves against the
         // server's cwd, which the calling agent cannot see.
         let resolved = std::fs::canonicalize(target)
@@ -298,7 +200,7 @@ impl ReflowService {
             .unwrap_or(path);
         let mut receipt = json!({
             "path": resolved,
-            "bytes": text.len(),
+            "bytes": written.bytes,
             "nodes": export.nodes.len(),
             "edges": export.edges.len(),
             "content_hash": export.content_hash,
