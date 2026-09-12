@@ -14,6 +14,15 @@ fn holds_none(_types: &[String]) -> Result<Vec<String>, reflow2_core::DynoError>
     Ok(Vec::new())
 }
 
+/// The enum-value sibling of `holds_none`: the graph stores none of the values
+/// this binary does not know. Named for the same reason — a call site states
+/// the population it assumes rather than implying one.
+fn stores_no_unknown_values(
+    _unknown: &[reflow2_core::provenance::UnknownEnumValue],
+) -> Result<Vec<reflow2_core::provenance::UnknownEnumValue>, reflow2_core::DynoError> {
+    Ok(Vec::new())
+}
+
 fn tmpdir(name: &str) -> std::path::PathBuf {
     let d = std::env::temp_dir().join(format!("reflow2-prov-{name}-{}", std::process::id()));
     let _ = std::fs::remove_dir_all(&d);
@@ -27,7 +36,13 @@ fn an_unstamped_graph_is_stamped_and_says_so() {
     let g = d.join("graph");
     let schema = load_schema().unwrap();
 
-    let v = check_and_stamp(g.to_str().unwrap(), &schema, holds_none).unwrap();
+    let v = check_and_stamp(
+        g.to_str().unwrap(),
+        &schema,
+        holds_none,
+        stores_no_unknown_values,
+    )
+    .unwrap();
     assert!(matches!(v, Provenance::Unstamped { .. }));
     assert!(
         v.note().unwrap().contains("no version stamp"),
@@ -40,7 +55,13 @@ fn an_unstamped_graph_is_stamped_and_says_so() {
     assert!(p.exists());
 
     // Second open now matches, and has nothing to report.
-    let again = check_and_stamp(g.to_str().unwrap(), &schema, holds_none).unwrap();
+    let again = check_and_stamp(
+        g.to_str().unwrap(),
+        &schema,
+        holds_none,
+        stores_no_unknown_values,
+    )
+    .unwrap();
     assert!(matches!(again, Provenance::Match { .. }));
     assert_eq!(again.note(), None, "a matching graph is not worth a remark");
     std::fs::remove_dir_all(&d).ok();
@@ -62,6 +83,7 @@ fn an_older_graph_opens_and_reports_the_difference() {
         edge_types: 52,
         node_type_names: None,
         edge_type_names: None,
+        enum_values: None,
     };
     std::fs::write(
         stamp_path(g.to_str().unwrap()),
@@ -69,7 +91,13 @@ fn an_older_graph_opens_and_reports_the_difference() {
     )
     .unwrap();
 
-    let v = check_and_stamp(g.to_str().unwrap(), &schema, holds_none).unwrap();
+    let v = check_and_stamp(
+        g.to_str().unwrap(),
+        &schema,
+        holds_none,
+        stores_no_unknown_values,
+    )
+    .unwrap();
     match &v {
         Provenance::OlderGraph { was, now } => {
             assert_eq!(was.node_types, 26);
@@ -106,6 +134,7 @@ fn a_graph_from_the_future_is_refused_loudly() {
         edge_types: 99,
         node_type_names: None,
         edge_type_names: None,
+        enum_values: None,
     };
     std::fs::write(
         stamp_path(g.to_str().unwrap()),
@@ -113,8 +142,13 @@ fn a_graph_from_the_future_is_refused_loudly() {
     )
     .unwrap();
 
-    let err = check_and_stamp(g.to_str().unwrap(), &schema, holds_none)
-        .expect_err("a graph from the future cannot be read in full");
+    let err = check_and_stamp(
+        g.to_str().unwrap(),
+        &schema,
+        holds_none,
+        stores_no_unknown_values,
+    )
+    .expect_err("a graph from the future cannot be read in full");
     let msg = err.to_string();
     assert!(msg.contains("9.9.9"), "say which reflow2 wrote it: {msg}");
     assert!(
@@ -145,8 +179,13 @@ fn an_unreadable_stamp_is_reported_never_overwritten() {
     let schema = load_schema().unwrap();
     std::fs::write(stamp_path(g.to_str().unwrap()), "{ not json").unwrap();
 
-    let err =
-        check_and_stamp(g.to_str().unwrap(), &schema, holds_none).expect_err("must not guess");
+    let err = check_and_stamp(
+        g.to_str().unwrap(),
+        &schema,
+        holds_none,
+        stores_no_unknown_values,
+    )
+    .expect_err("must not guess");
     assert!(err.to_string().contains("not readable"), "{err}");
     assert_eq!(
         std::fs::read_to_string(stamp_path(g.to_str().unwrap())).unwrap(),
@@ -178,6 +217,7 @@ fn a_graph_naming_a_retired_type_is_told_to_migrate() {
         edge_types: edges.len(),
         node_type_names: now.node_type_names.clone(),
         edge_type_names: Some(edges),
+        enum_values: now.enum_values.clone(),
     };
     std::fs::write(
         stamp_path(g.to_str().unwrap()),
@@ -185,8 +225,13 @@ fn a_graph_naming_a_retired_type_is_told_to_migrate() {
     )
     .unwrap();
 
-    let err = check_and_stamp(g.to_str().unwrap(), &schema, holds_none)
-        .expect_err("a graph using a retired type must be refused");
+    let err = check_and_stamp(
+        g.to_str().unwrap(),
+        &schema,
+        holds_none,
+        stores_no_unknown_values,
+    )
+    .expect_err("a graph using a retired type must be refused");
     let msg = err.to_string();
     assert!(msg.contains("VALIDATES"), "name the retired type: {msg}");
     assert!(
@@ -240,7 +285,12 @@ fn a_retired_type_with_no_instances_opens() {
     )
     .unwrap();
 
-    let verdict = check_and_stamp(g.to_str().unwrap(), &schema, holds_none);
+    let verdict = check_and_stamp(
+        g.to_str().unwrap(),
+        &schema,
+        holds_none,
+        stores_no_unknown_values,
+    );
     assert!(
         verdict.is_ok(),
         "a graph holding ZERO instances of a retired type must OPEN: the refusal's own \
@@ -266,8 +316,13 @@ fn an_unknown_type_still_refuses_even_with_no_instances() {
     )
     .unwrap();
 
-    let err = check_and_stamp(g.to_str().unwrap(), &schema, holds_none)
-        .expect_err("a graph from the future must still be refused");
+    let err = check_and_stamp(
+        g.to_str().unwrap(),
+        &schema,
+        holds_none,
+        stores_no_unknown_values,
+    )
+    .expect_err("a graph from the future must still be refused");
     assert!(
         err.to_string().contains("BEHIND"),
         "and it must still say the BINARY is behind, not that the graph should migrate: {err}"
@@ -290,9 +345,12 @@ fn a_retired_type_that_is_actually_populated_still_refuses() {
     )
     .unwrap();
 
-    let err = check_and_stamp(g.to_str().unwrap(), &schema, |types| {
-        Ok(types.to_vec()) // every retired type has instances
-    })
+    let err = check_and_stamp(
+        g.to_str().unwrap(),
+        &schema,
+        |types| Ok(types.to_vec()), // every retired type has instances
+        stores_no_unknown_values,
+    )
     .expect_err("a graph that HOLDS the retired type must still be refused");
     let msg = err.to_string();
     assert!(
@@ -319,9 +377,12 @@ fn a_population_that_cannot_be_counted_still_refuses() {
     )
     .unwrap();
 
-    let err = check_and_stamp(g.to_str().unwrap(), &schema, |_| {
-        Err(reflow2_core::DynoError::Storage("the scan failed".into()))
-    })
+    let err = check_and_stamp(
+        g.to_str().unwrap(),
+        &schema,
+        |_| Err(reflow2_core::DynoError::Storage("the scan failed".into())),
+        stores_no_unknown_values,
+    )
     .expect_err("an uncountable population must not read as an empty one");
     assert!(
         err.to_string().contains("the scan failed"),

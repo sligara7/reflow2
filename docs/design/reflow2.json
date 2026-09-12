@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:69bdc6e96af2f513384b5785091bd9491b43424bb64f067fbb511b50d590cd6f",
+  "content_hash": "sha256:ebb574db946c9383acb1a5e70fffc7dba6886e38fb0bdcee58c8e213281492a7",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -9851,6 +9851,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:the-version-guard-sees-enum-values",
+      "properties": {},
+      "to_id": "epoch:planned-a-vocabulary-change-is-never-silent"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:the-vocabulary-question-is-dispositioned",
       "properties": {},
       "to_id": "epoch:the-owner-rules-on-scope-and-reachability"
@@ -11363,6 +11369,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:planned-a-vocabulary-change-is-never-silent:cap:a-reader-that-cannot-read-the-vocabulary-is-told-what-it-lacks",
+      "properties": {},
+      "to_id": "epoch:planned-a-vocabulary-change-is-never-silent"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:planning-axis-intent:dec:where-plans-live",
       "properties": {},
       "to_id": "epoch:planning-axis-intent"
@@ -11376,6 +11388,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:cap:a-fix-with-no-recorded-cause-and-a-defect-its-subject-outran-are-noticed",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:cap:a-reader-that-cannot-read-the-vocabulary-is-told-what-it-lacks",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
     },
@@ -42199,6 +42217,42 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-version-guard-sees-enum-values",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-version-guard-sees-enum-values",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:provenance"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-version-guard-sees-enum-values",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-provenance"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-version-guard-sees-enum-values",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:a-reader-that-cannot-read-the-vocabulary-is-told-what-it-lacks"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-vocabulary-question-is-dispositioned",
       "properties": {
         "accepted_baseline": false,
@@ -59128,6 +59182,18 @@
       "from_id": "cap:a-fix-with-no-recorded-cause-and-a-defect-its-subject-outran-are-noticed",
       "properties": {},
       "to_id": "snap:epoch:preserved-on-write:cap:a-fix-with-no-recorded-cause-and-a-defect-its-subject-outran-are-noticed"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:a-reader-that-cannot-read-the-vocabulary-is-told-what-it-lacks",
+      "properties": {},
+      "to_id": "snap:epoch:planned-a-vocabulary-change-is-never-silent:cap:a-reader-that-cannot-read-the-vocabulary-is-told-what-it-lacks"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:a-reader-that-cannot-read-the-vocabulary-is-told-what-it-lacks",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:cap:a-reader-that-cannot-read-the-vocabulary-is-told-what-it-lacks"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -172345,6 +172411,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:a-vocabulary-change-is-never-silent-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-reader-that-cannot-read-the-vocabulary-is-told-what-it-lacks"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:acknowledgement-approver-test",
       "properties": {
         "completeness": "complete",
@@ -180228,6 +180303,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:a-vocabulary-change-is-never-silent",
+      "properties": {},
+      "to_id": "cap:a-reader-that-cannot-read-the-vocabulary-is-told-what-it-lacks"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:a-withdrawn-decision-is-not-a-conflict",
       "properties": {},
       "to_id": "req:a-detector-reads-the-properties-that-qualify-its-own-finding"
@@ -181809,6 +181890,14 @@
         "action": "created"
       },
       "to_id": "art:a-settled-decision-names-governed-prose-test"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:a-vocabulary-change-is-never-silent-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:a-vocabulary-change-is-never-silent-test"
     },
     {
       "edge_type": "YIELDED",
@@ -183797,6 +183886,18 @@
       }
     },
     {
+      "node_id": "art:a-vocabulary-change-is-never-silent-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:112f8774f6d5cfe2877807e5fe8a2b10133922eb93399dd3edd258b8101b33b6",
+        "description": "Five tests pinning the enum half of the version guard against real stamp files and the shipped schema: a declared-but-unstored value opens, a stored one is refused by name, a pre-enum stamp opens, an uncountable population refuses, and the collector really records the vocabulary (Decision.status does NOT yet hold deferred — the next increment adds it). Blinding the comparison fails exactly the two refusal tests.",
+        "location": "crates/reflow2-core/tests/a_vocabulary_change_is_never_silent.rs",
+        "name": "a_vocabulary_change_is_never_silent.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:acknowledgement-approver-test",
       "node_type": "Artifact",
       "properties": {
@@ -185014,7 +185115,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:949839b9ce4b37060bc2df33c03b26b1d4c4f700bae2c0c85add5183cb315f0b",
+        "checksum": "sha256:e5258317ac7604e2b15e8c8e9a5f8a7f07a5c9c5468afde9224c869dc28c6783",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/graph.rs",
         "name": "crates/reflow2-core/src/graph.rs",
@@ -185722,7 +185823,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:5001f03d28497a1bc059b275e33baf9d3af91d2d5304ab6d8dd09e2832b09ff5",
+        "checksum": "sha256:91d1c46d6b317b2e3488cd4538d7c45402e3959682dfff717582ced3295b7c9b",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/provenance.rs",
         "name": "provenance.rs",
@@ -187030,7 +187131,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "test",
-        "checksum": "sha256:5f1a30d57343660a3e9207828636281ad3cae82590a661b7782cdf9e194226d6",
+        "checksum": "sha256:b06e7b2066b92dc02c3ff47c472f51becb7f06c6b4836fba17c812c8f7ca685a",
         "description": "Drives check_and_stamp against real files rather than through open_rocksdb, so it runs on the fast path.\n\nSince 2026-09-08 it also carries the field-reported zero-instance case and the three controls that stop its fix becoming \"always open\": an UNKNOWN type still refuses and still says the binary is BEHIND; a retired type that IS populated still refuses, naming what it holds; and a population that CANNOT BE COUNTED still refuses, because a scan error read as zero would open the graph the guard exists to protect.\n\nThe zero-instance test was written against the unfixed code and observed to fail, reproducing the reporter's error text verbatim including the 0.50.0/0.55.1 version pair.\n\nREGISTERED LATE, on the day the guard it tests locked a user out for the second time. The file existed and was outside the design record, so nothing connected it to the decision it enforces.",
         "location": "crates/reflow2-core/tests/provenance.rs",
         "name": "tests/provenance.rs — which reflow2 wrote this graph, and the four controls that keep the retired-type refusal honest",
@@ -188045,10 +188146,10 @@
       "node_id": "cap:a-reader-that-cannot-read-the-vocabulary-is-told-what-it-lacks",
       "node_type": "Capability",
       "properties": {
-        "description": "Opening a design written under a vocabulary this binary does not know ends in one of two states: the reader is told precisely what it lacks, or the open is refused. It never succeeds quietly and then shows less than the file holds.\n\nTHE MEASURED HOLE, 2026-09-11: the stamp carries reflow2_version, schema_version, node/edge type COUNTS and node/edge type NAMES — and names only TYPES. Three classes of vocabulary change move none of them: a new ENUM VALUE on an existing field (a Decision status gaining `deferred` is the live case), a PROPERTY added to an existing type, and a SEMANTIC change where a field's meaning moved and its name did not. An older binary meets any of these, warns nobody, compares against the vocabulary it knows, and the item disappears from its reports.\n\nTWO THIRDS OF THE MECHANISM EXISTS: the guard already refuses rather than degrading, and already probes the store for a real population rather than trusting a declaration.\n\nWHAT THIS CAPABILITY DOES NOT DECIDE: whether the answer is a wider stamp, per-change identities with names, or a severity per change — that stays open, and a wider stamp is in direct tension with the stamp's own stated reason for being small (it must not depend on the vocabulary it is describing). The obligation is fixed here; the mechanism is the increment's question.\n\nTHE BOUND THAT ARGUES FOR IT: being told to migrate is an inconvenience, and migration has been shown lossless here (3,989 nodes and 21,555 edges in, same out). Only the SILENT case argues for any of this.",
+        "description": "Opening a design written under a vocabulary this binary does not know ends in one of two states: the reader is told precisely what it lacks, or the open is refused. It never succeeds quietly and then shows less than the file holds.\n\n⭐ BUILT AND VERIFIED 2026-09-12 (epoch:planned-a-vocabulary-change-is-never-silent). The stamp now records every enum vocabulary the schema declares, keyed Type.property, beside the type names it already carried. On open the guard compares them and refuses — naming the value — only when the graph actually STORES a value this binary does not know; a value merely declared and unused opens, the rule bought with two lockouts. Every stamp written before this still parses (serde-default), and the values do not enter content_hash, so lineage is untouched.\n\nTHE MEASURED HOLE IT CLOSED, 2026-09-11: the stamp named TYPES only. Decision.status gaining `deferred` moved no count and no name, so an older binary opened the graph with no warning, compared status == \"proposed\", and the decision VANISHED from loop_status and what_next rather than erroring.\n\nWHAT IT DELIBERATELY DOES NOT DO, per dec:the-stamp-records-enum-values-and-nothing-finer: property additions are not recorded (frequent, low harm — an older reader shows fewer fields and can tell; recording them would make nearly every release a migration), and semantic changes are not claimed (beyond any structural fingerprint; the per-change-identity road stays open for them).\n\nONE HONEST LIMIT, stated in the code: no registry of REMOVED enum values exists, so the guard cannot say whether the binary is behind or the value was removed. It names both and gives the reader the two stamps' versions as the discriminator, rather than asserting the commoner case.\n\nTHE BOUND THAT ARGUED FOR IT: being told to migrate is an inconvenience, and migration has been shown lossless here (3,989 nodes and 21,555 edges in, same out). Only the SILENT case argued for any of this.",
         "name": "A reader whose binary does not know a design's vocabulary is told what it lacks, or refused — never shown less of the design than it holds",
         "provenance": "authored",
-        "status": "planned",
+        "status": "verified",
         "tier": "operational"
       }
     },
@@ -198886,6 +198987,15 @@
       }
     },
     {
+      "node_id": "chg:the-version-guard-sees-enum-values",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "The version stamp records the declared enum values, and the guard refuses by name on a stored value this binary lacks",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:the-vocabulary-question-is-dispositioned",
       "node_type": "ChangeEvent",
       "properties": {
@@ -205501,6 +205611,17 @@
       }
     },
     {
+      "node_id": "dec:the-stamp-records-enum-values-and-nothing-finer",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Of the four roads the XRPL-amendment idea laid out, take (a) — widen the stamp — but SCOPED TO ENUM VALUES ONLY. The stamp now records every enum vocabulary the schema declares, keyed Type.property; the guard compares them on open and refuses only when the graph actually STORES a value this binary does not know, naming the value. Property additions are deliberately NOT recorded. Semantic changes are deliberately NOT claimed to be caught. Roads (b) per-change identities, (c) severity per change and (d) nothing are not taken, for the reasons below.",
+        "kind": "choice",
+        "name": "PROPOSED — the version guard widens to ENUM VALUES and stops there: property additions and semantic changes stay outside any structural fingerprint",
+        "rationale": "THE THREE CLASSES ARE NOT EQUALLY HARMFUL, and that is what decides the scope. An ENUM VALUE is the severe one: Decision.status gaining `deferred` moves no count and no name, an older binary opens the graph with no warning, compares status == \"proposed\", and the decision does not error — it VANISHES from loop_status and what_next. That is the exact harm the guard's own refusal names. A PROPERTY ADDITION makes an older reader show fewer fields, which it can already tell, and mis-filters nothing; this project adds properties constantly (the fourteen-holes work alone), so recording them would turn nearly every release into a migration for a harm that is \"you saw less\". A SEMANTIC CHANGE — a field's meaning moved while its name did not — is beyond any structural fingerprint, so widening the stamp further would not reach it and claiming otherwise would be the overstating failure.\n\nWHY NOT (b), per-change identities: it is a registry somebody maintains forever, and its failure mode is a change that lands without an entry — at which point the guard actively asserts the graph is fine. This project has already found that a retirement is two edits, not one, with RETIRED_NODE_TYPES. Semantic changes are the only class that NEEDS (b), and they are rare enough that the registry's cost is not yet earned. It stays open.\n\nWHY NOT (c), severity per change: somebody has to classify each change, and the incentive at the moment of classifying is always the cheaper severity. The population probe already gives the honest form of severity for free — a declared value nobody stores is no severity at all.\n\nWHY NOT (d), nothing: the probe only works for what the stamp NAMES, and before this it could not name an enum value.\n\nTHE TENSION WITH THE STAMP'S OWN REASON FOR BEING SMALL — \"it must not depend on the vocabulary it is describing\" — is real and was answered rather than routed around: the stamp already names types, which are vocabulary; enum values are the same kind of fact one level finer, the field is `#[serde(default)]` so every older stamp still parses, and the values do not enter content_hash, so lineage is untouched. Size is a few hundred short strings.\n\nONE HONEST LIMIT, stated in the code where it lives: reflow2 keeps no registry of REMOVED enum values, so when a graph holds a value this binary lacks the guard cannot say whether the binary is behind or the value was removed. It names both possibilities and hands the reader the only discriminator there is — the two stamps' own versions — rather than asserting the commoner case and being confidently wrong on the day somebody removes a value. When that day comes, the fix is the registry types already have.\n\nSEQUENCED BEFORE dec/req:an-idea-that-stopped-is-not-counted-as-debt on Anthony's word (2026-09-11, \"go with your suggested order\"), because that increment adds exactly the enum value this guard could not see.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:the-stop-hook-asks-the-graph-asynchronously",
       "node_type": "Decision",
       "properties": {
@@ -208751,11 +208872,11 @@
       "node_id": "epoch:planned-a-vocabulary-change-is-never-silent",
       "node_type": "DesignEpoch",
       "properties": {
-        "description": "PLANNED — third of the four Anthony ordered on 2026-09-11. A reader whose binary does not know a design's vocabulary is told what it lacks or refused, and never opens the graph to show less of the design than it holds.\n\nTHE HOLE THIS CLOSES: the stamp names TYPES only — versions, schema version, node and edge type counts and names. A new enum value on an existing field, a property added to an existing type, and a semantic change where a field's meaning moved and its name did not all pass it without moving anything.\n\nTHE QUESTION THIS INCREMENT SETTLES: wider stamp, per-change identities with names, or a severity per change. A wider stamp is in tension with the stamp's own reason for being small — it must not depend on the vocabulary it describes — so the choice is real and is not made yet.\n\nWHY IT PRECEDES THE SET-ASIDE STATUS: that work adds an enum value, which is exactly the change this guard cannot currently see. Shipping it first would demonstrate the bug on reflow2's own graph.\n\nNO VERSION NUMBER BY DESIGN.",
+        "description": "ARRIVED 2026-09-12. Third of the four Anthony ordered on 2026-09-11. A reader whose binary does not know a design's vocabulary is told what it lacks or refused, and never opens the graph to show less of the design than it holds.\n\nTHE HOLE IT CLOSED: the stamp named TYPES only. A new enum value on an existing field passed it without moving anything — an older binary opened the graph silently, compared status == \"proposed\", and a `deferred` decision vanished from loop_status and what_next rather than erroring.\n\nTHE QUESTION THIS INCREMENT SETTLED — wider stamp, per-change identities, or severity per change — WAS ANSWERED: a wider stamp, SCOPED TO ENUM VALUES ONLY (dec:the-stamp-records-enum-values-and-nothing-finer, proposed for Anthony's word). The stamp now records every declared enum vocabulary keyed Type.property; the guard refuses only when the graph actually STORES a value this binary lacks, and names the value. Property additions are not recorded (frequent, low harm, would make every release a migration). Semantic changes are not claimed (beyond any structural fingerprint; the per-change-identity road stays open for them).\n\nTHE TENSION WITH THE STAMP'S OWN REASON FOR BEING SMALL was answered, not routed around: types are already vocabulary and the stamp names them; enum values are the same fact one level finer; the field is serde-default so every older stamp parses; the values do not enter content_hash, so lineage is untouched.\n\nONE HONEST LIMIT, carried in the code: no registry of REMOVED enum values exists, so the guard cannot say whether a binary is behind or a value was removed. It names both and hands the reader the two stamps' versions as the discriminator, rather than asserting the commoner case.\n\nWHY IT PRECEDED THE SET-ASIDE STATUS: that increment adds an enum value, which is exactly the change this guard could not see. Shipping it first would have demonstrated the bug on reflow2's own graph.\n\nNO VERSION NUMBER BY DESIGN.",
         "epoch_type": "revision",
         "name": "A vocabulary change is never silent",
         "sequence": 432,
-        "status": "planned"
+        "status": "arrived"
       }
     },
     {
@@ -211050,6 +211171,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered a_settled_decision_names_prose_that_still_says_open.rs — the case, and the four silences"
+      }
+    },
+    {
+      "node_id": "frag:art:a-vocabulary-change-is-never-silent-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered a_vocabulary_change_is_never_silent.rs"
       }
     },
     {
@@ -219419,6 +219550,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:planned-a-vocabulary-change-is-never-silent:cap:a-reader-that-cannot-read-the-vocabulary-is-told-what-it-lacks",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:a-vocabulary-change-is-never-silent-test\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:a-vocabulary-change-is-never-silent\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:provenance\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:a-vocabulary-change-a-consumers-binary-cannot-read-is-never-silent\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SCHEDULED_FOR\",\"other_type\":\"DesignEpoch\",\"other_id\":\"epoch:planned-a-vocabulary-change-is-never-silent\",\"properties\":{\"modality\":\"expected\",\"recorded_at\":\"2026-09-11\"}}]",
+        "state": "{\"description\":\"Opening a design written under a vocabulary this binary does not know ends in one of two states: the reader is told precisely what it lacks, or the open is refused. It never succeeds quietly and then shows less than the file holds.\\n\\n⭐ BUILT AND VERIFIED 2026-09-12 (epoch:planned-a-vocabulary-change-is-never-silent). The stamp now records every enum vocabulary the schema declares, keyed Type.property, beside the type names it already carried. On open the guard compares them and refuses — naming the value — only when the graph actually STORES a value this binary does not know; a value merely declared and unused opens, the rule bought with two lockouts. Every stamp written before this still parses (serde-default), and the values do not enter content_hash, so lineage is untouched.\\n\\nTHE MEASURED HOLE IT CLOSED, 2026-09-11: the stamp named TYPES only. Decision.status gaining `deferred` moved no count and no name, so an older binary opened the graph with no warning, compared status == \\\"proposed\\\", and the decision VANISHED from loop_status and what_next rather than erroring.\\n\\nWHAT IT DELIBERATELY DOES NOT DO, per dec:the-stamp-records-enum-values-and-nothing-finer: property additions are not recorded (frequent, low harm — an older reader shows fewer fields and can tell; recording them would make nearly every release a migration), and semantic changes are not claimed (beyond any structural fingerprint; the per-change-identity road stays open for them).\\n\\nONE HONEST LIMIT, stated in the code: no registry of REMOVED enum values exists, so the guard cannot say whether the binary is behind or the value was removed. It names both and gives the reader the two stamps' versions as the discriminator, rather than asserting the commoner case.\\n\\nTHE BOUND THAT ARGUED FOR IT: being told to migrate is an inconvenience, and migration has been shown lossless here (3,989 nodes and 21,555 edges in, same out). Only the SILENT case argued for any of this.\",\"name\":\"A reader whose binary does not know a design's vocabulary is told what it lacks, or refused — never shown less of the design than it holds\",\"provenance\":\"authored\",\"status\":\"verified\",\"tier\":\"operational\"}",
+        "target_id": "cap:a-reader-that-cannot-read-the-vocabulary-is-told-what-it-lacks",
+        "target_type": "Capability"
+      }
+    },
+    {
       "node_id": "snap:epoch:planning-axis-intent:dec:where-plans-live",
       "node_type": "Snapshot",
       "properties": {
@@ -219445,6 +219586,16 @@
         "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:detect\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:a-fix-without-a-cause-and-an-overtaken-defect-raise-gaps\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:detect\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:finding-a-cause-is-a-served-process-not-an-improvisation\",\"properties\":{}}]",
         "state": "{\"description\":\"Two gap detectors, the third leg of the root-cause vocabulary (dec:idea-how-does-root-cause-become-automatic-rule-hook-detector-or-composition, mechanism (c)). `fix_without_recorded_cause`: one aggregate finding over every ChangeEvent of change_type defect_fix or test_failure_fix that sits on no CAUSES edge in either direction and carries no outgoing INVALIDATES — a repair indistinguishable from a symptom fix. A CAUSES edge on an artifact the fix touched is deliberately not counted. Forward-only by parking: a fix GOVERNED_BY ruling=parks under an accepted Decision is skipped and counted. `defect_overtaken_by_change`: one finding per open defect TemporalFact (no valid_to, no incoming INVALIDATES) whose subject_id, or an Artifact that REALIZES it, was CHANGED by a ChangeEvent with detected_at strictly after the fact's valid_from — keyed on the fact and the later changes, so a further change asks again. Undated changes are counted in the evidence and never treated as later; undated facts are skipped. Neither judges whether a recorded cause was right: both report absence of a record (dec:report-dont-judge).\",\"name\":\"A repair joined to no cause, and a recorded defect whose subject changed with nothing saying it was fixed, are noticed by the loop\",\"provenance\":\"authored\",\"status\":\"realized\"}",
         "target_id": "cap:a-fix-with-no-recorded-cause-and-a-defect-its-subject-outran-are-noticed",
+        "target_type": "Capability"
+      }
+    },
+    {
+      "node_id": "snap:epoch:preserved-on-write:cap:a-reader-that-cannot-read-the-vocabulary-is-told-what-it-lacks",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:a-vocabulary-change-is-never-silent-test\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:a-vocabulary-change-is-never-silent\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:provenance\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:a-vocabulary-change-a-consumers-binary-cannot-read-is-never-silent\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SCHEDULED_FOR\",\"other_type\":\"DesignEpoch\",\"other_id\":\"epoch:planned-a-vocabulary-change-is-never-silent\",\"properties\":{\"modality\":\"expected\",\"recorded_at\":\"2026-09-11\"}}]",
+        "state": "{\"description\":\"Opening a design written under a vocabulary this binary does not know ends in one of two states: the reader is told precisely what it lacks, or the open is refused. It never succeeds quietly and then shows less than the file holds.\\n\\nTHE MEASURED HOLE, 2026-09-11: the stamp carries reflow2_version, schema_version, node/edge type COUNTS and node/edge type NAMES — and names only TYPES. Three classes of vocabulary change move none of them: a new ENUM VALUE on an existing field (a Decision status gaining `deferred` is the live case), a PROPERTY added to an existing type, and a SEMANTIC change where a field's meaning moved and its name did not. An older binary meets any of these, warns nobody, compares against the vocabulary it knows, and the item disappears from its reports.\\n\\nTWO THIRDS OF THE MECHANISM EXISTS: the guard already refuses rather than degrading, and already probes the store for a real population rather than trusting a declaration.\\n\\nWHAT THIS CAPABILITY DOES NOT DECIDE: whether the answer is a wider stamp, per-change identities with names, or a severity per change — that stays open, and a wider stamp is in direct tension with the stamp's own stated reason for being small (it must not depend on the vocabulary it is describing). The obligation is fixed here; the mechanism is the increment's question.\\n\\nTHE BOUND THAT ARGUES FOR IT: being told to migrate is an inconvenience, and migration has been shown lossless here (3,989 nodes and 21,555 edges in, same out). Only the SILENT case argues for any of this.\",\"name\":\"A reader whose binary does not know a design's vocabulary is told what it lacks, or refused — never shown less of the design than it holds\",\"provenance\":\"authored\",\"status\":\"verified\",\"tier\":\"operational\"}",
+        "target_id": "cap:a-reader-that-cannot-read-the-vocabulary-is-told-what-it-lacks",
         "target_type": "Capability"
       }
     },
@@ -227951,6 +228102,20 @@
       }
     },
     {
+      "node_id": "ver:a-vocabulary-change-is-never-silent",
+      "node_type": "Verification",
+      "properties": {
+        "description": "`crates/reflow2-core/tests/a_vocabulary_change_is_never_silent.rs`, five tests against real stamp files and the shipped schema.\n\n1. A stamp declaring `Decision.status = deferred` on a graph that stores none of them OPENS — the rule bought with two lockouts: refuse on a population, never on a declaration.\n2. The same stamp on a graph that STORES it is refused, and the refusal names `Decision.status` and `deferred` and both reflow2 versions — a version number alone is what this change exists to stop.\n3. A stamp with no enum record (every stamp written before this) opens; an absent record is not a claim that nothing changed.\n4. A population that cannot be counted refuses with the scan's own error rather than reading as empty.\n5. The collector really records the declared vocabulary — Decision.status holds proposed and accepted, does NOT yet hold deferred, and more than twenty enum fields are recorded. This is the test the other four rest on: a collector quietly returning nothing would pass them all while the guard saw nothing.\n\nSHOWN TO FAIL BEFORE IT WAS TRUSTED: blinding `unknown_enum_values` makes exactly the two refusal tests (2 and 4) fail and leaves the three open-path tests passing.\n\nWHAT IT DOES NOT COVER: the population probe's own scan on a real RocksDB store is exercised only through the closure boundary here; the wiring in graph.rs uses scan_nodes_by_property, whose correctness is pinned by the engine's own tests. Property additions and semantic changes are outside this guard by decision, not by omission.",
+        "findings": "All five pass. Mutation check: with the comparison blinded, a_value_the_graph_holds_is_refused_and_named and an_uncountable_population_refuses fail; the other three still pass. Full core suite (156 binaries) and mcp suite (64 binaries) green alongside; toolsnap reports 180 schemas unchanged, as expected — the stamp is data in the export, not a tool schema.",
+        "kind": "verification",
+        "last_run_at": "2026-09-12",
+        "level": "integration",
+        "method": "test",
+        "name": "An enum value the graph holds and this binary lacks is refused by name; one it merely declares opens",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:a-withdrawn-decision-is-not-a-conflict",
       "node_type": "Verification",
       "properties": {
@@ -230455,7 +230620,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:4ba5ca6c2e6ddb206964c38ee1410bec64e80c3476abaad93648b34669daf4fc",
+  "prev_content_hash": "sha256:69bdc6e96af2f513384b5785091bd9491b43424bb64f067fbb511b50d590cd6f",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -230525,6 +230690,491 @@
       "YIELDED"
     ],
     "edge_types": 65,
+    "enum_values": {
+      "Actor.actor_type": [
+        "device",
+        "external_system",
+        "operator",
+        "service",
+        "stakeholder",
+        "user"
+      ],
+      "Artifact.artifact_type": [
+        "asset",
+        "binary",
+        "code",
+        "config",
+        "data",
+        "diagram",
+        "document",
+        "drawing",
+        "model",
+        "spec",
+        "test",
+        "test_result"
+      ],
+      "Artifact.audience": [
+        "consumer",
+        "internal"
+      ],
+      "Artifact.granularity": [
+        "atomic",
+        "opaque",
+        "pending_expansion"
+      ],
+      "Artifact.status": [
+        "in_progress",
+        "planned",
+        "realized",
+        "verified"
+      ],
+      "Artifact.volatility": [
+        "append_only",
+        "living",
+        "stable"
+      ],
+      "Capability.delivery": [
+        "artifact",
+        "model"
+      ],
+      "Capability.provenance": [
+        "authored",
+        "healed",
+        "imported",
+        "inferred",
+        "planned",
+        "reconciled"
+      ],
+      "Capability.status": [
+        "in_progress",
+        "planned",
+        "realized",
+        "verified"
+      ],
+      "Capability.tier": [
+        "operational",
+        "strategic",
+        "tactical"
+      ],
+      "ChangeEvent.change_type": [
+        "baseline_established",
+        "constraint_change",
+        "defect_fix",
+        "deprecation",
+        "documentation",
+        "environment_change",
+        "new_feature",
+        "performance_optimization",
+        "refactor",
+        "requirement_creep",
+        "resync",
+        "scope_change",
+        "test_failure_fix"
+      ],
+      "ChangeEvent.repair": [
+        "contained_symptom",
+        "corrected_cause"
+      ],
+      "ChangeEvent.subject": [
+        "record",
+        "system"
+      ],
+      "Component.kind": [
+        "assembly",
+        "layer",
+        "module",
+        "part",
+        "section",
+        "service",
+        "subsystem"
+      ],
+      "Component.provenance": [
+        "authored",
+        "healed",
+        "imported",
+        "inferred",
+        "planned",
+        "reconciled"
+      ],
+      "Component.status": [
+        "in_progress",
+        "planned",
+        "realized",
+        "verified"
+      ],
+      "Component.tier": [
+        "operational",
+        "strategic",
+        "tactical"
+      ],
+      "Constraint.category": [
+        "budget",
+        "business",
+        "kpp",
+        "operational",
+        "physical",
+        "regulatory",
+        "schedule",
+        "technical"
+      ],
+      "Constraint.concern": [
+        "core",
+        "cost",
+        "environmental",
+        "logistics",
+        "manufacturability",
+        "other",
+        "safety",
+        "schedule",
+        "security",
+        "sustainment",
+        "usability"
+      ],
+      "Constraint.direction": [
+        "maximum",
+        "minimum"
+      ],
+      "Constraint.priority": [
+        "critical",
+        "high",
+        "low",
+        "medium"
+      ],
+      "Contributor.kind": [
+        "automated_agent",
+        "organization",
+        "person"
+      ],
+      "Decision.kind": [
+        "choice",
+        "exploratory"
+      ],
+      "Decision.quality_target": [
+        "coupling",
+        "maintainability",
+        "maturity",
+        "observability",
+        "performance",
+        "reliability",
+        "scalability",
+        "security",
+        "testability"
+      ],
+      "Decision.status": [
+        "accepted",
+        "proposed",
+        "rejected",
+        "superseded"
+      ],
+      "DesignEpoch.epoch_type": [
+        "baseline",
+        "incident_response",
+        "milestone",
+        "release_cut",
+        "revision"
+      ],
+      "DesignEpoch.status": [
+        "arrived",
+        "planned"
+      ],
+      "DimensionAssessment.dimension": [
+        "coupling",
+        "maintainability",
+        "maturity",
+        "observability",
+        "performance",
+        "reliability",
+        "scalability",
+        "security",
+        "testability"
+      ],
+      "DimensionObservation.dimension": [
+        "coupling",
+        "maintainability",
+        "maturity",
+        "observability",
+        "performance",
+        "reliability",
+        "scalability",
+        "security",
+        "testability"
+      ],
+      "DriftEvent.drift_type": [
+        "checksum_change",
+        "deployment_contradicted",
+        "deployment_missing",
+        "deployment_undeclared",
+        "missing_artifact",
+        "spec_mismatch",
+        "status_mismatch",
+        "undocumented_addition"
+      ],
+      "DriftEvent.severity": [
+        "critical",
+        "high",
+        "low",
+        "medium"
+      ],
+      "Environment.env_type": [
+        "development",
+        "field",
+        "lab",
+        "physical_site",
+        "production",
+        "simulation",
+        "staging"
+      ],
+      "EnvironmentRule.rule_type": [
+        "building_code",
+        "constraint",
+        "environmental",
+        "interface",
+        "physical_law",
+        "regulatory",
+        "safety",
+        "standard",
+        "zoning"
+      ],
+      "Flow.flow_type": [
+        "capture",
+        "control_flow",
+        "data_flow",
+        "decision_flow",
+        "generation",
+        "process",
+        "retrieval"
+      ],
+      "Flow.tier": [
+        "cross_cutting",
+        "operational",
+        "strategic",
+        "tactical"
+      ],
+      "Fragment.fragment_type": [
+        "bug_fix",
+        "config",
+        "design",
+        "documentation",
+        "feedback",
+        "implementation",
+        "note",
+        "pseudocode",
+        "refactor",
+        "review",
+        "spec",
+        "test"
+      ],
+      "Fragment.note_kind": [
+        "author",
+        "director",
+        "reviewer"
+      ],
+      "Fragment.phase": [
+        "P0",
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "PM"
+      ],
+      "Fragment.provenance": [
+        "authored",
+        "healed",
+        "imported",
+        "inferred",
+        "planned",
+        "reconciled"
+      ],
+      "Fragment.status": [
+        "ingested",
+        "integrated",
+        "superseded"
+      ],
+      "Interface.auth": [
+        "api_key",
+        "basic",
+        "jwt",
+        "kerberos",
+        "mtls",
+        "none",
+        "oauth2",
+        "physical",
+        "signature",
+        "unspecified"
+      ],
+      "Interface.designation": [
+        "both",
+        "internal",
+        "published",
+        "required"
+      ],
+      "Interface.medium": [
+        "REST",
+        "cli",
+        "data",
+        "electrical",
+        "event",
+        "gRPC",
+        "graphql",
+        "human",
+        "json_rpc",
+        "library",
+        "mechanical",
+        "unspecified"
+      ],
+      "Interface.paradigm": [
+        "asynchronous",
+        "batch",
+        "streaming",
+        "synchronous",
+        "unspecified"
+      ],
+      "Interface.payload_format": [
+        "avro",
+        "binary",
+        "csv",
+        "form",
+        "json",
+        "msgpack",
+        "none",
+        "protobuf",
+        "text",
+        "unspecified",
+        "xml"
+      ],
+      "Interface.provenance": [
+        "authored",
+        "healed",
+        "imported",
+        "inferred",
+        "planned",
+        "reconciled"
+      ],
+      "Interface.transport_security": [
+        "air_gapped",
+        "ipsec",
+        "mtls",
+        "none",
+        "physical",
+        "tls",
+        "unspecified",
+        "vpn"
+      ],
+      "Project.mode": [
+        "flexible",
+        "rigid"
+      ],
+      "Project.status": [
+        "active",
+        "archived",
+        "paused"
+      ],
+      "Question.status": [
+        "answered",
+        "asked",
+        "withdrawn"
+      ],
+      "ReadinessAssessment.kind": [
+        "MRL",
+        "TRL"
+      ],
+      "Release.status": [
+        "built",
+        "deployed",
+        "planned",
+        "retired"
+      ],
+      "Release.unit_type": [
+        "binary",
+        "bundle",
+        "container",
+        "package",
+        "physical_build",
+        "publication"
+      ],
+      "Requirement.concern": [
+        "core",
+        "cost",
+        "environmental",
+        "logistics",
+        "manufacturability",
+        "other",
+        "safety",
+        "schedule",
+        "security",
+        "sustainment",
+        "usability"
+      ],
+      "Requirement.designation": [
+        "internal",
+        "published"
+      ],
+      "Requirement.kind": [
+        "business",
+        "functional",
+        "nonfunctional",
+        "quality"
+      ],
+      "Requirement.lineage": [
+        "decomposed",
+        "derived",
+        "original"
+      ],
+      "Requirement.priority": [
+        "critical",
+        "high",
+        "low",
+        "medium"
+      ],
+      "Requirement.provenance": [
+        "authored",
+        "healed",
+        "imported",
+        "inferred",
+        "planned",
+        "reconciled"
+      ],
+      "Requirement.status": [
+        "accepted",
+        "deferred",
+        "dropped",
+        "met",
+        "proposed"
+      ],
+      "TemporalFact.basis": [
+        "forecast",
+        "measured"
+      ],
+      "Verification.kind": [
+        "validation",
+        "verification"
+      ],
+      "Verification.level": [
+        "acceptance",
+        "integration",
+        "system",
+        "unit"
+      ],
+      "Verification.method": [
+        "analysis",
+        "demonstration",
+        "inspection",
+        "measurement",
+        "observation",
+        "review",
+        "simulation",
+        "test"
+      ],
+      "Verification.status": [
+        "blocked",
+        "failing",
+        "passing",
+        "planned",
+        "skipped",
+        "superseded"
+      ]
+    },
     "node_type_names": [
       "Actor",
       "Anchor",
