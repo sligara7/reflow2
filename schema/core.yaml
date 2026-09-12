@@ -105,6 +105,9 @@ schema:
         name: { type: string, required: true, indexed: true, fulltext: true }
         statement: { type: string, required: true, fulltext: true }
         category: { type: string, indexed: true, description: "tech_stack / convention / material / methodology / standard / style." }
+        # Added 2026-09-12 for req:a-lesson-is-served-at-the-step-it-concerns —
+        # see TemporalFact.steps in temporal.yaml for the reasoning; same shape.
+        steps: { type: "list:string", description: "The served SKILL names and/or served TOOL names this rule concerns — where it is delivered: get_skill carries the rules naming that skill beside its body, and the tool list carries them on that tool's description. Validated at write against what this server serves. Optional: absent means the rule is findable but not delivered at a step." }
         # NO DEFAULT, DELIBERATELY (Anthony, 2026-08-08,
         # dec:does-enforced-default-to-gate-blocking). Three states: true =
         # violations are gate-blocking; false = advisory; ABSENT = nobody has

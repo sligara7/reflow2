@@ -12,6 +12,7 @@ pub mod export_write;
 pub mod git;
 pub mod handshake;
 pub mod latent;
+pub mod lessons;
 pub mod mcp_http;
 pub mod nudge;
 pub mod prose_currency;

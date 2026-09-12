@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:22d49f122a6cffae1aae08ae816d0f8a556b6eb5df570af976c2e7b07be69570",
+  "content_hash": "sha256:53f4d8189c87f2bd2795b925165c2a3132e6df34abeec4738602c61019adcf39",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -1210,6 +1210,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-lesson-is-served-at-the-step-it-concerns",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:skills"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -5178,6 +5186,12 @@
       "from_id": "chg:a-gap-question-keeps-the-readers-vocabulary",
       "properties": {},
       "to_id": "epoch:v0370"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:a-lesson-names-its-step-and-get-skill-and-the-tool-list-deliver-it",
+      "properties": {},
+      "to_id": "epoch:planned-a-lesson-is-served-at-the-step-it-concerns"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -11464,6 +11478,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:cap:a-fix-with-no-recorded-cause-and-a-defect-its-subject-outran-are-noticed",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:cap:a-lesson-is-served-at-the-step-it-concerns",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
     },
@@ -18507,6 +18527,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-lesson-is-served-at-the-step-it-concerns",
+      "properties": {
+        "acted_at": "2026-09-12",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:a-node-can-say-who-may-change-it",
       "properties": {
         "acted_at": "2026-08-09",
@@ -22589,6 +22618,69 @@
         "action": "modified"
       },
       "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-lesson-names-its-step-and-get-skill-and-the-tool-list-deliver-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-core"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-lesson-names-its-step-and-get-skill-and-the-tool-list-deliver-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-temporal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-lesson-names-its-step-and-get-skill-and-the-tool-list-deliver-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-lesson-names-its-step-and-get-skill-and-the-tool-list-deliver-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-lesson-names-its-step-and-get-skill-and-the-tool-list-deliver-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-skills"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-lesson-names-its-step-and-get-skill-and-the-tool-list-deliver-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-temporal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-lesson-names-its-step-and-get-skill-and-the-tool-list-deliver-it",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:a-lesson-is-served-at-the-step-it-concerns"
     },
     {
       "edge_type": "CHANGED",
@@ -50139,6 +50231,14 @@
     },
     {
       "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-does-the-agent-keep-a-notepad-in-the-graph-for-the-next-agent",
+      "properties": {
+        "evidence": "Anthony promoted the idea's option C on 2026-09-12; the requirement states delivery-at-the-step as what is owed, and the idea's B+D halves (a view; checks for what bit twice) stay on the idea as the roads beside it."
+      },
+      "to_id": "req:a-lesson-is-served-at-the-step-it-concerns"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
       "from_id": "dec:idea-does-the-black-box-frame-reach-the-agent-at-call-time",
       "properties": {
         "evidence": "Drawn FROM that node INTO this one: it held 'maybe the graph should keep a table of terms' as a standalone idea; this is the same thought grown up, with a procedure that would FILL the table and, more importantly, a different answer about where the table lives. Same conversation, minutes apart, and the second form is materially better than the first — which is the reason to keep both rather than overwrite."
@@ -59725,6 +59825,12 @@
       "from_id": "cap:a-fix-with-no-recorded-cause-and-a-defect-its-subject-outran-are-noticed",
       "properties": {},
       "to_id": "snap:epoch:preserved-on-write:cap:a-fix-with-no-recorded-cause-and-a-defect-its-subject-outran-are-noticed"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:a-lesson-is-served-at-the-step-it-concerns",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:cap:a-lesson-is-served-at-the-step-it-concerns"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -173005,6 +173111,24 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:a-lesson-is-served-at-the-step-handler-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-lesson-is-served-at-the-step-it-concerns"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:a-lesson-is-served-at-the-step-wire-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-lesson-is-served-at-the-step-it-concerns"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:a-parked-report-that-produced-nothing-test",
       "properties": {
         "completeness": "complete",
@@ -174665,6 +174789,15 @@
         "conformance": "verified"
       },
       "to_id": "cap:the-skill-response-carries-the-lens"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:lessons",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-lesson-is-served-at-the-step-it-concerns"
     },
     {
       "edge_type": "REALIZES",
@@ -177527,6 +177660,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:a-lesson-is-served-at-the-step-it-concerns",
+      "properties": {},
+      "to_id": "req:a-lesson-is-served-at-the-step-it-concerns"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:a-module-can-be-read-swapped-and-tested-behind-a-contract",
       "properties": {},
       "to_id": "req:recursive-black-box-decomposition"
@@ -179107,6 +179246,15 @@
     },
     {
       "edge_type": "SCHEDULED_FOR",
+      "from_id": "cap:a-lesson-is-served-at-the-step-it-concerns",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-09-12"
+      },
+      "to_id": "epoch:planned-a-lesson-is-served-at-the-step-it-concerns"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
       "from_id": "cap:a-reader-that-cannot-read-the-vocabulary-is-told-what-it-lacks",
       "properties": {
         "modality": "expected",
@@ -179455,6 +179603,15 @@
         "recorded_at": "2026-08-17"
       },
       "to_id": "epoch:the-philosophy-is-in-the-product"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
+      "from_id": "req:a-lesson-is-served-at-the-step-it-concerns",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-09-12"
+      },
+      "to_id": "epoch:planned-a-lesson-is-served-at-the-step-it-concerns"
     },
     {
       "edge_type": "SCHEDULED_FOR",
@@ -180818,6 +180975,18 @@
       "from_id": "ver:a-fix-without-a-cause-and-an-overtaken-defect-raise-gaps",
       "properties": {},
       "to_id": "cap:a-fix-with-no-recorded-cause-and-a-defect-its-subject-outran-are-noticed"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:a-lesson-is-served-at-the-step-it-concerns",
+      "properties": {},
+      "to_id": "cap:a-lesson-is-served-at-the-step-it-concerns"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:a-lesson-is-served-at-the-step-it-concerns",
+      "properties": {},
+      "to_id": "req:a-lesson-is-served-at-the-step-it-concerns"
     },
     {
       "edge_type": "VERIFIES",
@@ -182627,6 +182796,22 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:a-lesson-is-served-at-the-step-handler-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:a-lesson-is-served-at-the-step-handler-test"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:a-lesson-is-served-at-the-step-wire-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:a-lesson-is-served-at-the-step-wire-test"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:a-parked-report-that-produced-nothing-test",
       "properties": {
         "action": "created"
@@ -183336,6 +183521,14 @@
         "action": "created"
       },
       "to_id": "art:launch-serves-release-gate"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:lessons",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:lessons"
     },
     {
       "edge_type": "YIELDED",
@@ -184670,6 +184863,30 @@
         "checksum": "sha256:d7cd41644a25d6624d9be6381718482cfb8db6a1e8c656738a776afe9197e76c",
         "location": "crates/reflow2-core/tests/a_fix_says_whether_it_corrected_the_cause.rs",
         "name": "a_fix_says_whether_it_corrected_the_cause.rs — the three clauses, and the silent-ledger case",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:a-lesson-is-served-at-the-step-handler-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:107ad9a19a2939dc78cc56eb2b6f28944c732ebedc973614b59eedcb85d47900",
+        "description": "Five handler-level pins: get_skill carries the lessons naming that skill and no other; the tool list carries a lesson on its tool and nowhere else; a no-step lesson is kept and delivered nowhere; an unserved step is refused with the nearest names and nothing written; rules take steps and the newest lesson comes first. Shown to fail on the deliver-everything-everywhere mutation (2 pins).",
+        "location": "crates/reflow2-mcp/tests/a_lesson_is_served_at_the_step_it_concerns.rs",
+        "name": "a_lesson_is_served_at_the_step_it_concerns.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:a-lesson-is-served-at-the-step-wire-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:4940d9706d076502fcee690c692d213a154a07d70ddc256cf169bee975504c3c",
+        "description": "The wire pin on the real binary: tools/list — the listing a harness reads before every call — carries the lesson on exactly one tool's description, keeps that description whole, leaves the other 180 byte-identical, before and after in one process; get_skill carries it for its skill only; a typo'd step is refused naming the nearest. Shown to fail on the deliver-everything mutation (2 pins). Wired into CI.",
+        "location": "tools/test_a_lesson_is_served_at_the_step.py",
+        "name": "test_a_lesson_is_served_at_the_step.py",
         "status": "realized"
       }
     },
@@ -186358,6 +186575,18 @@
       }
     },
     {
+      "node_id": "art:lessons",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:1733e471704142fc03b2eabbde07d340122bf8a51d3ac9b93704e9503f829554",
+        "description": "Delivery of a design's lessons at the step they name: the served-step set (skills + tools), validation with nearest-name refusal, one scan of rules and facts keyed by step (newest first), and the tool-list enrichment that leaves an empty design's surface untouched. Read by get_skill and the list_tools override in service.rs.",
+        "location": "crates/reflow2-mcp/src/lessons.rs",
+        "name": "lessons.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:llm",
       "node_type": "Artifact",
       "properties": {
@@ -187096,7 +187325,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:d085c382cc9c5d0265bcb7b0a29584b5446e96446ebcc030209e9da092bbb9d7",
+        "checksum": "sha256:c992124be64cef5200969174217c97169830ea8a893c6a9fa09d299f44bedb2b",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/core.yaml",
@@ -187208,7 +187437,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:4521388fa08545cee32ef3ccab49b49e47318243ca8ca98916d8ff5046fc894a",
+        "checksum": "sha256:0d01ff201bac24d325a5d94def61e8626d2db7b1dda220eb35b43cd35c7d7a95",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/temporal.yaml",
@@ -187364,7 +187593,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:1d69dc546e7343b61a663f17b84558746d9e6c174d9146f80f4b9c05af13dcf3",
+        "checksum": "sha256:c4b301562d53135c637ee1f9df36fffd4d17860358fbaffca0d945af0b097da5",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -188314,7 +188543,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:eed1ee2ea23180587ff2ffe7c014ea78b0899935fc2015b3319dbe90ddd18a3c",
+        "checksum": "sha256:50bfa7d3d61bf53dbea76d15a0538e0d052d933d2b746c3e3c39c0dd4110bbc7",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
         "name": "crates/reflow2-mcp/src/tools/capture.rs",
@@ -188403,7 +188632,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:07ce5cce81908e31930ec97d9ef9530651cfb1ce434379651381e56858bdbc28",
+        "checksum": "sha256:3521eec0ce59cf23b5d7ab0f33b140d5ae6019f721f57508833433aed08f189a",
         "location": "crates/reflow2-mcp/src/tools/skills_tools.rs",
         "name": "skills_tools.rs",
         "status": "realized"
@@ -188414,7 +188643,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:2a8ef3754e12cf2582a0931fe09c16f87f9589882db2bef7fd48d737d2de2e7f",
+        "checksum": "sha256:b38c6dab971593713dee6b30fcd6bdfdf251e483dfc6476aeb6aaa40a91c8292",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/temporal_tools.rs",
         "name": "tools/temporal_tools.rs",
@@ -189008,6 +189237,17 @@
         "name": "A repair joined to no cause, and a recorded defect whose subject changed with nothing saying it was fixed, are noticed by the loop",
         "provenance": "authored",
         "status": "realized"
+      }
+    },
+    {
+      "node_id": "cap:a-lesson-is-served-at-the-step-it-concerns",
+      "node_type": "Capability",
+      "properties": {
+        "description": "BUILT AND VERIFIED, 2026-09-12 (increment 438). DesignRule and TemporalFact carry an optional `steps` list naming served skills and/or served tools; record_finding and add_design_rule accept it and REFUSE a name that is neither (with the nearest served names), so a lesson cannot be filed where nothing will serve it. `get_skill` answers with the skill's body plus `lessons`: every rule or fact this design holds whose steps name that skill, newest first, each with id, name, one paragraph of statement and the node it hangs on. The tool list this server serves (`list_tools`, overridden to mirror rmcp's generated body) appends, to each tool's description, the lessons this design holds for that tool — read in the moment before the call. An empty design serves the surface unchanged. Modelled after the reader lens that already rides get_skill: best effort, a read lock, never able to withhold the skill or the listing. Module: crates/reflow2-mcp/src/lessons.rs. Live on reflow2's own graph: where-am-i carries the dev-box harness lesson; export_graph carries the format-first fact and the export-once rule; plan_epoch carries its own recorded defect.",
+        "name": "A design's lessons name the skill or tool they concern, and get_skill and the tool list deliver them there",
+        "provenance": "authored",
+        "status": "verified",
+        "tier": "operational"
       }
     },
     {
@@ -192001,6 +192241,15 @@
       "properties": {
         "change_type": "defect_fix",
         "name": "A gap question keeps the reader's vocabulary — the prompt template stops contradicting its own tool description",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:a-lesson-names-its-step-and-get-skill-and-the-tool-list-deliver-it",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Rules and facts name the skill or tool they concern in `steps`; get_skill and the served tool list deliver them at that step",
         "subject": "system"
       }
     },
@@ -209921,6 +210170,17 @@
       }
     },
     {
+      "node_id": "epoch:planned-a-lesson-is-served-at-the-step-it-concerns",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "description": "Anthony's word, 2026-09-12 (\"go with your recommendations on the 5\" — item 3). Follows 437 (/feedback).\n\nIN: (1) DesignRule and TemporalFact gain an optional `steps` property (list of served skill names and/or served tool names) — declared in the schema, offered by record_finding and add_design_rule, revisable. (2) `get_skill` carries, beside the body, every lesson THIS design holds whose `steps` names that skill, newest first, each with its id, its name and the node it is hung on. (3) The tool list this server serves carries, on each tool's description, the lessons this design holds for that tool — so the moment an agent reads how to call it, it reads what bit this project last time. Toolsnaps are unaffected because they are taken on an empty design. (4) The seven lessons migrated on 2026-09-12 name their steps where a step exists (plan_epoch's defect → `plan_epoch`; format-before-export → `export_graph`; the pipe trap and the false all-clear → the release flow's skills where one exists, else none). (5) Tests shown to fail first: a lesson naming a skill appears in that skill's reply and in no other; a lesson naming a tool appears on that tool's listed description and nowhere else; a lesson naming no step appears in neither; an empty design lists the surface unchanged (the toolsnap gate proves it); a step name that is neither a served skill nor a served tool is REFUSED with the nearest names, so a typo cannot file a lesson where nothing will ever serve it.\n\nNOT IN: a new node type; a lessons page; enriching every tool REPLY (refusals already carry reflow2's own lessons; a project's lessons on a refusal is a later, measured step); delivery outside reflow2's steps (shell, git, CI); claiming the recurrence stops — the baseline is recorded and the next session is the measurement.",
+        "epoch_type": "revision",
+        "name": "Increment 438 — a lesson is served at the step it concerns",
+        "sequence": 438,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:planned-a-session-serves-a-release-binary",
       "node_type": "DesignEpoch",
       "properties": {
@@ -211569,7 +211829,10 @@
         "category": "convention",
         "enforced": true,
         "name": "Exactly one commit on a branch writes the design export, and it should be the last",
-        "statement": "A branch may hold as many commits as it likes. EXACTLY ONE of them may write `docs/design/reflow2.json`, and it should be the last one. Export straight onto the committed file rather than exporting elsewhere and copying it in — the lineage link is built from whatever file is already at that path.\n\nENFORCED, AND THAT IS A MEASUREMENT RATHER THAN A JUDGEMENT. Breaking this ALREADY stops the build: `tools/reflow2_check.py` fails with `FAIL LINEAGE` and CI goes red. It did so twice on 2026-08-11 in one day's work. So `enforced: true` records what the project already does, not a consequence anybody chose today. ⚠️ Anthony has NOT been asked the consequence question for this rule — `cap:governance-proposal` exists to ask it and was not run. If he would rather this were advisory, the flag is wrong and the CI gate is what should change, not the flag.\n\nWHY THIS RULE EXISTS SEPARATELY FROM THE REQUIREMENT IT SHADOWS, which is the whole point of adding it. `req:the-export-is-serialised-rather-than-socially-enforced` (accepted) says the SOFTWARE must detect a severed chain, and it is fully traced: `art:check` satisfies it and `ver:gate-suite` verifies that artifact. That thread is about what reflow2 BUILDS. It says nothing about what a CONTRIBUTOR must do, and the governance layer — `unverified_enforced_rule`, which scans DesignRules — could not see this policy at all, because the policy was expressed only as a requirement on the tool.\n\n⇒ THE DETECTOR WAS REQUIRED AND BUILT; THE BEHAVIOUR WAS A CONVENTION WITH NO GOVERNANCE NODE. Anthony, 2026-08-11: \"reflow2's own rules shouldn't be tracked by hand, but by some governance rules.\" This is that rule, made first-class.\n\nHOW TO FOLLOW IT, recorded because it is not derivable and it cost about ten hand-driven cycles in a single day: restore the committed file first (`git checkout origin/main -- docs/design/reflow2.json`), then `export_graph` ONCE, then commit — folding into the existing commit with `--amend` if the branch already has one. ⚠️ A LINEAGE FAILURE REPORTED LOCALLY IMMEDIATELY AFTER EXPORTING IS EXPECTED AND IS NOT THE DEFECT: the local gate compares against HEAD's committed export while CI compares against the primary branch's, so amend first and re-check. The reverse also holds — a local OK after a rebase is not proof, because the three-way merge driver merges CONTENT correctly and cannot repair LINEAGE, which is a property of the file-to-file chain.\n\nSCOPE, stated because the sibling rule does not state its own and is partly unfollowable without a forge. THIS RULE IS EXPRESSIBLE IN PURE GIT: one commit per branch touches one file. It needs no pull request, no forge and no review model. A PR is merely where CI happens to notice, which is why the rule survives on a bare remote where `rule:nothing-lands-on-main-directly` does not.\n\nWHAT IT DOES NOT SAY: nothing about who may merge, nothing about branch naming, and nothing about review. Those are separate conventions and this rule deliberately does not smuggle them in."
+        "statement": "A branch may hold as many commits as it likes. EXACTLY ONE of them may write `docs/design/reflow2.json`, and it should be the last one. Export straight onto the committed file rather than exporting elsewhere and copying it in — the lineage link is built from whatever file is already at that path.\n\nENFORCED, AND THAT IS A MEASUREMENT RATHER THAN A JUDGEMENT. Breaking this ALREADY stops the build: `tools/reflow2_check.py` fails with `FAIL LINEAGE` and CI goes red. It did so twice on 2026-08-11 in one day's work. So `enforced: true` records what the project already does, not a consequence anybody chose today. ⚠️ Anthony has NOT been asked the consequence question for this rule — `cap:governance-proposal` exists to ask it and was not run. If he would rather this were advisory, the flag is wrong and the CI gate is what should change, not the flag.\n\nWHY THIS RULE EXISTS SEPARATELY FROM THE REQUIREMENT IT SHADOWS, which is the whole point of adding it. `req:the-export-is-serialised-rather-than-socially-enforced` (accepted) says the SOFTWARE must detect a severed chain, and it is fully traced: `art:check` satisfies it and `ver:gate-suite` verifies that artifact. That thread is about what reflow2 BUILDS. It says nothing about what a CONTRIBUTOR must do, and the governance layer — `unverified_enforced_rule`, which scans DesignRules — could not see this policy at all, because the policy was expressed only as a requirement on the tool.\n\n⇒ THE DETECTOR WAS REQUIRED AND BUILT; THE BEHAVIOUR WAS A CONVENTION WITH NO GOVERNANCE NODE. Anthony, 2026-08-11: \"reflow2's own rules shouldn't be tracked by hand, but by some governance rules.\" This is that rule, made first-class.\n\nHOW TO FOLLOW IT, recorded because it is not derivable and it cost about ten hand-driven cycles in a single day: restore the committed file first (`git checkout origin/main -- docs/design/reflow2.json`), then `export_graph` ONCE, then commit — folding into the existing commit with `--amend` if the branch already has one. ⚠️ A LINEAGE FAILURE REPORTED LOCALLY IMMEDIATELY AFTER EXPORTING IS EXPECTED AND IS NOT THE DEFECT: the local gate compares against HEAD's committed export while CI compares against the primary branch's, so amend first and re-check. The reverse also holds — a local OK after a rebase is not proof, because the three-way merge driver merges CONTENT correctly and cannot repair LINEAGE, which is a property of the file-to-file chain.\n\nSCOPE, stated because the sibling rule does not state its own and is partly unfollowable without a forge. THIS RULE IS EXPRESSIBLE IN PURE GIT: one commit per branch touches one file. It needs no pull request, no forge and no review model. A PR is merely where CI happens to notice, which is why the rule survives on a bare remote where `rule:nothing-lands-on-main-directly` does not.\n\nWHAT IT DOES NOT SAY: nothing about who may merge, nothing about branch naming, and nothing about review. Those are separate conventions and this rule deliberately does not smuggle them in.",
+        "steps": [
+          "export_graph"
+        ]
       }
     },
     {
@@ -212235,6 +212498,26 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered a_fix_says_whether_it_corrected_the_cause.rs — the three clauses, and the silent-ledger case"
+      }
+    },
+    {
+      "node_id": "frag:art:a-lesson-is-served-at-the-step-handler-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered a_lesson_is_served_at_the_step_it_concerns.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:a-lesson-is-served-at-the-step-wire-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered test_a_lesson_is_served_at_the_step.py"
       }
     },
     {
@@ -213146,6 +213429,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered launch_serves_release.py"
+      }
+    },
+    {
+      "node_id": "frag:art:lessons",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered lessons.rs"
       }
     },
     {
@@ -216809,6 +217102,19 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "Where reflow2 tells an agent which skill to use, it must phrase it as the call to make next rather than as a trailing reference. MEASURED, and this is the whole evidence: `add_capability` returned `loop_hint: \"loop: wire satisfies to the requirement this serves, then run detect_gaps when the capture batch lands (detect-and-ask)\"`. The agent that received it DID wire `satisfies` and DID run `detect_gaps` — and did NOT load `detect-and-ask`. The imperative clauses were obeyed; the skill name in parentheses was read as an attribution for where the advice came from, not as a step to take.\n\nSo the pointer already exists and already names the right skill — `cap:read-loop-hint` and the write-side `loop_hint` are both `verified` — and it still failed. That makes this cheaper than anything else in this family: the mechanism is built, delivered and correct, and only the wording is losing the effect. `run get_skill(\"detect-and-ask\") first` is a step; `(detect-and-ask)` is a footnote.\n\nSCOPE: every place reflow2 names a skill to an agent — the write tools' `loop_hint`, the read-side hint, `loop_nudge.py`'s Stop message, the SessionStart orientation, and the MCP server instructions. The rule is one line: if a skill is worth naming, name the call.\n\nNOT PROPOSED: making the hints longer or more numerous. The finding is about grammar, not volume, and a hint that grows is a hint that gets skimmed — the failure `dec:read-hint-shape` already guarded against by firing only when the debt is real.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:a-lesson-is-served-at-the-step-it-concerns",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "usability",
+        "lineage": "original",
+        "name": "A lesson a design holds is delivered at the step it concerns — when the skill is fetched or the tool is about to be used — not only where it was filed",
+        "priority": "high",
+        "provenance": "authored",
+        "statement": "Anthony, 2026-09-12, promoting option C of `dec:idea-does-the-agent-keep-a-notepad-in-the-graph-for-the-next-agent` (\"go with your recommendations\"). The measured premise: a lesson written in prose does not change the next command. The same trap was written down three times in three places and repeated anyway (`fact:the-pipe-trap-recurred-twice-on-2026-09-12-a-month-after-it-was-written-down`); what stopped each recurrence was something arriving at the step — a gate, a guard, a refusal that carried the lesson.\n\nTHE REQUIREMENT. A design's own lessons — DesignRules and dated TemporalFacts — can name the STEP they concern: a served skill (`capture-intent`, `where-am-i`, …) or a served tool (`export_graph`, `plan_epoch`, …). When an agent fetches that skill with `get_skill`, the reply carries the lessons this design holds for it, beside the skill's body, in the same moment the agent reads how to do the work. When an agent is about to use that tool, the tool's description as this server lists it carries the lessons this design holds for it. The lesson reaches the agent with its hands on the step, the way reflow2's own tool descriptions already carry reflow2's own measured lessons — generalised to any project's lessons about its own work.\n\nWHAT IT IS NOT. Not a new node type (the notepad exists: rules and facts, hung on what they concern). Not a lessons page read at session start (measured insufficient). Not a memory file (machine-local). A lesson that names no step is still a lesson — findable by search, hung on its node — it is simply not delivered at a step, and that absence is not an error.\n\nHONEST LIMIT. Only steps that go through reflow2 can carry a lesson: a served skill or a served tool. A shell command, a git operation, a CI job has no step here to hang on — unless the project models that procedure as a Flow whose steps are reflow2 skills, which is the project's choice and reflow2's own release procedure already makes.\n\nMEASURE. The baseline is on the record: three recurrences of one lesson before delivery-at-the-step existed. Whether the next session repeats it is the test, and nothing in this increment claims the answer.",
         "status": "accepted"
       }
     },
@@ -220793,6 +221099,16 @@
         "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:detect\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:a-fix-without-a-cause-and-an-overtaken-defect-raise-gaps\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:detect\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:finding-a-cause-is-a-served-process-not-an-improvisation\",\"properties\":{}}]",
         "state": "{\"description\":\"Two gap detectors, the third leg of the root-cause vocabulary (dec:idea-how-does-root-cause-become-automatic-rule-hook-detector-or-composition, mechanism (c)). `fix_without_recorded_cause`: one aggregate finding over every ChangeEvent of change_type defect_fix or test_failure_fix that sits on no CAUSES edge in either direction and carries no outgoing INVALIDATES — a repair indistinguishable from a symptom fix. A CAUSES edge on an artifact the fix touched is deliberately not counted. Forward-only by parking: a fix GOVERNED_BY ruling=parks under an accepted Decision is skipped and counted. `defect_overtaken_by_change`: one finding per open defect TemporalFact (no valid_to, no incoming INVALIDATES) whose subject_id, or an Artifact that REALIZES it, was CHANGED by a ChangeEvent with detected_at strictly after the fact's valid_from — keyed on the fact and the later changes, so a further change asks again. Undated changes are counted in the evidence and never treated as later; undated facts are skipped. Neither judges whether a recorded cause was right: both report absence of a record (dec:report-dont-judge).\",\"name\":\"A repair joined to no cause, and a recorded defect whose subject changed with nothing saying it was fixed, are noticed by the loop\",\"provenance\":\"authored\",\"status\":\"realized\"}",
         "target_id": "cap:a-fix-with-no-recorded-cause-and-a-defect-its-subject-outran-are-noticed",
+        "target_type": "Capability"
+      }
+    },
+    {
+      "node_id": "snap:epoch:preserved-on-write:cap:a-lesson-is-served-at-the-step-it-concerns",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:a-lesson-is-served-at-the-step-handler-test\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"verified\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:a-lesson-is-served-at-the-step-wire-test\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"verified\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:lessons\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"verified\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:a-lesson-is-served-at-the-step-it-concerns\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:skills\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:a-lesson-is-served-at-the-step-it-concerns\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SCHEDULED_FOR\",\"other_type\":\"DesignEpoch\",\"other_id\":\"epoch:planned-a-lesson-is-served-at-the-step-it-concerns\",\"properties\":{\"modality\":\"expected\",\"recorded_at\":\"2026-09-12\"}}]",
+        "state": "{\"description\":\"PLANNED, 2026-09-12 (increment 438). DesignRule and TemporalFact carry an optional `steps` list naming served skills and/or served tools; record_finding and add_design_rule accept it and REFUSE a name that is neither (with the nearest served names), so a lesson cannot be filed where nothing will serve it. `get_skill` answers with the skill's body plus `lessons`: every rule or fact this design holds whose steps name that skill, newest first, each with id, name, one-line statement and the node it hangs on. The tool list this server serves appends, to each tool's description, the lessons this design holds for that tool — read in the moment before the call. An empty design serves the surface unchanged. Modelled after the reader lens that already rides get_skill: best effort, a read lock, never able to withhold the skill.\",\"name\":\"A design's lessons name the skill or tool they concern, and get_skill and the tool list deliver them there\",\"provenance\":\"authored\",\"status\":\"verified\",\"tier\":\"operational\"}",
+        "target_id": "cap:a-lesson-is-served-at-the-step-it-concerns",
         "target_type": "Capability"
       }
     },
@@ -226091,6 +226407,9 @@
         "fact_type": "finding",
         "name": "Run cargo fmt --all BEFORE the export: a reformat after it changes artifact checksums and forces a second export and an amended commit",
         "statement": "Measured on PR #490 (2026-09-12): the increment's Rust edits were never formatted; CI's Format gate was the only red; running `cargo fmt --all` then changed three source files whose checksums the design holds, which meant accepting three baselines, re-exporting, and amending — a full extra cycle for whitespace. The order that avoids it, for this repo's chain: build → tests → `cargo fmt --all && cargo fmt --all --check` → clippy → toolsnap/render/lint → graph record → checksums → export → gates with `rc=$?` captured → commit. The export is last relative to every file the design checksums, and formatting is a file change. Moved here from an agent's machine-local memory file (rule:a-rule-the-project-follows-lives-in-the-graph-not-in-an-agents-memory).",
+        "steps": [
+          "export_graph"
+        ],
         "subject_id": "rule:the-export-is-written-once-per-branch",
         "valid_from": "2026-09-12"
       }
@@ -226684,9 +227003,13 @@
       "properties": {
         "basis": "measured",
         "confidence": 1.0,
-        "fact_type": "defect",
+        "fact_type": "finding",
         "name": "DEFECT — plan_epoch called on an epoch that already exists resets its status to `planned`, even when only the prose was being revised",
         "statement": "Measured on every arrival of increments 430–434 (2026-09-11/12): revising an epoch's description with `plan_epoch` (the constructor's \"call again with the same id to revise\" path) put the epoch back to `planned`, and it had to be re-arrived with `set_epoch_status`. The constructor's own contract says omitted fields keep their stored value; `status` is not a parameter, so it should be left alone on a revise and only set to `planned` on CREATE. This is the same class as BL-183 (a revise silently un-confirming a status) on a different type, and it is a root-cause fix of a few lines in the temporal slice — not built yet; recorded so it is enduring. Workaround until then: revise the prose FIRST, then `set_epoch_status(arrived)`. Moved here from an agent's machine-local memory file (rule:a-rule-the-project-follows-lives-in-the-graph-not-in-an-agents-memory).",
+        "steps": [
+          "plan_epoch",
+          "set_epoch_status"
+        ],
         "subject_id": "cap:planned-epochs",
         "valid_from": "2026-09-11"
       }
@@ -227232,6 +227555,9 @@
         "fact_type": "finding",
         "name": "Claude Code on the dev box kills background cargo runs under a \"low memory\" rule with 8 GiB free, and blocks foreground sleeps beyond a few seconds — a detached run survives",
         "statement": "Measured repeatedly 2026-09-11/12 in the Claude Code harness on the dev box: a `cargo test` launched as a harness background task is killed with \"the system is running low on memory\" while `free` shows ~8 GiB available; a foreground `sleep` longer than a few seconds is refused. What works: launch the long run DETACHED — `setsid nohup bash -c '… > out.txt 2>&1; echo rc=$? >> out.txt' &` — and watch the output file with the harness's Monitor tool and an `until grep -q '^rc=' out.txt` loop; wrap cargo in `systemd-run --user --scope -p MemoryMax=6G` as the box's OOM note already asks. Also: `pkill -f \"<pattern>\"` where the pattern matches the shell that issued it kills that shell (exit 144). Harness-specific and box-specific, recorded on the dev environment so any agent on this box meets it; moved here from an agent's machine-local memory file (rule:a-rule-the-project-follows-lives-in-the-graph-not-in-an-agents-memory).",
+        "steps": [
+          "where-am-i"
+        ],
         "subject_id": "env:dev",
         "valid_from": "2026-09-11"
       }
@@ -228967,6 +229293,20 @@
         "level": "unit",
         "method": "test",
         "name": "A fix joined to no cause, and an open defect whose subject moved, each raise a gap; the recorded shapes clear them",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:a-lesson-is-served-at-the-step-it-concerns",
+      "node_type": "Verification",
+      "properties": {
+        "description": "Three layers. (1) Unit tests in lessons.rs: a served name passes and is de-duplicated; an unserved name is refused naming the nearest served name; enrichment touches only the named tools and an empty map leaves the surface untouched. (2) Handler tests (a_lesson_is_served_at_the_step_it_concerns.rs): get_skill carries the lessons naming that skill and no other; the tool list carries a lesson on its tool and nowhere else, keeping the served description whole; a no-step lesson is kept and delivered nowhere; an unserved step is refused with the nearest names and nothing is written; rules take steps and the newest lesson comes first. (3) The wire test on the real binary (tools/test_a_lesson_is_served_at_the_step.py): tools/list — the listing a harness reads before every call — carries the lesson on exactly one tool's description with the other 180 byte-identical, before and after in one process; get_skill carries it for its skill only; a typo is refused. MUTATION: delivering every lesson to every tool broke 2 handler pins and 2 wire pins; restored and re-proved green. LIVE: on reflow2's own graph after the migrated lessons named their steps, get_skill(where-am-i) carries the harness lesson, export_graph's listed description carries the format-first fact and the export-once rule, and plan_epoch's carries its defect. Surface: toolsnap 181/181 (record_finding and add_design_rule re-blessed for +steps), skill_lint, render --check, clippy clean.",
+        "findings": "2026-09-12, increment 438: 3 unit + 5 handler + 1 wire test (11 pins) green; the deliver-everything mutation broke 2 + 2 pins; live delivery verified on reflow2's own graph; full mcp suite run detached — 68 test binaries, 0 failures, rc=0.",
+        "kind": "verification",
+        "last_run_at": "2026-09-12",
+        "level": "integration",
+        "method": "test",
+        "name": "A lesson names its step and is delivered there — and nowhere else",
         "status": "passing"
       }
     },
@@ -232005,7 +232345,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:b97cbc59db62ed51fb43d8e5769ca9ad7efda4686d8e09138dd90f790e17b24d",
+  "prev_content_hash": "sha256:22d49f122a6cffae1aae08ae816d0f8a556b6eb5df570af976c2e7b07be69570",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
