@@ -149,10 +149,11 @@
       },
       "status": {
         "default": null,
-        "description": "The status to LAND IN when the owner's word is already in hand:\n`proposed` (the default) / `accepted` / `superseded` / `rejected`.\nA status past `proposed` is REFUSED unless `approver` is named — one\ncall, with the signature present rather than assumed\n(dec:idea-should-a-constructor-accept-the-owners-word-in-one-call).\nBefore 2026-09-06 this took two calls that could not be batched.",
+        "description": "The status to LAND IN when the owner's word is already in hand:\n`proposed` (the default) / `accepted` / `deferred` / `superseded` / `rejected`.\n`deferred` is set aside and NOT debt — the loop stops counting it as owed.\nA status past `proposed` is REFUSED unless `approver` is named — one\ncall, with the signature present rather than assumed\n(dec:idea-should-a-constructor-accept-the-owners-word-in-one-call).\nBefore 2026-09-06 this took two calls that could not be batched.",
         "enum": [
           "proposed",
           "accepted",
+          "deferred",
           "superseded",
           "rejected",
           null

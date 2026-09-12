@@ -113,6 +113,93 @@ class Reflow2Check(unittest.TestCase):
                        check=True, capture_output=True, timeout=60)
         return repo, committed
 
+    # ---- lineage anchors at the merge-base ---------------------------------
+
+    def _rechained(self, doc: dict, prev: str, salt: str) -> dict:
+        """A new export with CHANGED content (so the chain must advance), its
+        content_hash recomputed the way the gate recomputes it for INTEGRITY,
+        and `prev_content_hash` set to whatever the test wants to claim."""
+        import copy, hashlib
+        out = copy.deepcopy(doc)
+        # Change CONTENT without adding a design element: a hand-built node
+        # would come back from import with injected defaults and fail the
+        # gate's ROUND TRIP check — which it did, the first time this was
+        # written. Renaming an existing node round-trips byte for byte.
+        first = out["nodes"][0]
+        first["properties"]["name"] = f"{first['properties'].get('name', '')} ({salt})"
+        canonical = json.dumps(
+            {"edges": out.get("edges", []), "graph_id": out.get("graph_id"),
+             "nodes": out.get("nodes", [])},
+            sort_keys=True, ensure_ascii=False, separators=(",", ":"))
+        out["content_hash"] = "sha256:" + hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+        out["prev_content_hash"] = prev
+        return out
+
+    def _git(self, repo, *args):
+        subprocess.run(["git", *args], cwd=repo, check=True, capture_output=True, timeout=60)
+
+    def test_two_export_commits_on_a_branch_both_chain_from_main_and_pass(self):
+        """THE DEFECT THIS PINS was found by the gate refusing the first branch
+        that did exactly what the export tool now guarantees.
+
+        Since 2026-09-12 `export_graph` chains from the file AS COMMITTED AT THE
+        MERGE-BASE with the default branch, so any number of exports on a branch
+        chain from the same ancestor and a squash lands one hop
+        (`dec:export-once-per-pr` by construction). This check went on expecting
+        HEAD~1 — the OLD anchor — so a branch with two export commits, each
+        correctly chained from main, was refused for LINEAGE. A mechanism wired
+        into the one place that motivated it, siblings left alone.
+        """
+        repo, committed = self.git_repo_with_export()
+        self._git(repo, "branch", "-M", "main")
+        main_doc = json.loads(committed.read_text())
+        main_hash = main_doc["content_hash"]
+        self._git(repo, "checkout", "-qb", "feature")
+
+        # First export on the branch: chains from main. Commit it.
+        first = self._rechained(main_doc, main_hash, "one")
+        committed.write_text(json.dumps(first, sort_keys=True, indent=1))
+        self._git(repo, "commit", "-qam", "first export on the branch")
+
+        # Second export on the branch: ALSO chains from main — the tool's
+        # guarantee — not from the first. Working tree, not yet committed.
+        second = self._rechained(first, main_hash, "two")
+        committed.write_text(json.dumps(second, sort_keys=True, indent=1))
+
+        r = self.gate(committed, root=repo, cwd=repo)
+        self.assertNotIn("LINEAGE", r.stdout,
+                         f"two exports chained from main must NOT be a lineage break:\n{r.stdout}")
+        self.assertEqual(r.returncode, 0, f"{r.stdout}\n{r.stderr}")
+
+        # And once that second export is committed too (the CI case: working
+        # file IS HEAD), HEAD against the merge-base still holds.
+        self._git(repo, "commit", "-qam", "second export on the branch")
+        r = self.gate(committed, root=repo, cwd=repo)
+        self.assertNotIn("LINEAGE", r.stdout, r.stdout)
+        self.assertEqual(r.returncode, 0, f"{r.stdout}\n{r.stderr}")
+
+    def test_an_export_chained_from_the_intermediate_is_still_a_break(self):
+        """The rule did not get weaker, it moved. An export on a branch that
+        chains from the PREVIOUS BRANCH COMMIT — the old on-disk behaviour, or a
+        pre-2026-09-12 reflow2 — names an ancestor the default branch never saw,
+        and that is exactly the severed history the check exists to catch."""
+        repo, committed = self.git_repo_with_export()
+        self._git(repo, "branch", "-M", "main")
+        main_doc = json.loads(committed.read_text())
+        self._git(repo, "checkout", "-qb", "feature")
+        first = self._rechained(main_doc, main_doc["content_hash"], "one")
+        committed.write_text(json.dumps(first, sort_keys=True, indent=1))
+        self._git(repo, "commit", "-qam", "first export on the branch")
+        # Chains from the INTERMEDIATE, not from main.
+        second = self._rechained(first, first["content_hash"], "two")
+        committed.write_text(json.dumps(second, sort_keys=True, indent=1))
+
+        r = self.gate(committed, root=repo, cwd=repo)
+        self.assertIn("LINEAGE", r.stdout, f"a chain anchored off-trunk must fail:\n{r.stdout}")
+        self.assertIn("MERGE-BASE", r.stdout, "and the message must name the anchor it expects")
+        self.assertNotIn("FOLD", r.stdout, "the old advice — fold the commits — must be gone")
+        self.assertNotEqual(r.returncode, 0)
+
     # ---- the trio ---------------------------------------------------------
 
     def test_a_coherent_design_passes(self):

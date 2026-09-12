@@ -602,10 +602,12 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Set a Decision's lifecycle status — proposed / accepted / superseded / \
-                       rejected (BL-70). Setting it to `proposed` opens it as a decision point: an \
-                       undecided fork you can register alternatives under. Every other property is \
-                       preserved. CARRIES `settled_question_prose` WHEN A DECISION REACHES \
+        description = "Set a Decision's lifecycle status — proposed / accepted / deferred / \
+                       superseded / rejected (BL-70). Setting it to `proposed` opens it as a decision \
+                       point: an undecided fork you can register alternatives under. `deferred` SETS \
+                       IT ASIDE — sound but untimely — and it stops counting as debt in loop_status \
+                       and what_next; it is the owner's word and wants `approver`, like `accepted`. \
+                       Every other property is preserved. CARRIES `settled_question_prose` WHEN A DECISION REACHES \
                        `accepted` AND SOMETHING IT GOVERNS STILL SAYS THE QUESTION IS OPEN: the \
                        block names each such node, the phrase that matched, and quotes the prose \
                        around it, so you can judge it here rather than in another call. It never \
@@ -647,8 +649,18 @@ impl ReflowService {
             req.approver.as_deref(),
             req.acted_at.as_deref(),
         )?;
-        // `accepted` is the settling status the intent gate reads; superseding
-        // or rejecting retires rather than settles and is not flagged.
+        // TWO DIFFERENT QUESTIONS, and they used to share one flag.
+        //
+        // WHOSE WORD IS THIS? `accepted` AND `deferred` are the owner's act —
+        // settling a question and setting one aside are both things only the
+        // person who owns the intent may do — so both want a name on them.
+        // Superseding or rejecting retires rather than decides and is not
+        // flagged.
+        //
+        // DID A QUESTION JUST CLOSE? Only `accepted` closes one. A deferred
+        // decision's governed prose saying "still open" is TRUE, so the
+        // settled-question check below must not fire for it.
+        let owners_word = matches!(req.status.as_str(), "accepted" | "deferred");
         let settles = req.status == "accepted";
         // A question just closed. Anything this decision governs whose prose
         // still says it is open is now a paragraph the next reader will believe
@@ -661,7 +673,7 @@ impl ReflowService {
         };
         crate::tools::capture::with_approval_and_settled_question(
             node,
-            crate::tools::capture::nobodys_name_note(settles, req.approver.as_deref()),
+            crate::tools::capture::nobodys_name_note(owners_word, req.approver.as_deref()),
             &req.decision_id,
             &hits,
         )

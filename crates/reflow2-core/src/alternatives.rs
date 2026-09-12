@@ -105,7 +105,11 @@ pub fn analyze_alternatives(
 // analyze_alternatives and merge_designs/apply_merge.
 // ---------------------------------------------------------------------------
 
-const DECISION_STATUSES: [&str; 4] = ["proposed", "accepted", "superseded", "rejected"];
+// `deferred` since 2026-09-12: set aside, sound but untimely, and NOT debt.
+// It is the one status here that neither opens a decision point nor closes
+// one — a deferred choice cannot have alternatives registered under it, which
+// `register_alternative` enforces by asking for `proposed` and nothing else.
+const DECISION_STATUSES: [&str; 5] = ["proposed", "accepted", "deferred", "superseded", "rejected"];
 
 /// The quality axes a design can declare itself built FOR.
 ///

@@ -62,7 +62,10 @@ def settles_intent(node):
     if t == "Requirement":
         return p.get("status") not in (None, "proposed")
     if t == "Decision":
-        return p.get("status") == "accepted"
+        # `deferred` since 2026-09-12: setting a decision aside is the owner's
+        # act exactly as accepting one is, so it carries a name or it is a
+        # red build. Superseded and rejected retire rather than decide.
+        return p.get("status") in ("accepted", "deferred")
     if t == "DesignRule":
         return p.get("enforced") is not None
     return False

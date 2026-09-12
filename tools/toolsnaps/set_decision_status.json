@@ -3,7 +3,7 @@
     "destructiveHint": false,
     "readOnlyHint": false
   },
-  "description": "Set a Decision's lifecycle status — proposed / accepted / superseded / rejected (BL-70). Setting it to `proposed` opens it as a decision point: an undecided fork you can register alternatives under. Every other property is preserved. CARRIES `settled_question_prose` WHEN A DECISION REACHES `accepted` AND SOMETHING IT GOVERNS STILL SAYS THE QUESTION IS OPEN: the block names each such node, the phrase that matched, and quotes the prose around it, so you can judge it here rather than in another call. It never says the text is wrong — prose that QUOTES an old question is a correct node and looks identical. Silent on `rejected`/`superseded`, which retire rather than settle, and on `accepted` -> `accepted`. From a 2026-09-09 incident where a requirement said \"NOT YET DECIDED … his call to make\" three weeks after the call had been made, and the owner was asked the settled question a second time.",
+  "description": "Set a Decision's lifecycle status — proposed / accepted / deferred / superseded / rejected (BL-70). Setting it to `proposed` opens it as a decision point: an undecided fork you can register alternatives under. `deferred` SETS IT ASIDE — sound but untimely — and it stops counting as debt in loop_status and what_next; it is the owner's word and wants `approver`, like `accepted`. Every other property is preserved. CARRIES `settled_question_prose` WHEN A DECISION REACHES `accepted` AND SOMETHING IT GOVERNS STILL SAYS THE QUESTION IS OPEN: the block names each such node, the phrase that matched, and quotes the prose around it, so you can judge it here rather than in another call. It never says the text is wrong — prose that QUOTES an old question is a correct node and looks identical. Silent on `rejected`/`superseded`, which retire rather than settle, and on `accepted` -> `accepted`. From a 2026-09-09 incident where a requirement said \"NOT YET DECIDED … his call to make\" three weeks after the call had been made, and the owner was asked the settled question a second time.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
@@ -28,10 +28,11 @@
         "type": "string"
       },
       "status": {
-        "description": "`proposed` (opens a decision point) / `accepted` / `superseded` /\n`rejected`.",
+        "description": "`proposed` (opens a decision point) / `accepted` / `deferred` (set aside,\nnot debt — carries an approver like `accepted`) / `superseded` /\n`rejected`.",
         "enum": [
           "proposed",
           "accepted",
+          "deferred",
           "superseded",
           "rejected"
         ],
