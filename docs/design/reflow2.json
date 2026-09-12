@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:adcaf90fdd79d75cb2b40eb871b08cbe30e7f8b93513168de48f55f05d7b13fc",
+  "content_hash": "sha256:4ba5ca6c2e6ddb206964c38ee1410bec64e80c3476abaad93648b34669daf4fc",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -9515,6 +9515,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:the-lineage-anchor-moves-from-the-file-to-the-commit",
+      "properties": {},
+      "to_id": "epoch:the-export-chains-from-main"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:the-linking-discipline-becomes-visible",
       "properties": {},
       "to_id": "epoch:v0450"
@@ -11393,6 +11399,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:cap:the-server-writes-the-export-through-and-chains-it-from-main",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:chg:the-cause-discipline-binds-forward-and-the-backlog-is-parked",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
@@ -12146,6 +12158,12 @@
       "from_id": "snap:epoch:the-discipline-arrives-at-the-tool:epoch:the-philosophy-is-in-the-product",
       "properties": {},
       "to_id": "epoch:the-discipline-arrives-at-the-tool"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:the-export-chains-from-main:cap:the-server-writes-the-export-through-and-chains-it-from-main",
+      "properties": {},
+      "to_id": "epoch:the-export-chains-from-main"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -40424,6 +40442,33 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-lineage-anchor-moves-from-the-file-to-the-commit",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-lineage-anchor-moves-from-the-file-to-the-commit",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-exchange"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-lineage-anchor-moves-from-the-file-to-the-commit",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:the-server-writes-the-export-through-and-chains-it-from-main"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-linking-discipline-becomes-visible",
       "properties": {
         "accepted_baseline": true,
@@ -59206,6 +59251,18 @@
       "from_id": "cap:skills-served",
       "properties": {},
       "to_id": "snap:epoch:surface-export:cap:skills-served"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:the-server-writes-the-export-through-and-chains-it-from-main",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:cap:the-server-writes-the-export-through-and-chains-it-from-main"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:the-server-writes-the-export-through-and-chains-it-from-main",
+      "properties": {},
+      "to_id": "snap:epoch:the-export-chains-from-main:cap:the-server-writes-the-export-through-and-chains-it-from-main"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -173212,6 +173269,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:git-anchor",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:the-server-writes-the-export-through-and-chains-it-from-main"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:github-mcp-study",
       "properties": {
         "completeness": "complete",
@@ -175547,6 +175613,15 @@
         "conformance": "verified"
       },
       "to_id": "cap:mcp-surface"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:the-export-chains-from-main-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:the-server-writes-the-export-through-and-chains-it-from-main"
     },
     {
       "edge_type": "REALIZES",
@@ -181056,6 +181131,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:the-export-chains-from-main",
+      "properties": {},
+      "to_id": "cap:the-server-writes-the-export-through-and-chains-it-from-main"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:the-export-survives-being-read-back",
       "properties": {},
       "to_id": "ifc:graph-export"
@@ -182025,6 +182106,14 @@
         "action": "created"
       },
       "to_id": "art:genesis"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:git-anchor",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:git-anchor"
     },
     {
       "edge_type": "YIELDED",
@@ -183081,6 +183170,14 @@
         "action": "created"
       },
       "to_id": "art:the-export-can-be-ordered-before-its-writes"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:the-export-chains-from-main-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:the-export-chains-from-main-test"
     },
     {
       "edge_type": "YIELDED",
@@ -184635,6 +184732,18 @@
       }
     },
     {
+      "node_id": "art:git-anchor",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:8dcf9b904913850e97a505a478d4a479e31a40d09fda94580fa98a3adcf1626a",
+        "description": "Where an export's lineage is anchored: the record as COMMITTED, not the file on disk. Resolves the default branch (origin/HEAD first, then origin/main, origin/master, main, master), takes the merge-base with HEAD, and reads that path's blob at that commit. Every failure — no git on PATH, not a repository, no default branch, no merge-base, path not committed, the committed blob not an export — returns a NAMED reason rather than an error, and the caller falls back to on-disk chaining. reflow2's first use of git anywhere in either crate; it lives in the MCP crate so the core stays the pure graph library.",
+        "location": "crates/reflow2-mcp/src/git.rs",
+        "name": "git.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:github-mcp-study",
       "node_type": "Artifact",
       "properties": {
@@ -186108,7 +186217,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b803de43df196ca97160e4802659548c9ddb3dd5a925377acfc05292509b9bd8",
+        "checksum": "sha256:6b1c6bed4fdf40047f2f48abfd8e4791a5f1e19edba657dcc59a8227aba7f0f4",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -186904,6 +187013,18 @@
       }
     },
     {
+      "node_id": "art:the-export-chains-from-main-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:243fa75a8b6fa5be37fa8d626bf13cc47d03d48d16aa62b0d8c5b7eeba319500",
+        "description": "Two hermetic tests over a scratch git repository. The first builds the shape dec:export-once-per-pr could not survive — a committed export on main, then TWO exports and a commit on a branch — and asserts both branch exports carry main's hash as prev_content_hash, so a squash lands one hop. The second asserts that outside a repository the on-disk chain still forms and the receipt says why. The first was shown to FAIL against the pre-fix behaviour before it was trusted.",
+        "location": "crates/reflow2-mcp/tests/the_export_chains_from_main.rs",
+        "name": "the_export_chains_from_main.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:tools-ask",
       "node_type": "Artifact",
       "properties": {
@@ -186986,7 +187107,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:cfe57fcfdb473f30ddb2e3e3f4ba6bd3f19e84bd9d416c14427166cab479f214",
+        "checksum": "sha256:f6213c94b482e8b5f5c15280a616594c4225baeda8715483174ddce561e26163",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/exchange.rs",
         "name": "tools/exchange.rs",
@@ -190164,10 +190285,10 @@
       "node_id": "cap:the-server-writes-the-export-through-and-chains-it-from-main",
       "node_type": "Capability",
       "properties": {
-        "description": "The shared server — not the session, and not a harness hook — keeps the working-tree export current after every graph change, coalescing bursts through a debounce, and sets the export's prev_content_hash from the export as committed on the default branch when a git repository is present.\n\nWHY THE SERVER OWNS IT: the session is the thing that might not come back. The Stop hook fires once and exists in one harness, so a consumer of reflow2 in any other client would never see it.\n\nWHY THE LINEAGE MOVES: continuous writing collides with one-export-per-PR only while the chain is built from the FILE on disk. Anchored at main, any number of commits on a branch each chain from main, and squash-and-merge lands exactly one hop per PR — which is what that rule always wanted. The \"and it must be LAST\" clause becomes automatic.\n\nFOUR THINGS THE INCREMENT MUST STILL DECIDE, named on the rulings and deliberately not settled here: the debounce interval; the git query that finds main's version (merge-base survives a long-lived branch where head-of-default does not); the behaviour when the working tree holds a hand edit of the export; and the no-git fallback, which stays today's on-disk chaining so reflow2 assumes nothing about git.\n\nAFFORDABILITY, MEASURED: a full export of the largest design in existence is 265 ms (2026-08-25, down from 1,168 ms), and the debounce means a burst of ten changes costs one export.",
+        "description": "The shared server — not the session, and not a harness hook — keeps the working-tree export current after every graph change, coalescing bursts through a debounce, and sets the export's prev_content_hash from the export as committed on the default branch when a git repository is present.\n\n⭐ HALF BUILT, 2026-09-12 (epoch:the-export-chains-from-main). THE LINEAGE HALF IS DONE: a written export chains from its own path at the merge-base with the default branch, so every export on a branch chains from the same committed ancestor and a squash-merge lands one hop. The receipt carries `chained_from`, and outside git the previous on-disk chaining stands with a stated reason. THE WRITE-THROUGH HALF IS NOT BUILT: the server still exports only when asked.\n\nWHY THE SERVER OWNS THE REMAINING HALF: the session is the thing that might not come back. The Stop hook fires once and exists in one harness, so a consumer of reflow2 in any other client would never see it.\n\nWHY THE LINEAGE MOVED FIRST: continuous writing collides with one-export-per-PR only while the chain is built from the FILE on disk, so the anchor had to move before the writing could become automatic. It is also useful on its own — `dec:export-once-per-pr`'s \"and it must be LAST\" clause is now automatic rather than remembered.\n\nOF THE FOUR QUESTIONS THE INCREMENT CARRIED, TWO ARE ANSWERED: the git query is the MERGE-BASE with the default branch, not the tip, because on a long-lived branch the tip moves underneath you and the export would claim descent from work it never contained; and the no-git fallback is today's on-disk chaining, reported rather than silent, so reflow2 assumes nothing about git. TWO REMAIN OPEN and belong to the write-through half: the debounce interval, and what happens when the working tree holds a hand edit of the export.\n\nAFFORDABILITY, MEASURED: a full export of the largest design in existence is 265 ms (2026-08-25, down from 1,168 ms), and the debounce means a burst of ten changes costs one export.",
         "name": "The server writes the design export through to the working tree on every change, debounced, and chains its lineage from what is committed on main",
         "provenance": "authored",
-        "status": "planned",
+        "status": "in_progress",
         "tier": "operational"
       }
     },
@@ -197913,6 +198034,15 @@
         "rationale": "🛑 A MONTH ON A BRANCH COST TWO REAL DEFECTS, AND THAT IS THE DURABLE LESSON.\n\n**1. THE WRITE-LOCK BUG, which would have shipped silently.** `lens_for_response` took `self.write_lock()` to perform a READ. Harmless when written on 2026-08-19; not harmless now. On 2026-08-26 `write_lock` became fallible AND began refusing outright on a `--read-only` server. Landing the branch unchanged would have returned `None` on every read-only deployment — **disabling the lens precisely on the surface a stranger reads the design through, which is where speaking their vocabulary matters most.** Computing a lens is a read; the original said otherwise and no test would have caught it, because no test ran against a read-only service. Now `self.graph.read()`.\n\n**2. THE FIVE HANDLER TESTS NEVER RAN BECAUSE THEY NEVER COMPILED.** The commit message called them \"unrun\". They were unrunnable: `GetSkillReq` / `ListSkillsReq` had moved from `skills` to `tools::skills_tools` in the tool-surface refactor, and `name` on two request types had become `Option<String>`. **\"Unrun tests\" and \"tests that do not compile\" are different states and the commit recorded the softer one.** All five pass now, alongside the six core tests.\n\n⭐ THE CHERRY-PICK CONFLICTED AND THE CONFLICT WAS INFORMATION. `skills.rs` was refactored after the branch: the tool handlers moved to `tools/skills_tools.rs` and the file kept only helpers. Resolving the conflict textually would have re-added structs that already exist elsewhere. The lens was instead applied BY HAND to the two files it actually belongs in — which is how the write-lock bug was noticed at all.\n\n📌 WHY IT MATTERED ENOUGH TO GO BACK FOR. A user reported twice, months apart, that reflow2 \"still speaks its own jargon and never asks who I am\". Both reports were correct and neither was a missing idea: the only two skills that instruct asking are `where-am-i` and `capture-intent`, which a regular user runs and a new user does not. **A mechanism that only fires on the path its author walks is indistinguishable from a working one, from where the author stands** — and the design recorded the capability, so every reading of the graph said the mechanism existed.\n\n⚠️ AND THE LIMIT THE CAPABILITY ALWAYS NAMED IS UNCHANGED: the tests prove the lens computes and is attached. They do not prove an agent ACTS on it, and nothing proves the translation is any good. This closes delivery. **Whether the words that come out are the reader's words remains unmeasured**, and the trial that would measure it — a real gap list narrated to a reader with a stated non-software background — is still the missing instrument.",
         "subject": "system",
         "summary": "`get_skill` and `list_skills` now carry a `lens` field: who the design knows how to speak to, or a plain statement that it knows nobody. Moves `cap:the-skill-response-carries-the-lens` from `in_progress` to `realized` — it was built 2026-08-19 on branch `lens-hint-rides-the-loop-rail` (commit e01c760), deliberately not marked realized at the v0.36.0 cut, and never merged. Verified live against the real binary: a `get_skill` response now returns keys [body, description, lens, name]. Workspace suite 1835 passed / 0 failed across 163 binaries, reconciling exactly against 1824 + 11 across 161 + 2."
+      }
+    },
+    {
+      "node_id": "chg:the-lineage-anchor-moves-from-the-file-to-the-commit",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "The export's lineage anchor moves off the working-tree file and onto the merge-base with the default branch",
+        "subject": "system"
       }
     },
     {
@@ -208735,6 +208865,17 @@
       }
     },
     {
+      "node_id": "epoch:the-export-chains-from-main",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "description": "ARRIVED 2026-09-12. The first half of increment 431 (epoch:planned-the-server-guarantees-the-export): the lineage anchor moved off the working-tree file and onto the committed record.\n\nWHAT CHANGED: inside a git repository, a written export now chains from that same path as it stands at the MERGE-BASE with the default branch. Any number of exports on a branch each chain from the same committed ancestor, so a squash-merge lands exactly one hop and dec:export-once-per-pr holds by construction rather than by the author remembering to export last. Outside git — no repository, no commits, the path not yet committed, no git on PATH — the previous on-disk chaining stands unchanged and the receipt says which anchor was used and why.\n\nWHY MERGE-BASE AND NOT THE TIP: on a long-lived branch origin/main moves underneath you, and anchoring at the tip would make the export claim descent from work the branch never contained. The merge-base is the commit both actually share.\n\nTHE RECEIPT GREW A FIELD, `chained_from`, because prev_content_hash is a hash and says nothing about where it came from — an export anchored at the committed record and one anchored at whatever was last written to disk are indistinguishable in the old receipt and produce different lineages.\n\nSPLIT FROM THE INCREMENT DELIBERATELY: the second half — the server keeping the working-tree export current, debounced, without being asked — is still planned and still carries its own open questions. The lineage half is a prerequisite for it (continuous writing collides with export-once-per-pr only while the chain is built from disk), it is useful on its own, and it is reviewable on its own.\n\nREFLOW2'S FIRST USE OF GIT. Until now nothing in either crate shelled out to git or depended on a git library. The new module is in the MCP crate rather than the core, keeping the core the pure graph library and the file-write seam where file concerns already live.",
+        "epoch_type": "revision",
+        "name": "The export chains from main, not from the file on disk",
+        "sequence": 435,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:the-floating-parts-get-a-home",
       "node_type": "DesignEpoch",
       "properties": {
@@ -211234,6 +211375,16 @@
       }
     },
     {
+      "node_id": "frag:art:git-anchor",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered git.rs"
+      }
+    },
+    {
       "node_id": "frag:art:github-mcp-study",
       "node_type": "Fragment",
       "properties": {
@@ -212555,6 +212706,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered the_export_can_be_ordered_before_its_writes.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:the-export-chains-from-main-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered the_export_chains_from_main.rs"
       }
     },
     {
@@ -219019,6 +219180,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:preserved-on-write:cap:the-server-writes-the-export-through-and-chains-it-from-main",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:git-anchor\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:the-export-chains-from-main-test\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:the-export-chains-from-main\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:export\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:the-server-keeps-the-working-tree-export-current\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SCHEDULED_FOR\",\"other_type\":\"DesignEpoch\",\"other_id\":\"epoch:planned-the-server-guarantees-the-export\",\"properties\":{\"modality\":\"expected\",\"recorded_at\":\"2026-09-11\"}}]",
+        "state": "{\"description\":\"The shared server — not the session, and not a harness hook — keeps the working-tree export current after every graph change, coalescing bursts through a debounce, and sets the export's prev_content_hash from the export as committed on the default branch when a git repository is present.\\n\\nWHY THE SERVER OWNS IT: the session is the thing that might not come back. The Stop hook fires once and exists in one harness, so a consumer of reflow2 in any other client would never see it.\\n\\nWHY THE LINEAGE MOVES: continuous writing collides with one-export-per-PR only while the chain is built from the FILE on disk. Anchored at main, any number of commits on a branch each chain from main, and squash-and-merge lands exactly one hop per PR — which is what that rule always wanted. The \\\"and it must be LAST\\\" clause becomes automatic.\\n\\nFOUR THINGS THE INCREMENT MUST STILL DECIDE, named on the rulings and deliberately not settled here: the debounce interval; the git query that finds main's version (merge-base survives a long-lived branch where head-of-default does not); the behaviour when the working tree holds a hand edit of the export; and the no-git fallback, which stays today's on-disk chaining so reflow2 assumes nothing about git.\\n\\nAFFORDABILITY, MEASURED: a full export of the largest design in existence is 265 ms (2026-08-25, down from 1,168 ms), and the debounce means a burst of ten changes costs one export.\",\"name\":\"The server writes the design export through to the working tree on every change, debounced, and chains its lineage from what is committed on main\",\"provenance\":\"authored\",\"status\":\"in_progress\",\"tier\":\"operational\"}",
+        "target_id": "cap:the-server-writes-the-export-through-and-chains-it-from-main",
+        "target_type": "Capability"
+      }
+    },
+    {
       "node_id": "snap:epoch:preserved-on-write:chg:the-cause-discipline-binds-forward-and-the-backlog-is-parked",
       "node_type": "Snapshot",
       "properties": {
@@ -220276,6 +220447,16 @@
         "state": "{\"epoch_type\":\"milestone\",\"name\":\"Doing it right is something reflow2 CARRIES, not just something this project practises — a fix says whether it reached the cause, and the tool says what it will not do\",\"sequence\":360,\"status\":\"planned\"}",
         "target_id": "epoch:the-philosophy-is-in-the-product",
         "target_type": "DesignEpoch"
+      }
+    },
+    {
+      "node_id": "snap:epoch:the-export-chains-from-main:cap:the-server-writes-the-export-through-and-chains-it-from-main",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:git-anchor\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:the-export-chains-from-main-test\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:the-export-chains-from-main\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:export\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:the-server-keeps-the-working-tree-export-current\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SCHEDULED_FOR\",\"other_type\":\"DesignEpoch\",\"other_id\":\"epoch:planned-the-server-guarantees-the-export\",\"properties\":{\"modality\":\"expected\",\"recorded_at\":\"2026-09-11\"}}]",
+        "state": "{\"description\":\"The shared server — not the session, and not a harness hook — keeps the working-tree export current after every graph change, coalescing bursts through a debounce, and sets the export's prev_content_hash from the export as committed on the default branch when a git repository is present.\\n\\n⭐ HALF BUILT, 2026-09-12 (epoch:the-export-chains-from-main). THE LINEAGE HALF IS DONE: a written export chains from its own path at the merge-base with the default branch, so every export on a branch chains from the same committed ancestor and a squash-merge lands one hop. The receipt carries `chained_from`, and outside git the previous on-disk chaining stands with a stated reason. THE WRITE-THROUGH HALF IS NOT BUILT: the server still exports only when asked.\\n\\nWHY THE SERVER OWNS THE REMAINING HALF: the session is the thing that might not come back. The Stop hook fires once and exists in one harness, so a consumer of reflow2 in any other client would never see it.\\n\\nWHY THE LINEAGE MOVED FIRST: continuous writing collides with one-export-per-PR only while the chain is built from the FILE on disk, so the anchor had to move before the writing could become automatic. It is also useful on its own — `dec:export-once-per-pr`'s \\\"and it must be LAST\\\" clause is now automatic rather than remembered.\\n\\nOF THE FOUR QUESTIONS THE INCREMENT CARRIED, TWO ARE ANSWERED: the git query is the MERGE-BASE with the default branch, not the tip, because on a long-lived branch the tip moves underneath you and the export would claim descent from work it never contained; and the no-git fallback is today's on-disk chaining, reported rather than silent, so reflow2 assumes nothing about git. TWO REMAIN OPEN and belong to the write-through half: the debounce interval, and what happens when the working tree holds a hand edit of the export.\\n\\nAFFORDABILITY, MEASURED: a full export of the largest design in existence is 265 ms (2026-08-25, down from 1,168 ms), and the debounce means a burst of ten changes costs one export.\",\"name\":\"The server writes the design export through to the working tree on every change, debounced, and chains its lineage from what is committed on main\",\"provenance\":\"authored\",\"status\":\"in_progress\",\"tier\":\"operational\"}",
+        "target_id": "cap:the-server-writes-the-export-through-and-chains-it-from-main",
+        "target_type": "Capability"
       }
     },
     {
@@ -229495,6 +229676,20 @@
       }
     },
     {
+      "node_id": "ver:the-export-chains-from-main",
+      "node_type": "Verification",
+      "properties": {
+        "description": "`crates/reflow2-mcp/tests/the_export_chains_from_main.rs`, two hermetic tests over scratch git repositories.\n\nTHE ONE THAT MATTERS builds the exact shape dec:export-once-per-pr could not survive: a committed export on main, a branch, an export, a commit, then a second export. It asserts BOTH branch exports carry main's content hash as their prev_content_hash — so whatever order the commits were made in, a squash-merge lands exactly one hop — and that neither chains from the other.\n\nTHE SECOND asserts the fallback: outside a git repository the on-disk chain still forms, the receipt reads `chained_from: disk`, and `chain_note` says why. Nothing about exporting requires git.\n\nSHOWN TO FAIL BEFORE IT WAS TRUSTED: reverting the anchor to the on-disk predecessor makes the branch test fail on the assertion that names the rule, with the intermediate hash in the message. A check nobody has seen fail is the NEW-01 shape on this project's own record.\n\nWHAT IT DOES NOT COVER: the second half of the increment — the server keeping the working-tree export current without being asked — is not built, so nothing here exercises a debounce, a background write, or what happens when the working tree holds a hand edit.",
+        "findings": "Both tests pass on the merged code. Against the pre-fix anchor the branch test fails as designed: the second branch export chained from the first (sha256:32ac3a8b…) instead of from main (sha256:7f7a0359…). The full mcp suite — 63 test binaries — passes alongside it, and toolsnap reports exactly one changed schema, export_graph's description, which was re-blessed deliberately.",
+        "kind": "verification",
+        "last_run_at": "2026-09-12",
+        "level": "integration",
+        "method": "test",
+        "name": "Two exports on one branch both chain from the committed ancestor",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:the-export-survives-being-read-back",
       "node_type": "Verification",
       "properties": {
@@ -229927,7 +230122,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:f6788ef6c38c8a3560cb29009ed093e23494110d77fecf0460fdd87b020740ee",
+  "prev_content_hash": "sha256:adcaf90fdd79d75cb2b40eb871b08cbe30e7f8b93513168de48f55f05d7b13fc",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

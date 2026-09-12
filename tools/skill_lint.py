@@ -785,8 +785,14 @@ TOOL_CONVENTIONS: dict[str, str] = {
     "set_verification_status": "not confirmation",
     # The snapshot captures NOW, so the order of operations is the whole rule.
     "record_change": "record the change BEFORE you make it",
-    # The lineage link is built from the file already at the path.
-    "export_graph": "export ONCE between commits",
+    # The lineage link anchors at the COMMITTED record, not at the file on
+    # disk (2026-09-12). The pinned phrase moved with the rule: "export ONCE
+    # between commits" was the DISCIPLINE the old anchor demanded of the
+    # author, and `dec:export-once-per-pr` now holds by construction, so
+    # pinning it would keep an instruction the tool no longer needs. What must
+    # survive is where the chain comes from, because two anchors give two
+    # different lineages and the hash cannot tell them apart.
+    "export_graph": "merge-base",
 }
 
 # `cap:gap-carries-a-reading` — the CONTRACT of how a choice is put to the user,

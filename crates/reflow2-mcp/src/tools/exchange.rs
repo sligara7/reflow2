@@ -118,21 +118,22 @@ impl ReflowService {
                        (export with the old build, import with the new). It carries a stamp saying \
                        which reflow2 wrote it. Pass `path` to write the document to a file instead \
                        of returning it — on a large design the payload overflows what a session \
-                       can read, and a backup wants to be a file anyway. CONVENTION: export ONCE \
-                       between commits, straight onto the committed file — the lineage link is \
-                       built from whatever file is already at that path, so exporting elsewhere \
-                       and copying it in, or exporting twice, both break the chain silently. \
+                       can read. LINEAGE ANCHORS AT THE \
+                       COMMITTED RECORD: in a git repository the document chains from this path \
+                       at the merge-base with the default branch, so every export on a branch \
+                       chains from the same ancestor and a squash-merge lands ONE hop — \
+                       `dec:export-once-per-pr` holds by construction. Outside git it chains from \
+                       the file already there; `chained_from` says which anchor was used and \
+                       `chain_note` why, because a hash cannot say where it came from. \
                        \u{1F6D1} NEVER ISSUE THIS IN THE SAME PARALLEL BATCH AS WRITES YOU EXPECT \
-                       IT TO CONTAIN. Tool calls a harness emits together are unordered and this \
-                       one takes the same lock, so it can run BEFORE them and serialise a design \
-                       state that is missing them. MEASURED, not theoretical: with each call on \
-                       its own task, as a real server runs them, the export was early in 91 of \
-                       200 trials. Unlike a write naming an absent node, THIS FAILURE IS SILENT \
-                       — the export succeeds, it is simply early, and the document you then \
-                       commit is the one whose artifact hashes will not match disk. Sequence the \
-                       export after the writes have returned. \u{26A0} The unexported-work nudge \
-                       will NOT catch it: that compares NODE COUNTS, so a missed PROPERTY change \
-                       is invisible to it — 0 of 10 caught.",
+                       IT TO CONTAIN: calls a harness emits together are unordered and this takes \
+                       the same lock, so it can run BEFORE them — measured early in 91 of 200 \
+                       trials, each call on its own task as a real server runs them. THE FAILURE \
+                       IS SILENT: the export succeeds, it is simply early, and the document you \
+                       commit carries artifact hashes that will not match disk. Sequence it after \
+                       the writes return. \u{26A0} The unexported-work nudge will NOT catch it — \
+                       it compares NODE COUNTS, so a missed PROPERTY change is invisible (0 of \
+                       10 caught).",
         annotations(read_only_hint = true)
     )]
     pub async fn export_graph(
@@ -171,6 +172,21 @@ impl ReflowService {
         // not a reflow2 export records no chain, and says so in the receipt.
         let mut chain_note = None;
         let mut sync_note = None;
+        // WHERE THE LINEAGE ANCHORS, asked once and used by every branch below.
+        //
+        // The chain used to grow from the file being replaced, which made every
+        // intermediate save a hop and put `dec:export-once-per-pr` on the author
+        // to remember. Anchored at the merge-base with the default branch
+        // instead, any number of commits on a branch each chain from the same
+        // committed ancestor and a squash-merge lands exactly one hop per PR —
+        // `dec:idea-does-the-graph-write-itself-through-to-the-repo-on-every-change`,
+        // road (a). Outside a git repository nothing changes: `Err` carries the
+        // reason and every branch falls back to the file on disk.
+        let committed = crate::git::committed_predecessor(target);
+        let mut chained_from = match &committed {
+            Ok(c) => c.source.clone(),
+            Err(_) => "disk".to_string(),
+        };
         // WHAT THIS WRITE ACTUALLY DID, because the receipt could not say.
         //
         // `content_hash` and `prev_content_hash` DO NOT ANSWER IT. Measured on
@@ -224,14 +240,39 @@ impl ReflowService {
                     } else {
                         "changed"
                     };
-                    export.chain_after(&predecessor);
+                    match &committed {
+                        Ok(c) => export.chain_after(&c.doc),
+                        Err(reason) => {
+                            export.chain_after(&predecessor);
+                            chain_note = Some(reason.reason());
+                        }
+                    }
                 }
                 None => {
                     wrote = "changed";
-                    chain_note = Some(
-                        "the file being replaced was not a reflow2 export — no lineage recorded",
-                    );
+                    // The file on disk is not an export — but the COMMITTED
+                    // version of this path may still be one, and it is the
+                    // honest ancestor either way.
+                    match &committed {
+                        Ok(c) => export.chain_after(&c.doc),
+                        Err(_) => {
+                            chained_from = "nothing".to_string();
+                            chain_note = Some(
+                                "the file being replaced was not a reflow2 export — no lineage \
+                                 recorded",
+                            );
+                        }
+                    }
                 }
+            }
+        } else {
+            // Nothing at this path — but a committed version can still exist
+            // (somebody deleted it, or this is a fresh checkout). Writing a
+            // record whose ancestry says "none" when git knows otherwise is the
+            // silent wrong answer this whole change exists to remove.
+            match &committed {
+                Ok(c) => export.chain_after(&c.doc),
+                Err(_) => chained_from = "nothing".to_string(),
             }
         }
         // Through `serde_json::Value` so keys serialize sorted (its object is a
@@ -262,6 +303,12 @@ impl ReflowService {
             "edges": export.edges.len(),
             "content_hash": export.content_hash,
             "prev_content_hash": export.prev_content_hash,
+            // WHAT THE CHAIN IS ANCHORED TO. `prev_content_hash` is a hash and
+            // says nothing about where that hash came from, so an export
+            // anchored at the committed record and one anchored at whatever was
+            // last written to disk look identical in the receipt — and they
+            // produce different lineages.
+            "chained_from": chained_from,
             "wrote": wrote,
             "stamp": serde_json::to_value(&export.stamp).map_err(ser_err)?,
         });
