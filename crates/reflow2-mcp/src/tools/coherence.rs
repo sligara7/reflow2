@@ -450,8 +450,12 @@ impl ReflowService {
 
         if let Some(graph_path) = self.graph_path.as_deref() {
             let live_nodes = g.count_all_nodes().unwrap_or(0);
-            let debts =
-                crate::sync_debt::sync_debt(graph_path, live_nodes, &|| g.export_graph().ok());
+            let debts = crate::sync_debt::sync_debt_with(
+                graph_path,
+                live_nodes,
+                &crate::sync_debt::StoreMembership::new(&g),
+                &mut crate::sync_debt::ParsedRecords::default(),
+            );
             if let Some(obj) = payload.as_object_mut() {
                 let behind: Vec<_> = debts.iter().filter(|d| d.is_actionable()).collect();
                 if !behind.is_empty() {
@@ -1251,7 +1255,12 @@ impl ReflowService {
             }));
         };
         let live_nodes = g.count_all_nodes().unwrap_or(0);
-        let debts = crate::sync_debt::sync_debt(graph_path, live_nodes, &|| g.export_graph().ok());
+        let debts = crate::sync_debt::sync_debt_with(
+            graph_path,
+            live_nodes,
+            &crate::sync_debt::StoreMembership::new(&g),
+            &mut crate::sync_debt::ParsedRecords::default(),
+        );
         let mut out = json!({
             "sync": debts,
             "behind": debts.iter().filter(|d| d.is_actionable()).map(|d| d.message()).collect::<Vec<_>>(),

@@ -5424,7 +5424,7 @@ impl ReflowService {
             let debts = crate::sync_debt::sync_debt_with(
                 graph_path,
                 live_nodes,
-                &|| g.export_graph().ok(),
+                &crate::sync_debt::StoreMembership::new(g),
                 &mut cache.parsed,
             );
             let behind: Vec<_> = debts

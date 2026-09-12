@@ -34,7 +34,9 @@
 use std::io::Write;
 
 use reflow2_core::{DesignGraph, GraphExport};
-use reflow2_mcp::sync_debt::{ParsedRecords, SyncDebt, SyncState, sync_debt, sync_debt_with};
+use reflow2_mcp::sync_debt::{
+    ExportedDesign, ParsedRecords, StoreMembership, SyncDebt, SyncState, sync_debt, sync_debt_with,
+};
 
 /// A fresh scratch dir plus a graph-store path inside it. The sync record is a
 /// sibling file of the store, so both need a home. Follows the repo's existing
@@ -1007,7 +1009,9 @@ fn a_record_that_moved_and_then_sat_still_is_read_once() {
     // Somebody else's work lands; the record has moved.
     put(&file, &design(&["cap:one", "cap:theirs"]));
     let mut parsed = ParsedRecords::default();
-    let first = sync_debt_with(&gp, 0, &|| Some(mine.clone()), &mut parsed);
+    let mine_fn = || Some(mine.clone());
+    let live = ExportedDesign::new(&mine_fn);
+    let first = sync_debt_with(&gp, 0, &live, &mut parsed);
     assert_eq!(
         first[0].state, "behind",
         "the move is seen on the first check"
@@ -1032,7 +1036,7 @@ fn a_record_that_moved_and_then_sat_still_is_read_once() {
     );
 
     // Unchanged by stat -> answered from the first read, never re-parsed.
-    let second = sync_debt_with(&gp, 0, &|| Some(mine.clone()), &mut parsed);
+    let second = sync_debt_with(&gp, 0, &live, &mut parsed);
     assert_eq!(
         second[0].state, "behind",
         "a moved record that has not changed since it was last read must not be \
@@ -1042,4 +1046,47 @@ fn a_record_that_moved_and_then_sat_still_is_read_once() {
         second[0].nodes_not_here_total, 1,
         "and it still knows what it holds"
     );
+}
+
+// ⭐ THE OTHER HALF OF THE SAME TAX. Once the parse was cached, the moved state
+// still cost ~490 ms per write generation: the whole live graph was EXPORTED so
+// two documents could be compared, to answer "which of the file's ids are absent
+// here?" — a membership question. The server paths now ask the store directly.
+//
+// Pinned as STRUCTURE: there is no export closure in this path at all — the type
+// system holds that — so what this asserts is the behaviour that must survive:
+// the diff is LIVE and per generation. A record the store lacks is `behind`
+// naming exactly what is missing; the moment the store takes that node in, the
+// next check — through the same parsed cache, so no re-read either — says
+// nothing is lost.
+#[test]
+fn a_moved_record_is_diffed_against_the_live_store_without_an_export() {
+    let (dir, gp) = scratch("membership");
+    let file = dir.path().join("reflow2.json");
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_capability("cap:one", "cap:one", "does a thing", Some("realized"))
+        .unwrap();
+    let mine = g.export_graph().unwrap();
+    put(&file, &mine);
+    mark_synced(&gp, &file, &mine);
+
+    // Somebody else's work lands in the record.
+    put(&file, &design(&["cap:one", "cap:theirs"]));
+    let mut parsed = ParsedRecords::default();
+    let found = sync_debt_with(&gp, 1, &StoreMembership::new(&g), &mut parsed);
+    assert_eq!(found[0].state, "behind");
+    assert_eq!(found[0].nodes_not_here, vec!["cap:theirs".to_string()]);
+    assert_eq!(found[0].nodes_not_here_total, 1);
+    assert_eq!(found[0].edges_not_here_total, 0);
+
+    // The live design takes it in by hand. The file has not changed, so nothing
+    // is re-read — and the answer moves anyway, because it is asked of the store.
+    g.add_capability("cap:theirs", "cap:theirs", "does a thing", Some("realized"))
+        .unwrap();
+    let again = sync_debt_with(&gp, 2, &StoreMembership::new(&g), &mut parsed);
+    assert_eq!(
+        again[0].state, "moved_but_current",
+        "the record still moved, but the store now holds everything it does"
+    );
+    assert_eq!(again[0].nodes_not_here_total, 0);
 }
