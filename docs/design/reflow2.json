@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:53f4d8189c87f2bd2795b925165c2a3132e6df34abeec4738602c61019adcf39",
+  "content_hash": "sha256:890c375c2dbaa4562860dbf84417783dedcc071b3a4462241098ed5901d366f1",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -5366,6 +5366,12 @@
       "from_id": "chg:a-retired-artifact-may-be-absent",
       "properties": {},
       "to_id": "epoch:v0320"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:a-revise-of-an-epoch-keeps-its-status",
+      "properties": {},
+      "to_id": "epoch:planned-revising-an-epoch-keeps-its-status"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -11459,6 +11465,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:planned-revising-an-epoch-keeps-its-status:cap:planned-epochs",
+      "properties": {},
+      "to_id": "epoch:planned-revising-an-epoch-keeps-its-status"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:planned-the-tool-surface-predicts-itself:cap:a-tool-description-predicts-what-the-tool-does",
       "properties": {},
       "to_id": "epoch:planned-the-tool-surface-predicts-itself"
@@ -11484,6 +11496,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:cap:a-lesson-is-served-at-the-step-it-concerns",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:cap:a-lesson-is-served-at-the-step-it-concerns:r2",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
     },
@@ -19667,6 +19685,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "rule:never-a-bare-cargo-clean-on-the-dev-box",
+      "properties": {
+        "acted_at": "2026-09-12",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "rule:no-foreclosure",
       "properties": {
         "acted_at": "2026-07-25",
@@ -22626,6 +22653,24 @@
         "accepted_baseline": true,
         "action": "modified"
       },
+      "to_id": "art:a-lesson-is-served-at-the-step-handler-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-lesson-names-its-step-and-get-skill-and-the-tool-list-deliver-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:lessons"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-lesson-names-its-step-and-get-skill-and-the-tool-list-deliver-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
       "to_id": "art:schema-core"
     },
     {
@@ -24490,6 +24535,24 @@
         "action": "modified"
       },
       "to_id": "fact:defect-a-retired-artifact-still-reports-missing-forever"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-revise-of-an-epoch-keeps-its-status",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:temporal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-revise-of-an-epoch-keeps-its-status",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:planned-epochs"
     },
     {
       "edge_type": "CHANGED",
@@ -59834,6 +59897,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:a-lesson-is-served-at-the-step-it-concerns",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:cap:a-lesson-is-served-at-the-step-it-concerns:r2"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "cap:a-reader-that-cannot-read-the-vocabulary-is-told-what-it-lacks",
       "properties": {},
       "to_id": "snap:epoch:planned-a-vocabulary-change-is-never-silent:cap:a-reader-that-cannot-read-the-vocabulary-is-told-what-it-lacks"
@@ -60053,6 +60122,12 @@
       "from_id": "cap:plan-movement-recorded",
       "properties": {},
       "to_id": "snap:epoch:arrival-delta:cap:plan-movement-recorded"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:planned-epochs",
+      "properties": {},
+      "to_id": "snap:epoch:planned-revising-an-epoch-keeps-its-status:cap:planned-epochs"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -170863,6 +170938,15 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:a-revise-of-an-epoch-keeps-its-status",
+      "properties": {
+        "at": "2026-09-12",
+        "note": "The core constructor now carries an existing epoch's status forward on a revise and sets `planned` only on create; pinned by revising_an_epochs_prose_keeps_its_status.rs, which read `planned` before the fix. The fact's valid_to is set to the same day."
+      },
+      "to_id": "fact:plan-epoch-on-an-existing-epoch-resets-its-status-to-planned"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:a-settled-decision-names-governed-prose-that-still-reads-open",
       "properties": {
         "at": "2026-09-09",
@@ -175440,6 +175524,15 @@
         "conformance": "verified"
       },
       "to_id": "cap:every-served-report-is-reachable-from-an-instruction"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:revising-an-epochs-prose-keeps-its-status-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:planned-epochs"
     },
     {
       "edge_type": "REALIZES",
@@ -182043,6 +182136,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:revising-an-epochs-prose-keeps-its-status",
+      "properties": {},
+      "to_id": "cap:planned-epochs"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:rules-can-be-verified",
       "properties": {},
       "to_id": "cap:vocabulary"
@@ -183836,6 +183935,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:revising-an-epochs-prose-keeps-its-status-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:revising-an-epochs-prose-keeps-its-status-test"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:sanitize",
       "properties": {
         "action": "created"
@@ -184871,7 +184978,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "test",
-        "checksum": "sha256:107ad9a19a2939dc78cc56eb2b6f28944c732ebedc973614b59eedcb85d47900",
+        "checksum": "sha256:af3bce297a44036e5c7b506f53bb912b94f7f37d842cc6440f9fbb30cfd37c48",
         "description": "Five handler-level pins: get_skill carries the lessons naming that skill and no other; the tool list carries a lesson on its tool and nowhere else; a no-step lesson is kept and delivered nowhere; an unserved step is refused with the nearest names and nothing written; rules take steps and the newest lesson comes first. Shown to fail on the deliver-everything-everywhere mutation (2 pins).",
         "location": "crates/reflow2-mcp/tests/a_lesson_is_served_at_the_step_it_concerns.rs",
         "name": "a_lesson_is_served_at_the_step_it_concerns.rs",
@@ -186579,7 +186686,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:1733e471704142fc03b2eabbde07d340122bf8a51d3ac9b93704e9503f829554",
+        "checksum": "sha256:de1a8a952b8f23bf3e960769e9877b9c329a8e585697fbf6c018563a221a24d5",
         "description": "Delivery of a design's lessons at the step they name: the served-step set (skills + tools), validation with nearest-name refusal, one scan of rules and facts keyed by step (newest first), and the tool-list enrichment that leaves an empty design's surface untouched. Read by get_skill and the list_tools override in service.rs.",
         "location": "crates/reflow2-mcp/src/lessons.rs",
         "name": "lessons.rs",
@@ -187248,6 +187355,18 @@
       }
     },
     {
+      "node_id": "art:revising-an-epochs-prose-keeps-its-status-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:6fe3ef632ff109c4b6cc670f47602055ca1a4e57cd63209f7037b13b99c088b7",
+        "description": "Two pins: arrive an epoch, revise its prose with plan_epoch, still arrived (read `planned` before the fix — shown to fail first); a new epoch lands planned and a revise of a still-planned one leaves it planned (which caught the first draft of the fix: the write replaces the property set, so status had to be carried forward, not omitted).",
+        "location": "crates/reflow2-mcp/tests/revising_an_epochs_prose_keeps_its_status.rs",
+        "name": "revising_an_epochs_prose_keeps_its_status.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:root-cause-command",
       "node_type": "Artifact",
       "properties": {
@@ -187901,7 +188020,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:05656ba005b8a9cf01e14c06f796ecebb10295b97d178e72016062ba1a718b29",
+        "checksum": "sha256:55e1bd5c730a916e4ed781a18eefd681b40f65b1d575364546f664eafd3e1a76",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/temporal.rs",
         "name": "crates/reflow2-core/src/temporal.rs",
@@ -189243,7 +189362,7 @@
       "node_id": "cap:a-lesson-is-served-at-the-step-it-concerns",
       "node_type": "Capability",
       "properties": {
-        "description": "BUILT AND VERIFIED, 2026-09-12 (increment 438). DesignRule and TemporalFact carry an optional `steps` list naming served skills and/or served tools; record_finding and add_design_rule accept it and REFUSE a name that is neither (with the nearest served names), so a lesson cannot be filed where nothing will serve it. `get_skill` answers with the skill's body plus `lessons`: every rule or fact this design holds whose steps name that skill, newest first, each with id, name, one paragraph of statement and the node it hangs on. The tool list this server serves (`list_tools`, overridden to mirror rmcp's generated body) appends, to each tool's description, the lessons this design holds for that tool — read in the moment before the call. An empty design serves the surface unchanged. Modelled after the reader lens that already rides get_skill: best effort, a read lock, never able to withhold the skill or the listing. Module: crates/reflow2-mcp/src/lessons.rs. Live on reflow2's own graph: where-am-i carries the dev-box harness lesson; export_graph carries the format-first fact and the export-once rule; plan_epoch carries its own recorded defect.",
+        "description": "BUILT AND VERIFIED, 2026-09-12 (increment 438; one correction the same day). DesignRule and TemporalFact carry an optional `steps` list naming served skills and/or served tools; record_finding and add_design_rule accept it and REFUSE a name that is neither (with the nearest served names), so a lesson cannot be filed where nothing will serve it. `get_skill` answers with the skill's body plus `lessons`: every rule or fact this design holds whose steps name that skill, newest first, each with id, name, one paragraph of statement and the node it hangs on. The tool list this server serves (`list_tools`, overridden to mirror rmcp's generated body) appends, to each tool's description, the lessons this design holds for that tool — read in the moment before the call. An empty design serves the surface unchanged. A finding whose `valid_to` is set has stopped being true and is NOT served — a closed defect is history, not a lesson (found the day the plan_epoch defect was fixed and closed and its fact went on being delivered). Modelled after the reader lens that already rides get_skill: best effort, a read lock, never able to withhold the skill or the listing. Module: crates/reflow2-mcp/src/lessons.rs. Live on reflow2's own graph: where-am-i carries the dev-box harness lesson; export_graph carries the format-first fact and the export-once rule.",
         "name": "A design's lessons name the skill or tool they concern, and get_skill and the tool list deliver them there",
         "provenance": "authored",
         "status": "verified",
@@ -192506,6 +192625,16 @@
       "properties": {
         "change_type": "new_feature",
         "name": "A retirement carried out stops being reported as drift: `DriftKind::ExpectedAbsence` is added, and `reconcile_artifacts` reads `is_discontinued` on the missing-file path so an accepted OBSOLETES decision turns a `high` failure into a `low` note. A distinct kind rather than silence, following ExpectedChange's precedent — a file deleted by accident after an unrelated retirement must still be visible."
+      }
+    },
+    {
+      "node_id": "chg:a-revise-of-an-epoch-keeps-its-status",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "name": "plan_epoch carries an existing epoch's status forward on a revise instead of resetting it to planned",
+        "repair": "corrected_cause",
+        "subject": "system"
       }
     },
     {
@@ -210255,6 +210384,17 @@
       }
     },
     {
+      "node_id": "epoch:planned-revising-an-epoch-keeps-its-status",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "description": "Anthony's word, 2026-09-12 (\"go with your recommendation for 1 and 2\" — item 2). A root-cause fix of the defect recorded the same day as fact:plan-epoch-on-an-existing-epoch-resets-its-status-to-planned: the core `plan_epoch` sets `status: planned` on every call, so the constructor's own revise path (same id, new prose) put an ARRIVED epoch back to planned, and every arrival of increments 430–434 needed a second set_epoch_status. IN: the core constructor sets `planned` only when the epoch does not yet exist; a revise leaves status alone (BL-183's discipline on a second type); a handler test shown to fail first; the defect fact closed with a valid_to and the change event recorded as a corrected cause. NOT IN: anything else about epochs.",
+        "epoch_type": "revision",
+        "name": "Increment 439 — revising an epoch's prose keeps its status",
+        "sequence": 439,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:planned-seams",
       "node_type": "DesignEpoch",
       "properties": {
@@ -211758,6 +211898,7 @@
       "node_type": "DesignRule",
       "properties": {
         "category": "convention",
+        "enforced": false,
         "name": "Never a bare `cargo clean` on the dev box — scope the clean, or lose the 34-minute RocksDB C++ build",
         "statement": "A bare `cargo clean` destroys the librocksdb-sys C++ build cache, and the next build is ~34 minutes cold instead of ~50 seconds warm (release rebuild ~7.5 min via tools/reflow2-rebuild.sh). The target directory regrows by roughly 250 GB per day of building and does need clearing, so the rule is HOW, not whether: `rm -rf target/{debug,release}/incremental`, then `cargo clean -p reflow2-core -p reflow2-mcp` — the project's own crates only. Measured 2026-09-12 (a scoped clean took disk from 99% to 37% with the RocksDB cache kept). Wrap heavy cargo runs in `systemd-run --user --scope -p MemoryMax=6G` (the box's OOM note). Advisory: nothing can gate a shell command, so this lives where any agent on the box reads it. Moved here from an agent's machine-local memory file on 2026-09-12 (rule:a-rule-the-project-follows-lives-in-the-graph-not-in-an-agents-memory)."
       }
@@ -213819,6 +213960,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered retire-from-design/SKILL.md"
+      }
+    },
+    {
+      "node_id": "frag:art:revising-an-epochs-prose-keeps-its-status-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered revising_an_epochs_prose_keeps_its_status.rs"
       }
     },
     {
@@ -221063,6 +221214,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:planned-revising-an-epoch-keeps-its-status:cap:planned-epochs",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:temporal\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:tools-temporal\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:planned-epochs\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:temporal\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:epochs-can-be-planned\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SCHEDULED_FOR\",\"other_type\":\"Release\",\"other_id\":\"rel:v0190\",\"properties\":{\"modality\":\"required\",\"recorded_at\":\"2026-07-31\"}}]",
+        "state": "{\"description\":\"DesignEpoch.status carries `planned` (a claim about a point that has not happened) or `arrived` (a record of one that has), with plan_epoch to create the forward kind and set_epoch_status to move between them. Status is a property in its own right rather than a value in epoch_type, because kind and tense are orthogonal — a planned MILESTONE and a planned RELEASE CUT are both sayable, and those are the two a roadmap is made of. It mirrors Release.status, which already carries `planned` for the capability view. The default is `arrived`, which is a record rather than a choice (req:defaults-do-not-assert): add_epoch's 27 call sites have only ever meant recording the point you are at, so every epoch written before the property existed did arrive. THE LOAD-BEARING HALF IS THE REFUSAL — record_change rejects a planned epoch, because a snapshot captures the present and cannot belong to a point that has not happened. Without it, status would be a declared-and-unconsulted field: stored, never read, true only by politeness. Delivered 2026-07-30 in 56a8388; both guards mutation-tested rather than merely covered, since a test that still passes with the check deleted is not evidence the check works.\",\"is_entry_point\":false,\"is_exit_point\":false,\"name\":\"An epoch can be planned, and arrival is the event that makes it history\",\"provenance\":\"authored\",\"status\":\"realized\",\"tier\":\"operational\"}",
+        "target_id": "cap:planned-epochs",
+        "target_type": "Capability"
+      }
+    },
+    {
       "node_id": "snap:epoch:planned-the-tool-surface-predicts-itself:cap:a-tool-description-predicts-what-the-tool-does",
       "node_type": "Snapshot",
       "properties": {
@@ -221108,6 +221269,16 @@
       "properties": {
         "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:a-lesson-is-served-at-the-step-handler-test\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"verified\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:a-lesson-is-served-at-the-step-wire-test\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"verified\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:lessons\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"verified\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:a-lesson-is-served-at-the-step-it-concerns\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:skills\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:a-lesson-is-served-at-the-step-it-concerns\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SCHEDULED_FOR\",\"other_type\":\"DesignEpoch\",\"other_id\":\"epoch:planned-a-lesson-is-served-at-the-step-it-concerns\",\"properties\":{\"modality\":\"expected\",\"recorded_at\":\"2026-09-12\"}}]",
         "state": "{\"description\":\"PLANNED, 2026-09-12 (increment 438). DesignRule and TemporalFact carry an optional `steps` list naming served skills and/or served tools; record_finding and add_design_rule accept it and REFUSE a name that is neither (with the nearest served names), so a lesson cannot be filed where nothing will serve it. `get_skill` answers with the skill's body plus `lessons`: every rule or fact this design holds whose steps name that skill, newest first, each with id, name, one-line statement and the node it hangs on. The tool list this server serves appends, to each tool's description, the lessons this design holds for that tool — read in the moment before the call. An empty design serves the surface unchanged. Modelled after the reader lens that already rides get_skill: best effort, a read lock, never able to withhold the skill.\",\"name\":\"A design's lessons name the skill or tool they concern, and get_skill and the tool list deliver them there\",\"provenance\":\"authored\",\"status\":\"verified\",\"tier\":\"operational\"}",
+        "target_id": "cap:a-lesson-is-served-at-the-step-it-concerns",
+        "target_type": "Capability"
+      }
+    },
+    {
+      "node_id": "snap:epoch:preserved-on-write:cap:a-lesson-is-served-at-the-step-it-concerns:r2",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:a-lesson-is-served-at-the-step-handler-test\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"verified\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:a-lesson-is-served-at-the-step-wire-test\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"verified\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:lessons\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"verified\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:a-lesson-is-served-at-the-step-it-concerns\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:skills\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:a-lesson-is-served-at-the-step-it-concerns\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SCHEDULED_FOR\",\"other_type\":\"DesignEpoch\",\"other_id\":\"epoch:planned-a-lesson-is-served-at-the-step-it-concerns\",\"properties\":{\"modality\":\"expected\",\"recorded_at\":\"2026-09-12\"}}]",
+        "state": "{\"description\":\"BUILT AND VERIFIED, 2026-09-12 (increment 438). DesignRule and TemporalFact carry an optional `steps` list naming served skills and/or served tools; record_finding and add_design_rule accept it and REFUSE a name that is neither (with the nearest served names), so a lesson cannot be filed where nothing will serve it. `get_skill` answers with the skill's body plus `lessons`: every rule or fact this design holds whose steps name that skill, newest first, each with id, name, one paragraph of statement and the node it hangs on. The tool list this server serves (`list_tools`, overridden to mirror rmcp's generated body) appends, to each tool's description, the lessons this design holds for that tool — read in the moment before the call. An empty design serves the surface unchanged. Modelled after the reader lens that already rides get_skill: best effort, a read lock, never able to withhold the skill or the listing. Module: crates/reflow2-mcp/src/lessons.rs. Live on reflow2's own graph: where-am-i carries the dev-box harness lesson; export_graph carries the format-first fact and the export-once rule; plan_epoch carries its own recorded defect.\",\"name\":\"A design's lessons name the skill or tool they concern, and get_skill and the tool list deliver them there\",\"provenance\":\"authored\",\"status\":\"verified\",\"tier\":\"operational\"}",
         "target_id": "cap:a-lesson-is-served-at-the-step-it-concerns",
         "target_type": "Capability"
       }
@@ -227011,7 +227182,8 @@
           "set_epoch_status"
         ],
         "subject_id": "cap:planned-epochs",
-        "valid_from": "2026-09-11"
+        "valid_from": "2026-09-11",
+        "valid_to": "2026-09-12"
       }
     },
     {
@@ -229301,7 +229473,7 @@
       "node_type": "Verification",
       "properties": {
         "description": "Three layers. (1) Unit tests in lessons.rs: a served name passes and is de-duplicated; an unserved name is refused naming the nearest served name; enrichment touches only the named tools and an empty map leaves the surface untouched. (2) Handler tests (a_lesson_is_served_at_the_step_it_concerns.rs): get_skill carries the lessons naming that skill and no other; the tool list carries a lesson on its tool and nowhere else, keeping the served description whole; a no-step lesson is kept and delivered nowhere; an unserved step is refused with the nearest names and nothing is written; rules take steps and the newest lesson comes first. (3) The wire test on the real binary (tools/test_a_lesson_is_served_at_the_step.py): tools/list — the listing a harness reads before every call — carries the lesson on exactly one tool's description with the other 180 byte-identical, before and after in one process; get_skill carries it for its skill only; a typo is refused. MUTATION: delivering every lesson to every tool broke 2 handler pins and 2 wire pins; restored and re-proved green. LIVE: on reflow2's own graph after the migrated lessons named their steps, get_skill(where-am-i) carries the harness lesson, export_graph's listed description carries the format-first fact and the export-once rule, and plan_epoch's carries its defect. Surface: toolsnap 181/181 (record_finding and add_design_rule re-blessed for +steps), skill_lint, render --check, clippy clean.",
-        "findings": "2026-09-12, increment 438: 3 unit + 5 handler + 1 wire test (11 pins) green; the deliver-everything mutation broke 2 + 2 pins; live delivery verified on reflow2's own graph; full mcp suite run detached — 68 test binaries, 0 failures, rc=0.",
+        "findings": "2026-09-12, increment 438: 3 unit + 5 handler + 1 wire test (11 pins) green; the deliver-everything mutation broke 2 + 2 pins; live delivery verified on reflow2's own graph; full mcp suite 68 binaries green. Same day, a sixth handler pin: a finding whose valid_to is set is no longer served (found when the plan_epoch defect was closed and kept being delivered) — 6 of 6 green, workspace suite 226 binaries green.",
         "kind": "verification",
         "last_run_at": "2026-09-12",
         "level": "integration",
@@ -231446,6 +231618,20 @@
       }
     },
     {
+      "node_id": "ver:revising-an-epochs-prose-keeps-its-status",
+      "node_type": "Verification",
+      "properties": {
+        "description": "Handler-level: plan an epoch, arrive it, revise its description through plan_epoch, read the status back — must still be arrived (read `planned` before the fix). And the other direction: a new epoch lands planned; a revise of a still-planned epoch leaves it planned — which failed on the first draft of the fix (omitting status), because the core write replaces the property set; the fix carries the stored status forward. The epoch-touching suites (tools.rs, every_constructor_can_say_what_the_thing_is.rs, a_set_aside_decision_is_not_debt.rs) re-run green; clippy clean on both crates.",
+        "findings": "2026-09-12: both pins green after the fix; the first was shown red before it; the second caught the first draft. Workspace suite run detached: 226 test binaries, 0 failures, rc=0. The 438 handler suite re-run with its sixth pin (a closed finding leaves its step): 6 of 6.",
+        "kind": "verification",
+        "last_run_at": "2026-09-12",
+        "level": "integration",
+        "method": "test",
+        "name": "Revising an epoch's prose keeps its status",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:rules-can-be-verified",
       "node_type": "Verification",
       "properties": {
@@ -232345,7 +232531,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:22d49f122a6cffae1aae08ae816d0f8a556b6eb5df570af976c2e7b07be69570",
+  "prev_content_hash": "sha256:53f4d8189c87f2bd2795b925165c2a3132e6df34abeec4738602c61019adcf39",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

@@ -632,15 +632,31 @@ impl DesignGraph {
         epoch_type: EpochType,
         sequence: i64,
     ) -> Result<StoredNode, DynoError> {
-        self.create_node(
-            node::DESIGN_EPOCH,
-            id,
-            Props::new()
-                .set("name", name)
-                .set("epoch_type", epoch_type.as_str())
-                .set("sequence", sequence)
-                .set("status", "planned"),
-        )
+        let mut props = Props::new()
+            .set("name", name)
+            .set("epoch_type", epoch_type.as_str())
+            .set("sequence", sequence);
+        // `planned` is what a NEW epoch lands in. On a revise — the same id
+        // again, which the constructors document as "what you pass overwrites,
+        // what you omit survives" — status is not something the caller passed,
+        // so it is not something this call may move: only `set_epoch_status`
+        // does. Measured 2026-09-11/12 on every arrival of increments 430–434:
+        // revising the prose put an ARRIVED epoch back to `planned` each time
+        // (fact:plan-epoch-on-an-existing-epoch-resets-its-status-to-planned),
+        // BL-183's class on a second type.
+        // Carried forward explicitly rather than omitted, because the write
+        // below replaces the property set it is given.
+        let status = self
+            .get_node(node::DESIGN_EPOCH, id)?
+            .and_then(|n| {
+                n.properties
+                    .get("status")
+                    .and_then(|v| v.as_str())
+                    .map(str::to_string)
+            })
+            .unwrap_or_else(|| "planned".to_string());
+        props = props.set("status", status.as_str());
+        self.create_node(node::DESIGN_EPOCH, id, props)
     }
 
     /// Move an epoch between `planned` and `arrived`, preserving everything else.

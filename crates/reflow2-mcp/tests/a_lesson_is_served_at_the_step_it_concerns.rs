@@ -15,6 +15,8 @@
 //! 4. A step that names nothing served is REFUSED with the nearest served
 //!    names, so a typo cannot file a lesson where nothing will deliver it.
 //! 5. Rules take steps too, and newest first is the order.
+//! 6. A finding that has stopped being true (`valid_to` set) is no longer
+//!    served — a closed defect is not a lesson, it is history.
 //!
 //! The listing is exercised through the same function the `list_tools`
 //! override calls, because a `RequestContext` cannot be built in a test; the
@@ -266,4 +268,40 @@ async fn rules_take_steps_and_the_newest_lesson_comes_first() {
     assert!(pos("fact:newer") < pos("fact:older"), "newest first: {d}");
     assert!(d.contains("rule:never-export-twice"));
     let _: Value = Value::Null;
+}
+
+/// A closed finding is history, not a lesson: once `valid_to` is set it
+/// leaves the step it named. Found the day 438 shipped, when the plan_epoch
+/// defect was fixed and closed and its fact went on being delivered.
+#[tokio::test]
+async fn a_finding_that_stopped_being_true_is_no_longer_served() {
+    let s = seeded().await;
+    j!(s.record_finding(Parameters(finding(
+        "fact:a-defect-since-fixed",
+        "A defect, since fixed",
+        Some(vec!["plan_epoch"]),
+        "2026-09-11",
+    ))));
+    let tools = s.tools_with_lessons_for_test().await;
+    let carries = |tools: &[rmcp::model::Tool]| {
+        tools
+            .iter()
+            .find(|t| t.name == "plan_epoch")
+            .and_then(|t| t.description.as_deref())
+            .unwrap_or("")
+            .contains("fact:a-defect-since-fixed")
+    };
+    assert!(carries(&tools), "while open it is served");
+
+    // Close it: the same fact, now with an end date.
+    let mut closed = finding(
+        "fact:a-defect-since-fixed",
+        "A defect, since fixed",
+        Some(vec!["plan_epoch"]),
+        "2026-09-11",
+    );
+    closed.valid_to = Some("2026-09-12".into());
+    j!(s.record_finding(Parameters(closed)));
+    let tools = s.tools_with_lessons_for_test().await;
+    assert!(!carries(&tools), "once closed it is history, not a lesson");
 }
