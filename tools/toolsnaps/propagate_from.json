@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": true
   },
-  "description": "Speculative blast radius from seed node ids (what would this touch?). Returns a summary (counts by distance, the distance-1 ring, risk crossings); pass full=true for every impacted node with its hop chain.",
+  "description": "Speculative blast radius from seed node ids — what would touching these reach? Walks the traceability edges outward and returns a SUMMARY by default: counts by distance, the distance-1 ring, and the risk and boundary crossings (an edge that leaves a component or crosses a published interface). Pass `full=true` for every impacted node with its hop chain; the default withholds it because on a large design the full dump overflows what a session can read, and every band is still counted. `max_depth` bounds the walk (default 5) and the reply says what it truncated beyond it. AN EMPTY RADIUS SAYS WHICH EMPTY — an unknown seed is reported in `unknown_seeds`, never silently walked as nothing. This is the read half of impact-check; `propagate_change` records the change as well. Ask for this when you want to know what depends on this part — show the blast radius — before you change it.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,

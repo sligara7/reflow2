@@ -35,6 +35,7 @@
         "type": "string"
       },
       "verification_id": {
+        "description": "The Verification (`ver:…`) whose run outcome is being recorded. Pass the real outcome: a check left at `planned` counts as no confirmation.",
         "type": "string"
       }
     },

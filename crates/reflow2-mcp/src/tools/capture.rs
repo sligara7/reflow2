@@ -1841,8 +1841,7 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Link a Capability to a Requirement it SATISFIES. Ask for this when you want to record \
-                       that a capability fulfils, meets or satisfies a requirement.",
+        description = "Link a Capability to a Requirement it SATISFIES — the first half of the golden thread, from a stated need to the function that serves it. `detect_gaps` raises `unsatisfied_requirement` on any requirement without one and `unmotivated_capability` on any capability without one, and delivery is COMPUTED along this edge (satisfied, and realized, and its check passing) rather than read from a status field, which is why it cannot be inflated by marking work done. `add_capability` draws this in the same call via its `satisfies` parameter. Ask for this when you want to record that a capability fulfils, meets or satisfies a requirement.",
         annotations(read_only_hint = false)
     )]
     pub async fn satisfies(
@@ -1924,7 +1923,7 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Allocate a Capability to a Component (ALLOCATED_TO).",
+        description = "Allocate a Capability to a Component (ALLOCATED_TO) — say WHICH PART of the design will provide the function. This is the structure half of the golden thread: `satisfies` says what need a capability serves, this says who owns delivering it. `evaluate_allocation` reads these edges to score modularity, and `detect_gaps` raises `unallocated_capability` on any capability without one. A capability may be allocated to more than one component; `propose_allocation` suggests a grouping from dependencies but never applies it. Ask for this when you want to record that a component owns, delivers or is responsible for a capability.",
         annotations(read_only_hint = false)
     )]
     pub async fn allocate(
@@ -2032,9 +2031,7 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Record that a Capability is a step of a Flow (PART_OF_FLOW), with its \
-                       position (`step_order`). A step without one is listed after the ordered \
-                       steps, and `flow_report` says so rather than inventing an order.",
+        description = "Record that a Capability is a step of a Flow (PART_OF_FLOW), with its position in `step_order`. A flow is an ordered sequence of capabilities — a use case, a process, a data path — and `flow_report` walks it in order. A step recorded WITHOUT `step_order` is listed after the ordered steps and the report says so rather than inventing a position; `is_entry_point` / `is_exit_point` on the capability mark where the flow starts and ends. A capability may be a step of several flows. Ask for this when you want to record that a capability is one step in a larger sequence.",
         annotations(read_only_hint = false)
     )]
     pub async fn part_of_flow(
@@ -2067,8 +2064,7 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Record that a Component PROVIDES an Interface — it is the side that \
-                       implements the contract. `from_id` is the Component, `to_id` the Interface.",
+        description = "Record that a Component PROVIDES an Interface — it is the side that implements the contract. `from_id` is the Component, `to_id` the Interface; the consuming side is `consumes`. Together the two edges are what `seam_coverage`, `seam_report` and `pair_designs` read to find where two parts, or two designs, meet — an Interface nothing provides is raised as `unprovided_interface` when something consumes it, and one nothing consumes is dead surface. The Interface's own contract axes (medium, paradigm, payload, auth …) live on it via `set_interface_spec`; this edge only says who implements it. Ask for this when you want to record that this component offers that interface — which component implements it.",
         annotations(read_only_hint = false)
     )]
     pub async fn provides(
@@ -2100,7 +2096,7 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Link a Project to a child node it CONTAINS.",
+        description = "Link a Project to a child node it CONTAINS — project membership, so a Requirement, Capability or Component is counted under the project whose gaps and rollups it belongs to. NOT decomposition: a Component inside another Component is `contain_component` (adds a parent) or `move_component` (moves it on the spine). Most typed constructors draw this edge for you when a project exists; use it directly for nodes created with `create_node`. Ask for this when a node sits in no project and the reports are not seeing it.",
         annotations(read_only_hint = false)
     )]
     pub async fn contains(

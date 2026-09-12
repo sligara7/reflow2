@@ -40,6 +40,7 @@
         ]
       },
       "id": {
+        "description": "The epoch's id — `epoch:<slug>` by convention, so the prefix names the type wherever the id appears. Calling again with an EXISTING id REVISES that node: what you pass overwrites, what you omit survives. `plan_epoch` on an existing id ALSO resets its status to `planned` — revise prose first, then set_epoch_status.",
         "type": "string"
       },
       "name": {

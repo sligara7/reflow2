@@ -58,6 +58,7 @@
         "type": "boolean"
       },
       "gaps": {
+        "description": "The gaps to accept in one call — each `{gap_id, reason, affected_ids?, approver?}`, the same fields `acknowledge_gap` takes one at a time. Every item carries its OWN reason: a batch under one shared reason would be the silent bulk accept this refuses to be.",
         "items": {
           "$ref": "#/$defs/GapAckReq"
         },

@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Allocate a Capability to a Component (ALLOCATED_TO).",
+  "description": "Allocate a Capability to a Component (ALLOCATED_TO) — say WHICH PART of the design will provide the function. This is the structure half of the golden thread: `satisfies` says what need a capability serves, this says who owns delivering it. `evaluate_allocation` reads these edges to score modularity, and `detect_gaps` raises `unallocated_capability` on any capability without one. A capability may be allocated to more than one component; `propose_allocation` suggests a grouping from dependencies but never applies it. Ask for this when you want to record that a component owns, delivers or is responsible for a capability.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,

@@ -70,6 +70,8 @@ jobs:
         run: python3 tools/launch_serves_release.py
       - name: Doc-version drift (prose vs what the build actually pins)
         run: python3 tools/check_doc_versions.py
+      - name: skills-and-tools.md matches the served surface
+        run: python3 tools/render_skills_and_tools.py --check
       - name: Doc-version checker suite (hermetic)
         run: python3 tools/test_check_doc_versions.py
 

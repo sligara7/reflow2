@@ -8,6 +8,7 @@
     "additionalProperties": false,
     "properties": {
       "artifact_id": {
+        "description": "The Artifact (`art:…`) that DOCUMENTS the target — a spec, an ICD, a page — as opposed to one that REALIZES it in code (`realizes`).",
         "type": "string"
       },
       "doc_kind": {

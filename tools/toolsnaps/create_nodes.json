@@ -41,6 +41,7 @@
         "type": "boolean"
       },
       "nodes": {
+        "description": "The nodes to create in one write — each `{node_type, id, properties}`, the same shape `create_node` takes. Applied together; an id naming an existing node REVISES it.",
         "items": {
           "$ref": "#/$defs/NodeSpecReq"
         },

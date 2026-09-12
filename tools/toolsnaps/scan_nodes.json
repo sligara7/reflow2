@@ -34,6 +34,7 @@
         ]
       },
       "node_type": {
+        "description": "The schema type to list, as declared — `Requirement`, `Component`, `DesignEpoch` (not `Epoch`) … `describe_schema` names them all; an unknown one is refused rather than answered empty.",
         "type": "string"
       },
       "offset": {

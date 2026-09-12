@@ -775,9 +775,7 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "List the alternatives registered under a decision point (BL-70) — the \
-                       Artifact pointers GOVERNED_BY the Decision, with their export locations. \
-                       Feed the locations to analyze_alternatives to compare them.",
+        description = "List the alternatives registered under a decision point (BL-70) — the Artifact pointers GOVERNED_BY the Decision, each with its export location, ready to feed to analyze_alternatives. AN EMPTY LIST SAYS WHICH EMPTY: the reply distinguishes a decision that exists but has no alternatives registered, a decision that is not `proposed` (only an open decision point can carry forks), and an id that names no Decision at all — three different facts that used to share one bare zero. Ask for this when you want to see the roads recorded under an open choice before comparing them.",
         annotations(read_only_hint = true)
     )]
     pub async fn alternatives_for(
@@ -829,18 +827,7 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Analyse THIS design together with another one — a dependency, a partner \
-                       system — and report what only shows up when both are present. Rather than \
-                       comparing them, it imports theirs alongside yours and runs reflow2's \
-                       ORDINARY checks over the whole, so seam problems arrive as the gaps they \
-                       already are: a contract with no provider once both sides are visible, a \
-                       requirement nothing satisfies across the join, a duplicate that is one \
-                       thing named twice. Findings are attributed OURS / THEIRS / SEAM, and the \
-                       seam ones are what neither design could have found alone. NOTHING IS \
-                       WRITTEN: the combined graph is built in memory and thrown away, so your \
-                       design is unchanged and your exports never start carrying theirs. Ids are \
-                       namespaced, because two designs routinely name different things the same \
-                       and a plain import would silently overwrite yours.",
+        description = "Analyse THIS design together with another one — a dependency, a partner system — and report what only shows up when both are present. Rather than comparing them, it imports theirs alongside yours and runs reflow2's ORDINARY checks over the whole, so seam problems arrive as the gaps they already are: a contract with no provider once both sides are visible, a requirement nothing satisfies across the join, a duplicate that is one thing named twice. Findings are attributed OURS / THEIRS / SEAM, and the seam ones are what neither design could have found alone. NOTHING IS WRITTEN: the combined graph is built in memory and thrown away, so your design is unchanged and your exports never start carrying theirs. Ids are namespaced, because two designs routinely name different things the same and a plain import would silently overwrite yours. ⚠ AND THE NAMESPACING IS WHY `seam_findings` CAN BE EMPTY ON A SEAM BUILT FOR IT: the halves share no node, so nothing touches across the boundary and there is no seam to find unless the correspondence is supplied. Measured 2026-09-11 on a partner design that required an interface this one publishes: `pair_designs` found the pair and its conflict; this returned `seam_findings: []`. Run `pair_designs` first and feed its pairs to `seam_report`; read an empty `seam_findings` here as the designs never touching, not as agreement. Root cause recorded, not fixed here.",
         annotations(read_only_hint = true)
     )]
     pub async fn compose_and_analyse(

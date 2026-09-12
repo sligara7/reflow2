@@ -8,6 +8,7 @@
     "additionalProperties": false,
     "properties": {
       "release_id": {
+        "description": "The Release (`rel:…`) to report — what it includes, where it is deployed, and what it is pinned to.",
         "type": "string"
       }
     },

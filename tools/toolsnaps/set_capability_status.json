@@ -8,6 +8,7 @@
     "additionalProperties": false,
     "properties": {
       "capability_id": {
+        "description": "The Capability (`cap:…`) whose lifecycle status moves. A status past `planned` with no passing check is reported as an unproven claim by `loop_status`.",
         "type": "string"
       },
       "status": {

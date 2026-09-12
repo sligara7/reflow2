@@ -294,8 +294,7 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Create an edge of any schema type between typed endpoints. Ask for this when you want to \
-                       link two items with a relationship no typed tool covers — a generic edge of any kind.",
+        description = "Create an edge of any schema type between typed endpoints — the generic write for a relationship no typed helper covers. PREFER THE TYPED HELPER when one exists (`satisfies`, `allocate`, `depends_on`, `verifies` …): it supplies the required properties and refuses a wrong endpoint by name. Before reaching for this, call `describe_schema` with `from` and `to`: it names which edge types may join two node types and flags whether each actually models that pair or merely accepts it through a `*` wildcard — several will validate, and the first that does is not necessarily the one that means what you intend. Ask for this when you want to link two items with a relationship the typed tools do not offer.",
         annotations(read_only_hint = false)
     )]
     pub async fn create_edge(
@@ -769,8 +768,7 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Delete a node by type and id (true if it existed). \
-                       Ask for this when you want to remove an item from the design entirely — get rid of a thing that should no longer be in the model.",
+        description = "Delete a node by type and id, returning whether it existed. THIS REMOVES EVERY EDGE ATTACHED TO IT AND THERE IS NO UNDO — which is why it is for MISTAKES, not for history. A requirement the user dropped, a capability something replaced, a component that shipped and was decommissioned are retired on the record instead (set_requirement_status, OBSOLETES, record_change with deprecation) so the design can still say why its survivors are shaped as they are; the retire-from-design skill forces that question first. Run `propagate_from` on the id before deleting: if the blast radius is not close to empty, this is the wrong tool. Ask for this when you want to remove an item from the design entirely — get rid of a thing that should no longer be in the model — and only for one that never should have existed.",
         annotations(read_only_hint = false)
     )]
     pub async fn delete_node(

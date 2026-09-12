@@ -8,6 +8,7 @@
     "additionalProperties": false,
     "properties": {
       "artifact_id": {
+        "description": "The registered Artifact (`art:…`, from `link_artifact` or `add_artifact`) whose intent and note are being set.",
         "type": "string"
       },
       "audience": {

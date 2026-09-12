@@ -25,6 +25,7 @@
         ]
       },
       "decision_id": {
+        "description": "The Decision whose lifecycle status moves. `dec:…` by convention; `search_design` finds one by its words.",
         "type": "string"
       },
       "status": {

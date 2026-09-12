@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": true
   },
-  "description": "Quality-dimension drift for one target node.",
+  "description": "Quality-dimension drift for ONE target node: the recorded observations of a single `-ility` (reliability, performance, maintainability …) on that node over time, and whether the latest reading is worse than the one before. A NULL VALUE SAYS WHICH NULL: the reply distinguishes a legal dimension with no observations recorded on this node, a node that does not exist, and a dimension name the schema does not declare — three facts that used to share `{\"value\": null}`. `dimension_drifts` (plural) sweeps the whole design worst-first. Ask for this when you want to know whether one part of the design is getting worse on one quality axis.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,

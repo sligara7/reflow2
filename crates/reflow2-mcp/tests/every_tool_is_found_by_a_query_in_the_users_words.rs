@@ -61,11 +61,6 @@ const EXEMPT: &[(&str, &str)] = &[
         "rank 6 — 'rule' and 'decision' are in the NAMES of violates_rule and \
       collapse_decision, which the name rule scores 5x over a description hit",
     ),
-    (
-        "scan_nodes",
-        "rank 6 — 'list' is in list_skills' name and 'all' in release_includes_all's; \
-      the 4-char prefix floor did not move it",
-    ),
 ];
 
 fn corpus() -> BTreeMap<String, String> {

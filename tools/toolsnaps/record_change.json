@@ -17,6 +17,7 @@
         "type": "string"
       },
       "change_event_id": {
+        "description": "The id for the new ChangeEvent — `chg:…` by convention. It is the record a later fix can INVALIDATE and a checksum acceptance can name.",
         "type": "string"
       },
       "change_type": {
@@ -39,9 +40,11 @@
         "type": "string"
       },
       "epoch_id": {
+        "description": "The ARRIVED DesignEpoch (`epoch:…`) the change is recorded into. A planned epoch is refused: a snapshot captures the present and cannot belong to a point that has not happened.",
         "type": "string"
       },
       "name": {
+        "description": "What changed, in one sentence a later reader can act on — the ChangeEvent's name. Put the WHY in `change_type` and the axis in `subject`, not here.",
         "type": "string"
       },
       "repair": {

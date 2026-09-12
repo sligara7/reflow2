@@ -33,6 +33,7 @@
         ]
       },
       "id": {
+        "description": "The actor's id — `actor:<slug>` by convention. An actor is a party OUTSIDE the design that interacts with it (a user, an operator, an external system); a person who works ON the design is a Contributor. Calling again with an existing id REVISES it.",
         "type": "string"
       },
       "name": {

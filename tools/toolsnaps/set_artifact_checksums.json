@@ -78,6 +78,7 @@
     "additionalProperties": false,
     "properties": {
       "accepts": {
+        "description": "One accepted baseline per artifact — each `{artifact_id, checksum, disposition, change_type?, design_change_event_id?, note?, at?}`, the same fields `set_artifact_checksum` takes one at a time. Each item carries its OWN disposition; all-or-nothing.",
         "items": {
           "$ref": "#/$defs/ChecksumAcceptReq"
         },

@@ -16,6 +16,7 @@
         "type": "string"
       },
       "project_id": {
+        "description": "The Project (`proj:…`) whose governance mode is being set — `flexible` lets `apply_heal` apply structural repairs, `rigid` makes it propose and stop.",
         "type": "string"
       }
     },

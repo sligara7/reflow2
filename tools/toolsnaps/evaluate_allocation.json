@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": true
   },
-  "description": "Evaluate how capabilities are allocated across components. Ask for this when you want to know how modular the decomposition is — whether the coupling sits where you think it does, and the modularity score.",
+  "description": "Evaluate how capabilities are allocated across components: the coupling each ALLOCATED_TO grouping carries, where cross-component dependencies concentrate, and a modularity score over the partition. MODULARITY IS REPORTED `null` WHEN IT CANNOT BE COMPUTED — a design whose components carry no declared coupling has no partition to score, and the reply says so rather than printing the 1.00 that once let an almost-unmodelled decomposition read as perfect. Which allocation is RIGHT depends on what the design is for (reliability may deliberately duplicate a function; performance wants the least cross-boundary chatter), so this scores, it does not judge. Ask for this when you want to know how modular the decomposition is and whether the coupling sits where you think it does.",
   "inputSchema": {
     "properties": {},
     "type": "object"

@@ -60,6 +60,7 @@
         "type": "boolean"
       },
       "edges": {
+        "description": "The edges to create in one write — each `{from_type, from_id, edge_type, to_type, to_id, properties?}`, the same shape `create_edge` takes one at a time. Applied together so a dependent pair cannot land half-done.",
         "items": {
           "$ref": "#/$defs/EdgeSpecReq"
         },

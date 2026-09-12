@@ -18,6 +18,7 @@
         "type": "string"
       },
       "interface_id": {
+        "description": "The Interface (`ifc:…`) whose role at the boundary is being set — `internal`, `published`, `required` or `both`. Read by `export_surface` and `pair_designs`.",
         "type": "string"
       }
     },

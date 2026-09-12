@@ -2,15 +2,17 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Deploy a Release to an Environment (planned/active/rolled_back).",
+  "description": "Deploy a Release to an Environment (DEPLOYED_TO), with the deployment's state — `planned`, `active` or `rolled_back`. This is what puts a release on the operation band: a Release with no DEPLOYED_TO edge reads as never fielded, however much of it is running, and `reconcile_deployment` compares these edges against what is actually observed. Deployment is per RELEASE; a project's standing relationship to an environment is `operates_in`. Ask for this when you want to record that this release runs in that environment — is running, was, or is planned to.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
     "properties": {
       "environment_id": {
+        "description": "The Environment (`env:…`, from `add_environment`) it is deployed to. A Release with no DEPLOYED_TO edge reads as never fielded in the operation band.",
         "type": "string"
       },
       "release_id": {
+        "description": "The Release (`rel:…`, from `add_release`) being deployed.",
         "type": "string"
       },
       "status": {

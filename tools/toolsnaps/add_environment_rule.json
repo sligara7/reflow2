@@ -16,6 +16,7 @@
         ]
       },
       "id": {
+        "description": "The rule's id — `envrule:<slug>` by convention. An EnvironmentRule is a code, standard or physical law an Environment IMPOSES (`imposes`); a rule the project sets for itself is a DesignRule (`add_design_rule`). Calling again with an existing id REVISES it.",
         "type": "string"
       },
       "jurisdiction": {

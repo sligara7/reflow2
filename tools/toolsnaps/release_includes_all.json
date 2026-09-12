@@ -21,6 +21,7 @@
         "type": "array"
       },
       "release_id": {
+        "description": "The Release (`rel:…`) that ships everything realized since the previous cut — the roll-call `release_includes` would otherwise need one call per item.",
         "type": "string"
       }
     },

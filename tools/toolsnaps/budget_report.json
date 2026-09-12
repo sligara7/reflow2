@@ -8,6 +8,7 @@
     "additionalProperties": false,
     "properties": {
       "constraint_id": {
+        "description": "The Constraint (`con:…`) holding the limit to roll up against — one with a `quantity`, `limit` and `direction`, typically a KPP (`category: kpp`).",
         "type": "string"
       }
     },

@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": true
   },
-  "description": "Propose a capability→component allocation via Leiden clustering. Ask for this when you want a suggested grouping of capabilities into components, derived from their dependencies.",
+  "description": "Propose a capability→component allocation by Leiden clustering over the DEPENDS_ON edges between capabilities — a SUGGESTED grouping, never applied; `allocate` records what you actually decide. ⚠️ IT ANSWERS THE PERFORMANCE QUESTION SPECIFICALLY (least cross-boundary chatter), and other quality targets want other partitions: reliability may deliberately duplicate a function, security follows trust boundaries rather than coupling at all. ⚠️ AND IT CLUSTERS ON EDGES MOST DESIGNS NEVER DECLARE: on reflow2's own graph that is one DEPENDS_ON across 238 capabilities, so it returned one cluster per capability — and now SAYS SO, reporting how many edges it had to work with, so 238 singletons cannot be read as a proposal. Ask for this when you want it to suggest how to group capabilities into components based on their dependencies — a starting grouping to argue with, after checking the reply says it had enough edges to mean anything.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,

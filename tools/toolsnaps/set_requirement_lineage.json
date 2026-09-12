@@ -17,6 +17,7 @@
         "type": "string"
       },
       "requirement_id": {
+        "description": "The Requirement (`req:…`) whose lineage is being set — `original`, `decomposed` (a 1:1 split of a parent) or `derived` (technical necessity a Decision created).",
         "type": "string"
       }
     },

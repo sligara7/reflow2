@@ -24,6 +24,7 @@
         ]
       },
       "requirement_id": {
+        "description": "The Requirement (`req:…`) whose lifecycle status moves. Every move off `proposed` records the USER's word — pass `approver`.",
         "type": "string"
       },
       "status": {

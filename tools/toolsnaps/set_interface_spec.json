@@ -45,6 +45,7 @@
         ]
       },
       "interface_id": {
+        "description": "The Interface (`ifc:…`) whose contract axes are being stated — medium, paradigm, payload format, auth, transport security, operations, error model, schema.",
         "type": "string"
       },
       "medium": {

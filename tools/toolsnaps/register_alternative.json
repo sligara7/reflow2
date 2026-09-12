@@ -21,6 +21,7 @@
         "type": "string"
       },
       "name": {
+        "description": "A short human name for the alternative — the road, not the file — as it will appear in `alternatives_for` and `analyze_alternatives`.",
         "type": "string"
       }
     },

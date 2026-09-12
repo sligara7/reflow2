@@ -355,7 +355,7 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Link an Artifact to the Capability/Component it REALIZES (implements).",
+        description = "Link an Artifact to the Capability or Component it REALIZES — the file, drawing or binary that implements it, as opposed to one that merely describes it (`documents`). This is the as-built half of the design: a capability nothing realizes is raised as `unrealized_capability`, and `reconcile_artifacts` compares each realizing file's checksum against its recorded baseline to catch drift. `link_artifact` does this in one call with provenance and a checksum, and is the better door; use this when the Artifact node already exists. Ask for this when you want to record that a real file implements a capability or part.",
         annotations(read_only_hint = false)
     )]
     pub async fn realizes(

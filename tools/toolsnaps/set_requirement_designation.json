@@ -16,6 +16,7 @@
         "type": "string"
       },
       "requirement_id": {
+        "description": "The Requirement (`req:…`) being marked `published` (a promise a consumer may rely on, carried by `export_surface`) or `internal`.",
         "type": "string"
       }
     },

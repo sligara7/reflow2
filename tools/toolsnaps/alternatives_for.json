@@ -2,12 +2,13 @@
   "annotations": {
     "readOnlyHint": true
   },
-  "description": "List the alternatives registered under a decision point (BL-70) — the Artifact pointers GOVERNED_BY the Decision, with their export locations. Feed the locations to analyze_alternatives to compare them.",
+  "description": "List the alternatives registered under a decision point (BL-70) — the Artifact pointers GOVERNED_BY the Decision, each with its export location, ready to feed to analyze_alternatives. AN EMPTY LIST SAYS WHICH EMPTY: the reply distinguishes a decision that exists but has no alternatives registered, a decision that is not `proposed` (only an open decision point can carry forks), and an id that names no Decision at all — three different facts that used to share one bare zero. Ask for this when you want to see the roads recorded under an open choice before comparing them.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
     "properties": {
       "decision_id": {
+        "description": "The Decision whose registered alternatives to list — a `proposed` decision point that `register_alternative` has been called on.",
         "type": "string"
       }
     },

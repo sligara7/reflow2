@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Record that a Component or Release needs a Resource, with how critical it is (optional/recommended/required).",
+  "description": "Record that a Component or Release needs a Resource (REQUIRES_RESOURCE), with how critical it is — `optional`, `recommended` or `required`. A Resource (`add_resource`) is something the design consumes from outside itself — power, bandwidth, a licence, a person-hour budget, a physical facility — and the `no_deploy_operate` gap asks for these alongside environments and deployments so an operate-phase design does not read as complete with nothing to run on. Ask for this when you want to record what a part or a release depends on having available.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
@@ -34,6 +34,7 @@
         ]
       },
       "resource_id": {
+        "description": "The Resource (`res:…`, from `add_resource`) the component or release needs.",
         "type": "string"
       }
     },

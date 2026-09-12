@@ -2,12 +2,13 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Create an edge of any schema type between typed endpoints. Ask for this when you want to link two items with a relationship no typed tool covers — a generic edge of any kind.",
+  "description": "Create an edge of any schema type between typed endpoints — the generic write for a relationship no typed helper covers. PREFER THE TYPED HELPER when one exists (`satisfies`, `allocate`, `depends_on`, `verifies` …): it supplies the required properties and refuses a wrong endpoint by name. Before reaching for this, call `describe_schema` with `from` and `to`: it names which edge types may join two node types and flags whether each actually models that pair or merely accepts it through a `*` wildcard — several will validate, and the first that does is not necessarily the one that means what you intend. Ask for this when you want to link two items with a relationship the typed tools do not offer.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
     "properties": {
       "edge_type": {
+        "description": "The edge type as declared, e.g. `SATISFIES`, `DEPENDS_ON`. `describe_schema` with `from` and `to` names which types may join two node types; prefer the typed helper (`satisfies`, `allocate`, `depends_on` …) when one exists.",
         "type": "string"
       },
       "from_id": {

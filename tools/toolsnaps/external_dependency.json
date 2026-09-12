@@ -60,6 +60,7 @@
         "type": "string"
       },
       "name": {
+        "description": "The dependency as a person names it — the crate, package, service or standard (`rmcp`, `RocksDB`, `MIL-STD-882`). It is the id's stem and what `search_design` finds it by.",
         "type": "string"
       },
       "note": {
