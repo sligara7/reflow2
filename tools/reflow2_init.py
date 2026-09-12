@@ -377,9 +377,9 @@ MCP_CONFIGS = [
         "harness": "claude",
         "path": ".mcp.json",
         "key": "mcpServers",
-        "entry": lambda b, g: {
+        "entry": lambda b, g, x: {
             "command": str(b),
-            "args": ["--graph-path", str(g), "--shared"],
+            "args": ["--graph-path", str(g), "--export-to", str(x), "--shared"],
         },
         "extract": lambda e: e.get("command"),
         "extra": {},
@@ -388,9 +388,9 @@ MCP_CONFIGS = [
         "harness": "opencode",
         "path": "opencode.json",
         "key": "mcp",
-        "entry": lambda b, g: {
+        "entry": lambda b, g, x: {
             "type": "local",
-            "command": [str(b), "--graph-path", str(g), "--shared"],
+            "command": [str(b), "--graph-path", str(g), "--export-to", str(x), "--shared"],
             "enabled": True,
         },
         # OpenCode takes command+args as one array; the binary is its head.
@@ -401,9 +401,9 @@ MCP_CONFIGS = [
         "harness": "vscode",
         "path": ".vscode/mcp.json",
         "key": "servers",
-        "entry": lambda b, g: {
+        "entry": lambda b, g, x: {
             "command": str(b),
-            "args": ["--graph-path", str(g), "--shared"],
+            "args": ["--graph-path", str(g), "--export-to", str(x), "--shared"],
         },
         "extract": lambda e: e.get("command"),
         "extra": {},
@@ -619,7 +619,20 @@ def write_mcp_config(project: Path, spec: dict, binary: Path, force: bool) -> st
     # an empty graph elsewhere rather than fail — which is why the installer
     # prints the resolved path it expects.
     graph = Path(".") / ".reflow2" / "graph"
-    entry = spec["entry"](binary, graph)
+    # THE SERVER'S OWN GUARANTEE, turned on for every project this installs.
+    #
+    # `--export-to` makes the server keep the shareable record current after
+    # every change, debounced, so a forgotten export stops being a class of loss
+    # (`req:the-server-keeps-the-working-tree-export-current`). It is opt-in at
+    # the binary — deriving the path from export history would let one export to
+    # a scratch path silently re-target the server's writes — and this is where
+    # a consumer opts in without having to know the flag exists.
+    #
+    # RELATIVE for the same reason the graph path is, and the SAME path
+    # `design_record_path` names, so the file the server keeps current is the
+    # one teammates read and the CI design gate checks.
+    export = Path(".") / "docs" / "design" / f"{project.name}.json"
+    entry = spec["entry"](binary, graph, export)
     label = spec["path"]
 
     existing: dict = {}

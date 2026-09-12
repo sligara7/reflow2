@@ -33,9 +33,10 @@ use tokio::sync::Mutex;
 /// are correlated by JSON-RPC `id`, so returning them out of order is correct
 /// rather than merely tolerated. stdout is behind a mutex: interleaving two
 /// replies mid-line would corrupt the channel.
-pub async fn run(url: &str, graph_path: &str) -> anyhow::Result<()> {
+pub async fn run(url: &str, graph_path: &str, export_to: Option<&str>) -> anyhow::Result<()> {
     let up = Arc::new(Upstream {
         graph_path: graph_path.to_string(),
+        export_to: export_to.map(str::to_string),
         url: Mutex::new(url.to_string()),
         session: Mutex::new(None),
         hello: Mutex::new(None),
@@ -70,7 +71,13 @@ pub async fn run(url: &str, graph_path: &str) -> anyhow::Result<()> {
                 Ok(ok) => ok,
                 Err(first) => {
                     tracing::warn!("the shared server did not answer the handshake ({first:#})");
-                    match crate::shared::ensure_server_async(&up.graph_path, None).await {
+                    match crate::shared::ensure_server_async(
+                        &up.graph_path,
+                        None,
+                        up.export_to.as_deref(),
+                    )
+                    .await
+                    {
                         Ok(fresh) => {
                             *up.url.lock().await = fresh.clone();
                             post(&fresh, None, line.clone(), PROBE_TIMEOUT)
@@ -181,6 +188,9 @@ pub async fn call_tool(url: &str, name: &str, args: serde_json::Value) -> anyhow
 /// server it was talking to goes away.
 struct Upstream {
     graph_path: String,
+    /// Forwarded when this proxy has to respawn the daemon, so a restart does
+    /// not silently drop the write-through the session was started with.
+    export_to: Option<String>,
     url: Mutex<String>,
     session: Mutex<Option<String>>,
     /// The client's own `initialize`, kept verbatim so a replacement server can
@@ -211,9 +221,13 @@ impl Upstream {
                     "the shared reflow2 server stopped answering ({first:#}); starting a \
                      replacement and retrying once"
                 );
-                let fresh = crate::shared::ensure_server_async(&self.graph_path, None)
-                    .await
-                    .context("could not restart a shared reflow2 server for this design")?;
+                let fresh = crate::shared::ensure_server_async(
+                    &self.graph_path,
+                    None,
+                    self.export_to.as_deref(),
+                )
+                .await
+                .context("could not restart a shared reflow2 server for this design")?;
                 *self.url.lock().await = fresh.clone();
                 // A new server has never seen the old session id, so re-do the
                 // handshake before replaying the request. Skipping this would

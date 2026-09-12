@@ -306,6 +306,35 @@ class InstallerTest(unittest.TestCase):
 
         vs = json.loads((p / ".vscode/mcp.json").read_text())["servers"]["reflow2"]
         self.assertIn("--shared", vs["args"], ".vscode/mcp.json must share by default")
+
+    def test_every_harness_gets_the_servers_export_guarantee(self):
+        """The server keeps the shareable record current, on every harness.
+
+        `req:the-server-keeps-the-working-tree-export-current`. The guarantee is
+        opt-in at the binary — `--export-to` — because deriving the path from
+        export history would let one export to a scratch path silently re-target
+        the server's writes. This is where a consumer opts in without having to
+        know the flag exists, and the path must be the one `design_record_path`
+        names, or the server keeps a file current that nobody reads.
+
+        Checked on ALL THREE harnesses for the reason the sharing test gives:
+        a guarantee wired into one config file is one-harness deep.
+        """
+        p = self.project()
+        self.install(p)
+        want = str(pathlib.Path(".") / "docs" / "design" / f"{p.name}.json")
+
+        mcp = json.loads((p / ".mcp.json").read_text())["mcpServers"]["reflow2"]
+        self.assertIn("--export-to", mcp["args"], ".mcp.json must keep the record current")
+        self.assertEqual(mcp["args"][mcp["args"].index("--export-to") + 1], want)
+
+        oc = json.loads((p / "opencode.json").read_text())["mcp"]["reflow2"]
+        self.assertIn("--export-to", oc["command"], "opencode.json must keep the record current")
+        self.assertEqual(oc["command"][oc["command"].index("--export-to") + 1], want)
+
+        vs = json.loads((p / ".vscode/mcp.json").read_text())["servers"]["reflow2"]
+        self.assertIn("--export-to", vs["args"], ".vscode/mcp.json must keep the record current")
+        self.assertEqual(vs["args"][vs["args"].index("--export-to") + 1], want)
         # Same for the other two harnesses, or the guarantee is one-harness deep.
         oc = json.loads((p / "opencode.json").read_text())["mcp"]["reflow2"]
         self.assertFalse(pathlib.Path(oc["command"][2]).is_absolute(), oc["command"])

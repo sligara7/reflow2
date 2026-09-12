@@ -161,6 +161,8 @@ jobs:
         # answer rather than a worktree each. Real HTTP, real concurrent
         # clients — the seat bug this guards would have been silent.
         run: python3 tools/test_shared_sessions.py
+      - name: --export-to reaches the daemon, not just the client
+        run: python3 tools/test_export_to_reaches_the_daemon.py
       - name: Nudge-path suite (the REGISTERED hook, run as registered)
         # req:nudge-path-proven: test_loop_nudge covers the script's logic given
         # its inputs, and passed the whole time nobody had checked the hook was

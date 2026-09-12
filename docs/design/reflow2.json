@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:4ba5ca6c2e6ddb206964c38ee1410bec64e80c3476abaad93648b34669daf4fc",
+  "content_hash": "sha256:69bdc6e96af2f513384b5785091bd9491b43424bb64f067fbb511b50d590cd6f",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -9737,6 +9737,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:the-server-writes-the-export-through-on-every-change",
+      "properties": {},
+      "to_id": "epoch:the-server-keeps-the-export-current"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:the-shareable-record-is-findable",
       "properties": {},
       "to_id": "epoch:v0300"
@@ -12290,6 +12296,12 @@
       "from_id": "snap:epoch:the-register-rule-reaches-the-words:art:tools-ask",
       "properties": {},
       "to_id": "epoch:the-register-rule-reaches-the-words"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:the-server-keeps-the-export-current:cap:the-server-writes-the-export-through-and-chains-it-from-main",
+      "properties": {},
+      "to_id": "epoch:the-server-keeps-the-export-current"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -27616,6 +27628,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-c8d2d152c6c84144",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:export-to-reaches-the-daemon-gate"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-c9e5ef23b8cd5a2f",
       "properties": {
         "accepted_baseline": true,
@@ -41438,6 +41459,96 @@
         "action": "modified"
       },
       "to_id": "req:the-server-is-the-authority-on-its-own-currency"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-server-writes-the-export-through-on-every-change",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:init"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-server-writes-the-export-through-on-every-change",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:main"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-server-writes-the-export-through-on-every-change",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:proxy"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-server-writes-the-export-through-on-every-change",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-server-writes-the-export-through-on-every-change",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:shared"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-server-writes-the-export-through-on-every-change",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-init"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-server-writes-the-export-through-on-every-change",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:the-server-keeps-the-export-current-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-server-writes-the-export-through-on-every-change",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-server-writes-the-export-through-on-every-change",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-exchange"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-server-writes-the-export-through-on-every-change",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:the-server-writes-the-export-through-and-chains-it-from-main"
     },
     {
       "edge_type": "CHANGED",
@@ -59263,6 +59374,12 @@
       "from_id": "cap:the-server-writes-the-export-through-and-chains-it-from-main",
       "properties": {},
       "to_id": "snap:epoch:the-export-chains-from-main:cap:the-server-writes-the-export-through-and-chains-it-from-main"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:the-server-writes-the-export-through-and-chains-it-from-main",
+      "properties": {},
+      "to_id": "snap:epoch:the-server-keeps-the-export-current:cap:the-server-writes-the-export-through-and-chains-it-from-main"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -172345,6 +172462,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:auto-export",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:the-server-writes-the-export-through-and-chains-it-from-main"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:bl124-instrument",
       "properties": {
         "completeness": "complete",
@@ -173179,12 +173305,30 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:export-to-reaches-the-daemon-gate",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:the-server-writes-the-export-through-and-chains-it-from-main"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:export-via-binary",
       "properties": {
         "completeness": "complete",
         "conformance": "unchecked"
       },
       "to_id": "cmp:export"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:export-write",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:the-server-writes-the-export-through-and-chains-it-from-main"
     },
     {
       "edge_type": "REALIZES",
@@ -175617,6 +175761,15 @@
     {
       "edge_type": "REALIZES",
       "from_id": "art:the-export-chains-from-main-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:the-server-writes-the-export-through-and-chains-it-from-main"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:the-server-keeps-the-export-current-test",
       "properties": {
         "completeness": "complete",
         "conformance": "unchecked"
@@ -181239,6 +181392,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:the-server-keeps-the-export-current",
+      "properties": {},
+      "to_id": "cap:the-server-writes-the-export-through-and-chains-it-from-main"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:the-server-says-when-it-is-stale",
       "properties": {},
       "to_id": "cap:the-orientation-call-says-whether-its-own-answers-are-current"
@@ -181717,6 +181876,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:auto-export",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:auto-export"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:bl124-instrument",
       "properties": {
         "action": "created"
@@ -182053,11 +182220,27 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:export-to-reaches-the-daemon-gate",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:export-to-reaches-the-daemon-gate"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:export-via-binary",
       "properties": {
         "action": "created"
       },
       "to_id": "art:export-via-binary"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:export-write",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:export-write"
     },
     {
       "edge_type": "YIELDED",
@@ -183181,6 +183364,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:the-server-keeps-the-export-current-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:the-server-keeps-the-export-current-test"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:tools-ask",
       "properties": {
         "action": "created"
@@ -183730,6 +183921,18 @@
         "name": "artifact_intent.rs",
         "status": "realized",
         "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:auto-export",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:9f791fcfdcf8172f9d2af4a29730f2b527937131e625c80ed2eb079cf9b740a2",
+        "description": "The server's write-through: a doorbell rung on every write, a debounced task (2s quiet, 10s ceiling) that coalesces a burst into one export, and the hand-edit guard that declines rather than overwrite. Tracks the baseline twice — in-process and via the recorded sync — so the guard also fires on a memory-backed server with no graph_path, and so a session's own deliberate export never looks like tampering. Never passes accept_divergence: an automatic write that discards somebody's work is the one outcome that cannot be undone from the thing that caused it.",
+        "location": "crates/reflow2-mcp/src/auto_export.rs",
+        "name": "auto_export.rs",
+        "status": "realized"
       }
     },
     {
@@ -184609,6 +184812,18 @@
       }
     },
     {
+      "node_id": "art:export-to-reaches-the-daemon-gate",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:2e185fb4b41f451b48d35c0127c8961f3e0b93b2d2194baac155ddf077a1bd7a",
+        "description": "A CI gate that drives a real `--shared` client over stdio, writes one node, and requires the export file to appear. It exists because the defect it pins was found by INSPECTION while building the feature: a --shared client is a proxy, so passing it --export-to and stopping there would have meant the flag every installed project now carries has no effect in the default configuration, while every test that drove a plain stdio server passed. Shown to fail — with the forwarding removed it reports the file never appeared — before it was trusted.",
+        "location": "tools/test_export_to_reaches_the_daemon.py",
+        "name": "test_export_to_reaches_the_daemon.py",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:export-via-binary",
       "node_type": "Artifact",
       "properties": {
@@ -184619,6 +184834,18 @@
         "name": "export_via_binary.py — export through a chosen binary, so the stamp says what shipped",
         "status": "realized",
         "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:export-write",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:7d9ddc578535021f6ae6ac53e9f7da60c1c7025bf28936e6fe4e4cfe8e0655f0",
+        "description": "The one place an export document becomes a file on disk, shared by the export_graph tool and the server's write-through. Holds the four things both callers must agree on: where the lineage anchors, whether the write would drop design the file already holds, what `wrote` reports, and recording that this seat is in step. Extracted because a second copy that drifts is the failure this project keeps meeting — the version guard, the unknown-field interception and the adjacency memo were all that shape.",
+        "location": "crates/reflow2-mcp/src/export_write.rs",
+        "name": "export_write.rs",
+        "status": "realized"
       }
     },
     {
@@ -185028,7 +185255,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:2b0c9b500c5d5e1a45497d5deef3382a41a6374851d5ffbf4fa91ae6d5958059",
+        "checksum": "sha256:04c0aaf111b1ddb6b21f3293cf34419239e003c4fb70184810ec3d17ed363ec2",
         "granularity": "atomic",
         "location": "tools/reflow2_init.py",
         "name": "reflow2_init.py",
@@ -185179,7 +185406,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:84d1f9f753e1c5017673d31b75209ec0003832fb2266bdfee79d4c01a9cd2a55",
+        "checksum": "sha256:21b237289d2f8a053ec319de221ad5f154c8c5ea54a0d96381b4653cce0ad1c5",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/main.rs",
         "name": "main.rs",
@@ -185508,7 +185735,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c1537adc3cba37798e26a225d522ee834aaede8945c01af3b8eb1fa4c8b754b6",
+        "checksum": "sha256:0600f136620ceb77adda6cbfef8fad3ca7c855cf8ddb442a86a977bf4b9531a1",
         "location": "crates/reflow2-mcp/src/proxy.rs",
         "name": "proxy.rs",
         "status": "realized"
@@ -186130,7 +186357,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:5c03524ada3d8a8c26c1a2a2dc353fe3e797e9f956f1b9b9b4fe27879f941c39",
+        "checksum": "sha256:93b59ac317c3c570c34532b28edccbf971615bbd39490ccbbb7b0b250075b0b4",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -186167,7 +186394,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:7c4e153875c7256e3205e172d4c05599390d26a82a1b8297e2736afe708923b3",
+        "checksum": "sha256:a1ef9bb6fbf052b144acd0ffbf02a48ae26b9aa6bd9b44c619b5a8cd29200db8",
         "location": "crates/reflow2-mcp/src/shared.rs",
         "name": "shared.rs",
         "status": "realized"
@@ -186705,7 +186932,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:80bb4b7b81a13ee0164d2e1c377ac326c95a2454b2a581cdfc9e86efc1dd8585",
+        "checksum": "sha256:0d7b362984bea837ac03aa87b576c3a6b127cbf54a7d543eec6607abb781582f",
         "granularity": "atomic",
         "location": "tools/test_init.py",
         "name": "test_init.py",
@@ -187025,6 +187252,18 @@
       }
     },
     {
+      "node_id": "art:the-server-keeps-the-export-current-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:3af2947547a0ddc4fd4cd38f74738331bcee2b2df319c0e4a23327ab8d8056c9",
+        "description": "Four tests on a real store: a write reaches disk with nobody asking; writes spread over three seconds still cost one export; a hand edit survives untouched AND loop_status carries the reason in `next`; a read-only server refuses the write-through. The debounce test carries its own warning — the obvious version of it passed with the debounce set to zero, because ten back-to-back writes coalesce whatever the quiet period is.",
+        "location": "crates/reflow2-mcp/tests/the_server_keeps_the_export_current.rs",
+        "name": "the_server_keeps_the_export_current.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:tools-ask",
       "node_type": "Artifact",
       "properties": {
@@ -187094,7 +187333,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c8067265324e62999cac6fcdce3b37b819c50a7b7cd1e643ac7419d2576386fe",
+        "checksum": "sha256:eb55e7acbe7a29390317c525bd3636bf09148805d7dc8e88f862fcb40cf3e6fc",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
@@ -187107,7 +187346,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f6213c94b482e8b5f5c15280a616594c4225baeda8715483174ddce561e26163",
+        "checksum": "sha256:932e359082278c2455a4b7b503ddd99e46be6a330bfbd9e79d129ce71ccf4565",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/exchange.rs",
         "name": "tools/exchange.rs",
@@ -190285,10 +190524,10 @@
       "node_id": "cap:the-server-writes-the-export-through-and-chains-it-from-main",
       "node_type": "Capability",
       "properties": {
-        "description": "The shared server — not the session, and not a harness hook — keeps the working-tree export current after every graph change, coalescing bursts through a debounce, and sets the export's prev_content_hash from the export as committed on the default branch when a git repository is present.\n\n⭐ HALF BUILT, 2026-09-12 (epoch:the-export-chains-from-main). THE LINEAGE HALF IS DONE: a written export chains from its own path at the merge-base with the default branch, so every export on a branch chains from the same committed ancestor and a squash-merge lands one hop. The receipt carries `chained_from`, and outside git the previous on-disk chaining stands with a stated reason. THE WRITE-THROUGH HALF IS NOT BUILT: the server still exports only when asked.\n\nWHY THE SERVER OWNS THE REMAINING HALF: the session is the thing that might not come back. The Stop hook fires once and exists in one harness, so a consumer of reflow2 in any other client would never see it.\n\nWHY THE LINEAGE MOVED FIRST: continuous writing collides with one-export-per-PR only while the chain is built from the FILE on disk, so the anchor had to move before the writing could become automatic. It is also useful on its own — `dec:export-once-per-pr`'s \"and it must be LAST\" clause is now automatic rather than remembered.\n\nOF THE FOUR QUESTIONS THE INCREMENT CARRIED, TWO ARE ANSWERED: the git query is the MERGE-BASE with the default branch, not the tip, because on a long-lived branch the tip moves underneath you and the export would claim descent from work it never contained; and the no-git fallback is today's on-disk chaining, reported rather than silent, so reflow2 assumes nothing about git. TWO REMAIN OPEN and belong to the write-through half: the debounce interval, and what happens when the working tree holds a hand edit of the export.\n\nAFFORDABILITY, MEASURED: a full export of the largest design in existence is 265 ms (2026-08-25, down from 1,168 ms), and the debounce means a burst of ten changes costs one export.",
+        "description": "The shared server — not the session, and not a harness hook — keeps the working-tree export current after every graph change, coalescing bursts through a debounce, and sets the export's prev_content_hash from the export as committed on the default branch when a git repository is present.\n\n⭐ BUILT AND VERIFIED 2026-09-12, in two halves: epoch:the-export-chains-from-main (the lineage anchor) and epoch:the-server-keeps-the-export-current (the write-through).\n\nHOW IT WORKS: `--export-to <FILE>` turns it on — explicit, because deriving the path from export history would let one export to a scratch path silently re-target the server's writes. `reflow2_init.py` emits the flag for all three harnesses, pointed at the docs/design/<project>.json that design_record_path names. After a write the task waits two seconds of quiet, with a ten-second ceiling so a steady stream cannot starve it, then exports once.\n\nWHY THE SERVER OWNS IT: the session is the thing that might not come back. The Stop hook that used to carry this fires once and exists in one harness, so a consumer of reflow2 in any other client never saw it.\n\nTHE LINEAGE: a written export chains from its own path at the merge-base with the default branch — not the tip, which moves underneath a long-lived branch and would make the export claim descent from work it never contained. Every export on a branch chains from the same committed ancestor, so a squash-merge lands one hop and dec:export-once-per-pr holds by construction. Outside git the previous on-disk chaining stands, with the reason stated in `chain_note`.\n\nIT DECLINES RATHER THAN OVERWRITE. A file that no longer matches what reflow2 last wrote — a hand edit, a half-resolved merge, conflict markers that will not parse — is left alone, and the reason surfaces in loop_status' `next` rather than in a log line, because a guarantee that has silently stopped guaranteeing is worse than none. A read-only server is refused the write-through outright.\n\nAFFORDABILITY, MEASURED: a full export of the largest design in existence is 265 ms (2026-08-25, down from 1,168 ms), and the debounce means a burst of ten changes costs one export.",
         "name": "The server writes the design export through to the working tree on every change, debounced, and chains its lineage from what is committed on main",
         "provenance": "authored",
-        "status": "in_progress",
+        "status": "verified",
         "tier": "operational"
       }
     },
@@ -193498,6 +193737,16 @@
         "change_type": "refactor",
         "detected_at": "2026-08-02",
         "name": "One dated feature-density illustration only: \"93 tools, 28 node types\" -> \"142 tools, 29 node types, measured 2026-08-02\". The skill's method — size a model by contracts and capabilities, never by an LOC ratio — is unchanged. Dated rather than merely corrected, because an undated measurement in prose is exactly what BL-164 is about: it had been silently wrong since the tool count moved."
+      }
+    },
+    {
+      "node_id": "chg:accept-c8d2d152c6c84144",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "detected_at": "2026-09-12",
+        "name": "CORRECTING A BASELINE THAT WAS INVENTED RATHER THAN COMPUTED. The first link carried a hand-typed hash that had never been read off the file — a plausible-looking string in the one field whose entire job is to be unforgeable. Nothing about the file or the design changed between the two values; only the recorded hash became true. Worth keeping on the record: a checksum nobody computed is worse than none, because reconcile_artifacts would have reported drift forever against a baseline that never described anything.",
+        "subject": "system"
       }
     },
     {
@@ -198429,6 +198678,15 @@
       "properties": {
         "change_type": "new_feature",
         "name": "The server stops making a human compare two numbers: served_by derives `stale` from its own /proc/self/exe, and the note carries the remedy that actually works"
+      }
+    },
+    {
+      "node_id": "chg:the-server-writes-the-export-through-on-every-change",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "The server writes the export through after every change, debounced — and declines rather than overwrite a hand edit",
+        "subject": "system"
       }
     },
     {
@@ -208554,11 +208812,11 @@
       "node_id": "epoch:planned-the-server-guarantees-the-export",
       "node_type": "DesignEpoch",
       "properties": {
-        "description": "PLANNED — second of the four Anthony ordered on 2026-09-11. The shared server writes the design export to the working tree after every graph change, debounced, and chains its prev_content_hash from the export as committed on the default branch rather than from whatever was last written to disk.\n\nWHY IT IS HERE: it removes a class of loss rather than an instance — the forgotten export — and the guarantee has to live in the server because the session is the thing that might not come back. It also makes dec:export-once-per-pr automatic: chained from main, any number of commits on a branch each chain from main, and squash-and-merge lands one hop per PR.\n\nTHE FOUR QUESTIONS THIS INCREMENT MUST SETTLE, named on the rulings and deliberately left open: the debounce interval; the git query that finds main's version (merge-base survives a long-lived branch where head-of-default does not); the behaviour when the working tree holds a hand edit of the export; and the no-git fallback, which stays today's on-disk chaining so reflow2 assumes nothing about git.\n\nMUST NOT INCLUDE: any change to durability. The store stays RocksDB — this makes the git RECORD reliable, it does not make the export the only copy.\n\nNO VERSION NUMBER BY DESIGN.",
+        "description": "ARRIVED 2026-09-12, in two halves — epoch:the-export-chains-from-main and epoch:the-server-keeps-the-export-current. Second of the four Anthony ordered on 2026-09-11. The shared server writes the design export to the working tree after every graph change, debounced, and chains its prev_content_hash from the export as committed on the default branch rather than from whatever was last written to disk.\n\nWHY IT WAS HERE: it removes a class of loss rather than an instance — the forgotten export — and the guarantee had to live in the server because the session is the thing that might not come back. It also made dec:export-once-per-pr automatic: chained from the merge-base, any number of commits on a branch each chain from the same ancestor, and squash-and-merge lands one hop per PR.\n\nALL FOUR QUESTIONS IT CARRIED ARE ANSWERED:\n· THE DEBOUNCE INTERVAL — two seconds of quiet, with a ten-second ceiling so a steady stream of writes cannot starve the export forever.\n· THE GIT QUERY — the MERGE-BASE with the default branch, not the tip. On a long-lived branch the tip moves underneath you and the export would claim descent from work it never contained.\n· A HAND-EDITED WORKING TREE — skip the write and warn loudly, Anthony's call 2026-09-12, put to him with the two alternatives and their costs. Never destroys a hand edit or a half-resolved merge; the accepted cost is that the export stops being current until somebody reads the warning, which is why it is in loop_status' `next`.\n· THE NO-GIT FALLBACK — today's on-disk chaining, reported rather than silent, so reflow2 assumes nothing about git.\n\nONE QUESTION THE INCREMENT DID NOT ANTICIPATE and had to settle: how the server learns WHICH file to keep current. An explicit `--export-to`, rather than deriving it from export history, which would have let one export to a scratch path silently re-target the server's writes. `reflow2_init.py` emits it for all three harnesses so a consumer opts in without knowing the flag exists.\n\nIT DID NOT CHANGE DURABILITY, as planned. The store stays RocksDB — this makes the git RECORD reliable, it does not make the export the only copy.\n\nNO VERSION NUMBER BY DESIGN.",
         "epoch_type": "revision",
         "name": "The server guarantees the export, and the lineage chains from main",
         "sequence": 431,
-        "status": "planned"
+        "status": "arrived"
       }
     },
     {
@@ -209002,6 +209260,17 @@
         "epoch_type": "revision",
         "name": "The translator rule stops being one skill deep — a standing rule, the gap-to-question step, and the first register obligation the build actually checks",
         "sequence": 363,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:the-server-keeps-the-export-current",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "description": "ARRIVED 2026-09-12. The second half of increment 431, which completes it: the server now writes the design export through to the working tree after every change, debounced, so a forgotten export stops being a class of loss.\n\nTWO CHOICES ANTHONY MADE, 2026-09-12, each put to him with its consequence:\n· HOW THE SERVER LEARNS THE PATH — an explicit `--export-to <FILE>`, rather than deriving it from export history. Deriving would have given every existing project the guarantee for free and would also mean one export to a scratch path silently re-targets the server's writes. `reflow2_init.py` now emits the flag for all three harnesses, pointed at the same docs/design/<project>.json that design_record_path names, so a consumer opts in without having to know the flag exists.\n· A HAND-EDITED EXPORT — skip the write and warn loudly, rather than overwrite or wedge the session. Never destroys a hand edit or a half-resolved merge. The cost he accepted is that the export stops being current until somebody reads the warning, which is why the warning is in loop_status' `next` — the list a session acts on — and not a log line.\n\nTHE DEBOUNCE: two seconds of quiet, with a ten-second ceiling so a steady stream of writes cannot starve the export forever. A burst of thirty writes costs one export. Affordable because a full export of the largest design in existence is 265 ms.\n\nTHE HAND-EDIT BASELINE IS TRACKED TWICE, and that is not redundancy: the recorded sync needs a graph_path, which a memory-backed server does not have, so without an in-process baseline such a server's guard would never fire. The recorded one survives a restart and also moves when a SESSION exports deliberately, so a manual export never looks like tampering.\n\nTHE FILE-WRITE SEAM MOVED INTO ONE MODULE shared by the tool and the write-through. Two callers that must agree on where the lineage anchors, whether a write would drop work, and what `wrote` reports — a second copy that drifts is the failure this project keeps meeting.\n\nA READ-ONLY SERVER IS REFUSED THE WRITE-THROUGH rather than silently given one: the mode exists so a surface with no authentication cannot change anything.\n\n⚠️ A TEST CAUGHT LYING AND FIXED, worth keeping because it is the same lesson as NEW-01: the first debounce test passed with the debounce set to ZERO. Ten writes issued back to back coalesce whatever the quiet period is, because the task has not been scheduled yet — it was measuring the scheduler. Spacing the writes 300 ms apart makes it discriminate: 10 exports without the debounce, 1 with. Both directions verified before it was trusted.",
+        "epoch_type": "revision",
+        "name": "The server keeps the working-tree export current, and declines rather than overwrite a hand edit",
+        "sequence": 436,
         "status": "arrived"
       }
     },
@@ -210864,6 +211133,16 @@
       }
     },
     {
+      "node_id": "frag:art:auto-export",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered auto_export.rs"
+      }
+    },
+    {
       "node_id": "frag:art:bl124-instrument",
       "node_type": "Fragment",
       "properties": {
@@ -211305,6 +211584,16 @@
       }
     },
     {
+      "node_id": "frag:art:export-to-reaches-the-daemon-gate",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered test_export_to_reaches_the_daemon.py"
+      }
+    },
+    {
       "node_id": "frag:art:export-via-binary",
       "node_type": "Fragment",
       "properties": {
@@ -211312,6 +211601,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered export_via_binary.py — export through a chosen binary, so the stamp says what shipped"
+      }
+    },
+    {
+      "node_id": "frag:art:export-write",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered export_write.rs"
       }
     },
     {
@@ -212716,6 +213015,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered the_export_chains_from_main.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:the-server-keeps-the-export-current-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered the_server_keeps_the_export_current.rs"
       }
     },
     {
@@ -220667,6 +220976,16 @@
         "state": "{\"artifact_type\":\"code\",\"checksum\":\"sha256:a61192bc3e08c0a0ae904c597228cc1aae1ba23bca5cf3d602b7bafd4f48d680\",\"granularity\":\"atomic\",\"location\":\"crates/reflow2-mcp/src/tools/ask.rs\",\"name\":\"tools/ask.rs\",\"status\":\"realized\",\"volatility\":\"stable\"}",
         "target_id": "art:tools-ask",
         "target_type": "Artifact"
+      }
+    },
+    {
+      "node_id": "snap:epoch:the-server-keeps-the-export-current:cap:the-server-writes-the-export-through-and-chains-it-from-main",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:auto-export\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:export-write\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:git-anchor\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:the-export-chains-from-main-test\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:the-server-keeps-the-export-current-test\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:the-export-chains-from-main\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:the-server-keeps-the-export-current\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:export\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:the-server-keeps-the-working-tree-export-current\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SCHEDULED_FOR\",\"other_type\":\"DesignEpoch\",\"other_id\":\"epoch:planned-the-server-guarantees-the-export\",\"properties\":{\"modality\":\"expected\",\"recorded_at\":\"2026-09-11\"}}]",
+        "state": "{\"description\":\"The shared server — not the session, and not a harness hook — keeps the working-tree export current after every graph change, coalescing bursts through a debounce, and sets the export's prev_content_hash from the export as committed on the default branch when a git repository is present.\\n\\n⭐ BUILT AND VERIFIED 2026-09-12, in two halves: epoch:the-export-chains-from-main (the lineage anchor) and epoch:the-server-keeps-the-export-current (the write-through).\\n\\nHOW IT WORKS: `--export-to <FILE>` turns it on — explicit, because deriving the path from export history would let one export to a scratch path silently re-target the server's writes. `reflow2_init.py` emits the flag for all three harnesses, pointed at the docs/design/<project>.json that design_record_path names. After a write the task waits two seconds of quiet, with a ten-second ceiling so a steady stream cannot starve it, then exports once.\\n\\nWHY THE SERVER OWNS IT: the session is the thing that might not come back. The Stop hook that used to carry this fires once and exists in one harness, so a consumer of reflow2 in any other client never saw it.\\n\\nTHE LINEAGE: a written export chains from its own path at the merge-base with the default branch — not the tip, which moves underneath a long-lived branch and would make the export claim descent from work it never contained. Every export on a branch chains from the same committed ancestor, so a squash-merge lands one hop and dec:export-once-per-pr holds by construction. Outside git the previous on-disk chaining stands, with the reason stated in `chain_note`.\\n\\nIT DECLINES RATHER THAN OVERWRITE. A file that no longer matches what reflow2 last wrote — a hand edit, a half-resolved merge, conflict markers that will not parse — is left alone, and the reason surfaces in loop_status' `next` rather than in a log line, because a guarantee that has silently stopped guaranteeing is worse than none. A read-only server is refused the write-through outright.\\n\\nAFFORDABILITY, MEASURED: a full export of the largest design in existence is 265 ms (2026-08-25, down from 1,168 ms), and the debounce means a burst of ten changes costs one export.\",\"name\":\"The server writes the design export through to the working tree on every change, debounced, and chains its lineage from what is committed on main\",\"provenance\":\"authored\",\"status\":\"verified\",\"tier\":\"operational\"}",
+        "target_id": "cap:the-server-writes-the-export-through-and-chains-it-from-main",
+        "target_type": "Capability"
       }
     },
     {
@@ -229884,6 +230203,20 @@
       }
     },
     {
+      "node_id": "ver:the-server-keeps-the-export-current",
+      "node_type": "Verification",
+      "properties": {
+        "description": "`crates/reflow2-mcp/tests/the_server_keeps_the_export_current.rs`, four tests on a real RocksDB store — real because the hand-edit baseline is recorded against the graph path, and a memory-backed service would exercise a different path than the one that ships.\n\n1. A write reaches disk with nobody calling export_graph. The feature; without it the guarantee is a claim.\n2. Ten writes spread 300 ms apart still cost one export. The debounce is what makes this affordable.\n3. A hand edit survives untouched, AND loop_status carries the reason — both the `auto_export.skipped` field and an entry in `next`, because a guarantee that has silently stopped guaranteeing is worse than none.\n4. A read-only server refuses the write-through and reports no status.\n\n⚠️ TEST 2 WAS CAUGHT LYING AND REWRITTEN, and the note is on the test itself. The obvious version — ten writes back to back — passed with the debounce set to ZERO, because the task has not been scheduled yet and the pokes collapse: it was measuring the scheduler, not the feature. Spacing the writes is what makes it discriminate.\n\nWHAT IT DOES NOT COVER: the behaviour of two servers pointed at one file, and anything about the git anchor (that is ver:the-export-chains-from-main).",
+        "findings": "All four pass. Both guards were shown to FAIL before being trusted: disabling the hand-edit check makes test 3 fail on the assertion that the edit survived; setting the quiet period to zero makes test 2 report 10 exports against a ceiling of 2. The full mcp suite — 64 test binaries — passes alongside, with toolsnap, smoke_mcp, empty_speaks and refusal_speaks green and 180 tool schemas unchanged.",
+        "kind": "verification",
+        "last_run_at": "2026-09-12",
+        "level": "integration",
+        "method": "test",
+        "name": "A write reaches the file unasked, a burst costs one export, and a hand edit survives",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:the-server-says-when-it-is-stale",
       "node_type": "Verification",
       "properties": {
@@ -230122,7 +230455,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:adcaf90fdd79d75cb2b40eb871b08cbe30e7f8b93513168de48f55f05d7b13fc",
+  "prev_content_hash": "sha256:4ba5ca6c2e6ddb206964c38ee1410bec64e80c3476abaad93648b34669daf4fc",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

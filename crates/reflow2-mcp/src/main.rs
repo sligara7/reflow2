@@ -20,6 +20,21 @@ struct Cli {
     #[arg(long, default_value = "./.reflow2/graph")]
     graph_path: String,
 
+    /// Keep this file current: write the design export through to it after
+    /// every change, debounced, so a forgotten export stops being a class of
+    /// loss (`req:the-server-keeps-the-working-tree-export-current`).
+    ///
+    /// OPT-IN BY AN EXPLICIT PATH. Deriving it from export history would give
+    /// every project the guarantee for free and would also mean one export to
+    /// a scratch path silently re-targets the server's writes; `reflow2_init.py`
+    /// puts this flag in the `.mcp.json` it generates instead.
+    ///
+    /// It NEVER overwrites a file that has changed since reflow2 last wrote it
+    /// — a hand edit, a half-resolved merge — it declines and says so in
+    /// `loop_status`. Refused together with `--read-only`.
+    #[arg(long = "export-to", value_name = "FILE")]
+    export_to: Option<String>,
+
     /// Serve over HTTP on this address instead of stdio, so SEVERAL sessions
     /// share one design (`req:sessions-share-a-graph`). One process holds the
     /// graph — the store is single-writer, and with one server there is still
@@ -860,7 +875,7 @@ async fn main() -> anyhow::Result<()> {
         // seat carrying this pid that we never leased reads `unknown` rather
         // than borrowing our liveness — see identity::SERVES_MANY_SESSIONS.
         reflow2_core::identity::declare_serving_many_sessions();
-        let (service, provenance) = ReflowService::new_reporting(&cli.graph_path)
+        let (mut service, provenance) = ReflowService::new_reporting(&cli.graph_path)
             .map(|(svc, prov)| {
                 (
                     if cli.read_only {
@@ -915,6 +930,18 @@ async fn main() -> anyhow::Result<()> {
                 }
                 explained
             })?;
+        // THE SERVER'S OWN GUARANTEE, started before it serves anyone. One task
+        // per server, never per session — the write-through is a property of the
+        // server (one file, one writer), the way the graph is.
+        if let Some(export_to) = cli.export_to.clone() {
+            match service.start_auto_export(export_to.clone()) {
+                Ok(()) => eprintln!(
+                    "reflow2: keeping {export_to} current — the design is written through after \
+                     every change, debounced."
+                ),
+                Err(why) => eprintln!("reflow2: NOT keeping {export_to} current — {why}"),
+            }
+        }
         // We are about to become the server, so any refusal recorded against this
         // graph describes a world that no longer holds.
         reflow2_mcp::shared::remove_refusal(&cli.graph_path);
@@ -939,7 +966,13 @@ async fn main() -> anyhow::Result<()> {
     // there is none) and be this session's end of it.
     if cli.shared {
         let log = cli.server_log.clone().map(std::path::PathBuf::from);
-        match reflow2_mcp::shared::ensure_server_async(&cli.graph_path, log.as_deref()).await {
+        match reflow2_mcp::shared::ensure_server_async(
+            &cli.graph_path,
+            log.as_deref(),
+            cli.export_to.as_deref(),
+        )
+        .await
+        {
             Ok(url) => {
                 eprintln!(
                     "reflow2: sharing the design at {} through {url} — other sessions on this \
@@ -947,7 +980,8 @@ async fn main() -> anyhow::Result<()> {
                      immediately.",
                     cli.graph_path
                 );
-                return reflow2_mcp::proxy::run(&url, &cli.graph_path).await;
+                return reflow2_mcp::proxy::run(&url, &cli.graph_path, cli.export_to.as_deref())
+                    .await;
             }
             Err(e) => {
                 // The whole point of staying on stdio: this session can still be
@@ -1000,13 +1034,25 @@ async fn main() -> anyhow::Result<()> {
             prov,
         )
     }) {
-        Ok((service, provenance)) => {
+        Ok((mut service, provenance)) => {
             // Say it on stderr as well as the log: an operator running this by
             // hand sees stderr, and "which reflow2 wrote this graph" is exactly
             // the question that used to have no answer at all.
             if let Some(note) = provenance {
                 tracing::warn!("{note}");
                 eprintln!("reflow2: {note}");
+            }
+            // THE SERVER'S OWN GUARANTEE, started before it serves anyone. One task
+            // per server, never per session — the write-through is a property of the
+            // server (one file, one writer), the way the graph is.
+            if let Some(export_to) = cli.export_to.clone() {
+                match service.start_auto_export(export_to.clone()) {
+                    Ok(()) => eprintln!(
+                        "reflow2: keeping {export_to} current — the design is written through after \
+                     every change, debounced."
+                    ),
+                    Err(why) => eprintln!("reflow2: NOT keeping {export_to} current — {why}"),
+                }
             }
 
             if let Some(addr) = cli.http.clone() {

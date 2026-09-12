@@ -294,6 +294,40 @@ impl ReflowService {
                 obj.insert("served_by".into(), block);
             }
         }
+        // THE SERVER'S WRITE-THROUGH, and whether it is currently declining.
+        //
+        // Same shape as `served_by` above and for the same reason: cheap when
+        // fine, LOUD when not. A write-through that has stopped — because the
+        // file was hand-edited, or a merge left it unparseable — is silent by
+        // construction, and a silent guarantee that has stopped guaranteeing is
+        // worse than none. So the skip goes into `next`, which is the list an
+        // agent acts on, rather than sitting in a field beside it.
+        //
+        // ABSENT means the server was not started with `--export-to`. That is a
+        // different fact from "it has written nothing", and the two must not
+        // share a reply — the same rule `open_questions`' zero follows.
+        if let Some((path, status)) = self.auto_export_status() {
+            if let (Some(skipped), Some(arr)) = (
+                status.skipped.clone(),
+                payload.get_mut("next").and_then(|v| v.as_array_mut()),
+            ) {
+                {
+                    arr.insert(
+                        0,
+                        json!(format!(
+                            "THE EXPORT IS NO LONGER BEING KEPT CURRENT — {skipped}"
+                        )),
+                    );
+                }
+            }
+            if let Some(obj) = payload.as_object_mut() {
+                let mut block = serde_json::to_value(&status).unwrap_or_else(|_| json!({}));
+                if let Some(b) = block.as_object_mut() {
+                    b.insert("path".into(), json!(path));
+                }
+                obj.insert("auto_export".into(), block);
+            }
+        }
         // Whether the loop's own safety net exists (req:nudge-path-proven).
         // Machine-readable here, and in the handshake for the sessions that
         // never call this — which are precisely the ones a nudge is for.
