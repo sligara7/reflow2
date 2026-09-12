@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:b97cbc59db62ed51fb43d8e5769ca9ad7efda4686d8e09138dd90f790e17b24d",
+  "content_hash": "sha256:22d49f122a6cffae1aae08ae816d0f8a556b6eb5df570af976c2e7b07be69570",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -12988,6 +12988,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:a-windows-build-waits-for-a-windows-user",
+      "properties": {
+        "acted_at": "2026-09-12",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:absorb-rocksdb-024-unchanged-then-switch-separately",
       "properties": {
         "acted_at": "2026-08-24",
@@ -13766,8 +13775,8 @@
       "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-a-top-level-graph-holds-what-the-component-graphs-share",
       "properties": {
-        "acted_at": "2026-08-14",
-        "role": "author"
+        "acted_at": "2026-09-12",
+        "role": "approver"
       },
       "to_id": "who:ajs"
     },
@@ -15493,6 +15502,15 @@
       "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-the-server-counts-its-own-refusals-so-no-session-has-to-remember-to",
       "properties": {
+        "acted_at": "2026-09-12",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-the-server-counts-its-own-refusals-so-no-session-has-to-remember-to",
+      "properties": {
         "acted_at": "2026-09-06",
         "role": "author"
       },
@@ -16324,6 +16342,15 @@
       "from_id": "dec:the-rust-rocksdb-switch-is-parked-until-the-store-question-settles",
       "properties": {
         "acted_at": "2026-08-25T01:50:00Z",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:the-stamp-records-enum-values-and-nothing-finer",
+      "properties": {
+        "acted_at": "2026-09-12",
         "role": "approver"
       },
       "to_id": "who:ajs"
@@ -50248,6 +50275,14 @@
     },
     {
       "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-the-server-counts-its-own-refusals-so-no-session-has-to-remember-to",
+      "properties": {
+        "evidence": "The usage ledger of increment 437 (#490) is this idea's option (b) widened to every call and given a delivery channel (/feedback); superseded on Anthony's word 2026-09-12 because the question it asked is answered by that requirement."
+      },
+      "to_id": "req:feedback-on-reflow2-is-computed-from-a-record-the-server-kept"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
       "from_id": "dec:idea-the-term-table-is-the-residue-of-a-capture-procedure-not-a-maintained-artifact",
       "properties": {
         "evidence": "The brainstormed idea became intent. That node measured four of five steps as already built and named the alias as the one with nowhere to write; this requirement is that one step, promoted on Anthony's word. Drawn from the idea to what it became, which is how a promotion is recorded."
@@ -61247,6 +61282,12 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:planned-epochs",
+      "properties": {},
+      "to_id": "fact:plan-epoch-on-an-existing-epoch-resets-its-status-to-planned"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "cap:propagate",
       "properties": {},
       "to_id": "fact:a-traversal-re-read-the-same-adjacency-7-times-over-because-region-walks-overlap"
@@ -61973,6 +62014,18 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "env:dev",
+      "properties": {},
+      "to_id": "fact:the-claude-code-harness-on-the-dev-box-kills-background-cargo-runs-and-blocks-long-sleeps"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "fact:a-piped-gate-reports-the-pipes-exit-code-not-the-gates",
+      "properties": {},
+      "to_id": "fact:the-pipe-trap-recurred-twice-on-2026-09-12-a-month-after-it-was-written-down"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "fact:defect-kit-manifest-drift-is-invisible-to-ci",
       "properties": {},
       "to_id": "fact:the-kit-manifest-gate-cannot-run-in-ci-because-ci-is-never-installed-into"
@@ -62083,6 +62136,12 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "rule:nothing-lands-on-main-directly",
+      "properties": {},
+      "to_id": "fact:gh-pr-edit-fails-on-a-projects-classic-error-and-changes-nothing"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "rule:success-is-read-from-the-authoritative-object",
       "properties": {},
       "to_id": "fact:a-gates-own-suite-stayed-green-through-a-rewrite-of-the-half-it-never-covered"
@@ -62097,7 +62156,19 @@
       "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "rule:success-is-read-from-the-authoritative-object",
       "properties": {},
+      "to_id": "fact:gh-pr-checks-json-is-unsupported-here-and-a-poll-on-it-reads-as-a-false-all-clear"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "rule:success-is-read-from-the-authoritative-object",
+      "properties": {},
       "to_id": "fact:the-root-cause-was-on-the-record-and-a-session-re-derived-it-anyway"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "rule:the-export-is-written-once-per-branch",
+      "properties": {},
+      "to_id": "fact:format-before-the-export-or-the-export-is-written-twice"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -201934,6 +202005,17 @@
       }
     },
     {
+      "node_id": "dec:a-windows-build-waits-for-a-windows-user",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "The release matrix builds linux-x86_64 (ELF) and macos arm64/x86_64 (Mach-O); on Windows the installer refuses with \"build from source\". Adding a windows-x86_64 target is mostly CI configuration, but RocksDB's C++ build on Windows is the unknown that can cost a day, and a target in the matrix is a promise that has to be kept green on every release. No user has asked. Anthony, 2026-09-12: go with the recommendation — not until someone on Windows asks. The trigger is a request from a Windows user, at which point this decision is superseded and the target is added.",
+        "kind": "choice",
+        "name": "A Windows (PE) build of reflow2-mcp waits until someone on Windows asks for it",
+        "rationale": "Raised by Anthony's question about executable formats (PE / ELF / Mach-O) on 2026-09-12 while the local profile moved to a release binary (increment 430). Recorded so the absence of a Windows target reads as a choice with a trigger rather than an oversight.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:absorb-rocksdb-024-unchanged-then-switch-separately",
       "node_type": "Decision",
       "properties": {
@@ -203245,7 +203327,7 @@
         "decision": "🕐 DEFERRED 2026-08-14 BY ANTHONY — THE SHAPE ONLY, AND DEFERRED IS NOT DECLINED. Asked which form vertical linking should take, he chose to **fix `req:decomposition-covers-its-parent` FIRST and decide the shape after**: every option below makes decomposition more load-bearing, the coverage hole is already measured with a field instance, and settling a tier shape on top of a broken roll-up would bake the defect into precisely the boundary where nobody can see it.\n\n⭐ **AND THE ASK IS NARROWER THAN \"OPTIONS, NONE CHOSEN\" SUGGESTS — ANTHONY CLARIFIED WHAT ALEX MEANS:** *\"I think my brother is more indicating that each tier is its own reflow2 graph that others are linked to vertically.\"* ⇒ **ALEX IS ASKING FOR OPTION (b): A GRAPH PER TIER, WITH VERTICAL LINKS BETWEEN THEM.** Not one graph with levels, and not a rendering. When this re-opens, (b) is the stated starting position rather than an open field — the others stay on the record as roads, not as equals.\n\n⇒ WHAT IS SETTLED: nothing about the shape.\n⇒ WHAT IS NOW LIVE WORK: `req:decomposition-covers-its-parent` (moved to **accepted** on his word) → `cap:decomposition-coverage-is-asked` (planned, `cmp:detect`). ⚠️ Its gap acknowledgement `decision:ack:1947285897ace4dc` — *\"deferred on Anthony's word 2026-07-28… a handshake to design rather than a check to write\"* — was WITHDRAWN, since a parked gap and a planned capability cannot both describe the same work.\n\n🎯 **RE-ASK TRIGGER, NAMED SO THIS CANNOT DEGRADE INTO NEVER ASKED AGAIN** (the shape `dec:the-other-uaf-domains-wait-for-a-project-that-needs-them` set): re-open when the coverage check is BUILT and one of — (i) a real design is split across an authority boundary and someone needs a parent's number to mean something, (ii) `dec:idea-intent-crosses-designs` is settled, since binding-versus-visible is this question in disguise, or (iii) a second user asks for tiers.\n⚠️ WHAT WOULD MAKE THIS DEFERRAL WRONG: someone building a tier hierarchy in prose or file layout while waiting — the workaround that looks like patience and costs exactly what the deferral was meant to avoid.\n📌 NOT ANSWERED BY THE RENDERING ROUTE: `dec:idea-a-view-can-slice-by-altitude-not-only-by-aspect` covers what a reader is SHOWN. It composes with this and does not substitute for it — a first version of that node claimed otherwise and was corrected.\n\n═══════════════════════════════════════════════\n\nRECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Alex (`who:alex`) 2026-08-14, sharpened by Anthony's framing.\n\nALEX'S WORDS: *\"I found myself wanting a top level graph and then graphs for the different components. The top level graph could hold information about the project as a whole and be aware of the graphs for the subcomponents of the graph (UI, API, e2e tests, etc.). In those graphs, we can put the fine details of those components, such as storing information about how migrations are performed in the database. The top level graph could contain domain knowledge that is relevant to all the graphs. This is the system of systems concept.\"*\n\nANTHONY'S FRAMING: *\"instead of being peer-to-peer, this is more tier-to-tier. If peer-to-peer linking is 'horizontal', this idea is more 'vertical' between tiers… you could have a 'leadership' level that doesn't need to know every detail… a 'management' layer that knows more… a 'worker' graph that knows details. At each layer, it is probably the exchange of breadth for depth. In the military, we had 'strategic', 'operational', and 'tactical'.\"*\n\n═══ ⭐⭐ WHY VERTICAL IS NOT HORIZONTAL REUSED ═══\n\n**HORIZONTAL is an INTERFACE.** Two designs meet at a contract; neither contains the other; the coordinate is *\"I designed against your published surface at this hash\"* (`cap:mirror-surface`). A mirror is a REFERENCE.\n**VERTICAL is a DECOMPOSITION.** The upper tier holds intent, the lower tier holds requirements decomposed FROM it, and delivery ROLLS UP — a containment-and-satisfaction relation with arithmetic attached.\n\n⇒ **reflow2 HAS decomposition INSIDE a graph and mirroring ACROSS graphs. It does not have decomposition ACROSS graphs.** That is the gap, and the existing federation work does not close it.\n\n═══ 🛑 MEASURED CORRECTION TO THE RECORD — the parent direction is NOT built ═══\n\n`dec:idea-intent-crosses-designs` asserts *\"THE MECHANISM FOR THE PARENT DIRECTION ALREADY EXISTS… ANTICIPATED and BUILT, not missing.\"* **Too strong:**\n  1. `report.rs` rolls delivery up via `decomposed_children` = `self.incoming(parent_id, DECOMPOSES)` (`graph.rs:1143`).\n  2. Reads are scoped to the bound `graph_id` and `create_edge` resolves BOTH endpoints in scope — a `DECOMPOSES` edge between two graphs cannot be created at all.\n  3. ⇒ **Nothing rolls up across a design boundary.** `cap:derived-completion` is verified WITHIN one graph.\n  4. Mirroring does not rescue it: `export_surface` publishes published Interfaces, the artifacts that SPECIFY/REALIZE them, published Requirements and the Project — **no Verifications.** Delivery = satisfied AND realized AND PASSING CHECK, so **the evidence is exactly the part that does not cross.**\n📌 That node warns *\"READ THE EXPORT, NOT THE SUMMARY\"* after making this error once, then makes it again a paragraph later about a different mechanism.\n\n═══ ⭐⭐ THE TIER FRAMING TURNS A KNOWN DEFECT INTO A WORSE ONE ═══\n\n`req:decomposition-covers-its-parent`: reflow2 rolls delivery UP and **never checks that children COVER the parent** — a parent split into two children addressing a tenth reports DELIVERED once both close. Measured instance: reflow's monolith split into 01a–01f, `context_management` and `self_improvement` present in all six originals, absent from all seven children, **unnoticed for months**.\n\n🛑 **\"EXCHANGE OF BREADTH FOR DEPTH\" IS THE MECHANISM THAT HIDES IT.** A decomposition by SUBJECT drops what belongs to no single subject; trading breadth for depth is that drop made deliberately, tier after tier. Inside one graph a reader sees both sides. **Across an authority boundary they cannot: the strategic tier sees `delivered` and is structurally unable to see what fell between the children** — and it is the tier least likely to look.\n\n═══ 📌 WHAT THE DESIGN ALREADY HOLDS ═══\n\n  · `dec:nested-graphs` (ACCEPTED 2026-07-25) — a graph per OWNERSHIP boundary, `level`s inside; *a graph per system* rejected as a RULE because every seam costs a coordinate, a roll-up and a freshness check. **Alex's UI/API/e2e split is depth under one owner, so under today's rule it is ONE graph — which is exactly the rule his ask strains.**\n  · **THE LEADERSHIP TIER IS ALREADY THERE, EXPRESSED HORIZONTALLY** — that decision calls `docs/org-scale-vision.md`'s *\"one graph the whole company plans in\"* a road not taken and replaces it with *\"the CEO's objectives are one design that others MIRROR.\"* Anthony's point is that a mirror may be the wrong shape, and the roll-up finding says he is right: mirroring gives visibility, not arithmetic.\n  · `dec:idea-intent-crosses-designs` — requirements already cross; the **Decision** cannot. Its unanswered question is this one in disguise: **is a mirrored Decision BINDING on the far side, or only VISIBLE?** Binding is what a tier means; visible is what a peer means.\n  · `dec:idea-many-graphs-one-store`, `dec:idea-one-owner-many-projects` — both open, both the ownership rule strained by people with depth and no authority boundary.\n\n🛑 MODELLING TRAP TO NAME BEFORE ANYONE BUILDS: `Component.level` (component → subsystem → system → system_of_systems → enterprise) is an **ASSEMBLY** ladder — *part of*. Strategic/operational/tactical is an **AUTHORITY and ABSTRACTION** ladder — a tactical design is not PART OF a strategic one, it REALIZES it. Reusing `level` conflates two relations, and `hierarchy_issues` already reads it the assembly way.\n\n📌 UAF, CHECKED RATHER THAN ASSUMED: `dec:the-other-uaf-domains-wait-for-a-project-that-needs-them` names its re-ask trigger for the four DOMAINS (information, materiel, personnel, states), not for layering. **This note does not trigger it.**\n\nOPTIONS — SHAPE DEFERRED, and (b) is what Alex is asking for.\n(a) ANSWER WITH THE ACCEPTED RULE — one graph, `level`s, `cap:scoped-analysis`. Correct today; occurred to neither user.\n(b) ⭐ **ALEX'S ASK** — VERTICAL AS A FIRST-CLASS RELATION: a graph per tier, cross-graph decomposition, intent down and EVIDENCE up. Cost: cross-graph edges, or a mirror carrying verification state; reopens `create_edge`'s endpoint invariant, which is deliberate and well-argued.\n(c) VERTICAL AS MIRRORING, AS TODAY. Cheapest, already decided; the parent can compute nothing about its children.\n(d) TIERS INSIDE ONE GRAPH — an abstraction ladder distinct from `Component.level`, tiers as a projection. No separate ownership or write locks, which is most of what a tier split is for.\n(e) ⭐ **CHOSEN AS SEQUENCING, NOT AS SHAPE** — fix the coverage check first.\n\n📌 ALEX'S OWN EXAMPLE IS STILL UNHOUSED: *\"how migrations are performed in the database\"* is not a requirement, capability or interface — operational know-how attached to a component, with nowhere to go today but an Artifact or a requirement's prose.",
         "name": "DEFERRED, SHAPE ONLY — vertical (tier-to-tier) linking: Alex means A GRAPH PER TIER linked vertically (option b), and the FORM waits behind the decomposition coverage check",
         "rationale": "Captured under the brainstorm skill, sharpened by Anthony's vertical/horizontal framing, deferred as to shape on his word, and then narrowed again when he clarified that Alex means a graph per tier rather than levels or a view. That clarification is recorded on the options list itself rather than only in prose, because the re-ask trigger will bring someone back to this node months from now and \"options, none chosen\" would hand them a blank field when the user has in fact stated one. The re-ask trigger follows the precedent `dec:the-other-uaf-domains-wait-for-a-project-that-needs-them` set, including naming what would make the deferral wrong. The measured correction to `dec:idea-intent-crosses-designs` lives here rather than being edited into that node, because withdrawing another node's claim deserves its own visibility rather than a quiet overwrite.",
-        "status": "proposed"
+        "status": "deferred"
       }
     },
     {
@@ -205382,7 +205464,7 @@
         "name": "OPEN — should the server record its own refusals (a refusals ledger per tool, kept in the design), so that \"where does reflow2 fail\" is computed rather than remembered, and a session that swallowed one can be noticed?",
         "no_relation_note": "Searched the design for a refusals ledger, friction counting and tool-failure tracking; nearest were the manual-work reports (report_manual_work records what the agent did BY HAND, not what the server refused) and dec:bl-155 (unused-tool counts, which cannot tell unused from unreachable). Neither is the same question, so no relation was drawn; the rule this is the detector leg of is linked from the rule's own text and this node is distinct from it by type and by asking the mechanism rather than stating the practice.",
         "rationale": "Raised beside the rule rather than left in the conversation because the rule's own text names it as owed: the rule is the instruction leg, the defect facts are the record leg, and nothing notices a refusal nobody wrote down. Whether any of it is worth building is Anthony's call; the cheapest measurement first would be (b) run for a week to see how many refusals a real session meets, since the wallpaper objection to (a) turns entirely on that number.",
-        "status": "proposed"
+        "status": "superseded"
       }
     },
     {
@@ -206610,7 +206692,7 @@
         "kind": "choice",
         "name": "PROPOSED — the version guard widens to ENUM VALUES and stops there: property additions and semantic changes stay outside any structural fingerprint",
         "rationale": "THE THREE CLASSES ARE NOT EQUALLY HARMFUL, and that is what decides the scope. An ENUM VALUE is the severe one: Decision.status gaining `deferred` moves no count and no name, an older binary opens the graph with no warning, compares status == \"proposed\", and the decision does not error — it VANISHES from loop_status and what_next. That is the exact harm the guard's own refusal names. A PROPERTY ADDITION makes an older reader show fewer fields, which it can already tell, and mis-filters nothing; this project adds properties constantly (the fourteen-holes work alone), so recording them would turn nearly every release into a migration for a harm that is \"you saw less\". A SEMANTIC CHANGE — a field's meaning moved while its name did not — is beyond any structural fingerprint, so widening the stamp further would not reach it and claiming otherwise would be the overstating failure.\n\nWHY NOT (b), per-change identities: it is a registry somebody maintains forever, and its failure mode is a change that lands without an entry — at which point the guard actively asserts the graph is fine. This project has already found that a retirement is two edits, not one, with RETIRED_NODE_TYPES. Semantic changes are the only class that NEEDS (b), and they are rare enough that the registry's cost is not yet earned. It stays open.\n\nWHY NOT (c), severity per change: somebody has to classify each change, and the incentive at the moment of classifying is always the cheaper severity. The population probe already gives the honest form of severity for free — a declared value nobody stores is no severity at all.\n\nWHY NOT (d), nothing: the probe only works for what the stamp NAMES, and before this it could not name an enum value.\n\nTHE TENSION WITH THE STAMP'S OWN REASON FOR BEING SMALL — \"it must not depend on the vocabulary it is describing\" — is real and was answered rather than routed around: the stamp already names types, which are vocabulary; enum values are the same kind of fact one level finer, the field is `#[serde(default)]` so every older stamp still parses, and the values do not enter content_hash, so lineage is untouched. Size is a few hundred short strings.\n\nONE HONEST LIMIT, stated in the code where it lives: reflow2 keeps no registry of REMOVED enum values, so when a graph holds a value this binary lacks the guard cannot say whether the binary is behind or the value was removed. It names both possibilities and hands the reader the only discriminator there is — the two stamps' own versions — rather than asserting the commoner case and being confidently wrong on the day somebody removes a value. When that day comes, the fix is the registry types already have.\n\nSEQUENCED BEFORE dec/req:an-idea-that-stopped-is-not-counted-as-debt on Anthony's word (2026-09-11, \"go with your suggested order\"), because that increment adds exactly the enum value this guard could not see.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -211409,6 +211491,15 @@
         "enforced": false,
         "name": "reflow2 targets ANY MCP CLIENT — that it can call an MCP server is the only assumption, and everything agent-facing rides a tool result",
         "statement": "Anthony, 2026-08-26: *\"let's assume that the only thing in common between each possible setup is an mcp and the graph. we should try to minimize agent specific harnesses, etc and make this as agnostic to a given agentic coding setup as possible.\"*\n\nSharpened the same day by his own correction: *\"What I was trying to describe is AI coding agents, agentic development platforms, or generative IDEs... things like Claude Code, Grok Build, Copilot CLI, Cursor, OpenCode, Google Antigravity... assume they can access an mcp (and thus reflow2) and that they can read/write (via the mcp) the graph. This is about as low a common denominator as I can think.\"*\n\n═══ THE RULE — **ONE** ASSUMPTION, NOT TWO ═══\n\n**reflow2 targets ANY MCP CLIENT. Assume only that the product the agent runs inside can call an MCP server — everything else follows or is unavailable.**\n\nThe first draft said \"MCP and the graph\" as though they were two things. They are not. **The graph is reachable BECAUSE of MCP** — no product reads `.reflow2/graph` or the export directly; it reads and writes through tool calls. So the lowest common denominator is a single capability, and stating it as two invited the mistake of assuming file access alongside it.\n\n⭐ **THE TEST:** *if this shipped and the user were on Cursor, or Copilot CLI, or Google Antigravity — what would they get?* If the answer is \"nothing\", the mechanism is in the wrong place, however well it works where it works.\n\n═══ WHAT THIS PUTS OUTSIDE THE LINE ═══\n\nEverything agent-facing must ride **a tool result or a tool schema**. Not available by assumption: hook events, settings files, slash commands, a memory directory, a `CLAUDE.md`-style instruction file, or any script the product must be configured to execute. Each may ship as an ADDITION where it works; none may be the mechanism a capability rests on.\n\n📌 **A DISTINCTION THE RULE MUST NOT BLUR: AGENT-FACING IS NOT CI-FACING.** `tools/reflow2_check.py`, `check_intent_authority.py` and the rest of the kit's gates are run by a BUILD, not by an agent, and a build genuinely does have a filesystem and a shell. This rule constrains what reflow2 assumes of the thing an agent is *typing into*; it says nothing about CI, and reading it as forbidding the gates would be wrong.\n\n═══ ADVISORY, AND STATED RATHER THAN LEFT UNSTATED ═══\n\nAnthony chose `enforced: false` on 2026-08-26, asked as a consequence question rather than a category one. **Written down explicitly instead of omitted**, because absent would mean nobody had said, and somebody has.\n\n⚠️ **WHY NOT ENFORCED — A COST, NOT A DOUBT.** reflow2 violates this today in mechanisms that work and are relied on: four hook registrations across three events, 23 slash commands, `.claude/settings.json`. Gate-blocking it would fail reflow2's own build on the day it landed, and `unverified_enforced_rule` would then demand a passing detector able to tell AGENT-FACING from INSTALL-TIME — a distinction `req:init-installs-only-the-harness-you-name` needs, since the installer writes per-product MCP configs on purpose and always will.\n\n═══ WHAT IT REOPENS, AND THIS IS THE PART WITH TEETH ═══\n\n`dec:idea-the-loop-nudge-exists-for-one-harness-only` (ACCEPTED 2026-08-14) chose option (c), ANNOUNCE THE ABSENCE, and left two open:\n\n- **(b)** register a per-product equivalent wherever an event model is confirmed to exist\n- **(d)** MOVE THE TRIGGER OFF THE PRODUCT — *\"the server sees every tool call\"* — unchosen for one stated reason: *\"the server cannot block a session's stop, which is the one moment the nudge is worth most.\"*\n\n**This rule does not overturn that decision; it changes which open option is preferred.** Being told you have no loop trigger becomes the FLOOR, not the answer, and (d) becomes the direction — with the stop-blocking limit as a real constraint on how much of the loop can move, not a reason to stop.\n\n📌 TWO REQUIREMENTS ALREADY ARGUE THIS FROM OTHER GROUNDS AND THIS GENERALISES THEM: `req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue` and `req:conventions-ride-the-tool-not-only-the-skill`. Both say a discipline must travel on the tool result. Neither says WHY that is also the only portable channel — this does.\n\n📌 THE MEASUREMENT: `fact:reflow2s-mechanisms-for-reaching-an-agent-are-mostly-claude-code-shaped` — ~150 MCP tools, 21 served skills and every detector reach every product; 4 hook registrations, 23 commands and the memory directory reach one.\n\n═══ VOCABULARY — SETTLED, WITH A LIMIT ═══\n\n⭐ **\"ANY MCP CLIENT\" IS THE AGREED PHRASE** (`dec:idea-what-do-we-call-the-thing-that-runs-the-agent`, ACCEPTED 2026-08-26). The category is deliberately not named: no industry term is settled, and MCP's own word — *host* — collides with `dec:central-host`, where host means the machine SERVING reflow2. Naming the ASSUMPTION cannot go stale as vendors rename themselves. Where a user must choose, `init` asks with a LIST of product names rather than any abstraction.\n\n⚠️ **THE LIMIT: 85 EXISTING NODES STILL SAY \"HARNESS\", INCLUDING THIS ONE ABOVE, AND THEY WERE NOT SWEPT.** Endorsing a phrase is not authorising an 85-node rename. The design is bilingual for now — honest debt, named here so a later reader meets it rather than reading it as carelessness."
+      }
+    },
+    {
+      "node_id": "rule:never-a-bare-cargo-clean-on-the-dev-box",
+      "node_type": "DesignRule",
+      "properties": {
+        "category": "convention",
+        "name": "Never a bare `cargo clean` on the dev box — scope the clean, or lose the 34-minute RocksDB C++ build",
+        "statement": "A bare `cargo clean` destroys the librocksdb-sys C++ build cache, and the next build is ~34 minutes cold instead of ~50 seconds warm (release rebuild ~7.5 min via tools/reflow2-rebuild.sh). The target directory regrows by roughly 250 GB per day of building and does need clearing, so the rule is HOW, not whether: `rm -rf target/{debug,release}/incremental`, then `cargo clean -p reflow2-core -p reflow2-mcp` — the project's own crates only. Measured 2026-09-12 (a scoped clean took disk from 99% to 37% with the RocksDB cache kept). Wrap heavy cargo runs in `systemd-run --user --scope -p MemoryMax=6G` (the box's OOM note). Advisory: nothing can gate a shell command, so this lives where any agent on the box reads it. Moved here from an agent's machine-local memory file on 2026-09-12 (rule:a-rule-the-project-follows-lives-in-the-graph-not-in-an-agents-memory)."
       }
     },
     {
@@ -225992,6 +226083,19 @@
       }
     },
     {
+      "node_id": "fact:format-before-the-export-or-the-export-is-written-twice",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "finding",
+        "name": "Run cargo fmt --all BEFORE the export: a reformat after it changes artifact checksums and forces a second export and an amended commit",
+        "statement": "Measured on PR #490 (2026-09-12): the increment's Rust edits were never formatted; CI's Format gate was the only red; running `cargo fmt --all` then changed three source files whose checksums the design holds, which meant accepting three baselines, re-exporting, and amending — a full extra cycle for whitespace. The order that avoids it, for this repo's chain: build → tests → `cargo fmt --all && cargo fmt --all --check` → clippy → toolsnap/render/lint → graph record → checksums → export → gates with `rc=$?` captured → commit. The export is last relative to every file the design checksums, and formatting is a file change. Moved here from an agent's machine-local memory file (rule:a-rule-the-project-follows-lives-in-the-graph-not-in-an-agents-memory).",
+        "subject_id": "rule:the-export-is-written-once-per-branch",
+        "valid_from": "2026-09-12"
+      }
+    },
+    {
       "node_id": "fact:four-frame-corrections-in-one-session-all-the-same-shape",
       "node_type": "TemporalFact",
       "properties": {
@@ -226038,6 +226142,32 @@
         "statement": "A THIRD MEASURED INSTANCE OF THIS REQUIREMENT, and the first that NO EXISTING MECHANISM CAN REACH.\n\nproj:chama, ten minutes into its first genesis, ran detect_defects: 10 structural defects, 8 of them `unthreaded_cluster` — every requirement sitting with its satisfying capability as a 2-3 node island.\n\n**THAT SHAPE IS THE PLAN, AND REFLOW2 SAYS SO IN THREE PLACES AT ONCE.** The genesis skill instructs 'do NOT create Components yet — leaving structure unspecified is deliberate'. `concept_without_design` fires at the same moment describing the same state APPROVINGLY (detect.rs:129: it 'fires only at ZERO components'). And heal.rs states in its own comment that CONTAINS is not a traceability edge and `design_network()` drops nine node types — so a design with no Components CANNOT thread, by construction. Two detectors read one graph state; one calls it the plan, the other calls it a defect.\n\nIt resolved on its own (10 → 6) as decisions and dependency edges arrived, which confirms phase noise. But a first-time user reading '10 structural defects' in their first ten minutes reasonably concludes they have done something wrong — and this requirement's own recorded hazard is that the correct action degrades the instrument until someone stops doing it.\n\n⭐ **WHY `parks` CANNOT ANSWER THIS ONE, which is what makes it a new instance rather than a repeat.** The two prior instances were fixed, or are fixable, by a ruling: `GOVERNED_BY ruling: parks` to an ACCEPTED Decision. That mechanism is PER-NODE and requires a human ruling, and heal.rs:1958-1959 already records the same limit from the other side — 'the `parks` ruling requires an ACCEPTED Decision, which is why parks cannot reach the brainstorm case at all'. Here nobody should have to rule anything: THE DESIGN ALREADY DECLARES THE PHASE, because `concept_without_design` being open IS the machine-readable statement that there are zero components. This instance is derivable with no user act at all, which none of the prior ones were.\n\nTHE REPORTER'S SUGGESTION, and it fits the existing pattern rather than inventing one: while `concept_without_design` is open, report `unthreaded_cluster` under `swept.expected_at_this_phase` — visible and counted, never silenced, the same 'report differently rather than hide' shape `swept.parked` already establishes.\n\n⚠️ NOT ESTABLISHED: whether other detectors fire on the same genesis state, and whether phase-awareness should key on `concept_without_design` specifically or on zero-Components directly. Nobody has been asked which.",
         "subject_id": "req:a-deliberate-state-is-not-a-defect",
         "valid_from": "2026-09-02"
+      }
+    },
+    {
+      "node_id": "fact:gh-pr-checks-json-is-unsupported-here-and-a-poll-on-it-reads-as-a-false-all-clear",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "finding",
+        "name": "gh pr checks --json is unsupported by the gh on the dev box; a poll loop on it exits at once and reads as \"CI finished\"",
+        "statement": "Measured 2026-09-11 while watching a PR: `gh pr checks <n> --json ...` is not supported by the apt-installed gh on the dev box, so a wait loop built on it terminated immediately and was read as \"all checks finished\" — a false all-clear, the exact shape this rule names. What works: read the workflow runs for the HEAD SHA from the REST API (`gh api \"repos/<o>/<r>/actions/runs?head_sha=<sha>\"`) and wait until none is queued or in progress; or grep the plain-text `gh pr checks` output for `pending`. Matching on the head SHA also survives a force-push, where the old run is cancelled and the new one not yet queued — a window in which \"nothing pending\" is true and meaningless. Moved here from an agent's machine-local memory file on 2026-09-12 (rule:a-rule-the-project-follows-lives-in-the-graph-not-in-an-agents-memory).",
+        "subject_id": "rule:success-is-read-from-the-authoritative-object",
+        "valid_from": "2026-09-11"
+      }
+    },
+    {
+      "node_id": "fact:gh-pr-edit-fails-on-a-projects-classic-error-and-changes-nothing",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "finding",
+        "name": "gh pr edit fails with a \"Projects (classic) is being deprecated\" GraphQL error and changes NOTHING; the REST PATCH works",
+        "statement": "Measured 2026-09-12, twice: `gh pr edit <n> --body-file …` on this repo dies with a fatal GraphQL error about Projects (classic) and leaves the PR body untouched (body length verified unchanged after both attempts) — so a PR body \"updated\" this way is silently the old one. What works: `gh api -X PATCH repos/sligara7/reflow2/pulls/<n> --input -` with `{\"body\": \"...\"}` on stdin, then read the body back and check for a sentence you know is in the new text. Also on 2026-09-12: a `gh pr create --body-file /dev/stdin <<'X'` heredoc nested inside another heredoc swallowed the PR body into the COMMIT MESSAGE; write the body to a file first and pass the path. Moved here from an agent's machine-local memory file (rule:a-rule-the-project-follows-lives-in-the-graph-not-in-an-agents-memory).",
+        "subject_id": "rule:nothing-lands-on-main-directly",
+        "valid_from": "2026-09-12"
       }
     },
     {
@@ -226546,6 +226676,19 @@
         "subject_id": "req:a-deliberate-state-is-not-a-defect",
         "valid_from": "2026-08-19",
         "value": "{\"ruling\":\"dec:a-dated-field-report-is-registered-and-parked\",\"parked\":[\"art:ophyd-service-feedback-2026-08-19\",\"art:hxm-program-feedback-2026-08-19\"],\"orphan_node\":\"honours parks - both artifacts moved to swept.parked\",\"unthreaded_cluster\":\"does NOT honour parks - new 3-node island heal:ad4ec5186566ff68\",\"defects_before_park\":36,\"defects_after_park\":37,\"defects_after_governed_by_edge\":36,\"net_cost_of_registering_two_documents\":0,\"what_fixed_it\":\"ordinary GOVERNED_BY from the ruling to req:a-deliberate-state-is-not-a-defect, true independently of the detector\",\"generalisation_risk\":\"a ruling with no parent in the main body keeps the cluster warning permanently\",\"not_established\":\"whether disconnected_community behaves the same; not exercised\"}"
+      }
+    },
+    {
+      "node_id": "fact:plan-epoch-on-an-existing-epoch-resets-its-status-to-planned",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "name": "DEFECT — plan_epoch called on an epoch that already exists resets its status to `planned`, even when only the prose was being revised",
+        "statement": "Measured on every arrival of increments 430–434 (2026-09-11/12): revising an epoch's description with `plan_epoch` (the constructor's \"call again with the same id to revise\" path) put the epoch back to `planned`, and it had to be re-arrived with `set_epoch_status`. The constructor's own contract says omitted fields keep their stored value; `status` is not a parameter, so it should be left alone on a revise and only set to `planned` on CREATE. This is the same class as BL-183 (a revise silently un-confirming a status) on a different type, and it is a root-cause fix of a few lines in the temporal slice — not built yet; recorded so it is enduring. Workaround until then: revise the prose FIRST, then `set_epoch_status(arrived)`. Moved here from an agent's machine-local memory file (rule:a-rule-the-project-follows-lives-in-the-graph-not-in-an-agents-memory).",
+        "subject_id": "cap:planned-epochs",
+        "valid_from": "2026-09-11"
       }
     },
     {
@@ -227078,6 +227221,19 @@
         "statement": "MEASURED 2026-09-10 over the committed export: **0 CALIBRATED_AGAINST edges in 23,666.**\n\n`dec:calibration-is-an-edge` was ACCEPTED on Anthony's word on 2026-08-01, on strong evidence — a project that built four independent internal diagnostics, every one of which narrowed the question correctly and none of which could have found the defect, because *no internal evidence can detect a circular fit, by construction*. The edge type is in the schema, `cap:independent-evidence` reads it, and the reporting rule is specified: a Verification that produces the evidence its own target was fitted to is CONSUMED, not independent.\n\nNobody has ever drawn one. So the guard currently answers \"no circular validation here\" on every design, and that answer is indistinguishable from \"nobody has ever recorded what anything was fitted to\". THIS IS THE EXACT FAILURE MODE THE PROJECT ALREADY NAMES ELSEWHERE — a detector reporting zero because it had nothing to run on reads identically to one that ran clean. `loop_status` refuses an unknown contributor_id for this reason; this instrument does not apply the rule to itself.\n\n⭐ AND THE FIRST HONEST INSTANCE WAS SHIPPED YESTERDAY, BY THE SESSION RECORDING THIS. `cap:a-settled-decision-names-governed-prose-that-still-reads-open` turns on nine marker phrases. Those phrases were CHOSEN BY MEASURING THEM AGAINST THIS DESIGN'S OWN CORPUS — a draft list was tried, `unresolved` and `tbd` were dropped for firing too widely on *these* nodes, and the surviving claim that the instrument is low-noise (\"43 of 640, and a good share of those are legitimate\") rests on the same 640 nodes the list was tuned on. That is a fit validated by its own fitting set, which is precisely what this capability exists to make visible, and it went unrecorded by the session that had just read the rule about it.\n\n⚠️ WHAT IS NOT CIRCULAR, so the claim is not overstated: the unit suite is six probes over SYNTHETIC prose and tests the MECHANISM, not the marker choice. It is genuine independent evidence that the block fires and stays silent correctly. Drawing the calibration edge would not and should not consume it. What is uncorroborated is narrower and real — that these nine phrases are the right nine, and that the noise floor holds on a corpus nobody tuned them against.\n\n🛑 THE EDGE COULD NOT BE DRAWN, and that is the second half of this finding rather than an excuse. `dec:calibration-is-an-edge` specifies the target as \"an Artifact or a Verification\" — the evidence the value was derived from. Here the fitting set is THE DESIGN ITSELF, and there is no Artifact registered for `docs/design/reflow2.json`. For an ordinary consumer the fitting set usually IS a file, so the decided shape fits their case; reflow2 tuning a threshold against its own graph may be the odd case, or may be a common one nobody has met yet. Whether the export should be a registered Artifact, or whether the edge should accept a design-wide subject, is a real question and is put to the user rather than answered here.",
         "subject_id": "cap:independent-evidence",
         "valid_from": "2026-09-10"
+      }
+    },
+    {
+      "node_id": "fact:the-claude-code-harness-on-the-dev-box-kills-background-cargo-runs-and-blocks-long-sleeps",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "finding",
+        "name": "Claude Code on the dev box kills background cargo runs under a \"low memory\" rule with 8 GiB free, and blocks foreground sleeps beyond a few seconds — a detached run survives",
+        "statement": "Measured repeatedly 2026-09-11/12 in the Claude Code harness on the dev box: a `cargo test` launched as a harness background task is killed with \"the system is running low on memory\" while `free` shows ~8 GiB available; a foreground `sleep` longer than a few seconds is refused. What works: launch the long run DETACHED — `setsid nohup bash -c '… > out.txt 2>&1; echo rc=$? >> out.txt' &` — and watch the output file with the harness's Monitor tool and an `until grep -q '^rc=' out.txt` loop; wrap cargo in `systemd-run --user --scope -p MemoryMax=6G` as the box's OOM note already asks. Also: `pkill -f \"<pattern>\"` where the pattern matches the shell that issued it kills that shell (exit 144). Harness-specific and box-specific, recorded on the dev environment so any agent on this box meets it; moved here from an agent's machine-local memory file (rule:a-rule-the-project-follows-lives-in-the-graph-not-in-an-agents-memory).",
+        "subject_id": "env:dev",
+        "valid_from": "2026-09-11"
       }
     },
     {
@@ -227791,6 +227947,19 @@
         "statement": "ROOT-CAUSE PASS ON OPHYD-SERVICE'S ITEM 4, run under the root-cause skill at Anthony's request, 2026-08-31.\n\n═══ ① THE SYMPTOM, WITH THE DIAGNOSIS CUT OUT ═══\nObserved (ophyd, verbatim): a CONTRADICTS edge from an exploratory Decision to an ACCEPTED Decision \"raised the main design's structural-defect count from 1 to 2 the moment it was drawn\", and loop_status carries the +1 while the idea stays open. NOT AFFECTED, and this bounds it: contradictions between TWO proposed Decisions ARE suppressed, which `proj:bhome` independently confirmed working the same day.\n\n═══ ② THE ANSWER WAS ALREADY WRITTEN DOWN, TWICE — STEP ② PAID ═══\n`dec:idea-a-proposed-decision-asserts-nothing-so-what-may-a-structural-detector-say-about-it` is ACCEPTED (2026-08-26, Anthony's word) and specifies the rule exactly: `contradiction` skips when BOTH endpoints are parked ideas; `unresolved_setup` skips when EITHER is. Its stated reason: \"A contradiction is real as soon as ONE side asserts something, so it needs both sides parked before it goes quiet.\" A counterweight test, `a_proposed_decision_is_not_treated_as_withdrawn`, exists SPECIFICALLY to defend the behaviour ophyd is objecting to: \"a parked idea that conflicts with an accepted decision is a real thing to settle.\"\n\n⇒ SO THE BEHAVIOUR IS NOT A DEFECT. IT IS A DECIDED POSITION WITH A TEST GUARDING IT.\n\n═══ ③ REPRODUCED HERE RATHER THAN TAKEN ON REPORT ═══\n`heal:43f0bd5292ef9d87` on reflow2's own graph today: `dec:idea-should-the-spine-be-re-derived-from-the-actual-structure` (exploratory, proposed) CONTRADICTS `dec:bl83a-functional-decomposition` (accepted), reported as a `contradiction` WARNING. The candidate \"the observation is wrong\" is dead.\n\n═══ ⭐⭐ ④ THE CAUSE, AND IT IS A DATE RATHER THAN AN INFERENCE ═══\n`is_parked_idea` (heal.rs:2009) keys on `status == \"proposed\"` AND NOTHING ELSE. That predicate cannot separate two things:\n  · a CHOICE somebody faced and has not settled — where a clash with settled design IS a live question, and the rule is right\n  · an IDEA deliberately held as an alternative — where the clash is the exploration working, and ophyd is right\n\nThe vocabulary that separates them EXISTS: `Decision.kind`, declared in schema/structure.yaml:141, INDEXED, values `[exploratory, choice]`, with \"ABSENT means nobody said, which is a third state and not a synonym for `choice`.\"\n\n🛑 AND IT ARRIVED FOUR DAYS AFTER THE RULE:\n    2026-08-26  3b41812  `is_parked_idea` written (#349)\n    2026-08-30  5022594  `Decision.kind` added — \"An idea is a declared kind, not an id prefix\" (#393)\n\n⇒ THE RULE KEYS ON A PROXY BECAUSE THE PRECISE PROPERTY DID NOT EXIST WHEN IT WAS WRITTEN. Nothing reads `Decision.kind` today except `linking_report` in relate.rs — a report, not a detector — and 12 of 584 Decisions carry it.\n\n═══ ⑤ WHY BOTH FIELD REPORTS ARE RIGHT ═══\nbhome praised the surfacing; ophyd objects to it; hxm_program (2026-08-26) objected to a THIRD case already fixed. All three are consistent once the conflation is named: they are describing different node kinds wearing the same `status`.\n\n═══ ⑥ THE CLASS, NOT THE INSTANCE ═══\nWould keying on `kind` have prevented hxm_program's report? NO — theirs was idea-vs-idea, fixed by the both-sides rule. So this is a genuinely different case rather than a re-fix, which is the test step ⑥ demands. The CLASS is: a detector keyed on a PROXY that predates the precise vocabulary, with nothing noticing when the vocabulary later arrives. That is the same shape as `dec:edge-orthogonality`'s test — a distinction earns its keep only if a computation reads it — pointing the other way: here the distinction was built and no computation was updated to read it.\n\n═══ ⚠️ ⑦ WHAT IS NOT ESTABLISHED, AND WHY NOTHING WAS BUILT ═══\n· NO FIX WAS WRITTEN. Changing this reverses an ACCEPTED decision and would require deleting or amending a counterweight test that exists on purpose. That is Anthony's call, not a repair.\n· THE FIX WOULD BE NEAR-INERT TODAY: 12 of 584 Decisions carry `kind`, so keying on it would change almost nothing until the property is populated — and the 572 without it would keep the current behaviour, which may be right or may be a second inconsistency.\n· A SHARPER PROBLEM SITS BESIDE IT, ALREADY RECORDED AND UNTOUCHED BY ANY OF THIS: `dec:idea-should-an-idea-be-linked-to-the-intent-that-scopes-it` measured that an idea contradicting an accepted DECISION scores +2 in what_next while one contradicting a REQUIREMENT scores 0 and is read by nothing. Its words: \"The more serious contradiction is the unread one.\" Ophyd is objecting to the case that IS read.\n· The 1-to-2 count is ophyd's measurement on ophyd's design and was not reproduced there; what was reproduced here is the FINDING, not their count.",
         "subject_id": "cap:a-finding-names-the-mechanism-that-parks-a-deliberate-state",
         "valid_from": "2026-08-31"
+      }
+    },
+    {
+      "node_id": "fact:the-pipe-trap-recurred-twice-on-2026-09-12-a-month-after-it-was-written-down",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "finding",
+        "name": "The piped-gate trap recurred twice on 2026-09-12 — a red gate was committed on both times — a month after the fact was recorded and with a rule pointing at it",
+        "statement": "`python3 tools/reflow2_check.py | tail -1 && git commit …` committed on a FAILING gate twice in one day (2026-09-12), because the pipeline's exit code is `tail`'s. The trap was first recorded 2026-08-14 (this fact's subject) and is named by rule:success-is-read-from-the-authoritative-object; the agent had both on the record and in its memory file. Both recurrences were caught before push. What works: redirect the gate to a file, capture `rc=$?` on its own line, and commit only inside `if [ $rc -eq 0 ]`. Recorded as a recurrence rather than a new lesson because the RECURRENCE is the finding: a written lesson did not change the next command, which is the measured premise behind dec:idea-does-the-agent-keep-a-notepad-in-the-graph-for-the-next-agent — the check at the step is what stops it.",
+        "subject_id": "fact:a-piped-gate-reports-the-pipes-exit-code-not-the-gates",
+        "valid_from": "2026-09-12"
       }
     },
     {
@@ -231836,7 +232005,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:61bed01b3d5dcdcfb6839432a8a6f6e6146f43f63243b01dcf8ed6c47309ccda",
+  "prev_content_hash": "sha256:b97cbc59db62ed51fb43d8e5769ca9ad7efda4686d8e09138dd90f790e17b24d",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
