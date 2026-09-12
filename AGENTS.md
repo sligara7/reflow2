@@ -84,7 +84,7 @@ python3 tools/test_init.py
 # Upsert, so it layers onto whatever is there. Takes `-` for stdin, so an export
 # on one machine pipes into an import on another. The graph is single-writer:
 # stop any running MCP server first, and the error says so if you forget.
-./target/debug/reflow2-mcp --graph-path .reflow2/graph --import docs/design/reflow2.json
+./target/release/reflow2-mcp --graph-path .reflow2/graph --import docs/design/reflow2.json
 
 # reflow2's own functional design, as a reflow2 graph (~215 nodes). The export at
 # docs/design/reflow2.json is the durable record — .reflow2/ is gitignored, so
@@ -201,13 +201,33 @@ platform with no prebuilt asset, whom the installer deliberately refuses and red
 source build.
 
 **The MCP server this repo runs on its own design graph is launched via
-[`tools/reflow2-mcp-launch.sh`](tools/reflow2-mcp-launch.sh)** (wired in `.mcp.json`), not the raw
-`target/debug/reflow2-mcp`. The wrapper content-hashes the sources and rebuilds `reflow2-mcp` iff
-they changed before exec'ing it, so every new session and every `/mcp` reconnect serves a fresh
-binary automatically. It hashes content, not mtimes, on purpose: `cargo build` keys on mtimes, and
-`git pull --rebase`/checkout can leave sources *older* than the last-built binary — which silently
-served stale code for whole sessions until this was added. All wrapper output goes to stderr;
-stdout is the JSON-RPC channel and must stay clean.
+[`tools/reflow2-mcp-launch.sh`](tools/reflow2-mcp-launch.sh)** (wired in `.mcp.json`), not a raw
+binary. **Since 2026-09-12 it serves `target/release/reflow2-mcp` and does not build it**
+(`req:a-session-runs-a-release-binary`). Measured on the same bytes with only the profile
+differing: a `propagate_from` walk 5,851 ms → 62 ms warm — 93× — and `design_regions` 12.5 s →
+2.0 s warm. Every cost number in the 2026-09-10/11 tool sweep was taken on the debug binary,
+because that is what this wrapper served.
+
+**Rebuilding is now a deliberate act: [`tools/reflow2-rebuild.sh`](tools/reflow2-rebuild.sh).**
+A release build here runs ~34 minutes cold, dominated by `librocksdb-sys` compiling C++ from
+source, so a wrapper that rebuilt on every source change would make any edit a half-hour cold
+start on the next session. The launcher therefore **refuses** when the release binary is missing
+(naming the command) and **serves-with-a-banner** when the binary is older than your source. For
+the edit-compile loop, `REFLOW2_PROFILE=debug` restores the old behaviour exactly: content-hash
+gate, automatic `cargo build`, refusal to serve a broken build.
+
+> ⚠️ **NOT REBUILDING BRINGS BACK THE FAILURE THE AUTO-REBUILD WAS ADDED FOR**, which is why the
+> staleness banner is loud and unconditional. On 2026-08-16 a stale binary answered
+> `describe_schema` with the pre-#199 `change_type` enum while main already declared `defect_fix`,
+> and the session nearly recorded the exact fiction #199 was merged to end. Nothing in a tool's
+> reply says which build answered it — `graph_report`'s `served_by.stale` is the second guard, and
+> it reads the running process rather than this document.
+
+The content hash covers sources, `schema/*.yaml` and `getting-started/skills/**/SKILL.md`, not
+mtimes, on purpose: `cargo build` keys on mtimes, and `git pull --rebase`/checkout can leave
+sources *older* than the last-built binary — which silently served stale code for whole sessions
+until this was added. All wrapper output goes to stderr; stdout is the JSON-RPC channel and must
+stay clean.
 
 > ⚠️ **`/mcp` RECONNECT DOES NOT PICK UP YOUR REBUILD, AND THIS PARAGRAPH SAID IT DID UNTIL
 > 2026-08-17.** The old wording — *"you must `/mcp` reconnect reflow2 (or restart the session) for
@@ -225,7 +245,7 @@ stdout is the JSON-RPC channel and must stay clean.
 > is at the path):
 >
 > ```bash
-> ./target/debug/reflow2-mcp --graph-path ./.reflow2/graph --stop-shared
+> ./target/release/reflow2-mcp --graph-path ./.reflow2/graph --stop-shared
 > ```
 >
 > `crates/reflow2-mcp/src/service.rs`'s own `STALE_NOTE` has said this correctly since 2026-08-11
@@ -255,7 +275,7 @@ repository configure an executable, so each clone defines it once:
 
 ```bash
 git config merge.reflow2.name 'reflow2 design export merge'
-git config merge.reflow2.driver 'target/debug/reflow2-mcp --merge-driver %O %A %B'
+git config merge.reflow2.driver 'target/release/reflow2-mcp --merge-driver %O %A %B'
 ```
 
 Then two people editing different parts of the design merge with no conflict, and a real
@@ -294,6 +314,7 @@ python3 tools/reflow2_check.py --export docs/design/reflow2.json   # design vs b
 python3 tools/check_intent_authority.py docs/design/reflow2.json    # settled intent carries the owner's name
 python3 tools/vocabulary_reach.py --check                # a NEW declared property the surface cannot write
 python3 tools/check_command_surface.py                   # the skill/command copies still agree
+python3 tools/launch_serves_release.py                   # the launcher serves release and builds nothing there
 ```
 
 > **This list is a SUBSET and `ci.yml` is the authority.** The full job also runs the instruments
