@@ -355,20 +355,30 @@ one of them may touch `docs/design/reflow2.json`, and it should be the last.
 > own the moment work started. Recorded as `dec:a-graph-claim-cannot-be-published-before-its-pr`;
 > do not treat the claims layer as proven under contention until that is answered.
 
-The gate checks
-this since BL-107 and will fail the build if you get it wrong:
+The gate checks this since BL-107 and will fail the build if you get it wrong.
+
+Each export records the `content_hash` of the one it replaced, which gives the design a history
+independent of git. **Since 2026-09-12 that link anchors at the COMMITTED record, not at the file
+on disk** (`req:the-server-keeps-the-working-tree-export-current`): inside a git repository the new
+document chains from this path as it stands at the *merge-base with the default branch*. So any
+number of exports on a branch each chain from the same committed ancestor, a squash-merge lands
+exactly one hop, and **`dec:export-once-per-pr` now holds by construction** — the old dance of
 
 ```bash
 git checkout docs/design/reflow2.json    # start from what is committed
-# …then export_graph --path docs/design/reflow2.json --overwrite, ONCE, last of all
+# …then export ONCE, last of all
 ```
 
-Each export records the `content_hash` of the one it replaced, which gives the design a history
-independent of git. That link is built from **whatever file is already at the target path**, so
-there are two ways to break it and both are silent without the gate: exporting somewhere else and
-copying the file into place (there was nothing to link to), or exporting **twice** between commits
-(the committed record then links to an intermediate that was never committed, leaving a hole).
-Make every graph write first; restore and export once at the end.
+is no longer required to keep the chain honest. Export when you like; the anchor does not move.
+Read **`chained_from`** in the receipt — `origin/main@<sha>` means the committed anchor was used,
+`disk` means the fallback was, and `chain_note` says why. Merge-base rather than the tip of the
+default branch is deliberate: on a long-lived branch `origin/main` moves underneath you, and
+anchoring at the tip would claim descent from work the branch never contained.
+
+Outside git, or before the export path is committed, the old on-disk behaviour stands unchanged
+and both of its silent breakages still apply — exporting somewhere else and copying the file into
+place (there was nothing to link to), or exporting twice between commits. reflow2 assumes nothing
+about git; the improvement is to the anchor, never a requirement.
 
 **CI enforces these on every push** (`.github/workflows/ci.yml`): a fast core job
 (core tests, clippy `-D warnings`, fmt, schema, installer suite, skill lint) and a full job
