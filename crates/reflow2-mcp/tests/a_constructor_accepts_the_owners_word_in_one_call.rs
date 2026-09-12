@@ -204,6 +204,8 @@ async fn a_rules_power_is_settled_intent_and_needs_the_owners_name() {
         distinct_from: None,
         approver: approver.map(str::to_string),
         acted_at: None,
+
+        steps: None,
     };
     let err = s
         .add_design_rule(Parameters(rule(Some(true), None)))

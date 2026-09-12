@@ -1563,6 +1563,12 @@ pub struct DesignRuleReq {
     /// When the approver acted, as a plain date. Stored on the approver edge.
     #[serde(default)]
     pub acted_at: Option<String>,
+    /// The served SKILL names and/or served TOOL names this rule concerns —
+    /// where it is DELIVERED (`get_skill`, the tool list). Validated against
+    /// what this server serves; an unknown name is REFUSED with the nearest.
+    /// Optional: a rule naming no step is still a rule, just not delivered.
+    #[serde(default)]
+    pub steps: Option<Vec<String>>,
 }
 
 /// One Actor for `add_actor`.
@@ -4603,6 +4609,14 @@ pub struct RecordFindingReq {
     /// neither check nor overturn.
     #[serde(default)]
     pub cause_evidence: Option<String>,
+    /// The served SKILL names and/or served TOOL names this finding concerns —
+    /// where it is DELIVERED: `get_skill` carries it beside that skill's body,
+    /// and the tool list carries it on that tool's description, so the lesson
+    /// reaches the agent with its hands on the step. Validated against what this
+    /// server serves; a name that is neither is REFUSED with the nearest names.
+    /// Optional: a finding naming no step is still recorded, just not delivered.
+    #[serde(default)]
+    pub steps: Option<Vec<String>>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -5567,8 +5581,60 @@ impl ReflowService {
     }
 }
 
+impl ReflowService {
+    /// The lessons this design holds for one step (a skill or tool name),
+    /// newest first. Best effort and read-only: never able to withhold the
+    /// skill or the listing it rides on. See [`crate::lessons`].
+    pub(crate) async fn lessons_for_step(&self, step: &str) -> Vec<crate::lessons::Lesson> {
+        let g = self.graph.read().await;
+        crate::lessons::lessons_by_step(&g)
+            .remove(step)
+            .unwrap_or_default()
+    }
+
+    /// The served tool list with this design's lessons appended to the
+    /// descriptions of the tools they name — the moment before the call.
+    pub async fn tools_with_lessons(&self) -> Vec<rmcp::model::Tool> {
+        let tools = self.tool_router.list_all();
+        let by_step = {
+            let g = self.graph.read().await;
+            crate::lessons::lessons_by_step(&g)
+        };
+        crate::lessons::enrich_tools(tools, &by_step)
+    }
+
+    /// Test seam for the listing above — the `list_tools` override needs a
+    /// `RequestContext` no test can build, so the suite reads this instead.
+    #[doc(hidden)]
+    pub async fn tools_with_lessons_for_test(&self) -> Vec<rmcp::model::Tool> {
+        self.tools_with_lessons().await
+    }
+}
+
 #[tool_handler(router = self.tool_router)]
 impl ServerHandler for ReflowService {
+    /// rmcp's own listing, with this design's lessons on the tools they name
+    /// (req:a-lesson-is-served-at-the-step-it-concerns). The body mirrors the
+    /// macro's generated one — cache hints included — so overriding it changes
+    /// nothing but the descriptions, and only where the design holds a lesson.
+    async fn list_tools(
+        &self,
+        _request: Option<rmcp::model::PaginatedRequestParams>,
+        context: rmcp::service::RequestContext<RoleServer>,
+    ) -> Result<rmcp::model::ListToolsResult, McpError> {
+        let supports_cache_hints = context
+            .protocol_version()
+            .is_some_and(|v| v >= rmcp::model::ProtocolVersion::V_2026_07_28);
+        Ok(rmcp::model::ListToolsResult {
+            result_type: Some(rmcp::model::ResultType::COMPLETE),
+            tools: self.tools_with_lessons().await,
+            meta: None,
+            next_cursor: None,
+            ttl_ms: supports_cache_hints.then_some(0),
+            cache_scope: supports_cache_hints.then_some(rmcp::model::CacheScope::Public),
+        })
+    }
+
     /// The macro's own `call_tool`, plus one sentence on an unknown-field
     /// refusal. Overridden rather than generated because the refusal is
     /// produced before any handler runs, and the one thing the server knows

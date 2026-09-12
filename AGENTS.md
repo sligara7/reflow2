@@ -324,7 +324,8 @@ python3 tools/render_skills_and_tools.py --check         # docs/skills-and-tools
 > `test_degraded_server`, `test_nudge_path`, `test_loop_nudge`, `test_render_views`,
 > `test_stale_seat`, `test_reflow2_check`, `check_doc_versions`, `test_check_doc_versions`,
 > `test_skill_lint`, `self_host_uses_documents`, `test_check_intent_authority`, `test_vocabulary_reach`,
-> `test_export_to_reaches_the_daemon`, `test_feedback_is_a_computed_tally` — so **green here is not green
+> `test_export_to_reaches_the_daemon`, `test_feedback_is_a_computed_tally`,
+> `test_a_lesson_is_served_at_the_step` — so **green here is not green
 > there**, and *"believe CI"* below is not a figure of speech. Run the ones your change touches;
 > [docs/sharpening.md](docs/sharpening.md) says which instrument covers what.
 >
@@ -407,6 +408,14 @@ unit is the project, not the session. `usage_report` renders the window since th
 (and leaves the marker that closes it); the served `feedback` skill — `/feedback` — is how a person
 gets that tally plus the agent's per-row dispositions into the project's own `reflow2_feedback.md`,
 which goes nowhere unless they carry it. An in-memory design has no ledger and says so.
+
+**Since 2026-09-12 a lesson is served at the step it concerns** — a `DesignRule` or `TemporalFact`
+may name the served skills and tools it is about in `steps` (`record_finding` / `add_design_rule`;
+a name nothing serves is refused with the nearest). `get_skill` then carries the design's lessons
+for that skill beside its body, and `tools/list` appends them to the named tool's description — the
+moment before the call. An empty design serves the surface unchanged (the toolsnap goldens pin it).
+The reason is measured: the same trap was written down three times and repeated; what stopped it
+each time arrived at the step (`req:a-lesson-is-served-at-the-step-it-concerns`).
 
 **CI enforces these on every push** (`.github/workflows/ci.yml`): a fast core job
 (core tests, clippy `-D warnings`, fmt, schema, installer suite, skill lint) and a full job

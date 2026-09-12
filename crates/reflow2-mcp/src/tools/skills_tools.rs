@@ -160,6 +160,25 @@ impl ReflowService {
         if let (Some(lens), Some(obj)) = (self.lens_for_response().await, payload.as_object_mut()) {
             obj.insert("lens".into(), serde_json::Value::String(lens));
         }
+        // And so do the design's own lessons for this step, for the same reason
+        // (req:a-lesson-is-served-at-the-step-it-concerns). Best effort: a
+        // skill is served whether or not the graph could be read.
+        let lessons = self.lessons_for_step(skill.name).await;
+        if let (false, Some(obj)) = (lessons.is_empty(), payload.as_object_mut()) {
+            obj.insert(
+                "lessons".into(),
+                json!({
+                    "note": format!(
+                        "{} lesson(s) THIS DESIGN holds for the `{}` step, recorded by \
+                         earlier sessions on this project. Read them before the work; a \
+                         lesson filed elsewhere was measured not to change the next call.",
+                        lessons.len(),
+                        skill.name
+                    ),
+                    "items": lessons,
+                }),
+            );
+        }
         structured(payload)
     }
     /// The working instructions, served rather than installed.

@@ -1386,6 +1386,35 @@ impl ReflowService {
             )
             .map_err(dyno_err)?,
         );
+        // Where the rule is DELIVERED (req:a-lesson-is-served-at-the-step-it-
+        // concerns): validated against what this server serves. Written as a
+        // second upsert because the core constructor's signature carries the
+        // rule's own fields and this is a serving concern, not a rule concern.
+        let node = match req.steps.as_deref() {
+            Some(steps) => {
+                let served = crate::lessons::served_steps(&self.tool_router.list_all());
+                let steps = crate::lessons::validate_steps(steps, &served)?;
+                NodeDto::from(
+                    g.upsert_node(
+                        node_ty,
+                        &req.id,
+                        reflow2_core::nodes::Props::new().set(
+                            "steps",
+                            reflow2_core::foundation::core::Value::List(
+                                steps
+                                    .iter()
+                                    .map(|s| {
+                                        reflow2_core::foundation::core::Value::from(s.as_str())
+                                    })
+                                    .collect(),
+                            ),
+                        ),
+                    )
+                    .map_err(dyno_err)?,
+                )
+            }
+            None => node,
+        };
         let found = search_first(&g, &req.id, existed, &format!("{name} {statement}"));
         if let Err(e) =
             refuse_unless_deliberate(&found, req.distinct_from.as_ref(), &req.id, "DesignRule")

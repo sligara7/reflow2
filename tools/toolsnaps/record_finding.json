@@ -89,6 +89,17 @@
           "null"
         ]
       },
+      "steps": {
+        "default": null,
+        "description": "The served SKILL names and/or served TOOL names this finding concerns —\nwhere it is DELIVERED: `get_skill` carries it beside that skill's body,\nand the tool list carries it on that tool's description, so the lesson\nreaches the agent with its hands on the step. Validated against what this\nserver serves; a name that is neither is REFUSED with the nearest names.\nOptional: a finding naming no step is still recorded, just not delivered.",
+        "items": {
+          "type": "string"
+        },
+        "type": [
+          "array",
+          "null"
+        ]
+      },
       "subject_id": {
         "description": "The node this finding is ABOUT. A node reference: it must resolve, and\na finding naming a node that does not exist is refused rather than\nstored, because a record about something the design does not have is\nnot a record.\nIts type is `node_type`, resolved from the id when omitted.",
         "type": "string"

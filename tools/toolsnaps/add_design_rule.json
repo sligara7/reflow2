@@ -68,6 +68,17 @@
           "string",
           "null"
         ]
+      },
+      "steps": {
+        "default": null,
+        "description": "The served SKILL names and/or served TOOL names this rule concerns —\nwhere it is DELIVERED (`get_skill`, the tool list). Validated against\nwhat this server serves; an unknown name is REFUSED with the nearest.\nOptional: a rule naming no step is still a rule, just not delivered.",
+        "items": {
+          "type": "string"
+        },
+        "type": [
+          "array",
+          "null"
+        ]
       }
     },
     "required": [

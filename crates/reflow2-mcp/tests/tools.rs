@@ -3461,6 +3461,8 @@ async fn add_design_rule_is_a_typed_constructor() {
         distinct_from: None,
         approver: None,
         acted_at: None,
+
+        steps: None,
     })));
     assert_eq!(node["node_type"], "DesignRule");
     assert_eq!(
@@ -3496,6 +3498,8 @@ async fn add_design_rule_records_a_stated_enforcement() {
         distinct_from: None,
         approver: Some("who:ann".into()),
         acted_at: None,
+
+        steps: None,
     })));
     assert_eq!(node["properties"]["enforced"], true);
 }

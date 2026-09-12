@@ -589,6 +589,22 @@ impl ReflowService {
                 props = props.set(k, v);
             }
         }
+        // Where the lesson is DELIVERED (req:a-lesson-is-served-at-the-step-it-
+        // concerns): validated against what this server serves, so a typo cannot
+        // file a finding where nothing will ever serve it.
+        if let Some(steps) = req.steps.as_deref() {
+            let served = crate::lessons::served_steps(&self.tool_router.list_all());
+            let steps = crate::lessons::validate_steps(steps, &served)?;
+            props = props.set(
+                "steps",
+                reflow2_core::foundation::core::Value::List(
+                    steps
+                        .iter()
+                        .map(|s| reflow2_core::foundation::core::Value::from(s.as_str()))
+                        .collect(),
+                ),
+            );
+        }
         let node = g
             .upsert_node(reflow2_core::nodes::node::TEMPORAL_FACT, &req.id, props)
             .map_err(dyno_err)?;
