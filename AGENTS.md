@@ -308,6 +308,7 @@ python3 tools/smoke_mcp.py                               # after any tool-surfac
 python3 tools/empty_speaks.py                            # an empty answer says WHICH empty — no bare zero on the wire
 python3 tools/refusal_speaks.py                          # a missing argument names the TOOL and what it wants — no bare serde string
 python3 tools/toolsnap.py                                # tool schemas vs committed goldens; --update to bless
+python3 tools/replies_are_bounded.py                     # a reply that outgrows the budget must offer a bound — and this FAILS if nothing overflowed
 python3 tools/skill_lint.py                              # after any skill or tool-surface edit
 python3 tools/test_wall_check.py                         # the wall-check instrument's own net
 python3 tools/reflow2_check.py --export docs/design/reflow2.json   # design vs build, and the export chain
