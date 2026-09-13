@@ -46,6 +46,39 @@ struct Cli {
     #[arg(long, value_name = "ADDR")]
     http: Option<String>,
 
+    /// Serve EVERY design under this directory, each selected by
+    /// `/g/<graph_id>/`, instead of the one at `--graph-path`.
+    ///
+    /// Requires `--http`: the selection rides the URL, which is what makes it
+    /// visible in logs and routable by ordinary proxies
+    /// (`cap:select-graph-by-id`). Designs open ON DEMAND, so starting a server
+    /// over a root of fifty designs opens none of them until somebody asks.
+    ///
+    /// ⭐ THE ROOT IS THE TENANT BOUNDARY
+    /// (`dec:the-registry-root-is-the-tenant-boundary`). This server routes
+    /// WITHIN the root and has no operation that crosses one, so an operator
+    /// serving several tenants gives each its own root and its own process.
+    /// Listing stays unfiltered because a filtered one would need reflow2 to
+    /// know who is asking — an identity system this design has twice refused.
+    ///
+    /// ⚠️ THE NO-AUTHENTICATION WARNING ON `--http` APPLIES WITH MORE FORCE
+    /// HERE, because what is reachable is now every design under the root
+    /// rather than one. `--read-only` covers all of them.
+    #[arg(long, value_name = "DIR")]
+    registry_root: Option<String>,
+
+    /// How many designs this server may hold open at once (default 8).
+    ///
+    /// Each open design costs a store, its file handles and its own full-text
+    /// index, so this is a resource bound rather than a policy. Past it, a
+    /// request for a design that is not already open is REFUSED WITH A CLEAR
+    /// ERROR naming this flag — never silent thrashing
+    /// (`dec:one-process-many-stores`). Nothing is evicted to make room: idle
+    /// eviction is a separate change with its own policy, and a cap that
+    /// silently closed somebody's design would be worse than one that declines.
+    #[arg(long, value_name = "N", default_value_t = 8)]
+    registry_max_open: usize,
+
     /// Refuse every write. Reads, searches and reports still work; nothing can
     /// be created, changed or deleted.
     ///
@@ -509,6 +542,67 @@ async fn main() -> anyhow::Result<()> {
         anyhow::bail!("--resolutions only means something with --merge-apply");
     }
 
+    // ---- serve MANY designs, selected by /g/<graph_id>/ ---------------------
+    //
+    // Placed before every single-graph path because it replaces the premise
+    // those paths rest on: there is no ONE design to open, and `--graph-path`
+    // means nothing here. Taking this branch late would mean opening a design
+    // nobody asked for on the way past.
+    if let Some(root) = cli.registry_root.clone() {
+        let Some(addr) = cli.http.clone() else {
+            // RULE 4 — say what would have worked. The selection rides the URL,
+            // so without a URL there is nowhere to put it, and stdio has one
+            // session that could never name a second design.
+            anyhow::bail!(
+                "--registry-root serves SEVERAL designs and each is addressed as \
+                 /g/<graph_id>/, so it needs --http to put them on. Add --http \
+                 127.0.0.1:<port>, or drop --registry-root to serve the single design at \
+                 --graph-path over stdio."
+            );
+        };
+
+        let registry = reflow2_mcp::registry::Registry::discover(&root);
+        let ids = registry.graph_ids();
+        // SAY WHAT IS THERE BEFORE SERVING IT. An empty root is not an error —
+        // a design created later is picked up without a restart, because the
+        // listing is re-read per request — but an operator who meant to point
+        // at a populated directory should find that out now rather than from a
+        // 404 later.
+        if ids.is_empty() {
+            eprintln!(
+                "reflow2: WARNING — no designs found under {root}. Serving anyway: the root is \
+                 re-read on every request, so a design created there later is reachable without \
+                 a restart. A design is a directory containing a reflow2 store."
+            );
+        } else {
+            eprintln!(
+                "reflow2: serving {} design(s) from {root} — {}",
+                ids.len(),
+                ids.join(", ")
+            );
+        }
+        eprintln!(
+            "reflow2: address a design as http://<addr>/g/<graph_id>/ . Designs open ON DEMAND \
+             and at most {} are held at once (--registry-max-open). THE ROOT IS THE TENANT \
+             BOUNDARY: this server routes within {root} and has no operation that crosses it. \
+             There is NO authentication — reach it over loopback or a private network only.",
+            cli.registry_max_open
+        );
+
+        let read_only = cli.read_only;
+        let max_open = cli.registry_max_open;
+        serve_http(
+            move |cfg| reflow2_mcp::registry_http::GraphRouter::new(root, read_only, max_open, cfg),
+            &addr,
+            &cli.http_allow_host,
+            HttpSurface::Design,
+            None,
+            true,
+        )
+        .await?;
+        return Ok(());
+    }
+
     // Diff-and-exit. Two files never touch the graph; one file compares
     // against the live graph, which needs the (single-writer) store.
     if !cli.diff.is_empty() {
@@ -949,7 +1043,7 @@ async fn main() -> anyhow::Result<()> {
             eprintln!("reflow2: {note}");
         }
         serve_http(
-            move || Ok(service.share()),
+            |cfg| http_service_of(move || Ok(service.share()), cfg),
             cli.http.as_deref().unwrap_or("127.0.0.1:0"),
             &cli.http_allow_host,
             HttpSurface::Design,
@@ -957,6 +1051,7 @@ async fn main() -> anyhow::Result<()> {
                 graph_path: cli.graph_path.clone(),
                 idle_timeout_minutes: cli.idle_timeout,
             }),
+            false,
         )
         .await?;
         return Ok(());
@@ -1057,11 +1152,12 @@ async fn main() -> anyhow::Result<()> {
 
             if let Some(addr) = cli.http.clone() {
                 serve_http(
-                    move || Ok(service.share()),
+                    |cfg| http_service_of(move || Ok(service.share()), cfg),
                     &addr,
                     &cli.http_allow_host,
                     HttpSurface::Design,
                     None,
+                    false,
                 )
                 .await?;
             } else {
@@ -1093,11 +1189,12 @@ async fn main() -> anyhow::Result<()> {
             let degraded = DegradedService::new(reason, cli.graph_path.clone());
             if let Some(addr) = cli.http.clone() {
                 serve_http(
-                    move || Ok(degraded.clone()),
+                    |cfg| http_service_of(move || Ok(degraded.clone()), cfg),
                     &addr,
                     &cli.http_allow_host,
                     HttpSurface::Degraded,
                     None,
+                    false,
                 )
                 .await?;
             } else {
@@ -1152,24 +1249,70 @@ struct SharedServer {
 /// **No authentication.** Bind loopback or a private tailnet: anything that can
 /// reach this port can write the design. Said here and in the flag's help
 /// because the failure is silent — a design does not look tampered with.
-async fn serve_http<S>(
+/// Build the single-design transport: one `StreamableHttpService` over one
+/// handler factory.
+///
+/// Exists so `serve_http` can take a MAKER of tower services — which is what
+/// lets the `--registry-root` path hand it a router instead — without every
+/// single-graph call site having to name rmcp's transport types.
+fn http_service_of<S>(
     factory: impl Fn() -> Result<S, std::io::Error> + Send + Sync + 'static,
-    addr: &str,
-    allow_hosts: &[String],
-    surface: HttpSurface,
-    shared: Option<SharedServer>,
-) -> anyhow::Result<()>
+    config: rmcp::transport::streamable_http_server::StreamableHttpServerConfig,
+) -> rmcp::transport::streamable_http_server::StreamableHttpService<
+    S,
+    rmcp::transport::streamable_http_server::session::local::LocalSessionManager,
+>
 where
     // rmcp v3 narrowed this from `Service<RoleServer>` to `ServerHandler`: the
     // sessionless transport builds a handler per REQUEST and has to ask it for
     // `get_info` and the tool list without a session to have cached them, which
-    // the bare Service trait cannot answer. Both surfaces that come through this
-    // door already implement it via `#[tool_handler]`, so this is a bound that
-    // got honest, not a capability lost.
+    // the bare Service trait cannot answer.
     S: rmcp::ServerHandler + Send + 'static,
 {
+    rmcp::transport::streamable_http_server::StreamableHttpService::new(
+        factory,
+        rmcp::transport::streamable_http_server::session::local::LocalSessionManager::default()
+            .into(),
+        config,
+    )
+}
+
+async fn serve_http<Svc>(
+    // ⭐ A MAKER OF THE TOWER SERVICE, not a factory of handlers, since
+    // 2026-09-13. The single-graph path still passes a handler factory — it
+    // wraps it one line below — but the registry path (`--registry-root`) serves
+    // a ROUTER that owns one StreamableHttpService per design and cannot be
+    // expressed as a single handler. Taking the maker here keeps the bind, the
+    // Host-allowlist config, the off-box warning, the rendezvous publish and the
+    // accept loop in ONE place: duplicating them for the second path is how the
+    // two would drift, and the off-box warning is exactly the kind of thing that
+    // gets fixed in one copy.
+    //
+    // The config is handed IN because the router needs it too: each design it
+    // opens gets its own StreamableHttpService built with the same allowlist.
+    make: impl FnOnce(rmcp::transport::streamable_http_server::StreamableHttpServerConfig) -> Svc,
+    addr: &str,
+    allow_hosts: &[String],
+    surface: HttpSurface,
+    shared: Option<SharedServer>,
+    // True when this server holds MANY designs, so the banner does not claim to
+    // hold one. Nothing else in this function differs.
+    many_designs: bool,
+) -> anyhow::Result<()>
+where
+    Svc: tower_service::Service<
+            http::Request<hyper::body::Incoming>,
+            Response = http::Response<
+                http_body_util::combinators::BoxBody<bytes::Bytes, std::convert::Infallible>,
+            >,
+            Error = std::convert::Infallible,
+        > + Clone
+        + Send
+        + 'static,
+    Svc::Future: Send + 'static,
+{
     use rmcp::transport::streamable_http_server::{
-        StreamableHttpServerConfig, StreamableHttpService, session::local::LocalSessionManager,
+        StreamableHttpServerConfig,
     };
 
     let listener = tokio::net::TcpListener::bind(addr)
@@ -1203,7 +1346,7 @@ where
         );
     }
 
-    let http = StreamableHttpService::new(factory, LocalSessionManager::default().into(), config);
+    let http = make(config);
 
     // Publish AFTER the bind and the store open, never before: a rendezvous that
     // exists must mean "a server got all the way up", because that is the only
@@ -1271,9 +1414,16 @@ where
     }
 
     match surface {
-        HttpSurface::Design => eprintln!(
+        // ⚠️ SAYS "THIS DESIGN" — SO THE REGISTRY SURFACE MUST NOT REACH IT.
+        // A multi-design server already printed what it serves and how to
+        // address it; this line would then claim it holds one design, which is
+        // the kind of banner an operator reads and believes.
+        HttpSurface::Design if !many_designs => eprintln!(
             "reflow2: serving over HTTP at http://{bound}/ — several sessions may share this \
              design. There is NO authentication: reach it over loopback or a private network only."
+        ),
+        HttpSurface::Design => eprintln!(
+            "reflow2: serving over HTTP at http://{bound}/ — address a design as /g/<graph_id>/."
         ),
         // Say what this one is, because it looks like a working server and is
         // not: a session that connects gets the reason and one tool, and an
