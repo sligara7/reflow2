@@ -404,6 +404,12 @@ pub struct ReflowService {
 struct ReadHintCache {
     computed_gen: Option<u64>,
     surfaced: Option<String>,
+    /// The sync targets this design has parsed, by content hash — so a record
+    /// that moved once and then sat still is read once, not on the first read
+    /// after every write (`epoch:a-record-that-moved-once-is-read-once`).
+    /// Per-design by construction: it rides on this handle, never a `static`
+    /// (`rule:per-design-state-is-never-a-process-global`).
+    parsed: crate::sync_debt::ParsedRecords,
 }
 
 // ---- error / result helpers -------------------------------------------------
@@ -5415,8 +5421,12 @@ impl ReflowService {
                 return None;
             }
             let live_nodes = g.count_all_nodes().unwrap_or(0);
-            let debts =
-                crate::sync_debt::sync_debt(graph_path, live_nodes, &|| g.export_graph().ok());
+            let debts = crate::sync_debt::sync_debt_with(
+                graph_path,
+                live_nodes,
+                &crate::sync_debt::StoreMembership::new(g),
+                &mut cache.parsed,
+            );
             let behind: Vec<_> = debts
                 .iter()
                 .filter(|d| d.is_actionable())

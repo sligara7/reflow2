@@ -11,6 +11,7 @@ never-crash contract is tested as hard as the counting.
 from __future__ import annotations
 
 import json
+import os
 import pathlib
 import subprocess
 import sys
@@ -1444,6 +1445,100 @@ class AsksWhatWasMadeFalse(unittest.TestCase):
         again = run_hook(self.project, {"hook_event_name": "SessionStart",
                                         "session_id": "newer"})
         self.assertNotIn("MAKE FALSE", again.stdout, "and exactly once")
+
+
+class ProbeSlotIsClaimedAtomically(unittest.TestCase):
+    """Two hook processes must never both spawn the graph probe.
+
+    THE CLASS, not the instance. The instance was a duplicated `hooks` block in
+    .claude/settings.local.json that made every hook fire twice; deleting it
+    stops today's pairs and leaves the defect, because PostToolUse and Stop can
+    legitimately arrive together. The defect is that the old guard READ the lock
+    and then WROTE it — two steps with room between them for another process.
+
+    MEASURED 2026-09-12 against the old shape: twelve concurrent invocations
+    released together spawned FOUR probes. What made that expensive rather than
+    untidy is in `claim_probe_slot`'s own docstring — the first usage ledger
+    priced the "one wasted read" that comment tolerated at 71.4% of all time
+    this project spent inside reflow2.
+
+    This asserts the STRUCTURE (exactly one winner), never a duration, so it
+    cannot be quietly retired by raising a threshold until it stops complaining.
+    """
+
+    N = 12
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory(prefix="probe-claim-")
+        self.project = pathlib.Path(self.tmp.name)
+        (self.project / ".reflow2").mkdir()
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    def _claim_from_n_processes(self, now: float) -> int:
+        """Winners when N processes all claim at once. Barrier, not sleep."""
+        import multiprocessing as mp
+        with mp.Manager() as m:
+            barrier = m.Barrier(self.N)
+            args = [(str(self.project), now, barrier)] * self.N
+            with mp.Pool(self.N) as pool:
+                return sum(pool.map(_claim_worker, args))
+
+    def test_only_one_of_many_concurrent_hooks_may_spawn(self):
+        self.assertEqual(
+            self._claim_from_n_processes(time.time()), 1,
+            "a read-then-write guard lets several hooks through; the claim must "
+            "be one atomic step so the filesystem picks the winner once",
+        )
+
+    def test_a_live_lock_turns_every_later_claim_away(self):
+        self.assertTrue(_claim(self.project, time.time(), "first"))
+        self.assertFalse(_claim(self.project, time.time(), "second"),
+                         "a young lock means a probe is working")
+
+    def test_a_stale_lock_is_reclaimed_exactly_once(self):
+        import loop_nudge
+        old = time.time() - (loop_nudge.PROBE_STALE_LOCK_S + 60)
+        self.assertTrue(_claim(self.project, old, "died-here"))
+        # A probe killed before cleanup must not silence the feature forever.
+        self.assertEqual(self._claim_from_n_processes(time.time()), 1,
+                         "the stale lock is cleared and exactly one successor wins")
+
+    def test_an_unwritable_state_dir_declines_instead_of_crashing(self):
+        import loop_nudge
+        cwd = os.getcwd()
+        os.chdir(self.project)
+        try:
+            d = self.project / ".reflow2" / "loop-nudge"
+            d.mkdir(parents=True, exist_ok=True)
+            d.chmod(0o500)
+            try:
+                self.assertFalse(loop_nudge.claim_probe_slot("s1", time.time(), "x"),
+                                 "a hook must decline quietly, never raise")
+            finally:
+                d.chmod(0o700)
+        finally:
+            os.chdir(cwd)
+
+
+def _claim(project: pathlib.Path, now: float, reason: str) -> bool:
+    """Claim once, with the module's cwd pointed at a throwaway project."""
+    cwd = os.getcwd()
+    os.chdir(project)
+    try:
+        sys.path.insert(0, str(SCRIPT.parent))
+        import loop_nudge
+        return loop_nudge.claim_probe_slot("s1", now, reason)
+    finally:
+        os.chdir(cwd)
+
+
+def _claim_worker(args):
+    """Top-level so it is picklable by multiprocessing on every start method."""
+    project, now, barrier = args
+    barrier.wait()
+    return 1 if _claim(pathlib.Path(project), now, "race") else 0
 
 
 if __name__ == "__main__":

@@ -47,7 +47,7 @@
 //! document does not", which is precisely the question, so this module supplies
 //! the enumeration and the wording and borrows the judgement.
 
-use reflow2_core::{GraphExport, sync::SyncVerdict};
+use reflow2_core::{DesignGraph, GraphExport};
 use serde::Serialize;
 
 pub use reflow2_core::provenance::SyncState;
@@ -376,12 +376,199 @@ pub fn not_checked(graph_path: &str) -> Option<SyncNotChecked> {
     })
 }
 
+/// What the LIVE design holds, asked one id at a time — so a moved record is
+/// diffed against the store by membership, never by building an export.
+///
+/// ⭐ WHY, measured 2026-09-12. The moved branch of [`sync_debt_with`] used to
+/// build the whole live export (`g.export_graph()`) and hand two documents to
+/// `assess_overwrite`, to answer "which of the file's ids are absent here?".
+/// That is a set-membership question, and the export cost ~490 ms of the ~1.1 s
+/// tax on the first read after every write in the moved state
+/// (`fact:the-first-store-read-after-any-write-pays-a-fixed-1-1s-tax-whichever-tool-it-is`,
+/// the tiny-target measurement). A store answers membership by lookup.
+///
+/// Two implementations. [`StoreMembership`] asks the store, and is what every
+/// server path uses. The export-backed one is private to [`sync_debt`], so a
+/// caller holding only a closure keeps exactly the behaviour it had: one export
+/// built lazily, only when a record has moved.
+pub trait LiveDesign {
+    fn has_node(&self, node_type: &str, node_id: &str) -> bool;
+    fn has_edge(&self, edge_type: &str, from_id: &str, to_id: &str) -> bool;
+    /// The live design's own content hash, when the oracle can say it without
+    /// paying for it. `None` skips the "the file IS this design" fast path,
+    /// which the membership diff then answers the long way — correctly.
+    fn content_hash(&self) -> Option<String> {
+        None
+    }
+    /// False when the oracle cannot answer at all — an export that failed to
+    /// build. Reported as `unreadable`, exactly as before.
+    fn available(&self) -> bool {
+        true
+    }
+}
+
+/// [`LiveDesign`] over the store itself. Edges are answered from one
+/// `outgoing(from, type)` scan per distinct pair, cached for the life of the
+/// check — a record's 25k edges become a few thousand prefix scans, not a
+/// whole-graph walk.
+pub struct StoreMembership<'a> {
+    g: &'a DesignGraph,
+    outgoing: std::cell::RefCell<
+        std::collections::HashMap<(String, String), std::collections::HashSet<String>>,
+    >,
+}
+
+impl<'a> StoreMembership<'a> {
+    pub fn new(g: &'a DesignGraph) -> Self {
+        Self {
+            g,
+            outgoing: Default::default(),
+        }
+    }
+}
+
+impl LiveDesign for StoreMembership<'_> {
+    fn has_node(&self, node_type: &str, node_id: &str) -> bool {
+        self.g.get_node(node_type, node_id).ok().flatten().is_some()
+    }
+
+    fn has_edge(&self, edge_type: &str, from_id: &str, to_id: &str) -> bool {
+        let key = (from_id.to_string(), edge_type.to_string());
+        let mut cache = self.outgoing.borrow_mut();
+        let targets = cache.entry(key).or_insert_with(|| {
+            self.g
+                .outgoing(from_id, Some(edge_type))
+                .map(|edges| edges.into_iter().map(|e| e.to_id).collect())
+                .unwrap_or_default()
+        });
+        targets.contains(to_id)
+    }
+}
+
+/// The export-backed oracle behind [`sync_debt`]: builds `mine()` at most once,
+/// and only when a moved record needs it. Membership by node id alone, as
+/// `assess_overwrite` compared — the parity the wrapper promises. Public so a
+/// caller that holds a document rather than a store can still use
+/// [`sync_debt_with`] and a long-lived [`ParsedRecords`].
+pub struct ExportedDesign<'a> {
+    mine: &'a dyn Fn() -> Option<GraphExport>,
+    built: std::cell::OnceCell<Option<ExportSets>>,
+}
+
+impl<'a> ExportedDesign<'a> {
+    pub fn new(mine: &'a dyn Fn() -> Option<GraphExport>) -> Self {
+        Self {
+            mine,
+            built: std::cell::OnceCell::new(),
+        }
+    }
+}
+
+struct ExportSets {
+    nodes: std::collections::BTreeSet<String>,
+    edges: std::collections::BTreeSet<String>,
+    hash: String,
+}
+
+impl ExportedDesign<'_> {
+    fn sets(&self) -> Option<&ExportSets> {
+        self.built
+            .get_or_init(|| {
+                (self.mine)().map(|doc| ExportSets {
+                    nodes: doc.nodes.iter().map(|n| n.node_id.clone()).collect(),
+                    edges: doc
+                        .edges
+                        .iter()
+                        .map(|e| format!("{} {} -> {}", e.edge_type, e.from_id, e.to_id))
+                        .collect(),
+                    hash: doc.effective_content_hash(),
+                })
+            })
+            .as_ref()
+    }
+}
+
+impl LiveDesign for ExportedDesign<'_> {
+    fn has_node(&self, _node_type: &str, node_id: &str) -> bool {
+        self.sets().is_some_and(|s| s.nodes.contains(node_id))
+    }
+
+    fn has_edge(&self, edge_type: &str, from_id: &str, to_id: &str) -> bool {
+        self.sets().is_some_and(|s| {
+            s.edges
+                .contains(&format!("{edge_type} {from_id} -> {to_id}"))
+        })
+    }
+
+    fn content_hash(&self) -> Option<String> {
+        self.sets().map(|s| s.hash.clone())
+    }
+
+    fn available(&self) -> bool {
+        self.sets().is_some()
+    }
+}
+
+/// The last document parsed from each sync target, by the content hash it
+/// parsed to — so a record that MOVED and then sat still is read once per
+/// design handle, not once per check.
+///
+/// ⭐ WHY THIS EXISTS, measured 2026-09-12. The stat gate in [`sync_debt_with`]
+/// skipped the parse only when the file was unchanged AND in step. A record
+/// that had moved once — a colleague's export pulled in — failed the hash
+/// clause on every check and was re-read and re-parsed whole each time: ~620
+/// ms for reflow2's own 16 MB record, on the FIRST READ AFTER EVERY WRITE,
+/// until this seat next exported. That was the entire cost of `get_node` and
+/// `search_design` in a working session, and 27% of all tool time over 47
+/// sessions (`fact:the-first-store-read-after-any-write-pays-a-fixed-1-1s-tax-
+/// whichever-tool-it-is`).
+///
+/// PER-DESIGN STATE, so it lives on the design's read cache and never in a
+/// `static`: `rule:per-design-state-is-never-a-process-global` is ENFORCED
+/// (`ver:no-per-design-process-globals` refused the first cut of this, which
+/// was a `static` — a second design open in the same process holds its own
+/// records, and that is exactly the rule's question). Keyed by the path as
+/// `last_synced` keys it, one document per target — the newest content wins,
+/// so the bound is one parsed record per target that has ever moved. An
+/// in-step target never enters: its gate answers from a stat.
+///
+/// A hit is valid on the same reasoning as the stat gate itself: unchanged
+/// `len` and `mtime` mean unchanged bytes, and `observed.hash` IS the hash of
+/// those bytes, computed on the read that populated this.
+#[derive(Default)]
+pub struct ParsedRecords(std::collections::HashMap<String, (String, std::sync::Arc<GraphExport>)>);
+
+impl ParsedRecords {
+    fn get(&self, path: &str, hash: &str) -> Option<std::sync::Arc<GraphExport>> {
+        self.0
+            .get(path)
+            .filter(|(h, _)| h == hash)
+            .map(|(_, doc)| doc.clone())
+    }
+
+    fn put(&mut self, path: &str, hash: &str, doc: std::sync::Arc<GraphExport>) {
+        self.0.insert(path.to_string(), (hash.to_string(), doc));
+    }
+}
+
+/// [`sync_debt_with`] and a cache that lives for this call only — every
+/// target is parsed at most once per call, which is what every caller had
+/// before 2026-09-12. Hold a [`ParsedRecords`] across calls to do better.
 pub fn sync_debt(
     graph_path: &str,
     live_nodes: usize,
     mine: &dyn Fn() -> Option<GraphExport>,
 ) -> Vec<SyncDebt> {
-    let mut built: Option<Option<GraphExport>> = None;
+    let live = ExportedDesign::new(mine);
+    sync_debt_with(graph_path, live_nodes, &live, &mut ParsedRecords::default())
+}
+
+pub fn sync_debt_with(
+    graph_path: &str,
+    live_nodes: usize,
+    live: &dyn LiveDesign,
+    parsed: &mut ParsedRecords,
+) -> Vec<SyncDebt> {
     let state = reflow2_core::provenance::read_sync_state(graph_path);
     let (checked, _) = ordered_targets(&state);
     let mut out = Vec::new();
@@ -405,16 +592,24 @@ pub fn sync_debt(
         }
         // THE STAT GATE (`dec:an-unchanged-sync-target-is-not-re-parsed`). If
         // this seat has read the file in full before and its size and mtime
-        // are unchanged and its hash is still the one `last_synced` expects,
-        // the bytes cannot have moved: answer in_step from the recorded count
-        // WITHOUT reading. A dead scratch export is parsed once and never
-        // again; a record that moved fails the gate and is read as before.
+        // are unchanged, the bytes cannot have moved since that read. TWO
+        // QUESTIONS, NOT ONE, and conflating them was the defect this gate
+        // shipped with: "unchanged since I last read it" and "in step with
+        // what I last wrote" are different facts. A record that is BOTH is
+        // answered in_step from the recorded count without reading. A record
+        // that is unchanged but NOT in step — moved once, sitting still, the
+        // exact state this feature exists to report — is answered from the
+        // document already parsed (`ParsedRecords`), never re-read. Until 2026-09-12
+        // it failed the in-step clause and was re-parsed whole on every check.
         // No target is dropped and no rule about paths is introduced — the
         // /tmp rule was tried and reverted against fifteen correct tests.
-        if let Some(obs) = state.observed.get(path)
-            && let Some((len, mtime)) = stat_of(target)
-            && obs.len == len
-            && obs.mtime_unix_nanos == mtime
+        let stat_now = stat_of(target);
+        let unchanged_since_observed = match (state.observed.get(path), stat_now) {
+            (Some(obs), Some((len, mtime))) => obs.len == len && obs.mtime_unix_nanos == mtime,
+            _ => false,
+        };
+        if unchanged_since_observed
+            && let Some(obs) = state.observed.get(path)
             && &obs.hash == expected
         {
             out.push(bare(
@@ -427,37 +622,60 @@ pub fn sync_debt(
             ));
             continue;
         }
-        let stat_before = stat_of(target);
-        let on_disk = std::fs::read_to_string(target)
-            .ok()
-            .and_then(|raw| serde_json::from_str::<GraphExport>(&raw).ok());
-        let Some(on_disk) = on_disk else {
-            out.push(bare(
-                path,
-                "unreadable",
-                Some(expected.clone()),
-                None,
-                live_nodes,
-                0,
-            ));
-            continue;
+        // Moved, or never seen: get the document, PARSING ONLY IF THE BYTES ARE
+        // NEW. `freshly_read` carries the stat of a real read so the
+        // observation below is recorded only when one happened.
+        let cached = if unchanged_since_observed
+            && let Some(obs) = state.observed.get(path)
+            && let Some(doc) = parsed.get(path, &obs.hash)
+        {
+            Some((doc, obs.hash.clone()))
+        } else {
+            None
         };
-        // ⚠️ COMPUTED, NEVER the hash the file states about itself.
-        // `effective_content_hash` TRUSTS the embedded `content_hash` and only
-        // computes when it is absent — so a document edited by anything other
-        // than `export_graph` (a merge, a hand-fix, another tool) keeps its old
-        // stamp and would read as "exactly where this graph left it" while its
-        // content had moved. Caught end-to-end on 2026-08-11 by simulating the
-        // very case this feature exists for: work appended to the record.
-        // The document is already parsed, so computing costs nothing extra.
-        let found = on_disk.compute_content_hash();
+        let (on_disk, found, freshly_read) = match cached {
+            Some((doc, hash)) => (doc, hash, None),
+            None => {
+                let stat_before = stat_of(target);
+                let document = std::fs::read_to_string(target)
+                    .ok()
+                    .and_then(|raw| serde_json::from_str::<GraphExport>(&raw).ok());
+                let Some(document) = document else {
+                    out.push(bare(
+                        path,
+                        "unreadable",
+                        Some(expected.clone()),
+                        None,
+                        live_nodes,
+                        0,
+                    ));
+                    continue;
+                };
+                // ⚠️ COMPUTED, NEVER the hash the file states about itself.
+                // `effective_content_hash` TRUSTS the embedded `content_hash`
+                // and only computes when it is absent — so a document edited
+                // by anything other than `export_graph` (a merge, a hand-fix,
+                // another tool) keeps its old stamp and would read as "exactly
+                // where this graph left it" while its content had moved.
+                // Caught end-to-end on 2026-08-11 by simulating the very case
+                // this feature exists for: work appended to the record. The
+                // document is already parsed, so computing costs nothing extra.
+                let found = document.compute_content_hash();
+                let doc = std::sync::Arc::new(document);
+                parsed.put(path, &found, doc.clone());
+                (doc, found, stat_before)
+            }
+        };
+        let on_disk: &GraphExport = &on_disk;
         // `verify_content_hash` recomputes the hash a SECOND time; compare the
         // embedded stamp against the one already in hand instead.
         let stamp_disagrees = on_disk.content_hash.as_deref().is_some_and(|h| h != found);
 
         let export_nodes = on_disk.nodes.len();
-        // Remember this read, so the next check can answer from a stat.
-        if let Some((len, mtime)) = stat_before {
+        // Remember this read, so the next check can answer from a stat. Only a
+        // REAL read is recorded: a cache hit changes nothing on disk and must
+        // not cost a sidecar write per check.
+        if let Some((len, mtime)) = freshly_read {
             reflow2_core::provenance::record_sync_observation(
                 graph_path,
                 path,
@@ -494,10 +712,12 @@ pub fn sync_debt(
             continue;
         }
 
-        // Something moved. NOW the export is worth building — once, however
-        // many targets are stale.
-        let mine = built.get_or_insert_with(mine);
-        let Some(mine) = mine.as_ref() else {
+        // Something moved. Ask the LIVE design what it lacks — by membership,
+        // one id at a time, never by building an export to compare two
+        // documents (that export was ~490 ms of the post-write tax; see
+        // `LiveDesign`). The verdicts are the same three the write path's
+        // `assess_overwrite` returns, reached the cheap way.
+        if !live.available() {
             out.push(bare(
                 path,
                 "unreadable",
@@ -507,60 +727,57 @@ pub fn sync_debt(
                 export_nodes,
             ));
             continue;
-        };
-
-        // The judgement itself is borrowed whole from the write path rather
-        // than reimplemented — assess_overwrite already answers "what does the
-        // file hold that this document does not".
-        //
-        // ⚠️ `last_synced` IS PASSED AS `None` DELIBERATELY. Its only role in
-        // there is a fast path that compares against `effective_content_hash`,
-        // which believes the stamp the document states about itself; we have
-        // already made that comparison above with a COMPUTED hash and know the
-        // content moved, so handing it the shortcut would let a stale stamp
-        // send it straight back to `Clear`. Passing None asks for the full
-        // document comparison, which is the whole reason we got here.
-        match reflow2_core::sync::assess_overwrite(Some(&on_disk), mine, None) {
-            SyncVerdict::Clear => {
-                let mut d = bare(
-                    path,
-                    "in_step",
-                    Some(expected.clone()),
-                    Some(found),
-                    live_nodes,
-                    export_nodes,
-                );
-                d.stamp_disagrees = stamp_disagrees;
-                out.push(d)
-            }
-            SyncVerdict::MovedButNothingLost { .. } => {
-                let mut d = bare(
-                    path,
-                    "moved_but_current",
-                    Some(expected.clone()),
-                    Some(found),
-                    live_nodes,
-                    export_nodes,
-                );
-                d.stamp_disagrees = stamp_disagrees;
-                out.push(d)
-            }
-            SyncVerdict::WouldDrop {
-                dropped_nodes,
-                dropped_edges,
-                ..
-            } => out.push(SyncDebt {
+        }
+        // Writing what is already there changes nothing, whoever wrote it —
+        // answerable only by an oracle that already holds its own hash.
+        if live.content_hash().as_deref() == Some(found.as_str()) {
+            let mut d = bare(
+                path,
+                "in_step",
+                Some(expected.clone()),
+                Some(found),
+                live_nodes,
+                export_nodes,
+            );
+            d.stamp_disagrees = stamp_disagrees;
+            out.push(d);
+            continue;
+        }
+        let dropped_nodes: Vec<String> = on_disk
+            .nodes
+            .iter()
+            .filter(|n| !live.has_node(&n.node_type, &n.node_id))
+            .map(|n| n.node_id.clone())
+            .collect();
+        let dropped_edges = on_disk
+            .edges
+            .iter()
+            .filter(|e| !live.has_edge(&e.edge_type, &e.from_id, &e.to_id))
+            .count();
+        if dropped_nodes.is_empty() && dropped_edges == 0 {
+            let mut d = bare(
+                path,
+                "moved_but_current",
+                Some(expected.clone()),
+                Some(found),
+                live_nodes,
+                export_nodes,
+            );
+            d.stamp_disagrees = stamp_disagrees;
+            out.push(d);
+        } else {
+            out.push(SyncDebt {
                 path: path.clone(),
                 state: "behind".into(),
                 expected: Some(expected.clone()),
                 found: Some(found),
                 nodes_not_here: dropped_nodes.iter().take(NAMED_ARRIVALS).cloned().collect(),
                 nodes_not_here_total: dropped_nodes.len(),
-                edges_not_here_total: dropped_edges.len(),
+                edges_not_here_total: dropped_edges,
                 stamp_disagrees,
                 export_nodes,
                 live_nodes,
-            }),
+            });
         }
     }
     out

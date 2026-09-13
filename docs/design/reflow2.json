@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:4243694a256d8b9815370227f53b6d794425ffed33abbd9d4b6571a29c3e87ec",
+  "content_hash": "sha256:d228f8d59940b405eaad08bdd7480f475d3e013f7bced1dc7207918dae0eb59d",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -5231,6 +5231,18 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:a-moved-record-is-diffed-against-the-store-not-an-export",
+      "properties": {},
+      "to_id": "epoch:a-record-that-moved-once-is-read-once"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:a-moved-record-that-sat-still-is-parsed-once-per-design",
+      "properties": {},
+      "to_id": "epoch:a-record-that-moved-once-is-read-once"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:a-name-is-not-a-report",
       "properties": {},
       "to_id": "epoch:v0390"
@@ -9803,6 +9815,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:the-probe-slot-is-claimed-atomically",
+      "properties": {},
+      "to_id": "epoch:the-loop-check-stops-firing-twice"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:the-readme-says-what-it-is-before-what-it-believes",
       "properties": {},
       "to_id": "epoch:v0430"
@@ -10991,6 +11009,18 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:a-record-that-moved-once-is-read-once:art:sync-debt",
+      "properties": {},
+      "to_id": "epoch:a-record-that-moved-once-is-read-once"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:a-record-that-moved-once-is-read-once:art:sync-debt:r2",
+      "properties": {},
+      "to_id": "epoch:a-record-that-moved-once-is-read-once"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:a-refusal-arrives-before-the-client-gives-up:cmp:shared",
       "properties": {},
       "to_id": "epoch:a-refusal-arrives-before-the-client-gives-up"
@@ -11622,6 +11652,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:chg:the-cause-discipline-binds-forward-and-the-backlog-is-parked",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:con:loop-status-after-a-write-answers-under-one-second",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
     },
@@ -12461,6 +12497,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:the-loop-check-stops-firing-twice:art:loop-nudge",
+      "properties": {},
+      "to_id": "epoch:the-loop-check-stops-firing-twice"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:the-loop-holds-the-invitation:art:capture-intent-skill",
       "properties": {},
       "to_id": "epoch:the-loop-holds-the-invitation"
@@ -13035,6 +13077,15 @@
       "from_id": "dec:a-module-that-supplies-an-observation-holds-no-function-of-its-own",
       "properties": {
         "acted_at": "2026-08-28",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:a-moved-record-is-diffed-by-membership-against-the-store",
+      "properties": {
+        "acted_at": "2026-09-12",
         "role": "approver"
       },
       "to_id": "who:ajs"
@@ -18407,6 +18458,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "fact:the-optimize-skill-hands-cause-finding-to-nothing-and-a-session-fell-through-it",
+      "properties": {
+        "acted_at": "2026-09-12",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "fact:the-server-already-sees-sessions-end-and-a-disciplined-session-still-ran-5-hours-unexported",
       "properties": {
         "acted_at": "2026-08-25",
@@ -20127,6 +20187,16 @@
     },
     {
       "edge_type": "CAUSES",
+      "from_id": "art:sync-debt",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "LOCATED BY THREE DISCRIMINATING MEASUREMENTS ON 2026-09-12, file untouched throughout. (1) Remove the sync sidecar: first read after a write drops from 1,117 ms to 40 ms; restore it and the tax returns — so the cost is the read path's record_moved check in sync_debt.rs, not the store. (2) With the sidecar present, set last_synced := observed.hash: 40 ms; set last_synced := garbage: 1,750-1,960 ms — so the failing clause is `observed.hash == last_synced` in the stat gate (sync_debt.rs ~line 414), which makes \"unchanged since observed\" require \"in step\" as well; a record that moved ONCE and then sits still fails it on every check, because `observed` is refreshed by the check path (record_sync_observation) while `last_synced` is refreshed only by export/import (record_sync). (3) A tiny moved target costs ~530 ms against ~1,150 ms for the 16 MB one: ~620 ms is the redundant re-parse of an unchanged file, ~490 ms is rebuilding the live export (`mine`) to answer a membership question. Why the live server is untaxed at this moment: it exported nine times today, so its hashes agree; every `git pull` that brings a colleague's export re-opens the gap until the next export — which is also why the 2026-09-05 measurement (taken right after an export) read 1.41x and was not wrong, only state-dependent.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:the-first-store-read-after-any-write-pays-a-fixed-1-1s-tax-whichever-tool-it-is"
+    },
+    {
+      "edge_type": "CAUSES",
       "from_id": "art:tools-capture",
       "properties": {
         "basis": "correlational",
@@ -20267,6 +20337,16 @@
         "validation_status": "validated"
       },
       "to_id": "dec:idea-a-planned-increment-is-named-by-content-not-by-number"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "dec:derived-scans-are-memoised-per-write-generation",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The memo that makes loop_status cheap is keyed on the write generation, so it is invalidated by every write. Measured on the live store in the live server configuration: loop_status is 1,291 ms with no write before it and 4,096 ms steady with one small write before each call — a 3.2x tax that lands precisely on a working session, because the tool the loop tells every session to call is the one guaranteed to run in its most expensive state. This is the largest code-side term; load and concurrency are environmental and the baseline itself is only 1.28 s.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:loop-status-cost-is-amplifiers-not-baseline-and-80pc-of-calls-are-automation"
     },
     {
       "edge_type": "CAUSES",
@@ -22948,6 +23028,51 @@
         "action": "modified"
       },
       "to_id": "ifc:graph-read"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-moved-record-is-diffed-against-the-store-not-an-export",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-moved-record-is-diffed-against-the-store-not-an-export",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:sync-debt"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-moved-record-is-diffed-against-the-store-not-an-export",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-moved-record-that-sat-still-is-parsed-once-per-design",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-moved-record-that-sat-still-is-parsed-once-per-design",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:sync-debt"
     },
     {
       "edge_type": "CHANGED",
@@ -26143,6 +26268,15 @@
         "action": "modified"
       },
       "to_id": "art:acknowledgement-not-structure-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-12d3937c934e12ab",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-loop-nudge"
     },
     {
       "edge_type": "CHANGED",
@@ -41870,6 +42004,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-probe-slot-is-claimed-atomically",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:loop-nudge"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-prose-survey-extended-to-skills-and-found-no-rot",
       "properties": {
         "accepted_baseline": false,
@@ -43861,8 +44004,9 @@
       "from_id": "con:a-full-orientation-pass-costs-at-most-8-seconds",
       "properties": {
         "basis": "measured",
-        "contribution": 31000.0,
-        "measured_at": "2026-09-05"
+        "contribution": 4192.0,
+        "measured_at": "2026-09-12",
+        "note": "CORRECTS THE SECOND STALE EDGE NAMED BY fact:the-budget-edges-still-carry-the-pre-fix-numbers-so-budget-report-says-exceeded-for-a-budget-that-holds — this edge carried 31,000 ms, the PRE-fix figure, while the same day's fact recorded 6,459 warm / 11,103 cold after the fix. Re-measured 2026-09-12 on a physical copy of the live store, 0.59.0 release, direct stdio, quiet box, WARM (tools/agent_surface_profile.py): loop_status 1,299 + open_questions 1,271 + detect_gaps 0.7 + graph_report 1,621 = 4,192 ms — under the 8,000 limit, which the budget's own statement scopes as warm. NOT RE-MEASURED TODAY: the cold-start pass, which was 11,103 on 2026-09-05 and over the limit; that half of the 09-05 reading stands until somebody takes it again."
       },
       "to_id": "cap:loop-status"
     },
@@ -43876,6 +44020,17 @@
         "note": "AFTER changes 1 and 2 (dec:the-loop-speaks-on-loop-status-not-inside-every-read; dec:an-unchanged-sync-target-is-not-re-parsed), measured on a copy of the live store with its six real sync targets, debug binary, ratio so the profile does not matter: warm get_node 3.7 ms, first read after a write 5.3 ms, RATIO 1.41 - UNDER the budget of 2. Before: 7,700 ms / 1.3 ms = ~5,900. sync_status on the same six targets: 3,556 ms -> 75 ms. Stopped here on this budget per the optimize skill; the remaining 1.6 ms is six stat calls."
       },
       "to_id": "cap:read-loop-hint"
+    },
+    {
+      "edge_type": "CONSTRAINS",
+      "from_id": "con:a-read-after-a-write-costs-at-most-twice-the-same-read-warm",
+      "properties": {
+        "basis": "measured",
+        "contribution": 397.0,
+        "measured_at": "2026-09-12",
+        "note": "AFTER both halves (epoch:a-record-that-moved-once-is-read-once): first store read after a write, moved-record state, 16 MB target — get_node 388/410/394 ms against 1 ms warm, ratio ~397, from ~1,100 in the morning and 646 after the parse cache alone. A tiny moved record is 50-57 ms, so the ~350 ms left on the large one is the membership diff itself (4.3k node lookups and a few thousand outgoing scans per write generation). STOPPED HERE ON PURPOSE: under Anthony's 1,000 ms objective; a further cut would need an incremental diff across generations, its own hypothesis and measurement. STILL `exceeded` against THIS budget, whose shape (2x of a 1 ms read) no per-generation work can meet — restating it as an absolute is the honest next move and is Anthony's to make. Ordinary in-step reads are unchanged at ~40 ms."
+      },
+      "to_id": "cap:store"
     },
     {
       "edge_type": "CONSTRAINS",
@@ -43899,11 +44054,23 @@
     },
     {
       "edge_type": "CONSTRAINS",
+      "from_id": "con:loop-status-after-a-write-answers-under-one-second",
+      "properties": {
+        "basis": "measured",
+        "contribution": 4096.0,
+        "measured_at": "2026-09-12",
+        "note": "The post-write path, which is the path a working session takes. Median of 4 calls, each preceded by one small write, on a physical copy of the live store (4,343 nodes / 25,004 edges), reflow2-mcp 0.59.0 release, shared transport with --export-to, load 0.1-0.4. 4.1x over the 1,000 ms limit. The same call with no write before it is 1,291 ms, so the entire overage is the per-write-generation memo invalidation."
+      },
+      "to_id": "cap:loop-status"
+    },
+    {
+      "edge_type": "CONSTRAINS",
       "from_id": "con:loop-status-warm-latency-ms",
       "properties": {
         "basis": "measured",
-        "contribution": 12502.0,
-        "measured_at": "2026-09-05"
+        "contribution": 1291.0,
+        "measured_at": "2026-09-12",
+        "note": "CORRECTS THE STALE CONTRIBUTION FOUND 2026-09-11 (fact:the-budget-edges-still-carry-the-pre-fix-numbers-so-budget-report-says-exceeded-for-a-budget-that-holds). This edge carried 12,502 ms — the PRE-fix figure from 2026-09-05 — so budget_report reported `exceeded` on a budget that actually held, and a tool sweep told Anthony both performance constraints were breached five days after they were not. The previous session deliberately left the number alone because which figure belonged in a budget named \"warm\" was a judgement: 1,912 ms warm or 6,354 ms after a write. That ambiguity is now gone — con:loop-status-after-a-write-answers-under-one-second carries the after-write case, so this budget takes the warm number and nothing else. 1,291 ms measured this date on a physical copy of the live store, 0.59.0 release, shared transport with --export-to, load 0.1-0.4, median of 4 calls with no write between them. This budget HOLDS at 65% of its 2,000 ms limit."
       },
       "to_id": "cap:loop-status"
     },
@@ -59816,6 +59983,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "art:loop-nudge",
+      "properties": {},
+      "to_id": "snap:epoch:the-loop-check-stops-firing-twice:art:loop-nudge"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "art:main",
       "properties": {},
       "to_id": "snap:epoch:rmcp-v3:art:main"
@@ -59921,6 +60094,18 @@
       "from_id": "art:skill-lint",
       "properties": {},
       "to_id": "snap:epoch:the-register-rule-reaches-the-words:art:skill-lint"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "art:sync-debt",
+      "properties": {},
+      "to_id": "snap:epoch:a-record-that-moved-once-is-read-once:art:sync-debt"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "art:sync-debt",
+      "properties": {},
+      "to_id": "snap:epoch:a-record-that-moved-once-is-read-once:art:sync-debt:r2"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -60395,6 +60580,12 @@
       "from_id": "cmp:skills",
       "properties": {},
       "to_id": "snap:epoch:cmp-skills-gets-one-parent:cmp:skills"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "con:loop-status-after-a-write-answers-under-one-second",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:con:loop-status-after-a-write-answers-under-one-second"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -61484,6 +61675,12 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "art:auto-export",
+      "properties": {},
+      "to_id": "fact:a-test-server-with-export-to-at-the-real-record-wrote-probe-nodes-into-it-and-nothing-could-refuse"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "art:main",
       "properties": {},
       "to_id": "fact:defect-main-rs-realizes-the-wrong-capability"
@@ -61505,6 +61702,12 @@
       "from_id": "cap:a-design-says-which-vocabulary-it-has-never-used",
       "properties": {},
       "to_id": "fact:naming-properties-grows-the-list-where-it-can-be-acted-on"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:a-repair-can-say-what-it-invalidated",
+      "properties": {},
+      "to_id": "fact:every-one-of-88-invalidated-findings-answers-rerun-owed-null"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -61568,9 +61771,21 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:feedback-is-a-computed-tally",
+      "properties": {},
+      "to_id": "fact:the-first-real-usage-report-classed-four-of-five-refusals-as-other"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "cap:independent-evidence",
       "properties": {},
       "to_id": "fact:the-circular-validation-guard-has-never-had-a-single-edge-drawn"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:loop-status",
+      "properties": {},
+      "to_id": "fact:loop-status-cost-is-amplifiers-not-baseline-and-80pc-of-calls-are-automation"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -61592,6 +61807,18 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:mcp-surface",
+      "properties": {},
+      "to_id": "fact:the-first-frequency-times-cost-ranking-of-the-tool-surface"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:optimize-skill",
+      "properties": {},
+      "to_id": "fact:the-optimize-skill-hands-cause-finding-to-nothing-and-a-session-fell-through-it"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "cap:planned-epochs",
       "properties": {},
       "to_id": "fact:plan-epoch-on-an-existing-epoch-resets-its-status-to-planned"
@@ -61610,6 +61837,12 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:release-pinned-to-time",
+      "properties": {},
+      "to_id": "fact:deploy-to-does-not-move-a-releases-own-status-and-no-cut-step-says-to"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "cap:shared-sessions",
       "properties": {},
       "to_id": "fact:the-shared-stdio-client-never-reaps-its-children-and-accumulates-zombies"
@@ -61619,6 +61852,12 @@
       "from_id": "cap:stale-seat-refusal",
       "properties": {},
       "to_id": "fact:correction-the-export-loses-nothing-the-108-were-serialized-defaults"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:store",
+      "properties": {},
+      "to_id": "fact:the-first-store-read-after-any-write-pays-a-fixed-1-1s-tax-whichever-tool-it-is"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -174420,6 +174659,15 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:a-moved-record-is-diffed-against-the-store-not-an-export",
+      "properties": {
+        "at": "2026-09-12",
+        "note": "Together with chg:a-moved-record-that-sat-still-is-parsed-once-per-design this retires the finding's headline: the fixed ~1.1 s is now ~0.4 s on a 16 MB moved record and ~50 ms on a small one (measured the same day, same copy, same method: 388/410/394 and 50/57/51 ms). The MECHANISM the finding describes — first store read after any write, once per generation, not the text index — was correct and located the cause; its numbers are what moved. The finding's own `value` carries the after figures beside the before."
+      },
+      "to_id": "fact:the-first-store-read-after-any-write-pays-a-fixed-1-1s-tax-whichever-tool-it-is"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:a-node-is-named-by-its-id-and-the-type-is-optional-across-the-relation-surface",
       "properties": {
         "at": "2026-09-06",
@@ -175093,6 +175341,15 @@
         "note": "RE-MEASURED THE SAME DAY, ON THE SAME DOCUMENT, AFTER THE CAUSE IT DIAGNOSED WAS FIXED. Its table is now the BEFORE column: total to queryable 8,828 ms -> 909 ms, import 8,398 ms -> 705 ms, on 3,140 nodes / 13,390 edges, release, in-memory backend, no full-text index.\n\nWHICH PART MOVED: the numbers, and the superlinearity. The O(E^1.7) shape was caused by a linear scan of the write buffer on every buffered read, which is gone — the buffer carries a BTreeMap index over its own ops now, so a lookup is a range/point query rather than a walk.\n\nWHICH PART STILL STANDS, and is the reason this is an INVALIDATES rather than a closure: the observation's HEADLINE was that the byte store is not the bottleneck, measured with no byte store present at all. That is not only still true, it is more firmly true — the remaining 705 ms is serialization, schema validation and puts, none of it storage. Its bounds also still stand: the full-text index was off, so every figure on both sides of this comparison is a lower bound for a hydrate that must answer search_design.\n\n⚠️ AND ITS DIAGNOSIS OF THE MECHANISM WAS WRONG, which the node should not be read for. It attributed the superlinearity to adjacency lists being read-modify-write per edge insert. Reading the code killed that: adj_out_key includes the target id, so every edge is its own key — three puts, no reads. The cost was on the READ side. chg:write-buffer-gets-an-index-and-hydrate-drops-tenfold carries the correct account.\n\n🛑 NOT FOUND BY unclaimed_findings, and worth knowing why: that computation reached subjects_examined=1 (cmp:byte-store, what the ChangeEvent touched) and returned nothing, because this observation's subject_id is a Decision. The change and the finding hang off different nodes, so nothing joined them. Closed by judgement instead — an empty shortlist is not evidence that nothing went stale."
       },
       "to_id": "fact:hydrate-cost-is-superlinear-in-edges-and-the-byte-store-is-not-the-bottleneck"
+    },
+    {
+      "edge_type": "INVALIDATES",
+      "from_id": "con:loop-status-after-a-write-answers-under-one-second",
+      "properties": {
+        "at": "2026-09-12",
+        "note": "Both edges this defect named are corrected on 2026-09-12 with dated measurements: con:loop-status-warm-latency-ms → cap:loop-status now carries 1,291 ms (was the pre-fix 12,502; the budget HOLDS), and con:a-full-orientation-pass-costs-at-most-8-seconds → cap:loop-status carries 4,192 ms warm (was 31,000; holds warm — cold not re-measured). The judgement the previous session parked — which figure a budget named \"warm\" should carry, 1,912 or 6,354 — was dissolved rather than decided: this second constraint carries the after-write case, so the warm budget takes the warm number and nothing else. The CLASS (a superseded measurement on a CONSTRAINS edge makes budget_report lie, and nothing reconciles the edge with a later fact) is NOT fixed; it recurred a third time the same day (con:a-read-after-a-write…, 1.41 → ~1,100) and stays open on the constraint notes and the handoff."
+      },
+      "to_id": "fact:the-budget-edges-still-carry-the-pre-fix-numbers-so-budget-report-says-exceeded-for-a-budget-that-holds"
     },
     {
       "edge_type": "INVALIDATES",
@@ -184622,6 +184879,18 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:a-moved-record-is-diffed-against-the-live-store",
+      "properties": {},
+      "to_id": "art:sync-debt"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:a-moved-record-is-diffed-against-the-live-store",
+      "properties": {},
+      "to_id": "cap:the-record-moved-is-surfaced"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:a-node-attached-to-nothing-is-reported-whatever-its-type",
       "properties": {},
       "to_id": "cap:a-node-attached-to-nothing-is-reported-whatever-its-type"
@@ -184655,6 +184924,18 @@
       "from_id": "ver:a-read-only-surface-refuses-every-write",
       "properties": {},
       "to_id": "cap:a-surface-can-refuse-every-write"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:a-record-that-moved-once-is-read-once",
+      "properties": {},
+      "to_id": "art:sync-debt"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:a-record-that-moved-once-is-read-once",
+      "properties": {},
+      "to_id": "cap:the-record-moved-reaches-an-ordinary-read"
     },
     {
       "edge_type": "VERIFIES",
@@ -185963,6 +186244,18 @@
       "from_id": "ver:the-nudge-absence-says-why",
       "properties": {},
       "to_id": "cap:nudge-absence-says-why"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:the-probe-slot-is-claimed-atomically",
+      "properties": {},
+      "to_id": "art:loop-nudge"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:the-probe-slot-is-claimed-atomically",
+      "properties": {},
+      "to_id": "cap:stop-nudge-asks-the-graph"
     },
     {
       "edge_type": "VERIFIES",
@@ -190226,7 +190519,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c28eefc04c02189671d16f4d28efb401ece3339a7773440bd4765efead870f42",
+        "checksum": "sha256:41124819e2eacd9d847b122ed8f34123d75fde11d483cd73420c83257fa0f449",
         "granularity": "atomic",
         "location": "tools/loop_nudge.py",
         "name": "loop_nudge.py",
@@ -191227,7 +191520,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c4b301562d53135c637ee1f9df36fffd4d17860358fbaffca0d945af0b097da5",
+        "checksum": "sha256:ebc342ab824b3ec4ab483a8d9dd57128bb6b82d06ef0eb58a5d57c09093532e9",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -191522,7 +191815,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:72a58c6a685b5e3726d75d7917f64edb23553ff2af60444d111f438419e4a823",
+        "checksum": "sha256:e35b5e13ddf5552daaeb40750583bc20e6dadab8ea89fc9a1cb93e2eab5351b0",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/sync_debt.rs",
         "name": "sync_debt.rs",
@@ -191815,7 +192108,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b8d5cee522585c5cb884103117bfd550130823ce1a3579b88b51044f92d21a24",
+        "checksum": "sha256:79392671bb9e1f249d58f5d488e297c02b627695dca9c92d712da0e19af20c98",
         "granularity": "atomic",
         "location": "tools/test_loop_nudge.py",
         "name": "test_loop_nudge.py",
@@ -192203,7 +192496,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:0f16541f3d653acd9169bee06050d1b7d8099d3eb9efc2dff86edf7359f59e96",
+        "checksum": "sha256:f5b8b2618a0c3bfb0310bd8a518aeabf8e96346f7da5edfc462ec4c07c13588e",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
@@ -195931,6 +196224,26 @@
       }
     },
     {
+      "node_id": "chg:a-moved-record-is-diffed-against-the-store-not-an-export",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "performance_optimization",
+        "name": "The moved-record check asks the live store what it lacks by membership (LiveDesign / StoreMembership) instead of exporting the whole graph to compare two documents; the read path, loop_status and sync_status all use it, and sync_debt keeps its closure signature over a lazily-built export-backed oracle",
+        "repair": "corrected_cause",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:a-moved-record-that-sat-still-is-parsed-once-per-design",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "name": "The sync stat gate asks \"unchanged since observed\" and \"in step\" as two questions, and a moved-but-unchanged record is answered from the document already parsed on the design's read cache instead of re-read on the first read after every write",
+        "repair": "corrected_cause",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:a-name-is-not-a-report",
       "node_type": "ChangeEvent",
       "properties": {
@@ -196699,6 +197012,16 @@
       "properties": {
         "change_type": "refactor",
         "name": "Mechanical only: two governed_by call sites take the new trailing note argument as None.",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:accept-12d3937c934e12ab",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-09-12",
+        "name": "PR #495 commit 5396db3 added 95 lines of tests to tools/test_loop_nudge.py covering the atomic guard (the loop check firing once per hook, not twice). The design already records that fix; the test file's hash moved with it and this accepts the new baseline.",
         "subject": "system"
       }
     },
@@ -203568,6 +203891,16 @@
       }
     },
     {
+      "node_id": "chg:the-probe-slot-is-claimed-atomically",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "name": "The graph probe's guard becomes one atomic claim, and the duplicated hook registration that guaranteed two racers every time is removed",
+        "repair": "corrected_cause",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:the-prose-survey-extended-to-skills-and-found-no-rot",
       "node_type": "ChangeEvent",
       "properties": {
@@ -205691,6 +206024,20 @@
       }
     },
     {
+      "node_id": "con:loop-status-after-a-write-answers-under-one-second",
+      "node_type": "Constraint",
+      "properties": {
+        "category": "budget",
+        "concern": "core",
+        "direction": "maximum",
+        "limit": 1000.0,
+        "name": "loop_status answers in under 1,000 ms on the path a working session actually takes — after a write (an OBJECTIVE, not a threshold)",
+        "priority": "high",
+        "quantity": "latency_ms",
+        "statement": "loop_status should answer in about 1,000 ms WHEN A WRITE PRECEDES IT — the state a working session is almost always in, and the one the existing warm budget does not measure.\n\n⭐ AN OBJECTIVE, NOT A THRESHOLD — Anthony's clarification, 2026-09-12, correcting the first draft of this node: \"the under-1s was an objective, not a threshold.\" Missing it is not a breach and must not be reported as one; it is the direction the work points. reflow2's Constraint type carries an `objective` field only on a `kpp`, so for a `budget` this sentence is where the distinction lives — a budget_report `exceeded` against this limit means \"not yet at the objective\", nothing stronger.\n\nWHY A SECOND BUDGET RATHER THAN A REVISION. `con:loop-status-warm-latency-ms` limits the WARM case (no write since the last call) to 2,000 ms and is currently MET: 1,291 ms measured 2026-09-12. But `fact:loop-status-cost-is-amplifiers-not-baseline-and-80pc-of-calls-are-automation` shows the warm case is not the case anyone waits on — the same call is 4,096 ms steady once a write precedes each one, because the derived-scan memo is keyed per write generation and a session that is WORKING invalidates it every time. A budget that only measures the state a session is rarely in cannot fail when the thing gets slow.\n\nTHE NUMBER, and the tighter derivation kept so it can be argued rather than rediscovered. Anthony set 1,000 ms as the objective across the tool surface. A STRICTER DERIVATION GIVES 332 ms: loop_nudge fires this check on PostToolUse of every reflow2 call, so it is an INSTRUMENT ATTACHED TO OTHER WORK, and an instrument should not cost more than about twice the work it observes. The median reflow2 write is 166 ms (n=76 over the 2026-09-12 ledger; 154 ms over all 115 non-loop_status calls), so 2x the work it follows is 332 ms. 1,000 ms is 6x the median write it trails.\n\nMEASURED BEFORE THIS WAS WRITTEN, 2026-09-12, reflow2-mcp 0.59.0 release, physical copy of the live store (4,343 nodes / 25,004 edges), shared transport with --export-to, load 0.1-0.4, medians of 4:\n  no write before the call   1,291 ms\n  one write before each call 4,096 ms   <- this budget's quantity, 4.1x from the objective\nProduction median that day was 12,089 ms, because concurrency (x1.6 at four clients) and machine load (up to x6 under a cargo build) stack on top.\n\nWHAT IT DOES NOT COVER: one machine (4 cores), release build, this store at this size, an uncontended box. Nothing about cold start, the other rollups, or a design ten times this size. And it is NOT a claim that 1,000 ms is reachable — the warm baseline alone is 1,284 ms, so reaching the objective requires the intrinsic scan cost left unstarted on 2026-09-05, not only the write tax."
+      }
+    },
+    {
       "node_id": "con:loop-status-warm-latency-ms",
       "node_type": "Constraint",
       "properties": {
@@ -205853,6 +206200,17 @@
         "name": "REJECTED — option (b) chosen instead: the reading half was given its own function, so no general rule about observation-suppliers was needed",
         "rationale": "SETTLED BY ANTHONY, 2026-08-28: option (b) — give `cmp:upstream` its own capability — with the explicit instruction to DEFINE THE NEED FIRST rather than mint the capability and back-fill a reason.\n\n═══ WHY IT WAS RAISED (preserved from the original proposal, 2026-08-27) ═══\nRaised because building `cap:a-declared-dependency-is-watched-not-imported` produced a genuinely empty part, and the standing allocation ruling gives no answer for a function that spans a deliberate architectural boundary. Left proposed because accepting it would be the agent ruling on the tidiness of its own work, which is precisely the case reserved for the user. The counter-arguments were written at full strength rather than as caveats, because this ruling's failure mode is that it GENERALISES: \"supplies input to another module\" would excuse nearly any empty part, and the 2026-08-25 sweep found 19 real functions behind that kind of reasoning. Option (d) was listed as a real option for the same reason — an open instance may be worth more than a comfortable answer.\n\n═══ WHY (b) WON ═══\nThe proposal's own stated failure mode decided it: \"supplies input to another module\" describes a great many modules, and that reasoning has a 19-to-1 record of being the wrong read. A general rule with that record is a bad rule to accept off a single instance.\n\n(a) WAS ALSO THE WRONG TOOL. Under UAF/DoDAF a resource performs FUNCTIONS and a capability emerges from functions across resources, so \"reading a file is not a capability\" is defensible doctrine — but reflow2 has no `Function` type, so (a) would have been a doctrine rule papering over a schema limitation. (b) works honestly inside the vocabulary that actually exists.\n\n(c) was declined because it would break a working allocation ruling for one case. (d) was declined because parking a fully-explained defect as \"pressure\" degrades the defect list, and the pressure would have been aimed at adding a `Function` type to the schema — a change driven purely by reflow2's own design, which nobody using reflow2 has asked for. That is the wrench problem: do not reshape the tool because the tool's own model itched.\n\n⭐ THE NEED WAS DEFINED FIRST, AND IT WAS NOT A NEW ONE. `cap:a-declared-upstream-is-read-where-it-lies` satisfies the already-accepted `req:design-dependencies-declared`, whose statement names the check \"has what I depend on moved since\" — unanswerable without opening the upstream file. No requirement was invented to justify the part. The separation of the reading half from the judging half is an ARCHITECTURAL CONSTRAINT (reflow2-core does no file I/O), not a separate need, and constraints do not need their own requirements.\n\n📌 `dec:idea-a-capability-is-a-set-of-functions-and-a-black-box-delivers-functions` REMAINS OPEN and is untouched by this. It should be settled when a real user's design needs it, not because of one empty box in reflow2's own graph.",
         "status": "rejected"
+      }
+    },
+    {
+      "node_id": "dec:a-moved-record-is-diffed-by-membership-against-the-store",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "sync_debt's moved branch takes a `LiveDesign` oracle. The server paths pass `StoreMembership` (get_node per record node, one cached `outgoing(from, type)` scan per distinct pair for edges). The closure-taking `sync_debt` stays as a wrapper over `ExportedDesign`, an export-backed oracle built lazily and at most once, so every prior caller and test keeps exact behaviour. assess_overwrite remains the WRITE path's judgement (export_graph refusing to overwrite), where both documents genuinely exist.",
+        "kind": "choice",
+        "name": "DECIDED — a moved record's \"what does the live design lack\" is answered by store membership, one id at a time, never by exporting the graph to compare two documents",
+        "rationale": "Anthony chose this shape on 2026-09-12 when offered it against doing it later or not at all (\"Now, in this session\"), after the split was measured: with the parse cached, a moved record still cost ~490 ms per write generation, all of it the live export (tiny target 497-586 ms; in-step 41).\n\nTHE ROADS NOT TAKEN, and why each lost:\n1. Cache the live export per write generation (on ReadCache, beside the derived memos). No gain — the tax is already paid exactly once per generation; caching what is rebuilt once per generation changes nothing.\n2. Cache the read-path DEBT RESULT per (path, file hash) and recompute only on import. Removes the cost, but a manual add of an id the record holds would leave the hint stale by one node until the next export — a courtesy hint answering from yesterday's live graph. Rejected as a workaround under rule:fix-it-properly-while-it-is-still-cheap: the question is membership; answer it by membership.\n3. Keep assess_overwrite and feed it a cheaper \"export\" (ids only). Still walks the whole store per generation to build the id sets; the cost is the walk, not the struct.\n4. Do nothing — 633 ms was under the objective. Lost because two-person shared designs LIVE in the moved state between a pull and the next export, and loop_status pays it per CALL there, not per generation.\n\nMeasured after: tiny moved 50-57 ms; 16 MB moved 388-410 (from 1,114-1,189 in the morning). What is left is the diff itself (~350 ms on 25k edges); an incremental cross-generation diff would be its own pass and was not started. Parity note: ExportedDesign matches nodes by id alone, as assess_overwrite did; StoreMembership matches (type, id), so an id reused under a different type reads as absent — conservative, and ids are unique in practice.",
+        "status": "accepted"
       }
     },
     {
@@ -213095,6 +213453,17 @@
       }
     },
     {
+      "node_id": "epoch:a-record-that-moved-once-is-read-once",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "description": "The second repair of the 2026-09-12 optimisation campaign, chosen by the frequency x cost ranking: the post-write tax — a fixed ~1.1 s paid by the first store-touching read after ANY write, 27% of all measured tool time over 47 sessions, and the entire cost of get_node and search_design.\n\nROOT-CAUSED BY MEASUREMENT (fact:the-first-store-read-after-any-write-pays-a-fixed-1-1s-tax-whichever-tool-it-is): the read path's record_moved check calls sync_debt, whose stat gate (dec:an-unchanged-sync-target-is-not-re-parsed) skipped the parse only when the file was unchanged AND observed.hash == last_synced. A record that has moved once — a colleague's export pulled in — and then sits still fails the second clause on every check, because observed is refreshed by the check path and last_synced only by export/import. Every write generation then re-read and re-parsed the whole file (~620 ms of the 1.1 s) and rebuilt the live export (~490 ms). Nothing in the design was wrong; the implementation of a correct decision conflated two facts.\n\nTHIS EPOCH: the gate asks the two questions separately. Unchanged-and-in-step answers from the recorded count as before; unchanged-but-moved answers from the document already parsed in this process (a per-path cache keyed by content hash, one document per target that has ever moved). A real read still records its observation; a cache hit no longer rewrites the sidecar per read. Pinned by a test that corrupts the file's bytes under the same length and mtime between two checks — observed to fail `unreadable != behind` against the old code.\n\nMEASURED: 16 MB moved target, first read after a write, 1,162 -> 646 ms. The remaining ~490 ms is the live export built to answer a set-membership question; whether to replace it with store lookups (a signature change across five test files, for a cost that exists only between a pull and the next export) is put to Anthony rather than decided here.",
+        "epoch_type": "revision",
+        "name": "A record that moved once is read once — the stat gate stops conflating \"unchanged\" with \"in step\", and the first read after every write stops re-parsing a 16 MB file (2026-09-12)",
+        "sequence": 442,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:a-record-that-still-reads-confident",
       "node_type": "DesignEpoch",
       "properties": {
@@ -214320,6 +214689,17 @@
         "epoch_type": "milestone",
         "name": "ARRIVED 2026-08-30 — a brainstormed idea becomes a declared kind, the near-match refusal asks about relatedness as well as sameness, and whether the discipline is followed becomes answerable. Unplanned: it emerged from a root-cause pass on why brainstorm content was not linked, which itself began as a user question mid-session. Recorded with add_epoch because it HAPPENED — nobody planned it, and pretending otherwise would make the plan look better than it was. Shipped as #393 and #394; the six undeclared subsystem boundaries the seam increment surfaced were NOT specified and remain open.",
         "sequence": 268,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:the-loop-check-stops-firing-twice",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "description": "The first measured prioritisation of reflow2's own tool surface, and the first repair driven by the usage ledger shipped in v0.59.0.\n\nWHAT PROMPTED IT: Anthony observed, unmeasured, that \"some tools take a long time — I think one takes 12.5s\" and asked for a campaign ranking tools by how often they are used. The ledger made that rankable for the first time. loop_status was 71.4% of all time spent inside reflow2 (604 s of 846 s across 150 calls), at a median of 12,089 ms — and his 12.5 s estimate was accurate.\n\nWHAT THE INVESTIGATION FOUND, and it inverted the plan: the baseline is 1,284 ms, not 12 s. Four hypotheses were falsified by measurement (debug binary, shared-daemon transport, RocksDB compaction debt, and the instrument itself). The 12 s is three measured amplifiers — a per-write memo invalidation (x3.2), concurrency (x1.6 at four clients) and machine load (up to x6). And 32 of 39 calls came from the Stop/PostToolUse probe rather than from the agent, fourteen of them in same-second pairs.\n\nWHAT THIS EPOCH CONTAINS: the duplicate hook registration removed, and the probe's check-then-write guard replaced with an atomic claim — the class fix, since PostToolUse and Stop can legitimately arrive together even with one registration. Plus a second latency budget for the path a working session actually takes, and the correction of a stale budget edge that had been reporting `exceeded` on a budget that held.\n\nWHAT IT MUST NOT BE READ AS: the budget is NOT met. This epoch reduces how OFTEN the expensive rollup runs; it does not make it faster. 4,096 ms against a 1,000 ms limit stands, and the two levers that would close it — the write-tax and the intrinsic scan cost — were left unstarted and need their own ruling.",
+        "epoch_type": "revision",
+        "name": "The loop check stops firing twice — the first usage ledger prices a \"wasted read\" at 71% of all tool time, and the guard that was supposed to stop it was never atomic (2026-09-12)",
+        "sequence": 441,
         "status": "arrived"
       }
     },
@@ -223870,6 +224250,26 @@
       }
     },
     {
+      "node_id": "snap:epoch:a-record-that-moved-once-is-read-once:art:sync-debt",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0280\",\"properties\":{\"as_checksum\":\"sha256:56cc3f8bd181db56332b9bf9b34d46127ef805da38a395a4c88e9322e175a99b\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0290\",\"properties\":{\"as_checksum\":\"sha256:56cc3f8bd181db56332b9bf9b34d46127ef805da38a395a4c88e9322e175a99b\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0300\",\"properties\":{\"as_checksum\":\"sha256:56cc3f8bd181db56332b9bf9b34d46127ef805da38a395a4c88e9322e175a99b\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0310\",\"properties\":{\"as_checksum\":\"sha256:56cc3f8bd181db56332b9bf9b34d46127ef805da38a395a4c88e9322e175a99b\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0320\",\"properties\":{\"as_checksum\":\"sha256:b2da4bd085cf70897b13e63d46b44c90eb44988d0488c2a83b019c16b8361286\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0321\",\"properties\":{\"as_checksum\":\"sha256:b2da4bd085cf70897b13e63d46b44c90eb44988d0488c2a83b019c16b8361286\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0330\",\"properties\":{\"as_checksum\":\"sha256:b2da4bd085cf70897b13e63d46b44c90eb44988d0488c2a83b019c16b8361286\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0340\",\"properties\":{\"as_checksum\":\"sha256:b2da4bd085cf70897b13e63d46b44c90eb44988d0488c2a83b019c16b8361286\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0350\",\"properties\":{\"as_checksum\":\"sha256:b2da4bd085cf70897b13e63d46b44c90eb44988d0488c2a83b019c16b8361286\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0360\",\"properties\":{\"as_checksum\":\"sha256:b2da4bd085cf70897b13e63d46b44c90eb44988d0488c2a83b019c16b8361286\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0370\",\"properties\":{\"as_checksum\":\"sha256:b2da4bd085cf70897b13e63d46b44c90eb44988d0488c2a83b019c16b8361286\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0380\",\"properties\":{\"as_checksum\":\"sha256:b2da4bd085cf70897b13e63d46b44c90eb44988d0488c2a83b019c16b8361286\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0390\",\"properties\":{\"as_checksum\":\"sha256:b2da4bd085cf70897b13e63d46b44c90eb44988d0488c2a83b019c16b8361286\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0400\",\"properties\":{\"as_checksum\":\"sha256:9d1d436090d03e4910d98fd89225efb7a13a7d23d95a06193cf0d97f68075603\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0410\",\"properties\":{\"as_checksum\":\"sha256:9d1d436090d03e4910d98fd89225efb7a13a7d23d95a06193cf0d97f68075603\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0420\",\"properties\":{\"as_checksum\":\"sha256:9d1d436090d03e4910d98fd89225efb7a13a7d23d95a06193cf0d97f68075603\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0430\",\"properties\":{\"as_checksum\":\"sha256:9d1d436090d03e4910d98fd89225efb7a13a7d23d95a06193cf0d97f68075603\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0440\",\"properties\":{\"as_checksum\":\"sha256:9d1d436090d03e4910d98fd89225efb7a13a7d23d95a06193cf0d97f68075603\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0450\",\"properties\":{\"as_checksum\":\"sha256:9d1d436090d03e4910d98fd89225efb7a13a7d23d95a06193cf0d97f68075603\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0460\",\"properties\":{\"as_checksum\":\"sha256:ca2aff3556bafb7fd4c5134a93b8c42d7aa14b827f830f52bffc2ce160c089f1\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0470\",\"properties\":{\"as_checksum\":\"sha256:ca2aff3556bafb7fd4c5134a93b8c42d7aa14b827f830f52bffc2ce160c089f1\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0471\",\"properties\":{\"as_checksum\":\"sha256:fa6020910eddcda910b8e5beda279b48936fa24dbc89ebeec74b02ea6e44253d\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0480\",\"properties\":{\"as_checksum\":\"sha256:72a58c6a685b5e3726d75d7917f64edb23553ff2af60444d111f438419e4a823\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0490\",\"properties\":{\"as_checksum\":\"sha256:72a58c6a685b5e3726d75d7917f64edb23553ff2af60444d111f438419e4a823\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0500\",\"properties\":{\"as_checksum\":\"sha256:72a58c6a685b5e3726d75d7917f64edb23553ff2af60444d111f438419e4a823\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0510\",\"properties\":{\"as_checksum\":\"sha256:72a58c6a685b5e3726d75d7917f64edb23553ff2af60444d111f438419e4a823\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0520\",\"properties\":{\"as_checksum\":\"sha256:72a58c6a685b5e3726d75d7917f64edb23553ff2af60444d111f438419e4a823\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0530\",\"properties\":{\"as_checksum\":\"sha256:72a58c6a685b5e3726d75d7917f64edb23553ff2af60444d111f438419e4a823\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0540\",\"properties\":{\"as_checksum\":\"sha256:72a58c6a685b5e3726d75d7917f64edb23553ff2af60444d111f438419e4a823\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0550\",\"properties\":{\"as_checksum\":\"sha256:72a58c6a685b5e3726d75d7917f64edb23553ff2af60444d111f438419e4a823\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0551\",\"properties\":{\"as_checksum\":\"sha256:72a58c6a685b5e3726d75d7917f64edb23553ff2af60444d111f438419e4a823\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0560\",\"properties\":{\"as_checksum\":\"sha256:72a58c6a685b5e3726d75d7917f64edb23553ff2af60444d111f438419e4a823\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0570\",\"properties\":{\"as_checksum\":\"sha256:72a58c6a685b5e3726d75d7917f64edb23553ff2af60444d111f438419e4a823\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0580\",\"properties\":{\"as_checksum\":\"sha256:72a58c6a685b5e3726d75d7917f64edb23553ff2af60444d111f438419e4a823\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0590\",\"properties\":{\"as_checksum\":\"sha256:72a58c6a685b5e3726d75d7917f64edb23553ff2af60444d111f438419e4a823\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:the-unexported-work-check-keeps-its-node-count-and-says-so\",\"properties\":{\"note\":\"This file holds the node-count comparison the decision rules on: the `live_nodes > export_nodes` arm stays, the in-step arm gains the sentence naming what it cannot see, and no further detector is built here. A later session proposing to add one — or to reach for `write_gen` — should read the rejection before writing code.\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:the-record-moved-is-surfaced\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Component\",\"other_id\":\"cmp:sync-debt\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}}]",
+        "state": "{\"artifact_type\":\"code\",\"checksum\":\"sha256:72a58c6a685b5e3726d75d7917f64edb23553ff2af60444d111f438419e4a823\",\"granularity\":\"atomic\",\"location\":\"crates/reflow2-mcp/src/sync_debt.rs\",\"name\":\"sync_debt.rs\",\"status\":\"realized\",\"volatility\":\"stable\"}",
+        "target_id": "art:sync-debt",
+        "target_type": "Artifact"
+      }
+    },
+    {
+      "node_id": "snap:epoch:a-record-that-moved-once-is-read-once:art:sync-debt:r2",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0280\",\"properties\":{\"as_checksum\":\"sha256:56cc3f8bd181db56332b9bf9b34d46127ef805da38a395a4c88e9322e175a99b\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0290\",\"properties\":{\"as_checksum\":\"sha256:56cc3f8bd181db56332b9bf9b34d46127ef805da38a395a4c88e9322e175a99b\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0300\",\"properties\":{\"as_checksum\":\"sha256:56cc3f8bd181db56332b9bf9b34d46127ef805da38a395a4c88e9322e175a99b\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0310\",\"properties\":{\"as_checksum\":\"sha256:56cc3f8bd181db56332b9bf9b34d46127ef805da38a395a4c88e9322e175a99b\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0320\",\"properties\":{\"as_checksum\":\"sha256:b2da4bd085cf70897b13e63d46b44c90eb44988d0488c2a83b019c16b8361286\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0321\",\"properties\":{\"as_checksum\":\"sha256:b2da4bd085cf70897b13e63d46b44c90eb44988d0488c2a83b019c16b8361286\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0330\",\"properties\":{\"as_checksum\":\"sha256:b2da4bd085cf70897b13e63d46b44c90eb44988d0488c2a83b019c16b8361286\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0340\",\"properties\":{\"as_checksum\":\"sha256:b2da4bd085cf70897b13e63d46b44c90eb44988d0488c2a83b019c16b8361286\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0350\",\"properties\":{\"as_checksum\":\"sha256:b2da4bd085cf70897b13e63d46b44c90eb44988d0488c2a83b019c16b8361286\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0360\",\"properties\":{\"as_checksum\":\"sha256:b2da4bd085cf70897b13e63d46b44c90eb44988d0488c2a83b019c16b8361286\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0370\",\"properties\":{\"as_checksum\":\"sha256:b2da4bd085cf70897b13e63d46b44c90eb44988d0488c2a83b019c16b8361286\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0380\",\"properties\":{\"as_checksum\":\"sha256:b2da4bd085cf70897b13e63d46b44c90eb44988d0488c2a83b019c16b8361286\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0390\",\"properties\":{\"as_checksum\":\"sha256:b2da4bd085cf70897b13e63d46b44c90eb44988d0488c2a83b019c16b8361286\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0400\",\"properties\":{\"as_checksum\":\"sha256:9d1d436090d03e4910d98fd89225efb7a13a7d23d95a06193cf0d97f68075603\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0410\",\"properties\":{\"as_checksum\":\"sha256:9d1d436090d03e4910d98fd89225efb7a13a7d23d95a06193cf0d97f68075603\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0420\",\"properties\":{\"as_checksum\":\"sha256:9d1d436090d03e4910d98fd89225efb7a13a7d23d95a06193cf0d97f68075603\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0430\",\"properties\":{\"as_checksum\":\"sha256:9d1d436090d03e4910d98fd89225efb7a13a7d23d95a06193cf0d97f68075603\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0440\",\"properties\":{\"as_checksum\":\"sha256:9d1d436090d03e4910d98fd89225efb7a13a7d23d95a06193cf0d97f68075603\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0450\",\"properties\":{\"as_checksum\":\"sha256:9d1d436090d03e4910d98fd89225efb7a13a7d23d95a06193cf0d97f68075603\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0460\",\"properties\":{\"as_checksum\":\"sha256:ca2aff3556bafb7fd4c5134a93b8c42d7aa14b827f830f52bffc2ce160c089f1\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0470\",\"properties\":{\"as_checksum\":\"sha256:ca2aff3556bafb7fd4c5134a93b8c42d7aa14b827f830f52bffc2ce160c089f1\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0471\",\"properties\":{\"as_checksum\":\"sha256:fa6020910eddcda910b8e5beda279b48936fa24dbc89ebeec74b02ea6e44253d\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0480\",\"properties\":{\"as_checksum\":\"sha256:72a58c6a685b5e3726d75d7917f64edb23553ff2af60444d111f438419e4a823\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0490\",\"properties\":{\"as_checksum\":\"sha256:72a58c6a685b5e3726d75d7917f64edb23553ff2af60444d111f438419e4a823\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0500\",\"properties\":{\"as_checksum\":\"sha256:72a58c6a685b5e3726d75d7917f64edb23553ff2af60444d111f438419e4a823\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0510\",\"properties\":{\"as_checksum\":\"sha256:72a58c6a685b5e3726d75d7917f64edb23553ff2af60444d111f438419e4a823\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0520\",\"properties\":{\"as_checksum\":\"sha256:72a58c6a685b5e3726d75d7917f64edb23553ff2af60444d111f438419e4a823\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0530\",\"properties\":{\"as_checksum\":\"sha256:72a58c6a685b5e3726d75d7917f64edb23553ff2af60444d111f438419e4a823\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0540\",\"properties\":{\"as_checksum\":\"sha256:72a58c6a685b5e3726d75d7917f64edb23553ff2af60444d111f438419e4a823\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0550\",\"properties\":{\"as_checksum\":\"sha256:72a58c6a685b5e3726d75d7917f64edb23553ff2af60444d111f438419e4a823\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0551\",\"properties\":{\"as_checksum\":\"sha256:72a58c6a685b5e3726d75d7917f64edb23553ff2af60444d111f438419e4a823\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0560\",\"properties\":{\"as_checksum\":\"sha256:72a58c6a685b5e3726d75d7917f64edb23553ff2af60444d111f438419e4a823\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0570\",\"properties\":{\"as_checksum\":\"sha256:72a58c6a685b5e3726d75d7917f64edb23553ff2af60444d111f438419e4a823\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0580\",\"properties\":{\"as_checksum\":\"sha256:72a58c6a685b5e3726d75d7917f64edb23553ff2af60444d111f438419e4a823\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0590\",\"properties\":{\"as_checksum\":\"sha256:72a58c6a685b5e3726d75d7917f64edb23553ff2af60444d111f438419e4a823\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:a-record-that-moved-once-is-read-once\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:the-unexported-work-check-keeps-its-node-count-and-says-so\",\"properties\":{\"note\":\"This file holds the node-count comparison the decision rules on: the `live_nodes > export_nodes` arm stays, the in-step arm gains the sentence naming what it cannot see, and no further detector is built here. A later session proposing to add one — or to reach for `write_gen` — should read the rejection before writing code.\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:the-record-moved-is-surfaced\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Component\",\"other_id\":\"cmp:sync-debt\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}}]",
+        "state": "{\"artifact_type\":\"code\",\"checksum\":\"sha256:0280a35d604105dc5ffa0e952ae2df8b9a8924dea79a68bd6ac23ab2859c773e\",\"granularity\":\"atomic\",\"location\":\"crates/reflow2-mcp/src/sync_debt.rs\",\"name\":\"sync_debt.rs\",\"status\":\"realized\",\"volatility\":\"stable\"}",
+        "target_id": "art:sync-debt",
+        "target_type": "Artifact"
+      }
+    },
+    {
       "node_id": "snap:epoch:a-refusal-arrives-before-the-client-gives-up:cmp:shared",
       "node_type": "Snapshot",
       "properties": {
@@ -224927,6 +225327,16 @@
         "state": "{\"change_type\":\"scope_change\",\"name\":\"The retro question is answered forward-only, 228 pre-detector fixes are parked, and the requirement stops saying the fork is open\",\"subject\":\"system\"}",
         "target_id": "chg:the-cause-discipline-binds-forward-and-the-backlog-is-parked",
         "target_type": "ChangeEvent"
+      }
+    },
+    {
+      "node_id": "snap:epoch:preserved-on-write:con:loop-status-after-a-write-answers-under-one-second",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"CONSTRAINS\",\"other_type\":\"Capability\",\"other_id\":\"cap:loop-status\",\"properties\":{\"basis\":\"measured\",\"contribution\":4096.0,\"measured_at\":\"2026-09-12\",\"note\":\"The post-write path, which is the path a working session takes. Median of 4 calls, each preceded by one small write, on a physical copy of the live store (4,343 nodes / 25,004 edges), reflow2-mcp 0.59.0 release, shared transport with --export-to, load 0.1-0.4. 4.1x over the 1,000 ms limit. The same call with no write before it is 1,291 ms, so the entire overage is the per-write-generation memo invalidation.\"}}]",
+        "state": "{\"category\":\"budget\",\"concern\":\"core\",\"direction\":\"maximum\",\"limit\":1000.0,\"name\":\"loop_status answers in under 1,000 ms on the path a working session actually takes — after a write\",\"priority\":\"high\",\"quantity\":\"latency_ms\",\"statement\":\"loop_status shall answer in AT MOST 1,000 ms WHEN A WRITE PRECEDES IT — the state a working session is almost always in, and the one the existing warm budget does not measure.\\n\\nWHY A SECOND BUDGET RATHER THAN A REVISION. `con:loop-status-warm-latency-ms` limits the WARM case (no write since the last call) to 2,000 ms and is currently MET: 1,291 ms measured 2026-09-12. But `fact:loop-status-cost-is-amplifiers-not-baseline-and-80pc-of-calls-are-automation` shows the warm case is not the case anyone waits on — the same call is 4,096 ms steady once a write precedes each one, because the derived-scan memo is keyed per write generation and a session that is WORKING invalidates it every time. A budget that only measures the state a session is rarely in cannot fail when the thing gets slow, which is the whole job of a budget.\\n\\nTHE NUMBER IS ANTHONY'S RULING, 2026-09-12, and the tighter derivation is recorded here so it can be argued rather than rediscovered. He asked for \\\"seconds to under 1s\\\" as the goal across the tool surface and chose 1,000 ms for this one. A STRICTER DERIVATION EXISTS AND GIVES 332 ms: loop_nudge fires this check on PostToolUse of every reflow2 call, so it is an INSTRUMENT ATTACHED TO OTHER WORK, and an instrument should not cost more than about twice the work it observes. Measured over the same ledger, the median reflow2 write is 166 ms (n=76; 154 ms over all 115 non-loop_status calls), so 2x the work it follows is 332 ms. 1,000 ms is therefore a CEILING, at 6x the median write it trails — deliberately loose, and the tighter number is the one to reach for if the levers turn out to allow it.\\n\\nMEASURED BEFORE THE BUDGET WAS WRITTEN, 2026-09-12, reflow2-mcp 0.59.0 release, on a physical copy of the live store (4,343 nodes / 25,004 edges), shared transport with --export-to, load 0.1-0.4, medians of 4:\\n  no write before the call   1,291 ms   (under the old warm budget)\\n  one write before each call 4,096 ms   <- THIS BUDGET'S QUANTITY, 4.1x over\\nAnd in production that day the median observed was 12,089 ms, because concurrency (x1.6 at four clients) and machine load (up to x6 under a cargo build) stack on top.\\n\\nWHAT IT DOES NOT COVER, stated so it is not quoted as a portable guarantee: one machine (4 cores), release build, this store at this size, stdio and shared transports, an uncontended box. It says nothing about cold start, nothing about the other rollups, and nothing about what the same call costs on a design ten times this size. It is also NOT a claim that 1,000 ms is achievable — the baseline alone is 1,284 ms warm, so meeting this budget REQUIRES attacking the intrinsic scan cost that was left unstarted on 2026-09-05, not only the write tax.\"}",
+        "target_id": "con:loop-status-after-a-write-answers-under-one-second",
+        "target_type": "Constraint"
       }
     },
     {
@@ -226320,6 +226730,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:the-loop-check-stops-firing-twice:art:loop-nudge",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0100\",\"properties\":{\"as_checksum\":\"sha256:96619724a77479e7\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0101\",\"properties\":{\"as_checksum\":\"sha256:96619724a77479e7\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0110\",\"properties\":{\"as_checksum\":\"sha256:96619724a77479e7\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0120\",\"properties\":{\"as_checksum\":\"sha256:96619724a77479e7\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0130\",\"properties\":{\"as_checksum\":\"sha256:96619724a77479e7\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0140\",\"properties\":{\"as_checksum\":\"sha256:96619724a77479e7\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0150\",\"properties\":{\"as_checksum\":\"sha256:96619724a77479e7\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0160\",\"properties\":{\"as_checksum\":\"sha256:96619724a77479e7\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0170\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0180\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0190\",\"properties\":{\"as_checksum\":\"sha256:fca6650697d55f63fc9dd71af518f9f9cfdebb82efd450cce36d7d991ca8dce7\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0200\",\"properties\":{\"as_checksum\":\"sha256:fca6650697d55f63fc9dd71af518f9f9cfdebb82efd450cce36d7d991ca8dce7\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0210\",\"properties\":{\"as_checksum\":\"sha256:fca6650697d55f63fc9dd71af518f9f9cfdebb82efd450cce36d7d991ca8dce7\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0220\",\"properties\":{\"as_checksum\":\"sha256:9cd7b5941e7546b94252f144ec97517f1cc4e34079a8130b08bb8d4b51c33f13\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0221\",\"properties\":{\"as_checksum\":\"sha256:9cd7b5941e7546b94252f144ec97517f1cc4e34079a8130b08bb8d4b51c33f13\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0230\",\"properties\":{\"as_checksum\":\"sha256:9cd7b5941e7546b94252f144ec97517f1cc4e34079a8130b08bb8d4b51c33f13\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0240\",\"properties\":{\"as_checksum\":\"sha256:9cd7b5941e7546b94252f144ec97517f1cc4e34079a8130b08bb8d4b51c33f13\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0250\",\"properties\":{\"as_checksum\":\"sha256:1b610577b6ffc1e8a4a08c8c00352b1a95a7e22a92e78fa56ba6b5206611a8c8\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0260\",\"properties\":{\"as_checksum\":\"sha256:1b610577b6ffc1e8a4a08c8c00352b1a95a7e22a92e78fa56ba6b5206611a8c8\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0261\",\"properties\":{\"as_checksum\":\"sha256:1b610577b6ffc1e8a4a08c8c00352b1a95a7e22a92e78fa56ba6b5206611a8c8\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0270\",\"properties\":{\"as_checksum\":\"sha256:337e0f5d99a3abf98407f6c471c5d902b1850fd35bdf7c826d09261cedc27528\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0280\",\"properties\":{\"as_checksum\":\"sha256:337e0f5d99a3abf98407f6c471c5d902b1850fd35bdf7c826d09261cedc27528\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0290\",\"properties\":{\"as_checksum\":\"sha256:337e0f5d99a3abf98407f6c471c5d902b1850fd35bdf7c826d09261cedc27528\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0300\",\"properties\":{\"as_checksum\":\"sha256:337e0f5d99a3abf98407f6c471c5d902b1850fd35bdf7c826d09261cedc27528\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0310\",\"properties\":{\"as_checksum\":\"sha256:337e0f5d99a3abf98407f6c471c5d902b1850fd35bdf7c826d09261cedc27528\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0320\",\"properties\":{\"as_checksum\":\"sha256:337e0f5d99a3abf98407f6c471c5d902b1850fd35bdf7c826d09261cedc27528\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0321\",\"properties\":{\"as_checksum\":\"sha256:337e0f5d99a3abf98407f6c471c5d902b1850fd35bdf7c826d09261cedc27528\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0330\",\"properties\":{\"as_checksum\":\"sha256:337e0f5d99a3abf98407f6c471c5d902b1850fd35bdf7c826d09261cedc27528\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0340\",\"properties\":{\"as_checksum\":\"sha256:337e0f5d99a3abf98407f6c471c5d902b1850fd35bdf7c826d09261cedc27528\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0350\",\"properties\":{\"as_checksum\":\"sha256:337e0f5d99a3abf98407f6c471c5d902b1850fd35bdf7c826d09261cedc27528\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0360\",\"properties\":{\"as_checksum\":\"sha256:337e0f5d99a3abf98407f6c471c5d902b1850fd35bdf7c826d09261cedc27528\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0370\",\"properties\":{\"as_checksum\":\"sha256:337e0f5d99a3abf98407f6c471c5d902b1850fd35bdf7c826d09261cedc27528\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0380\",\"properties\":{\"as_checksum\":\"sha256:337e0f5d99a3abf98407f6c471c5d902b1850fd35bdf7c826d09261cedc27528\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0390\",\"properties\":{\"as_checksum\":\"sha256:337e0f5d99a3abf98407f6c471c5d902b1850fd35bdf7c826d09261cedc27528\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0400\",\"properties\":{\"as_checksum\":\"sha256:63cb1f09f969be33ab14fbd837eff877e28b7f432953985e7eeba10b32bf0f31\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0410\",\"properties\":{\"as_checksum\":\"sha256:63cb1f09f969be33ab14fbd837eff877e28b7f432953985e7eeba10b32bf0f31\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0420\",\"properties\":{\"as_checksum\":\"sha256:63cb1f09f969be33ab14fbd837eff877e28b7f432953985e7eeba10b32bf0f31\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0430\",\"properties\":{\"as_checksum\":\"sha256:1dc6dec37183cd464134e89d8e96c54aa9990cb2082760232cb56dfd7008386d\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0440\",\"properties\":{\"as_checksum\":\"sha256:1dc6dec37183cd464134e89d8e96c54aa9990cb2082760232cb56dfd7008386d\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0450\",\"properties\":{\"as_checksum\":\"sha256:1dc6dec37183cd464134e89d8e96c54aa9990cb2082760232cb56dfd7008386d\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0460\",\"properties\":{\"as_checksum\":\"sha256:1dc6dec37183cd464134e89d8e96c54aa9990cb2082760232cb56dfd7008386d\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0470\",\"properties\":{\"as_checksum\":\"sha256:c28eefc04c02189671d16f4d28efb401ece3339a7773440bd4765efead870f42\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0471\",\"properties\":{\"as_checksum\":\"sha256:c28eefc04c02189671d16f4d28efb401ece3339a7773440bd4765efead870f42\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0480\",\"properties\":{\"as_checksum\":\"sha256:c28eefc04c02189671d16f4d28efb401ece3339a7773440bd4765efead870f42\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0490\",\"properties\":{\"as_checksum\":\"sha256:c28eefc04c02189671d16f4d28efb401ece3339a7773440bd4765efead870f42\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0500\",\"properties\":{\"as_checksum\":\"sha256:c28eefc04c02189671d16f4d28efb401ece3339a7773440bd4765efead870f42\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0510\",\"properties\":{\"as_checksum\":\"sha256:c28eefc04c02189671d16f4d28efb401ece3339a7773440bd4765efead870f42\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0520\",\"properties\":{\"as_checksum\":\"sha256:c28eefc04c02189671d16f4d28efb401ece3339a7773440bd4765efead870f42\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0530\",\"properties\":{\"as_checksum\":\"sha256:c28eefc04c02189671d16f4d28efb401ece3339a7773440bd4765efead870f42\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0540\",\"properties\":{\"as_checksum\":\"sha256:c28eefc04c02189671d16f4d28efb401ece3339a7773440bd4765efead870f42\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0550\",\"properties\":{\"as_checksum\":\"sha256:c28eefc04c02189671d16f4d28efb401ece3339a7773440bd4765efead870f42\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0551\",\"properties\":{\"as_checksum\":\"sha256:c28eefc04c02189671d16f4d28efb401ece3339a7773440bd4765efead870f42\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0560\",\"properties\":{\"as_checksum\":\"sha256:c28eefc04c02189671d16f4d28efb401ece3339a7773440bd4765efead870f42\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0570\",\"properties\":{\"as_checksum\":\"sha256:c28eefc04c02189671d16f4d28efb401ece3339a7773440bd4765efead870f42\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0580\",\"properties\":{\"as_checksum\":\"sha256:c28eefc04c02189671d16f4d28efb401ece3339a7773440bd4765efead870f42\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0590\",\"properties\":{\"as_checksum\":\"sha256:c28eefc04c02189671d16f4d28efb401ece3339a7773440bd4765efead870f42\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v090\",\"properties\":{\"as_checksum\":\"sha256:be1051b582c9e898\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:loop-nudge\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:loop-status\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:skill-loads-are-counted\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:stop-nudge-asks-the-graph\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"verified\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:the-graph-asks-what-a-session-made-false\",\"properties\":{\"completeness\":\"partial\",\"conformance\":\"verified\"}}]",
+        "state": "{\"artifact_type\":\"code\",\"checksum\":\"sha256:c28eefc04c02189671d16f4d28efb401ece3339a7773440bd4765efead870f42\",\"granularity\":\"atomic\",\"location\":\"tools/loop_nudge.py\",\"name\":\"loop_nudge.py\",\"status\":\"realized\",\"volatility\":\"stable\"}",
+        "target_id": "art:loop-nudge",
+        "target_type": "Artifact"
+      }
+    },
+    {
       "node_id": "snap:epoch:the-loop-holds-the-invitation:art:capture-intent-skill",
       "node_type": "Snapshot",
       "properties": {
@@ -227072,6 +227492,19 @@
         "statement": "THE SYMPTOM AS OBSERVED (dev_storyflow, 2026-09-08): `CONNECT_TIMEOUT after 30000ms`, no reflow2 tools for a whole session, while `.reflow2/graph.server.log` held the precise reason — a graph written by reflow2 0.50.0 refused by 0.55.1. The reporter's own words: 'It is not a connection problem at all... Every diagnostic instinct that timeout provokes is wrong, and the correct message was sitting in a log nobody had reason to open.'\n\nCANDIDATES CONSIDERED, five: (1) the --serve-shared daemon exits on every open failure, so no rendezvous ever appears; (2) reflow2's READY_TIMEOUT equals the client's connect timeout, so nothing said after it can be heard; (3) the daemon's stderr goes to a log file and never reaches the session, so even a correct message has no path; (4) not-in-the-suspected-component — the peer's launch wrapper swallowed the output; (5) the observation is wrong and CONNECT_TIMEOUT came from something else.\n\nTHE DISCRIMINATING MEASUREMENT, taken 2026-09-09 against a real permanently-unopenable store: drive `--shared` as an MCP client and time the handshake reply. Candidate 3 predicts NO reply; candidates 1 and 2 predict a correct degraded reply, late.\n\nRESULT: the handshake arrived at **t+30.0 s**, carrying the correct, complete degraded surface with the reason in its instructions. So candidate 3 is REFUTED — the machinery was right all along — and 1 and 2 are both true. They are not separable by timing (both predict 30 s), and they are separable by consequence: 1 explains why no rendezvous appears, 2 explains why the correct answer is unreachable anyway. READY_TIMEOUT is 30 s and the client gives up at 30 s. It is a dead heat the client always wins.\n\nTHE CLASS, not the instance: the version guard was the trigger. The cause is that the `--serve-shared` daemon handles EVERY open failure with the path written for ONE of them. Losing the store-lock race means somebody else won and will publish; a version-guard refusal, a corrupt store or an unreadable path mean there is no winner and never will be. The waiting loop's own comment justifies the wait by assuming a winner exists, and never notices that assumption.\n\n⭐ AND SHORTENING THE DEADLINE IS NOT THE FIX — this is the measurement that killed the obvious answer. `fact:the-first-store-read-of-a-session-costs-26-to-48-seconds` measured a LEGITIMATE cold daemon start at ~26 s, so 30 s already carries four seconds of headroom. Cutting it would trade a bricked graph's bad message for a healthy graph's false one. The reason has to travel instead of the clock being moved.\n\nWHAT WAS BUILT: the daemon records a refusal beside the store (`<graph>.server.refused.json`, the same sidecar convention as the rendezvous) when its failure is one no peer can resolve; the spawning session stops waiting the instant it reads one written by a pid it spawned. Measured after: **t+30.0 s becomes t+0.3 s**, and the handshake instructions name the actual refusal.\n\nPINNED, AND OBSERVED TO FAIL FIRST: `tools/test_degraded_server.py::SharedRefusalIsNotATimeoutTest`, 4 cases. Against the unfixed binary, 3 fail — the timing case at 30.024 s, the message case because the old text said 'within 30s' and blamed the write lock, and the record case because nothing was written. The fourth, `a_lost_lock_race_still_waits_for_the_winner`, passes in BOTH states: it is the counterweight, and it fails if the fix is ever widened into a blanket 'any open failure means stop waiting'.\n\nWHAT THIS DOES NOT ESTABLISH: the reproduction used a forged future stamp and a permanently-held lock, not the reporter's retired-type case, which cannot be constructed any more — a retired type is by definition one this binary will not write. Both drive the identical guard branch and the identical refusal, so the path is the same; the exact 0.50.0 store was never re-run. The 30 s client timeout is taken from the reporter's message and from this session's own measurement of when the reply arrives; no client's configuration was inspected. And the ~26 s legitimate cold start is quoted from an August measurement of a 77 MB store, not re-measured here.",
         "subject_id": "cmp:shared",
         "valid_from": "2026-09-09"
+      }
+    },
+    {
+      "node_id": "fact:a-test-server-with-export-to-at-the-real-record-wrote-probe-nodes-into-it-and-nothing-could-refuse",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "finding",
+        "name": "A throwaway server on a COPY of the design, launched with --export-to pointed at the real committed record, wrote 8 probe nodes into it — and nothing could have refused, because the copy carries the live design's identity",
+        "statement": "HAPPENED 2026-09-12, caught by the loop hint (\"the shared record holds 8 node(s) this graph does not: rul:perf-probe-…\"), restored from HEAD. An A/B harness measuring the live server's configuration launched a server on a copy of the store with the live flags, including `--export-to ./docs/design/reflow2.json`; the copy's own throwaway writes were auto-exported into the real record.\n\nWHY NO GUARD FIRED, and why one may not be able to: the copy was built by importing the committed export, so it ADOPTED the live design's identity (adopted_identity: reflow2). To the export path the target was legitimately \"its\" record — same graph id, a lineage it could chain from. A stale-seat refusal compares hashes and the copy was ahead, not behind. The only thing that noticed was the node-count comparison on the NEXT live read.\n\nA LIMIT TO STATE, NOT A DEFECT TO FIX BLINDLY: two stores sharing one identity are by design (that is what an import is for). What might be cheap and honest is for `--export-to` to say at startup, once, which graph directory it will write FROM — so a person reading a harness log sees the mismatch. Recorded as the shape of the trap; no change proposed here.",
+        "subject_id": "art:auto-export",
+        "valid_from": "2026-09-12"
       }
     },
     {
@@ -229818,6 +230251,24 @@
       }
     },
     {
+      "node_id": "fact:deploy-to-does-not-move-a-releases-own-status-and-no-cut-step-says-to",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "finding",
+        "name": "A Release stays `planned` after deploy_to — the v0.59.0 cut exported it that way and cost an amend, and no step of flow:release-cut says to set it",
+        "statement": "Measured on the v0.59.0 cut, 2026-09-12. `add_release` lands a Release at `planned`. `deploy_to` then records DEPLOYED_TO edges (dev/ci/container, status active) and leaves the Release's own `status` untouched — correctly, since deployment and lifecycle are different claims — but nothing in `flow:release-cut`'s eight steps says to move it, so the cut exported `rel:v0590` reading `planned` while its manifest was frozen and its assets were about to publish. Caught by reading the written export before committing; fixed with `create_node {\"status\": \"deployed\"}` and a second export, costing one amend and one re-gate.\n\nIT IS NOT NEW AND IT IS NOT VISIBLE: `rel:v0580` carries `deployed`, so a past cut set it the same unrecorded way, and `release_report` does not read the field — it reports the manifest and the deployments, both of which were already right. So the only reader that would have caught a release published while still labelled `planned` is a person looking at the node. ⚠️ RELATED AND STILL OPEN: `release_without_epoch` was hardened on 2026-08-21 to exempt a release only while UNDEPLOYED, which reads that same status — a release left at `planned` after publishing would be exempted from a check it should face.\n\nWHAT WORKS: set the status to `deployed` in the same batch as `deploy_to`, BEFORE the export, and retire the previous release in the same breath. Recorded with `steps` so it arrives at `deploy_to` and `add_release` rather than in a procedure somebody has to remember to re-read.",
+        "steps": [
+          "deploy_to",
+          "add_release",
+          "release_report"
+        ],
+        "subject_id": "cap:release-pinned-to-time",
+        "valid_from": "2026-09-12"
+      }
+    },
+    {
       "node_id": "fact:design-regions-exceeds-300-seconds-and-wedges-the-shared-server",
       "node_type": "TemporalFact",
       "properties": {
@@ -229967,6 +230418,20 @@
         "statement": "MEASURED 2026-08-24 after Anthony pointed out that RocksDB compiles with assertions on unless DEBUG_LEVEL=0. He was right that it matters, and checking it found a second thing nobody was looking for.\n\n⭐ WHAT PROMPTED IT: every performance number recorded EARLIER THE SAME DAY — including the 22.6s for `loop_status` that `dec:the-stop-hook-asks-the-graph-asynchronously` rests on — was taken against `target/debug/reflow2-mcp`, and NONE of them said so. A prior session had been careful about exactly this (`fact:the-orientation-reads-cost-ten-seconds-and-the-store-is-not-why` states 'MEASURED on real RocksDB with a RELEASE binary'), so the project already knew it mattered.\n\n═══ THE CONTROLLED COMPARISON ═══\n\nBoth binaries built from the SAME commit the same afternoon (debug 14:02, release 14:21). Both read the SAME freshly-imported store, seeded once. Profile is the only variable:\n\n    call            release   debug    ratio\n    loop_status       4.5s     9.9s     2.2x\n    detect_gaps      0.98s     1.97s    2.0x\n    claim_report     0.00s     0.00s      --\n\n⇒ **THE BUILD PROFILE IS WORTH ABOUT 2.2x ON THIS CALL.** Real, and users run the release binary while every number quoted today came from debug.\n\n═══ 🛑 AND THE BIGGER SURPRISE, WHICH IS NOT THE PROFILE ═══\n\nBoth of those are FAR below the 22.6s measured this morning. That gap must not be attributed to the profile, because THREE things differ between the two measurements and only one was controlled:\n\n  1. BUILD PROFILE — measured: 2.2x.\n  2. STORE PHYSICAL STATE — the live store is **89 MB across 25 SST files**; a fresh store holding the SAME 3,111 nodes from the same export is **12 MB with 0 SSTs**. Identical logical content, **7.4x the bytes**, from months of accumulated overwrites and uncompacted levels.\n  3. TRANSPORT — this morning went over the shared HTTP daemon; this went over stdio, direct.\n\n⚠️ **(2) IS A SIZE MEASUREMENT, NOT A LATENCY ONE.** 7.4x the bytes is correlated with the slowdown and is a plausible cause; nothing here proves it drives the latency. Saying it does would be the same error this project has already paid for once — two numbers agreeing is not causation, and that lesson was recorded THIS MORNING.\n\n═══ WHAT SURVIVES, AND WHAT NEEDS QUALIFYING ═══\n\n✅ `dec:the-stop-hook-asks-the-graph-asynchronously` STANDS. Even at the most favourable figure here — 4.5s, release binary, fresh store, direct transport — a Stop hook that blocks that long is unacceptable, and the path the hook actually runs on is demonstrably slower than that.\n\n🛑 BUT ITS STATED NUMBER IS UNDER-QUALIFIED. '22.6s, repeatably' is TRUE as measured — live graph, shared HTTP daemon, debug binary — and reads as a property of the call. **A number is a measurement of a whole setup, not of the code**, and a later reader comparing it against a release build on a fresh store will conclude the earlier work was wrong when it was only differently situated.\n\n═══ ⭐ THE LEAD WORTH FOLLOWING, and it is cheaper than anything discussed today ═══\n\nIf the store's physical state does drive the latency, a COMPACTION of the live store is a far cheaper win than any code change considered today — and nothing in reflow2 currently reports that its own store has grown to several times the size of its content. That is unmeasured and is stated here as a lead rather than a finding.",
         "subject_id": "cap:loop-status",
         "valid_from": "2026-08-24"
+      }
+    },
+    {
+      "node_id": "fact:every-one-of-88-invalidated-findings-answers-rerun-owed-null",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "finding",
+        "name": "On 2026-09-12 invalidated_findings returned 88 rows and every one of them had rerun_owed = null — a date is missing on one side of every claim, so the three-valued answer has never once been able to say true or false on this design",
+        "statement": "Read during the where-am-i pass, 2026-09-12: `invalidated_findings` — 88 findings carrying an INVALIDATES claim; rerun_owed true: 0, false: 0, null: 88. The tool's own contract says null means one side carries no date and nobody can say, and warns never to read it as \"no\". On this design that is the ONLY value it has ever produced, so the reader that was built to distinguish \"re-run owed\" from \"already reflects the fix\" distinguishes nothing.\n\nNOT ESTABLISHED which side is undated — the INVALIDATES edges (callers omitting `at`) or the findings (TemporalFacts with no last_run_at equivalent, or Verifications never run). Either is fixable at the constructor: `invalidates` could refuse an undated claim, or default `at` from the ChangeEvent's `detected_at` when it names one. Recorded as a sideways measurement; no change made.",
+        "subject_id": "cap:a-repair-can-say-what-it-invalidated",
+        "valid_from": "2026-09-12",
+        "value": "{\"rows\":88,\"rerun_owed_true\":0,\"rerun_owed_false\":0,\"rerun_owed_null\":88}"
       }
     },
     {
@@ -230359,6 +230824,25 @@
       }
     },
     {
+      "node_id": "fact:loop-status-cost-is-amplifiers-not-baseline-and-80pc-of-calls-are-automation",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.9,
+        "fact_type": "finding",
+        "name": "loop_status's 12.1s median is three measured AMPLIFIERS over a 1.29s baseline — and 32 of 39 calls were automation firing in duplicate pairs, not the agent",
+        "statement": "THE FIRST USAGE LEDGER (v0.59.0, 150 timed calls, 2026-09-12) SAYS loop_status IS 71.4% OF ALL TIME SPENT IN REFLOW2: n=38, median 12,089 ms, min 4,692, max 52,393, total 604 s of 846 s. Anthony's unmeasured estimate of \"one takes 12.5s\" was accurate.\n\nTHE BASELINE IS NOT THE PROBLEM. Same store, same release binary, measured in isolation: warm 1,284 ms, cold 3,309 ms. A PHYSICAL COPY of the live store profiles identically (warm 1,299 ms), so neither graph size (4,343 nodes / 25,004 edges) nor RocksDB compaction debt (19 SSTs / 25 MB live vs 5 SSTs / 14 MB rebuilt) is the cause.\n\nFOUR HYPOTHESES FALSIFIED BY MEASUREMENT, in order:\n  1. Debug binary — refuted: `ps` shows the live server IS target/release.\n  2. Shared-daemon transport — refuted by A/B on one store: stdio 1,222 ms vs shared 1,214 ms, 1.0x.\n  3. Store physical layout / compaction debt — refuted: physical copy of the live store, 1,299 ms warm.\n  4. The instrument is wrong — refuted: a live call bracketed by an independent clock was stamped 1,291 ms by the ledger and agreed. The ledger's `ms` is sound.\n\nTHREE AMPLIFIERS, EACH MEASURED, over the 1,284 ms baseline:\n  A. A WRITE BEFORE THE CALL: x3.2 (1,291 -> 4,096 ms steady, live config). The derived-scan memo is keyed per write generation (dec:derived-scans-are-memoised-per-write-generation), so a session that is WORKING never holds it. This is the dominant code-side factor and the fixable one.\n  B. CONCURRENT CALLERS: x1.6 at four clients (3,148 -> 5,184 ms each, cold path). Sublinear, so not the main term.\n  C. MACHINE LOAD: up to x6. sar for the day: the 52,393 ms pair sits at ldavg 6.35-8.49 with 12 blocked (a cargo release build); the same call is 8,127 ms at ldavg 0.02 and 1,291 ms at ldavg 0.12.\n  `--export-to` costs nothing measurable (1,291 vs 1,299 ms) and was ruled out.\n\nTHE FREQUENCY FINDING, AND IT MAY MATTER MORE THAN THE LATENCY. 32 of 39 loop_status calls came from client `rmcp`, only 7 from `claude-code`. 14 instants carry TWO loop_status calls at the same second, from two different seats, with durations within 1% of each other (10:54:50 8,041/8,055; 12:20:42 52,255/52,393). So roughly 80% of the 604 s is spent on rollups the agent never asked for, and half of those are exact concurrent duplicates. The ledger also shows 54 distinct seats across 150 calls.\n\nCONSEQUENCE FOR PRIORITISATION: ranking tools by measured cost puts loop_status first by a factor of ten over everything else (record_change 62.5 s, export_graph 62.1 s, all others under 40 s). But its cost is not earned by the agent leaning on it — it is a hook firing it twice per stop, in the one state (post-write) where its memo cannot help.\n\nNOT ESTABLISHED: which process the `rmcp` client is (the Stop-hook path in tools/loop_nudge.py is the leading candidate, unverified); whether the duplicate pair is one caller racing itself or two distinct callers; whether the 1,284 ms baseline can reach the under-1-second target Anthony asked for without attacking open_defects' intrinsic ~5 s, which was left unstarted on 2026-09-05 pending his ruling. No fix has been made and no budget has been rewritten.\n\nBOUNDS: one machine (4 cores), release build, live store and a physical copy of it, stdio and shared transports, medians of 3-4 runs, load 0.1-0.4 during the controlled runs. Instruments: tools/agent_surface_profile.py plus four purpose-built harnesses in the session scratchpad.",
+        "steps": [
+          "loop_status",
+          "usage_report",
+          "optimize"
+        ],
+        "subject_id": "cap:loop-status",
+        "valid_from": "2026-09-12",
+        "value": "{\"ledger_window\":\"2026-09-12\",\"loop_status_calls\":38,\"median_ms\":12089,\"min_ms\":4692,\"max_ms\":52393,\"total_s\":604.2,\"share_of_all_tool_time\":0.714,\"baseline_warm_ms\":1284,\"baseline_cold_ms\":3309,\"amplifier_write_x\":3.2,\"amplifier_concurrency_4x\":1.6,\"amplifier_load_x\":6,\"calls_from_rmcp\":32,\"calls_from_claude_code\":7,\"duplicate_pair_instants\":14,\"distinct_seats\":54,\"falsified\":[\"debug binary\",\"shared transport\",\"store compaction debt\",\"instrument wrong\",\"--export-to\"]}"
+      }
+    },
+    {
       "node_id": "fact:making-the-repo-private-would-break-the-way-reflow2-ships",
       "node_type": "TemporalFact",
       "properties": {
@@ -230392,6 +230876,18 @@
         "subject_id": "proj:reflow2",
         "valid_from": "2026-09-06",
         "value": "{\"diagnosis\":\"tool_missing\",\"reflow2_tool\":null}"
+      }
+    },
+    {
+      "node_id": "fact:manual-work-079e6bbac5746cda",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "manual_work",
+        "statement": "Wrote a throwaway Python script that speaks JSON-RPC over stdio to a client of the shared server, purely to make four ordinary tool calls that this session's own MCP connection could not make: setting a list-valued parameter added to two constructors earlier in the same session. The harness caches the tool schema from its handshake, so a parameter that did not exist when the session started is serialised as a string and the deserialiser refuses it. The tool was right, the design was right, and the only route to it was a second client.",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-09-12",
+        "value": "{\"diagnosis\":\"tool_refused\",\"reflow2_tool\":\"record_finding\"}"
       }
     },
     {
@@ -230515,6 +231011,18 @@
       }
     },
     {
+      "node_id": "fact:manual-work-a9e01e8871c11ebf",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "manual_work",
+        "statement": "Wrote a throwaway Python script during the release cut to find the increment's unpinned change events: load the previous tag's committed export, load the current one, take the set difference of ChangeEvent ids, and subtract every id that already carries an AT_EPOCH edge. It returned 8, all of them accept-events, which were then pinned one by one. The cut procedure names this diff in prose — \"found by diffing ids against the previous tag's export rather than against memory\" — and nothing computes it: changelog_view renders a window but does not say which events fall outside one, and arrival_delta compares what was scheduled against what was delivered, which is a different question. Searched find_tools for the shape before concluding.",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-09-12",
+        "value": "{\"diagnosis\":\"tool_missing\",\"reflow2_tool\":null}"
+      }
+    },
+    {
       "node_id": "fact:manual-work-ac2c8a4c428ba086",
       "node_type": "TemporalFact",
       "properties": {
@@ -230547,6 +231055,18 @@
         "statement": "Built a Python harness that drives the built binary over stdio JSON-RPC and runs a scripted PLAN of tool calls against an ISOLATED COPY of the design — copy seeded by importing the committed export into a fresh store, with an assertion refusing any path that resolves to the live store — recording every call, reply, refusal and latency to JSONL for later analysis. Used it for 430 calls exercising all 180 served tools, in tranches: predict from the published schema, call, diff prediction against outcome, then re-run the failures with values read from the schema instead of guessed. Nothing served does this: there is no way to ask reflow2 to exercise its own surface, no way to run a batch of calls against a scratch copy of a design, and no way to get a machine-readable record of what a call returned. The two things that come closest answer different questions — one finds a tool by description, the other reports what a session did by hand. The sweep's central measurement (guessing enum values refused 13 of 20 constructors; reading the published schema refused 0) is only obtainable by actually issuing both sets of calls, so the harness was the instrument, not a convenience.",
         "subject_id": "proj:reflow2",
         "valid_from": "2026-09-11",
+        "value": "{\"diagnosis\":\"tool_missing\",\"reflow2_tool\":null}"
+      }
+    },
+    {
+      "node_id": "fact:manual-work-b80153a8b362591b",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "manual_work",
+        "statement": "Joined two instruments by hand to rank the tool surface by frequency x cost: call volume per tool from the transcript scanner (tools/surface_usage.py, 47 sessions) against a controlled per-tool cost run on a copy of the store (hard-coded arguments for the top 40, reads timed cold and warm, refusals recorded as unmeasured), then weighted reads by how often they actually follow a write. Nothing serves a cost-weighted ranking; the two halves live in two scripts and the join was a third.",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-09-12",
         "value": "{\"diagnosis\":\"tool_missing\",\"reflow2_tool\":null}"
       }
     },
@@ -230620,6 +231140,18 @@
         "subject_id": "proj:reflow2",
         "valid_from": "2026-09-03",
         "value": "{\"diagnosis\":\"tool_not_found\",\"reflow2_tool\":\"changelog_view\"}"
+      }
+    },
+    {
+      "node_id": "fact:manual-work-e86b93a8f4d76ea0",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "manual_work",
+        "statement": "Wrote a script over the usage ledger to get per-tool COST — median and max ms per tool, total time share, the slowest single calls, a per-call timeline across the day, and which calls overlapped in time (which is how the duplicate same-second pairs were found). The ledger already stores `ms` on every call; usage_report renders counts, refusals and never-called, but none of the durations it holds. The whole prioritisation of the optimisation campaign came from that hand-rolled read.",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-09-12",
+        "value": "{\"diagnosis\":\"tool_missing\",\"reflow2_tool\":\"usage_report\"}"
       }
     },
     {
@@ -231224,11 +231756,12 @@
       "properties": {
         "basis": "measured",
         "confidence": 1.0,
-        "fact_type": "defect",
+        "fact_type": "finding",
         "name": "budget_report reports `exceeded` on a contribution the same day's own measurement superseded — the perf fix updated the fact and never the CONSTRAINS edge",
         "statement": "FOUND 2026-09-11. `budget_report` on `con:loop-status-warm-latency-ms` returns **total 12,502 ms against a 2,000 ms limit, verdict `exceeded`**, from a CONSTRAINS edge stamped `measured_at: 2026-09-05`.\n\n🛑 THE SAME DAY'S OWN MEASUREMENT SAYS THAT BUDGET HOLDS. `fact:the-three-perf-changes-killed-the-multiplier-and-two-budgets-hold-one-misses-on-my-own-derivation` (valid_from 2026-09-05) records, after the three approved perf changes: *\"✅ con:loop-status-warm-latency-ms — warm loop_status 1,912 ms vs 2,000 (**was 12,502**).\"* It names 12,502 explicitly as the PRE-FIX figure.\n\n**The fix landed, the fact was written, and the CONSTRAINS edge was never updated.** Both budget edges are in this state: the orientation-pass edge carries `contribution: 31000` while the same fact records warm 6,459 / cold 11,103.\n\n⭐ WHY THIS IS THE EXPENSIVE KIND OF STALENESS. A superseded FACT is at least visible as a dated claim someone can re-read. This number lives on an EDGE, is read by a tool that renders a verdict, and the verdict is the opposite of the truth. Nothing reconciles the two: `budget_report` reads the edge and never looks for a later measurement of the same quantity, and the fact that supersedes it does not touch the edge.\n\n📌 IT ALREADY CAUSED A WRONG REPORT, IN THIS SESSION. A tool sweep on 2026-09-10/11 called `budget_report` on both constraints, read `exceeded`, and reported to Anthony that \"both declared performance constraints are breached\" — presenting a pre-fix number as current, five days after the fix. That is the same shape the capture-session skill names as its central example, and it arrived through a different door: not an unread fact, but a fact that was written correctly while the structured value it superseded stayed put.\n\n⚠️ WHAT I AM NOT DOING, AND WHY. I am NOT rewriting the contributions. Which figure belongs in the budget is a judgement, not a lookup: the same fact records warm 1,912 ms, after-write 6,354 ms, and says plainly that *\"most loop_status calls follow a write, so 6,354 ms is what a session usually waits.\"* A budget named \"warm\" could honestly take either. That choice is Anthony's, and asserting one silently would be inventing a measurement nobody made.\n\n🛑 NOT ESTABLISHED: whether any other CONSTRAINS edge carries a superseded contribution — only these two were checked — or whether `budget_report` could reasonably be expected to notice. No root-cause pass was run.",
         "subject_id": "cap:budget",
         "valid_from": "2026-09-11",
+        "valid_to": "2026-09-12",
         "value": "{\"con:loop-status-warm-latency-ms\":{\"limit\":2000,\"edge_contribution\":12502,\"edge_measured_at\":\"2026-09-05\",\"post_fix_measurement_same_day\":1912,\"budget_report_verdict\":\"exceeded\",\"fact_says\":\"budget holds\"},\"con:a-full-orientation-pass-costs-at-most-8-seconds\":{\"limit\":8000,\"edge_contribution\":31000,\"post_fix_warm\":6459,\"post_fix_cold\":11103}}"
       }
     },
@@ -231583,6 +232116,24 @@
       }
     },
     {
+      "node_id": "fact:the-first-frequency-times-cost-ranking-of-the-tool-surface",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.85,
+        "fact_type": "finding",
+        "name": "The first frequency x cost ranking of the tool surface — three things are 68% of all measured tool time, and the long tail of writes is ~120 ms each",
+        "statement": "Anthony's rule for the optimisation campaign, 2026-09-12: \"if a tool is used 500x compared to one used 5x, focus on the 500x tool.\" The under-1s goal is an OBJECTIVE, not a threshold. This is the first ranking built to that rule, and it needed two instruments joined: FREQUENCY from tools/surface_usage.py over every retained transcript (47 sessions, 9,335 calls, 154 of 181 tools, 8 projects; reflow2's own self-host is 7,472 of those calls, musicjug 1,012, six others under 250 each), and COST from a controlled per-tool measurement on a copy of the live store (0.59.0 release, quiet box, medians of 3), with reads measured both cold (first after a write) and warm, and the post-write tax attributed by the real write->read transition counts.\n\nTOP BY VOLUME (share of all calls): add_decision 680 (7.3%), get_node 645, export_graph 579, create_node 553, search_design 495, authored_by 455, loop_status 331 (3.5%, but in 44 of 47 sessions), set_artifact_checksum 249, create_edge 245, add_change_event 243. The top 10 are 48% of calls; the top 40 are 85%.\n\nTOP BY VOLUME x COST (share of ~1,717 s measured), warm figures for reads:\n  1. loop_status        ~54%  (331 calls; 1.3-2.4 s warm, ~4.1 s after a write, so the true share is higher)\n  2. export_graph       ~30%  (579 calls x ~1,010 ms — it serialises a 16 MB record every time)\n  3. the post-write tax ~27% of the pre-export total (417 occurrences x ~1.1 s; fact:the-first-store-read-after-any-write-pays-a-fixed-1-1s-tax-whichever-tool-it-is) — it is the ENTIRE cost of get_node (#2 by volume) and search_design (#5), whose own cost is 1-2 ms\n  4. add_decision        82 s  (680 x 121 ms)\n  5. set_artifact_checksum 67 s (249 x 271 ms)\n  6. create_node         64 s  (553 x 116 ms)\n  7. detect_defects      56 s  (52 x 734 ms warm / 1,644 cold)\n  8. review_relations    33 s, add_change_event 28 s, set_decision_status 24 s, add_capability 24 s, add_requirement 24 s\n(shares overlap because export_graph's own cost was mis-stripped in the first pass and is restated here; the ordering is robust to it.)\n\nTHE SHAPE THAT MATTERS FOR PRIORITISING. Everything below the top three is a WRITE at 110-350 ms per call (add_decision 121, create_node 116, add_capability 116, add_requirement 126, add_change_event 117, add_verification 123, set_decision_status 135, set_verification_status 150, set_requirement_status 178, record_change ~300, link_artifact 248, set_artifact_checksum 271, add_epoch 253) and every RELATION tool is ~1 ms (authored_by, satisfies, allocate, verifies, governed_by, realizes, create_edge, delete_edge, deploy_to, invalidates, pin_at_epoch). So the write family has ONE cost shape — ~120 ms of something every constructor does — and would be optimised as one class, not thirteen tools. Whether 120 ms is the search-index commit, the snapshot, the loop hint, or the schema guard is NOT measured here.\n\nEVERYTHING ELSE IS ALREADY UNDER THE OBJECTIVE: get_skill 26 ms (18 KB), scan_nodes 44 ms (42 KB), create_edges 36 ms, describe_schema 2 ms (48 KB), what_next 77 ms, claim_report 44 ms warm. Reply SIZE is a second cost the timing does not see — detect_defects 58 KB, describe_schema 48 KB, scan_nodes 42 KB land in the agent's context on every call.\n\nNOT MEASURED: graph_report (1.5-1.6 s, 41 calls), open_questions (1.27 s), what_next, and the 114 tools below the top 40 — 15% of calls. Absence in the transcript sample is weak evidence (the instrument's own caveat): a tool used before the retention window looks identical to one never used.",
+        "steps": [
+          "usage_report",
+          "optimize"
+        ],
+        "subject_id": "cap:mcp-surface",
+        "valid_from": "2026-09-12",
+        "value": "{\"sessions\":47,\"calls\":9335,\"tools_seen\":154,\"served\":181,\"top_by_calls\":{\"add_decision\":680,\"get_node\":645,\"export_graph\":579,\"create_node\":553,\"search_design\":495,\"authored_by\":455,\"loop_status\":331},\"ms_per_call\":{\"loop_status_warm\":2403,\"loop_status_after_write\":4096,\"export_graph\":1010,\"detect_defects_warm\":734,\"detect_gaps_warm\":1,\"get_node_warm\":1,\"search_design_warm\":2,\"add_decision\":121,\"create_node\":116,\"set_artifact_checksum\":271,\"record_change\":298,\"link_artifact\":248,\"add_epoch\":253,\"relation_tools\":1,\"post_write_tax\":1100},\"share_of_measured_time\":{\"loop_status\":0.54,\"export_graph\":0.30,\"post_write_tax\":0.27}}"
+      }
+    },
+    {
       "node_id": "fact:the-first-move-of-a-session-did-not-fit",
       "node_type": "TemporalFact",
       "properties": {
@@ -231607,6 +232158,38 @@
         "subject_id": "dec:a-tool-carries-the-users-phrasing-and-the-corpus-is-the-test",
         "valid_from": "2026-09-11",
         "value": "{\"main_corpus\":{\"queries\":180,\"pass5\":152,\"near\":23,\"miss\":5,\"misses\":[\"detect_gaps\",\"import_graph\",\"ingest_corpus_step\",\"loop_status\",\"set_verification_status\"],\"miss_reason\":\"over the 1,500-char budget; phrasing not yet applied\"},\"held_out\":{\"queries\":42,\"pass5\":16,\"near\":3,\"miss\":23},\"pass_main_fail_heldout\":19,\"tuned_candidates\":[\"add_requirement\",\"budget_report\",\"certify_preservation\",\"claim_region\",\"delete_node\",\"design_identity\",\"detect_defects\",\"forecast_readiness\",\"genesis\",\"get_node\",\"get_skill\",\"graph_report\",\"graph_report_markdown\",\"invalidated_findings\",\"list_skills\",\"maturity_report\",\"mirror_surface\",\"owned_by\",\"pin_at_epoch\"]}"
+      }
+    },
+    {
+      "node_id": "fact:the-first-real-usage-report-classed-four-of-five-refusals-as-other",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "finding",
+        "name": "The first real usage report on reflow2's own graph: 113 calls over 31 tools in 3¼ hours, and 4 of 5 refusals landed in `other` — an argument-shape refusal has no class yet",
+        "statement": "Read 2026-09-12 18:07Z with `usage_report(peek)` on the window since the ledger began (14:52Z, when #490's binary went live): 113 calls, 31 distinct tools, 150 of 181 never called; loop_status ×26 (the Stop hook's nudge plus deliberate checks), record_finding ×13, pin_at_epoch ×10 (the release cut), export_graph ×8. Refusals: 5 — one `refused` (export_graph on a stale binary, correct) and FOUR `other`: three record_finding and one add_design_rule, all the same phrasing — rmcp's deserialiser saying \"invalid type: string … expected a sequence\", when the harness serialised a new list parameter (`steps`) as a string because its cached tool schema predated it. So the very first report did what the skill says a large `other` does: it named a refusal class the table lacks. An `invalid_argument` class (a parameter present but of the wrong shape) is owed, beside missing_argument and unknown_argument. Two more limits seen: 22 of 113 calls carry the client name `rmcp 3.3.0` — a proxy that re-initialises after a daemon respawn declares rmcp's default client info, not the harness's — and 37 seats were minted in one afternoon, one per respawn or probe, so `seats` counts connections rather than people. Anthony's prompt for the read: an unofficial observation that tool calls per step had gone up (they had — independent calls are batched, up to ~20 in one step); the ledger has no baseline before today, so the per-session rate is the next report's comparison, not this one's.",
+        "subject_id": "cap:feedback-is-a-computed-tally",
+        "valid_from": "2026-09-12",
+        "value": "{\"window_from\":\"2026-09-12T14:52Z\",\"window_to\":\"2026-09-12T18:07Z\",\"calls\":113,\"distinct_tools\":31,\"never_called\":150,\"served\":181,\"refusals\":{\"other\":4,\"refused\":1},\"other_phrasing\":\"invalid type: string, expected a sequence\",\"clients\":{\"claude-code 2.1.269\":86,\"rmcp 3.3.0\":22,\"steps-setter 0\":5},\"seats\":37}"
+      }
+    },
+    {
+      "node_id": "fact:the-first-store-read-after-any-write-pays-a-fixed-1-1s-tax-whichever-tool-it-is",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.9,
+        "fact_type": "finding",
+        "name": "The first store-touching read after ANY write pays a fixed ~1.1 s, whichever tool it is — 27% of all measured tool time over 47 sessions, paid 417 times, one cause",
+        "statement": "MEASURED 2026-09-12 on a physical copy of the live store (4,343 nodes / 25,004 edges), reflow2-mcp 0.59.0 release, direct stdio, load 0.1-0.4.\n\nTHE BISECT. After one small write (add_decision, ~120 ms):\n  describe_schema 7 ms -> get_node 1,175 ms -> get_node 1 ms\n  get_node 1,123 ms -> describe_schema 2 ms -> get_node 1 ms\n  search_design 1,077 ms -> get_node 47 ms -> get_node 1 ms\n  scan_nodes 1,127 ms -> get_node 3 ms\nSo: describe_schema (touches no store) never pays it; the FIRST read that touches the store pays ~1.1 s; the next store read is back to 1 ms. It is paid ONCE PER WRITE GENERATION, not once per tool.\n\nIT DOES NOT SCALE WITH THE WRITES. First get_node after 1 write: 1,189 ms; after 5: 1,094; after 20: 1,097. A fixed rebuild, not per-write work — whatever is rebuilt is rebuilt whole.\n\n⭐ AND IT IS NOT THE TEXT INDEX. The obvious candidate was a deferred tantivy commit+reload (foundation/text.rs:320 `commit()` -> `reader.reload()`), since search_design pays it. Discriminated: create_edge — a 1 ms RELATION write that indexes no text — is followed by get_node at 1,131 / 1,061 / 1,106 ms, the same tax as after add_decision (1,090 / 1,109). So the rebuild fires on ANY generation bump regardless of what changed, and lives under both the KV read path and the text path. What it rebuilds is NOT located; the spread across runs (~10%) says it is work, not a timer.\n\nWHERE IT IS NOT. Below graph.rs: `derived_at_current_generation` only resets the DerivedMemo (cheap), and detect_gaps recomputed SEPARATELY afterwards at 906 ms, so this is not the gaps/defects memo either.\n\nWHAT IT COSTS, weighted by the 47-session transcript sample (tools/surface_usage.py, 9,335 calls): a store read follows a write 417 times, so this one tax is ~459 s of the ~1,717 s of measured tool time — 27%. It lands on get_node (62 times), export_graph (111), loop_status (120), search_design (53), detect_gaps (47), scan_nodes and detect_defects — and it is the ENTIRE cost of get_node and search_design, whose own cost is 1-2 ms.\n\n⚠️ THE 2026-09-05 BUDGET DID NOT SEE THIS. `con:a-read-after-a-write-costs-at-most-twice-the-same-read-warm` records get_node after a write at 5.3 ms vs 3.7 ms warm, ratio 1.41, and called itself met. Today the same transition measures 1,123 ms vs 1 ms; a second CONSTRAINS edge (cap:store, 1,100, 2026-09-12) now makes the report say `exceeded`, which is the truth. Regression or measurement gap cannot be said from here: tools/time_one_tool.py calls one tool three times with NO write between, so it does not reproduce write-then-read; and the agent-surface profile lists loop_status BEFORE get_node, so loop_status would have absorbed the tax before get_node was timed. No commit since 2026-09-05 touching cache/graph/search is an obvious cause.\n\nBOUNDS: one machine, one store size, one binary; medians of 3-4; the copy carried ~140 throwaway probe nodes from the same session's harnesses.",
+        "steps": [
+          "optimize"
+        ],
+        "subject_id": "cap:store",
+        "valid_from": "2026-09-12",
+        "valid_to": "2026-09-12",
+        "value": "{\"tax_ms_fixed_before\":1100,\"tax_ms_after_parse_cache\":646,\"tax_ms_after_membership_diff\":397,\"tiny_record_moved_ms\":{\"before\":530,\"after_parse_cache\":517,\"after_membership_diff\":53},\"in_step_ms\":41,\"after_1_write_ms\":1189,\"after_5_writes_ms\":1094,\"after_20_writes_ms\":1097,\"after_relation_write_only_ms\":[1131,1061,1106],\"split_before\":{\"parse_16mb_ms\":620,\"live_export_and_diff_ms\":490,\"base_ms\":40},\"remaining\":{\"membership_diff_16mb_ms\":350,\"base_first_read_ms\":40,\"left_deliberately\":\"under the 1,000 ms objective; an incremental cross-generation diff would be its own measured pass\"},\"paid_by\":[\"get_node\",\"search_design\",\"scan_nodes\",\"export_graph\",\"loop_status\",\"detect_gaps\",\"detect_defects\"],\"not_paid_by\":[\"describe_schema\"],\"falsified\":[\"tantivy commit on text writes (fires on a 1 ms create_edge too)\",\"DerivedMemo reset (detect_gaps recomputes separately, 906 ms)\"],\"located\":\"sync_debt.rs stat gate: observed.hash == last_synced clause; observed refreshed on check, last_synced only on export/import; then the moved branch's whole-graph export for a membership question\",\"repaired_by\":[\"chg:a-moved-record-that-sat-still-is-parsed-once-per-design\",\"chg:a-moved-record-is-diffed-against-the-store-not-an-export\"],\"occurrences_47_sessions\":417,\"cost_s_47_sessions\":459,\"share_of_measured_tool_time\":0.27,\"prior_budget_claim\":{\"constraint\":\"con:a-read-after-a-write-costs-at-most-twice-the-same-read-warm\",\"claimed_ratio\":1.41,\"measured_today_ratio\":1100,\"ratio_after_parse_cache\":646,\"ratio_after_membership_diff\":397}}"
       }
     },
     {
@@ -231958,6 +232541,22 @@
         "subject_id": "cap:loop-status",
         "valid_from": "2026-09-05",
         "value": "{\"hypothesis\":\"build_network per-node edge scan is the ~5s dominant cost\",\"verdict\":\"FALSIFIED\",\"loop_status_after_write\":\"6354 -> 7039 (not moved)\",\"detect_defects_after_write\":\"5633 -> 5817 (not moved)\",\"misread\":\"detect_defects 2716 was a memo hit, not the change\",\"change_is\":\"correct, tests pass, removes real O(N) redundancy, but moves no release budget\",\"real_cost\":\"pre-structural per-type detectors + circular_dependencies, not the network build\",\"undecided\":\"whether to ship a correct-but-not-budget-moving change - Anthony's call\",\"branch\":\"perf/one-pass-edge-read, uncommitted\"}"
+      }
+    },
+    {
+      "node_id": "fact:the-optimize-skill-hands-cause-finding-to-nothing-and-a-session-fell-through-it",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.9,
+        "fact_type": "defect",
+        "name": "The optimize skill's step 3 says \"find the cause by measuring, never by guessing\" and hands off to nothing — a session ran four ad-hoc hypotheses under it before Anthony pointed at /root-cause",
+        "statement": "ANTHONY'S CORRECTION, 2026-09-12, mid-investigation: \"Should be able to do /root-cause on any of these investigations.\" What he had watched: under /optimize, investigating why loop_status cost 12 s, the agent formed and tested four causes in a row (debug binary, shared transport, store compaction, the instrument) without opening the root-cause skill — the exact pattern that skill's own text records its author falling into \"one hour after writing it\". Every hypothesis WAS measured and falsified, so the work was not wrong; it was unstructured, and step ② (search the design for a precedent) was skipped — a prior finding that \"the store is not why\" (fact:the-orientation-reads-cost-ten-seconds-and-the-store-is-not-why) surfaced only later, from propagate_change.\n\nTHE SEAM: record_finding's description DEMANDS the root-cause skill before a cause is written, and that demand is what eventually caught the session. optimize's step 3 — \"Write the hypothesis down, then design the cheapest experiment that could falsify it\" — is root-cause's steps ③-⑤ restated, with no hand-off to the skill that holds them. So the moment the trigger fires (\"that's odd\", \"it must be X\") is inside a skill that describes the discipline without invoking it. The fix shape is the one 438 built for tools: the hand-off belongs IN the step, not in a catalogue (req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue).\n\nNOT ESTABLISHED: whether the same seam exists in other skills that contain an investigative step (check-health's \"what is wrong here\", impact-check's \"what rotted\"). Only optimize was measured, once.",
+        "steps": [
+          "optimize"
+        ],
+        "subject_id": "cap:optimize-skill",
+        "valid_from": "2026-09-12"
       }
     },
     {
@@ -233113,6 +233712,20 @@
       }
     },
     {
+      "node_id": "ver:a-moved-record-is-diffed-against-the-live-store",
+      "node_type": "Verification",
+      "properties": {
+        "description": "`a_moved_record_is_diffed_against_the_live_store_without_an_export` in crates/reflow2-mcp/tests/the_record_moved_and_the_session_is_told.rs.\n\nWHAT IT PINS. A record that moved is checked through `StoreMembership` — an oracle over the store itself, with no export closure anywhere in the path, which the type system holds. What the test asserts is the behaviour that must survive: the diff is LIVE and per generation. The store lacks one of the record's nodes → `behind`, naming exactly that id, edges 0. The store then takes that node in by hand; the file is unchanged, so through the same `ParsedRecords` nothing is re-read — and the next check says `moved_but_current` anyway, because the question was put to the store.\n\nTHE OTHER HALF OF THE SAME TAX (ver:a-record-that-moved-once-is-read-once pins the first). With the parse cached, the moved state still cost ~490 ms per write generation: the whole live graph was exported so `assess_overwrite` could compare two documents, to answer \"which of the file's ids are absent here?\" — a set-membership question. The three server paths (the read-path hint, loop_status, sync_status) now ask by lookup; `sync_debt` keeps its closure signature over an export-backed oracle built lazily and at most once, so every prior caller and `the_expensive_export_is_not_built_on_the_ordinary_path` behave exactly as before.\n\nWHAT IT DOES NOT COVER: the cost of the membership diff itself (~350 ms over in-step for a 16 MB record against RocksDB), and the ~40 ms base cost of any first read after a write. Neither has a check; both are recorded as deliberately left where they are.",
+        "findings": "Written against an API that did not exist, so its first run failed to compile rather than to assert — stated plainly: this half has no behavioural red-then-green, because the property it pins (no export in the path) is structural and held by the signature. 26/26 in the file after the change; no_per_design_process_globals 3/3; clippy clean. Measured on a copy of the live store, release binary, first get_node after a write, 2026-09-12: tiny moved record 497-586 ms -> 50-57 ms (the export gone); 16 MB moved record 623-718 -> 388-410 ms; in-step unchanged at ~40 ms. From the morning's 1,114-1,189 ms, ~2.9x overall.",
+        "kind": "verification",
+        "last_run_at": "2026-09-12",
+        "level": "integration",
+        "method": "test",
+        "name": "A moved record is diffed against the live store, per generation, without building an export",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:a-node-attached-to-nothing-is-reported-whatever-its-type",
       "node_type": "Verification",
       "properties": {
@@ -233205,6 +233818,20 @@
         "level": "unit",
         "method": "test",
         "name": "A realizing link says whether anyone checked it, and the unchecked are counted",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:a-record-that-moved-once-is-read-once",
+      "node_type": "Verification",
+      "properties": {
+        "description": "`a_record_that_moved_and_then_sat_still_is_read_once` in crates/reflow2-mcp/tests/the_record_moved_and_the_session_is_told.rs, run by CI with the other 24 cases in that file.\n\nWHAT IT PINS. Two checks of the same moved record through one `ParsedRecords` (the per-design cache the read path holds). Between them the file's bytes are overwritten with garbage OF THE SAME LENGTH and the mtime is restored, so the corruption is invisible to a stat. The second check must still answer `behind` with the same counts. A check that re-reads cannot pass by accident: it finds garbage and answers `unreadable`. STRUCTURE, never a duration — a timing assertion here would measure the CI box.\n\nTHE CLASS IT PINS, not the instance: the stat gate (dec:an-unchanged-sync-target-is-not-re-parsed) conflated \"unchanged since I last read it\" with \"in step with what I last wrote\". `observed` is refreshed by the check path and `last_synced` only by export/import, so a record that moved once — a colleague's export pulled in — and then sat still failed the in-step clause on every check and was re-read and re-parsed whole (16 MB, ~620 ms) on the first read after every write until this seat next exported. That was the entire cost of get_node and search_design in a working session.\n\nALSO HELD BY THIS FILE'S NEIGHBOURS: `the_expensive_export_is_not_built_on_the_ordinary_path` (the in-step path still costs no export), and `ver:no-per-design-process-globals` refused the first cut of the fix, which was a `static` — the cache now rides on the design handle.\n\nWHAT IT DOES NOT COVER: the other ~490 ms of the moved-state cost, which is the live export built to answer a set-membership question, and the 40 ms base cost of any first read after a write. Neither has a check.",
+        "findings": "Observed to FAIL FIRST against the unfixed code, 2026-09-12: `assertion left == right failed ... left: \"unreadable\" right: \"behind\"` — the second check re-read the file and found the garbage. Passes after the fix; 25/25 in the file; `no_per_design_process_globals` 3/3 after the cache moved off the `static`. Measured effect on a copy of the live store, release binary, first get_node after a write with a moved 16 MB record: 1,189/1,114/1,182 ms before -> 633/718/623 ms after; in-step state unchanged at ~41 ms.",
+        "kind": "verification",
+        "last_run_at": "2026-09-12",
+        "level": "integration",
+        "method": "test",
+        "name": "A record that moved and then sat still is read once, not once per write generation",
         "status": "passing"
       }
     },
@@ -235771,6 +236398,20 @@
       }
     },
     {
+      "node_id": "ver:the-probe-slot-is-claimed-atomically",
+      "node_type": "Verification",
+      "properties": {
+        "description": "`ProbeSlotIsClaimedAtomically` in tools/test_loop_nudge.py — four cases, stdlib-only and hermetic, run by CI alongside the other 91 in that file.\n\nWHAT IT PINS AND WHY IT IS SHAPED THIS WAY. It asserts STRUCTURE, never duration: N processes released together through a Barrier must produce EXACTLY ONE winner of the probe claim. The optimize skill's rule is that a duration assertion in a parallel suite measures machine contention, and the standing response is to raise the threshold until it stops complaining — which retires a gate without anybody deciding to. A winner count cannot be retired that way.\n\nTHE CLASS, NOT THE INSTANCE. The instance was a duplicated `hooks` block in .claude/settings.local.json that made every hook fire twice. Deleting it stops today's pairs and leaves the defect standing, because PostToolUse and Stop can legitimately arrive together with a single registration. The class is that the guard READ the lock and then WROTE it, which is two steps with room between them.\n\nThe other three cases hold the edges the atomic claim must not break: a young lock turns every later claim away; a stale lock (a probe killed before cleanup) is cleared and exactly one successor wins, so a stuck lock cannot silence the feature permanently; and an unwritable state directory makes the hook DECLINE rather than raise, because a hook that breaks a session is worse than no hook.\n\nWHAT IT DOES NOT COVER: it says nothing about how LONG loop_status takes. The latency budgets (con:loop-status-warm-latency-ms, con:loop-status-after-a-write-answers-under-one-second) still carry NO passing check of their own — the after-write budget is measured at 4,096 ms against a 1,000 ms limit and is not met.",
+        "findings": "Run 2026-09-12 on this machine: 4 tests, all passing, 0.26 s. OBSERVED TO FAIL FIRST, which is the evidence that it pins anything — the guard was reverted to its pre-fix check-then-write shape and the same committed test went red with `AssertionError: 4 != 1`, twelve concurrent invocations spawning four probes. Restored, green. The full tools/test_loop_nudge.py suite is 95 tests, all passing, 24.0 s.",
+        "kind": "verification",
+        "last_run_at": "2026-09-12",
+        "level": "unit",
+        "method": "test",
+        "name": "Concurrent hook invocations spawn exactly one graph probe",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:the-record-moved-is-surfaced",
       "node_type": "Verification",
       "properties": {
@@ -236107,7 +236748,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:890c375c2dbaa4562860dbf84417783dedcc071b3a4462241098ed5901d366f1",
+  "prev_content_hash": "sha256:4243694a256d8b9815370227f53b6d794425ffed33abbd9d4b6571a29c3e87ec",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

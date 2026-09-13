@@ -780,8 +780,11 @@ def probe_in_flight(session_id: str, now: float) -> bool:
     The probe removes its own lock on the way out, so a lock that is still here
     and still young means one is working. An OLD lock means a probe was killed
     before it could clean up — treated as gone rather than as running, because
-    a stuck lock would silence the feature permanently and a duplicate probe
-    costs one wasted read.
+    a stuck lock would silence the feature permanently.
+
+    🛑 READ-ONLY, AND NOT A GUARD. Anything deciding whether to SPAWN must call
+    `claim_probe_slot` instead: a read followed by a write is two steps, and
+    two hook processes fit between them. See that function.
     """
     try:
         lock = json.loads(probe_lock(session_id).read_text())
@@ -791,6 +794,71 @@ def probe_in_flight(session_id: str, now: float) -> bool:
     if not isinstance(started, (int, float)):
         return False
     return (now - started) < PROBE_STALE_LOCK_S
+
+
+def claim_probe_slot(session_id: str, now: float, reason: str) -> bool:
+    """Claim the right to spawn THE probe for this session. True = you won.
+
+    ⭐ ONE ATOMIC STEP, and that is the whole point. This replaced a
+    check-then-write pair (`probe_in_flight` then `write_text`) that read as a
+    guard and was not one: both halves are fine alone, and two hook processes
+    fit in the gap between them. MEASURED 2026-09-12 against the old shape —
+    twelve concurrent invocations released together spawned FOUR probes.
+
+    WHY IT MATTERED ENOUGH TO FIX RATHER THAN TOLERATE. The old comment said a
+    duplicate probe "costs one wasted read", which was true when this was
+    written. The first usage ledger (v0.59.0) priced that read: `loop_status`
+    was 71.4% of all time this project spent inside reflow2 — 604 s of 846 s —
+    at a median of 12,089 ms, and 32 of its 39 calls came from this probe
+    rather than from the agent, fourteen of them in same-second pairs whose
+    durations agreed within 1%. A wasted read had become the single most
+    expensive thing the tool surface did.
+
+    O_CREAT|O_EXCL is the claim: the filesystem decides the winner, once, and
+    every loser is told so by the error rather than by a second look. A stale
+    lock (a probe killed before it could clean up) is removed and the claim is
+    retried EXACTLY ONCE — bounded, because a retry loop here would turn a
+    stuck lock into a spin, and the feature is a courtesy that must never cost
+    a session more than it saves.
+    """
+    lock = probe_lock(session_id)
+    payload = json.dumps({"started": now, "reason": reason}).encode()
+    for attempt in (0, 1):
+        try:
+            state_dir().mkdir(parents=True, exist_ok=True)
+            fd = os.open(lock, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o644)
+        except FileExistsError:
+            if attempt or not _probe_lock_is_stale(lock, now):
+                return False  # a live probe holds it, or the retry is spent
+            try:
+                lock.unlink()
+            except OSError:
+                return False  # someone else cleared it first; let them have it
+            continue
+        except OSError:
+            return False  # unwritable state dir — decline, never crash a hook
+        try:
+            os.write(fd, payload)
+        finally:
+            os.close(fd)
+        return True
+    return False
+
+
+def _probe_lock_is_stale(lock: Path, now: float) -> bool:
+    """Was this lock left behind by a probe that died before cleaning up?
+
+    Unreadable or undated reads as STALE: the file exists but says nothing
+    about who holds it, and treating that as live would silence the feature
+    permanently — the direction the old `probe_in_flight` chose too.
+    """
+    try:
+        started = json.loads(lock.read_text()).get("started")
+    except (OSError, ValueError):
+        return True
+    if not isinstance(started, (int, float)):
+        return True
+    return (now - started) >= PROBE_STALE_LOCK_S
 
 
 def spawn_probe(session_id: str, reason: str) -> None:
@@ -810,14 +878,12 @@ def spawn_probe(session_id: str, reason: str) -> None:
     last = data.get("taken_at")
     if isinstance(last, (int, float)) and (now - last) < PROBE_MIN_INTERVAL_S:
         return
-    if probe_in_flight(session_id, now):
+    # THE CLAIM IS THE GUARD. Winning it is what earns the right to spawn, so
+    # nothing may read the lock and then write it — see `claim_probe_slot`.
+    if not claim_probe_slot(session_id, now, reason):
         return
     try:
         import subprocess
-        state_dir().mkdir(parents=True, exist_ok=True)
-        probe_lock(session_id).write_text(
-            json.dumps({"started": now, "reason": reason})
-        )
         # start_new_session so it outlives this hook process, and DEVNULL on
         # every stream because the hook's stdout is a CONTRACT — Claude Code
         # parses it as the hook's decision, and a stray line from a child would
