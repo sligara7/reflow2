@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:2b662b500563699049cd40e55fd818deb33f485819e962c754cc3628e0cd3962",
+  "content_hash": "sha256:d228f8d59940b405eaad08bdd7480f475d3e013f7bced1dc7207918dae0eb59d",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -26268,6 +26268,15 @@
         "action": "modified"
       },
       "to_id": "art:acknowledgement-not-structure-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-12d3937c934e12ab",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-loop-nudge"
     },
     {
       "edge_type": "CHANGED",
@@ -192099,7 +192108,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b8d5cee522585c5cb884103117bfd550130823ce1a3579b88b51044f92d21a24",
+        "checksum": "sha256:79392671bb9e1f249d58f5d488e297c02b627695dca9c92d712da0e19af20c98",
         "granularity": "atomic",
         "location": "tools/test_loop_nudge.py",
         "name": "test_loop_nudge.py",
@@ -197003,6 +197012,16 @@
       "properties": {
         "change_type": "refactor",
         "name": "Mechanical only: two governed_by call sites take the new trailing note argument as None.",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:accept-12d3937c934e12ab",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-09-12",
+        "name": "PR #495 commit 5396db3 added 95 lines of tests to tools/test_loop_nudge.py covering the atomic guard (the loop check firing once per hook, not twice). The design already records that fix; the test file's hash moved with it and this accepts the new baseline.",
         "subject": "system"
       }
     },
