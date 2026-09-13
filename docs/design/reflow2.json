@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:10f5d5ad930fcdea1f32bfa12bfd666513b6ce372e49a4cf370471f08b20d54b",
+  "content_hash": "sha256:9ebc1781b04a748fb09d068cee769f55fe33b5981cebe5f89cb92e55b314054b",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -18436,6 +18436,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "epoch:2026-09-13-all-of-reflow-read-back-for-its-spirit-and-intent",
+      "properties": {
+        "acted_at": "2026-09-13",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "fact:an-agent-stopped-reaching-for-reflow2-and-a-second-one-reproduced-it-the-same-day",
       "properties": {
         "acted_at": "2026-08-23",
@@ -30683,6 +30692,15 @@
         "action": "modified"
       },
       "to_id": "art:a-fix-says-whether-it-corrected-the-cause-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:baseline-c6ea00db546a9538",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:reflow-spirit-review-2026-09-13"
     },
     {
       "edge_type": "CHANGED",
@@ -62849,6 +62867,12 @@
       "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "proj:reflow2",
       "properties": {},
+      "to_id": "fact:106-of-108-components-read-planned-on-a-shipped-system"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "proj:reflow2",
+      "properties": {},
       "to_id": "fact:a-pr-export-goes-stale-behind-a-green-mergeable-badge"
     },
     {
@@ -62862,6 +62886,12 @@
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "fact:feedback-triage-status-across-three-sources-2026-08-16"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "fact:reflow2-keeps-reflows-spirit-and-inherits-its-one-real-drift"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -191237,6 +191267,18 @@
       }
     },
     {
+      "node_id": "art:reflow-spirit-review-2026-09-13",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:acccfe9a30a4c45a273299fdf8cc35c8f722ff76dea00e8adf003824f3422e2e",
+        "description": "The 2026-09-13 review of the whole original reflow repository for its spirit and intent, and of whether reflow2 has drifted from it — the quote trail behind fact:reflow2-keeps-reflows-spirit-and-inherits-its-one-real-drift. Dated and parked, never linked with DOCUMENTS (dec:a-dated-field-report-is-registered-and-parked): it records what five readers found on one day, not what any node of the design is. Sibling of docs/reflow-audit.md (2026-07-18, item-by-item) which it does not supersede.",
+        "location": "docs/reflow-spirit-review-2026-09-13.md",
+        "name": "reflow-spirit-review-2026-09-13.md",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:reflow2-mcp-launch",
       "node_type": "Artifact",
       "properties": {
@@ -200816,6 +200858,16 @@
       "properties": {
         "change_type": "baseline_established",
         "name": "Recorded as a FIRST BASELINE (baseline_established): 'art:a-fix-says-whether-it-corrected-the-cause-test' had no checksum, so the disposition passed could claim nothing about a movement nobody observed. Nothing moved and the design took no position. Caller's note: First baseline for the repair-disposition and relation-coverage increment, so later drift in these files is detectable rather than merely unbaselined.",
+        "subject": "record"
+      }
+    },
+    {
+      "node_id": "chg:baseline-c6ea00db546a9538",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-09-13",
+        "name": "First baseline of the dated, parked review document; 254 lines at registration.",
         "subject": "record"
       }
     },
@@ -213664,6 +213716,17 @@
         "epoch_type": "milestone",
         "name": "The seven unsatisfied requirements are ruled on and ordered",
         "sequence": 429,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:2026-09-13-all-of-reflow-read-back-for-its-spirit-and-intent",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "description": "Anthony, 2026-09-13: \"relook at the original reflow, particularly workflows and tools, but I'd like to review all of reflow. Many times a project can drift over time away from its initial purpose. I'm not saying to adopt or reimplement, but I want to see if we've maybe got away from the 'spirit' and 'intent' of the original reflow.\" The July read (epoch:reflow-workflow-review, seq 220; docs/reflow-audit.md) asked \"does reflow2 have this?\" per workflow and tool. This one asked what reflow was FOR, what it warned against, where reflow itself drifted, and whether reflow2 has drifted the same way. Method: the three founding documents read directly, five independent readers over the rest of the repo (workflows+steps, tools+schemas+specs, definitions+templates+CLAUDE.md+changelog, docs, scientific-reflow+test_systems+tests), each returning quoted evidence; reflow2's side read from its own graph. Output: docs/reflow-spirit-review-2026-09-13.md (registered, parked) and fact:reflow2-keeps-reflows-spirit-and-inherits-its-one-real-drift. Nothing adopted, nothing reimplemented, on his word.",
+        "epoch_type": "revision",
+        "name": "All of the original reflow is read back against reflow2 for its spirit and intent, not item by item — and reflow2 is found faithful except in the one way reflow failed",
+        "sequence": 444,
         "status": "arrived"
       }
     },
@@ -227529,6 +227592,20 @@
       }
     },
     {
+      "node_id": "fact:106-of-108-components-read-planned-on-a-shipped-system",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "status",
+        "name": "106 of 108 Components read `planned` on a system that ships — the status a Component is born with was never moved, so \"born planned\" is also \"never promoted\"",
+        "statement": "Found sideways on 2026-09-13 while measuring how much of the concept-stage vocabulary reflow2's own design reaches (the pseudo-design brainstorm): jq over docs/design/reflow2.json at 4,380 nodes — Components with status `planned`: 106 of 108. Capabilities by contrast read realized/verified in the majority (247 total; delivery computed along the thread), and 342 Artifacts are registered with checksums, so the BUILD is recorded — it is the Component tier whose status field nobody moves. The design's own doctrine is that a status is a measurement at an instant and that delivery is computed from the thread rather than read from a status field, so this is not a delivery error; it is a record that reads confident and wrong at the Component tier (the class epoch:a-record-that-still-reads-confident names), and it is the same shape the reflow review found in reflow (\"PASS - production-ready\" beside \"unusable\"). CAUSE NOT ASSERTED: whether nothing on the surface moves Component.status, or whether the guided paths never say to, is not measured here — the root-cause skill is the step before anyone writes one. Reported as an observation; it may also be a candidate for the \"a settled node with nobody's name on it\" and \"prose predates its status\" family of checks, which look at the other tiers.",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-09-13",
+        "value": "{\"components_total\":108,\"status_planned\":106,\"measured_at\":\"2026-09-13\",\"measured_over\":\"docs/design/reflow2.json, 4380 nodes\"}"
+      }
+    },
+    {
       "node_id": "fact:176-nodes-are-singletons-in-the-design-network-and-reported-by-nobody",
       "node_type": "TemporalFact",
       "properties": {
@@ -231414,6 +231491,18 @@
       }
     },
     {
+      "node_id": "fact:manual-work-8cdef98c7d98f3d1",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "manual_work",
+        "statement": "Answered \"has this project drifted away from its original purpose over time?\" by hand: read the predecessor project's founding documents directly, fanned five independent readers over the rest of its repository to extract stated purpose, principles, warnings and self-admitted drift with quotes, then compared that against this design's own graph (which requirements from the predecessor were accepted, dropped, or left proposed; usage share, tool counts, verification execution, status fields). No served tool compares a design's stated intent over time or against a predecessor's; find_tools for the question returned set_project_mode, compare_designs and coverage_report, none of which asks it.",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-09-13",
+        "value": "{\"diagnosis\":\"tool_missing\",\"reflow2_tool\":null}"
+      }
+    },
+    {
       "node_id": "fact:manual-work-9a1bceeb20b41503",
       "node_type": "TemporalFact",
       "properties": {
@@ -231845,6 +231934,20 @@
         "statement": "CANDIDATE CAUSE, PRODUCED BY A MEASUREMENT THAT REFUTED THE FIRST EXPLANATION. Root-caused 2026-08-31 against the two field reports.\n\nTHE FIRST EXPLANATION WAS \"the instruction layer runs ahead of the typed-tool layer\" (dec:idea-the-instruction-layer-runs-ahead-of-the-typed-tool-layer), which predicted all four affordances would be ABSENT. The discriminating measurement was: for each, does a tool already exist that the agent simply did not find? Taken against the tool surface —\n\n  ① answer a gap substantively -> **EXISTS**. `answer_question` accepts EITHER `gap_id` or `question_id` (crates/reflow2-mcp/src/tools/ask.rs:294). Not absent.\n  ② component DEPENDS_ON      -> ABSENT. Only `declare_dependency` (built.rs:66), a different concept.\n  ③ edge-prose staleness      -> ABSENT. No detector in detect.rs reads edge `evidence` or `note`.\n  ④ snapshot the replaced field -> ABSENT. `certify_preservation` is design-to-design merge preservation (exchange.rs:495), not field replacement.\n\n3 of 4 absent, 1 present. **THE FOUR ARE NOT ONE CLASS.** They are two classes of two, and grouping them would have been the over-generalisation the first record warned about.\n\n⭐ THE SECOND CLASS IS THE ONE WORTH HAVING, and the measurement is what surfaced it. `answer_question` exists, takes the right id, and MEANS THE WRONG THING: its own description is \"Record what the user said in reply to a question.\" `acknowledge_gap` is the same shape — it refuses an unknown approver because acknowledging is the owner's judgement. So an agent holding a correct substantive answer has a tool it must not use, because using it would put its own reasoning in the user's mouth. It stays silent instead, and the silence is indistinguishable from having nothing to say.\n\n**REFLOW2 HAS A WELL-DEVELOPED VOCABULARY FOR RECORDING THE USER'S WORD AND ALMOST NONE FOR RECORDING THE AGENT'S.** That is a strength, not an accident — it is what stops a design being forged — but it has exactly one place where the other half is modelled: a Decision at `proposed` carrying AUTHORED_BY `role=approver`, which says \"I recommend this and it is not mine to decide\" and is reported by `loop_status` until the human answers. musicjug singled that out unprompted: \"I have not seen another design tool that models this as a first-class state. For agent-driven work this is close to essential.\"\n\n📌 SO THE SHAPE OF THE ASK CHANGES. Not \"add `answer_gap`\" as a new verb, but: **generalise the one mechanism that already works.** An agent-authored answer is a `proposed` record with the human named as approver — visible, attributed, expiring, and impossible to mistake for the owner's word. `answer_question` and `acknowledge_gap` each need that variant rather than a sibling tool.\n\n⚠️ WHAT THIS DOES NOT COVER, said plainly rather than stretched to fit: ② and ③ have nothing to do with whose voice a record is in. A missing typed helper for component coupling and an ungoverned edge-prose layer are two ordinary gaps with two ordinary causes. This cause explains two of the four findings and no more.\n\n📌 AND WHAT WAS NOT ESTABLISHED: nobody checked whether `answer_question` on a gap that was never asked is refused for a reason that would ALSO block the proposed variant — it requires a Question minted by `gap_to_prompt` first, and whether an agent-authored answer should mint one is unexamined. No test was written; this is a reading of the code and the tool descriptions, not a behavioural measurement of the running server.",
         "subject_id": "proj:reflow2",
         "valid_from": "2026-08-31"
+      }
+    },
+    {
+      "node_id": "fact:reflow2-keeps-reflows-spirit-and-inherits-its-one-real-drift",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.8,
+        "fact_type": "finding",
+        "name": "reflow2 has kept the original reflow's founding spirit and principles, and has inherited exactly one of reflow's drifts — the knife sharpening the knife — plus two places it sits behind reflow's intent",
+        "statement": "Review of all of /home/ajs7/project/reflow (v3.0→v4.1.2, 2025-10-16→2025-12-06) against reflow2's design, 2026-09-13, at Anthony's request; full quote trail in docs/reflow-spirit-review-2026-09-13.md.\n\nWHAT REFLOW WAS FOR, in its own words: the axiom \"Every system can be modeled as nodes (black boxes with functions) connected by edges (interfaces/interactions)\" (definitions/core_abstraction.json); the founding diagnosis \"Context Overload … Repository Clutter … Instruction Non-Adherence\" (docs/archive/instructions/INDEX.md, 2025-10-19); the product is the list of what is MISSING (six gap types); function before structure; \"Prevent architecture drift\" (workflow_master.json); the human chooses rigid or flexible; compute structure and hand meaning back; \"Machine-readable JSON is insufficient for stakeholder communication and validation\"; never delete history; design the operational world upfront. Its mission page was retrofitted on 2025-10-25 by reflow running its own setup on itself.\n\nWHERE REFLOW ITSELF DRIFTED (its own record): three self-analysis workflows (97/98/99; 99 at 55 KB, larger than the development workflow) whose subject became reflow's own control structures; tools 24→16 once (\"Cognitive Overload\"), then 49+; CLAUDE.md 41 KB of stacked release notes; \"VALIDATION PASSED\" on a graph with zero edges; 39 tools and 38 step files referenced but absent; tool_readiness_index validated_tools: 0, tested_tools: 0; crossed its own handoff boundary into hatchling/ruff/pytest choices and a 27,741-line C++→Python port; broke its own \"NEVER generate reports — exceptions: NONE\" rule within six days; restructuring declared COMPLETE while transferring 40% of context management and 15% of versioning; and its own final audit: \"LLMs optimize for 'getting to the answer' not 'following the process'\" — unsolved.\n\nREFLOW2 KEPT FAITH: the axiom (req:recursive-black-box-decomposition, with its shortfall measured); function before structure (genesis stops at capabilities; the maturity ladder); the gap as product plus report-dont-judge and no fabricated repairs; never PASS over emptiness (modularity \"not measurable\", unknown contributor refused, every zero says which zero) — the exact repair for reflow's worst instrument failure; mechanised drift prevention (checksums, reconcile, two-sided acceptance, the gate on every commit); the owner's word governs intent (ENFORCED); history never overwritten; instructions served from the binary so CLAUDE.md is a pointer; referenced ⇒ exists. Dropped from reflow in July on the record and confirmed right by reflow's own admissions: the framework registry, context as a static edge weight, drift as one similarity scalar.\n\nREFLOW2 INHERITED REFLOW'S DRIFT, measured: self-host is 7,472 of 9,335 recorded tool calls (80%), 700 Decisions and 4,380 nodes about itself, rule:reflow2-is-built-for-other-projects-not-for-itself restated twice; 181 served tools, 40 never called (dec:bl-155), one retirement ever; 249 of 254 verifications have no executable form and 42 never ran (reflow's tested_tools: 0 shape); enforcement stacked on the unsolved skill-use problem (req:skill-use-survives-a-long-session accepted, not built); neutral nouns with software-shaped delivery (model/drawing/diagram artifact types used 0 times; Environment layer designed, unbuilt); and 106 of 108 Components read `planned` on a shipped system (fact:106-of-108-components-read-planned-on-a-shipped-system).\n\nBEHIND REFLOW'S INTENT: (1) the mandatory human-readable view — reflow made BPMN/UML BLOCKING; reflow2's human view is prose and graph_report_markdown, and SV-1/SV-4 rendering (epoch:the-systems-views-are-rendered-from-the-graph) is planned, unbuilt, and now unblocked by the seam work; (2) three reflow lifecycle ideas read 2026-07-28 and still proposed: req:intent-is-reinjected (payload arrived 2026-09-13 as the design reference), req:build-loop-is-bounded (reflow's iteration budget), req:scenarios-are-modelled (reflow's USER_SCENARIOS as validation targets).\n\nVERDICT: faithful in spirit and principle; drifted in the one way reflow did — toward itself. NOT VERIFIED: reflow's tools were not re-run; its test-system claims are read from its own reports, which round up (a \"3/3 PASS\" that checks four structural booleans and no physics; a \"🟢 VALIDATION SUCCESSFUL\" whose inference never ran). Nothing adopted or reimplemented, on Anthony's word.",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-09-13",
+        "value": "{\"reflow_span\":\"v3.0.0..v4.1.2, 2025-10-16..2025-12-06, 215 commits\",\"reflow_tools\":{\"after_cleanup_2025_10_25\":16,\"by_2025_11_24\":49},\"reflow_referenced_but_absent\":{\"tools\":39,\"step_files\":38},\"reflow_claude_md_bytes\":41447,\"reflow2_self_host_share\":{\"calls\":7472,\"of\":9335},\"reflow2_tools\":{\"served\":181,\"never_called\":40,\"retired_ever\":1},\"reflow2_verifications\":{\"total\":254,\"no_executable_form\":249,\"never_run\":42},\"reflow2_components_reading_planned\":{\"count\":106,\"of\":108},\"reflow_ideas_still_proposed_since_2026_07_28\":[\"req:intent-is-reinjected\",\"req:build-loop-is-bounded\",\"req:scenarios-are-modelled\"],\"faithful\":[\"black-box axiom\",\"function before structure\",\"gap is the product\",\"never PASS over emptiness\",\"mechanised drift prevention\",\"owner's word\",\"history never overwritten\",\"instructions served not installed\",\"referenced implies exists\"],\"inherited_drift\":[\"self-absorption\",\"tool accretion\",\"validation without execution\",\"enforcement stacked on unsolved skill-use\",\"software-shaped delivery\",\"confident stale statuses\"],\"behind\":[\"mandatory human-readable view unbuilt\",\"three July requirements unsettled\"]}"
       }
     },
     {
@@ -237187,7 +237290,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:d228f8d59940b405eaad08bdd7480f475d3e013f7bced1dc7207918dae0eb59d",
+  "prev_content_hash": "sha256:10f5d5ad930fcdea1f32bfa12bfd666513b6ce372e49a4cf370471f08b20d54b",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
