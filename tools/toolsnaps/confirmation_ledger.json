@@ -4,7 +4,20 @@
   },
   "description": "The confirmation ledger (BL-35): for every capability with built artifacts, when was its claim last checked against reality, and what was the answer — drift events and whether each was resolved, accept claims split into design_holds vs design_updated, first baselines counted apart from both (they are not accepts), clean-reconcile confirmations with when they last happened, design edits on the record, and a state per capability: drifting (an observed divergence is unanswered), confirmed (examined, with the claim history visible), or unexamined (nobody has ever looked — NOT the same as confirmed). TWO FRESHNESS COUNTS RIDE ALONGSIDE THE THREE STATES: `stale_verification` is claims whose check last ran before the artifact last moved, and `unknown_verification_freshness` is those where one of the two dates is missing so neither can be said — never read the second as fresh.",
   "inputSchema": {
-    "properties": {},
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "budget_chars": {
+        "default": null,
+        "description": "How many characters of JSON this reply may spend before prose is\nwithheld to make it fit (default 30,000).\n\nRAISE IT ONLY IF YOU KNOW THIS CLIENT HAS THE ROOM. The default sits\nbelow the smallest tool-output cap in use, because the failure it\nexists to stop is not a slow call — it is the CLIENT refusing the reply,\nat which point the session sees a wall of harness text and reflow2 never\ngets to suggest narrowing.\n\nEvery trimmed reply says what it withheld, at `budget`; counts and ids\nare never budgeted away, so a shorter answer is never a quieter one.",
+        "format": "uint",
+        "minimum": 0,
+        "type": [
+          "integer",
+          "null"
+        ]
+      }
+    },
     "type": "object"
   },
   "name": "confirmation_ledger"

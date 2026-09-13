@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:9038c2461bae8bc1ac53e9a8aa805cbde8a1fc569973cc9c07571a8fbe9793b5",
+  "content_hash": "sha256:301bbb7f4bf135601c85a302da39eeaf9863eb8a73940bc8c3ff104de21fad32",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -62262,6 +62262,12 @@
       "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "cap:shared-sessions",
       "properties": {},
+      "to_id": "fact:an-orphaned-serve-shared-daemon-holds-the-store-and-475mb-2026-09-13"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:shared-sessions",
+      "properties": {},
       "to_id": "fact:the-shared-stdio-client-never-reaps-its-children-and-accumulates-zombies"
     },
     {
@@ -62694,6 +62700,18 @@
       "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "cmp:service",
       "properties": {},
+      "to_id": "fact:five-arms-cannot-reproduce-flo2s-448mb-2026-09-13"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cmp:service",
+      "properties": {},
+      "to_id": "fact:live-sessions-sit-above-the-band-reconstructions-below-2026-09-13"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cmp:service",
+      "properties": {},
       "to_id": "fact:per-call-retention-refuted-140-calls-reach-101mb-2026-09-13"
     },
     {
@@ -63055,6 +63073,18 @@
       "from_id": "ifc:mcp-tools",
       "properties": {},
       "to_id": "fact:the-reflow2-flo2-seam-reran-against-http-2026-08-26"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "ifc:mcp-tools",
+      "properties": {},
+      "to_id": "fact:the-reply-budget-sweep-is-built-2026-09-13"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "ifc:mcp-tools",
+      "properties": {},
+      "to_id": "fact:the-unbounded-reply-sweep-2026-09-13"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -228507,6 +228537,20 @@
       }
     },
     {
+      "node_id": "fact:an-orphaned-serve-shared-daemon-holds-the-store-and-475mb-2026-09-13",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "name": "WITHDRAWN — there was no orphan and single-writer is a guarantee. Two daemons, two DIFFERENT designs; a substring match on a RELATIVE graph path made two projects look like one",
+        "statement": "🛑 THIS RECORD IS WITHDRAWN. Its original claim — that pid 2713262 was an orphaned --serve-shared daemon holding reflow2's design on a dead port, that one design cost 1.42 GB across two daemons, and that single-writer might be a convention rather than a guarantee — WAS WRONG IN EVERY PART. Kept rather than deleted, because how it was got wrong is the useful half.\n\nWHAT IS ACTUALLY TRUE, established by flo2 reading each process's cwd and its real fd targets:\n\n    pid 2713262   cwd project/flo2      holds FLO2'S graph                     475 MB\n    pid 2719328   cwd project/reflow2   holds REFLOW2'S graph, --export-to     945 MB\n\nTWO DESIGNS, NOT TWO HOLDERS OF ONE. Neither is orphaned; both serve live sessions. `.reflow2/graph.server.json` names the older daemon because that rendezvous file belongs to flo2's directory — the file I read was not the file I thought I was reading. The \"1.42 GB for one design\" was two separate projects added together.\n\nAND SINGLE-WRITER HOLDS. From /proc/locks: four write locks across four DISTINCT inodes, one per directory per process, inode 2752626 confirmed by stat as flo2's graph/LOCK. No inode held twice. req:single-writer-graph's kernel-arbitrated exclusive open does exactly what dec:one-process-many-stores assumes it does. Guarantee, not convention — the question was raised in those words and it is answered in them.\n\n⭐ THE CAUSE, and it is a class this project already knows: I counted file descriptors with a substring match on `reflow2/graph`. EVERY project's store lives at `.reflow2/graph`, and that string contains `reflow2/graph`, so flo2's own store matched a filter meant to find reflow2's. The command line compounded it by reading `--graph-path .reflow2/graph` — a RELATIVE path, where cwd decides the design. I then took the absolute path of the BINARY (`project/reflow2/target/release/reflow2-mcp`) as evidence about the GRAPH; it is evidence about the executable, which both projects share because reflow2 is registered at user scope and every project on this box runs whatever binary was last built here.\n\n📌 THE FACT THAT WOULD HAVE PREVENTED IT WAS ALREADY KNOWN: the graph path is relative, so each project mints its OWN graph — one server binary, many graphs. A shared server does not mean a shared graph. Having the fact available is not the same as applying it, which is the same gap between record and behaviour this session has now found four times.\n\n⭐ THE DISCIPLINE THIS BREAKS is rule:success-is-read-from-the-authoritative-object. The authoritative object for \"which design does this process hold\" is its cwd plus its resolved fd targets, or /proc/locks by inode. A name match is not an identity. Nothing was killed on the strength of this — the original record said the decision was the user's — and had it been, it would have ended a live session.\n\nWHAT SURVIVES OF THE ORIGINAL: nothing about orphans or locks. Only the raw RSS numbers, which were correct and are now read the other way round — see fact:five-arms-cannot-reproduce-flo2s-448mb-2026-09-13.",
+        "subject_id": "cap:shared-sessions",
+        "valid_from": "2026-09-13",
+        "value": "{\"withdrawn\":true,\"original_claim\":\"orphaned daemon, 1.42GB for one design, single-writer possibly a convention\",\"actual\":\"two daemons holding two DIFFERENT designs, both live, single-writer confirmed\",\"pid_2713262\":{\"cwd\":\"project/flo2\",\"holds\":\"flo2 graph\",\"mb\":475},\"pid_2719328\":{\"cwd\":\"project/reflow2\",\"holds\":\"reflow2 graph\",\"mb\":945},\"proc_locks\":\"4 write locks, 4 distinct inodes, none held twice\",\"cause\":\"substring match on '.reflow2/graph' which every project shares, plus a RELATIVE --graph-path read against the wrong cwd\",\"corrected_by\":\"flo2 session 2026-09-13\",\"anything_killed\":false}"
+      }
+    },
+    {
       "node_id": "fact:apply-heal-would-have-destroyed-the-wrong-contributor",
       "node_type": "TemporalFact",
       "properties": {
@@ -231377,6 +231421,20 @@
       }
     },
     {
+      "node_id": "fact:five-arms-cannot-reproduce-flo2s-448mb-2026-09-13",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.9,
+        "fact_type": "finding",
+        "name": "FIVE ARMS, FOUR HYPOTHESES DEAD — call count, tool mix, payload size and held connection all cap out at 101-178 MB. Only multi-MB payloads reach 450, and flo2's 476 MB is still unreproduced on the same machine",
+        "statement": "MEASURED 2026-09-13, five arms, each a fresh server on its own identical copy of reflow2's own 4,403-node store. Extends and partly narrows fact:the-servers-resident-memory-is-export-retention-not-rocksdb-2026-09-13.\n\n    ARM   WHAT VARIED                                    ~128-140 CALLS, NO EXPORTS\n    H     140 identical graph_report, tiny payloads      101 MB  (flat from call 5)\n    M     flo2's tool MIX, tiny payloads                 173 MB  (non-monotonic)\n    P     same shape as M, 17 KB payloads per call       158 MB\n    K     same shape, ONE HELD CONNECTION throughout     178 MB\n    --    five export_graph calls at 14.7 MB each        433 MB\n\nFOUR HYPOTHESES KILLED, TWO FROM EACH SIDE:\n · RocksDB column-family defaults (flo2) — a fresh server with those exact defaults is 62 MB.\n · The tantivy writer heap (reflow2) — 62 MB default against 68 MB floored at 15 MB.\n · Retention tracks CALL COUNT (flo2) — arm H flat at 101, arm M below flo2's own lower bound.\n · Retention tracks PAYLOAD SIZE per call (flo2) — arm P at 17 KB/call reached 158 MB, LOWER than arm M at roughly 0.2 KB/call. Refuted by the arm designed to confirm it.\n · GLIBC ARENA COUNT SCALING WITH CORES (reflow2) — killed by flo2 on the condition this side set: nproc 4, hostname asligar-bitecool, 17 threads, MALLOC_ARENA_MAX unset. IT IS THE SAME MACHINE. Both repos sit under one home directory and both servers ran on one box, so the host cannot be the difference.\n\n🛑 SO THE ANOMALY IS UNREPRODUCED AND HAS GROWN. flo2's server moved 448 -> 476 MB over 24 further calls, five of them exports at ~0.45 MB. Their export cost tracks document size as expected, so their fourteen small exports are not it either. 202 nodes against 4,403, every reply smaller, and 2.7x the resident memory of anything reproducible here, on identical hardware.\n\n⭐ WHAT REMAINS UNVARIED, and it is now the whole list: DURATION (3.4 hours against roughly five minutes per arm) and whatever accumulates with it — session and seat churn across an agent's reconnects, debounced timers, background sweeps. No arm ran longer than a few minutes, and no arm minted more than one session. That is the next thing to vary and neither side has varied it.\n\n📌 ONE CORRECTION THIS SIDE OWES, already accepted by flo2: the per-call rate they extrapolated from was this repo's own ladder, and it was an average over a curve that had already flattened. Call one of the ten graph_reports was +26 MB alone; calls 6-10 moved 1 MB in total. The ladder said knee, both sides read rate.\n\nWHAT IS NOT ESTABLISHED: whether duration alone reproduces it; whether flo2's binary is the same build; whether session/seat state accumulates unbounded. Five arms is five points, all short-lived, all single-session.",
+        "subject_id": "cmp:service",
+        "valid_from": "2026-09-13",
+        "value": "{\"arm_H_mb\":101,\"arm_M_mb\":173,\"arm_P_17kb_payloads_mb\":158,\"arm_K_held_connection_mb\":178,\"five_exports_mb\":433,\"flo2_now_mb\":476,\"flo2_calls\":164,\"same_machine\":true,\"nproc\":4,\"hypotheses_killed\":[\"rocksdb cf defaults\",\"tantivy writer heap\",\"per-call count\",\"per-call payload size\",\"glibc arena count vs cores\"],\"remaining_unvaried\":[\"duration\",\"session/seat churn\"],\"reproduced\":false}"
+      }
+    },
+    {
       "node_id": "fact:five-capabilities-were-built-reachable-and-unreached-and-one-query-shape-found-them-all",
       "node_type": "TemporalFact",
       "properties": {
@@ -231649,6 +231707,20 @@
         "statement": "TOOL FRICTION MET WHILE WORKING, CAPTURED UNDER THE STANDING RULE THAT EVERY REFLOW2 TOOL FAILURE IS WRITTEN DOWN — AND IT TURNED OUT TO BE DATA LOSS, NOT FRICTION. Attaching an existing Artifact to a ChangeEvent with link_artifact on 2026-09-07 was refused with `missing field name`, then required the artifact's full name and location to be re-sent, roughly 300 characters the graph already held and had just returned from add_artifact.\n\nTHE ANSWER, READ FROM THE CODE RATHER THAN GUESSED. artifact.rs write_artifact_link upserts the Artifact with `.set(\"name\", opts.name)` — an unconditional set, while artifact_type, location and checksum beside it all use set_opt and therefore preserve a stored value when omitted. So name is the one field a re-link ALWAYS overwrites, and since the surface makes it mandatory, every re-link rewrites the name to whatever the caller happened to re-type. A caller who sends a short stub silently destroys a long descriptive name, with no refusal and no drift event.\n\nTHE CODE ALREADY ARGUES AGAINST ITSELF. The comment directly above that upsert explains at length why upsert_node was chosen over create_node: re-registering a file MUST NOT ERASE WHAT THE DESIGN ALREADY KNOWS ABOUT IT. It cites BL-165 and BL-46, and the measured evidence that re-linking had been silently dropping last_confirmed_at and downgrading a verified Artifact. The fix that came out of that reasoning was applied to the optional fields and not to `name`, which is the only one that cannot be omitted.\n\nTHE FIX AT THE CAUSE: make `name` optional on LinkArtifactReq, use set_opt in write_artifact_link so an omitted name preserves the stored one, and refuse with a clear message when the Artifact does not yet exist and no name was given. That also removes the friction, because the friction and the data loss have the same cause.\n\nTHE CLASS is the sibling-shape inconsistency recorded twice before: a constructor and its linking counterpart disagree about which fields they accept for the same node type. link_artifact also refuses `description` though add_artifact accepts it, so writing an artifact with prose and then linking it needs two tools with different field sets.\n\nDELIBERATELY NOT FIXED IN THE SAME CHANGE as the environment compliance layer, so that each lands reviewable on its own. Sequenced, not dropped.",
         "subject_id": "art:tools-operate",
         "valid_from": "2026-09-07"
+      }
+    },
+    {
+      "node_id": "fact:live-sessions-sit-above-the-band-reconstructions-below-2026-09-13",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.9,
+        "fact_type": "finding",
+        "name": "THE REFRAME — it was never one strange server. TWO live agent sessions sit at 476 and 945 MB; FIVE controlled reconstructions cap at 101-178. The only unvaried variable is duration and session churn",
+        "statement": "ESTABLISHED 2026-09-13 jointly by the reflow2 and flo2 sessions, after the survey that produced fact:an-orphaned-serve-shared-daemon-holds-the-store-and-475mb-2026-09-13 was corrected. That correction removed a false orphan AND changed the shape of the whole investigation, which is why this is recorded separately.\n\n    LIVE AGENT SESSIONS (long-running, real MCP client, repeated reconnects)\n        flo2's daemon        202 nodes, 2.9 MB export, 3.4 h      476 MB\n        reflow2's daemon   4,403 nodes, 14.7 MB export, 0.9 h     945 MB\n\n    CONTROLLED RECONSTRUCTIONS (fresh server, ~5 minutes, ONE session, curl or one held connection)\n        arm H  140 identical reads, tiny payloads                 101 MB\n        arm P  128 mixed calls, 17 KB payloads each               158 MB\n        arm M  128 mixed calls, tiny payloads                     173 MB\n        arm K  128 mixed calls, ONE held connection               178 MB\n\n⭐ FLO2'S SERVER WAS NEVER THE OUTLIER. Set beside reflow2's own live daemon it is the SMALLER of the two, and the ordering runs the way design size predicts — 202 nodes at 476 MB, 4,403 nodes at 945 MB. What is anomalous is not one server; it is that BOTH LIVE SESSIONS SIT ABOVE A BAND THAT FIVE RECONSTRUCTIONS CANNOT LEAVE. That is a far narrower finding and a far more testable one.\n\nWHAT HAS BEEN KILLED, so the remaining space is small and named: RocksDB column-family defaults, the tantivy writer heap, glibc arena count against core count (same machine, nproc 4), retention tracking call COUNT, retention tracking per-call PAYLOAD SIZE, and connection churn against a held connection. Six candidates, three from each side, every one refuted by a measurement that could have confirmed it. Arm P is the cleanest of them: 85x the bytes of arm M and LOWER resident memory.\n\n⭐ WHAT IS LEFT IS ONE VARIABLE AND NEITHER SIDE HAS MOVED IT: DURATION, and what accumulates along it. Every arm ran about five minutes and minted exactly ONE session. The two live daemons have run 3.4 and 0.9 hours across an agent's reconnects, each reconnect minting a new session and a new seat. Seat and session state, debounced export timers, and background sweeps are all untested. THE NEXT EXPERIMENT IS AN ARM THAT RUNS FOR HOURS AND RECONNECTS REPEATEDLY, not another arm that varies what is sent.\n\n📌 EXPORT SIZE STILL EXPLAINS PART OF IT AND MUST NOT BE DISCARDED. Five 14.7 MB exports took an arm from 140 to 433 MB, and flo2 confirms their own export cost tracks document size — their fourteen exports at 0.45 MB cost about 28 MB in total. So export retention is real and scales with the document; it accounts for much of reflow2's 945 MB and little of flo2's 476 MB. Both can be true.\n\nWHAT IS NOT ESTABLISHED: whether duration alone reproduces the gap; whether seats or sessions accumulate without bound; whether the two live daemons would fall back to the band if their clients disconnected. No long-running arm has been taken.",
+        "subject_id": "cmp:service",
+        "valid_from": "2026-09-13",
+        "value": "{\"live_flo2_mb\":476,\"live_flo2_nodes\":202,\"live_flo2_hours\":3.4,\"live_reflow2_mb\":945,\"live_reflow2_nodes\":4403,\"live_reflow2_hours\":0.9,\"arms\":{\"H\":101,\"P\":158,\"M\":173,\"K\":178},\"arm_duration_minutes\":5,\"arm_sessions\":1,\"candidates_killed\":6,\"remaining\":[\"duration\",\"session and seat churn\"],\"flo2_was_outlier\":false}"
       }
     },
     {
@@ -233607,6 +233679,20 @@
       }
     },
     {
+      "node_id": "fact:the-reply-budget-sweep-is-built-2026-09-13",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.95,
+        "fact_type": "status",
+        "name": "BUILT — nine tools bounded through ONE shared helper, with a CI gate that fails when nothing overflowed. Two tools are exempt as documents, and the first version's own bug is pinned by a test",
+        "statement": "BUILT 2026-09-13, answering fact:the-unbounded-reply-sweep-2026-09-13 as a CLASS rather than as the one tool it was reported from.\n\nWHAT LANDED: crates/reflow2-mcp/src/reply_budget.rs — one helper, not a fourth bespoke trimmer. Prose is cut progressively (4000, 2000, 800, 240, 120, 0 characters); numbers, counts and ids are never touched; every trimmed reply carries a `budget` block saying what went and how to get it back.\n\nMEASURED BEFORE AND AFTER, on this design seeded into a fresh store:\n\n    describe_schema        117,252 ->  47,904   (all 65 edge types still listed)\n    confirmation_ledger    125,383 ->  31,673\n    invalidated_findings    88,242 ->  27,492\n    evidence_report          75,159 ->  18,643\n    detect_defects           56,455 ->  31,971\n    compare_designs        9-16 MB  ->  bounded (the originally reported friction)\n    list_skills, export_surface, get_instructions — see below\n\n⚠️ THREE STILL LAND A FEW PERCENT OVER THE 30,000 DEFAULT, and that is the honest trade rather than a miss: once prose is gone what remains is STRUCTURE — ids, counts, keys — which this helper will not trim because trimming it is what makes a shorter answer a quieter one. Each reply reports its own `reply_chars`, so the residual is visible and not claimed away.\n\n🛑 TWO TOOLS ARE EXEMPT AND THE EXEMPTION IS THE INTERESTING PART. get_instructions and export_surface return DOCUMENTS, not reports. Character-trimming one is corrupt rather than short — half an instruction set reads exactly like a whole one. Worse, get_instructions already tells its reader \"if `instructions` is shorter than `returned_bytes`, YOUR CLIENT CAPPED IT\", a signal added after a real consumer lost the back half twice, nine days apart: trimming there would have made the tool accuse the client of reflow2's own edit. Both now WITHHOLD WHOLE over budget and hand back the narrower call that works (`section`, `path`). export_graph stays excluded for the same reason.\n\n⭐ THE FIRST VERSION OF THE HELPER HAD THE EXACT BUG IT EXISTS TO PREVENT, and a committed test caught it within the hour: capping lists for every caller returned ONE of describe_schema's 65 edge types, still shaped like a complete vocabulary. Shortening a LIST is now opt-in (`Sampling::Allowed`) and the default is Forbidden — over budget, such a tool overflows LOUDLY rather than going quiet. A `NEVER_TRIM_BELOW` floor of 80 characters is what makes the 0 rung safe: names, ids and enum values survive every rung, so a vocabulary comes back complete and terse instead of complete and empty. Both behaviours are pinned by their own tests.\n\n⭐ THE DETECTOR, which is the leg that was missing. tools/replies_are_bounded.py runs in CI: it SEEDS a real design from the committed export, calls every no-argument read tool, and fails if any reply exceeds the budget without declaring a bound. Toolsnaps could never catch this — a golden pins the tools that EXIST, so a NEW tool returning 126 KB unbounded is a clean diff and a green build.\n\n🛑 AND IT FAILS WHEN IT HAD NOTHING TO RUN ON. If no reply overflowed, the gate EXITS 1 rather than passing, because on an empty graph every reply is small and it would pass having checked nothing. \"No tool overflowed\" and \"I could not make any tool overflow\" must not share an exit code. VERIFIED TO FAIL, not merely to pass: at --budget 5000 it exits 1 and names eight unbounded tools.\n\n📌 THOSE EIGHT ARE A STANDING LIST, not a clean bill: design_regions, evaluate_allocation, granularity_report, graph_report, ility_report, manual_work_report, reviewed_defects and surprising_connections all sit under 30,000 on THIS design and would cross on a larger one. The gate will fail the day they do, which is the point of having it.\n\nWHAT IS NOT ESTABLISHED: only the 37 no-argument read tools are swept, so the 143 requiring arguments remain unmeasured apart from compare_designs. Sizes are for this design. The tool DESCRIPTIONS were not rewritten to mention the bound — the `budget_chars` parameter description carries it instead, which is a weaker instruction leg than the three original tools have.",
+        "subject_id": "ifc:mcp-tools",
+        "valid_from": "2026-09-13",
+        "value": "{\"helper\":\"crates/reflow2-mcp/src/reply_budget.rs\",\"gate\":\"tools/replies_are_bounded.py\",\"tools_bounded\":9,\"document_exempt\":[\"get_instructions\",\"export_surface\",\"export_graph\"],\"before_after\":{\"describe_schema\":[117252,47904],\"confirmation_ledger\":[125383,31673],\"invalidated_findings\":[88242,27492],\"evidence_report\":[75159,18643],\"detect_defects\":[56455,31971]},\"unit_tests\":8,\"gate_verified_to_fail\":true,\"toolsnaps_regenerated\":9,\"still_over_default\":3,\"watchlist_tools\":8}"
+      }
+    },
+    {
       "node_id": "fact:the-resend-cost-does-not-only-cost-tokens-it-moves-content-into-the-wrong-field",
       "node_type": "TemporalFact",
       "properties": {
@@ -234031,6 +234117,20 @@
         "subject_id": "dec:idea-a-tool-class-should-carry-a-contract-that-something-checks",
         "valid_from": "2026-09-11",
         "value": "{\"tools\":180,\"required_param_with_no_description\":93,\"any_param_with_no_description\":{\"tools\":94,\"params\":166},\"description_under_220_chars\":26,\"read_only_with_no_size_or_scope_control\":\"58 of 68\",\"required_inline_object_assembled_by_caller\":22,\"annotations\":{\"readOnlyHint\":\"180/180 (was 161/173)\",\"destructiveHint\":\"7/180\",\"idempotentHint\":\"1/180\",\"openWorldHint\":\"0/180\",\"title\":\"0/180 (was 9/173)\"},\"class_changes_and_their_edit_counts\":{\"every tool declares idempotentHint\":179,\"every tool declares destructiveHint\":173,\"every required param has a description\":93,\"every read-only tool can bound its reply\":58,\"every caller-assembled payload has a file handle\":22},\"sweep_findings_class_level\":6,\"sweep_findings_one_off\":7}"
+      }
+    },
+    {
+      "node_id": "fact:the-unbounded-reply-sweep-2026-09-13",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.95,
+        "fact_type": "defect",
+        "name": "THE SWEEP — 3 of 181 tools accept a reply budget, and at least 9 read tools exceed the 30,000-char default unbounded, the worst by 490x",
+        "statement": "MEASURED 2026-09-13 against the live server holding reflow2's own 4,403-node design, by calling every tool that takes no required arguments and counting the bytes on the wire. This is the sweep fact:compare-designs-has-no-reply-budget-2026-09-13 demanded before anything was fixed — \"the honest fix asks which OTHER read tools return an unbounded reply, and answers that before touching this one.\"\n\nTHE SURFACE: 181 tools. THREE accept budget_chars — detect_gaps, reviewed_gaps, topic_report. Everything else is unbounded by construction.\n\nEXCEEDING THE 30,000-CHAR DEFAULT, UNBOUNDED (bytes on the wire):\n\n    14,755,103  export_graph          492x   (see note — arguably exempt)\n       126,377  confirmation_ledger     4.2x\n       118,246  describe_schema         3.9x\n        89,238  invalidated_findings    3.0x\n        76,155  evidence_report         2.5x\n        61,669  get_instructions        2.1x\n        57,449  detect_defects          1.9x\n        34,319  export_surface          1.1x\n        30,489  list_skills             1.0x  (at the line)\n\n    plus compare_designs, which takes arguments and so is not in this table —\n    the originally reported instance, at 9-16 MB on two exports.\n\n⚠️ ONE SURPRISE THAT IS NOT A TOOL WITHOUT A BUDGET: reviewed_gaps returned 76,155 bytes WITH its default 30,000 budget applied. So the bound is real but it bounds the report JSON rather than the delivered payload, and escaping plus the envelope carry it past 2.5x. Whatever is done here, \"has budget_chars\" must not be read as \"fits\" — that is the same gap between claim and behaviour this design keeps finding.\n\n📌 export_graph IS A DIFFERENT CASE and should not be lumped in. Its job IS the whole document; a truncated export is not a smaller answer, it is a corrupt one. It needs streaming or a file path, not a character budget. It is listed because it is the largest and because it is the same payload that drives fact:the-servers-resident-memory-is-export-retention-not-rocksdb-2026-09-13.\n\nWHY THE COUNT MATTERS MORE THAN ANY ONE ROW: the failure this bound exists to stop is the CLIENT refusing the reply, at which point the session sees harness text and reflow2 never gets to suggest narrowing. Nine tools can do that today, and the three that cannot are the three somebody fixed one at a time after meeting each one. That is the instance-not-class pattern fact:the-parallel-batch-class-recurred-because-only-its-instance-was-fixed already records on this project — visible here as 3 fixed against 178 not.\n\n⭐ THE PRIMITIVE ALREADY EXISTS: reflow2_core::detect::DEFAULT_REPLY_BUDGET_CHARS, used by the three bounded tools. Nothing new has to be designed; the work is applying it, and deciding what each tool withholds first — which is a per-tool judgement, not a mechanical edit, because a budget that drops the wrong half makes a shorter answer a quieter one.\n\nWHAT IS NOT ESTABLISHED: only the 38 no-argument read tools were measured, so the 143 tools requiring arguments are unmeasured and compare_designs is the only one of them known to be large. Sizes are for THIS design; a bigger graph moves every row up and a small one may put several under the line. No fix is implemented.",
+        "subject_id": "ifc:mcp-tools",
+        "valid_from": "2026-09-13",
+        "value": "{\"tools_total\":181,\"tools_accepting_budget\":3,\"bounded\":[\"detect_gaps\",\"reviewed_gaps\",\"topic_report\"],\"measured_noarg_tools\":38,\"over_budget_unbounded\":9,\"default_budget_chars\":30000,\"worst\":{\"export_graph\":14755103,\"confirmation_ledger\":126377,\"describe_schema\":118246,\"invalidated_findings\":89238,\"evidence_report\":76155,\"get_instructions\":61669,\"detect_defects\":57449,\"export_surface\":34319,\"list_skills\":30489},\"reviewed_gaps_bytes_despite_budget\":76155,\"unmeasured_tools_requiring_args\":143,\"fix_implemented\":false}"
       }
     },
     {

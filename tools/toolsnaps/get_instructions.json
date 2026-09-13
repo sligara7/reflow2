@@ -7,6 +7,16 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
     "properties": {
+      "budget_chars": {
+        "default": null,
+        "description": "How many characters of JSON this reply may spend before prose is\nwithheld to make it fit (default 30,000). See `reply_budget`: counts and\nids are never budgeted away, so a shorter answer is never a quieter one.",
+        "format": "uint",
+        "minimum": 0,
+        "type": [
+          "integer",
+          "null"
+        ]
+      },
       "section": {
         "default": null,
         "description": "One section slug from the `sections` manifest, e.g. `the-loop`.\n\n**THIS EXISTS BECAUSE THE WHOLE DOCUMENT DOES NOT ALWAYS ARRIVE.** It is\n~27 KB, and a client-side result cap silently keeps the front of it: a\nreal consumer received the first ~19.5 KB twice, nine days apart, losing\nthe gap-to-question handshake and the entire tool inventory both times,\nwith nothing in the reply disagreeing with what it held.\n\nOmit it for the whole document plus the manifest. Pass it to fetch one\npart at a time, which is the path that works on a capped client. An\nunknown slug is REFUSED and lists the legal ones rather than returning\nan empty document, because a section that came back blank and a section\nthat does not exist must not be the same answer.",

@@ -4,7 +4,20 @@
   },
   "description": "Every finding some record CLAIMS to have answered, and whether a re-run is owed (the read half of `invalidates`). One row per Verification or TemporalFact carrying an inbound INVALIDATES edge, with who claimed it, when, and why. `rerun_owed` is THREE-VALUED and the third value is the point: true = the repair postdates the last run, false = the run already reflects it, and NULL = one side carries no date, so nobody can say — never read null as false. Findings here keep their own recorded status untouched: this says a verdict is STALE, never that it turned. Ask for this when you want to know which recorded test results or verdicts have gone stale and need re-running because something changed since.",
   "inputSchema": {
-    "properties": {},
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "budget_chars": {
+        "default": null,
+        "description": "How many characters of JSON this reply may spend before prose is\nwithheld to make it fit (default 30,000).\n\nRAISE IT ONLY IF YOU KNOW THIS CLIENT HAS THE ROOM. The default sits\nbelow the smallest tool-output cap in use, because the failure it\nexists to stop is not a slow call — it is the CLIENT refusing the reply,\nat which point the session sees a wall of harness text and reflow2 never\ngets to suggest narrowing.\n\nEvery trimmed reply says what it withheld, at `budget`; counts and ids\nare never budgeted away, so a shorter answer is never a quieter one.",
+        "format": "uint",
+        "minimum": 0,
+        "type": [
+          "integer",
+          "null"
+        ]
+      }
+    },
     "type": "object"
   },
   "name": "invalidated_findings"

@@ -724,7 +724,7 @@ async fn the_surface_can_say_that_nothing_moved() {
          nobody ran"
     );
 
-    let ledger = j!(s.confirmation_ledger());
+    let ledger = j!(s.confirmation_ledger(Parameters(Default::default())));
     assert_eq!(
         ledger["unexamined"], 0,
         "BL-158: the sweep has to be able to clear the debt it discharged"
@@ -907,6 +907,7 @@ fn the_advertised_protocol_version_is_the_sdks_latest_and_is_pinned() {
 async fn describe_schema_returns_the_whole_vocabulary() {
     let s = ReflowService::in_memory().expect("in-memory service");
     let v = j!(s.describe_schema(Parameters(DescribeSchemaReq {
+            budget_chars: None,
         node_type: None,
         from: None,
         to: None,
@@ -939,6 +940,7 @@ async fn describe_schema_returns_the_whole_vocabulary() {
 async fn describe_schema_answers_the_directed_question() {
     let s = ReflowService::in_memory().expect("in-memory service");
     let q = j!(s.describe_schema(Parameters(DescribeSchemaReq {
+            budget_chars: None,
         node_type: None,
         from: Some("Capability".into()),
         to: Some("Component".into()),
@@ -960,6 +962,7 @@ async fn describe_schema_answers_the_directed_question() {
 async fn release_pairs_report_their_true_standing() {
     let s = ReflowService::in_memory().expect("in-memory service");
     let q = j!(s.describe_schema(Parameters(DescribeSchemaReq {
+            budget_chars: None,
         node_type: None,
         from: Some("Release".into()),
         to: Some("Component".into()),
@@ -971,6 +974,7 @@ async fn release_pairs_report_their_true_standing() {
         "INCLUDES models Release -> Component since BL-34"
     );
     let loose = j!(s.describe_schema(Parameters(DescribeSchemaReq {
+            budget_chars: None,
         node_type: None,
         from: Some("Release".into()),
         to: Some("Requirement".into()),
@@ -992,6 +996,7 @@ async fn release_pairs_report_their_true_standing() {
 async fn describe_schema_focuses_one_node_type() {
     let s = ReflowService::in_memory().expect("in-memory service");
     let d = j!(s.describe_schema(Parameters(DescribeSchemaReq {
+            budget_chars: None,
         node_type: Some("Component".into()),
         from: None,
         to: None,
@@ -1019,12 +1024,14 @@ async fn describe_schema_focuses_one_node_type() {
 async fn describe_schema_required_only_is_compact() {
     let s = ReflowService::in_memory().expect("in-memory service");
     let full = j!(s.describe_schema(Parameters(DescribeSchemaReq {
+            budget_chars: None,
         node_type: Some("Requirement".into()),
         from: None,
         to: None,
         required_only: false,
     })));
     let compact = j!(s.describe_schema(Parameters(DescribeSchemaReq {
+            budget_chars: None,
         node_type: Some("Requirement".into()),
         from: None,
         to: None,
@@ -1058,6 +1065,7 @@ async fn describe_schema_rejects_a_half_given_pair() {
     // `from` without `to` is a mistake; silently dumping everything would hide it.
     assert!(
         s.describe_schema(Parameters(DescribeSchemaReq {
+            budget_chars: None,
             node_type: None,
             from: Some("Release".into()),
             to: None,
@@ -1070,6 +1078,7 @@ async fn describe_schema_rejects_a_half_given_pair() {
     // An unknown type name must not read as "exists, but connects to nothing".
     assert!(
         s.describe_schema(Parameters(DescribeSchemaReq {
+            budget_chars: None,
             node_type: Some("Relese".into()),
             from: None,
             to: None,
@@ -1812,6 +1821,7 @@ async fn compare_designs_reports_divergence_from_a_base_export() {
 
     // Identical: the live graph has not moved since the export.
     let same = j!(s.compare_designs(Parameters(CompareDesignsReq {
+            budget_chars: None,
         base_path: base_str.clone(),
         other_path: None,
     })));
@@ -1834,6 +1844,7 @@ async fn compare_designs_reports_divergence_from_a_base_export() {
     })));
 
     let diff = j!(s.compare_designs(Parameters(CompareDesignsReq {
+            budget_chars: None,
         base_path: base_str.clone(),
         other_path: None,
     })));
@@ -1853,6 +1864,7 @@ async fn compare_designs_reports_divergence_from_a_base_export() {
     })));
 
     let files = j!(s.compare_designs(Parameters(CompareDesignsReq {
+            budget_chars: None,
         base_path: base_str.clone(),
         other_path: Some(other_str.clone()),
     })));
@@ -1862,6 +1874,7 @@ async fn compare_designs_reports_divergence_from_a_base_export() {
     // A path that does not exist is the caller's mistake, said loudly.
     assert!(
         s.compare_designs(Parameters(CompareDesignsReq {
+            budget_chars: None,
             base_path: "/nonexistent/reflow2-compare.json".into(),
             other_path: None,
         }))
@@ -2087,6 +2100,7 @@ async fn export_files_chain_by_content_hash() {
         std::env::temp_dir().join(format!("reflow2-chain-old-{}.json", std::process::id()));
     std::fs::write(&old_copy, &on_disk).expect("copy of the first export");
     let diff = j!(s.compare_designs(Parameters(CompareDesignsReq {
+            budget_chars: None,
         base_path: old_copy.to_str().unwrap().into(),
         other_path: Some(path_str.clone()),
     })));

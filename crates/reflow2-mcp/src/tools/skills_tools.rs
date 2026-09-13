@@ -32,11 +32,22 @@ pub struct GetSkillReq {
 
 #[derive(Debug, serde::Deserialize, schemars::JsonSchema)]
 #[serde(deny_unknown_fields)]
-pub struct ListSkillsReq {}
+pub struct ListSkillsReq {
+    /// How many characters of JSON this reply may spend before prose is
+    /// withheld to make it fit (default 30,000). See `reply_budget`: counts and
+    /// ids are never budgeted away, so a shorter answer is never a quieter one.
+    #[serde(default)]
+    pub budget_chars: Option<usize>,
+}
 
 #[derive(Debug, serde::Deserialize, schemars::JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct GetInstructionsReq {
+    /// How many characters of JSON this reply may spend before prose is
+    /// withheld to make it fit (default 30,000). See `reply_budget`: counts and
+    /// ids are never budgeted away, so a shorter answer is never a quieter one.
+    #[serde(default)]
+    pub budget_chars: Option<usize>,
     /// One section slug from the `sections` manifest, e.g. `the-loop`.
     ///
     /// **THIS EXISTS BECAUSE THE WHOLE DOCUMENT DOES NOT ALWAYS ARRIVE.** It is
@@ -93,7 +104,7 @@ impl ReflowService {
     )]
     pub async fn list_skills(
         &self,
-        Parameters(_): Parameters<ListSkillsReq>,
+        Parameters(req): Parameters<ListSkillsReq>,
     ) -> Result<CallToolResult, McpError> {
         let items: Vec<_> = SKILLS
             .iter()
@@ -117,7 +128,12 @@ impl ReflowService {
         if let (Some(lens), Some(obj)) = (self.lens_for_response().await, payload.as_object_mut()) {
             obj.insert("lens".into(), serde_json::Value::String(lens));
         }
-        structured(payload)
+        structured(crate::reply_budget::bound_reply(
+            payload,
+            req.budget_chars
+                .unwrap_or(crate::reply_budget::DEFAULT_REPLY_BUDGET_CHARS),
+            "Every skill is still listed with its name and shortcut; read one in full with get_skill.",
+        ))
     }
 
     /// One skill, in full.
@@ -222,6 +238,46 @@ impl ReflowService {
                 (hit.body.clone(), Some(hit.slug.clone()))
             }
         };
+
+        // ⚠️ THIS TOOL IS NOT CHARACTER-TRIMMED, AND THAT IS DELIBERATE.
+        // Its payload is a DOCUMENT: a truncated instruction set is not a
+        // shorter answer but a corrupt one, the same reason export_graph is
+        // excluded from `reply_budget`. Worse, the note below tells the reader
+        // that `instructions` shorter than `returned_bytes` means THEIR CLIENT
+        // capped it — so trimming here would make this tool accuse the client
+        // of reflow2's own edit, and that signal was added because a real
+        // consumer lost the back half of the document twice, nine days apart.
+        //
+        // The honest bound is the one the tool already has: refuse to send a
+        // whole document that cannot fit, and hand back the manifest so the
+        // caller fetches it a section at a time.
+        let budget = req
+            .budget_chars
+            .unwrap_or(crate::reply_budget::DEFAULT_REPLY_BUDGET_CHARS);
+        if returned_section.is_none() && body.len() > budget {
+            return structured(json!({
+                "instructions": null,
+                "section": null,
+                "sections": manifest,
+                "total_bytes": INSTRUCTIONS.len(),
+                "returned_bytes": 0,
+                "budget": {
+                    "applied": true,
+                    "budget_chars": budget,
+                    "full_chars": body.len(),
+                    "detail": "whole_document_withheld",
+                    "note": format!(
+                        "WITHHELD WHOLE, NOT TRIMMED. The full instructions are {} characters \
+                         against a budget of {budget}, and this document is not something a \
+                         character limit can shorten honestly — half an instruction set reads \
+                         exactly like a complete one. Nothing is lost: every section is listed \
+                         in `sections`, and get_instructions {{\"section\": \"<slug>\"}} returns \
+                         each in full. Raise `budget_chars` if this client really has the room.",
+                        body.len()
+                    ),
+                },
+            }));
+        }
 
         structured(json!({
             "instructions": body,

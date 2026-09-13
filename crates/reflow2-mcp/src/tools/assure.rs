@@ -367,13 +367,20 @@ impl ReflowService {
                        Ask for this when you want to know which recorded test results or verdicts have gone stale and need re-running because something changed since.",
         annotations(read_only_hint = true)
     )]
-    pub async fn invalidated_findings(&self) -> Result<CallToolResult, McpError> {
+    pub async fn invalidated_findings(
+        &self,
+        Parameters(req): Parameters<crate::reply_budget::BudgetReq>,
+    ) -> Result<CallToolResult, McpError> {
         let g = self.graph.read().await;
         let out = g.invalidated_findings().map_err(dyno_err)?;
         self.ok_read(
             &g,
             crate::service::empty_speaks(
-                serde_json::json!({ "count": out.len(), "findings": out }),
+                crate::reply_budget::bound_reply_sampling(
+                    serde_json::json!({ "count": out.len(), "findings": out }),
+                    req.budget(),
+                    "The three-valued `rerun_owed` is never trimmed; read a finding in full with get_node on its id.",
+                ),
                 "no TemporalFact or Verification claims to have answered a check, so nothing can have gone stale",
             ),
         )
@@ -502,9 +509,18 @@ impl ReflowService {
                        names no environment and no swept parameters.",
         annotations(read_only_hint = true)
     )]
-    pub async fn evidence_report(&self) -> Result<CallToolResult, McpError> {
+    pub async fn evidence_report(
+        &self,
+        Parameters(req): Parameters<crate::reply_budget::BudgetReq>,
+    ) -> Result<CallToolResult, McpError> {
         let g = self.graph.read().await;
-        ok_json(g.evidence_report().map_err(dyno_err)?)
+        let full =
+            serde_json::to_value(g.evidence_report().map_err(dyno_err)?).map_err(ser_err)?;
+        ok_json(crate::reply_budget::bound_reply_sampling(
+            full,
+            req.budget(),
+            "Read one check in full with get_node on its verification id.",
+        ))
     }
 
     #[tool(

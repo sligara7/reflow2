@@ -11,6 +11,16 @@
         "description": "Path to the base export document — what every finding is relative to\n(`added` = in the other side, not here). Typically the committed\nexport, or the main branch's copy of it.",
         "type": "string"
       },
+      "budget_chars": {
+        "default": null,
+        "description": "How many characters of JSON this reply may spend before prose is\nwithheld to make it fit (default 30,000). See `reply_budget`: counts and\nids are never budgeted away, so a shorter answer is never a quieter one.",
+        "format": "uint",
+        "minimum": 0,
+        "type": [
+          "integer",
+          "null"
+        ]
+      },
       "other_path": {
         "default": null,
         "description": "Path to the other export document. Omit to compare the live graph as\nthe other side — \"has this session diverged from the record?\".",
