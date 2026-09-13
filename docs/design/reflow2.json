@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:a6b11fe9f3096c7b4c34ac66bbbda1ff8a1cd0c1c6c1c17993e030cf65b1171a",
+  "content_hash": "sha256:5c38e8e3d9ce338ab3efc275c93d6da1f9ecdb4d2f7b9ceb6050a46cd0179a1a",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -9984,6 +9984,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:the-stale-lock-reclaim-is-serialized",
+      "properties": {},
+      "to_id": "epoch:the-reply-budget-sweep"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:the-surface-gate-says-which-binary-it-read",
       "properties": {},
       "to_id": "epoch:v0330"
@@ -12639,6 +12645,12 @@
       "from_id": "snap:epoch:the-register-rule-reaches-the-words:art:tools-ask",
       "properties": {},
       "to_id": "epoch:the-register-rule-reaches-the-words"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:the-reply-budget-sweep:art:loop-nudge",
+      "properties": {},
+      "to_id": "epoch:the-reply-budget-sweep"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -20329,6 +20341,16 @@
         "validation_status": "unvalidated"
       },
       "to_id": "fact:the-defect-count-is-severity-blind-so-parked-ideas-are-reported-as-outstanding-debt"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "art:loop-nudge",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The reclaim path in claim_probe_slot was check-then-act: `if _probe_lock_is_stale(lock, now): lock.unlink(); continue`. N hook processes all find one stale lock and all judge it stale; one reaches the O_EXCL create first and writes a FRESH lock; a straggler still between the check and the unlink then unlinks — landing on the WINNER'S new lock. That unlink SUCCEEDS, so the straggler never reaches the \"someone else cleared it first\" branch, its own create succeeds, and two processes hold the slot. Isolated by measurement rather than reasoning: 8 processes on a barrier under CPU load, 60 trials, WITH a stale lock seeded gave 10/60 bad (2 and 3 winners) and WITHOUT any lock gave 0/60 — which refutes the competing candidate that a brand-new lock is briefly readable as stale through the empty window between O_EXCL create and the payload write. Serializing the reclaim behind an O_EXCL guard, with the staleness re-checked INSIDE that section, takes the same harness to 0/60.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:the-stale-probe-lock-reclaim-lets-two-winners-through-2026-09-13"
     },
     {
       "edge_type": "CAUSES",
@@ -42929,6 +42951,24 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-stale-lock-reclaim-is-serialized",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:loop-nudge"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-stale-lock-reclaim-is-serialized",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-loop-nudge"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-surface-gate-says-which-binary-it-read",
       "properties": {
         "accepted_baseline": false,
@@ -60585,6 +60625,12 @@
       "from_id": "art:loop-nudge",
       "properties": {},
       "to_id": "snap:epoch:the-loop-check-stops-firing-twice:art:loop-nudge"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "art:loop-nudge",
+      "properties": {},
+      "to_id": "snap:epoch:the-reply-budget-sweep:art:loop-nudge"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -191369,7 +191415,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:41124819e2eacd9d847b122ed8f34123d75fde11d483cd73420c83257fa0f449",
+        "checksum": "sha256:f08c5ef475b07b7e004f7e77ddf308b5cb5c280c756a192a616951815aacf804",
         "granularity": "atomic",
         "location": "tools/loop_nudge.py",
         "name": "loop_nudge.py",
@@ -192994,7 +193040,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:79392671bb9e1f249d58f5d488e297c02b627695dca9c92d712da0e19af20c98",
+        "checksum": "sha256:1baf1b9644201a868f752db0bb9f74260d8496c893499b35214f933441d78e7a",
         "granularity": "atomic",
         "location": "tools/test_loop_nudge.py",
         "name": "test_loop_nudge.py",
@@ -205108,6 +205154,16 @@
         "rationale": "THIS CALL IS ITSELF THE VERIFICATION. `summary` and `rationale` are the fields #256 added to this constructor, and a stale server would have REFUSED them — the request struct is deny_unknown_fields — so the fact that this event exists with both populated proves the new binary is answering. The other four checks passed the same way: hierarchy_issues returned the three predicted findings, scan_nodes(level:\"subsystem\") returned exactly 8, get_skill(\"rules\") named governance-proposal. The lesson worth keeping is the ORDER of what failed: a session restart did nothing, a /mcp reconnect did nothing, and only `--stop-shared` moved it — which is what STALE_NOTE has said since 2026-08-08 and what nothing surfaced until #259 put it on loop_status.",
         "subject": "system",
         "summary": "pid 3861122 (`--serve-shared`, up 5h41m) was stopped with `--stop-shared` and respawned from the current binary. PRs #254-#259 are now actually being served, having been merged and green for hours without ever running live."
+      }
+    },
+    {
+      "node_id": "chg:the-stale-lock-reclaim-is-serialized",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "name": "The stale probe-lock reclaim is serialized behind a guard with the staleness re-checked inside it — the second check-then-act, left behind when the first was fixed",
+        "repair": "corrected_cause",
+        "subject": "system"
       }
     },
     {
@@ -228111,6 +228167,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:the-reply-budget-sweep:art:loop-nudge",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0100\",\"properties\":{\"as_checksum\":\"sha256:96619724a77479e7\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0101\",\"properties\":{\"as_checksum\":\"sha256:96619724a77479e7\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0110\",\"properties\":{\"as_checksum\":\"sha256:96619724a77479e7\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0120\",\"properties\":{\"as_checksum\":\"sha256:96619724a77479e7\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0130\",\"properties\":{\"as_checksum\":\"sha256:96619724a77479e7\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0140\",\"properties\":{\"as_checksum\":\"sha256:96619724a77479e7\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0150\",\"properties\":{\"as_checksum\":\"sha256:96619724a77479e7\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0160\",\"properties\":{\"as_checksum\":\"sha256:96619724a77479e7\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0170\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0180\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0190\",\"properties\":{\"as_checksum\":\"sha256:fca6650697d55f63fc9dd71af518f9f9cfdebb82efd450cce36d7d991ca8dce7\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0200\",\"properties\":{\"as_checksum\":\"sha256:fca6650697d55f63fc9dd71af518f9f9cfdebb82efd450cce36d7d991ca8dce7\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0210\",\"properties\":{\"as_checksum\":\"sha256:fca6650697d55f63fc9dd71af518f9f9cfdebb82efd450cce36d7d991ca8dce7\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0220\",\"properties\":{\"as_checksum\":\"sha256:9cd7b5941e7546b94252f144ec97517f1cc4e34079a8130b08bb8d4b51c33f13\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0221\",\"properties\":{\"as_checksum\":\"sha256:9cd7b5941e7546b94252f144ec97517f1cc4e34079a8130b08bb8d4b51c33f13\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0230\",\"properties\":{\"as_checksum\":\"sha256:9cd7b5941e7546b94252f144ec97517f1cc4e34079a8130b08bb8d4b51c33f13\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0240\",\"properties\":{\"as_checksum\":\"sha256:9cd7b5941e7546b94252f144ec97517f1cc4e34079a8130b08bb8d4b51c33f13\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0250\",\"properties\":{\"as_checksum\":\"sha256:1b610577b6ffc1e8a4a08c8c00352b1a95a7e22a92e78fa56ba6b5206611a8c8\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0260\",\"properties\":{\"as_checksum\":\"sha256:1b610577b6ffc1e8a4a08c8c00352b1a95a7e22a92e78fa56ba6b5206611a8c8\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0261\",\"properties\":{\"as_checksum\":\"sha256:1b610577b6ffc1e8a4a08c8c00352b1a95a7e22a92e78fa56ba6b5206611a8c8\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0270\",\"properties\":{\"as_checksum\":\"sha256:337e0f5d99a3abf98407f6c471c5d902b1850fd35bdf7c826d09261cedc27528\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0280\",\"properties\":{\"as_checksum\":\"sha256:337e0f5d99a3abf98407f6c471c5d902b1850fd35bdf7c826d09261cedc27528\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0290\",\"properties\":{\"as_checksum\":\"sha256:337e0f5d99a3abf98407f6c471c5d902b1850fd35bdf7c826d09261cedc27528\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0300\",\"properties\":{\"as_checksum\":\"sha256:337e0f5d99a3abf98407f6c471c5d902b1850fd35bdf7c826d09261cedc27528\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0310\",\"properties\":{\"as_checksum\":\"sha256:337e0f5d99a3abf98407f6c471c5d902b1850fd35bdf7c826d09261cedc27528\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0320\",\"properties\":{\"as_checksum\":\"sha256:337e0f5d99a3abf98407f6c471c5d902b1850fd35bdf7c826d09261cedc27528\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0321\",\"properties\":{\"as_checksum\":\"sha256:337e0f5d99a3abf98407f6c471c5d902b1850fd35bdf7c826d09261cedc27528\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0330\",\"properties\":{\"as_checksum\":\"sha256:337e0f5d99a3abf98407f6c471c5d902b1850fd35bdf7c826d09261cedc27528\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0340\",\"properties\":{\"as_checksum\":\"sha256:337e0f5d99a3abf98407f6c471c5d902b1850fd35bdf7c826d09261cedc27528\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0350\",\"properties\":{\"as_checksum\":\"sha256:337e0f5d99a3abf98407f6c471c5d902b1850fd35bdf7c826d09261cedc27528\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0360\",\"properties\":{\"as_checksum\":\"sha256:337e0f5d99a3abf98407f6c471c5d902b1850fd35bdf7c826d09261cedc27528\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0370\",\"properties\":{\"as_checksum\":\"sha256:337e0f5d99a3abf98407f6c471c5d902b1850fd35bdf7c826d09261cedc27528\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0380\",\"properties\":{\"as_checksum\":\"sha256:337e0f5d99a3abf98407f6c471c5d902b1850fd35bdf7c826d09261cedc27528\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0390\",\"properties\":{\"as_checksum\":\"sha256:337e0f5d99a3abf98407f6c471c5d902b1850fd35bdf7c826d09261cedc27528\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0400\",\"properties\":{\"as_checksum\":\"sha256:63cb1f09f969be33ab14fbd837eff877e28b7f432953985e7eeba10b32bf0f31\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0410\",\"properties\":{\"as_checksum\":\"sha256:63cb1f09f969be33ab14fbd837eff877e28b7f432953985e7eeba10b32bf0f31\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0420\",\"properties\":{\"as_checksum\":\"sha256:63cb1f09f969be33ab14fbd837eff877e28b7f432953985e7eeba10b32bf0f31\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0430\",\"properties\":{\"as_checksum\":\"sha256:1dc6dec37183cd464134e89d8e96c54aa9990cb2082760232cb56dfd7008386d\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0440\",\"properties\":{\"as_checksum\":\"sha256:1dc6dec37183cd464134e89d8e96c54aa9990cb2082760232cb56dfd7008386d\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0450\",\"properties\":{\"as_checksum\":\"sha256:1dc6dec37183cd464134e89d8e96c54aa9990cb2082760232cb56dfd7008386d\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0460\",\"properties\":{\"as_checksum\":\"sha256:1dc6dec37183cd464134e89d8e96c54aa9990cb2082760232cb56dfd7008386d\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0470\",\"properties\":{\"as_checksum\":\"sha256:c28eefc04c02189671d16f4d28efb401ece3339a7773440bd4765efead870f42\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0471\",\"properties\":{\"as_checksum\":\"sha256:c28eefc04c02189671d16f4d28efb401ece3339a7773440bd4765efead870f42\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0480\",\"properties\":{\"as_checksum\":\"sha256:c28eefc04c02189671d16f4d28efb401ece3339a7773440bd4765efead870f42\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0490\",\"properties\":{\"as_checksum\":\"sha256:c28eefc04c02189671d16f4d28efb401ece3339a7773440bd4765efead870f42\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0500\",\"properties\":{\"as_checksum\":\"sha256:c28eefc04c02189671d16f4d28efb401ece3339a7773440bd4765efead870f42\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0510\",\"properties\":{\"as_checksum\":\"sha256:c28eefc04c02189671d16f4d28efb401ece3339a7773440bd4765efead870f42\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0520\",\"properties\":{\"as_checksum\":\"sha256:c28eefc04c02189671d16f4d28efb401ece3339a7773440bd4765efead870f42\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0530\",\"properties\":{\"as_checksum\":\"sha256:c28eefc04c02189671d16f4d28efb401ece3339a7773440bd4765efead870f42\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0540\",\"properties\":{\"as_checksum\":\"sha256:c28eefc04c02189671d16f4d28efb401ece3339a7773440bd4765efead870f42\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0550\",\"properties\":{\"as_checksum\":\"sha256:c28eefc04c02189671d16f4d28efb401ece3339a7773440bd4765efead870f42\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0551\",\"properties\":{\"as_checksum\":\"sha256:c28eefc04c02189671d16f4d28efb401ece3339a7773440bd4765efead870f42\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0560\",\"properties\":{\"as_checksum\":\"sha256:c28eefc04c02189671d16f4d28efb401ece3339a7773440bd4765efead870f42\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0570\",\"properties\":{\"as_checksum\":\"sha256:c28eefc04c02189671d16f4d28efb401ece3339a7773440bd4765efead870f42\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0580\",\"properties\":{\"as_checksum\":\"sha256:c28eefc04c02189671d16f4d28efb401ece3339a7773440bd4765efead870f42\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0590\",\"properties\":{\"as_checksum\":\"sha256:c28eefc04c02189671d16f4d28efb401ece3339a7773440bd4765efead870f42\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v090\",\"properties\":{\"as_checksum\":\"sha256:be1051b582c9e898\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:loop-nudge\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:the-probe-slot-is-claimed-atomically\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:loop-status\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:skill-loads-are-counted\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:stop-nudge-asks-the-graph\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"verified\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:the-graph-asks-what-a-session-made-false\",\"properties\":{\"completeness\":\"partial\",\"conformance\":\"verified\"}}]",
+        "state": "{\"artifact_type\":\"code\",\"checksum\":\"sha256:41124819e2eacd9d847b122ed8f34123d75fde11d483cd73420c83257fa0f449\",\"granularity\":\"atomic\",\"location\":\"tools/loop_nudge.py\",\"name\":\"loop_nudge.py\",\"status\":\"realized\",\"volatility\":\"stable\"}",
+        "target_id": "art:loop-nudge",
+        "target_type": "Artifact"
+      }
+    },
+    {
       "node_id": "snap:epoch:the-reply-budget-sweep:cmp:service",
       "node_type": "Snapshot",
       "properties": {
@@ -234449,13 +234515,13 @@
       "node_type": "TemporalFact",
       "properties": {
         "basis": "measured",
-        "confidence": 0.9,
+        "confidence": 0.95,
         "fact_type": "defect",
-        "name": "The stale-lock reclaim in claim_probe_slot admits TWO winners — the loser's unlink deletes the WINNER'S fresh lock, so the atomic claim it was built to be is not atomic on that path",
-        "statement": "OBSERVED 2026-09-13. Found because CI went red on a step that had passed minutes earlier, on a commit that touched only AGENTS.md — so the failure could not have been caused by the change, and looking was cheaper than re-running.\n\nTHE SYMPTOM, reproduced locally 2 times in 9 runs of tools/test_loop_nudge.py:\n\n    FAIL: test_a_stale_lock_is_reclaimed_exactly_once\n    AssertionError: 2 != 1 : the stale lock is cleared and exactly one successor wins\n\nNOT TEST FLAKINESS. The test is correct and the assertion is the right one; what it caught is a real race in tools/loop_nudge.py `claim_probe_slot`.\n\nTHE MECHANISM. On FileExistsError against a STALE lock the code unlinks and retries the O_EXCL create:\n\n    except FileExistsError:\n        if attempt or not _probe_lock_is_stale(lock, now):\n            return False\n        try:\n            lock.unlink()\n        except OSError:\n            return False   # \"someone else cleared it first; let them have it\"\n        continue\n\nTwo processes A and B both hit the stale lock and both judge it stale. A unlinks, wins the create, and writes a FRESH lock. B then unlinks — and its unlink lands on A's NEW lock. It SUCCEEDS, so B never reaches the \"someone else cleared it first\" branch, B's own O_EXCL create then succeeds, and both A and B believe they hold the slot.\n\n⭐ THE COMMENT ENCODES THE WRONG ASSUMPTION, which is why the bug survived review: it reasons that a losing unlink FAILS. It does not fail — it deletes the winner's lock. The guard is correct for the LIVE-lock path (O_CREAT|O_EXCL genuinely lets the filesystem pick one winner) and unsound only on the stale-reclaim path, which is why it passes most runs.\n\n📌 THE IRONY IS ON THE RECORD ALREADY. This function's own docstring says it replaced \"a check-then-write pair that read as a guard and was not one\", measured at four probes from twelve concurrent invocations. The replacement fixed the common path and left a second check-then-act inside the reclaim.\n\nWHAT IT COSTS: a duplicate loop_status probe. The same docstring prices that — loop_status was 71.4% of all time this project spent inside reflow2, 604 s of 846 s, at a median of 12,089 ms. A duplicate is not free; it is the most expensive call the surface makes.\n\nTHE SHAPE OF A FIX, not implemented here: the reclaim must itself be atomic. A separate O_EXCL reclaim file, held only across the unlink-and-recreate, is the usual answer — whoever wins the reclaim file is the only process permitted to remove the stale lock. Unlinking by inode is NOT a fix; the check and the unlink are still two steps.\n\nWHAT IS NOT ESTABLISHED: how often this fires in real use rather than under a test barrier that releases N processes simultaneously. Real hook invocations are near-simultaneous but not barrier-synchronised, so the true rate is unknown and is probably far below 2-in-9. Nothing here measures it.\n\n⚠️ NOT CAUSED BY THIS SESSION'S WORK, and nothing was changed to fix it. It is intermittently red and will keep flaking CI until somebody takes it.",
+        "name": "FIXED — the stale-lock reclaim admitted two winners because its check and its unlink were two steps; it is now serialized by a guard, 10/60 trials became 0/60",
+        "statement": "FIXED 2026-09-13. Supersedes this record's original reading, which named the mechanism correctly and had not measured it.\n\n① SYMPTOM. tools/test_loop_nudge.py::test_a_stale_lock_is_reclaimed_exactly_once, \"AssertionError: 2 != 1\". Intermittent: roughly 2 in 9 full-suite runs, and 0 in 20 when that test ran ALONE. Surfaced in CI on a commit that touched only AGENTS.md, which is what made it worth diagnosing rather than re-running.\n\n② PRECEDENT. Searched; nothing in the design but this record. New.\n\n③ CANDIDATES, generated rather than assumed:\n   (a) the loser's unlink deletes the winner's fresh lock — needs a genuinely stale pre-existing lock\n   (b) ANY brand-new lock is briefly readable as stale: O_CREAT|O_EXCL makes an EMPTY file and the payload is a separate os.write, and _probe_lock_is_stale returns True for an unreadable file\n   (c) the observation is wrong and the harness double-counts\n\n④⑤ THE DISCRIMINATING MEASUREMENT, and it is the reason this is settled rather than argued. (b) predicts failure with NO pre-existing lock; (a) predicts failure only with one. 8 processes released on a barrier under CPU load, 60 trials per arm:\n\n        pre-seeded STALE lock    10/60 trials had != 1 winner   (2 and 3)\n        NO lock at all            0/60\n\n   (b) REFUTED. (a) CONFIRMED. (c) refuted by the same arms — the harness counts 1 correctly 60 times running.\n\n⑥ THE CLASS. Check-then-act, and the instance-not-class pattern in its purest form: claim_probe_slot's OWN docstring records that it replaced \"a check-then-write pair that read as a guard and was not one\", measured at four probes from twelve invocations. That fix corrected the common path and left a SECOND check-then-act inside its own error branch.\n\n⑦ PINNED BY TESTS THAT FAIL TODAY, verified by reverting the fix and watching them go red — and the first attempt at one of them WAS A TEST THAT COULD NOT FAIL. It put a FRESH lock in place and asserted the reclaim declines; both the old and new shapes decline, because a fresh lock is not stale. It passed against the unfixed code. What the fix actually guarantees is MUTUAL EXCLUSION, so the test now asserts that: a reclaim attempted while another is in progress must decline and leave the stale lock untouched. Both new tests fail against the reverted code and pass against the fix.\n\n⑧ THE FIX, at the cause. _reclaim_stale_probe_lock serializes reclaimers behind an O_EXCL guard and re-checks staleness INSIDE that section, so a straggler finds a fresh lock and declines instead of deleting it. An orphaned guard (a process killed mid-reclaim) is cleared once and the attempt declines anyway, so the next invocation reclaims — one-shot, never a retry loop, because a wedged guard must cost one skipped probe rather than a spin.\n\nRESULT: stress harness 10/60 -> 0/60. Full suite 0 failures in 12 consecutive runs, against roughly 2 in 9 before.\n\n⑨ NOT ESTABLISHED: how often this fired in real use rather than under a barrier — real hook invocations are near-simultaneous but not synchronised, so the true rate is unknown and probably far below 1 in 6. The cost when it did fire is known and is not trivial: a duplicate loop_status probe, which the first usage ledger priced at 71.4% of all time this project spent inside reflow2.",
         "subject_id": "art:loop-nudge",
         "valid_from": "2026-09-13",
-        "value": "{\"test\":\"test_a_stale_lock_is_reclaimed_exactly_once\",\"observed\":\"2 winners, expected 1\",\"local_repro_rate\":\"2 of 9 runs\",\"file\":\"tools/loop_nudge.py\",\"function\":\"claim_probe_slot\",\"path\":\"stale-lock reclaim only\",\"live_lock_path_sound\":true,\"cause\":\"the losing process's unlink deletes the winner's freshly created lock, so it never detects it lost\",\"fix_shape\":\"a separate O_EXCL reclaim file held across unlink-and-recreate\",\"fixed\":false,\"caused_by_this_session\":false}"
+        "value": "{\"fixed\":true,\"stress_before\":\"10/60 bad (2 and 3 winners)\",\"stress_after\":\"0/60\",\"suite_before\":\"~2 in 9\",\"suite_after\":\"0 in 12\",\"candidate_refuted\":\"empty-file window makes a fresh lock read stale\",\"refuted_by\":\"no-lock arm 0/60\",\"fix\":\"O_EXCL reclaim guard with the staleness re-check inside the exclusive section\",\"orphaned_guard\":\"cleared once, attempt still declines, next invocation reclaims\",\"tests_added\":2,\"tests_verified_to_fail_first\":true,\"first_test_attempt_could_not_fail\":true}"
       }
     },
     {

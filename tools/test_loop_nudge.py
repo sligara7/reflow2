@@ -1505,6 +1505,92 @@ class ProbeSlotIsClaimedAtomically(unittest.TestCase):
         self.assertEqual(self._claim_from_n_processes(time.time()), 1,
                          "the stale lock is cleared and exactly one successor wins")
 
+    def test_a_straggler_never_deletes_the_successors_fresh_lock(self):
+        """THE RACE THE BARRIER TEST ONLY CATCHES SOMETIMES, made deterministic.
+
+        The old reclaim was check-then-act: N processes all judge one stale lock
+        stale, one wins and writes a FRESH lock, and a straggler still between
+        the check and the unlink then deletes the WINNER'S lock and claims too.
+        Measured 2026-09-13 at 7 failures in 60 barrier trials under load — and
+        0 in 20 when the test ran alone, which is why the suite-level canary is
+        not enough on its own and this test exists beside it.
+
+        WHAT THIS ASSERTS, and why it is not the obvious thing. The obvious test
+        — put a FRESH lock in place and check the reclaim declines — cannot
+        fail: both the old shape and the new one re-check staleness and decline,
+        because the fresh lock is not stale. It was written that way first and
+        it passed against the unfixed code, which is a test that proves nothing.
+
+        What the fix actually guarantees is MUTUAL EXCLUSION: at most one
+        process may be between the staleness check and the create. So that is
+        what is asserted here — a reclaim attempted while another reclaim is
+        already in progress must decline and leave the stale lock alone for the
+        holder to deal with. The old shape had no such section and would take
+        it. Verified to FAIL against the reverted code, not merely to pass.
+        """
+        import loop_nudge
+        cwd = os.getcwd()
+        os.chdir(self.project)
+        try:
+            lock = loop_nudge.probe_lock("s1")
+            lock.parent.mkdir(parents=True, exist_ok=True)
+            old = time.time() - (loop_nudge.PROBE_STALE_LOCK_S + 60)
+            stale = json.dumps({"started": old, "reason": "died-here"})
+            lock.write_text(stale)
+
+            # Another process is mid-reclaim RIGHT NOW: its guard is held and
+            # young, so it has not been orphaned.
+            guard = lock.with_name(lock.name + ".reclaim")
+            guard.write_text("")
+
+            won = loop_nudge._reclaim_stale_probe_lock(
+                lock, time.time(), b'{"started": 1, "reason": "straggler"}'
+            )
+            self.assertFalse(
+                won,
+                "two processes must never be inside the reclaim at once — that "
+                "overlap is exactly how both came to believe they held the slot",
+            )
+            self.assertEqual(
+                lock.read_text(), stale,
+                "and the straggler must not have touched the lock the holder is "
+                "in the middle of replacing",
+            )
+        finally:
+            os.chdir(cwd)
+
+    def test_an_orphaned_reclaim_guard_does_not_silence_the_feature_forever(self):
+        """A process killed mid-reclaim must not wedge the slot permanently.
+
+        The guard that makes the reclaim atomic is itself a file, so it can be
+        orphaned. Silencing the probe forever is the failure direction
+        `_probe_lock_is_stale` already refuses to take, so an old guard is
+        cleared — once, never in a retry loop, so a wedged guard costs one
+        skipped probe rather than a spin.
+        """
+        import loop_nudge
+        cwd = os.getcwd()
+        os.chdir(self.project)
+        try:
+            lock = loop_nudge.probe_lock("s1")
+            lock.parent.mkdir(parents=True, exist_ok=True)
+            old = time.time() - (loop_nudge.PROBE_STALE_LOCK_S + 60)
+            lock.write_text(json.dumps({"started": old, "reason": "died"}))
+            guard = lock.with_name(lock.name + ".reclaim")
+            guard.write_text("")
+            os.utime(guard, (old, old))
+
+            first = loop_nudge._reclaim_stale_probe_lock(lock, time.time(), b"{}")
+            self.assertFalse(first, "the wedged attempt declines rather than spinning")
+            self.assertFalse(guard.exists(), "and clears the orphaned guard on its way out")
+
+            second = loop_nudge._reclaim_stale_probe_lock(
+                lock, time.time(), b'{"started": 1, "reason": "next"}'
+            )
+            self.assertTrue(second, "so the NEXT invocation reclaims — never silenced forever")
+        finally:
+            os.chdir(cwd)
+
     def test_an_unwritable_state_dir_declines_instead_of_crashing(self):
         import loop_nudge
         cwd = os.getcwd()
