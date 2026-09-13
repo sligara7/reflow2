@@ -5834,7 +5834,17 @@ impl ServerHandler for ReflowService {
             // harness (dec:skills-served). Without this the skills would exist
             // and nobody would ever call for them.
             .with_instructions(format!(
-                "reflow2 is the persistent, coherent design brain. The loop: capture intent as \
+                // ⚠️ THE EPHEMERAL WARNING GOES FIRST, BEFORE ANYTHING ELSE.
+                // An agent that connects over HTTP never sees the stderr banner
+                // the operator saw, and the handshake is the one channel that
+                // reaches every session unasked. A session that does not know
+                // its design will not survive is a session that will lose work
+                // and have no way to have known.
+                //
+                // `graph_path: None` IS the condition — it means no directory
+                // backs this design, which is exactly what ephemeral means — so
+                // this cannot drift from a separate flag someone forgets to set.
+                "{}reflow2 is the persistent, coherent design brain. The loop: capture intent as \
                  Requirements/Capabilities/Components via the add_* / create_* tools; run \
                  detect_gaps and ask the human the gaps (gap_to_prompt); build only what the \
                  graph specifies; on any change, add_change_event + propagate_change to see the \
@@ -5844,6 +5854,15 @@ impl ServerHandler for ReflowService {
                  reason about — never a directive to the agent. CALL `get_instructions` FIRST on \
                  any design work: the full working instructions for this project are served here, \
                  not stored in the repo, so the file you read there is only a pointer.{}\n\n{}",
+                if self.graph_path.is_none() {
+                    "🛑 THIS DESIGN IS EPHEMERAL. It lives only in this server's memory and is \
+                     GONE when the process stops — nothing is written to disk and nothing will \
+                     be recovered. Anything you want to keep must be written out with \
+                     `export_graph` and a `path` before this server stops. This is a scratch or \
+                     measurement surface, not a design under version control.\n\n"
+                } else {
+                    ""
+                },
                 // The backstop for req:nudge-path-proven. If no session-end
                 // nudge is installed, NOTHING will interrupt a session that
                 // finishes owing the loop — and the handshake is the one channel

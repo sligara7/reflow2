@@ -67,6 +67,31 @@ struct Cli {
     #[arg(long, value_name = "DIR")]
     registry_root: Option<String>,
 
+    /// Serve a design that lives ONLY IN MEMORY and is GONE when this process
+    /// stops. Nothing is written to disk and nothing is recovered.
+    ///
+    /// ⭐ WHAT IT IS FOR: measuring reflow2 without the store, and scratch work
+    /// that is meant to be thrown away. `dec:idea-is-the-byte-backend-selectable-at-runtime`
+    /// was ruled this way on 2026-09-13 — the in-memory engine already existed
+    /// and several hundred tests run against it, and the only thing missing was
+    /// a way to ASK for it. To measure a REAL design, start this and then load
+    /// one with the `import_graph` tool.
+    ///
+    /// 🛑 IT IS DELIBERATELY NOT CALLED `--backend memory`. That name reads as a
+    /// neutral configuration choice between two equal options, and this is not
+    /// one: reflow2's whole premise is that a design outlives the session, so
+    /// the name has to say what happens to your work rather than which engine
+    /// is underneath. A flag that quietly turns off the memory is a foot-gun
+    /// pointed at the one thing this tool is for.
+    ///
+    /// ⚠️ REFUSED alongside `--graph-path`, `--registry-root`, `--shared` and
+    /// `--serve-shared`: each of those names a design ON DISK, and combining
+    /// them with this is far more likely to be a mistake than an intention.
+    /// Pair it with `--export-to` if you want the scratch design written
+    /// through to a file after all.
+    #[arg(long)]
+    ephemeral: bool,
+
     /// How many designs this server may hold open at once (default 8).
     ///
     /// Each open design costs a store, its file handles and its own full-text
@@ -504,7 +529,18 @@ async fn main() -> anyhow::Result<()> {
         .init();
 
     let cli = Cli::parse();
-    tracing::info!(graph_path = %cli.graph_path, "opening reflow2 design graph");
+    // ⚠️ SAY WHAT IS ACTUALLY BEING OPENED. This logged `--graph-path` for every
+    // invocation, including ones that never touch it — an ephemeral design opens
+    // no directory at all, and a registry server opens whichever design is asked
+    // for later, not this one. A log line that names a path nothing opened is a
+    // claim nothing checks, which is the drift class this project exists to catch.
+    if cli.ephemeral {
+        tracing::info!("opening an EPHEMERAL design — in memory only, no directory");
+    } else if let Some(root) = cli.registry_root.as_deref() {
+        tracing::info!(registry_root = %root, "serving designs from a registry root");
+    } else {
+        tracing::info!(graph_path = %cli.graph_path, "opening reflow2 design graph");
+    }
 
     if cli.export && cli.import.is_some() {
         anyhow::bail!("--export and --import do the opposite things; pass one, not both");
@@ -540,6 +576,100 @@ async fn main() -> anyhow::Result<()> {
     }
     if cli.resolutions.is_some() && cli.merge_apply.is_empty() {
         anyhow::bail!("--resolutions only means something with --merge-apply");
+    }
+
+    // ---- serve a design that will NOT survive this process -------------------
+    //
+    // Placed before the registry and single-graph paths for the same reason the
+    // registry branch is: it replaces the premise those rest on. There is no
+    // directory, so `--graph-path` means nothing here and opening one on the way
+    // past would create a store nobody asked for.
+    if cli.ephemeral {
+        // ⚠️ REFUSE THE COMBINATIONS THAT NAME A DESIGN ON DISK. Each of these
+        // is far more likely to be a mistake than an intention, and the cost of
+        // guessing wrong is somebody's design quietly not being saved. Rule 4
+        // throughout: say what would have worked.
+        //
+        // `--graph-path` is detected from the ARGUMENTS rather than the parsed
+        // value, because it carries a default — a parsed value cannot tell "the
+        // user asked for this directory" from "clap filled it in". The one case
+        // this misses is somebody passing the default path explicitly, which is
+        // harmless: they get the ephemeral design they asked for.
+        if std::env::args().any(|a| a == "--graph-path" || a.starts_with("--graph-path=")) {
+            anyhow::bail!(
+                "--ephemeral serves a design that is GONE when this process stops, and \
+                 --graph-path names one that is meant to persist — passing both is almost \
+                 certainly a mistake, so nothing was opened. Drop --graph-path for a scratch \
+                 design, or drop --ephemeral to work on the one at that path."
+            );
+        }
+        if cli.registry_root.is_some() {
+            anyhow::bail!(
+                "--ephemeral and --registry-root disagree: a registry root is a directory of \
+                 designs ON DISK, and an ephemeral design has no directory at all. Pass one."
+            );
+        }
+        if cli.shared || cli.serve_shared {
+            anyhow::bail!(
+                "--ephemeral cannot be shared. --shared and --serve-shared find or start the \
+                 server holding a design AT A PATH, and an ephemeral design has no path for \
+                 anyone to find it by. Use --http to let several sessions reach this one."
+            );
+        }
+
+        let service = ReflowService::in_memory().context("could not open an in-memory design")?;
+        let service = if cli.read_only {
+            service.into_read_only()
+        } else {
+            service
+        };
+
+        // SAY IT ON THE WAY UP, and say what happens rather than which engine
+        // is underneath. The handshake says it too, because an AGENT connecting
+        // here never reads stderr.
+        eprintln!(
+            "reflow2: ⚠️  EPHEMERAL — this design lives only in memory and is GONE when this \
+             process stops. Nothing is written to disk and nothing will be recovered."
+        );
+        if let Some(export_to) = cli.export_to.clone() {
+            eprintln!(
+                "reflow2: ...except that --export-to {export_to} is set, so the design is written \
+                 through to that file after every change. That file is the only durable record."
+            );
+        } else {
+            eprintln!(
+                "reflow2: to keep anything, either pass --export-to <FILE> or call export_graph \
+                 with a path before you stop. To measure a REAL design, load one with import_graph."
+            );
+        }
+
+        let mut service = service;
+        if let Some(export_to) = cli.export_to.clone() {
+            match service.start_auto_export(export_to.clone()) {
+                Ok(()) => {}
+                Err(why) => eprintln!("reflow2: NOT keeping {export_to} current — {why}"),
+            }
+        }
+
+        if let Some(addr) = cli.http.clone() {
+            serve_http(
+                |cfg| http_service_of(move || Ok(service.share()), cfg),
+                &addr,
+                &cli.http_allow_host,
+                HttpSurface::Design,
+                None,
+                false,
+            )
+            .await?;
+        } else {
+            tracing::info!("reflow2-mcp serving an EPHEMERAL design over stdio");
+            let running = service
+                .serve(stdio())
+                .await
+                .context("failed to start MCP stdio server")?;
+            running.waiting().await.context("MCP server error")?;
+        }
+        return Ok(());
     }
 
     // ---- serve MANY designs, selected by /g/<graph_id>/ ---------------------
@@ -1311,9 +1441,7 @@ where
         + 'static,
     Svc::Future: Send + 'static,
 {
-    use rmcp::transport::streamable_http_server::{
-        StreamableHttpServerConfig,
-    };
+    use rmcp::transport::streamable_http_server::StreamableHttpServerConfig;
 
     let listener = tokio::net::TcpListener::bind(addr)
         .await

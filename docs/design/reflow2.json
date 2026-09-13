@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:d8156f10159655d4bdc1e1506e50dbe7c1f3c40c440f46894f8311ba49dc099f",
+  "content_hash": "sha256:76a14317c49d51af6a2501711c76306509c6730c1ee699414a6b1356345bad06",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -1170,6 +1170,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:report"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-design-can-be-served-ephemerally",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:service"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -7134,6 +7142,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:an-in-memory-design-is-reachable-as-ephemeral",
+      "properties": {},
+      "to_id": "epoch:the-reply-budget-sweep"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:an-undated-change-event-says-so",
       "properties": {},
       "to_id": "epoch:2026-09-10-three-capture-surface-fixes-from-the-field"
@@ -11845,6 +11859,18 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:dec:idea-is-the-byte-backend-selectable-at-runtime",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:dec:idea-is-the-byte-backend-selectable-at-runtime:r2",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:dec:idea-is-the-byte-backend-selectable-at-runtime:r3",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
     },
@@ -30003,6 +30029,33 @@
         "action": "modified"
       },
       "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-in-memory-design-is-reachable-as-ephemeral",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:main"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-in-memory-design-is-reachable-as-ephemeral",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-in-memory-design-is-reachable-as-ephemeral",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:a-design-can-be-served-ephemerally"
     },
     {
       "edge_type": "CHANGED",
@@ -61591,6 +61644,18 @@
       "from_id": "dec:idea-is-the-byte-backend-selectable-at-runtime",
       "properties": {},
       "to_id": "snap:epoch:preserved-on-write:dec:idea-is-the-byte-backend-selectable-at-runtime"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:idea-is-the-byte-backend-selectable-at-runtime",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:dec:idea-is-the-byte-backend-selectable-at-runtime:r2"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:idea-is-the-byte-backend-selectable-at-runtime",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:dec:idea-is-the-byte-backend-selectable-at-runtime:r3"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -181137,6 +181202,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:test-ephemeral-says-so",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-design-can-be-served-ephemerally"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:test-every-constructor-says-what-the-thing-is",
       "properties": {
         "completeness": "complete",
@@ -182375,6 +182449,12 @@
       "from_id": "cap:a-derived-number-carries-what-it-was-computed-over",
       "properties": {},
       "to_id": "req:a-report-says-what-it-swept-and-whether-its-checks-ran"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:a-design-can-be-served-ephemerally",
+      "properties": {},
+      "to_id": "req:platform"
     },
     {
       "edge_type": "SATISFIES",
@@ -186077,6 +186157,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:an-ephemeral-design-says-so",
+      "properties": {},
+      "to_id": "cap:a-design-can-be-served-ephemerally"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:an-upstream-design-is-watched-not-imported",
       "properties": {},
       "to_id": "cap:a-declared-dependency-is-watched-not-imported"
@@ -189185,6 +189271,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:test-ephemeral-says-so",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-ephemeral-says-so"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:test-every-constructor-says-what-the-thing-is",
       "properties": {
         "action": "created"
@@ -191523,7 +191617,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:493be97d2298fb80556fa2c4e3a675a90dccb0192e202f5f80fcf8ec4b6ac859",
+        "checksum": "sha256:b7cdd05c508edee2aafd8f47f9e78bf90c5837308dfd4b86e977bb8c79660d7d",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/main.rs",
         "name": "main.rs",
@@ -192546,7 +192640,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:d255f71d6c023f1efdd6b65adb8ad32417fd58cb509ccdf876e78f6b48409d76",
+        "checksum": "sha256:f110b624d3e42b5e31db619a193c648148f6a846cb9409c3924c667f29b926d1",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -193092,6 +193186,18 @@
         "name": "edges_need_both_ends.rs",
         "status": "realized",
         "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:test-ephemeral-says-so",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:f6c963c9d6dcc570f6f4a987e0f4c37b2cef4d70cf1f9acc2a392e799ec10214",
+        "description": "Pins that an ephemeral design announces itself in the handshake, that the announcement survives share() into the per-session service an HTTP client actually gets, and that a design on disk is NOT labelled — the negative case, without which the warning would become noise readers skip.",
+        "location": "crates/reflow2-mcp/tests/an_ephemeral_design_says_so_in_its_handshake.rs",
+        "name": "an_ephemeral_design_says_so_in_its_handshake.rs",
+        "status": "realized"
       }
     },
     {
@@ -194147,6 +194253,16 @@
       "properties": {
         "description": "A ratio reported by one tool must carry the caveat its SOURCE tool considers essential, so a warning cannot be stripped by the tool that repeats the number.\n\nDISTINCT FROM dec:idea-a-derived-number-carries-what-it-was-computed-over-wherever-it-is-quoted, which is the OPEN QUESTION and the four options weighed. Anthony chose (a) with (d) as a follow-on, 2026-08-30. This is what gets BUILT; that is why.\n\nTHE INSTANCE THAT PROMPTED IT, measured 2026-08-30. `seam_coverage` emits a scope_note saying a design that declares contracts at a HIGHER boundary than it records dependencies will read as uncovered at module level, and to pass `altitude`. `maturity_report`'s seams band asks the SAME question at module level with none of that warning, and `graph_report_markdown` prints `seams 18% (13/72)` barer still. The band's `not_observed_about` list is four items long and does not include the one caveat its sibling considers necessary.\n\n⭐ WHY IT IS NOT AN AGENT-BEHAVIOUR PROBLEM. An agent reading the trajectory band has nothing to be suspicious of. Anthony named the pattern — an agent announces a number and only afterwards says what it actually measured — and asked for the ordering reversed. The reversal is not achievable by instruction alone, because the caveat is not in the number's hand at the moment it is quoted.\n\nTHE BANDS WHERE A CORRECT DESIGN READS LOW: SEAMS (answered at module level; a design declaring contracts one level up reads near zero); REALIZATION (a file nobody registered as an Artifact is invisible, so a user who has built everything and never run link-artifacts reads 0%); ASSURANCE (a capability checked only at component granularity is not counted); OPERATION (a design that never modelled an Environment reads as undeployed).\n\n⚠️ ONLY THE SEAMS CAVEAT IS MEASURED. The other three are reasoned from the band definitions and are NOT verified against a real design exhibiting them. Recorded so a later session does not inherit four confirmed findings where there is one.\n\nTHE SECOND LEG (Anthony's (d), a follow-on rather than a substitute): where-am-i re-derives a band from its source tool before naming it the FRONTIER, because the frontier is the one band that drives what the user does next. An instruction with no detector behind it is the weakest leg, which is why it rides behind the tool-side fix.\n\nWHAT IT MUST NOT DO: change the numbers. Moving a band's value would break comparison against every earlier reading. The caveat is added; the ratio stays.",
         "name": "A derived number carries what it was computed over, wherever it is quoted",
+        "provenance": "authored",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "cap:a-design-can-be-served-ephemerally",
+      "node_type": "Capability",
+      "properties": {
+        "description": "`--ephemeral` serves a design that lives only in the process and is gone when it stops. Built to answer dec:idea-is-the-byte-backend-selectable-at-runtime, and shaped by it: named for what happens to the WORK rather than for which engine is underneath, because reflow2's premise is that a design outlives the session and a neutral `--backend memory` would frame durability as a preference.\n\nREFUSES, rather than warns, alongside --graph-path, --registry-root, --shared and --serve-shared — each names a design on disk and the combination is likelier a mistake than an intention. --graph-path is detected from the ARGUMENTS, because a parsed value cannot tell a user's choice from clap's default.\n\nSAYS SO IN THE HANDSHAKE, FIRST, because an agent connecting over HTTP never sees the operator's stderr. The condition is `graph_path: None` — the same fact as \"no directory backs this\" rather than a second flag that could drift — and it survives `share()`, so every per-session service carries it.\n\n--export-to still works, so a scratch design can be written through to a file after all.",
+        "name": "A design can be served in memory only, labelled as scratch, and every flag that names a design on disk is refused alongside it",
         "provenance": "authored",
         "status": "realized"
       }
@@ -200919,6 +201035,15 @@
         "rationale": "Anthony accepted `dec:a-brainstormed-idea-is-a-first-class-kind` 2026-08-30, choosing shape (ii), a declared property rather than a new node type — the latter would make `what_next`, the detectors, the reports, delivery and the merge driver all learn a noun that otherwise behaves exactly like a Decision.\n\nWHY IT WAS BUILT NOW AFTER BEING TWICE JUDGED TOO SMALL: `req:a-vocabulary-distinction-proves-it-is-read` demands a computation read a distinction. A′ — the linking discipline riding the near-match refusal — is that computation, and measured 2026-08-30 it could not be scoped: 207 idea-Decisions and 363 other Decisions differed by nothing readable, `status` does not separate them (32 non-idea Decisions are also `proposed`), and the only remaining signal was the `dec:idea-` ID PREFIX — the defect closed the same morning in #390. Unscoped, A′ would land on the Requirement/Capability/ChangeEvent capture path a consumer's field report names as existing friction, so the marker is what keeps the fix off a live user's path.\n\n⚠️ NO DEFAULT, DELIBERATELY. Absent means NOBODY SAID — a third state, not a synonym for `choice` — following the doctrine `Decision.quality_target` already states. The 207 existing ideas stay UNMARKED: their only evidence of kind is the prefix being retired, so backfilling would launder it into a property. That leaves the existing population unqueryable and is the honest option; whether to backfill anyway is recorded as unsettled.\n\n⚠️ THE SCHEMA STAMP DOES NOT CARRY THIS. It records node and edge type names and counts, and no property names at all, so a consumer pinning a build gains a distinction nothing tells them about. Whether `schema_version` should move for a property addition is unresolved and is now a live question rather than a footnote.",
         "subject": "system",
         "summary": "`Decision.kind` declared in schema/structure.yaml — `exploratory` (an idea being turned over, recorded so it is not lost and NOT claimed as intent) or `choice` (a decision somebody faced), indexed, WITH NO DEFAULT. `DecisionReq` gains the field and the tool writes it INSIDE THE SAME CALL rather than through a follow-up setter, because two order-dependent calls is the hazard #392 documented and `cap:a-decision-can-be-created-already-settled` was built to remove for `status`. An undeclared value is refused, and the refusal says omitting is also valid so the obvious repair is not to guess. The brainstorm skill now sets it at capture and both mirrors were re-synced. Four tests, including that ABSENT STAYS ABSENT. Core suite 135 suites / 1548 passed / 0 failed; toolsnaps, schema, skill-lint, doc-versions and self-host gates green."
+      }
+    },
+    {
+      "node_id": "chg:an-in-memory-design-is-reachable-as-ephemeral",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "The in-memory engine becomes reachable at launch as --ephemeral — a labelled scratch mode, not a storage choice",
+        "subject": "system"
       }
     },
     {
@@ -209875,11 +210000,11 @@
       "node_id": "dec:idea-is-the-byte-backend-selectable-at-runtime",
       "node_type": "Decision",
       "properties": {
-        "decision": "NOT SETTLED, AND IT IS A FEATURE REQUEST RATHER THAN A DEFECT. Restated 2026-09-13 by flo2 after it withdrew the finding this was first raised as:\n\n  ▎ Not a design-vs-code defect — reflow2's interface says internal and the code agrees.\n  ▎ The question is whether to expose a selector at all, because without one flo2 cannot\n  ▎ evaluate in-memory against the store, and that gates an open question on flo2's side.\n  ▎ Your call whether it's worth it.\n\nWHAT IS TRUE TODAY, read from reflow2's source by flo2 rather than inferred from a fact about another project: KvBackend, MemoryBackend and RocksBackend are all pub(crate); selection is by which constructor runs; rocksdb is an optional Cargo feature whose ABSENCE MAKES open_rocksdb FAIL LOUD; and the CLI takes --graph-path and nothing naming a backend. Evaluating one backend against the other therefore means building a second binary.\n\n⭐ THE FAIL-LOUD PROPERTY IS A CONSTRAINT ON ANY ANSWER, not a detail. A build without the feature refuses rather than quietly opening an empty design. A runtime selector must preserve that: \"which backend is this design in\" becoming a property of how the server was launched is exactly how a design opened under the wrong backend would present as EMPTY — the silent failure mode dec:one-process-many-stores already names for identity. Whatever shape this takes has to survive it.\n\nWHAT IS ALREADY RULED, and it bears on this without answering it: dec:idea-a-byte-backend-that-compiles-in-seconds was REJECTED 2026-09-11 — RocksDB stays, because an engine swap forces a migration on every consumer to save build time on the builder's machine. That rejection was about REPLACING the engine. This asks whether both may be reachable from one binary, which is a different question and is not foreclosed by it.\n\nTHE COST TO WEIGH: one consumer, with one open question, against a new launch-time axis on a product whose whole premise is that a design lives in a directory and travels with the repo. Reflow2 has said no to smaller things for less reason. This is @ajs's call and is recorded so it can be declined on the record rather than drifting.",
+        "decision": "RULED 2026-09-13 by @ajs: YES, NARROWLY — an in-memory design is reachable at launch, as `--ephemeral`, and is presented as a SCRATCH MODE rather than as a storage choice. Built the same day.\n\nWHAT THE MEASUREMENT CHANGED ABOUT THE QUESTION. flo2's restatement described this as a feature request needing a runtime selector. Reading the source first showed the work was far smaller and the risk far more specific:\n · the in-memory engine EXISTS and is not experimental — several hundred tests run against it\n · `ReflowService::in_memory()` already existed\n · the server binary already compiles with no store (`cargo check -p reflow2-mcp --no-default-features` passes)\n · `main.rs` referenced `in_memory` ZERO times — the only missing piece was a way to ASK\n\nSo this was never \"build a second engine\". It was \"reach one that is already there\", and the decision turned on product shape rather than on effort.\n\n⭐ WHY NOT A NEUTRAL `--backend memory`. That name frames durability as a preference between two equal options, and for this product it is not one: reflow2's whole premise is that a design outlives the session. The flag is named for WHAT HAPPENS TO YOUR WORK, not for which engine is underneath. A flag that quietly turns off the memory is a foot-gun pointed at the one thing the tool is for.\n\nHOW THE FOOT-GUN IS BLUNTED, and each of these is a refusal rather than a warning:\n · `--graph-path`, `--registry-root`, `--shared` and `--serve-shared` are all REFUSED alongside it — every one of them names a design on disk, and the combination is far likelier to be a mistake than an intention. Detected from the ARGUMENTS for `--graph-path`, because a parsed value cannot tell \"the user asked for this\" from \"clap filled in the default\".\n · The handshake says it FIRST, before anything else, because an agent connecting over HTTP never sees the operator's stderr banner. The condition is `graph_path: None` — the same fact rather than a second flag that could drift from it — and `share()` copies it, so every per-session service carries the warning.\n · `--export-to` still works, so a scratch design can be written through after all.\n\nTWO EARLIER RULINGS POINT THE SAME WAY AND NEITHER IS CONTRADICTED. `dec:idea-a-byte-backend-that-compiles-in-seconds` (REJECTED 2026-09-11) and `dec:idea-does-reflow2-need-a-byte-store-at-all-or-only-durability` (RULED 2026-09-11, the store STAYS) are both about REPLACING the engine. This is about REACHING one that ships, for measurement and scratch work, and RocksDB remains the only way a design persists.\n\nHOW FLO2 GETS WHAT IT ASKED FOR: start `--ephemeral`, then load a real design with the `import_graph` tool, and measure that against the same design on the store. Their open question is answerable without a second binary and without anybody patching main.rs.\n\nWHAT IS NOT SETTLED HERE: whether an ephemeral design should ever be reachable in a hosted deployment. The refusals keep it away from `--registry-root` today, which is the conservative reading; if a hosted scratch tier is ever wanted, that is a new question and this ruling does not answer it.",
         "kind": "exploratory",
         "name": "OPEN — is the byte backend selectable at RUNTIME, or does choosing it stay a compile-time act?",
-        "rationale": "Raised by @ajs from flo2's 2026-09-13 session, initially supported by a citation of fact:the-storage-seam-is-published-in-design-and-private-in-code as reflow2's own record of a design-vs-code mismatch. THAT CITATION WAS WRONG and flo2 withdrew it the same day, keeping the withdrawal visible rather than editing it out: the fact's subject is dep:dynograph-foundation, absorbed 2026-08-24, and reflow2's own ifc:kv-backend says internal in agreement with the code. The misreading is recorded as fact:the-retired-dependency-fact-misled-a-second-reader-2026-09-13.\n\nWHY THE QUESTION SURVIVES ITS BAD CITATION, and this is the part worth keeping: flo2 re-read the ground from reflow2's source and the need did not move. What moved is its status — from a defect reflow2 owed a fix for, to a capability reflow2 may choose not to build. That is a materially different obligation and the record should not blur them.",
-        "status": "proposed"
+        "rationale": "Ruled after checking the three facts the answer depended on rather than accepting the framing: the in-memory engine exists and is exercised by several hundred tests, the server binary builds with no store at all, and main.rs never reaches the constructor. That turned \"should we build a selector\" into \"should we expose one that is already built\", and the honest answer to a consumer asking a fair question was yes.\n\nThe narrowing is where the judgement is. A full runtime backend selector would present durability as a configuration preference; `--ephemeral` presents throwing your work away as a deliberate, awkward, clearly-labelled act, and refuses every flag that names a design on disk.",
+        "status": "accepted"
       }
     },
     {
@@ -219768,6 +219893,16 @@
       }
     },
     {
+      "node_id": "frag:art:test-ephemeral-says-so",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered an_ephemeral_design_says_so_in_its_handshake.rs"
+      }
+    },
+    {
       "node_id": "frag:art:test-every-constructor-says-what-the-thing-is",
       "node_type": "Fragment",
       "properties": {
@@ -226957,6 +227092,26 @@
       "properties": {
         "edges": "[{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-09-13\",\"role\":\"author\"}},{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-a-byte-backend-that-compiles-in-seconds\",\"properties\":{\"evidence\":\"That decision ruled RocksDB stays as THE engine, rejecting a replacement on migration cost. This question — whether both backends are reachable from one running binary — only makes sense given that ruling, and its reopening trigger (a hosted tier making per-tenant hydrate the shape) is the same ground.\",\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-is-redis-a-third-backend-option-and-what-would-it-buy-over-rocksdb-or-in-memory\",\"properties\":{\"evidence\":\"Both ask what sits behind the KvBackend seam. A third backend and a runtime selector are the same seam seen from two sides: if selection stays compile-time, adding Redis is a third feature flag rather than a third choice anyone can make at run time.\",\"optional\":false,\"weight_basis\":\"estimated\"}}]",
         "state": "{\"decision\":\"NOT SETTLED. Today the backend is chosen by which constructor runs, and RocksDB is a Cargo feature — so evaluating in-memory against the persistent store means building a second binary. The question is whether a running server should be told which backend to use (a flag, an environment variable, a per-design setting), or whether compile-time selection is the right answer and the consumer's real need is met some other way.\\n\\nWHO NEEDS IT AND WHY: raised by @ajs from flo2's 2026-09-13 session. flo2 has an open question of its own that it cannot evaluate without either a second binary or a runtime selector.\\n\\nWHAT IS ALREADY RULED, and it bears on this without answering it: dec:idea-a-byte-backend-that-compiles-in-seconds was REJECTED 2026-09-11 — RocksDB stays, because an engine swap forces a migration on every consumer to save build time on the builder's machine. That rejection was about REPLACING the engine. This asks whether both may be reachable from one binary, which is a different question and is not foreclosed by it.\\n\\nTHE COUNTER-ARGUMENT TO RECORD: a runtime selector makes \\\"which backend is this design in\\\" a property of how the server was launched rather than of the design directory, and a design opened under the wrong backend would present as empty — the same silent failure mode dec:one-process-many-stores already names for identity. Whatever shape this takes has to survive that.\",\"kind\":\"exploratory\",\"name\":\"OPEN — is the byte backend selectable at RUNTIME, or does choosing it stay a compile-time act?\",\"rationale\":\"Recorded because flo2 asked for it directly and because the reference it arrived with was wrong in a way worth keeping on the record — see fact:the-retired-dependency-fact-misled-a-second-reader-2026-09-13. The underlying question survives the bad citation: it is a fair thing to want, and since the foundation subset was absorbed on 2026-08-24 it is a change to this repo rather than somebody else's.\",\"status\":\"proposed\"}",
+        "target_id": "dec:idea-is-the-byte-backend-selectable-at-runtime",
+        "target_type": "Decision"
+      }
+    },
+    {
+      "node_id": "snap:epoch:preserved-on-write:dec:idea-is-the-byte-backend-selectable-at-runtime:r2",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-09-13\",\"role\":\"approver\"}},{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-a-byte-backend-that-compiles-in-seconds\",\"properties\":{\"evidence\":\"That decision ruled RocksDB stays as THE engine, rejecting a replacement on migration cost. This question — whether both backends are reachable from one running binary — only makes sense given that ruling, and its reopening trigger (a hosted tier making per-tenant hydrate the shape) is the same ground.\",\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-is-redis-a-third-backend-option-and-what-would-it-buy-over-rocksdb-or-in-memory\",\"properties\":{\"evidence\":\"Both ask what sits behind the KvBackend seam. A third backend and a runtime selector are the same seam seen from two sides: if selection stays compile-time, adding Redis is a third feature flag rather than a third choice anyone can make at run time.\",\"optional\":false,\"weight_basis\":\"estimated\"}}]",
+        "state": "{\"decision\":\"NOT SETTLED, AND IT IS A FEATURE REQUEST RATHER THAN A DEFECT. Restated 2026-09-13 by flo2 after it withdrew the finding this was first raised as:\\n\\n  ▎ Not a design-vs-code defect — reflow2's interface says internal and the code agrees.\\n  ▎ The question is whether to expose a selector at all, because without one flo2 cannot\\n  ▎ evaluate in-memory against the store, and that gates an open question on flo2's side.\\n  ▎ Your call whether it's worth it.\\n\\nWHAT IS TRUE TODAY, read from reflow2's source by flo2 rather than inferred from a fact about another project: KvBackend, MemoryBackend and RocksBackend are all pub(crate); selection is by which constructor runs; rocksdb is an optional Cargo feature whose ABSENCE MAKES open_rocksdb FAIL LOUD; and the CLI takes --graph-path and nothing naming a backend. Evaluating one backend against the other therefore means building a second binary.\\n\\n⭐ THE FAIL-LOUD PROPERTY IS A CONSTRAINT ON ANY ANSWER, not a detail. A build without the feature refuses rather than quietly opening an empty design. A runtime selector must preserve that: \\\"which backend is this design in\\\" becoming a property of how the server was launched is exactly how a design opened under the wrong backend would present as EMPTY — the silent failure mode dec:one-process-many-stores already names for identity. Whatever shape this takes has to survive it.\\n\\nWHAT IS ALREADY RULED, and it bears on this without answering it: dec:idea-a-byte-backend-that-compiles-in-seconds was REJECTED 2026-09-11 — RocksDB stays, because an engine swap forces a migration on every consumer to save build time on the builder's machine. That rejection was about REPLACING the engine. This asks whether both may be reachable from one binary, which is a different question and is not foreclosed by it.\\n\\nTHE COST TO WEIGH: one consumer, with one open question, against a new launch-time axis on a product whose whole premise is that a design lives in a directory and travels with the repo. Reflow2 has said no to smaller things for less reason. This is @ajs's call and is recorded so it can be declined on the record rather than drifting.\",\"kind\":\"exploratory\",\"name\":\"OPEN — is the byte backend selectable at RUNTIME, or does choosing it stay a compile-time act?\",\"rationale\":\"Raised by @ajs from flo2's 2026-09-13 session, initially supported by a citation of fact:the-storage-seam-is-published-in-design-and-private-in-code as reflow2's own record of a design-vs-code mismatch. THAT CITATION WAS WRONG and flo2 withdrew it the same day, keeping the withdrawal visible rather than editing it out: the fact's subject is dep:dynograph-foundation, absorbed 2026-08-24, and reflow2's own ifc:kv-backend says internal in agreement with the code. The misreading is recorded as fact:the-retired-dependency-fact-misled-a-second-reader-2026-09-13.\\n\\nWHY THE QUESTION SURVIVES ITS BAD CITATION, and this is the part worth keeping: flo2 re-read the ground from reflow2's source and the need did not move. What moved is its status — from a defect reflow2 owed a fix for, to a capability reflow2 may choose not to build. That is a materially different obligation and the record should not blur them.\",\"status\":\"proposed\"}",
+        "target_id": "dec:idea-is-the-byte-backend-selectable-at-runtime",
+        "target_type": "Decision"
+      }
+    },
+    {
+      "node_id": "snap:epoch:preserved-on-write:dec:idea-is-the-byte-backend-selectable-at-runtime:r3",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-09-13\",\"role\":\"approver\"}},{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-a-byte-backend-that-compiles-in-seconds\",\"properties\":{\"evidence\":\"That decision ruled RocksDB stays as THE engine, rejecting a replacement on migration cost. This question — whether both backends are reachable from one running binary — only makes sense given that ruling, and its reopening trigger (a hosted tier making per-tenant hydrate the shape) is the same ground.\",\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-is-redis-a-third-backend-option-and-what-would-it-buy-over-rocksdb-or-in-memory\",\"properties\":{\"evidence\":\"Both ask what sits behind the KvBackend seam. A third backend and a runtime selector are the same seam seen from two sides: if selection stays compile-time, adding Redis is a third feature flag rather than a third choice anyone can make at run time.\",\"optional\":false,\"weight_basis\":\"estimated\"}}]",
+        "state": "{\"decision\":\"RULED 2026-09-13 by @ajs: YES, NARROWLY — an in-memory design is reachable at launch, as `--ephemeral`, and is presented as a SCRATCH MODE rather than as a storage choice. Built the same day.\\n\\nWHAT THE MEASUREMENT CHANGED ABOUT THE QUESTION. flo2's restatement described this as a feature request needing a runtime selector. Reading the source first showed the work was far smaller and the risk far more specific:\\n · the in-memory engine EXISTS and is not experimental — several hundred tests run against it\\n · `ReflowService::in_memory()` already existed\\n · the server binary already compiles with no store (`cargo check -p reflow2-mcp --no-default-features` passes)\\n · `main.rs` referenced `in_memory` ZERO times — the only missing piece was a way to ASK\\n\\nSo this was never \\\"build a second engine\\\". It was \\\"reach one that is already there\\\", and the decision turned on product shape rather than on effort.\\n\\n⭐ WHY NOT A NEUTRAL `--backend memory`. That name frames durability as a preference between two equal options, and for this product it is not one: reflow2's whole premise is that a design outlives the session. The flag is named for WHAT HAPPENS TO YOUR WORK, not for which engine is underneath. A flag that quietly turns off the memory is a foot-gun pointed at the one thing the tool is for.\\n\\nHOW THE FOOT-GUN IS BLUNTED, and each of these is a refusal rather than a warning:\\n · `--graph-path`, `--registry-root`, `--shared` and `--serve-shared` are all REFUSED alongside it — every one of them names a design on disk, and the combination is far likelier to be a mistake than an intention. Detected from the ARGUMENTS for `--graph-path`, because a parsed value cannot tell \\\"the user asked for this\\\" from \\\"clap filled in the default\\\".\\n · The handshake says it FIRST, before anything else, because an agent connecting over HTTP never sees the operator's stderr banner. The condition is `graph_path: None` — the same fact rather than a second flag that could drift from it — and `share()` copies it, so every per-session service carries the warning.\\n · `--export-to` still works, so a scratch design can be written through after all.\\n\\nTWO EARLIER RULINGS POINT THE SAME WAY AND NEITHER IS CONTRADICTED. `dec:idea-a-byte-backend-that-compiles-in-seconds` (REJECTED 2026-09-11) and `dec:idea-does-reflow2-need-a-byte-store-at-all-or-only-durability` (RULED 2026-09-11, the store STAYS) are both about REPLACING the engine. This is about REACHING one that ships, for measurement and scratch work, and RocksDB remains the only way a design persists.\\n\\nHOW FLO2 GETS WHAT IT ASKED FOR: start `--ephemeral`, then load a real design with the `import_graph` tool, and measure that against the same design on the store. Their open question is answerable without a second binary and without anybody patching main.rs.\\n\\nWHAT IS NOT SETTLED HERE: whether an ephemeral design should ever be reachable in a hosted deployment. The refusals keep it away from `--registry-root` today, which is the conservative reading; if a hosted scratch tier is ever wanted, that is a new question and this ruling does not answer it.\",\"kind\":\"exploratory\",\"name\":\"OPEN — is the byte backend selectable at RUNTIME, or does choosing it stay a compile-time act?\",\"rationale\":\"Ruled after checking the three facts the answer depended on rather than accepting the framing: the engine exists, the binary builds without a store, and main.rs never reaches it. That turned \\\"should we build a selector\\\" into \\\"should we expose one that is already built\\\", and the honest answer to a consumer asking a fair question was yes.\\n\\nThe narrowing is where the judgement is. A full runtime backend selector would present durability as a configuration preference; this presents throwing your work away as a deliberate, awkward, clearly-labelled act. Named by @ajs's own standing preference for fixing at the root rather than adding a switch nobody can reason about.</rationale>\\n<parameter name=\\\"status\\\">accepted\",\"status\":\"proposed\"}",
         "target_id": "dec:idea-is-the-byte-backend-selectable-at-runtime",
         "target_type": "Decision"
       }
@@ -236025,6 +236180,20 @@
         "level": "integration",
         "method": "test",
         "name": "An approver is recorded, an absent one is reported, and a name nobody can check leaves nothing behind",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:an-ephemeral-design-says-so",
+      "node_type": "Verification",
+      "properties": {
+        "description": "Three tests in crates/reflow2-mcp/tests/an_ephemeral_design_says_so_in_its_handshake.rs, plus the four refusals exercised by hand.\n\n⭐ THE SECOND TEST IS THE ONE THAT MATTERS: every HTTP session is served by `share()` rather than by the original service, so a warning that did not propagate would be seen by nobody who could act on it.\n\n⚠️ AND THE THIRD IS THE NEGATIVE CASE. A warning that fires on ordinary designs becomes noise readers learn to skip, and then it is not there when it is true.",
+        "findings": "PASSING 2026-09-13. Three tests green: the handshake carries the ephemeral warning and it comes FIRST; the warning survives share() into a per-session service; a design on disk is NOT labelled ephemeral.\n\nThe four refusals were exercised by hand against the built binary, each exiting 1 with its own message: --ephemeral with --graph-path, with --registry-root, with --shared, and with --serve-shared. Also confirmed by hand that an --ephemeral run writes nothing to disk and creates no stray store.",
+        "kind": "verification",
+        "last_run_at": "2026-09-13",
+        "level": "integration",
+        "method": "test",
+        "name": "An ephemeral design warns in its handshake, the warning survives into a session, and a persistent design is not labelled",
         "status": "passing"
       }
     },
