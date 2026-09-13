@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:f63b799d44aaef013284db9663535c2eeb5f0d4d32708c79ad6f96426063e814",
+  "content_hash": "sha256:a6b11fe9f3096c7b4c34ac66bbbda1ff8a1cd0c1c6c1c17993e030cf65b1171a",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -3515,6 +3515,15 @@
     },
     {
       "edge_type": "ANTICIPATES",
+      "from_id": "dec:idea-how-does-reflow2-enforce-the-contract-regime-a-domain-already-has",
+      "properties": {
+        "confidence": 0.9,
+        "evidence": "That question — how does reflow2 make an agent USE the typings, protocols, contracts and standards a domain already has — asked exactly this and named no mechanism for it. A domain seed template is a candidate ANSWER, and the first concrete one recorded. Direction runs from the older question to the idea: it saw this coming."
+      },
+      "to_id": "dec:idea-a-domain-seed-template-starts-a-design-in-the-fields-own-shape"
+    },
+    {
+      "edge_type": "ANTICIPATES",
       "from_id": "dec:idea-how-does-the-graph-learn-what-a-session-invalidated",
       "properties": {
         "evidence": "The earlier one saw this coming and named the mechanism to test. It recorded two sightings and six options in August; this is four more sightings, measured against the option that has since been BUILT, and it reports where that option reaches and where it cannot. It is the evidence that node was waiting for, not a restatement of it."
@@ -5454,6 +5463,12 @@
       "from_id": "chg:a-settled-decision-names-governed-prose-that-still-reads-open",
       "properties": {},
       "to_id": "epoch:2026-09-09-prose-that-outlives-its-decision-says-so"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:a-spawned-daemon-caps-its-allocator-arenas",
+      "properties": {},
+      "to_id": "epoch:the-reply-budget-sweep"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -11751,6 +11766,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:dec:idea-a-domain-seed-template-starts-a-design-in-the-fields-own-shape",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:dec:idea-a-name-the-agent-invented-reads-exactly-like-one-it-was-told",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
@@ -12618,6 +12639,12 @@
       "from_id": "snap:epoch:the-register-rule-reaches-the-words:art:tools-ask",
       "properties": {},
       "to_id": "epoch:the-register-rule-reaches-the-words"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:the-reply-budget-sweep:cmp:service",
+      "properties": {},
+      "to_id": "epoch:the-reply-budget-sweep"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -13753,6 +13780,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-a-domain-seed-template-starts-a-design-in-the-fields-own-shape",
+      "properties": {
+        "acted_at": "2026-09-13",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-a-factory-builds-the-mechanics-in-so-a-class-fix-is-one-edit",
       "properties": {
         "acted_at": "2026-08-28",
@@ -14129,6 +14165,15 @@
       "from_id": "dec:idea-an-increment-can-be-sliced-into-work-packages-with-an-owner",
       "properties": {
         "acted_at": "2026-08-20",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-an-org-template-carries-the-approved-references-a-design-must-use",
+      "properties": {
+        "acted_at": "2026-09-13",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -16009,6 +16054,15 @@
       "from_id": "dec:idea-who-judges-requirement-text-quality",
       "properties": {
         "acted_at": "2026-08-11",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-who-warrants-a-domain-template-and-how-does-it-stay-current",
+      "properties": {
+        "acted_at": "2026-09-13",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -25196,6 +25250,33 @@
         "action": "added"
       },
       "to_id": "cap:a-settled-decision-names-governed-prose-that-still-reads-open"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-spawned-daemon-caps-its-allocator-arenas",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:dockerfile"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-spawned-daemon-caps-its-allocator-arenas",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:shared"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-spawned-daemon-caps-its-allocator-arenas",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:service"
     },
     {
       "edge_type": "CHANGED",
@@ -47562,6 +47643,26 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-a-domain-seed-template-starts-a-design-in-the-fields-own-shape",
+      "properties": {
+        "evidence": "The sketched invocation is `/genesis + template_x`, so a template rides the existing bootstrap path rather than replacing it. @ajs was explicit that standard genesis stays and a template is optional — which makes this a dependency, not a supersession.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "cap:genesis"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-a-domain-seed-template-starts-a-design-in-the-fields-own-shape",
+      "properties": {
+        "evidence": "Same axis, one rung further out. That question asks whether reflow2 enforces a process or only supplies the vocabulary; a domain template would supply far more than vocabulary — a whole starting structure, and in some options the field's standards as Constraints — which makes answering it first load-bearing rather than academic.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-does-reflow2-enforce-an-se-process-or-only-supply-the-vocabulary"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "dec:idea-a-factory-builds-the-mechanics-in-so-a-class-fix-is-one-edit",
       "properties": {
         "evidence": "A factory can only guarantee mechanics somebody has named. Until the class contract question is answered — which axes, obliging what — there is nothing for a factory to build in, so this is worth nothing until that one lands.",
@@ -47699,6 +47800,16 @@
         "weight_basis": "evidence"
       },
       "to_id": "dec:the-decomposition-ladder-is-open-not-a-fixed-enum"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-an-org-template-carries-the-approved-references-a-design-must-use",
+      "properties": {
+        "evidence": "Both are the same delivery vehicle — a seed applied at genesis — so whatever mechanism carries a domain template would carry an organisation's one. If templates are not built at all, this has nowhere to live; if they are, this is a second kind of content rather than a second mechanism.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-a-domain-seed-template-starts-a-design-in-the-fields-own-shape"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -50860,6 +50971,15 @@
         "evidence": "The same question, asked twice a month apart by the same field project. dec:idea-a-finding-carries-its-bounds (2026-08-07/08) asks whether a Verification gains structured BOUNDS and FINDINGS fields; wish #42 (2026-09-07) asks for a not_established field and wish #46 for a not_exercised one. Linked rather than merged because the two were said for different reasons — the older one arrived from loop_status's rollup being unreadable, this one from a bounded finding being quoted later as settled — and both reasons bear on the answer."
       },
       "to_id": "dec:idea-a-finding-carries-its-bounds"
+    },
+    {
+      "edge_type": "DUPLICATES",
+      "from_id": "dec:idea-who-warrants-a-domain-template-and-how-does-it-stay-current",
+      "properties": {
+        "basis": "suspected",
+        "evidence": "The same shape said twice, for different reasons, so they are linked rather than merged. That record is about one fact whose subject was retired and which went on reading as current, misleading two readers 16 days apart; this is the same hazard at template scale, where dozens of seeded nodes could assert a world true only when the template was written."
+      },
+      "to_id": "fact:a-retired-dependencys-facts-keep-describing-this-project"
     },
     {
       "edge_type": "DUPLICATES",
@@ -61056,6 +61176,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cmp:service",
+      "properties": {},
+      "to_id": "snap:epoch:the-reply-budget-sweep:cmp:service"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "cmp:shared",
       "properties": {},
       "to_id": "snap:epoch:a-refusal-arrives-before-the-client-gives-up:cmp:shared"
@@ -61227,6 +61353,12 @@
       "from_id": "dec:idea-a-detector-can-read-the-phase-the-design-already-declares",
       "properties": {},
       "to_id": "snap:epoch:preserved-on-write:dec:idea-a-detector-can-read-the-phase-the-design-already-declares"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:idea-a-domain-seed-template-starts-a-design-in-the-fields-own-shape",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:dec:idea-a-domain-seed-template-starts-a-design-in-the-fields-own-shape"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -62178,6 +62310,12 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "art:loop-nudge",
+      "properties": {},
+      "to_id": "fact:the-stale-probe-lock-reclaim-lets-two-winners-through-2026-09-13"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "art:main",
       "properties": {},
       "to_id": "fact:defect-main-rs-realizes-the-wrong-capability"
@@ -62799,6 +62937,12 @@
       "from_id": "cmp:service",
       "properties": {},
       "to_id": "fact:per-call-retention-refuted-140-calls-reach-101mb-2026-09-13"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cmp:service",
+      "properties": {},
+      "to_id": "fact:the-arena-cap-halves-memory-for-no-measurable-throughput-2026-09-13"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -176168,6 +176312,14 @@
     },
     {
       "edge_type": "MITIGATES",
+      "from_id": "dec:idea-an-org-template-carries-the-approved-references-a-design-must-use",
+      "properties": {
+        "evidence": "It does not solve the warrant problem but it weakens it, and that is worth recording: an industry standard moves on its own schedule with nobody obliged to tell you, whereas an organisation's approved deployment repo has a reachable owner who already knows its state. The same question, asked where somebody can answer it."
+      },
+      "to_id": "dec:idea-who-warrants-a-domain-template-and-how-does-it-stay-current"
+    },
+    {
+      "edge_type": "MITIGATES",
       "from_id": "dec:idea-authentication-is-somebody-elses-layer-and-the-line-is-the-contributor-id",
       "properties": {
         "evidence": "That requirement treats authentication as ABSENT and relocates the residual confidentiality risk to the tailnet. This says the relocation is not a workaround but the correct placement — a tunnel or proxy authenticates before a packet arrives — so the first cut needs zero authentication code rather than merely tolerating its lack. Delegated is a stronger position than missing."
@@ -181925,6 +182077,14 @@
         "evidence": "This idea proposes a second inline refuse-or-warn guard modelled on the duplicate guard, which that measurement shows firing 15 times with zero true positives; building the second without diagnosing the first would repeat the failure."
       },
       "to_id": "fact:twelve-near-match-refusals-across-two-designs-and-not-one-was-a-duplicate"
+    },
+    {
+      "edge_type": "RISKS",
+      "from_id": "dec:idea-who-warrants-a-domain-template-and-how-does-it-stay-current",
+      "properties": {
+        "evidence": "This is the hazard that idea carries rather than a separate proposal: a template's whole value is the authority it brings, and that same authority is what makes a stale one worse than an empty graph. If this question has no answer, the template idea should not be built."
+      },
+      "to_id": "dec:idea-a-domain-seed-template-starts-a-design-in-the-fields-own-shape"
     },
     {
       "edge_type": "RISKS",
@@ -190399,7 +190559,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:660988c137b839e5e17fa68bb05c36c883b09d6754683c9b1736874a6612e65e",
+        "checksum": "sha256:d8e2852e50274488fe2db98e8560633fc6e721bf963bdb28c392353f43779508",
         "granularity": "atomic",
         "location": "Dockerfile",
         "name": "Dockerfile",
@@ -192283,7 +192443,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:a1ef9bb6fbf052b144acd0ffbf02a48ae26b9aa6bd9b44c619b5a8cd29200db8",
+        "checksum": "sha256:130af47cef1137fafb48bd778ad7c8368d3a6fd35ee95d54c1651979ec764a78",
         "location": "crates/reflow2-mcp/src/shared.rs",
         "name": "shared.rs",
         "status": "realized"
@@ -197317,6 +197477,16 @@
       "properties": {
         "change_type": "new_feature",
         "name": "Prose that outlives the Decision governing it says so, in the reply that settled it",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:a-spawned-daemon-caps-its-allocator-arenas",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "performance_optimization",
+        "name": "A spawned shared daemon inherits MALLOC_ARENA_MAX=2 — resident memory halves for no measurable write throughput, and an explicit setting is never overruled",
+        "repair": "corrected_cause",
         "subject": "system"
       }
     },
@@ -208071,6 +208241,17 @@
       }
     },
     {
+      "node_id": "dec:idea-a-domain-seed-template-starts-a-design-in-the-fields-own-shape",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. @ajs, 2026-09-13, thinking out loud. Nothing here is intent and nothing should be built from it without his word.\n\nTHE IDEA, in his words: templates that seed a design and use modern design practice for a given domain — \"almost like a cookie-cutter in a python project\" (https://cookiecutter.readthedocs.io/en/stable/). A software project's template would already describe and seed the graph with current software design practice. More templates follow for more domains, each carrying that field's practices, standards, codes and regulations. The invocation shape he sketched is `/genesis + template_x`.\n\n⭐ THE MOTIVATION IS THE PART TO KEEP: \"I feel like this would be helpful where somebody is designing in a domain that they are not the expert in.\" That is a different user from the one reflow2 has been built for so far. Every guided path here assumes the person knows their field and needs help keeping the design coherent; this assumes the opposite, and asks reflow2 to supply the field's shape as well as the discipline.\n\nEXPLICITLY NOT MANDATORY, and he said so unprompted: the standard genesis path stays, and a template is an option for well-defined domains rather than a new front door.\n\nWHAT A TEMPLATE MIGHT CARRY — not settled, and the options differ a lot in ambition:\n · the SHAPE only — the component tiers, the interface classes, the verification kinds a field expects, with nothing filled in\n · the shape plus the QUESTIONS that field always asks, seeded as open gaps rather than as answers\n · the shape plus stated STANDARDS and regulations as Constraints or DesignRules\n · pre-drawn golden thread, so a seeded design is already traceable before anybody types\n\nTHREE HONEST COUNTER-ARGUMENTS, recorded beside the idea rather than used to argue it down:\n\n 🛑 A TEMPLATE THAT ENCODES \"LATEST PRACTICE\" GOES STALE, AND A STALE TEMPLATE IS WORSE THAN A BLANK GRAPH — because it carries authority. A newcomer to a domain is exactly the person who cannot tell a current practice from a 2019 one. This is the failure that would sink it, and it is why the authority question is recorded separately.\n\n 🛑 IT COULD PUSH A DESIGN INTO A SHAPE NOBODY CHOSE. reflow2's whole posture is report-don't-judge and intent-moves-only-on-the-owner's-word — certainty is DERIVED from status and provenance precisely so that nothing can forge the user's signature. A seeded design starts full of structure the user never said. Whether that is help or a thumb on the scale depends entirely on how loudly the seeded parts announce themselves.\n\n 🛑 THE SEEDED PARTS COULD BECOME THE DESIGN WITHOUT ANYBODY DECIDING. This project already reads 106 of 108 Components as `planned` and 55 requirements as asserted-awaiting-the-user; a seeded design would arrive with far more of both, and the reports cannot currently tell \"seeded by a template\" from \"somebody wrote this\".\n\n⭐ AND THERE IS ALREADY A HOOK FOR THAT LAST ONE, which is the most useful technical observation here: every node carries `provenance` (authored / planned / inferred / healed / reconciled / imported), and requirement certainty is computed from status × provenance. A template would need its own value, or to land as `imported`, so that a seeded requirement can never read as one somebody confirmed. If that is right, the mechanism is mostly present and what is missing is the vocabulary and the seeding path.\n\nWHAT IS NOT ASKED AND SHOULD NOT BE INFERRED: whether reflow2 would SHIP any templates itself, or only accept them. Those are very different products — one makes reflow2 an authority on domains, the other keeps it a tool that carries somebody else's authority.",
+        "kind": "exploratory",
+        "name": "OPEN — should genesis accept a domain SEED TEMPLATE, so somebody designing outside their expertise starts in the field's own shape instead of from a blank graph?",
+        "rationale": "Captured while @ajs was thinking out loud, as a brainstorm. Recorded as an open question with options rather than a proposal, so a later session does not read it back as a settlement. The counter-arguments sit beside the idea deliberately: an idea killed in conversation loses its reasoning, an idea recorded with its objections keeps both.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-a-factory-builds-the-mechanics-in-so-a-class-fix-is-one-edit",
       "node_type": "Decision",
       "properties": {
@@ -208580,6 +208761,17 @@
       "properties": {
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony thinking out loud, 2026-08-20.\n\nHIS WORDS: \"allow a user to map out tasks in discretized increments (potentially, a manager could say, task package 1 is Alex's, task package 2 is AJ's, and so on).\"\n\nTHIS IS A WORK BREAKDOWN STRUCTURE, and it is worth naming as such because it is standard practice in exactly the world he comes from. A WBS slices an increment into packages, each with a single accountable owner. It is the artifact a manager actually manages with, and it is what makes 'who is behind?' answerable.\n\nWHAT REFLOW2 ALREADY HAS, and none of the three is this:\n  · OWNED_BY — whose AREA this is. Durable, standing, never released. About a REGION of the design, not a bundle of work.\n  · CLAIMS — who is IN it right now. Transient, advisory, session-scoped, released at checkout.\n  · AUTHORED_BY (role=approver) — who was ASKED to settle a decision. The only thing loop_status attributes today.\n\nA work package is none of those. It is a SCOPED BUNDLE OF WORK, inside an increment, with one accountable person, that exists until it is delivered. Standing like ownership, but about work rather than area; scoped like a claim, but durable and assigned rather than self-taken.\n\nWHY IT MIGHT MATTER MORE THAN IT LOOKS: the graph today can answer 'what is owed?' design-wide and 'what needs this person?' only for decisions they were asked to settle. It cannot answer 'what is Alex's slice of increment 3, and is it done?' — which is the question a manager asks every week. `loop_status(contributor_id)` already reports that most debt classes are `not_attributable`, which is the honest version of the same absence.\n\nOPTIONS, none chosen:\n  (a) A NEW EDGE on the existing schedule — SCHEDULED_FOR already carries `modality`; a package identifier plus an owner could ride alongside. Cheapest, no new node type. Weak: a package is a THING a manager names and talks about, and a property on an edge cannot be named or discussed.\n  (b) A WORK PACKAGE NODE contained by the increment, with capabilities and requirements scheduled into IT rather than directly into the epoch, and OWNED_BY the person. Most faithful to how WBS actually works, and it makes 'Alex's slice' a node you can ask about. Costs a schema addition and a level of indirection.\n  (c) REUSE OWNED_BY over a claimed region — no schema change at all, and claim_region can already describe a region by a query. Weak: ownership is about AREA and is never released, while a package is finished and closed; and a region defined by a query is not a set of tasks somebody agreed to do.\n  (d) DO NOTHING and let a manager keep the slicing outside reflow2. Honest option, and the status quo.\n\nCOUNTER-ARGUMENT, recorded beside the idea: reflow2 has deliberately kept people OUT of the blast radius — AUTHORED_BY, CLAIMS and OWNED_BY are all excluded from traceability so that a change never propagates into a person. Work packages are the point at which a design tool starts becoming a project-management tool, and that is a boundary worth crossing deliberately rather than by accident. The countervailing fact: `req:people-are-modellable-inside-the-design` is already an open requirement asking for organisation, role and who-performs-a-function, so the door is not closed.\n\nRELATED: dec:idea-lining-work-up-in-increments-should-be-the-default-not-a-skill-you-remember.",
         "name": "OPEN — can an increment be sliced into discrete work packages, each with a named owner, so a manager can say \"package 1 is Alex's, package 2 is AJ's\"?",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-an-org-template-carries-the-approved-references-a-design-must-use",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. @ajs, 2026-09-13, and this is the half of the template idea with a live user behind it rather than a hypothetical one.\n\nTWO THINGS HE SAID THAT POINT THE SAME WAY:\n · \"if an organization has specific governance and/or design practices, they could make a seed-template for their organization\"\n · and concretely, from his own use in hxm_program: a template \"could provide all the appropriate or approved references for the design to use (for example, use NSLS-II ansible repo for deployment, and n2sndocs for networking instructions, etc)\"\n\n⭐ WHY THIS IS A DIFFERENT QUESTION FROM THE DOMAIN TEMPLATE, and not just a smaller version of it: a domain template supplies SHAPE — the parts, seams and checks a field expects. This supplies POINTERS — the specific repositories, document sets and house rules a particular organisation has already blessed. The first is \"how do people in this field design\"; the second is \"what is this organisation's answer already\". One is educational, the other is administrative, and they could be built independently.\n\n⭐ IT IS ALSO THE CASE WHERE THE STALENESS OBJECTION IS WEAKEST. An industry standard moves on its own schedule and nobody tells you; an organisation's approved deployment repo is a thing that organisation controls, can point at, and already knows the state of. The warrant problem does not disappear, but it has an owner who is reachable.\n\nWHAT IT MIGHT MEAN IN THIS DESIGN'S OWN VOCABULARY, none of it settled:\n · the references as Artifacts with `documents` edges, registered but not authored here\n · or as external dependencies, since `external_dependency` already exists as a relation\n · or as DesignRules, if \"use the NSLS-II ansible repo for deployment\" is a rule whose breach should be reportable — which is the governance-proposal question, and its answer belongs to the organisation rather than to reflow2\n\n🛑 THE ONE THING THAT WOULD MAKE THIS WORSE THAN NOTHING: an approved-reference list that goes unmaintained is a set of links pointing at moved repositories and retired document sets, carried into every new design in the organisation, with the design asserting they are approved. The failure is the same class as a stale domain template but with a shorter fuse, because infrastructure repositories move more often than standards do.\n\nWHAT IS NOT ESTABLISHED: whether hxm_program actually wants this or whether @ajs is reasoning from it as an example. He has used reflow2 on that program and is describing what would have helped; nobody has asked the program.",
+        "kind": "exploratory",
+        "name": "OPEN — should an ORGANISATION's template carry the approved references a design must design against — the NSLS-II ansible repo for deployment, n2sndocs for networking — rather than only a domain shape?",
+        "rationale": "Kept separate from the domain-template question because the two have different owners, different staleness profiles and could be built independently — and because this one has a real deployment behind it (hxm_program, NSLS-II) rather than a hypothetical domain. Recorded as a brainstorm; @ajs stated no preference and asked for nothing to be built.",
         "status": "proposed"
       }
     },
@@ -210910,6 +211102,17 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — 2026-08-11, from Anthony bringing the Defense Acquisition University criteria for a good requirement into the discussion. Nothing here is intent.\n\nTHE CRITERIA HE CITED, in his framing. Individual requirement: NECESSARY (addresses a true operational gap), UNAMBIGUOUS (everyone reads it the same way), VERIFIABLE/TESTABLE (has criteria that can be practically proven), FEASIBLE (achievable within technology and budget), IMPLEMENTATION-FREE (what the system must deliver, not how to build it), MEASURABLE (quantifiable data, not vague adjectives). Full set: COMPLETE, CONSISTENT, TRACEABLE.\n\nWHAT REFLOW2 ACTUALLY CHECKS, sorted against that list:\n  SET-LEVEL — partially covered, structurally\n    Traceable   forward only, via the golden thread. Backward is unchecked — see\n                dec:idea-should-a-requirement-trace-back-to-its-demand-signal\n    Consistent  partially, via CONTRADICTS and dimension drift\n    Complete    approximated by the gap detectors, never claimed\n  INDIVIDUAL — ZERO OF SIX. Necessary, Unambiguous, Verifiable, Feasible, Implementation-Free and\n    Measurable are all properties of the TEXT, and no reflow2 computation reads requirement text\n    for quality at all. `unverified_capability` is the nearest thing and it asks whether a check\n    EXISTS, never whether the requirement is phrased so that a check is POSSIBLE — a different\n    question with the same words in it.\n\nIDEAS, unranked:\n(a) Nothing changes; state the boundary explicitly somewhere a user will read it, so \"reflow2 does\n    not grade your prose\" is a known limit rather than a surprise.\n(b) A three-party check: the LLM judges the six against the text, the graph records the judgement\n    and who made it, the human decides. Fits dec:three-party-checks exactly and needs no new\n    detector.\n(c) A deterministic subset only — e.g. MEASURABLE is partly mechanical (does the statement contain\n    a number and a unit?), and IMPLEMENTATION-FREE has weak mechanical tells. Cheap, and cheap in\n    the bad way: a keyword heuristic that grades prose will be wrong confidently.\n\n⭐ THE ARGUMENT FOR (a)/(b) OVER ANY DETECTOR: `req:deterministic-core` is accepted — the core is\ndeterministic and LLM-free. Judging \"is this unambiguous\" is irreducibly a language judgement. So\nthe six do not belong in detect.rs at all; if they belong anywhere it is the skill layer, where an\nLLM already reads and the human already decides.\n\n⚠️ THE HONEST COUNTER-EXAMPLE, recorded because it cuts against the whole frame. Of the storyflow\nfeedback's three ranked asks, #1 was NOT implementation-free — it named the mechanism outright\n(\"model VERIFIES onto DesignRule\") — and it is the one that got built. #2 and #3 were stated as\nnode-type wishes and did not. So on this evidence MEASURABLE and VERIFIABLE predicted delivery and\nIMPLEMENTATION-FREE anti-predicted it. When the system under design IS the modelling vocabulary,\n\"what not how\" gets genuinely slippery, and applying DAU to reflow2's own requirements needs that\ncaveat or it will reject the requirements that work.",
         "name": "OPEN — does reflow2 have any opinion on whether a Requirement is WELL WRITTEN, and if so whose job is it?",
         "rationale": "Anthony brought a mature external standard to bear and it partitions cleanly: reflow2 covers the set-level characteristics structurally and none of the six individual ones, because those are text judgements and the core is deliberately LLM-free. Whether that boundary is a deliberate design position or an unnoticed hole has never been stated either way.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-who-warrants-a-domain-template-and-how-does-it-stay-current",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Raised by @ajs on 2026-09-13 as part of the seed-template idea — \"then a domain expert can develop and review templates for specific domains.\" Recorded separately because it has a different failure mode from the template idea itself, and it is the one that would sink it.\n\nTHE PROBLEM. A template's selling point is that it carries a field's current practice, standards, codes and regulations. Every one of those things CHANGES. And the user a template is FOR — @ajs's own words, \"somebody designing in a domain that they are not the expert in\" — is precisely the person who cannot tell a current practice from a superseded one. A blank graph is honestly empty; a stale template is confidently wrong, and it is wearing a domain expert's authority while being so.\n\nHIS OWN ANSWER, which is the right shape and does not finish the job: a domain expert develops and reviews the template. That settles who AUTHORS it. It does not settle:\n · how a design created from template v3 learns that v5 exists\n · whether a seeded node keeps pointing at the template it came from, or is absorbed and forgotten\n · what happens when a standard is superseded AFTER a design was seeded — does anything tell the design, or does it quietly keep asserting a withdrawn code?\n · whether \"reviewed by a domain expert\" is a claim the graph can hold and check, or just prose in a README\n\n⭐ THIS DESIGN HAS ALREADY BEEN BITTEN BY THE GENERAL SHAPE, TWICE TODAY, WHICH IS WHY IT IS WORTH RECORDING RATHER THAN ASSUMING: `fact:a-retired-dependencys-facts-keep-describing-this-project` records a fact whose subject was retired and which went on reading as current — it misled two readers 16 days apart. A seeded design is that hazard at scale: dozens of nodes asserting a world that was true when the template was written.\n\n📌 AND THERE IS AN EXISTING MECHANISM THAT ALMOST FITS. reflow2 already has `mirrors` — \"I designed against your published surface, pinned at this version\" — built and, measured on 2026-08-13, never used once. A template is arguably the same relationship: a design pinned against a published thing that can move. Whether that machinery is the answer here, or only looks like it, is not established.\n\n⚠️ WHAT MUST NOT BE ASSUMED: that reflow2 should VALIDATE a template's content. Judging whether a template states the correct standards for a domain is a domain-expert act, and reflow2's standing posture is report-don't-judge. The question here is whether it can carry and track a warrant, not whether it can issue one.",
+        "kind": "exploratory",
+        "name": "OPEN — who WARRANTS a domain template, and how does a design know its seed has gone stale? A template carries authority, which is exactly what makes an out-of-date one dangerous",
+        "rationale": "Split out from the main template idea because the two fail differently and can be answered separately: one asks whether templates should exist, this asks what makes one trustworthy over time. Recorded as a brainstorm — @ajs was thinking out loud and stated no preference.",
         "status": "proposed"
       }
     },
@@ -226448,6 +226651,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:preserved-on-write:dec:idea-a-domain-seed-template-starts-a-design-in-the-fields-own-shape",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[]",
+        "state": "{\"decision\":\"RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. @ajs, 2026-09-13, thinking out loud. Nothing here is intent and nothing should be built from it without his word.\\n\\nTHE IDEA, in his words: templates that seed a design and use modern design practice for a given domain — \\\"almost like a cookie-cutter in a python project\\\" (https://cookiecutter.readthedocs.io/en/stable/). A software project's template would already describe and seed the graph with current software design practice. More templates follow for more domains, each carrying that field's practices, standards, codes and regulations. The invocation shape he sketched is `/genesis + template_x`.\\n\\n⭐ THE MOTIVATION IS THE PART TO KEEP: \\\"I feel like this would be helpful where somebody is designing in a domain that they are not the expert in.\\\" That is a different user from the one reflow2 has been built for so far. Every guided path here assumes the person knows their field and needs help keeping the design coherent; this assumes the opposite, and asks reflow2 to supply the field's shape as well as the discipline.\\n\\nEXPLICITLY NOT MANDATORY, and he said so unprompted: the standard genesis path stays, and a template is an option for well-defined domains rather than a new front door.\\n\\nWHAT A TEMPLATE MIGHT CARRY — not settled, and the options differ a lot in ambition:\\n · the SHAPE only — the component tiers, the interface classes, the verification kinds a field expects, with nothing filled in\\n · the shape plus the QUESTIONS that field always asks, seeded as open gaps rather than as answers\\n · the shape plus stated STANDARDS and regulations as Constraints or DesignRules\\n · pre-drawn golden thread, so a seeded design is already traceable before anybody types\\n\\nTHREE HONEST COUNTER-ARGUMENTS, recorded beside the idea rather than used to argue it down:\\n\\n 🛑 A TEMPLATE THAT ENCODES \\\"LATEST PRACTICE\\\" GOES STALE, AND A STALE TEMPLATE IS WORSE THAN A BLANK GRAPH — because it carries authority. A newcomer to a domain is exactly the person who cannot tell a current practice from a 2019 one. This is the failure that would sink it, and it is why the authority question is recorded separately.\\n\\n 🛑 IT COULD PUSH A DESIGN INTO A SHAPE NOBODY CHOSE. reflow2's whole posture is report-don't-judge and intent-moves-only-on-the-owner's-word — certainty is DERIVED from status and provenance precisely so that nothing can forge the user's signature. A seeded design starts full of structure the user never said. Whether that is help or a thumb on the scale depends entirely on how loudly the seeded parts announce themselves.\\n\\n 🛑 THE SEEDED PARTS COULD BECOME THE DESIGN WITHOUT ANYBODY DECIDING. This project already reads 106 of 108 Components as `planned` and 55 requirements as asserted-awaiting-the-user; a seeded design would arrive with far more of both, and the reports cannot currently tell \\\"seeded by a template\\\" from \\\"somebody wrote this\\\".\\n\\n⭐ AND THERE IS ALREADY A HOOK FOR THAT LAST ONE, which is the most useful technical observation here: every node carries `provenance` (authored / planned / inferred / healed / reconciled / imported), and requirement certainty is computed from status × provenance. A template would need its own value, or to land as `imported`, so that a seeded requirement can never read as one somebody confirmed. If that is right, the mechanism is mostly present and what is missing is the vocabulary and the seeding path.\\n\\nWHAT IS NOT ASKED AND SHOULD NOT BE INFERRED: whether reflow2 would SHIP any templates itself, or only accept them. Those are very different products — one makes reflow2 an authority on domains, the other keeps it a tool that carries somebody else's authority.\",\"kind\":\"exploratory\",\"name\":\"OPEN — should genesis accept a domain SEED TEMPLATE, so somebody designing outside their expertise starts in the field's own shape instead of from a blank graph?\",\"rationale\":\"Captured while @ajs was thinking out loud, as a brainstorm. It is recorded as an open question with options rather than a proposal, so a later session does not read it back as a settlement. The counter-arguments are recorded beside it deliberately: an idea killed in conversation loses its reasoning, an idea recorded with its objections keeps both.</rationale>\\n<parameter name=\\\"related_to\\\">[{\\\"relation\\\": \\\"ANTICIPATES\\\", \\\"other_id\\\": \\\"dec:idea-how-does-reflow2-enforce-the-contract-regime-a-domain-already-has\\\", \\\"incoming\\\": true, \\\"evidence\\\": \\\"That question — how does reflow2 make an agent USE the typings, protocols, contracts and standards a domain already has — asked exactly this and named no mechanism. A seed template is a candidate ANSWER to it, and the first concrete one recorded. The direction is from the older question to this idea: it saw this coming.\\\"}, {\\\"relation\\\": \\\"DEPENDS_ON\\\", \\\"other_id\\\": \\\"cap:genesis\\\", \\\"evidence\\\": \\\"The sketched invocation is `/genesis + template_x`, so a template rides the existing bootstrap path rather than replacing it. If genesis did not already seed a design from an opening brief there would be nothing for a template to extend, and @ajs was explicit that the standard genesis path stays.\\\"}, {\\\"relation\\\": \\\"DEPENDS_ON\\\", \\\"other_id\\\": \\\"dec:idea-does-reflow2-enforce-an-se-process-or-only-supply-the-vocabulary\\\", \\\"evidence\\\": \\\"Same axis, one rung further. That question asks whether reflow2 enforces a process or only supplies the vocabulary; a domain template would supply a great deal more than vocabulary — a whole starting structure — which makes answering it first load-bearing rather than academic.\\\"}]\",\"status\":\"proposed\"}",
+        "target_id": "dec:idea-a-domain-seed-template-starts-a-design-in-the-fields-own-shape",
+        "target_type": "Decision"
+      }
+    },
+    {
       "node_id": "snap:epoch:preserved-on-write:dec:idea-a-name-the-agent-invented-reads-exactly-like-one-it-was-told",
       "node_type": "Snapshot",
       "properties": {
@@ -227895,6 +228108,16 @@
         "state": "{\"artifact_type\":\"code\",\"checksum\":\"sha256:a61192bc3e08c0a0ae904c597228cc1aae1ba23bca5cf3d602b7bafd4f48d680\",\"granularity\":\"atomic\",\"location\":\"crates/reflow2-mcp/src/tools/ask.rs\",\"name\":\"tools/ask.rs\",\"status\":\"realized\",\"volatility\":\"stable\"}",
         "target_id": "art:tools-ask",
         "target_type": "Artifact"
+      }
+    },
+    {
+      "node_id": "snap:epoch:the-reply-budget-sweep:cmp:service",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:a-decision-can-be-created-already-settled\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:a-relation-tool-accepts-the-other-familys-names\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:a-surface-can-refuse-every-write\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:a-tool-description-predicts-what-the-tool-does\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:bl-14\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:bounded-reads\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:every-oversized-reply-offers-a-bound\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:every-tool-carries-the-users-phrasing-and-the-corpus-is-the-test\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:feedback-is-a-computed-tally\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:governance-mode\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:mcp-surface\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:nudge-absence-says-why\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:read-loop-hint\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:search-first-at-the-tool\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:the-design-holds-about-one-subject-is-read-back-in-one-call\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:the-orientation-call-says-whether-its-own-answers-are-current\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:the-owners-word-rides-the-same-call-as-the-status-it-signs\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:the-server-knows-its-own-currency\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:tool-carries-convention\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:tool-search\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"CONSTRAINS\",\"other_type\":\"DesignRule\",\"other_id\":\"rule:per-design-state-is-never-a-process-global\",\"properties\":{\"basis\":\"estimated\",\"note\":\"The service is where per-design state accretes: cap:graph-registry names graph_path, content_path, identity and write_gen as things that must become per-graph, and all four ride the service today.\"}},{\"direction\":\"in\",\"edge_type\":\"CONTAINS\",\"other_type\":\"Component\",\"other_id\":\"sub:serving\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"DOCUMENTS\",\"other_type\":\"Artifact\",\"other_id\":\"art:setup\",\"properties\":{\"doc_kind\":\"runbook\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0170\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0180\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0190\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0200\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0210\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0220\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0221\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0230\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0240\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0250\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0260\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0261\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0270\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0280\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0290\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0300\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0310\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0320\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0321\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0330\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0340\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0350\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0360\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0370\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0380\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0390\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0400\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0410\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0420\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0430\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0440\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0450\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0460\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0470\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0471\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0480\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0490\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0500\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0510\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0520\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0530\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0540\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0550\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0551\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0560\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0570\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0580\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0590\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:service\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:tools-ask\",\"properties\":{\"completeness\":\"partial\",\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:tools-assure\",\"properties\":{\"completeness\":\"partial\",\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:tools-built\",\"properties\":{\"completeness\":\"partial\",\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:tools-coherence\",\"properties\":{\"completeness\":\"partial\",\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:tools-operate\",\"properties\":{\"completeness\":\"partial\",\"conformance\":\"unchecked\"}},{\"direction\":\"out\",\"edge_type\":\"CONSUMES\",\"other_type\":\"Interface\",\"other_id\":\"ifc:authenticating-gateway\",\"properties\":{\"weight\":0.7,\"weight_basis\":\"evidence\"}},{\"direction\":\"out\",\"edge_type\":\"CONSUMES\",\"other_type\":\"Interface\",\"other_id\":\"ifc:core-api\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"CONSUMES\",\"other_type\":\"Interface\",\"other_id\":\"ifc:mcp-protocol\",\"properties\":{\"weight\":0.9,\"weight_basis\":\"evidence\"}},{\"direction\":\"out\",\"edge_type\":\"CONSUMES\",\"other_type\":\"Interface\",\"other_id\":\"ifc:session-graph-selector\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:bl-155\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:service-spof-accepted\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"PROVIDES\",\"other_type\":\"Interface\",\"other_id\":\"ifc:mcp-tools\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"PROVIDES\",\"other_type\":\"Interface\",\"other_id\":\"ifc:mcp-tools-http\",\"properties\":{\"weight_basis\":\"estimated\"}}]",
+        "state": "{\"kind\":\"module\",\"level\":\"component\",\"name\":\"service\",\"provenance\":\"authored\",\"purpose\":\"The service module.\",\"status\":\"planned\",\"tier\":\"operational\"}",
+        "target_id": "cmp:service",
+        "target_type": "Component"
       }
     },
     {
@@ -232903,6 +233126,20 @@
       }
     },
     {
+      "node_id": "fact:the-arena-cap-halves-memory-for-no-measurable-throughput-2026-09-13",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.85,
+        "fact_type": "finding",
+        "name": "MEASURED AND LANDED — capping glibc arenas halves resident memory (424 -> 199 MB) for no measurable write throughput cost, and the first two rounds would have supported either answer",
+        "statement": "MEASURED 2026-09-13, two servers on identical copies of reflow2's own 4,403-node store, same release binary, same box. Taken because req:one-open-design-costs-a-deliberate-amount-of-memory requires that the throughput traded away be measured ALONGSIDE the memory saved — the root-cause finding had measured only memory, so the fix could not honestly land on it.\n\n    resident memory     424 MB -> 199 MB   (-53%, identical in every round)\n    write throughput     7.7/s ->  7.8/s   (+0.6%, interleaved median)\n    export latency       0.81s ->  0.73s   (-9%, single round, not repeated)\n\n🛑 THE FIRST TWO ROUNDS WOULD HAVE JUSTIFIED EITHER CONCLUSION, and this is the part worth keeping:\n\n    round 1 (sequential)    write throughput  -0.9%   -> \"the trade is free, ship it\"\n    round 2 (sequential)    write throughput -30.1%   -> \"this costs a third of write speed\"\n\nThe control ITSELF moved 14.5/s -> 10.7/s between those rounds — a 26% drift with nothing changed — so neither number measured the allocator. Had only round 1 been taken, a fix would have landed on a claim a repeat contradicted within the minute.\n\n⭐ WHAT RESOLVED IT: interleaving. Alternating A/B/A/B in batches of 40 cancels monotonic drift, and the medians came back 7.7 against 7.8. The decisive evidence is not the medians but the SPREAD — 7.4-14.7 for the default arm and 7.3-14.5 for the capped one, both bimodal, nearly identical. Two arms with the same variance profile are being moved by the same thing, and it is not the arena count.\n\nWHAT LANDED:\n · crates/reflow2-mcp/src/shared.rs — a spawned --serve-shared daemon inherits MALLOC_ARENA_MAX=2. It must be set by the PARENT: glibc reads it at the first allocation, before main runs, so a process cannot choose its own arena count.\n · Dockerfile — the same, as ENV, for the published image.\n · An explicit setting in the launcher's environment WINS and is never overruled: whoever started reflow2 may have a thread-bound workload that wants the arenas.\n\nVERIFIED END TO END, not only in the unit test: a daemon spawned through `--shared` was found via its rendezvous file and `/proc/<pid>/environ` read back `MALLOC_ARENA_MAX=2`. The two unit tests pin the DECISION (cap by default, never overrule an explicit setting) and deliberately do not read /proc, because that would make the check Linux-only and this repo runs on macOS too.\n\n⚠️ WHAT IS NOT ESTABLISHED:\n · No CI test asserts the memory number. A resident-memory assertion would be exactly the kind of environment-dependent gate that goes intermittently red — this session found one such race the same day — so it is deliberately absent rather than forgotten.\n · Export latency was measured once and not repeated; the -9% should not be quoted as a result.\n · Only glibc. musl's allocator is different and the image's base libc was not re-checked after this change.\n · This does not touch the unexplained residue: two LIVE agent sessions sit above the band that five controlled arms cannot leave, and duration/session churn remains the one unvaried candidate.",
+        "subject_id": "cmp:service",
+        "valid_from": "2026-09-13",
+        "value": "{\"rss_before_mb\":424,\"rss_after_mb\":199,\"rss_delta_pct\":-53,\"throughput_before\":7.7,\"throughput_after\":7.8,\"throughput_delta_pct\":0.6,\"method\":\"interleaved A/B, 6 alternating batches of 40 writes\",\"round1_sequential_pct\":-0.9,\"round2_sequential_pct\":-30.1,\"control_drift_between_rounds_pct\":-26,\"spread_default\":\"7.4-14.7\",\"spread_capped\":\"7.3-14.5\",\"landed_in\":[\"crates/reflow2-mcp/src/shared.rs\",\"Dockerfile\"],\"verified_via_proc_environ\":true,\"ci_asserts_memory\":false}"
+      }
+    },
+    {
       "node_id": "fact:the-attach-path-checks-liveness-and-identity-but-never-version",
       "node_type": "TemporalFact",
       "properties": {
@@ -234205,6 +234442,20 @@
         "subject_id": "req:the-server-is-the-authority-on-its-own-currency",
         "valid_from": "2026-08-19",
         "value": "{\"instances\":4,\"instances_costing_five_merged_prs\":2,\"dates\":[\"2026-08-08\",\"2026-08-19\"],\"daemon_pid\":3861122,\"daemon_started\":\"17:22:52\",\"daemon_uptime_at_detection\":\"4h49m\",\"client_started\":\"22:11\",\"binary_on_disk\":\"current - stamp matched source hash\",\"calls_that_day\":{\"loop_status\":8,\"graph_report\":0},\"detection_existed_since\":\"2026-08-08\",\"detection_carried_by\":\"graph_report only\",\"fix\":\"loop_status carries served_by; remedy leads next when not current\",\"same_shape_as\":[\"ruling: parks\",\"Component.level\"],\"not_established\":\"whether other computed surfaces depend on binary currency the same way\"}"
+      }
+    },
+    {
+      "node_id": "fact:the-stale-probe-lock-reclaim-lets-two-winners-through-2026-09-13",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.9,
+        "fact_type": "defect",
+        "name": "The stale-lock reclaim in claim_probe_slot admits TWO winners — the loser's unlink deletes the WINNER'S fresh lock, so the atomic claim it was built to be is not atomic on that path",
+        "statement": "OBSERVED 2026-09-13. Found because CI went red on a step that had passed minutes earlier, on a commit that touched only AGENTS.md — so the failure could not have been caused by the change, and looking was cheaper than re-running.\n\nTHE SYMPTOM, reproduced locally 2 times in 9 runs of tools/test_loop_nudge.py:\n\n    FAIL: test_a_stale_lock_is_reclaimed_exactly_once\n    AssertionError: 2 != 1 : the stale lock is cleared and exactly one successor wins\n\nNOT TEST FLAKINESS. The test is correct and the assertion is the right one; what it caught is a real race in tools/loop_nudge.py `claim_probe_slot`.\n\nTHE MECHANISM. On FileExistsError against a STALE lock the code unlinks and retries the O_EXCL create:\n\n    except FileExistsError:\n        if attempt or not _probe_lock_is_stale(lock, now):\n            return False\n        try:\n            lock.unlink()\n        except OSError:\n            return False   # \"someone else cleared it first; let them have it\"\n        continue\n\nTwo processes A and B both hit the stale lock and both judge it stale. A unlinks, wins the create, and writes a FRESH lock. B then unlinks — and its unlink lands on A's NEW lock. It SUCCEEDS, so B never reaches the \"someone else cleared it first\" branch, B's own O_EXCL create then succeeds, and both A and B believe they hold the slot.\n\n⭐ THE COMMENT ENCODES THE WRONG ASSUMPTION, which is why the bug survived review: it reasons that a losing unlink FAILS. It does not fail — it deletes the winner's lock. The guard is correct for the LIVE-lock path (O_CREAT|O_EXCL genuinely lets the filesystem pick one winner) and unsound only on the stale-reclaim path, which is why it passes most runs.\n\n📌 THE IRONY IS ON THE RECORD ALREADY. This function's own docstring says it replaced \"a check-then-write pair that read as a guard and was not one\", measured at four probes from twelve concurrent invocations. The replacement fixed the common path and left a second check-then-act inside the reclaim.\n\nWHAT IT COSTS: a duplicate loop_status probe. The same docstring prices that — loop_status was 71.4% of all time this project spent inside reflow2, 604 s of 846 s, at a median of 12,089 ms. A duplicate is not free; it is the most expensive call the surface makes.\n\nTHE SHAPE OF A FIX, not implemented here: the reclaim must itself be atomic. A separate O_EXCL reclaim file, held only across the unlink-and-recreate, is the usual answer — whoever wins the reclaim file is the only process permitted to remove the stale lock. Unlinking by inode is NOT a fix; the check and the unlink are still two steps.\n\nWHAT IS NOT ESTABLISHED: how often this fires in real use rather than under a test barrier that releases N processes simultaneously. Real hook invocations are near-simultaneous but not barrier-synchronised, so the true rate is unknown and is probably far below 2-in-9. Nothing here measures it.\n\n⚠️ NOT CAUSED BY THIS SESSION'S WORK, and nothing was changed to fix it. It is intermittently red and will keep flaking CI until somebody takes it.",
+        "subject_id": "art:loop-nudge",
+        "valid_from": "2026-09-13",
+        "value": "{\"test\":\"test_a_stale_lock_is_reclaimed_exactly_once\",\"observed\":\"2 winners, expected 1\",\"local_repro_rate\":\"2 of 9 runs\",\"file\":\"tools/loop_nudge.py\",\"function\":\"claim_probe_slot\",\"path\":\"stale-lock reclaim only\",\"live_lock_path_sound\":true,\"cause\":\"the losing process's unlink deletes the winner's freshly created lock, so it never detects it lost\",\"fix_shape\":\"a separate O_EXCL reclaim file held across unlink-and-recreate\",\"fixed\":false,\"caused_by_this_session\":false}"
       }
     },
     {

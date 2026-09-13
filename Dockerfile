@@ -94,7 +94,29 @@ WORKDIR /data
 EXPOSE 8080
 
 ENV REFLOW2_GRAPH_PATH=/data/graphs/default/graph \
-    REFLOW2_BIND=0.0.0.0:8080
+    REFLOW2_BIND=0.0.0.0:8080 \
+    MALLOC_ARENA_MAX=2
+
+# ⭐ WHY MALLOC_ARENA_MAX IS SET HERE. glibc reads it at the FIRST allocation,
+# before `main` runs, so the process cannot choose its own arena count — only
+# whoever starts it can. In the image that is this line; for a locally spawned
+# daemon it is the `--shared` parent (crates/reflow2-mcp/src/shared.rs).
+#
+# MEASURED 2026-09-13 on reflow2's own 4,403-node design, two servers on
+# identical copies of one store:
+#
+#     resident memory     424 MB -> 199 MB   (-53%)
+#     write throughput    7.7/s  ->  7.8/s   (+0.6%, interleaved median)
+#
+# The memory it buys down is retention rather than a leak — a long-lived server
+# that has exported a large design several times holds hundreds of megabytes of
+# freed blocks, and the working set oscillates instead of climbing. Retained is
+# spent either way, and in a container it is spent against the memory limit.
+#
+# ⚠️ THE THROUGHPUT FIGURE IS INTERLEAVED FOR A REASON: two sequential rounds
+# disagreed by 29 points and the control itself drifted 26% between them, so a
+# single pair would have supported either answer. Override it at `docker run`
+# if a workload here is thread-bound and would rather have the arenas.
 
 # ⚠️ CAP THE LOG WHEN YOU RUN THIS. Docker's default `json-file` driver has NO
 # SIZE LIMIT, so any long-running container can fill a host disk with its own

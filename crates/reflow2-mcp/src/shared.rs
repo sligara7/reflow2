@@ -683,6 +683,36 @@ fn spawn_daemon(
         .stdout(std::process::Stdio::null())
         .stderr(std::process::Stdio::from(log));
 
+    // ⭐ CAP GLIBC'S PER-THREAD ARENAS. Set HERE rather than in the daemon's own
+    // code because glibc reads this at the first allocation, long before `main`
+    // runs — a process cannot choose its own arena count, only its parent can.
+    //
+    // MEASURED 2026-09-13 on reflow2's own 4,403-node design, two servers on
+    // identical copies (`fact:the-servers-resident-memory-is-export-retention-not-rocksdb-2026-09-13`):
+    //
+    //     resident memory     424 MB -> 199 MB   (-53%)
+    //     write throughput    7.7/s  ->  7.8/s   (+0.6%, interleaved median)
+    //
+    // WHY THE THROUGHPUT NUMBER IS INTERLEAVED AND NOT A SINGLE RUN: two
+    // sequential rounds disagreed by 29 points (-0.9% then -30.1%) and the
+    // CONTROL itself drifted 26% between them, so a single pair would have
+    // justified either conclusion. Alternating A/B/A/B cancels the drift; the
+    // spread WITHIN each arm then came back nearly identical (7.4-14.7 against
+    // 7.3-14.5), which is what says the variance is the machine rather than the
+    // allocator.
+    //
+    // The cost this buys down is real and priced: a long-lived daemon that has
+    // exported a large design several times retains hundreds of megabytes of
+    // freed blocks. It is retention rather than a leak — the working set
+    // oscillates instead of climbing — but a retained half-gigabyte is spent
+    // either way.
+    //
+    // ⚠️ AN EXPLICIT SETTING IN THE ENVIRONMENT WINS. Whoever launches reflow2
+    // may have a reason, and this must not overrule it silently.
+    if let Some((k, v)) = daemon_allocator_env(std::env::var_os("MALLOC_ARENA_MAX").is_some()) {
+        cmd.env(k, v);
+    }
+
     #[cfg(unix)]
     {
         use std::os::unix::process::CommandExt;
@@ -1070,6 +1100,56 @@ mod tests {
         assert!(
             !err.contains("resolved from"),
             "nothing was resolved, so the clause must not appear: {err}"
+        );
+    }
+}
+
+/// The allocator setting a spawned daemon should inherit, or `None` when the
+/// launcher has already stated one.
+///
+/// Split out as a function ONLY so the decision can be tested without spawning
+/// a process and without reading `/proc` — which would make the check
+/// Linux-only, and this repo runs on macOS too (`req:platform`).
+///
+/// ⚠️ WHAT THIS DOES NOT PROVE, said plainly because a green test here is
+/// easily over-read: it pins the DECISION, not the delivery. That the spawned
+/// daemon actually receives the variable rests on `Command::env`, which is not
+/// exercised here.
+#[must_use]
+pub(crate) fn daemon_allocator_env(
+    launcher_already_set_it: bool,
+) -> Option<(&'static str, &'static str)> {
+    if launcher_already_set_it {
+        // Whoever launched reflow2 may have a reason — a thread-bound workload
+        // that would rather have the arenas. An explicit setting wins, and it
+        // must not be overruled silently.
+        None
+    } else {
+        Some(("MALLOC_ARENA_MAX", "2"))
+    }
+}
+
+#[cfg(test)]
+mod allocator_env_tests {
+    use super::daemon_allocator_env;
+
+    #[test]
+    fn a_spawned_daemon_gets_the_arena_cap_by_default() {
+        assert_eq!(
+            daemon_allocator_env(false),
+            Some(("MALLOC_ARENA_MAX", "2")),
+            "measured 2026-09-13: 424 MB -> 199 MB resident on reflow2's own design, \
+             with write throughput unchanged (7.7/s -> 7.8/s, interleaved median)"
+        );
+    }
+
+    #[test]
+    fn an_explicit_setting_is_never_overruled() {
+        assert_eq!(
+            daemon_allocator_env(true),
+            None,
+            "a launcher that stated MALLOC_ARENA_MAX has a reason, and silently \
+             replacing it would be the tool deciding something it was not asked to"
         );
     }
 }
