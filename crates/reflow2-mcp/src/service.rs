@@ -2096,6 +2096,11 @@ pub struct TopicReportReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct DescribeSchemaReq {
+    /// How many characters of JSON this reply may spend before prose is
+    /// withheld to make it fit (default 30,000). See `reply_budget`: counts and
+    /// ids are never budgeted away, so a shorter answer is never a quieter one.
+    #[serde(default)]
+    pub budget_chars: Option<usize>,
     /// Focus one node type: its properties plus the edges it can carry.
     #[serde(default)]
     pub node_type: Option<String>,
@@ -3719,6 +3724,11 @@ pub struct MirrorSurfaceReq {
 #[derive(Debug, Default, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct ExportSurfaceReq {
+    /// How many characters of JSON this reply may spend before prose is
+    /// withheld to make it fit (default 30,000). See `reply_budget`: counts and
+    /// ids are never budgeted away, so a shorter answer is never a quieter one.
+    #[serde(default)]
+    pub budget_chars: Option<usize>,
     /// Write the surface document to this file and return a summary instead of
     /// the whole document. Omit to get the document inline.
     #[serde(default)]
@@ -3951,6 +3961,11 @@ pub struct WhatNextReq {
 #[derive(Debug, Default, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct ScopeReq {
+    /// How many characters of JSON this reply may spend before prose is
+    /// withheld to make it fit (default 30,000). See `reply_budget`: counts and
+    /// ids are never budgeted away, so a shorter answer is never a quieter one.
+    #[serde(default)]
+    pub budget_chars: Option<usize>,
     /// Narrow the answer to the part of the design around this node — a
     /// Component a team owns, a Project, a Capability. Omit for the whole design,
     /// which is the historical behaviour and stays byte-identical.
@@ -4802,6 +4817,11 @@ pub struct ImportGraphReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct CompareDesignsReq {
+    /// How many characters of JSON this reply may spend before prose is
+    /// withheld to make it fit (default 30,000). See `reply_budget`: counts and
+    /// ids are never budgeted away, so a shorter answer is never a quieter one.
+    #[serde(default)]
+    pub budget_chars: Option<usize>,
     /// Path to the base export document — what every finding is relative to
     /// (`added` = in the other side, not here). Typically the committed
     /// export, or the main branch's copy of it.

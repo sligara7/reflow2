@@ -201,6 +201,18 @@ jobs:
         run: python3 tools/refusal_speaks.py
       - name: Toolsnaps — served surface matches the committed goldens (BL-76)
         run: python3 tools/toolsnap.py
+      - name: Every oversized reply offers a bound (the class, not the instance)
+        # Toolsnaps pins the tools that EXIST, so a NEW tool returning 126 KB
+        # with no `budget_chars` is a clean golden diff and a green build. This
+        # is the check that notices. Measured 2026-09-13: 3 of 181 tools were
+        # bounded and nine exceeded the 30,000-char default, because each of the
+        # three had been fixed by hand after somebody personally met it.
+        #
+        # ⚠️ IT SEEDS A REAL DESIGN FROM THE COMMITTED EXPORT AND FAILS IF
+        # NOTHING OVERFLOWED. On an empty graph every reply is small and the
+        # gate would pass having checked nothing — "no tool overflowed" and "I
+        # could not make any tool overflow" must not share an exit code.
+        run: python3 tools/replies_are_bounded.py
       - name: Seat identity survives every transport (one client, one seat)
         run: python3 tools/stateless_seat_probe.py
       - name: Phase-coverage trial (13/13 regression gate)

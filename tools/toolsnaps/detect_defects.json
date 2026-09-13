@@ -7,6 +7,16 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
     "properties": {
+      "budget_chars": {
+        "default": null,
+        "description": "How many characters of JSON this reply may spend before prose is\nwithheld to make it fit (default 30,000). See `reply_budget`: counts and\nids are never budgeted away, so a shorter answer is never a quieter one.",
+        "format": "uint",
+        "minimum": 0,
+        "type": [
+          "integer",
+          "null"
+        ]
+      },
       "depth": {
         "default": null,
         "description": "Hops from the seed (default 2 — enough to reach a Component's own\ncapabilities, the requirements they satisfy, and what realizes them, and\nno further). Meaningless without `scope`.\n\nIt was 3 until 2026-08-17, and 3 did not narrow: measured over all 56\nComponents of reflow2's own design, every one returned 50-60 of the 83\ngaps. Raising it back is allowed and the reply will say what it cost —\nsee `share_of_anchored` and `narrowing_note`.",

@@ -351,13 +351,34 @@ impl ReflowService {
         Parameters(req): Parameters<DescribeSchemaReq>,
     ) -> Result<CallToolResult, McpError> {
         let g = self.graph.read().await;
+        // The vocabulary's bytes are in its `hint` and `description` prose, and
+        // the part a caller acts on is the type and edge NAMES — so trimming
+        // prose leaves this tool answering the question it is asked.
+        let bound = |v: serde_json::Value| {
+            crate::reply_budget::bound_reply(
+                v,
+                req.budget_chars
+                    .unwrap_or(crate::reply_budget::DEFAULT_REPLY_BUDGET_CHARS),
+                "Every type and edge name is still listed; narrow with `node_type`, or `from` \
+                 and `to` together, to read one part's hints in full.",
+            )
+        };
         match (&req.node_type, &req.from, &req.to) {
-            (None, None, None) => ok_json(g.describe_vocabulary()),
-            (Some(t), None, None) if req.required_only => {
-                ok_json(g.describe_node_type_required(t).map_err(params_err)?)
-            }
-            (Some(t), None, None) => ok_json(g.describe_node_type(t).map_err(params_err)?),
-            (None, Some(f), Some(t)) => ok_json(g.edge_types_between(f, t).map_err(params_err)?),
+            (None, None, None) => ok_json(bound(
+                serde_json::to_value(g.describe_vocabulary()).map_err(ser_err)?,
+            )),
+            (Some(t), None, None) if req.required_only => ok_json(bound(
+                serde_json::to_value(g.describe_node_type_required(t).map_err(params_err)?)
+                    .map_err(ser_err)?,
+            )),
+            (Some(t), None, None) => ok_json(bound(
+                serde_json::to_value(g.describe_node_type(t).map_err(params_err)?)
+                    .map_err(ser_err)?,
+            )),
+            (None, Some(f), Some(t)) => ok_json(bound(
+                serde_json::to_value(g.edge_types_between(f, t).map_err(params_err)?)
+                    .map_err(ser_err)?,
+            )),
             // A half-given pair is a mistake, not a request for everything.
             _ => Err(McpError::invalid_params(
                 "describe_schema takes no arguments (the full vocabulary), `node_type` alone, \

@@ -651,9 +651,18 @@ impl ReflowService {
                        neither can be said — never read the second as fresh.",
         annotations(read_only_hint = true)
     )]
-    pub async fn confirmation_ledger(&self) -> Result<CallToolResult, McpError> {
+    pub async fn confirmation_ledger(
+        &self,
+        Parameters(req): Parameters<crate::reply_budget::BudgetReq>,
+    ) -> Result<CallToolResult, McpError> {
         let g = self.graph.read().await;
-        ok_json(g.confirmation_ledger().map_err(dyno_err)?)
+        let full = serde_json::to_value(g.confirmation_ledger().map_err(dyno_err)?)
+            .map_err(crate::service::ser_err)?;
+        ok_json(crate::reply_budget::bound_reply_sampling(
+            full,
+            req.budget(),
+            "Read one claim in full with get_node on its capability or artifact id.",
+        ))
     }
 
     #[tool(
@@ -764,7 +773,12 @@ impl ReflowService {
         }
         .map_err(ser_err)?;
         lift_repair_notes(&mut out);
-        ok_json(out)
+        ok_json(crate::reply_budget::bound_reply_sampling(
+            out,
+            req.budget_chars
+                .unwrap_or(crate::reply_budget::DEFAULT_REPLY_BUDGET_CHARS),
+            "`swept` and every defect count survive trimming; narrow with `scope` to read one part's defects in full.",
+        ))
     }
 
     #[tool(

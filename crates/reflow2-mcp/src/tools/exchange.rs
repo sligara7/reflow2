@@ -256,7 +256,46 @@ impl ReflowService {
         let g = self.graph.read().await;
         let surface = g.export_surface().map_err(dyno_err)?;
         match req.path.as_deref() {
-            None => ok_json(surface),
+            // ⚠️ WITHHELD WHOLE, NEVER TRIMMED — the same rule get_instructions
+            // and export_graph follow. This branch returns a published SURFACE
+            // DOCUMENT that a consumer designs against; half of one is not a
+            // smaller answer, it is a corrupt contract, and it would be
+            // indistinguishable from a real surface that happens to be small.
+            // The escape already exists and is better: write it to `path`.
+            None => {
+                let full = serde_json::to_value(&surface).map_err(ser_err)?;
+                let budget = req
+                    .budget_chars
+                    .unwrap_or(crate::reply_budget::DEFAULT_REPLY_BUDGET_CHARS);
+                let chars = crate::reply_budget::chars_of(&full);
+                if chars > budget {
+                    return ok_json(json!({
+                        "published": surface.published,
+                        "nodes": surface.document.nodes.len(),
+                        "edges": surface.document.edges.len(),
+                        "withheld_nodes": surface.withheld_nodes,
+                        "withheld_edges": surface.withheld_edges,
+                        "content_hash": surface.document.content_hash,
+                        "note": surface.note,
+                        "budget": {
+                            "applied": true,
+                            "budget_chars": budget,
+                            "full_chars": chars,
+                            "detail": "whole_document_withheld",
+                            "note": format!(
+                                "WITHHELD WHOLE, NOT TRIMMED. The surface is {chars} characters \
+                                 against a budget of {budget}. A published surface is a CONTRACT \
+                                 somebody builds against, so a truncated one is corrupt rather \
+                                 than short — and nothing in it would say so. Every count and the \
+                                 content_hash are here; call again with `path` to write the whole \
+                                 document to a file, or raise `budget_chars` if this client has \
+                                 the room."
+                            ),
+                        },
+                    }));
+                }
+                ok_json(surface)
+            }
             Some(path) => {
                 let rendered = serde_json::to_string_pretty(&surface.document).map_err(ser_err)?;
                 if !req.overwrite.unwrap_or(false) && std::path::Path::new(path).exists() {
@@ -406,22 +445,42 @@ impl ReflowService {
         Parameters(req): Parameters<CompareDesignsReq>,
     ) -> Result<CallToolResult, McpError> {
         let base = read_export_document(&req.base_path)?;
+        // A divergence report is a LIST OF WHAT MOVED, not a document — so
+        // unlike export_surface above, trimming its prose leaves it answering
+        // the question it was asked. The node ids and every count survive; the
+        // long statements and rationales are what made it unusable on two real
+        // 9-16 MB exports, which is the friction this was reported as.
+        let bound = |v: serde_json::Value| {
+            crate::reply_budget::bound_reply_sampling(
+                v,
+                req.budget_chars
+                    .unwrap_or(crate::reply_budget::DEFAULT_REPLY_BUDGET_CHARS),
+                "Every diverging node id and every count is still here; read one side in full \
+                 with get_node, and the other from the export file itself.",
+            )
+        };
         match &req.other_path {
             Some(other_path) => {
                 let other = read_export_document(other_path)?;
-                ok_json(reflow2_core::compare_designs(
-                    &base,
-                    &other,
-                    &req.base_path,
-                    other_path,
+                ok_json(bound(
+                    serde_json::to_value(reflow2_core::compare_designs(
+                        &base,
+                        &other,
+                        &req.base_path,
+                        other_path,
+                    ))
+                    .map_err(ser_err)?,
                 ))
             }
             None => {
                 let g = self.graph.read().await;
-                ok_json(
-                    g.compare_with_base(&base, &req.base_path)
-                        .map_err(dyno_err)?,
-                )
+                ok_json(bound(
+                    serde_json::to_value(
+                        g.compare_with_base(&base, &req.base_path)
+                            .map_err(dyno_err)?,
+                    )
+                    .map_err(ser_err)?,
+                ))
             }
         }
     }

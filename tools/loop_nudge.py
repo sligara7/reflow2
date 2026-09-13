@@ -823,26 +823,104 @@ def claim_probe_slot(session_id: str, now: float, reason: str) -> bool:
     """
     lock = probe_lock(session_id)
     payload = json.dumps({"started": now, "reason": reason}).encode()
-    for attempt in (0, 1):
+    try:
+        state_dir().mkdir(parents=True, exist_ok=True)
+        fd = os.open(lock, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o644)
+    except FileExistsError:
+        # Somebody holds it. Reclaiming a STALE one is a second race of its own
+        # and is handled where it can be made atomic.
+        return _reclaim_stale_probe_lock(lock, now, payload)
+    except OSError:
+        return False  # unwritable state dir — decline, never crash a hook
+    try:
+        os.write(fd, payload)
+    finally:
+        os.close(fd)
+    return True
+
+
+def _reclaim_stale_probe_lock(lock: Path, now: float, payload: bytes) -> bool:
+    """Take over a lock left behind by a probe that died. True = you won.
+
+    🛑 THIS EXISTS BECAUSE THE OBVIOUS VERSION ADMITS TWO WINNERS, and it did.
+    The previous shape was, inside `claim_probe_slot`'s retry loop:
+
+        if _probe_lock_is_stale(lock, now):   # ① check
+            lock.unlink()                     # ② act
+            continue                          # ③ retry the O_EXCL create
+
+    That reads as a guard and is not one. N hook processes all find the same
+    stale lock and all judge it stale at ①. One reaches ③ first, wins the
+    create and writes a FRESH lock. A straggler still between ① and ② then
+    unlinks — and its unlink lands on the WINNER'S NEW LOCK. It succeeds, so the
+    straggler never takes the "someone else cleared it first" branch, its own
+    create succeeds, and two processes believe they hold the slot.
+
+    MEASURED 2026-09-13, 8 processes released on a barrier under CPU load, 60
+    trials each: with a stale lock seeded, 7/60 trials produced TWO winners —
+    always exactly two, which is the single bounded retry showing through. With
+    no lock present, 0/60. That second arm is what rules out the other candidate
+    (that a brand-new lock is briefly readable as stale, because O_EXCL creates
+    an empty file and the payload is written after); if that were the live path,
+    the no-lock arm would fail too, and it does not.
+
+    ⭐ THE IRONY, RECORDED SO THE LESSON SURVIVES: `claim_probe_slot`'s own
+    docstring says it replaced "a check-then-write pair that read as a guard and
+    was not one", measured at four probes from twelve invocations. That fix was
+    right about the common path and left a SECOND check-then-act inside its own
+    error branch. A class is not fixed until its instances are swept.
+
+    HOW THIS IS CORRECT: exactly one process may be reclaiming at a time, and it
+    re-checks staleness INSIDE that exclusive section. A straggler that judged
+    the old lock stale before the winner replaced it now finds a fresh lock on
+    its re-check and declines, instead of deleting it.
+    """
+    guard = lock.with_name(lock.name + ".reclaim")
+    try:
+        gfd = os.open(guard, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o644)
+    except FileExistsError:
+        # Another process is reclaiming right now — let it. A probe is a
+        # courtesy and declining costs one skipped read.
+        #
+        # UNLESS THE GUARD ITSELF WAS ORPHANED. A process killed mid-reclaim
+        # would otherwise silence the feature permanently, which is the failure
+        # direction `_probe_lock_is_stale` already refuses to take. Clear it and
+        # decline anyway: the NEXT invocation reclaims. One-shot, never a retry
+        # loop, so a wedged guard costs one probe rather than a spin.
         try:
-            state_dir().mkdir(parents=True, exist_ok=True)
-            fd = os.open(lock, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o644)
-        except FileExistsError:
-            if attempt or not _probe_lock_is_stale(lock, now):
-                return False  # a live probe holds it, or the retry is spent
-            try:
-                lock.unlink()
-            except OSError:
-                return False  # someone else cleared it first; let them have it
-            continue
+            if now - guard.stat().st_mtime >= PROBE_STALE_LOCK_S:
+                guard.unlink()
         except OSError:
-            return False  # unwritable state dir — decline, never crash a hook
+            pass
+        return False
+    except OSError:
+        return False
+    try:
+        # THE RE-CHECK THAT MAKES THIS A GUARD. Only one process is here, so
+        # between this line and the create below nobody else can interleave.
+        if not _probe_lock_is_stale(lock, now):
+            return False  # a successor already reclaimed it and holds it live
+        try:
+            lock.unlink()
+        except FileNotFoundError:
+            pass  # already gone; the create below is still ours to attempt
+        except OSError:
+            return False
+        try:
+            fd = os.open(lock, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o644)
+        except OSError:
+            return False
         try:
             os.write(fd, payload)
         finally:
             os.close(fd)
         return True
-    return False
+    finally:
+        os.close(gfd)
+        try:
+            guard.unlink()
+        except OSError:
+            pass
 
 
 def _probe_lock_is_stale(lock: Path, now: float) -> bool:
