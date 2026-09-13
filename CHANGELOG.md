@@ -31,6 +31,65 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.60.0] — 2026-09-13
+
+**Minor** — three new capabilities and two new flags on the tool surface; the schema stamp does
+**not** move (28 node types, 65 edge types, schema 1 — unchanged), so there is no upgrade doc and
+nothing about the graph model changed. Consumers can update without touching their designs.
+
+The increment answers a consumer project's handoff end to end. flo2 sent six items; all six are
+closed, one of them by refuting its own premise.
+
+### Added
+
+- **`--registry-root` and `/g/<graph_id>/`** — one server holds many designs, each selected by its
+  `graph_id` in the URL. Designs open on demand; `--registry-max-open` caps how many are held at
+  once and **refuses** past it rather than evicting somebody's design. The root is the tenant
+  boundary: the server routes within it and has no operation that crosses one. This finishes
+  `cap:select-graph-by-id`, whose resolution half had shipped in August with no caller outside its
+  own tests.
+- **`--ephemeral`** — serve a design that lives only in memory and is gone when the process stops.
+  For measurement and scratch work. Named for what happens to your work rather than for which
+  engine is underneath, refuses every flag that names a design on disk, and says so **first** in
+  the handshake, because an agent connecting over HTTP never sees the operator's stderr.
+- **A reply budget on nine more tools.** `budget_chars` now bounds `compare_designs`,
+  `confirmation_ledger`, `describe_schema`, `detect_defects`, `evidence_report`,
+  `invalidated_findings`, `list_skills` and others. Prose is trimmed; counts and ids never are.
+  `get_instructions` and `export_surface` are deliberately exempt — they return documents, and a
+  truncated document is corrupt rather than short, so over budget they withhold whole and name the
+  narrower call that works.
+
+### Changed
+
+- **A spawned shared daemon caps its allocator arenas** (`MALLOC_ARENA_MAX=2`, also set in the
+  image). Measured on this project's own design: resident memory **424 MB → 199 MB** with write
+  throughput unchanged. An explicit setting in your environment always wins.
+- The image entrypoint takes `REFLOW2_REGISTRY_ROOT` to serve many designs.
+- The startup log names what is actually being opened, rather than `--graph-path` on every
+  invocation including ones that never touch it.
+
+### Fixed
+
+- **The stale probe-lock reclaim admitted two winners.** Its check and its unlink were two steps, so
+  a straggler's unlink could delete the *winner's* fresh lock. It is now serialized behind a guard
+  with the staleness re-checked inside it. Measured 10/60 bad trials → 0/60. This was the second
+  check-then-act in a function whose own docstring records replacing the first.
+- **A container that never starts.** The registry entrypoint used `${VAR:-alternative}`, which
+  substitutes the *value* when the variable is set — so registry mode passed a bare argument and
+  exited 2. Caught by the smoke test's new phase before it shipped.
+
+### Verified
+
+- **Two designs stay apart inside the published image**, not just in the crate — a write into one is
+  asserted **absent** from the other. Seven further isolation properties are asserted end to end
+  against the transport.
+- **A new CI gate bounds replies as a class**: it seeds a real design from the committed export and
+  fails on any oversized reply that offers no bound — and **fails equally when nothing overflowed**,
+  because a detector with nothing to run on must not read as one that ran clean.
+- **The per-open-design cost is measured**: ~17 MB per process, ~5 MB and 7 file descriptors per
+  open design. That decides one-service-many-graphs against a process per project. The designs
+  measured were near-empty, so the slope is a floor rather than an estimate.
+
 ## [0.59.0] — 2026-09-12
 
 **Minor** — the schema **stamp moves** (`Decision.status` gains `deferred`, and the stamp now
