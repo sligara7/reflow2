@@ -171,8 +171,30 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=60s --retries=3 \
 # commit: `docker/build.sh && docker/smoke.sh reflow2-mcp:dev` starts the image
 # and fails in about three seconds on exactly this class of mistake. Release CI
 # runs the same script against the candidate image BEFORE it publishes anything.
-ENTRYPOINT ["/bin/sh", "-c", "exec /usr/local/bin/reflow2-mcp \
-  --graph-path \"$REFLOW2_GRAPH_PATH\" \
+# ⭐ TWO MODES, ONE ENTRYPOINT. Set REFLOW2_REGISTRY_ROOT and the container
+# serves EVERY design under that directory, each addressed as /g/<graph_id>/;
+# leave it unset — the default — and it serves the single design at
+# REFLOW2_GRAPH_PATH exactly as it always has. `--registry-root` takes
+# precedence in the binary, so passing both is not ambiguous, but only one is
+# passed here so the process line says which mode it is in.
+#
+# ⚠️ A DESIGN UNDER A REGISTRY ROOT LIVES AT <root>/<name>/.reflow2/graph, which
+# is NOT the shape REFLOW2_GRAPH_PATH defaults to (/data/graphs/default/graph).
+# The two layouts are different on purpose and a root will not discover a store
+# that does not follow the convention — docker/smoke.sh mints its two designs
+# at the registry shape for exactly this reason.
+# ⚠️ AN EXPLICIT `if`, NOT `${VAR:-...}`. The parameter-expansion form is the
+# obvious way to write "registry root, else graph path" and it is WRONG: `:-`
+# substitutes the VALUE when the variable is set, so registry mode passed `/data`
+# as a bare argument and clap exited 2 — a container that never starts, which is
+# the exact failure class this ENTRYPOINT's warning above is about. Caught by
+# docker/smoke.sh phase 2 before it could ship.
+ENTRYPOINT ["/bin/sh", "-c", "if [ -n \"$REFLOW2_REGISTRY_ROOT\" ]; then \
+    set -- --registry-root \"$REFLOW2_REGISTRY_ROOT\" \"$@\"; \
+  else \
+    set -- --graph-path \"$REFLOW2_GRAPH_PATH\" \"$@\"; \
+  fi; \
+  exec /usr/local/bin/reflow2-mcp \
+  \"$@\" \
   --http \"$REFLOW2_BIND\" \
-  ${REFLOW2_ALLOW_HOST:+--http-allow-host \"$REFLOW2_ALLOW_HOST\"} \
-  \"$@\"", "reflow2-mcp"]
+  ${REFLOW2_ALLOW_HOST:+--http-allow-host \"$REFLOW2_ALLOW_HOST\"}", "reflow2-mcp"]

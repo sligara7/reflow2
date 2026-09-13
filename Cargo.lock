@@ -1401,6 +1401,8 @@ dependencies = [
  "base64 0.22.1",
  "bytes",
  "clap",
+ "http",
+ "http-body",
  "http-body-util",
  "hyper",
  "hyper-util",
@@ -1411,6 +1413,7 @@ dependencies = [
  "serde_json",
  "sha2",
  "tokio",
+ "tower-service",
  "tracing",
  "tracing-subscriber",
 ]

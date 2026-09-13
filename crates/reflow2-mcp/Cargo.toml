@@ -40,6 +40,16 @@ hyper = { version = "1", features = ["server", "client", "http1"] }
 hyper-util = { version = "0.1", features = ["server", "tokio", "service"] }
 http-body-util = "0.1"
 bytes = "1"
+# `/g/<graph_id>/` routing (src/registry_http.rs) is a hyper/tower Service this
+# crate writes itself — the "deliberately NOT axum" note above is what makes
+# these three direct rather than borrowed: rmcp's own Service impl is stated in
+# `http` types, its response body in `http-body`, and the trait it implements is
+# `tower-service`. All three were already in the tree transitively, so naming
+# them adds no crate, and per dec:design-dependencies-declared a reliance is
+# recorded rather than implied.
+http = "1"
+http-body = "1"
+tower-service = "0.3"
 
 # `signal` so a shared server can remove its rendezvous on SIGTERM instead of
 # leaving a record pointing at a dead port; `process` so a session can spawn one.

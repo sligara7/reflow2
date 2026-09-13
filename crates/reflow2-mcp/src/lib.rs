@@ -18,6 +18,7 @@ pub mod nudge;
 pub mod prose_currency;
 pub mod proxy;
 pub mod registry;
+pub mod registry_http;
 pub mod reply_budget;
 pub mod service;
 pub mod shared;
