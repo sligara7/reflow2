@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:301bbb7f4bf135601c85a302da39eeaf9863eb8a73940bc8c3ff104de21fad32",
+  "content_hash": "sha256:f63b799d44aaef013284db9663535c2eeb5f0d4d32708c79ad6f96426063e814",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -1978,6 +1978,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:propagate"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:every-oversized-reply-offers-a-bound",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:service"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -8752,6 +8760,12 @@
       "from_id": "chg:next-names-the-safe-tool-20260808",
       "properties": {},
       "to_id": "epoch:v0250"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:nine-tools-gain-a-reply-budget",
+      "properties": {},
+      "to_id": "epoch:the-reply-budget-sweep"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -27903,6 +27917,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-9a93a9747b88ff32",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:lens-handler-test"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-9ab9600670c2ef60",
       "properties": {
         "accepted_baseline": true,
@@ -36649,6 +36672,69 @@
         "action": "modified"
       },
       "to_id": "cap:loop-status"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:nine-tools-gain-a-reply-budget",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:nine-tools-gain-a-reply-budget",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-assure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:nine-tools-gain-a-reply-budget",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:nine-tools-gain-a-reply-budget",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-exchange"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:nine-tools-gain-a-reply-budget",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-query"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:nine-tools-gain-a-reply-budget",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-skills"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:nine-tools-gain-a-reply-budget",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:every-oversized-reply-offers-a-bound"
     },
     {
       "edge_type": "CHANGED",
@@ -179746,6 +179832,24 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:replies-are-bounded-gate",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:every-oversized-reply-offers-a-bound"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:reply-budget",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:every-oversized-reply-offers-a-bound"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:reply-budget-test",
       "properties": {
         "completeness": "partial",
@@ -182628,6 +182732,12 @@
       "from_id": "cap:edge-prose-is-read-when-the-node-moves",
       "properties": {},
       "to_id": "req:an-edges-prose-does-not-outlive-the-node-it-points-at"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:every-oversized-reply-offers-a-bound",
+      "properties": {},
+      "to_id": "req:every-oversized-reply-offers-a-bound"
     },
     {
       "edge_type": "SATISFIES",
@@ -185983,6 +186093,18 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:every-oversized-reply-offers-a-bound",
+      "properties": {},
+      "to_id": "cap:every-oversized-reply-offers-a-bound"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:every-oversized-reply-offers-a-bound",
+      "properties": {},
+      "to_id": "req:every-oversized-reply-offers-a-bound"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:every-relation-tool-accepts-both-families-and-refuses-a-typo",
       "properties": {},
       "to_id": "cap:a-relation-tool-accepts-the-other-familys-names"
@@ -188244,6 +188366,22 @@
         "action": "created"
       },
       "to_id": "art:repair-notes-lifted-test"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:replies-are-bounded-gate",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:replies-are-bounded-gate"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:reply-budget",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:reply-budget"
     },
     {
       "edge_type": "YIELDED",
@@ -191035,7 +191173,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f98d03720336c92422cc7436ced0299628ed31c6dd558077dee98dcf73e20351",
+        "checksum": "sha256:8aac2ece8f2e57bcc7c8c9d00b935f8e1e4a15472465ce26e4c9ca5199ca429e",
         "location": "crates/reflow2-mcp/tests/a_skill_response_says_who_it_is_for.rs",
         "name": "tests/a_skill_response_says_who_it_is_for.rs",
         "status": "realized"
@@ -191659,6 +191797,30 @@
       }
     },
     {
+      "node_id": "art:replies-are-bounded-gate",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:98ea57e7b52febdb28bb3e58b1924c8b30fefd0ba606fc2a7592a9abab4f2594",
+        "description": "The CI gate, and the leg that was missing. Seeds a real design from the committed export, calls every no-argument read tool, and fails on any reply over budget that declares no bound. Toolsnaps cannot catch this class — a golden pins the tools that EXIST, so a new tool returning 126 KB unbounded is a clean diff and a green build. 🛑 IT ALSO FAILS WHEN NOTHING OVERFLOWED: on an empty graph every reply is small and it would otherwise pass having checked nothing, and \"no tool overflowed\" must not share an exit code with \"I could not make any tool overflow\". Verified to FAIL rather than merely to pass — at --budget 5000 it exits 1 and names eight tools, which are the standing watchlist for a larger design.",
+        "location": "tools/replies_are_bounded.py",
+        "name": "replies_are_bounded.py",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:reply-budget",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:f70590a55164e4a405d9abb5349f6d0e48957f264090f3884b04ea2b5e304d2d",
+        "description": "The ONE place a reply is bounded, so a tenth tool cannot quietly miss it. Trims prose progressively (4000/2000/800/240/120/0 characters) and never touches numbers, counts or ids. Shortening a LIST is opt-in via `Sampling::Allowed`; the default is Forbidden, so a vocabulary or catalogue overflows loudly rather than coming back as a complete-looking fragment. `NEVER_TRIM_BELOW` (80 chars) is what makes the 0 rung safe — names, ids and enum values survive every rung. Carries `BudgetReq` for the tools that took no arguments at all, which was most of the overflowing set. 8 unit tests, two of which pin bugs this module itself shipped and a committed test caught.",
+        "location": "crates/reflow2-mcp/src/reply_budget.rs",
+        "name": "reply_budget.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:reply-budget-test",
       "node_type": "Artifact",
       "properties": {
@@ -192084,7 +192246,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:ebc342ab824b3ec4ab483a8d9dd57128bb6b82d06ef0eb58a5d57c09093532e9",
+        "checksum": "sha256:d255f71d6c023f1efdd6b65adb8ad32417fd58cb509ccdf876e78f6b48409d76",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -193008,7 +193170,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:4cd3039b97fc6ba8721c7682724c9305f84cf4cd3ea8e0328db49db9bb38828d",
+        "checksum": "sha256:7fc35fb95479f58d066b11e6b084a949d2cde0345baa487ccde3a85255b2da0b",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/assure.rs",
         "name": "tools/assure.rs",
@@ -193060,7 +193222,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f5b8b2618a0c3bfb0310bd8a518aeabf8e96346f7da5edfc462ec4c07c13588e",
+        "checksum": "sha256:5e0d8eccd23e867eed222c1bee821b3dcf1cedf2dff6ed60800229be7b6403af",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
@@ -193073,7 +193235,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:1bc9f431b0298c9a90711b704df0bc55e4d99de3f11ebcd2b56356ca924458db",
+        "checksum": "sha256:20f362c9920bea1d0dcf908b498f15ac9c84343c9f53dc30a487c945c42437c8",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/exchange.rs",
         "name": "tools/exchange.rs",
@@ -193110,7 +193272,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:6271cce178e7f2e4d28845a8cfad070f7605d6d7af0ded23e2e49ff98bc5d975",
+        "checksum": "sha256:7b6d7a2d37d1ea917072f71b91ff998948ddf019a1f04cdc1790759e6dcb7408",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/query.rs",
         "name": "tools/query.rs",
@@ -193123,7 +193285,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:3521eec0ce59cf23b5d7ab0f33b140d5ae6019f721f57508833433aed08f189a",
+        "checksum": "sha256:f027d37d372a4c2e9b33cd676a3bb743b999d34c98a1ae8a4878f164343c95d9",
         "location": "crates/reflow2-mcp/src/tools/skills_tools.rs",
         "name": "skills_tools.rs",
         "status": "realized"
@@ -194900,6 +195062,16 @@
       "properties": {
         "description": "`stale_edge_evidence(node_id)` reads the `evidence` and `note` on every edge touching a node and names those still using language the node has DROPPED — comparing against the node's most recent snapshot, so a term that was never about the node is not confused with one the node has since lost. Surfaced by `propagate_change`, keyed by seed, because that is the call already putting those edges in front of a reader.\n\nReports `edges_with_prose` so an empty result over zero examined edges is distinguishable from one over twenty, and a `coverage_note` when there was no prior state — silent about the edges rather than clean on them. Warning only; it never refuses a write, and it carries its own caveat that it is lexical rather than semantic.",
         "name": "An edge whose prose outlived the node it points at is named, with the terms that moved",
+        "provenance": "authored",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "cap:every-oversized-reply-offers-a-bound",
+      "node_type": "Capability",
+      "properties": {
+        "description": "One shared helper bounds any tool reply to a caller-supplied `budget_chars`: prose is cut progressively (4000/2000/800/240/120/0 characters) while numbers, counts and ids are never touched, and every trimmed reply carries a `budget` block naming what went and how to get it back. Shortening a LIST is opt-in and forbidden by default, so a vocabulary or catalogue comes back complete-and-terse rather than complete-and-empty; an 80-character floor keeps names, ids and enum values intact at every rung. Document-shaped payloads (the design export, the instruction set, a published surface) are excluded and instead WITHHOLD WHOLE over budget, naming the narrower call that works. A CI gate seeds a real design from the committed export, calls every no-argument read tool, and fails on any reply that exceeds the budget without declaring a bound — and fails equally when NOTHING overflowed, because a detector with nothing to run on must not read as one that ran clean.",
+        "name": "Every oversized reply offers a bound, trims prose before length, and a CI gate fails when it had nothing to run on",
         "provenance": "authored",
         "status": "realized"
       }
@@ -199166,6 +199338,16 @@
       }
     },
     {
+      "node_id": "chg:accept-9a93a9747b88ff32",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-09-13",
+        "name": "One line: ListSkillsReq {} became ListSkillsReq { budget_chars: None }. The test asserts the same property about the same handler; only the struct literal moved with the type. No design meaning.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-9ab9600670c2ef60",
       "node_type": "ChangeEvent",
       "properties": {
@@ -202913,6 +203095,16 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "The loop's to-do list names the read-only tool as the imperative, and the brainstorm skill stops citing a default that changed"
+      }
+    },
+    {
+      "node_id": "chg:nine-tools-gain-a-reply-budget",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Nine tools gain a reply budget through one shared helper; two document-shaped tools withhold whole instead, and a CI gate fails when nothing overflowed",
+        "repair": "corrected_cause",
+        "subject": "system"
       }
     },
     {
@@ -215465,6 +215657,17 @@
       }
     },
     {
+      "node_id": "epoch:the-reply-budget-sweep",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "description": "2026-09-13. flo2 filed one friction — compare_designs has no budget_chars — and the sweep it prompted found 3 of 181 tools bounded and nine over the 30,000-character default. This epoch is the class answer rather than the instance: one shared helper (crates/reflow2-mcp/src/reply_budget.rs), nine tools bounded, two exempted as document-shaped and made to withhold whole instead, and a CI gate (tools/replies_are_bounded.py) that seeds a real design and fails when NOTHING overflowed.\n\nWHAT IT MUST NOT BE READ AS INCLUDING: no fix for the server memory retention measured the same day, and no bound on the 143 tools that take required arguments — only compare_designs among those was measured. Eight further tools sit under the budget on this design and would cross on a larger one; they are a named watchlist, not covered work.",
+        "epoch_type": "revision",
+        "name": "Every oversized reply offers a bound — the class swept, not the tool it was reported from (2026-09-13)",
+        "sequence": 450,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:the-server-keeps-the-export-current",
       "node_type": "DesignEpoch",
       "properties": {
@@ -218506,6 +218709,26 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered the_same_paragraph_fifty_times.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:replies-are-bounded-gate",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered replies_are_bounded.py"
+      }
+    },
+    {
+      "node_id": "frag:art:reply-budget",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered reply_budget.rs"
       }
     },
     {
@@ -223177,6 +223400,19 @@
         "provenance": "authored",
         "statement": "Anthony, 2026-09-11, stating the success criteria for the tool-sweep effort: \"that all issues identified in the earlier tranches have been addressed properly\". The sweep exercised all 180 served tools (430 scripted calls plus the interactive tranches) and recorded 24 D-/C- findings, 6 W- findings and 4 F- findings, tracked in docs/local/tool-sweep/REMEDIATION.md. Each row shall reach one of two states: a merged pull request that fixes it, or a Decision on the record saying why it is not being fixed. Where a finding belongs to a CLASS (a required reference parameter with no stated type: 40 tools; a read-only reply with no size bound: 58 of 68; a caller-assembled inline payload with no file handle: 22; a bare-zero reply that cannot say which empty it is), it is addressed at the class with one contract test that fails on a new member, not one tool at a time — dec:idea-a-factory-builds-the-mechanics-in-so-a-class-fix-is-one-edit is the settled shape. Where a finding is a one-off (seven of thirteen distinct deficiencies), it is an ordinary fix. F-02 (both budgets breached) was withdrawn as a stale-edge misreading and is already closed.",
         "status": "dropped"
+      }
+    },
+    {
+      "node_id": "req:every-oversized-reply-offers-a-bound",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "usability",
+        "lineage": "original",
+        "name": "A read tool whose reply outgrows what a client accepts offers a way to bound it, and never goes quiet to fit",
+        "priority": "high",
+        "provenance": "authored",
+        "statement": "Any tool whose reply can exceed what a client will accept offers a bound (`budget_chars`), and a bounded reply withholds PROSE while never changing a count, a total or an id. A shorter answer is never a quieter one.\n\nTWO KINDS OF PAYLOAD, and the distinction is the requirement rather than a detail:\n · A REPORT may be trimmed — its prose is commentary on counts and ids the reader acts on.\n · A DOCUMENT may NOT. Half an export, half an instruction set or half a published surface reads exactly like a whole one, and nothing in the reply would say otherwise. Such a tool must WITHHOLD WHOLE over budget and name the narrower call that works, never truncate.\n\nCOMPLETENESS IS PART OF THE ANSWER WHERE IT IS THE ANSWER. A vocabulary, or a catalogue something picks from, must come back complete even when its prose is dropped entirely. Shortening such a list is forbidden rather than merely discouraged: a list of 1 that is shaped like a list of 65 is the worst possible reply.\n\nWHY THIS IS INTENT AND NOT A FIX: the failure is not a slow call, it is the CLIENT refusing the payload — at which point the session sees harness text and reflow2 never gets to suggest narrowing. A reader who receives nothing cannot be told to narrow their question.\n\nAND IT MUST BE CHECKED AS A CLASS. Three tools carried a bound for months while 178 did not, each fixed by hand after somebody personally met it. A golden-file check cannot catch this, because it pins the tools that exist; a NEW tool returning 126 KB unbounded is a clean diff and a green build.",
+        "status": "proposed"
       }
     },
     {
@@ -235914,6 +236150,20 @@
         "level": "unit",
         "method": "test",
         "name": "A parked idea is not read as a commitment, and every finding kind states where it stands",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:every-oversized-reply-offers-a-bound",
+      "node_type": "Verification",
+      "properties": {
+        "description": "Two halves. (1) tools/replies_are_bounded.py in CI: seeds a real design from the committed export, calls every no-argument read tool, and fails on any reply over the budget that declares no bound — and fails equally if NOTHING overflowed, so a detector with nothing to run on cannot read as one that ran clean. (2) Eight unit tests in crates/reflow2-mcp/src/reply_budget.rs covering: a fitting reply returned byte-identical with no budget block; prose cut while numbers survive exactly; ids and hashes surviving every rung; the hint always reaching the reader; a bare array wrapped so it can carry its own explanation; and two that pin bugs this module itself shipped — a list must not be shortened unless the tool opted in, and a NAME must survive the zero rung that drops every hint.",
+        "findings": "PASSING 2026-09-13. Gate: measured 37 no-argument read tools, 6 exceeded 30,000 chars, every one offered a bound. VERIFIED TO FAIL, not merely to pass — at --budget 5000 it exits 1 and names eight unbounded tools (design_regions, evaluate_allocation, granularity_report, graph_report, ility_report, manual_work_report, reviewed_defects, surprising_connections), which are the watchlist for a larger design. Unit tests: 8 passing. Measured before/after on this design: describe_schema 117,252 -> 47,904 with all 65 edge types still listed; confirmation_ledger 125,383 -> 31,673; invalidated_findings 88,242 -> 27,492; evidence_report 75,159 -> 18,643; detect_defects 56,455 -> 31,971. Three of those remain a few percent over the default: once prose is gone the remainder is structure, which is never trimmed by design, and each reply reports its own reply_chars. Toolsnaps regenerated — 9 changed, 0 added, 0 removed. Workspace clippy clean; reflow2-mcp lib 81 and tools 80 passing.",
+        "kind": "verification",
+        "last_run_at": "2026-09-13",
+        "level": "integration",
+        "method": "test",
+        "name": "Every oversized reply offers a bound, and the gate fails when it had nothing to run on",
         "status": "passing"
       }
     },

@@ -124,7 +124,7 @@ async fn the_catalogue_carries_the_lens_as_well() {
     let s = service().await;
     described(&s, "who:ann", "person", Some("Beamline scientist.")).await;
 
-    let out = j!(s.list_skills(Parameters(ListSkillsReq { budget_chars: None, })));
+    let out = j!(s.list_skills(Parameters(ListSkillsReq { budget_chars: None })));
     assert!(
         out.get("lens")
             .and_then(|v| v.as_str())

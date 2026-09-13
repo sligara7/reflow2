@@ -399,7 +399,10 @@ mod tests {
             "completeness is the default: a list must survive whole unless the tool opted in"
         );
         assert!(
-            out["budget"]["note"].as_str().unwrap().contains("NOT shortened"),
+            out["budget"]["note"]
+                .as_str()
+                .unwrap()
+                .contains("NOT shortened"),
             "and the reply must say it chose to overflow rather than go quiet"
         );
     }
@@ -444,7 +447,11 @@ mod tests {
         let types: Vec<Value> = (0..200)
             .map(|i| json!({"edge_type": format!("EDGE_TYPE_{i}"), "hint": long(3_000)}))
             .collect();
-        let out = bound_reply(json!({"edge_types": types}), 5_000, "narrow with from and to");
+        let out = bound_reply(
+            json!({"edge_types": types}),
+            5_000,
+            "narrow with from and to",
+        );
         let got = out["edge_types"].as_array().unwrap();
         assert_eq!(got.len(), 200, "every edge type must still be listed");
         assert_eq!(

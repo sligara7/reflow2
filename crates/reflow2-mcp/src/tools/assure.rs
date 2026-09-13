@@ -514,8 +514,7 @@ impl ReflowService {
         Parameters(req): Parameters<crate::reply_budget::BudgetReq>,
     ) -> Result<CallToolResult, McpError> {
         let g = self.graph.read().await;
-        let full =
-            serde_json::to_value(g.evidence_report().map_err(dyno_err)?).map_err(ser_err)?;
+        let full = serde_json::to_value(g.evidence_report().map_err(dyno_err)?).map_err(ser_err)?;
         ok_json(crate::reply_budget::bound_reply_sampling(
             full,
             req.budget(),
