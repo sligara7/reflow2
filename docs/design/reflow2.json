@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:d228f8d59940b405eaad08bdd7480f475d3e013f7bced1dc7207918dae0eb59d",
+  "content_hash": "sha256:10f5d5ad930fcdea1f32bfa12bfd666513b6ce372e49a4cf370471f08b20d54b",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -3464,6 +3464,14 @@
         "evidence": "The sibling brainstorm asked whether the ruleset converges and found the forks live in prose rather than edges; this one asks whether the design can be unwound and reaches the same missing-edge finding from the reversal side — the two are halves of one question about whether a design's history is navigable."
       },
       "to_id": "dec:idea-a-design-cements-from-the-core-outward-and-past-a-point-starting-over-is-cheaper-than-unwinding"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "dec:idea-does-reflow2-enforce-an-se-process-or-only-supply-the-vocabulary",
+      "properties": {
+        "evidence": "That idea established that genesis and adopt enforce function-before-structure and asked how a user gains confidence the sequence was followed; the concept layer asked for here is that sequence's first stage made visible, so the earlier question saw this one coming."
+      },
+      "to_id": "dec:idea-every-design-starts-as-a-pseudo-design-and-whether-reflow2-already-holds-that-layer"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -9437,6 +9445,18 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:the-design-reference-capability-takes-a-required-seed",
+      "properties": {},
+      "to_id": "epoch:2026-09-13-the-design-reference-is-the-black-box-under-work-not-the-whole-design"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:the-design-reference-is-scoped-to-the-black-box-under-work",
+      "properties": {},
+      "to_id": "epoch:2026-09-13-the-design-reference-is-the-black-box-under-work-not-the-whole-design"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:the-design-type-list-moves-down-to-the-vocabulary",
       "properties": {},
       "to_id": "epoch:v0370"
@@ -10928,6 +10948,18 @@
       "from_id": "snap:epoch:2026-09-11-the-seven-unsatisfied-requirements-are-ruled-on:req:every-finding-of-the-tool-sweep-is-addressed-or-ruled-on",
       "properties": {},
       "to_id": "epoch:2026-09-11-the-seven-unsatisfied-requirements-are-ruled-on"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:2026-09-13-the-design-reference-is-the-black-box-under-work-not-the-whole-design:cap:the-design-reference-is-served-compact-code-shaped-and-derived-for-the-implementing-agent",
+      "properties": {},
+      "to_id": "epoch:2026-09-13-the-design-reference-is-the-black-box-under-work-not-the-whole-design"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:2026-09-13-the-design-reference-is-the-black-box-under-work-not-the-whole-design:req:the-implementing-agent-holds-a-compact-design-reference-derived-from-the-graph",
+      "properties": {},
+      "to_id": "epoch:2026-09-13-the-design-reference-is-the-black-box-under-work-not-the-whole-design"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -13887,6 +13919,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-a-quantity-that-crosses-a-seam-carries-its-unit-and-the-seam-check-compares-them",
+      "properties": {
+        "acted_at": "2026-09-13",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-a-rejected-field-says-whether-it-moved-or-was-never-there",
       "properties": {
         "acted_at": "2026-09-07T00:00:00Z",
@@ -14534,6 +14575,15 @@
       "from_id": "dec:idea-enum-near-synonyms-are-accepted-with-a-note",
       "properties": {
         "acted_at": "2026-09-06",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-every-design-starts-as-a-pseudo-design-and-whether-reflow2-already-holds-that-layer",
+      "properties": {
+        "acted_at": "2026-09-13",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -18718,10 +18768,28 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-project-declares-its-unit-system-as-a-governed-rule-and-undeclared-or-off-system-units-are-reported",
+      "properties": {
+        "acted_at": "2026-09-13",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:a-project-records-how-it-ships",
       "properties": {
         "acted_at": "2026-07-31",
         "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-quantity-that-crosses-a-published-boundary-declares-its-unit-and-the-seam-check-compares-them",
+      "properties": {
+        "acted_at": "2026-09-13",
+        "role": "approver"
       },
       "to_id": "who:ajs"
     },
@@ -19132,6 +19200,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:every-capability-is-asked-for-its-signature-and-the-unsigned-fraction-is-reported",
+      "properties": {
+        "acted_at": "2026-09-13",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:every-finding-of-the-tool-sweep-is-addressed-or-ruled-on",
       "properties": {
         "acted_at": "2026-09-11",
@@ -19494,6 +19571,15 @@
       "from_id": "req:the-hosted-surface-is-read-only-so-it-can-ship-before-authentication-exists",
       "properties": {
         "acted_at": "2026-08-26",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:the-implementing-agent-holds-a-compact-design-reference-derived-from-the-graph",
+      "properties": {
+        "acted_at": "2026-09-13",
         "role": "approver"
       },
       "to_id": "who:ajs"
@@ -40159,6 +40245,24 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-design-reference-capability-takes-a-required-seed",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:the-design-reference-is-served-compact-code-shaped-and-derived-for-the-implementing-agent"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-design-reference-is-scoped-to-the-black-box-under-work",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:the-implementing-agent-holds-a-compact-design-reference-derived-from-the-graph"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-design-type-list-moves-down-to-the-vocabulary",
       "properties": {
         "accepted_baseline": true,
@@ -47314,6 +47418,36 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-a-quantity-that-crosses-a-seam-carries-its-unit-and-the-seam-check-compares-them",
+      "properties": {
+        "evidence": "Option B is a change inside the budget roll-up, which today sums CONSTRAINS.contribution floats and trusts the Constraint.quantity suffix for the unit — the one place reflow2 already adds numbers blind.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "cap:budget"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-a-quantity-that-crosses-a-seam-carries-its-unit-and-the-seam-check-compares-them",
+      "properties": {
+        "evidence": "A unit axis has to be WRITABLE before it can be compared: set_interface_spec and the nine agreement axes are the write side that option A extends, and the same materialised-default trap (unspecified read as an answer) applies to it.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "cap:interface-spec"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-a-quantity-that-crosses-a-seam-carries-its-unit-and-the-seam-check-compares-them",
+      "properties": {
+        "evidence": "Option A, the recommended one, is a tenth property compared by the seam check that already compares paradigm, payload_format, auth and transport_security across a published/required pair; without that check a unit declaration on an interface is inert.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "cap:seam-incompatibility"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "dec:idea-a-recorded-questions-wording-can-be-corrected",
       "properties": {
         "evidence": "Fixing the rehydrate guard removes the commonest way a Question's wording degrades, which changes how much this question is worth answering — but not whether it needs answering, since a badly-phrased question is equally permanent. The dependency is on how urgent this is, not on whether it is real.",
@@ -47512,6 +47646,26 @@
         "weight_basis": "estimated"
       },
       "to_id": "fact:defect-link-artifact-has-no-type-for-a-test-source"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-every-design-starts-as-a-pseudo-design-and-whether-reflow2-already-holds-that-layer",
+      "properties": {
+        "evidence": "Option F, the house-and-satellite half of his framing, is exactly the delivery gap that idea holds (neutral nouns, software-shaped examples, unbuilt environment layer); a pseudo-design for a physical domain is worth nothing until that thread moves.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-reflow2-serves-a-project-that-is-not-software"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-every-design-starts-as-a-pseudo-design-and-whether-reflow2-already-holds-that-layer",
+      "properties": {
+        "evidence": "A pseudo-design is that requirement's black box with its inside left empty: function and interfaces stated, mechanism and structure not. Every option here presumes that shape; without it there is no layer to name.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "req:recursive-black-box-decomposition"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -48592,6 +48746,26 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "req:a-project-declares-its-unit-system-as-a-governed-rule-and-undeclared-or-off-system-units-are-reported",
+      "properties": {
+        "evidence": "The rule sweep has nothing to check until units are declared somewhere in the design; the boundary axis is the first place they get declared, so this requirement follows that one rather than leading it.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "req:a-quantity-that-crosses-a-published-boundary-declares-its-unit-and-the-seam-check-compares-them"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "req:a-project-declares-its-unit-system-as-a-governed-rule-and-undeclared-or-off-system-units-are-reported",
+      "properties": {
+        "evidence": "A unit-system rule is one instance of a rule the project follows: it is captured with its consequence stated (stop the build or advise) and its violation computed, which is exactly the machinery that requirement provides.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "req:a-rule-is-recorded-with-its-consequence"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "req:a-project-records-how-it-ships",
       "properties": {
         "note": "THE BLOCKER, DRAWN AS AN EDGE RATHER THAN LEFT IN PROSE. This requirement wants the release procedure held as an ordered process, and cap:model-process is the Flow machinery that would hold it. It CANNOT yet: PART_OF_FLOW is declared Capability -> Flow and accepts nothing else, so a Flow's steps must be Capabilities, and a release chore is not a capability. Until that widens (a schema change, which moves the stamp), this requirement is unsatisfiable by the vocabulary it needs. Recorded as an edge deliberately — this session's own finding was that a prerequisite written into a description is a trigger nothing fires (cap:what-next sat parked after its condition cleared, because nothing watched the prose).",
@@ -48817,6 +48991,16 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "req:intent-is-reinjected",
+      "properties": {
+        "evidence": "The July requirement asks that design intent be re-read into a long build on a counter and on drift symptoms, and never said what gets re-read; this reference is that payload, so re-injection is only worth anything once the reference exists.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "req:the-implementing-agent-holds-a-compact-design-reference-derived-from-the-graph"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "req:mode-is-chosen-and-changeable",
       "properties": {
         "optional": false,
@@ -48992,6 +49176,26 @@
         "weight_basis": "estimated"
       },
       "to_id": "dec:idea-how-does-the-graph-learn-what-a-session-invalidated"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "req:the-implementing-agent-holds-a-compact-design-reference-derived-from-the-graph",
+      "properties": {
+        "evidence": "A reference whose function headers are 244 of 247 unsigned is a list of names; the reference has content only once signatures are asked for at capture.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "req:every-capability-is-asked-for-its-signature-and-the-unsigned-fraction-is-reported"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "req:the-implementing-agent-holds-a-compact-design-reference-derived-from-the-graph",
+      "properties": {
+        "evidence": "The reference is the black-box statement of the design with the insides left empty — function and ports, no mechanism; that requirement defines the shape this one serves.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "req:recursive-black-box-decomposition"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -50516,6 +50720,22 @@
     },
     {
       "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-a-quantity-that-crosses-a-seam-carries-its-unit-and-the-seam-check-compares-them",
+      "properties": {
+        "evidence": "Option C of the brainstorm, promoted to accepted intent on Anthony's word 2026-09-13: the project's unit system is a governed rule and a missing or off-system unit is reported. Options B, D, E and F stay recorded on the idea as roads not taken."
+      },
+      "to_id": "req:a-project-declares-its-unit-system-as-a-governed-rule-and-undeclared-or-off-system-units-are-reported"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-a-quantity-that-crosses-a-seam-carries-its-unit-and-the-seam-check-compares-them",
+      "properties": {
+        "evidence": "Option A of the brainstorm, promoted to accepted intent on Anthony's word 2026-09-13: units become a tenth agreement axis on the interface contract and the seam check compares them."
+      },
+      "to_id": "req:a-quantity-that-crosses-a-published-boundary-declares-its-unit-and-the-seam-check-compares-them"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
       "from_id": "dec:idea-a-status-that-advances-past-its-own-prose",
       "properties": {
         "evidence": "The idea, captured 2026-09-02 from the dev_storyflow report, turned over four options A-D. Anthony chose A on 2026-09-04 ('build the status-vs-prose sentence') and this capability is that build: one block in the reply the caller already receives, at the moment the divergence is created. The decision's status is left `proposed` deliberately - the ruling is his and recording it as accepted on his behalf is what dec:certainty-derived forbids."
@@ -50585,6 +50805,22 @@
         "evidence": "Drawn FROM that node INTO this one: it held 'maybe the graph should keep a table of terms' as a standalone idea; this is the same thought grown up, with a procedure that would FILL the table and, more importantly, a different answer about where the table lives. Same conversation, minutes apart, and the second form is materially better than the first — which is the reason to keep both rather than overwrite."
       },
       "to_id": "dec:idea-the-term-table-is-the-residue-of-a-capture-procedure-not-a-maintained-artifact"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-every-design-starts-as-a-pseudo-design-and-whether-reflow2-already-holds-that-layer",
+      "properties": {
+        "evidence": "Option C, promoted on Anthony's word 2026-09-13: populate the function half so the layer has content, not only statuses. Options B, D, E, F and G stay on the idea as roads not taken."
+      },
+      "to_id": "req:every-capability-is-asked-for-its-signature-and-the-unsigned-fraction-is-reported"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-every-design-starts-as-a-pseudo-design-and-whether-reflow2-already-holds-that-layer",
+      "properties": {
+        "evidence": "Option A, promoted on Anthony's word 2026-09-13 and sharpened by him in the promotion: the one-page layer is a reference for the implementing agent, held like pseudocode, not a rendering for a person."
+      },
+      "to_id": "req:the-implementing-agent-holds-a-compact-design-reference-derived-from-the-graph"
     },
     {
       "edge_type": "EVOLVES_INTO",
@@ -60481,6 +60717,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:the-design-reference-is-served-compact-code-shaped-and-derived-for-the-implementing-agent",
+      "properties": {},
+      "to_id": "snap:epoch:2026-09-13-the-design-reference-is-the-black-box-under-work-not-the-whole-design:cap:the-design-reference-is-served-compact-code-shaped-and-derived-for-the-implementing-agent"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "cap:the-server-writes-the-export-through-and-chains-it-from-main",
       "properties": {},
       "to_id": "snap:epoch:preserved-on-write:cap:the-server-writes-the-export-through-and-chains-it-from-main"
@@ -61588,6 +61830,12 @@
       "from_id": "req:the-export-is-serialised-rather-than-socially-enforced",
       "properties": {},
       "to_id": "snap:epoch:export-rule-enters-the-governance-layer:req:the-export-is-serialised-rather-than-socially-enforced"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "req:the-implementing-agent-holds-a-compact-design-reference-derived-from-the-graph",
+      "properties": {},
+      "to_id": "snap:epoch:2026-09-13-the-design-reference-is-the-black-box-under-work-not-the-whole-design:req:the-implementing-agent-holds-a-compact-design-reference-derived-from-the-graph"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -181378,6 +181626,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:a-boundary-quantity-carries-its-unit-and-the-seam-compares-them",
+      "properties": {},
+      "to_id": "req:a-quantity-that-crosses-a-published-boundary-declares-its-unit-and-the-seam-check-compares-them"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:a-capability-declares-what-kind-of-thing-delivers-it",
       "properties": {},
       "to_id": "req:delivery-counts-work-that-is-not-code"
@@ -181549,6 +181803,12 @@
       "from_id": "cap:a-node-attached-to-nothing-is-reported-whatever-its-type",
       "properties": {},
       "to_id": "req:a-report-says-what-it-swept-and-whether-its-checks-ran"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:a-projects-unit-system-is-a-governed-rule-and-a-sweep-reports-unitless-and-off-system-quantities",
+      "properties": {},
+      "to_id": "req:a-project-declares-its-unit-system-as-a-governed-rule-and-undeclared-or-off-system-units-are-reported"
     },
     {
       "edge_type": "SATISFIES",
@@ -181797,6 +182057,12 @@
       "from_id": "cap:bulk-forms",
       "properties": {},
       "to_id": "req:agent-native"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:capture-asks-for-the-signature-and-the-unsigned-fraction-is-one-finding",
+      "properties": {},
+      "to_id": "req:every-capability-is-asked-for-its-signature-and-the-unsigned-fraction-is-reported"
     },
     {
       "edge_type": "SATISFIES",
@@ -182931,6 +183197,12 @@
       "from_id": "cap:the-design-record-merges-per-node-in-every-clone",
       "properties": {},
       "to_id": "req:the-git-exchange-path-is-defended-not-only-documented"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:the-design-reference-is-served-compact-code-shaped-and-derived-for-the-implementing-agent",
+      "properties": {},
+      "to_id": "req:the-implementing-agent-holds-a-compact-design-reference-derived-from-the-graph"
     },
     {
       "edge_type": "SATISFIES",
@@ -192928,6 +193200,17 @@
       }
     },
     {
+      "node_id": "cap:a-boundary-quantity-carries-its-unit-and-the-seam-compares-them",
+      "node_type": "Capability",
+      "properties": {
+        "description": "The write side: set_interface_spec gains a tenth agreement axis — a small structure of quantity name to unit (not a free string and not an enum), on the provider's published boundary and on the consumer's required boundary. The read side: the seam-incompatibility check, which already compares paradigm, payload_format, auth and transport_security across a published/required pair, compares the two unit maps quantity by quantity and reports a disagreement; and the incomplete-published-contract finding names the axis when a boundary that carries quantities states no units. `unspecified` and absence read as UNKNOWN, never as agreement — the materialised-default trap (fact:a-materialised-default-defeats-a-completeness-check) applies to this axis as to the other nine. Unit strings compare by exact spelling in the first cut; whether a canonical unit vocabulary is needed is the brainstorm's option F, deliberately not taken first. Planned 2026-09-13.",
+        "name": "A published boundary declares the unit of each quantity it carries, and the seam check reports the two sides disagreeing or one side silent",
+        "provenance": "authored",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:a-capability-declares-what-kind-of-thing-delivers-it",
       "node_type": "Capability",
       "properties": {
@@ -193205,6 +193488,17 @@
         "name": "A node attached to nothing is reported whatever its type, and a property that names a live node counts as attachment",
         "provenance": "authored",
         "status": "realized"
+      }
+    },
+    {
+      "node_id": "cap:a-projects-unit-system-is-a-governed-rule-and-a-sweep-reports-unitless-and-off-system-quantities",
+      "node_type": "Capability",
+      "properties": {
+        "description": "A DesignRule of a declared kind carries the unit system per quantity kind (e.g. mass: kg, energy: eV, length: mm); it is captured through governance-proposal, so the owner says whether a violation stops the build and the answer is recorded either way. A detector walks the unit-bearing fields the design holds — Constraint.quantity and CONSTRAINS.contribution, the unit axis on published boundaries, and any field added later that carries a unit — and reports (i) a quantity with no unit, (ii) a unit outside the declared system. It reports its own population (how many unit-bearing fields it examined) and says plainly when that was zero, per the rule that a detector with nothing to run on must not read like one that ran clean. Planned 2026-09-13; depends on the boundary unit axis existing, since Constraint.quantity is today the only unit-bearing field and it carries its unit as a name suffix.",
+        "name": "A project's unit system is a governed rule, and a sweep reports every quantity with no unit or a unit outside the system, saying when it had nothing to run on",
+        "provenance": "authored",
+        "status": "planned",
+        "tier": "operational"
       }
     },
     {
@@ -193850,6 +194144,17 @@
         "name": "One call where the surface measured N",
         "provenance": "authored",
         "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:capture-asks-for-the-signature-and-the-unsigned-fraction-is-one-finding",
+      "node_type": "Capability",
+      "properties": {
+        "description": "The two legs missing since v0.35.0 around set_capability_signature. Instruction leg: genesis, capture-intent and adopt's recover step carry the question in the user's domain words (\"what goes into it, what comes out?\") and write the signature at capture; add_capability's loop_hint names set_capability_signature as the next call when inputs/outputs were not given. Absence leg: one detector, keyed on the practice (aggregate_gap_keying), reports \"N of M capabilities carry no signature\" with the list, at low severity — never one finding per capability. Planned 2026-09-13.",
+        "name": "The guided capture paths ask each capability what it takes in and gives out, add_capability names the signature as the next call, and the unsigned fraction is one aggregate finding",
+        "provenance": "authored",
+        "status": "planned",
         "tier": "operational"
       }
     },
@@ -195590,6 +195895,17 @@
         "name": "The installer registers reflow2's merge driver, so a collaborator's clone merges the design per node rather than by lines",
         "provenance": "authored",
         "status": "realized"
+      }
+    },
+    {
+      "node_id": "cap:the-design-reference-is-served-compact-code-shaped-and-derived-for-the-implementing-agent",
+      "node_type": "Capability",
+      "properties": {
+        "description": "One served read that takes a REQUIRED seed — the Component (or Capability) under work — and renders its black box in a code-like form: the requirements that box satisfies; each of its capabilities as a function header with its signature (name, inputs, outputs, kind) or an explicit \"unsigned\" marker; the Constraints and enforced DesignRules that bind it, with units and consequence; each Interface it provides or consumes as a port, `unspecified` shown as such, and for every port the far-side box as a header only; the parent's contract; nothing else. The region is the seed's containment closure plus a propagation radius — the same computation claim_region and scoped detect_gaps use — and the reply reports what it left out (share of the design in scope, total against in-scope) so a narrowed reference never reads as the whole. The whole design is refused as a seed: there is no unscoped form, by Anthony's word 2026-09-13 (chg:the-design-reference-capability-takes-a-required-seed) — \"here is the whole car design again\" is the failure this exists to avoid. Every line traces to a node id, so a fill-in is detectable; the reply reports its own size and the fraction of the box's capabilities unsigned. The same payload is what req:intent-is-reinjected re-injects into a long build. Not a persisted document and not a grammar: a projection over the schema that already exists, in the structured natural language language models already read. Planned 2026-09-13.",
+        "name": "The design reference for one black box — its function, constraints, ports and the far side of each port — is served compact and code-shaped for the implementing agent, derived from the graph on every read",
+        "provenance": "authored",
+        "status": "planned",
+        "tier": "operational"
       }
     },
     {
@@ -203253,6 +203569,24 @@
       }
     },
     {
+      "node_id": "chg:the-design-reference-capability-takes-a-required-seed",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "The design-reference capability's scope goes from optional narrowing to a required seed: the reference is served for one black box and its ports, never for the whole design",
+        "subject": "record"
+      }
+    },
+    {
+      "node_id": "chg:the-design-reference-is-scoped-to-the-black-box-under-work",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "The design-reference requirement is revised from \"sized to hold the design\" to \"the black box under work, its constraints, its ports and the far side of each port\" — the whole design is never the unit",
+        "subject": "record"
+      }
+    },
+    {
       "node_id": "chg:the-design-type-list-moves-down-to-the-vocabulary",
       "node_type": "ChangeEvent",
       "properties": {
@@ -207465,6 +207799,17 @@
       }
     },
     {
+      "node_id": "dec:idea-a-quantity-that-crosses-a-seam-carries-its-unit-and-the-seam-check-compares-them",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-09-13, after reading the SimScale account of the 1999 Mars Climate Orbiter loss (https://www.simscale.com/blog/nasa-mars-climate-orbiter-metric/): Lockheed Martin's ground software produced thruster impulse in pound-force-seconds; JPL's navigation software read the same file as newton-seconds; the Software Interface Specification said SI; nobody compared the two sides; ground models did not catch it; the board named a systems-engineering function \"not robust enough\"; $125M spacecraft lost. His question: how can reflow2 insert checks that a design is done in proper units?\n\nWHAT THE DESIGN HOLDS TODAY (measured 2026-09-13): units appear in exactly ONE place — Constraint.quantity is a \"unit-bearing name\" by convention (mass_kg, latency_ms) and CONSTRAINS.contribution is a bare float \"in the Constraint's quantity unit\". The Interface contract has nine agreement axes (medium, paradigm, payload_format, payload_schema, endpoint, operations, auth, transport_security, designation) and NONE is units. The capability signature (inputs/outputs) is free strings. Verification carries no measured value at all. So the MCO defect — a unit disagreement at a seam — is not expressible, let alone detectable.\n\nTHE OPTIONS, in his words where he gave them:\n\nA. UNITS AS A TENTH AGREEMENT AXIS ON THE INTERFACE CONTRACT, COMPARED AT THE SEAM. The provider's published boundary declares the unit of each quantity it carries; the consumer's required boundary declares what it expects; the seam-incompatibility check that already compares paradigm, payload_format, auth and transport_security across a pair compares units too. This is the exact MCO shape (two organisations, one file, one seam) and it lands on machinery that exists. CHEAP: one field plus one comparison in an existing detector. COUNTER: payload_schema is free text today, so per-field units need a small structure (field → unit), not another enum; a unit string is only comparable if both sides spell it the same way, which pulls toward a canonical unit vocabulary (see F). And `unspecified` must read as unknown, never as agreement — the standing rule from the seam requirement.\n\nB. THE BUDGET ROLL-UP CHECKS THAT EVERY CONTRIBUTION NAMES THE SAME UNIT AS THE CONSTRAINT. Today budget_report sums bare floats and trusts that each was typed in the constraint's unit — a contribution of 6.9 (lb) against a limit of 100 (kg) rolls up silently. Make `unit` a real property on Constraint (instead of a suffix convention) and on the CONSTRAINS edge, and report any edge whose unit is absent or differs. CHEAP: a property and a comparison inside a report that already exists. COUNTER: this only catches a DECLARED disagreement; a number typed in the wrong unit with the right label looks identical to a correct one, which is precisely how MCO happened. The honest claim is \"absence and disagreement are reported\", not \"wrong units are caught\".\n\nC. A PROJECT-LEVEL UNIT SYSTEM AS A GOVERNED RULE. The project declares \"this design is SI\" (or names the system per quantity kind) the way it declares any other rule it follows, chooses whether breaking it stops the build, and a detector walks every unit-bearing field (Constraint, CONSTRAINS, interface quantities, capability signatures, verification measurements) and reports (i) a quantity with NO unit and (ii) a unit outside the declared system. This is the MCO board's own finding — the SE function was not robust enough — made mechanical. MEDIUM: one rule kind, one sweep over known fields. COUNTER: a design that has declared no quantities at all reads clean, and the detector must say it had nothing to run on (the zero-that-is-not-an-all-clear rule). Also NSLS-II and most real designs are legitimately mixed (eV, Å, mm, seconds) — the rule must be per quantity kind, not one blanket system, or it nags honest designs.\n\nD. THE CAPABILITY SIGNATURE CARRIES UNITS. `inputs`/`outputs` become typed (name, unit) pairs, so the black-box interface at the capability tier says \"thrust in N\" and a consuming capability whose input says \"thrust in lbf\" is a finding. MEDIUM. COUNTER: 0 of 170 signatures were set when the setter shipped and the graph deliberately raises no gap for a missing one; a unit check here has nothing to run on until signatures are in the habit. The three-legs rule applies — typed tool, instruction, and a detector that notices absence — and only the first leg exists.\n\nE. A VERIFICATION RECORDS THE UNIT IT MEASURED IN, AND IT MUST MATCH THE REQUIREMENT'S. MCO's ground models \"failed to detect the error\" because they consumed the same mislabelled data; a check that passes in the wrong unit is worse than no check. Add measured value + unit to Verification and compare against the unit of what it verifies. COUNTER: Verification has no numeric fields today, so this is a schema move for a case that is rarer than A and B; and most of reflow2's own 254 checks are pass/fail, not measurements.\n\nF. A UNIT VOCABULARY AS A FIRST-CLASS THING — a Quantity/Unit node type with canonical symbols and dimension, every unit-bearing field referencing it, dimensional analysis across edges. This is the \"proper\" answer and the over-engineered one: a units library inside a design tool, for a check that A and B deliver 80% of with two strings. Recorded so the road not taken is on the record; not recommended first.\n\n⭐ THE READING (a finding, not a decision): A first — it is the MCO failure exactly, and the seam comparison already exists and is measured to be the only place a cross-pair property mismatch can ever be found. B second, because the budget roll-up is the one place reflow2 already ADDS numbers and does so blind. C is the governance half and should follow A and B, once there are declared units for it to check. D and E wait for the habits they depend on. F is the road not to take first.\n\n🛑 THE HONEST LIMIT, stated so it is not oversold: reflow2 sees only what a design DECLARES. It can force the declaration to exist at a seam (absence is a finding), compare two declarations (disagreement is a finding), and roll a rule across the design (an undeclared quantity is a finding). It cannot read the units a program actually computes in — MCO's defect was in code whose spec said the right thing. What reflow2 adds is the review the MCO board said was missing: the two sides' declarations put side by side, mechanically, every time, instead of by a reviewer who did not know to look.",
+        "kind": "exploratory",
+        "name": "OPEN — how does a design get checked for being done in proper units of measurement? The Mars Climate Orbiter shape: a quantity crossed a seam in pounds-force and was read as newtons, the spec said SI, and no review compared the two sides",
+        "rationale": "Anthony's brainstorm; recorded so the options and their counter-arguments survive the conversation. Why it is worth holding at all: the seam-incompatibility trial (2026-07-28) proved that composition plus the ordinary detectors checks connectivity, not compatibility, and that only a property-by-property comparison across a pair of interfaces can find a contract mismatch — a unit mismatch is that class of defect, and it is the one with the most famous price tag in the field. The design has the machinery (interface agreement axes, seam check, budget roll-up, governed rules) and lacks the one axis.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-a-recorded-questions-wording-can-be-corrected",
       "node_type": "Decision",
       "properties": {
@@ -208288,6 +208633,17 @@
         "kind": "exploratory",
         "name": "OPEN — should an enum field accept an obvious near-synonym (`test` → `code`, `additive` → `new_feature`) and say so in the reply, or is a synonym a judgement the caller has to make?",
         "rationale": "COUNTER-ARGUMENTS. (a) makes a judgement on the caller's behalf — `test` → `code` throws away the very distinction the test-source defect says is missing, and `additive` → `new_feature` could equally mean `scope_change`; a synonym table also grows without bound and the reply note is easy to skim. (b) is what exists, is honest, and the reporter called it 'the right failure mode' — the cost is one round-trip per new vocabulary word, paid once per agent. (c) is the one case where the ask is really a vocabulary gap, and it is already on the record. A RANKING IS A FINDING: (b) with (c) fixed, and (a) only for a spelling that maps to exactly one value with no meaning lost — if any such pair exists. Anthony's call.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-every-design-starts-as-a-pseudo-design-and-whether-reflow2-already-holds-that-layer",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-09-13, following the units brainstorm.\n\nHIS FRAMING, in his words: reflow2's opening statement was \"design anything\", and the natural domain is obviously coding projects — designing a house or a new weather satellite is not. What if every design first started with a \"pseudocode\" design, or a \"pseudo-design\": the scaffolding/concept of a design, what other domains call a mockup? Review https://github.com/paralleldrive/sudolang for ideas. He is driving at a formal LAYER in the graph that captures the pseudo-design. Far-out extreme: if there is no language an AI agent can understand for this, invent a \"pseudo-design\" / \"pseudo-systems-engineering\" language. His own counter: reflow2 may already build some pseudo-design concept natively into the graph.\n\nWHAT SUDOLANG IS (read 2026-09-13): a pseudocode language for collaborating with language models — interfaces (typed structures), natural-language constraints \"continuously respected by the AI\", functions and a pipe operator, /commands as the chat surface, semantic pattern matching. Its load-bearing claim: \"All sufficiently advanced language models understand it without any special prompting. You do not need to paste the SudoLang specification.\" It is domain-independent because it is declarative and constraint-based rather than syntax-bound. Its constructs map onto reflow2's vocabulary almost one to one: interface → Interface/Component, constraint → Constraint/DesignRule, requirement → Requirement, function → Capability (with a signature), /command → a served skill. What SudoLang has that reflow2 does not: a human can WRITE and READ the whole program on one page.\n\n═══ THE COUNTER HE RAISED IS LARGELY RIGHT, AND HERE IS THE MEASUREMENT ═══\nreflow2 already holds a pseudo-design layer. It is distributed and unnamed:\n· GENESIS STOPS AT FUNCTION. The greenfield skill seeds requirements (P0) and capabilities (P1) and says \"Do NOT create Components (P2) yet — leaving structure unspecified is deliberate\"; the `concept_without_design` detector fires at zero Components and is the question \"how should this be structured?\", answered with the user. That IS a concept phase, enforced.\n· THE MATURITY TRAJECTORY is the ladder from concept to implementable: intent → function → allocation → seams → realization → assurance → operation, \"function first, structure later\", with the frontier named and no verdict on where a design SHOULD sit (\"a demonstrator may sit at 40% forever and be right\").\n· EVERY NODE IS BORN PLANNED. Component, Capability, Artifact and Release all land at `planned`; Requirement at `proposed`; Decision at `proposed`; an Interface's medium at `unspecified`. A design made only of planned things IS a mockup.\n· THE BLACK BOX WITHOUT ITS INSIDE. req:recursive-black-box-decomposition: every element is a black box with inner function and interfaces; a capability signature (inputs/outputs) describes function without mechanism — the pseudocode of a capability. Capability.delivery = `model` lets model work be reported delivered — the mockup as a deliverable.\n· THE BUILD TIER ALREADY HAS `pseudocode`: Fragment.fragment_type includes it, phase P0–P5, note_kind author = \"the implementer's intent/pseudocode\".\n· IDEAS BEFORE INTENT: exploratory Decisions (87 on this graph) are thought recorded as thought.\n· TEXT IN, DESIGN OUT already exists: ingest_step extracts a design from freeform text with the agent as the model (verified), and corpus ingest does it for a folder.\n\nAND THE MEASUREMENT OF HOW MUCH OF THAT LAYER IS ACTUALLY REACHED, on reflow2's own graph 2026-09-13: capability signatures set on 3 of 247; delivery=model on 2; Fragment pseudocode on 0 of 268 (257 are `implementation`); artifact types used: code 225, document 74, spec 11, test 30, config 2 — and model, drawing, diagram, asset, binary, data, test_result: ZERO; Project.domain = \"software\", written by genesis and read by nothing; 5 of 22 interfaces still at medium unspecified. Sideways finding worth its own look: 106 of 108 Components read `planned` on a shipped system — the status was never moved, so \"born planned\" is also \"never promoted\".\n\nSo the honest statement: THE VOCABULARY FOR A PSEUDO-DESIGN EXISTS AND THE PROCESS ENFORCES ITS ORDER; WHAT DOES NOT EXIST IS (1) A NAME FOR THE LAYER AND A WAY TO SEE IT AS ONE THING, (2) THE FUNCTION HALF POPULATED (signatures), (3) A COMPACT TEXT FORM A PERSON CAN WRITE AND READ, and (4) NON-SOFTWARE WORKED PATHS — the same gap dec:idea-reflow2-serves-a-project-that-is-not-software records (neutral nouns, software-shaped examples, and the Environment/EnvironmentRule compliance layer \"that makes design a house concrete\" designed and never built).\n\n═══ OPTIONS, none chosen ═══\n(A) NAME THE LAYER AND RENDER IT. \"Pseudo-design\" = the design with nothing realized: requirements, capabilities with signatures, constraints with units, boundaries named even if unspecified, no components required. One computed view reads it back as a whole — the concept on one page — under the standing doctrine that reflow2 serves content and the agent renders (the same division the SV-1/SV-4 increment uses). CHEAP: a projection over what exists. COUNTER: another view nobody reads is the vocabulary-nothing-reaches disease; it earns its place only if genesis and where-am-i hand it to the user unasked.\n\n(B) A COMPACT TEXT FORM, ROUND-TRIPPABLE — the SudoLang idea applied honestly. Render the pseudo-design as structured natural language (shall-statements, capability signatures as function headers, black boxes with ports, constraints with units, rules as constraints \"continuously respected\") that a person can edit; ingest reads the same form back. Half of this exists (ingest_step, graph_report_markdown, export_surface). SudoLang's real lesson is that the agent needs NO new language — structured English with constraints is already understood — so the design of the form is a rendering convention, not a grammar. COUNTER: a second serialization drifts from the schema; views must be pure projections and any renderer fill-in is a defect (his UAF doctrine); and \"invent our own pseudo-SE language\" is the over-engineering he watches for — the schema IS the language, and describe_schema already serves it to the agent.\n\n(C) POPULATE THE FUNCTION HALF — make the capability signature the pseudocode of the design. The setter exists; the instruction leg and the absence-noticing leg do not (3 of 247). Genesis and capture-intent ask \"what does it take in, what does it give out?\" for every capability, and the concept view reports the fraction signed. CHEAP, and it is the half of \"pseudo-design\" that has content rather than status. COUNTER: the three-legs rule was already stated for this exact field and only one leg was built, deliberately, to avoid 170 findings overnight — so the detector must be aggregate.\n\n(D) DECLARE THE PHASE, OR DERIVE IT. A design at concept stage says so (declared) or is read as such from zero Components (derived) so detectors stop reporting a mockup's islands as defects — dec:idea-a-detector-can-read-the-phase-the-design-already-declares, already open. COUNTER recorded there: a declared marker nothing reads is the disease; a consumer design measured ZERO Epoch nodes after months, so phase-by-epoch is dead on arrival.\n\n(E) A CONCEPT-COMPLETE CHECK — the SRR/SDR made computable: every requirement has a capability, every capability a signature, every external boundary named, every quantity a unit; reported as readiness to structure, never as a gate. COUNTER: QualityGate was retired because the phase gate dissolved into the detectors; this would re-invent it unless it is a report, not a stop.\n\n(F) THE PHYSICAL-DOMAIN HALF — mockup as drawings and models: Artifact types model/drawing/diagram exist and are used ZERO times; the Environment/EnvironmentRule layer (codes, site, physics) is designed and unbuilt; one worked non-software example end to end (Alex's shop, a house) is the cheapest evidence. COUNTER: it is the delivery gap already open under Alex's name, and it is a different problem from the layer question — solving one is not solving the other.\n\n(G) NOTHING. The order is enforced, the vocabulary is neutral, the agent adapts. COUNTER: the second user concluded the opposite from what he saw, and the owner has now asked the same question from the other side.\n\n⭐ THE READING (a finding, not a decision): the counter is right that the LAYER exists; it is wrong that it is VISIBLE. C and A together are the cheap, honest move — give the pseudo-design content (signatures) and a single readable projection — and they make B mostly unnecessary because a rendered concept page in structured English IS the SudoLang form, produced by the agent from the graph rather than parsed into it. F is real but is Alex's open thread, not this one. Inventing a language is the road not to take: SudoLang's own claim is that the language already exists.",
+        "kind": "exploratory",
+        "name": "OPEN — should every design start as a \"pseudo-design\" (scaffolding, concept, mockup) in a formal layer of the graph, possibly in an agent-readable notation like SudoLang — or does reflow2 already hold that layer natively and only fail to show it?",
+        "rationale": "Anthony's brainstorm, following the units question. Recorded because his own counter (\"reflow2 may already build this natively\") turned out to be measurable and largely true, and the measurement — which pieces of the concept-stage vocabulary are reached on reflow2's own graph — is the part that would be lost if only the conversation held it. The SudoLang comparison is recorded so the \"invent our own language\" option carries its strongest counter-argument in the language's own words.",
         "status": "proposed"
       }
     },
@@ -213308,6 +213664,17 @@
         "epoch_type": "milestone",
         "name": "The seven unsatisfied requirements are ruled on and ordered",
         "sequence": 429,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:2026-09-13-the-design-reference-is-the-black-box-under-work-not-the-whole-design",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "description": "Anthony, 2026-09-13, minutes after accepting the design-reference requirement: \"in a large design, I'm not sure [re-injecting the design] is a good idea. Say I was designing an exhaust manifold for an engine of a car and the manifold was taking a long time — I don't think it'd be appropriate to say, here is the whole car design again. It may be more appropriate that the neighbourhood of the design was re-injected. Or in terms of systems engineering, maybe its black box and interface were injected. That may help keep the AI agent focused and not flood context with a lot of non-relevant information.\" The requirement as first written said the reference is sized to hold the design; this revision makes the unit of the reference the black box under work — its function, its constraints, its ports, and the far side of each port — and never the design as a whole.",
+        "epoch_type": "revision",
+        "name": "The agent's design reference is scoped to the black box under work and its interfaces, not the whole design",
+        "sequence": 443,
         "status": "arrived"
       }
     },
@@ -221251,6 +221618,19 @@
       }
     },
     {
+      "node_id": "req:a-project-declares-its-unit-system-as-a-governed-rule-and-undeclared-or-off-system-units-are-reported",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "lineage": "original",
+        "name": "A project declares its unit system as a governed rule, and a quantity with no unit or a unit outside the system is reported",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "A project can state the unit system its design is done in — per quantity kind (mass in kg, energy in eV, length in mm), not one blanket system, because real designs are legitimately mixed — as a rule the project follows, captured the way any other rule is (req:a-rule-is-recorded-with-its-consequence): the owner is asked whether breaking it stops the build, and the answer is recorded either way. A detector walks every unit-bearing field the design holds — a Constraint's quantity and its contributions, the units on a published boundary's quantities, and any later field that carries a unit — and reports (i) a quantity that names NO unit and (ii) a unit outside the declared system. Absence is a finding, not a judgement. The detector says when it had nothing to run on: a design that has declared no quantities reads as unchecked, never as clean. Chosen by Anthony on 2026-09-13 after the Mars Climate Orbiter account, whose review board found the systems-engineering function \"not robust enough\" to catch a unit mismatch — this is that review made mechanical. Distinct from the seam requirement (req:a-quantity-that-crosses-a-published-boundary-declares-its-unit-and-the-seam-check-compares-them), which compares two sides of one boundary; this checks the whole design against one declared rule, and it has nothing to check until units are declared somewhere, so it follows that requirement rather than leading it.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "req:a-project-records-how-it-ships",
       "node_type": "Requirement",
       "properties": {
@@ -221262,6 +221642,19 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "A design that has Releases shall also record the ordered procedure for producing one — the steps, their order, and the external conventions they depend on — so that cutting a release is read from the design rather than reconstructed from what was done last time.\n\nANTHONY'S WORDS, 2026-07-31, raised while watching the v0.19.0 cut: \"should every reflow2 project have a requirement to describe its 'release instructions'? ... having a set of release instructions (what are all the steps that need to occur) would be nice. Then the agent doesn't have to look at what was done previously to release or whether it was released on pypi or whatever makes sense for the project being developed.\"\n\nTHE VOCABULARY ALREADY EXISTS AND SHOULD BE USED RATHER THAN EXTENDED. A release procedure is an ordered process, which is what Flow models: add_flow, part_of_flow with step_order, TRIGGERS transitions carrying a role, read back by flow_report. This wants no new node type and no new document.\n\nWHY THIS IS NOT dec:orientation-is-computed-not-written IN REVERSE. That decision refused a START-HERE file because orientation is DERIVABLE — a projection of design state, so the answer was build the view. Release steps are NOT derivable from the graph: which registry (PyPI / crates.io / GitHub releases / a manufactured build), which workflow, which credential, what the tag format is, which files carry a version claim. These are facts about the world outside the design, and no projection can compute them. The same derivability test therefore argues FOR recording them. That distinction is the load-bearing part of this requirement: record what cannot be computed, compute what can.\n\nEVIDENCE, from the v0.19.0 cut itself. The procedure was reconstructed from `git show v0.18.0` plus grepping AGENTS.md for \"release\" — seven steps that exist nowhere as a list: the version in three files plus the lockfile; the CHANGELOG heading plus a fresh empty Unreleased; an upgrade doc REQUIRED IF AND ONLY IF the schema stamp moved; version claims in docs/overview.md and AGENTS.md; the graph manifest, release epoch and prior-release retirement; export exactly once onto the committed file; tag and push. At least two of those are unguessable and were discoverable only by reading a past commit message.\n\nWHERE IT BITES AS A DETECTOR: a Project holding Release nodes with no release Flow is a gap worth surfacing, the same shape as unrealized_capability. Scope deliberately unsettled here — whether this is a reflow2-wide obligation on every governed design or advice the genesis/adopt skills ask for is Anthony's call, not this requirement's.\n\nPROPOSED — captured in his wording, not yet his signature.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:a-quantity-that-crosses-a-published-boundary-declares-its-unit-and-the-seam-check-compares-them",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "lineage": "original",
+        "name": "A quantity that crosses a published boundary declares its unit, and the seam check compares the two sides",
+        "priority": "high",
+        "provenance": "authored",
+        "statement": "A published interface contract carries, as a structured agreement axis alongside the nine that exist (medium, paradigm, payload format, payload schema, endpoint, operations, auth, transport security, designation), the UNIT of each quantity it carries — the provider's side saying what it emits, the consumer's required side saying what it expects. The seam-incompatibility check that already compares paradigm, payload format, auth and transport security across a published/required pair compares units too, and reports a disagreement as a finding put to both sides. An unstated unit reads as UNKNOWN and is itself reported on a published boundary that carries quantities; it never reads as agreement. Distinct from req:interface-spec-complete, whose six characteristics never name units: this is the tenth axis, chosen by Anthony on 2026-09-13 after the Mars Climate Orbiter account — thruster impulse crossed the Lockheed Martin/JPL seam in pound-force seconds and was read as newton seconds while the interface specification said SI, and no review compared the two sides. HONEST LIMIT, part of the requirement: reflow2 compares DECLARATIONS. It cannot read the unit a program actually computes in; what it adds is the two sides' declarations put side by side mechanically, every time.",
         "status": "accepted"
       }
     },
@@ -222420,6 +222813,19 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "The temporal axis must run forward as well as back, in TWO PAIRED VIEWS of the same architecture (Anthony, 2026-07-28: 'in systems engineering, I think this would be 2 views of the same system'): increments in TIME — epochs, what the architecture is expected to be at epoch_1..n — and increments in CAPABILITY — what each small, frequent release adds, the release-fast-in-small-increments practice now common in industry (his brother's project ships ~2 minor releases a week). Both views must exist, each comparable as a delta: any two epochs, any two increments, or either against the present. With many moving parts — an ecosystem of coupled repos, each with its own graph — an epoch or increment must pin the set of per-repo design versions it means, or the question 'which epoch are we talking about?' has no answer, which is the failure this exists to prevent. Original idea 2026-07-28 ('epoch branches: project_x:epoch_1 captures what we expect the graph to look like at epoch_1'), amended the same day with the two-views framing. THE ATOM, Anthony's distillation 2026-07-28: the roadmap is a SATISFACTION SCHEDULE — a mapping of requirements to the epoch or increment where they are satisfied: 'in epoch 1, requirements A and B are satisfied; in increment 3, requirements C, D and E are expected to be satisfied; in epoch 27, KPP 1 is required to be satisfied.' His own verbs carry the three modalities the mapping must distinguish: ARE satisfied (recorded history — the backward direction the graph already does), EXPECTED to be satisfied (a plan, carrying confidence that decays with horizon per req:plans-move-honestly), and REQUIRED to be satisfied by (an obligation whose miss at arrival is a computed violation, the scheduling face of a KPP — content inviolability from req:inviolable-intent gains a deadline dimension).",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:every-capability-is-asked-for-its-signature-and-the-unsigned-fraction-is-reported",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "lineage": "original",
+        "name": "Every capability is asked what it takes in and gives out at capture, and the fraction left unsigned is reported in aggregate — the function half of the pseudo-design gets populated",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Anthony, 2026-09-13: keep \"populate the function half\". The capability signature (inputs, outputs, kind) is the pseudocode of a capability — function stated without mechanism — and it is the content of the pseudo-design layer; without it the layer is only statuses. The setter shipped in v0.35.0 as the TOOL leg alone, deliberately, and today 3 of 247 capabilities on reflow2's own design carry one.\n\nWHAT IS REQUIRED — the two missing legs of the three (typed tool, instruction, detector that notices absence):\n1. THE INSTRUCTION LEG. The guided capture paths — genesis, capture-intent, adopt's recovery step — ask, in the user's own words, what each capability takes in and puts out, and write the signature at capture; and the add_capability response names the signature as the next call when one was not given. Asked about the thing, never about the field.\n2. THE ABSENCE LEG, AGGREGATE. One finding reports the fraction of capabilities with no signature and lists them, keyed on the practice rather than per node — per-capability it would have fired 244 times overnight on this design, which is the wall-of-red failure the vocabulary-coverage trial was run to avoid. The design reference (req:the-implementing-agent-holds-a-compact-design-reference-derived-from-the-graph) reports the same fraction where it is read, so an agent holding a reference of unsigned functions knows how much of it is empty.\n\nAn empty list is a statement (\"this takes nothing in\") and is distinguished from nobody having said, as the setter already does.",
         "status": "accepted"
       }
     },
@@ -223684,6 +224090,19 @@
       }
     },
     {
+      "node_id": "req:the-implementing-agent-holds-a-compact-design-reference-derived-from-the-graph",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "lineage": "original",
+        "name": "The implementing agent holds a compact design reference for the black box under work — its function, constraints, ports and the far side of each port — derived from the graph, the way a coder holds pseudocode; never the whole design",
+        "priority": "high",
+        "provenance": "authored",
+        "statement": "Anthony, 2026-09-13, sharpening the pseudo-design brainstorm: \"It isn't just a view/rendering, it is a reference for the person writing the code. What I'm getting at is some design reference that the AI agent can always refer to … a layer that the agent implementing the design can easily always reference. This is for the AI agent, not a rendered product for the human.\"\n\nREVISED THE SAME DAY, ON HIS WORD, TO FIX THE UNIT (chg:the-design-reference-is-scoped-to-the-black-box-under-work): \"In a large design, I'm not sure [re-injecting the design] is a good idea. Say I was designing an exhaust manifold for an engine of a car and the manifold was taking a long time — I don't think it'd be appropriate to say, here is the whole car design again. It may be more appropriate that the neighbourhood of the design was re-injected. Or in terms of systems engineering, maybe its black box and interface were injected. That may help keep the AI agent focused and not flood context with a lot of non-relevant information.\"\n\nWHAT IS REQUIRED. reflow2 serves, for THE BLACK BOX UNDER WORK, one compact reference for the implementing agent: the requirements that box must satisfy; its capabilities as function headers (name, what each takes in and gives out — the signature); the constraints and governed rules that bind it, with their units and their consequence; its ports — every interface it provides or consumes, named even where the contract is still unspecified — and, for each port, the far side: the black box on the other end as a header only, never its insides. The parent's contract is included because the box must fit it; siblings appear only through shared ports. The whole design is NEVER the unit: the manifold's reference holds the manifold, the engine's contract it must fit, and the pipes it bolts to — not the car. It is DERIVED from the graph on every read, never hand-maintained, so it cannot drift; CODE-SHAPED rather than prose; and small BY CONSTRUCTION, because the region bounds it, so the agent refers to it continuously rather than fetching pieces by id. The region is the same computation claims and scoped gap detection already use — a seed's containment closure plus a propagation radius — and the reply says what it left out, so a narrowed reference never reads as the whole. The agent building against it is the expected use, not a human reading it.\n\nWHY THIS SHAPE, in the benefits he relayed from SudoLang's own material (claims as stated by its sources, not verified here): a structured, code-like form puts a language model in a higher-reasoning \"code mode\", reported as 10–15% more accurate than natural-language prompts; \"referential omnipotence\" — a function is inferred from its name and description without an implementation, which is exactly what a capability signature is; constraint-based programming — declare rules that are continuously obeyed rather than steps; and token efficiency — 20–30% fewer tokens than prose for the same logic. Whether those numbers hold for this reference is a measurement this project owes before claiming them (req:context-is-a-modelled-quantity was dropped precisely for asserting design-time token estimates).\n\nWHAT ALREADY EXISTS, so this is not read as new machinery: req:intent-is-reinjected (proposed 2026-07-28, never accepted) asks that design intent be read back into a long build on a counter and on symptoms of drift, and named no payload — THIS IS ITS PAYLOAD, and the scoping above answers its worry about flooding a long session. The capability signature setter exists (cap:a-capability-states-what-it-takes-and-gives) and is set on 3 of 247. claim_region and scoped detect_gaps already compute a neighbourhood. What does not exist is the one compact, agent-facing form for a box and the instruction that the agent builds against it.\n\nWHAT IT MUST NOT BECOME: the whole design re-injected; a second hand-edited serialization that drifts from the schema; a rendering for a person (that is the SV-1/SV-4 view, a different deliverable); or a new language with a grammar — SudoLang's own claim is that models understand structured natural language with constraints unprompted, so the form is a rendering convention over the schema that already exists. Fill-ins are defects: every line traces to a node.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "req:the-kind-of-system-is-established-before-its-parts-are-captured",
       "node_type": "Requirement",
       "properties": {
@@ -224116,6 +224535,26 @@
         "edges": "[{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-09-11\",\"role\":\"author\"}}]",
         "state": "{\"concern\":\"core\",\"lineage\":\"original\",\"name\":\"Every finding from the 2026-09-10/11 tool sweep is either fixed by a merged change or closed by a recorded decision not to — never by a belief\",\"priority\":\"high\",\"provenance\":\"authored\",\"statement\":\"Anthony, 2026-09-11, stating the success criteria for the tool-sweep effort: \\\"that all issues identified in the earlier tranches have been addressed properly\\\". The sweep exercised all 180 served tools (430 scripted calls plus the interactive tranches) and recorded 24 D-/C- findings, 6 W- findings and 4 F- findings, tracked in docs/local/tool-sweep/REMEDIATION.md. Each row shall reach one of two states: a merged pull request that fixes it, or a Decision on the record saying why it is not being fixed. Where a finding belongs to a CLASS (a required reference parameter with no stated type: 40 tools; a read-only reply with no size bound: 58 of 68; a caller-assembled inline payload with no file handle: 22; a bare-zero reply that cannot say which empty it is), it is addressed at the class with one contract test that fails on a new member, not one tool at a time — dec:idea-a-factory-builds-the-mechanics-in-so-a-class-fix-is-one-edit is the settled shape. Where a finding is a one-off (seven of thirteen distinct deficiencies), it is an ordinary fix. F-02 (both budgets breached) was withdrawn as a stale-edge misreading and is already closed.\",\"status\":\"proposed\"}",
         "target_id": "req:every-finding-of-the-tool-sweep-is-addressed-or-ruled-on",
+        "target_type": "Requirement"
+      }
+    },
+    {
+      "node_id": "snap:epoch:2026-09-13-the-design-reference-is-the-black-box-under-work-not-the-whole-design:cap:the-design-reference-is-served-compact-code-shaped-and-derived-for-the-implementing-agent",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:the-implementing-agent-holds-a-compact-design-reference-derived-from-the-graph\",\"properties\":{}}]",
+        "state": "{\"description\":\"One served read (a tool, and the same payload where intent is re-injected into a long build) that renders the concept layer of a design in a code-like form: requirements as the rules that must hold; each capability as a function header with its signature (name, inputs, outputs, kind) or an explicit \\\"unsigned\\\" marker; Constraints and enforced DesignRules as continuously-obeyed constraints with their units and consequence; every Interface the work crosses as a port, `unspecified` shown as such; components only where they exist. Every line traces to a node id, so a fill-in is detectable; the reply reports its own size and the fraction of capabilities unsigned; a scope (Component, Capability, Project) narrows it the way detect_gaps narrows. Not a persisted document and not a grammar: a projection over the schema that already exists, in the structured natural language language models already read. Planned 2026-09-13.\",\"name\":\"The pseudo-design layer is served as one compact, code-shaped reference for the implementing agent, derived from the graph on every read and sized for context\",\"provenance\":\"authored\",\"status\":\"planned\",\"tier\":\"operational\"}",
+        "target_id": "cap:the-design-reference-is-served-compact-code-shaped-and-derived-for-the-implementing-agent",
+        "target_type": "Capability"
+      }
+    },
+    {
+      "node_id": "snap:epoch:2026-09-13-the-design-reference-is-the-black-box-under-work-not-the-whole-design:req:the-implementing-agent-holds-a-compact-design-reference-derived-from-the-graph",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Requirement\",\"other_id\":\"req:intent-is-reinjected\",\"properties\":{\"evidence\":\"The July requirement asks that design intent be re-read into a long build on a counter and on drift symptoms, and never said what gets re-read; this reference is that payload, so re-injection is only worth anything once the reference exists.\",\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"EVOLVES_INTO\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-every-design-starts-as-a-pseudo-design-and-whether-reflow2-already-holds-that-layer\",\"properties\":{\"evidence\":\"Option A, promoted on Anthony's word 2026-09-13 and sharpened by him in the promotion: the one-page layer is a reference for the implementing agent, held like pseudocode, not a rendering for a person.\"}},{\"direction\":\"in\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Capability\",\"other_id\":\"cap:the-design-reference-is-served-compact-code-shaped-and-derived-for-the-implementing-agent\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-09-13\",\"role\":\"approver\"}},{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Requirement\",\"other_id\":\"req:every-capability-is-asked-for-its-signature-and-the-unsigned-fraction-is-reported\",\"properties\":{\"evidence\":\"A reference whose function headers are 244 of 247 unsigned is a list of names; the reference has content only once signatures are asked for at capture.\",\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Requirement\",\"other_id\":\"req:recursive-black-box-decomposition\",\"properties\":{\"evidence\":\"The reference is the black-box statement of the design with the insides left empty — function and ports, no mechanism; that requirement defines the shape this one serves.\",\"optional\":false,\"weight_basis\":\"estimated\"}}]",
+        "state": "{\"concern\":\"core\",\"lineage\":\"original\",\"name\":\"The implementing agent holds a compact design reference — the pseudo-design layer, derived from the graph — the way a coder holds pseudocode, and builds against it\",\"priority\":\"high\",\"provenance\":\"authored\",\"statement\":\"Anthony, 2026-09-13, sharpening the pseudo-design brainstorm: \\\"It isn't just a view/rendering, it is a reference for the person writing the code. What I'm getting at is some design reference that the AI agent can always refer to … a layer that the agent implementing the design can easily always reference. This is for the AI agent, not a rendered product for the human.\\\"\\n\\nWHAT IS REQUIRED. reflow2 serves the pseudo-design layer of a design as ONE compact reference for the implementing agent: the requirements that must hold, every capability as a function header (name, what it takes in, what it gives out — its signature), the constraints and governed rules that must be continuously obeyed (with their units and their consequence), and every boundary the work crosses (named even where its contract is still unspecified). It is DERIVED from the graph on every read, never hand-maintained, so it cannot drift from the design the way a copied document does; it is CODE-SHAPED rather than prose; and it is SIZED to be held in context, so the agent refers to it continuously rather than fetching pieces by id. The agent building against it is the expected use, not a human reading it.\\n\\nWHY THIS SHAPE, in the benefits he relayed from SudoLang's own material (claims as stated by its sources, not verified here): a structured, code-like form puts a language model in a higher-reasoning \\\"code mode\\\", reported as 10–15% more accurate than natural-language prompts; \\\"referential omnipotence\\\" — a function is inferred from its name and description without an implementation, which is exactly what a capability signature is; constraint-based programming — declare rules that are continuously obeyed rather than steps; and token efficiency — 20–30% fewer tokens than prose for the same logic. Whether those numbers hold for this reference is a measurement this project owes before claiming them (req:context-is-a-modelled-quantity was dropped precisely for asserting design-time token estimates).\\n\\nWHAT ALREADY EXISTS, so this is not read as new machinery: req:intent-is-reinjected (proposed 2026-07-28, never accepted) asks that design intent be read back into a long build on a counter and on symptoms of drift, and named no payload — THIS IS ITS PAYLOAD. The capability signature setter exists (cap:a-capability-states-what-it-takes-and-gives) and is set on 3 of 247. graph_report_markdown, export_surface and the served instructions each carry part of the content. What does not exist is the one compact, agent-facing form and the instruction that the agent builds against it.\\n\\nWHAT IT MUST NOT BECOME: a second hand-edited serialization that drifts from the schema; a rendering for a person (that is the SV-1/SV-4 view, a different deliverable); or a new language with a grammar — SudoLang's own claim is that models understand structured natural language with constraints unprompted, so the form is a rendering convention over the schema that already exists. Fill-ins are defects: every line traces to a node.\",\"status\":\"accepted\"}",
+        "target_id": "req:the-implementing-agent-holds-a-compact-design-reference-derived-from-the-graph",
         "target_type": "Requirement"
       }
     },
@@ -236748,7 +237187,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:4243694a256d8b9815370227f53b6d794425ffed33abbd9d4b6571a29c3e87ec",
+  "prev_content_hash": "sha256:d228f8d59940b405eaad08bdd7480f475d3e013f7bced1dc7207918dae0eb59d",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
