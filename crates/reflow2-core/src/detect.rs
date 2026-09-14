@@ -653,6 +653,16 @@ pub enum GapSource {
     /// The same shape as `DefectOvertakenByChange` one type over, and simpler:
     /// one edge and one status, with no dates to order and no artifact walk.
     DecisionOvertakenByPromotion,
+    /// A prohibition — "must never", "is not allowed to" — living in the
+    /// prose of a Requirement, Capability, Component, Interface or accepted
+    /// Decision, with no Constraint binding that node. capture-intent's
+    /// routing table sends such a sentence to a Constraint, NOT a
+    /// Requirement, and reflow2's own design measured ≈61 of them in prose
+    /// against 8 Constraint nodes on 2026-09-14: the instruction was there
+    /// and nothing noticed it being skipped. ONE aggregate finding, low
+    /// severity — nothing here is wrong, the intent is recorded; it is in a
+    /// home no computation reads.
+    ProhibitionInProse,
 }
 
 impl GapSource {
@@ -716,6 +726,7 @@ impl GapSource {
             GapSource::FixWithoutRecordedCause => "fix_without_recorded_cause",
             GapSource::DefectOvertakenByChange => "defect_overtaken_by_change",
             GapSource::DecisionOvertakenByPromotion => "decision_overtaken_by_promotion",
+            GapSource::ProhibitionInProse => "prohibition_in_prose",
         }
     }
 
@@ -796,6 +807,12 @@ impl GapSource {
             // target arriving is a fresh claim that the question is answered,
             // so it is worth asking again.
             GapSource::DecisionOvertakenByPromotion => false,
+            // AGGREGATE, on purpose and from measurement: reflow2's own design
+            // raises ≈61 at once. Per node that is the BL-73 wallpaper — read
+            // as noise and acknowledged in bulk without being read. One
+            // finding names the practice and lists the sentences; one
+            // acknowledgement is a judgement about the practice.
+            GapSource::ProhibitionInProse => true,
             // AGGREGATE, and the call was close enough to record the losing
             // side. Per-component keying would be the more honest key for the
             // answer people will actually give — "cmp:bulk is a namespace, not
@@ -2070,6 +2087,9 @@ impl DesignGraph {
         // The same mirror one type over: an open question whose answer the
         // design has already taken up.
         self.detect_decision_overtaken_by_promotion(&mut gaps)?;
+        // A prohibition the routing table would have sent to a Constraint,
+        // sitting in the prose of something else.
+        self.detect_prohibitions_in_prose(&mut gaps)?;
         // The product form of the third-party rule: a stated need that nothing
         // a consumer can reach delivers. Silent unless the design has actually
         // declared some audiences.
@@ -5175,6 +5195,171 @@ impl DesignGraph {
                 ),
             });
         }
+        Ok(())
+    }
+
+    /// The phrasings capture-intent's routing table sends to a Constraint:
+    /// "a prohibition with no number in it". Matched as lowercase substrings
+    /// — no regex crate in core, and none needed for a fixed phrase list.
+    ///
+    /// Deliberately NOT here: "shall not". In requirement writing that is the
+    /// standard negative form of an obligation — an SE reader files "the
+    /// system shall not exceed…" as a Requirement, and the routing table's
+    /// row is about prohibitions stated as house law, not as shall-clauses.
+    /// A false neighbour is worse than a missing one. Also not here: the
+    /// closed-set row ("may only be A, B or C") — "exactly one of" is
+    /// ordinary API prose in this design and would flood.
+    const PROHIBITION_PHRASES: [&'static str; 6] = [
+        "must never",
+        "must not ever",
+        "is not allowed to",
+        "are not allowed to",
+        "never allowed",
+        "is forbidden",
+    ];
+
+    /// A prohibition living in prose (`GapSource::ProhibitionInProse`).
+    ///
+    /// One aggregate finding over every live Requirement, Capability,
+    /// Component, Interface and ACCEPTED Decision whose name, statement,
+    /// description or decision text carries one of
+    /// [`PROHIBITION_PHRASES`](Self::PROHIBITION_PHRASES), and which no
+    /// Constraint `CONSTRAINS`. The routing table in capture-intent says such
+    /// a sentence goes to `add_constraint`, "NOT a Requirement" — and
+    /// reflow2's own design, measured 2026-09-14, held ≈61 of them in prose
+    /// (9 of 10 sampled genuine) against 8 Constraint nodes. The row was
+    /// added because eleven prohibitions had been left as Requirements, and
+    /// the design went on doing it: instruction present, detector absent,
+    /// the three-leg rule missing the leg that notices.
+    ///
+    /// # Who is NOT scanned, and why
+    ///
+    /// - `proposed` Decisions: brainstormed ideas. The brainstorm skill's own
+    ///   rule is "do not run detect-and-ask over brainstormed nodes" — an
+    ///   idea's "must never" is a musing, and nudging it to firm up teaches
+    ///   the user that thinking out loud has a cost.
+    /// - DesignRules: a "we never…" there is HOME, by the table's other row.
+    /// - Constraints: the home itself.
+    /// - ChangeEvents, TemporalFacts, Verifications: records of what happened
+    ///   or was checked, not intent. "The one direction this must never fail
+    ///   in" on a test is a check, and it was in the measured sample.
+    /// - `rationale`: the why, not the what. A prohibition quoted in a
+    ///   rationale is reasoning about intent recorded elsewhere.
+    /// - Parked nodes, and nodes some Constraint already CONSTRAINS.
+    ///
+    /// Silent on a design with nothing of those types — an empty design has
+    /// not declined to file its prohibitions; it has not got there.
+    ///
+    /// Reports absence of a record, never judges the sentence
+    /// (`dec:report-dont-judge`): filing it as a Constraint is the reader's
+    /// call, and so is deciding the phrase was incidental.
+    fn detect_prohibitions_in_prose(&self, gaps: &mut Vec<GapCandidate>) -> Result<(), DynoError> {
+        const SCANNED: [&str; 5] = [
+            node::REQUIREMENT,
+            node::CAPABILITY,
+            node::COMPONENT,
+            node::INTERFACE,
+            node::DECISION,
+        ];
+        const FIELDS: [&str; 4] = ["name", "statement", "description", "decision"];
+
+        let mut population = 0usize;
+        // (node_id, node_type, the phrase that matched) — the phrase rides
+        // into the evidence so a reader can find the sentence without
+        // re-running the scan.
+        let mut hits: Vec<(String, String, &'static str)> = Vec::new();
+        for ty in SCANNED {
+            for n in self.scan_live_nodes(ty)? {
+                let status = n.properties.get("status").and_then(Value::as_str);
+                if ty == node::DECISION && status != Some("accepted") {
+                    continue;
+                }
+                population += 1;
+                let text: String = FIELDS
+                    .iter()
+                    .filter_map(|k| n.properties.get(*k).and_then(Value::as_str))
+                    .collect::<Vec<_>>()
+                    .join(" ")
+                    .to_lowercase();
+                let Some(phrase) = Self::PROHIBITION_PHRASES
+                    .iter()
+                    .copied()
+                    .find(|p| text.contains(p))
+                else {
+                    continue;
+                };
+                if self.is_parked(&n.node_id)? {
+                    continue;
+                }
+                if !self
+                    .incoming(&n.node_id, Some(edge::CONSTRAINS))?
+                    .is_empty()
+                {
+                    continue;
+                }
+                hits.push((n.node_id.clone(), ty.to_string(), phrase));
+            }
+        }
+        if hits.is_empty() {
+            return Ok(());
+        }
+        hits.sort();
+        let n = hits.len();
+        let affected: Vec<String> = hits.iter().map(|(id, _, _)| id.clone()).collect();
+        let mut by_type: std::collections::BTreeMap<&str, usize> =
+            std::collections::BTreeMap::new();
+        for (_, ty, _) in &hits {
+            *by_type.entry(ty.as_str()).or_insert(0) += 1;
+        }
+        let by_type_line = by_type
+            .iter()
+            .map(|(t, c)| format!("{t} {c}"))
+            .collect::<Vec<_>>()
+            .join(", ");
+        let listed: Vec<String> = hits
+            .iter()
+            .map(|(id, _, phrase)| format!("{id} (\"{phrase}\")"))
+            .collect();
+        gaps.push(GapCandidate {
+            id: gap_id(GapSource::ProhibitionInProse, &affected),
+            gap_source: GapSource::ProhibitionInProse,
+            scope: GapScope::Project,
+            // Beside unreviewed_ideas (0.3) and below a stale open question
+            // (0.4): nothing here is WRONG — the prohibition is recorded and
+            // findable. It is in a home no computation reads, so nothing can
+            // ever say what it binds or whether anything violates it.
+            severity: 0.35,
+            title: format!(
+                "{n} prohibition(s) live in prose where no check can read them ({by_type_line})"
+            ),
+            description: format!(
+                "{n} of {population} design node(s) say \"must never\", \"is not allowed to\" or \
+                 the like in their own text, and no Constraint binds them. capture-intent's \
+                 routing table sends a prohibition with no number in it to a Constraint, NOT a \
+                 Requirement — a Constraint can `constrains` what it binds and be read by the \
+                 checks; a sentence inside a requirement's prose cannot. For each: if the \
+                 sentence IS a standing prohibition, `add_constraint` with it as the \
+                 `statement` and draw `constrains` to what it binds — leave the prose as it is, \
+                 the Constraint is the queryable home, not a replacement, and nothing about the \
+                 node's status moves. If the phrase is incidental (a quoted rule, an aside), \
+                 acknowledge this once; it is one finding about the practice. Do not file a \
+                 Constraint to clear the count: a false constraint binds nothing and reads as \
+                 law."
+            ),
+            affected_ids: affected,
+            suggested_depth: 1,
+            evidence: format!(
+                "{n} live node(s) of type Requirement/Capability/Component/Interface/accepted \
+                 Decision carry one of {:?} in name, statement, description or decision text \
+                 and have no incoming CONSTRAINS; {population} such node(s) were scanned. \
+                 Proposed Decisions (brainstormed ideas), DesignRules (a \"we never\" there is \
+                 home), Constraints, records (ChangeEvent, TemporalFact, Verification), the \
+                 rationale field, and parked nodes are excluded. \"shall not\" is deliberately \
+                 not matched: it is the requirement idiom, not house law. Matched: {}.",
+                Self::PROHIBITION_PHRASES,
+                listed.join("; ")
+            ),
+        });
         Ok(())
     }
 
