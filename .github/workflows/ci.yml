@@ -143,6 +143,13 @@ jobs:
         run: python3 tools/check_intent_authority.py docs/design/reflow2.json
       - name: Intent-authority suite (hermetic — it must never pass quietly)
         run: python3 tools/test_check_intent_authority.py
+      - name: A capability that claims reach beyond this repo is realized by something a consumer gets
+        # The wall check was built here, generalised in code to "any project", and reached
+        # a consumer through nothing — this checkout has the script, so it could not feel
+        # the absence. The gate reads the export; the class is "realized only by tools/".
+        run: python3 tools/check_consumer_reach.py docs/design/reflow2.json
+      - name: Consumer-reach gate suite
+        run: python3 tools/test_check_consumer_reach.py
       - name: Command surface agrees with itself
         # reflow2's own surface lives in several places — three skill dirs, a
         # command source and its copy, and an alias table in Rust — and until

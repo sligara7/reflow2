@@ -51,10 +51,9 @@ fn a_named_approver_is_recorded_on_the_decision() {
     let edges = g.outgoing(&decision, Some(edge::AUTHORED_BY)).unwrap();
     let edge = edges.first().expect("the approver edge");
     assert_eq!(edge.to_id, "who:a");
-    assert_eq!(
-        edge.properties.get("role").and_then(|v| v.as_str()),
-        Some("approver"),
-        "author or reviewer would not satisfy the intent-authority rule; only approver does"
+    assert!(
+        reflow2_core::graph::edge_has_role(edge, "approver"),
+        "author or reviewer would not satisfy the intent-authority rule; only approver does: {edge:#?}"
     );
 }
 

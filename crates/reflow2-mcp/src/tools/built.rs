@@ -171,6 +171,49 @@ impl ReflowService {
     }
 
     #[tool(
+        description = "DOES THE DECOMPOSITION I DECLARED MATCH THE COUPLING THE CODE ACTUALLY HAS? Walks the \
+                       imports of every file the design registers (Artifact `location` + REALIZES → \
+                       Component) and holds them against the walls the design declares — DEPENDS_ON, \
+                       PROVIDES/CONSUMES, CONTAINS at every level — reporting cycles at each level, coupling \
+                       lifted through containment, and both directions of disagreement: a coupling the source \
+                       has that nobody declared, and a contract the design declares that no import backs. NO \
+                       CONFIGURATION: the file set is the design's own registered artifacts, so you get this \
+                       the moment link-artifacts has run. IT NEVER QUIETLY GUESSES — files in a language it \
+                       cannot read, files the design names and disk lacks, imports resolving to no registered \
+                       file, and source files the design has never heard of are each COUNTED AND NAMED. IT \
+                       REPORTS AND NEVER WRITES: an import is coupling, not a contract, so a declared pair the \
+                       source lacks is reported as exactly that, and nothing here becomes a CONSUMES edge — \
+                       that is your call, made with evidence. A Python instrument (the same file as \
+                       tools/wall_check.py) run by the server against the live design; a missing python3 is \
+                       refused with what to do. Served since 2026-09-14 because a consumer re-wrote it by hand \
+                       25 days after it was built here. `root` points at another checkout; `budget_chars` \
+                       bounds the report.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn wall_check(
+        &self,
+        Parameters(req): Parameters<WallCheckReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let export = {
+            let g = self.graph.read().await;
+            serde_json::to_string(&g.export_graph().map_err(dyno_err)?)
+                .map_err(|e| McpError::internal_error(format!("export: {e}"), None))?
+        };
+        let root = crate::wall_check::project_root(self.graph_path.as_deref(), req.root.as_deref());
+        let report = crate::wall_check::run(&export, &root, "python3")
+            .map_err(|why| McpError::invalid_params(why, None))?;
+        let budget = req
+            .budget_chars
+            .unwrap_or(crate::reply_budget::DEFAULT_REPLY_BUDGET_CHARS);
+        let text = format!(
+            "# wall check — does the decomposition you declared hold?\n\nroot: {}\n\n{}",
+            root.display(),
+            report
+        );
+        Ok(ok_markdown(crate::wall_check::bound_text(text, budget)))
+    }
+
+    #[tool(
         description = "Check the design against what was actually built. You supply what you \
                        observed — for each registered artifact, whether it still exists and its \
                        current content hash — and reflow2 reports the divergences: files that \

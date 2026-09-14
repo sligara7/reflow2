@@ -143,6 +143,10 @@ Dynamic — run the thing; the graph has a typed receptor for each observation:
 - **Run the test suite** and feed the real outcomes to `reconcile_verification`
   (`record_events: true`). A recorded `passing` the run fails is the system telling you its own
   documentation lies — the highest-value finding this phase produces.
+- **Hold the structure you recovered against the imports** with `wall_check` once the artifacts are
+  registered: it walks the registered files' imports and reports every coupling your recovered
+  decomposition did not declare, and every declared contract no import backs — at every level, with
+  what it could not read counted, never scored clean. Evidence for the next pass, never written back.
 - **Hash what is on disk** and run `reconcile_artifacts` — everything should agree, since you
   just recorded it; anything that does not is the model wrong on day one.
 - **If it is deployed anywhere, observe what actually runs** and feed `reconcile_deployment`.

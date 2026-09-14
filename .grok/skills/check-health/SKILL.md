@@ -52,6 +52,13 @@ node nobody agreed was redundant (`dec:ask-not-repair`). Confirm such a pair by
 re-drawing the edge with `basis: asserted`; acknowledge the gap if they are
 genuinely distinct.
 
+**Does the decomposition you declared match the coupling the code actually has?** `wall_check`
+walks the imports of every file the design registers and holds them against the walls you declared,
+at every level, in both directions — a coupling the source has that nobody declared, and a contract
+the design declares that no import backs. It reads only registered artifacts (so run link-artifacts
+first), counts what it cannot read rather than scoring it clean, and never writes: an import is
+coupling, not a contract, so the report is evidence for *your* `consumes` call, never the call itself.
+
 Also worth a look, and read the same way: `hierarchy_issues` (decomposition — a level skipped or
 mismatched), `surprising_connections` (coupling that crosses otherwise-distant parts of the
 design), `dimension_drifts` (quality trending down over time), and `graph_report` for the

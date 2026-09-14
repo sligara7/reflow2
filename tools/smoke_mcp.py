@@ -486,7 +486,7 @@ def run(binary: str, graph_path: str) -> int:
                                   "contributor_id": "who:ajs", "role": "author",
                                   "acted_at": "2026-07-22T00:00:00Z"})
     c.ok("a decision is attributed to its author with a role",
-         edge["properties"].get("role") == "author", edge.get("properties"))
+         "author" in (edge["properties"].get("roles") or []), edge.get("properties"))
     # The load-bearing invariant: authorship is not traceability. A change to the
     # attributed decision must NOT reach the contributor — a Contributor is not a
     # design hub, and authorship must never widen a blast radius.

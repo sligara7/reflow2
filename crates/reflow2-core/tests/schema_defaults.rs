@@ -31,8 +31,12 @@ use reflow2_core::schema::{declared_defaults, schema_default};
 #[test]
 fn the_declared_defaults_are_actually_parsed() {
     let d = declared_defaults();
+    // 68 → 67 on 2026-09-14: AUTHORED_BY's `role: default author` left the
+    // schema when the role became the SET `roles` (an approval must not
+    // displace an authorship); the default now lives at the typed door,
+    // `authored_by(role: None)` → author, where a test pins it.
     assert!(
-        d.len() >= 68,
+        d.len() >= 67,
         "the schema declares ~81 defaults; parsing {} means the line shape moved \
          and this parser stopped seeing them — silently, which is the failure it \
          exists to end",

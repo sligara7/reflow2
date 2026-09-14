@@ -313,6 +313,7 @@ python3 tools/skill_lint.py                              # after any skill or to
 python3 tools/test_wall_check.py                         # the wall-check instrument's own net
 python3 tools/reflow2_check.py --export docs/design/reflow2.json   # design vs build, and the export chain
 python3 tools/check_intent_authority.py docs/design/reflow2.json    # settled intent carries the owner's name
+python3 tools/check_consumer_reach.py docs/design/reflow2.json     # a capability claiming reach beyond this repo is realized by something a consumer gets
 python3 tools/vocabulary_reach.py --check                # a NEW declared property the surface cannot write
 python3 tools/check_command_surface.py                   # the skill/command copies still agree
 python3 tools/launch_serves_release.py                   # the launcher serves release and builds nothing there
@@ -324,7 +325,7 @@ python3 tools/render_skills_and_tools.py --check         # docs/skills-and-tools
 > `stateless_seat_probe`, `test_init`, `test_shared_sessions`, `test_merge_driver`,
 > `test_degraded_server`, `test_nudge_path`, `test_loop_nudge`, `test_render_views`,
 > `test_stale_seat`, `test_reflow2_check`, `check_doc_versions`, `test_check_doc_versions`,
-> `test_skill_lint`, `self_host_uses_documents`, `test_check_intent_authority`, `test_vocabulary_reach`,
+> `test_skill_lint`, `self_host_uses_documents`, `test_check_intent_authority`, `test_check_consumer_reach`, `test_vocabulary_reach`,
 > `test_export_to_reaches_the_daemon`, `test_feedback_is_a_computed_tally`,
 > `test_a_lesson_is_served_at_the_step` — so **green here is not green
 > there**, and *"believe CI"* below is not a figure of speech. Run the ones your change touches;

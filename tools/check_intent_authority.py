@@ -11,7 +11,8 @@ Requirement off `proposed`, marking a Decision `accepted`, or recording a
 DesignRule's `enforced`. An agent may create, draft, measure, argue and
 recommend without limit; it may not do those three on Anthony's behalf.
 
-WHAT MAKES IT HIS WORD: an AUTHORED_BY edge with `role=approver`. That is the
+WHAT MAKES IT HIS WORD: an AUTHORED_BY edge whose `roles` carry `approver`
+(or, on an older export, `role=approver`). That is the
 graph saying in structure that a named person signed, rather than prose
 claiming it.
 
@@ -55,6 +56,21 @@ RULE_ID = "rule:design-intent-moves-only-on-the-owners-word"
 GRANDFATHER_ID = "dec:the-authority-check-guards-forward-not-backward"
 GRANDFATHER_FIELD = "grandfathered_ids"
 
+
+
+def _authored_roles(props: dict) -> set[str]:
+    """Every role an AUTHORED_BY edge carries.
+
+    The stored shape is the SET `roles` (2026-09-14: a single `role` let the
+    settling call replace the authorship it found — flo2 caught it twice in one
+    day). A legacy export still carries single `role`, read here as a
+    one-element set with the old schema default of `author`.
+    """
+    roles = props.get("roles")
+    if isinstance(roles, list):
+        return {r for r in roles if isinstance(r, str)}
+    role = props.get("role")
+    return {role} if isinstance(role, str) else {"author"}
 
 def settles_intent(node):
     """Does this node assert settled intent? (the rule's three cases)"""
@@ -110,7 +126,7 @@ def check(design):
         e["from_id"]
         for e in edges
         if e.get("edge_type") == "AUTHORED_BY"
-        and (e.get("properties") or {}).get("role") == "approver"
+        and "approver" in _authored_roles(e.get("properties") or {})
     }
 
     settled = [n for n in nodes if settles_intent(n)]

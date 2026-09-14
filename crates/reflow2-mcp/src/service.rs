@@ -4367,6 +4367,21 @@ pub struct CoverageReportReq {
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct WallCheckReq {
+    /// The project root the design's Artifact locations are relative to.
+    /// Default: the directory the graph store sits under (`<root>/.reflow2/graph`),
+    /// which is where a registered design lives; an ephemeral design uses the
+    /// server's working directory. The report names the root it used.
+    #[serde(default)]
+    pub root: Option<String>,
+    /// Bound the report to this many characters (default the shared reply
+    /// budget). The report says when it was cut.
+    #[serde(default)]
+    pub budget_chars: Option<usize>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct ReconcileArtifactsReq {
     /// What you observed, one entry per artifact you checked:
     /// `{ "artifact_id", "present": bool, "checksum": "<hash>"? }`.

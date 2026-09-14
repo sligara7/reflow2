@@ -823,12 +823,7 @@ impl DesignGraph {
                 continue;
             }
             for edge in self.outgoing(&dec.node_id, Some(edge::AUTHORED_BY))? {
-                if edge
-                    .properties
-                    .get("role")
-                    .and_then(crate::foundation::core::Value::as_str)
-                    != Some("approver")
-                {
+                if !crate::graph::edge_has_role(&edge, "approver") {
                     continue;
                 }
                 // Scoping happens HERE, on the one edge that names a person,
@@ -1956,11 +1951,7 @@ impl DesignGraph {
             // Band 1: did the user ask for this one?
             let mut approver = None;
             for e in self.outgoing(id, Some(edge::AUTHORED_BY))? {
-                if e.properties
-                    .get("role")
-                    .and_then(crate::foundation::core::Value::as_str)
-                    == Some("approver")
-                {
+                if crate::graph::edge_has_role(&e, "approver") {
                     approver = Some(e.to_id.clone());
                     break;
                 }
