@@ -58,8 +58,19 @@ async fn approver_edges(s: &ReflowService, from: &str) -> Vec<(String, String, O
         .map(|e| {
             (
                 e["to_id"].as_str().unwrap_or("").to_string(),
-                e["properties"]["role"].as_str().unwrap_or("").to_string(),
-                e["properties"]["acted_at"].as_str().map(str::to_string),
+                // The stored shape is the SET `roles` (an approval must not
+                // displace an authorship); this helper reports the roles
+                // joined, and the approver's own date.
+                e["properties"]["roles"]
+                    .as_array()
+                    .map(|r| {
+                        r.iter()
+                            .filter_map(|x| x.as_str())
+                            .collect::<Vec<_>>()
+                            .join(",")
+                    })
+                    .unwrap_or_default(),
+                e["properties"]["approved_at"].as_str().map(str::to_string),
             )
         })
         .collect()

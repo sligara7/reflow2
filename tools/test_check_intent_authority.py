@@ -128,6 +128,21 @@ def test_a_proposed_requirement_is_not_a_settling():
     assert run(design([req])).returncode == 0, "an agent may propose anything"
 
 
+def test_the_set_shape_is_read_and_an_author_who_also_approved_counts():
+    """The stored shape is `roles`, a set: an approver who also authored the
+    node still signs it. The legacy single `role` fixtures above stay, because
+    a consumer's older export still carries that shape and must read right."""
+    e = approver("dec:new")
+    e["properties"] = {"roles": ["author", "approver"], "approved_at": "2026-09-14"}
+    assert run(design([settled_decision()], edges=[e])).returncode == 0
+
+
+def test_the_set_shape_without_approver_is_not_a_signature():
+    e = approver("dec:new")
+    e["properties"] = {"roles": ["author", "reviewer"]}
+    assert run(design([settled_decision()], edges=[e])).returncode == 1
+
+
 def test_a_reviewer_edge_is_not_an_approver_edge():
     """`role` is load-bearing: a review is not a signature."""
     e = approver("dec:new")

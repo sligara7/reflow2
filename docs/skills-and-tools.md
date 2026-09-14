@@ -1,4 +1,4 @@
-# What reflow2 offers: 27 skills and 181 tools
+# What reflow2 offers: 27 skills and 182 tools
 
 Generated from the **running server**, not from memory — the skill list came from `list_skills`,
 the tool list and every read/write marking from `tools/list`, and the command mapping from
@@ -94,7 +94,7 @@ Read one in full with `get_skill` before doing the work it covers.
 
 ---
 
-## The 181 tools
+## The 182 tools
 
 `read` never changes the design. **write** does. That marking is the tool's own `readOnlyHint`
 annotation, read off the served surface — 58 read, 97 write.
@@ -273,6 +273,7 @@ description, which an agent sees in the tool schema; this table is for a person 
 | `external_dependency` | **write** | Declare which version of ANOTHER DESIGN this one depends on — the pin a seam analysis is taken AS OF. |
 | `reconcile_dependencies` | **read** | Check the declared dependencies against what the build ACTUALLY resolves, and return the reflow2.toml manifest. |
 | `upstream_status` | **read** | Has the design this one DEPENDS ON moved since the declaration was made? |
+| `wall_check` | **read** | DOES THE DECOMPOSITION I DECLARED MATCH THE COUPLING THE CODE ACTUALLY HAS? |
 
 ### Time — epochs, change, and what a claim was true of
 

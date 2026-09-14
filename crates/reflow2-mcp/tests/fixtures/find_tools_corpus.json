@@ -174,13 +174,14 @@
   "topic_report": "everything the design says about one subject in one place",
   "unclaimed_findings": "did my recent changes make any recorded findings false",
   "upstream_status": "has the design we depend on changed since we last checked it",
+  "usage_report": "give me the numbers on how this project has been using reflow2 \u2014 which tools got called, which calls it refused \u2014 so I can send feedback to the maintainer",
   "verifies": "record that this test checks that capability",
   "violates_rule": "record that this part breaks that rule",
   "vocabulary_coverage": "which parts of the modelling vocabulary have we never used",
+  "wall_check": "does the decomposition I declared match the coupling the code actually has \u2014 walk the imports across the walls I drew",
   "what_next": "which decisions should we settle next and why",
   "withdraw_defect_acknowledgement": "un-accept a defect I previously waved through",
   "withdraw_gap_acknowledgement": "reopen a gap I previously accepted",
-  "withdraw_question": "retract a question that was asked",
-  "usage_report": "give me the numbers on how this project has been using reflow2 \u2014 which tools got called, which calls it refused \u2014 so I can send feedback to the maintainer"
+  "withdraw_question": "retract a question that was asked"
  }
 }

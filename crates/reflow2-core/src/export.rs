@@ -478,8 +478,14 @@ impl DesignGraph {
                     .or_else(|| existing.get(&e.to_id).map(String::as_str));
                 match (from, to) {
                     (Some(ft), Some(tt)) => {
-                        let props: std::collections::HashMap<String, Value> =
+                        let mut props: std::collections::HashMap<String, Value> =
                             e.properties.clone().into_iter().collect();
+                        // A legacy export carries single `role` (+ `acted_at`);
+                        // the store holds the set shape. Normalised on the way
+                        // in so one design never holds both.
+                        if e.edge_type == edge::AUTHORED_BY {
+                            crate::graph::normalize_authored_by_props(&mut props);
+                        }
                         match self.create_edge(&e.edge_type, ft, &e.from_id, tt, &e.to_id, props) {
                             Ok(_) => edges_written += 1,
                             Err(err) => faults.push(format!(

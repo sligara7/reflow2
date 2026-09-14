@@ -419,15 +419,18 @@ impl DesignGraph {
             crate::identity::resolve_on_open(path, DEFAULT_GRAPH_ID, store_had_content, || {
                 Self::holds_a_design_probe(&engine, DEFAULT_GRAPH_ID)
             })?;
-        Ok((
-            Self {
-                engine,
-                graph_id: identity.graph_id,
-                store_path: Some(path.to_string()),
-                derived: Default::default(),
-            },
-            provenance,
-        ))
+        let mut graph = Self {
+            engine,
+            graph_id: identity.graph_id,
+            store_path: Some(path.to_string()),
+            derived: Default::default(),
+        };
+        // Legacy AUTHORED_BY edges (single `role`) move to the set shape on
+        // every open — idempotent, one edge scan, and the only way to make an
+        // on-disk store uniform when nothing is stamped on it to key a
+        // one-shot migration.
+        graph.migrate_authored_by_roles()?;
+        Ok((graph, provenance))
     }
 
     /// Does this store already hold a design under `graph_id`?
@@ -2172,6 +2175,28 @@ impl DesignGraph {
     /// [`Contributor`](node::CONTRIBUTOR) — the structured "who" behind
     /// provenance's "how". [`AUTHORED_BY`](edge::AUTHORED_BY) is deliberately not
     /// a traceability edge, so this never enlarges a blast radius.
+    ///
+    /// # MERGES, never replaces — the fix for a displaced author
+    ///
+    /// The store's identity for an edge is `(graph, type, from, to)`; the role
+    /// is not in it. So while the role was a single property, the second write
+    /// to the same (node, contributor) pair REPLACED the first: a node you
+    /// wrote in August and signed off in September lost the record that you
+    /// wrote it, silently, and the setter reported the edge it wrote rather
+    /// than the one it displaced. flo2 caught it twice in one day (2026-09-14)
+    /// from a PR body built by `compare_designs`, and on reflow2's own design
+    /// 389 edges read approver-only with no way left to say how many had been
+    /// author edges (`fact:defect-approving-a-node-you-authored-silently-
+    /// erases-that-you-authored-it`). `dec:design-authorship-identity` had
+    /// promised AUTHORED_BY "is past tense and never changes"; this write
+    /// changed it.
+    ///
+    /// Fixed at the cause: an author and an approver are two facts, so the
+    /// edge carries a SET — `roles` — with a date per role, and this call adds
+    /// to the set. Read the set with [`authored_roles`] / [`edge_has_role`],
+    /// which also understand the legacy single `role` so an unmigrated store
+    /// reads right; [`Self::migrate_authored_by_roles`] rewrites legacy edges
+    /// on open and import normalises them on the way in.
     pub fn authored_by(
         &mut self,
         from_type: &str,
@@ -2180,17 +2205,85 @@ impl DesignGraph {
         role: Option<&str>,
         acted_at: Option<&str>,
     ) -> Result<StoredEdge, DynoError> {
+        let role = role.unwrap_or("author");
+        if !AUTHORED_ROLES.contains(&role) {
+            return Err(DynoError::Validation {
+                node_type: edge::AUTHORED_BY.into(),
+                property: "role".into(),
+                message: format!(
+                    "'{role}' is not an AUTHORED_BY role (one of {})",
+                    AUTHORED_ROLES.join(", ")
+                ),
+            });
+        }
         self.require_contributor(contributor_id, "authored_by", "author this")?;
+        // Start from what is already there for this pair, brought into the
+        // current shape. ONLY an edge that exists is normalised: the
+        // normaliser's "no role recorded means author" is the old schema
+        // default and is right for a stored legacy edge — applied to a fresh
+        // empty map it would smuggle `author` into a first-ever `approver`
+        // write. The test for approving twice caught exactly that.
+        let mut props: std::collections::HashMap<String, Value> = match self
+            .outgoing(from_id, Some(edge::AUTHORED_BY))?
+            .into_iter()
+            .find(|e| e.to_id == contributor_id)
+        {
+            Some(existing) => {
+                let mut p = existing.properties;
+                normalize_authored_by_props(&mut p);
+                p
+            }
+            None => std::collections::HashMap::new(),
+        };
+        let mut roles = list_of_strings(props.get("roles"));
+        if !roles.iter().any(|r| r.as_str() == role) {
+            roles.push(role.to_string());
+        }
+        props.insert("roles".into(), roles_value(roles));
+        if let Some(at) = acted_at {
+            props.insert(role_date_key(role).into(), Value::String(at.to_string()));
+        }
         self.create_edge(
             edge::AUTHORED_BY,
             from_type,
             from_id,
             node::CONTRIBUTOR,
             contributor_id,
-            Props::new()
-                .set_opt("role", role)
-                .set_opt("acted_at", acted_at),
+            props,
         )
+    }
+
+    /// Rewrite every legacy AUTHORED_BY edge — single `role` (+ `acted_at`) —
+    /// into the set shape, and return how many moved. Idempotent and cheap
+    /// (one edge scan), so it runs on every on-disk open: nothing is stamped
+    /// on a graph directory to key a one-shot migration on (AGENTS.md), and
+    /// the readers tolerate the legacy shape anyway, so a store this never
+    /// reached still reads right — this only makes the export uniform.
+    pub fn migrate_authored_by_roles(&mut self) -> Result<usize, DynoError> {
+        let index = self.node_type_index()?;
+        let mut moved = 0usize;
+        for e in self.engine.scan_all_edges(&self.graph_id)? {
+            if e.edge_type != edge::AUTHORED_BY {
+                continue;
+            }
+            let mut props = e.properties.clone();
+            if !normalize_authored_by_props(&mut props) {
+                continue;
+            }
+            let Some(from_type) = index.get(&e.from_id).cloned() else {
+                continue;
+            };
+            self.create_edge(
+                edge::AUTHORED_BY,
+                &from_type,
+                &e.from_id,
+                node::CONTRIBUTOR,
+                &e.to_id,
+                props,
+            )?;
+            moved += 1;
+        }
+        Ok(moved)
     }
 
     /// Refuse a who-edge in a way that says what WOULD have worked.
@@ -2358,4 +2451,96 @@ impl DesignGraph {
             Props::new(),
         )
     }
+}
+
+/// The roles a Contributor can stand in to a node, in canonical order. The
+/// MCP `authored_by` tool's `role` enum is generated from this list.
+pub const AUTHORED_ROLES: [&str; 3] = ["author", "reviewer", "approver"];
+
+/// The property that dates one role's act.
+pub fn role_date_key(role: &str) -> &'static str {
+    match role {
+        "reviewer" => "reviewed_at",
+        "approver" => "approved_at",
+        _ => "authored_at",
+    }
+}
+
+fn list_of_strings(v: Option<&Value>) -> Vec<String> {
+    match v {
+        Some(Value::List(items)) => items
+            .iter()
+            .filter_map(|x| x.as_str().map(str::to_string))
+            .collect(),
+        _ => Vec::new(),
+    }
+}
+
+fn roles_value(mut roles: Vec<String>) -> Value {
+    // Canonical order and no duplicates, so two writes in either order
+    // produce byte-identical edges and the export does not churn.
+    roles.sort_by_key(|r| {
+        AUTHORED_ROLES
+            .iter()
+            .position(|k| k == r)
+            .unwrap_or(usize::MAX)
+    });
+    roles.dedup();
+    Value::List(roles.into_iter().map(Value::String).collect())
+}
+
+/// Bring an AUTHORED_BY property map into the set shape. Returns whether
+/// anything changed. A legacy single `role` (default `author`, per the old
+/// schema default) joins `roles`; a legacy `acted_at` becomes that role's
+/// date if it has none. Nothing already in the set shape is touched.
+pub fn normalize_authored_by_props(props: &mut std::collections::HashMap<String, Value>) -> bool {
+    let legacy_role = props
+        .remove("role")
+        .and_then(|v| v.as_str().map(str::to_string));
+    let legacy_at = props
+        .remove("acted_at")
+        .and_then(|v| v.as_str().map(str::to_string));
+    let had_roles = matches!(props.get("roles"), Some(Value::List(_)));
+    if had_roles {
+        // The set is the record. A `role` found BESIDE it is not a claim: an
+        // older binary whose schema still declares `role: default author`
+        // injects that default on any write, and merging it would mint a
+        // phantom author on every edge such a binary touched. Dropped, and
+        // the map counts as changed only if there was something to drop.
+        return legacy_role.is_some() || legacy_at.is_some();
+    }
+    let mut roles = list_of_strings(props.get("roles"));
+    let role = legacy_role.unwrap_or_else(|| "author".to_string());
+    if !roles.contains(&role) {
+        roles.push(role.clone());
+    }
+    if let Some(at) = legacy_at {
+        let key = role_date_key(&role);
+        if !props.contains_key(key) {
+            props.insert(key.to_string(), Value::String(at));
+        }
+    }
+    props.insert("roles".into(), roles_value(roles));
+    true
+}
+
+/// Every role this edge carries — the set shape, or the legacy single `role`
+/// (defaulting to `author`) on a store the migration has not reached.
+pub fn authored_roles(edge: &StoredEdge) -> Vec<String> {
+    let set = list_of_strings(edge.properties.get("roles"));
+    if !set.is_empty() {
+        return set;
+    }
+    vec![
+        edge.properties
+            .get("role")
+            .and_then(|v| v.as_str())
+            .unwrap_or("author")
+            .to_string(),
+    ]
+}
+
+/// Does this AUTHORED_BY edge carry `role`? Tolerates both shapes.
+pub fn edge_has_role(edge: &StoredEdge, role: &str) -> bool {
+    authored_roles(edge).iter().any(|r| r == role)
 }

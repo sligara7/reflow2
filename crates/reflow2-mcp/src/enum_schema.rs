@@ -197,7 +197,14 @@ schema_enum!(
     "criticality",
     opt
 );
-schema_enum!(authored_by_role_opt, "AUTHORED_BY", "role", opt);
+// The stored property is the SET `roles`; the CALL still names one role at a
+// time, and its values come from the core's list rather than a schema
+// property that no longer exists.
+list_enum!(
+    authored_by_role_opt,
+    &reflow2_core::graph::AUTHORED_ROLES,
+    opt
+);
 schema_enum!(changed_action_opt, "CHANGED", "action", opt);
 schema_enum!(changed_action_req, "CHANGED", "action", req);
 // Sets that live only in code — the same const the handler enforces.

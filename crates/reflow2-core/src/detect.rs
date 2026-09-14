@@ -1641,17 +1641,14 @@ impl DesignGraph {
             self.governed_by(&node_type, target, node::DECISION, &decision_id, None, None)?;
         }
         if let Some(who) = approver {
-            let mut props = crate::nodes::Props::new().set("role", "approver");
-            if let Some(at) = acted_at {
-                props = props.set("acted_at", at);
-            }
-            self.create_edge(
-                edge::AUTHORED_BY,
+            // Through the typed door, so the approver role MERGES into
+            // whatever this pair already records rather than replacing it.
+            self.authored_by(
                 node::DECISION,
                 &decision_id,
-                node::CONTRIBUTOR,
                 who,
-                props,
+                Some("approver"),
+                acted_at,
             )?;
         }
         Ok(decision_id)

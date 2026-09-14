@@ -33,6 +33,44 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **`wall_check` is served.** The import-boundary walk — does the decomposition you declared match
+  the coupling the code has — was built as `tools/wall_check.py` on 2026-08-20 and generalised to
+  "any project, with no configuration" the next day. The code was generalised; the reach was not:
+  `find_tools` indexes MCP tools only, no skill named it, the kit does not ship it, and on
+  2026-09-14 an agent on a consumer project wrote the identical analysis by hand and filed it as
+  "unknown". The script is now compiled into the binary (like the skills) and run by the server
+  against the live design and the working tree; `check-health` and `adopt` name it; a missing
+  `python3` is refused with what to do. Nothing about the analysis changed — registered artifacts
+  only, counts what it cannot read, reports and never writes. `root` and `budget_chars` params.
+- **A capability that claims reach beyond this repo must be realized by something a consumer
+  gets.** `tools/check_consumer_reach.py` fails the build when a Capability whose text claims "any
+  project" / "a reflow2 user" / "consumer" reach is realized only by scripts under `tools/` — the
+  class the wall check was an instance of, and one this checkout cannot feel because it has the
+  scripts. Observed failing on the unfixed export before the tool above was served.
+
+### Changed
+
+- **Approving a node you authored no longer erases that you authored it.** The stored shape of an
+  `AUTHORED_BY` edge is now the **set `roles`** (`author` / `reviewer` / `approver`) with a date per
+  role — `authored_at`, `reviewed_at`, `approved_at` — in place of the single `role` + `acted_at`.
+  The store's identity for an edge is `(graph, type, from, to)` and the role was never in it, so a
+  single-valued `role` meant the settling call silently **replaced** the author edge it found there,
+  and the setter reported what it wrote rather than what it displaced. flo2 caught it twice in one
+  day (2026-09-14) from a `compare_designs`-built PR body; reflow2's own design had 389 approver-only
+  edges it could no longer say anything about; and `dec:design-authorship-identity` had promised the
+  edge "is past tense and never changes". Fixed at the cause: `authored_by` **merges** into the set,
+  canonical order, so two writes in either order produce a byte-identical edge. **The call surface
+  is unchanged** — `authored_by(role=…)`, the constructors' and setters' `approver`, and every skill
+  and doc that names them stay as they are; a role outside the vocabulary is now refused at the
+  typed door instead of by a schema enum. **Legacy edges read right and migrate**: readers accept
+  the single `role` (default `author`) on a store the migration has not reached; every on-disk open
+  rewrites legacy edges to the set shape (idempotent, one scan); `import_graph` normalises a
+  consumer's older export on the way in, so one design never holds both shapes.
+  `tools/check_intent_authority.py` and `smoke_mcp.py` read the set. **Minor**: the exported edge
+  shape changed; the schema stamp did not (no type names moved), so no upgrade doc is owed.
+
+### Added
+
 - **An open question its own promotion already answered now gets asked about.** New gap source
   `decision_overtaken_by_promotion`: a live `Decision` at `status: proposed` with an outgoing
   `EVOLVES_INTO` edge to something the design has already taken up — an `accepted`/`met`

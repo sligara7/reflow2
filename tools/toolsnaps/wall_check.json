@@ -1,0 +1,32 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "DOES THE DECOMPOSITION I DECLARED MATCH THE COUPLING THE CODE ACTUALLY HAS? Walks the imports of every file the design registers (Artifact `location` + REALIZES → Component) and holds them against the walls the design declares — DEPENDS_ON, PROVIDES/CONSUMES, CONTAINS at every level — reporting cycles at each level, coupling lifted through containment, and both directions of disagreement: a coupling the source has that nobody declared, and a contract the design declares that no import backs. NO CONFIGURATION: the file set is the design's own registered artifacts, so you get this the moment link-artifacts has run. IT NEVER QUIETLY GUESSES — files in a language it cannot read, files the design names and disk lacks, imports resolving to no registered file, and source files the design has never heard of are each COUNTED AND NAMED. IT REPORTS AND NEVER WRITES: an import is coupling, not a contract, so a declared pair the source lacks is reported as exactly that, and nothing here becomes a CONSUMES edge — that is your call, made with evidence. A Python instrument (the same file as tools/wall_check.py) run by the server against the live design; a missing python3 is refused with what to do. Served since 2026-09-14 because a consumer re-wrote it by hand 25 days after it was built here. `root` points at another checkout; `budget_chars` bounds the report.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "budget_chars": {
+        "default": null,
+        "description": "Bound the report to this many characters (default the shared reply\nbudget). The report says when it was cut.",
+        "format": "uint",
+        "minimum": 0,
+        "type": [
+          "integer",
+          "null"
+        ]
+      },
+      "root": {
+        "default": null,
+        "description": "The project root the design's Artifact locations are relative to.\nDefault: the directory the graph store sits under (`<root>/.reflow2/graph`),\nwhich is where a registered design lives; an ephemeral design uses the\nserver's working directory. The report names the root it used.",
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "type": "object"
+  },
+  "name": "wall_check"
+}
