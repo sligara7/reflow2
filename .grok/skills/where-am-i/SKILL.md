@@ -107,6 +107,17 @@ a reasonable *offer* — "you're the systems engineer who owns this, right?" —
 default. Offer it and let them correct it: a description somebody did not choose is a stereotype
 the design will then repeat back at them forever.
 
+**When the design records MORE THAN ONE background, the design cannot say which one is reading —
+that is a fact about the session, and only you can see it.** Match the git author (or login, or
+handle) you can see against the names the lens line carries beside each id, and offer the match
+in one sentence: *"assuming you are AJ — if not, tell me who you are and your background so I
+pitch this right."* Then do not ask again that session. A correction is taken at face value and
+the corrected person is the reader from then on; if no recorded name matches, ask as you would a
+new reader. **And attribute to the person you assumed:** whatever you capture that session is
+`authored_by` the same Contributor you are speaking to, and you say so once — a wrong guess then
+costs one sentence to fix instead of a wrong name on the record. Same machine is not same person;
+that is why this is an offer.
+
 **What it shapes, and the one thing it must not.** It shapes how you SPEAK — which vocabulary,
 which examples, how much you unpack. It never shapes what you WRITE INTO the design: the record
 stays in its own register whoever is in the room, because the next reader is someone else.
