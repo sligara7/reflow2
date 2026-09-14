@@ -328,6 +328,31 @@ impl ReflowService {
                 obj.insert("auto_export".into(), block);
             }
         }
+        // THE LENS RIDES THIS REPLY TOO, and the reason is a field report.
+        //
+        // 2026-09-14: a session closed with *"6 structural findings and 1
+        // undispositioned drift … its repair step can delete nodes, so it's
+        // worth reading what it proposes rather than applying blind"* — this
+        // reply's own field name and `next` line, read out to a person as if
+        // they were English. ROOT CAUSE, measured: the lens
+        // (`cap:the-skill-response-carries-the-lens`) rode `get_skill` and
+        // `list_skills` only; every served skill ends with "before moving on:
+        // loop_status", so the LAST reply an agent reads before choosing its
+        // closing words was the one on that path carrying no lens — and `next`
+        // is a to-do list written FOR THE AGENT in reflow2's vocabulary, with
+        // nothing marking it as such. Same sentence as the skill rail, same
+        // best-effort rule (a lens that could withhold the debt would trade a
+        // reminder for an outage), computed from the read lock already held.
+        if let (Some(obj), Ok(lens)) = (payload.as_object_mut(), g.reader_lens()) {
+            obj.insert(
+                "lens".into(),
+                json!(format!(
+                    "`next` is the agent's to-do list, written in reflow2's nouns; what a \
+                     person reads is what it MEANS for their design, in their words. {}",
+                    crate::skills::lens_line(&lens)
+                )),
+            );
+        }
         // Whether the loop's own safety net exists (req:nudge-path-proven).
         // Machine-readable here, and in the handshake for the sessions that
         // never call this — which are precisely the ones a nudge is for.

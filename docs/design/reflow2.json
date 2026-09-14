@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:8848c5e417ad91c2d2aca3361e1882ec922cbd56be888a041a2bd36846fcbfa5",
+  "content_hash": "sha256:dc1ed4743845b7aeafacfc3fc409b93b0705eca5c25a60e909abfa434f307c41",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -9806,6 +9806,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:the-lens-rides-loop-status-and-the-nudge-says-its-words-are-for-the-agent",
+      "properties": {},
+      "to_id": "epoch:the-lens-reaches-the-loop-rail"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:the-lineage-anchor-moves-from-the-file-to-the-commit",
       "properties": {},
       "to_id": "epoch:the-export-chains-from-main"
@@ -12791,6 +12797,12 @@
       "from_id": "snap:epoch:the-key-is-renamed-and-the-sweep-says-what-it-swept:dec:a-misnaming-is-fixed-in-the-message-not-the-key",
       "properties": {},
       "to_id": "epoch:the-key-is-renamed-and-the-sweep-says-what-it-swept"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:the-lens-reaches-the-loop-rail:cap:the-skill-response-carries-the-lens",
+      "properties": {},
+      "to_id": "epoch:the-lens-reaches-the-loop-rail"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -20164,6 +20176,28 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "epoch:planned-the-mechanism-reaches-the-moment",
+      "properties": {
+        "approved_at": "2026-09-14",
+        "roles": [
+          "approver"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "epoch:planned-the-three-source-reading-analyses",
+      "properties": {
+        "approved_at": "2026-09-14",
+        "roles": [
+          "approver"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "fact:an-agent-stopped-reaching-for-reflow2-and-a-second-one-reproduced-it-the-same-day",
       "properties": {
         "authored_at": "2026-08-23",
@@ -22543,6 +22577,16 @@
         "validation_status": "unvalidated"
       },
       "to_id": "fact:defect-the-unexported-claim-was-computed-per-file-and-stated-per-seat"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "cap:the-skill-response-carries-the-lens",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The reminder on the wire was delivered on get_skill and list_skills only (skills.rs:301, two call sites); every served skill's final instruction is to call loop_status, so the reply an agent reads last before its closing words was the one on that path carrying no lens, and its `next` list is agent-facing text in reflow2's vocabulary that nothing marked as such.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:root-cause-the-lens-rode-the-skill-rail-and-the-closing-words-are-chosen-on-the-loop-rail"
     },
     {
       "edge_type": "CAUSES",
@@ -29368,6 +29412,24 @@
         "action": "modified"
       },
       "to_id": "art:dependency-manifest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-5a088de5b7580401",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-5b82d6e1059cff20",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:loop-status-lens-test"
     },
     {
       "edge_type": "CHANGED",
@@ -43932,6 +43994,51 @@
     {
       "edge_type": "CHANGED",
       "from_id": "chg:the-lens-lands-a-month-after-it-was-built",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:the-skill-response-carries-the-lens"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-lens-rides-loop-status-and-the-nudge-says-its-words-are-for-the-agent",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:kit-instructions"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-lens-rides-loop-status-and-the-nudge-says-its-words-are-for-the-agent",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:loop-nudge"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-lens-rides-loop-status-and-the-nudge-says-its-words-are-for-the-agent",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-loop-nudge"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-lens-rides-loop-status-and-the-nudge-says-its-words-are-for-the-agent",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-lens-rides-loop-status-and-the-nudge-says-its-words-are-for-the-agent",
       "properties": {
         "accepted_baseline": false,
         "action": "modified"
@@ -63729,6 +63836,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:the-skill-response-carries-the-lens",
+      "properties": {},
+      "to_id": "snap:epoch:the-lens-reaches-the-loop-rail:cap:the-skill-response-carries-the-lens"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "cap:tool-carries-convention",
       "properties": {},
       "to_id": "snap:epoch:reference-parameters-name-their-type:cap:tool-carries-convention"
@@ -65262,6 +65375,12 @@
       "from_id": "cap:the-register-rule-reaches-the-words",
       "properties": {},
       "to_id": "fact:reflow2-jargon-reaches-the-user-unfiltered-by-the-lens-a-work-session-said-structural-findings-and-undispositioned-drift-to-a-person"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:the-register-rule-reaches-the-words",
+      "properties": {},
+      "to_id": "fact:root-cause-the-lens-rode-the-skill-rail-and-the-closing-words-are-chosen-on-the-loop-rail"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -188825,6 +188944,15 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:the-lens-rides-loop-status-and-the-nudge-says-its-words-are-for-the-agent",
+      "properties": {
+        "at": "2026-09-14",
+        "note": "The field report asked WHY the lens did not filter the words; the walk answered it (fact:root-cause-the-lens-rode-the-skill-rail-and-the-closing-words-are-chosen-on-the-loop-rail) and this change put the lens on the reply the words came from and the register line on the nudge. The observation stays true as history; the open question it carried is answered. Whether an agent now ACTS on the lens is still unmeasured."
+      },
+      "to_id": "fact:reflow2-jargon-reaches-the-user-unfiltered-by-the-lens-a-work-session-said-structural-findings-and-undispositioned-drift-to-a-person"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:the-loop-notices-a-fix-with-no-cause-and-a-defect-its-subject-outran",
       "properties": {
         "at": "2026-09-06",
@@ -190216,6 +190344,12 @@
       "from_id": "epoch:planned-status-accounting",
       "properties": {},
       "to_id": "epoch:planned-seams"
+    },
+    {
+      "edge_type": "PRECEDES",
+      "from_id": "epoch:planned-the-mechanism-reaches-the-moment",
+      "properties": {},
+      "to_id": "epoch:planned-the-three-source-reading-analyses"
     },
     {
       "edge_type": "PRECEDES",
@@ -192638,6 +192772,15 @@
         "conformance": "verified"
       },
       "to_id": "cap:the-graph-asks-what-a-session-made-false"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:loop-status-lens-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:the-skill-response-carries-the-lens"
     },
     {
       "edge_type": "REALIZES",
@@ -197412,6 +197555,15 @@
     },
     {
       "edge_type": "SCHEDULED_FOR",
+      "from_id": "cap:the-register-rule-reaches-the-words",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-09-14"
+      },
+      "to_id": "epoch:planned-the-mechanism-reaches-the-moment"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
       "from_id": "cap:the-server-writes-the-export-through-and-chains-it-from-main",
       "properties": {
         "modality": "expected",
@@ -197541,6 +197693,15 @@
       "from_id": "req:a-fix-says-whether-it-corrected-the-cause",
       "properties": {
         "modality": "expected",
+        "recorded_at": "2026-09-14"
+      },
+      "to_id": "epoch:planned-the-mechanism-reaches-the-moment"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
+      "from_id": "req:a-fix-says-whether-it-corrected-the-cause",
+      "properties": {
+        "modality": "expected",
         "recorded_at": "2026-08-17"
       },
       "to_id": "epoch:the-philosophy-is-in-the-product"
@@ -197652,6 +197813,15 @@
         "recorded_at": "2026-08-16"
       },
       "to_id": "epoch:triage-fixes"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
+      "from_id": "req:an-analysis-a-consumer-needs-is-served-named-and-gated",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-09-14"
+      },
+      "to_id": "epoch:planned-the-three-source-reading-analyses"
     },
     {
       "edge_type": "SCHEDULED_FOR",
@@ -201599,6 +201769,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:loop-status-lens-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:loop-status-lens-test"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:main",
       "properties": {
         "action": "created"
@@ -204610,7 +204788,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:6ce194d4464eeb313b861daf1d9b170c0817c493f983b073eb5cdf53a6aeb171",
+        "checksum": "sha256:6f25c2bf05689e35e8b60c1c1266250e8bd3157852b5f839e4376a50fc829d9d",
         "granularity": "atomic",
         "location": "getting-started/AGENTS.md",
         "name": "getting-started/AGENTS.md",
@@ -204721,12 +204899,24 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f08c5ef475b07b7e004f7e77ddf308b5cb5c280c756a192a616951815aacf804",
+        "checksum": "sha256:408725831816ecf284d1e1cce9a2feda092580d62cc05229fc3d2caa720cb272",
         "granularity": "atomic",
         "location": "tools/loop_nudge.py",
         "name": "loop_nudge.py",
         "status": "realized",
         "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:loop-status-lens-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:0079a81b693f5848de54f458d5ff143a4f6c3f438735515fc7261beb88650fe5",
+        "description": "Four handler tests pinning that the loop_status reply carries the lens: the silent case names who could be asked; the recorded case names them; the lens names `next` as the agent's to-do list; the lens never withholds `next`. Written first and observed failing (0 passed, 4 failed) before the fix in coherence.rs, from the 2026-09-14 field report where a loop_status reply was read out to a person verbatim.",
+        "location": "crates/reflow2-mcp/tests/a_loop_status_reply_says_whose_words_to_use.rs",
+        "name": "a_loop_status_reply_says_whose_words_to_use.rs",
+        "status": "realized"
       }
     },
     {
@@ -206370,7 +206560,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:1baf1b9644201a868f752db0bb9f74260d8496c893499b35214f933441d78e7a",
+        "checksum": "sha256:79ce30b159bbde1aaaf9e03a7c71af384ce865691dd6788245b6d08adb681f86",
         "granularity": "atomic",
         "location": "tools/test_loop_nudge.py",
         "name": "test_loop_nudge.py",
@@ -206770,7 +206960,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:5e0d8eccd23e867eed222c1bee821b3dcf1cedf2dff6ed60800229be7b6403af",
+        "checksum": "sha256:2bb6f9cb2562e423e0f4ba399912900ed2891d134d8f0def94738289ed027d96",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
@@ -210120,8 +210310,8 @@
       "node_id": "cap:the-skill-response-carries-the-lens",
       "node_type": "Capability",
       "properties": {
-        "description": "**REALIZED 2026-08-26 — `get_skill` and `list_skills` carry a `lens` field**, so the reminder rides the response the agent reads immediately before doing the work. Built 2026-08-19 on Anthony's idea.\n\n🛑 **IT SAT ON AN UNMERGED BRANCH FOR A MONTH, AND THE DESIGN SAID IT EXISTED THE WHOLE TIME.** This description previously read *\"status is `in_progress`, NOT `realized`, and that is deliberate… move to `realized` when the branch merges.\"* The branch (`lens-hint-rides-the-loop-rail`, commit e01c760) never merged. Meanwhile the capability appeared in `capabilities_covered` on release reports, because that list derives from shipped components and artifacts and never from a capability's STATUS — **so every reading of the release record said the mechanism shipped.** Measured and recorded in `fact:the-lens-that-carries-the-persona-was-built-on-a-branch-and-never-shipped`.\n\n**Distinct from the two neighbouring capabilities, and the split is the point:** `cap:the-agent-asks-who-it-is-talking-to` ASKS at orientation; `cap:the-register-rule-reaches-the-words` puts the RULE in served prose everywhere; **this one makes the reminder arrive on the wire, so it survives the context distance that prose does not.**\n\nWHAT IS BUILT\n· **`DesignGraph::reader_lens()`** in core (`claims.rs`), returning `ReaderLens { with_background, without_background }`. **Six tests passing** in `the_design_says_whose_words_to_use.rs`.\n· **`lens_line()`** in `skills.rs` turns it into the sentence an agent reads.\n· **`lens_for_response()`** attaches it best-effort to both skill tools in `tools/skills_tools.rs`. **Five handler tests passing** in `a_skill_response_says_who_it_is_for.rs`.\n· Verified against the REAL binary over stdio: a `get_skill` response returns keys `[body, description, lens, name]`.\n\n⭐ THE FOUR PROPERTIES PINNED BY TESTS, because each is where this could have gone wrong:\n1. **IT REPORTS ABSENCE.** A design where nobody carries a background says so and NAMES who could be asked — the half reflow2 has never had, since every detector reasons over what EXISTS.\n2. **IT NEVER CLAIMS TO KNOW WHO IS AT THE KEYBOARD.** A `seat` names a session, never a person. It reports what the DESIGN holds and leaves matching the reader to the agent. **Confidently addressing the wrong person would be worse than silence.**\n3. **AN `automated_agent` IS NEVER COUNTED.** A bot's `description` is provenance about a tool; counting it would let a design claim it knows its AUDIENCE when it only knows its AUTHORS.\n4. **WHITESPACE IS NOT A BACKGROUND**, and `kind` unset reads as a person.\n\n📌 **BEST-EFFORT BY CONSTRUCTION.** `lens_for_response` swallows a graph error and returns `None`, so a skill is still served when the graph is busy, missing or unreadable. **A reminder that could withhold a skill would trade a nudge for an outage.**\n\n📌 **THE IDEA WAS AN INPUT PARAMETER; THIS IS AN OUTPUT.** `session_user` as an argument has a chicken-and-egg — the agent must already know who it is speaking to. As an output, **absence becomes the signal** and the caller passes nothing.\n\n🛑 **TWO DEFECTS THE MONTH-LONG DELAY CREATED, both caught only because landing it was done by hand:**\n- **`lens_for_response` took a WRITE lock to do a READ.** Harmless in August; not now — `write_lock` became fallible AND refuses outright on a `--read-only` server, so the lens would have returned `None` on every read-only deployment. **That is exactly the surface a stranger reads a design through**, and no test would have caught it. Now `graph.read()`.\n- **The five handler tests never ran because they never COMPILED** — `GetSkillReq`/`ListSkillsReq` had moved modules and `name` had become `Option<String>`. The commit called them \"unrun\"; unrunnable is a different and softer-sounding state.\n\n🛑 **AND THE REAL LIMIT IS UNCHANGED BY ANY OF IT.** The tests prove the lens computes correctly and that the field is attached. **They do not prove an agent acts on it, and nothing proves the translation is any good.** This fixes \"the agent forgot\"; it does not touch \"the agent translated badly\". The trial — a real gap list narrated to a reader with a stated non-software background — is still the missing instrument.\n\n⚠️ OPEN, DELIBERATELY NOT DECIDED HERE: whether the lens needs `loop_hint`'s fire-on-change throttle.",
-        "name": "A skill response says who the design knows how to speak to — or says plainly that it knows nobody",
+        "description": "**REVISED 2026-09-14 — THE LENS RIDES `loop_status` TOO**, with one sentence in front of it naming `next` as the agent's to-do list. Field report that day: a session closed with *\"6 structural findings and 1 undispositioned drift … its repair step can delete nodes, so it's worth reading what it proposes rather than applying blind\"* — `loop_status`'s own field name and `next` line, read out to a person. Root-caused (fact:root-cause-the-lens-rode-the-skill-rail-and-the-closing-words-are-chosen-on-the-loop-rail): the lens rode the skill rail, the moment of DOING; every served skill's last instruction is \"before moving on: loop_status\", so the closing words are chosen on the loop rail, which carried no lens, and its `next` lines are written FOR THE AGENT in reflow2's nouns with nothing marking them as such. Now `loop_status` carries `lens` (coherence.rs, from the read lock already held, best-effort, never withholding `next`), every Stop-nudge message ends with the register line (tools/loop_nudge.py), and served AGENTS.md's standing rule names tool replies as addressed to the agent. Four handler tests in `a_loop_status_reply_says_whose_words_to_use.rs` and one nudge test, each observed failing first. STILL NOT ON THE WIRE: the `loop_hint` on write replies — the cost question req:the-reminder-rides-the-response left open. STILL UNMEASURED: whether an agent acts on it.\n\n**REALIZED 2026-08-26 — `get_skill` and `list_skills` carry a `lens` field**, so the reminder rides the response the agent reads immediately before doing the work. Built 2026-08-19 on Anthony's idea.\n\n🛑 **IT SAT ON AN UNMERGED BRANCH FOR A MONTH, AND THE DESIGN SAID IT EXISTED THE WHOLE TIME.** This description previously read *\"status is `in_progress`, NOT `realized`, and that is deliberate… move to `realized` when the branch merges.\"* The branch (`lens-hint-rides-the-loop-rail`, commit e01c760) never merged. Meanwhile the capability appeared in `capabilities_covered` on release reports, because that list derives from shipped components and artifacts and never from a capability's STATUS — **so every reading of the release record said the mechanism shipped.** Measured and recorded in `fact:the-lens-that-carries-the-persona-was-built-on-a-branch-and-never-shipped`.\n\n**Distinct from the two neighbouring capabilities, and the split is the point:** `cap:the-agent-asks-who-it-is-talking-to` ASKS at orientation; `cap:the-register-rule-reaches-the-words` puts the RULE in served prose everywhere; **this one makes the reminder arrive on the wire, so it survives the context distance that prose does not.**\n\nWHAT IS BUILT\n· **`DesignGraph::reader_lens()`** in core (`claims.rs`), returning `ReaderLens { with_background, without_background }`. **Six tests passing** in `the_design_says_whose_words_to_use.rs`.\n· **`lens_line()`** in `skills.rs` turns it into the sentence an agent reads.\n· **`lens_for_response()`** attaches it best-effort to both skill tools in `tools/skills_tools.rs`. **Five handler tests passing** in `a_skill_response_says_who_it_is_for.rs`.\n· Verified against the REAL binary over stdio: a `get_skill` response returns keys `[body, description, lens, name]`.\n\n⭐ THE FOUR PROPERTIES PINNED BY TESTS, because each is where this could have gone wrong:\n1. **IT REPORTS ABSENCE.** A design where nobody carries a background says so and NAMES who could be asked — the half reflow2 has never had, since every detector reasons over what EXISTS.\n2. **IT NEVER CLAIMS TO KNOW WHO IS AT THE KEYBOARD.** A `seat` names a session, never a person. It reports what the DESIGN holds and leaves matching the reader to the agent. **Confidently addressing the wrong person would be worse than silence.**\n3. **AN `automated_agent` IS NEVER COUNTED.** A bot's `description` is provenance about a tool; counting it would let a design claim it knows its AUDIENCE when it only knows its AUTHORS.\n4. **WHITESPACE IS NOT A BACKGROUND**, and `kind` unset reads as a person.\n\n📌 **BEST-EFFORT BY CONSTRUCTION.** `lens_for_response` swallows a graph error and returns `None`, so a skill is still served when the graph is busy, missing or unreadable. **A reminder that could withhold a skill would trade a nudge for an outage.**\n\n📌 **THE IDEA WAS AN INPUT PARAMETER; THIS IS AN OUTPUT.** `session_user` as an argument has a chicken-and-egg — the agent must already know who it is speaking to. As an output, **absence becomes the signal** and the caller passes nothing.\n\n🛑 **TWO DEFECTS THE MONTH-LONG DELAY CREATED, both caught only because landing it was done by hand:**\n- **`lens_for_response` took a WRITE lock to do a READ.** Harmless in August; not now — `write_lock` became fallible AND refuses outright on a `--read-only` server, so the lens would have returned `None` on every read-only deployment. **That is exactly the surface a stranger reads a design through**, and no test would have caught it. Now `graph.read()`.\n- **The five handler tests never ran because they never COMPILED** — `GetSkillReq`/`ListSkillsReq` had moved modules and `name` had become `Option<String>`. The commit called them \"unrun\"; unrunnable is a different and softer-sounding state.\n\n🛑 **AND THE REAL LIMIT IS UNCHANGED BY ANY OF IT.** The tests prove the lens computes correctly and that the field is attached. **They do not prove an agent acts on it, and nothing proves the translation is any good.** This fixes \"the agent forgot\"; it does not touch \"the agent translated badly\". The trial — a real gap list narrated to a reader with a stated non-software background — is still the missing instrument.\n\n⚠️ OPEN, DELIBERATELY NOT DECIDED HERE: whether the lens needs `loop_hint`'s fire-on-change throttle.",
+        "name": "A skill response — and the loop_status reply — says who the design knows how to speak to, or says plainly that it knows nobody",
         "provenance": "authored",
         "status": "realized"
       }
@@ -212214,6 +212404,26 @@
       "properties": {
         "change_type": "documentation",
         "name": "v0.59.0 cut, step 1: the version string in reflow2.toml moved 0.58.0 → 0.59.0. The design meaning of a cut lives in rel:v0590 and epoch:v0590-cut, never in a version string — accepted BEFORE the manifest is frozen, as the step's own trap note demands.",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:accept-5a088de5b7580401",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-09-14",
+        "name": "CI clippy: the nested `if let` pair around the lens insert collapsed into one tuple match; rustfmt applied. Behaviour unchanged, four lens tests still pass.",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:accept-5b82d6e1059cff20",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-09-14",
+        "name": "rustfmt only (CI Format gate); assertions unchanged.",
         "subject": "system"
       }
     },
@@ -218148,6 +218358,16 @@
         "rationale": "🛑 A MONTH ON A BRANCH COST TWO REAL DEFECTS, AND THAT IS THE DURABLE LESSON.\n\n**1. THE WRITE-LOCK BUG, which would have shipped silently.** `lens_for_response` took `self.write_lock()` to perform a READ. Harmless when written on 2026-08-19; not harmless now. On 2026-08-26 `write_lock` became fallible AND began refusing outright on a `--read-only` server. Landing the branch unchanged would have returned `None` on every read-only deployment — **disabling the lens precisely on the surface a stranger reads the design through, which is where speaking their vocabulary matters most.** Computing a lens is a read; the original said otherwise and no test would have caught it, because no test ran against a read-only service. Now `self.graph.read()`.\n\n**2. THE FIVE HANDLER TESTS NEVER RAN BECAUSE THEY NEVER COMPILED.** The commit message called them \"unrun\". They were unrunnable: `GetSkillReq` / `ListSkillsReq` had moved from `skills` to `tools::skills_tools` in the tool-surface refactor, and `name` on two request types had become `Option<String>`. **\"Unrun tests\" and \"tests that do not compile\" are different states and the commit recorded the softer one.** All five pass now, alongside the six core tests.\n\n⭐ THE CHERRY-PICK CONFLICTED AND THE CONFLICT WAS INFORMATION. `skills.rs` was refactored after the branch: the tool handlers moved to `tools/skills_tools.rs` and the file kept only helpers. Resolving the conflict textually would have re-added structs that already exist elsewhere. The lens was instead applied BY HAND to the two files it actually belongs in — which is how the write-lock bug was noticed at all.\n\n📌 WHY IT MATTERED ENOUGH TO GO BACK FOR. A user reported twice, months apart, that reflow2 \"still speaks its own jargon and never asks who I am\". Both reports were correct and neither was a missing idea: the only two skills that instruct asking are `where-am-i` and `capture-intent`, which a regular user runs and a new user does not. **A mechanism that only fires on the path its author walks is indistinguishable from a working one, from where the author stands** — and the design recorded the capability, so every reading of the graph said the mechanism existed.\n\n⚠️ AND THE LIMIT THE CAPABILITY ALWAYS NAMED IS UNCHANGED: the tests prove the lens computes and is attached. They do not prove an agent ACTS on it, and nothing proves the translation is any good. This closes delivery. **Whether the words that come out are the reader's words remains unmeasured**, and the trial that would measure it — a real gap list narrated to a reader with a stated non-software background — is still the missing instrument.",
         "subject": "system",
         "summary": "`get_skill` and `list_skills` now carry a `lens` field: who the design knows how to speak to, or a plain statement that it knows nobody. Moves `cap:the-skill-response-carries-the-lens` from `in_progress` to `realized` — it was built 2026-08-19 on branch `lens-hint-rides-the-loop-rail` (commit e01c760), deliberately not marked realized at the v0.36.0 cut, and never merged. Verified live against the real binary: a `get_skill` response now returns keys [body, description, lens, name]. Workspace suite 1835 passed / 0 failed across 163 binaries, reconciling exactly against 1824 + 11 across 161 + 2."
+      }
+    },
+    {
+      "node_id": "chg:the-lens-rides-loop-status-and-the-nudge-says-its-words-are-for-the-agent",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "name": "loop_status carries `lens` (the skill rail's sentence, prefixed by one naming `next` as the agent's list), every Stop-nudge message ends with the register line, and served AGENTS.md's standing rule names tool replies as addressed to the agent — root-caused from the 2026-09-14 field report, pinned by four server tests and one nudge test that failed first",
+        "repair": "corrected_cause",
+        "subject": "system"
       }
     },
     {
@@ -229052,6 +229272,17 @@
       }
     },
     {
+      "node_id": "epoch:planned-the-mechanism-reaches-the-moment",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "description": "PLANNED on Anthony's word, 2026-09-14, from the session plan he confirmed (\"record as proposed\"; \"two walks, one increment\"). NO VERSION NUMBER BY DESIGN (dec:idea-a-planned-increment-is-named-by-content-not-by-number).\n\nTHE THEME. Three field reports arrived on 2026-09-14 and they are one class: a mechanism the design already holds fails to reach the moment it exists for. The register rule exists, is lint-checked, and reflow2's own nouns still reached a person verbatim. The orientation skill exists and a management progress deck was written from a checklist file without the design being read. The cause discipline exists and an agent asked the owner whether to record causes at all. In every case the tool or rule was present and nothing keyed it to the words a person reads or the moment a claim is made.\n\nORDER, as ruled:\n1. Root-cause on reflow2 jargon reaching the user unfiltered by the lens (his explicit ask) — fact:reflow2-jargon-reaches-the-user-unfiltered-by-the-lens-a-work-session-said-structural-findings-and-undispositioned-drift-to-a-person. Subject cap:the-register-rule-reaches-the-words. The leading candidate to discriminate, not assume: the lens governs prose the skills write, while the offending words were reply field names read out in a closing summary no skill governs. The baseball coach is the test.\n2. Root-cause on the hxm_program status deck — fact:field-report-hxm-a-progress-deck-was-written-from-a-checklist-and-recency-and-the-design-was-read-only-after-a-challenge. A SECOND walk on the same bones (ruled: two walks, one increment), because the class is shared with fact:the-root-cause-skill-is-demanded-by-no-tool-and-named-by-no-trigger-so-it-loads-only-by-luck: a trigger keyed on the agent's internal state loads only by luck. After the walk, the three ideas it produced are put to Anthony for promotion, parking or rejection; the walk says which of them addresses the cause.\n3. Root-cause on fix_without_recorded_cause — fact:a-work-project-answered-fix-without-recorded-cause-and-twenty-of-twenty-one-fixes-were-checksum-dispositions-wearing-the-nearest-label — then its three sub-items in the order already recorded there: measure which path labelled twenty checksum dispositions defect_fix and fix it at the source (resync is the right label); rewrite the gap text as a standing rule with a triage recipe and sweep other detector texts that offer declining a DesignRule as an option; exclude acceptance-minted events by construction.\n\nWHY THIS ORDER. Anthony's ruling of 2026-09-07 (dec:v0520-takes-the-field-feedback-triage-first-then-the-cement-measure) puts field feedback ahead of instruments because it is the only input from someone using reflow2 on their own design. Jargon goes first among the three because it is the one that loses a user outright.\n\nWHAT IS NOT IN IT. No new instrument, no new detector unless a walk names one as the fix at the cause. Not the three remaining source-reading analyses (clone detection, protocol enumeration, the profile survey): those wait on Anthony's definitions and are the next increment, epoch:planned-the-three-source-reading-analyses. Not the rulings only he can give (the eleven decision_overtaken_by_promotion findings; dec:idea-should-an-edge-write-report-and-preserve-what-it-replaced-the-way-a-node-write-does; the six ideas parked at his instruction). Not the loop housekeeping (36 unsurfaced gaps, 92 structural defects, 3 unproven capabilities, 2 unreconciled built capabilities, one ghost claim), which is one pass beside the increment, not part of it.\n\nEach walk runs the root-cause skill in full: symptom as observation, precedent, candidates generated from the design, a measurement that could refute the favourite, the class, the fix at the cause with its failing-first test.",
+        "epoch_type": "milestone",
+        "name": "PLANNED — the mechanism reaches the moment: three field reports of 2026-09-14 root-caused and fixed at the cause",
+        "sequence": 490,
+        "status": "planned"
+      }
+    },
+    {
       "node_id": "epoch:planned-the-server-guarantees-the-export",
       "node_type": "DesignEpoch",
       "properties": {
@@ -229060,6 +229291,17 @@
         "name": "The server guarantees the export, and the lineage chains from main",
         "sequence": 431,
         "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:planned-the-three-source-reading-analyses",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "description": "PLANNED on Anthony's word, 2026-09-14, from the session plan he confirmed. Follows epoch:planned-the-mechanism-reaches-the-moment. NO VERSION NUMBER BY DESIGN (dec:idea-a-planned-increment-is-named-by-content-not-by-number).\n\nTHE THEME. dec:reflow2-serves-source-reading-analyses-that-report-and-never-write is ACCEPTED on his word with three conditions: no configuration; never quietly guesses; reports and never writes. The wall check is served (chg:the-wall-check-is-served), with the gate that fails this repo's build when a capability promises reach it does not have. Three analyses remain from his \"fix this for all 4\": clone detection, protocol enumeration, and the profile survey.\n\nTHE ORDER OF WORK, and why it is blocked on him and not on code: each analysis needs its question DEFINED IN HIS TERMS before anything is built — what counts as a clone, what counts as a protocol, what a profile is — which is exactly the guess the consumer's agent refused to make. ASK, then build one at a time. Each ships only with the three consumer legs: served as a tool, named in a skill at the moment of use, and seen by the consumer-reach gate (req:an-analysis-a-consumer-needs-is-served-named-and-gated).\n\nWHAT IS NOT IN IT. No analysis built on a definition reflow2 guessed. No analysis that writes design back. No fourth analysis nobody asked for. The field-report root-causes are the previous increment, not this one.",
+        "epoch_type": "milestone",
+        "name": "PLANNED — the three remaining source-reading analyses, each defined in Anthony's terms before it is built, each shipped with all three consumer legs",
+        "sequence": 500,
+        "status": "planned"
       }
     },
     {
@@ -229423,6 +229665,17 @@
         "epoch_type": "revision",
         "name": "Fixed properly rather than patched — the misnamed category is renamed and the unscoped sweep returns what it examined",
         "sequence": 349,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:the-lens-reaches-the-loop-rail",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "description": "Recorded with add_epoch because it HAPPENED: the first item of the planned increment epoch:planned-the-mechanism-reaches-the-moment (sequence 490) landed on 2026-09-14, and the increment itself stays planned until the other two walks land. Sequence 491 places it inside that increment on the time axis.\n\nWHAT ARRIVED. The root-cause walk on fact:reflow2-jargon-reaches-the-user-unfiltered-by-the-lens-a-work-session-said-structural-findings-and-undispositioned-drift-to-a-person, recorded as fact:root-cause-the-lens-rode-the-skill-rail-and-the-closing-words-are-chosen-on-the-loop-rail, and the fix at its cause: loop_status carries `lens`; every Stop-nudge message ends with the register line; the standing rule in served AGENTS.md names tool replies as addressed to the agent. Four server tests and one nudge test, each observed failing before the fix.\n\nWHAT DID NOT ARRIVE, deliberately: the \"every reply\" clause of req:the-agent-learns-who-it-is-talking-to is still proposed and needs Anthony's word; the trial that would measure whether an agent's words are the reader's words is still unbuilt; the loop_hint on write replies still carries no lens (the cost question req:the-reminder-rides-the-response left open).",
+        "epoch_type": "revision",
+        "name": "ARRIVED 2026-09-14 — the lens rides loop_status and the Stop nudge says its words are for the agent: the first of the three field-report root-causes in epoch:planned-the-mechanism-reaches-the-moment delivered",
+        "sequence": 491,
         "status": "arrived"
       }
     },
@@ -232313,6 +232566,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered loop_nudge.py"
+      }
+    },
+    {
+      "node_id": "frag:art:loop-status-lens-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered a_loop_status_reply_says_whose_words_to_use.rs"
       }
     },
     {
@@ -241953,6 +242216,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:the-lens-reaches-the-loop-rail:cap:the-skill-response-carries-the-lens",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:lens-core-test\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"verified\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:lens-handler-test\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"verified\"}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:skills\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"BLOCKS\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-the-persona-has-no-delivery-leg-so-what-carries-it\",\"properties\":{\"evidence\":\"That capability stands at `in_progress` and its own description says it moves to `realized` only 'when the branch merges'. Until this question is answered one way or the other, it cannot move — and a capability parked indefinitely at in_progress is what makes the release report read as though it shipped.\"}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:the-reminder-rides-the-response\",\"properties\":{}}]",
+        "state": "{\"description\":\"**REALIZED 2026-08-26 — `get_skill` and `list_skills` carry a `lens` field**, so the reminder rides the response the agent reads immediately before doing the work. Built 2026-08-19 on Anthony's idea.\\n\\n🛑 **IT SAT ON AN UNMERGED BRANCH FOR A MONTH, AND THE DESIGN SAID IT EXISTED THE WHOLE TIME.** This description previously read *\\\"status is `in_progress`, NOT `realized`, and that is deliberate… move to `realized` when the branch merges.\\\"* The branch (`lens-hint-rides-the-loop-rail`, commit e01c760) never merged. Meanwhile the capability appeared in `capabilities_covered` on release reports, because that list derives from shipped components and artifacts and never from a capability's STATUS — **so every reading of the release record said the mechanism shipped.** Measured and recorded in `fact:the-lens-that-carries-the-persona-was-built-on-a-branch-and-never-shipped`.\\n\\n**Distinct from the two neighbouring capabilities, and the split is the point:** `cap:the-agent-asks-who-it-is-talking-to` ASKS at orientation; `cap:the-register-rule-reaches-the-words` puts the RULE in served prose everywhere; **this one makes the reminder arrive on the wire, so it survives the context distance that prose does not.**\\n\\nWHAT IS BUILT\\n· **`DesignGraph::reader_lens()`** in core (`claims.rs`), returning `ReaderLens { with_background, without_background }`. **Six tests passing** in `the_design_says_whose_words_to_use.rs`.\\n· **`lens_line()`** in `skills.rs` turns it into the sentence an agent reads.\\n· **`lens_for_response()`** attaches it best-effort to both skill tools in `tools/skills_tools.rs`. **Five handler tests passing** in `a_skill_response_says_who_it_is_for.rs`.\\n· Verified against the REAL binary over stdio: a `get_skill` response returns keys `[body, description, lens, name]`.\\n\\n⭐ THE FOUR PROPERTIES PINNED BY TESTS, because each is where this could have gone wrong:\\n1. **IT REPORTS ABSENCE.** A design where nobody carries a background says so and NAMES who could be asked — the half reflow2 has never had, since every detector reasons over what EXISTS.\\n2. **IT NEVER CLAIMS TO KNOW WHO IS AT THE KEYBOARD.** A `seat` names a session, never a person. It reports what the DESIGN holds and leaves matching the reader to the agent. **Confidently addressing the wrong person would be worse than silence.**\\n3. **AN `automated_agent` IS NEVER COUNTED.** A bot's `description` is provenance about a tool; counting it would let a design claim it knows its AUDIENCE when it only knows its AUTHORS.\\n4. **WHITESPACE IS NOT A BACKGROUND**, and `kind` unset reads as a person.\\n\\n📌 **BEST-EFFORT BY CONSTRUCTION.** `lens_for_response` swallows a graph error and returns `None`, so a skill is still served when the graph is busy, missing or unreadable. **A reminder that could withhold a skill would trade a nudge for an outage.**\\n\\n📌 **THE IDEA WAS AN INPUT PARAMETER; THIS IS AN OUTPUT.** `session_user` as an argument has a chicken-and-egg — the agent must already know who it is speaking to. As an output, **absence becomes the signal** and the caller passes nothing.\\n\\n🛑 **TWO DEFECTS THE MONTH-LONG DELAY CREATED, both caught only because landing it was done by hand:**\\n- **`lens_for_response` took a WRITE lock to do a READ.** Harmless in August; not now — `write_lock` became fallible AND refuses outright on a `--read-only` server, so the lens would have returned `None` on every read-only deployment. **That is exactly the surface a stranger reads a design through**, and no test would have caught it. Now `graph.read()`.\\n- **The five handler tests never ran because they never COMPILED** — `GetSkillReq`/`ListSkillsReq` had moved modules and `name` had become `Option<String>`. The commit called them \\\"unrun\\\"; unrunnable is a different and softer-sounding state.\\n\\n🛑 **AND THE REAL LIMIT IS UNCHANGED BY ANY OF IT.** The tests prove the lens computes correctly and that the field is attached. **They do not prove an agent acts on it, and nothing proves the translation is any good.** This fixes \\\"the agent forgot\\\"; it does not touch \\\"the agent translated badly\\\". The trial — a real gap list narrated to a reader with a stated non-software background — is still the missing instrument.\\n\\n⚠️ OPEN, DELIBERATELY NOT DECIDED HERE: whether the lens needs `loop_hint`'s fire-on-change throttle.\",\"name\":\"A skill response says who the design knows how to speak to — or says plainly that it knows nobody\",\"provenance\":\"authored\",\"status\":\"realized\"}",
+        "target_id": "cap:the-skill-response-carries-the-lens",
+        "target_type": "Capability"
+      }
+    },
+    {
       "node_id": "snap:epoch:the-loop-check-stops-firing-twice:art:loop-nudge",
       "node_type": "Snapshot",
       "properties": {
@@ -247104,6 +247377,25 @@
         "statement": "MEASURED ON THE LIVE GRAPH, AND IT CORRECTS AN EARLIER CLAIM IN THIS SAME CHANGE. Retiring a node type does not merely stop an export CONTAINING that type from importing. It stops EVERY EXISTING GRAPH FROM OPENING AT ALL, instances or no instances, until the graph is migrated.\n\nThe reason is that the guard reads the STAMP, not the contents. A graph's stamp records the SCHEMA the writing binary had, so every reflow2 graph in existence names QualityGate whether or not it ever held one. reflow2's own graph held ZERO QualityGate nodes and was refused outright: \"this graph names types this reflow2 cannot read, so opening it could silently show you less of your design than it holds — refused.\"\n\nWHAT I GOT WRONG, AND HOW. I probed the IMPORT path with a hand-built document carrying an undeclared type, saw it refused, and wrote the blast radius from that: \"almost certainly affects nobody, since the type never had a constructor and our graph holds zero.\" The measurement was real and it measured the wrong path. The binding gate is STORE OPEN, which fires on the stamp; instance count never enters it. This is step (5) of the root-cause discipline failing in its documented way — a call that completed, a result that was true, and an inference that did not follow.\n\nTHE RETIREMENT IS TWO EDITS, NOT ONE, AND THE CODE SAYS SO. provenance.rs carries RETIRED_NODE_TYPES with the comment \"Empty so far; grows the day a node type is retired.\" Cutting the type from schema/verify.yaml without adding it there left the guard classifying an ordinary graph as one from the FUTURE, so the refusal told the operator their reflow2 was BEHIND and to rebuild — the exact opposite of the correct action. Registering the retirement flips the message to \"predates a schema change — migrate the graph\", which is right.\n\nTHE MIGRATION RECIPE WORKS AND WAS RUN END TO END on the live graph: export with a binary that still knows the type, import into a FRESH graph with the binary that retired it, verify. Result: 3,989 nodes and 21,555 edges in, 3,989 and 21,555 out, zero nodes lost, zero edges lost, stamp 29 → 28.\n\n⚠️ ONE OPERATIONAL TRAP FOUND BY FALLING INTO IT. The stamp lives in a SIDECAR file beside the store, `<graph-path>.meta.json`, not inside the store directory. Copying the store directory into place while leaving the old sidecar reproduces the refusal exactly, on a graph that has already been migrated. Anyone moving a graph by hand must move the sidecar with it; the published recipe avoids this only because importing into a fresh path writes its own.\n\nOPEN AND NOT DECIDED HERE: whether the guard should open the store and COUNT instances before refusing. A retired type with zero instances carries no risk of showing less than the design holds, which is the guard's whole stated purpose — so the refusal is stricter than its own justification requires. Against that: counting means opening the store the guard is refusing to open, and a cheap conservative check is worth more than a clever one. Not this change's call.",
         "subject_id": "dec:qualitygate-is-retired-the-phase-gate-dissolved-into-the-detectors",
         "valid_from": "2026-09-07"
+      }
+    },
+    {
+      "node_id": "fact:root-cause-the-lens-rode-the-skill-rail-and-the-closing-words-are-chosen-on-the-loop-rail",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.9,
+        "fact_type": "finding",
+        "name": "ROOT CAUSE (walked, measured): the leaked sentence was loop_status's own field name and `next` line; the lens rode get_skill/list_skills only, and every skill's last instruction is to call loop_status — so the last reply read before the closing words was the one on that path with no lens, and its to-do list is written for the agent in reflow2's nouns with nothing marking it as such",
+        "statement": "RUN AS THE SKILL, on Anthony's instruction, 2026-09-14, on fact:reflow2-jargon-reaches-the-user-unfiltered-by-the-lens-a-work-session-said-structural-findings-and-undispositioned-drift-to-a-person.\n\n① OBSERVED, verbatim, relayed from a project at his workplace: \"Remaining: 6 structural findings and 1 undispositioned drift (the deleted [file], outstanding since before this session). Both are the check-health workflow rather than this one — and its repair step can delete nodes, so it's worth reading what it proposes rather than applying blind.\" Expected: \"6 things about the design's shape to look at, and 1 file the design still lists that was deleted.\" NOT affected: the same agent's gap questions, which are rephrased through gap_to_prompt and carry the register rule on that tool. First occurrence anyone can point to of the same class: Alex, 2026-08-18, \"there are open gaps with X, Y, Z\".\n\n② PRECEDENT, searched on the raw phrase: nothing prior holds \"undispositioned drift\" reaching a person. The design holds the rule (cap:the-register-rule-reaches-the-words, 2026-08-19, lint-checked on detect-and-ask), the reminder on the wire (cap:the-skill-response-carries-the-lens, landed 2026-08-26 on get_skill and list_skills), the requirement that the answer shapes EVERY reply (req:the-agent-learns-who-it-is-talking-to, clause 2), and req:the-reminder-rides-the-response (\"a discipline the agent must hold across a long session rides the tool response it already reads\").\n\n③ CANDIDATES, generated from the bones: (a) ALLOCATION — the lens governs prose the skills write and the words were a TOOL REPLY. (b) INTENT — the \"every reply\" clause is still `proposed`, never accepted by the owner. (c) ASSURANCE — the lint proves the obligation is stated in one skill's text, never what a person reads. (d) INTENT/ABSENCE — that project had no background recorded, so the lens was silent. (e) NOT IN THE SUSPECTED COMPONENT — the Stop nudge is the last text an agent reads and is written in reflow2's nouns. (f) THE OBSERVATION IS WRONG — the words came from a skill after all.\n\n④/⑤ MEASUREMENTS, taken 2026-09-14 on the checkout. M1: \"undispositioned\" occurs in NO served skill and NO served instruction; \"structural finding\" occurs nowhere. (f) REFUTED. M2: `undispositioned_drift` is a loop_status reply FIELD (report.rs:435) and the `next` line at report.rs:941 reads \"…structural defect(s) outstanding — run detect_defects to read them (the check-health skill is the wider workflow; its repair step can delete nodes, so read what it proposes before applying)\". The user's sentence is that line paraphrased, with the field name read out as English. (a) CONFIRMED as the source. M3: lens_line has exactly two call sites, get_skill and list_skills (skills.rs:301, lens_for_response); loop_status's reply carries no lens; the loop_hint on write replies (\"loop owes: N structural defect(s), N drift(s) awaiting disposition\") carries none. M4: the standing register rule in served AGENTS.md and the lens sentence never mention tool replies; loop_status's served description never mentions the reader; the Stop nudge (tools/loop_nudge.py) carries no register line. M5: the `next` prose dates from 2026-07-21 (before the register rule) and the 08-19 and 08-26 fixes touched AGENTS.md, gap_to_prompt, detect-and-ask, get_skill and list_skills — never loop_status. (b) CONFIRMED by get_node: the requirement is `proposed`. (c) CONFIRMED by reading skill_lint: ASK_CONTRACT checks detect-and-ask's text only. (d) NOT MEASURABLE from here — that design is not visible. (e) CONFIRMED as a second unlensed channel on the same moment, though whether it fired in that session is unknown.\n\n⑥ THE CLASS: text written FOR THE AGENT — a to-do list, a hint, a nudge, a gap title — is relayed TO THE PERSON whenever it is the freshest text in context, and nothing marks which text is which. The lens was allocated to the skill rail, the moment of DOING, and never to the loop rail, the moment of FINISHING — and every served skill's last instruction is \"before moving on: loop_status\", so the closing words are chosen on the loop rail. Would the fix have stopped the 2026-08-18 report? That relay came from gap output, which got its own leg on 08-19; the class is one (reply text relayed) and loop_status was the remaining unlensed reply on the closing path.\n\n⑦ PINNED FIRST: crates/reflow2-mcp/tests/a_loop_status_reply_says_whose_words_to_use.rs (four tests: the silent case names who could be asked; the recorded case names them; the lens names `next` as the agent's list; the lens never withholds `next`) — observed failing before the fix, \"0 passed; 4 failed\". tools/test_loop_nudge.py test_the_stop_nudge_says_the_next_words_are_read_by_a_person — observed failing before the fix.\n\n⑧ FIXED AT THE CAUSE: loop_status carries `lens` — the same sentence as the skill rail, prefixed by \"`next` is the agent's to-do list, written in reflow2's nouns; what a person reads is what it MEANS for their design, in their words\" — computed from the read lock already held, best-effort, never withholding the debt. Every Stop-nudge block reason ends with a register line (\"What you say next is read by a person, not by reflow2…\"). The standing rule in served AGENTS.md gained a paragraph naming tool replies as addressed to the agent. All nine lens tests pass after the fix.\n\n⑨ NOT ESTABLISHED: whether that project had a reader's background recorded; whether the Stop nudge fired in that session; whether an agent ACTS on the lens — the standing limit every lens record names, and the trial with a non-software reader is still the missing instrument; and the \"every reply\" clause of req:the-agent-learns-who-it-is-talking-to is still `proposed` and needs the owner's word before the design can say the rule is INTENT rather than prose.",
+        "steps": [
+          "loop_status",
+          "where-am-i",
+          "root-cause",
+          "check-health"
+        ],
+        "subject_id": "cap:the-register-rule-reaches-the-words",
+        "valid_from": "2026-09-14"
       }
     },
     {
@@ -252728,7 +253020,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:0a5070bfea1587c2df8749830ae324b7079fd312940302f8265e5c21e0c74aba",
+  "prev_content_hash": "sha256:8848c5e417ad91c2d2aca3361e1882ec922cbd56be888a041a2bd36846fcbfa5",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

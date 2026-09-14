@@ -1157,14 +1157,30 @@ def retired_ask(data: dict | None = None, session_id: str | None = None) -> str 
     )
 
 
+# The one line that has to reach the agent at the moment it chooses its closing
+# words. FIELD REPORT 2026-09-14: a session ended with "6 structural findings
+# and 1 undispositioned drift" — loop_status's own field name and `next` line,
+# read out to a person verbatim. The register rule lived in served skills and
+# the lens rode skill replies; the text an agent reads LAST is this nudge and
+# the loop_status reply, both written in reflow2's nouns for the agent, and
+# neither said so. This is the nudge's half; `loop_status` carries its own.
+REGISTER_LINE = (
+    "What you say next is read by a person, not by reflow2: say what these "
+    "mean for THEIR design in their own words — gap, drift, structural defect "
+    "and loop are reflow2's nouns, not theirs."
+)
+
+
 def ride_along(session_id: str, reason: str) -> str:
-    """Append the retired-observations ask to a message already going out.
+    """Append the retired-observations ask and the register line to a message
+    already going out.
 
     FREE BY CONSTRUCTION: it adds no interruption, because it only ever speaks
     where one was happening anyway. That is the whole of "ask, don't block".
     """
     ask = retired_ask(session_id=session_id)
-    return f"{reason} {ask}" if ask else reason
+    body = f"{reason} {ask}" if ask else reason
+    return f"{body} {REGISTER_LINE}"
 
 
 def main() -> int:
