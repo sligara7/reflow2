@@ -96,12 +96,7 @@ async fn start_design_refuses_once_a_design_has_arrived() {
     drop(g);
 
     let svc = reflow2_mcp::latent::LatentService::new(graph.display().to_string());
-    let out = svc
-        .reflow2_start_design(rmcp::handler::server::wrapper::Parameters(
-            reflow2_mcp::latent::NoArgs {},
-        ))
-        .await
-        .expect("call");
+    let out = svc.start_design_detached().await.expect("call").0;
     let v = out.structured_content.expect("structured");
 
     assert_eq!(
@@ -130,12 +125,7 @@ async fn an_undesigned_directory_still_starts_normally() {
     let graph = dir.join(".reflow2").join("graph");
 
     let svc = reflow2_mcp::latent::LatentService::new(graph.display().to_string());
-    let out = svc
-        .reflow2_start_design(rmcp::handler::server::wrapper::Parameters(
-            reflow2_mcp::latent::NoArgs {},
-        ))
-        .await
-        .expect("call");
+    let out = svc.start_design_detached().await.expect("call").0;
     let v = out.structured_content.expect("structured");
 
     assert_eq!(v["started"], true, "the ordinary path must still work: {v}");
@@ -162,12 +152,7 @@ async fn an_opted_in_directory_with_no_store_is_not_treated_as_designed() {
     );
 
     let svc = reflow2_mcp::latent::LatentService::new(graph.display().to_string());
-    let out = svc
-        .reflow2_start_design(rmcp::handler::server::wrapper::Parameters(
-            reflow2_mcp::latent::NoArgs {},
-        ))
-        .await
-        .expect("call");
+    let out = svc.start_design_detached().await.expect("call").0;
     let v = out.structured_content.expect("structured");
 
     assert!(

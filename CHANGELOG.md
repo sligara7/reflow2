@@ -31,6 +31,25 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Fixed
+
+- **Opt-in finishes inside MCP, on any client: the latent server promotes itself in place.** Alex,
+  Grok Build, 2026-09-14: `reflow2_start_design` created an empty `.reflow2/` and its `next_step`
+  said "run /mcp" — Claude Code's reconnect. Grok Build has `/mcps` and no reconnect; the latent
+  two-tool stdio process was never replaced; `.reflow2/graph` was never created; genesis could not
+  finish and `report-friction` could not run. His client DID re-query the tool list after
+  "continue"; this process still offered two tools. Root-caused, not re-worded: the opt-in's last
+  step was allocated to the client (a process restart), the instruction named one product's
+  command, and nothing re-probed — the 2026-08-15 restore report asked for in-place promotion
+  and got only its fallback. Now `LatentService` re-probes on every `tools/list` and `tools/call`,
+  opens the store once when the design directory exists, serves the full surface from this same
+  process, sends `notifications/tools/list_changed` after `reflow2_start_design` (and declares the
+  capability at the handshake), and returns a next step that says the surface is SERVED NOW — a
+  client restart is the fallback only, with per-product hints riding as additions. Four tests over
+  the real binary on stdio with a client-neutral `clientInfo`, three observed failing first; CI runs
+  them against the built binary. **Patch**: no shape or schema change; a directory that opts in now
+  gets its store from the process that opted it in.
+
 ### Added
 
 - **`wall_check` is served.** The import-boundary walk — does the decomposition you declared match

@@ -27,11 +27,19 @@
 //! nobody ever made one would send it hunting a fault that does not exist.
 
 use rmcp::handler::server::router::tool::ToolRouter;
+use rmcp::handler::server::tool::ToolCallContext;
 use rmcp::handler::server::wrapper::Parameters;
-use rmcp::model::{CallToolResult, ContentBlock, Implementation, ServerCapabilities, ServerInfo};
-use rmcp::{ErrorData as McpError, ServerHandler, tool, tool_handler, tool_router};
+use rmcp::model::{
+    CallToolRequestParams, CallToolResponse, CallToolResult, ContentBlock, Implementation,
+    ListToolsResult, PaginatedRequestParams, ServerCapabilities, ServerInfo,
+};
+use rmcp::service::{RequestContext, RoleServer};
+use rmcp::{ErrorData as McpError, ServerHandler, tool, tool_router};
 use serde_json::json;
 use std::path::{Path, PathBuf};
+use std::sync::Arc;
+
+use crate::service::ReflowService;
 
 /// Whether this directory has opted into being designed.
 ///
@@ -46,11 +54,30 @@ pub fn design_present(graph_path: &str) -> bool {
             .is_some_and(|d| !d.as_os_str().is_empty() && d.exists())
 }
 
-/// A server for a directory with no design, which says so without inventing one.
+/// A server for a directory with no design, which says so without inventing one
+/// — and which becomes the full design server IN PLACE the moment one exists.
+///
+/// ⭐ WHY IN PLACE, AND NOT BY A RESTART. Until 2026-09-14 the opt-in ended
+/// with "ask the user to run /mcp" — Claude Code's reconnect command — and the
+/// design surface arrived only when the client replaced this process. Alex,
+/// on Grok Build, could not follow it: that client has `/mcps` and no
+/// reconnect. His client DID re-query the tool list afterwards; this process
+/// still offered two tools. The design's own rule
+/// (`rule:mcp-and-the-graph-are-the-only-common-ground`) says reflow2 assumes
+/// ONLY that the product can call an MCP server, so finishing opt-in may need
+/// nothing outside MCP — and MCP has the mechanism: the server re-probes on
+/// every call, opens the store itself, serves the full surface from then on,
+/// and sends `notifications/tools/list_changed`. A client restart is the
+/// fallback for a client that ignores the notification, never the way.
+/// `fact:defect-the-latent-surface-never-re-probes-after-a-cli-restore`
+/// (2026-08-15) asked for exactly this and got only its fallback.
 #[derive(Clone)]
 pub struct LatentService {
     graph_path: String,
     tool_router: ToolRouter<Self>,
+    /// The full service, once the design exists. Opened at most once per
+    /// process; every call re-probes the directory first.
+    full: Arc<tokio::sync::RwLock<Option<ReflowService>>>,
 }
 
 #[derive(Debug, serde::Deserialize, schemars::JsonSchema)]
@@ -103,7 +130,46 @@ impl LatentService {
         Self {
             graph_path,
             tool_router: Self::tool_router(),
+            full: Arc::new(tokio::sync::RwLock::new(None)),
         }
+    }
+
+    /// The full design service, if a design exists here NOW — re-probed on
+    /// every call, opened at most once. Best-effort: a store that will not
+    /// open leaves the latent surface in place and says why on stderr, rather
+    /// than turning "no design yet" into an outage.
+    pub(crate) async fn promoted(&self) -> Option<ReflowService> {
+        if let Some(full) = self.full.read().await.as_ref() {
+            return Some(full.clone());
+        }
+        if !design_present(&self.graph_path) {
+            return None;
+        }
+        let mut slot = self.full.write().await;
+        if slot.is_none() {
+            match ReflowService::new_reporting(&self.graph_path) {
+                Ok((svc, provenance)) => {
+                    if let Some(note) = provenance {
+                        eprintln!("reflow2: {note}");
+                    }
+                    eprintln!(
+                        "reflow2: a design now exists at {} — this server serves the full \
+                         design surface from here on",
+                        self.graph_path
+                    );
+                    *slot = Some(svc);
+                }
+                Err(e) => {
+                    eprintln!(
+                        "reflow2: a design directory exists at {} but the store could not be \
+                         opened ({e}); still serving the latent surface",
+                        self.graph_path
+                    );
+                    return None;
+                }
+            }
+        }
+        slot.clone()
     }
 
     /// What design lives at each of these paths — without opening any of them.
@@ -144,13 +210,13 @@ impl LatentService {
         Ok(result)
     }
 
-    /// Opt this directory in, and say plainly what has to happen next.
+    /// Opt this directory in, and finish the job in this same process.
     ///
-    /// It creates the directory and nothing else — no store, no schema, no
-    /// nodes. Opening RocksDB here would take the write lock in the very process
-    /// that is about to be replaced, and the design surface this session needs
-    /// is served by a *different* process; the honest thing is to make the
-    /// opt-in and hand back the one instruction that completes it.
+    /// It creates the directory, opens the store, and tells the client the
+    /// tool list changed — so the design surface is served by THIS process from
+    /// the next call on, on any MCP client. Until 2026-09-14 it created the
+    /// directory only and handed back "run /mcp", which finished the opt-in on
+    /// exactly one client (`fact:field-report-genesis-on-grok-build-cannot-finish-...`).
     #[tool(
         description = "Start a design for this directory. reflow2 is installed on this machine but \
                        no design has been started HERE, which is why the design tools are absent. \
@@ -169,7 +235,20 @@ impl LatentService {
     pub async fn reflow2_start_design(
         &self,
         Parameters(_): Parameters<NoArgs>,
+        ctx: RequestContext<RoleServer>,
     ) -> Result<CallToolResult, McpError> {
+        let (result, promoted_now) = self.start_design_detached().await?;
+        if promoted_now {
+            announce_tool_list_changed(&ctx).await;
+        }
+        Ok(result)
+    }
+
+    /// The opt-in itself, without a client to notify — what the tool above
+    /// does before it sends `tools/list_changed`, and what a test with no
+    /// peer can drive. Returns the reply and whether this call promoted the
+    /// process to the full surface.
+    pub async fn start_design_detached(&self) -> Result<(CallToolResult, bool), McpError> {
         let dir = PathBuf::from(&self.graph_path)
             .parent()
             .filter(|d| !d.as_os_str().is_empty())
@@ -193,17 +272,16 @@ impl LatentService {
             found.state,
             reflow2_core::DesignPathState::Design | reflow2_core::DesignPathState::Unnamed
         ) {
+            let promoted_now = self.promoted().await.is_some();
             let payload = json!({
                 "started": false,
                 "a_design_is_already_here": true,
                 "graph_path": self.graph_path,
                 "design": found,
                 "what_happened": "A design exists at this path NOW. This server was started when \
-                                  it did not, which is why it is serving the one-tool surface — \
-                                  the surface is chosen once at startup and does not re-probe.",
-                "next_step": "Ask the user to fully restart this client (a /mcp reconnect is not \
-                              always enough — the stdio server must be replaced). The new server \
-                              will see the design and serve the full surface.",
+                                  it did not; it has re-probed, opened that design, and serves \
+                                  the full design surface from here on.",
+                "next_step": served_next_step(&self.graph_path, promoted_now),
                 "nothing_was_created": "This call did NOT create or modify anything. Starting a \
                                         design over one that already exists is the mistake this \
                                         refusal exists to prevent.",
@@ -217,7 +295,7 @@ impl LatentService {
                 .map_err(|e| McpError::internal_error(e.to_string(), None))?;
             let mut result = CallToolResult::structured(payload);
             result.content = vec![ContentBlock::text(text)];
-            return Ok(result);
+            return Ok((result, promoted_now));
         }
 
         let already = dir.exists();
@@ -234,20 +312,24 @@ impl LatentService {
             ));
         }
 
+        // THE OPT-IN FINISHES HERE, INSIDE MCP. The directory exists, so the
+        // design is present by the same test the launcher uses; open the
+        // store in this process and tell the client its tool list changed.
+        // Nothing the user has to type, on any client.
+        let promoted_now = self.promoted().await.is_some();
         let payload = json!({
             "started": !already,
             "design_directory": dir.display().to_string(),
             "graph_path": self.graph_path,
-            "next_step": "Ask the user to run /mcp (reconnect the reflow2 server), then continue. \
-                          This session is talking to a server that was started before the design \
-                          existed; the reconnected one serves the full design surface.",
+            "surface": if promoted_now { "full" } else { "latent" },
+            "next_step": served_next_step(&self.graph_path, promoted_now),
             "what_this_means": "reflow2 is installed machine-wide and this directory has now opted \
                                 into being designed. Nothing has been designed yet — no project, no \
-                                requirements. After the reconnect, run the genesis skill for a new \
+                                requirements. Run the genesis skill (get_skill genesis) for a new \
                                 project or the adopt skill for code that already exists.",
             "do_not": "Do not report reflow2 as broken, missing or misconfigured, and do not write \
-                       design notes into files as a substitute. The design surface is one reconnect \
-                       away and the graph is where design belongs.",
+                       design notes into files as a substitute. The design surface is served now \
+                       and the graph is where design belongs.",
             "if_you_did_not_check_nearby": "Say so to the user NOW, before going further. This \
                                             call only created a directory — nothing has been \
                                             designed — so if a design already exists one or two \
@@ -260,26 +342,98 @@ impl LatentService {
             .map_err(|e| McpError::internal_error(e.to_string(), None))?;
         let mut result = CallToolResult::structured(payload);
         result.content = vec![ContentBlock::text(text)];
-        Ok(result)
+        Ok((result, promoted_now))
     }
 }
 
-#[tool_handler(router = self.tool_router)]
+/// The one instruction that finishes the opt-in — written for ANY MCP client.
+///
+/// It names no client command as the way: the surface is served by this same
+/// process and the client has been told the list changed. The restart is the
+/// fallback, and the per-product hints ride it as ADDITIONS, which is what
+/// `rule:mcp-and-the-graph-are-the-only-common-ground` allows and no more.
+fn served_next_step(graph_path: &str, promoted: bool) -> String {
+    if promoted {
+        format!(
+            "The full design surface is SERVED NOW by this same server: it opened the design at \
+             {graph_path} and sent the client `notifications/tools/list_changed`. Continue in \
+             this session — `get_skill` genesis for a new project, adopt for code that already \
+             exists — and read the tool list again if your client caches it. Only if the design \
+             tools still do not appear, ask the user to restart this client's reflow2 server \
+             (Claude Code: `/mcp` then reconnect; Grok Build: `/mcps`, toggle reflow2 off and on, \
+             or restart the TUI; any other client: restart it). Nothing else is needed."
+        )
+    } else {
+        format!(
+            "The design directory exists but this server could not open the store at \
+             {graph_path} (see its stderr log). Ask the user to restart this client's reflow2 \
+             server (Claude Code: `/mcp` then reconnect; Grok Build: `/mcps`, toggle reflow2 off \
+             and on, or restart the TUI; any other client: restart it); the fresh server will \
+             report the open error in band if it persists."
+        )
+    }
+}
+
+/// Tell the client the tool list changed — the MCP mechanism for exactly this.
+/// Best-effort: a client that does not take notifications is not an error,
+/// and the next `tools/list` serves the full surface regardless.
+async fn announce_tool_list_changed(ctx: &RequestContext<RoleServer>) {
+    if let Err(e) = ctx.peer.notify_tool_list_changed().await {
+        eprintln!("reflow2: could not send tools/list_changed to the client: {e}");
+    }
+}
+
 impl ServerHandler for LatentService {
+    /// The latent tools, or the full surface once a design exists here.
+    async fn list_tools(
+        &self,
+        request: Option<PaginatedRequestParams>,
+        context: RequestContext<RoleServer>,
+    ) -> Result<ListToolsResult, McpError> {
+        if let Some(full) = self.promoted().await {
+            return full.list_tools(request, context).await;
+        }
+        Ok(ListToolsResult::with_all_items(self.tool_router.list_all()))
+    }
+
+    /// `reflow2_start_design` is always answered here (it re-probes and says
+    /// whether the surface is served); everything else goes to the full
+    /// service once there is one.
+    async fn call_tool(
+        &self,
+        request: CallToolRequestParams,
+        context: RequestContext<RoleServer>,
+    ) -> Result<CallToolResponse, McpError> {
+        if request.name != "reflow2_start_design"
+            && let Some(full) = self.promoted().await
+        {
+            return full.call_tool(request, context).await;
+        }
+        let tcc = ToolCallContext::new(self, request, context);
+        self.tool_router.call(tcc).await
+    }
+
     fn get_info(&self) -> ServerInfo {
         // Said at handshake time, because the agent's first wrong conclusion
         // would otherwise be "reflow2 is not set up here" — which on a
         // machine-wide install is false in a way that costs the user the whole
         // design loop.
-        ServerInfo::new(ServerCapabilities::builder().enable_tools().build())
-            .with_server_info({
-                let mut info = Implementation::from_build_env();
-                info.name = env!("CARGO_PKG_NAME").to_string();
-                info.version = env!("CARGO_PKG_VERSION").to_string();
-                info
-            })
-            .with_instructions(format!(
-                "reflow2 IS INSTALLED AND AVAILABLE HERE, AND THIS DIRECTORY HAS NO DESIGN YET. \
+        // `list_changed` is DECLARED, because this server sends it: the moment a
+        // design exists here it serves the full surface and says so the MCP way.
+        ServerInfo::new(
+            ServerCapabilities::builder()
+                .enable_tools()
+                .enable_tool_list_changed()
+                .build(),
+        )
+        .with_server_info({
+            let mut info = Implementation::from_build_env();
+            info.name = env!("CARGO_PKG_NAME").to_string();
+            info.version = env!("CARGO_PKG_VERSION").to_string();
+            info
+        })
+        .with_instructions(format!(
+            "reflow2 IS INSTALLED AND AVAILABLE HERE, AND THIS DIRECTORY HAS NO DESIGN YET. \
                  Nothing has failed: no design graph has ever been started at {}, so the design \
                  tools are not served and exactly one tool is — `reflow2_start_design`.\n\nThis is \
                  the ordinary state of a directory on a machine where reflow2 is installed once \
@@ -295,7 +449,7 @@ impl ServerHandler for LatentService {
                  worked, this view is stale, and a full client restart is what attaches the design \
                  surface. Do not re-import and do not report the restore as failed. \
                  `reflow2_start_design` re-probes and will tell you if this has happened.",
-                self.graph_path, self.graph_path
-            ))
+            self.graph_path, self.graph_path
+        ))
     }
 }
