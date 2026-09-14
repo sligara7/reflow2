@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:e6a0f951de7518f759a4523fe81dc5d96c427567b50703f4db5af1781067c725",
+  "content_hash": "sha256:69b83048ee351b71974bab5a5a6a15b5f2feb99e030ea6daead8eb5d28d19423",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -1470,6 +1470,14 @@
     {
       "edge_type": "ALLOCATED_TO",
       "from_id": "cap:an-acknowledgement-says-whose-judgement-it-was",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:an-open-question-its-own-promotion-answered-is-noticed",
       "properties": {
         "weight_basis": "estimated"
       },
@@ -3665,6 +3673,14 @@
         "evidence": "The earlier one saw this coming. It is ACCEPTED and records that the loop nudge's mechanism is .claude/settings.json, so it exists for one harness only. Every safeguard reflow2 has for 'did this session export?' rides that hook, which means the guarantee asked for here cannot be built where the existing ones live — and flo2's users would not be in Claude Code at all."
       },
       "to_id": "dec:idea-what-guarantees-the-export-if-the-export-is-the-only-durable-copy"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "dec:idea-the-routing-table-routes-grammar-not-domain-nouns",
+      "properties": {
+        "evidence": "That question already reached 'what is missing is a PLACE TO PUT THE ANSWER' and named a per-project glossary as its option (c); this one arrives at the same mechanism from the interview end rather than from the translator end. It also carries the measurement this one rests on — that the shipped routing table routes grammar, not nouns — and its option (f), diffing two or three translators, is the cheapest thing that would make either decidable."
+      },
+      "to_id": "dec:idea-the-interviews-answers-become-the-projects-own-se-reference"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -14828,6 +14844,14 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-extraction-is-two-pass-against-an-se-schema-stated-up-front",
+      "properties": {
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-feedback-arrives-by-git-push-and-pull",
       "properties": {
         "acted_at": "2026-08-13",
@@ -15859,6 +15883,14 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-the-interviews-answers-become-the-projects-own-se-reference",
+      "properties": {
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-the-load-bearing-prose-is-unchecked-against-the-code-it-describes",
       "properties": {
         "acted_at": "2026-09-02",
@@ -15996,6 +16028,14 @@
         "role": "author"
       },
       "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-the-user-declares-an-se-unit-on-purpose-with-a-skill-per-unit",
+      "properties": {
+        "role": "author"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -19312,6 +19352,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:an-idea-the-design-already-built-stops-reading-as-an-open-question",
+      "properties": {
+        "acted_at": "2026-09-14",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:an-unavailable-loop-trigger-is-named-as-unavailable",
       "properties": {
         "acted_at": "2026-08-14",
@@ -21173,6 +21222,16 @@
         "validation_status": "unvalidated"
       },
       "to_id": "dec:idea-a-derived-number-carries-what-it-was-computed-over-wherever-it-is-quoted"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:seven-open-questions-had-already-shipped-their-answers-2026-09-14",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "This requirement exists BECAUSE of that sweep: it found seven ideas whose answers had already shipped and were still being offered as open work, and diagnosed the cause as the project's own three-leg rule (typed tool + instruction + detector) missing its third leg.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "req:an-idea-the-design-already-built-stops-reading-as-an-open-question"
     },
     {
       "edge_type": "CAUSES",
@@ -37488,6 +37547,14 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:promotion-overtakes-the-question",
+      "properties": {
+        "accepted_baseline": false
+      },
+      "to_id": "cap:an-open-question-its-own-promotion-answered-is-noticed"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:protocol-version-current",
       "properties": {
         "accepted_baseline": true,
@@ -48304,6 +48371,16 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-extraction-is-two-pass-against-an-se-schema-stated-up-front",
+      "properties": {
+        "evidence": "Both this question's option (d) and that question's follow-on question set fire on the SAME trigger — the agent noticing its own reading is ambiguous. Neither is buildable in that form unless an agent can reliably tell ambiguous from clear, so the ambiguity-detection question is upstream of both.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-the-interviews-answers-become-the-projects-own-se-reference"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "dec:idea-field-evidence-is-a-prioritisation-input",
       "properties": {
         "note": "Weighting field evidence by SOURCE INDEPENDENCE is the honest version of the prioritisation idea, and it is impossible while every source is the same two related households. Whether evidence ARRIVES from anyone outside that circle is upstream of whether it should move a priority.",
@@ -48701,6 +48778,16 @@
         "weight_basis": "estimated"
       },
       "to_id": "dec:idea-what-guarantees-the-export-if-the-export-is-the-only-durable-copy"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-the-user-declares-an-se-unit-on-purpose-with-a-skill-per-unit",
+      "properties": {
+        "evidence": "The agent-facing half of this idea IS that question's subject matter: it measured the translate-to-the-user lens on 2 of 177 tools and the black-box frame in no served instruction. If the answer there is 'state the principle and keep a term table', the agent-facing half of this is already built and this reduces to the user-facing half alone.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-does-the-black-box-frame-reach-the-agent-at-call-time"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -51395,6 +51482,24 @@
         "evidence": "The shipped block is the thing being sized; this idea is that capability's excerpt rule grown from a fixed cut to a judgement-preserving one."
       },
       "to_id": "dec:idea-prose-currency-quotes-enough-to-judge-without-a-second-read"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:how-a-session-is-pointed-at-a-design",
+      "properties": {
+        "confidence": 0.85,
+        "evidence": "The shape question grew into this capability, built 2026-09-13 as `/g/<graph_id>/`. It weighed (a) edit .mcp.json and reconnect against (b) a graph reference carried per call, and what shipped is (b) in its safest form — carried in the URL path, never defaulted. Both blockers it named are gone: the discovery half was settled separately as dec:describe-a-design-without-binding-to-it and `describe_at` exists, and the store-lock complication is handled by the registry opening on demand. Its own stated rule that should survive either choice — 'default when exactly one design is reachable; refuse and list them when several are' — is what the router does. The capability's description already said it 'Contributes an answer to' this decision, in PROSE, where no query could read it."
+      },
+      "to_id": "cap:select-graph-by-id"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:how-should-reflow2-log-its-own-usage",
+      "properties": {
+        "confidence": 0.9,
+        "evidence": "The question grew into this requirement and shipped in v0.59.0. It asked WHERE the log should live and recommended option (1), beside the store rather than in the graph; the built ledger is at `<graph-path>.usage.jsonl`, beside the store, with a test literally named `a_torn_line_is_skipped_and_the_ledger_sits_beside_the_store`. It also argued a TOOL is the wrong shape because a tool must be called and the population worth measuring is the one least likely to call it — the server records every call without the agent's cooperation, which is what shipped. Drawn 2026-09-14 during a sweep for open questions whose answers already shipped: nobody drew it at promotion time, which is why the question still reads open."
+      },
+      "to_id": "req:feedback-on-reflow2-is-computed-from-a-record-the-server-kept"
     },
     {
       "edge_type": "EVOLVES_INTO",
@@ -62826,6 +62931,12 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:an-open-question-its-own-promotion-answered-is-noticed",
+      "properties": {},
+      "to_id": "fact:the-promotion-detector-measured-before-it-shipped-and-the-measurement-moved-the-definition-twice"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "cap:an-unconnected-idea-is-visible-as-one",
       "properties": {},
       "to_id": "fact:the-review-relations-redo-was-a-no-op-once-somebody-read-the-code"
@@ -63807,6 +63918,12 @@
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "fact:reflow2-keeps-reflows-spirit-and-inherits-its-one-real-drift"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "fact:seven-open-questions-had-already-shipped-their-answers-2026-09-14"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -187018,6 +187135,14 @@
     },
     {
       "edge_type": "MITIGATES",
+      "from_id": "dec:idea-a-domain-seed-template-starts-a-design-in-the-fields-own-shape",
+      "properties": {
+        "evidence": "Anthony's own claim, 2026-09-14: \"I think this may address some of Alex having to create and use a translation skill at his work.\" A seed that arrives carrying the field's shape — and, under one option, what a function and an interface ARE in that field — would mean the routing question is answered before the user meets it, for domains that have a template. It mitigates rather than answers: it reaches no domain without one, which today is every domain."
+      },
+      "to_id": "dec:idea-a-users-domain-vocabulary-has-no-route-into-se-vocabulary"
+    },
+    {
+      "edge_type": "MITIGATES",
       "from_id": "dec:idea-a-problem-in-the-users-words-should-retrieve-the-tool-that-answers-it",
       "properties": {
         "evidence": "BL-155 records the hazard in its own words — 'a capability nobody can find is worth what an absent one is worth' — and its group (c) is exactly this failure: reads that answer real questions on designs that exist today, which nobody reaches for. This node is the answer to that hazard rather than another measurement of it: BL-155 asks WHICH tools are unreachable, this asks WHY retrieval fails and what would fix it."
@@ -189212,6 +189337,15 @@
         "conformance": "unchecked"
       },
       "to_id": "cap:aggregate-gap-keying"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:detect",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:an-open-question-its-own-promotion-answered-is-noticed"
     },
     {
       "edge_type": "REALIZES",
@@ -193302,6 +193436,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:an-open-question-its-own-promotion-answered-is-noticed",
+      "properties": {},
+      "to_id": "req:an-idea-the-design-already-built-stops-reading-as-an-open-question"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:arrival-delta",
       "properties": {},
       "to_id": "req:plans-move-honestly"
@@ -196936,6 +197076,12 @@
       "from_id": "ver:cycle-basis",
       "properties": {},
       "to_id": "cap:cycle-names-its-basis"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:decision-overtaken-by-promotion-tests",
+      "properties": {},
+      "to_id": "cap:an-open-question-its-own-promotion-answered-is-noticed"
     },
     {
       "edge_type": "VERIFIES",
@@ -205284,6 +205430,16 @@
       "properties": {
         "description": "BUILT 2026-08-23 on Anthony's word, closing `fact:acknowledge-gap-records-a-judgement-without-recording-whose`. DISTINCT FROM that fact, which is the MEASUREMENT: it holds the numbers and how the defect stayed hidden; this is the remedy, so the design can say whether the fix happened separately from what it found.\n\n`acknowledge_gap` and `acknowledge_gaps` take an optional `approver` (and `acted_at`) and draw `AUTHORED_BY role=approver` on the Decision they mint. The bulk form carries it PER ITEM, for the same reason `reason` is per item: a batch under one shared approver would record a judgement nobody made for every gap but one.\n\nTHREE BEHAVIOURS, and the middle one is a decision about consequence rather than a shortcut.\n1. A named approver is recorded.\n2. AN ABSENT APPROVER IS ALLOWED AND REPORTED. Refusing would leave a design that has modelled no Contributor unable to accept a gap at all — which is most solo designs on day one. So the reply says the acknowledgement carries nobody's name and will be reported by `check_intent_authority`, rather than accepting it in silence. That silence is what let 49 unattributed nodes be written in a single pass.\n3. AN APPROVER NAMING NO CONTRIBUTOR IS REFUSED AND NOTHING IS WRITTEN. A typo would otherwise attach the owner's authority to somebody who does not exist, which is worse than recording none.\n\nADDITIVE: `acknowledge_gap`'s old signature is unchanged, so every existing caller still compiles and still works — it simply now gets told when it recorded nobody.",
         "name": "An acknowledgement records whose judgement it was, and says so plainly when nobody's name is on it",
+        "provenance": "authored",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "cap:an-open-question-its-own-promotion-answered-is-noticed",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Gap source `decision_overtaken_by_promotion` (crates/reflow2-core/src/detect.rs), plus the instruction that feeds it.\n\nTHE RULE: a live Decision at `status: proposed` with an outgoing `EVOLVES_INTO` edge to a node the design has already taken up — a Requirement `accepted`/`met`, a Capability `realized`/`verified`, a Decision `accepted`, or a ChangeEvent or DesignRule, which carry no status and are counted on their existence (a change happened; a rule is in force). Per decision, keyed on the decision AND what it became, so a second promotion asks again. Parked decisions skipped. Severity 0.4 — below a stale open defect (0.5), which is a live instruction to do the wrong work; above unreviewed_ideas (0.3), where nothing is actually wrong. Here the design says two contradictory things at once.\n\nTHE SAME SHAPE AS `defect_overtaken_by_change`, one type over, and simpler: one edge and one status, with no dates to order and no artifact walk.\n\nDELIBERATE EXCLUSIONS, each pinned by a test that fails when the rule is widened: a `dropped`/`deferred`/`rejected`/`superseded` target does NOT settle the question — what the idea became was itself put down, which reopens it rather than closing it; a target still `proposed`/`planned` is intent, not settlement; and a TemporalFact does NOT count although it too is status-free, because a measurement about an idea is evidence toward an answer rather than the answer. That last exclusion is why the status-free rule is an ENUMERATION and not \"anything with no status\".\n\nTHE OTHER LEG, and the half a detector cannot reach: the instruction now lives in **capture-intent**, which is the skill that actually runs at the moment of promotion. brainstorm step 5 named `EVOLVES_INTO` and then handed straight over to capture-intent, which never mentioned it — the instruction sat in the skill you were leaving rather than the one you were entering, and that seam is precisely where 2 of the 7 fell through. An idea answered by work nobody linked back is unreachable by any query, and the detector's own evidence line says so rather than reporting a number that sounds complete.\n\nReports absence of a record and never judges the ruling (dec:report-dont-judge): `set_decision_status` is the owner's call.",
+        "name": "An open question its own promotion already answered is noticed",
         "provenance": "authored",
         "status": "realized"
       }
@@ -214366,6 +214522,17 @@
       }
     },
     {
+      "node_id": "chg:promotion-overtakes-the-question",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-09-14",
+        "name": "An open question its own promotion answered now gets asked about, and the instruction moved to the skill that runs at the moment of promotion",
+        "subject": "system",
+        "summary": "Two legs of the three-leg rule, in the order that matters.\n\n(a) THE INSTRUCTION, MOVED TO WHERE IT RUNS. `capture-intent` step 1 now says: if the duplicate guard hands back the idea this came from, draw `EVOLVES_INTO` from the idea to what it became, with the reason in `evidence`, and direction is the claim. brainstorm step 5 already named the edge — and then handed straight over to capture-intent, which never mentioned it. The instruction lived in the skill you were leaving rather than the one you were entering, and that seam is exactly where 2 of the 7 fell through. All three skill trees (getting-started, .claude, .grok).\n\n(b) THE DETECTOR. `decision_overtaken_by_promotion` in detect.rs: a live Decision at `proposed` with an outgoing EVOLVES_INTO to a node the design has already taken up. Same shape as `defect_overtaken_by_change`, one type over, and simpler — one edge and one status, no dates to order, no artifact walk. Severity 0.4, per decision, keyed on the decision AND what it became. Parked decisions skipped.\n\nDELIBERATELY NOT DONE: `promoted_from` on add_requirement / add_capability. The typed-tool leg already exists — `review_relations` takes EVOLVES_INTO, and the duplicate guard exempts the promotion pair by name in capture.rs. A new parameter would have changed the tool schema, the toolsnap and nine tool descriptions to duplicate a door that already works.\n\nTHE DEFINITION WAS MEASURED BEFORE IT SHIPPED, and the measurement corrected the plan twice. The hand sweep of 2026-09-14 found 5 detectable instances; the shipped definition finds 11 of 277, because counting ChangeEvent and DesignRule targets — status-free, adopted by existing — reaches four the sweep could not see, three of them ideas that shipped inside one recorded change. TemporalFact was excluded on the same pass: a measurement about an idea is evidence toward an answer, not the answer, which is why the status-free rule is an enumeration rather than \"anything with no status\".\n\nFALSIFIED BOTH WAYS rather than assumed: disabling the sweep call fails the 5 positive tests; widening the settled-status rule to accept anything fails all 3 exclusion tests. 10 tests, all told.\n\nWHAT THIS STILL CANNOT SEE, stated in the detector's own evidence line rather than left for a reader to discover: only promotions that DREW the edge. An idea answered by work nobody linked back is unreachable by any query — 2 of the 7 on this design — and only the instruction reaches that half."
+      }
+    },
+    {
       "node_id": "chg:protocol-version-current",
       "node_type": "ChangeEvent",
       "properties": {
@@ -220295,6 +220462,17 @@
       }
     },
     {
+      "node_id": "dec:idea-extraction-is-two-pass-against-an-se-schema-stated-up-front",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "**RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL.** Anthony, 2026-09-14.\n\n═══ THE IDEA, in his words ═══\n\n\"In the storyflow project (you can ssh to the other machine and look for the 2 pass extraction process), but this would maybe be similar in that you would have a schema (with all the SE terms defined up-front) that tell the agent how to parse a user provided description. It could be done at /genesis or /adopt, but might be good when the agent is looking is given any design related prompt to help it extract the content in a systematic extraction manner.\"\n\n═══ WHAT IS ACTUALLY BEING PROPOSED ═══\n\nNot new vocabulary — a new **ORDER OF OPERATIONS**. Today extraction is one pass: the agent reads the user's words and produces nodes, with its own judgement doing the routing in flight. Two-pass means the SE terms are laid out first, as a schema the parse is performed AGAINST, and only then is the description read. The claim is that a parse against a stated schema is more systematic — and, crucially, more REVIEWABLE — than a parse against an agent's priors.\n\n**⭐ THE REASON THIS IS NOT THE SAME AS `describe_schema`**: the vocabulary is already served on demand. What is proposed is that it be CONSULTED AS A FIRST STEP rather than available as a lookup. That is a behavioural claim, not a content one, and it is the same distinction `dec:idea-does-the-black-box-frame-reach-the-agent-at-call-time` drew when it found the frame stated nowhere the agent reads at call time.\n\n═══ THE SECOND QUESTION, AND IT MAY BE THE HARDER ONE: WHEN ═══\n\nAnthony offers three answers and does not choose:\n\n- **At `/genesis` or `/adopt`** — once, at the start. Cheap; nothing recurring. ⚠️ But Alex's failure was not at genesis; it arrived mid-project, on a word nobody had needed before.\n- **On any design-related prompt** — every capture parses against the schema. Most thorough. ⚠️ And it is a cost on every single capture, paid to serve the ambiguous minority — the exact objection recorded against option (b) of `dec:idea-a-users-domain-vocabulary-has-no-route-into-se-vocabulary`.\n- **On ambiguity only** — implied rather than stated, and it is the same trigger the follow-on question set in `dec:idea-the-interviews-answers-become-the-projects-own-se-reference` would use.\n\n═══ ⚠️ THE REFERENCE HAS NOT BEEN READ ═══\n\nstoryflow's two-pass extraction lives on the LAN peer (ajs77, `~/projects/`) and **nobody has looked at it for this purpose**. Everything above is inference from one sentence describing it. What it actually does, what the two passes actually are, and whether the analogy holds are all unchecked — and this project has a standing lesson about exactly this shape (`fact:dev-storyflow-feedback...`: a file's identity and age are read off the FILE, never off a note about it). **Reading it is the cheapest thing that would make this decidable**, and it has not been done.\n\n═══ OPTIONS, none chosen ═══\n\n**(a) NOTHING. One-pass extraction with a routing table is what shipped, and it works for most captures.** ⚠️ Counter: it demonstrably did not work for Alex, and its failure mode is silent — a confident wrong category, not an error.\n\n**(b) SCHEMA-FIRST AT GENESIS AND ADOPT ONLY.** Cheapest real change; fits where the interview already runs. ⚠️ Counter: misses the mid-project arrival, which is when it actually broke.\n\n**(c) SCHEMA-FIRST ON EVERY DESIGN PROMPT.** ⚠️ Counter: pays on every capture for the ambiguous minority, and reflow2's own recorded objection to that pattern is on file.\n\n**(d) SCHEMA-FIRST ONLY ON AMBIGUITY**, sharing a trigger with the follow-on interview questions. ⚠️ Counter: requires the agent to DETECT its own ambiguity, which is the part nothing has ever demonstrated — Alex's agent did not notice it was unsure, it noticed it was stuck and asked him. Detecting \"I have two defensible readings\" is a harder problem than either pass.\n\n═══ WHAT WOULD MAKE THIS DECIDABLE ═══\n\nTwo things, both cheap and neither done: **read storyflow's two-pass extraction** rather than reasoning from a description of it; and establish whether an agent can reliably tell \"ambiguous\" from \"clear\", because options (d) and the whole follow-on-questions idea rest on it.",
+        "kind": "exploratory",
+        "name": "OPEN — should extraction be TWO-PASS against an SE schema stated up front, the way storyflow parses, and does it run at genesis/adopt or on every design prompt?",
+        "rationale": "Recorded as an open question via the brainstorm discipline, and deliberately NOT researched before recording — the reference on the LAN peer is named as unread rather than summarised from one sentence about it, which is this project's own standing lesson about reading a thing rather than a note about it.\n\nKept separate from the interview-reference question because they answer different halves: that one asks what is KEPT, this asks in what ORDER the parse happens. They share a trigger in one option each, which is the relation drawn rather than a reason to merge them.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-feedback-arrives-by-git-push-and-pull",
       "node_type": "Decision",
       "properties": {
@@ -221616,6 +221794,17 @@
       }
     },
     {
+      "node_id": "dec:idea-the-interviews-answers-become-the-projects-own-se-reference",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "**RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL.** Anthony, 2026-09-14, thinking out loud about seed templates and what Alex hit at work.\n\n═══ WHAT PROMPTED IT ═══\n\nAlex's agent could not work out what his project's \"systems\" were in SE terms and handed the question back to him — asking what a *query* was — and his translator answered \"Interface\". `dec:idea-a-users-domain-vocabulary-has-no-route-into-se-vocabulary` argues the hard part is ROUTING, not coverage: Interface, Capability, Requirement and Flow are all defensible for that word and lead to different designs. `dec:idea-the-routing-table-routes-grammar-not-domain-nouns` sharpens it — the shipped table routes ENGLISH PHRASING and Alex's question is about NOUNS.\n\nAnthony's move: ask about functions (black boxes) and interfaces in a way that needs no SE knowledge — and then KEEP the answers.\n\n═══ THE IDEA, in his words ═══\n\n\"a follow-on set of questions (if it isn't immediately clear to the agent) is to have some set of questions where the agent asks about functions (black boxes) and interfaces without the user having to know systems engineering. These would go into the design 'template' for the project that help explain to an agent and becomes a reference for all future users what the functions and interfaces are.\"\n\nTwo halves, and the second is the new one:\n\n**(i) A FOLLOW-ON QUESTION SET, FIRED ON AMBIGUITY.** The five interview questions in capture-intent already ask about the thing rather than the schema (cap:the-design-interview-precedes-the-capture, realized). What does not exist is a SECOND pass that fires when the first leaves the routing genuinely ambiguous — the exact state Alex's agent was in when it gave up and asked him. There is no defined behaviour today for \"the interview ran and I still cannot route this\": the skill forbids handing the question back, and says nothing about what to do instead.\n\n**(ii) ⭐ THE ANSWERS BECOME A DURABLE PROJECT ARTEFACT.** Today the interview's output dissolves into nodes and the interview itself is forgotten. The proposal is that \"in THIS project, a function is X, an interface is Y, and here is what we call them\" survives as a reference — read by the next agent and the next person, instead of being re-derived or re-asked.\n\n═══ WHY THIS MIGHT BE THE RIGHT SHAPE ═══\n\nIt lands on option (c) of BOTH older questions — a per-project glossary the design holds — but arrives from a third direction. Those two reached it by asking what to do with a translator somebody had already written. This reaches it by asking what the interview should have KEPT. Three independent routes to one mechanism is weak evidence, but it is evidence.\n\nIt also has a partial home already: record_alias puts the user's own noun on a node, and capture-intent instructs it. That is the per-NODE case. This is the per-CATEGORY case — what the TYPES mean here, not what one thing is called.\n\n═══ OPTIONS, none chosen ═══\n\n**(a) Nothing new. record_alias plus the interview covers it.** ⚠️ Counter: aliases attach to nodes that already exist. Alex's failure was upstream of any node — he could not get the FIRST one created.\n\n**(b) A second interview pass that fires on ambiguity; output captured as ordinary nodes.** Cheapest, and the half with a clear failure behind it. ⚠️ Counter: answers (i) and not (ii) — the reasoning still dissolves and the next session re-asks.\n\n**(c) A project-level reference the interview WRITES — the design's own SE glossary.** ⚠️ Counter: real vocabulary surface, all three legs, on an n=1 report; and it can freeze an early wrong call into something that reads authoritative.\n\n**(d) Fold it into the seed template instead.** A domain seed (dec:idea-a-domain-seed-template-starts-a-design-in-the-fields-own-shape) could ARRIVE carrying \"what a function and an interface are in this field\", and the interview only fills gaps. ⚠️ Counter: helps only designs whose domain has a template, which is none of them today.\n\n═══ ⚠️ THE COUNTERWEIGHT ═══\n\n**A glossary that is wrong is worse than no glossary**, because it is inherited without being re-examined. Alex's translator calling a query an Interface may be a category error; this idea's effect would be to make that call permanent and authoritative for every future session on his project. The older question already says nothing in reflow2 can tell him which is right — and making the answer DURABLE does not make it CORRECT. Whatever is built here needs to be overturnable as cheaply as it is written.",
+        "kind": "exploratory",
+        "name": "OPEN — should the design interview's ANSWERS become a project-level reference every later session inherits, and what asks the follow-on questions when the first pass is not clear?",
+        "rationale": "Recorded as an open question rather than a proposal, via the brainstorm discipline. Kept separate from the /template-skill question and the two-pass-extraction question because they fail differently: this is about what the interview KEEPS, the second about what the user can DECLARE, the third about how a description is PARSED.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-the-kit-diagnoses-a-stale-project",
       "node_type": "Decision",
       "properties": {
@@ -221760,6 +221949,17 @@
         "kind": "exploratory",
         "name": "OPEN — every relation needs both ends modelled, but the natural other end is often a file, a failure class or the corpus itself. Should some endpoints be literals?",
         "rationale": "Four independent sightings in two days — three from hxm_program's field report (a file as a defect's cause, a failure class with nowhere to live, a repo-qualified location) and one hit unprompted in reflow2's own work when the first CALIBRATED_AGAINST edge could not be drawn because the corpus had no Artifact. The unification is this session's; the observations are the hxm agent's. Recorded as an idea rather than a proposal because the strongest counter-argument is that these are three different problems that merely rhyme, and because option (a) — the friction is a nudge toward modelling and should be paid — has not been ruled out.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-the-user-declares-an-se-unit-on-purpose-with-a-skill-per-unit",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "**RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL.** Anthony, 2026-09-14.\n\n═══ THE IDEA, in his words ═══\n\n\"could purposefully have a '/template' type skill that the user can define a building block of the systems - could have /building-block or /interface or /contract or /function or any number of skills that allow the user to purposefully define a systems engineering unit for a particular domain. These could even be skills the agent uses that have SE definitions that automatically label or help the agent translate SE to the domain the user is working in. I'm not sure from a reflow2 perspective if you could have some fixed tools that are simply SE definitions or labels for the agent so that it can quickly assign to them to a description.\"\n\n═══ ⭐ THE TWO FACES, AND WHY THEY ARE ONE QUESTION ═══\n\nHe describes the same mechanism pointed in two directions, and said so himself (\"could even be skills the agent uses\"):\n\n**USER-FACING** — `/function`, `/interface`, `/contract`, `/building-block`. The user says *\"this is a function\"* deliberately, instead of the agent inferring it from their phrasing. It is the user taking the routing decision ON PURPOSE, at a moment when they have the thing in mind.\n\n**AGENT-FACING** — a fixed, served set of SE definitions the agent can assign quickly: *what an Interface IS*, in one authoritative sentence, so the agent labels a description against a definition rather than against its own priors.\n\n═══ ⚠️ THE OBJECTION THAT HAS TO BE FACED FIRST, BECAUSE IT IS THE PROJECT'S OWN DOCTRINE ═══\n\n**capture-intent says, in bold: \"Never ask the user which node type to use.\"** It says handing that question back \"gives the one person in the room with no reason to know the answer the one decision they cannot check\", and there is a shipped check (`ver:the-capture-skills-do-not-hand-the-vocabulary-back`) enforcing it. The user-facing half of this idea is, on its face, exactly the thing that rule forbids.\n\n**The honest counter, and it may be strong enough**: there is a difference between the agent ASKING the user to pick a type, and the user CHOOSING to declare one. The rule was written against the first. A user typing `/interface` has volunteered; a user being asked \"is this an Interface or a Capability?\" has been handed work. Whether that distinction survives contact with a non-SE user is exactly what is open — because Alex, who is technical, hit this and wrote a translator rather than answering.\n\n**And the rule's own evidence cuts both ways**: it came from a first-time user who was asked what node types to store his data models as, said \"you figure it out\", and it worked. That user DECLINED to declare. This idea assumes users who want to.\n\n═══ OPTIONS, none chosen ═══\n\n**(a) NOTHING — the doctrine already settles it.** The agent routes; the user never picks. ⚠️ Counter: it settles the user-facing half and says nothing about the agent-facing half, which no rule forbids and which nothing serves today.\n\n**(b) THE AGENT-FACING HALF ONLY — served SE definitions the agent labels against.** This is the half with no doctrinal conflict, and it has a measured hole behind it: `dec:idea-does-the-black-box-frame-reach-the-agent-at-call-time` found the translate-to-the-user lens on 2 of 177 tools and the black-box frame in no served instruction. ⚠️ Counter: `describe_schema` already returns the vocabulary, so this may be a delivery problem dressed as a missing feature — the definitions exist and nothing points the agent at them at the right moment.\n\n**(c) BOTH, with the user-facing half framed as OPT-IN DECLARATION rather than a question.** ⚠️ Counter: a dozen new slash commands is a large surface for a mechanism whose need is measured on one or two users, and every one of them is a door a confused user can walk through wrongly. `/interface` typed by somebody who means \"the screen\" would write a category error with full confidence and no ambiguity flag.\n\n**(d) ONE skill, not a family — `/declare` or `/template`, which asks what kind of unit this is.** Smaller surface, same effect. ⚠️ Counter: loses the thing that makes the family attractive — that `/function` is guessable and self-documenting where `/declare` is not.\n\n═══ WHAT WOULD MAKE THIS DECIDABLE ═══\n\nWhether any user has ever WANTED to declare a type. Alex did the opposite — he wrote a translator so he would not have to, and reflow2's own recorded evidence has a user explicitly refusing (\"you figure it out\"). **Nobody has yet been observed reaching for a `/function` that was not there**, which is the signal `report_manual_work` exists to catch. Until one is, (b) is the half standing on measured ground and the rest is a hypothesis.",
+        "kind": "exploratory",
+        "name": "OPEN — should a user be able to DECLARE a systems-engineering unit on purpose (/function, /interface, /contract, /building-block), and is the agent-facing mirror — fixed SE labels it assigns — the same mechanism or a different one?",
+        "rationale": "Recorded as an open question via the brainstorm discipline. The doctrinal objection is stated at full strength rather than softened, because it is a shipped, lint-checked rule of this project and any answer here has to get past it or change it deliberately.\n\nKept as ONE decision rather than two because Anthony framed the two faces as one mechanism in one breath, and separating them would lose the thing he noticed — that the same SE definitions serve the user declaring and the agent labelling.",
         "status": "proposed"
       }
     },
@@ -234002,6 +234202,18 @@
       }
     },
     {
+      "node_id": "req:an-idea-the-design-already-built-stops-reading-as-an-open-question",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "An idea the design has already built stops being offered as an open question",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "When a brainstormed idea is promoted and the promotion lands — an accepted Requirement, a realized Capability, a recorded change, a rule now in force — the question it came from must stop reading as open work. The loop raises it so its owner can rule on it; closing it stays the owner's word (rule:design-intent-moves-only-on-the-owners-word).\n\nTWO HALVES, because the failure has two. The promotion must DRAW the edge that records what the idea became (`EVOLVES_INTO`), and something must READ that edge. Neither alone is enough: an edge nothing reads is exactly what produced this requirement, and a reader with no edge to read is blind by construction.\n\nAnthony's word, 2026-09-14, on being shown the triage: \"Go with (a) and (b)\" — (a) the instruction at the moment of promotion, (b) the detector that notices its absence.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "req:an-irreversible-operation-is-concurrency-aware",
       "node_type": "Requirement",
       "properties": {
@@ -244126,6 +244338,23 @@
       }
     },
     {
+      "node_id": "fact:seven-open-questions-had-already-shipped-their-answers-2026-09-14",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.9,
+        "fact_type": "finding",
+        "name": "SEVEN open questions had already shipped their answers — promotion has an instruction and no detector, which is 1 of the 3 legs, and 2 of 7 left no trace at all",
+        "statement": "SWEPT 2026-09-14 over all 277 Decisions reading `proposed`, after two of the top five in `what_next` turned out on reading to be questions whose answers had already shipped.\n\n═══ WHAT IT FOUND ═══\n\nFIVE ideas carry an `EVOLVES_INTO` edge to something already ACCEPTED or REALIZED — the edge the brainstorm discipline draws from an idea to what it became. Promoted, never closed:\n  · the units question -> two accepted requirements\n  · the status-past-its-own-prose question -> cap:a-status-advance-says-whether-its-prose-predates-it, REALIZED and observed firing twice on 2026-09-13\n  · the agent's-notepad question -> req:a-lesson-is-served-at-the-step-it-concerns, accepted AND built\n  · the pseudo-design question -> two accepted requirements\n  · the /feedback-tally question -> req:feedback-on-reflow2-is-computed-from-a-record-the-server-kept, accepted AND built\n\nTWO MORE were found only by READING, because nobody drew the edge: `dec:how-should-reflow2-log-its-own-usage` (answered the way it recommended — the ledger is at `<graph-path>.usage.jsonl`, beside the store, with a test named for it) and `dec:how-a-session-is-pointed-at-a-design` (answered 2026-09-13 by `/g/<graph_id>/`; cap:select-graph-by-id's description already said it \"Contributes an answer to\" this decision, IN PROSE, where no query reads it).\n\n🛑 A CLAIM IN THE FIRST VERSION OF THIS RECORD WAS TOO STRONG AND IS WITHDRAWN. It said a promoted-but-open idea is \"well connected and ranks HIGH\", and that two of `what_next`'s top three were this. MEASURED AFTERWARDS: the seven sit at ranks 3, 6, 80, 88, 136, 142 and 228 of 277, against a median of 138 — SCATTERED, not systematically inflated. `EVOLVES_INTO` is not in the score at all, so promotion does not raise rank; the two I met early rank high because they happen to GOVERN things, and meeting them first is what made the pattern visible. It was 2 of the top FIVE, not the top three. The generalisation was drawn from the two instances that surfaced it.\n\n⭐ THE REAL MECHANISM, AND IT IS THE PROJECT'S OWN THREE-LEG RULE: vocabulary reaches a design only with a TYPED TOOL, an INSTRUCTION, and a DETECTOR THAT NOTICES ABSENCE. Promotion has exactly ONE — the brainstorm skill's step 5 says to draw `EVOLVES_INTO`. There is no typed tool (no `promote`, and no `promoted_from` on add_requirement / add_capability), and no detector. One leg of three predicts precisely what was measured: the instruction is followed most of the time (5 of 7) and silently skipped the rest (2 of 7), and nothing ever notices either way.\n\n📌 THE DETECTOR SHAPE ALREADY EXISTS FOR ANOTHER TYPE. `defect_overtaken_by_change` finds a defect that still reads open while later repairs touched its subject. The Decision analogue is the same rule and SIMPLER — one edge and one status, with no dates to parse and no artifact walk.\n\n⚠️ HOW BIG IS IT, HONESTLY: 5 detectable of 277, which is 1.8%, plus an unknown number with no edge. The cost today is small. The argument for acting is that it RATCHETS — nothing ever closes these, every future promotion that skips the edge adds one, and the design reads as holding more open questions than it has.\n\nNOTHING WAS CLOSED — `rule:design-intent-moves-only-on-the-owners-word` holds. Two missing `EVOLVES_INTO` edges were drawn, with evidence, so the query sees them next time.\n\nWHAT IS NOT ESTABLISHED: how many of the remaining 270 are in the same state. Only edge-carrying promotions are detectable; the other two were found by reading two nodes, which is not a sample to generalise from.",
+        "steps": [
+          "what_next"
+        ],
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-09-14",
+        "value": "{\"proposed_decisions\":277,\"found_answered\":7,\"structurally_detectable\":5,\"found_only_by_reading\":2,\"pct_detectable\":1.8,\"ranks_of_the_seven\":[3,6,80,88,136,142,228],\"median_rank\":138,\"ranking_distortion\":\"NOT systematic — withdrawn from the first version of this record\",\"legs_present\":1,\"legs\":\"instruction only; no typed tool, no detector\",\"existing_analogue\":\"defect_overtaken_by_change\",\"closed\":0,\"edges_drawn\":2}"
+      }
+    },
+    {
       "node_id": "fact:shared-graph-field-report-what-held",
       "node_type": "TemporalFact",
       "properties": {
@@ -245296,6 +245525,20 @@
         "statement": "NEW EVIDENCE ON AN OPEN QUESTION, NOT A NEW QUESTION. Anthony returned to this road on 2026-09-11 — *\"I still want to get rid of rocksdb and go with a memory only solution where the graph is exported to git repo for persistence\"* — and the honest thing to add is not another node but what changed under the existing one.\n\n═══ WHAT `dec:idea-a-byte-backend-that-compiles-in-seconds` MEASURED ON 2026-08-24 ═══\n\nIt checked the premise before answering, and half-refuted it:\n\n    release build of reflow2-mcp (~19 min)  — recompiled RocksDB: 0 times\n    workspace test run #1 (~10 min)         — recompiled RocksDB: 0 times\n    workspace test run #2 (~10 min)         — recompiled RocksDB: 0 times\n\nand concluded, correctly: *\"A cold first build, a CI cache miss, a new contributor's first `cargo build`, and **a profile switch** each pay the RocksDB cost in full — those are real and recurring. Day-to-day iteration does not, and a swap justified on day-to-day iteration would be justified on a cost that is not being paid.\"*\n\n═══ WHAT 2026-09-11 MEASURED ═══\n\n**The profile switch it named as an occasional payer is now on the critical path, and it was paid in full today.**\n\n    cargo build --release -p reflow2-mcp --bin reflow2-mcp     33 min 39 s\n      — dominated by librocksdb-sys compiling C++ from source;\n        two `cc1plus` processes pegged for roughly 25 of those minutes.\n\nAnd the reason the switch is no longer optional is the other half of the same day's work:\n\n    propagate_from, 4 consecutive calls, one process, identical bytes\n      debug    5851 / 5942 / 5904 / 5784 ms      (flat)\n      release  1614 /   70 /   88 /   62 ms      (the memo working)\n                                        -> 93x on the walk\n\n    design_regions   12.5 s (debug)  ->  5.5 s cold / 2.0 s warm (release)\n\n⭐ **93x, not the ~2.2x this project had previously recorded for the debug profile on other work.** `tools/reflow2-mcp-launch.sh:26` serves `target/debug/reflow2-mcp`, so every session today runs the slow one. Making reflow2 fast therefore REQUIRES shipping release, and shipping release means paying librocksdb-sys — so the cost moves out of \"occasional\" and into \"on the path to the thing we want\".\n\n⚠️ **AND THE DEBUG BUILD IS WHY THE 93x WENT UNNOTICED.** It also produced a wrong reading earlier the same day: flat debug timings were recorded in `fact:the-walk-memo-takes-effect-on-the-daemon-path-and-not-on-plain-stdio-same-bytes-same-binary` as evidence that the memo was not taking effect. The release shape (1614 → 62) shows the memo working perfectly; in debug the walk is slow enough to bury it. That finding needs correcting, and it is noted here because the same profile caused both.\n\n═══ THE DISK HALF, WHICH THAT NODE LEFT UNCONTESTED ═══\n\nIt recorded one cached `librocksdb-sys` build directory at **1.7 GB** and called the disk cost uncontested. Today, with both profiles built: **`target/` is 282 GB and the disk is at 99% (7.1 GB free)**, and the release build had to be run under a hard abort guard in case it filled the drive.\n\n═══ WHAT THIS DOES NOT SETTLE ═══\n\n🛑 **IT STRENGTHENS ONE ARGUMENT AND ANSWERS NOTHING.** The list of what a store actually buys is unchanged — durability without a whole-document rewrite, crash consistency, larger-than-RAM — and the honest counterweight recorded on this node stands exactly as written: **bounded loss vs no loss.** A faster compile is not a durability story.\n\n⚠️ Nor does it touch the two questions that would have to be answered first: what GUARANTEES the export if it is the only durable copy (`dec:idea-what-guarantees-the-export-if-the-export-is-the-only-durable-copy`, where the failure has already happened once in the field), and whether continuous auto-export collides with `dec:export-once-per-pr`, which is ACCEPTED.\n\n⚠️ **AND A CHEAPER ROAD REACHES MOST OF THIS BENEFIT WITHOUT TOUCHING THE STORAGE MODEL:** serve a release binary that is rebuilt deliberately rather than per launch. That would capture the 93x and leave every durability question closed. Whether the compile and disk costs alone justify the storage inversion is exactly what nobody has decided — **five Decisions on this road have been open since 2026-08-24 and none has been settled.**",
         "subject_id": "dec:idea-does-reflow2-need-a-byte-store-at-all-or-only-durability",
         "valid_from": "2026-09-11"
+      }
+    },
+    {
+      "node_id": "fact:the-promotion-detector-measured-before-it-shipped-and-the-measurement-moved-the-definition-twice",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "measurement",
+        "name": "MEASURED before merge: 11 of 277, not the 5 a hand sweep found — and the four it missed are the reason the status-free rule is an enumeration",
+        "statement": "MEASURED 2026-09-14 against reflow2's own committed export (4,467 nodes, 26,600 edges) with the shipped definition, before merge.\n\n═══ THE NUMBER ═══\n11 of 277 proposed Decisions, 4.0%. The design carried 34 open gaps in total at the time, so this is a third of them — a statement about how few gaps this design carries, not about how large the class is.\n\nAcross the 11 findings the promotion targets were 7 accepted Requirements, 2 realized Capabilities, 3 ChangeEvents and 1 DesignRule; several decisions carry two.\n\n═══ ⭐ THE MEASUREMENT MOVED THE DEFINITION, TWICE ═══\nThe hand sweep that started this line of work found FIVE. The shipped definition finds ELEVEN, and the six-instance gap is the useful part:\n\n(1) THREE ideas shipped inside ONE recorded change — `chg:alexs-four-surface-fixes-sequence-hint-get-node-by-id-auth-hint-and-bulk-check-only`, which answered four of Alex's surface complaints at once. A ChangeEvent carries no `status`, so a rule reading only statuses was blind to the single most common way an idea actually gets answered: somebody just built it. Counting ChangeEvent and DesignRule on their EXISTENCE — a change happened, a rule is in force — is what reaches them.\n\n(2) TemporalFact is status-free too and is DELIBERATELY EXCLUDED. A measurement about an idea is evidence toward an answer, not the answer. That one exclusion is why the rule is an ENUMERATION of two types rather than the tempting \"anything without a status\", and it is pinned by a test.\n\nThe general lesson, not new here but earned again: A DEFINITION MEASURED BEFORE IT SHIPS IS A DIFFERENT DEFINITION FROM THE ONE MEASURED AFTER. The five-instance version would have shipped, reported a real number, and silently missed the most common case.\n\n═══ FALSIFIED BOTH WAYS ═══\nRun, not assumed. Disabling the sweep call: 5 of 10 tests fail — every positive. Widening the settled-status rule to accept any target: 3 of 10 fail — every exclusion. The two remaining are silence tests that cannot fail by construction (a parked question, and an answer nobody linked back), and the second exists to DOCUMENT the blind spot rather than to prove anything.\n\n═══ WHAT THIS DOES NOT ESTABLISH ═══\nThe size of the invisible half. Only promotions that drew the edge are reachable; 2 of the 7 found by hand carried nothing, and there is no way to count how many more are like them without reading 277 decisions. The 11 is a FLOOR on a population of unknown size, and the detector's own evidence line says so rather than reporting a number that sounds complete.",
+        "subject_id": "cap:an-open-question-its-own-promotion-answered-is-noticed",
+        "valid_from": "2026-09-14",
+        "value": "{\"proposed_decisions\":277,\"findings\":11,\"pct\":4.0,\"total_gaps_in_design\":34,\"hand_sweep_found\":5,\"missed_by_hand_sweep\":6,\"target_requirements\":7,\"target_capabilities\":2,\"target_change_events\":3,\"target_design_rules\":1,\"severity\":0.4,\"tests\":10,\"fail_when_detector_disabled\":5,\"fail_when_rule_widened\":3,\"invisible_half\":\"unbounded — 2 of 7 carried no edge\"}"
       }
     },
     {
@@ -247391,6 +247634,16 @@
         "level": "integration",
         "method": "test",
         "name": "A cycle finding names what it walked",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:decision-overtaken-by-promotion-tests",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-core/tests/decision_overtaken_by_promotion.rs — 10 tests.\n\nPOSITIVES (all 5 fail when the sweep call is disabled): an idea promoted into an accepted Requirement raises one finding anchored to BOTH the question and what answered it, with its denominator in the evidence; closing the decision clears it; an idea that shipped as a recorded ChangeEvent is asked about (the class the hand sweep missed); an idea that became a DesignRule in force is asked about; a second promotion moves the gap id so an acknowledgement of the first does not silence it.\n\nEXCLUSIONS (all 3 fail when the settled rule is widened to accept any target): a promotion still at `proposed` is intent, not settlement; a `dropped` promotion reopens the question rather than settling it; a TemporalFact target is evidence toward an answer, not the answer.\n\nTWO SILENCE TESTS that cannot fail by construction, and are honest about it: a parked question goes quiet; an answer nobody linked back is out of reach — the second exists to DOCUMENT the blind spot the detector's own evidence line states, not to prove anything.",
+        "kind": "verification",
+        "name": "The promotion detector's ten tests, falsified in both directions",
         "status": "passing"
       }
     },
@@ -249540,7 +249793,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:5f30a103db8beacb2a65eadc22196c0a9b5f200a7c5996ed631ff95ec18b718b",
+  "prev_content_hash": "sha256:e6a0f951de7518f759a4523fe81dc5d96c427567b50703f4db5af1781067c725",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
