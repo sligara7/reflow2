@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:0a5070bfea1587c2df8749830ae324b7079fd312940302f8265e5c21e0c74aba",
+  "content_hash": "sha256:5c0940035cce1e19cd988ef43e411134c63866a8a3c612c1717ab6b925b579b0",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -1250,14 +1250,6 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:heal"
-    },
-    {
-      "edge_type": "ALLOCATED_TO",
-      "from_id": "cap:a-prohibition-living-in-prose-is-noticed-once-as-a-practice",
-      "properties": {
-        "weight_basis": "estimated"
-      },
-      "to_id": "cmp:detect"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -11774,12 +11766,6 @@
     },
     {
       "edge_type": "AT_EPOCH",
-      "from_id": "snap:epoch:preserved-on-write:cap:a-prohibition-living-in-prose-is-noticed-once-as-a-practice",
-      "properties": {},
-      "to_id": "epoch:preserved-on-write"
-    },
-    {
-      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:cap:a-reader-that-cannot-read-the-vocabulary-is-told-what-it-lacks",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
@@ -12327,12 +12313,6 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:rel:v0602",
-      "properties": {},
-      "to_id": "epoch:preserved-on-write"
-    },
-    {
-      "edge_type": "AT_EPOCH",
-      "from_id": "snap:epoch:preserved-on-write:req:a-prohibition-written-into-prose-is-noticed-as-unfiled",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
     },
@@ -19084,15 +19064,6 @@
       "from_id": "req:a-part-can-be-moved-not-only-given-a-second-parent",
       "properties": {
         "acted_at": "2026-08-23",
-        "role": "approver"
-      },
-      "to_id": "who:ajs"
-    },
-    {
-      "edge_type": "AUTHORED_BY",
-      "from_id": "req:a-prohibition-written-into-prose-is-noticed-as-unfiled",
-      "properties": {
-        "acted_at": "2026-09-14",
         "role": "approver"
       },
       "to_id": "who:ajs"
@@ -37570,41 +37541,6 @@
         "action": "modified"
       },
       "to_id": "art:readme"
-    },
-    {
-      "edge_type": "CHANGED",
-      "from_id": "chg:prohibitions-in-prose-are-noticed",
-      "properties": {
-        "accepted_baseline": true,
-        "action": "modified"
-      },
-      "to_id": "art:detect"
-    },
-    {
-      "edge_type": "CHANGED",
-      "from_id": "chg:prohibitions-in-prose-are-noticed",
-      "properties": {
-        "accepted_baseline": true,
-        "action": "modified"
-      },
-      "to_id": "art:detect-and-ask-skill"
-    },
-    {
-      "edge_type": "CHANGED",
-      "from_id": "chg:prohibitions-in-prose-are-noticed",
-      "properties": {
-        "accepted_baseline": true,
-        "action": "modified"
-      },
-      "to_id": "art:skill-lint"
-    },
-    {
-      "edge_type": "CHANGED",
-      "from_id": "chg:prohibitions-in-prose-are-noticed",
-      "properties": {
-        "accepted_baseline": false
-      },
-      "to_id": "cap:a-prohibition-living-in-prose-is-noticed-once-as-a-practice"
     },
     {
       "edge_type": "CHANGED",
@@ -61399,12 +61335,6 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
-      "from_id": "cap:a-prohibition-living-in-prose-is-noticed-once-as-a-practice",
-      "properties": {},
-      "to_id": "snap:epoch:preserved-on-write:cap:a-prohibition-living-in-prose-is-noticed-once-as-a-practice"
-    },
-    {
-      "edge_type": "HAS_SNAPSHOT",
       "from_id": "cap:a-reader-that-cannot-read-the-vocabulary-is-told-what-it-lacks",
       "properties": {},
       "to_id": "snap:epoch:planned-a-vocabulary-change-is-never-silent:cap:a-reader-that-cannot-read-the-vocabulary-is-told-what-it-lacks"
@@ -62713,12 +62643,6 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
-      "from_id": "req:a-prohibition-written-into-prose-is-noticed-as-unfiled",
-      "properties": {},
-      "to_id": "snap:epoch:preserved-on-write:req:a-prohibition-written-into-prose-is-noticed-as-unfiled"
-    },
-    {
-      "edge_type": "HAS_SNAPSHOT",
       "from_id": "req:a-question-arrives-with-a-reading",
       "properties": {},
       "to_id": "snap:epoch:reading-carries-options:req:a-question-arrives-with-a-reading"
@@ -63016,12 +62940,6 @@
       "from_id": "cap:a-design-says-which-vocabulary-it-has-never-used",
       "properties": {},
       "to_id": "fact:naming-properties-grows-the-list-where-it-can-be-acted-on"
-    },
-    {
-      "edge_type": "HAS_TEMPORAL_FACT",
-      "from_id": "cap:a-prohibition-living-in-prose-is-noticed-once-as-a-practice",
-      "properties": {},
-      "to_id": "fact:the-prohibition-detector-finds-30-of-1003-and-the-gap-to-the-estimate-is-the-exclusions"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -63874,12 +63792,6 @@
       "from_id": "dec:idea-embeddings-adoption",
       "properties": {},
       "to_id": "fact:quantised-vectors-would-fit-in-the-export-and-full-precision-ones-would-not"
-    },
-    {
-      "edge_type": "HAS_TEMPORAL_FACT",
-      "from_id": "dec:idea-extraction-is-two-pass-against-an-se-schema-stated-up-front",
-      "properties": {},
-      "to_id": "fact:capture-is-blind-to-three-families-and-the-routing-table-has-a-row-for-two-of-them"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -189458,15 +189370,6 @@
       "from_id": "art:detect",
       "properties": {
         "completeness": "complete",
-        "conformance": "unchecked"
-      },
-      "to_id": "cap:a-prohibition-living-in-prose-is-noticed-once-as-a-practice"
-    },
-    {
-      "edge_type": "REALIZES",
-      "from_id": "art:detect",
-      "properties": {
-        "completeness": "complete",
         "conformance": "verified"
       },
       "to_id": "cap:a-published-contract-is-asked-for-its-evidence"
@@ -193411,12 +193314,6 @@
       "from_id": "cap:a-node-attached-to-nothing-is-reported-whatever-its-type",
       "properties": {},
       "to_id": "req:a-report-says-what-it-swept-and-whether-its-checks-ran"
-    },
-    {
-      "edge_type": "SATISFIES",
-      "from_id": "cap:a-prohibition-living-in-prose-is-noticed-once-as-a-practice",
-      "properties": {},
-      "to_id": "req:a-prohibition-written-into-prose-is-noticed-as-unfiled"
     },
     {
       "edge_type": "SATISFIES",
@@ -197752,12 +197649,6 @@
     },
     {
       "edge_type": "VERIFIES",
-      "from_id": "ver:prohibition-in-prose-tests",
-      "properties": {},
-      "to_id": "cap:a-prohibition-living-in-prose-is-noticed-once-as-a-practice"
-    },
-    {
-      "edge_type": "VERIFIES",
       "from_id": "ver:propagate",
       "properties": {},
       "to_id": "cap:propagate"
@@ -201538,7 +201429,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:59e030a096514e058d5be6617627bcaf1fa946012e64369b2b39f3793fde999c",
+        "checksum": "sha256:d6ba57456368fc148f398321cbee350280796497fca45017d293f3c2a45cac4e",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
@@ -201551,7 +201442,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:fc1a8d1a0421e6e67be71cdeacb0f5e5e1ccbbf546dc561a27ef0e5a8b6a2899",
+        "checksum": "sha256:37d3878b6002e84c3797b36609d79cfdcdede7fbb2c7a1cd760392f2fef69ce7",
         "location": "getting-started/skills/detect-and-ask/SKILL.md",
         "name": "detect-and-ask/SKILL.md — the ask half of the loop, and now the rule for when NOT to ask",
         "status": "realized"
@@ -203641,7 +203532,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:49a8d9afd07de8aabec4e19a1b5ddbc953d43c68dd31ea60e08700ba138c7e4b",
+        "checksum": "sha256:040a0aa06430f80975b02cf91972809a994944d5cfaa3ecd6ab378f0ceca8399",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -205282,16 +205173,6 @@
       "properties": {
         "description": "The degree-zero rule inside `orphan_node` ran on `Decision` alone (heal.rs:879) and now runs on every node type nothing else asks about. That narrowness is why the pass whose job is structural soundness returned a false green: dev_storyflow's fleet got `clean` back over a DesignEpoch carrying NO EDGES AT ALL, in two packages, through every health call of a session.\n\nMEASURED ON REFLOW2'S OWN GRAPH, 2026-08-16: 75 of 2406 nodes are degree-zero. The old rule reported 7 of them; the new rule reports 21. The 14 newly visible are 3 DesignEpochs marking nothing, 3 Fragments with no source, `ver:the-export-survives-being-read-back` — a check counted among the 159 passing that says what it checks to nobody — and 7 TemporalFacts whose `subject_id` names a node THAT DOES NOT EXIST, including `prj:reflow2` (the Project is `proj:reflow2`) and `cap:thin-install` (the node is `req:thin-install`).\n\nTHREE BOUNDS, and two of them exist because the first cut was wrong:\n\n(1) NOT EVERY ATTACHMENT IS AN EDGE. `TemporalFact.subject_id`, `Snapshot.target_id` and `Question.gap_id` are required indexed PROPERTIES: those nodes name what they are about without ever drawing a link. The naive rule would have reported 48 of reflow2's own 212 TemporalFacts — 48 false findings shipped inside the change whose subject is instruments that overstate. A degree-zero node is now skipped when any property resolves to a live node id, which keeps the case that IS wrong: a pointer to a node the design no longer has. The unit test caught this, because `subject_id` is required and the fixture could not be built without one.\n\n(2) BL-42 STAYS CLOSED. Requirement, Capability and Interface are excluded — DETECT asks about those by name (`unsatisfied_requirement`, `unallocated_capability`, `unprovided_interface`), and reporting them here as well is the same finding in two vocabularies that became 20 of 31 defects on the storyflow trial.\n\n(3) A RESTING STATE IS NOT A DEFECT. Project and DesignRule are excluded. A Project alone means the design is EMPTY — what genesis produces on day one — and the phase rollups already say so. An advisory DesignRule can bind the PROCESS rather than a node, and demanding an edge would push authors to draw a relationship nobody meant. Widening a sweep without asking that question is how the correct action starts degrading the instrument (`req:a-deliberate-state-is-not-a-defect`).\n\nThree fixtures were genuinely incomplete and were fixed rather than silenced: a \"v1 baseline\" epoch that was the baseline of nothing, a \"v1.0\" release that shipped nothing, and a recency test whose Verification verified nothing.",
         "name": "A node attached to nothing is reported whatever its type, and a property that names a live node counts as attachment",
-        "provenance": "authored",
-        "status": "realized"
-      }
-    },
-    {
-      "node_id": "cap:a-prohibition-living-in-prose-is-noticed-once-as-a-practice",
-      "node_type": "Capability",
-      "properties": {
-        "description": "Gap source `prohibition_in_prose` in crates/reflow2-core/src/detect.rs (`detect_prohibitions_in_prose`; the six phrases are the `PROHIBITION_PHRASES` constant — read them there, they are not repeated here because a node that quotes them trips the detector, as the first draft of this node did).\n\nTHE RULE: one aggregate finding over every live Requirement, Capability, Component, Interface and ACCEPTED Decision whose name, statement, description or decision text contains one of the six prohibition phrasings, case-insensitively, and which no Constraint CONSTRAINS. Severity 0.35, beside unreviewed_ideas: nothing is wrong, the intent is recorded and findable; it is in a home no computation reads. Aggregate on purpose and from measurement — dozens at once on this design; per node it is the BL-73 wallpaper. Stable aggregate id, so one acknowledgement is a judgement about the practice. The matched phrase rides into the evidence per node, and the evidence carries the denominator (nodes scanned).\n\nDELIBERATE EXCLUSIONS, each pinned by a test that fails when the rule is widened: proposed Decisions (brainstormed ideas — the brainstorm skill's own rule is that detectors do not run over them; once accepted, the same sentence IS scanned); DesignRules (a house \"we never…\" there is home by the routing table's other row) and Constraints (the home itself); ChangeEvents, TemporalFacts and Verifications (records and checks, not intent — a test's \"the one direction this cannot fail in\" was in the measured sample); the `rationale` field (the why, not the what); parked nodes; nodes some Constraint already binds. The shall-clause is deliberately NOT matched: it is the standard negative form of an obligation in requirement writing and an SE reader files it as a Requirement — a false neighbour is worse than a missing one. The closed-set row (\"may only be A, B or C\") is not matched: \"exactly one of\" is ordinary API prose here and would flood.\n\nSilent on a design with none of the scanned types — an empty design has not declined to file its prohibitions. Reports absence of a record and never judges the sentence (dec:report-dont-judge): `add_constraint` + `constrains`, or an acknowledgement that the phrase was incidental, is the reader's call, and the finding says not to file a Constraint just to clear the count.\n\nNo regex crate in core and none added: six fixed phrases, lowercase substring.",
-        "name": "A prohibition living in prose is noticed, once, as a practice",
         "provenance": "authored",
         "status": "realized"
       }
@@ -214684,17 +214565,6 @@
       "properties": {
         "change_type": "scope_change",
         "name": "The instruction files stop pointing at docs/backlog.md, because the file is gone: README.md drops it from the docs list, and CLAUDE.md, AGENTS.md and COORD.md now send a reader to the graph — loop_status for what the loop owes, detect_gaps for the open questions, search_design to find a past finding by its words. AGENTS.md's \"where to record what\" table now names the SHAPE instead of the file (a TemporalFact defect, a planned Capability, a proposed Decision, a DesignRule), and COORD.md's \"reference the id, don't restate it\" rule now names node ids rather than BL ids. COORD.md's historical claim-board entries were deliberately LEFT ALONE: they record what happened on dates that have passed, the BL ids they cite now resolve to nodes, and rewriting a log to match the present is the overwrite this project exists to prevent. Design-side half of the two-sided accept for art:readme."
-      }
-    },
-    {
-      "node_id": "chg:prohibitions-in-prose-are-noticed",
-      "node_type": "ChangeEvent",
-      "properties": {
-        "change_type": "new_feature",
-        "detected_at": "2026-09-14",
-        "name": "A prohibition living in prose is noticed once as a practice — the routing table's Constraint row gets the leg that notices",
-        "subject": "system",
-        "summary": "New gap source `prohibition_in_prose` in detect.rs, from the same morning's measurement (fact:capture-is-blind-to-three-families-…): capture-intent's routing table sends \"a prohibition with no number in it\" to a Constraint, NOT a Requirement, and the design went on writing them into prose — instruction present, detector absent.\n\nTHE RULE: one aggregate finding over live Requirements, Capabilities, Components, Interfaces and ACCEPTED Decisions whose name/statement/description/decision text contains one of six phrases (\"must never\", \"must not ever\", \"is/are not allowed to\", \"never allowed\", \"is forbidden\"), case-insensitive, with no incoming CONSTRAINS. Severity 0.35, beside unreviewed_ideas. Aggregate with a stable id — one acknowledgement is a judgement about the practice; per node it is the BL-73 wallpaper. The matched phrase rides into the evidence per node; the evidence carries the denominator.\n\nEXCLUSIONS, each pinned by a test that fails when the rule is widened: proposed Decisions (the brainstorm skill's own rule — detectors do not run over ideas; once accepted the same sentence IS scanned); DesignRules and Constraints (both are homes); ChangeEvents, TemporalFacts, Verifications (records and checks, not intent); the rationale field; parked nodes. \"shall not\" deliberately not matched — the requirement idiom. The closed-set row not matched — \"exactly one of\" is ordinary API prose here and would flood.\n\nMEASURED ON THE COMMITTED EXPORT BEFORE MERGE: 30 of 1,003 scanned nodes (Requirement 14, Capability 9, accepted Decision 7). Lower than the morning's ≈61 regex estimate, and the difference is the exclusions — that estimate also counted records, rationales and brainstormed ideas, which is exactly what the shipped rule refuses to nudge. 35 gaps in the design in total, so this is one of them.\n\nFALSIFIED BOTH WAYS: detector disabled → the 5 positive tests fail; every exclusion widened at once (all types, all statuses, rationale included, CONSTRAINS ignored) → the 5 exclusion tests fail. 11 tests.\n\nNo regex crate added. Composition: detect-and-ask names the source (all three skill trees), skill_lint allowlists it, docs/gap-surfacing.md row, CHANGELOG."
       }
     },
     {
@@ -233800,18 +233670,6 @@
       }
     },
     {
-      "node_id": "req:a-prohibition-written-into-prose-is-noticed-as-unfiled",
-      "node_type": "Requirement",
-      "properties": {
-        "lineage": "original",
-        "name": "A prohibition written into a design node's prose is noticed as having no home a check can read",
-        "priority": "medium",
-        "provenance": "authored",
-        "statement": "When a Requirement, Capability, Component, Interface or accepted Decision carries a prohibition in its own text — the \"no number in it\" phrasings capture-intent's routing table sends to a Constraint — and no Constraint binds that node, the loop says so, once, as a finding about the practice. The table already routes such a sentence to a Constraint rather than a Requirement, because a Constraint can `constrains` what it binds and be read by the checks; an instruction with nothing noticing its absence is one leg of three.\n\nMeasured before it was asked for: reflow2's own design held ≈61 such sentences in prose (9 of 10 sampled genuine) against 8 Constraint nodes, on a routing row that had been added precisely because eleven prohibitions were left as Requirements (fact:capture-is-blind-to-three-families-and-the-routing-table-has-a-row-for-two-of-them).\n\nAnthony's word, 2026-09-14: \"Build the detector for prohibitions living in prose.\"\n\nOut of scope by design: nudging a brainstormed idea (a proposed Decision's prohibition is a musing), flagging a DesignRule or a Constraint (both are homes), reading records and checks as intent, matching the shall-clause (the requirement idiom), or judging whether the sentence should become a Constraint — filing or acknowledging stays the reader's call.\n\n(This node deliberately does not spell the phrases it is about: a record that quotes the pattern trips the detector that reads it — measured on the first draft of this very node.)",
-        "status": "accepted"
-      }
-    },
-    {
       "node_id": "req:a-project-declares-its-unit-system-as-a-governed-rule-and-undeclared-or-off-system-units-are-reported",
       "node_type": "Requirement",
       "properties": {
@@ -237927,16 +237785,6 @@
       }
     },
     {
-      "node_id": "snap:epoch:preserved-on-write:cap:a-prohibition-living-in-prose-is-noticed-once-as-a-practice",
-      "node_type": "Snapshot",
-      "properties": {
-        "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:detect\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:prohibition-in-prose-tests\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:detect\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:a-prohibition-written-into-prose-is-noticed-as-unfiled\",\"properties\":{}}]",
-        "state": "{\"description\":\"Gap source `prohibition_in_prose` in crates/reflow2-core/src/detect.rs (`detect_prohibitions_in_prose`, `PROHIBITION_PHRASES`).\\n\\nTHE RULE: one aggregate finding over every live Requirement, Capability, Component, Interface and ACCEPTED Decision whose name, statement, description or decision text contains one of six phrases — \\\"must never\\\", \\\"must not ever\\\", \\\"is not allowed to\\\", \\\"are not allowed to\\\", \\\"never allowed\\\", \\\"is forbidden\\\" — case-insensitively, and which no Constraint CONSTRAINS. Severity 0.35, beside unreviewed_ideas: nothing is wrong, the intent is recorded and findable; it is in a home no computation reads. Aggregate on purpose and from measurement — ≈61 at once on this design; per node it is the BL-73 wallpaper. Stable aggregate id, so one acknowledgement is a judgement about the practice. The matched phrase rides into the evidence per node, and the evidence carries the denominator (nodes scanned).\\n\\nDELIBERATE EXCLUSIONS, each pinned by a test that fails when the rule is widened: proposed Decisions (brainstormed ideas — the brainstorm skill's own rule is that detectors do not run over them; once accepted, the same sentence IS scanned); DesignRules (a \\\"we never…\\\" there is home by the routing table's other row) and Constraints (the home itself); ChangeEvents, TemporalFacts and Verifications (records and checks, not intent — \\\"the one direction this must never fail in\\\" on a test was in the measured sample); the `rationale` field (the why, not the what); parked nodes; nodes some Constraint already binds. \\\"shall not\\\" is deliberately NOT matched: it is the standard negative form of an obligation in requirement writing and an SE reader files it as a Requirement — a false neighbour is worse than a missing one. The closed-set row (\\\"may only be A, B or C\\\") is not matched: \\\"exactly one of\\\" is ordinary API prose here and would flood.\\n\\nSilent on a design with none of the scanned types — an empty design has not declined to file its prohibitions. Reports absence of a record and never judges the sentence (dec:report-dont-judge): `add_constraint` + `constrains`, or an acknowledgement that the phrase was incidental, is the reader's call, and the finding says not to file a Constraint just to clear the count.\\n\\nNo regex crate in core and none added: six fixed phrases, lowercase substring.\",\"name\":\"A prohibition living in prose is noticed, once, as a practice\",\"provenance\":\"authored\",\"status\":\"realized\"}",
-        "target_id": "cap:a-prohibition-living-in-prose-is-noticed-once-as-a-practice",
-        "target_type": "Capability"
-      }
-    },
-    {
       "node_id": "snap:epoch:preserved-on-write:cap:a-reader-that-cannot-read-the-vocabulary-is-told-what-it-lacks",
       "node_type": "Snapshot",
       "properties": {
@@ -238854,16 +238702,6 @@
         "state": "{\"description\":\"Cut 2026-09-14, the second patch over v0.60.0 for the same CI script and a different cause.\\n\\nv0.60.0 and v0.60.1 both published binaries, kit and checksums and NEITHER published a container image. The gate that refused runs before publication, so nothing unverified shipped — it behaved correctly both times and the test behind it did not.\\n\\nThe second cause existed only because of how the first was fixed: `mktemp -d` is mode 700 owned by the caller, and chowning it to the container's uid takes it away from that caller wherever they are not also uid 1000. Both fixes passed locally because the author IS uid 1000, so the chown was a no-op — the test was verified in the one environment where its defect cannot appear.\\n\\nEvery check in that phase now runs INSIDE the container, so host uid and mode cannot produce a false negative at all.\",\"name\":\"v0.60.2 — the smoke check asks the container, not the host\",\"status\":\"planned\",\"unit_type\":\"binary\",\"version\":\"0.60.2\"}",
         "target_id": "rel:v0602",
         "target_type": "Release"
-      }
-    },
-    {
-      "node_id": "snap:epoch:preserved-on-write:req:a-prohibition-written-into-prose-is-noticed-as-unfiled",
-      "node_type": "Snapshot",
-      "properties": {
-        "edges": "[{\"direction\":\"in\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Capability\",\"other_id\":\"cap:a-prohibition-living-in-prose-is-noticed-once-as-a-practice\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-09-14\",\"role\":\"approver\"}}]",
-        "state": "{\"lineage\":\"original\",\"name\":\"A prohibition written into a design node's prose is noticed as having no home a check can read\",\"priority\":\"medium\",\"provenance\":\"authored\",\"statement\":\"When a Requirement, Capability, Component, Interface or accepted Decision carries a prohibition in its own text — \\\"must never\\\", \\\"is not allowed to\\\" — and no Constraint binds that node, the loop says so, once, as a finding about the practice. The routing table already sends such a sentence to a Constraint rather than a Requirement, because a Constraint can `constrains` what it binds and be read by the checks; an instruction with nothing noticing its absence is one leg of three.\\n\\nMeasured before it was asked for: reflow2's own design held ≈61 such sentences in prose (9 of 10 sampled genuine) against 8 Constraint nodes, on a routing row that had been added precisely because eleven prohibitions were left as Requirements (fact:capture-is-blind-to-three-families-and-the-routing-table-has-a-row-for-two-of-them).\\n\\nAnthony's word, 2026-09-14: \\\"Build the detector for prohibitions living in prose.\\\"\\n\\nWhat it must NOT do: nudge a brainstormed idea (a proposed Decision's \\\"must never\\\" is a musing), flag a DesignRule or a Constraint (both are homes), read records and checks as intent, match \\\"shall not\\\" (the requirement idiom), or judge whether the sentence should become a Constraint — filing or acknowledging stays the reader's call.\",\"status\":\"accepted\"}",
-        "target_id": "req:a-prohibition-written-into-prose-is-noticed-as-unfiled",
-        "target_type": "Requirement"
       }
     },
     {
@@ -241412,24 +241250,6 @@
         "statement": "THE DISCRIMINATING EXPERIMENT, RUN 2026-08-31 ON ANTHONY'S WORD, and it returns \"nothing here\" — which the optimize skill explicitly permits as a successful outcome.\n\nTHE HYPOTHESIS UNDER TEST: that behaviour smeared onto the shared `DesignGraph` struct causes change fragility, so splitting the struct would reduce rebuild cost. THE EXPERIMENT DESIGNED TO FALSIFY IT: touch a LEAF module (granularity.rs, one impl block) and touch the GOD-STRUCT (graph.rs, 54 public methods on the shared struct), and compare. If the struct is the cause, the second must cost more.\n\n═══ MEASURED, debug profile, two runs per condition, crates-compiled verified from cargo's own output ═══\n                              workspace          core only     crates built\n    no-op                  0.38s / 0.31s              —             0\n    touch LEAF module     13.74s / 13.80s   4.39s / 3.93s        2 / 1\n    touch GOD-STRUCT      13.80s / 14.09s   3.98s / 3.95s        2 / 1\n\n⭐⭐ THE HYPOTHESIS IS FALSIFIED. Leaf and god-struct are INDISTINGUISHABLE — the spread WITHIN a condition (13.74-14.09) is as wide as the spread BETWEEN them, and core-only is if anything marginally faster for the god-struct. Touching one impl block costs exactly what touching fifty-four costs, because the CRATE is Rust's compilation unit and both files live in `reflow2-core`.\n\n⇒ A STRUCT SPLIT WOULD SAVE ZERO BUILD TIME. That is now measured rather than argued, and it closes the compile-fragility branch of the restructure question. `fact:change-fragility-is-crate-scoped-not-struct-scoped` reasoned this from Rust's compilation model; this measures it.\n\n═══ AND WHAT A CRATE SPLIT WOULD BUY IS ALSO BOUNDED, IN THE SAME NUMBERS ═══\nThe whole 88-module `reflow2-core` crate rebuilds in ~4 SECONDS. So splitting core into N crates has a CEILING of about four seconds per incremental build, before counting the dependent chain that would still rebuild. That is not a restructure that pays for itself.\n\n⭐ THE DOMINANT COST IS SOMEWHERE ELSE ENTIRELY, and the measurement hands it over unasked: core-only is ~4s and workspace is ~14s, so ROUGHLY TEN OF THE FOURTEEN SECONDS IS `reflow2-mcp` REBUILDING because it depends on core. The existing crate boundary is already earning its keep — it saves those ten seconds whenever only core is needed — and the largest single lever on incremental build time is the core→mcp dependency, not anything inside core.\n\n═══ ⚠️ WHAT THIS DOES NOT ESTABLISH ═══\n· DEBUG PROFILE ONLY, one machine, warm cache. Release builds and cold builds are not measured and would be much larger; users get release binaries, developers get this.\n· IT MEASURES ONLY BUILD TIME. The other three consequences of behaviour smearing — global coupling, write contention on the single RwLock, and per-module measurability — are untouched by this result and remain live arguments for a struct split. THIS KILLS ONE ARGUMENT, NOT THE PROPOSAL.\n· It does not measure `cargo test` or `cargo check`, which are what a developer actually waits on most often; only `cargo build` was timed.\n· No budget was written before this, because none was needed: the optimize skill's step 1 is measurement, and the answer arrived before any target was called for. Nothing was optimised and nothing should be.",
         "subject_id": "cmp:graph",
         "valid_from": "2026-08-31"
-      }
-    },
-    {
-      "node_id": "fact:capture-is-blind-to-three-families-and-the-routing-table-has-a-row-for-two-of-them",
-      "node_type": "TemporalFact",
-      "properties": {
-        "basis": "measured",
-        "confidence": 0.85,
-        "fact_type": "measurement",
-        "name": "MEASURED: capture is blind to families two ways — three node types no skill can reach at all, and two more (Constraint, Flow) the routing table names and the design still routes into prose",
-        "statement": "MEASURED 2026-09-14 on reflow2's own committed export (4,477 nodes, 26,622 edges) and the 27 served skills, at Anthony's direction, as option (b) of the decision this hangs on. The storyflow question — \"is a monolithic capture blind to whole families?\" — answered on this design, without an LLM in the loop: three deterministic cuts and one calibrated proxy.\n\n═══ CUT 1 — STRUCTURAL REACH: which node types can ANY skill route to? ═══\nFor every node type with a typed constructor, which SKILL.md names that tool:\n  · Actor (add_actor) — NO skill. None of 27. 3 Actors in the design.\n  · EnvironmentRule (add_environment_rule) — NO skill. 0 nodes.\n  · ReadinessAssessment (add_readiness) — NO skill. 0 nodes.\n  · Flow (add_flow) — capture-intent ONLY. 1 Flow in 4,477 nodes.\n  · Component (add_component) — capture-intent ONLY. 108.\n  · Constraint — capture-intent, kpp-proposal, optimize. 8.\n  · Interface — four skills. 22.\n  · Requirement / Capability / Decision — four to five skills each. 226 / 254 / 709.\nThis is the direct analogue of storyflow's \"the monolith fired zero hierarchy edges\": a type no instruction points at is created only by accident. ACTOR IS THE STARK ONE — the vocabulary has a type for who the system serves, and no served skill ever says to use it.\n\n═══ CUT 2 — YIELD: what the design actually holds ═══\nFlow 1 (0.02%), PART_OF_FLOW 8 edges. Constraint 8. Actor 3. Environment 3. Resource 1. DECOMPOSES 0 edges — the decomposition_coverage detector has never had anything to run on. Interface 22, and the skill's \"record BOTH sides of every contract\" yielded PROVIDES 18 against CONSUMES 56 — three to one, the rule followed on one side.\nDocuments captured FROM (36 artifacts with DOCUMENTS edges, 54 nodes yielded): Decision 18, Project 9, TemporalFact 8, Release 8, Capability 5, Component 3, Requirement 2, Interface 1, and Flow / Constraint / Actor ZERO. Every document reading produced records and rulings; none produced a process, a prohibition, or a served party.\n\n═══ CUT 3 — GROUND TRUTH BY THE TABLE'S OWN TRIGGERS, with measured precision ═══\nThe routing table in capture-intent names the phrasing that routes to each type. Regex for that phrasing over every node's prose, then a random sample of 10 matches read by hand to calibrate:\n  · CONSTRAINT row (\"we must never…\", \"it is not allowed to…\" → Constraint, NOT a Requirement): 68 nodes match. Sample precision 9/10 — genuine design prohibitions (\"a non-tty must never hang\", \"the report must never become telemetry\", \"the edge must never become RESOLVES\", \"an absolute path must never enter a global config\"). ≈61 prohibitions living in the prose of Decisions (22), Requirements (14), Capabilities (10) and change records — against 8 Constraint nodes. ⭐ AND THIS IS THE ROW THE TABLE ADDED PRECISELY BECAUSE \"eleven constitutional prohibitions [were] left as Requirements\" — the row exists, and the design went on routing prohibitions into prose anyway.\n  · FLOW row (\"first this, then that\" → Flow): 166 match. Sample precision ~2–3/10 — most hits are \"step 5 of the skill\" references or history narrated as \"first… then\". The genuine ones are the coherence loop's own ordered sequence (\"change event first, then the durable intent\"), the release cut, the detect→ask handshake. Even at 10% precision that is ≈16 ordered processes against 1 Flow node; at the sampled rate, ≈40.\n  · ACTOR (\"the user\", \"an operator who…\", a served party): 389 match — the proxy is too loose to count on (this design talks about \"the user\" constantly), so no ratio is claimed; the structural cut already settles Actor.\n  · INTERFACE (\"where X meets Y\", \"the contract between\", \"handoff\"): 44 match vs 22 nodes — not a blind family; the one-sided PROVIDES/CONSUMES is the defect there.\n\n═══ ⭐ THE FINDING, IN ONE SENTENCE ═══\nCapture is blind two different ways, and only one of them is a missing instruction: ACTOR, EnvironmentRule and ReadinessAssessment are unreachable because nothing points at them; CONSTRAINT and FLOW are unreached although capture-intent's table has a row for each — instruction present, yield ≈ zero, nothing noticing. That second shape is the three-leg rule again (tool ✓, instruction ✓, detector ✗), and it is the same shape the promotion edge had this morning.\n\n═══ WHAT THIS DOES NOT ESTABLISH ═══\nPer-type RECALL of an agent running the skill on a brief with known answers — the storyflow number. This design is a self-host (ChangeEvent, Decision and TemporalFact are 49% of nodes), so its prose is dominated by records of building, and a product design might route differently. The Flow proxy is weak and is reported with its precision rather than as a count. The usage ledger on this box spans two days and 623 calls (add_flow 0, add_interface 0, add_component 0, add_actor 0) — consistent, but a window of the author's own sessions, so supporting only. Establishing recall needs a corpus with known answers, and Alex's pseudo-project is still the candidate.",
-        "steps": [
-          "capture-intent",
-          "detect-and-ask"
-        ],
-        "subject_id": "dec:idea-extraction-is-two-pass-against-an-se-schema-stated-up-front",
-        "valid_from": "2026-09-14",
-        "value": "{\"nodes\":4477,\"types_no_skill_routes_to\":[\"Actor\",\"EnvironmentRule\",\"ReadinessAssessment\"],\"types_capture_intent_only\":[\"Flow\",\"Component\"],\"flow_nodes\":1,\"constraint_nodes\":8,\"actor_nodes\":3,\"decomposes_edges\":0,\"provides_edges\":18,\"consumes_edges\":56,\"documents\":36,\"document_yield\":{\"Decision\":18,\"Project\":9,\"TemporalFact\":8,\"Release\":8,\"Capability\":5,\"Component\":3,\"Requirement\":2,\"Interface\":1,\"Flow\":0,\"Constraint\":0,\"Actor\":0},\"constraint_prose_matches\":68,\"constraint_proxy_precision\":\"9/10\",\"flow_prose_matches\":166,\"flow_proxy_precision\":\"~2-3/10\",\"interface_prose_matches\":44,\"ledger_calls\":623,\"ledger_add_flow\":0,\"ledger_add_actor\":0}"
       }
     },
     {
@@ -245787,20 +245607,6 @@
       }
     },
     {
-      "node_id": "fact:the-prohibition-detector-finds-30-of-1003-and-the-gap-to-the-estimate-is-the-exclusions",
-      "node_type": "TemporalFact",
-      "properties": {
-        "basis": "measured",
-        "confidence": 1.0,
-        "fact_type": "measurement",
-        "name": "MEASURED before merge: 30 of 1,003 scanned nodes carry an unfiled prohibition — half the regex estimate, and the difference is exactly what the rule refuses to nudge",
-        "statement": "MEASURED 2026-09-14 on reflow2's committed export (4,477 nodes) with the shipped detector, before merge.\n\nTHE NUMBER: 30 of 1,003 scanned nodes — Requirement 14, Capability 9, accepted Decision 7; Component 0, Interface 0. One aggregate finding at severity 0.35, among 35 gaps in the whole design.\n\nWHY IT IS HALF THE MORNING'S ESTIMATE. fact:capture-is-blind-to-three-families-… estimated ≈61 from a regex over EVERY node's prose including ChangeEvents, TemporalFacts, Verifications, brainstormed Decisions and the rationale field, then sampled 9/10 genuine. The shipped rule excludes all of those on purpose: records and checks are not intent, a proposed Decision's \"must never\" is a musing the brainstorm skill says not to nudge, and a rationale is the why. So ≈31 of the 61 were sentences the detector is DESIGNED not to raise, and the 30 that remain are the ones a reader should actually file or dismiss. The estimate was right about the practice and loose about the population; the rule is the tighter statement.\n\nWHAT THE 30 LOOK LIKE (from the evidence line): cap:describe-design-at-path (\"something-unnamed must never read as nothing-here\"), cap:capture-registers-its-source, cap:a-session-reports-the-work-it-did-by-hand (\"the report must never become telemetry\"), cap:a-declared-wall-is-checked-against-the-coupling-it-contains, req:the-kind-of-system-is-established-before-its-parts-are-captured (\"it must never determine which analyses reflow2 will run\") — standing house prohibitions, each of which a Constraint could bind to the node it governs and a check could then read.\n\nFALSIFIED BOTH WAYS, run not assumed: detector disabled → 5 of 11 fail (every positive); every exclusion widened at once → 5 of 11 fail (every exclusion). The remaining test (parked, silence) cannot fail by construction and says so.\n\nBOUNDS: one design, a self-host. Six phrases; \"shall not\" and the closed-set row deliberately outside. Whether the 30 SHOULD become Constraints is the reader's ruling, not this record's.",
-        "subject_id": "cap:a-prohibition-living-in-prose-is-noticed-once-as-a-practice",
-        "valid_from": "2026-09-14",
-        "value": "{\"scanned\":1003,\"flagged\":30,\"by_type\":{\"Requirement\":14,\"Capability\":9,\"Decision\":7,\"Component\":0,\"Interface\":0},\"severity\":0.35,\"total_gaps_in_design\":35,\"regex_estimate\":61,\"tests\":11,\"fail_when_disabled\":5,\"fail_when_widened\":5}"
-      }
-    },
-    {
       "node_id": "fact:the-promotion-detector-measured-before-it-shipped-and-the-measurement-moved-the-definition-twice",
       "node_type": "TemporalFact",
       "properties": {
@@ -248902,16 +248708,6 @@
         "level": "unit",
         "method": "test",
         "name": "The function-preservation check refuses what it cannot classify",
-        "status": "passing"
-      }
-    },
-    {
-      "node_id": "ver:prohibition-in-prose-tests",
-      "node_type": "Verification",
-      "properties": {
-        "description": "crates/reflow2-core/tests/prohibition_in_prose.rs — 11 tests.\n\nPOSITIVES (all 5 fail when the sweep call is disabled): a \"must never\" inside a requirement raises one finding with numerator, denominator and the matched phrase in its evidence; three prohibitions are ONE finding; a Constraint that binds the node clears it; a proposed Decision's musing is not scanned but the same sentence IS once the decision is accepted; matching is case-insensitive.\n\nEXCLUSIONS (all 5 fail when every exclusion is widened at once): \"shall not\" is the requirement idiom and is not matched; a DesignRule and a Constraint are the homes and are not flagged; records and checks (Verification, TemporalFact) are not intent; a prohibition quoted in a rationale is reasoning; a Constraint binding the node clears it.\n\nSILENCE TESTS that cannot fail by construction, and say so: a parked node is skipped; nothing to scan is silence, not \"0 of 0\".",
-        "kind": "verification",
-        "name": "The prohibition detector's eleven tests, falsified in both directions",
         "status": "passing"
       }
     },
