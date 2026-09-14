@@ -973,6 +973,17 @@ CLASSES: dict[str, dict[str, tuple[str, ...]]] = {
 }
 
 
+# The orientation skill fires on the CLAIM, not on who asked or who will read.
+# Checked on the description alone: that is the text list_skills serves and the
+# handshake carries, so it is the only part of the skill a session sees before
+# it decides whether to load the skill at all.
+TRIGGER_CONTRACT: dict[str, str] = {
+    "the claim is the trigger": "about to assert",
+    "whoever the audience is": "whoever the audience",
+    "a progress report or a deck counts": "progress report",
+}
+
+
 ASK_CONTRACT: dict[str, str] = {
     "offers a reading": "Say which answer you would give",
     "carries what would change it": "Name the condition under which your recommendation is wrong",
@@ -1372,6 +1383,30 @@ def main() -> int:
         "The decision stays with the user" in ask_text,
         "the separation must be stated, not implied",
     )
+
+    # THE TRIGGER CONTRACT — same shape as ASK_CONTRACT, same reason. Field
+    # report 2026-09-14 (hxm_program): asked for a progress deck for
+    # management, an agent asserted the project's status from a checklist file
+    # and its own recent writes, never reading the design; challenged, one read
+    # gave it twenty hits across nine node types. The orientation skill's
+    # trigger named the USER asking where things stand and a SESSION starting,
+    # and nothing else — "produce a status for someone" matched neither. The
+    # clause that keys orientation to the CLAIM, whoever asked and whoever the
+    # audience is, has to be stated where the trigger is read, and it has to
+    # stay stated: an instruction shipped and lapsed within four days here once.
+    print("== the orientation trigger ==")
+    wai_md = SKILLS / "where-am-i" / "SKILL.md"
+    wai_text = wai_md.read_text(encoding="utf-8") if wai_md.exists() else ""
+    # The front matter is everything before the closing delimiter; the body
+    # after it must not count, or a clause buried in a paragraph nobody serves
+    # at the handshake would satisfy a check about the trigger.
+    wai_desc = wai_text.split("\n---", 1)[0] if wai_text.startswith("---") else ""
+    for label, phrase in TRIGGER_CONTRACT.items():
+        check(
+            f"where-am-i's trigger states: {label}",
+            phrase in wai_desc,
+            f"missing {phrase!r} from the description (the part list_skills and the handshake serve)",
+        )
 
     print("== the linking contract ==")
     link_md = SKILLS / "brainstorm" / "SKILL.md"

@@ -233,7 +233,7 @@ description, which an agent sees in the tool schema; this table is for a person 
 | `get_node` | **read** | Fetch a node by id — `{node: {...}}` when present, `{node: null}` when absent. |
 | `scan_nodes` | **read** | List nodes of a type. |
 | `search_design` | **read** | Find design nodes by what they say, when you don't know their ids — 'what does the design say about persistence?', 'is there already a requirement about latency?'. |
-| `topic_report` | **read** | WHAT THE DESIGN HOLDS ABOUT ONE SUBJECT, read-only, in one call — the /topic view. |
+| `topic_report` | **read** | WHAT THE DESIGN HOLDS ABOUT ONE SUBJECT, read-only, in one call — the /topic view: 'show me something about X'. |
 
 ### Assurance — checks, evidence and confirmation
 
