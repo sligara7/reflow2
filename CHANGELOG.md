@@ -68,6 +68,20 @@ This file is the third view: *what changed, and when*.
   idea answered by work nobody linked back is unreachable by any query, and only the instruction
   reaches that half.
 
+- **A prohibition living in prose gets noticed.** New gap source `prohibition_in_prose`: one
+  aggregate finding over every live Requirement, Capability, Component, Interface or accepted
+  Decision whose own text says "must never", "is not allowed to", "never allowed" or "is
+  forbidden", with no Constraint binding it. The routing table in `capture-intent` already sends
+  "a prohibition with no number in it" to a Constraint, *not* a Requirement — a Constraint can
+  `constrains` what it binds and be read by the checks; a sentence in prose can be read by
+  nobody. Measured on reflow2's own design the day it was written: ≈61 such sentences (9 of 10
+  sampled genuine) against 8 Constraint nodes, on a table row that had been added because eleven
+  prohibitions were left as Requirements. Instruction present, detector absent. Severity 0.35,
+  aggregate on purpose — per node it is wallpaper. Excludes brainstormed (`proposed`) Decisions,
+  DesignRules and Constraints (both are homes), records and checks, the `rationale` field, and
+  parked nodes; deliberately does **not** match "shall not", the requirement idiom. Reports,
+  never judges — filing or acknowledging is the reader's call.
+
 ### Changed
 
 - **The promotion instruction moved to the skill that actually runs at the moment of promotion.**
