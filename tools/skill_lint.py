@@ -244,6 +244,10 @@ NON_TOOL_TERMS = {
     # outran.
     "fix_without_recorded_cause",
     "defect_overtaken_by_change",
+    # A GAP SOURCE key (2026-09-14): the same mirror one type over, named by
+    # detect-and-ask and by capture-intent, where the instruction that FEEDS it
+    # now lives.
+    "decision_overtaken_by_promotion",
     # `approver` (2026-09-06) — the field the constructors and status setters
     # take so the owner's word rides the same call as the status it signs; the
     # skills that instruct settling a status now name it, as they must.

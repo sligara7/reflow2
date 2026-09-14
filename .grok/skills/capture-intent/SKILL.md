@@ -90,6 +90,23 @@ mis-file things**; this one names where it runs out, and that boundary is where 
    **Only a word they actually used.** A synonym you thought of is a false neighbour
    every later search repeats. It merges rather than replaces, so a second word never
    costs the first, and it renames nothing — `name` stays the design's word.
+   ⭐ **AND IF THE SEARCH HANDS BACK THE IDEA THIS CAME FROM, DRAW `EVOLVES_INTO`.** A
+   requirement promoted out of a brainstormed question is the one capture that has a *parent*,
+   and this skill is what runs at the moment of promotion: **brainstorm**'s step 5 names the
+   edge and then hands straight over here, so the instruction lives in the skill you are
+   leaving rather than the one you are entering. `review_relations` is the door —
+   `EVOLVES_INTO` **from the idea to what it became**, with the reason in `evidence`. Direction
+   is the claim, not a formality: backwards, the same edge says the requirement grew into the
+   question.
+
+   **The failure this prevents is an open question nobody can ever close.** Measured on
+   reflow2's own design, 2026-09-14: of seven ideas whose answers had already shipped, five
+   carried the edge and **two carried nothing at all** — reachable only by a person reading
+   those two nodes end to end. With the edge, `detect_gaps` raises the idea as settled
+   (`decision_overtaken_by_promotion`) and its owner can rule on it; without it the design goes
+   on reading as though the question were still open, and no query anywhere can tell the
+   difference.
+
 2. Create each node with a stable id (`req:…`, `cap:…`, `cmp:…`, `ifc:…`) and a clear
    name/statement. **Requirements land at status `proposed` and stay there until the user
    confirms the wording** — every move off `proposed` (`accepted`, `met`, `deferred`,

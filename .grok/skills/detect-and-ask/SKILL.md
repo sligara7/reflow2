@@ -36,7 +36,10 @@ the record**: the gaps stay counted and stay loud (`req:no-idea-goes-quiet`).
    indistinguishable from a symptom fix; the root-cause skill is the door) and **defects the
    record never closed** (`defect_overtaken_by_change` — a later repair touched the subject after the defect was
    recorded and nothing says whether that was the fix; a stale open defect sent a session down a
-   wrong re-fix), surprising couplings, quality drift.
+   wrong re-fix), **open questions the design already answered by building them**
+   (`decision_overtaken_by_promotion` — an idea still reading `proposed` that EVOLVES_INTO an
+   accepted requirement, a realized capability or a recorded change; the promotion landed and
+   nobody went back to close the question), surprising couplings, quality drift.
    If empty, the design is coherent for now — proceed to build.
 
    **On a large design, ask for your part.** Pass `scope` (a node id — the Component your team
