@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:dc1ed4743845b7aeafacfc3fc409b93b0705eca5c25a60e909abfa434f307c41",
+  "content_hash": "sha256:3a86ef799cf6b2db1cedabbf26631c6d80643ad6690b2efb98844bf49d1f63f9",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -4014,6 +4014,14 @@
         "evidence": "The stale sentence is a comment in `[workspace.dependencies]`, which is exactly the surface that node is about. A dependency's REASON currently lives beside its pin as free prose that nothing checks and nothing expires, which is why this one could rot silently in the file somebody edits to act on it."
       },
       "to_id": "dec:idea-one-place-to-bump-a-dependency"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "fact:three-searches-that-did-not-happen-and-what-each-one-cost",
+      "properties": {
+        "evidence": "That 2026-08-17 record named the class — assertions in prose about what the graph holds, on the read path where nothing enforces anything — and this is its fourth recorded instance, from a third project."
+      },
+      "to_id": "fact:root-cause-the-status-claim-was-keyed-to-nothing-and-the-catalogue-spoke-the-designs-side-not-the-askers"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -8948,6 +8956,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:orientation-fires-on-the-status-claim-and-the-catalogue-answers-a-status-question-in-the-askers-words",
+      "properties": {},
+      "to_id": "epoch:the-status-claim-is-the-trigger"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:orphan-decision-degree-zero",
       "properties": {},
       "to_id": "epoch:v0220"
@@ -12893,6 +12907,12 @@
       "from_id": "snap:epoch:the-server-keeps-the-export-current:cap:the-server-writes-the-export-through-and-chains-it-from-main",
       "properties": {},
       "to_id": "epoch:the-server-keeps-the-export-current"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:the-status-claim-is-the-trigger:cap:skill-triggers",
+      "properties": {},
+      "to_id": "epoch:the-status-claim-is-the-trigger"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -22530,6 +22550,16 @@
     },
     {
       "edge_type": "CAUSES",
+      "from_id": "art:where-am-i-skill",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "Its served description keyed the orientation read to the user asking where things stand and to a session starting; the moment of asserting a project's status to someone was named nowhere, so a request for a progress deck matched no trigger, and the catalogue asked in the same words returned no reading tool.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:root-cause-the-status-claim-was-keyed-to-nothing-and-the-catalogue-spoke-the-designs-side-not-the-askers"
+    },
+    {
+      "edge_type": "CAUSES",
       "from_id": "cap:a-decision-can-be-created-already-settled",
       "properties": {
         "basis": "correlational",
@@ -22597,6 +22627,16 @@
         "validation_status": "unvalidated"
       },
       "to_id": "fact:find-tools-misses-split-into-a-vocabulary-gap-no-ranking-can-close-and-a-scorer-that-lets-long-descriptions-crowd"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "cap:tool-search",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The second cause beside the trigger wording: the catalogue's ranking is over descriptions written from the design's side, and asked in the asker's words for a progress deck it returned add_project, set_project_mode, schedule_for, set_violation_status, dimension_drifts and contains — no reading tool — so even an agent that reached for the catalogue would not have found the read.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:root-cause-the-status-claim-was-keyed-to-nothing-and-the-catalogue-spoke-the-designs-side-not-the-askers"
     },
     {
       "edge_type": "CAUSES",
@@ -39315,6 +39355,51 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:orientation-fires-on-the-status-claim-and-the-catalogue-answers-a-status-question-in-the-askers-words",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:orientation-fires-on-the-status-claim-and-the-catalogue-answers-a-status-question-in-the-askers-words",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skills-and-tools"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:orientation-fires-on-the-status-claim-and-the-catalogue-answers-a-status-question-in-the-askers-words",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-query"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:orientation-fires-on-the-status-claim-and-the-catalogue-answers-a-status-question-in-the-askers-words",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:where-am-i-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:orientation-fires-on-the-status-claim-and-the-catalogue-answers-a-status-question-in-the-askers-words",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:skill-triggers"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:orphan-decision-degree-zero",
       "properties": {
         "accepted_baseline": true,
@@ -53640,6 +53725,15 @@
     },
     {
       "edge_type": "DUPLICATES",
+      "from_id": "dec:idea-a-project-scoped-status-rollup-answers-what-has-this-project-achieved-in-one-call",
+      "properties": {
+        "basis": "suspected",
+        "evidence": "The hxm session's rollup — capabilities with statuses, the latest dated change on each, open findings and gates, scoped to a project — is option (b) of that earlier question, a remaining-work view over data already held; said for a different reason (a management deck) by a third project, and both reasons matter."
+      },
+      "to_id": "dec:idea-remaining-work-has-no-answer-in-the-graph"
+    },
+    {
+      "edge_type": "DUPLICATES",
       "from_id": "dec:idea-who-warrants-a-domain-template-and-how-does-it-stay-current",
       "properties": {
         "basis": "suspected",
@@ -63794,6 +63888,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:skill-triggers",
+      "properties": {},
+      "to_id": "snap:epoch:the-status-claim-is-the-trigger:cap:skill-triggers"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "cap:skills-served",
       "properties": {},
       "to_id": "snap:epoch:surface-export:cap:skills-served"
@@ -65345,6 +65445,12 @@
       "from_id": "cap:shared-sessions",
       "properties": {},
       "to_id": "fact:the-shared-stdio-client-never-reaps-its-children-and-accumulates-zombies"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:skill-triggers",
+      "properties": {},
+      "to_id": "fact:root-cause-the-status-claim-was-keyed-to-nothing-and-the-catalogue-spoke-the-designs-side-not-the-askers"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -188838,6 +188944,15 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:orientation-fires-on-the-status-claim-and-the-catalogue-answers-a-status-question-in-the-askers-words",
+      "properties": {
+        "at": "2026-09-14",
+        "note": "The field report carried four candidate causes and said the walk was owed; the walk ran (fact:root-cause-the-status-claim-was-keyed-to-nothing-and-the-catalogue-spoke-the-designs-side-not-the-askers) and this change fixed the two causes it confirmed, the trigger wording and the catalogue's phrasing. The observation stays true as history. Not retired: the two ideas the report proposed, which stay for the owner's word, and the limit that nothing demands the read at the moment of a claim."
+      },
+      "to_id": "fact:field-report-hxm-a-progress-deck-was-written-from-a-checklist-and-recency-and-the-design-was-read-only-after-a-challenge"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:re-linking-an-artifact-no-longer-renames-it",
       "properties": {
         "evidence": "The repair against the finding that measured it. The finding's own text names the fix it wanted — make name optional, use set_opt, refuse a first link with no name — and all three landed. It says the finding can no longer be read as current; the cause fact beside it stays live, because the class it names is still guarded by a hand-maintained list."
@@ -194014,6 +194129,15 @@
         "conformance": "verified"
       },
       "to_id": "cap:dimensions"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:status-question-finds-the-read-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:tool-search"
     },
     {
       "edge_type": "REALIZES",
@@ -202361,6 +202485,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:status-question-finds-the-read-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:status-question-finds-the-read-test"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:storyflow-resolution-study",
       "properties": {
         "action": "created"
@@ -206047,7 +206179,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:49a8d9afd07de8aabec4e19a1b5ddbc953d43c68dd31ea60e08700ba138c7e4b",
+        "checksum": "sha256:8796ec28fdadd175a34b6a2d762a3b7ceb26bbadc142b854e44e8dad20f4bead",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -206086,7 +206218,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:4aef7bf5db70fcc4490c5ba799afc1f762eff440258832d961ffe087e77ccea3",
+        "checksum": "sha256:e41a73cb6f5640d01e0f451bb8cf368e0e9de36ded8219a7187cda7a88a94334",
         "location": "docs/skills-and-tools.md",
         "name": "skills-and-tools.md",
         "status": "realized"
@@ -206150,6 +206282,18 @@
         "checksum": "sha256:f44dda5865c39d5f8d301b33192096405930956e0a0adaf487a6eedead6e36f0",
         "location": "crates/reflow2-core/src/stats.rs",
         "name": "stats.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:status-question-finds-the-read-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:e9d506515e805248700ad848e0431f20bb9a87bb5daf69f0b49438af47d97a69",
+        "description": "Two catalogue tests: a status question in the asker's words (\"put together a progress deck for management on what this project has achieved so far\"; \"where does this project stand, what has been achieved and what is still open\") finds topic_report in find_tools' top five. Written first and observed failing (0 passed, 2 failed) with the same six non-reading tools measured by hand, from the 2026-09-14 hxm_program field report.",
+        "location": "crates/reflow2-mcp/tests/a_status_question_in_the_askers_words_finds_the_read.rs",
+        "name": "a_status_question_in_the_askers_words_finds_the_read.rs",
         "status": "realized"
       }
     },
@@ -207010,7 +207154,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:7b6d7a2d37d1ea917072f71b91ff998948ddf019a1f04cdc1790759e6dcb7408",
+        "checksum": "sha256:d4d52195a0783098c7fc102ec4d3554f82a81848de23a7ab73e6d8ed7a92623c",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/query.rs",
         "name": "tools/query.rs",
@@ -207395,7 +207539,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:6d06584e49f301282094e79ce47787c3f5d574b7f2f931d904fbe516dcf6f377",
+        "checksum": "sha256:758de3b811d62a48db065a16f6fe8bb0b7aeb713239e110447b151f69499952b",
         "location": "getting-started/skills/where-am-i/SKILL.md",
         "name": "where-am-i/SKILL.md — orientation, and the step that asks who the reader is",
         "status": "realized"
@@ -217079,6 +217223,16 @@
         "name": "Option (d) became a tool, and the scoring approach was measured and dropped",
         "rationale": "Anthony chose (d) then (a). (d) was built as a reusable tool rather than a one-off script, because tests the design has never heard of is every project's problem.",
         "summary": "link_tests.py attributes tests to components on a two-clause rule and refuses to guess at the rest."
+      }
+    },
+    {
+      "node_id": "chg:orientation-fires-on-the-status-claim-and-the-catalogue-answers-a-status-question-in-the-askers-words",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "name": "The orientation skill's trigger names the act of asserting status to anyone (three mirrored copies, served at every handshake), topic_report's description carries the asker's words at its prior length and names itself the first read before a status is asserted, and a lint contract keeps the trigger clause stated — root-caused from the hxm_program field report, pinned by two catalogue tests and three lint checks that failed first",
+        "repair": "corrected_cause",
+        "subject": "system"
       }
     },
     {
@@ -229793,6 +229947,17 @@
       }
     },
     {
+      "node_id": "epoch:the-status-claim-is-the-trigger",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "description": "Recorded with add_epoch because it HAPPENED: the second item of the planned increment epoch:planned-the-mechanism-reaches-the-moment (sequence 490) landed on 2026-09-14; the increment stays planned until the third walk lands. Sequence 492 places it after epoch:the-lens-reaches-the-loop-rail (491) inside that increment.\n\nWHAT ARRIVED. The root-cause walk on the hxm_program status-deck field report, recorded as fact:root-cause-the-status-claim-was-keyed-to-nothing-and-the-catalogue-spoke-the-designs-side-not-the-askers, and the fix at its cause: the orientation skill's trigger names the act of asserting status, whoever asked and whoever the audience is; topic_report's served description carries the asker's words and names itself the first read before a status is asserted, at its prior length; a lint contract keeps the trigger clause stated. Two catalogue tests and three lint checks, each observed failing first.\n\nWHAT DID NOT ARRIVE, deliberately: no tool call marks \"about to assert status\", so nothing DEMANDS the read the way record_finding demands root-cause — the served prose is the leg reflow2 can build, and its load rate is measured at 19-24 percent where nothing demands it. The three hxm ideas (reading coverage; a project-scoped status rollup, which is dec:idea-remaining-work-has-no-answer-in-the-graph's option (b); the audience-is-not-the-trigger idea, whose cheap option this delivers) stay for Anthony's word.",
+        "epoch_type": "revision",
+        "name": "ARRIVED 2026-09-14 — the status claim is the trigger: orientation fires when the agent is about to assert status to anyone, and the catalogue answers a status question in the asker's words; the second of the three walks in epoch:planned-the-mechanism-reaches-the-moment delivered",
+        "sequence": 492,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:the-surface-stops-saying-false-things",
       "node_type": "DesignEpoch",
       "properties": {
@@ -233306,6 +233471,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered stateless_seat_probe.py"
+      }
+    },
+    {
+      "node_id": "frag:art:status-question-finds-the-read-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered a_status_question_in_the_askers_words_finds_the_read.rs"
       }
     },
     {
@@ -242376,6 +242551,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:the-status-claim-is-the-trigger:cap:skill-triggers",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:skill-triggers\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:nudge\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:8f3bacedc618f3d4\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:skill-use-survives-a-long-session\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SCHEDULED_FOR\",\"other_type\":\"Release\",\"other_id\":\"rel:v0210\",\"properties\":{\"modality\":\"expected\",\"recorded_at\":\"2026-07-31\"}}]",
+        "state": "{\"description\":\"The loop hook stops merely COUNTING writes and starts recognising SHAPES, so a skill is named when the situation calling for it arrives rather than when the agent happens to remember: a file edit with no ChangeEvent means impact-check; a change recorded but never PROPAGATED also means impact-check (BL-163); a recorded change with no artifact link means link-artifacts; a capture batch with no gap pass means detect-and-ask; a rendering written and nothing stored means session-artifacts. Extends `req:nudge-covers-bypass`, which already arms on file-edit events and already names those skills — what was missing was the pattern, not the trigger. This is the half of BL-74 the existing rungs structurally cannot reach: they compute loop debt from graph state, and these situations are invisible to the graph. BL-163 CORRECTED THE FIRST SHAPE AND ADDED THE ONE ARMING BRANCH THIS CAPABILITY HAS. As shipped, impact-check keyed on `changes == 0` — it fired only when a session recorded NOTHING — so a session that edited code and wrote its ChangeEvents up AFTERWARDS had `changes > 0` and was met with silence, while every one of those events was the bookkeeping-after the hook's own message says is not the loop. It measured a ChangeEvent's PRESENCE where it meant its PRECEDENCE, and the root cause was that `CHANGE_OPS` held only RECORDING ops while no set counted `propagate_change` or `propagate_from` at all: the hook could not separate recording from looking because it never counted looking. Every other shape refines a nudge already firing and adds no interruption; this one had to ARM, because the session it catches has no unchecked writes and has touched reflow2, so there was no nudge for a shape to refine.\",\"is_entry_point\":false,\"is_exit_point\":false,\"name\":\"The moment tells the agent which skill it needs\",\"provenance\":\"authored\",\"status\":\"verified\",\"tier\":\"operational\"}",
+        "target_id": "cap:skill-triggers",
+        "target_type": "Capability"
+      }
+    },
+    {
       "node_id": "snap:epoch:the-surface-stops-saying-false-things:art:verify",
       "node_type": "Snapshot",
       "properties": {
@@ -247395,6 +247580,25 @@
           "check-health"
         ],
         "subject_id": "cap:the-register-rule-reaches-the-words",
+        "valid_from": "2026-09-14"
+      }
+    },
+    {
+      "node_id": "fact:root-cause-the-status-claim-was-keyed-to-nothing-and-the-catalogue-spoke-the-designs-side-not-the-askers",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.85,
+        "fact_type": "finding",
+        "name": "ROOT CAUSE (walked, measured): the orientation read was keyed to the user asking \"where things stand\" and to a session starting, never to the agent being about to ASSERT status; and the catalogue, asked in the asker's words for a progress deck, returned six tools of which none reads — routing was written from the design's side, not the asker's, and the read path has no demand",
+        "statement": "RUN AS THE SKILL, the second walk of epoch:planned-the-mechanism-reaches-the-moment, on fact:field-report-hxm-a-progress-deck-was-written-from-a-checklist-and-recency-and-the-design-was-read-only-after-a-challenge (relayed by Anthony from the hxm_program hub design, 2026-09-14).\n\n① OBSERVED: asked for a progress deck for management, the agent asserted the project's status from a script-by-script checklist file (boxes unticked by convention) and from the six change events it had itself written that week; it never read the design. Challenged, one topic call on the project's name gave 20 hits across 9 node types; it had known 6 of 41 change events. Expected: a status claim about a design under reflow2 is read from the design before it is written. NOT affected: the same agent opened the root-cause skill three times that month when a tool demanded it, so demands do reach it.\n\n② PRECEDENT, searched: this is the FOURTH recorded instance of a class already on the record. fact:three-searches-that-did-not-happen-and-what-each-one-cost (2026-08-17): three assertions in prose about what the graph holds, none involving a tool call, \"the write guard cannot fire because nothing was being written\". dec:idea-search-first-fires-without-being-remembered: \"ALL SIX HAPPENED ON THE READ PATH, WHERE NOTHING ENFORCES ANYTHING… it cannot fire when a user asks a question and an agent answers in prose\", option A refused because \"it needs to know what the user asked, which the tool layer never sees\". fact:a-second-project-answered-what-is-left-to-build-from-decision-prose (2026-08-14): a status question answered from prose because the graph had no view for it. And fact:the-root-cause-skill-is-demanded-by-no-tool-and-named-by-no-trigger-so-it-loads-only-by-luck: a trigger keyed to the agent's internal state loads at 19-24 percent.\n\n③ CANDIDATES from the bones: (a) ALLOCATION — the orientation skill's trigger is written for the user asking where things stand and for a session starting; the moment of asserting status is named nowhere. (b) ASSURANCE — nothing demands a read at the moment of a claim: only impact-check (record_change) and root-cause (record_finding) declare demanded_by; the nudge names where-am-i at SessionStart only. (c) CONTRACT — the catalogue (find_tools) is written from the design's side; the asker's words reach no reading tool. (d) INTENT/ABSENCE — nothing says how much of a subject the session has read (the recency mechanism that filled the vacuum). (e) NOT IN THE SUSPECTED COMPONENT — the project's own house rules pointed at the checklist file, a plan that reads as a status source. (f) THE OBSERVATION IS WRONG.\n\n④/⑤ MEASURED, 2026-09-14 on the checkout. (a) CONFIRMED: where-am-i's description read \"Use when the user asks where things stand, what you've concluded, what's been decided, or wants to pick up an existing design after a break — and at the start of any session\"; a request to produce a deck matches none of it. (b) CONFIRMED: grep of demanded_by across served skills — two skills, neither is orientation; tools/loop_nudge.py names where-am-i in SESSION_START_TEXT only; served AGENTS.md carries no \"read before you assert status\" rule. (c) CONFIRMED, the conversion test in the user's words: find_tools \"put together a progress deck for management on what this project has achieved so far\" → add_project, set_project_mode, schedule_for, set_violation_status, dimension_drifts, contains; \"where does this project stand, what is done and what is still open\" → add_project, set_project_mode, design_regions, open_questions, coverage_report, describe_schema. topic_report, the tool that answered after the challenge, in neither; its own catalogue query is \"everything the design says about one subject in one place\", nobody's phrasing of a status question. (d) CONFIRMED as absent (the usage ledger holds the verb, never the object) and recorded as an idea, not a cause: it is the mechanism that fills the vacuum once the read has not happened. (e) NOT MEASURABLE from here. (f) REFUTED: the session measured its own coverage, 6 of 41.\n\n⑥ THE CLASS, sharpened from the precedent: the read path has no demand, and its two routing surfaces — the skill trigger and the tool catalogue — are written from the design's side (\"where things stand\", \"one subject\") rather than the asker's (\"what have we achieved\", \"a deck for management\"). The precedent said the tool layer never sees what the user asked; this instance shows the request WAS visible and matched nothing, which is a cheaper failure to fix than the internal-state one. Would this fix have stopped the 2026-08-17 three? Two of the three were the agent asserting what the graph holds with no user request to route, so no — those remain the internal-state class the root-cause precedent names. It would have stopped this one and the 2026-08-14 one, both of which began with a status question in a person's words.\n\n⑦ PINNED FIRST: tools/skill_lint.py gained TRIGGER_CONTRACT (three phrases the orientation skill's DESCRIPTION must state — the part list_skills and the handshake serve) — observed failing, 3 checks. crates/reflow2-mcp/tests/a_status_question_in_the_askers_words_finds_the_read.rs (two queries in the asker's words must find topic_report in the top five) — observed failing, 0 passed 2 failed, with the same six tools measured by hand.\n\n⑧ FIXED AT THE CAUSE, three legs. Instruction: the orientation skill's trigger (three mirrored copies) now says \"and whenever you are about to assert the project's status to anyone: a progress report, a deck for management, a summary, 'what have we achieved'. The claim is the trigger, whoever asked and whoever the audience is; a status written from a checklist file or from what you wrote this week is a plan reported as a measurement\" — served on every handshake through list_skills. Served tool: topic_report's description carries the asker's words and names itself the first read before a status is asserted; kept at its prior length (906 chars) because the first attempt at 1,350 chars knocked the tool out of the top five for its OWN query — the scorer penalises length, so the catalogue leg had to be a rewrite, not an addition. Detector: the lint contract, so the clause cannot lapse. All catalogue tests green (182 tools), lint green, snapshot and surface doc regenerated.\n\n⑨ NOT ESTABLISHED: whether the hxm session would have loaded the skill given the new trigger (the served-prose load rate is measured at 19-24 percent where nothing demands it, and nothing demands orientation at the moment of a claim — no tool call marks it, the same limit the precedent names); whether a read-coverage line would change behaviour (dec:idea-reading-coverage-says-how-much-of-a-subject-this-session-has-actually-read stays an idea); the project-scoped rollup (dec:idea-a-project-scoped-status-rollup-answers-what-has-this-project-achieved-in-one-call) is the same ask as dec:idea-remaining-work-has-no-answer-in-the-graph's option (b) and stays for Anthony's word.",
+        "steps": [
+          "where-am-i",
+          "topic_report",
+          "find_tools",
+          "root-cause"
+        ],
+        "subject_id": "cap:skill-triggers",
         "valid_from": "2026-09-14"
       }
     },
@@ -253020,7 +253224,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:8848c5e417ad91c2d2aca3361e1882ec922cbd56be888a041a2bd36846fcbfa5",
+  "prev_content_hash": "sha256:dc1ed4743845b7aeafacfc3fc409b93b0705eca5c25a60e909abfa434f307c41",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
