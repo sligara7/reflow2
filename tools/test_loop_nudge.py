@@ -151,6 +151,19 @@ class LoopNudge(unittest.TestCase):
         r2 = run_hook(self.project, stop(active=True))
         self.assertEqual(r2.stdout, "")
 
+    def test_the_stop_nudge_says_the_next_words_are_read_by_a_person(self):
+        """The nudge is the last text an agent reads before its closing words,
+        and it is written in reflow2's own nouns. Field report 2026-09-14: "6
+        structural findings and 1 undispositioned drift" reached a person
+        verbatim. The reminder that those words are for the agent, not the
+        reader, has to ride the message that arrives at that moment."""
+        run_hook(self.project, post_tool("mcp__reflow2__add_capability"))
+        r = run_hook(self.project, stop())
+        self.assertTrue(r.stdout.strip(), "a write without a loop check nudges")
+        reason = json.loads(r.stdout)["reason"]
+        self.assertIn("read by a person", reason)
+        self.assertIn("their own words", reason)
+
     def test_stop_passes_when_the_loop_ran(self):
         run_hook(self.project, post_tool("mcp__reflow2__add_capability"))
         run_hook(self.project, post_tool("mcp__reflow2__loop_status"))

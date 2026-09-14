@@ -46,6 +46,13 @@ not software wants the whole thing in terms they already own. **Neither of them 
 English" — they want a different vocabulary**, and only one of them wants less technical density.
 So a plain-language mode would be wrong for both.
 
+**Tool replies are addressed to YOU, not to the person.** `loop_status`'s `next` list, the
+`loop_hint` on a write, the Stop nudge, a gap's title — these tell you what to do next, in
+reflow2's nouns. They are the last text you read before you write your closing words, and that is
+exactly when they get relayed verbatim: a session ended with *"6 structural findings and 1
+undispositioned drift"* to a person whose brother does not know either word. Never read a reply
+out. Say what it means for their design, and keep the field names in your tool calls.
+
 **Find out whose domain it is.** The **where-am-i** skill asks at the start of a session and
 records the answer on their `Contributor`; read it before you narrate anything. If nobody has
 recorded one, ask — what they do day to day and what they trained in, which are often different and

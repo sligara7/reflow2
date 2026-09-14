@@ -50,6 +50,21 @@ This file is the third view: *what changed, and when*.
 
 ### Changed
 
+- **The lens rides `loop_status`, and the Stop nudge says its words are for the agent.** Field
+  report, 2026-09-14: a session closed with *"Remaining: 6 structural findings and 1
+  undispositioned drift … its repair step can delete nodes, so it's worth reading what it proposes
+  rather than applying blind"* — `loop_status`'s own field name and `next` line, read out to a
+  person as if they were English. Root-caused rather than re-worded: the register rule was in
+  served prose and lint-checked on one skill, and the lens rode `get_skill` / `list_skills` only;
+  every served skill ends with "before moving on: `loop_status`", so the LAST reply an agent reads
+  before choosing its closing words was the one on that path carrying no lens — and `next` is a
+  to-do list written for the agent in reflow2's nouns, with nothing marking it as such. Now
+  `loop_status` carries `lens` (the same line as the skill rail, prefixed by a sentence naming
+  `next` as the agent's list), every Stop-nudge message ends with the register line, and the
+  standing rule in served `AGENTS.md` says tool replies are addressed to the agent. Four server
+  tests and one nudge test, each observed failing before the fix. **Patch**: an added reply field,
+  no shape or schema change. Still unmeasured, as before: whether the words that come out are the
+  reader's words — the trial with a non-software reader remains the missing instrument.
 - **Approving a node you authored no longer erases that you authored it.** The stored shape of an
   `AUTHORED_BY` edge is now the **set `roles`** (`author` / `reviewer` / `approver`) with a date per
   role — `authored_at`, `reviewed_at`, `approved_at` — in place of the single `role` + `acted_at`.
