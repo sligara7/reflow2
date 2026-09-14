@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:3a86ef799cf6b2db1cedabbf26631c6d80643ad6690b2efb98844bf49d1f63f9",
+  "content_hash": "sha256:771375d701974d1349a1417e914af5ebd186bf1324b9e2fa0c5ca89080a21c85",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -3053,6 +3053,14 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:the-lens-names-the-person-beside-the-id-and-orientation-offers-the-match",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:the-loop-holds-the-invitation",
       "properties": {
         "weight_basis": "estimated"
@@ -3697,6 +3705,14 @@
         "evidence": "The earlier one saw this coming. It is ACCEPTED and records that the loop nudge's mechanism is .claude/settings.json, so it exists for one harness only. Every safeguard reflow2 has for 'did this session export?' rides that hook, which means the guarantee asked for here cannot be built where the existing ones live — and flo2's users would not be in Claude Code at all."
       },
       "to_id": "dec:idea-what-guarantees-the-export-if-the-export-is-the-only-durable-copy"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "dec:idea-the-persona-has-no-delivery-leg-so-what-carries-it",
+      "properties": {
+        "evidence": "That question asked what CARRIES the persona to a session; option (c) here, the seat recording who the session is speaking to and the lens saying so on every reply, is a carrier answer for the shared-design case."
+      },
+      "to_id": "dec:idea-two-readers-share-one-design-and-the-session-not-the-graph-says-which-lens-applies"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -9820,6 +9836,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:the-lens-names-the-person-beside-the-id-and-orientation-offers-the-git-author-match",
+      "properties": {},
+      "to_id": "epoch:the-reader-is-offered-never-assumed-and-the-lens-names-them"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:the-lens-rides-loop-status-and-the-nudge-says-its-words-are-for-the-agent",
       "properties": {},
       "to_id": "epoch:the-lens-reaches-the-loop-rail"
@@ -11885,6 +11907,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:cap:stamp",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:cap:the-lens-names-the-person-beside-the-id-and-orientation-offers-the-match",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
     },
@@ -16875,6 +16903,17 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-two-readers-share-one-design-and-the-session-not-the-graph-says-which-lens-applies",
+      "properties": {
+        "authored_at": "2026-09-14",
+        "roles": [
+          "author"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-v0300-is-the-stable-baseline-and-only-feedback-moves-it",
       "properties": {
         "authored_at": "2026-08-14",
@@ -21626,9 +21665,9 @@
       "edge_type": "AUTHORED_BY",
       "from_id": "req:the-agent-learns-who-it-is-talking-to",
       "properties": {
-        "authored_at": "2026-08-18",
+        "approved_at": "2026-09-14",
         "roles": [
-          "author"
+          "approver"
         ]
       },
       "to_id": "who:ajs"
@@ -21638,6 +21677,17 @@
       "from_id": "req:the-agent-never-authors-what-requires-accountable-sign-off",
       "properties": {
         "approved_at": "2026-08-30T00:00:00Z",
+        "roles": [
+          "approver"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:the-agent-says-which-recorded-reader-it-assumes-and-the-lens-names-them",
+      "properties": {
+        "approved_at": "2026-09-14",
         "roles": [
           "approver"
         ]
@@ -44087,6 +44137,51 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-lens-names-the-person-beside-the-id-and-orientation-offers-the-git-author-match",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:claims"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-lens-names-the-person-beside-the-id-and-orientation-offers-the-git-author-match",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-lens-names-the-person-beside-the-id-and-orientation-offers-the-git-author-match",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skills"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-lens-names-the-person-beside-the-id-and-orientation-offers-the-git-author-match",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:where-am-i-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-lens-names-the-person-beside-the-id-and-orientation-offers-the-git-author-match",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:the-lens-names-the-person-beside-the-id-and-orientation-offers-the-match"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-lens-rides-loop-status-and-the-nudge-says-its-words-are-for-the-agent",
       "properties": {
         "accepted_baseline": true,
@@ -51083,6 +51178,16 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-two-readers-share-one-design-and-the-session-not-the-graph-says-which-lens-applies",
+      "properties": {
+        "evidence": "Every option here is bounded by that requirement's rule that a guess from a login or git author is offered and never assumed; it was accepted on his word the same day this was raised.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "req:the-agent-learns-who-it-is-talking-to"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "dec:idea-what-do-we-call-the-thing-that-runs-the-agent",
       "properties": {
         "evidence": "That requirement makes `init` ASK the user which one they use, so whatever word is chosen is spoken aloud to a stranger installing reflow2 — which is what makes this a product question rather than an internal style one. It also defeats the most promising option: 'which MCP client do you use?' is a worse question than 'which editor?' for someone who has never heard of MCP.",
@@ -53876,6 +53981,14 @@
     },
     {
       "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-a-user-carries-a-persona-that-shapes-every-reply",
+      "properties": {
+        "evidence": "That idea holds his 2026-08-18 refinement that a login guess should be offered and stored; this grows it up for the case it did not consider, two recorded readers on one design, where the graph can hold both backgrounds and cannot say which is present."
+      },
+      "to_id": "dec:idea-two-readers-share-one-design-and-the-session-not-the-graph-says-which-lens-applies"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
       "from_id": "dec:idea-a-users-domain-vocabulary-has-no-route-into-se-vocabulary",
       "properties": {
         "evidence": "Drawn FROM the 2026-08-26 node INTO this one: the same question, from the same user, grown up. That node had the routing analysis and the four-defensible-types example but was written before the routing table shipped. This one adds what Alex says in his OWN words about WHY he needs the layer — three reasons, not one — and the measurement of what the shipped table actually keys on."
@@ -54097,6 +54210,14 @@
         "evidence": "The brainstormed idea became intent. That node measured four of five steps as already built and named the alias as the one with nowhere to write; this requirement is that one step, promoted on Anthony's word. Drawn from the idea to what it became, which is how a promotion is recorded."
       },
       "to_id": "req:a-node-records-what-the-user-calls-it"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-two-readers-share-one-design-and-the-session-not-the-graph-says-which-lens-applies",
+      "properties": {
+        "evidence": "Promoted on Anthony's word, 2026-09-14: options (a) skill-only and (b) names on the lens line were taken together; (c) the seat carrying the reader and (d) asking every session were not."
+      },
+      "to_id": "req:the-agent-says-which-recorded-reader-it-assumes-and-the-lens-names-them"
     },
     {
       "edge_type": "EVOLVES_INTO",
@@ -63909,6 +64030,12 @@
       "from_id": "cap:the-design-reference-is-served-compact-code-shaped-and-derived-for-the-implementing-agent",
       "properties": {},
       "to_id": "snap:epoch:2026-09-13-the-design-reference-is-the-black-box-under-work-not-the-whole-design:cap:the-design-reference-is-served-compact-code-shaped-and-derived-for-the-implementing-agent"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:the-lens-names-the-person-beside-the-id-and-orientation-offers-the-match",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:cap:the-lens-names-the-person-beside-the-id-and-orientation-offers-the-match"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -192836,6 +192963,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:lens-names-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:the-lens-names-the-person-beside-the-id-and-orientation-offers-the-match"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:lessons",
       "properties": {
         "completeness": "complete",
@@ -197301,6 +197437,12 @@
       "from_id": "cap:the-handshake-is-written-down-beside-the-graph",
       "properties": {},
       "to_id": "req:a-report-can-name-what-was-talking-to-what"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:the-lens-names-the-person-beside-the-id-and-orientation-offers-the-match",
+      "properties": {},
+      "to_id": "req:the-agent-says-which-recorded-reader-it-assumes-and-the-lens-names-them"
     },
     {
       "edge_type": "SATISFIES",
@@ -201869,6 +202011,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:lens-names-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:lens-names-test"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:lessons",
       "properties": {
         "action": "created"
@@ -203799,7 +203949,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:2d9d47d689b9964eb984c29777fcf819258d1afda88d0003376e2c200cae0cc5",
+        "checksum": "sha256:35bcd48855523f6a8f388268f6bb34b8a0f7e7948a603124bd31a7a32ac264db",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/claims.rs",
         "name": "claims.rs",
@@ -205002,6 +205152,18 @@
       }
     },
     {
+      "node_id": "art:lens-names-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:eae6bdcae1c60f8a8501049abfe43ffcfe193d735e8e71ff24101925c8780919",
+        "description": "Four served-reply tests: two recorded readers are named beside their ids on the skill lens; the askable people in the silent case are named too; a person with no name is still listed by id with no empty parenthesis; loop_status carries the names as well. Three observed failing before ReaderLens carried names.",
+        "location": "crates/reflow2-mcp/tests/the_lens_names_the_person_beside_the_id.rs",
+        "name": "the_lens_names_the_person_beside_the_id.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:lessons",
       "node_type": "Artifact",
       "properties": {
@@ -206179,7 +206341,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:8796ec28fdadd175a34b6a2d762a3b7ceb26bbadc142b854e44e8dad20f4bead",
+        "checksum": "sha256:2f3bb24136b5cc5034d08df02a011ef129423b14abf128472bdb30016333136e",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -206205,7 +206367,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:05ce690aea2d48f10e96d4e6d6463578bd9c223ae8e38a48eadf0c97a5872371",
+        "checksum": "sha256:7ad7dfc6220c8b0f11a7cc584074c729e66427d58fbfd57380767337b3f37b59",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/skills.rs",
         "name": "skills.rs",
@@ -207539,7 +207701,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:758de3b811d62a48db065a16f6fe8bb0b7aeb713239e110447b151f69499952b",
+        "checksum": "sha256:d09de48b9a307e1c9103219e06fed65379f94be9e235db724e3dcd17fb85aadd",
         "location": "getting-started/skills/where-am-i/SKILL.md",
         "name": "where-am-i/SKILL.md — orientation, and the step that asks who the reader is",
         "status": "realized"
@@ -210353,6 +210515,17 @@
         "name": "A server writes down which client connected and what they agreed to speak, where a broken protocol cannot hide it",
         "provenance": "authored",
         "status": "verified"
+      }
+    },
+    {
+      "node_id": "cap:the-lens-names-the-person-beside-the-id-and-orientation-offers-the-match",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Two legs, on Anthony's word 2026-09-14 (\"two legs and no more\"). LEG 1, the served reply: ReaderLens carries each person's name; lens_line renders \"who:ajs (Anthony Sligar)\" for both the recorded and the askable lists, so the sentence that already rides get_skill, list_skills and loop_status gives the agent the join it needs against the git author it can see. No email or other identity signal is recorded; names are already in the public export. LEG 2, the orientation skill's reader step: with more than one background recorded, match the git author to a recorded name, offer it in one sentence (\"assuming you are AJ — if not, tell me who you are and your background\"), do not ask again that session, and attribute what is captured to the same person. A lint contract (READER_CONTRACT) keeps the clause stated. Pinned by the_lens_names_the_person_beside_the_id.rs (four tests) and three lint checks, each observed failing first. Deliberately not built: the seat does not record the reader; a stated assumption plus a name on every lens line keeps a wrong guess visible without session state.",
+        "name": "The lens line names each recorded person beside their id, and orientation offers the git-author match as an assumption when more than one reader is recorded",
+        "provenance": "authored",
+        "status": "realized",
+        "tier": "operational"
       }
     },
     {
@@ -218515,6 +218688,15 @@
       }
     },
     {
+      "node_id": "chg:the-lens-names-the-person-beside-the-id-and-orientation-offers-the-git-author-match",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "ReaderLens carries each person's name and the lens line renders \"who:ajs (Anthony Sligar)\" on every skill and loop_status reply, telling the agent, when more than one background is recorded, to match the git author, offer the match in one sentence and attribute to the same person; the orientation skill's reader step carries the same clause in three mirrored copies under a lint contract — two legs on Anthony's word, pinned by four served-reply tests and three lint checks that failed first",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:the-lens-rides-loop-status-and-the-nudge-says-its-words-are-for-the-agent",
       "node_type": "ChangeEvent",
       "properties": {
@@ -224855,6 +225037,17 @@
       }
     },
     {
+      "node_id": "dec:idea-two-readers-share-one-design-and-the-session-not-the-graph-says-which-lens-applies",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Recorded as brainstorming, not as a proposal. Anthony, 2026-09-14, in his words: \"one of my projects (flo2) with my brother Alex. We'll use the same projects repo (same GitHub repo). When I am looking at the project, it should be viewed from my lens/persona. When he is looking at the project, it should be viewed from his lens. When opening an existing project, I usually run where-am-i skill. Maybe this would be a good place to see who the current user is? Probably if it is coming from the same machine, it is probably the same user, so may not need to ask every time and do something like 'assuming you are AJ; if not, please state your name and some background so that I can shape/tailor my responses to you'.\"\n\nWHAT IS ALREADY ON THE RECORD, so this is the new part and not a restatement: the guess-from-login idea is his own from 2026-08-18 (dec:idea-a-user-carries-a-persona-that-shapes-every-reply) and is already law in the accepted requirement — \"a login name, a git author or an existing handle is a reasonable offer and a terrible silent default\" (req:the-agent-learns-who-it-is-talking-to, accepted on his word today). The orientation skill already says \"ask once, at the start, if the design does not already say\", and the lens on every reply already lists the recorded backgrounds and says \"this says what the DESIGN holds, never who is at the keyboard\".\n\nTHE NEW CASE, which none of that settles: a design that records TWO backgrounds. \"Ask if the design does not already say\" is ambiguous when the design says two things. Which one applies is a fact about the SESSION, not about the design — a seat names a session, never a person, and the graph cannot hold \"who is reading right now\" without asserting what it cannot know. So the choice is made per session, every session, and today nothing says how or where.\n\nWHAT THE AGENT CAN SEE THAT THE GRAPH CANNOT (measured on this box): git user.name \"Anthony Sligar\", git user.email, OS login \"ajs7\". The recorded Contributors carry handles \"@ajs\" and \"@bro\" — nothing joins a git identity to a Contributor, so today a match is a guess by name, not a lookup.\n\nOPTIONS, unranked:\n(a) SKILL-ONLY: the orientation step gains a clause for the several-backgrounds case — offer the one whose name matches the git author or login as an assumption (\"assuming you are AJ — if not, say who you are and your background\"), invite correction, and do not ask afresh. Cheap; instruction-only; nothing observes whether it happens, and the design has measured that instruction-only rules lapse within days.\n(b) MAKE THE MATCH A LOOKUP: record the identity signal a harness can see (a git author name or handle) on the Contributor, and let the lens line carry it — \"Recorded backgrounds: who:ajs (git: Anthony Sligar), who:alex (git: Alex …)\" — so the agent's guess is a join, not a hunch. Counter: identity signals in a PUBLIC export — the 2026-08-19 redaction precedent; a name is probably fine, an email is not, and the design should say which.\n(c) THE SEAT CARRIES THE READER: once offered and confirmed (or offered and unanswered), the session's seat records \"reader: who:ajs, basis: assumed from git author / confirmed by them\", and every lens line says so — \"speaking to who:ajs (assumed, unconfirmed)\". The assumption becomes visible and correctable on every reply instead of silent, and it expires with the session, which is exactly the lifetime a \"who is reading\" fact has. Answers dec:idea-the-persona-has-no-delivery-leg-so-what-carries-it's question for this case. Counter: seat state grows; an assumption repeated on every reply can become wallpaper.\n(d) NEVER GUESS; ask each session when more than one background is recorded. Counter: it is exactly what he asked not to have, and a question every session teaches people to answer it carelessly.\n\nTHE HONEST COUNTER TO THE PREMISE: same machine is not same person. Alex at Anthony's desk, a shared laptop, a hosted flo2 where every session comes from one server — in each the machine signal points at the wrong person, and the accepted requirement's \"offered, never assumed\" is what keeps a wrong guess cheap. (c) is the option that keeps the wrong guess visible for the whole session rather than for one sentence.\n\nA SECOND COUNTER: the persona is per-graph (established 2026-08-19). For flo2, one repo means one graph, so both brothers ARE in it — this case works. Across their other projects each answers again; that is unchanged by anything here.",
+        "kind": "exploratory",
+        "name": "OPEN — when two people share one design (flo2: Anthony and Alex, one repo), the graph records BOTH backgrounds and cannot say which one is reading; should orientation offer a guess from the machine (\"assuming you are AJ — if not, say who you are and your background\") rather than ask every session, and where does the confirmed answer live?",
+        "rationale": "Recorded as its own question rather than folded into the persona idea because the persona idea asks WHETHER a stored background is the right mechanism and the accepted requirement says WHAT is owed; this asks the operational question neither settles — which of several recorded readers a session is talking to, how the agent guesses, and where a confirmed guess lives for the rest of the session. The cheap option (a) is his stated ask; (c) is the one that keeps a wrong guess visible, which is what the accepted requirement's \"offered, never assumed\" is really for.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-v0300-is-the-stable-baseline-and-only-feedback-moves-it",
       "node_type": "Decision",
       "properties": {
@@ -229905,6 +230098,17 @@
       }
     },
     {
+      "node_id": "epoch:the-reader-is-offered-never-assumed-and-the-lens-names-them",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "description": "Recorded with add_epoch because it HAPPENED, on Anthony's word the same day: \"Go with your suggestion for two legs and no more: skill only and lens line carries names beside ids.\" Sequence 493 places it after the two field-report walks (491, 492) and inside the still-planned increment epoch:planned-the-mechanism-reaches-the-moment, which it is adjacent to rather than part of — it came from his brainstorm on flo2 (one repo shared with Alex), not from a field report.\n\nWHAT ARRIVED. req:the-agent-says-which-recorded-reader-it-assumes-and-the-lens-names-them (accepted, his signature) and cap:the-lens-names-the-person-beside-the-id-and-orientation-offers-the-match. Leg 1: ReaderLens carries names; lens_line renders \"who:ajs (Anthony Sligar)\" on every skill and loop_status reply, and says, when more than one background is recorded, to match the git author, offer the match in one sentence, and attribute to the same person. Leg 2: the orientation skill's reader step carries the several-readers clause in all three mirrored copies, held by a lint contract (READER_CONTRACT). Four served-reply tests and three lint checks, each observed failing first.\n\nWHAT DID NOT ARRIVE, deliberately: the seat does not record the reader; no email or other identity signal is recorded; the persona stays per-graph. Same machine is not same person, which is why this offers and never assumes.",
+        "epoch_type": "revision",
+        "name": "ARRIVED 2026-09-14 — two legs and no more: the lens line names each person beside their id, and orientation offers the git-author match as an assumption when a design records more than one reader",
+        "sequence": 493,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:the-record-moved-is-noticed",
       "node_type": "DesignEpoch",
       "properties": {
@@ -232701,6 +232905,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered launch_serves_release.py"
+      }
+    },
+    {
+      "node_id": "frag:art:lens-names-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered the_lens_names_the_person_beside_the_id.rs"
       }
     },
     {
@@ -239056,7 +239270,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "Anthony, 2026-08-18, promoted from `dec:idea-a-user-carries-a-persona-that-shapes-every-reply` on his instruction *\"do the where-am-i fix and add the who are you ask\"*, and SHARPENED the same day (see clause 1). Raised from Alex's field report that he was about to show reflow2 to coworkers and expected them to meet reflow2's own vocabulary cold. **That Decision asks WHETHER a stored persona is the right mechanism and stays open; this states WHAT IS OWED.**\n\nWHAT IS REQUIRED, in three parts:\n\n1. **THE AGENT ESTABLISHES WHAT LENS THE READER BRINGS, BEFORE IT READS THE DESIGN BACK — AND THE QUESTION MUST ELICIT A BACKGROUND, NOT AN IDENTITY.**\n\n   ⭐⭐ **THIS CLAUSE WAS SHARPENED BECAUSE THE FIRST VERSION FAILED ON ITS OWN TERMS.** It specified the wording *\"who am I talking to, and what do you work in?\"* — and Anthony caught it immediately: *\"a user could reply with 'Bob' and that doesn't tell you much about Bob and the lens with which he sees his design.\"* **\"Bob\" is a correct answer to that question.** A requirement that names a question which a useless answer satisfies has not stated what it wants. **What is owed is the VOCABULARY THE READER ALREADY OWNS**, and the wording is a means to it — so this requirement states the property and leaves the phrasing to the skill.\n\n   Three obligations follow, and they are separable:\n   (a) **ASK FOR BACKGROUND, NOT IDENTITY** — what they do day to day AND what they trained in.\n   (b) **SHOW WHAT A USEFUL ANSWER LOOKS LIKE.** An example in the question shapes the reply far more reliably than an instruction to answer fully. *\"Software engineer, but my degree is in biology\"* is the shape being asked for.\n   (c) **A THIN ANSWER GETS ONE FOLLOW-UP AND NO MORE.** This is an opening courtesy, not an intake form; interrogating someone about themselves before answering their question is worse than pitching it slightly wrong.\n\n   ⭐ **THE TWO HALVES DIVERGE, AND THE DIVERGENCE IS THE INFORMATIVE PART.** Measured against the two real users: Alex is a **software applications engineer with a bachelor's in BIOLOGY**; Anthony **develops software but came through space acquisitions and systems engineering, with a BS in EE and an MS in EE (electro-optics) focused on space object detection.** Neither is recoverable from a job title, and each changes which explanation lands — living-systems analogies for one, requirements/cost/risk and a physical signal-versus-noise intuition for the other. **A job title alone would have produced the same register for both, and it would have been wrong for both.**\n\n2. **THE ANSWER SHAPES THE REGISTER OF EVERY REPLY, NOT ONLY OF QUESTIONS.** `req:a-question-arrives-with-a-reading` already governs how a CHOICE is put to the user. This covers status readouts, gap lists, explanations of what was built — the replies containing no decision at all, which is most of them.\n\n3. **AND IT NEVER SHAPES THE RECORD.** What is written into the design stays in its own register whoever is in the room, because the next reader is someone else. `second-person-to-him-third-person-in-the-record` is the existing statement of the same split.\n\n⭐⭐ **THE LOAD-BEARING DISTINCTION: THIS IS A VOCABULARY SWAP, NOT A DIFFICULTY DIAL.** Anthony's SE terms — requirement, interface, allocation, verification, TRL, KPP, signal-to-noise — are NATIVE and softening them patronises him and loses precision; what he wants dropped is **reflow2's INTERNAL vocabulary** (gap, loop, detector, node id, \"the loop owes\"). Alex's coworkers meet all of it cold. A hitting coach who knows baseball and not software wants the whole thing in terms he already owns. **None of the three wants \"simpler English\"; each wants a DIFFERENT vocabulary, and only one wants less technical density.** So a plain-language mode or a reading-level setting would be wrong for the primary user, wrong for the coach, and only accidentally right for a generic newcomer.\n\n📌 **THE BACKGROUND IS A STARTING POINT, NOT A VERDICT.** People show their vocabulary by using it. When the reader's own words say more than their opening answer did, the record is updated — a background written once and never revisited goes stale like any other fact.\n\n📌 WHERE IT IS ASKED: `where-am-i` already fires *\"at the start of any session on an existing design\"*, so it is the one moment reliably reached before the agent starts talking, and it is what a NEW person hits first.\n\n🛑 **AND THAT SKILL HARDCODED AN AUDIENCE, WHICH WAS A DEFECT ON ITS OWN.** It read *\"Write it as prose for the person who described this project to you\"* — assuming the reader had briefed the agent. Alex's coworkers briefed nobody. Fixed 2026-08-18 (PR #246).\n\n⚠️ **ASKING WHO SOMEBODY IS DOES NOT VIOLATE `dec:idea-the-graph-vocabulary-never-reaches-the-user`.** That decision forbids making the user choose an INTERNAL CATEGORY — a question about reflow2's schema only reflow2 can answer. Asking about their background asks for the one fact reflow2 genuinely cannot look up. **They are opposites: one hands reflow2's work to the user, the other asks for what only the user has.**\n\n⚠️ **A GUESS IS OFFERED, NEVER ASSUMED.** A login name, a git author or an existing handle is a reasonable offer and a terrible silent default — `req:defaults-do-not-assert`. A description somebody did not choose is a stereotype the design then repeats back forever, and SELF-DESCRIBED vs ASSIGNED is the difference between a good feature and a bad one. **Live instance: Alex's background is recorded RELAYED BY ANTHONY and says so on its face, awaiting his own correction.**\n\nWHAT IS DELIBERATELY NOT REQUIRED, and left open in the Decision this was promoted from: a dedicated persona property on Contributor. `description` carries it today and the trial is reversible; by Anthony's own ruling (`chg:bl179-maturity-profile`) a field no computation reads does not earn its keep. ⭐ **The honest route to earning it is `ver:gap-carries-a-reading`'s `skill_lint`, which ALREADY checks that no served skill hardcodes an ANSWER LANGUAGE — the sibling check, that no served skill hardcodes an AUDIENCE, would make this mechanically enforced rather than instruction-only.**\n\n🛑 UNTIL THAT CHECK EXISTS THIS IS AN INSTRUCTION WITH NOTHING ABLE TO OBSERVE IT — the failure `dec:idea-the-enum-question-came-back-four-days-after-it-was-fixed` measured recurring within four days of a fix shipping. Stated plainly so this is not mistaken for delivered when the prose lands.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -239068,6 +239282,19 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "Where a design artifact carries PROFESSIONAL ACCOUNTABILITY — a stamped structural drawing, a permit submission, a certified analysis, a safety or medical certification — the agent must not produce it. It may state the requirement the artifact has to meet, identify who or what produces it, and record the returned result as a Verification with its provenance. It must not be the author.\n\nAnthony, 2026-08-30, accepting this after a brainstorm on non-software domains (`dec:idea-who-authors-the-domain-artifact`, where this was tier 3 of three).\n\n⭐ THE REASON IS NOT AGENT QUALITY, AND THAT IS WHY IT IS A REQUIREMENT RATHER THAN A GUIDELINE. The other two tiers turn on whether a human can review the output, which is a judgement that moves as models improve. This one does not move at all: in most jurisdictions a structural drawing for a habitable structure is stamped by a licensed engineer, and an analysis someone relies on is a professional judgement with a name attached to it. No level of model competence makes an unlicensed author licensed. A better agent makes tiers 1 and 2 wider; it leaves this boundary exactly where it is.\n\nDISTINGUISH IT FROM THE FABRICATION RULE IT SITS BESIDE. `cap:no-fabricated-repair` and the viewpoints no-extrapolation rule both stop the agent inventing content nobody stated — they answer \"did anybody decide this?\". This answers a different question: \"is this agent ENTITLED to be the one who says it?\" An artifact can be entirely faithful to the design, invent nothing, and still be one the agent must not sign.\n\nWHAT IT DOES NOT SAY: that reflow2 cannot help with such a design. It can hold the requirements, the interfaces, the allocations and the verification matrix for a permitted building all the way through — and that is most of the work. What it must not do is emit the document that carries somebody's professional signature.\n\nCONCRETE CASES BEHIND IT: a garage extension needing a permit (Alex's, the nearest real candidate), and a car-engine component whose FEA under thermal and cyclic loading somebody is accountable for.\n\nNOT ESTABLISHED: how the boundary is DETECTED rather than merely stated. Nothing in reflow2 today knows which artifact types carry licensure, and jurisdictions differ. A requirement with no detector behind it is the weakest of the three legs — so this is accepted intent with its enforcement still open.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:the-agent-says-which-recorded-reader-it-assumes-and-the-lens-names-them",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "usability",
+        "lineage": "original",
+        "name": "When a design records more than one reader's background, the agent offers a guess matched to the git author, says so once, does not ask again that session — and the lens line carries each person's name beside their id so the match is a lookup",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Anthony, 2026-09-14, promoted from dec:idea-two-readers-share-one-design-and-the-session-not-the-graph-says-which-lens-applies on his word: \"Go with your suggestion for two legs and no more: skill only and lens line carries names beside ids.\" The case: flo2, one repo shared with his brother Alex; each should be read to in his own vocabulary, and he does not want to be asked who he is every session.\n\nWHAT IS REQUIRED, two legs and no more:\n\n1. THE ORIENTATION SKILL, when the design records MORE THAN ONE background: match what the harness can see — the git author name, a login, a handle — against the recorded people's names, offer the match as an assumption in one sentence (\"assuming you are AJ — if not, tell me who you are and your background\"), and do not ask again that session. The assumption is OFFERED, never silent (req:the-agent-learns-who-it-is-talking-to, accepted, already forbids a silent default); a correction is taken at face value and the corrected person is the reader from then on. When no recorded name matches, ask as for a new reader.\n\n2. THE LENS LINE CARRIES NAMES BESIDE IDS: the sentence that rides every skill and loop_status reply lists \"who:ajs (Anthony Sligar)\" rather than the id alone, so the agent's match against the git author is a join over text already in front of it, not a hunch that needs a fetch per person. Names are already in the public export; no email or other new identity signal is recorded.\n\nAND THE ONE RULE THAT MAKES A WRONG GUESS COST SOMETHING: the identity the agent assumes for the lens is the identity it ATTRIBUTES to — AUTHORED_BY on what it captures that session goes to the same Contributor — and it says so once. Today both answers come from the same unstated guess and a wrong one damages the record silently.\n\nWHAT IS DELIBERATELY NOT REQUIRED, and why: the session's seat does not record the reader (the heavier option in the brainstorm); a stated assumption plus a name on every lens line already keeps a wrong guess visible and re-readable, and seat state would be built for a hosted flo2 that does not exist yet. Same machine is not same person, which is why this offers and never assumes. The persona stays per-graph.\n\nVERIFIED BY: a served-reply test that the lens line names the person beside the id; a lint contract that the orientation skill's body states the offer-and-say-so clause; both written first and observed failing.",
         "status": "accepted"
       }
     },
@@ -240847,6 +241074,16 @@
         "edges": "[{\"direction\":\"in\",\"edge_type\":\"TRIGGERS\",\"other_type\":\"Capability\",\"other_id\":\"cap:changelog-view\",\"properties\":{\"role\":\"feeds — the increment's changes are now known, so the stamp can answer whether an upgrade note is owed. Pin every ChangeEvent of the INCREMENT first, found by diffing ids against the previous tag's export rather than against memory: v0.22.0's changelog read 12 entries before that diff and 47 after, with unmapped empty both times\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:stamp\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:provenance\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:07bb37be6d5cd129\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:22386cd2f1a1fa96\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:233d08765e4cfc7b\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:593e26aed260f0a3\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:695a599323c7edfe\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:75d815c93cad4c86\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:9b2071dba7dfe759\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:b25bb8d8db80dfd3\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:c8cfb3f3be9183af\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:d1c2d599af5b45ce\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:d31369434b7b1347\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"PART_OF_FLOW\",\"other_type\":\"Flow\",\"other_id\":\"flow:release-cut\",\"properties\":{\"step_order\":3,\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:survives-upgrade\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"TRIGGERS\",\"other_type\":\"Capability\",\"other_id\":\"cap:derived-release-manifest\",\"properties\":{\"role\":\"feeds — documentation is settled, so the graph's record of what ships is next. An upgrade note is owed if and only if the stamp MOVED, and a new property does not move it: the stamp carries node and edge TYPE names\"}}]",
         "state": "{\"description\":\"Stamp and check, refusing a graph from the future.\",\"is_entry_point\":false,\"is_exit_point\":false,\"name\":\"Say which reflow2 wrote a graph\",\"provenance\":\"authored\",\"status\":\"verified\",\"tier\":\"operational\"}",
         "target_id": "cap:stamp",
+        "target_type": "Capability"
+      }
+    },
+    {
+      "node_id": "snap:epoch:preserved-on-write:cap:the-lens-names-the-person-beside-the-id-and-orientation-offers-the-match",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:lens-names-test\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"verified\"}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:skills\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:the-agent-says-which-recorded-reader-it-assumes-and-the-lens-names-them\",\"properties\":{}}]",
+        "state": "{\"description\":\"Two legs, on Anthony's word 2026-09-14 (\\\"two legs and no more\\\"). LEG 1, the served reply: ReaderLens carries each person's name; lens_line renders \\\"who:ajs (Anthony Sligar)\\\" for both the recorded and the askable lists, so the sentence that already rides get_skill, list_skills and loop_status gives the agent the join it needs against the git author it can see. No email or other identity signal is recorded; names are already in the public export. LEG 2, the orientation skill's reader step: with more than one background recorded, match the git author to a recorded name, offer it in one sentence (\\\"assuming you are AJ — if not, tell me who you are and your background\\\"), do not ask again that session, and attribute what is captured to the same person. A lint contract (READER_CONTRACT) keeps the clause stated. Pinned by the_lens_names_the_person_beside_the_id.rs (four tests) and three lint checks, each observed failing first. Deliberately not built: the seat does not record the reader; a stated assumption plus a name on every lens line keeps a wrong guess visible without session state.\",\"name\":\"The lens line names each recorded person beside their id, and orientation offers the git-author match as an assumption when more than one reader is recorded\",\"provenance\":\"authored\",\"status\":\"in_progress\",\"tier\":\"operational\"}",
+        "target_id": "cap:the-lens-names-the-person-beside-the-id-and-orientation-offers-the-match",
         "target_type": "Capability"
       }
     },
@@ -253224,7 +253461,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:dc1ed4743845b7aeafacfc3fc409b93b0705eca5c25a60e909abfa434f307c41",
+  "prev_content_hash": "sha256:3a86ef799cf6b2db1cedabbf26631c6d80643ad6690b2efb98844bf49d1f63f9",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
