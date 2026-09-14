@@ -115,18 +115,32 @@ trap 'cleanup; cleanup2' EXIT
 # Mint two designs AT THE REGISTRY SHAPE (<root>/<name>/.reflow2/graph). A store
 # at any other path is not discovered, which is a convention worth failing on
 # loudly here rather than in a consumer's deployment.
+# ⚠️ WAIT FOR THE STORE TO APPEAR ON THE VOLUME, not for the container to be
+# "Running". The first version of this checked Running and BROKE OUT when it was
+# false — which is true for the first moment of every container's life, so on a
+# slower machine it gave up before the design was ever minted and reported
+# "nothing to isolate". It passed locally and failed in CI on the release,
+# which is the worst place to find a check-then-act.
+#
+# The volume is a bind mount, so the host can see the store directly and no
+# `docker exec` is needed. The identity sidecar is what `Registry::discover`
+# actually reads, so that is what is waited for.
 for d in alpha beta; do
   docker run -d --name "$name-$d" -v "$reg:/data" \
     -e REFLOW2_GRAPH_PATH="/data/$d/.reflow2/graph" "$image" >/dev/null
-  for _ in $(seq 1 40); do
-    [ "$(docker inspect "$name-$d" --format '{{.State.Running}}')" = "true" ] || break
-    docker exec "$name-$d" test -d "/data/$d/.reflow2/graph" 2>/dev/null && break
+  minted=""
+  for _ in $(seq 1 90); do
+    [ -f "$reg/$d/.reflow2/graph.id.json" ] && { minted=yes; break; }
     sleep 1
   done
+  if [ -z "$minted" ]; then
+    echo "--- $d container logs ---" >&2
+    docker logs "$name-$d" 2>&1 | tail -20 >&2
+  fi
   docker rm -f "$name-$d" >/dev/null 2>&1 || true
 done
-[ -d "$reg/alpha/.reflow2/graph" ] && [ -d "$reg/beta/.reflow2/graph" ] \
-  || fail "could not mint two designs under the registry root — nothing to isolate."
+[ -f "$reg/alpha/.reflow2/graph.id.json" ] && [ -f "$reg/beta/.reflow2/graph.id.json" ] \
+  || fail "could not mint two designs under the registry root — nothing to isolate. The identity sidecar is what the registry reads, and at least one design never wrote one."
 
 docker run -d --name "$name-reg" -v "$reg:/data" -p 127.0.0.1:18081:8080 \
   -e REFLOW2_REGISTRY_ROOT=/data "$image" >/dev/null
