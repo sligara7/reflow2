@@ -31,6 +31,32 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.60.2] — 2026-09-14
+
+**Patch** — the same CI script, a second cause. No change to the tool surface, the
+schema or any behaviour of the server.
+
+v0.60.0 and v0.60.1 both published their binaries, kit and checksums correctly and
+**neither published a container image**: the image smoke test's two-design phase
+failed on the release runner both times, and that gate runs before publication, so
+it refused rather than shipping an unverified image. This release republishes
+everything, image included.
+
+### Fixed
+
+- **The image smoke test could not see the volume it was watching.** `mktemp -d`
+  creates a directory at mode 700 owned by whoever ran it; chowning it to the
+  container's uid then takes it away from that user wherever they are not also
+  uid 1000 — which is every CI runner. The container had minted the design
+  correctly each time; the host simply could not stat the file it was waiting for.
+  It passed locally both times because the author *is* uid 1000, so the chown was
+  a no-op — the test was verified in the one environment where its bug is
+  invisible.
+
+  Every check in that phase now runs **inside the container**, so host uid and
+  mode cannot produce a false negative at all, and the directory mode is repaired
+  as well.
+
 ## [0.60.1] — 2026-09-13
 
 **Patch** — one CI script fix. No change to the tool surface, the schema or any

@@ -107,7 +107,14 @@ echo "smoke: OK — $image starts, reports healthy, and answers on its published
 echo "smoke: phase 2 — two designs under one registry root"
 
 reg="$(mktemp -d)"
+# The runtime user is uid 1000, so it must be able to write here. ⚠️ AND THE
+# HOST MUST STILL BE ABLE TO READ IT: `mktemp -d` is mode 700 owned by whoever
+# ran this, so chowning it to 1000 alone takes the directory AWAY from that user
+# wherever they are not also uid 1000 — which is every CI runner. That is not
+# hypothetical: it failed exactly this way on two release runs while passing
+# locally, because locally the author IS uid 1000 and the chown was a no-op.
 chown -R 1000:1000 "$reg" 2>/dev/null || sudo chown -R 1000:1000 "$reg"
+chmod -R a+rwX "$reg" 2>/dev/null || sudo chmod -R a+rwX "$reg"
 cleanup2() { docker rm -f "$name-a" "$name-b" "$name-reg" >/dev/null 2>&1 || true
              rm -rf "$reg" 2>/dev/null || sudo rm -rf "$reg" || true; }
 trap 'cleanup; cleanup2' EXIT
@@ -128,18 +135,23 @@ trap 'cleanup; cleanup2' EXIT
 for d in alpha beta; do
   docker run -d --name "$name-$d" -v "$reg:/data" \
     -e REFLOW2_GRAPH_PATH="/data/$d/.reflow2/graph" "$image" >/dev/null
+  # ⭐ ASK THE CONTAINER, NOT THE HOST. Whether the host can see inside the
+  # volume depends on uid and mode; whether the design was minted does not.
+  # Polling from inside removes that whole class of false negative.
   minted=""
   for _ in $(seq 1 90); do
-    [ -f "$reg/$d/.reflow2/graph.id.json" ] && { minted=yes; break; }
+    docker exec "$name-$d" test -f "/data/$d/.reflow2/graph.id.json" 2>/dev/null \
+      && { minted=yes; break; }
     sleep 1
   done
   if [ -z "$minted" ]; then
     echo "--- $d container logs ---" >&2
     docker logs "$name-$d" 2>&1 | tail -20 >&2
   fi
+  eval "minted_$d=\$minted"
   docker rm -f "$name-$d" >/dev/null 2>&1 || true
 done
-[ -f "$reg/alpha/.reflow2/graph.id.json" ] && [ -f "$reg/beta/.reflow2/graph.id.json" ] \
+[ -n "$minted_alpha" ] && [ -n "$minted_beta" ] \
   || fail "could not mint two designs under the registry root — nothing to isolate. The identity sidecar is what the registry reads, and at least one design never wrote one."
 
 docker run -d --name "$name-reg" -v "$reg:/data" -p 127.0.0.1:18081:8080 \
