@@ -39,7 +39,11 @@ the record**: the gaps stay counted and stay loud (`req:no-idea-goes-quiet`).
    wrong re-fix), **open questions the design already answered by building them**
    (`decision_overtaken_by_promotion` — an idea still reading `proposed` that EVOLVES_INTO an
    accepted requirement, a realized capability or a recorded change; the promotion landed and
-   nobody went back to close the question), surprising couplings, quality drift.
+   nobody went back to close the question), **prohibitions living in prose**
+   (`prohibition_in_prose` — a "must never" or "is not allowed to" inside a requirement's or
+   capability's own text with no Constraint binding it; the routing table sends that sentence to
+   `add_constraint`, where a check can read it, and one finding lists them all), surprising
+   couplings, quality drift.
    If empty, the design is coherent for now — proceed to build.
 
    **On a large design, ask for your part.** Pass `scope` (a node id — the Component your team

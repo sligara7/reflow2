@@ -248,6 +248,9 @@ NON_TOOL_TERMS = {
     # detect-and-ask and by capture-intent, where the instruction that FEEDS it
     # now lives.
     "decision_overtaken_by_promotion",
+    # A GAP SOURCE key (2026-09-14): a prohibition the routing table sends to
+    # a Constraint, found living in prose instead. detect-and-ask names it.
+    "prohibition_in_prose",
     # `approver` (2026-09-06) — the field the constructors and status setters
     # take so the owner's word rides the same call as the status it signs; the
     # skills that instruct settling a status now name it, as they must.
