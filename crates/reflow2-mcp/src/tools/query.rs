@@ -757,19 +757,18 @@ impl ReflowService {
 
     #[tool(
         description = "WHAT THE DESIGN HOLDS ABOUT ONE SUBJECT, read-only, in one call — the \
-                       /topic view. Not a brainstorm, not a link-artifacts effort: 'show me \
-                       something about X'. Searches the design for the phrase, groups the hits \
-                       by node type, and for each hit reads its status, its connections by edge \
-                       type and direction, and the LATEST DATED change that touched it or \
-                       measurement about it. Computed server-side so two agents render one \
-                       topic the same way (a view is a projection of the graph, never a \
-                       renderer's fill-in). ⭐ `not_found` IS MANDATORY AND LOAD-BEARING: it \
-                       says what was searched, which populated node types matched NOTHING, and \
-                       whether the list was cut at its limit — search is keyword-based and a \
-                       miss on the caller's phrasing must never read as the design holding \
-                       nothing. Bounded like detect_gaps: `budget` says which tier the reply \
-                       landed in and what it withheld; `count` and `by_type` are never trimmed. \
-                       Writes nothing.",
+                       /topic view: 'show me something about X'. Searches the design for the \
+                       phrase, groups the hits by node type, and for each hit reads its status, \
+                       its connections, and the LATEST DATED change or measurement that touched \
+                       it. Computed server-side so two agents render one topic the same way. \
+                       ⭐ `not_found` IS MANDATORY: it says what was searched, which populated \
+                       node types matched NOTHING, and whether the list was cut — a miss on the \
+                       caller's phrasing must never read as the design holding nothing. \
+                       Bounded: `budget` says what was withheld; `count` and `by_type` never are. \
+                       ⭐ ALSO THE FIRST READ BEFORE YOU ASSERT A PROJECT'S STATUS TO ANYONE — a \
+                       progress report or deck for management, \"what has this project achieved\", \
+                       \"where does it stand\": call it on the project's name before you write a \
+                       word (field report 2026-09-14). Writes nothing.",
         annotations(read_only_hint = true)
     )]
     pub async fn topic_report(

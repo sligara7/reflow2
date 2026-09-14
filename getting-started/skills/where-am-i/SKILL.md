@@ -1,6 +1,6 @@
 ---
 name: where-am-i
-description: Use when the user asks where things stand, what you've concluded, what's been decided, or wants to pick up an existing design after a break — and at the start of any session on a graph that already has a Project. Reads the design graph and tells them, in their own words, what the design now says and what's still open.
+description: Use when the user asks where things stand, what you've concluded, what's been decided, or wants to pick up an existing design after a break — at the start of any session on a graph that already has a Project — and whenever you are about to assert the project's status to anyone: a progress report, a deck for management, a summary, "what have we achieved". The claim is the trigger, whoever asked and whoever the audience is; a status written from a checklist file or from what you wrote this week is a plan reported as a measurement. Reads the design graph and tells them, in their own words, what the design now says and what's still open.
 metadata: {composes: [STANDING, REPORTS]}
 ---
 

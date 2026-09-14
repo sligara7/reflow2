@@ -50,6 +50,26 @@ This file is the third view: *what changed, and when*.
 
 ### Changed
 
+- **The status claim is the trigger: orientation fires when the agent is about to assert a
+  project's status to anyone, and a status question in the asker's words finds the read.** Field
+  report, 2026-09-14 (hxm_program, a hub design over many projects): asked for a progress deck
+  for management, an agent asserted the project's status from a checklist file and its own
+  recent writes and never read the design; challenged, one `topic_report` call gave it twenty hits
+  across nine node types, and it had known six of forty-one change events. Root-caused, not
+  re-worded: the `where-am-i` trigger named the USER asking where things stand and a SESSION
+  starting, and nothing else; nothing demands a read at the moment of a claim; and `find_tools`,
+  asked in the user's own words for a progress deck, returned six tools of which none reads —
+  the routing was written from the design's side, not the asker's. The fourth recorded instance
+  of the read-path class (`fact:three-searches-that-did-not-happen-and-what-each-one-cost`). Now
+  the skill's description says *the claim is the trigger, whoever asked and whoever the audience
+  is*; `topic_report`'s description carries the asker's words and names itself the first read
+  before a status is asserted — **at its prior length**, because a first attempt that merely
+  appended the sentence knocked the tool out of the top five for its own catalogue query (the
+  scorer penalises length, so the catalogue leg had to be a rewrite); and `skill_lint` gained a
+  trigger contract so the clause cannot lapse. Two catalogue tests and three lint checks, each
+  observed failing first. **Patch**: served prose and a description; no shape or schema change.
+  Not built, and said so: no tool call marks "about to assert status", so nothing DEMANDS the read
+  the way `record_finding` demands root-cause.
 - **The lens rides `loop_status`, and the Stop nudge says its words are for the agent.** Field
   report, 2026-09-14: a session closed with *"Remaining: 6 structural findings and 1
   undispositioned drift … its repair step can delete nodes, so it's worth reading what it proposes
