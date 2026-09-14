@@ -31,6 +31,25 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.60.1] — 2026-09-13
+
+**Patch** — one CI script fix. No change to the tool surface, the schema or any
+behaviour of the server.
+
+v0.60.0's binaries, kit and checksums published correctly; its **container image
+did not**, because the image smoke test's new two-design phase failed on the
+release runner and that gate deliberately runs before anything is published. This
+release republishes everything, image included.
+
+### Fixed
+
+- **The image smoke test gave up before it had minted anything.** Its new phase
+  checked `{{.State.Running}}` and broke out when that was false — which it is for
+  the first moment of every container's life — so on a slower machine it reported
+  "nothing to isolate" without ever waiting. It now waits for the identity sidecar
+  to appear on the bind mount, which is what the registry actually reads, and dumps
+  the container's logs if it times out.
+
 ## [0.60.0] — 2026-09-13
 
 **Minor** — three new capabilities and two new flags on the tool surface; the schema stamp does
