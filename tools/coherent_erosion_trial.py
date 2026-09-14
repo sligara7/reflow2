@@ -121,6 +121,7 @@ def main() -> int:
                                                  "design_change_event_id": f"chg:cap{i}"}
                                                 if widens else
                                                 {"disposition": "design_holds",
+                                                 "change_type": "test_failure_fix",
                                                  "note": f"fix {i}: no behaviour change"})})
 
         print("\n== release, cut as its own epoch ==")
