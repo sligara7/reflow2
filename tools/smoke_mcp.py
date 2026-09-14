@@ -919,9 +919,17 @@ def run(binary: str, graph_path: str) -> int:
                              {"artifact_id": "art:flight", "checksum": "sha256:v2",
                               "disposition": "design_updated",
                               "design_change_event_id": "chg:phantom"}) is not None)
+    # It says WHY the code moved: since 2026-09-14 a design_holds accept on a
+    # baselined artifact with no change_type is refused — the old default
+    # (`test_failure_fix`) filed every reconcile pass as a fix owing a cause.
+    c.ok("a design_holds accept that does not say why the code moved is refused",
+         s.call_expect_error("set_artifact_checksum",
+                             {"artifact_id": "art:flight", "checksum": "sha256:v2",
+                              "disposition": "design_holds"}) is not None)
     acc = s.call("set_artifact_checksum",
                  {"artifact_id": "art:flight", "checksum": "sha256:v2",
                   "disposition": "design_holds",
+                  "change_type": "test_failure_fix",
                   "note": "edge-case fix; behaviour unchanged",
                   "at": "2026-07-19T12:00:00Z"})
     c.ok("an accept leaves its claim on axis Z",

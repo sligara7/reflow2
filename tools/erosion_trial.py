@@ -103,6 +103,7 @@ def main() -> int:
             s.call("set_artifact_checksum", {"artifact_id": "art:charge",
                                              "checksum": sha(code),
                                              "disposition": "design_holds",
+                                             "change_type": "test_failure_fix",
                                              "note": f"fix {i}: tests pass again"})
             s.call("set_verification_status", {"verification_id": "ver:charge", "status": "passing"})
         print(f"   {drifts} drift finding(s) raised and accepted across {args.cycles} cycles")
