@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:771375d701974d1349a1417e914af5ebd186bf1324b9e2fa0c5ca89080a21c85",
+  "content_hash": "sha256:52c41817b23ad2747bb6e54d947270071f173a079f11536be90e14db08ca1e19",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -5237,6 +5237,12 @@
       "from_id": "chg:a-deliverable-declares-who-it-reaches",
       "properties": {},
       "to_id": "epoch:v0390"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:a-design-holds-acceptance-says-why-the-code-moved-and-the-no-cause-gap-states-the-discipline",
+      "properties": {},
+      "to_id": "epoch:the-reason-for-a-code-movement-is-asked-not-defaulted"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -12893,6 +12899,12 @@
       "from_id": "snap:epoch:the-owners-identity-is-one-node-again:ctr:anthony",
       "properties": {},
       "to_id": "epoch:the-owners-identity-is-one-node-again"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:the-reason-for-a-code-movement-is-asked-not-defaulted:cap:a-fix-with-no-recorded-cause-and-a-defect-its-subject-outran-are-noticed",
+      "properties": {},
+      "to_id": "epoch:the-reason-for-a-code-movement-is-asked-not-defaulted"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -22630,6 +22642,16 @@
     },
     {
       "edge_type": "CAUSES",
+      "from_id": "cap:nothing-moved",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The disposition surface (set_artifact_checksum and its bulk form) defaulted a missing change_type on design_holds to test_failure_fix — service.rs parse_disposition, `unwrap_or(\"test_failure_fix\")` — so every reconcile-pass acceptance made without a stated reason entered the fix population; measured on reflow2's own export as 104 of 281 fix-typed events wearing that default, none with a cause.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:root-cause-a-default-put-every-reconcile-pass-into-the-fix-population-and-the-gap-offered-to-decline-the-rule"
+    },
+    {
+      "edge_type": "CAUSES",
       "from_id": "cap:scoped-analysis",
       "properties": {
         "basis": "correlational",
@@ -25038,6 +25060,42 @@
         "action": "modified"
       },
       "to_id": "art:tools-built"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-design-holds-acceptance-says-why-the-code-moved-and-the-no-cause-gap-states-the-discipline",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-design-holds-acceptance-says-why-the-code-moved-and-the-no-cause-gap-states-the-discipline",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-design-holds-acceptance-says-why-the-code-moved-and-the-no-cause-gap-states-the-discipline",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-built"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-design-holds-acceptance-says-why-the-code-moved-and-the-no-cause-gap-states-the-discipline",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:a-fix-with-no-recorded-cause-and-a-defect-its-subject-outran-are-noticed"
     },
     {
       "edge_type": "CHANGED",
@@ -63715,6 +63773,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:a-fix-with-no-recorded-cause-and-a-defect-its-subject-outran-are-noticed",
+      "properties": {},
+      "to_id": "snap:epoch:the-reason-for-a-code-movement-is-asked-not-defaulted:cap:a-fix-with-no-recorded-cause-and-a-defect-its-subject-outran-are-noticed"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "cap:a-lesson-is-served-at-the-step-it-concerns",
       "properties": {},
       "to_id": "snap:epoch:preserved-on-write:cap:a-lesson-is-served-at-the-step-it-concerns"
@@ -65386,6 +65450,12 @@
       "from_id": "cap:a-fix-with-no-recorded-cause-and-a-defect-its-subject-outran-are-noticed",
       "properties": {},
       "to_id": "fact:a-work-project-answered-fix-without-recorded-cause-and-twenty-of-twenty-one-fixes-were-checksum-dispositions-wearing-the-nearest-label"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:a-fix-with-no-recorded-cause-and-a-defect-its-subject-outran-are-noticed",
+      "properties": {},
+      "to_id": "fact:root-cause-a-default-put-every-reconcile-pass-into-the-fix-population-and-the-gap-offered-to-decline-the-rule"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -188837,6 +188907,15 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:a-design-holds-acceptance-says-why-the-code-moved-and-the-no-cause-gap-states-the-discipline",
+      "properties": {
+        "at": "2026-09-14",
+        "note": "The field report recorded three sub-items; the walk (fact:root-cause-a-default-put-every-reconcile-pass-into-the-fix-population-and-the-gap-offered-to-decline-the-rule) confirmed the default and the decline-invitation as the causes, and this change delivered all three: the reason is asked at the source, the gap states the discipline with a recipe, the detector tells acceptances from repairs. The observation stays true as history. Not retired: the as_built_aligned label idea and the unbuilt date-boundary ruling."
+      },
+      "to_id": "fact:a-work-project-answered-fix-without-recorded-cause-and-twenty-of-twenty-one-fixes-were-checksum-dispositions-wearing-the-nearest-label"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:a-moved-record-is-diffed-against-the-store-not-an-export",
       "properties": {
         "at": "2026-09-12",
@@ -191952,6 +192031,15 @@
         "conformance": "unchecked"
       },
       "to_id": "ver:design-dependencies-declared"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:design-holds-says-why-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:nothing-moved"
     },
     {
       "edge_type": "REALIZES",
@@ -201595,6 +201683,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:design-holds-says-why-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:design-holds-says-why-test"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:detect",
       "properties": {
         "action": "created"
@@ -204210,11 +204306,22 @@
       }
     },
     {
+      "node_id": "art:design-holds-says-why-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "description": "Five tests on the acceptance surface: a baselined artifact accepted as design_holds with no change_type is refused and the refusal names the repair labels and the reconcile labels; a stated reason is recorded as given; a repair may still be accepted as a repair; a first baseline needs no reason; the bulk form refuses the silent item and names it. The two refusal cases observed failing before the default was removed.",
+        "location": "crates/reflow2-mcp/tests/a_design_holds_acceptance_says_why_the_code_moved.rs",
+        "name": "a_design_holds_acceptance_says_why_the_code_moved.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:detect",
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:cfac76d6ae3928b23cb86ef97d4017343285aa7c115b5f63137c89ca3bbca0dc",
+        "checksum": "sha256:add341e3da304dd95ad0df2362185e9deada1deaf69d4d8d47ad0c5b3d06143e",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
@@ -206254,7 +206361,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c06748785df80655334391c425ed6680404aeac6ad0722839508eb1983bee547",
+        "checksum": "sha256:8aa0805d6aa31807f8093f46ba496a13f5a3558e453d47a23a91e7b248898eaa",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -207227,7 +207334,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:4af9d2cae95eb6f9666fd3cdaeeb231a546420c2fa5f45268c24e10678c17fac",
+        "checksum": "sha256:a5ecdce4b9df9d581050b9647550f2af6abb2a90c9d5e981ad1692381298a7ca",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/built.rs",
         "name": "tools/built.rs",
@@ -210985,6 +211092,16 @@
         "rationale": "Anthony's ruling: merge the duplicate rules, and build the proxy detector advisory rather than blocking. The requirement exists because a rule binds only the people building reflow2 while a requirement makes it something reflow2 DOES for every project — the split `req:a-fix-says-whether-it-corrected-the-cause` established at his request on 2026-08-17. NEVER PATH-DERIVED: a first sketch classified by directory, which encodes one project's layout and is the exact failure the rule forbids. MUTATION-CHECKED THREE WAYS; the third mutation caught nothing, which proved a guard dead and exposed that `vocabulary_coverage` names unused node and edge TYPES but never PROPERTIES — recorded as an open hole rather than closed.",
         "subject": "system",
         "summary": "`Artifact.audience` (`consumer` | `internal`) added to the schema, reachable through `set_artifact_intent` beside granularity and volatility, refused outside the enum. New `internal_only_delivery` finding names a Requirement whose every DECLARED delivering artifact is internal with none declared consumer — per-requirement, severity 0.45. Also merges the two duplicate DesignRules stating that reflow2 is built for other projects, moving all six governance edges to the survivor, and adds `req:work-says-whether-it-reaches-a-consumer` as the product form of that rule."
+      }
+    },
+    {
+      "node_id": "chg:a-design-holds-acceptance-says-why-the-code-moved-and-the-no-cause-gap-states-the-discipline",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "name": "design_holds on a baselined artifact requires change_type (no default; the refusal names repair labels as repair-only and the reconcile labels), the fix-without-recorded-cause gap states the discipline with a triage recipe and never offers to decline it, and the detector tells checksum acceptances from repairs by construction — root-caused from the 2026-09-14 field report, pinned by five acceptance tests and three detector tests, five observed failing first",
+        "repair": "corrected_cause",
+        "subject": "system"
       }
     },
     {
@@ -230109,6 +230226,17 @@
       }
     },
     {
+      "node_id": "epoch:the-reason-for-a-code-movement-is-asked-not-defaulted",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "description": "Recorded with add_epoch because it HAPPENED: the third and last item of the planned increment epoch:planned-the-mechanism-reaches-the-moment (sequence 490) landed on 2026-09-14. Sequence 494 places it after 491 (the lens on the loop rail), 492 (the status claim is the trigger) and 493 (the reader is offered, never assumed).\n\nWHAT ARRIVED. The root-cause walk on the fix-without-recorded-cause field report, recorded as fact:root-cause-a-default-put-every-reconcile-pass-into-the-fix-population-and-the-gap-offered-to-decline-the-rule, and the three sub-items the report recorded, each fixed at the cause: (a) a design_holds acceptance on a baselined artifact must say why the code moved — no default; (b) the gap text is a standing rule with a triage recipe and never offers to decline the rule; (c) the detector tells checksum acceptances from repairs by construction and names the ones wearing a fix label for relabelling. Five acceptance tests and three detector tests, the five load-bearing ones observed failing first.\n\nWHAT DID NOT ARRIVE, and said so: the 2026-09-07 date-boundary ruling (dec:the-no-cause-fix-gap-grandfathers-fixes-recorded-before-the-rule-existed) is accepted and still unbuilt; the as_built_aligned disposition stays an open idea; reflow2's own 142 mislabelled acceptances are named by the detector and not relabelled — a triage pass for a session with the owner's word. With this the planned increment's three walks are delivered and it can be marked arrived on Anthony's word.",
+        "epoch_type": "revision",
+        "name": "ARRIVED 2026-09-14 — the reason for a code movement is asked, not defaulted; the no-cause gap states the discipline and a recipe; acceptances wearing a fix label are told apart from repairs: the third of the three walks in epoch:planned-the-mechanism-reaches-the-moment delivered",
+        "sequence": 494,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:the-record-moved-is-noticed",
       "node_type": "DesignEpoch",
       "properties": {
@@ -232385,6 +232513,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered delivery_kind.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:design-holds-says-why-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered a_design_holds_acceptance_says_why_the_code_moved.rs"
       }
     },
     {
@@ -242718,6 +242856,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:the-reason-for-a-code-movement-is-asked-not-defaulted:cap:a-fix-with-no-recorded-cause-and-a-defect-its-subject-outran-are-noticed",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:detect\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:a-fix-without-a-cause-and-an-overtaken-defect-raise-gaps\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:detect\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:finding-a-cause-is-a-served-process-not-an-improvisation\",\"properties\":{}}]",
+        "state": "{\"description\":\"Two gap detectors, the third leg of the root-cause vocabulary (dec:idea-how-does-root-cause-become-automatic-rule-hook-detector-or-composition, mechanism (c)). `fix_without_recorded_cause`: one aggregate finding over every ChangeEvent of change_type defect_fix or test_failure_fix that sits on no CAUSES edge in either direction and carries no outgoing INVALIDATES — a repair indistinguishable from a symptom fix. A CAUSES edge on an artifact the fix touched is deliberately not counted. Forward-only by parking: a fix GOVERNED_BY ruling=parks under an accepted Decision is skipped and counted. `defect_overtaken_by_change`: one finding per open defect TemporalFact (no valid_to, no incoming INVALIDATES) whose subject_id, or an Artifact that REALIZES it, was CHANGED by a REPAIR (a ChangeEvent of change_type defect_fix or test_failure_fix) with detected_at strictly after the fact's valid_from — keyed on the fact and the later repairs, so a further repair asks again. Repairs only, measured rather than assumed: over later changes of any kind this design raised 65 findings and one hub component carried 39 members; over repairs, 45 with a median of 3. Undated changes and later non-repairs are counted in the evidence and never offered as the fix; undated facts are skipped. Neither judges whether a recorded cause was right: both report absence of a record (dec:report-dont-judge).\",\"name\":\"A repair joined to no cause, and a recorded defect whose subject changed with nothing saying it was fixed, are noticed by the loop\",\"provenance\":\"authored\",\"status\":\"realized\"}",
+        "target_id": "cap:a-fix-with-no-recorded-cause-and-a-defect-its-subject-outran-are-noticed",
+        "target_type": "Capability"
+      }
+    },
+    {
       "node_id": "snap:epoch:the-register-rule-reaches-the-words:art:detect-and-ask-skill",
       "node_type": "Snapshot",
       "properties": {
@@ -247799,6 +247947,26 @@
         "statement": "MEASURED ON THE LIVE GRAPH, AND IT CORRECTS AN EARLIER CLAIM IN THIS SAME CHANGE. Retiring a node type does not merely stop an export CONTAINING that type from importing. It stops EVERY EXISTING GRAPH FROM OPENING AT ALL, instances or no instances, until the graph is migrated.\n\nThe reason is that the guard reads the STAMP, not the contents. A graph's stamp records the SCHEMA the writing binary had, so every reflow2 graph in existence names QualityGate whether or not it ever held one. reflow2's own graph held ZERO QualityGate nodes and was refused outright: \"this graph names types this reflow2 cannot read, so opening it could silently show you less of your design than it holds — refused.\"\n\nWHAT I GOT WRONG, AND HOW. I probed the IMPORT path with a hand-built document carrying an undeclared type, saw it refused, and wrote the blast radius from that: \"almost certainly affects nobody, since the type never had a constructor and our graph holds zero.\" The measurement was real and it measured the wrong path. The binding gate is STORE OPEN, which fires on the stamp; instance count never enters it. This is step (5) of the root-cause discipline failing in its documented way — a call that completed, a result that was true, and an inference that did not follow.\n\nTHE RETIREMENT IS TWO EDITS, NOT ONE, AND THE CODE SAYS SO. provenance.rs carries RETIRED_NODE_TYPES with the comment \"Empty so far; grows the day a node type is retired.\" Cutting the type from schema/verify.yaml without adding it there left the guard classifying an ordinary graph as one from the FUTURE, so the refusal told the operator their reflow2 was BEHIND and to rebuild — the exact opposite of the correct action. Registering the retirement flips the message to \"predates a schema change — migrate the graph\", which is right.\n\nTHE MIGRATION RECIPE WORKS AND WAS RUN END TO END on the live graph: export with a binary that still knows the type, import into a FRESH graph with the binary that retired it, verify. Result: 3,989 nodes and 21,555 edges in, 3,989 and 21,555 out, zero nodes lost, zero edges lost, stamp 29 → 28.\n\n⚠️ ONE OPERATIONAL TRAP FOUND BY FALLING INTO IT. The stamp lives in a SIDECAR file beside the store, `<graph-path>.meta.json`, not inside the store directory. Copying the store directory into place while leaving the old sidecar reproduces the refusal exactly, on a graph that has already been migrated. Anyone moving a graph by hand must move the sidecar with it; the published recipe avoids this only because importing into a fresh path writes its own.\n\nOPEN AND NOT DECIDED HERE: whether the guard should open the store and COUNT instances before refusing. A retired type with zero instances carries no risk of showing less than the design holds, which is the guard's whole stated purpose — so the refusal is stricter than its own justification requires. Against that: counting means opening the store the guard is refusing to open, and a cheap conservative check is worth more than a clever one. Not this change's call.",
         "subject_id": "dec:qualitygate-is-retired-the-phase-gate-dissolved-into-the-detectors",
         "valid_from": "2026-09-07"
+      }
+    },
+    {
+      "node_id": "fact:root-cause-a-default-put-every-reconcile-pass-into-the-fix-population-and-the-gap-offered-to-decline-the-rule",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.95,
+        "fact_type": "finding",
+        "name": "ROOT CAUSE (walked, measured): the checksum-acceptance path defaulted a missing change_type to test_failure_fix, so every reconcile pass entered the fix population — 142 of reflow2's own 281 fix-typed events are acceptances, 104 wearing the default, none with a cause — and the gap's text then offered \"this design does not record causes\" as a live option, which an agent that had not read the rule took at face value",
+        "statement": "RUN AS THE SKILL, the third walk of epoch:planned-the-mechanism-reaches-the-moment, on fact:a-work-project-answered-fix-without-recorded-cause-and-twenty-of-twenty-one-fixes-were-checksum-dispositions-wearing-the-nearest-label (relayed by Anthony, 2026-09-14).\n\n① OBSERVED: the detector asked a project about 21 fixes with no cause; the agent answered that 20 were checksum dispositions recorded while reconciling the design with the code, \"defect_fix was the closest label\", and put to the owner whether the project should record causes at all — offering \"C. Acknowledge it — [the project] doesn't record causes\". Anthony: \"the graph is recording information that the AI agent doesn't know what to do with\"; \"the agent shouldn't have to ask if it should record causes.\" Expected: a detector about repairs asks about repairs, and its text tells the reader what the rule is and how to triage, never whether to keep the rule. NOT affected: the three genuine repairs on that project had their causes recorded — the discipline works where the instruction reaches the moment of repairing.\n\n② PRECEDENT, searched: fact:defect-the-checksum-disposition-has-no-answer-for-aligning-code-to-existing-intent (2026-08-14) already said the disposition vocabulary had no honest label for the commonest case and closed with \"the confirmation ledger could count design_holds accepts carrying test_failure_fix — a sweep nobody has run\". dec:the-no-cause-fix-gap-grandfathers-fixes-recorded-before-the-rule-existed (accepted 2026-09-07) rules a date boundary that the detector does not yet implement (it parks, it does not date). dec:change-type-splits-into-two-axes. The design's own doctrine on defaults, stated for `kind`, `priority` and `quality_target`: a default makes an unasked question indistinguishable from an answered one.\n\n③ CANDIDATES from the bones: (a) CONTRACT — the tool's default labels a silent acceptance with a fix type. (b) ALLOCATION — the agent chose the nearest label by hand. (c) INTENT — the gap text phrases a DesignRule as a per-project choice. (d) ASSURANCE — the detector cannot tell an acceptance from a repair, so its population is wrong by construction. (e) NOT IN THE SUSPECTED COMPONENT — the 09-07 date-boundary ruling was never built, so old records keep arriving. (f) THE OBSERVATION IS WRONG.\n\n④/⑤ MEASURED 2026-09-14. (a) CONFIRMED at service.rs parse_disposition: `change_type.unwrap_or(\"test_failure_fix\")` on design_holds; the schema advertised \"(test_failure_fix default)\". The sweep the 08-14 record asked for, run on reflow2's own export: 968 ChangeEvents, 281 fix-typed, 142 of them minted by acceptances (ids chg:accept-…): 104 test_failure_fix (the default) and 38 defect_fix; 0 of the 142 on any CAUSES edge. So the default alone puts half the fix population there; the field agent's \"closest label\" is (b), the same effect by hand. (c) CONFIRMED at detect.rs: the description ended \"acknowledging this finding instead says this design does not record causes, and it will not be asked again\" — the sentence the agent turned into option C; a grep of every served gap text found this the only one offering to decline a rule. (d) CONFIRMED: the detector read change_type alone; the acceptance marker (`accepted_baseline: true`) lives on the CHANGED edge the accept writes, so the two populations were separable and never separated. (e) CONFIRMED and out of scope: the detector has parking and no date boundary; recorded, not fixed here. (f) REFUTED.\n\n⑥ THE CLASS: a typed constructor's DEFAULT silently answers a question nobody asked, and a detector downstream then asks a person to explain records nobody wrote. The design already names this class for three other fields and refuses to default them; this field was missed. Would the fix have stopped the 08-14 report? Partly: that report was about the missing label (as_built_aligned), which stays open; but the sweep it asked for is now run and the default it feared is gone. Would it have stopped THIS report? Yes on both halves: the twenty would have been asked for a reason at the moment of acceptance, and the one real question would have arrived with a recipe instead of an invitation to decline.\n\n⑦ PINNED FIRST: crates/reflow2-mcp/tests/a_design_holds_acceptance_says_why_the_code_moved.rs — five tests, the two refusal cases observed failing (a baselined artifact accepted with no reason; the bulk form naming the silent item), the three permissive cases (a stated reason recorded as given; a repair may still say so; a first baseline needs no reason) passing before and after. crates/reflow2-core/tests/fix_without_recorded_cause.rs — three tests, two observed failing (an acceptance wearing a fix label is told apart from a repair and named for relabelling; the text states the discipline and a recipe and never offers to decline).\n\n⑧ FIXED AT THE CAUSE, the three sub-items the field report recorded. (a) SOURCE: design_holds on an artifact that already has a baseline REQUIRES change_type; the refusal names the repair labels as repair-only and the reconcile labels (`resync`, `refactor`, `documentation`, `performance_optimization`); an artifact with no baseline is still read as a first baseline with nothing to ask; the bulk form refuses per item and names it. (b) TEXT: the gap is a standing rule with a triage recipe in order — your own fix: invalidates or record_finding with caused_by; an acceptance wearing a fix label: relabel, never invent a cause; a backlog predating the rule: park under one accepted Decision, forward-only; acknowledging records that the backlog was judged, not that the discipline was declined. (c) CONSTRUCTION: the detector tells acceptances (CHANGED edge marked accepted_baseline) from repairs; acceptances wearing a fix label are counted and named separately (\"…, and N checksum acceptance(s) wear a fix label\") and excluded from the repair denominator.\n\n⑨ NOT ESTABLISHED: on the field project, whether the agent or the default chose defect_fix (the agent said \"closest label\", which is (b); the default would have produced test_failure_fix); the as_built_aligned disposition stays an open idea; the date-boundary ruling of 09-07 is accepted and unbuilt; and reflow2's own 142 mislabelled acceptances are now NAMED by the detector, not relabelled — that is a triage pass for a session with the owner's word, per the recipe.",
+        "steps": [
+          "set_artifact_checksums",
+          "set_artifact_checksum",
+          "detect-and-ask",
+          "root-cause",
+          "link-artifacts"
+        ],
+        "subject_id": "cap:a-fix-with-no-recorded-cause-and-a-defect-its-subject-outran-are-noticed",
+        "valid_from": "2026-09-14"
       }
     },
     {
@@ -253461,7 +253629,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:3a86ef799cf6b2db1cedabbf26631c6d80643ad6690b2efb98844bf49d1f63f9",
+  "prev_content_hash": "sha256:771375d701974d1349a1417e914af5ebd186bf1324b9e2fa0c5ca89080a21c85",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
