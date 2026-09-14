@@ -645,6 +645,14 @@ pub enum GapSource {
     /// with nothing saying whether that change fixed it. The mirror of the
     /// row above: a fix that never closed its finding.
     DefectOvertakenByChange,
+    /// A Decision still reading `proposed` that `EVOLVES_INTO` something the
+    /// design has already taken up — an accepted Requirement, a realized
+    /// Capability, a recorded change, a rule now in force. The question was
+    /// answered by the thing it became, and nobody went back to close it.
+    ///
+    /// The same shape as `DefectOvertakenByChange` one type over, and simpler:
+    /// one edge and one status, with no dates to order and no artifact walk.
+    DecisionOvertakenByPromotion,
 }
 
 impl GapSource {
@@ -707,6 +715,7 @@ impl GapSource {
             GapSource::InternalOnlyDelivery => "internal_only_delivery",
             GapSource::FixWithoutRecordedCause => "fix_without_recorded_cause",
             GapSource::DefectOvertakenByChange => "defect_overtaken_by_change",
+            GapSource::DecisionOvertakenByPromotion => "decision_overtaken_by_promotion",
         }
     }
 
@@ -783,6 +792,10 @@ impl GapSource {
             // Per fact, and keyed on the later changes too: a further change on
             // the subject is a fresh question about a different state of it.
             GapSource::DefectOvertakenByChange => false,
+            // Per decision, and keyed on what it became: a second promotion
+            // target arriving is a fresh claim that the question is answered,
+            // so it is worth asking again.
+            GapSource::DecisionOvertakenByPromotion => false,
             // AGGREGATE, and the call was close enough to record the losing
             // side. Per-component keying would be the more honest key for the
             // answer people will actually give — "cmp:bulk is a namespace, not
@@ -2054,6 +2067,9 @@ impl DesignGraph {
         // with nothing saying whether that was the fix.
         self.detect_fix_without_recorded_cause(&mut gaps)?;
         self.detect_defect_overtaken_by_change(&mut gaps)?;
+        // The same mirror one type over: an open question whose answer the
+        // design has already taken up.
+        self.detect_decision_overtaken_by_promotion(&mut gaps)?;
         // The product form of the third-party rule: a stated need that nothing
         // a consumer can reach delivers. Silent unless the design has actually
         // declared some audiences.
@@ -5011,6 +5027,151 @@ impl DesignGraph {
                      Artifact that REALIZES it.{swept}",
                     fact.node_id,
                     prop("valid_from").unwrap_or("")
+                ),
+            });
+        }
+        Ok(())
+    }
+
+    /// An open question the design has already answered by building it
+    /// (`GapSource::DecisionOvertakenByPromotion`).
+    ///
+    /// A Decision still reading `proposed` whose `EVOLVES_INTO` target has been
+    /// taken up: an `accepted`/`met` Requirement, a `realized`/`verified`
+    /// Capability, an `accepted` Decision, a recorded ChangeEvent, or a
+    /// DesignRule now in force. The idea was promoted, the promotion landed,
+    /// and nobody went back to close the question it came from.
+    ///
+    /// # Why this detector had to exist
+    ///
+    /// `EVOLVES_INTO` on a promotion is the whole record that the idea became
+    /// something, and until now nothing anywhere read it. Measured on reflow2's
+    /// own design 2026-09-14: of seven ideas whose answers had already shipped,
+    /// five carried the edge and nothing ever noticed, and two carried no edge
+    /// at all. That is the project's own three-leg rule missing a leg — the
+    /// tool exists (`review_relations`) and the instruction exists (**brainstorm**
+    /// step 5, now repeated in **capture-intent**, which is the skill that
+    /// actually runs at the moment of promotion), but absence was unnoticed.
+    ///
+    /// # What counts as taken up, and what deliberately does not
+    ///
+    /// ChangeEvent and DesignRule carry no `status` and are counted on their
+    /// existence: a change was recorded as having happened, a rule is in force.
+    /// **TemporalFact is not**, though it is equally status-free — a
+    /// measurement about an idea is evidence toward an answer, not the answer.
+    /// A `dropped`, `deferred`, `rejected` or `superseded` target is not
+    /// counted either: what the idea became was itself put down, which reopens
+    /// the question rather than settling it.
+    ///
+    /// # What it cannot see
+    ///
+    /// Only promotions that DREW THE EDGE. An idea answered by work nobody
+    /// linked back is unreachable by any query — it was two of the seven, and
+    /// the only fix for that half is the instruction, not this detector. The
+    /// finding says so rather than reporting a number that sounds complete.
+    ///
+    /// Reports absence of a record and never judges the ruling
+    /// (`dec:report-dont-judge`): closing a Decision is the owner's word, so
+    /// this asks, and `set_decision_status` is theirs to call.
+    fn detect_decision_overtaken_by_promotion(
+        &self,
+        gaps: &mut Vec<GapCandidate>,
+    ) -> Result<(), DynoError> {
+        let index = self.node_type_index()?;
+        // The population the finding is a fraction of. A numerator with no
+        // denominator has said almost nothing — the same reasoning as
+        // `unreviewed_ideas`.
+        let mut proposed = 0usize;
+        let mut open: Vec<(crate::foundation::store::StoredNode, Vec<(String, String)>)> =
+            Vec::new();
+        for dec in self.scan_live_nodes(node::DECISION)? {
+            if dec.properties.get("status").and_then(Value::as_str) != Some("proposed") {
+                continue;
+            }
+            proposed += 1;
+            if self.is_parked(&dec.node_id)? {
+                continue;
+            }
+            let mut taken_up: Vec<(String, String)> = Vec::new();
+            for e in self.outgoing(&dec.node_id, Some(edge::EVOLVES_INTO))? {
+                let Some(ty) = index.get(&e.to_id) else {
+                    continue;
+                };
+                if self.is_discontinued(&e.to_id)? {
+                    continue;
+                }
+                let Some(target) = self.get_node(ty, &e.to_id)? else {
+                    continue;
+                };
+                let status = target.properties.get("status").and_then(Value::as_str);
+                let up = match (ty.as_str(), status) {
+                    // Status-free on purpose: a recorded change happened, and a
+                    // design rule is in force. TemporalFact is NOT here.
+                    (node::CHANGE_EVENT | node::DESIGN_RULE, _) => true,
+                    (_, Some("accepted" | "met" | "realized" | "verified")) => true,
+                    _ => false,
+                };
+                if up {
+                    taken_up.push((e.to_id.clone(), node_name(&target)));
+                }
+            }
+            if !taken_up.is_empty() {
+                taken_up.sort();
+                taken_up.dedup();
+                open.push((dec, taken_up));
+            }
+        }
+
+        // Fixed before the loop, not counted as it goes: every finding must
+        // report the SAME numerator, or each one quietly contradicts the last.
+        let overtaken = open.len();
+        for (dec, taken_up) in open {
+            let name = node_name(&dec);
+            let n = taken_up.len();
+            let became: Vec<String> = taken_up
+                .iter()
+                .map(|(id, nm)| format!("“{nm}” ({id})"))
+                .collect();
+            let mut affected = vec![dec.node_id.clone()];
+            affected.extend(taken_up.iter().map(|(id, _)| id.clone()));
+            affected.sort();
+            gaps.push(GapCandidate {
+                id: gap_id(GapSource::DecisionOvertakenByPromotion, &affected),
+                gap_source: GapSource::DecisionOvertakenByPromotion,
+                scope: GapScope::Project,
+                // Below a stale open defect (0.5), which is a live instruction
+                // to do the wrong work; above unreviewed ideas (0.3), where
+                // nothing is actually wrong. Here the design says two
+                // contradictory things at once — this question is open, and
+                // this question was answered and built.
+                severity: 0.4,
+                title: format!(
+                    "“{name}” still reads open, and the {n} thing(s) it became have been taken up"
+                ),
+                description: format!(
+                    "The decision “{name}” is still at status `proposed`, yet it EVOLVES_INTO \
+                     {}, which the design has already accepted, realized or recorded. The \
+                     question was answered by the thing it became and nobody went back to close \
+                     it — so it goes on being offered as open work, and the design reads as \
+                     holding more open questions than it has. If that promotion IS the answer, \
+                     `set_decision_status` to `accepted` with the `approver` whose word it is, \
+                     saying in the rationale what answered it. If the question is genuinely \
+                     still open despite the promotion — what was built was only part of it — \
+                     acknowledge this once; a further promotion off the same decision will ask \
+                     again. Closing it is the owner's word, never yours.",
+                    became.join(", ")
+                ),
+                affected_ids: affected,
+                suggested_depth: 1,
+                evidence: format!(
+                    "Decision '{}' has status=proposed and {n} outgoing EVOLVES_INTO edge(s) \
+                     to a live node that is accepted/met/realized/verified, or to a ChangeEvent \
+                     or DesignRule (both status-free, counted on existence); {} of {proposed} \
+                     proposed Decision(s) in the design are in this state. Parked decisions are \
+                     skipped. Only promotions that DREW the edge are reachable: an idea answered \
+                     by work nobody linked back is invisible here, and on this design that was 2 \
+                     of the 7 found by hand on 2026-09-14.",
+                    dec.node_id, overtaken
                 ),
             });
         }

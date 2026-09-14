@@ -31,6 +31,58 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **An open question its own promotion already answered now gets asked about.** New gap source
+  `decision_overtaken_by_promotion`: a live `Decision` at `status: proposed` with an outgoing
+  `EVOLVES_INTO` edge to something the design has already taken up — an `accepted`/`met`
+  Requirement, a `realized`/`verified` Capability, an `accepted` Decision, or a `ChangeEvent` or
+  `DesignRule`, which carry no status and are counted on their existence (a change happened; a
+  rule is in force). The same shape as `defect_overtaken_by_change` one type over, and simpler:
+  one edge and one status, with no dates to order and no artifact walk. Per decision, keyed on
+  the decision **and** what it became, so a second promotion asks again; parked decisions
+  skipped; severity 0.4 — below a stale open defect (0.5), which is a live instruction to do the
+  wrong work, and above `unreviewed_ideas` (0.3), where nothing is actually wrong. Here the
+  design says two contradictory things at once. **It reports and never judges** — closing a
+  decision is the owner's word, so it asks and `set_decision_status` stays theirs.
+
+  `EVOLVES_INTO` on a promotion is the whole record that an idea became something, and until now
+  **nothing anywhere read it**. Measured on reflow2's own design 2026-09-14: of seven ideas whose
+  answers had already shipped and were still being offered as open work, five carried the edge and
+  nothing noticed; two carried no edge at all. That is the project's own three-leg rule — typed
+  tool + instruction + detector that notices absence — missing its third leg, which predicts
+  exactly what was measured: the instruction was followed 5 times of 7, silently skipped twice,
+  and nothing ever noticed either way.
+
+  **The definition was measured before it shipped, and the measurement moved it twice.** The hand
+  sweep found 5 instances; the shipped rule finds **11 of 277**, because three ideas shipped
+  inside one recorded change and one became a rule — status-free targets a status-only rule was
+  blind to, and the single most common way an idea actually gets answered is that somebody just
+  built it. `TemporalFact` is status-free too and is deliberately **excluded**: a measurement
+  about an idea is evidence toward an answer, not the answer — which is why the rule enumerates
+  two types rather than accepting "anything without a status". A `dropped`/`deferred`/`rejected`/
+  `superseded` target does not settle the question either; what the idea became was itself put
+  down, which reopens it. Each exclusion is pinned by a test that fails when the rule is widened.
+
+  **What it cannot see, stated in its own evidence line:** only promotions that drew the edge. An
+  idea answered by work nobody linked back is unreachable by any query, and only the instruction
+  reaches that half.
+
+### Changed
+
+- **The promotion instruction moved to the skill that actually runs at the moment of promotion.**
+  `capture-intent` now says, at step 1 where the duplicate guard has already handed back the
+  near-matches: if one of them is the idea this came from, draw `EVOLVES_INTO` from the idea to
+  what it became, with the reason in `evidence`, and direction is the claim. **brainstorm** step 5
+  had named the edge — and then handed straight over to `capture-intent`, which never mentioned
+  it, so the instruction sat in the skill you were leaving rather than the one you were entering.
+  That seam is precisely where 2 of the 7 fell through. All three skill trees.
+
+  Deliberately **not** done: a `promoted_from` parameter on `add_requirement`/`add_capability`.
+  The typed-tool leg already exists — `review_relations` takes `EVOLVES_INTO`, and the duplicate
+  guard exempts the promotion pair by name — so a new parameter would have changed the tool
+  schema, the toolsnap and nine tool descriptions to duplicate a door that already works.
+
 ## [0.60.2] — 2026-09-14
 
 **Patch** — the same CI script, a second cause. No change to the tool surface, the
