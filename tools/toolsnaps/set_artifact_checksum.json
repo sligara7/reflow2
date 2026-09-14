@@ -21,7 +21,7 @@
       },
       "change_type": {
         "default": null,
-        "description": "For `design_holds`: why the code moved (`test_failure_fix` (default) /\n`refactor` / `performance_optimization` / `documentation` / …). Refused\nwith the other two dispositions rather than ignored.\n\n`documentation` is the one to reach for when the file changed and\nNOTHING IT DESCRIBES BEHAVES DIFFERENTLY — a stale comment, a hand-kept\ncount, a docstring that outlived what it documented. The test is\nbehavioural rather than file-shaped: a normative document (a gate list,\na skill's instructions) changes what somebody DOES, so it is a real\nchange and takes a real label.",
+        "description": "For `design_holds`: why the code moved — REQUIRED on an artifact that\nalready has a baseline. A repair says `defect_fix` or `test_failure_fix`\n(those two enter the population `fix_without_recorded_cause` asks about,\nso they are for repairs only); a reconcile pass says what the movement\nwas: `refactor` / `documentation` / `performance_optimization` / `resync`.\nThere is no default since 2026-09-14: it used to be `test_failure_fix`,\nwhich filed every reconcile pass as a fix owing a cause (field report).\nRefused with the other two dispositions rather than ignored.\n\n`documentation` is the one to reach for when the file changed and\nNOTHING IT DESCRIBES BEHAVES DIFFERENTLY — a stale comment, a hand-kept\ncount, a docstring that outlived what it documented. The test is\nbehavioural rather than file-shaped: a normative document (a gate list,\na skill's instructions) changes what somebody DOES, so it is a real\nchange and takes a real label.",
         "enum": [
           "requirement_creep",
           "new_feature",

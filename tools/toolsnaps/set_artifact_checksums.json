@@ -21,7 +21,7 @@
           },
           "change_type": {
             "default": null,
-            "description": "For `design_holds`: why the code moved (`test_failure_fix` default).",
+            "description": "For `design_holds`: why the code moved — REQUIRED on an artifact that\nalready has a baseline; a fix label (`defect_fix` / `test_failure_fix`)\nonly for a repair, `resync` / `refactor` / `documentation` for a\nreconcile pass. No default since 2026-09-14.",
             "enum": [
               "requirement_creep",
               "new_feature",

@@ -4802,6 +4802,18 @@ impl DesignGraph {
         gaps: &mut Vec<GapCandidate>,
     ) -> Result<(), DynoError> {
         let mut uncaused: Vec<String> = Vec::new();
+        // A checksum ACCEPTANCE wearing a fix label. FIELD REPORT 2026-09-14:
+        // this detector asked a project about twenty-one fixes with no cause,
+        // and twenty were dispositions recorded while reconciling the design
+        // with the code — the tool's default had labelled them
+        // `test_failure_fix`. On reflow2's own design, 142 of 281 fix-typed
+        // events were minted by acceptances and none carries a cause, because
+        // none is a repair. A question about repairs over a population that
+        // is half not-repairs cannot be answered, so the two are told apart
+        // by construction: the event an accept mints hangs on a CHANGED edge
+        // marked `accepted_baseline`, and one of those wearing a fix label is
+        // a LABEL to correct, never a cause to invent.
+        let mut mislabelled: Vec<String> = Vec::new();
         let mut total = 0usize;
         let mut parked = 0usize;
         for ev in self.scan_live_nodes(node::CHANGE_EVENT)? {
@@ -4813,7 +4825,18 @@ impl DesignGraph {
             if change_type != "defect_fix" && change_type != "test_failure_fix" {
                 continue;
             }
-            total += 1;
+            let is_acceptance = self
+                .outgoing(&ev.node_id, Some(edge::CHANGED))?
+                .iter()
+                .any(|e| {
+                    e.properties
+                        .get("accepted_baseline")
+                        .and_then(Value::as_bool)
+                        .unwrap_or(false)
+                });
+            if !is_acceptance {
+                total += 1;
+            }
             if self.is_parked(&ev.node_id)? {
                 parked += 1;
                 continue;
@@ -4829,13 +4852,37 @@ impl DesignGraph {
             {
                 continue;
             }
-            uncaused.push(ev.node_id.clone());
+            if is_acceptance {
+                mislabelled.push(ev.node_id.clone());
+            } else {
+                uncaused.push(ev.node_id.clone());
+            }
         }
-        if uncaused.is_empty() {
+        if uncaused.is_empty() && mislabelled.is_empty() {
             return Ok(());
         }
         uncaused.sort();
+        mislabelled.sort();
         let n = uncaused.len();
+        let a = mislabelled.len();
+        let mislabel_title = if a > 0 {
+            format!(", and {a} checksum acceptance(s) wear a fix label")
+        } else {
+            String::new()
+        };
+        let mislabel_note = if a > 0 {
+            format!(
+                " {a} of the affected ids are checksum ACCEPTANCES wearing a fix label — {} — \
+                 minted while reconciling the design with the code, not repairs: relabel each \
+                 with what the code movement was (`resync`, `refactor`, `documentation`) rather \
+                 than invent a cause for it.",
+                mislabelled.join(", ")
+            )
+        } else {
+            String::new()
+        };
+        let mut affected = uncaused.clone();
+        affected.extend(mislabelled.iter().cloned());
         let parked_note = if parked > 0 {
             format!(
                 " A further {parked} fix(es) are PARKED by an accepted ruling and are not counted \
@@ -4844,8 +4891,21 @@ impl DesignGraph {
         } else {
             String::new()
         };
+        // THE TEXT IS A STANDING RULE WITH A TRIAGE RECIPE, NOT A CHOICE.
+        // Its first version ended "acknowledging this finding instead says
+        // this design does not record causes, and it will not be asked
+        // again" — and on 2026-09-14 an agent, answering it for a project it
+        // had not built, dutifully offered the owner option C: "this project
+        // doesn't record causes". Recording the cause of a fix is a DesignRule
+        // here, not a per-project preference; a gap that phrases a standing
+        // rule as an open question invites the reader to decline it, and an
+        // agent that has not read the rule cannot tell the invitation from a
+        // real choice. The gap is the only instruction present at the moment
+        // of answering, so it tells: the discipline stands, here is how to
+        // tell a mislabelled record from an undisciplined one, and here is how
+        // to carry the backlog that predates the rule.
         gaps.push(GapCandidate {
-            id: gap_id(GapSource::FixWithoutRecordedCause, &uncaused),
+            id: gap_id(GapSource::FixWithoutRecordedCause, &affected),
             gap_source: GapSource::FixWithoutRecordedCause,
             scope: GapScope::Project,
             // Above `change_axis_unstated` (0.3): a missing axis is a lost
@@ -4853,26 +4913,35 @@ impl DesignGraph {
             // same class of failure comes back wearing different clothes.
             // Below every contradiction and every break in the golden thread.
             severity: 0.35,
-            title: format!("{n} of {total} recorded fix(es) are joined to no cause"),
-            description: format!(
-                "{n} change(s) recorded as a defect fix or a test-failure fix are joined to no \
-                 cause: nothing CAUSES them, they CAUSE nothing, and they INVALIDATE no finding. \
-                 The repair is recoverable from the diff; the cause is not, and a fix with no \
-                 recorded cause is indistinguishable from a symptom fix. For each one, either draw \
-                 INVALIDATES from the fix to the finding it closed (the `invalidates` tool), or \
-                 record the cause as a dated fact and draw CAUSES between them. A fix made before \
-                 this design adopted the discipline can be parked (GOVERNED_BY, ruling=parks, under \
-                 one accepted Decision) and is then counted rather than asked about; acknowledging \
-                 this finding instead says this design does not record causes, and it will not be \
-                 asked again."
+            title: format!(
+                "{n} of {total} recorded fix(es) are joined to no cause{mislabel_title}"
             ),
-            affected_ids: uncaused,
+            description: format!(
+                "The discipline stands: a repair records what it fixed, because the repair is \
+                 recoverable from the diff and the cause is not, and a fix with no recorded cause \
+                 is indistinguishable from a symptom fix. {n} change(s) recorded as a defect fix or \
+                 a test-failure fix are joined to no cause: nothing CAUSES them, they CAUSE \
+                 nothing, and they INVALIDATE no finding. TRIAGE, in this order. (1) A fix you or \
+                 this session made: draw INVALIDATES from the fix to the finding it closed (the \
+                 `invalidates` tool), or record the cause as a dated fact and draw CAUSES between \
+                 them (`record_finding` with `caused_by`). (2) A checksum acceptance wearing a fix \
+                 label — listed separately in the evidence — is a LABEL to correct, not a cause to \
+                 invent: relabel it with what the code movement was (`resync`, `refactor`, \
+                 `documentation`). (3) A backlog that predates the discipline is parked, forward-only: \
+                 GOVERNED_BY with ruling=parks under ONE accepted Decision, after which it is \
+                 counted rather than asked about. Nobody backfills a cause onto a historical fix; a \
+                 cause reconstructed from a diff is the confident wrong answer the root-cause skill \
+                 exists to stop. Acknowledging this finding records that the backlog was judged, \
+                 not that the discipline was declined."
+            ),
+            affected_ids: affected,
             suggested_depth: 1,
             evidence: format!(
-                "{n} of {total} ChangeEvent(s) with change_type defect_fix or test_failure_fix sit \
-                 on no CAUSES edge in either direction and carry no outgoing INVALIDATES.{parked_note} \
-                 A CAUSES edge on an artifact the fix touched is deliberately not counted: it says \
-                 something about that artifact's past, not about this repair."
+                "{n} of {total} recorded ChangeEvent(s) with change_type defect_fix or \
+                 test_failure_fix sit on no CAUSES edge in either direction and carry no outgoing \
+                 INVALIDATES.{parked_note}{mislabel_note} A CAUSES edge on an artifact the fix \
+                 touched is deliberately not counted: it says something about that artifact's \
+                 past, not about this repair."
             ),
         });
         Ok(())

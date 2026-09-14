@@ -195,3 +195,119 @@ fn a_design_with_no_fixes_is_silent() {
     change(&mut g, "chg:feature", "new_feature");
     assert!(the_gap(&g).is_none());
 }
+
+// ─── 2026-09-14: a checksum acceptance is not a repair ────────────────────────
+//
+// FIELD REPORT: the detector asked a project about twenty-one fixes with no
+// cause, and twenty were checksum dispositions recorded while reconciling the
+// design with the code — the tool's default had labelled them with a fix type.
+// A question about "which repairs have no cause" over a population that is
+// mostly not-repairs cannot be answered, and the agent asked the owner whether
+// to record causes at all. The population is now told apart by construction:
+// an event minted by an acceptance (its CHANGED edge carries
+// `accepted_baseline`) that wears a fix label is reported as a LABEL to fix,
+// beside the repairs that owe a cause — never as a cause to invent.
+
+use reflow2_core::{ChangeType, DriftDisposition, LinkArtifactOptions};
+
+fn baselined_artifact(g: &mut DesignGraph) {
+    g.add_capability("cap:x", "X", "x", None).expect("cap");
+    g.link_artifact(LinkArtifactOptions {
+        artifact_id: "art:x".into(),
+        name: Some("x.rs".into()),
+        description: None,
+        location: Some("x.rs".into()),
+        artifact_type: Some("code".into()),
+        target_type: node::CAPABILITY.into(),
+        target_id: "cap:x".into(),
+        completeness: None,
+        conformance: None,
+        provenance: None,
+        fragment_id: None,
+        checksum: Some("sha256:a".into()),
+        content_ref: None,
+        note_kind: None,
+    })
+    .expect("link");
+}
+
+/// ⭐ THE CASE FROM THE FIELD. One real repair with no cause, one acceptance
+/// wearing a fix label. Both are named; they are named as different things.
+#[test]
+fn a_checksum_acceptance_wearing_a_fix_label_is_told_apart_from_a_repair() {
+    let mut g = graph();
+    baselined_artifact(&mut g);
+    let (_, accepted) = g
+        .set_artifact_checksum(
+            "art:x",
+            "sha256:b",
+            DriftDisposition::DesignHolds {
+                change_type: ChangeType::TestFailureFix,
+            },
+            None,
+            Some("2026-09-14"),
+        )
+        .expect("accept");
+    change(&mut g, "chg:fix-a", "defect_fix");
+
+    let gap = the_gap(&g).expect("asked about");
+    assert_eq!(
+        gap.title,
+        "1 of 1 recorded fix(es) are joined to no cause, and 1 checksum acceptance(s) wear a fix label"
+    );
+    assert!(gap.affected_ids.iter().any(|id| id == "chg:fix-a"));
+    assert!(gap.affected_ids.iter().any(|id| id == &accepted));
+    assert!(
+        gap.evidence.contains(&accepted),
+        "the acceptance is named in the evidence so it can be relabelled: {}",
+        gap.evidence
+    );
+    assert!(
+        gap.description.contains("relabel"),
+        "the recipe for an acceptance is a relabel, never an invented cause: {}",
+        gap.description
+    );
+}
+
+/// An acceptance that wears a NON-fix label is nobody's business here.
+#[test]
+fn an_acceptance_with_an_honest_label_is_not_counted_anywhere() {
+    let mut g = graph();
+    baselined_artifact(&mut g);
+    g.set_artifact_checksum(
+        "art:x",
+        "sha256:b",
+        DriftDisposition::DesignHolds {
+            change_type: ChangeType::Refactor,
+        },
+        None,
+        Some("2026-09-14"),
+    )
+    .expect("accept");
+    assert!(
+        the_gap(&g).is_none(),
+        "a refactor acceptance owes no cause and wears no fix label"
+    );
+}
+
+/// The gap states the discipline and a triage recipe. It does not offer
+/// "this design does not record causes" as a live option: recording the cause
+/// of a fix is a DesignRule here, not a per-project preference, and a gap that
+/// phrases a standing rule as a choice invites the reader to decline it.
+#[test]
+fn the_gap_states_the_discipline_and_a_recipe_instead_of_offering_to_decline_it() {
+    let mut g = graph();
+    change(&mut g, "chg:fix-a", "defect_fix");
+    let gap = the_gap(&g).expect("asked about");
+    assert!(
+        gap.description.contains("The discipline stands"),
+        "{}",
+        gap.description
+    );
+    assert!(
+        !gap.description.contains("does not record causes"),
+        "must not offer declining the rule: {}",
+        gap.description
+    );
+    assert!(gap.description.contains("park"), "{}", gap.description);
+}

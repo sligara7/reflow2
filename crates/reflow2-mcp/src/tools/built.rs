@@ -47,6 +47,24 @@ use reflow2_core::{
 use crate::dto::{EdgeDto, NodeDto};
 use crate::service::*;
 
+/// Does this artifact already carry a drift baseline? Decides whether a
+/// `design_holds` accept must say why the code moved: with a baseline the
+/// code moved against it and the reason is asked; without one the core reads
+/// the accept as a FIRST baseline, nothing moved, and there is nothing to ask.
+/// An unknown artifact reads as having none — the core refuses it by name a
+/// moment later, which is the better error.
+fn artifact_has_baseline(g: &DesignGraph, artifact_id: &str) -> Result<bool, McpError> {
+    Ok(g.get_node(reflow2_core::nodes::node::ARTIFACT, artifact_id)
+        .map_err(dyno_err)?
+        .and_then(|n| {
+            n.properties
+                .get("checksum")
+                .and_then(Value::as_str)
+                .map(|s| !s.trim().is_empty())
+        })
+        .unwrap_or(false))
+}
+
 #[tool_router(router = built_router, vis = "pub")]
 impl ReflowService {
     #[tool(
@@ -259,12 +277,13 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<SetChecksumReq>,
     ) -> Result<CallToolResult, McpError> {
+        let mut g = self.write_lock().await?;
         let disposition = parse_disposition(
             &req.disposition,
             req.change_type.as_deref(),
             req.design_change_event_id.as_deref(),
+            artifact_has_baseline(&g, &req.artifact_id)?,
         )?;
-        let mut g = self.write_lock().await?;
         let (artifact, change_event_id) = g
             .set_artifact_checksum(
                 &req.artifact_id,
@@ -334,13 +353,20 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<SetChecksumsReq>,
     ) -> Result<CallToolResult, McpError> {
+        let mut g = self.write_lock().await?;
         let mut accepts = Vec::with_capacity(req.accepts.len());
         for a in &req.accepts {
             let disposition = parse_disposition(
                 &a.disposition,
                 a.change_type.as_deref(),
                 a.design_change_event_id.as_deref(),
-            )?;
+                artifact_has_baseline(&g, &a.artifact_id)?,
+            )
+            .map_err(|e| {
+                // Name the item: a batch refusal that does not say which entry
+                // is silent sends the caller back to guess across fifty.
+                McpError::invalid_params(format!("{}: {}", a.artifact_id, e.message), None)
+            })?;
             accepts.push(BulkChecksumAccept {
                 artifact_id: a.artifact_id.clone(),
                 checksum: a.checksum.clone(),
@@ -349,7 +375,6 @@ impl ReflowService {
                 at: a.at.clone(),
             });
         }
-        let mut g = self.write_lock().await?;
         let report = g
             .set_artifact_checksums_with(&accepts, req.check_only)
             .map_err(dyno_err)?;
