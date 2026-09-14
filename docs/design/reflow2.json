@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:5f30a103db8beacb2a65eadc22196c0a9b5f200a7c5996ed631ff95ec18b718b",
+  "content_hash": "sha256:e6a0f951de7518f759a4523fe81dc5d96c427567b50703f4db5af1781067c725",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -11787,6 +11787,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:cap:feedback-is-a-computed-tally",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:cap:release-publishes-a-container",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
     },
@@ -61422,6 +61428,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:release-publishes-a-container",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:cap:release-publishes-a-container"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "cap:review-expires-on-content",
       "properties": {},
       "to_id": "snap:epoch:reading-carries-options:cap:review-expires-on-content"
@@ -62925,6 +62937,12 @@
       "from_id": "cap:release-pinned-to-time",
       "properties": {},
       "to_id": "fact:deploy-to-does-not-move-a-releases-own-status-and-no-cut-step-says-to"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:release-publishes-a-container",
+      "properties": {},
+      "to_id": "fact:the-cut-verified-the-assets-and-never-the-image-2026-09-14"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -206952,7 +206970,7 @@
       "node_id": "cap:release-publishes-a-container",
       "node_type": "Capability",
       "properties": {
-        "description": "One more job in release.yml, which already builds a per-platform binary matrix (linux-x86_64, macos-arm64, macos-x86_64) and packages the consumer kit — this is not new machinery.\n\nBuilds for linux/amd64 (and linux/arm64 if consumers may land on arm hosts), tags the image with the version already in [workspace.package] so a consumer pins rather than chasing latest, publishes to a registry the consumer can pull from, and runs as a non-root user with the mounted data volume writable by that uid — the commonest way a first container run fails.\n\nThere is no Dockerfile in the repo today, so this starts from nothing. The image's own documentation must state plainly that reflow2 has NO authentication and must not be reachable from outside a private network.",
+        "description": "One more job in release.yml, which already builds a per-platform binary matrix (linux-x86_64, macos-arm64, macos-x86_64) and packages the consumer kit.\n\nBuilds for linux/amd64 (and linux/arm64 if consumers may land on arm hosts), tags the image with the version already in [workspace.package] so a consumer pins rather than chasing latest, publishes to a registry the consumer can pull from, and runs as a non-root user with the mounted data volume writable by that uid — the commonest way a first container run fails. The image's own documentation must state plainly that reflow2 has NO authentication and must not be reachable from outside a private network.\n\n🛑 THE CUT MUST VERIFY THE IMAGE SEPARATELY FROM THE ASSETS, AND THIS IS THE STEP WHERE THAT IS OWED. Measured 2026-09-13/14: v0.60.0 and v0.60.1 were BOTH tagged, both published all five release assets, both read `draft: false` — and NEITHER published a container image. The release object looked complete because it WAS complete, for the assets; the image is not an asset and does not appear there. Verifying the assets off the release object, which the cut already does, says nothing about it.\n\nHOW TO VERIFY, and read the job rather than the run:\n\n    gh run view <run> --json jobs --jq '.jobs[] | \"\\(.conclusion)\\t\\(.name)\"'\n\nThe `container image` job must read `success`. Its own last step already prints\n`published <IMAGE>:<VERSION>` after an `imagetools inspect`, so the log carries\nthe confirmation — and the image name is `ghcr.io/<owner>/<repo>/reflow2-mcp`,\nwhich is NOT `ghcr.io/<owner>/reflow2-mcp`; guessing the shorter one 404s and\nreads exactly like a missing image.\n\n⚠️ THE WHOLE-RUN CONCLUSION IS NOT ENOUGH EITHER WAY. A run can be RED while the\nassets published, because the container job fails after `publish release` has\nalready succeeded — that is precisely what happened twice. Read the job.\n\n⭐ WHY THE GATE BEING RIGHT IS THE POINT: the smoke test runs BEFORE the push, so\nboth failures refused to ship an unverified image rather than shipping one. The\ncapability held; what failed was a new check inside it, and the cut had no step\nthat would notice the difference.",
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "The release workflow publishes a tagged container image alongside the binaries",
@@ -237570,6 +237588,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:preserved-on-write:cap:release-publishes-a-container",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:docker-build-script\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:docker-smoke-script\",\"properties\":{\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:dockerfile\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"TRIGGERS\",\"other_type\":\"Capability\",\"other_id\":\"cap:a-cut-exports-the-record-once-from-the-new-binary\",\"properties\":{\"role\":\"feeds — the record is committed and merged, so the tag can go out. Branch, draft PR, CI green, merge, THEN tag on main\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:container-image\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:packaging\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-08-05T23:10:00Z\",\"role\":\"author\"}},{\"direction\":\"out\",\"edge_type\":\"PART_OF_FLOW\",\"other_type\":\"Flow\",\"other_id\":\"flow:release-cut\",\"properties\":{\"step_order\":7,\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:reflow2-consumable-as-an-image\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"TRIGGERS\",\"other_type\":\"Capability\",\"other_id\":\"cap:a-release-that-shipped-nothing-is-reported\",\"properties\":{\"role\":\"feeds — the published assets are verified off the release object, and now the DESIGN's record of what they contained is verified the same way. Both readings are of the authoritative object, never of the call that wrote it\"}}]",
+        "state": "{\"description\":\"One more job in release.yml, which already builds a per-platform binary matrix (linux-x86_64, macos-arm64, macos-x86_64) and packages the consumer kit — this is not new machinery.\\n\\nBuilds for linux/amd64 (and linux/arm64 if consumers may land on arm hosts), tags the image with the version already in [workspace.package] so a consumer pins rather than chasing latest, publishes to a registry the consumer can pull from, and runs as a non-root user with the mounted data volume writable by that uid — the commonest way a first container run fails.\\n\\nThere is no Dockerfile in the repo today, so this starts from nothing. The image's own documentation must state plainly that reflow2 has NO authentication and must not be reachable from outside a private network.\",\"is_entry_point\":false,\"is_exit_point\":false,\"name\":\"The release workflow publishes a tagged container image alongside the binaries\",\"provenance\":\"authored\",\"status\":\"realized\",\"tier\":\"operational\"}",
+        "target_id": "cap:release-publishes-a-container",
+        "target_type": "Capability"
+      }
+    },
+    {
       "node_id": "snap:epoch:preserved-on-write:cap:stamp",
       "node_type": "Snapshot",
       "properties": {
@@ -244497,6 +244525,23 @@
       }
     },
     {
+      "node_id": "fact:the-cut-verified-the-assets-and-never-the-image-2026-09-14",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "name": "Two releases looked complete and shipped no container image — the cut verifies ASSETS off the release object, and the image is not an asset",
+        "statement": "MEASURED across the v0.60.0 and v0.60.1 cuts. Both were tagged, both published all five release assets, both read `draft: false` — and NEITHER published a container image.\n\n🛑 THE RELEASE OBJECT DID NOT LIE. It was complete, for the assets. The image is not an asset and never appears there, so the standing check — \"verify the release published, don't trust the workflow's green\", which the cut already does — cannot see it. A cut that passes that check has verified everything except the one artefact a container consumer pulls.\n\nWHAT TO ADD, at the same point the assets are verified:\n\n    gh run view <run> --json jobs --jq '.jobs[] | \"\\(.conclusion)\\t\\(.name)\"'\n\nThe `container image` job must read `success`. Its last step prints\n`published <IMAGE>:<VERSION>` after an `imagetools inspect`, so the log carries\nthe confirmation directly.\n\n⚠️ TWO TRAPS INSIDE THAT, both met on 2026-09-14:\n · THE RUN'S OWN CONCLUSION IS USELESS HERE IN BOTH DIRECTIONS. A run reads RED while the assets published fine, because the container job fails AFTER `publish release` has succeeded. Read the JOB.\n · THE IMAGE NAME IS `ghcr.io/<owner>/<repo>/reflow2-mcp`, not `ghcr.io/<owner>/reflow2-mcp`. The shorter guess 404s and is indistinguishable from a missing image — which is how a successful publish was nearly reported as a failure minutes after the real one.\n\n⭐ THE GATE WAS RIGHT ALL THREE TIMES and must not be blamed: the smoke test runs BEFORE the push, so both failures refused to ship an unverified image rather than shipping one. The capability held. What failed was a new check inside it, and the CUT had no step that would notice the difference between \"no image was built\" and \"no image was published\".\n\n📌 THE GENERAL SHAPE, and it is the same one `rule:success-is-read-from-the-authoritative-object` already states on three other surfaces: an object can be complete about what it covers and silent about what it does not, and the silence reads as consent. The assets object is authoritative for assets only.",
+        "steps": [
+          "release_report"
+        ],
+        "subject_id": "cap:release-publishes-a-container",
+        "valid_from": "2026-09-14",
+        "value": "{\"tags_affected\":[\"v0.60.0\",\"v0.60.1\"],\"assets_published\":5,\"draft\":false,\"image_published\":false,\"why_invisible\":\"the image is not a release asset, so the asset check cannot see it\",\"verify\":\"gh run view <run> --json jobs, the 'container image' job must read success\",\"run_conclusion_useless\":\"a red run can still have published all assets\",\"image_name\":\"ghcr.io/<owner>/<repo>/reflow2-mcp\"}"
+      }
+    },
+    {
       "node_id": "fact:the-decision-race-is-caller-ordering-not-read-after-write",
       "node_type": "TemporalFact",
       "properties": {
@@ -249495,7 +249540,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:513d0f2f49061ad8f83670114c11d9cc62a8b1c363730bb75c726c07b7b77ccd",
+  "prev_content_hash": "sha256:5f30a103db8beacb2a65eadc22196c0a9b5f200a7c5996ed631ff95ec18b718b",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
