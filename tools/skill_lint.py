@@ -983,6 +983,18 @@ TRIGGER_CONTRACT: dict[str, str] = {
     "a progress report or a deck counts": "progress report",
 }
 
+# The several-readers clause, checked on the BODY of the orientation skill.
+# Anthony, 2026-09-14 (req:the-agent-says-which-recorded-reader-it-assumes-and-
+# the-lens-names-them): a design shared by two people records two backgrounds
+# and cannot say which one is reading; the agent matches the git author it can
+# see against the recorded names, OFFERS the match in one sentence, and does
+# not ask again that session — and attributes to the same person it assumed.
+READER_CONTRACT: dict[str, str] = {
+    "the match is against the git author": "git author",
+    "the guess is offered in one sentence": "assuming you are",
+    "the assumed reader is the attributed one": "attribute",
+}
+
 
 ASK_CONTRACT: dict[str, str] = {
     "offers a reading": "Say which answer you would give",
@@ -1406,6 +1418,12 @@ def main() -> int:
             f"where-am-i's trigger states: {label}",
             phrase in wai_desc,
             f"missing {phrase!r} from the description (the part list_skills and the handshake serve)",
+        )
+    for label, phrase in READER_CONTRACT.items():
+        check(
+            f"where-am-i's reader step states: {label}",
+            phrase in wai_text,
+            f"missing {phrase!r} from the skill body",
         )
 
     print("== the linking contract ==")

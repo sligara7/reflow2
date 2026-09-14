@@ -372,6 +372,14 @@ pub struct ReaderLens {
     pub with_background: Vec<String>,
     /// People carrying none — askable, and the reason the count is not enough.
     pub without_background: Vec<String>,
+    /// Each person's `name`, by id, for those who carry one. Anthony,
+    /// 2026-09-14: a design shared by two people records two backgrounds
+    /// and cannot say which one is reading; the harness can see a git
+    /// author, and the only join the agent has is NAME against NAME. Carried
+    /// here so the lens line can print it and the match is a lookup over
+    /// text already in front of the agent, not a fetch per person. Names
+    /// are already in the public export; nothing else about identity is.
+    pub names: std::collections::BTreeMap<String, String>,
 }
 
 impl ReaderLens {
@@ -386,6 +394,7 @@ impl DesignGraph {
     pub fn reader_lens(&self) -> Result<ReaderLens, DynoError> {
         let mut with_background = Vec::new();
         let mut without_background = Vec::new();
+        let mut names = std::collections::BTreeMap::new();
         for c in self.scan_nodes(node::CONTRIBUTOR)? {
             let kind = c.properties.get("kind").and_then(Value::as_str);
             // Unset reads as a person: `kind` is optional and older nodes
@@ -399,6 +408,15 @@ impl DesignGraph {
                 .get("description")
                 .and_then(Value::as_str)
                 .is_some_and(|s| !s.trim().is_empty());
+            if let Some(name) = c
+                .properties
+                .get("name")
+                .and_then(Value::as_str)
+                .map(str::trim)
+                .filter(|s| !s.is_empty())
+            {
+                names.insert(c.node_id.clone(), name.to_string());
+            }
             if has_background {
                 with_background.push(c.node_id);
             } else {
@@ -410,6 +428,7 @@ impl DesignGraph {
         Ok(ReaderLens {
             with_background,
             without_background,
+            names,
         })
     }
 }

@@ -257,6 +257,20 @@ pub(crate) fn lens_line(lens: &reflow2_core::ReaderLens) -> String {
                 and keep their own field's words (a systems engineer wants `requirement` and \
                 `verification`; someone who knows livestock or baseball wants theirs). This is a \
                 vocabulary swap, not simplification.";
+    // "who:ajs (Anthony Sligar)": the name beside the id, so the agent can
+    // join the git author it can see to a reader the design records without a
+    // fetch per person. Anthony, 2026-09-14 — a design shared by two people
+    // records two backgrounds and cannot say which one is reading; the name is
+    // the only join there is, and it was already in the public export.
+    let labelled = |ids: &[String]| -> String {
+        ids.iter()
+            .map(|id| match lens.names.get(id) {
+                Some(name) => format!("{id} ({name})"),
+                None => id.clone(),
+            })
+            .collect::<Vec<_>>()
+            .join(", ")
+    };
     if lens.is_silent() {
         let askable = if lens.without_background.is_empty() {
             "Nobody is recorded in this design yet".to_string()
@@ -264,7 +278,7 @@ pub(crate) fn lens_line(lens: &reflow2_core::ReaderLens) -> String {
             format!(
                 "{} recorded here and none describes themselves ({})",
                 lens.without_background.len(),
-                lens.without_background.join(", ")
+                labelled(&lens.without_background)
             )
         };
         format!(
@@ -274,11 +288,17 @@ pub(crate) fn lens_line(lens: &reflow2_core::ReaderLens) -> String {
              use with you. {rule}"
         )
     } else {
+        let several = if lens.with_background.len() > 1 {
+            " More than one is recorded: match the git author you can see to a name here, offer \
+             the match as an assumption in one sentence, and attribute to the same person."
+        } else {
+            ""
+        };
         format!(
             "Recorded backgrounds: {}. Read the one for whoever you are talking to (`get_node` on \
              the Contributor) — this says what the DESIGN holds, never who is at the keyboard. If \
-             it is somebody else, ask and record it. {rule}",
-            lens.with_background.join(", ")
+             it is somebody else, ask and record it.{several} {rule}",
+            labelled(&lens.with_background)
         )
     }
 }

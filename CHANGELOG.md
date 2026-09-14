@@ -50,6 +50,20 @@ This file is the third view: *what changed, and when*.
 
 ### Changed
 
+- **The lens line names each person beside their id, and orientation offers the git-author match
+  when a design records more than one reader.** Anthony, 2026-09-14, on flo2 — one repo shared
+  with his brother: each should be read to in his own vocabulary, and nobody should be asked who
+  they are every session. The graph cannot say who is at the keyboard and never will; the harness
+  can see a git author, and with two recorded readers the agent's only join is NAME against NAME —
+  and the lens line printed ids alone. Now `ReaderLens` carries names and the sentence that rides
+  every `get_skill` / `list_skills` / `loop_status` reply reads `who:ajs (Anthony Sligar)`; with
+  more than one background recorded it says to match the git author, offer the match in one
+  sentence ("assuming you are AJ — if not, tell me who you are and your background"), and
+  attribute to the same person. The `where-am-i` reader step carries the same clause, held by a
+  lint contract. Two legs and no more, on his word: the seat does not record the reader, and no
+  email or other identity signal is recorded — names were already in the public export. Four
+  served-reply tests and three lint checks, each observed failing first. **Patch**: an existing
+  reply field grew a name in parentheses; no shape or schema change.
 - **The status claim is the trigger: orientation fires when the agent is about to assert a
   project's status to anyone, and a status question in the asker's words finds the read.** Field
   report, 2026-09-14 (hxm_program, a hub design over many projects): asked for a progress deck
