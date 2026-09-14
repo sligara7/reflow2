@@ -616,12 +616,16 @@ async fn reconcile_surfaces_a_code_change_back_to_the_design() {
         "a code change must reach the requirement that justified it"
     );
 
-    // Accepting the change clears the drift.
+    // Accepting the change clears the drift. It says WHY the code moved:
+    // since 2026-09-14 a design_holds accept on a baselined artifact with no
+    // change_type is refused, because the old default (`test_failure_fix`) put
+    // every reconcile pass into the fix population that
+    // fix_without_recorded_cause asks about.
     j!(s.set_artifact_checksum(Parameters(SetChecksumReq {
         artifact_id: "art:flight".into(),
         checksum: "sha256:v2".into(),
         disposition: "design_holds".into(),
-        change_type: None,
+        change_type: Some("refactor".into()),
         design_change_event_id: None,
         note: Some("accepted after review: no behaviour change".into()),
         at: Some("2026-07-19T12:00:00Z".into()),

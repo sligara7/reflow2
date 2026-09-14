@@ -1283,6 +1283,7 @@ pub(crate) fn parse_disposition<'a>(
     disposition: &str,
     change_type: Option<&str>,
     design_change_event_id: Option<&'a str>,
+    has_baseline: bool,
 ) -> Result<DriftDisposition<'a>, McpError> {
     match disposition {
         "design_holds" => {
@@ -1293,8 +1294,41 @@ pub(crate) fn parse_disposition<'a>(
                     None,
                 ));
             }
-            let change_type: ChangeType =
-                parse_enum(change_type.unwrap_or("test_failure_fix"), "change type")?;
+            // WHY THE CODE MOVED IS ASKED, NOT DEFAULTED. Until 2026-09-14 a
+            // missing `change_type` here became `test_failure_fix` — one of the
+            // two labels that put an event into the fix population
+            // `fix_without_recorded_cause` asks about. A field project then
+            // answered that gap: twenty of its twenty-one "fixes" were
+            // reconcile-pass acceptances wearing the default, and the agent
+            // asked the owner whether to record causes at all. On reflow2's own
+            // design 142 of 281 fix-typed events were acceptances, 104 of them
+            // wearing the default. A default answers a question nobody asked
+            // and makes it indistinguishable from an answered one — the same
+            // reason `kind`, `priority` and `quality_target` refuse to default.
+            // An artifact with NO baseline is the one exception: the core reads
+            // that accept as a first baseline whatever it carries, nothing
+            // moved, and there is no "why" to ask.
+            let Some(change_type) = change_type else {
+                if has_baseline {
+                    return Err(McpError::invalid_params(
+                        "design_holds needs `change_type`: why did the code move? A repair says \
+                         `defect_fix` (the design was right and the code was wrong) or \
+                         `test_failure_fix` (a check caught it) — those two enter the population \
+                         fix_without_recorded_cause asks about, so use them only for a repair. A \
+                         reconcile pass says what the movement was: `refactor`, `documentation`, \
+                         `performance_optimization`, or `resync` (the record caught up with the \
+                         code). It used to default to `test_failure_fix`, which filed every \
+                         reconcile pass as a fix owing a cause.",
+                        None,
+                    ));
+                }
+                // No baseline: the core records a first baseline and ignores
+                // the type, so any legal value will do here.
+                return Ok(DriftDisposition::DesignHolds {
+                    change_type: ChangeType::BaselineEstablished,
+                });
+            };
+            let change_type: ChangeType = parse_enum(change_type, "change type")?;
             Ok(DriftDisposition::DesignHolds { change_type })
         }
         "design_updated" => {
@@ -2794,7 +2828,10 @@ pub struct ChecksumAcceptReq {
     /// moved). Per item, never per call: the round trip collapses, the
     /// judgement does not.
     pub disposition: String,
-    /// For `design_holds`: why the code moved (`test_failure_fix` default).
+    /// For `design_holds`: why the code moved — REQUIRED on an artifact that
+    /// already has a baseline; a fix label (`defect_fix` / `test_failure_fix`)
+    /// only for a repair, `resync` / `refactor` / `documentation` for a
+    /// reconcile pass. No default since 2026-09-14.
     #[serde(default)]
     #[schemars(schema_with = "crate::enum_schema::change_event_change_type_opt")]
     pub change_type: Option<String>,
@@ -4467,9 +4504,14 @@ pub struct SetChecksumReq {
     /// *against*, and a first baseline cannot be established over one that
     /// already exists (that would be a real change, laundered).
     pub disposition: String,
-    /// For `design_holds`: why the code moved (`test_failure_fix` (default) /
-    /// `refactor` / `performance_optimization` / `documentation` / …). Refused
-    /// with the other two dispositions rather than ignored.
+    /// For `design_holds`: why the code moved — REQUIRED on an artifact that
+    /// already has a baseline. A repair says `defect_fix` or `test_failure_fix`
+    /// (those two enter the population `fix_without_recorded_cause` asks about,
+    /// so they are for repairs only); a reconcile pass says what the movement
+    /// was: `refactor` / `documentation` / `performance_optimization` / `resync`.
+    /// There is no default since 2026-09-14: it used to be `test_failure_fix`,
+    /// which filed every reconcile pass as a fix owing a cause (field report).
+    /// Refused with the other two dispositions rather than ignored.
     ///
     /// `documentation` is the one to reach for when the file changed and
     /// NOTHING IT DESCRIBES BEHAVES DIFFERENTLY — a stale comment, a hand-kept
