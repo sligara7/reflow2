@@ -513,3 +513,110 @@ fn a_valid_document_still_imports_whole() {
     assert_eq!((r.nodes_written, r.edges_written), (2, 1));
     assert!(r.skipped_edges.is_empty());
 }
+
+/// ⭐ THE 853. A document written by a NEWER reflow2 is refused, because this
+/// binary would write its own defaults onto everything the newer one left
+/// implicit and nothing would say so. `accept_newer` is the deliberate way
+/// through, and the report then names what was written.
+#[test]
+fn a_document_written_by_a_newer_reflow2_is_refused_unless_accepted() {
+    let mut doc = a_design().export_graph().unwrap();
+    let mut stamp = doc
+        .stamp
+        .clone()
+        .expect("every export reflow2 writes is stamped");
+    stamp.reflow2_version = "99.0.0".into();
+    doc.stamp = Some(stamp);
+
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    let err = g
+        .import_graph(&doc)
+        .expect_err("a document from the future must be refused by default");
+    let msg = err.to_string();
+    assert!(
+        msg.contains("99.0.0") && msg.contains("BEHIND") && msg.contains("accept_newer"),
+        "the refusal names both versions, the direction and the way through: {msg}"
+    );
+    assert_eq!(
+        g.export_graph().unwrap().nodes.len(),
+        0,
+        "nothing is written on a refusal"
+    );
+
+    let report = g
+        .import_graph_with(&doc, reflow2_core::ImportOptions { accept_newer: true })
+        .expect("accepted on purpose");
+    assert_eq!(report.nodes_written, doc.nodes.len());
+}
+
+/// A document written by THIS version, or an older one, imports as before.
+#[test]
+fn a_document_from_this_or_an_older_reflow2_imports_without_ceremony() {
+    let mut doc = a_design().export_graph().unwrap();
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.import_graph(&doc).expect("same version");
+
+    let mut stamp = doc.stamp.clone().unwrap();
+    stamp.reflow2_version = "0.1.0".into();
+    doc.stamp = Some(stamp);
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.import_graph(&doc)
+        .expect("older writer — additive, reads whole");
+}
+
+/// The import says what the store now holds that the document did not state.
+/// Take a document, strip one property that equals its declared default, and
+/// the restore materialises exactly that one — named by `Type.property`, and
+/// nothing else. That is the shape the 853 would have worn:
+/// `AUTHORED_BY.role`, 853 times, in the report instead of in silence.
+#[test]
+fn an_import_reports_the_values_it_materialised() {
+    let mut doc = a_design().export_graph().unwrap();
+    let defaults = reflow2_core::schema::declared_defaults();
+    let mut removed: Option<(String, String, String, String)> = None;
+    'outer: for n in doc.nodes.iter_mut() {
+        for d in &defaults {
+            if d.node_type == n.node_type
+                && n.properties.get(&d.property).and_then(|v| v.as_str()) == Some(d.value.as_str())
+            {
+                n.properties.remove(&d.property);
+                removed = Some((
+                    n.node_type.clone(),
+                    d.property.clone(),
+                    n.node_id.clone(),
+                    d.value.clone(),
+                ));
+                break 'outer;
+            }
+        }
+    }
+    let (node_type, property, node_id, value) =
+        removed.expect("the design carries at least one property equal to its declared default");
+    let key = format!("{node_type}.{property}");
+
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    let report = g.import_graph(&doc).unwrap();
+    assert_eq!(
+        report.materialized.get(&key).copied(),
+        Some(1),
+        "the defaulted property is named, once: {:?}",
+        report.materialized
+    );
+    assert_eq!(
+        report.materialized.len(),
+        1,
+        "and nothing the document stated is counted: {:?}",
+        report.materialized
+    );
+    let stored = g.get_node(&node_type, &node_id).unwrap().expect("written");
+    assert_eq!(
+        stored.properties.get(&property).and_then(|v| v.as_str()),
+        Some(value.as_str()),
+        "and the value written is the schema default"
+    );
+
+    // A document that states everything materialises nothing.
+    let mut h = DesignGraph::open_in_memory().unwrap();
+    let full = h.import_graph(&a_design().export_graph().unwrap()).unwrap();
+    assert!(full.materialized.is_empty(), "{:?}", full.materialized);
+}

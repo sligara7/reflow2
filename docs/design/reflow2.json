@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:64351678b967ded5417b44e5dd0b2cadd7867e828a00b3de360f290743d4d139",
+  "content_hash": "sha256:8e0e74a3eaaf28411383e74627fd3b5a34936613e6323bb6a2099d3315add0f9",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -1490,6 +1490,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:an-import-knows-its-own-age-and-a-server-behind-its-record-says-so",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:export"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -7315,6 +7323,12 @@
       "from_id": "chg:an-idea-is-a-declared-kind",
       "properties": {},
       "to_id": "epoch:v0450"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:an-import-knows-its-own-age-and-a-server-behind-its-record-says-so",
+      "properties": {},
+      "to_id": "epoch:an-import-knows-its-own-age"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -32545,6 +32559,69 @@
         "action": "modified"
       },
       "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-import-knows-its-own-age-and-a-server-behind-its-record-says-so",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:export"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-import-knows-its-own-age-and-a-server-behind-its-record-says-so",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:main"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-import-knows-its-own-age-and-a-server-behind-its-record-says-so",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:provenance"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-import-knows-its-own-age-and-a-server-behind-its-record-says-so",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-import-knows-its-own-age-and-a-server-behind-its-record-says-so",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-import-knows-its-own-age-and-a-server-behind-its-record-says-so",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-exchange"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-import-knows-its-own-age-and-a-server-behind-its-record-says-so",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:an-import-knows-its-own-age-and-a-server-behind-its-record-says-so"
     },
     {
       "edge_type": "CHANGED",
@@ -196619,6 +196696,15 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:an-import-knows-its-own-age-and-a-server-behind-its-record-says-so",
+      "properties": {
+        "at": "2026-09-15",
+        "note": "The cause the measurement named — an older binary importing a newer record with no version comparison, and no report of what it wrote — is closed at the operation: import refuses a newer document unless accepted, reports what it materialised, and a server behind its record says so on every loop_status. The 853 edges themselves were already reverted in the record; this claim is about the class recurring."
+      },
+      "to_id": "fact:root-cause-the-853-is-an-older-binary-writing-the-old-role-default-onto-a-newer-document-not-the-export-leaving-a-default-implicit"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:authorship-survives-approval",
       "properties": {
         "at": "2026-09-14",
@@ -200524,6 +200610,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:import-from-a-newer-reflow2-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:an-import-knows-its-own-age-and-a-server-behind-its-record-says-so"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:ingest",
       "properties": {
         "completeness": "complete",
@@ -203908,6 +204003,12 @@
       "from_id": "cap:an-acknowledgement-says-whose-judgement-it-was",
       "properties": {},
       "to_id": "req:settled-intent-carries-the-owners-name"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:an-import-knows-its-own-age-and-a-server-behind-its-record-says-so",
+      "properties": {},
+      "to_id": "req:stale-seat-knows"
     },
     {
       "edge_type": "SATISFIES",
@@ -207434,6 +207535,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:an-import-knows-its-own-age",
+      "properties": {},
+      "to_id": "cap:an-import-knows-its-own-age-and-a-server-behind-its-record-says-so"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:an-upstream-design-is-watched-not-imported",
       "properties": {},
       "to_id": "cap:a-declared-dependency-is-watched-not-imported"
@@ -209739,6 +209846,14 @@
         "action": "created"
       },
       "to_id": "art:ility"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:import-from-a-newer-reflow2-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:import-from-a-newer-reflow2-test"
     },
     {
       "edge_type": "YIELDED",
@@ -212379,7 +212494,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:7d7ceb8f0ec1c621fbb96aed2ec8a95f2275c12a1a439eb7c7f9c243168a9e7c",
+        "checksum": "sha256:8712b379f2e1f3e8010462c1675a6e3e030dc0ddba0a32093b49baf9b940b2ab",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/export.rs",
         "name": "export.rs",
@@ -212837,6 +212952,18 @@
       }
     },
     {
+      "node_id": "art:import-from-a-newer-reflow2-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:d4b635bbbc1d4faba5b0ee88055d6cf55ca3c9b3ca068e36a5749412b9a3dc3b",
+        "description": "Four in-process tests on the served surface: the import_graph tool refuses a document from a newer reflow2 and names the way through; accepted on purpose, the report names what was materialised by Type.property; this-or-older versions import as before; behind_record is absent when current and names the newer writer, this version and the hazard when behind.",
+        "location": "crates/reflow2-mcp/tests/an_import_from_a_newer_reflow2_is_refused.rs",
+        "name": "an_import_from_a_newer_reflow2_is_refused.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:increment-plan",
       "node_type": "Artifact",
       "properties": {
@@ -213079,7 +213206,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:ef52acf8b4cae93af7462048af6c6f8422038731cd7d055601ff6cfbf5b13d61",
+        "checksum": "sha256:ab39283cdff3e8ee2e43c77c51856f9290331ea29c1e0396b42fe214a2cd8c11",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/main.rs",
         "name": "main.rs",
@@ -213407,7 +213534,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:91d1c46d6b317b2e3488cd4538d7c45402e3959682dfff717582ced3295b7c9b",
+        "checksum": "sha256:5d2bf6ff2f723efca9dde5156f6aa39a4a750eaf185ead373de6df7244e13f89",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/provenance.rs",
         "name": "provenance.rs",
@@ -214114,7 +214241,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:cf274cfe27051f3b69d04340a3434448c105de7b6b9b88efbb24bfe80dce1e9f",
+        "checksum": "sha256:283b54cc7c088ad020a81e93765f327fecfa9bcd28cc9312d821fda14e69ad16",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -215150,7 +215277,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:2bb6f9cb2562e423e0f4ba399912900ed2891d134d8f0def94738289ed027d96",
+        "checksum": "sha256:d18423e0d5248be1672c49b0b73cccc72c96409568a1d6ae4b67326733ec1f4f",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
@@ -215163,7 +215290,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:20f362c9920bea1d0dcf908b498f15ac9c84343c9f53dc30a487c945c42437c8",
+        "checksum": "sha256:f3a9e893011168ce55417e79cd59339982ccbdcaae9a99e61a2da6edfb68d991",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/exchange.rs",
         "name": "tools/exchange.rs",
@@ -216242,6 +216369,17 @@
         "name": "An acknowledgement records whose judgement it was, and says so plainly when nobody's name is on it",
         "provenance": "authored",
         "status": "realized"
+      }
+    },
+    {
+      "node_id": "cap:an-import-knows-its-own-age-and-a-server-behind-its-record-says-so",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Three legs against the 853. (1) `DesignGraph::import_graph` refuses a document whose stamp names a reflow2 newer than the crate — naming both versions, the direction, the hazard and the way through — unless `ImportOptions::accept_newer`; the tool takes `accept_newer` and the CLI `--accept-newer`. (2) `ImportReport::materialized` counts, by `Type.property` and `EDGE_TYPE.property`, every value the store now holds that the document did not state (schema defaults and migrations), and `--import` prints them. (3) The open-time provenance distinguishes `NewerWriter` (last written by a newer reflow2, same vocabulary — until now misreported as an older graph with the note the wrong way round) from `OlderGraph`; the service keeps the newer writer and `served_by.behind_record` on loop_status and graph_report names it, with a `next` line (BEHIND_NEXT), because `served_by.stale` asks a different question — was my executable replaced — that a release binary merely built before the record answers no, truthfully. Shared prose: `provenance::BEHIND_HAZARD`.",
+        "name": "An import knows its own age, and a server behind its record says so",
+        "provenance": "authored",
+        "status": "realized",
+        "tier": "operational"
       }
     },
     {
@@ -222718,6 +222856,16 @@
         "rationale": "Anthony accepted `dec:a-brainstormed-idea-is-a-first-class-kind` 2026-08-30, choosing shape (ii), a declared property rather than a new node type — the latter would make `what_next`, the detectors, the reports, delivery and the merge driver all learn a noun that otherwise behaves exactly like a Decision.\n\nWHY IT WAS BUILT NOW AFTER BEING TWICE JUDGED TOO SMALL: `req:a-vocabulary-distinction-proves-it-is-read` demands a computation read a distinction. A′ — the linking discipline riding the near-match refusal — is that computation, and measured 2026-08-30 it could not be scoped: 207 idea-Decisions and 363 other Decisions differed by nothing readable, `status` does not separate them (32 non-idea Decisions are also `proposed`), and the only remaining signal was the `dec:idea-` ID PREFIX — the defect closed the same morning in #390. Unscoped, A′ would land on the Requirement/Capability/ChangeEvent capture path a consumer's field report names as existing friction, so the marker is what keeps the fix off a live user's path.\n\n⚠️ NO DEFAULT, DELIBERATELY. Absent means NOBODY SAID — a third state, not a synonym for `choice` — following the doctrine `Decision.quality_target` already states. The 207 existing ideas stay UNMARKED: their only evidence of kind is the prefix being retired, so backfilling would launder it into a property. That leaves the existing population unqueryable and is the honest option; whether to backfill anyway is recorded as unsettled.\n\n⚠️ THE SCHEMA STAMP DOES NOT CARRY THIS. It records node and edge type names and counts, and no property names at all, so a consumer pinning a build gains a distinction nothing tells them about. Whether `schema_version` should move for a property addition is unresolved and is now a live question rather than a footnote.",
         "subject": "system",
         "summary": "`Decision.kind` declared in schema/structure.yaml — `exploratory` (an idea being turned over, recorded so it is not lost and NOT claimed as intent) or `choice` (a decision somebody faced), indexed, WITH NO DEFAULT. `DecisionReq` gains the field and the tool writes it INSIDE THE SAME CALL rather than through a follow-up setter, because two order-dependent calls is the hazard #392 documented and `cap:a-decision-can-be-created-already-settled` was built to remove for `status`. An undeclared value is refused, and the refusal says omitting is also valid so the obvious repair is not to guess. The brainstorm skill now sets it at capture and both mirrors were re-synced. Four tests, including that ABSENT STAYS ABSENT. Core suite 135 suites / 1548 passed / 0 failed; toolsnaps, schema, skill-lint, doc-versions and self-host gates green."
+      }
+    },
+    {
+      "node_id": "chg:an-import-knows-its-own-age-and-a-server-behind-its-record-says-so",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "name": "import_graph refuses a document from a newer reflow2 unless accept_newer, the import report names every materialised Type.property, and the provenance's new NewerWriter verdict reaches served_by.behind_record with a next line",
+        "repair": "corrected_cause",
+        "subject": "system"
       }
     },
     {
@@ -236958,6 +237106,17 @@
       }
     },
     {
+      "node_id": "epoch:an-import-knows-its-own-age",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "description": "Response to flo2's \"853 edges gained a field\" (2026-09-14), root-caused as an older release binary (0.59.0, served by the launcher) importing/writing a record a newer reflow2 (0.60.2) had written: import compared no versions, the open-time guard compared only vocabulary, and the old binary's `role: author` default landed on 853 AUTHORED_BY edges in silence. Anthony's word: \"yes on three-leg fix\". Ordering: after the v0.61.1 cut (499). MUST NOT: refuse an OLDER document (additive, reads whole); refuse on vocabulary the guard already handles; hide the materialized counts on a same-version import (they are the defaults the export left implicit on purpose, and saying so is the point). Tests were written together with the fix, not failing-first; the mcp suite, core suite, clippy and smoke are green on the branch.",
+        "epoch_type": "incident_response",
+        "name": "An import knows its own age (2026-09-15)",
+        "sequence": 500,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:anthony-rules-on-five",
       "node_type": "DesignEpoch",
       "properties": {
@@ -240949,6 +241108,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered ility.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:import-from-a-newer-reflow2-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered an_import_from_a_newer_reflow2_is_refused.rs"
       }
     },
     {
@@ -259297,6 +259466,20 @@
       }
     },
     {
+      "node_id": "ver:an-import-knows-its-own-age",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-core/tests/export.rs: a document stamped 99.0.0 is refused (both versions, BEHIND, accept_newer named; nothing written) and imports under accept_newer; documents from this or an older version import without ceremony; stripping one default-valued property from a document makes the report name exactly that Type.property once and the stored value equal the default, while a fully-stated document materialises nothing. provenance.rs unit test: is_newer's direction and pre-release safety; same_vocabulary_verdict yields NewerWriter (note says BEHIND and 853) vs OlderGraph. crates/reflow2-mcp/tests/an_import_from_a_newer_reflow2_is_refused.rs: the served import_graph refuses and names the way through, accepts on purpose and reports materialized keyed by Type.property, imports this-or-older versions as before; behind_record is absent when current and names written_by/running/hazard when behind, and BEHIND_NEXT points at it.",
+        "findings": "21/21 core export tests, 12/12 provenance unit tests, 4/4 mcp tests; the full mcp suite, clippy -D warnings on both crates, fmt and smoke_mcp green on the branch.",
+        "kind": "verification",
+        "last_run_at": "2026-09-15",
+        "level": "integration",
+        "method": "test",
+        "name": "A newer document is refused, materialised values are named, and a behind server says so",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:an-unobserved-location-means-the-sweep-missed-it",
       "node_type": "Verification",
       "properties": {
@@ -261841,7 +262024,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:4ea7edcae3be339edfc6d25d498699d634649637a4c4e3bba5e366853b6cf77f",
+  "prev_content_hash": "sha256:64351678b967ded5417b44e5dd0b2cadd7867e828a00b3de360f290743d4d139",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

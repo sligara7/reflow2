@@ -222,6 +222,38 @@ pub const UNKNOWN_NEXT: &str = "This server CANNOT TELL whether it is still the 
      started from (/proc unreadable — non-Linux or restricted). Unknown is not `false`: verify \
      the running build another way before trusting a rollup. See `served_by.stale_note`.";
 
+/// `next` entry when this server is BEHIND the record it holds — see
+/// `behind_record`. Distinct from STALE (the binary on disk moved under a
+/// running process): here the binary is exactly what was launched, and it is
+/// older than the last reflow2 that wrote this design.
+pub const BEHIND_NEXT: &str = "THIS SERVER IS BEHIND THE RECORD IT HOLDS — the design was last \
+     written by a NEWER reflow2 (see `served_by.behind_record`). Reads are complete; every WRITE \
+     from here materialises this binary's schema defaults onto records the newer one left \
+     implicit, silently. Update reflow2 (or serve the build that wrote the record) before \
+     writing, then `--stop-shared` and any tool call.";
+
+/// The `served_by.behind_record` block: the newer reflow2 that last wrote the
+/// store this server holds, when this binary is behind it. `None` otherwise —
+/// absent rather than `false`, like `stale_note`, so the ordinary call pays
+/// nothing for it.
+///
+/// `served_by.stale` could not carry this (08-13 finding, and the 853 of
+/// 2026-09-14): it asks "was my executable replaced since I started?", and a
+/// release binary that was simply BUILT before the record it opens answers no,
+/// truthfully. The question here is asked of the store's stamp at open.
+pub fn behind_record(written_by: Option<&str>) -> Option<serde_json::Value> {
+    let written_by = written_by?;
+    Some(json!({
+        "written_by": written_by,
+        "running": env!("CARGO_PKG_VERSION"),
+        "note": format!(
+            "BEHIND: this design was last written by reflow2 {written_by}; this server is {}. {}",
+            env!("CARGO_PKG_VERSION"),
+            reflow2_core::provenance::BEHIND_HAZARD
+        ),
+    }))
+}
+
 /// What it says when the executable is still the file we started from.
 pub const CURRENT_NOTE: &str =
     "current: this server's executable is still the file it was started from.";
@@ -354,6 +386,11 @@ pub struct ReflowService {
     /// is (`req:design-identity` — both live in sidecars beside the store).
     /// `None` for an in-memory graph, which has no sidecar to remember in.
     pub(crate) graph_path: Option<String>,
+    /// The NEWER reflow2 that last wrote this store, when this binary is behind
+    /// it (`reflow2_core::provenance::Provenance::NewerWriter`). `None` when
+    /// the store was written by this version or an older one, or is in memory.
+    /// Read by `served_by` as `behind_record`, and by `loop_status`'s `next`.
+    pub(crate) written_by: Option<String>,
     /// THIS SESSION's seat, minted per service instance rather than per process
     /// (`req:seat-per-client`). One server holds many client sessions — rmcp
     /// builds a service per session — so a process-wide seat would report every
@@ -4874,6 +4911,15 @@ pub struct ImportGraphReq {
     /// with that file, which is what clears a `req:stale-seat-knows` refusal.
     #[serde(default)]
     pub path: Option<String>,
+    /// Import a document stamped by a NEWER reflow2 than this server anyway.
+    /// Default false: such an import is REFUSED, because this binary would
+    /// write its own schema defaults onto every record the newer reflow2 left
+    /// implicit (853 AUTHORED_BY edges gained `role: author` that way on
+    /// 2026-09-14) and nothing in the result would say so. Pass true only when
+    /// you mean to read it with this binary — the report's `materialized` field
+    /// then names exactly what was written that the document did not state.
+    #[serde(default)]
+    pub accept_newer: Option<bool>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -5180,10 +5226,12 @@ impl ReflowService {
         // saw, and a silently-partial search reads as "the design says
         // nothing about that". One bounded rebuild at open closes that hole.
         graph.reindex_search()?;
-        Ok((
-            Self::wrap_at(graph, Some(path.to_string())),
-            provenance.note(),
-        ))
+        let mut service = Self::wrap_at(graph, Some(path.to_string()));
+        // A binary behind its record is told so at open, and KEEPS knowing:
+        // the note above is printed once to a log nobody reads mid-session,
+        // and `served_by` is what a session actually consults.
+        service.written_by = provenance.newer_writer().map(str::to_string);
+        Ok((service, provenance.note()))
     }
 
     pub fn new(path: &str) -> Result<Self, DynoError> {
@@ -5214,6 +5262,7 @@ impl ReflowService {
             read_only: false,
             seat: std::sync::Arc::new(reflow2_core::identity::SeatLease::attach()),
             graph_path,
+            written_by: None,
             // adding a store did not have to change every constructor.
             // The skills are served, not installed (dec:skills-served), and
             // their tools live in their own module — combined here so
@@ -5291,6 +5340,9 @@ impl ReflowService {
             graph: Arc::clone(&self.graph),
             tool_router: self.tool_router.clone(),
             graph_path: self.graph_path.clone(),
+            // A property of the STORE, like the graph: every session on this
+            // server is behind the same record.
+            written_by: self.written_by.clone(),
             write_gen: Arc::clone(&self.write_gen),
             // ⭐ INHERITED, NEVER RESET, and this is the case that actually
             // matters. `share()` mints a service per CLIENT SESSION, so a

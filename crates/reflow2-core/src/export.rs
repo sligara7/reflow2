@@ -295,6 +295,28 @@ pub struct ImportReport {
     #[serde(skip_serializing_if = "Vec::is_empty")]
     #[serde(default)]
     pub dangling_node_refs: Vec<String>,
+    /// What the store now holds that the document did NOT state, counted by
+    /// `Type.property` (nodes) and `EDGE_TYPE.property` (edges): the schema
+    /// defaults this reflow2 materialised and the migrations it applied (an
+    /// AUTHORED_BY `role` becoming `roles`, say).
+    ///
+    /// On a document written by THIS version these are the defaults the export
+    /// left implicit on purpose (`cap:defaults-are-not-serialized`) and the
+    /// round trip stays byte-identical. On a document written by a NEWER
+    /// reflow2 they are the hazard `ImportOptions::accept_newer` gates: on
+    /// 2026-09-14 an 0.59.0 binary imported a 0.60.2 record and 853 AUTHORED_BY
+    /// edges gained `role: author`, and no report said so. Now one does.
+    #[serde(skip_serializing_if = "BTreeMap::is_empty")]
+    #[serde(default)]
+    pub materialized: BTreeMap<String, usize>,
+}
+
+/// How an import may deviate from the safe default.
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
+pub struct ImportOptions {
+    /// Import a document stamped by a reflow2 NEWER than this crate. Refused
+    /// by default — see [`DesignGraph::import_graph_with`].
+    pub accept_newer: bool,
 }
 
 impl DesignGraph {
@@ -347,6 +369,47 @@ impl DesignGraph {
     /// Everything lands in one batch, so a document that fails validation
     /// half-way leaves the graph untouched rather than half-loaded.
     pub fn import_graph(&mut self, doc: &GraphExport) -> Result<ImportReport, DynoError> {
+        self.import_graph_with(doc, ImportOptions::default())
+    }
+
+    /// [`import_graph`](Self::import_graph) with options.
+    ///
+    /// 🛑 A DOCUMENT WRITTEN BY A NEWER reflow2 IS REFUSED unless
+    /// `accept_newer`. The vocabulary may read fine — that is not the hazard.
+    /// The hazard is what THIS binary writes: every property the newer reflow2
+    /// left implicit gets this binary's default, which may be a default the
+    /// newer one removed. Measured 2026-09-14: an 0.59.0 server imported a
+    /// 0.60.2 record and 853 AUTHORED_BY edges gained `role: author`, silently
+    /// (`fact:root-cause-the-853-is-an-older-binary-writing-the-old-role-default-
+    /// onto-a-newer-document-not-the-export-leaving-a-default-implicit`). The
+    /// import compared no versions; the store's own open-time guard compares
+    /// vocabulary, which was identical. This is the mirror of the stale-export
+    /// refusal: a record is written by code that is on disk, and read by code
+    /// that is at least as new as what wrote it.
+    pub fn import_graph_with(
+        &mut self,
+        doc: &GraphExport,
+        options: ImportOptions,
+    ) -> Result<ImportReport, DynoError> {
+        if let Some(stamp) = &doc.stamp
+            && crate::provenance::is_newer(&stamp.reflow2_version, env!("CARGO_PKG_VERSION"))
+            && !options.accept_newer
+        {
+            return Err(DynoError::Validation {
+                node_type: "GraphExport".into(),
+                property: "stamp.reflow2_version".into(),
+                message: format!(
+                    "REFUSED: this document was written by reflow2 {}, and you are running {}, \
+                     which is BEHIND it. Nothing was written. {} Update reflow2 and import \
+                     again — or pass accept_newer: true if you mean to read it with this \
+                     binary, and read the report's `materialized` field for exactly what it \
+                     wrote that the document did not state.",
+                    stamp.reflow2_version,
+                    env!("CARGO_PKG_VERSION"),
+                    crate::provenance::BEHIND_HAZARD
+                ),
+            });
+        }
         // WHOSE DESIGN IS THIS? Answered before a single write, because the id
         // namespaces every stored key and the import writes under whatever name
         // the graph currently carries (BL-169).
@@ -410,6 +473,7 @@ impl DesignGraph {
             // success would be the silent-failure this crate's first principle
             // forbids. The error carries the whole list.
             let mut faults: Vec<String> = Vec::new();
+            let mut materialized: BTreeMap<String, usize> = BTreeMap::new();
             let mut pending_refs: Vec<(usize, &str, &str, String, String)> = Vec::new();
             for (index, n) in doc.nodes.iter().enumerate() {
                 let props: std::collections::HashMap<String, Value> =
@@ -423,9 +487,17 @@ impl DesignGraph {
                         target,
                     ));
                 }
-                if let Err(e) = self.create_node_refs_checked_later(&n.node_type, &n.node_id, props)
-                {
-                    faults.push(format!("nodes[{index}] {}: {e}", n.node_id));
+                match self.create_node_refs_checked_later(&n.node_type, &n.node_id, props) {
+                    Ok(stored) => {
+                        for key in stored.properties.keys() {
+                            if !n.properties.contains_key(key) {
+                                *materialized
+                                    .entry(format!("{}.{key}", n.node_type))
+                                    .or_insert(0) += 1;
+                            }
+                        }
+                    }
+                    Err(e) => faults.push(format!("nodes[{index}] {}: {e}", n.node_id)),
                 }
             }
 
@@ -487,7 +559,16 @@ impl DesignGraph {
                             crate::graph::normalize_authored_by_props(&mut props);
                         }
                         match self.create_edge(&e.edge_type, ft, &e.from_id, tt, &e.to_id, props) {
-                            Ok(_) => edges_written += 1,
+                            Ok(stored) => {
+                                edges_written += 1;
+                                for key in stored.properties.keys() {
+                                    if !e.properties.contains_key(key) {
+                                        *materialized
+                                            .entry(format!("{}.{key}", e.edge_type))
+                                            .or_insert(0) += 1;
+                                    }
+                                }
+                            }
                             Err(err) => faults.push(format!(
                                 "edges[{index}] {} {} -> {}: {err}",
                                 e.edge_type, e.from_id, e.to_id
@@ -533,6 +614,7 @@ impl DesignGraph {
                 }),
                 adopted_identity: adopted_identity.clone(),
                 dangling_node_refs,
+                materialized,
             })
         })();
 

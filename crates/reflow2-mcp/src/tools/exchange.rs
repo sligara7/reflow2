@@ -373,24 +373,23 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Load an exported design into this graph. THE DOCUMENT SHAPE, which an export of an empty \
-                       graph cannot teach you: \
+        description = "Load an exported design into this graph. THE DOCUMENT SHAPE: \
                        {\"nodes\":[{\"node_type\":\"Requirement\",\"node_id\":\"req:x\",\"properties\":{...}}],\"edges\":[{\"edge_type\":\"SATISFIES\",\"from_id\":\"cap:x\",\"to_id\":\"req:x\",\"properties\":{}}]}. \
                        That is the whole required envelope — `graph_id`, `stamp`, `content_hash` and \
-                       `prev_content_hash` are all OPTIONAL on the way in, and `edges` may be omitted entirely. \
-                       Endpoint types are not stored on an edge; they are recovered from the nodes in the same \
-                       document or from this graph. Use describe_schema for the properties each node_type \
-                       takes. EACH NODE MUST BE COMPLETE: validation applies to the whole node, so a partial \
-                       node is refused rather than merged into the one already there — unlike create_node, \
-                       where a partial props object edits. Upsert, not replace: ids already present are \
-                       overwritten and anything not in the document is left alone, so clear the graph first if \
-                       you want a clean restore. Atomic — a document that fails validation leaves the graph \
-                       untouched rather than half-loaded — and EVERY invalid item is reported in one response \
-                       with its position. Reports any edge whose endpoints were missing rather than dropping \
-                       it. IDENTITY: an EMPTY store adopts the document's `graph_id` (reported as \
-                       `adopted_identity`) instead of renaming the design; a store already holding one keeps \
-                       its name. Ask for this when you want to load a design or model file that someone \
-                       exported or sent you.",
+                       `prev_content_hash` are OPTIONAL on the way in, and `edges` may be omitted. Endpoint \
+                       types are recovered from the nodes in the document or from this graph; describe_schema \
+                       lists each node_type's properties. EACH NODE MUST BE COMPLETE: validation applies to the \
+                       whole node, so a partial node is refused rather than merged. Upsert, not replace: ids \
+                       already present are overwritten and anything not in the document is left alone — clear \
+                       the graph first for a clean restore. Atomic: a document that fails validation leaves the \
+                       graph untouched, and EVERY invalid item is reported in one response; an edge whose \
+                       endpoint is missing is reported, not dropped. IDENTITY: an EMPTY store adopts the \
+                       document's `graph_id` (reported as `adopted_identity`); a store already holding one \
+                       keeps its name. A document stamped by a NEWER reflow2 than this server is REFUSED unless \
+                       `accept_newer` — it would write this binary's defaults onto records the newer one left \
+                       implicit (the 853 of 2026-09-14). `materialized` in the report names every Type.property \
+                       written that the document did not state. Ask for this when you want to load a design or \
+                       model file that someone exported or sent you.",
         annotations(read_only_hint = false)
     )]
     pub async fn import_graph(
@@ -416,7 +415,14 @@ impl ReflowService {
             }
         };
         let mut g = self.write_lock().await?;
-        let report = g.import_graph(&doc).map_err(dyno_err)?;
+        let report = g
+            .import_graph_with(
+                &doc,
+                reflow2_core::export::ImportOptions {
+                    accept_newer: req.accept_newer.unwrap_or(false),
+                },
+            )
+            .map_err(dyno_err)?;
         // Absorbing a file puts this seat in step with it, which is exactly
         // what the stale-seat refusal tells people to do — so record it, or the
         // remedy would not clear the condition it names (req:stale-seat-knows).

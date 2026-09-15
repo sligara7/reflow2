@@ -440,6 +440,60 @@ pub enum Provenance {
     /// Written before some of this binary's vocabulary existed. Safe: schema
     /// growth is additive, so nothing in the graph is unreadable.
     OlderGraph { was: GraphStamp, now: GraphStamp },
+    /// LAST WRITTEN BY A reflow2 NEWER THAN THIS ONE, with a vocabulary this
+    /// one can read in full — so it opens, and that is exactly the hazard.
+    ///
+    /// Until 2026-09-15 this case was reported as `OlderGraph` and its note
+    /// said "you are running <newer> … additive only", the wrong way round.
+    /// Measured 2026-09-14 (`fact:root-cause-the-853-is-an-older-binary-
+    /// writing-the-old-role-default-onto-a-newer-document…`): a 0.59.0 server
+    /// held a design a 0.60.2 had written, opened it without a word, and every
+    /// write it made materialised ITS schema defaults onto records the newer
+    /// reflow2 had left implicit — 853 AUTHORED_BY edges gained `role: author`.
+    /// Nothing is unreadable; what is wrong is what this binary WRITES.
+    NewerWriter { was: GraphStamp, now: GraphStamp },
+}
+
+/// The hazard a binary behind its record carries, in one paragraph, shared by
+/// the open-time note, the import refusal and the served `behind_record` so
+/// the three say the same thing.
+pub const BEHIND_HAZARD: &str = "Everything in it still reads, but every write THIS binary makes \
+     materialises its own schema defaults onto records the newer reflow2 left implicit — measured \
+     2026-09-14: an 0.59.0 server wrote `role: author` onto 853 AUTHORED_BY edges of a 0.60.2 \
+     record, and nothing said so. Update reflow2 before writing.";
+
+/// Dotted version string → comparable key (`"0.61.1"` → `[0, 61, 1]`). A
+/// non-numeric segment reads as 0, so a pre-release suffix never sorts ABOVE
+/// its release — `is_newer` errs toward "not newer", which is the safe side
+/// for a refusal.
+pub fn version_key(v: &str) -> Vec<u64> {
+    v.trim()
+        .split('.')
+        .map(|seg| {
+            seg.chars()
+                .take_while(|c| c.is_ascii_digit())
+                .collect::<String>()
+                .parse::<u64>()
+                .unwrap_or(0)
+        })
+        .collect()
+}
+
+/// Is `candidate` a strictly newer reflow2 than `than`? Version strings only;
+/// `"unstamped"` (or anything non-numeric) is never newer.
+pub fn is_newer(candidate: &str, than: &str) -> bool {
+    version_key(candidate) > version_key(than)
+}
+
+/// The verdict for a graph whose stamp names a vocabulary this binary can read
+/// in full: OLDER (the ordinary, additive case) or NEWER WRITER (the hazard
+/// above). Pure, so the direction can be pinned without a store.
+pub fn same_vocabulary_verdict(was: GraphStamp, now: GraphStamp) -> Provenance {
+    if is_newer(&was.reflow2_version, &now.reflow2_version) {
+        Provenance::NewerWriter { was, now }
+    } else {
+        Provenance::OlderGraph { was, now }
+    }
 }
 
 impl Provenance {
@@ -462,6 +516,20 @@ impl Provenance {
                 now.node_types,
                 now.edge_types
             )),
+            Provenance::NewerWriter { was, now } => Some(format!(
+                "THIS GRAPH WAS LAST WRITTEN BY reflow2 {}; you are running {}, which is BEHIND \
+                 it. {}",
+                was.reflow2_version, now.reflow2_version, BEHIND_HAZARD
+            )),
+        }
+    }
+
+    /// The newer reflow2 that last wrote this graph, when this binary is behind
+    /// it — what `served_by.behind_record` reports. `None` otherwise.
+    pub fn newer_writer(&self) -> Option<&str> {
+        match self {
+            Provenance::NewerWriter { was, .. } => Some(was.reflow2_version.as_str()),
+            _ => None,
         }
     }
 }
@@ -662,15 +730,9 @@ pub fn check_and_stamp(
                         }
                     )));
                 }
-                Provenance::OlderGraph {
-                    was,
-                    now: now.clone(),
-                }
+                same_vocabulary_verdict(was, now.clone())
             }
-            VocabularyGap::None => Provenance::OlderGraph {
-                was,
-                now: now.clone(),
-            },
+            VocabularyGap::None => same_vocabulary_verdict(was, now.clone()),
         },
     };
 
@@ -688,7 +750,7 @@ pub fn check_and_stamp(
     // Decision actually carries it; refusing on the declaration alone would
     // repeat exactly the mistake that made a graph holding ZERO instances of a
     // retired type unopenable.
-    if let Provenance::OlderGraph { was, now } = &verdict {
+    if let Provenance::OlderGraph { was, now } | Provenance::NewerWriter { was, now } = &verdict {
         let unknown = was.unknown_enum_values(now);
         if !unknown.is_empty() {
             let stored = enum_population(&unknown)?;
@@ -719,6 +781,30 @@ pub fn check_and_stamp(
 
 #[cfg(test)]
 mod tests {
+    /// A version comparison that errs toward "not newer", and the verdict that
+    /// finally names the direction the 853 came from.
+    #[test]
+    fn a_newer_writer_is_named_as_such_and_an_older_one_still_reads_as_older() {
+        assert!(super::is_newer("0.61.1", "0.59.0"));
+        assert!(super::is_newer("0.61.1", "0.61.0"));
+        assert!(!super::is_newer("0.59.0", "0.61.1"));
+        assert!(!super::is_newer("0.61.1", "0.61.1"));
+        assert!(!super::is_newer("unstamped", "0.61.1"));
+        assert!(!super::is_newer("0.61.1-rc1", "0.61.1"));
+
+        let newer = legacy("0.62.0", 28, 65);
+        let me = legacy("0.61.1", 28, 65);
+        let v = super::same_vocabulary_verdict(newer.clone(), me.clone());
+        assert!(matches!(v, super::Provenance::NewerWriter { .. }), "{v:?}");
+        assert_eq!(v.newer_writer(), Some("0.62.0"));
+        let note = v.note().expect("a behind binary is told so");
+        assert!(note.contains("BEHIND") && note.contains("853"), "{note}");
+
+        let v = super::same_vocabulary_verdict(me.clone(), newer);
+        assert!(matches!(v, super::Provenance::OlderGraph { .. }), "{v:?}");
+        assert_eq!(v.newer_writer(), None);
+    }
+
     /// The message a gap would refuse with, or None when it opens. The unit
     /// tests below are about MESSAGE WORDING — which types are named, and
     /// whether the operator is told to migrate or to rebuild — so they read the

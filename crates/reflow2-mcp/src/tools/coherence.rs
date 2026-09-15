@@ -274,7 +274,16 @@ impl ReflowService {
         // it — which is the whole lesson being applied here rather than
         // restated.
         {
-            let served = crate::service::served_by();
+            let mut served = crate::service::served_by();
+            // BEHIND THE RECORD is a different question from STALE and gets its
+            // own line in `next`, for the same reason stale does: a field beside
+            // the list is not the same as being in it.
+            if let Some(behind) = crate::service::behind_record(self.written_by.as_deref()) {
+                served["behind_record"] = behind;
+                if let Some(arr) = payload.get_mut("next").and_then(|v| v.as_array_mut()) {
+                    arr.insert(0, json!(crate::service::BEHIND_NEXT));
+                }
+            }
             let stale = served.get("stale").and_then(serde_json::Value::as_bool);
             let mut block = served.clone();
             if stale == Some(false) {
@@ -742,7 +751,11 @@ impl ReflowService {
             })
             .map_err(ser_err)?
         };
-        report["served_by"] = served_by();
+        let mut served = served_by();
+        if let Some(behind) = crate::service::behind_record(self.written_by.as_deref()) {
+            served["behind_record"] = behind;
+        }
+        report["served_by"] = served;
         self.ok_read(&g, report)
     }
 
