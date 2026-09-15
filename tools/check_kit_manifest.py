@@ -77,12 +77,28 @@ def file_sha(p: Path) -> str:
     return hashlib.sha256(p.read_bytes()).hexdigest()
 
 
-def shipped_sources() -> dict[str, Path]:
-    """Every path the kit installs, mapped to its source file.
+def shipped_sources(harnesses: set[str] | None = None) -> dict[str, Path]:
+    """Every path the kit installs INTO THIS PROJECT, mapped to its source file.
 
     Both halves of the installer's contract: the flat `FILES` list and the
     `TREES` copied wholesale. Reading them from the installer's own module is
     deliberate — see the import note above.
+
+    `harnesses` is what the project's stamp says it asked for. A tree only one
+    harness reads is not shipped to a project that named a different one, and
+    this check has to apply the SAME gate the installer applies or it reports a
+    file that was correctly never installed as drift.
+
+    THE BUG THIS CLOSES was latent and one-sided, which is why it survived: an
+    OpenCode project reported all eleven Claude slash commands as missing from
+    its manifest — 30 findings on a correct install — and nobody met it because
+    `.claude/commands` was the only gated tree and almost every project is
+    Claude Code. Adding a second gated tree (`.opencode/plugins`) made the same
+    fault appear in the other direction, on the far more common harness, which
+    is how it was found.
+
+    Omitted (or an older stamp that records no harnesses) means check
+    everything, which is exactly the previous behaviour.
     """
     out: dict[str, Path] = {}
     for src, rel in kit.FILES:
@@ -90,6 +106,10 @@ def shipped_sources() -> dict[str, Path]:
     for src_dir, rel_dir in kit.TREES:
         if not src_dir.is_dir():
             continue
+        if harnesses is not None:
+            owner = getattr(kit, "TREE_HARNESS", {}).get(rel_dir)
+            if owner and owner not in harnesses:
+                continue
         for src in sorted(src_dir.rglob("*")):
             if src.is_file():
                 out[f"{rel_dir}/{src.relative_to(src_dir).as_posix()}"] = src
@@ -139,7 +159,10 @@ def check(project: Path) -> tuple[list[str], list[str]]:
                      "content claims cannot be checked, and one install closes that")
         return (findings, notes)
 
-    shipped = shipped_sources()
+    stamped_harnesses = stamp.get("harnesses")
+    shipped = shipped_sources(
+        set(stamped_harnesses) if isinstance(stamped_harnesses, list) and stamped_harnesses else None
+    )
     # A path the project owned lands at its sidecar instead, so the sidecar is a
     # legitimate manifest key for the file it stands in for.
     allowed = set(shipped)

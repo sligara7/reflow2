@@ -155,8 +155,22 @@ def foreign_owner(src: Path, dst: Path) -> str | None:
 # Without them a consumer install is experienced as broken rather than thin: the
 # skills are reachable but nothing tells you they are, which is the same
 # invisibility this requirement was raised for.
+#
+# THE OPENCODE PLUGIN IS THE SECOND EXCEPTION, and it is exception-shaped for a
+# different reason than the commands are. OpenCode has no hook configuration to
+# merge into — it loads plugin FILES from a directory — so the loop nudge cannot
+# be wired the way `~/.claude/settings.json` is wired. The file has to land on
+# disk or the coherence loop simply has no trigger on that harness.
+#
+# What keeps it honest is that it carries no judgement: every threshold, counter
+# and message stays in `loop_nudge.py`, which the plugin shells out to. It is an
+# adapter between OpenCode's hooks and that script's stdin, so the thing that
+# goes stale on a copy — content that changes with the release — is not in it.
+# And because it is installed through `place_kit_file` like everything else, an
+# upgrade refreshes it and an edited copy is kept, loudly.
 TREES: list[tuple[Path, str]] = [
     (KIT / "commands", ".claude/commands"),
+    (KIT / "plugins", ".opencode/plugins"),
 ]
 
 # Which harness reads each installed tree. `.claude/commands` is Claude Code's
@@ -165,6 +179,7 @@ TREES: list[tuple[Path, str]] = [
 # absent from this map is harness-neutral and always installed.
 TREE_HARNESS: dict[str, str] = {
     ".claude/commands": "claude",
+    ".opencode/plugins": "opencode",
 }
 
 

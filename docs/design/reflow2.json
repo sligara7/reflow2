@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:65c91bed5f5908b2e9132827cbbc77c90e79985e64e41e21d399f1d2ef14009b",
+  "content_hash": "sha256:82c801b704f7532376a75c3321eabd2b5aedbf86fff5b1cc9fb5828c6c67d18a",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -3077,6 +3077,14 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:the-loop-nudge-reaches-opencode-through-a-plugin-adapter",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:nudge"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:the-orientation-call-says-whether-its-own-answers-are-current",
       "properties": {
         "weight_basis": "estimated"
@@ -3801,6 +3809,14 @@
     },
     {
       "edge_type": "ANTICIPATES",
+      "from_id": "fact:a-fresh-server-on-an-old-build-is-not-stale-and-stamps-confidently",
+      "properties": {
+        "evidence": "That 2026-08-13 finding said a server on an old build does not read as stale and acts confidently; here the same old build imports a newer document confidently and rewrites it, on the maintainer's own box."
+      },
+      "to_id": "fact:root-cause-the-853-is-an-older-binary-writing-the-old-role-default-onto-a-newer-document-not-the-export-leaving-a-default-implicit"
+    },
+    {
+      "edge_type": "ANTICIPATES",
       "from_id": "fact:a-piped-gate-reports-the-pipes-exit-code-not-the-gates",
       "properties": {
         "evidence": "The earlier fact recorded mechanism 1 of the five on its own. It saw the shape coming and named it precisely — and was then hit twice more in this session AFTER being on the record, which is the part that makes the census worth taking: knowing about one instance did not prevent the same shape arriving through four other doors. Drawn from the earlier fact TO this one."
@@ -3849,6 +3865,14 @@
     },
     {
       "edge_type": "ANTICIPATES",
+      "from_id": "fact:defect-export-graph-stamps-confidently-while-the-server-reports-itself-stale",
+      "properties": {
+        "evidence": "The 2026-09-06 defect was the export side of version skew and was closed by a refusal; this is the import side, which still has none."
+      },
+      "to_id": "fact:root-cause-the-853-is-an-older-binary-writing-the-old-role-default-onto-a-newer-document-not-the-export-leaving-a-default-implicit"
+    },
+    {
+      "edge_type": "ANTICIPATES",
       "from_id": "fact:defect-loop-status-asserts-an-answer-never-reached-the-design-from-a-fact-that-cannot-say-so",
       "properties": {
         "evidence": "The 2026-08-16 fact saw this coming in its own text: it named option A (\"the narrow honest repair is for the message to say what it actually knows\") and stated the obstacle behind option C (\"'was this answer written into the design' has no general computation\"). It framed the choice seventeen days before the recurrence made it worth deciding."
@@ -3894,6 +3918,14 @@
         "evidence": "The earlier measurement saw this coming. On 2026-08-19 it established across four independent grounds that v0.13.0's diff over ALL SIX crates reflow2 touches was EMPTY — the release changed only `dynograph-client` and `dynograph-service`, neither of which reflow2 depends on — and the confirmation still cost a session and a full workspace build, with the pin bump parked to this day. That episode IS the cost of coupling release to repository rather than to crate, observed four days before anyone asked the question. Drawn from the fact TO the question: the observation came first."
       },
       "to_id": "dec:idea-dynograph-crates-independent-in-code-coupled-in-release"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "fact:export-import-export-is-lossless-but-not-a-fixed-point-until-one-normalising-pass",
+      "properties": {
+        "evidence": "The 2026-08-24 finding named the class — the committed export is not in its importer's normal form, and a rehydrate produces one phantom diff — and flo2 met it three weeks later on a different field, the roles migration."
+      },
+      "to_id": "fact:field-confirmation-flo2-853-authored-by-edges-gained-roles-on-import-the-roles-migration-seen-from-the-consumer-side"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -9909,6 +9941,12 @@
       "from_id": "chg:the-loop-notices-a-fix-with-no-cause-and-a-defect-its-subject-outran",
       "properties": {},
       "to_id": "epoch:v0500-cut"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:the-loop-nudge-reaches-opencode-through-a-plugin-adapter",
+      "properties": {},
+      "to_id": "epoch:the-coherence-loop-gets-a-trigger-on-opencode"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -22670,6 +22708,16 @@
     },
     {
       "edge_type": "CAUSES",
+      "from_id": "cap:a-session-serves-a-release-binary",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The launcher serves target/release and rebuilds it only on the builder's word; after #505 changed AUTHORED_BY's stored shape that release binary (0.59.0) went on serving every session on this box, and measured directly (M3) it rewrites the current export's 853 AUTHORED_BY edges with the old schema default `role: author` on import — the exact number and field flo2 reported — while the current binary round-trips the same document unchanged (M2).",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:root-cause-the-853-is-an-older-binary-writing-the-old-role-default-onto-a-newer-document-not-the-export-leaving-a-default-implicit"
+    },
+    {
+      "edge_type": "CAUSES",
       "from_id": "cap:latent-surface",
       "properties": {
         "basis": "correlational",
@@ -30849,6 +30897,15 @@
         "action": "modified"
       },
       "to_id": "art:dependency-manifest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-cb0f5504050ea74f",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:nudge-detect"
     },
     {
       "edge_type": "CHANGED",
@@ -44602,6 +44659,51 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-loop-nudge-reaches-opencode-through-a-plugin-adapter",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:check-kit-manifest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-loop-nudge-reaches-opencode-through-a-plugin-adapter",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:init"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-loop-nudge-reaches-opencode-through-a-plugin-adapter",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:machine-install"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-loop-nudge-reaches-opencode-through-a-plugin-adapter",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:nudge-detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-loop-nudge-reaches-opencode-through-a-plugin-adapter",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:the-loop-nudge-reaches-opencode-through-a-plugin-adapter"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-loop-stops-recomputing-itself-on-every-read",
       "properties": {
         "accepted_baseline": true,
@@ -49412,6 +49514,15 @@
     },
     {
       "edge_type": "CONTRADICTS",
+      "from_id": "fact:root-cause-the-853-is-an-older-binary-writing-the-old-role-default-onto-a-newer-document-not-the-export-leaving-a-default-implicit",
+      "properties": {
+        "alignment": "opposing",
+        "evidence": "That record's first reading — the 853 are the roles migration — rested on a count match; the measured migration is 842 edges gaining `roles`, while the 853 is the old release binary adding `role: author` to a newer document. The number and the field both refute the first reading; the class it named still holds."
+      },
+      "to_id": "fact:field-confirmation-flo2-853-authored-by-edges-gained-roles-on-import-the-roles-migration-seen-from-the-consumer-side"
+    },
+    {
+      "edge_type": "CONTRADICTS",
       "from_id": "fact:seam-roll-up-found-a-container-by-id-prefix-and-answered-a-false-zero",
       "properties": {
         "alignment": "supporting",
@@ -49616,6 +49727,16 @@
         "evidence": "Two halves of one arrangement, recorded as SUPPORTING so it reinforces rather than conflicts (req:supporting-is-not-conflict). The third-party rule says a fix is judged by what it does for somebody else's project; this says the self-host is what GENERATES the finding, because reflow2's own design is the first place a missing detector shows up as pain. Neither replaces the other, and this one explicitly does not weaken the third-party rule's named failure: patch it here, mark it met, leave every consumer with the hole."
       },
       "to_id": "rule:fixes-are-judged-by-the-third-party"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cap:the-loop-nudge-reaches-opencode-through-a-plugin-adapter",
+      "properties": {
+        "evidence": "The adapter holds no judgement: every threshold, counter, shape match and graph probe it delivers comes from loop_nudge.py, so this is only worth anything while that script is the single implementation.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "cap:stop-nudge-asks-the-graph"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -53989,6 +54110,15 @@
     },
     {
       "edge_type": "DUPLICATES",
+      "from_id": "fact:field-confirmation-flo2-853-authored-by-edges-gained-roles-on-import-the-roles-migration-seen-from-the-consumer-side",
+      "properties": {
+        "basis": "suspected",
+        "evidence": "The same complaint from a third project in nearly the same words — a restore tells an agent the design changed when nobody designed anything — said for a different reason (a migration, not a schema default) and worth keeping both."
+      },
+      "to_id": "fact:defect-import-materialises-defaults-so-a-restored-graph-reads-as-changed"
+    },
+    {
+      "edge_type": "DUPLICATES",
       "from_id": "fact:the-upgrade-path-leaves-the-shared-server-on-the-old-binary",
       "properties": {
         "basis": "suspected",
@@ -54309,6 +54439,14 @@
         "evidence": "The road this idea actually took. Rejected 2026-09-01 as a grouping of four, but the measurement it demanded of itself is what produced this narrower cause — which explains two of its four instances precisely and claims nothing about the other two. Drawn rather than written into the decision's prose, because the promotion edge records the outcome structurally and leaves the original reasoning intact (bhome, 2026-08-31: EVOLVES_INTO is the right edge for this and no instruction pointed at it)."
       },
       "to_id": "fact:reflow2-has-a-vocabulary-for-the-users-word-and-none-for-the-agents"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-the-loop-nudge-exists-for-one-harness-only",
+      "properties": {
+        "evidence": "That decision chose to announce the absence and left option (b), a per-harness equivalent wherever an event model is confirmed, open; OpenCode's plugin event model is confirmed and this capability is option (b) delivered for it."
+      },
+      "to_id": "cap:the-loop-nudge-reaches-opencode-through-a-plugin-adapter"
     },
     {
       "edge_type": "EVOLVES_INTO",
@@ -58907,6 +59045,14 @@
       "from_id": "cap:the-loop-holds-the-invitation",
       "properties": {},
       "to_id": "decision:ack:a961bfe399679dbf"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:the-loop-nudge-reaches-opencode-through-a-plugin-adapter",
+      "properties": {
+        "note": "A plugin file is outside the one assumption that rule allows (that the product can call an MCP server), so this ships as an ADDITION where it works, exactly as the rule permits for hooks and commands: the served surface still rests on MCP alone, and a product without a plugin model is told so by the nudge-presence check rather than left silent."
+      },
+      "to_id": "rule:mcp-and-the-graph-are-the-only-common-ground"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -66376,6 +66522,18 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "dec:export-hash-chain",
+      "properties": {},
+      "to_id": "fact:field-confirmation-flo2-853-authored-by-edges-gained-roles-on-import-the-roles-migration-seen-from-the-consumer-side"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "dec:export-hash-chain",
+      "properties": {},
+      "to_id": "fact:root-cause-the-853-is-an-older-binary-writing-the-old-role-default-onto-a-newer-document-not-the-export-leaving-a-default-implicit"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "dec:export-once-per-pr",
       "properties": {},
       "to_id": "fact:defect-lineage-message-omits-its-own-decision"
@@ -66475,6 +66633,12 @@
       "from_id": "dec:idea-gap-flows-to-the-dependency",
       "properties": {},
       "to_id": "fact:the-levied-requirement-blocker-cleared-and-the-workaround-recurred"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "dec:idea-how-does-a-content-only-client-get-an-answer",
+      "properties": {},
+      "to_id": "fact:opencode-measured-it-connects-refreshes-its-tool-list-and-injects-instructions-but-hands-the-model-only-the-text-block"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -193438,6 +193602,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:opencode-loop-nudge-plugin",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "reviewed"
+      },
+      "to_id": "cap:the-loop-nudge-reaches-opencode-through-a-plugin-adapter"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:operate",
       "properties": {
         "completeness": "complete",
@@ -194912,6 +195085,15 @@
         "conformance": "verified"
       },
       "to_id": "ver:one-tool-declares-its-output-contract"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:test-opencode-plugin",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:the-loop-nudge-reaches-opencode-through-a-plugin-adapter"
     },
     {
       "edge_type": "REALIZES",
@@ -197638,6 +197820,12 @@
       "from_id": "cap:the-loop-holds-the-invitation",
       "properties": {},
       "to_id": "req:detecting-is-not-asking"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:the-loop-nudge-reaches-opencode-through-a-plugin-adapter",
+      "properties": {},
+      "to_id": "req:skill-use-survives-a-long-session"
     },
     {
       "edge_type": "SATISFIES",
@@ -200984,6 +201172,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:the-opencode-plugin-delivers-the-nudge",
+      "properties": {},
+      "to_id": "cap:the-loop-nudge-reaches-opencode-through-a-plugin-adapter"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:the-per-open-design-cost-is-measured",
       "properties": {},
       "to_id": "cap:graph-registry"
@@ -202336,6 +202530,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:opencode-loop-nudge-plugin",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:opencode-loop-nudge-plugin"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:operate",
       "properties": {
         "action": "created"
@@ -203093,6 +203295,14 @@
         "action": "created"
       },
       "to_id": "art:test-nudge-path"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:test-opencode-plugin",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-opencode-plugin"
     },
     {
       "edge_type": "YIELDED",
@@ -204114,7 +204324,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b78fa9e7b867218d12b5f4e478f55228619203e15bebb578d54b0bd00ea0a97d",
+        "checksum": "sha256:c4fa5ee3d8e3671ca2bb39a71f5cae07a7f33d20ebc16a72a832e73ad2540d0b",
         "granularity": "atomic",
         "location": "tools/check_kit_manifest.py",
         "name": "check_kit_manifest.py",
@@ -205268,7 +205478,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:04c0aaf111b1ddb6b21f3293cf34419239e003c4fb70184810ec3d17ed363ec2",
+        "checksum": "sha256:d0e35bd9cb84125490f04c3df6fcd76b43a91f967634b2b71856e99b3577942c",
         "granularity": "atomic",
         "location": "tools/reflow2_init.py",
         "name": "reflow2_init.py",
@@ -205454,7 +205664,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f7b21dc97aa8ee9f4a6b33f59ea944d3e900671479d79ee7a4c023877929f9b6",
+        "checksum": "sha256:70526eac3e1332f9a8cd5fd2fb3ffeee00b6ea490f7ab4820db2b3e449f543af",
         "granularity": "atomic",
         "location": "tools/reflow2_install.py",
         "name": "reflow2_install.py",
@@ -205602,7 +205812,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:728650e901174321fd684df8aa431ccfd84bc3e806f2d725c416a9d7f2445814",
+        "checksum": "sha256:7dbdfa0bae226ef0dd447aaa882217a0a5996319d75d61bfade6409c284441c7",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/nudge.rs",
         "name": "nudge.rs",
@@ -205618,6 +205828,18 @@
         "checksum": "sha256:a673256a273cfce6610d002c956f2f14e834643dc1da23bdab2b1de943152965",
         "location": "getting-started/skills/onboarding/SKILL.md",
         "name": "onboarding/SKILL.md — where does this new piece of work belong?",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:opencode-loop-nudge-plugin",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:92ca1c0d429ecf3f1b4d8fe67cf894a79b4cdbbbf09d65d2be4d821d6fd226f4",
+        "description": "The OpenCode half of the coherence loop's trigger — an adapter that translates OpenCode's plugin hooks (chat.message, tool.execute.after, the session.idle event) into the hook-event JSON tools/loop_nudge.py reads on stdin, and delivers its sentence through experimental.chat.system.transform. Holds no judgement; shipped in the kit under plugins/ and installed into .opencode/plugins/ (project) or ~/.config/opencode/plugins/ (machine). Reviewed 2026-09-14 against OpenCode 1.18.31's plugin types, loader and tool naming.",
+        "location": "getting-started/plugins/reflow2-loop-nudge.js",
+        "name": "reflow2-loop-nudge.js",
         "status": "realized"
       }
     },
@@ -207168,6 +207390,18 @@
         "checksum": "sha256:fd9380e4a6a47d2d8c55414c7ca675b40634afb353144b91a741b6a80f957d89",
         "location": "crates/reflow2-mcp/tests/one_tool_declares_its_output_contract.rs",
         "name": "one_tool_declares_its_output_contract.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:test-opencode-plugin",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:51cafb7d1de27950e7f05f9500c61e36a12e254b37ac350b0cade83294b56f32",
+        "description": "Drives the plugin's four hooks under node exactly as OpenCode would and asserts the nudge ARRIVES (session start, after a write, at stop, quiet after a loop check, silent in a directory with no design). Exists because the first translation turned reflow2_add_decision into \"decision\" and the stop nudge never fired — a failure in the direction of silence. Skips where node is absent. Run by CI.",
+        "location": "tools/test_opencode_plugin.py",
+        "name": "test_opencode_plugin.py",
         "status": "realized"
       }
     },
@@ -210775,6 +211009,17 @@
       }
     },
     {
+      "node_id": "cap:the-loop-nudge-reaches-opencode-through-a-plugin-adapter",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Built by the flo2 session (PR #511, 2026-09-14) and integrated in review. getting-started/plugins/reflow2-loop-nudge.js is an adapter that holds no judgement: it maps OpenCode's chat.message (first message per session) to SessionStart, tool.execute.after to PostToolUse (translating reflow2_<op> to the mcp__reflow2__<op> name loop_nudge.py parses, and OpenCode's edit/write/apply_patch to the edit tools it counts), and the session.idle event to Stop; it runs tools/loop_nudge.py with that event on stdin, never throws or hangs (10 s timeout), and delivers the script's sentence through experimental.chat.system.transform before the next model call. reflow2_init.py installs it into .opencode/plugins/ for a project that names OpenCode; reflow2_install.py into ~/.config/opencode/plugins/ machine-wide; tools/check_kit_manifest.py gates trees per harness the same way. Pinned by tools/test_opencode_plugin.py, which drives the four hooks as OpenCode does and asserts the nudge arrives (skips where node is absent). In review the server's nudge-presence check (nudge.rs) learned to recognise the plugin file so an OpenCode project is told \"installed\" rather than \"no nudge is possible here\". The stop-time nudge cannot block on OpenCode; it lands at the top of the next turn. The plugin locates loop_nudge.py by convention (REFLOW2_LOOP_NUDGE, the machine kit, or a checkout beside it) and is silent when none holds.",
+        "name": "The coherence loop's trigger reaches OpenCode: a plugin adapter feeds OpenCode's hooks to loop_nudge.py, and the server's nudge-presence check sees it",
+        "provenance": "authored",
+        "status": "realized",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:the-orientation-call-says-whether-its-own-answers-are-current",
       "node_type": "Capability",
       "properties": {
@@ -214258,6 +214503,16 @@
         "change_type": "documentation",
         "detected_at": "2026-08-26",
         "name": "Version bumped 0.40.0 -> 0.41.0 for the v0.41.0 cut. THE DESIGN HOLDS: the design meaning of a cut lives in the Release and its epoch, not in a version string, and nothing this file declares about dependencies changed — only the number naming which reflow2 declares them.\n\n📌 ACCEPTED BEFORE THE MANIFEST IS FROZEN, DELIBERATELY. `release_includes_all` freezes each artifact's CURRENT checksum, so accepting this drift afterwards would make the release record that it shipped the PRE-BUMP file. The recorded procedure learned that on the v0.20.0 cut and it has recurred on every cut since; accepting first is one step instead of two.",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:accept-cb0f5504050ea74f",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-09-14",
+        "name": "rustfmt only, on the two impossible-hook tests moved to VS Code; CI's Format gate caught it. Behaviour unchanged, 22 nudge tests pass.",
         "subject": "system"
       }
     },
@@ -219023,6 +219278,15 @@
         "rationale": "The third leg: the skill and the rules existed, and nothing noticed a fix that recorded no cause, so the accepted requirement that a fix say what it reached was unenforceable. Three design choices worth the record. (1) The tight definition — a CAUSES edge on an artifact the fix touched is NOT accepted — because measured on this design the loose reading whitewashed 33 fixes through one old cause on a hub artifact. (2) Forward-only by parking rather than by a date in the detector: the graph already has the word for a deliberate unattached state, and a dated cutoff would be a second mechanism for the same thing. (3) The mirror counts later REPAIRS only: read from the served surface before merge, later changes of any kind raised 65 findings and one hub component carried 39 members — a question nobody can answer — where repairs raise 45 with a median of 3; a feature or refactor is counted in the evidence and never offered as the fix. On first run this design reads 183 of 209 fixes uncaused and 45 overtaken defects; the origin case of the mirror is NOT reachable as specified (subject was the reporting document, fixer undated), recorded and closed with that bound. The link-artifacts skill is not a registered artifact, so its edit owes no checksum accept.",
         "subject": "system",
         "summary": "Two gap detectors land in detect.rs: fix_without_recorded_cause (aggregate over defect_fix/test_failure_fix ChangeEvents on no CAUSES edge and with no outgoing INVALIDATES; parked fixes skipped and counted) and defect_overtaken_by_change (per open defect fact whose subject or a realizing artifact was CHANGED by a dated later REPAIR, no INVALIDATES; undated changes and later non-repairs counted, never offered as the fix). Composition: a root-cause pointer in check-health, link-artifacts and capture-session; both sources named in detect-and-ask; skill lint allowlist and docs/gap-surfacing.md rows. Item 2 of v0.50.0, mechanisms (c) and (d) of the mechanism ruling."
+      }
+    },
+    {
+      "node_id": "chg:the-loop-nudge-reaches-opencode-through-a-plugin-adapter",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "A plugin adapter feeds OpenCode's hooks to loop_nudge.py (kit plugins/, installed per project and machine-wide), check_kit_manifest gates trees per harness, a node-driven test pins that the nudge arrives, CI runs it — and in review the server's nudge-presence check learned to see the plugin and the new gate was listed in AGENTS.md",
+        "subject": "system"
       }
     },
     {
@@ -230180,6 +230444,17 @@
       }
     },
     {
+      "node_id": "epoch:the-coherence-loop-gets-a-trigger-on-opencode",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "description": "Recorded with add_epoch because it HAPPENED: the flo2 session built PR #511 (branch kit/opencode-loop-nudge) on 2026-09-14, and this session reviewed it and integrated it into the design on Anthony's word. Sequence 496, after the opt-in incident (495).\n\nWHAT ARRIVED. getting-started/plugins/reflow2-loop-nudge.js — an ADAPTER, not a second implementation: it translates OpenCode's plugin hooks (chat.message as SessionStart, tool.execute.after as PostToolUse, the session.idle event as Stop) into the hook-event JSON tools/loop_nudge.py already reads on stdin, and delivers whatever the script prints through experimental.chat.system.transform before the next model call. Every threshold, counter, shape match and once-only claim stays in loop_nudge.py. Installed per project into .opencode/plugins/ by reflow2_init.py and machine-wide into ~/.config/opencode/plugins/ by reflow2_install.py; tools/check_kit_manifest.py now applies the same per-harness gate the installer applies (a latent one-sided bug: an OpenCode project reported all eleven Claude commands as missing). tools/test_opencode_plugin.py drives the four hooks the way OpenCode does and asserts the nudge ARRIVES; it caught the first translation bug (reflow2_add_decision → \"decision\", writes counted as zero, the stop nudge never fired — a failure in the direction of silence). Reviewed here against OpenCode's source: hook names and signatures, the {plugin,plugins}/*.{ts,js} loader, the reflow2_<tool> naming and the session.idle event all match.\n\nThis is option (b) of dec:idea-the-loop-nudge-exists-for-one-harness-only — \"register a per-harness equivalent wherever an event model is confirmed to exist\" — delivered for OpenCode, and an ADDITION where it works under rule:mcp-and-the-graph-are-the-only-common-ground; the served surface still rests on MCP alone.\n\nTHE HONEST DIFFERENCE, from the PR: a Claude Code Stop hook blocks; an OpenCode plugin cannot, because by session.idle the turn is over — so a stop-time nudge is queued and lands at the top of the next turn. In exchange a nudge raised by a tool call lands on the very next model call, mid-turn, which Claude Code's wiring cannot do.\n\nADDED IN REVIEW: the server's nudge-presence check (crates/reflow2-mcp/src/nudge.rs) looked only for a Claude Code Stop hook and told an OpenCode project \"no nudge is possible for this harness\" — which the plugin makes false. It now recognises the plugin file, per project or machine-wide, and reports installed. The new CI gate is listed in AGENTS.md's block, which the lint requires.\n\nWHAT DID NOT ARRIVE: the plugin finds loop_nudge.py by convention (an env var, the machine kit at ~/.local/share/reflow2/kit, or a checkout beside it); a machine where none of those holds gets a silent plugin, which the file says of itself. Grok Build and Copilot still have no trigger.",
+        "epoch_type": "revision",
+        "name": "ARRIVED 2026-09-14 — the coherence loop gets a trigger on OpenCode: a plugin adapter feeds OpenCode's hooks to loop_nudge.py, installed per project and machine-wide, and the server's own nudge-presence check learns to see it",
+        "sequence": 496,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:the-declared-walls-hold",
       "node_type": "DesignEpoch",
       "properties": {
@@ -233346,6 +233621,16 @@
       }
     },
     {
+      "node_id": "frag:art:opencode-loop-nudge-plugin",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered reflow2-loop-nudge.js"
+      }
+    },
+    {
       "node_id": "frag:art:operate",
       "node_type": "Fragment",
       "properties": {
@@ -234295,6 +234580,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered test_nudge_path.py"
+      }
+    },
+    {
+      "node_id": "frag:art:test-opencode-plugin",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered test_opencode_plugin.py"
       }
     },
     {
@@ -246939,6 +247234,24 @@
       }
     },
     {
+      "node_id": "fact:field-confirmation-flo2-853-authored-by-edges-gained-roles-on-import-the-roles-migration-seen-from-the-consumer-side",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.95,
+        "fact_type": "field_confirmation",
+        "name": "FIELD CONFIRMATION (flo2, 2026-09-14): \"import materialises schema defaults the export left implicit — 853 of reflow2's 26,795 edges gained a field; converges after one pass; a CI gate comparing hashes fires falsely once per rehydrate\" — the 853 are reflow2's AUTHORED_BY edges and the field is `roles`: the one-time migration #505 shipped, seen from the consumer's side, not a new defect; the class it belongs to is the 2026-08-24 finding that the committed export is not in its importer's normal form",
+        "statement": "RELAYED by Anthony from the flo2 session, 2026-09-14, in its words: \"Import materialises schema defaults the export left implicit — 853 of reflow2's 26,795 edges gained a field. Nothing lost, and it converges after exactly one pass. But the first export after a rehydrate differs from the last one before it with zero user activity. A CI design gate comparing hashes fires falsely once per rehydrate. Normalise on ingest, store that as the baseline — trivial if you know, alarming if you don't.\"\n\nIDENTIFIED, by measurement on reflow2's own export the same day: this export holds exactly 853 AUTHORED_BY edges and every one carries `roles`; 0 carry the legacy single `role`. PR #505 (merged 2026-09-14) made AUTHORED_BY's stored shape the set `roles`, and its importer and every on-disk open rewrite legacy edges to that shape (graph.rs migrate_authored_by_roles). flo2 rehydrated from an export written BEFORE #505, the import migrated all 853 edges, and its next export differed from the document by exactly those 853 — once, then a fixed point. That is the migration doing what it was built to do, and it was announced in the CHANGELOG (\"legacy edges read right and migrate; import_graph normalises a consumer's older export on the way in, so one design never holds both shapes\"). It is not a schema default and there is nothing to fix in the migration.\n\nTHE CLASS IS REAL AND ALREADY ON THE RECORD, twice: fact:defect-import-materialises-defaults-so-a-restored-graph-reads-as-changed (2026-08-15, Artifact.granularity/volatility — settled by dec:the-safe-reading-lives-in-the-reader-not-the-store, which removed those two defaults from the schema) and fact:export-import-export-is-lossless-but-not-a-fixed-point-until-one-normalising-pass (2026-08-24, REALIZES.conformance null→unchecked on 223 legacy edges — \"either the EXPORTER stops omitting the default, or the IMPORTER stops materialising it, and the two sides currently disagree\"). Measured today on reflow2's own export: 0 of 497 REALIZES edges lack conformance, 0 of 280 ALLOCATED_TO lack weight_basis, 0 of 66 SCHEDULED_FOR lack modality, 0 node or edge schema defaults are declared any more — so reflow2's own document IS in normal form now; a consumer's older document may not be, and a MIGRATION (roles) will always produce exactly one such pass by design.\n\nWHAT FLO2'S FRAMING ADDS, and it is the part worth keeping: the cost is not the diff, it is that nothing SAYS what the diff is. \"The first export after a rehydrate differs with zero user activity\" and the gate reads that as the design having changed. The 08-15 report said the same: the honest fix (re-export, commit) is indistinguishable from the dishonest one (--no-verify) unless somebody diffs property by property. Their proposal — normalise on ingest and store that as the baseline — is one direction of the 08-24 finding; for a migration the importer MUST rewrite, so the remaining honest move is to SAY SO: import and open report what they migrated (count, edge type, field), and the hash gate's message names a migration on open or import as a benign cause with its recipe (re-export once, commit, done). Not chosen here; Anthony's call.\n\nNOT ESTABLISHED: whether flo2's gate was reflow2_check's lineage/behind check or a hash comparison of their own; whether any consumer document still carries the 2026-08-24 REALIZES shape (the flo2 number says roles, not conformance).",
+        "steps": [
+          "import_graph",
+          "export_graph",
+          "sync_status"
+        ],
+        "subject_id": "dec:export-hash-chain",
+        "valid_from": "2026-09-14"
+      }
+    },
+    {
       "node_id": "fact:field-confirmations-from-two-external-sessions",
       "node_type": "TemporalFact",
       "properties": {
@@ -247870,6 +248183,24 @@
       }
     },
     {
+      "node_id": "fact:opencode-measured-it-connects-refreshes-its-tool-list-and-injects-instructions-but-hands-the-model-only-the-text-block",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.95,
+        "fact_type": "finding",
+        "name": "MEASURED (OpenCode 1.18.31 source, 1.18.18 binary, 2026-09-14): it connects from the installer's opencode.json, handles tools/list_changed, injects the server's instructions, and its /mcps toggle is a full reconnect — but it hands the model ONLY the text block of a tool result, so every structured reflow2 reply reaches the model as the signpost sentence; it fills the text block from structuredContent only when the text block is EMPTY, which is a new option for the open question",
+        "statement": "Anthony, 2026-09-14: the flo2 prototype will run on OpenCode (checkout at /home/ajs7/project/opencode, packages/opencode 1.18.31; an installed 1.18.18 binary on this box). Measured by reading its source and by driving the installed binary against reflow2-mcp 0.60.2+.\n\nWHAT WORKS, measured:\n- CONFIG: project `opencode.json` with `mcp.reflow2 = {type: \"local\", command: [bin, args…], enabled: true}` — exactly what tools/reflow2_init.py writes; `opencode mcp list` in such a project reports \"✓ reflow2 connected\". Global config at ~/.config/opencode/opencode.json; project overrides global; `opencode mcp add` exists (non-interactive form writes GLOBAL only).\n- DYNAMIC TOOL LIST: packages/opencode/src/mcp/index.ts:461-471 registers a handler for notifications/tools/list_changed whenever the server declares a tools capability, re-fetches tools/list and republishes; the tool set is re-resolved every assistant turn. So the 2026-09-14 in-place promotion (chg:the-latent-server-promotes-itself-in-place-and-announces-the-changed-tool-list) works on OpenCode without any client command.\n- RESTART PRIMITIVE: the TUI command is `/mcps` (Toggle MCPs); toggling a server disconnects and reconnects it. Same name as Grok Build's, which the new next_step already names.\n- INSTRUCTIONS: the handshake `instructions` string is trimmed and injected into the system prompt inside <mcp_instructions><server name=\"reflow2\"> (session/system.ts:121-136), unless every tool of the server is permission-denied.\n- CLIENT INFO: clientInfo.name \"opencode\", version = build version or \"local\"; capabilities {roots: {}} only; MCP SDK @modelcontextprotocol/sdk 1.29.0 (patched).\n- TOOL NAMES: `reflow2_<tool>` (server_tool, underscore-joined); no count cap; input schemas are forced to type object with additionalProperties false at the top level; a failing outputSchema is retried stripped.\n- SKILLS and COMMANDS: it reads SKILL.md from .claude/skills/ and .opencode/skills/ natively (the kit's copies are read); slash commands are .opencode/commands/*.md with frontmatter (the kit's .claude/commands are NOT read); hooks are TypeScript plugins in .opencode/plugins/ (events incl. session.idle, tool.execute.before/after) — the loop-nudge hook does not reach it, a plugin could.\n- HEADLESS: `opencode run --format json --model provider/model \"…\"` needs a provider credential; this box has none valid, so the model-side observation below is from source, not from a run.\n\n⭐ WHAT DOES NOT WORK, and it is the August outage on a second, independent client. session/tools.ts:415-480 builds the model's tool result from `result.content` ONLY — text, image and resource blocks — and never reads structuredContent. reflow2's json_result sends every structured payload in structuredContent with the STRUCTURED_ONLY signpost as the sole text block (service.rs:1030, by dec:idea-how-does-a-content-only-client-get-an-answer's own account). So on OpenCode every structured reflow2 tool — search_design, loop_status, detect_gaps, every constructor's reply — reaches the model as the signpost sentence. The prose tools and refusals arrive in full, as on Grok. This makes n=2 independent clients that read only content (grok-shell-reflow2 1.0.13 on MCP 2025-11-25, and opencode), which answers that decision's question 3.\n\n⭐⭐ THE NEW OPTION THE SOURCE GIVES. mcp/catalog.ts:70-78, convertTool: if content is non-empty OR structuredContent is absent, the result is passed through unchanged; otherwise content is set to one text block, JSON.stringify(structuredContent). So on OpenCode an EMPTY content block with structuredContent present yields the exact payload to the model at 1× wire cost — no duplication, no signpost. That is option (f) for the open question: for a client the server knows fills its own text block, send content empty. The server knows the client: clientInfo.name is recorded at initialize (handshake.rs) and \"opencode\" is the value. Combined with the flag option (c) for unknown clients, this is option (g): a per-client content policy keyed on clientInfo.name — opencode: empty content; clients measured to read only content and not to synthesise (grok-shell): duplicate; everyone else: the signpost; `--duplicate-content` as the explicit override. It costs the 2× only where a client needs it and nothing where OpenCode can do the work itself.\n\n⚠️ A SECOND EDGE: OpenCode's per-call timeout is 30,000 ms for tools/list and tools/call (catalog.ts DEFAULT_TIMEOUT), reset on progress notifications (resetTimeoutOnProgress: true). loop_status has measured a 12 s median and a 39 s worst case on reflow2's own design; a call over 30 s fails on OpenCode unless the server sends progress. Not addressed here.\n\n⚠️ THE EXPERIMENTAL EXCEPTION: with OPENCODE_EXPERIMENTAL_CODE_MODE=1, code-mode.ts:108 returns structuredContent and discards text. Off by default.\n\nNOT ESTABLISHED: what the model does with a 26 KB JSON text block from detect_gaps on OpenCode (it truncates output per agent rather than refusing); whether flo2 will run OpenCode's TUI, its server (`opencode serve`) or ACP, which changes which of the three surfaces the config must reach.",
+        "steps": [
+          "get_instructions",
+          "search_design",
+          "loop_status"
+        ],
+        "subject_id": "dec:idea-how-does-a-content-only-client-get-an-answer",
+        "valid_from": "2026-09-14"
+      }
+    },
+    {
       "node_id": "fact:option-d-of-the-naming-decision-was-already-satisfied-by-the-v0500-and-v0510-work",
       "node_type": "TemporalFact",
       "properties": {
@@ -248154,6 +248485,25 @@
           "link-artifacts"
         ],
         "subject_id": "cap:a-fix-with-no-recorded-cause-and-a-defect-its-subject-outran-are-noticed",
+        "valid_from": "2026-09-14"
+      }
+    },
+    {
+      "node_id": "fact:root-cause-the-853-is-an-older-binary-writing-the-old-role-default-onto-a-newer-document-not-the-export-leaving-a-default-implicit",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.95,
+        "fact_type": "finding",
+        "name": "ROOT CAUSE (walked, measured): flo2's \"853 edges gained a field on import\" is an OLDER binary (the 0.59.0 release this box's launcher serves) importing a NEWER document and injecting the old schema default `role: author` onto all 853 AUTHORED_BY edges that #505's shape leaves without it — version skew, not an export leaving a default implicit; the new binary round-trips the same document with zero changes, and nothing on import compares the document's version with the binary's",
+        "statement": "RUN AS THE SKILL on Anthony's \"/root-cause the 853\", 2026-09-14, on fact:field-confirmation-flo2-853-authored-by-edges-gained-roles-on-import-the-roles-migration-seen-from-the-consumer-side — whose own first reading (the roles migration) this walk REFUTES.\n\n① OBSERVED, flo2's words: \"Import materialises schema defaults the export left implicit — 853 of reflow2's 26,795 edges gained a field. Nothing lost, and it converges after exactly one pass. The first export after a rehydrate differs from the last one before it with zero user activity. A CI design gate comparing hashes fires falsely once per rehydrate.\" Expected: a rehydrate from a document and the next export are the same document, or the gate says why not. NOT affected: nodes (0 changed), every other edge type.\n\n② PRECEDENT: fact:defect-import-materialises-defaults-so-a-restored-graph-reads-as-changed (2026-08-15, Artifact defaults — settled by removing them from the schema), fact:export-import-export-is-lossless-but-not-a-fixed-point-until-one-normalising-pass (2026-08-24, REALIZES.conformance), fact:defect-export-graph-stamps-confidently-while-the-server-reports-itself-stale (2026-09-06, fixed: a stale server refuses to export), fact:a-fresh-server-on-an-old-build-is-not-stale-and-stamps-confidently (2026-08-13), cap:a-session-serves-a-release-binary (the launcher serves target/release and rebuilds only on the builder's word).\n\n③ CANDIDATES from the bones: (a) CHANGE — the #505 roles migration rewriting legacy AUTHORED_BY edges on import (the field-confirmation's reading). (b) CONTRACT — a schema default still injected at write for some edge property (the 08-24 class). (c) IMPLEMENTATION/VERSION SKEW — the importing binary is OLDER than the document and applies a default the newer schema dropped. (d) the exporter omitting a field the store holds. (e) OBSERVATION WRONG — the 853 is a coincidence with reflow2's AUTHORED_BY count.\n\n④/⑤ MEASURED, 2026-09-14, reflow2-mcp CLI end to end (--import into an empty store, --diff against the document):\nM1 — the export from just before #505 (12c8150: 26,637 edges, 842 AUTHORED_BY all carrying `role`) imported by the CURRENT debug binary: edges_changed 842, all AUTHORED_BY, role→roles and acted_at→authored_at/approved_at/reviewed_at. The migration, correct, one pass — and 842, not 853. (a) REFUTED as the source of the number.\nM2 — the current main export (fe36d74: 26,784 edges, 853 AUTHORED_BY all carrying `roles`) imported by the CURRENT binary: design_changed 0, edges_changed 0. A fixed point. (b) and (d) REFUTED for reflow2's own document: no committed schema default remains (0 declared on nodes or edges), and reflow2's document IS in its importer's normal form.\nM3 — the SAME current export imported by target/release/reflow2-mcp 0.59.0 — the binary this box's launcher serves to every session, flo2's included — then diffed: edges_changed 853, all AUTHORED_BY, every one gaining `role: author` (base null → other \"author\"). (c) CONFIRMED. The number is exact and the field is the old one. No committed main export has 26,795 edges; flo2's document was a working-tree export a few edges ahead of main, with the same 853.\n(e) REFUTED by M3: the match is the mechanism, not a coincidence.\nAnd import prints no warning: the document carries a stamp with the writing version and the edge vocabulary, and import_graph never compares it with the binary's own.\n\n⑥ THE CLASS: two binaries of different schema generations sharing one document, with the older one silently rewriting the newer shape into its own. It is the mirror of the 2026-09-06 defect (an old server EXPORTING confidently) — that side now refuses; this side, an old binary IMPORTING a newer document, still does not. On this box the launcher serves the release binary and rebuilds it only on the builder's word, so every merge that changes a stored shape (#505 did) leaves every session here running older code against newer documents until someone rebuilds — and \"converges after one pass\" is each binary converging to ITS shape, a ping-pong between two normal forms rather than a fixed point. Would fixing this have stopped the 08-15 and 08-24 reports? No: those were same-binary, real defaults, and are settled. Would it have stopped this one? Yes, either leg: a refusal or a loud report at import names the skew instead of a phantom diff.\n\n⑧ THE FIX AT THE CAUSE, proposed and NOT built here (Anthony's call, because one leg refuses): (1) import_graph and --import compare the document's stamp with the binary: a document written by a NEWER reflow2 (or carrying an edge vocabulary this binary lacks) is refused with the versions named and the remedy (rebuild or upgrade the server, or pass an explicit override), the same posture as the stale-export refusal; (2) an OLDER document is imported and the report SAYS what was migrated — count by edge type and property — so a diff with zero user activity is explained by the record that caused it; (3) the launcher's staleness: served_by.stale reads false for a release binary that is simply older than the code, which is the 08-13 finding and is what let this happen on the maintainer's own box. (2) is what flo2 asked for by another name; (1) is the missing refusal.\n\n⑨ NOT ESTABLISHED: which binary flo2's session actually ran (inferred from the launcher on this box; the 0.59.0 test reproduces the number exactly); which gate fired for them (reflow2_check's behind/lineage check, or a hash comparison of their own); whether any consumer besides this box has a document ahead of its binary.",
+        "steps": [
+          "import_graph",
+          "export_graph",
+          "sync_status",
+          "loop_status"
+        ],
+        "subject_id": "dec:export-hash-chain",
         "valid_from": "2026-09-14"
       }
     },
@@ -253449,6 +253799,20 @@
       }
     },
     {
+      "node_id": "ver:the-opencode-plugin-delivers-the-nudge",
+      "node_type": "Verification",
+      "properties": {
+        "description": "tools/test_opencode_plugin.py imports the plugin under node with the same four hooks OpenCode calls and asserts the nudge ARRIVES, not that the code ran: session start yields the orientation; a reflow2 write (tool.execute.after with reflow2_add_decision) followed by session.idle yields the stop nudge through experimental.chat.system.transform; a session that ran a loop check gets no nudge; a directory with no .reflow2 gets nothing at all. The nudge module's own unit tests cover the server-side half: the plugin file in .opencode/plugins/ or ~/.config/opencode/plugins/ reads as installed, and an OpenCode project without it reads as absent rather than impossible. Skips where node is absent rather than failing red. Run by CI after the build.",
+        "findings": "Run locally 2026-09-14 on the review branch under node 22: all checks passed. The nudge module's 22 unit tests pass, including the three plugin-presence tests added in review.",
+        "kind": "verification",
+        "last_run_at": "2026-09-14",
+        "level": "integration",
+        "method": "test",
+        "name": "The OpenCode plugin delivers the loop nudge, driven as OpenCode drives it",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:the-per-open-design-cost-is-measured",
       "node_type": "Verification",
       "properties": {
@@ -253837,7 +254201,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:771375d701974d1349a1417e914af5ebd186bf1324b9e2fa0c5ca89080a21c85",
+  "prev_content_hash": "sha256:65c91bed5f5908b2e9132827cbbc77c90e79985e64e41e21d399f1d2ef14009b",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
