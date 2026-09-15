@@ -20,6 +20,21 @@ struct Cli {
     #[arg(long, default_value = "./.reflow2/graph")]
     graph_path: String,
 
+    /// What the `content` block of a JSON reply carries, for EVERY client:
+    /// `signpost` (one sentence naming `structuredContent` — the payload
+    /// once), `duplicate` (the payload pretty-printed in the text block too,
+    /// for a client that hands its model only `content`), or `empty` (no text
+    /// block, for a client that fills it from `structuredContent` only when it
+    /// is empty). UNSET, THE POLICY IS CHOSEN PER CLIENT from the name it gives
+    /// at handshake: grok* → duplicate, opencode* → empty, everything else →
+    /// signpost. A `--shared` client forwards this to the daemon it starts.
+    #[arg(
+        long = "content-policy",
+        value_name = "POLICY",
+        env = "REFLOW2_CONTENT_POLICY"
+    )]
+    content_policy: Option<String>,
+
     /// Keep this file current: write the design export through to it after
     /// every change, debounced, so a forgotten export stops being a class of
     /// loss (`req:the-server-keeps-the-working-tree-export-current`).
@@ -529,6 +544,17 @@ async fn main() -> anyhow::Result<()> {
         .init();
 
     let cli = Cli::parse();
+    if let Some(raw) = cli.content_policy.as_deref() {
+        match reflow2_mcp::content_policy::ContentPolicy::parse(raw) {
+            Some(p) => reflow2_mcp::content_policy::set_override(p),
+            None => {
+                eprintln!(
+                    "reflow2-mcp: --content-policy must be signpost, duplicate or empty, got '{raw}'"
+                );
+                std::process::exit(2);
+            }
+        }
+    }
     // ⚠️ SAY WHAT IS ACTUALLY BEING OPENED. This logged `--graph-path` for every
     // invocation, including ones that never touch it — an ephemeral design opens
     // no directory at all, and a registry server opens whichever design is asked

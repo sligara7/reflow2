@@ -312,6 +312,7 @@ python3 tools/replies_are_bounded.py                     # a reply that outgrows
 python3 tools/skill_lint.py                              # after any skill or tool-surface edit
 python3 tools/test_wall_check.py                         # the wall-check instrument's own net
 python3 tools/test_latent_promotion.py                  # the latent server promotes itself in place, on any client (real binary)
+python3 tools/test_content_policy.py                    # a reply takes the shape its client can read (per-client content policy, on the wire)
 python3 tools/test_opencode_plugin.py                   # the OpenCode loop-nudge plugin, driven as OpenCode drives it (node)
 python3 tools/reflow2_check.py --export docs/design/reflow2.json   # design vs build, and the export chain
 python3 tools/check_intent_authority.py docs/design/reflow2.json    # settled intent carries the owner's name

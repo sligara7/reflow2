@@ -673,6 +673,13 @@ fn spawn_daemon(
             Some(p) => vec![String::from("--export-to"), p.to_string()],
             None => Vec::new(),
         })
+        // Forward the operator's content policy for the same reason: the
+        // daemon answers the tool calls, so a flag left on the proxy would
+        // shape nothing.
+        .args(match crate::content_policy::override_policy() {
+            Some(p) => vec![String::from("--content-policy"), p.as_str().to_string()],
+            None => Vec::new(),
+        })
         // Pass the log through so a caller that redirected it (the test suite)
         // gets the daemon's diagnostics in the same place it is watching.
         .args(match log_to {

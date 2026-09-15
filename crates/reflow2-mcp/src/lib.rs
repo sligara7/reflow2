@@ -5,6 +5,7 @@
 //! thin stdio entry point over it; integration tests drive the service directly.
 
 pub mod auto_export;
+pub mod content_policy;
 pub mod degraded;
 pub mod dto;
 pub mod enum_schema;

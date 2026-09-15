@@ -75,13 +75,20 @@ def gaps_of(server, **args):
 class Server:
     """A running reflow2-mcp process, spoken to over stdio JSON-RPC."""
 
-    def __init__(self, binary: str, graph_path: str) -> None:
+    def __init__(
+        self,
+        binary: str,
+        graph_path: str,
+        client_name: str = "smoke_mcp",
+        extra_args: tuple = (),
+    ) -> None:
         self.binary = binary
         self.graph_path = graph_path
+        self.client_name = client_name
         self.handshake_result = None
         self._id = 0
         self.proc = subprocess.Popen(
-            [binary, "--graph-path", graph_path],
+            [binary, "--graph-path", graph_path, *extra_args],
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
@@ -118,7 +125,7 @@ class Server:
                 # which is how the server's own stale version went unnoticed.
                 "protocolVersion": "2025-11-25",
                 "capabilities": {},
-                "clientInfo": {"name": "smoke_mcp", "version": "0"},
+                "clientInfo": {"name": self.client_name, "version": "0"},
             },
         )
         self.handshake_result = init

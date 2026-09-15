@@ -32,6 +32,47 @@ This file is the third view: *what changed, and when*.
 ## [Unreleased]
 
 ## [0.61.0] — 2026-09-15
+### Added
+
+- **A reply takes the shape its client can read: the `content` block is chosen per client.**
+  Grok Build hands its model only the text block of a tool result — reported by Alex on
+  2026-08-27 and 2026-08-29, and measured on 2026-09-15 from Anthony's own Grok Build 1.0.30
+  session on this repo, where `maturity_report`, `what_next`, `scan_nodes` and `open_questions`
+  all reached the model as the one-sentence signpost and nothing else. OpenCode (read from its
+  source, 2026-09-14) forwards only the text block too, and fills it from `structuredContent`
+  only when it is empty. No automatic detection is possible — the negotiated protocol revision
+  is uncorrelated with what a client reads — so the server keys on the name the client gives at
+  handshake, in `call_tool` where the usage ledger already reads it: `grok*` gets the payload
+  pretty-printed in the text block as well (`duplicate` — the shape two skill tools already used,
+  and the same Grok session shows both reaching the model in full), `opencode*` gets an empty
+  text block, and every client that reads `structuredContent` keeps the signpost and pays
+  nothing. `--content-policy signpost|duplicate|empty` (env `REFLOW2_CONTENT_POLICY`) overrides
+  for a client nobody has named, and a `--shared` client forwards it to the daemon it starts;
+  the signpost now names the flag, so the person who needs it reads it where they are stuck. The
+  2026-08-23 cost that ruled out always-duplicate (157 KB replies) is bounded since the reply
+  budget (2026-09-13) caps JSON replies at 30,000 characters. Only the signpost shape is
+  rewritten: prose tools, refusals and already-duplicated results are untouched.
+  `tools/test_content_policy.py` drives the real binary under four client names and the flag.
+  `dec:idea-how-does-a-content-only-client-get-an-answer` stays the owner's decision; this is
+  the mechanism that puts a choice in front of him at no cost to the reading clients.
+
+- **The coherence loop gets a trigger on OpenCode.** The loop nudge was Claude Code hooks in
+  `settings.json`, so on OpenCode nothing said the loop was owed anything. `getting-started/
+  plugins/reflow2-loop-nudge.js` is an ADAPTER, not a second implementation: it maps OpenCode's
+  `chat.message` (first message per session) to SessionStart, `tool.execute.after` to PostToolUse,
+  and the `session.idle` event to Stop, feeds `tools/loop_nudge.py` the hook-event JSON it already
+  reads, and delivers the sentence through `experimental.chat.system.transform` before the next
+  model call. Every threshold, counter and shape match stays in the script. `reflow2_init.py`
+  installs it into `.opencode/plugins/` for a project that names OpenCode, `reflow2_install.py`
+  into `~/.config/opencode/plugins/` machine-wide, and `check_kit_manifest.py` now applies the
+  installer's per-harness gate (an OpenCode project used to report every Claude command as
+  missing). One honest difference: a Claude Code Stop hook blocks, an OpenCode plugin cannot, so a
+  stop-time nudge lands at the top of the next turn; in exchange a nudge raised by a tool call lands
+  mid-turn. `tools/test_opencode_plugin.py` drives the four hooks under node and asserts the nudge
+  ARRIVES — it caught a translation that turned `reflow2_add_decision` into `decision` and silenced
+  the stop nudge. In review: the server's nudge-presence check (`nudge.rs`) recognises the plugin,
+  per project or machine-wide, so an OpenCode project is told "installed" rather than "no nudge is
+  possible for this harness". Built by the flo2 session (#511), reviewed against OpenCode 1.18.31.
 
 ### Fixed
 

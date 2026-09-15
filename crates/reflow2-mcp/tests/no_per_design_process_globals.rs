@@ -49,6 +49,17 @@ use std::path::{Path, PathBuf};
 /// belongs on the design handle and this list is the wrong fix.
 const ALLOWED: &[(&str, &str, &str)] = &[
     (
+        "reflow2-mcp/src/content_policy.rs",
+        "OVERRIDE",
+        "The operator's `--content-policy` / REFLOW2_CONTENT_POLICY, parsed once \
+         from how THIS PROCESS was launched. It says how a client that hands its \
+         model only the text block is answered, and a second design open in the \
+         same process is served to the same clients by the same launch — the \
+         value is a fact about the process and its callers, not about a design. \
+         Per-client keying (the part that could differ) is read from each \
+         session's own handshake, never stored here.",
+    ),
+    (
         "reflow2-mcp/src/shared.rs",
         "STARTUP_FINGERPRINT",
         "This process's own executable, fingerprinted (size:mtime) at start, so \
