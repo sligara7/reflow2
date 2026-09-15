@@ -45,6 +45,27 @@ This file is the third view: *what changed, and when*.
   new lock.
 
  — 2026-09-15
+### Fixed
+
+- **An import knows its own age, and a server behind its record says so.** Root cause of flo2's
+  "853 edges gained a field" (2026-09-14): the launcher served a 0.59.0 release binary while the
+  committed record had been written by 0.60.2; import compared no versions, the open-time guard
+  compared only vocabulary (identical), and the older binary wrote its `role: author` default onto
+  853 `AUTHORED_BY` edges the newer reflow2 had left implicit — silently. Three legs, on Anthony's
+  word: (1) `import_graph` (tool and `--import`) REFUSES a document stamped by a newer reflow2,
+  naming both versions and the hazard, unless `accept_newer` / `--accept-newer` says you mean it —
+  the mirror of the stale-export refusal; (2) the import report carries `materialized`, every
+  `Type.property` the store now holds that the document did not state (schema defaults and
+  migrations), so an import never changes a record silently, and `--import` prints them; (3) the
+  open-time provenance gains `NewerWriter` — until now a store last written by a NEWER reflow2 with
+  the same vocabulary was reported as an *older* graph with the note the wrong way round — and
+  `served_by.behind_record` (on `loop_status` and `graph_report`) names the newer writer, this
+  version and the hazard, with a `next` line, because `served_by.stale` asks "was my executable
+  replaced?" and a release binary merely built before the record answers no, truthfully.
+  Tests: `crates/reflow2-core/tests/export.rs` (three), provenance unit test,
+  `crates/reflow2-mcp/tests/an_import_from_a_newer_reflow2_is_refused.rs` (four).
+
+## [0.61.1] — 2026-09-15
 
 ### Fixed
 

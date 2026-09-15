@@ -1448,6 +1448,7 @@ async fn a_design_round_trips_through_export_and_import() {
     let report = j!(fresh.import_graph(Parameters(ImportGraphReq {
         document: Some(obj(&doc)),
         path: None,
+        accept_newer: None,
     })));
     assert_eq!(
         report["nodes_written"].as_u64().unwrap(),
@@ -1489,6 +1490,7 @@ async fn importing_something_that_is_not_an_export_fails_loud() {
         s.import_graph(Parameters(ImportGraphReq {
             document: Some(obj(&serde_json::json!({"nodes": "not a list"}))),
             path: None,
+            accept_newer: None,
         }))
         .await
         .is_err(),

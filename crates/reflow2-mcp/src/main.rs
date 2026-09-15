@@ -230,6 +230,14 @@ struct Cli {
     #[arg(long, value_name = "FILE")]
     import: Option<String>,
 
+    /// With `--import`: load a document stamped by a NEWER reflow2 than this
+    /// binary anyway. Refused by default, because this binary would write its
+    /// own schema defaults onto every record the newer reflow2 left implicit
+    /// and nothing would say so; the import report's `materialized` lines then
+    /// say exactly what was written that the document did not state.
+    #[arg(long = "accept-newer", requires = "import")]
+    accept_newer: bool,
+
     /// Compare two as-designed records and exit, printing the divergence
     /// report as JSON. With two paths, compares the files directly — no graph
     /// is opened, so this runs even while a server holds the lock. With one
@@ -1005,7 +1013,12 @@ async fn main() -> anyhow::Result<()> {
         // every gate green. It now lives in `import_graph` itself, so every
         // caller gets it and this one only has to REPORT what happened.
         let report = graph
-            .import_graph(&doc)
+            .import_graph_with(
+                &doc,
+                reflow2_core::export::ImportOptions {
+                    accept_newer: cli.accept_newer,
+                },
+            )
             .context("failed to import the design")?;
         if let Some(adopted) = &report.adopted_identity {
             eprintln!(
@@ -1021,6 +1034,20 @@ async fn main() -> anyhow::Result<()> {
         );
         if let Some(note) = &report.integrity_note {
             eprintln!("reflow2: WARNING — {note}");
+        }
+        // What the store now holds that the document did not say. Schema
+        // defaults and migrations are legitimate; an import that does not name
+        // them is how 853 edges once gained a property nobody chose.
+        if !report.materialized.is_empty() {
+            let total: usize = report.materialized.values().sum();
+            eprintln!(
+                "reflow2: this import materialised {total} value(s) the document did not state — \
+                 reflow2 {}'s schema defaults and migrations, by Type.property:",
+                env!("CARGO_PKG_VERSION")
+            );
+            for (key, n) in &report.materialized {
+                eprintln!("  {n}x {key}");
+            }
         }
         if !report.skipped_edges.is_empty() {
             eprintln!(
