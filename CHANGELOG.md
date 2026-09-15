@@ -31,8 +31,9 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
-## [0.61.0] — 2026-09-15
-### Added
+## [0.61.1] — 2026-09-15
+
+### Fixed
 
 - **A reply takes the shape its client can read: the `content` block is chosen per client.**
   Grok Build hands its model only the text block of a tool result — reported by Alex on
@@ -55,6 +56,9 @@ This file is the third view: *what changed, and when*.
   `tools/test_content_policy.py` drives the real binary under four client names and the flag.
   `dec:idea-how-does-a-content-only-client-get-an-answer` stays the owner's decision; this is
   the mechanism that puts a choice in front of him at no cost to the reading clients.
+
+## [0.61.0] — 2026-09-15
+### Added
 
 - **The coherence loop gets a trigger on OpenCode.** The loop nudge was Claude Code hooks in
   `settings.json`, so on OpenCode nothing said the loop was owed anything. `getting-started/
