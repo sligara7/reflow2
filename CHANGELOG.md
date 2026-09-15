@@ -31,6 +31,25 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Fixed
+
+- **Opt-in finishes inside MCP, on any client: the latent server promotes itself in place.** Alex,
+  Grok Build, 2026-09-14: `reflow2_start_design` created an empty `.reflow2/` and its `next_step`
+  said "run /mcp" — Claude Code's reconnect. Grok Build has `/mcps` and no reconnect; the latent
+  two-tool stdio process was never replaced; `.reflow2/graph` was never created; genesis could not
+  finish and `report-friction` could not run. His client DID re-query the tool list after
+  "continue"; this process still offered two tools. Root-caused, not re-worded: the opt-in's last
+  step was allocated to the client (a process restart), the instruction named one product's
+  command, and nothing re-probed — the 2026-08-15 restore report asked for in-place promotion
+  and got only its fallback. Now `LatentService` re-probes on every `tools/list` and `tools/call`,
+  opens the store once when the design directory exists, serves the full surface from this same
+  process, sends `notifications/tools/list_changed` after `reflow2_start_design` (and declares the
+  capability at the handshake), and returns a next step that says the surface is SERVED NOW — a
+  client restart is the fallback only, with per-product hints riding as additions. Four tests over
+  the real binary on stdio with a client-neutral `clientInfo`, three observed failing first; CI runs
+  them against the built binary. **Patch**: no shape or schema change; a directory that opts in now
+  gets its store from the process that opted it in.
+
 ### Added
 
 - **`wall_check` is served.** The import-boundary walk — does the decomposition you declared match
@@ -50,6 +69,29 @@ This file is the third view: *what changed, and when*.
 
 ### Changed
 
+- **A `design_holds` acceptance says why the code moved, or is refused; the no-cause gap states the
+  discipline and a recipe; acceptances wearing a fix label are told apart from repairs.** Field
+  report, 2026-09-14: `fix_without_recorded_cause` asked a project about twenty-one fixes with no
+  cause, twenty were checksum dispositions recorded while reconciling the design with the code, and
+  the agent then asked the owner whether to record causes at all. Root-caused, not re-worded: the
+  disposition surface defaulted a missing `change_type` to `test_failure_fix`, one of the two labels
+  that put an event into the fix population — on reflow2's own design 142 of the 281 fix-typed
+  events were acceptances, 104 wearing that default, none with a cause; and the gap's own text ended
+  by offering "this design does not record causes" as a live option, the sentence the agent turned
+  into a choice for the owner. Now: (a) `design_holds` on an artifact that already has a baseline
+  REQUIRES `change_type`, and the refusal names the repair labels (`defect_fix`, `test_failure_fix`)
+  as repair-only and the reconcile labels (`resync`, `refactor`, `documentation`,
+  `performance_optimization`); an artifact with no baseline is still read as a first baseline with
+  nothing to ask; the bulk form refuses per item and names it. (b) The gap is a standing rule with a
+  triage recipe — your own fix: `invalidates` or `record_finding` with `caused_by`; an acceptance
+  wearing a fix label: relabel, never invent a cause; a backlog predating the rule: park under one
+  accepted Decision — and acknowledging records that the backlog was judged, not that the discipline
+  was declined. (c) The detector tells acceptances (the `CHANGED` edge an accept writes carries
+  `accepted_baseline`) from repairs, counts the ones wearing a fix label separately in the title,
+  names them in the evidence, and keeps them out of the repair denominator. Five acceptance tests
+  and three detector tests, the five load-bearing ones observed failing first. **Minor**: a
+  parameter that was silently defaulted is now required in one case — a caller that omitted
+  `change_type` on a baselined artifact gets a refusal naming what to pass. No schema change.
 - **The lens line names each person beside their id, and orientation offers the git-author match
   when a design records more than one reader.** Anthony, 2026-09-14, on flo2 — one repo shared
   with his brother: each should be read to in his own vocabulary, and nobody should be asked who
