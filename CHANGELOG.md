@@ -31,25 +31,7 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
-### Added
-
-- **The coherence loop gets a trigger on OpenCode.** The loop nudge was Claude Code hooks in
-  `settings.json`, so on OpenCode nothing said the loop was owed anything. `getting-started/
-  plugins/reflow2-loop-nudge.js` is an ADAPTER, not a second implementation: it maps OpenCode's
-  `chat.message` (first message per session) to SessionStart, `tool.execute.after` to PostToolUse,
-  and the `session.idle` event to Stop, feeds `tools/loop_nudge.py` the hook-event JSON it already
-  reads, and delivers the sentence through `experimental.chat.system.transform` before the next
-  model call. Every threshold, counter and shape match stays in the script. `reflow2_init.py`
-  installs it into `.opencode/plugins/` for a project that names OpenCode, `reflow2_install.py`
-  into `~/.config/opencode/plugins/` machine-wide, and `check_kit_manifest.py` now applies the
-  installer's per-harness gate (an OpenCode project used to report every Claude command as
-  missing). One honest difference: a Claude Code Stop hook blocks, an OpenCode plugin cannot, so a
-  stop-time nudge lands at the top of the next turn; in exchange a nudge raised by a tool call lands
-  mid-turn. `tools/test_opencode_plugin.py` drives the four hooks under node and asserts the nudge
-  ARRIVES — it caught a translation that turned `reflow2_add_decision` into `decision` and silenced
-  the stop nudge. In review: the server's nudge-presence check (`nudge.rs`) recognises the plugin,
-  per project or machine-wide, so an OpenCode project is told "installed" rather than "no nudge is
-  possible for this harness". Built by the flo2 session (#511), reviewed against OpenCode 1.18.31.
+## [0.61.0] — 2026-09-15
 
 ### Fixed
 
@@ -71,6 +53,24 @@ This file is the third view: *what changed, and when*.
   gets its store from the process that opted it in.
 
 ### Added
+
+- **The coherence loop gets a trigger on OpenCode.** The loop nudge was Claude Code hooks in
+  `settings.json`, so on OpenCode nothing said the loop was owed anything. `getting-started/
+  plugins/reflow2-loop-nudge.js` is an ADAPTER, not a second implementation: it maps OpenCode's
+  `chat.message` (first message per session) to SessionStart, `tool.execute.after` to PostToolUse,
+  and the `session.idle` event to Stop, feeds `tools/loop_nudge.py` the hook-event JSON it already
+  reads, and delivers the sentence through `experimental.chat.system.transform` before the next
+  model call. Every threshold, counter and shape match stays in the script. `reflow2_init.py`
+  installs it into `.opencode/plugins/` for a project that names OpenCode, `reflow2_install.py`
+  into `~/.config/opencode/plugins/` machine-wide, and `check_kit_manifest.py` now applies the
+  installer's per-harness gate (an OpenCode project used to report every Claude command as
+  missing). One honest difference: a Claude Code Stop hook blocks, an OpenCode plugin cannot, so a
+  stop-time nudge lands at the top of the next turn; in exchange a nudge raised by a tool call lands
+  mid-turn. `tools/test_opencode_plugin.py` drives the four hooks under node and asserts the nudge
+  ARRIVES — it caught a translation that turned `reflow2_add_decision` into `decision` and silenced
+  the stop nudge. In review: the server's nudge-presence check (`nudge.rs`) recognises the plugin,
+  per project or machine-wide, so an OpenCode project is told "installed" rather than "no nudge is
+  possible for this harness". Built by the flo2 session (#511), reviewed against OpenCode 1.18.31.
 
 - **`wall_check` is served.** The import-boundary walk — does the decomposition you declared match
   the coupling the code has — was built as `tools/wall_check.py` on 2026-08-20 and generalised to
