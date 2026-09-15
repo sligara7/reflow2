@@ -31,6 +31,8 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.61.2] — 2026-09-15
+
 ### Changed
 
 - **`serde_yaml` (archived by its author at 0.9.34+deprecated) is replaced by `serde_yaml_ng` 0.10,
