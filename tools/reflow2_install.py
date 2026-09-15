@@ -63,6 +63,9 @@ GRAPH_PATH = ".reflow2/graph"
 SERVER_ARGS = ["--graph-path", GRAPH_PATH, "--shared", "--only-if-present"]
 
 CLAUDE_COMMANDS = HOME / ".claude" / "commands"
+# OpenCode loads every .js/.ts file in its plugin directory at startup. This is
+# the global one; `reflow2_init.py` writes the per-project `.opencode/plugins/`.
+OPENCODE_PLUGINS = HOME / ".config" / "opencode" / "plugins"
 CLAUDE_SETTINGS = HOME / ".claude" / "settings.json"
 OPENCODE_CONFIG = HOME / ".config" / "opencode" / "opencode.json"
 BIN_DIR = Path(os.environ.get("REFLOW2_BIN_DIR", HOME / ".local" / "bin"))
@@ -273,6 +276,53 @@ def remove_commands(check: bool) -> list[str]:
     return out or ["ok      ~/.claude/commands: nothing to remove"]
 
 
+# --------------------------------------------------------------------- plugins
+
+
+def install_plugins(check: bool) -> list[str]:
+    """The OpenCode half of the loop nudge.
+
+    Claude Code gets its trigger from hooks merged into `~/.claude/settings.json`
+    (see `install_hooks`). OpenCode has no hook configuration to merge into — it
+    loads plugin FILES from a directory — so the same trigger arrives as a file
+    here instead. Safe globally for the same reason the hooks are: the plugin
+    defers every judgement to `loop_nudge.py`, which is a no-op wherever
+    `.reflow2/` does not exist.
+    """
+    src = KIT / "plugins"
+    if not src.is_dir():
+        return [f"skip    no plugins in the kit at {src}"]
+    out = []
+    for f in sorted(src.glob("*.js")):
+        target = OPENCODE_PLUGINS / f.name
+        if target.exists() and target.read_bytes() == f.read_bytes():
+            continue
+        verb = "update" if target.exists() else "create"
+        if not check:
+            OPENCODE_PLUGINS.mkdir(parents=True, exist_ok=True)
+            target.write_bytes(f.read_bytes())
+        out.append(f"{verb}  ~/.config/opencode/plugins/{f.name}")
+    return out or ["ok      ~/.config/opencode/plugins already current"]
+
+
+def remove_plugins(check: bool) -> list[str]:
+    src = KIT / "plugins"
+    out = []
+    for f in sorted(src.glob("*.js")) if src.is_dir() else []:
+        target = OPENCODE_PLUGINS / f.name
+        if not target.exists():
+            continue
+        if target.read_bytes() != f.read_bytes():
+            # Someone edited it. Their file, their call — reflow2 does not get
+            # to delete work it did not write.
+            out.append(f"keep    ~/.config/opencode/plugins/{f.name} (your edits — not removed)")
+            continue
+        if not check:
+            target.unlink()
+        out.append(f"remove  ~/.config/opencode/plugins/{f.name}")
+    return out or ["ok      ~/.config/opencode/plugins: nothing to remove"]
+
+
 # ----------------------------------------------------------------------- hooks
 
 
@@ -448,7 +498,8 @@ def main() -> int:
             + (" — CHECK ONLY, nothing written" if args.check else ""))
         say("")
         for line in [unregister_claude(args.check), unregister_opencode(args.check),
-                     *remove_commands(args.check), remove_hooks(args.check),
+                     *remove_commands(args.check), *remove_plugins(args.check),
+                     remove_hooks(args.check),
                      remove_wrapper(args.check)]:
             say(f"  {line}")
         say("")
@@ -472,6 +523,7 @@ def main() -> int:
         register_claude(binary, args.check),
         register_opencode(binary, args.check),
         *install_commands(args.check),
+        *install_plugins(args.check),
     ]
     if nudge.exists():
         lines.append(install_hooks(nudge, args.check))
