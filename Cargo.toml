@@ -40,7 +40,10 @@ repository = "https://github.com/sligara7/reflow2"
 rmp-serde = "1"
 tracing = "0.1"
 lru = "0.18"
-serde_yaml = "0.9"
+# serde_yaml 0.9 is archived by its author (0.9.34+deprecated). serde_yaml_ng
+# is the maintained fork with the same API — a rename, not a rewrite
+# (Anthony, 2026-09-14: replace it).
+serde_yaml_ng = "0.10"
 uuid = { version = "1", features = ["v4", "serde"] }
 thiserror = "2"
 tantivy = "0.26"

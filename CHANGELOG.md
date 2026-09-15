@@ -31,7 +31,20 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
-## [0.61.1] — 2026-09-15
+### Changed
+
+- **`serde_yaml` (archived by its author at 0.9.34+deprecated) is replaced by `serde_yaml_ng` 0.10,
+  and the lockfile is refreshed.** Anthony's word, 2026-09-14, on the dependency note: a build never
+  upgrades anything by itself — `Cargo.lock` pins every crate — so "we get the latest with each
+  build" was not true, and the one deprecated crate in the tree was the YAML reader that parses the
+  schema. `serde_yaml_ng` is the maintained fork with the same API: two `use` lines in
+  `reflow2-core` (`foundation/core/schema.rs`, `foundation/mod.rs`) and the workspace manifest.
+  `cargo update` moved 82 crates within their already-declared ranges; `rmcp` stays at 3.3.0 and
+  `rocksdb` / `librocksdb-sys` are untouched, per `dec:absorb-rocksdb-024-unchanged-then-switch-separately`.
+  Core suite (in-memory), server suite, clippy on both crates and the wire instruments were run on the
+  new lock.
+
+ — 2026-09-15
 
 ### Fixed
 

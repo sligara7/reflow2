@@ -55,7 +55,7 @@
 //!
 //! # The external crates this brought with it
 //!
-//! `rocksdb`, `tantivy`, `rmp-serde`, `lru`, `serde_yaml`, `uuid`, `thiserror`.
+//! `rocksdb`, `tantivy`, `rmp-serde`, `lru`, `serde_yaml_ng`, `uuid`, `thiserror`.
 //! ⚠️ `rocksdb` is pinned at **0.24, absorbed verbatim** — it is the
 //! historically-unmaintained crate, and `rust-rocksdb` is the maintained one.
 //! Switching is deliberately NOT part of this change:

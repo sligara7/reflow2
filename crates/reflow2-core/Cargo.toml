@@ -12,7 +12,7 @@ description = "Reflow 2.0 deterministic core — a schema-driven design graph, f
 rmp-serde = { workspace = true }
 tracing = { workspace = true }
 lru = { workspace = true }
-serde_yaml = { workspace = true }
+serde_yaml_ng = { workspace = true }
 uuid = { workspace = true }
 thiserror = { workspace = true }
 rocksdb = { workspace = true, optional = true }
