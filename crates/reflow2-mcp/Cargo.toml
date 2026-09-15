@@ -62,7 +62,7 @@ schemars = "1"
 # rather than left implied, per `dec:design-dependencies-declared`. Zero new
 # crates compile.
 sha2 = "0.10"
-clap = { version = "4", features = ["derive"] }
+clap = { version = "4", features = ["derive", "env"] }
 anyhow = "1"
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }

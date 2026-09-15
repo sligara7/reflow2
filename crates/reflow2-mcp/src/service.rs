@@ -1036,7 +1036,12 @@ pub(crate) const STRUCTURED_ONLY: &str = "This reply's payload is in `structured
      arrive here in full, so a rejected call still tells you why; for anything else, call \
      `export_graph` with a `path` and read the file you just wrote. Then tell whoever runs this \
      server, because that file is a post-hoc check and not a read: it cannot replace \
-     `search_design` before you create a node, or `loop_status` before you finish.";
+     `search_design` before you create a node, or `loop_status` before you finish. WHAT THEY \
+     CAN DO: start the server with `--content-policy duplicate` (or REFLOW2_CONTENT_POLICY=\
+     duplicate) and every reply carries its payload here. reflow2 already does that unasked \
+     for a client whose handshake name starts with `grok`, and sends an empty text block to \
+     `opencode`, which fills it from `structuredContent` itself — so if you are reading this \
+     sentence, your client is one reflow2 has not met.";
 
 /// The signpost text, for tests and for anything that needs to assert what a
 /// `content`-only client actually receives.
@@ -5758,6 +5763,10 @@ impl ServerHandler for ReflowService {
                 )
             })
             .unwrap_or_else(|| ("unknown".to_string(), String::new()));
+        // THE SHAPE OF `content` IS CHOSEN PER CLIENT, by the name it gave at
+        // handshake (`crate::content_policy`): a client measured to hand its
+        // model only the text block gets the payload there too.
+        let policy = crate::content_policy::for_client(Some(client.as_str()));
         let started = std::time::Instant::now();
         let tcc = rmcp::handler::server::tool::ToolCallContext::new(self, request, context);
         let answer = self.tool_router.call(tcc).await;
@@ -5778,7 +5787,7 @@ impl ServerHandler for ReflowService {
         // test called `stale_client_hint` as a pure function and never asked a
         // server. The `Err` arms are kept for transports or rmcp versions that
         // do surface it that way; the `Ok` arm is the one that fires here.
-        match answer {
+        let answer = match answer {
             Err(e) if e.message.contains("unknown field") => {
                 let hinted = stale_client_hint(&e.message);
                 Err(McpError::invalid_params(hinted, e.data.clone()))
@@ -5814,7 +5823,8 @@ impl ServerHandler for ReflowService {
                 }
             }
             other => other,
-        }
+        };
+        crate::content_policy::shape(policy, answer)
     }
 
     /// Record who connected, then answer exactly as rmcp's default would.

@@ -409,8 +409,15 @@ impl ServerHandler for LatentService {
         {
             return full.call_tool(request, context).await;
         }
+        let policy = crate::content_policy::for_client(
+            context
+                .peer
+                .peer_info()
+                .map(|info| info.client_info.name.clone())
+                .as_deref(),
+        );
         let tcc = ToolCallContext::new(self, request, context);
-        self.tool_router.call(tcc).await
+        crate::content_policy::shape(policy, self.tool_router.call(tcc).await)
     }
 
     fn get_info(&self) -> ServerInfo {

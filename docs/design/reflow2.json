@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:8966bf065070d75d22fa994637d92b6ea8f34485ef25abbfe3873ab6617b7168",
+  "content_hash": "sha256:39c0d38d19d4d3269343a06fdcf76ca7e66aa42defecd5ac071620daed4c798a",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -1322,6 +1322,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:report"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-reply-takes-the-shape-its-client-can-read",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:service"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -9659,6 +9667,12 @@
       "from_id": "chg:the-concern-enum-publishes-its-values",
       "properties": {},
       "to_id": "epoch:2026-09-10-three-capture-surface-fixes-from-the-field"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:the-content-block-is-chosen-per-client",
+      "properties": {},
+      "to_id": "epoch:a-reply-takes-the-shape-its-client-can-read"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -43057,6 +43071,69 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-content-block-is-chosen-per-client",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:latent"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-content-block-is-chosen-per-client",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:main"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-content-block-is-chosen-per-client",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-content-block-is-chosen-per-client",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:shared"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-content-block-is-chosen-per-client",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:smoke-mcp"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-content-block-is-chosen-per-client",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-no-per-design-globals"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-content-block-is-chosen-per-client",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:a-reply-takes-the-shape-its-client-can-read"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-coupling-edge-gets-its-name-back",
       "properties": {
         "accepted_baseline": true,
@@ -66759,6 +66836,12 @@
       "from_id": "dec:idea-gap-flows-to-the-dependency",
       "properties": {},
       "to_id": "fact:the-levied-requirement-blocker-cleared-and-the-workaround-recurred"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "dec:idea-how-does-a-content-only-client-get-an-answer",
+      "properties": {},
+      "to_id": "fact:grok-build-measured-on-this-box-it-hands-the-model-only-the-text-block-and-hides-mcp-tools-behind-a-search"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -195765,6 +195848,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:content-policy",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-reply-takes-the-shape-its-client-can-read"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:contradiction-alignment-test",
       "properties": {
         "completeness": "complete",
@@ -198582,6 +198674,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:test-content-policy",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-reply-takes-the-shape-its-client-can-read"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:test-degraded-server",
       "properties": {
         "completeness": "complete",
@@ -200048,6 +200149,12 @@
       "from_id": "cap:a-repair-says-which-kind-it-was",
       "properties": {},
       "to_id": "req:a-fix-says-whether-it-corrected-the-cause"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:a-reply-takes-the-shape-its-client-can-read",
+      "properties": {},
+      "to_id": "req:never-silently-absent"
     },
     {
       "edge_type": "SATISFIES",
@@ -203510,6 +203617,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:a-reply-takes-the-shape-its-client-can-read",
+      "properties": {},
+      "to_id": "cap:a-reply-takes-the-shape-its-client-can-read"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:a-report-is-not-a-list-of-every-check",
       "properties": {},
       "to_id": "cap:bounded-reads"
@@ -205566,6 +205679,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:content-policy",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:content-policy"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:corpus",
       "properties": {
         "action": "created"
@@ -206846,6 +206967,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:test-content-policy",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-content-policy"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:test-degraded-server",
       "properties": {
         "action": "created"
@@ -208122,6 +208251,18 @@
       }
     },
     {
+      "node_id": "art:content-policy",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:e67e8dfa5f3b19aa3b79efe9c6992da19c51791042d375cc704f643d6ae67ded",
+        "description": "The per-client content policy: ContentPolicy {Signpost, Duplicate, Empty}, keyed on the handshake name (grok* → duplicate, *opencode* → empty, else signpost) with a launch-time override; apply() rewrites only the exact signpost shape; shape() is the call_tool hook. Carries the measured history in its module doc.",
+        "location": "crates/reflow2-mcp/src/content_policy.rs",
+        "name": "content_policy.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:contradiction-alignment-test",
       "node_type": "Artifact",
       "properties": {
@@ -209172,7 +209313,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c058f71da85563bf4866cd39dc780c1ce01ce37f74d937e873d0a1fa2d0c70fa",
+        "checksum": "sha256:cc94210da501a0805639e50cc8c270143a3b2129bebe5abfac668ab8143a9636",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/latent.rs",
         "name": "latent.rs",
@@ -209306,7 +209447,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b7cdd05c508edee2aafd8f47f9e78bf90c5837308dfd4b86e977bb8c79660d7d",
+        "checksum": "sha256:ef52acf8b4cae93af7462048af6c6f8422038731cd7d055601ff6cfbf5b13d61",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/main.rs",
         "name": "main.rs",
@@ -210341,7 +210482,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:8aa0805d6aa31807f8093f46ba496a13f5a3558e453d47a23a91e7b248898eaa",
+        "checksum": "sha256:cf274cfe27051f3b69d04340a3434448c105de7b6b9b88efbb24bfe80dce1e9f",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -210378,7 +210519,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:130af47cef1137fafb48bd778ad7c8368d3a6fd35ee95d54c1651979ec764a78",
+        "checksum": "sha256:4434265932b24231898f3c30b45bc80a757b27e69c1738382daf4099b40510d1",
         "location": "crates/reflow2-mcp/src/shared.rs",
         "name": "shared.rs",
         "status": "realized"
@@ -210504,7 +210645,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:6c08e77c307646475c10f61a3e8f0a5645520bb677e7405ea92de0dcf01d2293",
+        "checksum": "sha256:0cb52966e30c10155ca3fdb814dde9ecd914311a159219c229bfacb91a1878a8",
         "location": "tools/smoke_mcp.py",
         "name": "smoke_mcp.py",
         "status": "realized"
@@ -210839,6 +210980,18 @@
       }
     },
     {
+      "node_id": "art:test-content-policy",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:3138f937a7b26e2943398718d4be60a21a20062bdb11537f915380af6f6c8734",
+        "description": "Wire proof over the real binary: four client names and the operator flag, asserting the content block's shape and that structuredContent is kept; a prose tool and a refusal reach grok untouched. CI full job.",
+        "location": "tools/test_content_policy.py",
+        "name": "test_content_policy.py",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:test-degraded-server",
       "node_type": "Artifact",
       "properties": {
@@ -210979,7 +211132,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:a209afb5843b6531ba61a7861d41bb8323a08d215e8d5c4383eac700fe4af092",
+        "checksum": "sha256:9047e937c243342cccb68e2b37492cd9037e5100c260d7924337583378a95643",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/tests/no_per_design_process_globals.rs",
         "name": "no_per_design_process_globals.rs",
@@ -212228,6 +212381,17 @@
         "name": "A repair records whether it corrected the cause or contained a symptom, and the design can say what still rests on a patch",
         "provenance": "authored",
         "status": "realized"
+      }
+    },
+    {
+      "node_id": "cap:a-reply-takes-the-shape-its-client-can-read",
+      "node_type": "Capability",
+      "properties": {
+        "description": "In the server's call_tool, after the handler answers and before the reply leaves, the shape of the `content` block of a JSON result is chosen by the name the client gave at handshake (clientInfo.name, replayed verbatim through the shared proxy so the daemon keys on the real client): a name starting `grok` gets the payload pretty-printed in the text block as well as structuredContent (`duplicate` — the shape two skill tools already used and the same Grok Build session that showed the outage shows reaching the model in full); a name containing `opencode` gets an EMPTY text block (`empty` — measured in its source: it fills the text from structuredContent only when the text block is empty); every other client keeps the one-sentence signpost and pays nothing. `--content-policy signpost|duplicate|empty` (env REFLOW2_CONTENT_POLICY) overrides for every client, for one nobody has named; a `--shared` client forwards it to the daemon it starts. Only the exact signpost shape is rewritten — prose tools, refusals and already-duplicated results are untouched. The signpost itself now names the flag, so the person stuck reading it learns the way out where they are stuck. Bounded by reply_budget: at most twice a 30,000-character reply, never twice the 157 KB that ruled out always-duplicate on 2026-08-23. Module crates/reflow2-mcp/src/content_policy.rs; wire proof tools/test_content_policy.py.",
+        "name": "A reply takes the shape its client can read — the content block is chosen per client",
+        "provenance": "authored",
+        "status": "realized",
+        "tier": "operational"
       }
     },
     {
@@ -222395,6 +222559,16 @@
         "rationale": "hxm_program F-19: \"`concern: \\\"operability\\\"` → validation error listing the eleven allowed values. One retry. The parameter description names the property but not the set.\" Its neighbour `priority`, on the SAME request struct, already published its values — two fields of one type, one discoverable and one not, which is what makes this an oversight rather than a policy.\n\nSAFE BY MEASUREMENT, NOT BY ASSUMPTION. The one way publishing an enum can break a caller is a value in use that is not in the declared list — a validating client would begin refusing something that works today. Measured across the committed export: 96 declared enum properties, and ZERO out-of-list values in 4,110 nodes and 24,102 edges. The server already validated (that is how F-19 surfaced at all), so publishing can only convert a server-side refusal into client-side knowledge.\n\nREPAIR: `contained_symptom`. STANDS IN FOR: a check that every declared enum reachable through a request field publishes its values, so the next one cannot ship unwired. THE INSTANCE IS FIXED AND THE CLASS IS NOT — wiring is per-field and manual, with nothing measuring completeness.\n\n⚠️ AND THE CLASS IS SMALLER THAN THIS SESSION FIRST REPORTED, which is worth recording because the wrong number was put to the user. A first sweep claimed ~40 unwired enums with a constructor param; that used a regex matching any same-NAMED field anywhere in service.rs, so `Constraint.concern` and `Requirement.concern` both counted off one match. Checked per request struct the real figure is about three — `Capability.tier`, `Component.tier`, `Decision.kind`. The remaining unwired ones are edge properties written through generic `props` maps with no typed parameter to hang a schema on, which is a different and larger question.",
         "subject": "system",
         "summary": "`add_requirement`'s `concern` parameter now publishes the schema's eleven values in its served schema, wired through `schema_enum!` so the list is read from the compiled-in schema and cannot drift from what is enforced. One line plus one attribute."
+      }
+    },
+    {
+      "node_id": "chg:the-content-block-is-chosen-per-client",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "name": "The content block of a JSON reply is chosen per client in call_tool: grok gets the payload duplicated into the text block, opencode an empty one, everyone else the signpost; --content-policy overrides and is forwarded to a spawned daemon; the signpost names the flag",
+        "repair": "corrected_cause",
+        "subject": "system"
       }
     },
     {
@@ -232975,6 +233149,17 @@
       }
     },
     {
+      "node_id": "epoch:a-reply-takes-the-shape-its-client-can-read",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "description": "Revision after the third content-only report from the Grok population and the first from Anthony's own hands: on 2026-09-15 his Grok Build 1.0.30 session on this repo received the signpost sentence and nothing else for maturity_report, what_next, scan_nodes and open_questions, and its session store held no copy of structuredContent. The 2026-08-23 signpost shape was chosen against \"a client nobody could name\"; three reports named one, and OpenCode (2026-09-14) was a second. This epoch records the mechanism that answers both without reopening the 2× wire cost for the clients that read structuredContent: the content block is keyed on the handshake name in call_tool, with an operator override. MUST NOT: reintroduce the unbounded duplicate for every client (the reply budget bounds it, the per-client key limits who pays); guess at a client's behaviour that was not measured (Grok's empty-text fallback is unmeasured and Grok therefore gets `duplicate`, the shape measured to reach its model). The decision dec:idea-how-does-a-content-only-client-get-an-answer stays the owner's; the merge of the PR carrying this epoch is his word on the mechanism, and switching any client — or every client — to strictly structured is a one-line change once the empty-text probe (scratchpad grokprobe/, waiting on Grok quota) has run.",
+        "epoch_type": "revision",
+        "name": "The content block is chosen per client (2026-09-15)",
+        "sequence": 498,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:a-report-describes-the-walk-that-produced-it",
       "node_type": "DesignEpoch",
       "properties": {
@@ -236531,6 +236716,16 @@
       }
     },
     {
+      "node_id": "frag:art:content-policy",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered content_policy.rs"
+      }
+    },
+    {
       "node_id": "frag:art:content-test",
       "node_type": "Fragment",
       "properties": {
@@ -238140,6 +238335,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered constructors_preserve.rs — the class guard: a write path that builds a node from a partial property set must not erase what the design already knew"
+      }
+    },
+    {
+      "node_id": "frag:art:test-content-policy",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered test_content_policy.py"
       }
     },
     {
@@ -251239,6 +251444,19 @@
       }
     },
     {
+      "node_id": "fact:grok-build-measured-on-this-box-it-hands-the-model-only-the-text-block-and-hides-mcp-tools-behind-a-search",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.95,
+        "fact_type": "finding",
+        "name": "MEASURED (Grok Build 1.0.30, this box, 2026-09-15): the model receives ONLY the text block of a reflow2 tool result — the session store keeps `rawOutput.output.OkayOutput` = the content text and nothing of structuredContent — so every structured reply is the signpost sentence; Grok Build is a native Rust client on rmcp 3.2.0, names tools `reflow2__<tool>`, and hides all 191 MCP tools behind a SearchTool the model queries first",
+        "statement": "Anthony opened Grok Build 1.0.30 on the reflow2 repo itself (2026-09-15 ~02:05Z, served by the 0.59.0 shared daemon via .mcp.json) and ran where-am-i. Its agent reported: \"This client only shows the text half of structured replies.\" Measured from the client's own session store (~/.grok/sessions/<repo>/<session>/): chat_history.jsonl tool_result entries for maturity_report, what_next, scan_nodes and open_questions carry exactly the STRUCTURED_ONLY signpost (857 bytes) as their whole content; updates.jsonl stores each MCP result as {type: MCP, tool_name, server_name, output: {OkayOutput: <content text>}} with NO structuredContent field kept anywhere. So the client discards structuredContent at the transport edge, before storage, and the model never sees it. THE SAME SESSION ALSO PROVES THE DUPLICATE SHAPE WORKS ON THIS CLIENT: get_instructions and get_skill build their result with skills_tools.rs `structured()`, which puts the pretty-printed JSON in the text block AS WELL AS structuredContent, and both reached the model in full (21 KB each, OkayOutput = the JSON). graph_report_markdown (prose only) reached it too. So on Grok Build: signpost → nothing usable; duplicate → the whole answer. What was NOT measured: what Grok Build does with an EMPTY text block plus structuredContent (OpenCode fills the text from structuredContent in that case; Grok's binary is native Rust on rmcp 3.2.0 and cannot be read the way OpenCode's TypeScript could; a headless probe with a mock server was written — scratchpad grokprobe/ — but Grok Build refused it: the free usage limit was reached, so it waits for quota). Three further facts about this client that bear on skills, instructions and the reply budget: (1) MCP tools are named `reflow2__<tool>` (double underscore); (2) Grok Build 1.0.30 does NOT list MCP tools to the model — it exposes a SearchTool (\"total_hidden_tools\": 191) the model queries by description first, so a tool's description is its only way of being found; (3) it TRUNCATES a tool output at 19.5 KB, spills the full text to <session>/mcp/call-<id>.json and tells the model to query that file with a terminal command — so reflow2's 30,000-char default reply budget is above Grok's own cap, and the last third of a budget-sized reply arrives as a file pointer. Third content-only measurement of the same client population (Alex 2026-08-27 TUI, Alex 2026-08-29 grok-shell 1.0.13, Anthony 2026-09-15 Grok Build 1.0.30) and the second client after OpenCode (2026-09-14). Bearing on the open question: the constraint that killed always-duplicate (157 KB replies) has weakened since reply_budget (2026-09-13) caps every JSON reply at 30,000 chars by default, so duplicating the payload into content costs at most ~2× a bounded reply.",
+        "subject_id": "dec:idea-how-does-a-content-only-client-get-an-answer",
+        "valid_from": "2026-09-15"
+      }
+    },
+    {
       "node_id": "fact:hydrate-cost-is-superlinear-in-edges-and-the-byte-store-is-not-the-bottleneck",
       "node_type": "TemporalFact",
       "properties": {
@@ -254978,6 +255196,20 @@
       }
     },
     {
+      "node_id": "ver:a-reply-takes-the-shape-its-client-can-read",
+      "node_type": "Verification",
+      "properties": {
+        "description": "tools/test_content_policy.py drives the real reflow2-mcp binary over stdio under four client names and the operator flag: claude-code gets the signpost and structuredContent; grok-shell-reflow2 gets the payload as JSON in the text block equal to structuredContent, with no flag; opencode gets an empty text block with structuredContent kept; an unknown client under --content-policy duplicate gets the payload, and grok under --content-policy signpost is overridden back; a prose tool and a refusal reach grok untouched. Unit tests in content_policy.rs cover the reshaping itself (duplicate, empty, only-the-signpost-shape, flag parsing, name keying). Wired into CI's full job.",
+        "findings": "9 of 9 wire checks pass against the 2026-09-15 debug build; 5 of 5 unit tests pass.",
+        "kind": "verification",
+        "last_run_at": "2026-09-15",
+        "level": "integration",
+        "method": "test",
+        "name": "The content block is keyed on the handshake name, on the wire",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:a-report-is-not-a-list-of-every-check",
       "node_type": "Verification",
       "properties": {
@@ -257892,7 +258124,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:82c801b704f7532376a75c3321eabd2b5aedbf86fff5b1cc9fb5828c6c67d18a",
+  "prev_content_hash": "sha256:8966bf065070d75d22fa994637d92b6ea8f34485ef25abbfe3873ab6617b7168",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
