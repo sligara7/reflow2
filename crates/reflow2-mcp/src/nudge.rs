@@ -99,7 +99,8 @@ impl NudgeStatus {
             // advisories.
             NudgeStatus::NoHookForThisHarness { harnesses } => Some(format!(
                 "THERE IS NO SESSION-END NUDGE FOR THIS HARNESS, and none is possible: this \
-                 project is set up for {harnesses}, and reflow2 only has a hook for Claude Code. \
+                 project is set up for {harnesses}, and reflow2 has a trigger only for Claude \
+                 Code (a Stop hook) and OpenCode (a plugin). \
                  Nothing is missing and there is nothing to install — the coherence loop is \
                  yours to run. Call `loop_status` before you finish any session in which you \
                  changed the design, and after a batch of captures."
@@ -114,6 +115,16 @@ impl NudgeStatus {
 /// falls back to the working directory, which is where every configured harness
 /// launches the server (the same assumption the relative graph path rests on).
 pub fn status(graph_path: Option<&str>) -> NudgeStatus {
+    status_with_home(
+        graph_path,
+        std::env::var_os("HOME").map(std::path::PathBuf::from),
+    )
+}
+
+/// [`status`] with the home directory passed in, so a test can look at a
+/// project without also seeing whatever the developer's own machine has
+/// installed under `~/.config/opencode/plugins/`.
+pub fn status_with_home(graph_path: Option<&str>, home: Option<PathBuf>) -> NudgeStatus {
     let Some(project) = project_dir(graph_path) else {
         return NudgeStatus::Unknown;
     };
@@ -141,15 +152,30 @@ pub fn status(graph_path: Option<&str>) -> NudgeStatus {
             };
         }
     }
-    // No hook. Before calling that a shortfall, ask whether one was ever
-    // possible here — the installer records which harness this project named,
-    // and only Claude Code has an event model reflow2 can register against.
+    // THE OPENCODE HALF (2026-09-14, PR #511): OpenCode has no hook
+    // configuration to register into; it loads plugin FILES from a directory,
+    // and the kit ships an adapter there that feeds OpenCode's hooks to the
+    // same loop_nudge.py. So the presence test for OpenCode is the file, per
+    // project or machine-wide. Checked here rather than inferred from the
+    // harness stamp, for the same reason the Claude search reads the settings
+    // file: a project that HAS a working nudge must never be told otherwise.
+    if opencode_plugin_present(&project, home.as_deref()) {
+        return NudgeStatus::Installed;
+    }
+    // No hook and no plugin. Before calling that a shortfall, ask whether one
+    // was ever possible here — the installer records which harness this
+    // project named, and reflow2 has a trigger for two of them: a Stop hook on
+    // Claude Code and a plugin on OpenCode.
     //
-    // ORDER MATTERS: the hook search runs FIRST and wins. Somebody on any
+    // ORDER MATTERS: the searches above run FIRST and win. Somebody on any
     // harness may have wired their own Stop hook, and a project that HAS a
     // working nudge must never be told its harness cannot have one.
     match recorded_harnesses(&project) {
-        Some(harnesses) if !harnesses.iter().any(|h| h == HOOK_HARNESS) => {
+        Some(harnesses)
+            if !harnesses
+                .iter()
+                .any(|h| TRIGGER_HARNESSES.contains(&h.as_str())) =>
+        {
             NudgeStatus::NoHookForThisHarness {
                 harnesses: harnesses.join(", "),
             }
@@ -161,8 +187,33 @@ pub fn status(graph_path: Option<&str>) -> NudgeStatus {
     }
 }
 
-/// The harness reflow2 can register a session-end hook against. One, today.
-const HOOK_HARNESS: &str = "claude";
+/// The harnesses reflow2 has a loop trigger for: a Stop hook registered into
+/// Claude Code's settings, and a plugin file OpenCode loads from its plugin
+/// directory (PR #511, 2026-09-14). Anything else has no event model reflow2
+/// can reach, and is told so rather than told to install something.
+const TRIGGER_HARNESSES: &[&str] = &["claude", "opencode"];
+
+/// The kit's OpenCode plugin, by the name the installers write it under.
+const OPENCODE_PLUGIN: &str = "reflow2-loop-nudge.js";
+
+/// Is the OpenCode loop-nudge plugin installed for this project — in the
+/// project's own `.opencode/plugins/`, or machine-wide in
+/// `~/.config/opencode/plugins/`, the two directories OpenCode loads plugins
+/// from? Either one reaches a session opened in this project.
+fn opencode_plugin_present(project: &Path, home: Option<&Path>) -> bool {
+    if project
+        .join(".opencode/plugins")
+        .join(OPENCODE_PLUGIN)
+        .exists()
+    {
+        return true;
+    }
+    home.is_some_and(|home| {
+        home.join(".config/opencode/plugins")
+            .join(OPENCODE_PLUGIN)
+            .exists()
+    })
+}
 
 /// Which harnesses this project was set up for, as `reflow2_init.py` recorded
 /// them in `.reflow2/kit-version.json`.
@@ -308,7 +359,10 @@ mod tests {
             "#!/usr/bin/env python3\n",
         )
         .unwrap();
-        assert_eq!(status(Some(&p.graph())), NudgeStatus::Installed);
+        assert_eq!(
+            status_with_home(Some(&p.graph()), None),
+            NudgeStatus::Installed
+        );
     }
 
     #[test]
@@ -319,7 +373,7 @@ mod tests {
             r#"{"hooks":{"Stop":[{"hooks":[{"type":"command",
                "command":"python3 \"$CLAUDE_PROJECT_DIR/tools/loop_nudge.py\""}]}]}}"#,
         );
-        let NudgeStatus::Broken { command } = status(Some(&p.graph())) else {
+        let NudgeStatus::Broken { command } = status_with_home(Some(&p.graph()), None) else {
             panic!("a hook pointing at a missing script must not read as installed");
         };
         assert!(command.contains("loop_nudge"));
@@ -328,7 +382,7 @@ mod tests {
     #[test]
     fn no_hook_is_absent_and_says_what_to_do_instead() {
         let p = project_with(r#"{"hooks":{}}"#);
-        let status = status(Some(&p.graph()));
+        let status = status_with_home(Some(&p.graph()), None);
         assert_eq!(status, NudgeStatus::Absent);
         let advisory = status.advisory().unwrap();
         assert!(advisory.contains("loop_status"), "{advisory}");
@@ -345,7 +399,7 @@ mod tests {
     #[test]
     fn the_absent_advisory_does_not_claim_nothing_else_will_remind_you() {
         let p = project_with(r#"{"hooks":{}}"#);
-        let advisory = status(Some(&p.graph())).advisory().unwrap();
+        let advisory = status_with_home(Some(&p.graph()), None).advisory().unwrap();
         assert!(
             advisory.contains("REFLOW2 HAS NOT INSTALLED"),
             "it must say what reflow2 did, not what the world contains: {advisory}"
@@ -363,7 +417,10 @@ mod tests {
     #[test]
     fn a_settings_file_that_is_not_json_does_not_read_as_installed() {
         let p = project_with("{ not json");
-        assert_eq!(status(Some(&p.graph())), NudgeStatus::Absent);
+        assert_eq!(
+            status_with_home(Some(&p.graph()), None),
+            NudgeStatus::Absent
+        );
     }
 
     // ---------------------------------------------------------------- `~`
@@ -409,7 +466,7 @@ mod tests {
             r#"{"hooks":{"Stop":[{"hooks":[{"type":"command",
                "command":"python3 ~/.reflow2-no-such-dir-8f3a/loop_nudge.py"}]}]}}"#,
         );
-        let NudgeStatus::Broken { command } = status(Some(&p.graph())) else {
+        let NudgeStatus::Broken { command } = status_with_home(Some(&p.graph()), None) else {
             panic!("expanding ~ must not make a missing script read as installed");
         };
         assert!(command.contains("loop_nudge"));
@@ -498,14 +555,15 @@ mod tests {
     #[test]
     fn a_harness_that_cannot_hold_a_hook_is_not_reported_as_a_missing_one() {
         // The defect this variant exists for: `Absent` answered two questions
-        // with one word, and sent an OpenCode user after something that does
-        // not exist.
+        // with one word, and sent a user after something that does not exist.
+        // (OpenCode was the example until 2026-09-14, when it got a plugin —
+        // so the harness with no trigger is now VS Code.)
         let p = project_with("{}");
-        set_up_for(&p, &["opencode"]);
+        set_up_for(&p, &["vscode"]);
         assert_eq!(
-            status(Some(&p.graph())),
+            status_with_home(Some(&p.graph()), None),
             NudgeStatus::NoHookForThisHarness {
-                harnesses: "opencode".to_string()
+                harnesses: "vscode".to_string()
             }
         );
     }
@@ -515,15 +573,12 @@ mod tests {
         // An advisory that tells somebody to fix an unfixable thing is how a
         // reader learns to skip advisories.
         let p = project_with("{}");
-        set_up_for(&p, &["opencode"]);
-        let said = status(Some(&p.graph()))
+        set_up_for(&p, &["vscode"]);
+        let said = status_with_home(Some(&p.graph()), None)
             .advisory()
             .expect("must say something");
         assert!(said.contains("none is possible"), "{said}");
-        assert!(
-            said.contains("opencode"),
-            "it must name the harness: {said}"
-        );
+        assert!(said.contains("vscode"), "it must name the harness: {said}");
         assert!(
             said.contains("loop_status"),
             "saying the trigger is absent is only useful with what to do instead: {said}"
@@ -539,7 +594,10 @@ mod tests {
         // The counterweight. Narrowing must not silence the real gap.
         let p = project_with("{}");
         set_up_for(&p, &["claude"]);
-        assert_eq!(status(Some(&p.graph())), NudgeStatus::Absent);
+        assert_eq!(
+            status_with_home(Some(&p.graph()), None),
+            NudgeStatus::Absent
+        );
     }
 
     #[test]
@@ -558,7 +616,10 @@ mod tests {
             "#!/usr/bin/env python3\n",
         )
         .unwrap();
-        assert_eq!(status(Some(&p.graph())), NudgeStatus::Installed);
+        assert_eq!(
+            status_with_home(Some(&p.graph()), None),
+            NudgeStatus::Installed
+        );
     }
 
     #[test]
@@ -567,14 +628,20 @@ mod tests {
         // become "cannot" — that would reproduce, one layer down, the very
         // conflation this variant was added to fix.
         let p = project_with("{}");
-        assert_eq!(status(Some(&p.graph())), NudgeStatus::Absent);
+        assert_eq!(
+            status_with_home(Some(&p.graph()), None),
+            NudgeStatus::Absent
+        );
     }
 
     #[test]
     fn a_multi_harness_project_including_claude_can_still_have_a_hook() {
         let p = project_with("{}");
         set_up_for(&p, &["opencode", "claude"]);
-        assert_eq!(status(Some(&p.graph())), NudgeStatus::Absent);
+        assert_eq!(
+            status_with_home(Some(&p.graph()), None),
+            NudgeStatus::Absent
+        );
     }
 
     #[test]
@@ -623,5 +690,57 @@ mod tests {
                 let _ = std::fs::remove_dir_all(&self.dir);
             }
         }
+    }
+
+    /// PR #511 (2026-09-14): OpenCode has no hook to register, it loads a
+    /// plugin FILE — so the presence test for OpenCode is that file.
+    #[test]
+    fn the_opencode_plugin_in_the_project_reads_as_installed() {
+        let p = project_with(r#"{"hooks":{}}"#);
+        std::fs::create_dir_all(p.dir.join(".opencode/plugins")).unwrap();
+        std::fs::write(
+            p.dir.join(".opencode/plugins/reflow2-loop-nudge.js"),
+            "export default () => ({})\n",
+        )
+        .unwrap();
+        assert_eq!(
+            status_with_home(Some(&p.graph()), None),
+            NudgeStatus::Installed
+        );
+    }
+
+    /// The machine-wide copy reaches every project on the machine, so it counts
+    /// for a project that has none of its own.
+    #[test]
+    fn the_machine_wide_opencode_plugin_reads_as_installed() {
+        let p = project_with(r#"{"hooks":{}}"#);
+        let home = p.dir.join("fake-home");
+        std::fs::create_dir_all(home.join(".config/opencode/plugins")).unwrap();
+        std::fs::write(
+            home.join(".config/opencode/plugins/reflow2-loop-nudge.js"),
+            "export default () => ({})\n",
+        )
+        .unwrap();
+        assert_eq!(
+            status_with_home(Some(&p.graph()), Some(home)),
+            NudgeStatus::Installed
+        );
+    }
+
+    /// An OpenCode project WITHOUT the plugin is told it is absent — fixable —
+    /// and no longer that no nudge is possible for its harness.
+    #[test]
+    fn an_opencode_project_without_the_plugin_is_absent_not_impossible() {
+        let p = project_with(r#"{"hooks":{}}"#);
+        std::fs::create_dir_all(p.dir.join(".reflow2")).unwrap();
+        std::fs::write(
+            p.dir.join(".reflow2/kit-version.json"),
+            r#"{"harnesses":["opencode"]}"#,
+        )
+        .unwrap();
+        assert_eq!(
+            status_with_home(Some(&p.graph()), None),
+            NudgeStatus::Absent
+        );
     }
 }
