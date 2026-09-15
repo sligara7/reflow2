@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:4ea7edcae3be339edfc6d25d498699d634649637a4c4e3bba5e366853b6cf77f",
+  "content_hash": "sha256:64351678b967ded5417b44e5dd0b2cadd7867e828a00b3de360f290743d4d139",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -17840,6 +17840,17 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:serde-yaml-is-replaced-by-serde-yaml-ng-and-the-lock-is-refreshed",
+      "properties": {
+        "approved_at": "2026-09-14",
+        "roles": [
+          "approver"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:should-a-design-be-able-to-say-it-describes-something-that-already-exists",
       "properties": {
         "approved_at": "2026-08-15",
@@ -33400,6 +33411,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:baseline-9404e88ac5891f51",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:foundation"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:baseline-942ecf6024c25fbb",
       "properties": {
         "accepted_baseline": true,
@@ -41775,6 +41795,24 @@
         "action": "modified"
       },
       "to_id": "req:a-session-with-no-seed-can-still-orient"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:serde-yaml-ng-replaces-serde-yaml-and-the-lock-is-refreshed",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:foundation"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:serde-yaml-ng-replaces-serde-yaml-and-the-lock-is-refreshed",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:schema"
     },
     {
       "edge_type": "CHANGED",
@@ -212502,6 +212540,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
+        "checksum": "sha256:6bfeb48735dad56038ae617a0a9b4a1cbd0234d6030cd7c4f9d8d28a5b48f468",
         "location": "crates/reflow2-core/src/foundation/mod.rs",
         "name": "foundation/mod.rs",
         "status": "realized"
@@ -223241,6 +223280,16 @@
       }
     },
     {
+      "node_id": "chg:baseline-9404e88ac5891f51",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-09-15",
+        "name": "First baseline for foundation/mod.rs, taken as its YAML reader moved to serde_yaml_ng; it had shipped in every manifest as without_checksum.",
+        "subject": "record"
+      }
+    },
+    {
       "node_id": "chg:baseline-942ecf6024c25fbb",
       "node_type": "ChangeEvent",
       "properties": {
@@ -225850,6 +225899,18 @@
         "change_type": "new_feature",
         "name": "design_regions ships: the parts a design names, sized and costed, for a session that arrived with nothing",
         "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:serde-yaml-ng-replaces-serde-yaml-and-the-lock-is-refreshed",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-09-15",
+        "name": "serde_yaml → serde_yaml_ng 0.10; Cargo.lock refreshed within declared ranges (82 crates; rmcp 3.3.0 and rocksdb unchanged)",
+        "rationale": "dec:serde-yaml-is-replaced-by-serde-yaml-ng-and-the-lock-is-refreshed, Anthony's word 2026-09-14. A build never upgrades anything (Cargo.lock pins), so the deprecated crate would have stayed forever; a rename-not-rewrite fork keeps the change to three lines. Verified on the new lock: core suite in-memory, server suite, clippy both crates, format, wire instruments.",
+        "subject": "system",
+        "summary": "The YAML reader that parses reflow2's schema moved from the archived serde_yaml 0.9.34+deprecated to its maintained same-API fork serde_yaml_ng 0.10 (workspace Cargo.toml, reflow2-core Cargo.toml, two use sites in foundation/core/schema.rs and foundation/mod.rs), and cargo update moved 82 crates to the newest versions their declared ranges already allowed. No behaviour change; rocksdb/librocksdb-sys deliberately untouched."
       }
     },
     {
@@ -233839,6 +233900,17 @@
         "name": "The satisfaction schedule is a traceability edge — WHAT→WHEN, the same shape as ALLOCATED_TO's WHAT→WHERE",
         "rationale": "Built rather than parked because the defect was not hypothetical — it was firing on `rel:v0190` in the live design, and the alternative on offer was `generate_bridge`, i.e. inventing an edge to hide a missing rule. That would have papered over the finding with exactly the kind of fill-in `dec:views-are-projections` calls a defect.\n\nThe direction was read off the precedent rather than chosen: `INCLUDES` had already settled that a Release is downstream of its contents (\"the contents are the source of truth, the release a downstream packaging of them\"), and a schedule is the same relation before the fact instead of after it.\n\nLeft PROPOSED because whether a schedule should propagate impact at all is a real design question — it widens every blast radius that touches a scheduled item — and that is Anthony's call, not something to settle by having fixed it.",
         "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:serde-yaml-is-replaced-by-serde-yaml-ng-and-the-lock-is-refreshed",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Replace `serde_yaml` (0.9.34+deprecated, archived by its author) with `serde_yaml_ng` 0.10 — the maintained fork with the same API — in the workspace manifest and the two `use` sites in reflow2-core (foundation/core/schema.rs, foundation/mod.rs); and run `cargo update` so the lockfile moves every crate to the newest version its declared range already allows (82 crates on 2026-09-15). rmcp stays 3.3.0; rocksdb and librocksdb-sys are deliberately left alone per dec:absorb-rocksdb-024-unchanged-then-switch-separately.",
+        "kind": "choice",
+        "name": "serde_yaml → serde_yaml_ng 0.10, and Cargo.lock is refreshed within declared ranges (rocksdb untouched)",
+        "rationale": "Anthony's dependency note (2026-09-14) assumed each build pulls the latest; it does not — Cargo.lock pins every crate and a build never upgrades. The one crate in the tree that had actually stopped being maintained was the YAML reader that parses reflow2's own schema, which is the wrong place for an unmaintained dependency. A rename-not-rewrite fork keeps the change to three lines of source. The lock refresh is bundled because the same misreading (\"we get the latest\") is what it corrects, and it is bounded by the ranges already declared — nothing crosses a major version. Verified on the new lock: core suite (in-memory), the server suite, clippy on both crates, format, and the wire instruments. His word: \"yes on the dependency pull request and the serde_yaml replacement\".",
+        "status": "accepted"
       }
     },
     {
@@ -261769,7 +261841,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:39c0d38d19d4d3269343a06fdcf76ca7e66aa42defecd5ac071620daed4c798a",
+  "prev_content_hash": "sha256:4ea7edcae3be339edfc6d25d498699d634649637a4c4e3bba5e366853b6cf77f",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

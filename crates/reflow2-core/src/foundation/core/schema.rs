@@ -356,14 +356,14 @@ impl Schema {
     /// Raw YAML parse with the top-level `schema:` key unwrapped if
     /// present. No `validate()` — callers add it.
     fn from_yaml_unvalidated(yaml: &str) -> Result<Self, DynoError> {
-        let raw: serde_yaml::Value =
-            serde_yaml::from_str(yaml).map_err(|e| DynoError::Schema(e.to_string()))?;
+        let raw: serde_yaml_ng::Value =
+            serde_yaml_ng::from_str(yaml).map_err(|e| DynoError::Schema(e.to_string()))?;
         let schema_value = if let Some(inner) = raw.get("schema") {
             inner.clone()
         } else {
             raw
         };
-        serde_yaml::from_value(schema_value).map_err(|e| DynoError::Schema(e.to_string()))
+        serde_yaml_ng::from_value(schema_value).map_err(|e| DynoError::Schema(e.to_string()))
     }
 
     /// Merge another schema into this one.
@@ -1240,8 +1240,8 @@ schema:
         assert!(!props["author"].fulltext);
 
         // Survives serialize → reparse (structural round-trip).
-        let serialized = serde_yaml::to_string(&schema).unwrap();
-        let reparsed: Schema = serde_yaml::from_str(&serialized).unwrap();
+        let serialized = serde_yaml_ng::to_string(&schema).unwrap();
+        let reparsed: Schema = serde_yaml_ng::from_str(&serialized).unwrap();
         assert!(reparsed.node_types["Document"].properties["body"].fulltext);
         assert!(!reparsed.node_types["Document"].properties["status"].fulltext);
     }
@@ -1294,7 +1294,7 @@ schema:
     #[test]
     fn property_description_round_trips_yaml() {
         // Property carries a description through parse → re-serialize → re-parse.
-        // Byte-equal isn't a useful assertion across serde_yaml because HashMap
+        // Byte-equal isn't a useful assertion across serde_yaml_ng because HashMap
         // ordering and quoting normalization differ; structural round-trip is
         // what consumers actually rely on.
         let yaml = r#"
@@ -1313,8 +1313,8 @@ schema:
         let prop = &schema.node_types["Item"].properties["name"];
         assert_eq!(prop.description.as_deref(), Some("Human-readable label"));
 
-        let serialized = serde_yaml::to_string(&schema).unwrap();
-        let reparsed: Schema = serde_yaml::from_str(&serialized).unwrap();
+        let serialized = serde_yaml_ng::to_string(&schema).unwrap();
+        let reparsed: Schema = serde_yaml_ng::from_str(&serialized).unwrap();
         assert_eq!(
             reparsed.node_types["Item"].properties["name"]
                 .description
@@ -1335,7 +1335,7 @@ schema:
   edge_types: {}
 "#;
         let bare = Schema::from_yaml(bare_yaml).unwrap();
-        let bare_serialized = serde_yaml::to_string(&bare).unwrap();
+        let bare_serialized = serde_yaml_ng::to_string(&bare).unwrap();
         assert!(
             !bare_serialized.contains("description"),
             "missing description should not be serialized: {}",
