@@ -188,12 +188,10 @@ impl ReflowService {
         description = "The coherence loop's outstanding debt, cheaply: what capture→detect→ask→decide steps are \
                        owed now, computed from graph state, never run history. Anchored gaps never put to the \
                        user, questions waiting or answered-but-unwritten, open decisions a named person was \
-                       ASKED to settle (one carrying an approver edge), structural defects, capabilities \
+                       ASKED to settle, structural defects, capabilities \
                        claiming realized/verified with no passing check, drift awaiting a disposition, and \
-                       built capabilities nobody has checked against reality, and follow-ups captured with one \
-                       word (`/log-issue`, a TemporalFact with fact_type `follow_up`) that nobody has settled \
-                       — listed oldest first in `follow_ups`, so a session boundary can put them to the \
-                       user without a second call. `clean: true` means nothing is \
+                       built capabilities nobody has checked against reality, and follow-ups (`/log-issue`) \
+                       nobody has settled, listed oldest first in `follow_ups`. `clean: true` means nothing is \
                        owed, and those decisions are LISTED in `assigned_decisions`. Pass `contributor_id` to \
                        ask WHAT NEEDS THIS PERSON. Scoped, TWO things are attributed: decisions they were asked \
                        to settle, and open gaps standing on ground they OWN (`gaps_on_owned_ground`, each \
@@ -203,8 +201,8 @@ impl ReflowService {
                        same answer — so scoped, `clean` means nothing is owed BY THAT PERSON, not that the \
                        design is clean. An unknown contributor_id is REFUSED: a typo would otherwise give the \
                        most reassuring reply there is. `verifications` is a DIGEST: counts by status, how many \
-                       never ran, and every check not currently passing. `graph_report` carries every check \
-                       with its last run. Ask for this to learn what the design process still needs from you, \
+                       never ran, and every check not currently passing. Ask for this to learn what the \
+                       design process still needs from you, \
                        and what to do next.",
         annotations(read_only_hint = true)
     )]
