@@ -25,7 +25,7 @@ serde_json = "1"
 # The export's content hash (tamper evidence + lineage chain,
 # dec:export-hash-chain). FNV-1a serves the deterministic *ids*; a fingerprint
 # meant to detect edits needs a real cryptographic hash.
-sha2 = "0.10"
+sha2 = "0.11"
 
 [features]
 default = []

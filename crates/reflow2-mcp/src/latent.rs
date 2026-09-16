@@ -31,7 +31,7 @@ use rmcp::handler::server::tool::ToolCallContext;
 use rmcp::handler::server::wrapper::Parameters;
 use rmcp::model::{
     CallToolRequestParams, CallToolResponse, CallToolResult, ContentBlock, Implementation,
-    ListToolsResult, PaginatedRequestParams, ServerCapabilities, ServerInfo,
+    ListToolsResult, PaginatedRequestParams, ServerCapabilities, ServerConfig,
 };
 use rmcp::service::{RequestContext, RoleServer};
 use rmcp::{ErrorData as McpError, ServerHandler, tool, tool_router};
@@ -420,14 +420,14 @@ impl ServerHandler for LatentService {
         crate::content_policy::shape(policy, self.tool_router.call(tcc).await)
     }
 
-    fn get_info(&self) -> ServerInfo {
+    fn get_info(&self) -> ServerConfig {
         // Said at handshake time, because the agent's first wrong conclusion
         // would otherwise be "reflow2 is not set up here" — which on a
         // machine-wide install is false in a way that costs the user the whole
         // design loop.
         // `list_changed` is DECLARED, because this server sends it: the moment a
         // design exists here it serves the full surface and says so the MCP way.
-        ServerInfo::new(
+        ServerConfig::new(
             ServerCapabilities::builder()
                 .enable_tools()
                 .enable_tool_list_changed()

@@ -29,7 +29,17 @@ pub fn node_content_hash(props: &std::collections::HashMap<String, Value>) -> St
     use sha2::{Digest, Sha256};
     let ordered: std::collections::BTreeMap<&String, &Value> = props.iter().collect();
     let text = serde_json::to_string(&ordered).unwrap_or_default();
-    format!("sha256:{:x}", Sha256::digest(text.as_bytes()))
+    // Byte by byte rather than `{:x}` on the digest: sha2 0.11's output array
+    // no longer implements LowerHex (2026-09-15), and export.rs already spells
+    // it this way, so the two hashes stay the same shape.
+    let digest = Sha256::digest(text.as_bytes());
+    let mut hex = String::with_capacity(7 + 64);
+    hex.push_str("sha256:");
+    for b in digest {
+        use std::fmt::Write as _;
+        let _ = write!(hex, "{b:02x}");
+    }
+    hex
 }
 
 /// Widen integer literals to floats for properties the schema declares

@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:c09f4a613ffc358220287cfdb27bd101b40a08db0d6d19b016a15aeed789f8ed",
+  "content_hash": "sha256:dacb03cfcc3651ce677062509377c2520aee9ac5efb1d47c8375a02cbc6a0bdd",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -28991,6 +28991,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-07a5ebcfde8ae86c",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-07e3a6bad1dfeab8",
       "properties": {
         "accepted_baseline": true,
@@ -29630,6 +29639,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-43707b8e21766d94",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-43a9ebb1c1f406c1",
       "properties": {
         "accepted_baseline": true,
@@ -29918,6 +29936,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-5787196d9f1a5b77",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-operate"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-5797039bbb62a5bc",
       "properties": {
         "accepted_baseline": true,
@@ -30053,6 +30080,24 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-63cdc7f0f67e7927",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-built"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-63e423a171b12487",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:latent"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-6414f7a4c781cef4",
       "properties": {
         "accepted_baseline": true,
@@ -30086,6 +30131,24 @@
         "action": "modified"
       },
       "to_id": "art:depends-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-66c9039b14b2587b",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-6790e95ca4e81308",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-exchange"
     },
     {
       "edge_type": "CHANGED",
@@ -30179,6 +30242,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-711cb1738741d839",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-temporal"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-733928e50c4d61b4",
       "properties": {
         "accepted_baseline": true,
@@ -30248,6 +30320,15 @@
         "action": "modified"
       },
       "to_id": "art:conformance-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-78393a80760c1a86",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:degraded"
     },
     {
       "edge_type": "CHANGED",
@@ -30962,6 +31043,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-b0b6a62142117709",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-b140e08dc08f6591",
       "properties": {
         "accepted_baseline": true,
@@ -30989,12 +31079,30 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-b1afef0e05ee4f0b",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-ask"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-b1fafb5f84628d53",
       "properties": {
         "accepted_baseline": true,
         "action": "modified"
       },
       "to_id": "art:schema-inference"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-b5101c6ec488ef2e",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-claims"
     },
     {
       "edge_type": "CHANGED",
@@ -31205,6 +31313,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-c564570ee5257881",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-query"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-c5c292951bc3363e",
       "properties": {
         "accepted_baseline": true,
@@ -31364,6 +31481,15 @@
         "action": "modified"
       },
       "to_id": "art:dependency-manifest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-d67b95fe3a54bafc",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-assure"
     },
     {
       "edge_type": "CHANGED",
@@ -31733,6 +31859,15 @@
         "action": "modified"
       },
       "to_id": "art:alternatives"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-f5263546cb372a12",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-ingest"
     },
     {
       "edge_type": "CHANGED",
@@ -37096,6 +37231,33 @@
         "action": "added"
       },
       "to_id": "cap:design-dependencies-declared"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:dependencies-to-current-2026-09-15",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:dependencies-to-current-2026-09-15",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:dependencies-to-current-2026-09-15",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:mcp-surface"
     },
     {
       "edge_type": "CHANGED",
@@ -216197,7 +216359,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:eb126729e08e8d8d3ac45acec3a2e291e068dc1e9afed14a8647edf73300bdde",
+        "checksum": "sha256:bbc4ed6f24cb12d182ce302e0deb125b312abb903af26711701d573a9fb286a2",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/degraded.rs",
         "name": "degraded.rs",
@@ -216862,7 +217024,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f07917c9db29175d1b5ca340562fbdf17fad36c8a9c16797c6f904b84d6a7722",
+        "checksum": "sha256:9061fd98d6ed06fae5270ae8c3f64149f23c2efcf320c8875afd83dff52c8c02",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/graph.rs",
         "name": "crates/reflow2-core/src/graph.rs",
@@ -217180,7 +217342,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:cc94210da501a0805639e50cc8c270143a3b2129bebe5abfac668ab8143a9636",
+        "checksum": "sha256:3ca3d913de7479ad5feec6680ca1d75a65e95f7aee2553d5764e2fdcc8de4f07",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/latent.rs",
         "name": "latent.rs",
@@ -218349,7 +218511,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:509fa7d53744113f176ce48330f15dbccacb5085f9efe11b6c40257fe10a4641",
+        "checksum": "sha256:42bfeaca4e5c0c224b43429d22d711b908aecb063e968bebdc609437f9390245",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -219356,7 +219518,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:5ee4776c1d681b7e38254e024eab78df64753798754e01476f7863458eae66e5",
+        "checksum": "sha256:d03d9db60c259504adfddc1711dfb8fdfa340b18950ae3ae5aa36afd519fa932",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/ask.rs",
         "name": "tools/ask.rs",
@@ -219369,7 +219531,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:7fc35fb95479f58d066b11e6b084a949d2cde0345baa487ccde3a85255b2da0b",
+        "checksum": "sha256:37d8858759ceec37d6fea0eb36902eae33f6bf50d494f3fa2a81040e3ca93f86",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/assure.rs",
         "name": "tools/assure.rs",
@@ -219382,7 +219544,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f6607a9fd146e13acb79bf0da333b9e7e866250f4a3e5160fb118ac5a44f6a12",
+        "checksum": "sha256:25519a8c584e19d4aa91ff5edcb5c585ba1ecd8eeba2c82830d7322ad7efbd67",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/built.rs",
         "name": "tools/built.rs",
@@ -219395,7 +219557,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f12ed5649a799d3012f5bd1b2225ec32f97ac68c75f84578fba12b15cb83b0af",
+        "checksum": "sha256:548efa38a97bdddaf6a4ce58dfad1245f26a292c34b074a4a616f83eca47ad0b",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
         "name": "crates/reflow2-mcp/src/tools/capture.rs",
@@ -219408,7 +219570,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:97189f77fc8e8eb8b36e8a3bba9eb889f280b9af23d8b3d4e3c4cb97f9b209d8",
+        "checksum": "sha256:b734894b4375b214df2ba827d918649123009f5361b91220b2370847545a6a6e",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/claims_tools.rs",
         "name": "tools/claims_tools.rs",
@@ -219421,7 +219583,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:d18423e0d5248be1672c49b0b73cccc72c96409568a1d6ae4b67326733ec1f4f",
+        "checksum": "sha256:1238b9c643046f652facc540f8a2a2fac4fa0f9566caecb86c085a6dd7c0e050",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
@@ -219434,7 +219596,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f3a9e893011168ce55417e79cd59339982ccbdcaae9a99e61a2da6edfb68d991",
+        "checksum": "sha256:9da7b7124668c88c1b443e60e342ddbf586cb87e2e1dabd76315c9a321283247",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/exchange.rs",
         "name": "tools/exchange.rs",
@@ -219447,7 +219609,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:33936079b06743d7234fda9b21b4a7f760114dde27db536b3ba57858c264809a",
+        "checksum": "sha256:0532f1b20cbaa164e073cf8f89ac8b154df063abc8590d7f8dcc02cdfb2792e1",
         "location": "crates/reflow2-mcp/src/tools/ingest_tools.rs",
         "name": "ingest_tools.rs",
         "status": "realized"
@@ -219458,7 +219620,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b27238a727106eeee6f651ff364168ba8ee446cb3637e7d7f05419605f8ff482",
+        "checksum": "sha256:2d54e9cfaacc5b4255c66b351266448b0caa78f29b0a97901f592fa4aa5c3515",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/operate_tools.rs",
         "name": "tools/operate_tools.rs",
@@ -219471,7 +219633,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:d4d52195a0783098c7fc102ec4d3554f82a81848de23a7ab73e6d8ed7a92623c",
+        "checksum": "sha256:573d72b69e2ab8606559bf0b2e0bac0968aff6f5495857b76b9a77d8567340c9",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/query.rs",
         "name": "tools/query.rs",
@@ -219495,7 +219657,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b38c6dab971593713dee6b30fcd6bdfdf251e483dfc6476aeb6aaa40a91c8292",
+        "checksum": "sha256:a41acf7e0b4bbca93e83a5bb8ea4ac9b76604aa49a0c3e3d35daf633f2a5fc33",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/temporal_tools.rs",
         "name": "tools/temporal_tools.rs",
@@ -223925,6 +224087,16 @@
       }
     },
     {
+      "node_id": "chg:accept-07a5ebcfde8ae86c",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-09-16",
+        "name": "rmcp 3.4 alias rename (chg:dependencies-to-current-2026-09-15).",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-07e3a6bad1dfeab8",
       "node_type": "ChangeEvent",
       "properties": {
@@ -224591,6 +224763,16 @@
       }
     },
     {
+      "node_id": "chg:accept-43707b8e21766d94",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-09-16",
+        "name": "sha2 0.11: node_content_hash spells hex bytewise; same output (chg:dependencies-to-current-2026-09-15).",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-43a9ebb1c1f406c1",
       "node_type": "ChangeEvent",
       "properties": {
@@ -224888,6 +225070,16 @@
       }
     },
     {
+      "node_id": "chg:accept-5787196d9f1a5b77",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-09-16",
+        "name": "rmcp 3.4 alias rename (chg:dependencies-to-current-2026-09-15).",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-5797039bbb62a5bc",
       "node_type": "ChangeEvent",
       "properties": {
@@ -225026,6 +225218,26 @@
       }
     },
     {
+      "node_id": "chg:accept-63cdc7f0f67e7927",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-09-16",
+        "name": "rmcp 3.4 alias rename (chg:dependencies-to-current-2026-09-15).",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:accept-63e423a171b12487",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-09-16",
+        "name": "rmcp 3.4 alias rename (chg:dependencies-to-current-2026-09-15).",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-6414f7a4c781cef4",
       "node_type": "ChangeEvent",
       "properties": {
@@ -225061,6 +225273,26 @@
         "change_type": "refactor",
         "detected_at": "2026-08-26",
         "name": "Fixture only — the existing declaration literal gains the three new fields as None. Not one assertion changed, and the design's account of what these checks cover is unmoved.",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:accept-66c9039b14b2587b",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-09-16",
+        "name": "rmcp 3.4: ServerInfo -> ServerConfig, same type (chg:dependencies-to-current-2026-09-15).",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:accept-6790e95ca4e81308",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-09-16",
+        "name": "rmcp 3.4 alias rename (chg:dependencies-to-current-2026-09-15).",
         "subject": "system"
       }
     },
@@ -225160,6 +225392,16 @@
       }
     },
     {
+      "node_id": "chg:accept-711cb1738741d839",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-09-16",
+        "name": "rmcp 3.4 alias rename (chg:dependencies-to-current-2026-09-15).",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-733928e50c4d61b4",
       "node_type": "ChangeEvent",
       "properties": {
@@ -225230,6 +225472,16 @@
       "properties": {
         "change_type": "refactor",
         "name": "Call-site churn only from the LinkArtifactOptions signature change. What this file tests is unchanged.",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:accept-78393a80760c1a86",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-09-16",
+        "name": "rmcp 3.4 alias rename (chg:dependencies-to-current-2026-09-15).",
         "subject": "system"
       }
     },
@@ -225977,6 +226229,16 @@
       }
     },
     {
+      "node_id": "chg:accept-b0b6a62142117709",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-09-16",
+        "name": "rmcp 3.4 alias rename (chg:dependencies-to-current-2026-09-15).",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-b140e08dc08f6591",
       "node_type": "ChangeEvent",
       "properties": {
@@ -226004,12 +226266,32 @@
       }
     },
     {
+      "node_id": "chg:accept-b1afef0e05ee4f0b",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-09-16",
+        "name": "rmcp 3.4 alias rename (chg:dependencies-to-current-2026-09-15).",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-b1fafb5f84628d53",
       "node_type": "ChangeEvent",
       "properties": {
         "change_type": "refactor",
         "detected_at": "2026-08-08",
         "name": "CAUSES.validation_status's description corrected: it offered 'observational / intervention / mechanism / temporal' against an enum of unvalidated/hypothesis/validated/refuted, zero overlap. The enum is unchanged, so no design meaning moved — only the prose that describes it, which is what describe_schema serves to agents. Second proven instance of req:schema-prose-is-checked (proposed)."
+      }
+    },
+    {
+      "node_id": "chg:accept-b5101c6ec488ef2e",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-09-16",
+        "name": "rmcp 3.4 alias rename (chg:dependencies-to-current-2026-09-15).",
+        "subject": "system"
       }
     },
     {
@@ -226225,6 +226507,16 @@
       }
     },
     {
+      "node_id": "chg:accept-c564570ee5257881",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-09-16",
+        "name": "rmcp 3.4 alias rename (chg:dependencies-to-current-2026-09-15).",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-c5c292951bc3363e",
       "node_type": "ChangeEvent",
       "properties": {
@@ -226390,6 +226682,16 @@
         "change_type": "refactor",
         "detected_at": "2026-08-29",
         "name": "The v0.43.0 version bump, and nothing else. The design meaning of a cut lives in the Release and its epoch, not in a version string, so the design holds.\n\nACCEPTED BEFORE THE MANIFEST FREEZE, DELIBERATELY: `release_includes_all` records each artifact's CURRENT checksum as shipped, so accepting afterwards would leave the release recording that it shipped the pre-bump file. Doing it in this order is one step; the other order is a gate failure and a second export, budgeted on every cut before someone wrote down which way round it goes.",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:accept-d67b95fe3a54bafc",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-09-16",
+        "name": "rmcp 3.4 alias rename (chg:dependencies-to-current-2026-09-15).",
         "subject": "system"
       }
     },
@@ -226709,6 +227011,16 @@
         "change_type": "refactor",
         "detected_at": "2026-08-20",
         "name": "One call site: `.map(|a| a.modularity)` becomes `.and_then(...)` now that the inner value is optional. The field was ALREADY Option<f64> here, so the comparison surface is unchanged — it now correctly reports None where it would previously have carried a manufactured 1.0.",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:accept-f5263546cb372a12",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-09-16",
+        "name": "rmcp 3.4 alias rename (chg:dependencies-to-current-2026-09-15).",
         "subject": "system"
       }
     },
@@ -228801,6 +229113,18 @@
       "properties": {
         "change_type": "new_feature",
         "name": "A design can declare which version of another design it depends on, and reflow2 checks that claim against what the build actually resolves"
+      }
+    },
+    {
+      "node_id": "chg:dependencies-to-current-2026-09-15",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-09-16",
+        "name": "Dependencies to current: rmcp 3.4, sha2 0.11, and two declarations nothing called are removed",
+        "rationale": "A dependency that reads behind the newest is a decaying claim the same way hand-copied prose is, and the standing preference is one small dependency PR per release so the gap never grows past one line. Two of the session's advance claims were wrong and are recorded as such: the sha2 API had changed (LowerHex gone), and the base64 bump was not the collapse of a duplicate but a no-op, which is how the unused declarations were found — per dec:design-dependencies-declared a declared reliance must be a real one. No behaviour moved, so every artifact baseline under this event is accepted as design_holds.",
+        "subject": "system",
+        "summary": "On Anthony's word 2026-09-15, after the 2026-09-14 lock refresh (#515) left four crates behind crates.io: rmcp 3.3.0 -> 3.4.0 (lock only, inside the declared range), which deprecates the `ServerInfo` alias for `ServerConfig` — both alias InitializeResult — so all 21 uses across service.rs, latent.rs, degraded.rs and the eleven tool-surface slices are renamed rather than the deprecation allowed; sha2 0.10 -> 0.11 (manifest), whose digest output no longer implements LowerHex, so node_content_hash (graph.rs) spells the hex byte by byte the way export.rs already did and the two hashes keep one shape; `base64` and `sha2` REMOVED from reflow2-mcp's manifest because neither had a single call site — the reason is left in the manifest, and the core crate's sha2 is the real reliance. rocksdb stays 0.24 by dec:absorb-rocksdb-024-unchanged-then-switch-separately. Both base64 copies remain in the lock, pulled transitively. Workspace tests and both clippy gates green locally before the PR (#520)."
       }
     },
     {
@@ -266462,7 +266786,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:b22a6870a800db1a5f1b3e173982ac244d9e92c65fe5f7a93ee529d397ada640",
+  "prev_content_hash": "sha256:c09f4a613ffc358220287cfdb27bd101b40a08db0d6d19b016a15aeed789f8ed",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

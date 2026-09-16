@@ -19,7 +19,7 @@ use rmcp::{
     handler::server::router::tool::ToolRouter,
     model::{
         CallToolResult, ContentBlock, Implementation, ProtocolVersion, ServerCapabilities,
-        ServerInfo,
+        ServerConfig,
     },
     service::RequestContext,
     tool_handler, tool_router,
@@ -5650,7 +5650,7 @@ impl ReflowService {
 impl ReflowService {
     /// The MCP protocol version this server advertises.
     ///
-    /// Exposed so a test can pin it. `get_info` builds a whole `ServerInfo`
+    /// Exposed so a test can pin it. `get_info` builds a whole `ServerConfig`
     /// behind a trait, which makes "what protocol do we actually claim?" awkward
     /// to assert — and an unassertable claim is how the previous value sat four
     /// releases stale without anyone noticing.
@@ -5928,12 +5928,12 @@ impl ServerHandler for ReflowService {
         Ok(info)
     }
 
-    fn get_info(&self) -> ServerInfo {
+    fn get_info(&self) -> ServerConfig {
         // NOT Implementation::from_build_env(): that macro expands in rmcp's
         // own build env, so the server introduced itself as the MCP library's
         // version ("2.2.0") rather than reflow2's — found by the smoke check
         // that insists the handshake and graph_report.served_by agree (BL-32).
-        ServerInfo::new(ServerCapabilities::builder().enable_tools().build())
+        ServerConfig::new(ServerCapabilities::builder().enable_tools().build())
             .with_server_info({
                 let mut info = Implementation::from_build_env();
                 info.name = env!("CARGO_PKG_NAME").to_string();

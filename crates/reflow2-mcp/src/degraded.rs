@@ -34,7 +34,7 @@
 
 use rmcp::handler::server::router::tool::ToolRouter;
 use rmcp::handler::server::wrapper::Parameters;
-use rmcp::model::{CallToolResult, ContentBlock, Implementation, ServerCapabilities, ServerInfo};
+use rmcp::model::{CallToolResult, ContentBlock, Implementation, ServerCapabilities, ServerConfig};
 use rmcp::{ErrorData as McpError, ServerHandler, tool, tool_handler, tool_router};
 use serde_json::json;
 
@@ -115,12 +115,12 @@ impl DegradedService {
 
 #[tool_handler(router = self.tool_router)]
 impl ServerHandler for DegradedService {
-    fn get_info(&self) -> ServerInfo {
+    fn get_info(&self) -> ServerConfig {
         // The instructions are the real fix. A client puts them in the agent's
         // context at handshake time, so the reason arrives BEFORE the agent
         // wonders where the tools went — which is the difference between a
         // self-explaining outage and an invisible one.
-        ServerInfo::new(ServerCapabilities::builder().enable_tools().build())
+        ServerConfig::new(ServerCapabilities::builder().enable_tools().build())
             .with_server_info({
                 let mut info = Implementation::from_build_env();
                 info.name = env!("CARGO_PKG_NAME").to_string();
