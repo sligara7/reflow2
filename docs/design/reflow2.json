@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:dacb03cfcc3651ce677062509377c2520aee9ac5efb1d47c8375a02cbc6a0bdd",
+  "content_hash": "sha256:f071827156ced0a6334d63ff1e3a4fe4e40b87ce56bc66831e43d0359c7a2ade",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -1202,6 +1202,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:vocabulary"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-diff-is-read-as-a-design-change",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:propagate"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -12218,6 +12226,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:dec:idea-diff-driven-impact",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:dec:idea-does-reflow2-need-a-byte-store-at-all-or-only-durability",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
@@ -15360,6 +15374,17 @@
         "authored_at": "2026-08-09",
         "roles": [
           "author"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-diff-driven-impact",
+      "properties": {
+        "approved_at": "2026-09-16",
+        "roles": [
+          "approver"
         ]
       },
       "to_id": "who:ajs"
@@ -20950,6 +20975,17 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-diff-is-read-as-a-design-change",
+      "properties": {
+        "approved_at": "2026-09-16",
+        "roles": [
+          "approver"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue",
       "properties": {
         "authored_at": "2026-08-09",
@@ -25685,6 +25721,24 @@
         "action": "modified"
       },
       "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-git-diff-is-read-as-a-design-change",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:a-diff-is-read-as-a-design-change"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-git-diff-is-read-as-a-design-change",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:propagate"
     },
     {
       "edge_type": "CHANGED",
@@ -55154,6 +55208,14 @@
     },
     {
       "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-diff-driven-impact",
+      "properties": {
+        "evidence": "The brainstorm grew up into the driver: what it said was cheap (a script over git diff plus hashing, calling reconcile then propagate) is what shipped, and the unmapped-file question it flagged is settled the loud way."
+      },
+      "to_id": "chg:a-git-diff-is-read-as-a-design-change"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
       "from_id": "dec:idea-does-the-agent-keep-a-notepad-in-the-graph-for-the-next-agent",
       "properties": {
         "evidence": "Anthony promoted the idea's option C on 2026-09-12; the requirement states delivery-at-the-step as what is owed, and the idea's B+D halves (a view; checks for what bit twice) stay on the idea as the roads beside it."
@@ -65629,6 +65691,12 @@
       "from_id": "dec:idea-cannibalize-dynograph-foundation-into-reflow2",
       "properties": {},
       "to_id": "snap:epoch:2026-08-23-dynograph-absorption-deferred:dec:idea-cannibalize-dynograph-foundation-into-reflow2"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:idea-diff-driven-impact",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:dec:idea-diff-driven-impact"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -204817,6 +204885,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:impact-of-diff",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-diff-is-read-as-a-design-change"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:import-from-a-newer-reflow2-test",
       "properties": {
         "completeness": "complete",
@@ -206714,6 +206791,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:test-impact-of-diff",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-diff-is-read-as-a-design-change"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:test-init",
       "properties": {
         "completeness": "complete",
@@ -208004,6 +208090,12 @@
       "from_id": "cap:a-design-says-which-vocabulary-it-has-never-used",
       "properties": {},
       "to_id": "req:declared-vocabulary-is-reachable-from-the-surface"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:a-diff-is-read-as-a-design-change",
+      "properties": {},
+      "to_id": "req:a-diff-is-read-as-a-design-change"
     },
     {
       "edge_type": "SATISFIES",
@@ -211409,6 +211501,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:a-diff-is-read-as-a-design-change",
+      "properties": {},
+      "to_id": "cap:a-diff-is-read-as-a-design-change"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:a-faced-choice-is-not-a-musing",
       "properties": {},
       "to_id": "cap:heal"
@@ -214095,6 +214193,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:impact-of-diff",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:impact-of-diff"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:import-from-a-newer-reflow2-test",
       "properties": {
         "action": "created"
@@ -215044,6 +215150,14 @@
         "action": "created"
       },
       "to_id": "art:test-every-constructor-says-what-the-thing-is"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:test-impact-of-diff",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-impact-of-diff"
     },
     {
       "edge_type": "YIELDED",
@@ -217222,6 +217336,18 @@
       }
     },
     {
+      "node_id": "art:impact-of-diff",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:beb7c6931cbb87e15ad04994f628a5b012f73b2ea1047ad9a84ab3b013f993d4",
+        "description": "The driver that reads a git range as a design change: changed files, to registered artifacts by location, to reconcile_artifacts' propagation seeds, to propagate_from's radius. Unmapped files first and counted; --fail-on-unmapped is the opt-in exit code; the export itself is set aside as the record. Same stdio client and hash helper as reflow2_check.py.",
+        "location": "tools/impact_of_diff.py",
+        "name": "impact_of_diff.py",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:import-from-a-newer-reflow2-test",
       "node_type": "Artifact",
       "properties": {
@@ -219154,6 +219280,18 @@
       }
     },
     {
+      "node_id": "art:test-impact-of-diff",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:e50add3bc1dec4a8122cfc7ab7905f668564b9a0ea98e8631e251d2582822323",
+        "description": "Hermetic, real binary over stdio, real git repository: a registered file reaches the requirement it serves; an unregistered file is named first and never folded in; --fail-on-unmapped is exit 1 only when asked; the design record is set aside; a deleted registered file is still a change; a range with no base is \"could not run\", never an empty radius.",
+        "location": "tools/test_impact_of_diff.py",
+        "name": "test_impact_of_diff.py",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:test-init",
       "node_type": "Artifact",
       "properties": {
@@ -220271,6 +220409,17 @@
         "outputs": "[\"node_types\",\"edge_types\",\"properties_on_used_types\",\"properties_on_used_edge_types\",\"domains\",\"parked_domains\",\"unused\",\"note\"]",
         "provenance": "authored",
         "status": "verified"
+      }
+    },
+    {
+      "node_id": "cap:a-diff-is-read-as-a-design-change",
+      "node_type": "Capability",
+      "properties": {
+        "description": "tools/impact_of_diff.py: given a git range (default: the merge-base with main to HEAD, optionally plus uncommitted work), lists the changed files, maps each to a registered Artifact by exact location or by a parent-directory artifact, hashes the mapped ones, calls reconcile_artifacts for the propagation seeds and propagate_from for the blast radius, and prints the capabilities and requirements reached with the distance bands, risk crossings and published boundaries crossed. Unmapped files are reported first and counted; `--fail-on-unmapped` turns them into exit 1 for a gate that opts in; the export document itself is set aside as the record. Exit codes follow reflow2_check.py: 0 ran, 1 opted-in failure, 2 could not run. Wiring only — the core does no file I/O and gained nothing.",
+        "name": "A commit range is read as a design change: the requirements it reaches, and the files it touches that the design cannot see",
+        "provenance": "authored",
+        "status": "realized",
+        "tier": "operational"
       }
     },
     {
@@ -223424,6 +223573,18 @@
         "change_type": "defect_fix",
         "name": "A gap question keeps the reader's vocabulary — the prompt template stops contradicting its own tool description",
         "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:a-git-diff-is-read-as-a-design-change",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-09-16",
+        "name": "A git diff is read as a design change — tools/impact_of_diff.py, and an unmapped file is reported loudly",
+        "rationale": "Anthony asked (2026-09-16) whether his brother's idea about seeing across projects and linking git commits had been followed up; it had not — three brainstorm nodes sat at proposed. Of the three, this was the one whose machinery already existed (reconcile_artifacts returns seeds; propagate_from walks them) and whose only design question — what to do with a changed file the design cannot see — had a clear honest answer: name it first, never fold it in, and make failure opt-in so the read does not punish a project mid-registration. The first real run found the artifact-side hole the idea predicted: an integration test and three tool snapshots change in a real PR and no Artifact points at them. Whether to register those is a separate judgement; the driver's job is to say so. Anthony's recommendation order stands: export-stamp branch and commit next, the where-does-the-graph-live question left open until a second project of his is paired with this one.",
+        "subject": "system",
+        "summary": "New tools/impact_of_diff.py: given a git range (default merge-base with main to HEAD, --working-tree adds uncommitted work), it lists changed files, maps each to a registered Artifact by exact location or parent-directory artifact, hashes the mapped ones, imports the committed export into a throwaway graph, calls reconcile_artifacts for propagation seeds and propagate_from for the radius, and prints capabilities and requirements reached, distance bands, risk crossings and boundaries crossed; --full prints every impacted node with its hops; --json for machines. Unmapped files are reported FIRST and counted; --fail-on-unmapped turns them into exit 1 for a gate that opts in; the export itself is set aside as record. Exit codes as reflow2_check.py. Six-case hermetic suite tools/test_impact_of_diff.py added to CI's workspace job and to AGENTS.md's gate sentence (skill_lint green). No core change."
       }
     },
     {
@@ -235891,10 +236052,10 @@
       "node_id": "dec:idea-diff-driven-impact",
       "node_type": "Decision",
       "properties": {
-        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Source: Alex Sligar's 2026-08-05 research, specifically Understand Anything's \"diff impact analysis that shows what a given change touches\". STILL OPEN.\n\nTHE IDEA: reflow2's impact analysis runs design-first — add_change_event then propagate_change, seeded by the design node you are about to touch. The survey's tools run it code-first: here is a diff, here is what it touches. Those are opposite directions, and the code-first direction is the one a developer actually has in hand at review time.\n\nWHAT ALREADY EXISTS, and this was checked rather than assumed: reconcile_artifacts takes observed artifact hashes and returns `propagation_seeds` — \"the design nodes the changes land on\" — explicitly documented to be fed to propagate_from. So the code-to-design hop is BUILT. The composition is: changed files, to registered artifacts by hash, to REALIZES edges, to capabilities and upward. Nothing is missing in the core.\n\nWHAT IS THEREFORE ACTUALLY OPEN, and it is smaller than the survey makes it sound: (a) nothing computes the hashes from a commit — reflow2 performs no file I/O by design, so a caller must do it, and no caller currently does it from a git diff; (b) the CI gate checks the committed export for drift and open gaps, not \"what does this commit touch upstream\"; (c) the answer is only as complete as artifact registration, and an unregistered file lands on nothing at all, which would read as \"this change is safe\" rather than \"this change is unmapped\". That last one is the real risk and it is the same failure mode as the release-manifest problem: silence that looks like a pass.\n\nWHAT IS CHEAP: a driver script over `git diff --name-only` plus hashing, calling reconcile_artifacts then propagate_from. That is wiring, in the same family as tools/reflow2_check.py, and needs no core change.\n\nTHE COUNTER-ARGUMENT: a per-commit blast radius is only as trustworthy as REALIZES coverage, and an incomplete golden thread turns it into a confident understatement — which is worse than no answer, because a reviewer will believe it. If this is built, the honest version must report unmapped files as UNMAPPED and loudly, not fold them into a clean result. The existing unrealized_capability gap is the design-side half of that problem; this is the artifact-side half and there may be nothing that detects it.",
-        "name": "OPEN — should a git diff be a direct input to impact analysis, given reconcile_artifacts already returns propagation_seeds and nothing drives it from a commit?",
+        "decision": "DECIDED on Anthony's word, 2026-09-16 (\"go with diff-driven impact idea first\"), when he asked whether his brother's cross-project and git-linking idea had ever been followed up. Built as tools/impact_of_diff.py — wiring, no core change, the core still does no file I/O: the driver lists the range's files with git, hashes the ones a registered Artifact points at (by exact `location` or by a parent-directory artifact), calls reconcile_artifacts for the propagation seeds and propagate_from for the radius, and prints the capabilities and requirements reached. The design question the idea named is settled the loud way: unmapped files are reported FIRST and counted, never folded into a clean result, and `--fail-on-unmapped` makes them an exit code only for a gate that opts in, so the read never punishes a project that has not finished registering (dec:idea-allocation-waits-for-the-last-responsible-moment). The export document itself is set aside as record rather than build. First run on the real repository, the #519 merge: 12 files mapped, 4 named as invisible (an integration test and three tool snapshots), 9 requirements reached directly. Pinned by tools/test_impact_of_diff.py, six cases, in CI. The text below is the brainstorm as it was recorded and stays as history.\n\n═══ AS RECORDED 2026-08-05 ═══\nRECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Source: Alex Sligar's 2026-08-05 research, specifically Understand Anything's \"diff impact analysis that shows what a given change touches\".\n\nTHE IDEA: reflow2's impact analysis runs design-first — add_change_event then propagate_change, seeded by the design node you are about to touch. The survey's tools run it code-first: here is a diff, here is what it touches. Those are opposite directions, and the code-first direction is the one a developer actually has in hand at review time.\n\nWHAT ALREADY EXISTS, and this was checked rather than assumed: reconcile_artifacts takes observed artifact hashes and returns `propagation_seeds` — \"the design nodes the changes land on\" — explicitly documented to be fed to propagate_from. So the code-to-design hop is BUILT. The composition is: changed files, to registered artifacts by hash, to REALIZES edges, to capabilities and upward. Nothing is missing in the core.\n\nWHAT WAS THEREFORE ACTUALLY OPEN, and it was smaller than the survey made it sound: (a) nothing computed the hashes from a commit; (b) the CI gate checks the committed export for drift and open gaps, not \"what does this commit touch upstream\"; (c) the answer is only as complete as artifact registration, and an unregistered file lands on nothing at all, which would read as \"this change is safe\" rather than \"this change is unmapped\". That last one was the real risk and it is the same failure mode as the release-manifest problem: silence that looks like a pass.\n\nTHE COUNTER-ARGUMENT, which shaped the build: a per-commit blast radius is only as trustworthy as REALIZES coverage, and an incomplete golden thread turns it into a confident understatement — worse than no answer, because a reviewer will believe it. The built version reports unmapped files as UNMAPPED and loudly. The existing unrealized_capability gap is the design-side half of that problem; this driver is the artifact-side half.",
+        "name": "DECIDED 2026-09-16 — a git diff is a direct input to impact analysis: tools/impact_of_diff.py drives reconcile_artifacts then propagate_from from a commit range, and names every changed file the design cannot see",
         "rationale": "Recorded as an idea rather than a gap because the machinery it asks for already exists and only the driver is absent, which makes it a small increment rather than a design question — except for the unmapped-file silence, which is a design question and is the reason this is worth a node at all.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -245750,6 +245911,16 @@
       }
     },
     {
+      "node_id": "frag:art:impact-of-diff",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered impact_of_diff.py"
+      }
+    },
+    {
       "node_id": "frag:art:import-from-a-newer-reflow2-test",
       "node_type": "Fragment",
       "properties": {
@@ -246939,6 +247110,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered every_constructor_can_say_what_the_thing_is.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:test-impact-of-diff",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered test_impact_of_diff.py"
       }
     },
     {
@@ -249657,6 +249838,19 @@
         "provenance": "authored",
         "statement": "A structural detector must consult the properties that change whether its finding IS a finding — on the edge and on both endpoints — so that modelling something the way the design prescribes never adds a defect.\n\nTHE OBSERVATION IS `fact:defect-recording-a-refutation-correctly-adds-a-structural-defect`; this is the intent behind fixing it.\n\nTHE ARGUMENT IS THE PROJECT'S OWN, ALREADY WRITTEN DOWN. `heal.rs` was fixed once for exactly this shape: reading the CONTRADICTS edge TYPE and never its `alignment` property meant \"every correctly-modelled corroboration came back as a structural defect\", and the comment ends \"A PROPERTY THE DETECTOR IGNORES IS A PROPERTY THAT LIES.\" The same sentence applies one property across — the detector still never reads either endpoint's `status`, so a `rejected` Decision contradicting its successor is reported as a conflict when it is the healthy case.\n\n⚠️ WHY THIS IS AN INCENTIVE PROBLEM AND NOT A NUISANCE: recording a refutation correctly ADDS a warning-severity defect, and burying it in prose adds none. The tool mildly penalises the discipline `rejected` exists to support, at the moment a seat is least likely to push back. The cheap wrong response is to delete the rejected node or the edge — the erasure the record exists to prevent.\n\nMEASURED HERE: our four reported contradictions have no rejected or superseded endpoint today, so it does not fire — but the design holds 10 superseded and 1 rejected Decision and ZERO such edges, which is itself weak evidence that the relation is not being recorded.\n\nWHAT MUST NOT BREAK: `acknowledge_defect` already handles this well — it stores the REASON rather than the suppression, and the review expires if the defect's shape changes because the id hashes the category with the affected set. Any fix must leave that intact.\n\nNOT DECIDED: whether `superseded` and `rejected` are treated identically, and whether such pairs vanish or move to a separate band.",
         "status": "proposed"
+      }
+    },
+    {
+      "node_id": "req:a-diff-is-read-as-a-design-change",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "lineage": "original",
+        "name": "A git diff is read as a design change, and every changed file the design cannot see is named",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Given a commit range, reflow2 says which capabilities and requirements the changed files reach through the golden thread, and names, first and counted, every changed file that no registered Artifact points at — because a blast radius that silently omits an unregistered file reads as \"this change is safe\" when the truth is \"this change is invisible to the design\". Unmapped files are never folded into a clean result; failing a build on them is opt-in, so the read never punishes a project that has not finished registering.",
+        "status": "accepted"
       }
     },
     {
@@ -254249,6 +254443,16 @@
         "edges": "[{\"direction\":\"in\",\"edge_type\":\"ANTICIPATES\",\"other_type\":\"Decision\",\"other_id\":\"dec:the-transition-is-two-halves-and-reads-are-the-unscheduled-one\",\"properties\":{\"evidence\":\"That decision said the failing half of 'documents to graph' is READING THE GRAPH BACK, and that reads were the unscheduled half. A topic view is exactly a read-back surface — the earlier decision saw this need coming before anyone asked for a skill by name.\"}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"role\":\"author\"}}]",
         "state": "{\"decision\":\"Recorded as BRAINSTORMING, not as a proposal. Anthony, 2026-09-06, in his words: 'adding /topic or /topic-search skill — some times, I just want to see what's already within the reflow2 graph and it isn't a brainstorm or link-artifacts type effort — I just want to see something about a topic.' Distinct from dec:idea-should-the-open-list-be-rendered-in-the-owners-language-rather-than-the-graphs (qs): that renders the OPEN LIST in the owner's vocabulary; this renders the design's knowledge of ONE SUBJECT. Same family (a projection in the reader's words), different question.\\n\\nWHAT EXISTS TODAY, and why it is not this: search_design returns ranked hits — ids and names, one dimension; get_node reads one node; where-am-i reads back the WHOLE design's state; relation_candidates and surprising_connections work outward from one node. None answers 'what do we know about X' as a digest: what is decided about it and why, what is still open, what has been measured, what realizes or checks it, and what is conspicuously absent.\\n\\nOPTIONS:\\n(a) A SERVED SKILL `topic`: given a phrase, the agent runs search_design (top N), groups hits by node type, pulls each hit's one-hop neighbourhood and status, and renders a bounded digest in the owner's vocabulary (the lens), with a line for what the search did NOT find. No writes. Cheapest to ship; costs 5-10 calls per topic and the rendering is the agent's, so two agents could render the same topic differently.\\n(b) A TOOL `topic_report(query)` computed server-side: same digest, deterministic, one call, reply-cost bounded by the server; a skill becomes a one-line instruction leg pointing at it. The SE doctrine on record — views are PURE PROJECTIONS of the graph and a renderer's fill-ins are defects — argues the projection belongs in the server, not in an agent's prose.\\n(c) EXTEND where-am-i with a `topic` argument, reusing its read-back voice. Cheap; but where-am-i is the whole-design orientation and its skill text is already long — mixing scopes makes both harder to read.\\n(d) NOTHING NEW: search_design + get_node already do it by hand. Counter: that is the by-hand path Anthony is asking to stop taking, and the same by-hand rendering was what the qs user asked for on the open list.\",\"kind\":\"exploratory\",\"name\":\"OPEN — should reflow2 serve a /topic (or /topic-search) view: what the design already holds about ONE subject, read-only, in the owner's words — when the ask is neither a brainstorm nor a link-artifacts effort, just 'show me something about X'?\",\"rationale\":\"COUNTER-ARGUMENTS beside each. (a) rests entirely on search quality, and search misses on the agent's phrasing were measured this week (dec:idea-search-expands-with-the-projects-own-domain-vocabulary): a topic digest built on a miss is a confident wrong answer about what the design holds, worse than a raw hit list, so the 'what was not found' line is load-bearing, not decoration. (a) also adds reply cost — fact:defect-the-reply-costs-more-than-the-answer is open — and a digest per topic that is not bounded becomes the verbose-reply problem in a new coat. (b) is the honest home by the projection doctrine and by cost (one call, server-bounded), but it is a new tool on a surface whose sibling-inconsistency is the largest open friction class — it must take the ONE naming convention Anthony just ruled (type optional, resolved from the id) from day one. (c) is free and wrong-scoped. (d) is what he has. A RANKING IS A FINDING, NOT A DECISION: (b) with a thin skill as its instruction leg, and the not-found line mandatory; (a) as the prototype that discovers what the digest should contain before the tool freezes it. Anthony rules — and nothing here is built until he does.\",\"status\":\"proposed\"}",
         "target_id": "dec:idea-a-topic-view-shows-what-the-design-holds-about-one-subject-read-only",
+        "target_type": "Decision"
+      }
+    },
+    {
+      "node_id": "snap:epoch:preserved-on-write:dec:idea-diff-driven-impact",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"approved_at\":\"2026-09-16\",\"roles\":[\"approver\"]}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:alex\",\"properties\":{\"authored_at\":\"2026-08-05\",\"roles\":[\"author\"]}}]",
+        "state": "{\"decision\":\"RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Source: Alex Sligar's 2026-08-05 research, specifically Understand Anything's \\\"diff impact analysis that shows what a given change touches\\\". STILL OPEN.\\n\\nTHE IDEA: reflow2's impact analysis runs design-first — add_change_event then propagate_change, seeded by the design node you are about to touch. The survey's tools run it code-first: here is a diff, here is what it touches. Those are opposite directions, and the code-first direction is the one a developer actually has in hand at review time.\\n\\nWHAT ALREADY EXISTS, and this was checked rather than assumed: reconcile_artifacts takes observed artifact hashes and returns `propagation_seeds` — \\\"the design nodes the changes land on\\\" — explicitly documented to be fed to propagate_from. So the code-to-design hop is BUILT. The composition is: changed files, to registered artifacts by hash, to REALIZES edges, to capabilities and upward. Nothing is missing in the core.\\n\\nWHAT IS THEREFORE ACTUALLY OPEN, and it is smaller than the survey makes it sound: (a) nothing computes the hashes from a commit — reflow2 performs no file I/O by design, so a caller must do it, and no caller currently does it from a git diff; (b) the CI gate checks the committed export for drift and open gaps, not \\\"what does this commit touch upstream\\\"; (c) the answer is only as complete as artifact registration, and an unregistered file lands on nothing at all, which would read as \\\"this change is safe\\\" rather than \\\"this change is unmapped\\\". That last one is the real risk and it is the same failure mode as the release-manifest problem: silence that looks like a pass.\\n\\nWHAT IS CHEAP: a driver script over `git diff --name-only` plus hashing, calling reconcile_artifacts then propagate_from. That is wiring, in the same family as tools/reflow2_check.py, and needs no core change.\\n\\nTHE COUNTER-ARGUMENT: a per-commit blast radius is only as trustworthy as REALIZES coverage, and an incomplete golden thread turns it into a confident understatement — which is worse than no answer, because a reviewer will believe it. If this is built, the honest version must report unmapped files as UNMAPPED and loudly, not fold them into a clean result. The existing unrealized_capability gap is the design-side half of that problem; this is the artifact-side half and there may be nothing that detects it.\",\"name\":\"OPEN — should a git diff be a direct input to impact analysis, given reconcile_artifacts already returns propagation_seeds and nothing drives it from a commit?\",\"rationale\":\"Recorded as an idea rather than a gap because the machinery it asks for already exists and only the driver is absent, which makes it a small increment rather than a design question — except for the unmapped-file silence, which is a design question and is the reason this is worth a node at all.\",\"status\":\"accepted\"}",
+        "target_id": "dec:idea-diff-driven-impact",
         "target_type": "Decision"
       }
     },
@@ -263480,6 +263684,20 @@
       }
     },
     {
+      "node_id": "ver:a-diff-is-read-as-a-design-change",
+      "node_type": "Verification",
+      "properties": {
+        "description": "tools/test_impact_of_diff.py, six cases, run in CI's workspace job. Builds a four-node golden thread and one unregistered file with the real binary, exports into a real git repository, commits changes, and runs the driver as a subprocess: the registered file's diff lands on its capability and the requirement sits in the direct ring; the unregistered file is reported before the radius and the \"every file maps\" line is absent; --fail-on-unmapped is exit 1 and the same run without it is exit 0; the export is record_only, never unmapped; a deletion still seeds; a range with no base exits 2.",
+        "findings": "6 passed, 0 failed, 10.3 s, against target/debug/reflow2-mcp built from #519's tree. First run on the real repository (9caacab..76712b2): 17 files changed, 12 mapped, 4 invisible (crates/reflow2-mcp/tests/tools.rs and three tools/toolsnaps/*.json), 1 record-only, 22 seeds, 9 requirements reached directly.",
+        "kind": "verification",
+        "last_run_at": "2026-09-16",
+        "level": "integration",
+        "method": "test",
+        "name": "A commit range reaches the requirement its files serve, and an unmapped file is named first",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:a-faced-choice-is-not-a-musing",
       "node_type": "Verification",
       "properties": {
@@ -266786,7 +267004,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:c09f4a613ffc358220287cfdb27bd101b40a08db0d6d19b016a15aeed789f8ed",
+  "prev_content_hash": "sha256:dacb03cfcc3651ce677062509377c2520aee9ac5efb1d47c8375a02cbc6a0bdd",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
