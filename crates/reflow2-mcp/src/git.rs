@@ -198,3 +198,51 @@ pub fn committed_predecessor(path: &Path) -> Result<CommittedPredecessor, NoAnch
         source: format!("{branch}@{}", &base[..base.len().min(7)]),
     })
 }
+
+/// The working tree `path` sits in, as [`reflow2_core::TakenAt`]: branch (None
+/// on a detached HEAD), HEAD's commit, and whether anything OTHER than the
+/// export file itself is uncommitted. None outside a repository, with no git
+/// on PATH, or in a repository with no commits yet — absent means nobody said,
+/// never "clean on main".
+pub fn taken_at(path: &Path) -> Option<reflow2_core::TakenAt> {
+    let dir: PathBuf = path
+        .parent()
+        .filter(|p| !p.as_os_str().is_empty())
+        .map(PathBuf::from)
+        .unwrap_or_else(|| PathBuf::from("."));
+    let toplevel = PathBuf::from(git(&dir, &["rev-parse", "--show-toplevel"])?);
+    let commit = git(&dir, &["rev-parse", "--verify", "--quiet", "HEAD"])?;
+    let branch =
+        git(&dir, &["rev-parse", "--abbrev-ref", "HEAD"]).filter(|b| !b.is_empty() && b != "HEAD");
+    // The export itself is always about to change — that is what an export
+    // does — so it is excluded from "dirty"; everything else counts.
+    let abs = std::fs::canonicalize(path).unwrap_or_else(|_| {
+        if path.is_absolute() {
+            path.to_path_buf()
+        } else {
+            std::env::current_dir().unwrap_or_default().join(path)
+        }
+    });
+    let root = std::fs::canonicalize(&toplevel).unwrap_or(toplevel);
+    let own = abs
+        .strip_prefix(&root)
+        .ok()
+        .map(|r| r.to_string_lossy().replace('\\', "/"));
+    let dirty = git(&dir, &["status", "--porcelain", "--untracked-files=normal"])
+        .map(|out| {
+            out.lines().any(|line| {
+                if line.len() < 4 {
+                    return false;
+                }
+                let file = line[3..].trim().trim_matches('"');
+                let file = file.rsplit(" -> ").next().unwrap_or(file);
+                own.as_deref() != Some(file)
+            })
+        })
+        .unwrap_or(false);
+    Some(reflow2_core::TakenAt {
+        branch,
+        commit,
+        dirty,
+    })
+}

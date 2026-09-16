@@ -88,6 +88,7 @@ pub(crate) fn chain_and_write(
     let mut chain_note = None;
     let mut sync_note = None;
     let mut wrote = "created";
+    let mut predecessor_taken_at: Option<reflow2_core::TakenAt> = None;
 
     if target.exists() {
         match std::fs::read_to_string(target)
@@ -95,6 +96,7 @@ pub(crate) fn chain_and_write(
             .and_then(|raw| serde_json::from_str::<GraphExport>(&raw).ok())
         {
             Some(predecessor) => {
+                predecessor_taken_at = predecessor.taken_at.clone();
                 // req:stale-seat-knows. Before the lineage link, the question
                 // git answers with a non-fast-forward refusal: would writing
                 // this drop design the file already holds? Only the lossy case
@@ -155,6 +157,15 @@ pub(crate) fn chain_and_write(
     // Through `serde_json::Value` so keys serialize sorted (its object is a
     // BTreeMap) — the same convention as the committed design export, so a file
     // this writes diffs cleanly against one written before it.
+    // WHERE THIS WAS TAKEN. Stamped by this layer because the core does no I/O.
+    // Kept from the predecessor while the design content is unchanged, so an
+    // export that did not move stays byte-identical across commits and
+    // `wrote: unchanged` goes on meaning what it says; an old file with no
+    // coordinate gets one the first time it is written by a reflow2 that knows.
+    export.taken_at = match (wrote, predecessor_taken_at) {
+        ("unchanged", Some(kept)) => Some(kept),
+        _ => crate::git::taken_at(target),
+    };
     let v = serde_json::to_value(&*export)
         .map_err(|e| WriteRefusal::Io(format!("cannot serialize the export: {e}")))?;
     let text = format!(

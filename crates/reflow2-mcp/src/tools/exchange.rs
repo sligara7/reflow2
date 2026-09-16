@@ -114,11 +114,12 @@ impl ReflowService {
     #[tool(
         description = "The whole design as one portable document — every node and edge, sorted so \
                        two exports of an unchanged graph are byte-identical. Use it to back the \
-                       design up, move it between machines, or migrate it across a reflow2 upgrade \
-                       (export with the old build, import with the new). It carries a stamp saying \
-                       which reflow2 wrote it. Pass `path` to write the document to a file instead \
-                       of returning it — on a large design the payload overflows what a session \
-                       can read. LINEAGE ANCHORS AT THE \
+                       design up, move it between machines, or migrate it across a reflow2 upgrade. \
+                       It carries a stamp saying \
+                       which reflow2 wrote it, and `taken_at` — the branch and commit the working tree \
+                       was at, and whether it was dirty — because an export is a property of a tree. \
+                       Pass `path` to write the document to a file instead of returning it — a large \
+                       design overflows a session. LINEAGE ANCHORS AT THE \
                        COMMITTED RECORD: in a git repository the document chains from this path \
                        at the merge-base with the default branch, so every export on a branch \
                        chains from the same ancestor and a squash-merge lands ONE hop — \
@@ -128,12 +129,11 @@ impl ReflowService {
                        \u{1F6D1} NEVER ISSUE THIS IN THE SAME PARALLEL BATCH AS WRITES YOU EXPECT \
                        IT TO CONTAIN: calls a harness emits together are unordered and this takes \
                        the same lock, so it can run BEFORE them — measured early in 91 of 200 \
-                       trials, each call on its own task as a real server runs them. THE FAILURE \
+                       trials. THE FAILURE \
                        IS SILENT: the export succeeds, it is simply early, and the document you \
                        commit carries artifact hashes that will not match disk. Sequence it after \
                        the writes return. \u{26A0} The unexported-work nudge will NOT catch it — \
-                       it compares NODE COUNTS, so a missed PROPERTY change is invisible (0 of \
-                       10 caught).",
+                       it compares NODE COUNTS, so a missed PROPERTY change is invisible.",
         annotations(read_only_hint = true)
     )]
     pub async fn export_graph(
@@ -212,6 +212,7 @@ impl ReflowService {
             // produce different lineages.
             "chained_from": chained_from,
             "wrote": wrote,
+            "taken_at": serde_json::to_value(&export.taken_at).map_err(ser_err)?,
             "stamp": serde_json::to_value(&export.stamp).map_err(ser_err)?,
         });
         if wrote == "unchanged" {

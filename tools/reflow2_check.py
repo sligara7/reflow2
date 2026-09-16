@@ -731,6 +731,51 @@ def check_export_chain(path: str, doc: dict) -> str | None:
     )
 
 
+def check_taken_on_this_branch(path: str, doc: dict) -> str | None:
+    """An export ABOUT TO BE COMMITTED was taken on the branch it is being
+    committed to.
+
+    Since 2026-09-16 every export written inside a git repository carries
+    `taken_at` — the branch and commit the working tree was at, and whether it
+    was dirty — because the graph does not branch with git: one store serves
+    every branch checked out in a directory, so a plain export on branch B
+    carries branch A's writes and merges cleanly. That was caught once as four
+    phantom drifts (`dec:idea-should-a-node-carry-its-git-coordinate`, option
+    ②), and the export is the one thing that can say which tree it came from.
+
+    THE ONLY CASE CHECKED is the one that is a defect: the working-tree export
+    is MODIFIED (about to be committed) and its `taken_at.branch` names a
+    different branch from the one checked out. A committed export is not
+    re-judged — squash merges rewrite branch history, so the name it carries
+    stops meaning anything once it lands — and a detached HEAD, an export with
+    no coordinate, or a tree outside git cannot be judged and is skipped
+    rather than guessed.
+    """
+    taken = doc.get("taken_at") or {}
+    taken_branch = taken.get("branch")
+    if not taken_branch:
+        return None
+    rel = _repo_relative(path)
+    if rel is None:
+        return None
+    root, inside = rel
+    here = (_git(["rev-parse", "--abbrev-ref", "HEAD"], root) or "").strip()
+    if not here or here == "HEAD" or here == taken_branch:
+        return None
+    status = _git(["status", "--porcelain", "--", inside], root)
+    if not status or not status.strip():
+        return None
+    return (
+        f"PHANTOM  '{path}' was taken on branch '{taken_branch}' and is about to be "
+        f"committed on '{here}'. The graph does not branch with git — one store serves "
+        f"every branch checked out here — so an export taken elsewhere carries that "
+        f"branch's writes into this one, and it merges cleanly. Restore the committed "
+        f"file (`git checkout {path}`) and export again FROM THIS BRANCH so the record "
+        f"says where it came from; if the other branch's design writes really belong "
+        f"here, say so in the commit and re-export anyway."
+    )
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--export", default="design.json", help="committed design export (JSON)")
@@ -797,6 +842,9 @@ def main() -> int:
     broken_chain = check_export_chain(opts.export, doc)
     if broken_chain:
         failures.append(broken_chain)
+    phantom = check_taken_on_this_branch(opts.export, doc)
+    if phantom:
+        failures.append(phantom)
 
     # IDENTITY (BL-169) — a rename passes every check above, because graph_id is
     # inside the content hash and the chain links across it perfectly well.
