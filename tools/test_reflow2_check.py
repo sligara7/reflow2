@@ -577,6 +577,77 @@ class Reflow2Check(unittest.TestCase):
         self.assertIn("different properties", found, found)
 
 
+@unittest.skipUnless(BIN, "reflow2-mcp binary not found (build it: cargo build -p reflow2-mcp)")
+class TakenOnThisBranch(unittest.TestCase):
+    """An export about to be committed on one branch, taken on another, is the
+    phantom-drift shape (`dec:idea-should-a-node-carry-its-git-coordinate`,
+    option ②) and the gate refuses it; the same export on its own branch, a
+    committed one whatever it says, and one with no coordinate all pass."""
+
+    def setUp(self):
+        self._tmp = tempfile.TemporaryDirectory(prefix="reflow2-taken-at-test-")
+        self.tmp = pathlib.Path(self._tmp.name)
+        self.repo = self.tmp / "repo"
+        self.repo.mkdir()
+        for args in (["init", "-q", "-b", "main"], ["config", "user.email", "t@t"],
+                     ["config", "user.name", "t"]):
+            self._git(*args)
+        s = Server(BIN, str(self.tmp / "graph"))
+        try:
+            coherent(s)
+            self.export = self.repo / "design.json"
+            s.call("export_graph", {"path": str(self.export), "overwrite": True})
+        finally:
+            s.close()
+        self._git("add", "design.json")
+        self._git("commit", "-qm", "first export")
+
+    def tearDown(self):
+        self._tmp.cleanup()
+
+    def _git(self, *args):
+        subprocess.run(["git", *args], cwd=self.repo, check=True, capture_output=True, timeout=60)
+
+    def gate(self):
+        cmd = [sys.executable, str(CHECK), "--export", "design.json", "--root", str(self.repo),
+               "--bin", BIN]
+        return subprocess.run(cmd, capture_output=True, text=True, timeout=120, cwd=str(self.repo))
+
+    def _rewrite(self, branch):
+        doc = json.loads(self.export.read_text())
+        doc["taken_at"] = {"branch": branch, "commit": doc.get("taken_at", {}).get("commit", "x"),
+                           "dirty": False}
+        self.export.write_text(json.dumps(doc, sort_keys=True, indent=1))
+
+    def test_a_modified_export_taken_on_another_branch_is_refused(self):
+        self._git("checkout", "-qb", "feature")
+        self._rewrite("main")
+        run = self.gate()
+        self.assertEqual(run.returncode, 1, run.stdout + run.stderr)
+        self.assertIn("PHANTOM", run.stdout + run.stderr)
+
+    def test_a_modified_export_taken_on_this_branch_passes(self):
+        self._git("checkout", "-qb", "feature")
+        self._rewrite("feature")
+        run = self.gate()
+        self.assertNotIn("PHANTOM", run.stdout + run.stderr)
+
+    def test_a_committed_export_is_not_rejudged(self):
+        self._rewrite("some-branch-that-was-squashed")
+        self._git("commit", "-qam", "landed via squash")
+        self._git("checkout", "-qb", "feature")
+        run = self.gate()
+        self.assertNotIn("PHANTOM", run.stdout + run.stderr)
+
+    def test_an_export_with_no_coordinate_is_not_judged(self):
+        doc = json.loads(self.export.read_text())
+        doc.pop("taken_at", None)
+        self.export.write_text(json.dumps(doc, sort_keys=True, indent=1))
+        self._git("checkout", "-qb", "feature")
+        run = self.gate()
+        self.assertNotIn("PHANTOM", run.stdout + run.stderr)
+
+
 class UnmodelledSource(unittest.TestCase):
     """The gate notices a source file the design has never heard of.
 

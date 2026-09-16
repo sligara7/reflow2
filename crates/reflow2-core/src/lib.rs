@@ -134,7 +134,7 @@ pub use drift::{DriftFinding, DriftKind, DriftReport, ObservedArtifact, Reconcil
 pub use export::ImportOptions;
 pub use export::{
     ExportedEdge, ExportedNode, GraphExport, ImportReport, MirrorRef, MirrorReport,
-    SeveredContainment, SurfaceExport,
+    SeveredContainment, SurfaceExport, TakenAt,
 };
 pub use fielded::{
     FieldedDriftKind, FieldedFinding, FieldedOptions, FieldedReport, ObservedEnvironment,

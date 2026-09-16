@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:3c71b14f345f2bbded3f238be13734f6dd597f552e3306f98bf49b13fa2e2bdc",
+  "content_hash": "sha256:2a2a6a2d8e138a3d6196ed7330604ade9bd3156380b0e1b57a1c123402a65fcd",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -1506,6 +1506,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:an-export-says-which-tree-it-was-taken-in",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:export"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -12354,6 +12362,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:dec:idea-should-a-node-carry-its-git-coordinate",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:dec:idea-should-reflow2-ship-a-companion-for-the-file-side-work-it-refuses-to-do",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
@@ -16603,9 +16617,11 @@
       "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-should-a-node-carry-its-git-coordinate",
       "properties": {
+        "approved_at": "2026-09-16",
         "authored_at": "2026-08-31",
         "roles": [
-          "author"
+          "author",
+          "approver"
         ]
       },
       "to_id": "who:ajs"
@@ -21479,6 +21495,17 @@
       "from_id": "req:an-edges-prose-does-not-outlive-the-node-it-points-at",
       "properties": {
         "approved_at": "2026-08-31",
+        "roles": [
+          "approver"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:an-export-says-which-tree-it-was-taken-in",
+      "properties": {
+        "approved_at": "2026-09-16",
         "roles": [
           "approver"
         ]
@@ -29134,6 +29161,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-04bc37e6893636ad",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:merge"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-04f1020b8000c46a",
       "properties": {
         "accepted_baseline": true,
@@ -33055,6 +33091,78 @@
         "action": "modified"
       },
       "to_id": "cap:a-sweep-says-what-it-could-not-have-found"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-export-says-which-tree-it-was-taken-in",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:check"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-export-says-which-tree-it-was-taken-in",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:coherence-gate-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-export-says-which-tree-it-was-taken-in",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:export"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-export-says-which-tree-it-was-taken-in",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:export-write"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-export-says-which-tree-it-was-taken-in",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:git-anchor"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-export-says-which-tree-it-was-taken-in",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-exchange"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-export-says-which-tree-it-was-taken-in",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:an-export-says-which-tree-it-was-taken-in"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-export-says-which-tree-it-was-taken-in",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:export"
     },
     {
       "edge_type": "CHANGED",
@@ -55447,6 +55555,14 @@
     },
     {
       "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-should-a-node-carry-its-git-coordinate",
+      "properties": {
+        "evidence": "Options ② and ⑤ of the brainstorm are what shipped: the coordinate on the export, kept while unchanged, and the gate reading it for the one case that is a defect. Option ①, the per-node field, was not built for the reasons the idea itself recorded."
+      },
+      "to_id": "chg:an-export-says-which-tree-it-was-taken-in"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
       "from_id": "dec:idea-slash-feedback-emits-a-computed-tally-not-an-agents-recollection",
       "properties": {
         "evidence": "Anthony promoted the idea to intent on 2026-09-12 (\"I want to continue with implementing /feedback\"); the requirement is the idea's lean (A + B, unit = the project since the last report) stated as what is owed."
@@ -63905,6 +64021,14 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "req:an-export-says-which-tree-it-was-taken-in",
+      "properties": {
+        "note": "The requirement is the decision's shape made into intent: the coordinate on the export rather than on nodes, kept while unchanged, read by the gate for the one case that is a defect. Re-opening the decision re-opens the requirement."
+      },
+      "to_id": "dec:idea-should-a-node-carry-its-git-coordinate"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "req:an-irreversible-operation-is-concurrency-aware",
       "properties": {
         "note": "This requirement is the second guard for a decision that is already accepted and currently defeated in the build -- not new intent. Whether it should exist as a separate requirement at all, or be folded into enforcing dec:ask-not-repair, is Anthony's call."
@@ -65986,6 +66110,12 @@
       "from_id": "dec:idea-should-a-constructor-accept-the-owners-word-in-one-call",
       "properties": {},
       "to_id": "snap:epoch:preserved-on-write:dec:idea-should-a-constructor-accept-the-owners-word-in-one-call"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:idea-should-a-node-carry-its-git-coordinate",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:dec:idea-should-a-node-carry-its-git-coordinate"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -206868,6 +206998,24 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:test-an-export-says-where-it-was-taken",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:an-export-says-which-tree-it-was-taken-in"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:test-an-export-says-which-tree-it-was-taken-in",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:an-export-says-which-tree-it-was-taken-in"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:test-check-kit-manifest",
       "properties": {
         "completeness": "complete",
@@ -208504,6 +208652,12 @@
       "from_id": "cap:an-acknowledgement-says-whose-judgement-it-was",
       "properties": {},
       "to_id": "req:settled-intent-carries-the-owners-name"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:an-export-says-which-tree-it-was-taken-in",
+      "properties": {},
+      "to_id": "req:an-export-says-which-tree-it-was-taken-in"
     },
     {
       "edge_type": "SATISFIES",
@@ -212066,6 +212220,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:an-export-says-which-tree-it-was-taken-in",
+      "properties": {},
+      "to_id": "cap:an-export-says-which-tree-it-was-taken-in"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:an-import-knows-its-own-age",
       "properties": {},
       "to_id": "cap:an-import-knows-its-own-age-and-a-server-behind-its-record-says-so"
@@ -215276,6 +215436,22 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:test-an-export-says-where-it-was-taken",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-an-export-says-where-it-was-taken"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:test-an-export-says-which-tree-it-was-taken-in",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-an-export-says-which-tree-it-was-taken-in"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:test-check-kit-manifest",
       "properties": {
         "action": "created"
@@ -216333,7 +216509,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:93ccb5fb29fb532bd55eb6da2903d2320d2987734caaf24943461a6644f7702e",
+        "checksum": "sha256:ad7ad1411c9249413940b7ed5b040426b697f2a13c39787a9831ca170afc1326",
         "granularity": "atomic",
         "location": "tools/reflow2_check.py",
         "name": "reflow2_check.py",
@@ -216475,7 +216651,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:061a77d5a07ca717105b036d9923de90d3cb2ddc04c923211573178fc7521390",
+        "checksum": "sha256:c163793630c1697d68dd24c0f413283c1b2bc15ff26913966bdbd9e7da78e358",
         "location": "tools/test_reflow2_check.py",
         "name": "test_reflow2_check.py",
         "status": "realized"
@@ -217081,7 +217257,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:8712b379f2e1f3e8010462c1675a6e3e030dc0ddba0a32093b49baf9b940b2ab",
+        "checksum": "sha256:81063ce1b20caaed58dd02ce407f3acecb37e323c315f77836e65afae7450336",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/export.rs",
         "name": "export.rs",
@@ -217119,7 +217295,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:7d9ddc578535021f6ae6ac53e9f7da60c1c7025bf28936e6fe4e4cfe8e0655f0",
+        "checksum": "sha256:4dd6db54fe4471ca2d1bd7a8eabff6e24a96a031a37d33c18226a21dfa296a3a",
         "description": "The one place an export document becomes a file on disk, shared by the export_graph tool and the server's write-through. Holds the four things both callers must agree on: where the lineage anchors, whether the write would drop design the file already holds, what `wrote` reports, and recording that this seat is in step. Extracted because a second copy that drifts is the failure this project keeps meeting — the version guard, the unknown-field interception and the adjacency memo were all that shape.",
         "location": "crates/reflow2-mcp/src/export_write.rs",
         "name": "export_write.rs",
@@ -217290,7 +217466,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:8dcf9b904913850e97a505a478d4a479e31a40d09fda94580fa98a3adcf1626a",
+        "checksum": "sha256:f970327b2b2981ca7c0e8a71bfcf9cc3867d7aa1a34d8758cf767586378bd654",
         "description": "Where an export's lineage is anchored: the record as COMMITTED, not the file on disk. Resolves the default branch (origin/HEAD first, then origin/main, origin/master, main, master), takes the merge-base with HEAD, and reads that path's blob at that commit. Every failure — no git on PATH, not a repository, no default branch, no merge-base, path not committed, the committed blob not an export — returns a NAMED reason rather than an error, and the caller falls back to on-disk chaining. reflow2's first use of git anywhere in either crate; it lives in the MCP crate so the core stays the pure graph library.",
         "location": "crates/reflow2-mcp/src/git.rs",
         "name": "git.rs",
@@ -217865,7 +218041,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:7fb957179e32074a5b714477bb9b7df9f45d6f7af9018e2a5a09c49333bc48de",
+        "checksum": "sha256:0bd6c3a0a3a447993ae351e43f7483997859d03555a99ed9fb8af3984e764253",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/merge.rs",
         "name": "merge.rs",
@@ -219373,6 +219549,30 @@
       }
     },
     {
+      "node_id": "art:test-an-export-says-where-it-was-taken",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:d65cab06ee2918cb57dde80235b25c2577b7feeed32b1662d1f9f33f20cd9d04",
+        "description": "The document contract: taken_at survives a JSON round trip; an older document reads with None rather than a default; a detached HEAD is a commit with no branch; the coordinate is not part of the content hash.",
+        "location": "crates/reflow2-core/tests/an_export_says_where_it_was_taken.rs",
+        "name": "an_export_says_where_it_was_taken.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:test-an-export-says-which-tree-it-was-taken-in",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:71032109bfbb1669564d107823b3b67677b1899569371706cc42cf075d7f08e4",
+        "description": "Against a real git repository: the receipt and the file carry branch and HEAD; dirty ignores the export file itself and notices anything else; an unchanged design keeps the coordinate it was taken at, byte-identical across a commit; outside git there is no coordinate rather than a made-up one.",
+        "location": "crates/reflow2-mcp/tests/an_export_says_which_tree_it_was_taken_in.rs",
+        "name": "an_export_says_which_tree_it_was_taken_in.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:test-check-kit-manifest",
       "node_type": "Artifact",
       "properties": {
@@ -219961,7 +220161,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:9da7b7124668c88c1b443e60e342ddbf586cb87e2e1dabd76315c9a321283247",
+        "checksum": "sha256:ed20ffbb94562b3495a6a59240bdcbbdc807695a814fcb0878ab05e284addd0a",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/exchange.rs",
         "name": "tools/exchange.rs",
@@ -221051,6 +221251,17 @@
         "name": "An acknowledgement records whose judgement it was, and says so plainly when nobody's name is on it",
         "provenance": "authored",
         "status": "realized"
+      }
+    },
+    {
+      "node_id": "cap:an-export-says-which-tree-it-was-taken-in",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Three parts. THE DOCUMENT: GraphExport gains an optional `taken_at` (export.rs: TakenAt { branch: Option, commit, dirty }), serde-default so an older document reads with None, excluded from the content hash so the same design taken on two branches is the same design. THE WRITER: crate::git::taken_at (reflow2-mcp git.rs) reads branch (None on a detached HEAD), HEAD, and `status --porcelain` minus the export file itself; export_write::chain_and_write stamps it on every write, keeping the predecessor's coordinate when the design content is unchanged so the bytes stay identical and `wrote: unchanged` stays true; the export_graph receipt carries it. THE GATE: reflow2_check.py's check_taken_on_this_branch refuses (exit 1, PHANTOM) a MODIFIED export whose recorded branch is not the branch checked out, skips a committed one (squash merges make the name meaningless once landed), a detached HEAD, an export with no coordinate, and a tree outside git. Options ② and ⑤ of the brainstorm, together; no per-node field.",
+        "name": "An export carries the branch, commit and dirtiness of the tree it was taken in, and the gate refuses one about to be committed on a branch it was not taken on",
+        "provenance": "authored",
+        "status": "realized",
+        "tier": "operational"
       }
     },
     {
@@ -224468,6 +224679,16 @@
       }
     },
     {
+      "node_id": "chg:accept-04bc37e6893636ad",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-09-16",
+        "name": "The merged document's struct literal sets taken_at: None; no behaviour moved.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-04f1020b8000c46a",
       "node_type": "ChangeEvent",
       "properties": {
@@ -227773,6 +227994,18 @@
         "name": "Nine read-only tools stop answering a bare zero: each empty reply now carries empty_because, the sentence saying what was swept and why nothing came back, and a wire-level CI gate refuses a bare zero from any no-argument read-only tool",
         "repair": "corrected_cause",
         "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:an-export-says-which-tree-it-was-taken-in",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-09-16",
+        "name": "An export carries the branch, commit and dirtiness of the tree it was taken in, and the gate refuses one about to be committed on a branch it was not taken on",
+        "rationale": "Anthony's 2026-08-31 idea asked for a git coordinate on every node; the record bounded it — a node cannot carry the commit that contains it, the core does no I/O so any coordinate is a caller's claim, and a hand-maintained per-node field goes stale on the first merge — and named the export as the grain at which the measured incident (four phantom drifts that would have merged cleanly, because the graph does not branch with git) was actually a question. On his word 2026-09-16 the export carries it (option ②) and the gate reads it for the one case that is a defect (option ⑤, narrowed): an export taken elsewhere and about to be committed here. A committed export is deliberately not re-judged, because squash merges make the branch name it carries meaningless once it lands — an ancestor check was considered and rejected for exactly that reason. CORRECTED THE CAUSE: for the phantom-drift shape, yes, at the moment it can still be stopped; the per-node traceability he first asked for is not built, and the decision says so.",
+        "subject": "system",
+        "summary": "THE DOCUMENT (reflow2-core export.rs): GraphExport gains `taken_at: Option<TakenAt>` — branch (None on a detached HEAD), commit, dirty — serde-default so an older document reads with None, skipped when absent, and excluded from the content hash; the three struct literals (export, mirror, merge) set it None, and TakenAt is re-exported from the crate. THE WRITER (reflow2-mcp): git::taken_at reads `rev-parse --abbrev-ref HEAD`, `rev-parse HEAD` and `status --porcelain` minus the export file itself; export_write::chain_and_write stamps it on every write, keeping the predecessor's coordinate when the design content is unchanged so the bytes stay identical and `wrote: unchanged` stays true; the export_graph receipt carries `taken_at` and the tool's description names it (trimmed to stay under the 1500-char budget; toolsnap updated). THE GATE (tools/reflow2_check.py): check_taken_on_this_branch fails a MODIFIED export whose recorded branch is not the branch checked out (PHANTOM, exit 1) and skips a committed one, a detached HEAD, a missing coordinate, or a tree outside git. Tests: an_export_says_where_it_was_taken.rs (4, document contract), an_export_says_which_tree_it_was_taken_in.rs (4, real git repo: branch+HEAD on receipt and file, dirty excludes the export, unchanged content keeps its coordinate byte-for-byte across a commit, outside git nothing), test_reflow2_check.py TakenOnThisBranch (4). Chain, record-moved, auto-export and the whole gate suite (46) still green."
       }
     },
     {
@@ -237536,9 +237769,9 @@
       "properties": {
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — Anthony, 2026-08-31, arriving out of the alternate-design discussion. Nothing chosen.\n\nHIS WORDS: \"does each node in the graph have an associated git repo/branch field... when the agent wants to determine where something is, it can just look at the node. And in the case of an alternate design, maybe the nodes/edges of the alternate design project have git_repo/alternate_design_branch. Additionally, when something is in work, maybe it has the branch that it is being worked in... when it is merged to main, then the node is also updated to git_repo/main now. If we were really fancy, could maybe include the commit hash... Then there is explicit traceability with every node in the design with its git repo/branch/commit?\"\n\n═══ WHAT EXISTS TODAY, CHECKED ═══\nNO node type carries a git coordinate. The nearest three, and none is this:\n· `Artifact.location` + `checksum` — a path and a content hash. WHERE a file is, not which branch a NODE belongs to.\n· `Resource.version` — \"for a design-dependency: the version this design MEANS to depend on — a tag, a commit, a release\". About depending on ANOTHER design.\n· The export `stamp` — carries `reflow2_version` and the schema shape, and NO git coordinate at all.\n\n═══ ⭐⭐ THE STRONGEST ARGUMENT FOR IT IS A TRAP THAT HAS ALREADY BITTEN ═══\nThe design graph does NOT branch with git: one store per DIRECTORY, shared by every branch checked out in it. A session on a feature branch writes into the same graph as main, and a plain export then carries the other branch's writes. That was caught once as FOUR PHANTOM DRIFTS and it would have merged cleanly — a silent wrong merge, which is the worst class this project recognises. A branch coordinate is exactly what would make that detectable rather than discovered.\n\n═══ 🛑 AND THERE IS A CIRCULARITY THAT BOUNDS THE COMMIT HALF ═══\nThe design is exported to a FILE THAT LIVES IN THE REPO. A node therefore CANNOT carry the hash of the commit that contains it: writing the hash changes the file, which changes the commit. The commit field can only ever mean \"the commit this was DERIVED FROM\" or \"last synced at\" — never \"the commit I am in\". That is not fatal, and it is not what the idea assumes, so it has to be stated before anyone builds it.\n\n═══ 🛑 AND THE CORE CANNOT COMPUTE IT ═══\n`reflow2-core` does NO file I/O, deliberately and repeatedly — `reconcile_artifacts` makes the CALLER supply hashes for exactly this reason. So a git coordinate would be CALLER-SUPPLIED: a claim, not a computation. That is the shape that goes stale, and this session has recorded EIGHT instances today of a declared property nothing reads or populates.\n\n⭐ THE PRECEDENT THAT SHOWS WHAT WOULD MAKE IT WORK: `Artifact.checksum` is the same shape — a git-adjacent fact stored on a node — and it earns its keep ONLY because `reconcile_artifacts` recomputes it from disk and reports divergence. A branch field with no equivalent recomputation is decoration that will be wrong the first time somebody merges without updating it, which his own sentence anticipates (\"then the node is ALSO UPDATED\") and which nothing would notice.\n\n═══ THE OPTIONS, none chosen ═══\n① PER-NODE repo/branch/commit, as proposed. Maximum traceability. ⚠️ 3,536 nodes each carrying a hand-maintained fact with no recomputation; goes stale on every merge; and the commit half cannot mean what it appears to.\n② ON THE EXPORT STAMP ONLY — branch and commit recorded once per export, at the MCP layer where file I/O is already allowed. ⭐ CHEAPEST, and it catches the phantom-drift trap exactly, because that trap is a property of the EXPORT rather than of any node. ⚠️ Says nothing about an individual node's provenance, which is what he asked for.\n③ ON THE ChangeEvent — the branch a change was made on, recorded at the moment of the write. ⭐ A ChangeEvent is already the \"what moved and when\" record, it is written once and never edited, so it CANNOT go stale the way a per-node field would. ⚠️ Answers \"where was this changed\" rather than \"where does this live now\".\n④ ONLY ON ARTIFACTS, extending `location` with a repo/branch. ⭐ Artifacts are the nodes that actually correspond to files, and the recomputation machinery already exists there. ⚠️ Leaves every non-Artifact node — which is most of the graph — unlocated.\n⑤ NOTHING, AND FIX THE TRAP DIRECTLY: have the export or `sync_status` warn when the working tree's branch differs from the one the last export was taken on. ⚠️ Solves the measured incident and none of the traceability he is asking for.\n\n═══ ⚠️ COUNTER-ARGUMENTS ═══\n(1) `dec:merge-three-way` settled that GIT IS THE DAG and reflow2 owns no branch machinery. Recording a coordinate is not owning the DAG, but ① edges toward reflow2 maintaining a parallel model of git state, which is the thing that decision refused.\n(2) The idea's own update rule — \"when merged to main, the node is also updated\" — is a hand-maintained invariant with nothing checking it, which is the exact cause shape this project keeps finding: \"a rule maintained by hand with nothing checking it is a rule that silently stops being true\".\n(3) It is not clear anybody has needed per-node location. The phantom-drift incident needed EXPORT-level branch awareness; the fork case needs to know which STORE a node is in, which the store path already answers.",
         "kind": "exploratory",
-        "name": "OPEN — should every node carry a git repo/branch/commit coordinate? The trap it would catch is real and already measured; the granularity it needs may be the export, not the node",
+        "name": "DECIDED 2026-09-16 — the git coordinate lives on the EXPORT, not on nodes: every export written inside a repository carries `taken_at` (branch, commit, dirty), kept while the content is unchanged; the coherence gate refuses an export about to be committed on a branch it was not taken on (options ② and ⑤ together); no per-node field",
         "rationale": "Recorded under the brainstorm discipline — ideas as ideas, nothing promoted, counter-arguments beside rather than against.\n\nThe circularity and the no-file-IO constraint are recorded first because both bound what the idea can mean, and neither is visible from the proposal as stated: a node cannot carry its own commit, and the core cannot compute any git fact, so every option below is a caller-supplied claim rather than a derived one.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -247323,6 +247556,26 @@
       }
     },
     {
+      "node_id": "frag:art:test-an-export-says-where-it-was-taken",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered an_export_says_where_it_was_taken.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:test-an-export-says-which-tree-it-was-taken-in",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered an_export_says_which_tree_it_was_taken_in.rs"
+      }
+    },
+    {
       "node_id": "frag:art:test-check-kit-manifest",
       "node_type": "Fragment",
       "properties": {
@@ -250896,6 +251149,19 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "An edge's `evidence` and `note` are claims about the world, written at a moment in time, and the design says when one still uses language the node it points at has since dropped — rather than leaving a reader to follow an edge whose reasoning reads as current and is not.\n\nRecorded from bhome's field report, 2026-08-31: narrowing a climate requirement left five RISKS edges still arguing about the arctic, and four were repaired only because the propagation happened to list them and the agent happened to remember what they said. Accepted on Anthony's word the same day.\n\n⚠️ THE OBLIGATION IS TO SAY, NOT TO REPAIR. Whether stale-reading evidence is now WRONG is a judgement about meaning, and this requirement deliberately does not claim the design can make it. It also does not oblige the check to be able to answer everywhere: where no prior state was recorded, saying so is satisfying this requirement, not failing it.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:an-export-says-which-tree-it-was-taken-in",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "lineage": "original",
+        "name": "An export says which working tree it was taken in, and one taken on another branch is not committed here unnoticed",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Every export written inside a git repository records the branch and commit the working tree was at when the design content was taken, and whether that tree held uncommitted work besides the export itself. The coordinate is on the export, never on a node: a node cannot carry the commit that contains it, and a hand-maintained per-node field would go stale on the first merge with nothing recomputing it. It is kept, not bumped, while the design content is unchanged, so an unchanged export stays byte-identical across commits. An export outside git, or on a detached HEAD, says nothing rather than something made up. The coherence gate refuses a modified export whose recorded branch is not the branch it is about to be committed on — the phantom-drift shape — and does not re-judge a committed one, because squash merges make the name it carries meaningless once it lands.",
         "status": "accepted"
       }
     },
@@ -254927,6 +255193,16 @@
         "edges": "[]",
         "state": "{\"decision\":\"RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Ideas 2, 3 and 4 from the qs project agent, 2026-09-04, corroborated by dev_storyflow's constructor table of the same day. Nothing is intent.\\n\\nTHE COMPLAINT, qs: \\\"MANY SMALL CALLS PER FACT. Recording one verification took FOUR TO SIX calls (`add_verification`, `set_verification_status`, `verifies` per target, `link_artifact` per file). Recording one decision THE USER HAD ALREADY MADE took `add_decision` then `set_decision_status`, and DOING BOTH IN ONE PARALLEL BATCH IS REFUSED BECAUSE THEY ARE UNORDERED. `add_capability` accepts `status`; `add_decision` and `add_requirement` do not accept an initial status EVEN WHEN THE OWNER'S WORD IS IN HAND.\\\"\\n\\n⭐ THE BATCHING NOTE IS THE PART THAT MAKES THIS MORE THAN ERGONOMICS. The two calls cannot be issued together, because a harness emits a batch unordered and `set_decision_status` may run before the node exists — which is `fact:the-parallel-batch-class-recurred-because-only-its-instance-was-fixed`. So the cost is not one extra call, it is a FORCED SERIAL ROUND TRIP on the single commonest capture in the tool.\\n\\nTHEIR THREE PROPOSALS:\\n① `add_decision(..., status=\\\"accepted\\\", decided_by=<contributor>)` — and the same for requirements — REFUSED UNLESS A CONTRIBUTOR IS NAMED, \\\"so the certainty rule still holds but one call does the work\\\".\\n② `add_verification(verifies=[...], status, findings, last_run_at)` — \\\"the common case is 'I just ran it and here is what it found'\\\".\\n③ A \\\"wire this capability\\\" call: allocate + realizes + verifies in one step, which would also collapse the three-findings-for-one-missing-edge shape they reported separately.\\n\\n🛑 THE RULE THIS HAS TO SURVIVE, and ① is deliberately shaped to survive it. `dec:certainty-derived` says certainty is DERIVED FROM STATUS, so an agent promoting a status on the user's behalf FORGES THEIR SIGNATURE — which is why `add_decision` lands `proposed` and why the brainstorm skill tells you to verify it did. ⭐ Their proposal does not weaken that: it makes the contributor MANDATORY when a status is passed, so the signature is present rather than assumed. Whether a named contributor is sufficient evidence of the user's word, or whether only a separate deliberate act counts, is exactly the open question.\\n\\n⚠️ AND `add_capability` ALREADY DOES THIS, which is either the precedent or the inconsistency depending on how it is read. dev_storyflow measured four sibling constructors giving four different answers to \\\"what status does this land in\\\", and `add_capability` honouring an explicit status is one of them. So the surface has already decided this once, for one type, without the rule being argued.\\n\\nNOT ESTABLISHED: whether the four-to-six calls per verification is dominated by the status or by the EDGES (`verifies` per target, `link_artifact` per file). Only ② and ③ address the edges, and nobody has counted which half of their traffic was which — so the cheapest fix may be the bulk edge forms rather than the status field.\",\"kind\":\"exploratory\",\"name\":\"OPEN — recording a decision the user already made takes two calls that cannot be batched. Should constructors accept the owner's word, and does that break the forgery rule?\",\"rationale\":\"Captured under the brainstorm skill; recorded as an idea, nothing promoted. Kept separate from the companion-CLI idea because this one turns on a governance rule (dec:certainty-derived) rather than on the no-file-IO boundary, and separate from the constructor-naming fact because that records a measured defect while this asks a design question the user must rule on.\",\"status\":\"proposed\"}",
         "target_id": "dec:idea-should-a-constructor-accept-the-owners-word-in-one-call",
+        "target_type": "Decision"
+      }
+    },
+    {
+      "node_id": "snap:epoch:preserved-on-write:dec:idea-should-a-node-carry-its-git-coordinate",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"approved_at\":\"2026-09-16\",\"authored_at\":\"2026-08-31\",\"roles\":[\"author\",\"approver\"]}},{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-the-requirement-tiers-exist-and-nothing-reads-them\",\"properties\":{\"evidence\":\"Both are the same bet in different clothes: a declared property is worth adding only if something reads it and something keeps it true. That node measures what happens when neither holds — 205 requirements at a default nobody chose — and a per-node branch field with no recomputation would be the same shape at ten times the node count.\",\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"MITIGATES\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-what-is-the-minimum-path-to-fork-ophyd-service-today\",\"properties\":{\"evidence\":\"A branch coordinate is what would make the worktree fork self-describing: today the only thing saying which design you are editing is the graph path in an MCP config, and that node records mis-pointing it as the route's most dangerous unpaid cost. Option ② or ③ would let a session say which branch its design came from rather than inferring it from a path.\"}}]",
+        "state": "{\"decision\":\"RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — Anthony, 2026-08-31, arriving out of the alternate-design discussion. Nothing chosen.\\n\\nHIS WORDS: \\\"does each node in the graph have an associated git repo/branch field... when the agent wants to determine where something is, it can just look at the node. And in the case of an alternate design, maybe the nodes/edges of the alternate design project have git_repo/alternate_design_branch. Additionally, when something is in work, maybe it has the branch that it is being worked in... when it is merged to main, then the node is also updated to git_repo/main now. If we were really fancy, could maybe include the commit hash... Then there is explicit traceability with every node in the design with its git repo/branch/commit?\\\"\\n\\n═══ WHAT EXISTS TODAY, CHECKED ═══\\nNO node type carries a git coordinate. The nearest three, and none is this:\\n· `Artifact.location` + `checksum` — a path and a content hash. WHERE a file is, not which branch a NODE belongs to.\\n· `Resource.version` — \\\"for a design-dependency: the version this design MEANS to depend on — a tag, a commit, a release\\\". About depending on ANOTHER design.\\n· The export `stamp` — carries `reflow2_version` and the schema shape, and NO git coordinate at all.\\n\\n═══ ⭐⭐ THE STRONGEST ARGUMENT FOR IT IS A TRAP THAT HAS ALREADY BITTEN ═══\\nThe design graph does NOT branch with git: one store per DIRECTORY, shared by every branch checked out in it. A session on a feature branch writes into the same graph as main, and a plain export then carries the other branch's writes. That was caught once as FOUR PHANTOM DRIFTS and it would have merged cleanly — a silent wrong merge, which is the worst class this project recognises. A branch coordinate is exactly what would make that detectable rather than discovered.\\n\\n═══ 🛑 AND THERE IS A CIRCULARITY THAT BOUNDS THE COMMIT HALF ═══\\nThe design is exported to a FILE THAT LIVES IN THE REPO. A node therefore CANNOT carry the hash of the commit that contains it: writing the hash changes the file, which changes the commit. The commit field can only ever mean \\\"the commit this was DERIVED FROM\\\" or \\\"last synced at\\\" — never \\\"the commit I am in\\\". That is not fatal, and it is not what the idea assumes, so it has to be stated before anyone builds it.\\n\\n═══ 🛑 AND THE CORE CANNOT COMPUTE IT ═══\\n`reflow2-core` does NO file I/O, deliberately and repeatedly — `reconcile_artifacts` makes the CALLER supply hashes for exactly this reason. So a git coordinate would be CALLER-SUPPLIED: a claim, not a computation. That is the shape that goes stale, and this session has recorded EIGHT instances today of a declared property nothing reads or populates.\\n\\n⭐ THE PRECEDENT THAT SHOWS WHAT WOULD MAKE IT WORK: `Artifact.checksum` is the same shape — a git-adjacent fact stored on a node — and it earns its keep ONLY because `reconcile_artifacts` recomputes it from disk and reports divergence. A branch field with no equivalent recomputation is decoration that will be wrong the first time somebody merges without updating it, which his own sentence anticipates (\\\"then the node is ALSO UPDATED\\\") and which nothing would notice.\\n\\n═══ THE OPTIONS, none chosen ═══\\n① PER-NODE repo/branch/commit, as proposed. Maximum traceability. ⚠️ 3,536 nodes each carrying a hand-maintained fact with no recomputation; goes stale on every merge; and the commit half cannot mean what it appears to.\\n② ON THE EXPORT STAMP ONLY — branch and commit recorded once per export, at the MCP layer where file I/O is already allowed. ⭐ CHEAPEST, and it catches the phantom-drift trap exactly, because that trap is a property of the EXPORT rather than of any node. ⚠️ Says nothing about an individual node's provenance, which is what he asked for.\\n③ ON THE ChangeEvent — the branch a change was made on, recorded at the moment of the write. ⭐ A ChangeEvent is already the \\\"what moved and when\\\" record, it is written once and never edited, so it CANNOT go stale the way a per-node field would. ⚠️ Answers \\\"where was this changed\\\" rather than \\\"where does this live now\\\".\\n④ ONLY ON ARTIFACTS, extending `location` with a repo/branch. ⭐ Artifacts are the nodes that actually correspond to files, and the recomputation machinery already exists there. ⚠️ Leaves every non-Artifact node — which is most of the graph — unlocated.\\n⑤ NOTHING, AND FIX THE TRAP DIRECTLY: have the export or `sync_status` warn when the working tree's branch differs from the one the last export was taken on. ⚠️ Solves the measured incident and none of the traceability he is asking for.\\n\\n═══ ⚠️ COUNTER-ARGUMENTS ═══\\n(1) `dec:merge-three-way` settled that GIT IS THE DAG and reflow2 owns no branch machinery. Recording a coordinate is not owning the DAG, but ① edges toward reflow2 maintaining a parallel model of git state, which is the thing that decision refused.\\n(2) The idea's own update rule — \\\"when merged to main, the node is also updated\\\" — is a hand-maintained invariant with nothing checking it, which is the exact cause shape this project keeps finding: \\\"a rule maintained by hand with nothing checking it is a rule that silently stops being true\\\".\\n(3) It is not clear anybody has needed per-node location. The phantom-drift incident needed EXPORT-level branch awareness; the fork case needs to know which STORE a node is in, which the store path already answers.\",\"kind\":\"exploratory\",\"name\":\"OPEN — should every node carry a git repo/branch/commit coordinate? The trap it would catch is real and already measured; the granularity it needs may be the export, not the node\",\"rationale\":\"Recorded under the brainstorm discipline — ideas as ideas, nothing promoted, counter-arguments beside rather than against.\\n\\nThe circularity and the no-file-IO constraint are recorded first because both bound what the idea can mean, and neither is visible from the proposal as stated: a node cannot carry its own commit, and the core cannot compute any git fact, so every option below is a caller-supplied claim rather than a derived one.\",\"status\":\"accepted\"}",
+        "target_id": "dec:idea-should-a-node-carry-its-git-coordinate",
         "target_type": "Decision"
       }
     },
@@ -264794,6 +265070,20 @@
       }
     },
     {
+      "node_id": "ver:an-export-says-which-tree-it-was-taken-in",
+      "node_type": "Verification",
+      "properties": {
+        "description": "Three suites. an_export_says_where_it_was_taken.rs (core, 4): the document contract — round trip, absence on an old document, detached HEAD, excluded from the content hash. an_export_says_which_tree_it_was_taken_in.rs (mcp, 4): a real git repository — branch and HEAD on receipt and file, dirty excludes the export itself, an unchanged design keeps its coordinate byte-for-byte across a commit, nothing outside git. test_reflow2_check.py TakenOnThisBranch (4): a modified export taken on another branch is refused with PHANTOM and exit 1; the same on its own branch passes; a committed one is not re-judged; one with no coordinate is not judged.",
+        "findings": "4 + 4 + 4 passed. The chain, record-moved and auto-export suites and the whole gate suite (46) still green. One wrong turn on the way: the first cut of the write-path edit never landed on disk and three MCP cases failed with taken_at null; the instrumented rerun showed the reader was never called, and the edit was reapplied. The export_graph description had to be trimmed from ~1590 to 1470 characters to stay under the lint's 1500 budget.",
+        "kind": "verification",
+        "last_run_at": "2026-09-16",
+        "level": "integration",
+        "method": "test",
+        "name": "An export names its branch and commit, keeps them while unchanged, and the gate refuses one about to be committed elsewhere",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:an-import-knows-its-own-age",
       "node_type": "Verification",
       "properties": {
@@ -267352,7 +267642,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:f071827156ced0a6334d63ff1e3a4fe4e40b87ce56bc66831e43d0359c7a2ade",
+  "prev_content_hash": "sha256:3c71b14f345f2bbded3f238be13734f6dd597f552e3306f98bf49b13fa2e2bdc",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

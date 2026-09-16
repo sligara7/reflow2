@@ -84,9 +84,44 @@ impl From<StoredEdge> for ExportedEdge {
     }
 }
 
+/// The working tree an export was TAKEN in — which branch, at which commit,
+/// and whether that tree held uncommitted work besides the export itself.
+///
+/// Recorded once per export by the layer that may read git (the MCP server);
+/// the core takes no clock and does no I/O, so this is caller-supplied and
+/// absent means nobody said (an export from outside a repository, or from
+/// before 2026-09-16). It answers the question the phantom-drift incident
+/// asked — *which branch was this export taken on?* — at the one grain where
+/// it is true: an export is a property of a working tree, and a node is not
+/// (dec:idea-should-a-node-carry-its-git-coordinate, option ②).
+///
+/// ⚠️ `commit` CANNOT mean "the commit that contains this file": writing the
+/// hash into the file changes the file, which changes the commit. It means
+/// the commit the tree was AT when the design content was last exported —
+/// the parent of whatever commit later carries it. And it is kept, not
+/// bumped, while the design content is unchanged, so an export that did not
+/// move stays byte-identical across commits.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+pub struct TakenAt {
+    /// The branch checked out, or None on a detached HEAD.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub branch: Option<String>,
+    /// HEAD at the time — the tree the design content was taken from.
+    pub commit: String,
+    /// Whether the working tree held uncommitted changes OTHER than the
+    /// export file itself when the export was taken.
+    #[serde(default)]
+    pub dirty: bool,
+}
+
 /// A whole design graph, portable.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct GraphExport {
+    /// Where this export was taken — see [`TakenAt`]. Not part of the content
+    /// hash: two exports of one design taken on different branches are the
+    /// same design.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub taken_at: Option<TakenAt>,
     /// Which reflow2 wrote it. Carried so an import can tell whether the file
     /// came from a vocabulary it does not know — the same question
     /// [`crate::provenance`] asks of a graph directory. Optional on the way in,
@@ -348,6 +383,7 @@ impl DesignGraph {
         });
 
         let mut export = GraphExport {
+            taken_at: None,
             stamp: Some(GraphStamp::current(self.schema())),
             content_hash: None,
             prev_content_hash: None,
@@ -851,6 +887,7 @@ impl DesignGraph {
         };
 
         let mut document = GraphExport {
+            taken_at: None,
             stamp: Some(GraphStamp::current(self.schema())),
             content_hash: None,
             // Deliberately not chained — see the doc comment.

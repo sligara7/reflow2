@@ -1244,6 +1244,7 @@ pub fn resolve_merge(
     });
 
     let mut merged = GraphExport {
+        taken_at: None,
         stamp: ours.stamp.clone(),
         content_hash: None,
         prev_content_hash: None,
