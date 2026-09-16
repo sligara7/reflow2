@@ -30,6 +30,13 @@
           "null"
         ]
       },
+      "checksum": {
+        "description": "A content hash of the file (`sha256:<hex>`) — the baseline that makes a later edit detectable.\nSupply it on creation, as `link_artifact` does: without one, `reconcile_artifacts` can say the file\nvanished but never that its contents changed. On a REVISE of an artifact that already carries one it\nis REFUSED — moving a baseline is a drift disposition, which is `set_artifact_checksum`'s job.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
       "description": {
         "default": null,
         "description": "WHAT THIS IS, in prose. Added 2026-09-07: `description` is the only\nprose field this type declares, and no tool offered it, so the surface\nlet a caller NAME the thing and never say what it was — six of eleven\ntypes that declare a description were in that state, because the class\nwas fixed one report at a time and never swept\n(`fact:six-constructors-cannot-write-any-prose-because-the-class-was-fixed-one-report-at-a-time-and-never-swept`).",

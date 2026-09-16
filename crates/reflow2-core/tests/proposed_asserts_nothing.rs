@@ -269,11 +269,26 @@ fn a_measurement_anticipating_a_parked_idea_is_not_an_unresolved_setup() {
 fn anticipation_between_accepted_decisions_is_still_an_unresolved_setup() {
     // The counterweight: settled work that sets something up and never follows
     // through is exactly what this detector is for.
-    let g = joined(Some("accepted"), edge::ANTICIPATES);
+    // Since 2026-09-15 the rule tests follow-through, and an ACCEPTED target
+    // counts as the anticipated decision having been made — so the case that
+    // must still fire is a committed setup whose anticipated choice nobody
+    // made: `kind: choice` (faced, not parked) and still `proposed`. See
+    // a_rule_tests_the_condition_its_message_names.rs for both sides.
+    let mut g = joined(Some("accepted"), edge::ANTICIPATES);
+    g.create_node(
+        node::DECISION,
+        "dec:two",
+        Props::new()
+            .set("name", "dec:two")
+            .set("decision", "something")
+            .set("status", "proposed")
+            .set("kind", "choice"),
+    )
+    .unwrap();
     assert_eq!(
         defects(&g, HealCategory::UnresolvedSetup).len(),
         1,
-        "an accepted decision that anticipates and never follows through must still be reported"
+        "an accepted decision that anticipates a choice nobody made must still be reported"
     );
 }
 

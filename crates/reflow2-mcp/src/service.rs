@@ -2215,6 +2215,11 @@ pub struct AddArtifactReq {
     /// (`fact:six-constructors-cannot-write-any-prose-because-the-class-was-fixed-one-report-at-a-time-and-never-swept`).
     #[serde(default)]
     pub description: Option<String>,
+    /// A content hash of the file (`sha256:<hex>`) — the baseline that makes a later edit detectable.
+    /// Supply it on creation, as `link_artifact` does: without one, `reconcile_artifacts` can say the file
+    /// vanished but never that its contents changed. On a REVISE of an artifact that already carries one it
+    /// is REFUSED — moving a baseline is a drift disposition, which is `set_artifact_checksum`'s job.
+    pub checksum: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -4281,7 +4286,9 @@ pub struct InterfaceSpecReq {
     pub interface_id: String,
     /// How the contract is CARRIED: `REST` / `gRPC` / `json_rpc` / `event` /
     /// `graphql` / `cli` / `library` / `data` / `mechanical` / `electrical` /
-    /// `human`.
+    /// `human` / `procedural` (a rule-governed exchange between institutions or
+    /// roles — a legal, contractual or constitutional procedure rather than a
+    /// protocol or a human-factors touchpoint).
     /// Unset reads as `unspecified`, which is deliberately not a claim that a
     /// boundary is REST. Worth setting even when the rest of the spec is
     /// unknown: two boundaries can only be wired together if their media match,

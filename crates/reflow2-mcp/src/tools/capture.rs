@@ -1967,7 +1967,8 @@ impl ReflowService {
 
     #[tool(
         description = "Create an Interface node — a contract between parts (an API, event, \
-                       data feed, CLI, library boundary, or physical/human connection point). \
+                       data feed, CLI, library boundary, physical/human connection point, or a \
+                       procedural contract between institutions). \
                        Model one whenever two Components talk to each other, then pair it with \
                        `provides` and `consumes`: that pairing is what makes a change on one \
                        side of a boundary surface the other side. \

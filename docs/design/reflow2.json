@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:b22a6870a800db1a5f1b3e173982ac244d9e92c65fe5f7a93ee529d397ada640",
+  "content_hash": "sha256:c09f4a613ffc358220287cfdb27bd101b40a08db0d6d19b016a15aeed789f8ed",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -13856,6 +13856,17 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:a-rule-computes-the-condition-its-message-names",
+      "properties": {
+        "approved_at": "2026-09-15",
+        "roles": [
+          "approver"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:a-stale-finding-is-closed-by-a-claim-not-a-computation",
       "properties": {
         "approved_at": "2026-08-24",
@@ -17813,6 +17824,17 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:procedural-is-the-medium-for-a-boundary-between-institutions",
+      "properties": {
+        "approved_at": "2026-09-15",
+        "roles": [
+          "approver"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:qualitygate-is-retired-the-phase-gate-dissolved-into-the-detectors",
       "properties": {
         "roles": [
@@ -18749,6 +18771,17 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:36f996750fe0a1bc",
+      "properties": {
+        "approved_at": "2026-09-15",
+        "roles": [
+          "approver"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "decision:ack:378cbdafd1fa41fb",
       "properties": {
         "roles": [
@@ -18804,6 +18837,17 @@
       "edge_type": "AUTHORED_BY",
       "from_id": "decision:ack:3a667fe34b66bffd",
       "properties": {
+        "roles": [
+          "approver"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:3bbb191dc364a8d9",
+      "properties": {
+        "approved_at": "2026-09-15",
         "roles": [
           "approver"
         ]
@@ -19344,6 +19388,17 @@
       "from_id": "decision:ack:7f72f4a7ae00b8de",
       "properties": {
         "approved_at": "2026-08-23",
+        "roles": [
+          "approver"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:808f3b7285069e44",
+      "properties": {
+        "approved_at": "2026-09-15",
         "roles": [
           "approver"
         ]
@@ -19947,8 +20002,30 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:c59d400d9fba621f",
+      "properties": {
+        "approved_at": "2026-09-15",
+        "roles": [
+          "approver"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "decision:ack:c628f709c27ad035",
       "properties": {
+        "roles": [
+          "approver"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:c87cd180e8c74423",
+      "properties": {
+        "approved_at": "2026-09-15",
         "roles": [
           "approver"
         ]
@@ -20060,6 +20137,17 @@
         ]
       },
       "to_id": "ctr:claude-fable"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:d0098626ac85ac53",
+      "properties": {
+        "approved_at": "2026-09-15",
+        "roles": [
+          "approver"
+        ]
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -20314,6 +20402,17 @@
       "edge_type": "AUTHORED_BY",
       "from_id": "decision:ack:f78628387e7c41cc",
       "properties": {
+        "roles": [
+          "approver"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:f9214aec3d2feb1b",
+      "properties": {
+        "approved_at": "2026-09-15",
         "roles": [
           "approver"
         ]
@@ -30485,6 +30584,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-9069aae703368036",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skills-and-tools"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-90d8baec7c63fba7",
       "properties": {
         "accepted_baseline": true,
@@ -31868,6 +31976,42 @@
         "action": "added"
       },
       "to_id": "ver:acknowledgement-not-structure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:add-artifact-takes-the-first-checksum",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:artifact"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:add-artifact-takes-the-first-checksum",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:add-artifact-takes-the-first-checksum",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-built"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:add-artifact-takes-the-first-checksum",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:mcp-surface"
     },
     {
       "edge_type": "CHANGED",
@@ -37604,6 +37748,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:every-constructor-can-say-what-the-thing-it-makes-is",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:mcp-surface"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:every-declared-enum-is-wired-or-exempt",
       "properties": {
         "accepted_baseline": true,
@@ -40157,6 +40310,51 @@
         "action": "modified"
       },
       "to_id": "art:readme"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:procedural-joins-the-interface-media",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:ingest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:procedural-joins-the-interface-media",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-structure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:procedural-joins-the-interface-media",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:procedural-joins-the-interface-media",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:interface-spec"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:procedural-joins-the-interface-media",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:schema"
     },
     {
       "edge_type": "CHANGED",
@@ -47140,6 +47338,42 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:two-repair-rules-compute-the-condition-their-message-names",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:two-repair-rules-compute-the-condition-their-message-names",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:proposed-asserts-nothing-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:two-repair-rules-compute-the-condition-their-message-names",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:heal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:two-repair-rules-compute-the-condition-their-message-names",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:heal"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:unallocated-component-reads-the-ruling",
       "properties": {
         "accepted_baseline": true,
@@ -47668,6 +47902,16 @@
         "action": "modified"
       },
       "to_id": "cmp:byte-store"
+    },
+    {
+      "edge_type": "CLAIMS",
+      "from_id": "who:claude-code",
+      "properties": {
+        "depth": 2,
+        "note": "Ruling on the 13 overtaken-defect records (Anthony 2026-09-15): fixing the contradiction and unresolved_setup rules to test their own condition, add_artifact checksum, Interface.medium procedural; acknowledging the rest.",
+        "seat": "asligar-bitecool:3425173:147fbad8"
+      },
+      "to_id": "cmp:heal"
     },
     {
       "edge_type": "CLAIMS",
@@ -55468,6 +55712,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:an-acknowledgement-says-whose-judgement-it-was",
+      "properties": {},
+      "to_id": "decision:ack:c87cd180e8c74423"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:an-unconnected-idea-is-visible-as-one",
       "properties": {},
       "to_id": "dec:idea-what-notices-an-idea-that-connects-to-nothing"
@@ -57138,6 +57388,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:heal",
       "properties": {},
+      "to_id": "decision:ack:d0098626ac85ac53"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:heal",
+      "properties": {},
       "to_id": "decision:ack:d1c2d599af5b45ce"
     },
     {
@@ -57661,6 +57917,12 @@
       "from_id": "cap:mcp-surface",
       "properties": {},
       "to_id": "decision:ack:233d08765e4cfc7b"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:mcp-surface",
+      "properties": {},
+      "to_id": "decision:ack:3bbb191dc364a8d9"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -59578,6 +59840,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:tool-search",
+      "properties": {},
+      "to_id": "decision:ack:f9214aec3d2feb1b"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:unallocated-component-detector",
       "properties": {
         "note": "This detector IS option E — the choice was \"make the absence visible first, decide about a skill later\", and the absence it makes visible is structure no function has been allocated to. If that decision is ever revisited (A, B or C — a skill of its own, or the method folded into genesis or detect-and-ask), this is the node that was built instead, and the counts it produces are the evidence that should settle it."
@@ -61280,6 +61548,20 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "chg:one-tool-declares-its-output-contract",
+      "properties": {},
+      "to_id": "decision:ack:3bbb191dc364a8d9"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "chg:procedural-joins-the-interface-media",
+      "properties": {
+        "note": "One value rather than a family, and a closed enum rather than an open string, are this decision's choices."
+      },
+      "to_id": "dec:procedural-is-the-medium-for-a-boundary-between-institutions"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "chg:qualitygate-leaves-the-schema",
       "properties": {
         "evidence": "The removal exists because of this ruling and its scope came from it: the type goes, the record of what it was for stays, and the condition for bringing it back is stated rather than left to be re-argued."
@@ -61606,6 +61888,14 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "chg:two-repair-rules-compute-the-condition-their-message-names",
+      "properties": {
+        "note": "The two definitions the code now computes are this decision's; loosening either means changing the decision, not only the rule."
+      },
+      "to_id": "dec:a-rule-computes-the-condition-its-message-names"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "chg:unallocated-component-reads-the-ruling",
       "properties": {
         "ruling": "parks"
@@ -61748,6 +62038,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cmp:export",
       "properties": {},
+      "to_id": "decision:ack:c59d400d9fba621f"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:export",
+      "properties": {},
       "to_id": "decision:ack:f384097e7d8b01b0"
     },
     {
@@ -61785,6 +62081,12 @@
       "from_id": "cmp:heal",
       "properties": {},
       "to_id": "dec:merge-survivor-provenance"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:heal",
+      "properties": {},
+      "to_id": "decision:ack:808f3b7285069e44"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -61919,6 +62221,12 @@
       "from_id": "cmp:sanitize",
       "properties": {},
       "to_id": "decision:ack:f384097e7d8b01b0"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:schema",
+      "properties": {},
+      "to_id": "decision:ack:36f996750fe0a1bc"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -62660,6 +62968,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "fact:a-gap-can-be-answered-in-prose-but-only-closed-with-a-signature",
+      "properties": {},
+      "to_id": "decision:ack:c87cd180e8c74423"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "fact:a-local-feature-error-was-worked-around-instead-of-read-as-the-ci-contract",
       "properties": {
         "note": "The obvious repair was to gate the whole test file, which would have made CI green by deleting coverage from the job that has no index. Clause 1 is why it was split instead: the half that can be checked everywhere now is."
@@ -62680,6 +62994,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "fact:bl-198-cost-measured-twice-in-both-directions",
+      "properties": {},
+      "to_id": "decision:ack:c59d400d9fba621f"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "fact:correction-stranded-server-is-recoverable-without-a-reconnect",
       "properties": {
         "note": "This correction is the clause that stands, on measured evidence rather than recency."
@@ -62691,6 +63011,12 @@
       "from_id": "fact:correction-stranded-server-is-recoverable-without-a-reconnect",
       "properties": {},
       "to_id": "decision:ack:heal:4bd7c50f777fe56e"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "fact:defaults-are-injected-by-dynograph-at-write",
+      "properties": {},
+      "to_id": "decision:ack:36f996750fe0a1bc"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -62733,6 +63059,12 @@
       "from_id": "fact:defect-merge-survivor-ignores-priority-and-status",
       "properties": {},
       "to_id": "decision:ack:b89b95a950b25a99"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "fact:defect-merge-survivor-ignores-priority-and-status",
+      "properties": {},
+      "to_id": "decision:ack:d0098626ac85ac53"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -62824,7 +63156,19 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "fact:orphan-decision-is-silenced-by-an-edge-that-does-not-reach-it",
       "properties": {},
+      "to_id": "decision:ack:808f3b7285069e44"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "fact:orphan-decision-is-silenced-by-an-edge-that-does-not-reach-it",
+      "properties": {},
       "to_id": "decision:ack:fab1c2d1b2a80925"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "fact:reflow2-sends-a-structured-payload-for-tools-that-declare-no-output-contract",
+      "properties": {},
+      "to_id": "decision:ack:3bbb191dc364a8d9"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -62837,6 +63181,12 @@
       "from_id": "fact:seam-report-is-named-for-something-it-does-not-do",
       "properties": {},
       "to_id": "decision:ack:34185b8ad2a0aa83"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "fact:the-builder-reads-source-where-a-consumer-has-only-the-surface-and-find-tools-returned-the-negation",
+      "properties": {},
+      "to_id": "decision:ack:f9214aec3d2feb1b"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -200304,6 +200654,15 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:add-artifact-takes-the-first-checksum",
+      "properties": {
+        "at": "2026-09-15",
+        "note": "Half (1) is fixed: add_artifact takes `checksum` and stores it as the first baseline, refusing to move one that exists. Half (2), delete_edge refusing endpoint types, stands as built on the record's own judgement that the refusal is defensible; the friction it names — a rejected field not saying whether it moved or was never there — is the open wish dec:idea-a-rejected-field-says-whether-it-moved-or-was-never-there, not this record."
+      },
+      "to_id": "fact:defect-two-more-constructor-shape-frictions-met-while-working-add-artifact-cannot-set-a-checksum-and-delete-edge-refuses-the-types-create-edge-requires"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:alexs-four-surface-fixes-sequence-hint-get-node-by-id-auth-hint-and-bulk-check-only",
       "properties": {
         "at": "2026-09-05",
@@ -200430,6 +200789,15 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:every-constructor-can-say-what-the-thing-it-makes-is",
+      "properties": {
+        "at": "2026-09-07",
+        "note": "Read from the code 2026-09-15: all six constructors (Artifact, Environment, Interface, Project, Release, Resource) take `description` via capture::set_description, and every_constructor_can_say_what_the_thing_is.rs sweeps the schema so the class cannot reopen silently. Merged dcee6d0 (#449) on 2026-09-07, the day the finding was written; the ChangeEvent was recorded eight days late, which is why the finding read as open."
+      },
+      "to_id": "fact:six-constructors-cannot-write-any-prose-because-the-class-was-fixed-one-report-at-a-time-and-never-swept"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:lineage-message-names-its-decision",
       "properties": {
         "at": "2026-08-20",
@@ -200454,6 +200822,15 @@
         "note": "The field report carried four candidate causes and said the walk was owed; the walk ran (fact:root-cause-the-status-claim-was-keyed-to-nothing-and-the-catalogue-spoke-the-designs-side-not-the-askers) and this change fixed the two causes it confirmed, the trigger wording and the catalogue's phrasing. The observation stays true as history. Not retired: the two ideas the report proposed, which stay for the owner's word, and the limit that nothing demands the read at the moment of a claim."
       },
       "to_id": "fact:field-report-hxm-a-progress-deck-was-written-from-a-checklist-and-recency-and-the-design-was-read-only-after-a-challenge"
+    },
+    {
+      "edge_type": "INVALIDATES",
+      "from_id": "chg:procedural-joins-the-interface-media",
+      "properties": {
+        "at": "2026-09-15",
+        "note": "Interface.medium now carries `procedural`, defined in the schema as a rule-governed exchange between institutions or roles. The seventeen boundaries the reporter filed under `human` have a word; whether it should be one value or several was decided as one (dec:procedural-is-the-medium-for-a-boundary-between-institutions)."
+      },
+      "to_id": "fact:the-medium-enum-has-no-word-for-an-institutional-or-legal-contract"
     },
     {
       "edge_type": "INVALIDATES",
@@ -200932,6 +201309,33 @@
         "note": "FIXED AT THE CAUSE: the two pairs the fact named (Decision-Verification, Requirement-Decision) are in PRESCRIBED_LAYER_PAIRS and pinned. The third (Decision-DesignEpoch, n=1) is deliberately NOT added, per the fact's own 'watch, not add' — one more report would justify it. Also learned while pinning: add_verification runs no near-match guard at all (and lacks distinct_from), so the reporter's Decision-beside-Verification fire was the Decision constructor's; the Verification side is silent by omission, which is a separate small gap not closed here."
       },
       "to_id": "fact:defect-two-prescribed-layer-pairs-are-missing-so-a-check-beside-its-ruling-is-refused-as-a-duplicate"
+    },
+    {
+      "edge_type": "INVALIDATES",
+      "from_id": "chg:two-repair-rules-compute-the-condition-their-message-names",
+      "properties": {
+        "at": "2026-09-15",
+        "note": "The fix shape the finding proposed is what shipped: before emitting, the rule checks for a Decision linked to both endpoints, and the open question it flagged — must it be accepted — is answered yes. The proof case (an accepted decision GOVERNED_BY from both endpoints) is now a passing test."
+      },
+      "to_id": "fact:defect-a-contradiction-cannot-be-resolved-only-acknowledged"
+    },
+    {
+      "edge_type": "INVALIDATES",
+      "from_id": "chg:two-repair-rules-compute-the-condition-their-message-names",
+      "properties": {
+        "at": "2026-09-15",
+        "note": "Both rules now compute the condition named: contradiction looks for an accepted Decision governing both endpoints, unresolved_setup looks for EVOLVES_INTO or an arrival status on the target. The two design questions the finding said a fix would have to decide are settled in dec:a-rule-computes-the-condition-its-message-names."
+      },
+      "to_id": "fact:two-heal-rules-assert-a-condition-they-never-test"
+    },
+    {
+      "edge_type": "INVALIDATES",
+      "from_id": "chg:two-repair-rules-compute-the-condition-their-message-names",
+      "properties": {
+        "at": "2026-09-15",
+        "note": "The exact shape walked into on 2026-09-02 — an anticipated idea settled and EVOLVES_INTO the ChangeEvent that implemented it — is now a passing test (a_target_that_evolved_into_recorded_work_is_followed_through). The rule asks whether anything followed through instead of only whether either side is still a musing."
+      },
+      "to_id": "fact:unresolved-setup-says-nothing-follows-through-and-never-checks-whether-anything-did"
     },
     {
       "edge_type": "INVALIDATES",
@@ -205978,12 +206382,30 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:test-a-procedural-boundary-has-a-word",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:interface-spec"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:test-a-replaced-value-is-kept",
       "properties": {
         "completeness": "complete",
         "conformance": "verified"
       },
       "to_id": "cap:a-revising-write-keeps-what-it-would-have-lost"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:test-a-rule-tests-the-condition-its-message-names",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:heal"
     },
     {
       "edge_type": "REALIZES",
@@ -206011,6 +206433,15 @@
         "conformance": "unchecked"
       },
       "to_id": "cap:a-check-records-what-it-found-separately-from-what-it-is"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:test-add-artifact-takes-the-first-checksum",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:mcp-surface"
     },
     {
       "edge_type": "REALIZES",
@@ -214310,11 +214741,27 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:test-a-procedural-boundary-has-a-word",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-a-procedural-boundary-has-a-word"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:test-a-replaced-value-is-kept",
       "properties": {
         "action": "created"
       },
       "to_id": "art:test-a-replaced-value-is-kept"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:test-a-rule-tests-the-condition-its-message-names",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-a-rule-tests-the-condition-its-message-names"
     },
     {
       "edge_type": "YIELDED",
@@ -214339,6 +214786,14 @@
         "action": "created"
       },
       "to_id": "art:test-absence-means-nobody-said-and-a-plan-holds-a-check"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:test-add-artifact-takes-the-first-checksum",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-add-artifact-takes-the-first-checksum"
     },
     {
       "edge_type": "YIELDED",
@@ -215200,7 +215655,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:e8b9cb8b4764328fee1e96fde474e3ea3cc045ec02f9bfa8807f4a57f8570d07",
+        "checksum": "sha256:238c06064a48692d354337cf5172c4c6b94e27789971644f0bdbfa7ecbed2fd5",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/artifact.rs",
         "name": "artifact.rs",
@@ -216500,7 +216955,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:cb68af69db089d23c43cbdfcb99e844b25fd11d1a1c1a1e7eef3efe3a5302606",
+        "checksum": "sha256:fac8501b5736b813f542e38569c8ec006de10aa6461750a93df1fdbe245168eb",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/heal.rs",
         "name": "heal.rs",
@@ -216634,7 +217089,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:54fc373ecd16a79330cac62b4feab422ac4201c4bf0a6e3c6a7efbea81bc0a11",
+        "checksum": "sha256:b87384b766738b315ba255197c0d27c7f12ada23d2a943fc01b299dc0ac623e3",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/ingest.rs",
         "name": "ingest.rs",
@@ -217165,7 +217620,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:e12c29c59596cec33b128660c8221f99affb641267aece9a360f4871ab875ccd",
+        "checksum": "sha256:647b3fdc35e7e0c198ffb37e31caeab215f1dd2bfff83a26b15d48769ad05227",
         "location": "crates/reflow2-core/tests/proposed_asserts_nothing.rs",
         "name": "tests/proposed_asserts_nothing.rs",
         "status": "realized"
@@ -217724,7 +218179,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:342ae3d59a44940ed12bb5a785b24baabcf27f02486a35fcf947e2e09c85c33c",
+        "checksum": "sha256:f21eb36bc6f0db496e687dea69e3527fdbaa60fe65b38bf365013efe4c3a08eb",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/structure.yaml",
@@ -217894,7 +218349,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:283b54cc7c088ad020a81e93765f327fecfa9bcd28cc9312d821fda14e69ad16",
+        "checksum": "sha256:509fa7d53744113f176ce48330f15dbccacb5085f9efe11b6c40257fe10a4641",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -218020,7 +218475,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:e41a73cb6f5640d01e0f451bb8cf368e0e9de36ded8219a7187cda7a88a94334",
+        "checksum": "sha256:978d50d9fd74ae730fd4aa8c6439b0938e9d81b30d6c539659e991f2b27374c3",
         "location": "docs/skills-and-tools.md",
         "name": "skills-and-tools.md",
         "status": "realized"
@@ -218301,6 +218756,18 @@
       }
     },
     {
+      "node_id": "art:test-a-procedural-boundary-has-a-word",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:53cfcd7ebf376ab905f6a31f5ff0630a536818152b6e18508f3ab140e209bac3",
+        "description": "Interface.medium accepts `procedural`, and the word the government reporter reached for (`process`) is still refused with a message that lists the value that would have worked.",
+        "location": "crates/reflow2-core/tests/a_procedural_boundary_has_a_word.rs",
+        "name": "a_procedural_boundary_has_a_word.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:test-a-repair-can-say-what-it-invalidated",
       "node_type": "Artifact",
       "properties": {
@@ -218319,6 +218786,18 @@
         "checksum": "sha256:78bbbdc28c1e794627fbe8015a33af44c839902d892d3c41cca5cb01e9531d74",
         "location": "crates/reflow2-mcp/tests/a_replaced_value_is_kept_when_it_would_be_lost.rs",
         "name": "a_replaced_value_is_kept_when_it_would_be_lost.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:test-a-rule-tests-the-condition-its-message-names",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:d5b8136dc10bd65c239172c1f5153a1f101923114a3bb955be14670529033d8d",
+        "description": "Pins both definitions from dec:a-rule-computes-the-condition-its-message-names from both sides: a contradiction clears only under an ACCEPTED Decision governing BOTH endpoints (proposed resolves nothing, one side is not a ruling, the CONTRADICTS edge survives, the clearance is counted under suppressed_by_resolution); an anticipation clears only when its target arrived on its own terms or EVOLVES_INTO recorded work (an accepted Requirement is a need agreed, not met; a planned Capability is not built; a faced choice nobody made still fires).",
+        "location": "crates/reflow2-core/tests/a_rule_tests_the_condition_its_message_names.rs",
+        "name": "a_rule_tests_the_condition_its_message_names.rs",
         "status": "realized"
       }
     },
@@ -218352,6 +218831,18 @@
         "checksum": "sha256:2ac46b6977a7415dc6f1fb27e031088ed3b80ab66fd988745fe9809bdcd5e285",
         "location": "crates/reflow2-core/tests/absence_means_nobody_said_and_a_plan_holds_a_check.rs",
         "name": "absence_means_nobody_said_and_a_plan_holds_a_check.rs — a Verification without method/level stores neither; a check and a ruling can be scheduled into an epoch; an Artifact still cannot",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:test-add-artifact-takes-the-first-checksum",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:849b1a13e68dda4fc3a38bb19fc6df6363166ff014b7d2c042366a12fd4ee822",
+        "description": "add_artifact stores the checksum it is given (reaches the STORED property, not merely accepted), stores nothing when none is given, and refuses to move an existing baseline, naming set_artifact_checksum as the door that records why.",
+        "location": "crates/reflow2-mcp/tests/add_artifact_takes_the_first_checksum.rs",
+        "name": "add_artifact_takes_the_first_checksum.rs",
         "status": "realized"
       }
     },
@@ -218891,7 +219382,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:a5ecdce4b9df9d581050b9647550f2af6abb2a90c9d5e981ad1692381298a7ca",
+        "checksum": "sha256:f6607a9fd146e13acb79bf0da333b9e7e866250f4a3e5160fb118ac5a44f6a12",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/built.rs",
         "name": "tools/built.rs",
@@ -218904,7 +219395,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:50bfa7d3d61bf53dbea76d15a0538e0d052d933d2b746c3e3c39c0dd4110bbc7",
+        "checksum": "sha256:f12ed5649a799d3012f5bd1b2225ec32f97ac68c75f84578fba12b15cb83b0af",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
         "name": "crates/reflow2-mcp/src/tools/capture.rs",
@@ -225085,6 +225576,16 @@
       }
     },
     {
+      "node_id": "chg:accept-9069aae703368036",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "documentation",
+        "detected_at": "2026-09-15",
+        "name": "Re-rendered from the served surface after add_artifact gained checksum and the medium enum gained procedural; the document tracks the surface, it does not decide it.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-90d8baec7c63fba7",
       "node_type": "ChangeEvent",
       "properties": {
@@ -226406,6 +226907,18 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "BL-124: exclude review records from the design network. An acknowledgement Decision is wired GOVERNED_BY into everything it acknowledges, so it joined the island it acknowledged and made disconnected_community permanently unclosable. Fixed at design_network() rather than at the defect-id hash because it has three consumers. MEASURED on reflow2's own graph: 125 review records carrying 610 edges; four of the eight most central nodes were acknowledgements and are now none, with real components rising (rel:v0170 +75%, cmp:detect +41%); and surprising_connections went 16 to 32 — the bookkeeping edges were SUPPRESSING half the real surprises by tying communities together, which is the opposite of the predicted pollution."
+      }
+    },
+    {
+      "node_id": "chg:add-artifact-takes-the-first-checksum",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-09-15",
+        "name": "add_artifact can set the first checksum, the way every other door already could",
+        "rationale": "The Artifact schema declares `checksum`, link_artifact takes one and its skill says always supply it, set_artifact_checksum moves one later — and the plain constructor alone could not set the first, so the workaround was create_node with a props bag. The class is the one the reachability instrument cannot see: a declared property no typed constructor offers, hidden because most artifacts carry one through the OTHER door and the property reads as heavily used. CORRECTED THE CAUSE: for this property, yes. The sweep the record said was never run — every constructor that cannot set a declared property of its own type — is still not run, and is the honest remaining edge of this fix.",
+        "subject": "system",
+        "summary": "AddArtifactReq gains `checksum`; the handler writes it through a new core method, DesignGraph::set_artifact_baseline (artifact.rs), which stores the canonical form as a plain property with no ChangeEvent — a first baseline is not a change, the same shape link_artifact uses — and REFUSES to move an existing one, naming set_artifact_checksum as the door that records why a baseline moved. Pinned by crates/reflow2-mcp/tests/add_artifact_takes_the_first_checksum.rs (stored, not merely accepted; absent stays absent; a move is refused). The delete_edge half of the same record is left as built: an edge is identified by its two ids and its type, the endpoint types are redundant for a delete, and the record itself judged the refusal defensible — what it wanted there is the wish already open as dec:idea-a-rejected-field-says-whether-it-moved-or-was-never-there."
       }
     },
     {
@@ -228473,6 +228986,18 @@
       }
     },
     {
+      "node_id": "chg:every-constructor-can-say-what-the-thing-it-makes-is",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-09-07",
+        "name": "Every constructor can say what the thing it makes IS — six of them could not (PR #449, recorded late)",
+        "rationale": "RECORDED 2026-09-15, EIGHT DAYS LATE, because the ruling pass on overtaken defects found the fix in the code and the test and NO ChangeEvent for it — so the finding it answered (fact:six-constructors-cannot-write-any-prose-because-the-class-was-fixed-one-report-at-a-time-and-never-swept) went on reading as open and the detector listed three unrelated repairs as candidates for having fixed it. That is the same shape the finding itself describes: the class survives every instance because nobody joins the fix to the record. The fix landed on the day the finding was written, in the same session's PR; only the design side was skipped. Cause: the finding's own root-cause walk — a vocabulary hole fixed where it is reported and never swept across siblings — and the repair is the sweep-shaped test, which is why this is a defect_fix rather than a feature.",
+        "subject": "system",
+        "summary": "add_artifact, add_environment, add_interface, add_project, add_release and add_resource each gained a `description` parameter, written through one shared helper (capture::set_description) so the next type is covered where the last one was fixed. Pinned by a SWEEP rather than a list: crates/reflow2-mcp/tests/every_constructor_can_say_what_the_thing_is.rs walks every schema type declaring `description` and asserts the surface can write it, with a one-entry exemption list that has to carry a reason. Merged as dcee6d0 (#449) on 2026-09-07."
+      }
+    },
+    {
       "node_id": "chg:every-declared-enum-is-wired-or-exempt",
       "node_type": "ChangeEvent",
       "properties": {
@@ -229255,6 +229780,18 @@
       "properties": {
         "change_type": "scope_change",
         "name": "The instruction files stop pointing at docs/backlog.md, because the file is gone: README.md drops it from the docs list, and CLAUDE.md, AGENTS.md and COORD.md now send a reader to the graph — loop_status for what the loop owes, detect_gaps for the open questions, search_design to find a past finding by its words. AGENTS.md's \"where to record what\" table now names the SHAPE instead of the file (a TemporalFact defect, a planned Capability, a proposed Decision, a DesignRule), and COORD.md's \"reference the id, don't restate it\" rule now names node ids rather than BL ids. COORD.md's historical claim-board entries were deliberately LEFT ALONE: they record what happened on dates that have passed, the BL ids they cite now resolve to nodes, and rewriting a log to match the present is the overwrite this project exists to prevent. Design-side half of the two-sided accept for art:readme."
+      }
+    },
+    {
+      "node_id": "chg:procedural-joins-the-interface-media",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-09-15",
+        "name": "Interface.medium gains `procedural` — a rule-governed exchange between institutions or roles",
+        "rationale": "The US-government genesis session (2026-08-15) filed seventeen constitutional check-and-balance boundaries under `human` because nothing else fit, and `medium` is READ by the single-point-of-failure exemption and by seam_report, so those boundaries were being reasoned about as human-factors touchpoints. dec:procedural-is-the-medium-for-a-boundary-between-institutions settles on one word rather than a family: the enum stays closed so pairing compares like with like, and a second governance domain can bring its own evidence for a second value. CORRECTED THE CAUSE: yes, for the reported class — the vocabulary now has the kind of boundary the domain needed; whether one word is enough is a question the next governance design answers.",
+        "subject": "system",
+        "summary": "schema/structure.yaml adds `procedural` to Interface.medium with a definition in the property's own description; the ingest mirror MEDIUM_VALUES (ingest.rs) and the two tool descriptions that spell the enum (set_interface_spec's `medium` doc in service.rs, add_interface's description in capture.rs) carry the same word. Additive: enum values do not move the schema stamp. Pinned by crates/reflow2-core/tests/a_procedural_boundary_has_a_word.rs — the value validates on an Interface, and the word the reporter reached for (`process`) is still refused with a message that lists `procedural`."
       }
     },
     {
@@ -231308,6 +231845,18 @@
       }
     },
     {
+      "node_id": "chg:two-repair-rules-compute-the-condition-their-message-names",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-09-15",
+        "name": "The contradiction and unresolved_setup rules now test the condition their own message names, and a cleared finding is counted under its own heading",
+        "rationale": "Three records were one defect: a contradiction could be acknowledged or erased but never resolved (2026-08-08, proved by execution), two rules asserted a condition they never tested (2026-08-10), and unresolved_setup fired the moment an anticipated question was ANSWERED (2026-09-02, defects 73 -> 74 for finishing the work). The cause in every case was the same sentence the alignment fix in the same function had already recorded — a property the detector ignores is a property that lies — applied one step along to a CONDITION the detector never computed. The fix needed two definitions nobody had asked the owner for; dec:a-rule-computes-the-condition-its-message-names carries them and the counter-argument (any definition can under-fire), which is why both were chosen narrow and each is pinned from both sides. CORRECTED THE CAUSE: yes — the rules now compute what they claim, rather than exempting one more case.",
+        "subject": "system",
+        "summary": "heal.rs: the CONTRADICTS loop skips a pair when an ACCEPTED Decision governs BOTH endpoints (resolving_decision), and the ANTICIPATES loop skips a target that EVOLVES_INTO anything or has arrived on its own type's terms — Decision accepted, Capability/Component realized or verified, Requirement met, epoch arrived (follow_through_exists). The Suppressed counter became a struct with two maps, `parked` and `resolved`, and the sweep report gained `suppressed_by_resolution` beside `suppressed_by_parked_idea`, so a finding cleared because the design answered is never filed as one the sweep did not look at. Pinned from both sides in crates/reflow2-core/tests/a_rule_tests_the_condition_its_message_names.rs (12 tests: the case each definition clears and the nearest case it must not); the one older test that asserted accepted-anticipating-accepted still fires was rewritten to a faced choice nobody made, with the reason in place. Failing first observed, then 12 passing; heal.rs, contradiction_alignment.rs, proposed_asserts_nothing.rs and a_choice_is_not_a_musing.rs still green."
+      }
+    },
+    {
       "node_id": "chg:unallocated-component-reads-the-ruling",
       "node_type": "ChangeEvent",
       "properties": {
@@ -233172,6 +233721,17 @@
         "decision": "`import_graph` writes a node whose `node_ref` property names a node that is in neither the document nor the graph, and names it on `ImportReport.dangling_node_refs` (printed by `--import`). It does NOT fail the import. `create_node` is unchanged and still refuses such a write outright.\n\nORIGINALLY RECORDED AS PROPOSED, because it was Claude's engineering call taken to keep this design's own export restorable, and it was Anthony's to settle or overturn.\n\n✅ SETTLED 2026-08-29 — ACCEPTED on Anthony's word, after its rationale was corrected twice the same day and a root-cause pass was run on dangling references. He settled the behaviour as drafted: report, do not refuse.",
         "name": "A restore reports an unresolvable node reference rather than refusing the whole document",
         "rationale": "THE ALTERNATIVE, and why it lost: refuse the import, matching `create_node`. Measured 2026-08-29 — this design's own export carried nine references written before the guard existed. Under refusal the export could not be restored AT ALL, and the only remedy on offer was hand-editing the export document, which is the one thing this project tells users never to do. Any user upgrading into the guard with a single pre-existing dangling reference would silently acquire an unrestorable backup.\n\nTHE DISTINCTION THAT DECIDES IT: a write ASSERTS something new, and refusing a new record about a node the design does not have is right. An import ASSERTS NOTHING — it reproduces a state that already existed, and the document is the evidence that it did. Refusing there is the tool substituting its judgement for a reality it is being handed.\n\nNOT A NEW POLICY. `ImportReport` had already answered this same question three times — `skipped_edges` (an edge whose endpoint is missing is skipped and named, not fatal), `integrity_note` and `provenance_note`, each documented as \"the import still proceeds but never silently\". A dangling property reference is the other shape of a missing endpoint, so answering it differently would have one import refusing what its neighbour two lines up reports.\n\n────────────────────────────────────────────────────────────\n⚠️ CORRECTED TWICE ON 2026-08-29, BEFORE THIS WAS PUT UP FOR A RULING.\nThe second correction reverses part of the first. Both are kept.\n────────────────────────────────────────────────────────────\n\n🛑 ① THE RENAME LEG WAS WITHDRAWN — CORRECTLY, BUT TOO BROADLY. The original said the nine were \"five instances of a `prj:`/`proj:` typo, four capabilities renamed after the fact was written\" and concluded that \"the renames that produce most real dangles are unreachable by ANY write-time check\". Measured: those four ids never existed as nodes under any prefix, and the root-cause pass sharpened it further — 6 of the 9 are PREFIX ERRORS on a real slug (`prj:`→`proj:`, `cap:thin-install`→`req:thin-install`) and 3 are slugs INVENTED FROM THE NAME OF A SERVED TOOL. None is a rename. All nine would have been refused at write time.\n\n⭐ ② THE ADMITTED COST IS SMALLER. The original accepted one price — \"an export/import laundering route the write guard closes\" — as a permanent blind spot. `dangling_reference` (#373) now reports an unresolvable reference on its own terms whatever the node's degree, so anything an import launders in is named on the next sweep rather than never.\n\n🛑🛑 ③ AND THE RETIRE CASE IS REAL AFTER ALL — IT WAS IN THE PROPERTY NOBODY HAD SWEPT. Correction ① was true of `TemporalFact.subject_id` and was over-generalised to the whole class. The root-cause pass swept the other two pointer properties `heal.rs` names, which `fact:defect-seven-temporal-facts-name-a-subject-id-that-does-not-exist` asked for on 2026-08-16 and nobody had done. `Snapshot.target_id` holds 195 values, 191 resolve, and ALL FOUR THAT DANGLE ARE RETIRES — `art:content`, `art:content-test`, `art:tools-content` snapshotted at `epoch:content-store-discontinued`, and `ctr:anthony` at `epoch:the-owners-identity-is-one-node-again`. Every one resolved when written and broke when its target was deleted or merged.\n\n⭐⭐ THIS IS NOW THE STRONGEST ARGUMENT ON THE RECORD FOR REPORTING RATHER THAN REFUSING, and it is measured rather than hypothesised: THOSE FOUR DANGLING REFERENCES ARE CORRECT. A Snapshot exists precisely to preserve what a node was; when the node is deliberately deleted, the snapshot pointing at nothing is the mechanism working, not a fault. So a refusing import would reject this design's own export over four records that are doing their job — and a refusal cannot tell a broken reference from a correct historical one, because at the point of restore they are the same bytes. Only a report can hand that judgement to the person who owns the design.\n\n⚠️ WHAT THAT COSTS THE OTHER SIDE, stated plainly: `Snapshot.target_id` is NOT declared `node_ref`, so those four are invisible to the guard and to `dangling_reference` today, and this argument bites only if anyone declares it. The point stands anyway — the four exist, they are correct, and any rule that treated pointer properties uniformly would refuse them.\n\n📌 WHAT SURVIVES UNTOUCHED, and is what actually carries the decision: assertion versus reproduction, the unrestorable-backup measurement, and the three existing `ImportReport` precedents. None rested on any corrected claim.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:a-rule-computes-the-condition-its-message-names",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Two repair rules had asserted a condition they never computed since 2026-08-08/10, and the fix needed two definitions nobody had been asked for. Anthony settled both on 2026-09-15 on the session's recommendation. (1) RESOLVING a contradiction: an ACCEPTED Decision that both endpoints are GOVERNED_BY. Both, because a decision touching one side has not ruled on the disagreement; accepted, because a proposed Decision is somebody thinking out loud and must not silence anything. The CONTRADICTS edge stays — the history is the point. (2) FOLLOWING THROUGH on an anticipation: the anticipated node EVOLVES_INTO anything (work was recorded against it), or has arrived on its own type's terms — a Decision accepted, a Capability or Component realized or verified, a Requirement met, an epoch arrived. A Requirement merely accepted is a need agreed, not a need met, and stays unresolved. A type with no arrival status (a TemporalFact, an Artifact) can only follow through by evolving. Both suppressions are COUNTED in the sweep under their own heading, suppressed_by_resolution, kept apart from suppressed_by_parked_idea because the two say opposite things: parked means the sweep did not look, resolved means it looked and the design had answered.",
+        "kind": "choice",
+        "name": "DECIDED — a contradiction is resolved by an ACCEPTED Decision governing BOTH endpoints; an anticipation is followed through when its target EVOLVES_INTO something or has arrived on its own type's terms",
+        "rationale": "The counter-argument, stated and overruled: any definition converts an over-firing rule into an under-firing one, and the cheapest honest option was to leave both at their current severity and record why. Overruled because the cost of the over-firing was measured three times — a contradiction that could be acknowledged or erased but never resolved (2026-08-08, proved by execution), a design punished for recording anticipation at all (2026-08-10), and a rule that fired the moment a question was ANSWERED (2026-09-02, defects 73 -> 74 for finishing the work) — and because the definitions chosen are the narrow ones: accepted-and-both for a resolution, arrived-or-evolved for follow-through. Each is pinned from both sides in a_rule_tests_the_condition_its_message_names.rs (the case it clears and the nearest case it must not clear), so a later loosening has to change a test on the record. Closes fact:two-heal-rules-assert-a-condition-they-never-test, fact:defect-a-contradiction-cannot-be-resolved-only-acknowledged and fact:unresolved-setup-says-nothing-follows-through-and-never-checks-whether-anything-did, which were one defect recorded three times.",
         "status": "accepted"
       }
     },
@@ -237522,6 +238082,17 @@
       }
     },
     {
+      "node_id": "dec:procedural-is-the-medium-for-a-boundary-between-institutions",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "One value, `procedural`: a legal, contractual or constitutional procedure between institutions or roles — a presentment-and-veto cycle, an approval chain, a contractual obligation — where the contract is a procedure rather than a protocol or a human-factors touchpoint. Not two values (procedural and contractual), and not an open string with a controlled subset: one word answers the reported case, the enum stays closed so seam checking and boundary pairing keep comparing like with like, and a second governance domain can ask for a second word with its own evidence. Enum values do not move the schema stamp, so this is additive. The ingest mirror (MEDIUM_VALUES) and the tool descriptions carry the same word.",
+        "kind": "choice",
+        "name": "DECIDED — Interface.medium gains ONE value, `procedural`, for a rule-governed exchange between institutions or roles",
+        "rationale": "Reported by the US-government genesis session 2026-08-15: `medium: process` refused, seventeen check-and-balance boundaries filed under `human` and judged defensible by the reporter. Recorded despite being graded LOW because `medium` is READ — library/data earn the single-point-of-failure exemption and seam_report compares it across paired designs — so a procedural boundary labelled `human` is reasoned about as a touchpoint by every computation that reads the field. The first push on this enum (json_rpc) was settled by SPLITTING an Interface rather than adding a value; that reasoning does not transfer here, since seventeen procedures are not one node describing two boundaries. The counter-argument — that the enum reads as software-plus-hardware and a governance domain might want several kinds — is real and is why this adds one word rather than a family: over-designing the vocabulary before a second domain asks is the failure Anthony watches for. Closes fact:the-medium-enum-has-no-word-for-an-institutional-or-legal-contract.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:proposed-requirements-pruned",
       "node_type": "Decision",
       "properties": {
@@ -238655,6 +239226,16 @@
       }
     },
     {
+      "node_id": "decision:ack:36f996750fe0a1bc",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:36f996750fe0a1bc.",
+        "name": "Reviewed: gap:36f996750fe0a1bc",
+        "rationale": "RULED 2026-09-15 (Anthony, on the session's read of the code): STILL TRUE, and none of the seven later repairs to the schema touched it. schema/functional.yaml still declares `tier: default operational`, core.yaml still declares `lineage: default original`, `concern: default core` and `Contributor.kind: default person`, and dynograph still injects a declared default at write time — so the descriptive enums nobody chooses go on being stored as if somebody had. This is a per-property design question (which defaults mean \"nobody said\" and which are a meaningful initial state), not a code defect, and it is the owner's to answer property by property; the record already names the candidates. Acknowledged once for these seven repairs; the next repair on the schema will ask again, which is right.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "decision:ack:378cbdafd1fa41fb",
       "node_type": "Decision",
       "properties": {
@@ -238711,6 +239292,16 @@
         "decision": "Accepted the gap gap:3a667fe34b66bffd.",
         "name": "Reviewed: gap:3a667fe34b66bffd",
         "rationale": "Deferred on Anthony's word, 2026-07-28. Accepted and not dropped: adopt has no completeness measure, so \"we adopted it\" cannot be told from \"we adopted what we happened to read\", where reflow's RE-06 computed extraction coverage and gated at 80%. Deferred rather than built because the honest measure has to be expressed in what adopt actually models — unmapped entry points, unmodelled contracts, untouched modules — and a naive nodes-per-LOC ratio would punish the coarse-but-honest granularity adopt correctly requires. That design work is the increment.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:3bbb191dc364a8d9",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:3bbb191dc364a8d9.",
+        "name": "Reviewed: gap:3bbb191dc364a8d9",
+        "rationale": "RULED 2026-09-15 (Anthony): PARTLY ADDRESSED, NOT CLOSED. The discriminating experiment the finding proposed has been BUILT — search_design declares an output schema and every other tool is the control (chg:one-tool-declares-its-output-contract, ver:one-tool-declares-its-output-contract passing) — but the client arm has not run: the 2026-09-15 Grok Build session called maturity_report, what_next, scan_nodes and open_questions and never the declared tool, and the headless probe waits on Grok quota. So the asymmetry the finding records stands at 1 declared of 191, and whether an output contract is what a content-only client needs is still unmeasured. None of the four listed repairs (authorship survives approval, the enum wiring, the concern enum, a checksum acceptance) bears on it. Acknowledged for these repairs; closes when the probe runs, from its result.",
         "status": "accepted"
       }
     },
@@ -239231,6 +239822,16 @@
         "decision": "Accepted the gap gap:7f72f4a7ae00b8de.",
         "name": "Reviewed: gap:7f72f4a7ae00b8de",
         "rationale": "The design already settled this and the settlement is IN the node: `medium` is deliberately `unspecified` because the enum (REST / gRPC / event / graphql / cli / library / data / mechanical / electrical / human) has NO VALUE for MCP over streamable HTTP. REST is positively wrong — this is a SINGLE endpoint carrying JSON-RPC 2.0, not a resource tree. Adding `json_rpc` is the open option, declined for now because enum values are not counted by the version stamp, so a new one is a compatibility event nothing can detect.\n\nACKNOWLEDGED 2026-08-23 AFTER I GOT IT WRONG. Working this gap I set `medium: REST` to close it — overwriting a documented decision with the value that decision names as incorrect. Reverted within the minute. The cost of leaving it unspecified is real and stated on the node: `medium` is a pairing-key axis and `unspecified` never reads as agreement, so this boundary cannot pair with anything (including flo2's `ifc:reflow2-design-api`, which says REST) until the vocabulary question is settled. That is a true report of the situation, and a wrong value would have destroyed it to make a number go down.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:808f3b7285069e44",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:808f3b7285069e44.",
+        "name": "Reviewed: gap:808f3b7285069e44",
+        "rationale": "RULED 2026-09-15 (Anthony): STILL TRUE AND DELIBERATELY SO. The zero-degree rule in heal.rs still counts ANY edge — a Decision whose only edge is AUTHORED_BY still reads clean while being exactly as unreachable to propagation and as unable to expire as one with no edges. The finding's own counter-argument holds: excluding AUTHORED_BY from the degree would fire on the whole brainstorm population at once, the BL-42 explosion the degree-zero rule exists to prevent. What the nine later repairs did instead was rename the cluster rule to `unthreaded` and make its message say what it actually walks, which answers the MISREADING and not the computation. The accepted-only case the finding singled out was one node then and has not been re-counted. Acknowledged as a deliberate state; if a narrower, lower-severity reading is ever wanted it is a new decision, not this rule.",
         "status": "accepted"
       }
     },
@@ -239805,12 +240406,32 @@
       }
     },
     {
+      "node_id": "decision:ack:c59d400d9fba621f",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:c59d400d9fba621f.",
+        "name": "Reviewed: gap:c59d400d9fba621f",
+        "rationale": "RULED 2026-09-15 (Anthony): THE MEASUREMENT STANDS; NO REPAIR HAS REACHED IT. The record is that two careful readers reached the same wrong conclusion from serialized defaults, one release apart, in opposite directions — and the actionable half, that the comparison must become default-aware or version-aware rather than merely stop serializing defaults, is still open: compare.rs has no normalisation, and the class was reconfirmed from the field on 2026-09-14 (flo2: 853 edges gained a field on import, the CI gate fires falsely once per rehydrate). The three listed repairs — a restore judging references against the document, a checksum acceptance, authorship surviving approval — touched the export component and not this. It rides on the schema-defaults question (fact:defaults-are-injected-by-dynograph-at-write), acknowledged the same day for the same reason.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "decision:ack:c628f709c27ad035",
       "node_type": "Decision",
       "properties": {
         "decision": "Accepted the gap gap:c628f709c27ad035.",
         "name": "Reviewed: gap:c628f709c27ad035",
         "rationale": "LEFT OPEN ON PURPOSE — Anthony's call 2026-07-31. The requirement is HIS OWN idea, captured the same day; accepting this gap parks the MODELLING question, not the intent.\n\nWHAT BLOCKS IT IS A REAL VOCABULARY PROBLEM, FOUND BY CHECKING AND RECORDED SO NOBODY RE-DERIVES IT. The first answer given was \"reflow2 already has the vocabulary — model the release procedure as a Flow\". THAT IS WRONG AS THE SCHEMA STANDS: PART_OF_FLOW is declared Capability -> Flow and accepts nothing else, so a Flow's steps must be Capabilities. \"Bump the version in three files\" is a chore, not a capability. Modelling seven release chores as seven Capabilities would put fake entries into the very set that coverage_report and the verification counts range over — 100 real capabilities plus seven chores makes every one of those reports quietly wrong, permanently. The correction is recorded here rather than edited over the earlier claim.\n\nSO THE OPEN QUESTION IS ONE LEVEL DOWN, AND IT IS GENUINE: is a procedure step a first-class design object, or is it documentation the design POINTS AT? Making it first-class means widening PART_OF_FLOW to accept a step type — which MOVES THE STAMP and locks every older reflow2 out of the design, so it is a release-shaped decision, not a side edit. Pointing at it instead means writing the procedure as a document in the content store (which now exists) and referencing it from the Project — cheap, no schema change, but an agent reads prose rather than querying steps, which is most of what was asked for.\n\nWHY NOT NOW: v0.20.0 was deliberately scoped to cap:changelog-view ALONE, and a schema change is not a side quest to slip in beside it. Nothing is lost by waiting — the requirement holds the reasoning and the derivability argument, and the seven recovered steps are written down outside the graph in the meantime.\n\nTHE ONE THING NOT TO DO is build it as a Flow of invented Capabilities to make this note go away. That would trade a visible open question for a silently wrong metric, which is the exact trade req:no-silent-fallback exists to forbid.\n\nTHE EVIDENCE STANDS AND IS NOT WEAKENED BY THE PARK: cutting v0.19.0 required reconstructing seven steps from `git show v0.18.0` plus a grep, and at least two of them — that an upgrade doc is owed ONLY when the schema stamp moves, and that the release manifest must be exhaustive with nothing computing it — were discoverable only from a past commit message.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:c87cd180e8c74423",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:c87cd180e8c74423.",
+        "name": "Reviewed: gap:c87cd180e8c74423",
+        "rationale": "RULED 2026-09-15 (Anthony): STILL TRUE. answer_question takes a gap, a question and an answer and nothing about WHO answered, so an agent with a correct substantive reading still has no honest verb — writing it there records its reasoning as the user's, and acknowledging is the owner's judgement by definition. The one listed repair, authorship surviving approval (chg:authorship-survives-approval), fixed a different loss on the same capability: an approver's own authorship being erased. The vocabulary for the AGENT'S word is the open question already carried by fact:reflow2-has-a-vocabulary-for-the-users-word-and-none-for-the-agents, and this is an instance of it, not a separate fix. Acknowledged for that repair; it closes when the agent-word vocabulary does.",
         "status": "accepted"
       }
     },
@@ -239911,6 +240532,16 @@
         "decision": "Accepted the gap gap:cee341f46e8067f7.",
         "name": "Reviewed: gap:cee341f46e8067f7",
         "rationale": "Checked 2026-09-07: still open. The structural analyses still span only the dependency, provides and consumes edges; nothing runs cycle, centrality or community detection over satisfies, realizes, verifies or precedes.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:d0098626ac85ac53",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:d0098626ac85ac53.",
+        "name": "Reviewed: gap:d0098626ac85ac53",
+        "rationale": "RULED 2026-09-15 (Anthony): UNCHANGED, DELIBERATELY. heal.rs merge_survivor still ranks by provenance and breaks a tie by id — read again today — and the finding's own record says why that stands: ranking priority above status (or the reverse) asserts a policy about what matters more, which dec:readiness-is-an-observation-the-threshold-is-the-judgement says reflow2 must not default. What was done instead is disclosure: a merge proposal names what it would destroy and says when the alphabet chose the victim, and any deletion requires human review. The four listed repairs (two checksum acceptances, the instruction-surface routing, the wall check) do not touch survivor selection. The scoring half — weight similarity by shared referents rather than prose — is still open and is a separate piece of work. Acknowledged as a deliberate state.",
         "status": "accepted"
       }
     },
@@ -240161,6 +240792,16 @@
         "decision": "Accepted the gap gap:f78628387e7c41cc.",
         "name": "Reviewed: gap:f78628387e7c41cc",
         "rationale": "Standing disposition for planned-but-unbuilt capabilities (user's 2026-07-23 call, applied again 2026-07-24). The check this needs, named now because the obvious one would pass while missing the point: a fixture where a REGISTERED artifact grows a new capability must report understatement, and must be distinguishable from the same artifact having a typo fixed — today both are checksum_change, and a test that only asserts \"drift was detected\" would pass on both and prove nothing about direction. A second case should assert the report names WHAT the design now claims wrongly, not merely that bytes moved, since the whole failure mode is that a human is told the design is stale without being told what to fix and therefore does not fix it. This capability's real validation is a field one and belongs to the trials programme: run it against storyflow, where the understatement was observed, and see whether it names the same delta a person would.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:f9214aec3d2feb1b",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:f9214aec3d2feb1b.",
+        "name": "Reviewed: gap:f9214aec3d2feb1b",
+        "rationale": "RULED 2026-09-15 (Anthony): STILL TRUE, RE-MEASURED TODAY. The exact query from the record — \"record when a point in time actually happened so changes pinned to it can be ordered by date\" — was run again against the 0.61.2 surface: add_epoch is still absent from the top five (invalidated_findings, set_evidence_scope, pin_at_epoch, invalidates, relation_candidates). plan_epoch no longer ranks, but nothing correct replaced it, so the catalogue still cannot route a user to the tool that records an arrival. The one listed repair, serving the wall check, is unrelated. A lexical catalogue that cannot tell a claim from its denial is a real ranking defect and a larger piece of work than a ruling; acknowledged for this repair so it stops reading as overtaken, and stays open on its own record.",
         "status": "accepted"
       }
     },
@@ -245796,6 +246437,16 @@
       }
     },
     {
+      "node_id": "frag:art:test-a-procedural-boundary-has-a-word",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered a_procedural_boundary_has_a_word.rs"
+      }
+    },
+    {
       "node_id": "frag:art:test-a-replaced-value-is-kept",
       "node_type": "Fragment",
       "properties": {
@@ -245803,6 +246454,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered a_replaced_value_is_kept_when_it_would_be_lost.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:test-a-rule-tests-the-condition-its-message-names",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered a_rule_tests_the_condition_its_message_names.rs"
       }
     },
     {
@@ -245833,6 +246494,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered absence_means_nobody_said_and_a_plan_holds_a_check.rs — a Verification without method/level stores neither; a check and a ruling can be scheduled into an epoch; an Artifact still cannot"
+      }
+    },
+    {
+      "node_id": "frag:art:test-add-artifact-takes-the-first-checksum",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered add_artifact_takes_the_first_checksum.rs"
       }
     },
     {
@@ -265791,7 +266462,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:152e2880e7b00c1e1809deb3ee95450446955bec1cd3dd537a86ab621662448a",
+  "prev_content_hash": "sha256:b22a6870a800db1a5f1b3e173982ac244d9e92c65fe5f7a93ee529d397ada640",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
