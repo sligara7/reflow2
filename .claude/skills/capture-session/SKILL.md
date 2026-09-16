@@ -245,3 +245,9 @@ whoever reads it.
 `loop_status`. Capturing is a real capture: new nodes owe the loop a gap pass, and a decision
 recorded here may have opened a question worth putting to the user while they are still around to
 answer it.
+
+**And read `follow_ups` out of that reply.** A session boundary is the moment the one-word
+captures (`/log-issue`) were waiting for: each open follow-up is put to the user, oldest first,
+and settled as one thing — a finding with a cause, a planned check, an idea, a change record, or
+closed as lapsed with a word — the way the log-issue skill's *Settling one, later* describes.
+Sorting them here, with the person present, is what lets the capture ask nothing at the time.

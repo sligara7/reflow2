@@ -436,6 +436,17 @@ pub struct LoopStatus {
     /// Built capabilities nobody has ever checked against reality
     /// (the confirmation ledger's `unexamined`).
     pub unexamined_claims: usize,
+    /// Follow-ups captured and never revisited: TemporalFacts with
+    /// `fact_type: follow_up`, no `valid_to`, and nothing claiming to have
+    /// answered them (no incoming INVALIDATES). The one-word capture
+    /// (`/log-issue`) is a door; this is the boundary read that keeps it from
+    /// being a drawer — a follow-up nobody ever settles is a to-do list by
+    /// another name, which is the objection that killed a Task node type
+    /// (dec:idea-a-one-word-capture-for-something-to-come-back-to, 2026-09-16).
+    pub follow_ups_open: usize,
+    /// The open follow-ups themselves, oldest first, so a boundary can read
+    /// them out without a second call.
+    pub follow_ups: Vec<FollowUp>,
     /// The debt as ordered to-do lines, most blocking first. Empty when the
     /// loop is clean — and emptiness is asserted, not implied.
     pub next: Vec<String>,
@@ -485,6 +496,20 @@ pub struct GapOnOwnedGround {
 }
 
 /// An open Decision somebody was explicitly asked to settle.
+/// One follow-up captured and not yet settled — see `LoopStatus::follow_ups`.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct FollowUp {
+    pub fact_id: String,
+    /// The node it was captured against — a Component, a Release, the Project
+    /// when nothing nearer was named.
+    pub subject_id: String,
+    /// The person's own sentence, as captured.
+    pub statement: String,
+    /// When it was captured, when the capture said.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub captured_on: Option<String>,
+}
+
 #[derive(Debug, Clone, serde::Serialize)]
 pub struct AssignedDecision {
     pub decision_id: String,
@@ -707,6 +732,51 @@ impl DesignGraph {
         Ok(out)
     }
 
+    /// Follow-ups captured and not yet settled, oldest first. A follow-up is
+    /// a TemporalFact with `fact_type: follow_up`; it is settled when it
+    /// carries a `valid_to`, or when something claims to have answered it
+    /// (an incoming INVALIDATES edge — the same claim `invalidated_findings`
+    /// reads). Deliberately nothing else: promoting it into a finding with a
+    /// cause, a check or an idea is a judgement, and the promoting session
+    /// closes the follow-up in the same motion, so this needs no third state.
+    pub fn open_follow_ups(&self) -> Result<Vec<FollowUp>, DynoError> {
+        let mut out: Vec<FollowUp> = Vec::new();
+        for n in self.scan_nodes(node::TEMPORAL_FACT)? {
+            let prop = |k: &str| {
+                n.properties
+                    .get(k)
+                    .and_then(crate::foundation::core::Value::as_str)
+                    .map(str::to_string)
+            };
+            if prop("fact_type").as_deref() != Some("follow_up") {
+                continue;
+            }
+            if prop("valid_to").is_some_and(|v| !v.is_empty()) {
+                continue;
+            }
+            if !self
+                .incoming(&n.node_id, Some(edge::INVALIDATES))?
+                .is_empty()
+            {
+                continue;
+            }
+            out.push(FollowUp {
+                fact_id: n.node_id.clone(),
+                subject_id: prop("subject_id").unwrap_or_default(),
+                statement: prop("statement")
+                    .or_else(|| prop("name"))
+                    .unwrap_or_default(),
+                captured_on: prop("valid_from"),
+            });
+        }
+        out.sort_by(|a, b| {
+            a.captured_on
+                .cmp(&b.captured_on)
+                .then(a.fact_id.cmp(&b.fact_id))
+        });
+        Ok(out)
+    }
+
     pub fn loop_status(&self) -> Result<LoopStatus, DynoError> {
         self.loop_status_for(None)
     }
@@ -878,6 +948,8 @@ impl DesignGraph {
             .count();
 
         let unexamined_claims = self.confirmation_ledger()?.unexamined;
+        let follow_ups = self.open_follow_ups()?;
+        let follow_ups_open = follow_ups.len();
 
         let mut next = Vec::new();
         if unanswered_questions > 0 {
@@ -972,6 +1044,14 @@ impl DesignGraph {
         // The gap line now subtracts what ownership DID attribute, so the
         // not-attributable count shrinks as a design records more ownership.
         // That is the whole payoff of OWNED_BY on this surface.
+        if follow_ups_open > 0 {
+            next.push(format!(
+                "{follow_ups_open} follow-up(s) captured and never revisited — listed in \
+                 `follow_ups`. Settle each: it becomes a finding with a cause (root-cause), \
+                 a planned check, an idea (brainstorm), or it is closed — `invalidates` from \
+                 the record that answered it, or `valid_to` on the fact if it simply lapsed"
+            ));
+        }
         let gaps_not_attributable = unsurfaced_gaps.saturating_sub(gaps_on_owned_ground.len());
         let scope = contributor.map(|id| {
             let mut not_attributable = Vec::new();
@@ -995,6 +1075,7 @@ impl DesignGraph {
                     unexamined_claims,
                     "built capability(ies) never checked against reality",
                 ),
+                (follow_ups_open, "follow-up(s) captured and never revisited"),
             ] {
                 if n > 0 {
                     not_attributable.push(format!("{n} {what}"));
@@ -1062,6 +1143,8 @@ impl DesignGraph {
             unproven_capabilities,
             undispositioned_drift,
             unexamined_claims,
+            follow_ups_open,
+            follow_ups,
             verifications: self.verification_recency()?,
             assigned_decisions,
             gaps_on_owned_ground,

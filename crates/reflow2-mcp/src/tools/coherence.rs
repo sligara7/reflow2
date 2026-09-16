@@ -190,7 +190,10 @@ impl ReflowService {
                        user, questions waiting or answered-but-unwritten, open decisions a named person was \
                        ASKED to settle (one carrying an approver edge), structural defects, capabilities \
                        claiming realized/verified with no passing check, drift awaiting a disposition, and \
-                       built capabilities nobody has checked against reality. `clean: true` means nothing is \
+                       built capabilities nobody has checked against reality, and follow-ups captured with one \
+                       word (`/log-issue`, a TemporalFact with fact_type `follow_up`) that nobody has settled \
+                       — listed oldest first in `follow_ups`, so a session boundary can put them to the \
+                       user without a second call. `clean: true` means nothing is \
                        owed, and those decisions are LISTED in `assigned_decisions`. Pass `contributor_id` to \
                        ask WHAT NEEDS THIS PERSON. Scoped, TWO things are attributed: decisions they were asked \
                        to settle, and open gaps standing on ground they OWN (`gaps_on_owned_ground`, each \
