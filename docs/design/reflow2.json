@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:f071827156ced0a6334d63ff1e3a4fe4e40b87ce56bc66831e43d0359c7a2ade",
+  "content_hash": "sha256:3c71b14f345f2bbded3f238be13734f6dd597f552e3306f98bf49b13fa2e2bdc",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2909,6 +2909,22 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:something-to-come-back-to-is-captured-with-one-word",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:report"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:something-to-come-back-to-is-captured-with-one-word",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:stale-seat-refusal",
       "properties": {
         "weight_basis": "estimated"
@@ -3482,6 +3498,14 @@
     },
     {
       "edge_type": "ANTICIPATES",
+      "from_id": "dec:idea-a-failure-met-mid-task-is-parked-where-a-boundary-revisits-it",
+      "properties": {
+        "evidence": "The 2026-09-12 failure idea's option B is 'a one-word park meaning this failed, come back to it', and its lean is record-at-the-moment, revisit-at-a-boundary. This idea is that same mechanism asked for a wider population — issues and things that are neither failures nor brainstorms — so the earlier node saw this coming for one class of thing."
+      },
+      "to_id": "dec:idea-a-one-word-capture-for-something-to-come-back-to"
+    },
+    {
+      "edge_type": "ANTICIPATES",
       "from_id": "dec:idea-a-hosted-tier-of-many-single-writer-tenants",
       "properties": {
         "evidence": "The earlier idea saw this coming and asked it without a number: \"what does reflow2 look like at 1k / 100k / 1M tenants each holding their OWN design, and what must not be foreclosed now?\" This one arrives with the number — flo2 at ~10,000 simultaneous users on different projects — and with the second half the earlier one only gestured at, namely what must not be foreclosed being the LOCAL case specifically. Direction is deliberate: the abstract question anticipated the concrete one, not the reverse."
@@ -3633,6 +3657,14 @@
         "evidence": "That node asked the question this answers, and named it as the half nobody had settled: 'IS A MIRRORED DECISION BINDING ON THE MIRRORING DESIGN, OR ONLY VISIBLE TO IT?' It also predicted the obstacle correctly — 'check_intent_authority is the ENFORCED rule... whose word governs a child that inherited a decision it never approved?' The experiment answers both: the status field is the switch, and the approver must travel only for the binding form."
       },
       "to_id": "fact:the-status-field-is-the-binding-versus-visible-switch"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "dec:idea-is-there-a-lightweight-task-capture-below-the-increment-grain",
+      "properties": {
+        "evidence": "The 2026-08-25 to-do idea found the gap is CEREMONY, not vocabulary — a capture that costs more than the thing captured does not get used — and its option A was a deliberately tiny /task skill. This idea asks the general form of that question three weeks later: one cheap door for anything to come back to, not only to-dos."
+      },
+      "to_id": "dec:idea-a-one-word-capture-for-something-to-come-back-to"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -12208,6 +12240,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:dec:idea-a-one-word-capture-for-something-to-come-back-to",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:dec:idea-a-tool-is-exercised-as-a-consumer-before-it-is-changed",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
@@ -14738,6 +14776,19 @@
         "authored_at": "2026-08-23",
         "roles": [
           "author"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-a-one-word-capture-for-something-to-come-back-to",
+      "properties": {
+        "approved_at": "2026-09-16",
+        "authored_at": "2026-09-16",
+        "roles": [
+          "author",
+          "approver"
         ]
       },
       "to_id": "who:ajs"
@@ -22051,6 +22102,17 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:something-to-come-back-to-is-captured-with-one-word",
+      "properties": {
+        "approved_at": "2026-09-16",
+        "roles": [
+          "approver"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:sources-are-kept-not-just-parsed",
       "properties": {
         "authored_at": "2026-07-31",
@@ -25712,6 +25774,60 @@
         "action": "modified"
       },
       "to_id": "art:tools-ask"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-follow-up-is-captured-with-one-word-and-listed-until-settled",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:capture-session-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-follow-up-is-captured-with-one-word-and-listed-until-settled",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:report"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-follow-up-is-captured-with-one-word-and-listed-until-settled",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-follow-up-is-captured-with-one-word-and-listed-until-settled",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:something-to-come-back-to-is-captured-with-one-word"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-follow-up-is-captured-with-one-word-and-listed-until-settled",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:report"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-follow-up-is-captured-with-one-word-and-listed-until-settled",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:skills"
     },
     {
       "edge_type": "CHANGED",
@@ -30080,6 +30196,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-5cdb03d894806929",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skills-and-tools"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-5e5f712bc4f3be62",
       "properties": {
         "accepted_baseline": true,
@@ -30809,6 +30934,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-96c2020cd0d3ad0a",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-96e9f11e62ac29fd",
       "properties": {
         "accepted_baseline": true,
@@ -31058,6 +31192,15 @@
         "action": "modified"
       },
       "to_id": "art:report"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-ae2b4cc16bf8ee58",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
     },
     {
       "edge_type": "CHANGED",
@@ -55128,6 +55271,14 @@
     },
     {
       "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-a-one-word-capture-for-something-to-come-back-to",
+      "properties": {
+        "evidence": "The brainstorm's option A plus C is what shipped, the same day: the tiny door and the boundary read. Option B, the general door, is deliberately not built and waits on a week of use."
+      },
+      "to_id": "chg:a-follow-up-is-captured-with-one-word-and-listed-until-settled"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
       "from_id": "dec:idea-a-quantity-that-crosses-a-seam-carries-its-unit-and-the-seam-check-compares-them",
       "properties": {
         "evidence": "Option C of the brainstorm, promoted to accepted intent on Anthony's word 2026-09-13: the project's unit system is a governed rule and a missing or off-system unit is reported. Options B, D, E and F stay recorded on the idea as roads not taken."
@@ -65643,6 +65794,12 @@
       "from_id": "dec:idea-a-name-the-agent-invented-reads-exactly-like-one-it-was-told",
       "properties": {},
       "to_id": "snap:epoch:preserved-on-write:dec:idea-a-name-the-agent-invented-reads-exactly-like-one-it-was-told"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:idea-a-one-word-capture-for-something-to-come-back-to",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:dec:idea-a-one-word-capture-for-something-to-come-back-to"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -205073,6 +205230,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:log-issue-skill",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:something-to-come-back-to-is-captured-with-one-word"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:loop-nudge",
       "properties": {
         "completeness": "complete",
@@ -206582,6 +206748,15 @@
         "conformance": "unchecked"
       },
       "to_id": "cap:detect"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:test-a-follow-up-is-owed-until-it-is-settled",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:something-to-come-back-to-is-captured-with-one-word"
     },
     {
       "edge_type": "REALIZES",
@@ -209499,6 +209674,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:something-to-come-back-to-is-captured-with-one-word",
+      "properties": {},
+      "to_id": "req:something-to-come-back-to-is-captured-with-one-word"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:stale-seat-refusal",
       "properties": {},
       "to_id": "req:stale-seat-knows"
@@ -211540,6 +211721,12 @@
       "from_id": "ver:a-fix-without-a-cause-and-an-overtaken-defect-raise-gaps",
       "properties": {},
       "to_id": "cap:a-fix-with-no-recorded-cause-and-a-defect-its-subject-outran-are-noticed"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:a-follow-up-is-owed-until-it-is-settled",
+      "properties": {},
+      "to_id": "cap:something-to-come-back-to-is-captured-with-one-word"
     },
     {
       "edge_type": "VERIFIES",
@@ -214289,6 +214476,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:log-issue-skill",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:log-issue-skill"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:loop-nudge",
       "properties": {
         "action": "created"
@@ -214982,6 +215177,14 @@
         "action": "created"
       },
       "to_id": "art:test-a-detector-consults-what-the-graph-already-holds"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:test-a-follow-up-is-owed-until-it-is-settled",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-a-follow-up-is-owed-until-it-is-settled"
     },
     {
       "edge_type": "YIELDED",
@@ -216080,7 +216283,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:a358730d2a92e587c9980a358a86a7a5ca2f28096d82f39aa47d2099d97dad6e",
+        "checksum": "sha256:1863f714f3d6bd6ed1af23bced79cd18b3885d783c9a6d9e4e913f03952ed788",
         "granularity": "atomic",
         "location": "getting-started/skills/capture-session/SKILL.md",
         "name": "getting-started/skills/capture-session/SKILL.md",
@@ -217560,6 +217763,18 @@
       }
     },
     {
+      "node_id": "art:log-issue-skill",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:91848cad61f2dfc6f331432410b4c3fc568ab3b0d0f7c28c78903bef1abbd31c",
+        "description": "The door: take the sentence as given, find the subject from the user's noun (Project when nothing matches), record_finding with fact_type follow_up and the sentence verbatim, say one line back. Do not sort it at capture; do not run the loop check for it. 'Settling one, later' says how a boundary closes each. Served from the binary; byte-identical copies in .claude/skills and .grok/skills, and the /log-issue command in getting-started/commands.",
+        "location": "getting-started/skills/log-issue/SKILL.md",
+        "name": "log-issue/SKILL.md",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:loop-nudge",
       "node_type": "Artifact",
       "properties": {
@@ -218238,7 +218453,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:707be204c7700652cac6195cb77e6e139ad6aba0804e49b2a3f001661c84921d",
+        "checksum": "sha256:9587048cbfa55e6f64c092251819d3a95add743e7f710aaa5aa10c6de5e9ffb8",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/report.rs",
         "name": "report.rs",
@@ -218724,7 +218939,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:2f3bb24136b5cc5034d08df02a011ef129423b14abf128472bdb30016333136e",
+        "checksum": "sha256:4d706f7aa202ff8db7f1ba8d60935814cfa9263c702925fbc210474f9cfc62dc",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -218763,7 +218978,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:978d50d9fd74ae730fd4aa8c6439b0938e9d81b30d6c539659e991f2b27374c3",
+        "checksum": "sha256:1c3e42f709770778c775d82fb5d531ddc74eae21bb5c158d4ff7539df20e3af7",
         "location": "docs/skills-and-tools.md",
         "name": "skills-and-tools.md",
         "status": "realized"
@@ -218995,6 +219210,18 @@
         "checksum": "sha256:51c5f07c34b7149425c9847ee87ebf8e446617b4d24c696fb8b3c40da250fc7a",
         "location": "crates/reflow2-core/tests/a_detector_consults_what_the_graph_already_holds.rs",
         "name": "a_detector_consults_what_the_graph_already_holds.rs — a withdrawn rule raises no gap; gaps sharing one cause name each other; and the header records the deferred-requirement pin that was WRONG and why",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:test-a-follow-up-is-owed-until-it-is-settled",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:7f6cf82db40049b3e659d609132e2adca025e56653e8f5751da694790407a885",
+        "description": "Pins the boundary read from both sides: an open follow-up is owed, named in next, and makes the loop not clean; a record that answered it (INVALIDATES) settles it; a valid_to settles it; an ordinary finding is never mistaken for one; follow-ups come back oldest first.",
+        "location": "crates/reflow2-core/tests/a_follow_up_is_owed_until_it_is_settled.rs",
+        "name": "a_follow_up_is_owed_until_it_is_settled.rs",
         "status": "realized"
       }
     },
@@ -219721,7 +219948,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:1238b9c643046f652facc540f8a2a2fac4fa0f9566caecb86c085a6dd7c0e050",
+        "checksum": "sha256:b48aba90db6548e076203346dda4ba841856c09f74389d7ce0be19b69c8b224b",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
@@ -222829,6 +223056,17 @@
       }
     },
     {
+      "node_id": "cap:something-to-come-back-to-is-captured-with-one-word",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Two halves, deliberately tiny. THE DOOR: the served `log-issue` skill and its `/log-issue` command take the person's sentence, find the subject from their noun (search_design; the Project when nothing matches), and call record_finding with fact_type `follow_up`, the sentence verbatim, dated — no cause, no node type, no id asked. THE BOUNDARY READ: DesignGraph::open_follow_ups (report.rs) lists every TemporalFact with fact_type `follow_up` that carries no `valid_to` and no incoming INVALIDATES, oldest first; loop_status carries them as `follow_ups` / `follow_ups_open`, names them in `next`, counts them under `not_attributable` when scoped, and capture-session's closing step reads them out to the user. Settling is the person's judgement at the boundary — a finding with a cause, a planned check, an idea, a change record (each closes the follow-up with `invalidates`), or lapsed with a `valid_to`. `follow_up` is a convention on a free-text field made real by the one thing that reads it.",
+        "name": "A follow-up is captured with one word and listed at every boundary until settled",
+        "provenance": "authored",
+        "status": "realized",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:stale-seat-refusal",
       "node_type": "Capability",
       "properties": {
@@ -223564,6 +223802,18 @@
       "properties": {
         "change_type": "new_feature",
         "name": "A structural finding names the walk it made, an empty orientation read says which zero it is, and a scoped answer stops claiming nothing could be found when it found something"
+      }
+    },
+    {
+      "node_id": "chg:a-follow-up-is-captured-with-one-word-and-listed-until-settled",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-09-16",
+        "name": "/log-issue: a follow-up is captured with one word, and loop_status lists every open one until it is settled",
+        "rationale": "Anthony, 2026-09-16: walking past a beamline he saw a service he deployed misbehaving, and back at the desk wanted to type one word so it entered the design as something to follow up on. Three brainstorms had reached the same gap from three sides (a to-do with no cheap home, a failure never revisited mid-task, and this), and the recorded counter-argument to any capture was the same each time: a capture nobody settles is a to-do list by another name, the objection that killed a Task node type. So the build is two halves and neither is optional — the door asks nothing, and the loop lists what came through it until a person settles it. The general /capture-something door was deliberately NOT built: a door that asks \"which kind is this?\" is the ceremony being avoided, and the decision names a week of real use as the test of whether one door or three. No new vocabulary: follow_up is a convention on record_finding's free-text fact_type, made real by the one thing that reads it.",
+        "subject": "system",
+        "summary": "THE DOOR: a new served skill, log-issue (getting-started/skills/log-issue/SKILL.md, mirrored byte-identical to .claude/skills and .grok/skills), and its /log-issue command (getting-started/commands/log-issue.md, copied to .claude/commands and user scope). It takes the person's sentence, finds the subject from their noun via search_design (the Project when nothing matches), and calls record_finding with fact_type `follow_up`, the sentence verbatim, dated — no cause, no node type, no id asked, no loop check. THE BOUNDARY READ: DesignGraph::open_follow_ups in report.rs lists every TemporalFact with fact_type follow_up, no valid_to and no incoming INVALIDATES, oldest first; LoopStatus gains `follow_ups_open` and `follow_ups` (a FollowUp carries fact_id, subject_id, statement, captured_on), a line in `next`, and an entry under `not_attributable` when scoped. capture-session's closing step now reads follow_ups out to the user and settles each. loop_status's tool description names the class (toolsnap updated); skill_lint's NON_TOOL_TERMS gains the five field terms the skill spells out; docs/skills-and-tools.md re-rendered (28 skills). Pinned by crates/reflow2-core/tests/a_follow_up_is_owed_until_it_is_settled.rs (5 cases); workspace 241 suites and both clippy gates green."
       }
     },
     {
@@ -225325,6 +225575,16 @@
       }
     },
     {
+      "node_id": "chg:accept-5cdb03d894806929",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "documentation",
+        "detected_at": "2026-09-16",
+        "name": "Re-rendered from the served surface: 28 skills.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-5e5f712bc4f3be62",
       "node_type": "ChangeEvent",
       "properties": {
@@ -226087,6 +226347,16 @@
       }
     },
     {
+      "node_id": "chg:accept-96c2020cd0d3ad0a",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "documentation",
+        "detected_at": "2026-09-16",
+        "name": "Five field terms the new skill names added to NON_TOOL_TERMS; the lint's behaviour is unchanged.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-96e9f11e62ac29fd",
       "node_type": "ChangeEvent",
       "properties": {
@@ -226348,6 +226618,16 @@
         "change_type": "defect_fix",
         "detected_at": "2026-08-20",
         "name": "The markdown readout no longer prints \"Modularity 1.00 across 44 component(s)\" over an unmodelled decomposition. When there is no partition it says NOT MEASURABLE, gives the ratio of components carrying any coupling, and states plainly that this is a fact about how much is modelled rather than a poor result. Measured on reflow2's own design: 182 allocated capabilities, 47 components, ONE capability-to-capability dependency — old readout 1.00, new readout not measurable.",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:accept-ae2b4cc16bf8ee58",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "documentation",
+        "detected_at": "2026-09-16",
+        "name": "loop_status's description trimmed under the 1500-char budget skill_lint enforces (1711 -> 1483); same content, shorter.",
         "subject": "system"
       }
     },
@@ -235381,6 +235661,17 @@
         "name": "OPEN — should a nested part have an ADDRESS (subsystem_A.component_2.sub_component_1), or is the containment spine enough?",
         "rationale": "Recorded via the brainstorm skill at `proposed`. Split from the contract-level and capability-composition questions he raised in the same breath, because each can be answered without the others.",
         "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-a-one-word-capture-for-something-to-come-back-to",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-09-16, in his words: \"being able to do something like /log-issue. Sometimes in active development of a project, just need to be able to capture an issue that occurred and can come back to it later. Sometimes they are also things that aren't necessarily things that have /root-cause. I don't know if this should be generalized to /capture-something (may not be an issue or brainstorm, etc). Usually these are things that you'd like to follow up on later.\"\n\n═══ THE INSTANCE, added the same day, and it changes the shape ═══\nHis words: \"I was walking by a beamline and noticed they were having an issue with one of the services (queueservice) that I helped deploy. When I go back to my desk, I just want to go to that project and type /log-issue or /capture-something so that it gets included in the design as something to follow up on.\"\n\nWhat this instance says that the abstract question did not:\n· IT IS FROM THE FIELD, NOT FROM MID-TASK. He was not focused on another task in reflow2; he was away from the desk entirely. So the server-side refusal ledger (option E) cannot see this class at all, and the \"agent forgets mid-task\" argument is not the operative one — the operative cost is the walk back to the desk and what the first minute there demands.\n· THE SUBJECT IS KNOWN AND NAMED. \"queueservice\" is a real deployed Component (or a Release deployed to an Environment) in that project's design. So the capture usually has a node to land on — a default subject of the Project is the fallback for the rare case, not the norm — and the door's job is to find that node from his word (\"queueservice\") rather than ask him for an id.\n· IT HAS NO CAUSE YET, and must not be made to have one. \"They were having an issue\" is an observation. record_finding's root-cause trigger fires on causal language (\"because\", \"the problem is\"), not on this, so the existing tool already lets it in without ceremony; the door must not add any.\n· \"SO THAT IT GETS INCLUDED IN THE DESIGN AS SOMETHING TO FOLLOW UP ON\" is the whole requirement, in one sentence: a dated observation on the thing it is about, that the loop later shows him. That is a TemporalFact with a follow-up flavour, surfaced at a boundary. Nothing new in the vocabulary; one new door.\n\n⭐ WHAT HE IS ASKING FOR IS A MOMENT, NOT A NODE TYPE. The record already has the durable forms (below); what it lacks is a capture that costs one word while the person has something else in hand. That is the same finding two earlier ideas reached from two directions — a to-do with no cheap home (2026-08-25) and a failure never revisited mid-task (2026-09-12) — and this is the third arrival, which makes it a class.\n\n═══ WHAT THE GRAPH ALREADY HOLDS ═══\n· rule:an-identified-issue-is-enduring-never-dropped (his word, 2026-08-20): an identified issue becomes a durable node, an asked Question with a name, or a computed finding — never only a sentence in a conversation. The rule exists; the cheap door does not.\n· record_finding: a dated observation on the node it concerns, one call, and it demands root-cause only when the text is a CAUSE — an issue with no cause offered is already legal there. It requires a subject_id that resolves; the beamline instance shows the subject is usually nameable in the user's words, so the door resolves it by search rather than asking.\n· report_manual_work: hand-rolled work with a closed diagnosis. Right form for one shape of issue, wrong for most.\n· The brainstorm skill: one Decision at proposed. Right for an idea, wrong for \"the queueservice was misbehaving, look later\".\n· plan-increments: claims the to-do ground and is a delivery ritual (the 2026-08-25 idea's finding).\n· req:detecting-is-not-asking: record unconditionally at the moment, invite attention at a boundary. This is the shape any answer here must take, or it becomes a nag.\n\n═══ THE OPTIONS, none chosen ═══\nA. /log-issue, DELIBERATELY TINY. One skill, two lines: take the sentence, find the node it names (search_design on the user's noun; the Project only when nothing matches), record_finding with fact_type `follow_up`, dated, the sentence as the statement. No diagnosis, no cause, no node-type question. Surfaced at boundaries (capture-session, an increment close, loop_status) as \"N follow-ups never revisited\". ⚠️ Cost: a 24th skill on a set already hard to keep coherent; and any follow-up that lands on the Project for want of a match is in a drawer unless the boundary read lists it.\nB. /capture-something, GENERALISED — one door, one question (\"issue, idea, or to-do?\"), then routed: issue -> A; idea -> brainstorm; to-do -> the planned Verification / Capability / Artifact the task idea's option C describes. ⚠️ Cost, and it is the serious one: the routing question IS the ceremony he is trying to avoid — asking \"which kind is this?\" at the moment of capture is the translation step the 2026-08-25 idea already found too expensive. A general door that asks is worse than three specific doors that do not.\nC. ROUTE AT THE BOUNDARY, NOT AT CAPTURE. Capture everything as A, and let the boundary read do the sorting: when capture-session or an increment close lists the follow-ups, THAT is when each becomes a finding with a cause, a brainstorm, a planned check, or is dropped with a word. ⭐ Cheapest at the moment that matters, and it is exactly req:detecting-is-not-asking. ⚠️ Cost: a follow-up that is never dispositioned is a to-do list by another name — the tracker objection that killed the Task node type applies unless the boundary read is real and the disposition is one word.\nD. NO NEW SKILL — the tools exist; teach the agent to call record_finding. ⚠️ Cost: measured not to work mid-task, and the beamline instance is worse: he is the one at the keyboard, and what he wants to type is one word, not a tool name and a subject id.\nE. LET THE SERVER DO IT for the failures it can see (the refusal ledger, option A of the failure-mid-task idea), and reserve the human capture for what the server cannot see. The beamline instance is squarely the second population, so E does not answer it alone.\n\n═══ THE TEST THAT WOULD DECIDE IT ═══\nWrite A as a two-line skill and use it for one real week on his work project, starting with the queueservice observation. Count how many follow-ups it captures, how many the boundary read surfaces, and how many get a disposition. If the third number is near zero, C's tracker objection is confirmed and the capture is a drawer; if it is most of them, A+C is the answer and B was never needed.\n\n📌 NOT A REQUIREMENT AND NOT INTENT, his own framing: a thing he does every day has no cheap home, and the question is whether one door or three.",
+        "kind": "exploratory",
+        "name": "DECIDED 2026-09-16 — the tiny version: /log-issue records a dated follow-up on the thing it is about with no questions asked (option A), and loop_status lists every open follow-up at the boundary until it is settled (option C); the general /capture-something door is NOT built until a week of use says it is needed",
+        "rationale": "Captured under the brainstorm skill, nothing promoted. Kept as its own node rather than folded into the two neighbours it plainly relates to, because each asks a different question: the 2026-08-25 idea asks whether a TO-DO grain exists below an increment; the 2026-09-12 idea asks how a FAILURE survives the moment; this asks whether ONE door can serve both plus the things that are neither — and that generalisation question is the one he actually posed. The counter-argument to generalising (a door that asks \"which kind?\" is the ceremony being avoided) is recorded beside it rather than argued in conversation, because it is the deciding argument and it would otherwise be lost.",
+        "status": "accepted"
       }
     },
     {
@@ -246031,6 +246322,16 @@
       }
     },
     {
+      "node_id": "frag:art:log-issue-skill",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered log-issue/SKILL.md"
+      }
+    },
+    {
       "node_id": "frag:art:loop-nudge",
       "node_type": "Fragment",
       "properties": {
@@ -246898,6 +247199,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered a_detector_consults_what_the_graph_already_holds.rs — a withdrawn rule raises no gap; gaps sharing one cause name each other; and the header records the deferred-requirement pin that was WRONG and why"
+      }
+    },
+    {
+      "node_id": "frag:art:test-a-follow-up-is-owed-until-it-is-settled",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered a_follow_up_is_owed_until_it_is_settled.rs"
       }
     },
     {
@@ -252384,6 +252695,19 @@
       }
     },
     {
+      "node_id": "req:something-to-come-back-to-is-captured-with-one-word",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "usability",
+        "lineage": "original",
+        "name": "Something noticed that must be come back to is captured with one word, on the thing it is about, and the loop shows it until it is settled",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "A person who notices something away from the task — a deployed service misbehaving at a beamline, a colleague's remark, a failure with no cause yet — can capture it in the design with one word and their own sentence, demanding nothing else: no node type, no cause, no root-cause, no id. It lands as a dated observation on the thing it is about (found from their noun; the Project only when nothing matches). It is not sorted at capture. The loop lists every open follow-up at each boundary, oldest first, until it is settled — closed by the record that answered it, or lapsed with a date — so a capture that asks nothing never becomes a drawer.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "req:sources-are-kept-not-just-parsed",
       "node_type": "Requirement",
       "properties": {
@@ -254413,6 +254737,16 @@
         "edges": "[{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-09-07T23:50:00Z\",\"role\":\"author\"}},{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Capability\",\"other_id\":\"cap:bl-40\",\"properties\":{\"evidence\":\"That capability holds views to a no-extrapolation standard so a renderer cannot fill in what the design never said. This is the same doctrine one surface along, applied to a node's own name rather than to a projection of it.\",\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Requirement\",\"other_id\":\"req:the-agent-never-authors-what-requires-accountable-sign-off\",\"properties\":{\"evidence\":\"Option (d) is that requirement generalised beyond licensure: when a fact has an owner elsewhere, the agent fetches it rather than reconstructing it from memory. If that reading holds, this question is already half answered by an accepted requirement.\",\"optional\":false,\"weight_basis\":\"estimated\"}}]",
         "state": "{\"decision\":\"RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-09-07, relaying an incident from dev_storyflow and asking whether it is reflow2's problem at all.\\n\\nWHAT HAPPENED, in the reporting agent's own words: \\\"There is no story called 'Tale of Ashes'. The campaign is Tomb of Annihilation, the published D&D adventure. My memory notes carried it as 'ToA', and at some point early in this session I expanded that abbreviation into a name I made up, then kept using it as though it were real. The identifier was right throughout, so every measurement stands. The campaign at c81c39b0 really does hold 189 characters, 719 events and the 27.6-second duplicate listing. Only the name was wrong. It is in a lot of places now: several verification and change-event records in the design graph from today, some commit messages, and the evidence notes for the coverage work and the deploy.\\\"\\n\\nANTHONY'S FRAMING, which is the question rather than the incident: \\\"I'm not sure this is reflow2's issue, but part of why I created reflow2 to overcome some of the weaknesses of an LLM agent - in this case making something up and then propagating it as if it was fact.\\\"\\n\\n⭐ THE SHAPE OF IT, and it is uncomfortably precise. reflow2 already has a whole family of markers for HOW DO WE KNOW THIS. A Requirement carries `provenance` (authored or inferred). An edge carries `basis` (asserted or suspected), and DUPLICATES will not license a deletion without the first. A TemporalFact carries `basis` (measured or forecast) and a date, so a six-week-old observation cannot be narrated as current. A CAUSES edge carries `validation_status`. Views are held to a no-extrapolation standard (cap:bl-40) precisely so a renderer cannot fill in what the design did not say.\\n\\nAND A NODE'S NAME CARRIES NOTHING. The name is the string every reader actually reads, quotes, and puts in a commit message. Here the ID was correct throughout and the NAME was invented, and no part of the design could tell the difference — because a fabricated name is internally consistent, contradicts nothing, and matches no source the graph holds.\\n\\nOPTIONS, UNRANKED:\\n\\n(a) NOTHING. This is an agent-behaviour failure, not a design-brain failure. reflow2 records what it is told; a name nobody can check against a source is outside what any detector can reach. Cheapest, and it is a defensible reading of his own doubt.\\n\\n(b) A NAME CARRIES ITS PROVENANCE — read from a source, or supplied by the agent. Says the thing directly. And it is a property with no reader, which is the exact failure this project measured three times in one day: Verification.level exists and nothing reads it, so a second unread marker would make the design say more and know no more.\\n\\n(c) AN EXTERNAL THING IS RECORDED BY ITS IDENTIFIER, AND THE NAME IS LABELLED AS A LABEL. The incident's own evidence points here: the identifier c81c39b0 was right the whole time and every measurement built on it still stands. If a node mirrors something living in another system, the design could hold the foreign id as the key and treat the human-readable name as a convenience that is NOT authoritative. That is a smaller claim than (b) and it matches what actually survived.\\n\\n(d) THE ANSWER IS THE SAME ONE AS FOR LICENSURE. `req:the-agent-never-authors-what-requires-accountable-sign-off` already says the agent carries the requirement into the tool that owns the answer and brings the result back as evidence. A campaign's name is owned by dev_storyflow's database, not by the agent's memory of an abbreviation. Generalised: WHEN A FACT HAS AN OWNER ELSEWHERE, THE AGENT FETCHES IT RATHER THAN RECONSTRUCTING IT.\\n\\n(e) A RULE THAT AN ABBREVIATION IS NEVER EXPANDED WITHOUT A SOURCE. Names the exact mechanism, costs one sentence, and is an instruction with no detector — the leg this project has repeatedly measured failing on its own.\\n\\n(f) A DETECTOR, if one is even possible. Nothing in the graph contradicted the invented name, so no consistency check could have fired. The only computable version is narrower: a node that MIRRORS an external thing whose name has never been reconciled against the source.\\n\\nTHE HONEST COUNTER-ARGUMENT TO ALL OF IT: reflow2 could not have caught this one. The failure happened in the agent's head, between reading \\\"ToA\\\" in a memory note and writing a sentence, before any tool was called. What reflow2 can offer is not detection but SHAPE — making it natural to record the id and the source, and unnatural to let a remembered abbreviation become an authoritative-looking string. That is a real contribution and it is smaller than the framing \\\"overcome the weaknesses of an LLM agent\\\" might suggest.\\n\\n⚠️ AND THE INCIDENT ALSO SHOWS THE DESIGN WORKING. The agent caught itself when asked a direct question, said plainly which parts were wrong and which measurements still stood, and proposed correcting the graph records while leaving merged commit messages alone because rewriting history costs more than it fixes. That is exactly the disposition the loop is meant to produce, and any option here should be judged against how much it adds to it.\",\"kind\":\"exploratory\",\"name\":\"OPEN — an agent expanded an abbreviation into a name it made up and propagated it as fact. Should a node's NAME carry where it came from, the way a claim already carries its basis?\",\"rationale\":\"Recorded rather than acted on because the strongest option may be (a), and because two of the others repeat a failure this project measured three separate times today — adding a property nobody reads.\\n\\nWhat makes it worth keeping rather than dismissing is the asymmetry the incident exposes: reflow2 is careful about the provenance of RELATIONS, of REQUIREMENTS and of MEASUREMENTS, and careless about the provenance of NAMES, which are what a human actually reads and repeats. That asymmetry was invisible until somebody fabricated a name and nothing anywhere noticed.\\n\\nThe incident is dev_storyflow's; the question is reflow2's, which is why it is recorded here rather than there.\",\"status\":\"proposed\"}",
         "target_id": "dec:idea-a-name-the-agent-invented-reads-exactly-like-one-it-was-told",
+        "target_type": "Decision"
+      }
+    },
+    {
+      "node_id": "snap:epoch:preserved-on-write:dec:idea-a-one-word-capture-for-something-to-come-back-to",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"ANTICIPATES\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-a-failure-met-mid-task-is-parked-where-a-boundary-revisits-it\",\"properties\":{\"evidence\":\"The 2026-09-12 failure idea's option B is 'a one-word park meaning this failed, come back to it', and its lean is record-at-the-moment, revisit-at-a-boundary. This idea is that same mechanism asked for a wider population — issues and things that are neither failures nor brainstorms — so the earlier node saw this coming for one class of thing.\"}},{\"direction\":\"in\",\"edge_type\":\"ANTICIPATES\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-is-there-a-lightweight-task-capture-below-the-increment-grain\",\"properties\":{\"evidence\":\"The 2026-08-25 to-do idea found the gap is CEREMONY, not vocabulary — a capture that costs more than the thing captured does not get used — and its option A was a deliberately tiny /task skill. This idea asks the general form of that question three weeks later: one cheap door for anything to come back to, not only to-dos.\"}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"authored_at\":\"2026-09-16\",\"roles\":[\"author\"]}}]",
+        "state": "{\"decision\":\"RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-09-16, in his words: \\\"being able to do something like /log-issue. Sometimes in active development of a project, just need to be able to capture an issue that occurred and can come back to it later. Sometimes they are also things that aren't necessarily things that have /root-cause. I don't know if this should be generalized to /capture-something (may not be an issue or brainstorm, etc). Usually these are things that you'd like to follow up on later.\\\"\\n\\n⭐ WHAT HE IS ASKING FOR IS A MOMENT, NOT A NODE TYPE. The record already has the durable forms (below); what it lacks is a capture that costs one word while the person is focused on something else. That is the same finding two earlier ideas reached from two directions — a to-do with no cheap home (2026-08-25) and a failure never revisited mid-task (2026-09-12) — and this is the third arrival, which makes it a class.\\n\\n═══ WHAT THE GRAPH ALREADY HOLDS ═══\\n· rule:an-identified-issue-is-enduring-never-dropped (his word, 2026-08-20): an identified issue becomes a durable node, an asked Question with a name, or a computed finding — never only a sentence in a conversation. The rule exists; the cheap door does not.\\n· record_finding: a dated observation on the node it concerns, one call, and it demands root-cause only when the text is a CAUSE — an issue with no cause offered is already legal there. It requires a subject_id that resolves, which is the one thing a person mid-task may not have to hand.\\n· report_manual_work: hand-rolled work with a closed diagnosis. Right form for one shape of issue, wrong for most.\\n· The brainstorm skill: one Decision at proposed. Right for an idea, wrong for \\\"the export timed out, look later\\\".\\n· plan-increments: claims the to-do ground and is a delivery ritual (the 2026-08-25 idea's finding).\\n· req:detecting-is-not-asking: record unconditionally at the moment, invite attention at a boundary. This is the shape any answer here must take, or it becomes a nag.\\n\\n═══ THE OPTIONS, none chosen ═══\\nA. /log-issue, DELIBERATELY TINY. One skill, two lines: record_finding with fact_type `follow_up`, subject defaulting to the Project when nothing nearer is named, the person's sentence as the statement, dated. No diagnosis, no cause, no node-type question. Surfaced at boundaries (capture-session, an increment close, loop_status) as \\\"N follow-ups never revisited\\\". ⚠️ Cost: a 24th skill on a set already hard to keep coherent; and a default subject of the Project is a node that will collect everything, so the boundary read must list them or they are a drawer.\\nB. /capture-something, GENERALISED — one door, one question (\\\"issue, idea, or to-do?\\\"), then routed: issue -> A; idea -> brainstorm; to-do -> the planned Verification / Capability / Artifact the task idea's option C describes. ⚠️ Cost, and it is the serious one: the routing question IS the ceremony he is trying to avoid — asking \\\"which kind is this?\\\" at the moment of capture is the translation step the 2026-08-25 idea already found too expensive. A general door that asks is worse than three specific doors that do not.\\nC. ROUTE AT THE BOUNDARY, NOT AT CAPTURE. Capture everything as A (a dated follow-up on the nearest node or the Project), and let the boundary read do the sorting: when capture-session or an increment close lists the follow-ups, THAT is when each becomes a finding, a brainstorm, a planned check, or is dropped with a word. ⭐ Cheapest at the moment that matters, and it is exactly req:detecting-is-not-asking. ⚠️ Cost: a follow-up that is never dispositioned is a to-do list by another name — the tracker objection that killed the Task node type applies unless the boundary read is real and the disposition is one word.\\nD. NO NEW SKILL — the tools exist; teach the agent to call record_finding mid-task. ⚠️ Cost: measured not to work. The rule from 2026-09-06 asks for exactly this and three failures in that session went unrecorded until he asked; the failure-mid-task idea's whole premise is that \\\"the agent will remember\\\" is the unreliable leg. A slash command is an affordance, not a reminder.\\nE. LET THE SERVER DO IT for the failures it can see (the refusal ledger, option A of the failure-mid-task idea), and reserve the human capture for what the server cannot see — a shell error, a thought, a colleague's remark. ⚠️ Cost: two mechanisms; but they cover different populations and the split is honest.\\n\\n═══ THE TEST THAT WOULD DECIDE IT ═══\\nWrite A as a two-line skill and use it for one real week on his work project. Count how many follow-ups it captures, how many the boundary read surfaces, and how many get a disposition. If the third number is near zero, C's tracker objection is confirmed and the capture is a drawer; if it is most of them, A+C is the answer and B was never needed.\\n\\n📌 NOT A REQUIREMENT AND NOT INTENT, his own framing: a thing he does every day has no cheap home, and the question is whether one door or three.\",\"kind\":\"exploratory\",\"name\":\"OPEN — is there a one-word way to capture \\\"something happened, come back to it later\\\" — /log-issue, or a generalised /capture-something — that is neither a brainstorm, nor intent, nor a root-cause?\",\"rationale\":\"Captured under the brainstorm skill, nothing promoted. Kept as its own node rather than folded into the two neighbours it plainly relates to, because each asks a different question: the 2026-08-25 idea asks whether a TO-DO grain exists below an increment; the 2026-09-12 idea asks how a FAILURE survives the moment; this asks whether ONE door can serve both plus the things that are neither — and that generalisation question is the one he actually posed. The counter-argument to generalising (a door that asks \\\"which kind?\\\" is the ceremony being avoided) is recorded beside it rather than argued in conversation, because it is the deciding argument and it would otherwise be lost.\",\"status\":\"proposed\"}",
+        "target_id": "dec:idea-a-one-word-capture-for-something-to-come-back-to",
         "target_type": "Decision"
       }
     },
@@ -263762,6 +264096,20 @@
       }
     },
     {
+      "node_id": "ver:a-follow-up-is-owed-until-it-is-settled",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-core/tests/a_follow_up_is_owed_until_it_is_settled.rs, five cases over an in-memory design with one deployed service: a TemporalFact with fact_type follow_up and no valid_to is counted, listed with its subject and capture date, named in loop_status.next, and makes clean false; an INVALIDATES edge from a ChangeEvent clears it; a valid_to clears it; a finding of any other fact_type is not counted; two open ones come back oldest first. The door itself (the skill) is checked by check_command_surface.py and skill_lint.py in CI: the three skill copies are byte-identical, the command copy matches its source, and every tool and field the skill names exists on the served surface.",
+        "findings": "5 passed, 0 failed; the existing report suite (20) still green alongside it. skill_lint and check_command_surface green after registering five field terms the new skill names.",
+        "kind": "verification",
+        "last_run_at": "2026-09-16",
+        "level": "unit",
+        "method": "test",
+        "name": "An open follow-up is listed by the loop until a record answers it or it lapses",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:a-lesson-is-served-at-the-step-it-concerns",
       "node_type": "Verification",
       "properties": {
@@ -267004,7 +267352,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:dacb03cfcc3651ce677062509377c2520aee9ac5efb1d47c8375a02cbc6a0bdd",
+  "prev_content_hash": "sha256:f071827156ced0a6334d63ff1e3a4fe4e40b87ce56bc66831e43d0359c7a2ade",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

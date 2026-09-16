@@ -176,7 +176,7 @@ pub use regions::{
     DEFAULT_REGION_DEPTH, DesignRegion, DesignRegions, REGION_SEED_TYPES, RegionCoverage,
 };
 pub use report::{
-    AllocationSummary, CertaintyBreakdown, GraphReport, LoopStatus, RankedDecision,
+    AllocationSummary, CertaintyBreakdown, FollowUp, GraphReport, LoopStatus, RankedDecision,
     RequirementCertainty, ShapingDecision, WhatNext,
 };
 pub use sanitize::{SanitizeReport, sanitize_text};
