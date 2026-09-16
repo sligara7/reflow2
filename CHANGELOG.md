@@ -31,6 +31,63 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.62.0] — 2026-09-16
+
+### Added
+
+- **`/log-issue` — something to come back to is captured with one word, and the loop lists it until
+  it is settled.** Anthony, from a beamline: a service he had deployed was misbehaving, and back at
+  the desk he wanted to type one word so it entered the design as a follow-up. The served `log-issue`
+  skill and its command take the sentence as given, find the subject from the user's noun (the Project
+  when nothing matches), and `record_finding` with `fact_type: follow_up` — no cause, no node type,
+  no id asked, no loop check. The other half is what keeps it from being a drawer: `loop_status`
+  gains `follow_ups` / `follow_ups_open` (a `follow_up` fact with no `valid_to` and no incoming
+  `INVALIDATES`), names them in `next`, and `capture-session`'s closing step reads them out and
+  settles each. The general `/capture-something` door is deliberately not built; a week of use
+  decides (`dec:idea-a-one-word-capture-for-something-to-come-back-to`).
+- **A git diff is read as a design change — `tools/impact_of_diff.py`.** Given a commit range it maps
+  each changed file to the registered artifact that points at it, hashes it, and walks
+  `reconcile_artifacts` → `propagate_from` to the capabilities and requirements the change reaches.
+  Any changed file the design cannot see is reported FIRST and counted, never folded into a clean
+  result; `--fail-on-unmapped` is the opt-in exit code. First run on the real repository: 12 files
+  mapped, 4 invisible, 9 requirements reached. Alex Sligar's 2026-08-05 survey, taken up on Anthony's
+  word (`dec:idea-diff-driven-impact`).
+- **An export says which working tree it was taken in.** Every export written inside a git
+  repository carries `taken_at` — branch (None on a detached HEAD), commit, and whether the tree held
+  uncommitted work besides the export itself — kept while the design content is unchanged so an
+  unchanged export stays byte-identical across commits, and excluded from the content hash. The
+  coherence gate refuses (`PHANTOM`) a modified export whose recorded branch is not the branch it is
+  about to be committed on; a committed one is not re-judged, because squash merges make the name
+  meaningless once it lands. On the export, not on nodes, for the reasons the idea itself recorded
+  (`dec:idea-should-a-node-carry-its-git-coordinate`).
+- **`add_artifact` takes `checksum`.** The plain constructor can set the first baseline, the way
+  `link_artifact` always could; a revise that would move an existing one is refused and names
+  `set_artifact_checksum`.
+- **`Interface.medium` gains `procedural`** — a rule-governed exchange between institutions or roles,
+  after a governance design filed seventeen constitutional boundaries under `human` for want of a word.
+
+### Fixed
+
+- **The `contradiction` and `unresolved_setup` rules now compute the condition their own message
+  names.** Since August both fired unconditionally on an edge: a contradiction could be acknowledged
+  or erased but never *resolved*, and an anticipation became a defect the moment its target was
+  settled. A contradiction is now resolved by an ACCEPTED Decision governing BOTH endpoints; an
+  anticipation is followed through when its target `EVOLVES_INTO` something or has arrived on its
+  own type's terms. Cleared findings are counted under `suppressed_by_resolution`, kept apart from
+  `suppressed_by_parked_idea` because the two say opposite things
+  (`dec:a-rule-computes-the-condition-its-message-names`).
+- **Thirteen defect records the loop reported as overtaken were ruled on**, read against the code
+  rather than the repair names: one fixed by #449 and never joined to its record, one half fixed,
+  eleven still true — seven acknowledged with the owner's name, three fixed here.
+
+### Changed
+
+- **Dependencies to current.** `rmcp` 3.4 (the `ServerInfo` alias renamed to `ServerConfig` rather
+  than the deprecation allowed), `sha2` 0.11 (its digest lost `LowerHex`, so the node hash is spelled
+  byte by byte, as the export hash already was). `base64` and the MCP crate's own `sha2` declaration
+  were never called and are removed. `rocksdb` stays at 0.24 by the standing decision.
+
+
 ## [0.61.2] — 2026-09-15
 
 ### Changed
