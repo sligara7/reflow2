@@ -246,7 +246,18 @@ fn defect_ack_decision_id(defect_id: &str) -> String {
 /// A type alias rather than a bare map so the accumulator threaded through the
 /// detectors is named for what it holds: things NOT reported, which is a
 /// different claim from things found.
-pub type Suppressed = BTreeMap<&'static str, usize>;
+/// Findings a rule looked at and deliberately did NOT report, by category and
+/// by REASON. Two reasons, kept apart because they mean opposite things about
+/// the design: `parked` says the sweep did not look (a musing asserts
+/// nothing), `resolved` says the sweep looked and found the condition its
+/// message names already met — a contradiction with its ruling written, an
+/// anticipation followed through. Filing the second under the first would
+/// report a settled question as an unread one.
+#[derive(Debug, Clone, Default, PartialEq)]
+pub struct Suppressed {
+    pub parked: BTreeMap<&'static str, usize>,
+    pub resolved: BTreeMap<&'static str, usize>,
+}
 
 #[derive(Debug, Clone, serde::Serialize)]
 pub struct SweepScope {
@@ -333,6 +344,15 @@ pub struct SweepScope {
     /// Empty means nothing was suppressed — which, unlike a missing field, is a
     /// claim somebody can check.
     pub suppressed_by_parked_idea: BTreeMap<&'static str, usize>,
+    /// Findings NOT REPORTED because the condition their message names was
+    /// already MET, by category: a `contradiction` whose resolving Decision is
+    /// accepted and governs both endpoints, an `unresolved_setup` whose target
+    /// was followed through. Kept apart from `suppressed_by_parked_idea`
+    /// because the two say opposite things — that one means the sweep did not
+    /// look, this one means it looked and the design had answered. Counted
+    /// for the same reason: a finding that vanishes without a trace is a zero
+    /// nobody can check (2026-09-15, `fact:two-heal-rules-assert-a-condition-they-never-test`).
+    pub suppressed_by_resolution: BTreeMap<&'static str, usize>,
     /// Said in WORDS when the sweep could not have found anything — an empty
     /// graph. `None` when the sweep was real, so its presence is the signal.
     #[serde(skip_serializing_if = "Option::is_none", default)]
@@ -993,7 +1013,7 @@ impl DesignGraph {
         // the skip rule would drift from the first, which is the exact disease
         // `is_parked_idea` was written to cure. Same reasoning as
         // `parked_nodes` delegating to `is_parked` rather than re-deciding.
-        let mut suppressed = Suppressed::new();
+        let mut suppressed = Suppressed::default();
         let defects = self.open_defects_counting(&mut suppressed)?;
         Ok(DefectSweep {
             swept: self.sweep_scope(suppressed)?,
@@ -1005,7 +1025,7 @@ impl DesignGraph {
     /// accepted. The engine's own consumers (`propose_heal`, the rollups, the
     /// scoped view) want the list without the sweep description around it.
     pub fn open_defects(&self) -> Result<Vec<HealIssue>, DynoError> {
-        self.open_defects_counting(&mut Suppressed::new())
+        self.open_defects_counting(&mut Suppressed::default())
     }
 
     /// [`open_defects`](Self::open_defects), also reporting what the parked-idea
@@ -1148,7 +1168,8 @@ impl DesignGraph {
             isolated_in_walk: self.design_network()?.isolated_in_walk(),
             parked: self.parked_nodes()?,
             expected_at_this_phase: self.genesis_phase_islands()?,
-            suppressed_by_parked_idea: suppressed,
+            suppressed_by_parked_idea: suppressed.parked,
+            suppressed_by_resolution: suppressed.resolved,
             rules: HealCategory::ALL.iter().map(|c| c.as_str()).collect(),
             note: (nodes == 0).then(|| {
                 "this graph holds no nodes, so an empty result is VACUOUS rather than clean — \
@@ -1491,7 +1512,7 @@ impl DesignGraph {
     pub fn reviewed_defects(&self) -> Result<Vec<ReviewedDefect>, DynoError> {
         let mut reviewed = Vec::new();
         let mut live = std::collections::HashSet::new();
-        for issue in self.all_defects(&mut Suppressed::new())? {
+        for issue in self.all_defects(&mut Suppressed::default())? {
             if let Some((decision_id, reason)) = self.defect_acknowledgement(&issue.id)? {
                 live.insert(issue.id.clone());
                 reviewed.push(ReviewedDefect {
@@ -1994,6 +2015,35 @@ impl DesignGraph {
             // skips only when NEITHER side claims anything.
             if self.is_parked_idea(&index, &e.from_id) && self.is_parked_idea(&index, &e.to_id) {
                 *suppressed
+                    .parked
+                    .entry(HealCategory::Contradiction.as_str())
+                    .or_default() += 1;
+                continue;
+            }
+            // AND THE CONDITION THE MESSAGE NAMES, AT LAST. The category's own
+            // doc comment has always read "two nodes joined by CONTRADICTS with
+            // NO RESOLVING DECISION", the suggested fix has always been
+            // `generate_decision`, and until 2026-09-15 nothing here looked for
+            // one — so writing the decision the finding asked for did not clear
+            // the finding, and the only exits were to acknowledge a resolved
+            // disagreement as if it were unresolved or to delete the edge and
+            // erase that it happened (fact:defect-a-contradiction-cannot-be-
+            // resolved-only-acknowledged, proved by execution 2026-08-08;
+            // fact:two-heal-rules-assert-a-condition-they-never-test).
+            //
+            // WHAT RESOLVES: an ACCEPTED Decision that BOTH endpoints are
+            // GOVERNED_BY. Both, because a decision touching one side has not
+            // ruled on the disagreement; accepted, because a `proposed` one is
+            // somebody thinking out loud and must not silence anything (the
+            // owner's word, 2026-09-15). The CONTRADICTS edge stays — the
+            // history is the point — and the resolution is counted in `swept`
+            // rather than silently dropped.
+            if self
+                .resolving_decision(&index, &e.from_id, &e.to_id)
+                .is_some()
+            {
+                *suppressed
+                    .resolved
                     .entry(HealCategory::Contradiction.as_str())
                     .or_default() += 1;
                 continue;
@@ -2089,6 +2139,31 @@ impl DesignGraph {
             // and can never be parked. Both cases are now pinned.
             if self.is_parked_idea(&index, &e.from_id) || self.is_parked_idea(&index, &e.to_id) {
                 *suppressed
+                    .parked
+                    .entry(HealCategory::UnresolvedSetup.as_str())
+                    .or_default() += 1;
+                continue;
+            }
+            // AND NOW THE FOLLOW-THROUGH ITSELF. The message asserts "nothing
+            // follows through" and, until 2026-09-15, the loop never asked
+            // whether anything had: it exempted parked ideas and reported the
+            // rest, so the moment an anticipated idea was SETTLED — accepted,
+            // EVOLVES_INTO a ChangeEvent, code merged under a failing-first
+            // test — it stopped being exempt and became a defect. The rule
+            // punished answering the question (fact:unresolved-setup-says-
+            // nothing-follows-through-and-never-checks-whether-anything-did,
+            // walked into 2026-09-02, defects 73 -> 74 for finishing the work).
+            //
+            // WHAT COUNTS AS FOLLOW-THROUGH, on the owner's word 2026-09-15: the
+            // anticipated node has EVOLVED_INTO something (work was recorded
+            // against it), or it has ARRIVED on its own type's terms — a
+            // Decision `accepted`, a Capability or Component `realized` or
+            // `verified`, a Requirement `met`, an epoch `arrived`. Each of those
+            // is the design saying the setup was acted on; anything short of it
+            // is still a commitment nobody kept.
+            if self.follow_through_exists(&index, &e.to_id) {
+                *suppressed
+                    .resolved
                     .entry(HealCategory::UnresolvedSetup.as_str())
                     .or_default() += 1;
                 continue;
@@ -2226,6 +2301,73 @@ impl DesignGraph {
                 unsettled && !faced_choice
             })
             .unwrap_or(false)
+    }
+
+    /// The ACCEPTED Decision that both `a` and `b` are `GOVERNED_BY`, if one
+    /// exists — what the contradiction rule means by "resolving". Read from
+    /// the endpoints' outgoing GOVERNED_BY edges, so a decision that merely
+    /// mentions the pair in prose does not count: the graph has to say it.
+    fn resolving_decision(
+        &self,
+        index: &HashMap<String, String>,
+        a: &str,
+        b: &str,
+    ) -> Option<String> {
+        let accepted_governors = |id: &str| -> Vec<String> {
+            self.outgoing(id, Some(edge::GOVERNED_BY))
+                .unwrap_or_default()
+                .into_iter()
+                .map(|e| e.to_id)
+                .filter(|d| {
+                    index.get(d).is_some_and(|t| t == node::DECISION)
+                        && self
+                            .get_node(node::DECISION, d)
+                            .ok()
+                            .flatten()
+                            .and_then(|n| {
+                                n.properties
+                                    .get("status")
+                                    .and_then(Value::as_str)
+                                    .map(|s| s == "accepted")
+                            })
+                            .unwrap_or(false)
+                })
+                .collect()
+        };
+        let of_b = accepted_governors(b);
+        accepted_governors(a).into_iter().find(|d| of_b.contains(d))
+    }
+
+    /// Whether the node an ANTICIPATES edge points at has been ACTED ON —
+    /// what the unresolved_setup rule means by "follows through". True when
+    /// the node EVOLVES_INTO anything, or when its status says it arrived on
+    /// its own type's terms. A type with no arrival status (a TemporalFact,
+    /// an Artifact) can only follow through by evolving.
+    fn follow_through_exists(&self, index: &HashMap<String, String>, id: &str) -> bool {
+        if self
+            .outgoing(id, Some(edge::EVOLVES_INTO))
+            .is_ok_and(|es| !es.is_empty())
+        {
+            return true;
+        }
+        let Some(node_type) = index.get(id) else {
+            return false;
+        };
+        let Some(status) = self.get_node(node_type, id).ok().flatten().and_then(|n| {
+            n.properties
+                .get("status")
+                .and_then(Value::as_str)
+                .map(str::to_string)
+        }) else {
+            return false;
+        };
+        match node_type.as_str() {
+            node::DECISION => status == "accepted",
+            node::CAPABILITY | node::COMPONENT => status == "realized" || status == "verified",
+            node::REQUIREMENT => status == "met",
+            node::DESIGN_EPOCH => status == "arrived",
+            _ => false,
+        }
     }
 
     /// Graph-topology defects over the design network (via `dynograph-graph`):
@@ -2370,6 +2512,7 @@ impl DesignGraph {
                 // this rule is for. The counterweight is pinned.
                 if island_ids.iter().all(|id| self.is_parked_idea(&index, id)) {
                     *suppressed
+                        .parked
                         .entry(HealCategory::UnthreadedCluster.as_str())
                         .or_default() += 1;
                     continue;

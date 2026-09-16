@@ -419,6 +419,10 @@ impl ReflowService {
             req.description.as_deref(),
         )?
         .unwrap_or(stored);
+        let stored = match req.checksum.as_deref() {
+            Some(c) => g.set_artifact_baseline(&req.id, c).map_err(dyno_err)?,
+            None => stored,
+        };
         ok_json(NodeDto::from(stored))
     }
 

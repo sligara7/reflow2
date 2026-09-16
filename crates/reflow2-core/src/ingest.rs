@@ -1949,6 +1949,7 @@ const MEDIUM_VALUES: &[&str] = &[
     "mechanical",
     "electrical",
     "human",
+    "procedural",
 ];
 
 /// Schema `method` values. Mirrors schema/verify.yaml; an unknown value is

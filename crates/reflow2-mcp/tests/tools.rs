@@ -1607,6 +1607,7 @@ async fn documents_links_a_doc_over_the_surface_and_refuses_a_ghost() {
         artifact_type: Some("document".into()),
         location: Some("README.md".into()),
         description: None,
+        checksum: None,
     })));
 
     let edge = j!(s.documents(Parameters(DocumentsReq {
@@ -2313,6 +2314,7 @@ async fn temporal_resource_and_realization_tools_round_trip() {
         artifact_type: Some("code".into()),
         location: Some("src/flight.rs".into()),
         description: None,
+        checksum: None,
     })));
     j!(s.realizes(Parameters(RealizesReq {
         artifact_id: "art:flight-rs".into(),

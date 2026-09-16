@@ -256,6 +256,50 @@ impl DesignGraph {
         )
     }
 
+    /// Record the FIRST checksum on an artifact that has none — the baseline
+    /// that makes a later edit detectable. This is the constructor's half of
+    /// what `link_artifact` does in one call: a plain property write, no
+    /// ChangeEvent, because a baseline is not a change. An artifact that
+    /// already carries a checksum is REFUSED — moving a baseline is a drift
+    /// disposition and belongs to `set_artifact_checksum`, which records why.
+    ///
+    /// Until 2026-09-15 `add_artifact` could not set one at all, though the
+    /// schema declares it and every other door (link_artifact, the setter)
+    /// takes one; the workaround was `create_node` with a props bag
+    /// (fact:defect-two-more-constructor-shape-frictions-met-while-working-…).
+    pub fn set_artifact_baseline(
+        &mut self,
+        artifact_id: &str,
+        checksum: &str,
+    ) -> Result<StoredNode, DynoError> {
+        let Some(existing) = self.get_node(node::ARTIFACT, artifact_id)? else {
+            return Err(DynoError::NodeNotFound {
+                node_type: node::ARTIFACT.to_string(),
+                node_id: artifact_id.to_string(),
+            });
+        };
+        if existing
+            .properties
+            .get("checksum")
+            .and_then(|v| v.as_str())
+            .is_some_and(|c| !c.is_empty())
+        {
+            return Err(DynoError::Validation {
+                node_type: node::ARTIFACT.into(),
+                property: "checksum".into(),
+                message: format!(
+                    "'{artifact_id}' already has a baseline; moving it is a drift disposition — \
+                     use set_artifact_checksum, which records why it moved"
+                ),
+            });
+        }
+        self.upsert_node(
+            node::ARTIFACT,
+            artifact_id,
+            Props::new().set("checksum", canonical_checksum(checksum)),
+        )
+    }
+
     /// Accept a drifted artifact's new content hash as the baseline — a
     /// **two-sided decision**, never a silent update (BL-33).
     ///
