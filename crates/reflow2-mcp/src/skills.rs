@@ -155,6 +155,7 @@ const COMMAND_ALIASES: &[(&str, Result<&str, &str>)] = &[
     // made the next one join — see
     // `fact:the-command-surface-has-five-copies-and-nothing-reconciles-them`.
     ("what-is-this", Ok("help")),
+    ("taxonomy", Ok("establish-taxonomy")),
     ("where-does-it-go", Ok("onboarding")),
     (
         "next",

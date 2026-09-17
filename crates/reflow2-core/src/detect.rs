@@ -718,6 +718,17 @@ pub enum GapSource {
     /// says; this is the ask. Aggregate, one per design; silent on a design
     /// with nothing to close.
     ClosureCriterionUndeclared,
+    /// Several live nodes of one type are ENCODED DIFFERENTLY — some carry the
+    /// type's discriminator (Component.kind, Interface.medium,
+    /// Requirement.kind, Verification.method), some carry nothing — and the
+    /// ones carrying nothing are governed by no accepted Decision. The fifth
+    /// service that looks like the first four and was recorded differently
+    /// (`req:a-taxonomy-is-decided-once-before-bulk-capture-and-every-instance-cites-it`,
+    /// Alex 2026-09-17). One finding per type and discriminator, keyed on
+    /// that pair; silent under three instances; a materialised `unspecified`
+    /// reads as nothing said. It asks whether an encoding decision is owed and
+    /// never picks one.
+    EncodingUndecided,
 }
 
 impl GapSource {
@@ -792,6 +803,7 @@ impl GapSource {
                 "quantity_check_without_executable_form"
             }
             GapSource::ClosureCriterionUndeclared => "closure_criterion_undeclared",
+            GapSource::EncodingUndecided => "encoding_undecided",
         }
     }
 
@@ -897,6 +909,7 @@ impl GapSource {
             GapSource::QuantityWithoutSource => false,
             GapSource::QuantityCheckWithoutExecutableForm => false,
             GapSource::ClosureCriterionUndeclared => true,
+            GapSource::EncodingUndecided => true,
             // AGGREGATE, and the call was close enough to record the losing
             // side. Per-component keying would be the more honest key for the
             // answer people will actually give — "cmp:bulk is a namespace, not
@@ -2139,6 +2152,7 @@ impl DesignGraph {
         self.detect_unit_sweep(&mut gaps)?;
         self.detect_quantity_provenance(&mut gaps)?;
         self.detect_closure_criterion(&mut gaps)?;
+        self.detect_encoding_undecided(&mut gaps)?;
         self.detect_failing_verifications(&mut gaps)?;
         self.detect_unresolved_drift(&mut gaps)?;
         self.detect_unreleased_components(&mut gaps)?;
@@ -5994,6 +6008,123 @@ impl DesignGraph {
                 projects.len()
             ),
         });
+        Ok(())
+    }
+
+    /// `encoding_undecided` — the taxonomy leg of the loop. See the variant
+    /// docs. The discriminators are the properties with NO materialised
+    /// default (or whose default is `unspecified`, which the store writes on
+    /// every node and which therefore says nothing): Artifact.artifact_type
+    /// and Flow.flow_type default to a real value and would read as stated on
+    /// every node, so they are deliberately not swept.
+    fn detect_encoding_undecided(&self, gaps: &mut Vec<GapCandidate>) -> Result<(), DynoError> {
+        const DISCRIMINATORS: &[(&str, &str, &str)] = &[
+            (node::COMPONENT, "kind", "what kind of part it is"),
+            (
+                node::INTERFACE,
+                "medium",
+                "what medium the contract runs over",
+            ),
+            (node::REQUIREMENT, "kind", "what kind of need it is"),
+            (node::VERIFICATION, "method", "how the check is done"),
+        ];
+        for (ty, prop, what) in DISCRIMINATORS {
+            let mut nodes = self.scan_live_nodes(ty)?;
+            nodes.sort_by(|a, b| a.node_id.cmp(&b.node_id));
+            if nodes.len() < 3 {
+                continue;
+            }
+            let mut stated = 0usize;
+            let mut unstated: Vec<String> = Vec::new();
+            for n in &nodes {
+                let said = n
+                    .properties
+                    .get(*prop)
+                    .and_then(Value::as_str)
+                    .map(str::trim)
+                    .filter(|s| !s.is_empty() && *s != "unspecified")
+                    .is_some();
+                if said {
+                    stated += 1;
+                } else {
+                    unstated.push(n.node_id.clone());
+                }
+            }
+            if unstated.is_empty() {
+                continue;
+            }
+            // An instance that cites an accepted encoding decision is encoded
+            // by that decision, whatever its own properties say.
+            let mut ungoverned: Vec<String> = Vec::new();
+            for id in &unstated {
+                let mut governed = false;
+                for e in self.outgoing(id, Some(edge::GOVERNED_BY))? {
+                    if let Some(d) = self.get_node(node::DECISION, &e.to_id)?
+                        && d.properties.get("status").and_then(Value::as_str) == Some("accepted")
+                    {
+                        governed = true;
+                        break;
+                    }
+                }
+                if !governed {
+                    ungoverned.push(id.clone());
+                }
+            }
+            if ungoverned.is_empty() {
+                continue;
+            }
+            // Mixed encoding is the sharp signal (Alex's trigger). A type where
+            // NOBODY has said is the weaker one, and is only worth an ask once
+            // there are enough instances for the silence to be a practice.
+            let mixed = stated > 0;
+            if !mixed && ungoverned.len() < 5 {
+                continue;
+            }
+            let key = format!("{ty}.{prop}");
+            let sample: Vec<String> = ungoverned.iter().take(4).cloned().collect();
+            let title = if mixed {
+                format!(
+                    "{} of {} {}(s) say {what} and {} say nothing, under no encoding decision",
+                    stated,
+                    nodes.len(),
+                    ty,
+                    ungoverned.len()
+                )
+            } else {
+                format!(
+                    "{} {}(s) and none says {what}, under no encoding decision",
+                    nodes.len(),
+                    ty
+                )
+            };
+            gaps.push(GapCandidate {
+                id: gap_id(GapSource::EncodingUndecided, std::slice::from_ref(&key)),
+                gap_source: GapSource::EncodingUndecided,
+                scope: GapScope::Project,
+                severity: if mixed { 0.45 } else { 0.3 },
+                title,
+                description: format!(
+                    "Instances of one category are being encoded differently, or not at all. \
+                     Decide ONCE how a {ty} of this kind is recorded — its `{prop}`, the edges \
+                     every instance carries, its name pattern — as an accepted Decision the owner \
+                     confirms, and draw governed_by from each instance to it, so every later \
+                     capture cites the decision instead of re-deciding (the establish-taxonomy \
+                     skill). An instance that carries its `{prop}` is encoded; one that carries \
+                     nothing and cites nothing is what this names. If this design genuinely uses \
+                     no `{prop}` on {ty}, say so once with acknowledge_gap. First few: {}.",
+                    sample.join(", ")
+                ),
+                affected_ids: ungoverned,
+                suggested_depth: 1,
+                evidence: format!(
+                    "{} live {ty} node(s): {stated} state `{prop}`, {} state nothing (or \
+                     `unspecified`), of which {} are governed by no accepted Decision.",
+                    nodes.len(),
+                    unstated.len(),
+                    sample.len().max(1)
+                ),
+            });
+        }
         Ok(())
     }
 

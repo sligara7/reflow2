@@ -103,6 +103,7 @@ schema_enum!(
 );
 schema_enum!(change_event_subject_opt, "ChangeEvent", "subject", opt);
 schema_enum!(component_tier_opt, "Component", "tier", opt);
+schema_enum!(component_kind_opt, "Component", "kind", opt);
 schema_enum!(constraint_concern_opt, "Constraint", "concern", opt);
 schema_enum!(constraint_direction_opt, "Constraint", "direction", opt);
 schema_enum!(constraint_priority_opt, "Constraint", "priority", opt);
