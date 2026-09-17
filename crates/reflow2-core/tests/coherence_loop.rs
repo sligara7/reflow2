@@ -20,6 +20,10 @@ use reflow2_core::{
 fn baseline() -> DesignGraph {
     let mut g = DesignGraph::open_in_memory().unwrap();
     g.add_project("proj:widget", "Widget").unwrap();
+    // A clean baseline says what done means; since 2026-09-17 a design with
+    // live requirements and no closure criterion is asked, once.
+    g.set_closure_criterion("proj:widget", &["traceability"], 100.0)
+        .unwrap();
 
     g.create_node(
         node::REQUIREMENT,

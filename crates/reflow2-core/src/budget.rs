@@ -125,6 +125,40 @@ impl DesignGraph {
         self.upsert_node(node::CONSTRAINT, id, props)
     }
 
+    /// Declare the headroom the owner wants kept inside a budget's limit, in
+    /// the limit's unit. Read by the closure report's budgets leg: within the
+    /// limit but inside the margin is a hole. A negative margin is refused —
+    /// it would move the limit, which is what `limit` is for.
+    pub fn set_constraint_margin(
+        &mut self,
+        id: &str,
+        margin: f64,
+    ) -> Result<StoredNode, DynoError> {
+        let Some(existing) = self.get_node(node::CONSTRAINT, id)? else {
+            return Err(DynoError::NodeNotFound {
+                node_type: node::CONSTRAINT.to_string(),
+                node_id: id.to_string(),
+            });
+        };
+        if margin.is_nan() || margin < 0.0 {
+            return Err(DynoError::Validation {
+                node_type: node::CONSTRAINT.into(),
+                property: "margin".into(),
+                message: format!(
+                    "{margin} is not a margin: headroom is zero or more, in the limit's unit; to \
+                     move the limit itself, set `limit`"
+                ),
+            });
+        }
+        let mut props = Props::new().set("margin", margin);
+        for (k, v) in &existing.properties {
+            if k != "margin" {
+                props = props.set(k, v.clone());
+            }
+        }
+        self.upsert_node(node::CONSTRAINT, id, props)
+    }
+
     /// `Constraint CONSTRAINS target` — the target spends `contribution` of
     /// the budget (in the Constraint's quantity unit). `from_type` is fixed:
     /// budgets hang off Constraints; `target_type` is free because anything

@@ -33,6 +33,7 @@ pub mod artifact;
 pub mod budget;
 pub mod bulk;
 pub mod claims;
+pub mod closure;
 pub mod compare;
 pub mod compose;
 pub mod confirm;
@@ -107,6 +108,10 @@ pub use alternatives::{
 pub use artifact::{ArtifactLink, DriftDisposition, LinkArtifactOptions};
 pub use budget::{BudgetContributor, BudgetReport, BudgetVerdict};
 pub use claims::{Claim, ReaderLens};
+pub use closure::{
+    CLOSURE_LEGS, ClosureCriterion, ClosureHole, ClosureLeg, ClosureReport, ClosureSummary,
+    ClosureVerdict, QuantityProvenanceSweep,
+};
 pub use compare::{
     ChangedEdge, ChangedNode, ChangelogBucket, ChangelogDraft, ChangelogEntry, DesignDiff,
     DiffAncestry, DiffBand, DiffSummary, EdgeRef, LIVE_GRAPH_LABEL, ManifestDelta, NodeRef,

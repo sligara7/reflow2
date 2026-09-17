@@ -528,6 +528,8 @@ NON_TOOL_TERMS = {
     "basis",
     "estimated",
     "asserted",
+    "closure_criterion_undeclared",
+    "no_closure_criterion_stated",
     "evidence",
     "measured",
     # BL-105 bounded reads (cap:bounded-reads): scan_nodes answers with a page

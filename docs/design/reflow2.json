@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:9a55f67303f8a0eee110555e9e46b41536f798b1b930ade9167520e413531692",
+  "content_hash": "sha256:de5a97baae0b1a72109e4872294880fcc10dc2caf13de113c8da5453de5f95a6",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -1826,6 +1826,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:dates"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:closure-report",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:report"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -12425,6 +12433,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:cap:a-status-advance-says-whether-its-prose-predates-it",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:cap:closure-report",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
     },
@@ -26212,6 +26226,169 @@
         "action": "modified"
       },
       "to_id": "art:tools-built"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-design-closes-against-a-declared-threshold-and-the-report-names-the-first-hole",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:budget"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-design-closes-against-a-declared-threshold-and-the-report-names-the-first-hole",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:closure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-design-closes-against-a-declared-threshold-and-the-report-names-the-first-hole",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-design-closes-against-a-declared-threshold-and-the-report-names-the-first-hole",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:detect-and-ask-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-design-closes-against-a-declared-threshold-and-the-report-names-the-first-hole",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:enum-schema"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-design-closes-against-a-declared-threshold-and-the-report-names-the-first-hole",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:find-tools-corpus-fixture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-design-closes-against-a-declared-threshold-and-the-report-names-the-first-hole",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:genesis-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-design-closes-against-a-declared-threshold-and-the-report-names-the-first-hole",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:operate"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-design-closes-against-a-declared-threshold-and-the-report-names-the-first-hole",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:schema-core"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-design-closes-against-a-declared-threshold-and-the-report-names-the-first-hole",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-design-closes-against-a-declared-threshold-and-the-report-names-the-first-hole",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-design-closes-against-a-declared-threshold-and-the-report-names-the-first-hole",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:skills-and-tools"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-design-closes-against-a-declared-threshold-and-the-report-names-the-first-hole",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:test-a-closure-criterion-is-declared-on-the-served-surface"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-design-closes-against-a-declared-threshold-and-the-report-names-the-first-hole",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:test-a-design-closes-against-a-declared-threshold"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-design-closes-against-a-declared-threshold-and-the-report-names-the-first-hole",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-design-closes-against-a-declared-threshold-and-the-report-names-the-first-hole",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-design-closes-against-a-declared-threshold-and-the-report-names-the-first-hole",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified",
+        "note": "ALIASED now applies to a property with no instance yet; found when Project.closure_legs was aliased and still reported as unreachable"
+      },
+      "to_id": "art:vocabulary-reach"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-design-closes-against-a-declared-threshold-and-the-report-names-the-first-hole",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:where-am-i-skill"
     },
     {
       "edge_type": "CHANGED",
@@ -66958,6 +67135,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:closure-report",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:cap:closure-report"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "cap:complementary-pairing",
       "properties": {},
       "to_id": "snap:epoch:reflow2-declares-what-it-requires:cap:complementary-pairing"
@@ -70061,6 +70244,22 @@
         "covers": "whole"
       },
       "to_id": "ver:a-budget-adds-only-numbers-in-its-own-unit"
+    },
+    {
+      "edge_type": "IMPLEMENTS",
+      "from_id": "art:test-a-closure-criterion-is-declared-on-the-served-surface",
+      "properties": {
+        "covers": "whole"
+      },
+      "to_id": "ver:a-closure-criterion-is-declared-on-the-served-surface"
+    },
+    {
+      "edge_type": "IMPLEMENTS",
+      "from_id": "art:test-a-design-closes-against-a-declared-threshold",
+      "properties": {
+        "covers": "whole"
+      },
+      "to_id": "ver:a-design-closes-against-a-declared-threshold"
     },
     {
       "edge_type": "IMPLEMENTS",
@@ -209472,6 +209671,24 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:closure",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:closure-report"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:closure",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "chg:a-design-closes-against-a-declared-threshold-and-the-report-names-the-first-hole"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:coherence-gate-test",
       "properties": {
         "completeness": "complete",
@@ -211647,6 +211864,16 @@
       "from_id": "art:schema-core",
       "properties": {
         "completeness": "complete",
+        "conformance": "unchecked",
+        "note": "Project.closure_legs, Project.closure_threshold, Constraint.margin"
+      },
+      "to_id": "cap:closure-report"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:schema-core",
+      "properties": {
+        "completeness": "complete",
         "conformance": "unchecked"
       },
       "to_id": "cmp:schema"
@@ -212412,12 +212639,30 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:test-a-closure-criterion-is-declared-on-the-served-surface",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "chg:a-design-closes-against-a-declared-threshold-and-the-report-names-the-first-hole"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:test-a-dangling-reference-is-found-whatever-its-degree",
       "properties": {
         "completeness": "complete",
         "conformance": "verified"
       },
       "to_id": "cap:a-dangling-reference-is-reported-whatever-the-nodes-degree"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:test-a-design-closes-against-a-declared-threshold",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "chg:a-design-closes-against-a-declared-threshold-and-the-report-names-the-first-hole"
     },
     {
       "edge_type": "REALIZES",
@@ -213212,6 +213457,16 @@
       "from_id": "art:tools-capture",
       "properties": {
         "completeness": "complete",
+        "conformance": "unchecked",
+        "note": "the served set_closure_criterion tool and margin on add_constraint"
+      },
+      "to_id": "cap:closure-report"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:tools-capture",
+      "properties": {
+        "completeness": "complete",
         "conformance": "unchecked"
       },
       "to_id": "cap:governance-mode"
@@ -213278,6 +213533,16 @@
         "conformance": "unchecked"
       },
       "to_id": "cap:bulk-forms"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:tools-coherence",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked",
+        "note": "the served closure_report tool"
+      },
+      "to_id": "cap:closure-report"
     },
     {
       "edge_type": "REALIZES",
@@ -217469,6 +217734,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:a-closure-criterion-is-declared-on-the-served-surface",
+      "properties": {},
+      "to_id": "cap:closure-report"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:a-contract-answers-at-the-altitude-you-asked",
       "properties": {},
       "to_id": "cap:a-contract-answers-at-the-altitude-you-asked"
@@ -217496,6 +217767,12 @@
       "from_id": "ver:a-derived-scan-runs-once-per-write-generation",
       "properties": {},
       "to_id": "con:loop-status-warm-latency-ms"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:a-design-closes-against-a-declared-threshold",
+      "properties": {},
+      "to_id": "cap:closure-report"
     },
     {
       "edge_type": "VERIFIES",
@@ -219811,6 +220088,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:closure",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:closure"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:coherence-gate-test",
       "properties": {
         "action": "created"
@@ -221075,11 +221360,27 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:test-a-closure-criterion-is-declared-on-the-served-surface",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-a-closure-criterion-is-declared-on-the-served-surface"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:test-a-dangling-reference-is-found-whatever-its-degree",
       "properties": {
         "action": "created"
       },
       "to_id": "art:test-a-dangling-reference-is-found-whatever-its-degree"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:test-a-design-closes-against-a-declared-threshold",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-a-design-closes-against-a-declared-threshold"
     },
     {
       "edge_type": "YIELDED",
@@ -222228,7 +222529,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:81a97fe87d140850adc532349884725212b65018796e57c64e38dc28106e939d",
+        "checksum": "sha256:4faf540183635a75d94bdb1e21c9e69d27eebf409a371fbce3fda1ceee7bf571",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/budget.rs",
         "name": "budget.rs",
@@ -222487,6 +222788,18 @@
         "name": "claims.rs",
         "status": "realized",
         "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:closure",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:a61b7c6f6b9edcbbeb5add57ea720484465e95b4ef75c8012f0cba59c6097f98",
+        "description": "closure_report, closure_summary (read by release_report), set_closure_criterion (Project.closure_legs / closure_threshold, validated against CLOSURE_LEGS), quantity_provenance_sweep. A counted leg that swept nothing does not close and says so; no criterion reads no_closure_criterion_stated; a report, never a gate.",
+        "location": "crates/reflow2-core/src/closure.rs",
+        "name": "closure.rs — the closure report: five legs summed against the owner's declared threshold, each saying what it swept, the first hole in declared order, and the provenance sweep shared with the detector",
+        "status": "realized"
       }
     },
     {
@@ -222770,7 +223083,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:2677201cc214107926eac78ead7dc30cc2e5358175a3251df005b171f19f17b5",
+        "checksum": "sha256:a12d7b8a53802b1426864e859256ab321fc2b10bf8764e89c547534ceacf3495",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
@@ -222783,7 +223096,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:6bc66f158c543707bd88d110f9d2a00a007e03c288f88051bc57d520a9e53a04",
+        "checksum": "sha256:c90d525d70dbfa2c6e26484815ebbbe2a18ca80d63a6504499982f43946d814f",
         "location": "getting-started/skills/detect-and-ask/SKILL.md",
         "name": "detect-and-ask/SKILL.md — the ask half of the loop, and now the rule for when NOT to ask",
         "status": "realized"
@@ -223002,7 +223315,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b54afd174e0c08ef4f47f13d09a49c6082f455c5ec8d0d5eeb01a4de6e1bb693",
+        "checksum": "sha256:2b0269946dc592f2fb45a3af5b6136046a8fc819b01b09234f7e32e457a763f9",
         "location": "crates/reflow2-mcp/src/enum_schema.rs",
         "name": "enum_schema.rs — one schema_with fn per enum request field, reading legal values from the compiled-in schema (or the handler's own const) at tool-listing time",
         "status": "realized"
@@ -223211,7 +223524,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "test",
-        "checksum": "sha256:91e1d76f4d7e1f90e993012b062a81647188d08c7deef08eecf31f38a4493987",
+        "checksum": "sha256:7954e1221e0beee2b256efdc56feec359928a2f3454066ed1b8d93938cc7781c",
         "description": "The 180-query criterion-1 corpus: one query per served tool, phrased as a user states the job — never the tool's name, never a phrase lifted from its description. Authored 2026-09-11 by an agent that had read every description, so informed rather than blind; a query from a field report supersedes the one here. Read by every_tool_is_found_by_a_query_in_the_users_words.rs via include_str!, so adding a tool without a query fails the build.",
         "location": "crates/reflow2-mcp/tests/fixtures/find_tools_corpus.json",
         "name": "find_tools_corpus.json",
@@ -223296,7 +223609,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:e0334491fcacb79a68da5c74f8569bea455bd26ac385dbd050581fe938dd79e1",
+        "checksum": "sha256:d1889b4b1b06af63281e461a9a312d891accfbd7c9284387bd93a636048fc154",
         "granularity": "atomic",
         "location": "getting-started/skills/genesis/SKILL.md",
         "name": "genesis/SKILL.md",
@@ -224007,7 +224320,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:944191440942f4aca8d58d9f9223f3dc7957e86456dfd6eb89bc3af53e7588eb",
+        "checksum": "sha256:bc2b5cb90eca3a1124beb282aa9e9b9729d10c22684f575f74572abc6ef66082",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/operate.rs",
         "name": "operate.rs",
@@ -224603,7 +224916,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:35cae3cc2e90e7a627bb8e7650a11dfd3240cb8b6780ebdeda42b2ab006685ab",
+        "checksum": "sha256:25666817a106d14498ece7432d796396feaf80cbbdcd33660ddb9c9c1493acb3",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/core.yaml",
@@ -224871,7 +225184,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:4f8ed8059860d7b46b4256ca09932e1ac32835d4fce5ab54fb19eac639869b8e",
+        "checksum": "sha256:78aa52577e399ebef6559ac4355142c3aeefc812c5d7b21ae74bcb99734b234e",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -224958,7 +225271,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:4c5bb01bbd5e04ad27d5f429e7d7ee14919472c0065ca6169d9470657e08cc0a",
+        "checksum": "sha256:e7ce1db21f9188276372d881978a2011aa05ff0838815c2b4665c2cef3d197fd",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -224997,7 +225310,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:247b390bd1e76c73c75261c9599ed3063fc5933ee40e4a1e6932133f66d9bccc",
+        "checksum": "sha256:0f28629efea72a69d317186c326edb5519028a634751c12eb1c3289e6480dc8a",
         "location": "docs/skills-and-tools.md",
         "name": "skills-and-tools.md",
         "status": "realized"
@@ -225223,6 +225536,18 @@
       }
     },
     {
+      "node_id": "art:test-a-closure-criterion-is-declared-on-the-served-surface",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:a5cadde784b4cb2f8ff7d8a29010395456bd0f507c80fb07b0d6c215fd28cad1",
+        "description": "Three cases; a renamed or unreachable field fails here rather than in front of somebody. Includes the empty-design case: two counted legs with nothing to run on, and the design does not close on that account rather than closing on silence.",
+        "location": "crates/reflow2-mcp/tests/a_closure_criterion_is_declared_on_the_served_surface.rs",
+        "name": "a_closure_criterion_is_declared_on_the_served_surface.rs — set_closure_criterion, closure_report and margin on add_constraint, driven through the JSON request shapes",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:test-a-dangling-reference-is-found-whatever-its-degree",
       "node_type": "Artifact",
       "properties": {
@@ -225230,6 +225555,18 @@
         "checksum": "sha256:eff5e13a0920d032a51e6b4471a05edd9021ac385c7b927b06de2c86e7092861",
         "location": "crates/reflow2-core/tests/a_dangling_reference_is_found_whatever_its_degree.rs",
         "name": "a_dangling_reference_is_found_whatever_its_degree.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:test-a-design-closes-against-a-declared-threshold",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:6cc16ca10742fffe4358412d459e451e98af7f8eec7e5292647a24d424d9f8e9",
+        "description": "The tests that carry the weight are the refusals: no criterion reads as \"no closure criterion stated\" rather than as any default, and a counted leg with nothing to run on cannot read as closed. Fixture is delivery.rs's threaded design.",
+        "location": "crates/reflow2-core/tests/a_design_closes_against_a_declared_threshold.rs",
+        "name": "a_design_closes_against_a_declared_threshold.rs — nine cases: no criterion is never a default, an unknown leg is refused by name, a delivered thread closes and a failing check reopens it, a counted leg with nothing to run on cannot read as closed, 50% is legal, margin, declared order, the decisions hole, the release report carries the verdict",
         "status": "realized"
       }
     },
@@ -226085,7 +226422,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f9349aae2eef07d1cd7c72a941f9e9b1b67e9d2b548ded5225c0d6e8af06e292",
+        "checksum": "sha256:08276b1329b7b0ec4a40587d9402b6ed99016054639371c3a4066c94bcdf9417",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
         "name": "crates/reflow2-mcp/src/tools/capture.rs",
@@ -226111,7 +226448,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b48aba90db6548e076203346dda4ba841856c09f74389d7ce0be19b69c8b224b",
+        "checksum": "sha256:48fc58b40e0e953eb8462e277e567dc2a1f72033d1ca99023f2641eac9d27463",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
@@ -226492,7 +226829,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:e8b3a7430680466300943c45cd9832055c973d83ca076e535453bcedfcbb3dd4",
+        "checksum": "sha256:bcc0ae89e5cfc7361be0780c9f608ba7b81d682f4fadad286300b03d71cf4748",
         "location": "tools/vocabulary_reach.py",
         "name": "tools/vocabulary_reach.py",
         "status": "realized"
@@ -226546,7 +226883,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:d09de48b9a307e1c9103219e06fed65379f94be9e235db724e3dcd17fb85aadd",
+        "checksum": "sha256:0b9ff961bee9b79f16141200ba351a504c12a5487064cb326c8a3993ba6d96f4",
         "location": "getting-started/skills/where-am-i/SKILL.md",
         "name": "where-am-i/SKILL.md — orientation, and the step that asks who the reader is",
         "status": "realized"
@@ -227752,10 +228089,10 @@
       "node_id": "cap:closure-report",
       "node_type": "Capability",
       "properties": {
-        "description": "One read that sums the computations that already exist — the delivery line, budget_report, seam_coverage, what_next's open decisions, and quantity provenance — into a closure verdict against a threshold the project declared. Each leg says what it swept and names its worst offender. No declared threshold reads as \"no closure criterion stated\". A report, never a gate.",
+        "description": "As built (2026-09-17): closure_report sums five computations that already exist — requirement_is_delivered per live requirement, budget_report per Constraint with a limit (against a declared margin when one is stated), seam_coverage, the scheduled work still governed by a proposed decision, and the quantity provenance sweep the detector shares — into one read. Each leg reports swept, closed, share, a swept_note in words and its worst offender; a counted leg that swept nothing carries closes: None and the design does not close on it, with the hole saying 'nothing to run on'. The criterion is Project.closure_legs and Project.closure_threshold, declared with set_closure_criterion (validated against the five legs, 0–100, no default); first_hole is the first leg in the DECLARED order that fails. No declaration reads no_closure_criterion_stated with the legs still shown. closure_criterion_undeclared asks once on a design with live requirements. release_report carries a ClosureSummary beside its own answer — a report, never a gate. Constraint.margin is read by the budgets leg; budget_report's verdict is against the bare limit.",
         "name": "A closure report: five legs, what each swept, the first hole, and a verdict against the declared threshold",
         "provenance": "authored",
-        "status": "planned"
+        "status": "realized"
       }
     },
     {
@@ -229968,6 +230305,17 @@
         "rationale": "Anthony's ruling: merge the duplicate rules, and build the proxy detector advisory rather than blocking. The requirement exists because a rule binds only the people building reflow2 while a requirement makes it something reflow2 DOES for every project — the split `req:a-fix-says-whether-it-corrected-the-cause` established at his request on 2026-08-17. NEVER PATH-DERIVED: a first sketch classified by directory, which encodes one project's layout and is the exact failure the rule forbids. MUTATION-CHECKED THREE WAYS; the third mutation caught nothing, which proved a guard dead and exposed that `vocabulary_coverage` names unused node and edge TYPES but never PROPERTIES — recorded as an open hole rather than closed.",
         "subject": "system",
         "summary": "`Artifact.audience` (`consumer` | `internal`) added to the schema, reachable through `set_artifact_intent` beside granularity and volatility, refused outside the enum. New `internal_only_delivery` finding names a Requirement whose every DECLARED delivering artifact is internal with none declared consumer — per-requirement, severity 0.45. Also merges the two duplicate DesignRules stating that reflow2 is built for other projects, moving all six governance edges to the survivor, and adds `req:work-says-whether-it-reaches-a-consumer` as the product form of that rule."
+      }
+    },
+    {
+      "node_id": "chg:a-design-closes-against-a-declared-threshold-and-the-report-names-the-first-hole",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-09-17",
+        "name": "A design closes against a threshold the owner declares, and the closure report names the first hole",
+        "rationale": "Requirement 3 of the three intents Anthony accepted on 2026-09-16 (\"need to ensure that designs close and are verified\"), built 2026-09-17 after #528 on his word (\"After merging 528, then let's start on requirement 3\"). The lesson carried from the two increments before it: a leg with nothing to run on must say so rather than read clean, and the threshold is the owner's word, never a default — 100% and \"traceability and budgets only\" are both declarations. Closure is a report and never a gate, so a release cut while the design does not close is recorded as exactly that.",
+        "summary": "closure_report (core closure.rs, served in the coherence router) sums five computations that already exist — requirement_is_delivered per live requirement, budget_report per Constraint with a limit (now against a declared margin too), seam_coverage, the GOVERNED_BY / SCHEDULED_FOR read what_next scores, and the provenance sweep the detector uses — into one read: each leg says what it swept, its share and its worst offender; a counted leg that swept nothing does not close and says so; first_hole is the first leg in the DECLARED order that fails. Project.closure_legs and Project.closure_threshold are declared with set_closure_criterion (validated against the five legs; no default); no declaration reads no_closure_criterion_stated. closure_criterion_undeclared asks once on a design with live requirements. Constraint.margin added; add_constraint accepts it; set_constraint_margin sets it. release_report carries a ClosureSummary beside its own answer. detect_quantity_provenance refactored onto the shared quantity_provenance_sweep so the detector and the leg cannot disagree. Skills: genesis asks what done means; where-am-i gathers and tells the closure line; detect-and-ask has the row. Tests: a_design_closes_against_a_declared_threshold.rs (core, nine cases) and a_closure_criterion_is_declared_on_the_served_surface.rs (served, three)."
       }
     },
     {
@@ -252158,6 +252506,16 @@
       }
     },
     {
+      "node_id": "frag:art:closure",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered closure.rs — the closure report: five legs summed against the owner's declared threshold, each saying what it swept, the first hole in declared order, and the provenance sweep shared with the detector"
+      }
+    },
+    {
       "node_id": "frag:art:coherence-gate-test",
       "node_type": "Fragment",
       "properties": {
@@ -253758,6 +254116,16 @@
       }
     },
     {
+      "node_id": "frag:art:test-a-closure-criterion-is-declared-on-the-served-surface",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered a_closure_criterion_is_declared_on_the_served_surface.rs — set_closure_criterion, closure_report and margin on add_constraint, driven through the JSON request shapes"
+      }
+    },
+    {
       "node_id": "frag:art:test-a-dangling-reference-is-found-whatever-its-degree",
       "node_type": "Fragment",
       "properties": {
@@ -253765,6 +254133,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered a_dangling_reference_is_found_whatever_its_degree.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:test-a-design-closes-against-a-declared-threshold",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered a_design_closes_against_a_declared_threshold.rs — nine cases: no criterion is never a default, an unknown leg is refused by name, a delivered thread closes and a failing check reopens it, a counted leg with nothing to run on cannot read as closed, 50% is legal, margin, declared order, the decisions hole, the release report carries the verdict"
       }
     },
     {
@@ -261369,6 +261747,16 @@
         "edges": "[]",
         "state": "{\"description\":\"When a set_*_status call actually MOVES a status and the node carries prose, the reply carries a prose_currency block naming both statuses, the field, and an excerpt - so the caller can judge whether the description still reads true here rather than in another call. Silent when the status did not move and silent when there is no prose. It never judges the text: it states that the prose was written under the OLD status and asks, per dec:report-dont-judge. Built from a 2026-09-02 field report; the reporter's reasoning is why it is a reply and not a detector - the call already knows the description was not touched, so the divergence is caught while the author is still in the room.</description>\\n</invoke>\\n\",\"name\":\"A status that moves past the prose describing it says so, in the reply that moved it\",\"provenance\":\"authored\",\"status\":\"realized\"}",
         "target_id": "cap:a-status-advance-says-whether-its-prose-predates-it",
+        "target_type": "Capability"
+      }
+    },
+    {
+      "node_id": "snap:epoch:preserved-on-write:cap:closure-report",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:closure\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:schema-core\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\",\"note\":\"Project.closure_legs, Project.closure_threshold, Constraint.margin\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:tools-capture\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\",\"note\":\"the served set_closure_criterion tool and margin on add_constraint\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:tools-coherence\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\",\"note\":\"the served closure_report tool\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:a-closure-criterion-is-declared-on-the-served-surface\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:a-design-closes-against-a-declared-threshold\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:report\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:a-design-closes-against-a-declared-threshold-and-the-report-names-the-first-hole\",\"properties\":{}}]",
+        "state": "{\"description\":\"One read that sums the computations that already exist — the delivery line, budget_report, seam_coverage, what_next's open decisions, and quantity provenance — into a closure verdict against a threshold the project declared. Each leg says what it swept and names its worst offender. No declared threshold reads as \\\"no closure criterion stated\\\". A report, never a gate.\",\"name\":\"A closure report: five legs, what each swept, the first hole, and a verdict against the declared threshold\",\"provenance\":\"authored\",\"status\":\"realized\"}",
+        "target_id": "cap:closure-report",
         "target_type": "Capability"
       }
     },
@@ -270962,6 +271350,20 @@
       }
     },
     {
+      "node_id": "ver:a-closure-criterion-is-declared-on-the-served-surface",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-mcp/tests/a_closure_criterion_is_declared_on_the_served_surface.rs — three cases; reach is the point, since a report the core computes and no tool serves is the class the vocabulary-reach requirement exists to end.",
+        "findings": "closure2 run: 3 passed, 0 failed.",
+        "kind": "verification",
+        "last_run_at": "2026-09-17",
+        "level": "integration",
+        "method": "test",
+        "name": "The served surface declares what closure means and reads whether the design closes: set_closure_criterion, closure_report, and margin on add_constraint, driven through the JSON request shapes",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:a-contract-answers-at-the-altitude-you-asked",
       "node_type": "Verification",
       "properties": {
@@ -271028,6 +271430,20 @@
         "level": "integration",
         "method": "test",
         "name": "A derived scan runs once per write generation, and a write invalidates the memo",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:a-design-closes-against-a-declared-threshold",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-core/tests/a_design_closes_against_a_declared_threshold.rs — nine cases over closure_report, set_closure_criterion, set_constraint_margin and release_report.closure.",
+        "findings": "closure3 run: 9 passed, 0 failed (after the epoch fixture moved to plan_epoch; add_epoch records an arrived point, and the report reads an absent status as arrived).",
+        "kind": "verification",
+        "last_run_at": "2026-09-17",
+        "level": "unit",
+        "method": "test",
+        "name": "No declared criterion reads as no criterion stated, never a default; an unknown leg is refused by name; traceability at 100 closes on a delivered thread and opens when the check fails; a counted leg with nothing to run on cannot read as closed; 50% is a legal declaration; a budget inside its limit but not its margin is a hole; the first hole follows the declared order; scheduled work governed by an open decision is the decisions hole; closure is a report and the release report carries it",
         "status": "passing"
       }
     },
@@ -274520,7 +274936,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:4ab7e56a1f5748ff34fe78bb05fecedb198091d60ae6b134b518c033ee94bc5d",
+  "prev_content_hash": "sha256:9a55f67303f8a0eee110555e9e46b41536f798b1b930ade9167520e413531692",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -275112,8 +275528,8 @@
     "schema_version": 1
   },
   "taken_at": {
-    "branch": "a-quantity-says-how-it-was-obtained",
-    "commit": "e4927609b0b9d6c6616ba9279435968d640da4be",
+    "branch": "a-design-closes-against-a-declared-threshold",
+    "commit": "03a685ae134ad409513c26cd26fbe41c510ff866",
     "dirty": true
   }
 }

@@ -115,6 +115,15 @@
           "null"
         ]
       },
+      "margin": {
+        "default": null,
+        "description": "Headroom the owner wants kept inside the limit, in the limit's unit:\nwith a `maximum` the budget CLOSES only when total <= limit - margin.\nRead by closure_report's budgets leg; budget_report judges the bare\nlimit. Leave unset when no margin was declared — never invent one.",
+        "format": "double",
+        "type": [
+          "number",
+          "null"
+        ]
+      },
       "name": {
         "default": null,
         "type": [

@@ -1,4 +1,4 @@
-# What reflow2 offers: 28 skills and 182 tools
+# What reflow2 offers: 28 skills and 184 tools
 
 Generated from the **running server**, not from memory — the skill list came from `list_skills`,
 the tool list and every read/write marking from `tools/list`, and the command mapping from
@@ -94,7 +94,7 @@ Read one in full with `get_skill` before doing the work it covers.
 
 ---
 
-## The 182 tools
+## The 184 tools
 
 `read` never changes the design. **write** does. That marking is the tool's own `readOnlyHint`
 annotation, read off the served surface — 58 read, 97 write.
@@ -150,6 +150,7 @@ description, which an agent sees in the tool schema; this table is for a person 
 | `flow_report` | **read** | Read a Flow back as facts: steps in stated order, the TRIGGERS transitions among them with their roles, and the cycles. |
 | `linking_report` | **read** | IS THE LINKING DISCIPLINE BEING FOLLOWED? |
 | `record_alias` | **write** | Record WHAT THE USER CALLS a node, in their own words — the domain nouns that mean this thing. |
+| `set_closure_criterion` | **write** | Declare what DONE means for this design: which closure legs count — traceability (every live requirement traced to a built, passing capability), budgets (every limit met with its declared margin), seams (every coupling specified on both sides), decisions (no scheduled work governed by an open decision), provenance (no number without a source) — and the share of each that must close. |
 
 ### Coherence — what the design says about itself
 
@@ -212,6 +213,7 @@ description, which an agent sees in the tool schema; this table is for a person 
 | `sync_status` | **read** | Has the SHARED RECORD moved since this graph last looked? |
 | `vocabulary_coverage` | **read** | Which of the design VOCABULARY this design has ever used — node types, edge types, and properties on the types that have instances. |
 | `what_next` | **read** | Which decisions to settle next — a rough guide, not an ordering, for a design with more open questions than anyone can hold at once. |
+| `closure_report` | **read** | DOES THE DESIGN CLOSE? |
 
 ### Query — read the design back
 

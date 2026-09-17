@@ -1252,6 +1252,31 @@ impl ReflowService {
     }
 
     #[tool(
+        description = "DOES THE DESIGN CLOSE? One read that sums five computations that already \
+                       exist — the delivery thread, every budget's rollup, seam coverage, the \
+                       scheduled work still governed by open decisions, and quantity provenance — \
+                       against the threshold the owner declared with set_closure_criterion. Each \
+                       leg says what it SWEPT ('budgets: 1 modelled'), its share, and its worst \
+                       offender, so a leg with nothing to run on cannot read as clean: a counted \
+                       leg that swept nothing does not close, and says why. `first_hole` is the \
+                       first leg in the DECLARED order that fails, with the node that fails it. \
+                       No declared criterion reads `no_closure_criterion_stated` — the legs are \
+                       still computed and shown; no default stands in for the owner's word. A \
+                       REPORT, NEVER A GATE: a release may be cut while this says does_not_close, \
+                       and release_report carries the verdict beside its own. Pure arithmetic \
+                       over the graph. Ask for this when you want to know whether the design is \
+                       done, verified and closed, or what is still open before it can be.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn closure_report(
+        &self,
+        Parameters(_req): Parameters<ClosureReportReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let g = self.graph.read().await;
+        ok_json(g.closure_report().map_err(dyno_err)?)
+    }
+
+    #[tool(
         description = "Does the BUILD separate what the DESIGN separates? Reports one fact and \
                        refuses a verdict: an artifact realizing N capabilities the design \
                        distinguishes is the build holding as one thing what the design holds as \

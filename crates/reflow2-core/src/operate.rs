@@ -330,6 +330,11 @@ pub struct ReleaseReport {
     pub built_capabilities_not_covered: Vec<String>,
     /// Environments this release is deployed to, with the deployment status.
     pub deployed_to: Vec<(String, Option<String>)>,
+    /// Whether the design closes, at cut time. Closure is a report and never
+    /// a gate: this release is produced whatever it says, and the verdict
+    /// rides beside it so "we shipped while the design did not close" is on
+    /// the record rather than discovered.
+    pub closure: Option<crate::closure::ClosureSummary>,
 }
 
 impl DesignGraph {
@@ -445,6 +450,7 @@ impl DesignGraph {
             capabilities_covered: covered.into_iter().collect(),
             built_capabilities_not_covered: built_not_covered,
             deployed_to,
+            closure: Some(self.closure_summary()?),
         })
     }
 }

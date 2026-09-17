@@ -31,6 +31,10 @@ you. The standing rule is in AGENTS.md.
   intent, function, allocation, seams, realization, assurance and operation have each come, and
   which one is the frontier. Deliberately NOT a verdict: a demonstrator may sit at 40% forever and
   be right, so report the shape and let the user judge it.
+- `closure_report` — whether the design CLOSES against the threshold the owner declared: five
+  legs (traceability, budgets, seams, decisions, provenance), what each swept, and the first hole.
+  `no_closure_criterion_stated` means nobody has said what done means yet — say that, and ask,
+  rather than supplying a threshold of your own.
 - `scan_nodes` for `Decision` — what has actually been settled, and why. **This is the part they
   most want and the report does not include it.**
 - `detect_gaps` — what still needs their input.
@@ -140,6 +144,11 @@ dump. Aim for something they could read in under a minute:
    requirements, the capability that satisfies it is built, and its check currently passes. It is
    **computed from the thread, not read off a status field**, which is why it cannot be inflated by
    somebody marking their own work done.
+
+   Then the closure line. `closure_report` says whether the design closes against the threshold
+   the owner declared and names the first hole — *"does not close: the mass budget is inside its
+   limit but not its declared margin."* If no criterion is stated, say so and ask what done means
+   for this project; never pick a threshold for them.
 
    ⭐ **THIS IS USUALLY THE QUESTION THEY CAME WITH**, and it is the one a design tool is uniquely
    able to answer. Everything else in this list says what is undecided, unbuilt or unlinked. Say

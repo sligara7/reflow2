@@ -124,6 +124,8 @@ BASELINE = REPO / "tools/vocabulary_reach_baseline.json"
 # disagree on a name, and the better answer is usually to make them agree.
 ALIASED = {
     ("Component", "purpose"): "add_component's `description` parameter",
+    ("Project", "closure_legs"): "set_closure_criterion's `legs` parameter",
+    ("Project", "closure_threshold"): "set_closure_criterion's `threshold` parameter",
 }
 
 
@@ -355,7 +357,11 @@ def main(argv: list[str] | None = None) -> int:
                 # together would have been this tool committing the exact
                 # defect its own epoch is named after.
                 no_instances.append((t, p, 0))
-            elif p not in params:
+            elif p not in params and (t, p) not in ALIASED:
+                # ALIASED applies here too: a property a tool writes under
+                # another parameter name is reachable whether or not the
+                # export happens to hold an instance yet (found 2026-09-17,
+                # when Project.closure_legs was aliased and still reported).
                 unreachable.append((t, p, type_counts[t]))
             else:
                 unused_but_offered.append((t, p, type_counts[t]))

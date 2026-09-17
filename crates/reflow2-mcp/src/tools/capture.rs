@@ -1705,6 +1705,34 @@ impl ReflowService {
     }
 
     #[tool(
+        description = "Declare what DONE means for this design: which closure legs count — \
+                       traceability (every live requirement traced to a built, passing \
+                       capability), budgets (every limit met with its declared margin), seams \
+                       (every coupling specified on both sides), decisions (no scheduled work \
+                       governed by an open decision), provenance (no number without a source) — \
+                       and the share of each that must close. Recorded on the Project; \
+                       closure_report reads it. ASK THE OWNER; never pick for them: 100 is a legal \
+                       declaration and so is 'traceability and budgets only'. Legs are walked in \
+                       the order given, so the first named leg that fails is the first hole the \
+                       report names. A design that never declared one reads 'no closure \
+                       criterion stated' — nothing is defaulted. Closure is a report, never a \
+                       gate. Ask for this when the user says what finished means for this project, \
+                       or when closure_criterion_undeclared is raised.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn set_closure_criterion(
+        &self,
+        Parameters(req): Parameters<SetClosureCriterionReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.write_lock().await?;
+        let legs: Vec<&str> = req.legs.iter().map(String::as_str).collect();
+        ok_json(NodeDto::from(
+            g.set_closure_criterion(&req.project_id, &legs, req.threshold)
+                .map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(
         description = "Set a Capability's lifecycle status: `planned` (the default) / \
                        `in_progress` / `realized` / `verified`. Use it as a capability moves \
                        through its life; to record one that already ships, pass `status` to \
@@ -2253,6 +2281,10 @@ impl ReflowService {
             ],
         )?
         .unwrap_or(stored);
+        let stored = match req.margin {
+            Some(m) => g.set_constraint_margin(&req.id, m).map_err(dyno_err)?,
+            None => stored,
+        };
         let node = NodeDto::from(stored);
         let found = search_first(&g, &req.id, existed, &format!("{name} {statement}"));
         preserve_prior(&mut g, prior.as_ref(), &node);

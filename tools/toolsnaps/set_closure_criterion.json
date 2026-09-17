@@ -1,0 +1,43 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Declare what DONE means for this design: which closure legs count — traceability (every live requirement traced to a built, passing capability), budgets (every limit met with its declared margin), seams (every coupling specified on both sides), decisions (no scheduled work governed by an open decision), provenance (no number without a source) — and the share of each that must close. Recorded on the Project; closure_report reads it. ASK THE OWNER; never pick for them: 100 is a legal declaration and so is 'traceability and budgets only'. Legs are walked in the order given, so the first named leg that fails is the first hole the report names. A design that never declared one reads 'no closure criterion stated' — nothing is defaulted. Closure is a report, never a gate. Ask for this when the user says what finished means for this project, or when closure_criterion_undeclared is raised.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "legs": {
+        "description": "Which legs count, in the owner's order — the first named leg that\nfails is the first hole closure_report names. At least one.",
+        "items": {
+          "enum": [
+            "traceability",
+            "budgets",
+            "seams",
+            "decisions",
+            "provenance"
+          ],
+          "type": "string"
+        },
+        "minItems": 1,
+        "type": "array"
+      },
+      "project_id": {
+        "description": "The Project (`proj:…`) declaring what closure means for its design.",
+        "type": "string"
+      },
+      "threshold": {
+        "description": "The share of each counted leg that must close, 0 to 100. 100 is a legal\ndeclaration and so is 50; nothing is defaulted.",
+        "format": "double",
+        "type": "number"
+      }
+    },
+    "required": [
+      "project_id",
+      "legs",
+      "threshold"
+    ],
+    "type": "object"
+  },
+  "name": "set_closure_criterion"
+}

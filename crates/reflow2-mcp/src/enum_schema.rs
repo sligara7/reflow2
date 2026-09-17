@@ -238,4 +238,15 @@ pub const DOC_KINDS: &[&str] = &[
 ];
 list_enum!(doc_kind_opt, DOC_KINDS, opt);
 pub const HEAL_STRATEGIES: &[&str] = &["conservative", "balanced", "aggressive"];
+
+/// `set_closure_criterion.legs`: an array whose items are the five closure
+/// legs — the one list-valued enum on the surface, published so a client can
+/// name the legs without guessing.
+pub fn closure_legs_list(_: &mut SchemaGenerator) -> Schema {
+    let items: Vec<Value> = reflow2_core::closure::CLOSURE_LEGS
+        .iter()
+        .map(|s| Value::String(s.to_string()))
+        .collect();
+    json_schema!({ "type": "array", "items": { "type": "string", "enum": items }, "minItems": 1 })
+}
 list_enum!(heal_strategy_opt, HEAL_STRATEGIES, opt);

@@ -50,6 +50,13 @@ asserted) and `limit_source` (the tool, artifact, check or person, by id); a con
 as a proposal. A number with no source is reported, because a design cannot tell it from a made-up
 one, and that is the reason this tool exists.
 
+**And ask what DONE means.** Closure is declared, never defaulted: which legs count —
+traceability, budgets, seams, decisions, provenance — and what share of each must close. Record it
+with `set_closure_criterion`; 100% is a real answer and so is "traceability and budgets only". From
+then on `closure_report` says whether the design closes and names the first hole, and a design
+that never said reads "no closure criterion stated" rather than closing on silence. It is a report,
+never a gate: a release can be cut while the design does not close, and the release report says so.
+
 ⚠️ **Never ask which node type to use.** The mapping from their words to the vocabulary is yours —
 `describe_schema` is how you look it up, and **capture-intent** carries the routing table. A user
 who is asked to pick a node type has been handed the one decision they cannot check.
