@@ -112,6 +112,12 @@ there are dependency edges, whoever calls them.
      where a lost reading is unrecoverable. This is a trade-off only the user can make, and
      guessing it silently picks a structure they never chose.
 
+   - **Before any bulk of one category, establish the taxonomy.** The brief's plural nouns are
+     the categories the design will hold many of; decide ONCE how an instance of each is encoded
+     — node type, discriminator, edges, name pattern — as an accepted Decision the owner
+     confirms, and govern every instance by it (the **establish-taxonomy** skill). Instances
+     encoded differently under no decision come back as `encoding_undecided`.
+
 3. **Capture deployment/consumer context as Requirements.** This is easy to forget and expensive
    to discover late. Explicitly ask the user (or record what you already know) as
    `add_requirement` nodes: **target platform(s)** (e.g. macOS, Windows), **the driving agent**

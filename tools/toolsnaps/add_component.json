@@ -30,6 +30,24 @@
         "description": "The component's id — `cmp:<slug>` by convention, so the prefix names the type wherever the id appears. Calling again with an EXISTING id REVISES that node: what you pass overwrites, what you omit survives. (`sub:` / `sys:` for the higher rungs)",
         "type": "string"
       },
+      "kind": {
+        "default": null,
+        "description": "What KIND of part this is — `service`, `module`, `subsystem`, `assembly`,\n`part`, `section`, `layer` — the discriminator a taxonomy decision names\nfor its category (establish-taxonomy). Optional: unset means nobody said,\nand encoding_undecided reports a type where some instances say and some do\nnot. Never defaulted.",
+        "enum": [
+          "service",
+          "module",
+          "subsystem",
+          "assembly",
+          "part",
+          "section",
+          "layer",
+          null
+        ],
+        "type": [
+          "string",
+          "null"
+        ]
+      },
       "level": {
         "default": null,
         "description": "Axis-Y decomposition rank: `component` (default), `subsystem`,\n`system`, `system_of_systems`, `enterprise`. Set it whenever the part\nis really an assembly — `hierarchy_issues` compares the levels either\nside of a containment, so leaving everything at the default means there\nis no hierarchy to check.",

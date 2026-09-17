@@ -33,6 +33,17 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **The taxonomy is decided once, before bulk capture, and every instance cites it.** Alex, by
+  email, 2026-09-17: his repos keep the taxonomy as accepted Decisions and govern later captures
+  by them, by hand — "nothing helps you write them." Three legs. A served `establish-taxonomy`
+  skill (`/taxonomy`) lists the categories a design will hold many of, decides ONCE how an
+  instance of each is encoded (node type, discriminator, edges, name pattern) as an accepted
+  Decision on the owner's word, and governs every instance by it; adopt points at it after the
+  breadth pass, genesis after seeding, and the genesis checklist names it. `encoding_undecided`
+  reports several live nodes of one type encoded differently — some carrying Component.kind,
+  Interface.medium, Requirement.kind or Verification.method, some nothing — under no accepted
+  decision; silent under three, a materialised `unspecified` reads as nothing said. And
+  `add_component` accepts `kind`, which no typed tool could write before.
 - **A design closes against a threshold the owner declares, and the closure report names the first
   hole.** Anthony, 2026-09-16: "need to ensure that designs close and are verified." `closure_report`
   sums five computations that already existed — the delivery thread, every budget's rollup, seam

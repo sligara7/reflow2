@@ -76,6 +76,7 @@ async fn component(s: &ReflowService, id: &str, name: &str) {
         id: id.into(),
         name: Some(name.into()),
         description: Some(format!("The {name} part, for a coupling fixture.")),
+        kind: None,
         level: None,
         distinct_from: None,
         tier: None,

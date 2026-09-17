@@ -251,6 +251,7 @@ async fn an_unmeasured_cross_type_pair_still_refuses_with_the_layer_wording() {
         id: "cmp:outdoor-unit".into(),
         name: Some("Outdoor unit".into()),
         description: Some(IDEA.into()),
+        kind: None,
         level: None,
         distinct_from: None,
         tier: None,

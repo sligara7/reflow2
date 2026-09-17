@@ -87,6 +87,13 @@ fn genesis_next_steps() -> Vec<String> {
          known for this domain` is a real answer, recorded by acknowledging the \
          artifact_standard_undeclared finding with that reason; silence is not."
             .to_string(),
+        "Before recording many of one kind of thing, decide ONCE how an instance is encoded — \
+         its node type, the discriminator it carries (Component.kind, Interface.medium, \
+         Requirement.kind, Verification.method), the edges every instance has, its name \
+         pattern — as an accepted Decision the owner confirms, and govern every instance by \
+         it (the establish-taxonomy skill). Instances encoded differently under no decision \
+         are reported as encoding_undecided."
+            .to_string(),
         "Run detect_gaps for the first round (expect concept_without_design), then use \
          gap_to_prompt to ask the user each surfaced gap."
             .to_string(),

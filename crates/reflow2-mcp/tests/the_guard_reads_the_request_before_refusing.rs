@@ -44,6 +44,7 @@ fn component(id: &str, name: &str) -> ComponentReq {
         id: id.into(),
         name: Some(name.into()),
         description: Some(WORDS.into()),
+        kind: None,
         level: None,
         distinct_from: None,
         tier: None,

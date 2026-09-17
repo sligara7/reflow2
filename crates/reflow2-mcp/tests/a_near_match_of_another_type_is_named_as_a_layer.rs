@@ -126,6 +126,7 @@ async fn a_cross_type_near_match_names_the_layering_not_a_duplicate() {
             id: "cmp:client-elector".into(),
             name: Some("Client elector".into()),
             description: Some(SHIPPED.into()),
+            kind: None,
             level: None,
             distinct_from: None,
             tier: None,

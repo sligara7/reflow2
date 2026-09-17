@@ -1857,9 +1857,13 @@ impl ReflowService {
         let stored = g
             .add_component(&req.id, &name, &description, req.level.as_deref())
             .map_err(dyno_err)?;
-        let stored =
-            set_optional_props(&mut g, node_ty, &req.id, &[("tier", req.tier.as_deref())])?
-                .unwrap_or(stored);
+        let stored = set_optional_props(
+            &mut g,
+            node_ty,
+            &req.id,
+            &[("tier", req.tier.as_deref()), ("kind", req.kind.as_deref())],
+        )?
+        .unwrap_or(stored);
         let node = NodeDto::from(stored);
         let found = search_first(&g, &req.id, existed, &format!("{name} {description}"));
         if let Err(e) = refuse_unless_deliberate(

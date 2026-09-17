@@ -1898,6 +1898,14 @@ pub struct ComponentReq {
     /// is no hierarchy to check.
     #[serde(default)]
     pub level: Option<String>,
+    /// What KIND of part this is — `service`, `module`, `subsystem`, `assembly`,
+    /// `part`, `section`, `layer` — the discriminator a taxonomy decision names
+    /// for its category (establish-taxonomy). Optional: unset means nobody said,
+    /// and encoding_undecided reports a type where some instances say and some do
+    /// not. Never defaulted.
+    #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::component_kind_opt")]
+    pub kind: Option<String>,
     /// Ids you read and judged DIFFERENT from this one, when reflow2 has
     /// already told you something close exists. Naming them is the deliberate
     /// decision: sharpen an existing node by calling with ITS id, or start a

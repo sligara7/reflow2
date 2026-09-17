@@ -134,6 +134,13 @@ recorded.
 - **Model the whole repo, not a region.** A partial graph emits gaps indistinguishable from
   real ones — the detectors cannot yet tell "nothing delivers this" from "nobody has drawn the
   edge yet". Coarse-over-everything is safe; deep-over-a-corner is noise.
+- **Establish the taxonomy before the bulk lands.** The breadth pass has just shown you the
+  categories the artifact repeats — twelve services, nine scan plans, forty drawings. Before you
+  record them in bulk, decide ONCE how an instance of each is encoded (node type, the
+  discriminator it always carries, the edges every instance has, the name pattern) as an accepted
+  Decision the owner confirms, and govern every instance by it — the **establish-taxonomy**
+  skill. Alex's repos did this by hand and nothing helped; instances encoded differently under no
+  decision are reported as `encoding_undecided`.
 
 ## Phase 2 · Analyze — static, then dynamic
 
