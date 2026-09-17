@@ -584,6 +584,7 @@ impl ReflowService {
             ("valid_from", req.valid_from.as_deref()),
             ("valid_to", req.valid_to.as_deref()),
             ("value", req.value.as_deref()),
+            ("source", req.source.as_deref()),
         ] {
             if let Some(v) = v {
                 props = props.set(k, v);
@@ -829,8 +830,11 @@ impl ReflowService {
                        already replaced. TWO QUESTIONS, NOT ONE: `change_type` says WHY, and \
                        `subject` says WHICH AXIS — `system` (the thing changed) or `record` \
                        (the thing did not change and only the design's knowledge of it did, \
-                       e.g. a re-sync or a drift you are accepting). Leaving `subject` out is \
-                       a true answer and is never inferred from `change_type`. \
+                       e.g. a re-sync or a drift you are accepting). A MEASUREMENT FED BACK BY AN \
+                       EXTERNAL TOOL IS `record`: the shell did not change, the design's knowledge \
+                       of it did (bhome 2026-09-16, an IFC take-off revising a floor-area limit) — \
+                       the most common case a measuring partner will ever produce. Leaving \
+                       `subject` out is a true answer and is never inferred from `change_type`. \
                        ⭐ CHANGING SOMETHING THAT ALREADY EXISTS? LOAD THE `impact-check` \
                        SKILL FIRST (`get_skill`) — it propagates from what you are about to \
                        touch and shows the blast radius, so you edit what is actually \

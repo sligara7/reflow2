@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Record that a Constraint CONSTRAINS a target, with the target's `contribution` to the budget (in the Constraint's quantity unit) and the `basis` for the number (estimated/evidence/measured). An edge without a contribution is reported by budget_report as unstated — never treated as zero. Ask for this when you want to say how much a part contributes to a budget or limit — its share of the mass, latency, cost or other quantity.",
+  "description": "Record that a Constraint CONSTRAINS a target, with the target's `contribution` to the budget (in the Constraint's quantity unit) and the `basis` for the number (estimated/evidence/measured) and its `source` — the tool, artifact or person the number came from. An edge without a contribution is reported by budget_report as unstated — never treated as zero; a number with no source is named as unsourced. ⭐ THIS IS THE CONTRACT WITH AN EXTERNAL MEASURING TOOL: design the budget here, measure it in the tool (an IFC take-off, a ray trace), write the number back with `basis: measured`, `source` naming the tool, `unit` and `measured_at`, and budget_report says whether it still fits (bhome 2026-09-16: the seam existed and nothing pointed at it). Ask for this when you want to say how much a part contributes to a budget or limit — its share of the mass, latency, cost or other quantity.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
@@ -45,6 +45,14 @@
       "note": {
         "default": null,
         "description": "WHY this Constraint binds this target — the sentence a later reader\nneeds and the one this call could not carry until now.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "source": {
+        "default": null,
+        "description": "WHO OR WHAT the contribution came from — the measuring tool or Artifact (an IFC take-off,\na ray trace), the check that computed it, or the Contributor who estimated it, by id where\none exists. With `basis: measured` this is a measurement; a number with no source is named\nby budget_report as unsourced.",
         "type": [
           "string",
           "null"

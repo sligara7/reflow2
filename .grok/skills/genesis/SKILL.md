@@ -44,6 +44,12 @@ contribution (`constrains … unit`) and every quantity crossing a boundary
 the system is reported. The Mars Climate Orbiter was lost because nobody compared two sides'
 units; this is that review, made mechanical, from day one.
 
+**And every number says where it came from.** A limit carries `limit_basis` (measured / computed /
+asserted) and `limit_source` (the tool, artifact, check or person, by id); a contribution carries
+`source`. A number you proposed is `asserted` with your own contributor id — allowed, and visible
+as a proposal. A number with no source is reported, because a design cannot tell it from a made-up
+one, and that is the reason this tool exists.
+
 ⚠️ **Never ask which node type to use.** The mapping from their words to the vocabulary is yours —
 `describe_schema` is how you look it up, and **capture-intent** carries the routing table. A user
 who is asked to pick a node type has been handed the one decision they cannot check.

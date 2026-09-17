@@ -81,6 +81,14 @@
           "null"
         ]
       },
+      "source": {
+        "default": null,
+        "description": "WHO OR WHAT the fact's value came from — an Artifact, tool, Verification or Contributor,\nby id where one exists. A value with no source is somebody's word and reads as such.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
       "statement": {
         "default": null,
         "description": "The assertion itself, in plain terms. This is the embedding field, so\nit is what `search_design` finds the finding by.",

@@ -69,6 +69,43 @@ impl DesignGraph {
         )
     }
 
+    /// HOW A LIMIT WAS OBTAINED and by what: `limit_basis` (measured / computed
+    /// / asserted), `limit_source` (the instrument, artifact, check or person,
+    /// by id where one exists) and, for a measurement, when. Every other
+    /// property is carried. A limit with a number and no source is what
+    /// `quantity_without_source` reports; an asserted limit that names the
+    /// agent is allowed and visible.
+    pub fn set_constraint_provenance(
+        &mut self,
+        id: &str,
+        limit_basis: Option<&str>,
+        limit_source: Option<&str>,
+        limit_measured_at: Option<&str>,
+    ) -> Result<StoredNode, DynoError> {
+        let Some(existing) = self.get_node(node::CONSTRAINT, id)? else {
+            return Err(DynoError::NodeNotFound {
+                node_type: node::CONSTRAINT.to_string(),
+                node_id: id.to_string(),
+            });
+        };
+        let mut props = Props::new()
+            .set_opt("limit_basis", limit_basis)
+            .set_opt(
+                "limit_source",
+                limit_source.map(str::trim).filter(|s| !s.is_empty()),
+            )
+            .set_opt("limit_measured_at", limit_measured_at);
+        for (k, v) in &existing.properties {
+            if !(k == "limit_basis" && limit_basis.is_some())
+                && !(k == "limit_source" && limit_source.is_some())
+                && !(k == "limit_measured_at" && limit_measured_at.is_some())
+            {
+                props = props.set(k, v.clone());
+            }
+        }
+        self.upsert_node(node::CONSTRAINT, id, props)
+    }
+
     /// The unit a Constraint's `limit` is in, stated explicitly rather than
     /// read off a `quantity` suffix — a suffix convention is exactly the thing
     /// nobody compares. Every other property is carried.
@@ -119,6 +156,7 @@ impl DesignGraph {
             contribution,
             None,
             basis,
+            None,
             measured_at,
             note,
         )
@@ -137,6 +175,7 @@ impl DesignGraph {
         contribution: Option<f64>,
         unit: Option<&str>,
         basis: Option<&str>,
+        source: Option<&str>,
         measured_at: Option<&str>,
         note: Option<&str>,
     ) -> Result<StoredEdge, DynoError> {
@@ -167,6 +206,14 @@ impl DesignGraph {
                 // default that used to materialise `estimated` here asserted
                 // the provenance of an absent value (xrt-demo F6, 2026-09-16).
                 .set_opt("basis", basis.filter(|_| contribution.is_some()))
+                // The source, like the basis, describes a number; with no
+                // contribution it describes nothing and is not stored.
+                .set_opt(
+                    "source",
+                    source
+                        .map(str::trim)
+                        .filter(|s| !s.is_empty() && contribution.is_some()),
+                )
                 .set_opt("measured_at", measured_at)
                 .set_opt("note", note),
         )
@@ -183,6 +230,9 @@ pub struct BudgetContributor {
     /// silence, reported in `unit_unstated`.
     pub unit: Option<String>,
     pub basis: Option<String>,
+    /// Who or what the number came from, as the edge stated it. `None` on a
+    /// stated number is a silence, reported in `unsourced`.
+    pub source: Option<String>,
     /// When the contribution was observed, where the caller said.
     ///
     /// Only meaningful for a `basis` that decays. An estimate does not go
@@ -216,6 +266,9 @@ pub struct BudgetReport {
     /// unit sweep has something to say about this budget, and nothing here can
     /// judge a contribution's unit.
     pub unit: Option<String>,
+    /// How the limit was obtained and by what, if the Constraint said.
+    pub limit_basis: Option<String>,
+    pub limit_source: Option<String>,
     pub limit: Option<f64>,
     /// `maximum` (default) or `minimum`.
     pub direction: String,
@@ -235,6 +288,12 @@ pub struct BudgetReport {
     /// totalled: a pound figure is not added to a kilogram budget, and the
     /// verdict is left open the way an unstated contribution leaves it.
     pub unit_mismatched: Vec<String>,
+    /// Contributors whose edge states a number and NO source — a number nobody
+    /// owns. Still totalled (the old behaviour), but named: this is the whole
+    /// of what a design tool can do about a made-up number, make it look
+    /// different from a sourced one
+    /// (req:a-quantity-carries-how-it-was-obtained-and-an-unsourced-one-is-reported).
+    pub unsourced: Vec<String>,
     /// How many contributions rest on each basis — a total over `estimated`
     /// numbers is a weaker claim than one over `measured`, and the caller
     /// must see that.
@@ -298,6 +357,11 @@ impl DesignGraph {
                     .get("unit")
                     .and_then(Value::as_str)
                     .map(str::to_string),
+                source: e
+                    .properties
+                    .get("source")
+                    .and_then(Value::as_str)
+                    .map(str::to_string),
                 basis: e
                     .properties
                     .get("basis")
@@ -317,6 +381,11 @@ impl DesignGraph {
             .iter()
             .filter(|c| c.contribution.is_some())
             .filter(|c| matches!((&unit, &c.unit), (Some(cu), Some(u)) if cu != u))
+            .map(|c| c.node_id.clone())
+            .collect();
+        let unsourced: Vec<String> = contributors
+            .iter()
+            .filter(|c| c.contribution.is_some() && c.source.is_none())
             .map(|c| c.node_id.clone())
             .collect();
         let unit_unstated: Vec<String> = contributors
@@ -391,6 +460,8 @@ impl DesignGraph {
             constraint_name: sprop("name").unwrap_or_else(|| constraint_id.to_string()),
             quantity: sprop("quantity"),
             unit,
+            limit_basis: sprop("limit_basis"),
+            limit_source: sprop("limit_source"),
             limit,
             direction,
             contributors,
@@ -398,6 +469,7 @@ impl DesignGraph {
             unstated,
             unit_unstated,
             unit_mismatched,
+            unsourced,
             basis_coverage,
             undated_measurements,
             verdict,

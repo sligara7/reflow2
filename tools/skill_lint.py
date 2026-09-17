@@ -495,6 +495,12 @@ NON_TOOL_TERMS = {
     "unit_system_undeclared",
     "quantity_without_unit",
     "unit_outside_declared_system",
+    # Quantity provenance (2026-09-16): the fields and the two findings.
+    "limit_basis",
+    "limit_source",
+    "source",
+    "quantity_without_source",
+    "quantity_check_without_executable_form",
     "undocumented_addition",
     "unknown_seeds",
     "unmotivated_capability",
@@ -521,6 +527,7 @@ NON_TOOL_TERMS = {
     "contribution",
     "basis",
     "estimated",
+    "asserted",
     "evidence",
     "measured",
     # BL-105 bounded reads (cap:bounded-reads): scan_nodes answers with a page

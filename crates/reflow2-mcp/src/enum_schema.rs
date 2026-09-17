@@ -191,6 +191,7 @@ schema_enum!(
 schema_enum!(realizes_completeness_opt, "REALIZES", "completeness", opt);
 schema_enum!(realizes_conformance_opt, "REALIZES", "conformance", opt);
 schema_enum!(constrains_basis_opt, "CONSTRAINS", "basis", opt);
+schema_enum!(constraint_limit_basis_opt, "Constraint", "limit_basis", opt);
 schema_enum!(satisfies_coverage_opt, "SATISFIES", "coverage", opt);
 schema_enum!(deployed_to_status_opt, "DEPLOYED_TO", "status", opt);
 schema_enum!(

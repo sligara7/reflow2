@@ -698,6 +698,19 @@ pub enum GapSource {
     /// A stated unit that is not among the declared unit system's. Keyed on
     /// the set of offenders; louder when the rule is `enforced`.
     UnitOutsideDeclaredSystem,
+    /// A Constraint with a `limit` and no `limit_source`, or a CONSTRAINS edge
+    /// with a `contribution` and no `source`: a number nobody owns. The
+    /// founding fear made mechanical
+    /// (`req:a-quantity-carries-how-it-was-obtained-and-an-unsourced-one-is-reported`):
+    /// reflow2 cannot rule out a made-up number; it can make one with no
+    /// source LOOK DIFFERENT from one with a source, and count them. A source
+    /// that is the agent (`who:claude-code`) is allowed and visible — a
+    /// proposal reads as a proposal. Keyed on the set of offenders.
+    QuantityWithoutSource,
+    /// A Verification that VERIFIES a Constraint carrying a `limit` and has
+    /// no IMPLEMENTS from any Artifact — a check on a number that no tool can
+    /// re-run. Keyed on the set of checks.
+    QuantityCheckWithoutExecutableForm,
 }
 
 impl GapSource {
@@ -767,6 +780,10 @@ impl GapSource {
             GapSource::UnitSystemUndeclared => "unit_system_undeclared",
             GapSource::QuantityWithoutUnit => "quantity_without_unit",
             GapSource::UnitOutsideDeclaredSystem => "unit_outside_declared_system",
+            GapSource::QuantityWithoutSource => "quantity_without_source",
+            GapSource::QuantityCheckWithoutExecutableForm => {
+                "quantity_check_without_executable_form"
+            }
         }
     }
 
@@ -867,6 +884,10 @@ impl GapSource {
             // set stays acknowledged.
             GapSource::QuantityWithoutUnit => false,
             GapSource::UnitOutsideDeclaredSystem => false,
+            // Keyed on the SET of offenders: a new unsourced number re-asks, an
+            // acknowledged set stays acknowledged.
+            GapSource::QuantityWithoutSource => false,
+            GapSource::QuantityCheckWithoutExecutableForm => false,
             // AGGREGATE, and the call was close enough to record the losing
             // side. Per-component keying would be the more honest key for the
             // answer people will actually give — "cmp:bulk is a namespace, not
@@ -2107,6 +2128,7 @@ impl DesignGraph {
         self.detect_compliance_gaps(&mut gaps)?;
         self.detect_artifact_standard(&mut gaps)?;
         self.detect_unit_sweep(&mut gaps)?;
+        self.detect_quantity_provenance(&mut gaps)?;
         self.detect_failing_verifications(&mut gaps)?;
         self.detect_unresolved_drift(&mut gaps)?;
         self.detect_unreleased_components(&mut gaps)?;
@@ -5893,6 +5915,144 @@ impl DesignGraph {
                 enforced
             ),
         });
+        Ok(())
+    }
+
+    /// Provenance on a quantity, and an executable form on the check that
+    /// judges it
+    /// (`req:a-quantity-carries-how-it-was-obtained-and-an-unsourced-one-is-reported`).
+    ///
+    /// Two findings. (1) A number nobody owns: a Constraint's `limit` with no
+    /// `limit_source`, or a CONSTRAINS `contribution` with no `source`. The
+    /// source may be a tool, an artifact, a check or a person — including the
+    /// agent, which is allowed and visible: the point is that a number with no
+    /// source looks different from one with a source, which is the whole of
+    /// what a design tool can do about a made-up number. (2) A check on a
+    /// numeric limit with no executable form — nothing a tool could re-run —
+    /// which is a claim wearing a status.
+    ///
+    /// Silent when the design carries no numeric limits: nothing to run on is
+    /// not clean, and the finding says nothing rather than reading green.
+    fn detect_quantity_provenance(&self, gaps: &mut Vec<GapCandidate>) -> Result<(), DynoError> {
+        let clean = |v: Option<&Value>| {
+            v.and_then(Value::as_str)
+                .map(str::trim)
+                .filter(|s| !s.is_empty())
+                .map(str::to_string)
+        };
+        let mut unsourced: Vec<(String, String)> = Vec::new(); // (affected id, what)
+        let mut checks_without_form: Vec<(String, String)> = Vec::new(); // (check, limit)
+        let mut checks_seen: BTreeSet<String> = BTreeSet::new();
+        let mut limits = 0usize;
+        for c in self.scan_live_nodes(node::CONSTRAINT)? {
+            if c.properties.get("limit").and_then(Value::as_f64).is_none() {
+                continue;
+            }
+            limits += 1;
+            if clean(c.properties.get("limit_source")).is_none() {
+                unsourced.push((c.node_id.clone(), format!("the limit of '{}'", c.node_id)));
+            }
+            for e in self.outgoing(&c.node_id, Some(edge::CONSTRAINS))? {
+                let has_number = e
+                    .properties
+                    .get("contribution")
+                    .and_then(Value::as_f64)
+                    .is_some();
+                if has_number && clean(e.properties.get("source")).is_none() {
+                    unsourced.push((
+                        e.to_id.clone(),
+                        format!("the contribution of '{}' to '{}'", e.to_id, c.node_id),
+                    ));
+                }
+            }
+            for v in self.incoming(&c.node_id, Some(edge::VERIFIES))? {
+                if !checks_seen.insert(v.from_id.clone()) {
+                    continue;
+                }
+                if self
+                    .incoming(&v.from_id, Some(edge::IMPLEMENTS))?
+                    .is_empty()
+                {
+                    checks_without_form.push((v.from_id.clone(), c.node_id.clone()));
+                }
+            }
+        }
+        if limits == 0 {
+            return Ok(());
+        }
+
+        if !unsourced.is_empty() {
+            let ids: BTreeSet<&str> = unsourced.iter().map(|(id, _)| id.as_str()).collect();
+            let affected: Vec<String> = ids.into_iter().map(str::to_string).collect();
+            gaps.push(GapCandidate {
+                id: gap_id(GapSource::QuantityWithoutSource, &affected),
+                gap_source: GapSource::QuantityWithoutSource,
+                scope: GapScope::Project,
+                severity: 0.5,
+                title: format!(
+                    "{} quantity(ies) carry a number nobody has sourced",
+                    unsourced.len()
+                ),
+                description: format!(
+                    "A number with no source cannot be told from a made-up one. Say who or what \
+                     each came from: add_constraint with `limit_basis` (measured / computed / \
+                     asserted) and `limit_source`; constrains with `source` beside the \
+                     contribution. A tool that measured it, a check that computed it, or the \
+                     person — or the agent — who asserted it are all real answers, and \
+                     `asserted` by name is allowed: a proposal reads as a proposal. What is not \
+                     allowed to pass unremarked is a number nobody owns. Unsourced: {}.",
+                    unsourced
+                        .iter()
+                        .map(|(_, what)| what.clone())
+                        .collect::<Vec<_>>()
+                        .join("; ")
+                ),
+                affected_ids: affected,
+                suggested_depth: 2,
+                evidence: format!(
+                    "{} numeric limit(s) swept with their contributions; {} number(s) name no \
+                     source (Constraint.limit_source / CONSTRAINS.source absent).",
+                    limits,
+                    unsourced.len()
+                ),
+            });
+        }
+
+        if !checks_without_form.is_empty() {
+            let mut affected: Vec<String> =
+                checks_without_form.iter().map(|(v, _)| v.clone()).collect();
+            affected.sort();
+            affected.dedup();
+            gaps.push(GapCandidate {
+                id: gap_id(GapSource::QuantityCheckWithoutExecutableForm, &affected),
+                gap_source: GapSource::QuantityCheckWithoutExecutableForm,
+                scope: GapScope::Project,
+                severity: 0.45,
+                title: format!(
+                    "{} check(s) on a numeric limit have no form a tool can re-run",
+                    affected.len()
+                ),
+                description: format!(
+                    "A check that judges a number and exists only as a status is a claim: nothing \
+                     can re-run it, so nothing can say whether the number still holds. Name the \
+                     file that IS the check — a test, a script, the tool call that measures it — \
+                     with link_artifact and an IMPLEMENTS edge to the Verification. Checks \
+                     without a form: {}.",
+                    checks_without_form
+                        .iter()
+                        .map(|(v, c)| format!("'{v}' on '{c}'"))
+                        .collect::<Vec<_>>()
+                        .join("; ")
+                ),
+                affected_ids: affected,
+                suggested_depth: 2,
+                evidence: format!(
+                    "{} Verification(s) VERIFY a Constraint with a limit and have 0 incoming \
+                     IMPLEMENTS.",
+                    checks_without_form.len()
+                ),
+            });
+        }
         Ok(())
     }
 

@@ -2247,6 +2247,9 @@ impl ReflowService {
                 ("concern", req.concern.as_deref()),
                 ("priority", req.priority.as_deref()),
                 ("unit", req.unit.as_deref()),
+                ("limit_basis", req.limit_basis.as_deref()),
+                ("limit_source", req.limit_source.as_deref()),
+                ("limit_measured_at", req.limit_measured_at.as_deref()),
             ],
         )?
         .unwrap_or(stored);
@@ -2354,10 +2357,15 @@ impl ReflowService {
     #[tool(
         description = "Record that a Constraint CONSTRAINS a target, with the target's `contribution` to the \
                        budget (in the Constraint's quantity unit) and the `basis` for the number \
-                       (estimated/evidence/measured). An edge without a contribution is reported by \
-                       budget_report as unstated — never treated as zero. Ask for this when you want to say how \
-                       much a part contributes to a budget or limit — its share of the mass, latency, cost or \
-                       other quantity.",
+                       (estimated/evidence/measured) and its `source` — the tool, artifact or person the \
+                       number came from. An edge without a contribution is reported by budget_report as \
+                       unstated — never treated as zero; a number with no source is named as unsourced. \
+                       ⭐ THIS IS THE CONTRACT WITH AN EXTERNAL MEASURING TOOL: design the budget here, \
+                       measure it in the tool (an IFC take-off, a ray trace), write the number back with \
+                       `basis: measured`, `source` naming the tool, `unit` and `measured_at`, and \
+                       budget_report says whether it still fits (bhome 2026-09-16: the seam existed and \
+                       nothing pointed at it). Ask for this when you want to say how much a part contributes \
+                       to a budget or limit — its share of the mass, latency, cost or other quantity.",
         annotations(read_only_hint = false)
     )]
     pub async fn constrains(
@@ -2379,6 +2387,7 @@ impl ReflowService {
                 req.contribution,
                 req.unit.as_deref(),
                 req.basis.as_deref(),
+                req.source.as_deref(),
                 req.measured_at.as_deref(),
                 req.note.as_deref(),
             )

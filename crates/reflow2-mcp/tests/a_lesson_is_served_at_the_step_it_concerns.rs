@@ -47,6 +47,7 @@ fn finding(id: &str, name: &str, steps: Option<Vec<&str>>, valid_from: &str) -> 
         fact_type: Some("finding".into()),
         basis: None,
         confidence: None,
+        source: None,
         value: None,
         valid_from: Some(valid_from.into()),
         valid_to: None,
