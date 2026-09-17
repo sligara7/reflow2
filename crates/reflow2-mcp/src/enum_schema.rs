@@ -81,6 +81,7 @@ macro_rules! list_enum {
 
 // Node properties
 schema_enum!(capability_status_opt, "Capability", "status", opt);
+schema_enum!(artifact_status_opt, "Artifact", "status", opt);
 schema_enum!(capability_status_req, "Capability", "status", req);
 schema_enum!(requirement_status_req, "Requirement", "status", req);
 schema_enum!(requirement_status_opt, "Requirement", "status", opt);
@@ -190,6 +191,7 @@ schema_enum!(
 schema_enum!(realizes_completeness_opt, "REALIZES", "completeness", opt);
 schema_enum!(realizes_conformance_opt, "REALIZES", "conformance", opt);
 schema_enum!(constrains_basis_opt, "CONSTRAINS", "basis", opt);
+schema_enum!(satisfies_coverage_opt, "SATISFIES", "coverage", opt);
 schema_enum!(deployed_to_status_opt, "DEPLOYED_TO", "status", opt);
 schema_enum!(
     requires_resource_criticality_opt,

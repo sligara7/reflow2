@@ -776,11 +776,20 @@ impl DesignGraph {
                 .set_opt("content_ref", opts.content_ref.as_deref())
                 .set_opt("note_kind", opts.note_kind.as_deref()),
         )?;
-        // The Artifact itself.
+        // The Artifact itself. `status` is set to `realized` ONLY on first
+        // registration: this call read the file's checksum off disk, which is
+        // evidence the file exists, and Artifact.status has carried no default
+        // since 2026-09-16 (xrt-demo F1). On a re-link the stored status is
+        // kept — an Artifact at `verified` must not be downgraded, which is the
+        // silent downgrade the comment above records.
+        let first_registration = self
+            .get_node(node::ARTIFACT, &opts.artifact_id)?
+            .is_none_or(|n| !n.properties.contains_key("status"));
         self.upsert_node(
             node::ARTIFACT,
             &opts.artifact_id,
             Props::new()
+                .set_opt("status", first_registration.then_some("realized"))
                 .set_opt("name", opts.name.as_deref())
                 .set_opt("description", opts.description.as_deref())
                 .set_opt("artifact_type", opts.artifact_type.as_deref())

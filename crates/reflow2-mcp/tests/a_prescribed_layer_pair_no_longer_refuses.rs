@@ -258,13 +258,24 @@ async fn an_unmeasured_cross_type_pair_still_refuses_with_the_layer_wording() {
     .await
     .expect("the component lands");
 
+    // Requirement↔Component WAS the unmeasured pair here until 2026-09-16, when
+    // the xrt-demo genesis measured it (7 refusals, 0 duplicates) and it joined
+    // the prescribed set. Component↔DesignRule has no measurement behind it.
     let err = s
-        .add_requirement(Parameters(requirement(
-            "req:a-lost-reading-heals-itself",
-            "A lost reading heals itself",
-        )))
+        .add_design_rule(Parameters(DesignRuleReq {
+            id: "rule:cumulative-totals".into(),
+            name: Some("Cumulative totals, not deltas".into()),
+            statement: Some(IDEA.into()),
+            category: None,
+            enforced: None,
+            units: None,
+            distinct_from: None,
+            approver: None,
+            acted_at: None,
+            steps: None,
+        }))
         .await
-        .expect_err("Requirement against Component is not a measured layer pair, so it refuses");
+        .expect_err("DesignRule against Component is not a measured layer pair, so it refuses");
 
     let msg = err.message.to_string();
     assert!(

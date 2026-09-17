@@ -35,8 +35,12 @@ fn the_declared_defaults_are_actually_parsed() {
     // schema when the role became the SET `roles` (an approval must not
     // displace an authorship); the default now lives at the typed door,
     // `authored_by(role: None)` → author, where a test pins it.
+    // 67 → 65 on 2026-09-16: Artifact.status (`realized`) and CONSTRAINS.basis
+    // (`estimated`) left the schema — the first asserted that a file nobody
+    // had produced was done, the second the provenance of a number that was
+    // not there (xrt-demo F1/F6). Both are now absent-means-nobody-said.
     assert!(
-        d.len() >= 67,
+        d.len() >= 65,
         "the schema declares ~81 defaults; parsing {} means the line shape moved \
          and this parser stopped seeing them — silently, which is the failure it \
          exists to end",
@@ -53,9 +57,16 @@ fn a_known_default_resolves_by_type_and_property() {
         schema_default("Requirement", "status").as_deref(),
         Some("proposed")
     );
+    // Artifact.status was the `realized` example here until 2026-09-16, when it
+    // joined granularity/volatility/audience as deliberately undefaulted: a
+    // status default is an affirmative claim, and add_artifact had no way to
+    // say otherwise. `Capability.status` (`planned`) is the not-yet-done end
+    // that stays.
+    assert_eq!(schema_default("Artifact", "status"), None);
+    assert_eq!(schema_default("CONSTRAINS", "basis"), None);
     assert_eq!(
-        schema_default("Artifact", "status").as_deref(),
-        Some("realized")
+        schema_default("Capability", "status").as_deref(),
+        Some("planned")
     );
     // And the seven removed for BL-198 step 1 now resolve to nothing, which is
     // the change itself: dynograph injects only what still declares a default.

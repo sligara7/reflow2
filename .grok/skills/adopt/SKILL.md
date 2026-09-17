@@ -69,6 +69,11 @@ recorded.
   3–7 span-of-control bound, while the hand-built functional design of the same system exceeded
   it in four places.
 
+  **Every root of the spine is contained by the Project** — `contains` from the Project to each
+  top-level part, including a part that is one indivisible thing with no children. Measured on
+  xrt-demo (2026-09-16): a single top-level part left uncontained can satisfy neither hierarchy
+  rule whatever `level` it declares, and the finding's message now says so.
+
   **FLAT IS AN HONEST ANSWER WHEN THE ARTIFACT IS FLAT** — say so rather than manufacturing tiers
   to look thorough. And check the result: `hierarchy_issues` reports a `level` that is not a rung
   on the ladder, a parent that is not exactly one rung above its child, and a box in two boxes.

@@ -162,7 +162,11 @@ impl DesignGraph {
             Props::new()
                 .set_opt("contribution", contribution)
                 .set_opt("unit", unit.map(str::trim).filter(|u| !u.is_empty()))
-                .set_opt("basis", basis)
+                // A basis describes a number. With no contribution there is
+                // nothing it could describe, so none is stored — the schema
+                // default that used to materialise `estimated` here asserted
+                // the provenance of an absent value (xrt-demo F6, 2026-09-16).
+                .set_opt("basis", basis.filter(|_| contribution.is_some()))
                 .set_opt("measured_at", measured_at)
                 .set_opt("note", note),
         )
