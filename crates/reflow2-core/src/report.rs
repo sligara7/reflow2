@@ -17,6 +17,7 @@ use crate::foundation::core::DynoError;
 use crate::allocate::AllocationReport;
 use crate::detect::GapCandidate;
 use crate::dimensions::{DimensionDrift, DriftDirection};
+use crate::frontier::Deferral;
 use crate::graph::DesignGraph;
 use crate::nodes::{edge, node};
 use crate::surprises::SurprisingConnection;
@@ -454,6 +455,12 @@ pub struct LoopStatus {
     /// The open follow-ups themselves, oldest first, so a boundary can read
     /// them out without a second call.
     pub follow_ups: Vec<FollowUp>,
+    /// Parts captured structurally whose intent was DEFERRED on purpose
+    /// (`fact_type: deferred_derivation`, open). The deferral quiets the intent
+    /// findings on its subject; this is where it is owed instead, so a
+    /// deferral is never a way to make a question disappear (frontier.rs).
+    pub deferrals_open: usize,
+    pub deferrals: Vec<Deferral>,
     /// The debt as ordered to-do lines, most blocking first. Empty when the
     /// loop is clean — and emptiness is asserted, not implied.
     pub next: Vec<String>,
@@ -957,6 +964,8 @@ impl DesignGraph {
         let unexamined_claims = self.confirmation_ledger()?.unexamined;
         let follow_ups = self.open_follow_ups()?;
         let follow_ups_open = follow_ups.len();
+        let deferrals = self.open_deferrals()?;
+        let deferrals_open = deferrals.len();
 
         let mut next = Vec::new();
         if unanswered_questions > 0 {
@@ -1059,6 +1068,14 @@ impl DesignGraph {
                  the record that answered it, or `valid_to` on the fact if it simply lapsed"
             ));
         }
+        if deferrals_open > 0 {
+            next.push(format!(
+                "{deferrals_open} part(s) captured structurally with intent deliberately deferred — \
+                 listed in `deferrals`; `frontier` says where to resume. Settle each by recovering \
+                 the intent (adopt Phase 3) and closing the marker: `valid_to` on the fact, or \
+                 `invalidates` from the record that answered it"
+            ));
+        }
         let gaps_not_attributable = unsurfaced_gaps.saturating_sub(gaps_on_owned_ground.len());
         let scope = contributor.map(|id| {
             let mut not_attributable = Vec::new();
@@ -1083,6 +1100,7 @@ impl DesignGraph {
                     "built capability(ies) never checked against reality",
                 ),
                 (follow_ups_open, "follow-up(s) captured and never revisited"),
+                (deferrals_open, "part(s) with intent deliberately deferred"),
             ] {
                 if n > 0 {
                     not_attributable.push(format!("{n} {what}"));
@@ -1152,6 +1170,8 @@ impl DesignGraph {
             unexamined_claims,
             follow_ups_open,
             follow_ups,
+            deferrals_open,
+            deferrals,
             verifications: self.verification_recency()?,
             assigned_decisions,
             gaps_on_owned_ground,

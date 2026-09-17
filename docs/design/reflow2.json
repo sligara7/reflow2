@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:c875217c3e5e05cd5fd5a23487805e7e0e1c5c82bd1962c7ffdd2fe4e19326e3",
+  "content_hash": "sha256:84894a5d5372ed4120d082fee4411e78e11c9b2371dac26963f2e8ce10137dc9",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -12555,6 +12555,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:cap:feedback-is-a-computed-tally",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:cap:incremental-adopt-with-a-frontier-and-a-deferred-derivation-marker",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
     },
@@ -33680,6 +33686,105 @@
         "action": "modified"
       },
       "to_id": "cap:mcp-surface"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:adopt-is-incremental-with-a-frontier-and-a-deferred-derivation-marker",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:adopt-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:adopt-is-incremental-with-a-frontier-and-a-deferred-derivation-marker",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:adopt-is-incremental-with-a-frontier-and-a-deferred-derivation-marker",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:find-tools-corpus-fixture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:adopt-is-incremental-with-a-frontier-and-a-deferred-derivation-marker",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:frontier"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:adopt-is-incremental-with-a-frontier-and-a-deferred-derivation-marker",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:report"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:adopt-is-incremental-with-a-frontier-and-a-deferred-derivation-marker",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:adopt-is-incremental-with-a-frontier-and-a-deferred-derivation-marker",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:adopt-is-incremental-with-a-frontier-and-a-deferred-derivation-marker",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skills-and-tools"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:adopt-is-incremental-with-a-frontier-and-a-deferred-derivation-marker",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:test-adopt-is-incremental-with-a-frontier-and-a-deferred-derivation-marker"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:adopt-is-incremental-with-a-frontier-and-a-deferred-derivation-marker",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:test-the-frontier-is-served-and-a-deferral-is-a-recorded-finding"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:adopt-is-incremental-with-a-frontier-and-a-deferred-derivation-marker",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
     },
     {
       "edge_type": "CHANGED",
@@ -67623,6 +67728,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:incremental-adopt-with-a-frontier-and-a-deferred-derivation-marker",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:cap:incremental-adopt-with-a-frontier-and-a-deferred-derivation-marker"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "cap:install-reaches-the-agent",
       "properties": {},
       "to_id": "snap:epoch:linking-repos:cap:install-reaches-the-agent"
@@ -70721,6 +70832,14 @@
     },
     {
       "edge_type": "IMPLEMENTS",
+      "from_id": "art:test-adopt-is-incremental-with-a-frontier-and-a-deferred-derivation-marker",
+      "properties": {
+        "covers": "whole"
+      },
+      "to_id": "ver:adopt-is-incremental-with-a-frontier-and-a-deferred-derivation-marker"
+    },
+    {
+      "edge_type": "IMPLEMENTS",
       "from_id": "art:test-an-edge-says-only-what-it-was-told",
       "properties": {
         "covers": "whole"
@@ -70742,6 +70861,14 @@
         "covers": "whole"
       },
       "to_id": "ver:the-graph-asks-what-a-session-made-false"
+    },
+    {
+      "edge_type": "IMPLEMENTS",
+      "from_id": "art:test-the-frontier-is-served-and-a-deferral-is-a-recorded-finding",
+      "properties": {
+        "covers": "whole"
+      },
+      "to_id": "ver:the-frontier-is-served-and-a-deferral-is-a-recorded-finding"
     },
     {
       "edge_type": "IMPLEMENTS",
@@ -213445,6 +213572,16 @@
       "edge_type": "REALIZES",
       "from_id": "art:adopt-skill",
       "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked",
+        "note": "Region mode"
+      },
+      "to_id": "cap:incremental-adopt-with-a-frontier-and-a-deferred-derivation-marker"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:adopt-skill",
+      "properties": {
         "conformance": "unchecked"
       },
       "to_id": "cap:the-domain-standard-is-asked-recorded-and-its-absence-noticed"
@@ -214222,6 +214359,16 @@
       "edge_type": "REALIZES",
       "from_id": "art:detect",
       "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked",
+        "note": "the two intent detectors skip a deferred subject"
+      },
+      "to_id": "cap:incremental-adopt-with-a-frontier-and-a-deferred-derivation-marker"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:detect",
+      "properties": {
         "completeness": "partial",
         "conformance": "unchecked"
       },
@@ -214648,6 +214795,24 @@
         "conformance": "verified"
       },
       "to_id": "cap:store"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:frontier",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:incremental-adopt-with-a-frontier-and-a-deferred-derivation-marker"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:frontier",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "chg:adopt-is-incremental-with-a-frontier-and-a-deferred-derivation-marker"
     },
     {
       "edge_type": "REALIZES",
@@ -217067,6 +217232,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:test-adopt-is-incremental-with-a-frontier-and-a-deferred-derivation-marker",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "chg:adopt-is-incremental-with-a-frontier-and-a-deferred-derivation-marker"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:test-an-edge-says-only-what-it-was-told",
       "properties": {
         "completeness": "complete",
@@ -217433,6 +217607,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:test-the-frontier-is-served-and-a-deferral-is-a-recorded-finding",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "chg:adopt-is-incremental-with-a-frontier-and-a-deferred-derivation-marker"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:test-the-guard-reads-the-request-before-refusing",
       "properties": {
         "completeness": "complete",
@@ -217783,6 +217966,16 @@
         "note": "the served closure_report tool"
       },
       "to_id": "cap:closure-report"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:tools-coherence",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked",
+        "note": "the served frontier tool"
+      },
+      "to_id": "cap:incremental-adopt-with-a-frontier-and-a-deferred-derivation-marker"
     },
     {
       "edge_type": "REALIZES",
@@ -222418,6 +222611,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:adopt-is-incremental-with-a-frontier-and-a-deferred-derivation-marker",
+      "properties": {},
+      "to_id": "cap:incremental-adopt-with-a-frontier-and-a-deferred-derivation-marker"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:adopt-storyflow",
       "properties": {},
       "to_id": "cap:adopt"
@@ -223531,6 +223730,12 @@
       "from_id": "ver:the-first-move-fits",
       "properties": {},
       "to_id": "cap:bounded-reads"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:the-frontier-is-served-and-a-deferral-is-a-recorded-finding",
+      "properties": {},
+      "to_id": "cap:incremental-adopt-with-a-frontier-and-a-deferred-derivation-marker"
     },
     {
       "edge_type": "VERIFIES",
@@ -224716,6 +224921,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:frontier",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:frontier"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:genesis",
       "properties": {
         "action": "created"
@@ -225812,6 +226025,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:test-adopt-is-incremental-with-a-frontier-and-a-deferred-derivation-marker",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-adopt-is-incremental-with-a-frontier-and-a-deferred-derivation-marker"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:test-an-edge-says-only-what-it-was-told",
       "properties": {
         "action": "created"
@@ -226057,6 +226278,14 @@
         "action": "created"
       },
       "to_id": "art:test-the-fourteen-holes-are-writable"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:test-the-frontier-is-served-and-a-deferral-is-a-recorded-finding",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-the-frontier-is-served-and-a-deferral-is-a-recorded-finding"
     },
     {
       "edge_type": "YIELDED",
@@ -226649,7 +226878,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:1a1bf56e7495bd3e112b8d585b5bcf71ee1c577edd94a0bc35885fd72d06b64d",
+        "checksum": "sha256:2b18c90fb4f0af11bd400cff80c716ac41a4d08a8e6c69548bbf5373b8e5f70d",
         "granularity": "atomic",
         "location": "getting-started/skills/adopt/SKILL.md",
         "name": "adopt/SKILL.md",
@@ -227367,7 +227596,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:6cf32d70418e33e456de484569c7bb1e171f22af1290dd4bda073a2ce7065143",
+        "checksum": "sha256:346ca8186c73695a313c06045a184f5326d2ff05771b3e6a39a9da8ae1743cfc",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
@@ -227820,7 +228049,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "test",
-        "checksum": "sha256:7954e1221e0beee2b256efdc56feec359928a2f3454066ed1b8d93938cc7781c",
+        "checksum": "sha256:6fe9449a5781067d53c3ea6f043131c6653b4f79b3351d9f91d8e2c8a9a55cdd",
         "description": "The 180-query criterion-1 corpus: one query per served tool, phrased as a user states the job — never the tool's name, never a phrase lifted from its description. Authored 2026-09-11 by an agent that had read every description, so informed rather than blind; a query from a field report supersedes the one here. Read by every_tool_is_found_by_a_query_in_the_users_words.rs via include_str!, so adding a tool without a query fails the build.",
         "location": "crates/reflow2-mcp/tests/fixtures/find_tools_corpus.json",
         "name": "find_tools_corpus.json",
@@ -227873,6 +228102,17 @@
         "checksum": "sha256:6bfeb48735dad56038ae617a0a9b4a1cbd0234d6030cd7c4f9d8d28a5b48f468",
         "location": "crates/reflow2-core/src/foundation/mod.rs",
         "name": "foundation/mod.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:frontier",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:8a61f6c37a5fca8ba64b3300e8616c05baa5d5e689d4779fbe40c2affbe296e9",
+        "location": "crates/reflow2-core/src/frontier.rs",
+        "name": "frontier.rs — the deferred-derivation marker read and the frontier report: structure without intent, the deferred, the uncaptured (with a sweep), the resume point",
         "status": "realized"
       }
     },
@@ -229081,7 +229321,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:0ee3b6c41f79dd4a21892c7f0e94a7bf90135f6a72a43c0643c1b3360a4a05a2",
+        "checksum": "sha256:39f8b824a6c53184d1e79901d2108ddd742bb941962f4f16e0a9806e764e8cb9",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/report.rs",
         "name": "report.rs",
@@ -229480,7 +229720,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:aa87e3f4361b41feedb1202d381d02afc8a59c1355ac9e7d38a5e2add9153042",
+        "checksum": "sha256:4e61000c663f3005bdb230e47d6a7f31d677e4feba7b2467ba279954c6d32f85",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -229567,7 +229807,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:12c849fcb7d88fdbe4c05188de99cb5622cf229b33847410815e043d6bb454da",
+        "checksum": "sha256:9f1ee744eaa5d2cb0b03ff29cb8f4a339108d7a71d7cc4e505f8bb18e2d3af51",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -229606,7 +229846,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:05d25328fe5eac8890bc742a23e6504ffd375c6bca10c4430f3a232e6529bcd8",
+        "checksum": "sha256:cbb45bf54040141eb312b9a42d9e0abcbd210410c9fb0402eebbf5b3d627ee59",
         "location": "docs/skills-and-tools.md",
         "name": "skills-and-tools.md",
         "status": "realized"
@@ -230134,6 +230374,17 @@
       }
     },
     {
+      "node_id": "art:test-adopt-is-incremental-with-a-frontier-and-a-deferred-derivation-marker",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:6e385bd8b44cd6da17118760dce6481c97d0fbc0023959b356dec3186b694386",
+        "location": "crates/reflow2-core/tests/adopt_is_incremental_with_a_frontier_and_a_deferred_derivation_marker.rs",
+        "name": "adopt_is_incremental_with_a_frontier_and_a_deferred_derivation_marker.rs — four cases: the marker quiets and is owed, closing it brings the finding back, the frontier's three legs and resume point, no sweep reads as not known",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:test-an-edge-says-only-what-it-was-told",
       "node_type": "Artifact",
       "properties": {
@@ -230618,6 +230869,17 @@
       }
     },
     {
+      "node_id": "art:test-the-frontier-is-served-and-a-deferral-is-a-recorded-finding",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:6f0eddb8466447ff26874c6e731537bf02370a794d79a1d4932b3a296ae6f35a",
+        "location": "crates/reflow2-mcp/tests/the_frontier_is_served_and_a_deferral_is_a_recorded_finding.rs",
+        "name": "the_frontier_is_served_and_a_deferral_is_a_recorded_finding.rs — the frontier tool and the deferral marker through the served surface",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:test-the-guard-reads-the-request-before-refusing",
       "node_type": "Artifact",
       "properties": {
@@ -230780,7 +231042,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:48fc58b40e0e953eb8462e277e567dc2a1f72033d1ca99023f2641eac9d27463",
+        "checksum": "sha256:9bf9b63ca356c076a2b55701ccf6cfc4754132f409581ec0027030dbd11f4c22",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
@@ -233044,10 +233306,10 @@
       "node_id": "cap:incremental-adopt-with-a-frontier-and-a-deferred-derivation-marker",
       "node_type": "Capability",
       "properties": {
-        "description": "Planned. A deferred_derivation fact kind read the way follow_up is: dated, keyed to a node, listed at every boundary as owed, and suppressing the intent gaps on its subject so a regional pass does not report false gaps for what was left on purpose. A frontier read that lists nodes captured structurally with no recovered intent, nodes carrying the marker, and unmodelled neighbours adjacent to what is captured, as the worklist and the resume point. Adopt gains a region mode that writes the marker on what it leaves. Depends on the scoped detectors telling the truth about a region (two measured defects). The frontier must keep saying what has not been looked at, or the regional pass becomes the local optimum the adopt skill warns about.",
+        "description": "As built (2026-09-17): a deferred_derivation TemporalFact on a part (record_finding fact_type deferred_derivation) is open until valid_to or INVALIDATES; while open, unmotivated_capability and unallocated_component skip that part, and loop_status lists it under deferrals with a next line — quieted on its subject, owed at the boundary, never gone. frontier (served) reports structure_without_intent (the detectors' own rules minus deferred subjects), deferred oldest first, uncaptured (coverage_report's unclaimed regions when a sweep is handed in; absent, not empty, without one) and resume_point (the most recent deferral). The adopt skill's Region mode: model the region, mark what you leave, ask with the region's scope, resume with frontier, settle by closing the marker. The scoped-detector defect this depended on was settled 2026-08-17 (default depth 2).",
         "name": "Incremental, resumable adopt: a frontier read (structure without intent, deferred parts, uncaptured neighbours) and a deferred-derivation marker that is listed as owed and suppresses the intent gaps on its subject",
         "provenance": "authored",
-        "status": "planned"
+        "status": "realized"
       }
     },
     {
@@ -238680,6 +238942,17 @@
         "rationale": "The Artifact schema declares `checksum`, link_artifact takes one and its skill says always supply it, set_artifact_checksum moves one later — and the plain constructor alone could not set the first, so the workaround was create_node with a props bag. The class is the one the reachability instrument cannot see: a declared property no typed constructor offers, hidden because most artifacts carry one through the OTHER door and the property reads as heavily used. CORRECTED THE CAUSE: for this property, yes. The sweep the record said was never run — every constructor that cannot set a declared property of its own type — is still not run, and is the honest remaining edge of this fix.",
         "subject": "system",
         "summary": "AddArtifactReq gains `checksum`; the handler writes it through a new core method, DesignGraph::set_artifact_baseline (artifact.rs), which stores the canonical form as a plain property with no ChangeEvent — a first baseline is not a change, the same shape link_artifact uses — and REFUSES to move an existing one, naming set_artifact_checksum as the door that records why a baseline moved. Pinned by crates/reflow2-mcp/tests/add_artifact_takes_the_first_checksum.rs (stored, not merely accepted; absent stays absent; a move is refused). The delete_edge half of the same record is left as built: an edge is identified by its two ids and its type, the endpoint types are redundant for a delete, and the record itself judged the refusal defensible — what it wanted there is the wish already open as dec:idea-a-rejected-field-says-whether-it-moved-or-was-never-there."
+      }
+    },
+    {
+      "node_id": "chg:adopt-is-incremental-with-a-frontier-and-a-deferred-derivation-marker",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-09-17",
+        "name": "Adopt is incremental and resumable: a frontier read and a deferred-derivation marker",
+        "rationale": "Second of Alex's three ideas promoted on Anthony's word 2026-09-17, built after the v0.63.0 cut on his word (\"Can we move into Alex's second requirement?\"). The shape is the two primitives Alex named, on vocabulary the design already had: the marker is the follow_up shape with a different fact_type, the frontier reuses the two intent detectors' rules and coverage_report's sweep. The breadth-first payoff is kept by construction — the frontier refuses to read clean about what is uncaptured until a sweep is handed in — and a deferral is never a way to make a question disappear: it quiets the finding on its subject and is listed as owed at the boundary instead. The scoped-detector dependency was already settled (dec:the-default-scope-depth-should-be-two, 2026-08-17).",
+        "summary": "frontier.rs: DEFERRED_DERIVATION (a TemporalFact fact_type), open_deferrals / deferred_subjects (open = no valid_to and no INVALIDATES, the follow_up rule), and frontier(observed, exclusions) — structure_without_intent (capabilities with no SATISFIES, leaf components with no ALLOCATED_TO, the detectors' own rules, minus deferred subjects), deferred oldest first, uncaptured (coverage_report's unclaimed regions when a sweep is handed in; absent, never empty, without one), resume_point (the most recent deferral). detect.rs: unmotivated_capability and unallocated_component skip subjects under an open deferral. report.rs: LoopStatus.deferrals_open / deferrals, a next line, and the not-attributable tuple. Served: frontier (coherence router; observed as {path, mass} objects like coverage_report). Skills: adopt gains Region mode (model the region; mark what you leave with record_finding fact_type deferred_derivation; scoped detect_gaps; resume with frontier; settle by closing the marker). Corpus query for frontier; CHANGELOG entry. Tests: adopt_is_incremental_with_a_frontier_and_a_deferred_derivation_marker.rs (core, four cases) and the_frontier_is_served_and_a_deferral_is_a_recorded_finding.rs (served, two)."
       }
     },
     {
@@ -257370,6 +257643,16 @@
       }
     },
     {
+      "node_id": "frag:art:frontier",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered frontier.rs — the deferred-derivation marker read and the frontier report: structure without intent, the deferred, the uncaptured (with a sweep), the resume point"
+      }
+    },
+    {
       "node_id": "frag:art:genesis",
       "node_type": "Fragment",
       "properties": {
@@ -258741,6 +259024,16 @@
       }
     },
     {
+      "node_id": "frag:art:test-adopt-is-incremental-with-a-frontier-and-a-deferred-derivation-marker",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered adopt_is_incremental_with_a_frontier_and_a_deferred_derivation_marker.rs — four cases: the marker quiets and is owed, closing it brings the finding back, the frontier's three legs and resume point, no sweep reads as not known"
+      }
+    },
+    {
       "node_id": "frag:art:test-an-edge-says-only-what-it-was-told",
       "node_type": "Fragment",
       "properties": {
@@ -259051,6 +259344,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered the_fourteen_holes_are_writable.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:test-the-frontier-is-served-and-a-deferral-is-a-recorded-finding",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered the_frontier_is_served_and_a_deferral_is_a_recorded_finding.rs — the frontier tool and the deferral marker through the served surface"
       }
     },
     {
@@ -266212,6 +266515,16 @@
         "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:feedback-command\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"reviewed\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:feedback-is-a-computed-tally-report-test\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"verified\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:feedback-is-a-computed-tally-wire-test\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"verified\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:feedback-skill\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"reviewed\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:usage-ledger\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"verified\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:the-ledger-holds-the-verb-and-never-the-object\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:service\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:feedback-on-reflow2-is-computed-from-a-record-the-server-kept\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SCHEDULED_FOR\",\"other_type\":\"DesignEpoch\",\"other_id\":\"epoch:planned-feedback-is-a-computed-tally\",\"properties\":{\"modality\":\"expected\",\"recorded_at\":\"2026-09-12\"}}]",
         "state": "{\"description\":\"PLANNED, 2026-09-12 (increment 437). Three parts, one capability because they are useless apart.\\n\\nTHE LEDGER. Every tool call the server answers appends one line to `<graph-path>.usage.jsonl` beside the design's store — the sidecar convention `.meta.json`, `.server.json` and `.client.json` already follow. A line carries: the moment, the tool name, the outcome class (`ok`, `refused`, `error`), the refusal class when refused (near_match, missing_argument, unknown_argument, unresolved_reference, refused, other — derived from a fixed table of the server's own phrasings, so the message itself is never stored), the duration, the harness name and version from the handshake, the seat, and for `get_skill` alone the skill name (reflow2's vocabulary, not the user's). NEVER an argument, a node id, a statement, or a message. An in-memory design writes nothing; a write that fails never fails the call (the handshake's own rule).\\n\\nTHE REPORT. A read tool, `usage_report`, renders the ledger since the previous report's marker or since a date the caller names: calls by tool, the served tools never called in the window, refusals by class and by tool, skills fetched, harnesses seen, the window's bounds — plus what the server knows without asking: reflow2's version, OS and architecture, the negotiated protocol revision, the design's node count. It appends a marker line so the next report starts after it, which is what makes \\\"since last time\\\" real. The unit is the PROJECT, not the session: the ledger is written by every session that ever served this design, from any harness.\\n\\nTHE SKILL. `feedback`, served with the `/feedback` shortcut and a command file in the kit for every harness. It calls the tool, adds the model as the agent's self-report labelled as such (the one field no harness sends over the protocol), invites one line of disposition per refusal row (guard working / real defect / unexplained) and any reproduction, appends the whole to the project's own `reflow2_feedback.md`, and shows it to the person. It never files or sends anything: typing the command is consent to compose, not to send.\\n\\nWHAT IT DOES NOT SEE: anything outside reflow2's own tool calls. A shell pipe, a git error, a red CI — `report-friction` remains the form for those, with the agent as witness.\",\"name\":\"/feedback renders a tally the server kept — tools used, refusals by class, harness and version metadata — for the person to carry\",\"provenance\":\"authored\",\"status\":\"verified\",\"tier\":\"operational\"}",
         "target_id": "cap:feedback-is-a-computed-tally",
+        "target_type": "Capability"
+      }
+    },
+    {
+      "node_id": "snap:epoch:preserved-on-write:cap:incremental-adopt-with-a-frontier-and-a-deferred-derivation-marker",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"CONTAINS\",\"other_type\":\"Project\",\"other_id\":\"proj:reflow2\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:adopt-skill\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\",\"note\":\"Region mode\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:detect\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\",\"note\":\"the two intent detectors skip a deferred subject\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:frontier\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:tools-coherence\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\",\"note\":\"the served frontier tool\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:adopt-is-incremental-with-a-frontier-and-a-deferred-derivation-marker\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:the-frontier-is-served-and-a-deferral-is-a-recorded-finding\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:temporal\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:alex\",\"properties\":{\"roles\":[\"author\"]}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:adopt-can-be-incremental-and-resumable-with-a-frontier-and-a-deferred-derivation-marker\",\"properties\":{}}]",
+        "state": "{\"description\":\"Planned. A deferred_derivation fact kind read the way follow_up is: dated, keyed to a node, listed at every boundary as owed, and suppressing the intent gaps on its subject so a regional pass does not report false gaps for what was left on purpose. A frontier read that lists nodes captured structurally with no recovered intent, nodes carrying the marker, and unmodelled neighbours adjacent to what is captured, as the worklist and the resume point. Adopt gains a region mode that writes the marker on what it leaves. Depends on the scoped detectors telling the truth about a region (two measured defects). The frontier must keep saying what has not been looked at, or the regional pass becomes the local optimum the adopt skill warns about.\",\"name\":\"Incremental, resumable adopt: a frontier read (structure without intent, deferred parts, uncaptured neighbours) and a deferred-derivation marker that is listed as owed and suppresses the intent gaps on its subject\",\"provenance\":\"authored\",\"status\":\"realized\"}",
+        "target_id": "cap:incremental-adopt-with-a-frontier-and-a-deferred-derivation-marker",
         "target_type": "Capability"
       }
     },
@@ -276727,6 +277040,20 @@
       }
     },
     {
+      "node_id": "ver:adopt-is-incremental-with-a-frontier-and-a-deferred-derivation-marker",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-core/tests/adopt_is_incremental_with_a_frontier_and_a_deferred_derivation_marker.rs — four cases.",
+        "findings": "fr run: 4 passed, 0 failed.",
+        "kind": "verification",
+        "last_run_at": "2026-09-17",
+        "level": "unit",
+        "method": "test",
+        "name": "A deferral quiets the intent finding on its subject and the boundary lists it as owed; closing the marker brings the finding back; the frontier lists structure without intent, the deferred and the resume point; a frontier with no sweep says it does not know what is uncaptured",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:adopt-storyflow",
       "node_type": "Verification",
       "properties": {
@@ -278883,6 +279210,20 @@
       }
     },
     {
+      "node_id": "ver:the-frontier-is-served-and-a-deferral-is-a-recorded-finding",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-mcp/tests/the_frontier_is_served_and_a_deferral_is_a_recorded_finding.rs — two cases through the JSON request shapes.",
+        "findings": "fr run: 2 passed, 0 failed.",
+        "kind": "verification",
+        "last_run_at": "2026-09-17",
+        "level": "integration",
+        "method": "test",
+        "name": "The frontier is served and says when no sweep was handed in; a deferral is a recorded finding that loop_status lists, the frontier resumes at, and detect_gaps does not ask about",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:the-git-exchange-path-is-defended",
       "node_type": "Verification",
       "properties": {
@@ -279419,7 +279760,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:3a45d70498a903cccaa70dfa8957fa33ae942e4bc33d22be57433c1d697faff7",
+  "prev_content_hash": "sha256:c875217c3e5e05cd5fd5a23487805e7e0e1c5c82bd1962c7ffdd2fe4e19326e3",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -280016,8 +280357,8 @@
     "schema_version": 1
   },
   "taken_at": {
-    "branch": "cut-v0.63.0",
-    "commit": "0fea1b2f522499964d6a59c6d46338d212b4432c",
+    "branch": "adopt-is-incremental-with-a-frontier-and-a-deferred-derivation-marker",
+    "commit": "aa9a231d773fb373a8cee9bbdaf82cf07a24a1b0",
     "dirty": true
   }
 }

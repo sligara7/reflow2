@@ -256,6 +256,31 @@ gap is closed. A system adopted honestly usually *should* have open gaps and unc
 naming them is what "under design control" means, and hiding them is how a thin pass gets
 mistaken for a complete one.
 
+## Region mode — incremental, resumable, and honest about what it left
+
+Adopt is breadth-first on purpose, and the warning above stands: a partial graph emits gaps
+indistinguishable from real ones. Since 2026-09-17 there is a way to work one region at a time
+WITHOUT that lie, on Alex's ask ("a native incremental adopt mode needing two primitives: a
+frontier query and a deferred-derivation marker"):
+
+1. **Model the region** as Phase 1 says — coarse, both sides of every contract, nested.
+2. **Mark what you leave.** For each part you captured structurally and whose intent you are NOT
+   recovering in this pass, `record_finding` with `fact_type` `deferred_derivation`, `subject_id`
+   the part, `statement` why it is deferred, `valid_from` today. The marker QUIETS the intent
+   findings on that part (`unmotivated_capability`, `unallocated_component`) — so the region's gap
+   list is about the region — and it is LISTED AS OWED at every boundary (`loop_status`
+   `deferrals`). A deferral never makes a question disappear; it moves it to where it is counted.
+3. **Ask the region's questions with the region's scope**: `detect_gaps` with `scope` on the
+   region's root (the default depth is one component's own thread; it was measured).
+4. **Resume with `frontier`.** It lists structure without intent, the deferrals oldest first, and
+   the most recent one as `resume_point` — you were here. Hand it the sweep (`observed`, derived
+   from `git ls-files`) and it also lists what is adjacent and NOT captured at all; without a
+   sweep it says that is not known rather than reading clean. That third leg is the breadth-first
+   payoff kept alive: the frontier keeps saying what you have not looked at.
+5. **Settle a deferral** by recovering the intent (Phase 3) and closing the marker — `valid_to` on
+   the fact, or `invalidates` from the record that answered it — which brings the finding back if
+   the intent is still missing.
+
 ## Before you write
 
 **Search before you create.** Adopt runs against a design that may already hold

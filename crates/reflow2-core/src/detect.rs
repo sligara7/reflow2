@@ -2629,11 +2629,15 @@ impl DesignGraph {
         if pop.requirements == 0 {
             return Ok(());
         }
+        // A part whose intent was DEFERRED on purpose is not missing intent:
+        // the deferral marker moves the question to the boundary
+        // (loop_status.deferrals) instead of asking it here (frontier.rs).
+        let deferred = self.deferred_subjects()?;
         for cap in self.scan_live_nodes(node::CAPABILITY)? {
             // Discontinued: built, then decided against. It is not
             // unfinished work and asking about it forever is how a gap list
             // becomes unreadable.
-            if self.is_discontinued(&cap.node_id)? {
+            if self.is_discontinued(&cap.node_id)? || deferred.contains(&cap.node_id) {
                 continue;
             }
             if self
@@ -2979,6 +2983,8 @@ impl DesignGraph {
 
         let mut unallocated: Vec<String> = Vec::new();
         let mut leaves = 0usize;
+        // Deferred on purpose: listed at the boundary, not asked here (frontier.rs).
+        let deferred = self.deferred_subjects()?;
         // Leaves an accepted ruling declares CORRECTLY empty. Counted rather
         // than merely skipped — see the parking check below.
         let mut parked = 0usize;
@@ -3034,6 +3040,9 @@ impl DesignGraph {
                 // the silent truncation `dec:reflow2-is-built-for-observability`
                 // forbids — the reader must be able to tell a design with no
                 // empty parts from one whose empty parts were ruled deliberate.
+                if deferred.contains(&cmp.node_id) {
+                    continue;
+                }
                 if self.is_parked(&cmp.node_id)? {
                     parked += 1;
                     continue;
