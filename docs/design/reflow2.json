@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:ed8ebea1eea1c2a4209e07534968d57587b7c910f8da5dd7c52856615f3449dc",
+  "content_hash": "sha256:4ab7e56a1f5748ff34fe78bb05fecedb198091d60ae6b134b518c033ee94bc5d",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -16120,6 +16120,16 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-genesis-ergonomics-a-brief-that-already-answers-the-structure-a-schema-read-that-answers-one-question-tools-a-skill-needs-and-one-finding-for-nothing-built",
+      "properties": {
+        "roles": [
+          "author"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-governance-management-split",
       "properties": {
         "authored_at": "2026-08-09",
@@ -16724,6 +16734,16 @@
     {
       "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-pair-with-mcp-for-blender-as-the-hands-that-make-and-show-the-cad-artifact",
+      "properties": {
+        "roles": [
+          "author"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-physical-domains-need-ordered-parts-dimensioned-quantities-and-a-physical-medium",
       "properties": {
         "roles": [
           "author"
@@ -17574,6 +17594,16 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-the-tool-partnership-needs-a-named-contract-basis-measured-subject-record-and-a-word-for-apparatus",
+      "properties": {
+        "roles": [
+          "author"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-the-user-declares-an-se-unit-on-purpose-with-a-skill-per-unit",
       "properties": {
         "roles": [
@@ -17631,6 +17661,16 @@
       "from_id": "dec:idea-verifies-takes-a-list-of-targets",
       "properties": {
         "authored_at": "2026-09-06",
+        "roles": [
+          "author"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-what-did-the-agent-infer-provenance-per-field-per-type-and-as-a-report",
+      "properties": {
         "roles": [
           "author"
         ]
@@ -31711,6 +31751,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-a9de8d85e68af580",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-an-edge-says-only-what-it-was-told"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-acb06c45b63a7b6d",
       "properties": {
         "accepted_baseline": true,
@@ -39430,6 +39479,123 @@
         "action": "modified"
       },
       "to_id": "dep:dynograph-foundation"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:four-root-causes-from-two-field-reports-are-fixed-at-the-cause",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:adopt-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:four-root-causes-from-two-field-reports-are-fixed-at-the-cause",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:artifact"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:four-root-causes-from-two-field-reports-are-fixed-at-the-cause",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:budget"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:four-root-causes-from-two-field-reports-are-fixed-at-the-cause",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:enum-schema"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:four-root-causes-from-two-field-reports-are-fixed-at-the-cause",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:four-root-causes-from-two-field-reports-are-fixed-at-the-cause",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:hierarchy"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:four-root-causes-from-two-field-reports-are-fixed-at-the-cause",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:report"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:four-root-causes-from-two-field-reports-are-fixed-at-the-cause",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:schema-build"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:four-root-causes-from-two-field-reports-are-fixed-at-the-cause",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:schema-core"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:four-root-causes-from-two-field-reports-are-fixed-at-the-cause",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:four-root-causes-from-two-field-reports-are-fixed-at-the-cause",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:test-a-prescribed-layer-pair-no-longer-refuses"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:four-root-causes-from-two-field-reports-are-fixed-at-the-cause",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:tools-built"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:four-root-causes-from-two-field-reports-are-fixed-at-the-cause",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
     },
     {
       "edge_type": "CHANGED",
@@ -55647,6 +55813,22 @@
     },
     {
       "edge_type": "DOCUMENTS",
+      "from_id": "art:bhome-cad-demo-feedback-2026-09-16",
+      "properties": {
+        "doc_kind": "field_report"
+      },
+      "to_id": "dec:idea-the-tool-partnership-needs-a-named-contract-basis-measured-subject-record-and-a-word-for-apparatus"
+    },
+    {
+      "edge_type": "DOCUMENTS",
+      "from_id": "art:bhome-cad-demo-feedback-2026-09-16",
+      "properties": {
+        "doc_kind": "field_report"
+      },
+      "to_id": "fact:root-cause-two-field-holes-a-rejected-coverage-and-a-basis-asserted-for-a-number-that-is-not-there-share-one-cause-the-edge-sweep-was-dropped"
+    },
+    {
+      "edge_type": "DOCUMENTS",
       "from_id": "art:bhome-genesis-feedback-2026-08-31",
       "properties": {},
       "to_id": "dec:idea-reflow2s-own-scaffolding-manufactures-the-findings-it-then-reports"
@@ -56044,6 +56226,22 @@
         "doc_kind": "design_doc"
       },
       "to_id": "dec:should-a-design-be-able-to-say-it-describes-something-that-already-exists"
+    },
+    {
+      "edge_type": "DOCUMENTS",
+      "from_id": "art:xrt-demo-genesis-feedback-2026-09-16",
+      "properties": {
+        "doc_kind": "field_report"
+      },
+      "to_id": "fact:root-cause-add-artifact-materialises-realized-because-the-affirmative-default-was-outside-the-2026-07-28-sweep-and-the-constructor-has-no-status"
+    },
+    {
+      "edge_type": "DOCUMENTS",
+      "from_id": "art:xrt-demo-genesis-feedback-2026-09-16",
+      "properties": {
+        "doc_kind": "field_report"
+      },
+      "to_id": "fact:root-cause-the-guard-still-refuses-thread-pairs-because-the-prescribed-set-was-built-from-evidence-and-the-evidence-for-capability-component-arrived-today"
     },
     {
       "edge_type": "DUPLICATES",
@@ -69020,6 +69218,12 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "fact:root-cause-a-childless-root-part-has-no-legal-level-because-two-self-limiting-hierarchy-rules-were-never-checked-jointly",
+      "properties": {},
+      "to_id": "fact:measured-the-childless-root-part-in-xrt-demo-is-not-contained-by-its-project-so-the-cure-both-rules-accept-was-never-named-to-the-agent"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "fact:twelve-near-match-refusals-across-two-designs-and-not-one-was-a-duplicate",
       "properties": {},
       "to_id": "fact:the-fifteenth-and-sixteenth-near-match-refusals-were-cross-type-and-distinct-too"
@@ -69300,6 +69504,14 @@
     },
     {
       "edge_type": "IMPLEMENTS",
+      "from_id": "art:test-a-floating-root-part-is-told-the-cure",
+      "properties": {
+        "covers": "whole"
+      },
+      "to_id": "ver:a-floating-root-part-is-told-the-cure"
+    },
+    {
+      "edge_type": "IMPLEMENTS",
       "from_id": "art:test-a-project-declares-its-unit-system-and-the-sweep-reports",
       "properties": {
         "covers": "whole"
@@ -69313,6 +69525,14 @@
         "covers": "whole"
       },
       "to_id": "ver:a-project-is-asked-what-its-artifacts-must-be-in"
+    },
+    {
+      "edge_type": "IMPLEMENTS",
+      "from_id": "art:test-a-registered-artifact-asserts-nothing-it-was-not-told",
+      "properties": {
+        "covers": "whole"
+      },
+      "to_id": "ver:a-registered-artifact-asserts-nothing-it-was-not-told"
     },
     {
       "edge_type": "IMPLEMENTS",
@@ -69332,6 +69552,14 @@
     },
     {
       "edge_type": "IMPLEMENTS",
+      "from_id": "art:test-an-edge-says-only-what-it-was-told",
+      "properties": {
+        "covers": "whole"
+      },
+      "to_id": "ver:an-edge-says-only-what-it-was-told"
+    },
+    {
+      "edge_type": "IMPLEMENTS",
       "from_id": "art:test-loop-nudge",
       "properties": {
         "covers": "whole"
@@ -69345,6 +69573,14 @@
         "covers": "whole"
       },
       "to_id": "ver:the-graph-asks-what-a-session-made-false"
+    },
+    {
+      "edge_type": "IMPLEMENTS",
+      "from_id": "art:test-the-guard-reads-the-request-before-refusing",
+      "properties": {
+        "covers": "whole"
+      },
+      "to_id": "ver:the-guard-reads-the-request-before-refusing"
     },
     {
       "edge_type": "INCLUDES",
@@ -205868,6 +206104,38 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:four-root-causes-from-two-field-reports-are-fixed-at-the-cause",
+      "properties": {
+        "evidence": "orphan_level's message names the Project as the thing that can contain the part; the adopt skill says so where it teaches nesting. Pinned by a_floating_root_part_is_told_the_cure.rs."
+      },
+      "to_id": "fact:root-cause-a-childless-root-part-has-no-legal-level-because-two-self-limiting-hierarchy-rules-were-never-checked-jointly"
+    },
+    {
+      "edge_type": "INVALIDATES",
+      "from_id": "chg:four-root-causes-from-two-field-reports-are-fixed-at-the-cause",
+      "properties": {
+        "evidence": "Artifact.status undefaulted; add_artifact takes status; link_artifact sets realized only on first registration. Pinned by a_registered_artifact_asserts_nothing_it_was_not_told.rs."
+      },
+      "to_id": "fact:root-cause-add-artifact-materialises-realized-because-the-affirmative-default-was-outside-the-2026-07-28-sweep-and-the-constructor-has-no-status"
+    },
+    {
+      "edge_type": "INVALIDATES",
+      "from_id": "chg:four-root-causes-from-two-field-reports-are-fixed-at-the-cause",
+      "properties": {
+        "evidence": "refuse_unless_deliberate reads the request's declared targets; four thread pairs join PRESCRIBED_LAYER_PAIRS. Pinned by the_guard_reads_the_request_before_refusing.rs."
+      },
+      "to_id": "fact:root-cause-the-guard-still-refuses-thread-pairs-because-the-prescribed-set-was-built-from-evidence-and-the-evidence-for-capability-component-arrived-today"
+    },
+    {
+      "edge_type": "INVALIDATES",
+      "from_id": "chg:four-root-causes-from-two-field-reports-are-fixed-at-the-cause",
+      "properties": {
+        "evidence": "satisfies takes coverage and delivery reads it; CONSTRAINS.basis undefaulted and stored only beside a contribution. The two instances are closed; the dropped requirement is the open half. Pinned by an_edge_says_only_what_it_was_told.rs."
+      },
+      "to_id": "fact:root-cause-two-field-holes-a-rejected-coverage-and-a-basis-asserted-for-a-number-that-is-not-there-share-one-cause-the-edge-sweep-was-dropped"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:lineage-message-names-its-decision",
       "properties": {
         "at": "2026-08-20",
@@ -206891,6 +207159,14 @@
       "edge_type": "OBSOLETES",
       "from_id": "dec:field-reports-are-untracked-because-the-repository-is-public",
       "properties": {
+        "evidence": "Inbound field reports are kept out of git (docs/feedback/ is gitignored) because the repository is public; the file stays on this machine and the design keeps what it yielded. Retired by the same accepted decision as the eleven before it, so a checkout without the file reads expected_absence, not missing_artifact."
+      },
+      "to_id": "art:bhome-cad-demo-feedback-2026-09-16"
+    },
+    {
+      "edge_type": "OBSOLETES",
+      "from_id": "dec:field-reports-are-untracked-because-the-repository-is-public",
+      "properties": {
         "confidence": 1.0
       },
       "to_id": "art:bhome-genesis-feedback-2026-08-31"
@@ -207020,6 +207296,14 @@
         "confidence": 1.0
       },
       "to_id": "art:qs-project-feedback-2026-09-04"
+    },
+    {
+      "edge_type": "OBSOLETES",
+      "from_id": "dec:field-reports-are-untracked-because-the-repository-is-public",
+      "properties": {
+        "evidence": "Inbound field reports are kept out of git (docs/feedback/ is gitignored) because the repository is public; the file stays on this machine and the design keeps what it yielded. Retired by the same accepted decision as the eleven before it, so a checkout without the file reads expected_absence, not missing_artifact."
+      },
+      "to_id": "art:xrt-demo-genesis-feedback-2026-09-16"
     },
     {
       "edge_type": "OBSOLETES",
@@ -208324,6 +208608,15 @@
         "conformance": "unchecked"
       },
       "to_id": "cap:the-server-writes-the-export-through-and-chains-it-from-main"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:bhome-cad-demo-feedback-2026-09-16",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "fact:field-report-bhome-cad-demo-2026-09-16-the-loop-closed-and-the-seam-was-basis-measured"
     },
     {
       "edge_type": "REALIZES",
@@ -211529,6 +211822,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:test-a-floating-root-part-is-told-the-cure",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "chg:four-root-causes-from-two-field-reports-are-fixed-at-the-cause"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:test-a-follow-up-is-owed-until-it-is-settled",
       "properties": {
         "completeness": "complete",
@@ -211601,6 +211903,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:test-a-registered-artifact-asserts-nothing-it-was-not-told",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "chg:four-root-causes-from-two-field-reports-are-fixed-at-the-cause"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:test-a-replaced-value-is-kept",
       "properties": {
         "completeness": "complete",
@@ -211661,6 +211972,15 @@
         "conformance": "unchecked"
       },
       "to_id": "cap:mcp-surface"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:test-an-edge-says-only-what-it-was-told",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "chg:four-root-causes-from-two-field-reports-are-fixed-at-the-cause"
     },
     {
       "edge_type": "REALIZES",
@@ -212018,6 +212338,15 @@
         "conformance": "unchecked"
       },
       "to_id": "req:declared-vocabulary-is-reachable-from-the-surface"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:test-the-guard-reads-the-request-before-refusing",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "chg:four-root-causes-from-two-field-reports-are-fixed-at-the-cause"
     },
     {
       "edge_type": "REALIZES",
@@ -212771,6 +213100,15 @@
         "conformance": "unchecked"
       },
       "to_id": "cap:the-agent-asks-who-it-is-talking-to"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:xrt-demo-genesis-feedback-2026-09-16",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "fact:field-report-xrt-demo-genesis-2026-09-16-eight-frictions-eight-things-that-worked"
     },
     {
       "edge_type": "REQUIRES_RESOURCE",
@@ -216577,6 +216915,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:a-floating-root-part-is-told-the-cure",
+      "properties": {},
+      "to_id": "cap:hierarchy"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:a-follow-up-is-owed-until-it-is-settled",
       "properties": {},
       "to_id": "cap:something-to-come-back-to-is-captured-with-one-word"
@@ -216700,6 +217044,12 @@
       "from_id": "ver:a-refusal-names-its-own-fix",
       "properties": {},
       "to_id": "cap:cluster-claims"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:a-registered-artifact-asserts-nothing-it-was-not-told",
+      "properties": {},
+      "to_id": "cap:store"
     },
     {
       "edge_type": "VERIFIES",
@@ -216928,6 +217278,12 @@
       "from_id": "ver:an-approval-does-not-erase-authorship-tests",
       "properties": {},
       "to_id": "cap:a-contributors-roles-toward-a-node-are-a-set-that-a-write-adds-to"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:an-edge-says-only-what-it-was-told",
+      "properties": {},
+      "to_id": "cap:derived-completion"
     },
     {
       "edge_type": "VERIFIES",
@@ -218017,6 +218373,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:the-guard-reads-the-request-before-refusing",
+      "properties": {},
+      "to_id": "cap:search-first-at-the-tool"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:the-handshake-is-written-down",
       "properties": {},
       "to_id": "cap:the-handshake-is-written-down-beside-the-graph"
@@ -218678,6 +219040,14 @@
         "action": "created"
       },
       "to_id": "art:auto-export"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:bhome-cad-demo-feedback-2026-09-16",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:bhome-cad-demo-feedback-2026-09-16"
     },
     {
       "edge_type": "YIELDED",
@@ -220065,6 +220435,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:test-a-floating-root-part-is-told-the-cure",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-a-floating-root-part-is-told-the-cure"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:test-a-follow-up-is-owed-until-it-is-settled",
       "properties": {
         "action": "created"
@@ -220121,6 +220499,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:test-a-registered-artifact-asserts-nothing-it-was-not-told",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-a-registered-artifact-asserts-nothing-it-was-not-told"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:test-a-replaced-value-is-kept",
       "properties": {
         "action": "created"
@@ -220174,6 +220560,14 @@
         "action": "created"
       },
       "to_id": "art:test-add-artifact-takes-the-first-checksum"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:test-an-edge-says-only-what-it-was-told",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-an-edge-says-only-what-it-was-told"
     },
     {
       "edge_type": "YIELDED",
@@ -220414,6 +220808,14 @@
         "action": "created"
       },
       "to_id": "art:test-the-fourteen-holes-are-writable"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:test-the-guard-reads-the-request-before-refusing",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-the-guard-reads-the-request-before-refusing"
     },
     {
       "edge_type": "YIELDED",
@@ -220753,6 +221155,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:xrt-demo-genesis-feedback-2026-09-16",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:xrt-demo-genesis-feedback-2026-09-16"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:genesis-skill-registered",
       "properties": {
         "action": "created"
@@ -220982,7 +221392,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:7878ef838e690a49c6f86670af29b52092325561fa7eae666f388eb2d99ad218",
+        "checksum": "sha256:ca1c1a158ee5ebcc76e997aa3c92e784518cb5e3990ea776b461e838e7e33656",
         "granularity": "atomic",
         "location": "getting-started/skills/adopt/SKILL.md",
         "name": "adopt/SKILL.md",
@@ -221059,7 +221469,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:238c06064a48692d354337cf5172c4c6b94e27789971644f0bdbfa7ecbed2fd5",
+        "checksum": "sha256:5672ece57a00511fb0eaf59e1eded05f53c459a3f5b4d740d34600e5405b11e9",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/artifact.rs",
         "name": "artifact.rs",
@@ -221089,6 +221499,18 @@
         "description": "The server's write-through: a doorbell rung on every write, a debounced task (2s quiet, 10s ceiling) that coalesces a burst into one export, and the hand-edit guard that declines rather than overwrite. Tracks the baseline twice — in-process and via the recorded sync — so the guard also fires on a memory-backed server with no graph_path, and so a session's own deliberate export never looks like tampering. Never passes accept_divergence: an automatic write that discards somebody's work is the one outcome that cannot be undone from the thing that caused it.",
         "location": "crates/reflow2-mcp/src/auto_export.rs",
         "name": "auto_export.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:bhome-cad-demo-feedback-2026-09-16",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:04201e13e15c834d5bcfa2252552d2d1f0a04da827e45c2db326e1af838ae77a",
+        "description": "Copied verbatim from /home/ajs7/project/bhome/feedback.md (994 lines) on 2026-09-16. Lines 1–709 are Session 1 (2026-08-31, already triaged as art:bhome-genesis-feedback-2026-08-31); lines 710–994 are Session 2 and 2 part 2, the CAD partnership and the first closed loop. Inbound field reports are kept out of git and registered here so the findings point back at them.",
+        "location": "docs/feedback/2026-09-16-bhome-cad-demo-feedback.md",
+        "name": "bhome feedback.md through Session 2 part 2 (2026-09-16) — the reflow2↔IfcMCP loop closed; the 2026-08-31 copy is a strict prefix",
         "status": "realized"
       }
     },
@@ -221134,7 +221556,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:0b289f850b763a40e86f906e3b7188a454c51e5b6e8e39e3152ead74384cf558",
+        "checksum": "sha256:f40f0e34349f19c9cb866edaf4174c3b07109516124fdf92959247dfdff3b3b8",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/budget.rs",
         "name": "budget.rs",
@@ -221908,7 +222330,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:af336522d96a5b9df5024a0400923b114473cad585939eee14a2f7e4ebb96606",
+        "checksum": "sha256:0323aad949f08c289cc3da86c8ae66b86cdbcd33ec57811c4ba86dadd4fdfca1",
         "location": "crates/reflow2-mcp/src/enum_schema.rs",
         "name": "enum_schema.rs — one schema_with fn per enum request field, reading legal values from the compiled-in schema (or the handler's own const) at tool-listing time",
         "status": "realized"
@@ -222266,7 +222688,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:afecba32a33121ec5c1d49f6804d3c3ff6c76bcf2d91067ba0728eb4b5230eac",
+        "checksum": "sha256:2743a0c8817437f980230692a0ac0e84a4b62a04edbe7152da20839f327ccb15",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/graph.rs",
         "name": "crates/reflow2-core/src/graph.rs",
@@ -222383,7 +222805,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:e98b26a8551e5249083d159ead2ff0701ddb9129c1f967b86a3df9aa4ba560e4",
+        "checksum": "sha256:a54dd685a9670e87db2761cfb86c953fe0b1dfbb29e2c5027e346ec0eb421035",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/hierarchy.rs",
         "name": "hierarchy.rs",
@@ -223378,7 +223800,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:9587048cbfa55e6f64c092251819d3a95add743e7f710aaa5aa10c6de5e9ffb8",
+        "checksum": "sha256:0ee3b6c41f79dd4a21892c7f0e94a7bf90135f6a72a43c0643c1b3360a4a05a2",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/report.rs",
         "name": "report.rs",
@@ -223495,7 +223917,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:bf04f09c3d3364ce7bb37f2a196155b37ce9c7464bf84f20466d3373cf9f1fee",
+        "checksum": "sha256:8a314ca35376c559c9e5464fb584ef6d840e920501c1ff1213e1b18c8c1b17e7",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/build.yaml",
@@ -223509,7 +223931,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:a6a267458269d90769e96dda3cbca4efdcbc8fa13701c61d5715f889b826c9c7",
+        "checksum": "sha256:fca2dfbdf78961542268cff6f669ab5a30f913cd0fd2d5f944423e667330f8d1",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/core.yaml",
@@ -223777,7 +224199,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b30203723690caba875c5a644d03affa98d7351ba8699e6970c4140d5ce0cb52",
+        "checksum": "sha256:7c02d25452c3f9ac9185dc9cbbb6717759575c74c8a929e50b9ccad5439983fc",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -224151,6 +224573,18 @@
       }
     },
     {
+      "node_id": "art:test-a-floating-root-part-is-told-the-cure",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:ae3bc3ec58bce44a2599dbe377d2460d5a1a2f112c8b7aeacdb563edbd85a40d",
+        "description": "Two cases, the first observed failing against the unfixed message. The fixture mirrors xrt-demo's shape: a system containing a subsystem, and one indivisible top-level part left uncontained.",
+        "location": "crates/reflow2-core/tests/a_floating_root_part_is_told_the_cure.rs",
+        "name": "a_floating_root_part_is_told_the_cure.rs — orphan_level's message names the Project as the thing that can contain the part; contained by the Project it is a legal top-level part",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:test-a-follow-up-is-owed-until-it-is-settled",
       "node_type": "Artifact",
       "properties": {
@@ -224201,7 +224635,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:e17343db90ca856eb3e476fa44c04207d878d6f285fa637ea3b8c2c015d40bc2",
+        "checksum": "sha256:fb02c18c78a942cb6e5f709a717b1c87fdc51ad555cb1202e3f389b64e4d801e",
         "location": "crates/reflow2-mcp/tests/a_prescribed_layer_pair_no_longer_refuses.rs",
         "name": "a_prescribed_layer_pair_no_longer_refuses.rs",
         "status": "realized"
@@ -224240,6 +224674,18 @@
         "description": "Seven cases in one file so the constructor property (`checker`), the Project→rule edge and the two detectors land together or not at all. The two-state key is pinned as behaviour: the acknowledged \"none known\" gap id and the re-asked one are asserted different, because collapsing them is exactly the \"asked once, silenced forever\" failure the aggregate-acknowledgement ruling warns about.",
         "location": "crates/reflow2-core/tests/a_project_is_asked_what_its_artifacts_must_be_in.rs",
         "name": "a_project_is_asked_what_its_artifacts_must_be_in.rs — the artifact-standard question pinned: asked on an empty project, ended by a declaration, \"none known\" re-asked once when a drawing appears, a drawing that does not say is named, a generating source is not, a mirror is not asked",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:test-a-registered-artifact-asserts-nothing-it-was-not-told",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:cb5a259ee2ba25c7b0c4558e727db2ad9dd6beab4275749571f96e4f29fc91a2",
+        "description": "Three cases. The first read `realized` against the unfixed schema (the field was materialised on write); the third pins the re-link contract the artifact.rs comment had recorded as a silent downgrade.",
+        "location": "crates/reflow2-mcp/tests/a_registered_artifact_asserts_nothing_it_was_not_told.rs",
+        "name": "a_registered_artifact_asserts_nothing_it_was_not_told.rs — add_artifact stores only the status it is told; link_artifact writes realized on first registration and never downgrades on a re-link",
         "status": "realized"
       }
     },
@@ -224331,6 +224777,18 @@
         "description": "add_artifact stores the checksum it is given (reaches the STORED property, not merely accepted), stores nothing when none is given, and refuses to move an existing baseline, naming set_artifact_checksum as the door that records why.",
         "location": "crates/reflow2-mcp/tests/add_artifact_takes_the_first_checksum.rs",
         "name": "add_artifact_takes_the_first_checksum.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:test-an-edge-says-only-what-it-was-told",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:53c91e013e1f7dcbf643a0148b95c4a692508b8ef0a40a7f6742441aac4df5a0",
+        "description": "Four cases. Did not compile against the unfixed core (no satisfies_with_coverage, no partially_satisfied), which is the reach hole itself; the basis half was written to fail behaviourally and could not be run in isolation because the file did not compile — recorded as such rather than claimed.",
+        "location": "crates/reflow2-core/tests/an_edge_says_only_what_it_was_told.rs",
+        "name": "an_edge_says_only_what_it_was_told.rs — satisfies stores coverage where delivery reads it and a partial satisfier does not deliver; a contribution that is not there has no basis; the rollup still reads an absent basis as estimated",
         "status": "realized"
       }
     },
@@ -224807,6 +225265,18 @@
       }
     },
     {
+      "node_id": "art:test-the-guard-reads-the-request-before-refusing",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:5ac25ee15d4ad10823071195e43cf64f97a066143fb4ef7c921598a08f84b0b2",
+        "description": "Three cases, observed failing against the stashed unfixed guard (2 refused, the counterweight passed before and after — which is what shows the change narrows the guard rather than blinding it).",
+        "location": "crates/reflow2-mcp/tests/the_guard_reads_the_request_before_refusing.rs",
+        "name": "the_guard_reads_the_request_before_refusing.rs — a near-match the write names as its own relation target is never refused; Requirement↔Component reports and does not refuse; a same-type near duplicate still does",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:test-the-two-reported-fields",
       "node_type": "Artifact",
       "properties": {
@@ -224906,7 +225376,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:25519a8c584e19d4aa91ff5edcb5c585ba1ecd8eeba2c82830d7322ad7efbd67",
+        "checksum": "sha256:8a578ec9ed3456acb3fd4ed4a029ff187d65572cc4627a7c5f687aabdfa21e27",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/built.rs",
         "name": "tools/built.rs",
@@ -224919,7 +225389,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:6f1c9e226e58bc5eaf1fd0d009f052dd4eba2d2e7c8a770d3d4e31772ec48fe4",
+        "checksum": "sha256:92fa10135bdd033d2f8c3a644117d409f254b0842a7cda213073a736ac0b32ab",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
         "name": "crates/reflow2-mcp/src/tools/capture.rs",
@@ -225383,6 +225853,18 @@
         "checksum": "sha256:d09de48b9a307e1c9103219e06fed65379f94be9e235db724e3dcd17fb85aadd",
         "location": "getting-started/skills/where-am-i/SKILL.md",
         "name": "where-am-i/SKILL.md — orientation, and the step that asks who the reader is",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:xrt-demo-genesis-feedback-2026-09-16",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:df4c813eb186fe979b549095102e83a507ca090f21a57c56c2882be14b177c07",
+        "description": "Copied verbatim from /home/ajs7/project/xrt-demo/reflow2_feedback.md (336 lines) on 2026-09-16; inbound field reports are kept out of git and registered here so the finding they yielded can point back at them. Session 2 (the beamline and the first traces) is pending in the original.",
+        "location": "docs/feedback/2026-09-16-xrt-demo-genesis-feedback.md",
+        "name": "reflow2_feedback.md from the xrt-demo genesis (2026-09-16) — 8 wins, 12 frictions, 3 ideas, from a 7.5 KB brief seeded with no xrt call",
         "status": "realized"
       }
     },
@@ -231682,6 +232164,16 @@
       }
     },
     {
+      "node_id": "chg:accept-a9de8d85e68af580",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-09-17",
+        "name": "Two clippy lints (get().is_none() → !contains_key) that CI's --all-targets run caught; no behaviour moved.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-acb06c45b63a7b6d",
       "node_type": "ChangeEvent",
       "properties": {
@@ -235063,6 +235555,19 @@
       "properties": {
         "change_type": "new_feature",
         "name": "The dynograph-foundation pin moves v0.11.0 to v0.12.0, closing a type leak reflow2 was structurally exposed to and making the forwarded feature names a committed contract upstream"
+      }
+    },
+    {
+      "node_id": "chg:four-root-causes-from-two-field-reports-are-fixed-at-the-cause",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-09-16",
+        "name": "Four root causes from the bhome and xrt-demo reports fixed at the cause: no affirmative artifact status, the guard reads the request, edges say only what they were told, and a floating root part is told the cure",
+        "rationale": "Each fix is at the class, not the instance. (1) is the same undefaulting already done to audience/granularity/volatility on the same type — the sweep that stopped one field short. (2) replaces one more allow-list entry with reading the request, which is not an allow-list; the pairs are still an allow-list and are extended only on evidence, as the August repair required. (3) acts on the two instances of the DROPPED req:edge-defaults-do-not-assert; the requirement itself stays dropped until Anthony says otherwise, and that is recorded as the open half. (4) fixes the words, because the code was already right and the words sent the reporter to the wrong knob.",
+        "repair": "corrected_cause",
+        "subject": "system",
+        "summary": "On Anthony's word (\"let's start addressing the 4 root causes\"), 2026-09-16, one PR. (1) Artifact.status carries no default; add_artifact accepts `status` and writes only what it is told; link_artifact sets `realized` on FIRST registration only (it read the checksum off disk) and never downgrades a stored status on a re-link. Nothing in the core read the field for delivery, so the default asserted and informed nothing. (2) The near-duplicate guard reads the request before refusing: a near-match the write names as its own relation target (a capability's `satisfies` or `allocated_to`, a decision's `related_to`) is never refused; and on today's count (7/0, 19/0 across three designs) Capability↔Component, Requirement↔Component, Capability↔DesignRule and Capability↔Constraint join the prescribed pairs. Component↔Component is deliberately left refusing (measured once; same-type is what the guard is for). The report is never suppressed — the match still comes back in near_matches. (3) `satisfies` accepts `coverage` (full / partial / planned), stored by a new `satisfies_with_coverage`; the delivery line counts a partial or planned satisfier as `partially_satisfied`, never as satisfaction, while an unstated coverage still reads as full so older designs do not move. CONSTRAINS.basis carries no default and `constrains` stores a basis only beside a contribution; budget_report still reads an absent basis on a stated number as `estimated`. (4) orphan_level's message names the cure — contain a top-level part under the Project with `contains` — and the adopt skill says the same where it teaches nesting; both hierarchy rules already accepted a Project parent, and the xrt-demo measurement showed the part simply was not contained. Four new test files, each written before its fix and run against the stashed, unfixed code first."
       }
     },
     {
@@ -250731,6 +251236,16 @@
       }
     },
     {
+      "node_id": "frag:art:bhome-cad-demo-feedback-2026-09-16",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered bhome feedback.md through Session 2 part 2 (2026-09-16) — the reflow2↔IfcMCP loop closed; the 2026-08-31 copy is a strict prefix"
+      }
+    },
+    {
       "node_id": "frag:art:bl124-instrument",
       "node_type": "Fragment",
       "properties": {
@@ -252482,6 +252997,16 @@
       }
     },
     {
+      "node_id": "frag:art:test-a-floating-root-part-is-told-the-cure",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered a_floating_root_part_is_told_the_cure.rs — orphan_level's message names the Project as the thing that can contain the part; contained by the Project it is a legal top-level part"
+      }
+    },
+    {
       "node_id": "frag:art:test-a-follow-up-is-owed-until-it-is-settled",
       "node_type": "Fragment",
       "properties": {
@@ -252553,6 +253078,16 @@
       }
     },
     {
+      "node_id": "frag:art:test-a-registered-artifact-asserts-nothing-it-was-not-told",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered a_registered_artifact_asserts_nothing_it_was_not_told.rs — add_artifact stores only the status it is told; link_artifact writes realized on first registration and never downgrades on a re-link"
+      }
+    },
+    {
       "node_id": "frag:art:test-a-replaced-value-is-kept",
       "node_type": "Fragment",
       "properties": {
@@ -252620,6 +253155,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered add_artifact_takes_the_first_checksum.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:test-an-edge-says-only-what-it-was-told",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered an_edge_says_only_what_it_was_told.rs — satisfies stores coverage where delivery reads it and a partial satisfier does not deliver; a contribution that is not there has no basis; the rollup still reads an absent basis as estimated"
       }
     },
     {
@@ -252923,6 +253468,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered the_fourteen_holes_are_writable.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:test-the-guard-reads-the-request-before-refusing",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered the_guard_reads_the_request_before_refusing.rs — a near-match the write names as its own relation target is never refused; Requirement↔Component reports and does not refuse; a same-type near duplicate still does"
       }
     },
     {
@@ -253354,6 +253909,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered test_wall_check.py"
+      }
+    },
+    {
+      "node_id": "frag:art:xrt-demo-genesis-feedback-2026-09-16",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered reflow2_feedback.md from the xrt-demo genesis (2026-09-16) — 8 wins, 12 frictions, 3 ideas, from a 7.5 KB brief seeded with no xrt call"
       }
     },
     {
@@ -266660,6 +267225,18 @@
       }
     },
     {
+      "node_id": "fact:measured-the-childless-root-part-in-xrt-demo-is-not-contained-by-its-project-so-the-cure-both-rules-accept-was-never-named-to-the-agent",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "measurement",
+        "name": "MEASURED (xrt-demo's live graph, driven by the 0.62 debug binary, 2026-09-16): cmp:agent-seam is `level: system`, hierarchy_issues raises exactly one orphan_level on it, and the message \"not contained by anything above it\" is literally true — no CONTAINS edge from the Project reaches it. Candidate (c) holds: the cure both rules accept was never taken because nothing named it",
+        "statement": "Taken with tools/smoke_mcp.Server against /home/ajs7/project/xrt-demo/.reflow2/graph (not locked; no writes). get_node cmp:agent-seam → level \"system\", status planned. hierarchy_issues → one finding: orphan_level on cmp:agent-seam, \"'cmp:agent-seam' (system) is not contained by anything above it and contains nothing below it\"; no level_spine_disagreement, and none of the other ten components fires (they have parents or children). Since orphan_level's has_higher_parent accepts a Project parent, the absence of the finding under a Project CONTAINS edge is what the code already does; the edge is simply not there. So the root cause resolves to: the genesis skill says \"contains each new node under the Project\" and the agent did not for this one; the finding's message names the condition and not that cure, so the agent turned the only knob the message mentioned (level) and found both settings wrong. The joint-exemption candidate (a) is latent, not the cause here. FIX (his word): orphan_level's message says \"if this is a top-level part, contain it under the Project with `contains`\"; and the genesis and adopt skills say the same where they tell the agent to nest. No schema change.",
+        "subject_id": "fact:root-cause-a-childless-root-part-has-no-legal-level-because-two-self-limiting-hierarchy-rules-were-never-checked-jointly",
+        "valid_from": "2026-09-16"
+      }
+    },
+    {
       "node_id": "fact:music-graph-f8-to-f20-verified-against-the-build-2026-08-17",
       "node_type": "TemporalFact",
       "properties": {
@@ -269675,6 +270252,17 @@
       }
     },
     {
+      "node_id": "ver:a-floating-root-part-is-told-the-cure",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-core/tests/a_floating_root_part_is_told_the_cure.rs — two cases; the first observed failing against the unfixed message.",
+        "kind": "verification",
+        "last_run_at": "2026-09-16",
+        "name": "orphan_level's message names the Project as the thing that can contain the part; contained by the Project, a childless top-level part raises nothing",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:a-follow-up-is-owed-until-it-is-settled",
       "node_type": "Verification",
       "properties": {
@@ -269924,6 +270512,17 @@
         "level": "unit",
         "method": "test",
         "name": "A claim for an unknown Contributor names add_contributor and still refuses; add_contributor accepts claim_region's field name without loosening deny_unknown_fields",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:a-registered-artifact-asserts-nothing-it-was-not-told",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-mcp/tests/a_registered_artifact_asserts_nothing_it_was_not_told.rs — three cases; the first read `realized` against the unfixed schema. Verifies the store's write contract: a constructor materialises no claim the caller did not make.",
+        "kind": "verification",
+        "last_run_at": "2026-09-16",
+        "name": "add_artifact stores only the status it is told; link_artifact writes realized on first registration and never downgrades a stored status on a re-link",
         "status": "passing"
       }
     },
@@ -270388,6 +270987,17 @@
         "description": "crates/reflow2-core/tests/an_approval_does_not_erase_authorship.rs — 11 tests, plus the updated an_acknowledgement_says_whose.rs, the MCP a_constructor_accepts_the_owners_word_in_one_call.rs helper, and two new cases in tools/test_check_intent_authority.py.\n\nMERGE (fail when authored_by is reverted to replace): author then approve keeps both roles and both dates and drops the single-valued slot; the set is in canonical order whatever the write order; a legacy author edge survives a new approval.\n\nSHAPE: the same role twice is one role with the latest date; no role means author; an unknown role is refused and nothing is written; normalising the set shape changes nothing; a stray legacy `role` beside a set is dropped, not merged.\n\nMIGRATION: migrate_authored_by_roles rewrites legacy edges once and is idempotent; a legacy export is normalised on import.\n\nREADERS: an approver who also authored still counts as the approver in loop_status's assigned decisions; the intent-authority tool reads the set and still refuses a set with no approver.\n\nTHE ONE THAT EARNED ITS KEEP: \"the same role twice is one role\" failed on the first draft and exposed that the normaliser's legacy default was being applied to an empty map — a bug two sibling tests had passed over.",
         "kind": "verification",
         "name": "Approving what you authored keeps both roles — eleven tests, falsified by reverting the merge to a replace",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:an-edge-says-only-what-it-was-told",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-core/tests/an_edge_says_only_what_it_was_told.rs — four cases. Could not be run against the unfixed core because the setter it pins did not exist (the reach hole itself).",
+        "kind": "verification",
+        "last_run_at": "2026-09-16",
+        "name": "satisfies stores coverage where delivery reads it and a partial satisfier is counted as partial, not as satisfaction; a contribution that is not there has no basis; the rollup still reads an absent basis on a stated number as estimated",
         "status": "passing"
       }
     },
@@ -272493,6 +273103,17 @@
       }
     },
     {
+      "node_id": "ver:the-guard-reads-the-request-before-refusing",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-mcp/tests/the_guard_reads_the_request_before_refusing.rs — three cases; two observed refused against the stashed unfixed guard, the counterweight passing before and after.",
+        "kind": "verification",
+        "last_run_at": "2026-09-16",
+        "name": "A near-match the write names as its own relation target is never refused; Requirement↔Component reports and does not refuse; a same-type near duplicate still refuses with the escape",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:the-handshake-is-written-down",
       "node_type": "Verification",
       "properties": {
@@ -272978,7 +273599,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:e544b8e968a257bfc342d23bc2a0843d825dcd7507b06eef8c3afb4acaf13d0d",
+  "prev_content_hash": "sha256:ed8ebea1eea1c2a4209e07534968d57587b7c910f8da5dd7c52856615f3449dc",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -273570,8 +274191,8 @@
     "schema_version": 1
   },
   "taken_at": {
-    "branch": "units-declared-compared-and-governed",
-    "commit": "b6944a6988b654caaa5fa4ad751b1813010e15c7",
+    "branch": "four-root-causes-from-two-field-reports",
+    "commit": "0b876d9137467ebd901c41aa5c0ff58983de902a",
     "dirty": true
   }
 }
