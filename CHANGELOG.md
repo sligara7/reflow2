@@ -31,8 +31,38 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.63.0] — 2026-09-17
+
 ### Added
 
+- **A quantity says how it was obtained, and a check on a limit has a form a tool can re-run.**
+  Anthony, 2026-09-16: "something that rules out that the AI agent just didn't make up a
+  measurement — in general, this is why I created reflow2." Constraint gains `limit_basis`
+  (measured / computed / asserted, no default), `limit_source` and `limit_measured_at`; CONSTRAINS
+  gains `source` beside `basis`, stored only when there is a number for it to describe; a recorded
+  fact gains `source`. `add_constraint`, `constrains` and `record_finding` accept them.
+  `quantity_without_source` names a limit or contribution nobody sourced (a number the agent
+  proposed and said so is allowed); `quantity_check_without_executable_form` names a check on a
+  limit that no artifact implements. `budget_report` carries the limit's basis and source and the
+  unsourced contributors beside the total. The constrains tool states the partnership contract:
+  design the budget here, measure it in the partner tool, write the number back with its source.
+- **Units are declared per quantity, compared at the seam, added only when they match, and governed
+  by a per-kind rule.** The Mars Climate Orbiter brainstorm (2026-09-13), built. `Interface.units`
+  is the tenth agreement axis (`quantity=unit` entries; `none` is an answer); `Constraint.unit` and
+  `CONSTRAINS.unit` let `budget_report` add only matching units, leaving a mismatch out of the total
+  and the verdict open, and naming a silent unit. `DesignRule.units` under `category: unit_system`
+  declares the system; the sweep raises `quantity_without_unit`, `unit_system_undeclared` (only when
+  quantities exist) and `unit_outside_declared_system` (louder when enforced). Exact spelling, no
+  conversion, on purpose. Genesis asks the units question; capture-intent and kpp-proposal ask for
+  the unit.
+- **A project is asked, from genesis, what standard its design artifacts must be in, and a drawing
+  that does not say is named.** The first of the three intents Anthony accepted on 2026-09-16.
+  `EnvironmentRule.checker` names the tool that validates a file against the standard;
+  COMPLIES_WITH accepts a Project as its source; "none known for this domain" is recorded by
+  acknowledging the finding. `artifact_standard_undeclared` asks on a bare project and asks again,
+  louder, once a drawing or model exists unasked; `artifact_not_under_declared_standard` names each
+  drawing or model that neither complies with nor is recorded as violating the declared standard.
+  Genesis and adopt ask before a single artifact exists. reflow2 opens no file.
 - **The taxonomy is decided once, before bulk capture, and every instance cites it.** Alex, by
   email, 2026-09-17: his repos keep the taxonomy as accepted Decisions and govern later captures
   by them, by hand — "nothing helps you write them." Three legs. A served `establish-taxonomy`
@@ -57,6 +87,20 @@ This file is the third view: *what changed, and when*.
   report, never a gate: `release_report` carries the verdict beside its own answer. Constraint gains
   `margin` (headroom inside the limit, read by the budgets leg); `add_constraint` accepts it.
   Genesis asks what done means; where-am-i reads the closure line back.
+
+### Fixed
+
+- **Four root causes from two field reports, fixed at the cause** (bhome Session 2, where the
+  reflow2 and IfcMCP loop closed; the xrt-demo genesis; 2026-09-16). `Artifact.status` carries no
+  default and `add_artifact` takes `status`, so a deliverable that does not exist is no longer
+  recorded as produced; `link_artifact` sets `realized` on first registration only. The
+  near-duplicate guard reads the request before refusing: a near-match the write names as its own
+  relation target is never refused, and Capability↔Component, Requirement↔Component,
+  Capability↔DesignRule and Capability↔Constraint join the prescribed pairs on the measured count.
+  `satisfies` accepts `coverage` and the delivery line counts a partial or planned satisfier as
+  `partially_satisfied`, never as satisfaction; `CONSTRAINS.basis` carries no default and is stored
+  only beside a contribution. `orphan_level`'s message names the cure, and the adopt skill says so
+  where it teaches nesting.
 
 ## [0.62.0] — 2026-09-16
 
