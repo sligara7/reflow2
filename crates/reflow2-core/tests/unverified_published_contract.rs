@@ -271,6 +271,10 @@ fn fully_specified(g: &mut DesignGraph, id: &str) {
         Some("RFC 7807 problem+json"),
     )
     .expect("spec");
+    // The tenth axis (2026-09-16): this boundary carries no quantity, and
+    // saying so is an answer.
+    g.set_interface_units(id, &["none".to_string()])
+        .expect("units");
 }
 
 #[test]
@@ -465,6 +469,8 @@ fn unspecified_is_unset_and_none_is_an_answer() {
         Some("problem+json"),
     )
     .expect("spec");
+    g.set_interface_units("ifc:api", &["none".to_string()])
+        .expect("units");
 
     let gap = finding(&g, GapSource::IncompletePublishedContract)
         .expect("`unspecified` medium is an unanswered axis, not an answered one");

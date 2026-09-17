@@ -71,7 +71,9 @@ fn unspecified_is_never_reported_as_agreement() {
     let r = g.seam_report(&them, &pairs()).unwrap();
     assert_eq!(r.incompatible.len(), 0);
     assert_eq!(r.agreed, 0, "silence is not agreement");
-    assert_eq!(r.unstated.len(), 8, "every axis should read as unstated");
+    // Nine since 2026-09-16: `units`, the Mars Climate Orbiter axis, joined
+    // the eight (req:a-quantity-that-crosses-a-published-boundary-declares-its-unit-and-the-seam-check-compares-them).
+    assert_eq!(r.unstated.len(), 9, "every axis should read as unstated");
     assert!(
         r.note.contains("stated by NOBODY") && r.note.contains("not a claim of compatibility"),
         "the note must refuse to be read as a clean bill: {}",

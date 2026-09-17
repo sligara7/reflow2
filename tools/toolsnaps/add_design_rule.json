@@ -79,6 +79,17 @@
           "array",
           "null"
         ]
+      },
+      "units": {
+        "default": null,
+        "description": "For `category: unit_system`: the unit each quantity KIND is done in, one entry per kind\nas `kind=unit` — `mass=kg`, `length=mm`, `energy=eV`. Per kind, not one blanket system.\nThe unit sweep reports any stated unit not among these.",
+        "items": {
+          "type": "string"
+        },
+        "type": [
+          "array",
+          "null"
+        ]
       }
     },
     "required": [

@@ -1229,6 +1229,58 @@ impl DesignGraph {
         )
     }
 
+    /// For a DesignRule of `category: unit_system`: the unit each quantity
+    /// KIND is done in, as `kind=unit` entries (`mass=kg`, `length=mm`). Per
+    /// kind rather than one blanket system, because real designs are
+    /// legitimately mixed. Every other property is carried.
+    pub fn set_design_rule_units(
+        &mut self,
+        id: &str,
+        units: &[String],
+    ) -> Result<StoredNode, DynoError> {
+        self.set_list_property(node::DESIGN_RULE, id, "units", units)
+    }
+
+    /// The tenth agreement axis on a boundary: the unit of each quantity it
+    /// carries, as `quantity=unit` entries, or the single entry `none` for a
+    /// boundary that carries no quantity. Read by the seam check quantity by
+    /// quantity and by the unit sweep. Every other property is carried.
+    pub fn set_interface_units(
+        &mut self,
+        id: &str,
+        units: &[String],
+    ) -> Result<StoredNode, DynoError> {
+        self.set_list_property(node::INTERFACE, id, "units", units)
+    }
+
+    fn set_list_property(
+        &mut self,
+        node_type: &str,
+        id: &str,
+        key: &str,
+        items: &[String],
+    ) -> Result<StoredNode, DynoError> {
+        let Some(existing) = self.get_node(node_type, id)? else {
+            return Err(DynoError::NodeNotFound {
+                node_type: node_type.to_string(),
+                node_id: id.to_string(),
+            });
+        };
+        let cleaned: Vec<Value> = items
+            .iter()
+            .map(|s| s.trim())
+            .filter(|s| !s.is_empty())
+            .map(Value::from)
+            .collect();
+        let mut props = Props::new().set(key, Value::List(cleaned));
+        for (k, v) in &existing.properties {
+            if k != key {
+                props = props.set(k, v.clone());
+            }
+        }
+        self.upsert_node(node_type, id, props)
+    }
+
     /// Set a `Capability`'s lifecycle status, preserving its other properties.
     /// `status` ∈ `planned` (the default) / `in_progress` / `realized` /
     /// `verified`.

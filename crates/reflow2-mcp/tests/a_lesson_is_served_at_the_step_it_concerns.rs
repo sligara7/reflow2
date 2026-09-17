@@ -236,6 +236,7 @@ async fn rules_take_steps_and_the_newest_lesson_comes_first() {
         statement: Some("The lineage lives inside the file; export once, last.".into()),
         category: Some("convention".into()),
         enforced: None,
+        units: None,
         approver: None,
         acted_at: None,
         distinct_from: None,

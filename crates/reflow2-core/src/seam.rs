@@ -72,6 +72,13 @@ pub enum Axis {
     ErrorModel,
     /// Free text: where the field-level contract lives.
     PayloadSchema,
+    /// The tenth axis: the UNIT of each quantity the boundary carries, one
+    /// `quantity=unit` entry per quantity, compared quantity by quantity. The
+    /// Mars Climate Orbiter seam: thruster impulse crossed in pound-force
+    /// seconds and was read in newton seconds, the spec said SI, and no review
+    /// compared the two sides
+    /// (`req:a-quantity-that-crosses-a-published-boundary-declares-its-unit-and-the-seam-check-compares-them`).
+    Units,
 }
 
 impl Axis {
@@ -85,6 +92,7 @@ impl Axis {
             Axis::Operations => "operations",
             Axis::ErrorModel => "error_model",
             Axis::PayloadSchema => "payload_schema",
+            Axis::Units => "units",
         }
     }
 
@@ -103,7 +111,7 @@ impl Axis {
     }
 
     /// Every axis worth comparing, hardest failure first.
-    fn all() -> [Axis; 8] {
+    fn all() -> [Axis; 9] {
         [
             Axis::Medium,
             Axis::Paradigm,
@@ -113,6 +121,7 @@ impl Axis {
             Axis::Operations,
             Axis::ErrorModel,
             Axis::PayloadSchema,
+            Axis::Units,
         ]
     }
 }
@@ -204,7 +213,138 @@ fn why(axis: Axis, ours: Option<&str>, theirs: Option<&str>) -> String {
         Axis::TransportSecurity => format!(
             "we require `{o}`, they offer `{t}` — a refusal to connect rather than a degradation"
         ),
+        Axis::Units => format!(
+            "we read `{o}`, they emit `{t}` — the Mars Climate Orbiter seam: a number crosses in \
+             one unit and is read in another, and nothing fails until the spacecraft is gone"
+        ),
         _ => format!("ours says `{o}`, theirs says `{t}` — free text, so a person must read both"),
+    }
+}
+
+/// The `units` entries of a boundary as a map, or None when nobody stated
+/// them. `quantity=unit` becomes (quantity, unit); a bare word (`none`, the
+/// answer for a boundary that carries no quantity) maps to an empty unit so it
+/// still compares by name.
+fn units_of(props: &[(String, Value)]) -> Option<std::collections::BTreeMap<String, String>> {
+    let list = props
+        .iter()
+        .find(|(k, _)| k == "units")
+        .and_then(|(_, v)| match v {
+            Value::List(items) => Some(items),
+            _ => None,
+        })?;
+    let mut map = std::collections::BTreeMap::new();
+    for item in list {
+        let Some(s) = item.as_str() else { continue };
+        let s = s.trim();
+        if s.is_empty() {
+            continue;
+        }
+        match s.split_once('=') {
+            Some((q, u)) => {
+                map.insert(q.trim().to_string(), u.trim().to_string());
+            }
+            None => {
+                map.insert(s.to_string(), String::new());
+            }
+        }
+    }
+    if map.is_empty() { None } else { Some(map) }
+}
+
+fn unit_entry(q: &str, u: &str) -> String {
+    if u.is_empty() {
+        q.to_string()
+    } else {
+        format!("{q}={u}")
+    }
+}
+
+/// The units axis, compared QUANTITY BY QUANTITY rather than as one string:
+/// the same quantity in two units is an incompatibility; a quantity one side
+/// names and the other does not is a silence about that quantity, never
+/// agreement; a side that stated nothing at all is one unstated finding.
+#[allow(clippy::too_many_arguments)]
+fn compare_units(
+    op: &[(String, Value)],
+    tp: &[(String, Value)],
+    our_id: &str,
+    their_id: &str,
+    agreed: &mut usize,
+    incompatible: &mut Vec<SeamFinding>,
+    unstated: &mut Vec<SeamFinding>,
+) {
+    let ours = units_of(op);
+    let theirs = units_of(tp);
+    let show = |m: &Option<std::collections::BTreeMap<String, String>>| {
+        m.as_ref().map(|m| {
+            m.iter()
+                .map(|(q, u)| unit_entry(q, u))
+                .collect::<Vec<_>>()
+                .join(", ")
+        })
+    };
+    let finding =
+        |verdict, our_value: Option<String>, their_value: Option<String>, detail: String| {
+            SeamFinding {
+                axis: Axis::Units,
+                verdict,
+                ours: our_id.to_string(),
+                theirs: their_id.to_string(),
+                our_value,
+                their_value,
+                detail,
+            }
+        };
+    let (Some(o), Some(t)) = (&ours, &theirs) else {
+        unstated.push(finding(
+            Verdict::Unstated,
+            show(&ours),
+            show(&theirs),
+            "units stated on at most one side — a number crossing here is read in whatever \
+             unit the reader assumes, which is the Mars Climate Orbiter failure; `none` says no \
+             quantity crosses, and is an answer"
+                .to_string(),
+        ));
+        return;
+    };
+    for (q, ou) in o {
+        match t.get(q) {
+            Some(tu) if tu == ou => *agreed += 1,
+            Some(tu) => incompatible.push(finding(
+                Verdict::Incompatible,
+                Some(unit_entry(q, ou)),
+                Some(unit_entry(q, tu)),
+                format!(
+                    "`{q}` crosses this seam in `{tu}` on their side and is read as `{ou}` on \
+                     ours — the Mars Climate Orbiter seam: thruster impulse left in pound-force \
+                     seconds, was read in newton seconds, and nothing failed until the spacecraft \
+                     was gone"
+                ),
+            )),
+            None => unstated.push(finding(
+                Verdict::Unstated,
+                Some(unit_entry(q, ou)),
+                None,
+                format!(
+                    "we name `{q}` and they do not — a quantity one side never declared is a \
+                     silence about that quantity, not agreement"
+                ),
+            )),
+        }
+    }
+    for (q, tu) in t {
+        if !o.contains_key(q) {
+            unstated.push(finding(
+                Verdict::Unstated,
+                None,
+                Some(unit_entry(q, tu)),
+                format!(
+                    "they name `{q}` and we do not — a quantity one side never declared is a \
+                     silence about that quantity, not agreement"
+                ),
+            ));
+        }
     }
 }
 
@@ -258,6 +398,18 @@ impl DesignGraph {
             checked += 1;
 
             for axis in Axis::all() {
+                if matches!(axis, Axis::Units) {
+                    compare_units(
+                        &op,
+                        &tp,
+                        our_id,
+                        their_id,
+                        &mut agreed,
+                        &mut incompatible,
+                        &mut unstated,
+                    );
+                    continue;
+                }
                 let o = prop(&op, axis.property());
                 let t = prop(&tp, axis.property());
                 let finding = |verdict| SeamFinding {

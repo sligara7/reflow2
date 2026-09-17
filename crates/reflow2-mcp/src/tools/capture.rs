@@ -1386,6 +1386,12 @@ impl ReflowService {
             )
             .map_err(dyno_err)?,
         );
+        let node = match req.units.as_deref() {
+            Some(units) => {
+                NodeDto::from(g.set_design_rule_units(&req.id, units).map_err(dyno_err)?)
+            }
+            None => node,
+        };
         // Where the rule is DELIVERED (req:a-lesson-is-served-at-the-step-it-
         // concerns): validated against what this server serves. Written as a
         // second upsert because the core constructor's signature carries the
@@ -2200,6 +2206,7 @@ impl ReflowService {
             &[
                 ("concern", req.concern.as_deref()),
                 ("priority", req.priority.as_deref()),
+                ("unit", req.unit.as_deref()),
             ],
         )?
         .unwrap_or(stored);
@@ -2325,11 +2332,12 @@ impl ReflowService {
             "target_type",
         )?;
         ok_json(EdgeDto::from(
-            g.constrains(
+            g.constrains_in(
                 &req.constraint_id,
                 &target_type,
                 &req.target_id,
                 req.contribution,
+                req.unit.as_deref(),
                 req.basis.as_deref(),
                 req.measured_at.as_deref(),
                 req.note.as_deref(),
@@ -2877,8 +2885,8 @@ impl ReflowService {
                 ));
             }
         }
-        ok_json(NodeDto::from(
-            g.set_interface_spec(
+        let node = g
+            .set_interface_spec(
                 &req.interface_id,
                 req.medium.as_deref(),
                 req.paradigm.as_deref(),
@@ -2890,7 +2898,13 @@ impl ReflowService {
                 req.transport_security.as_deref(),
                 req.error_model.as_deref(),
             )
-            .map_err(dyno_err)?,
-        ))
+            .map_err(dyno_err)?;
+        let node = match req.units.as_deref() {
+            Some(units) => g
+                .set_interface_units(&req.interface_id, units)
+                .map_err(dyno_err)?,
+            None => node,
+        };
+        ok_json(NodeDto::from(node))
     }
 }

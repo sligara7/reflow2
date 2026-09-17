@@ -489,6 +489,12 @@ NON_TOOL_TERMS = {
     "checker",
     "authority",
     "reference",
+    # Units (2026-09-16): the two fields and the three findings the skills name.
+    "unit",
+    "units",
+    "unit_system_undeclared",
+    "quantity_without_unit",
+    "unit_outside_declared_system",
     "undocumented_addition",
     "unknown_seeds",
     "unmotivated_capability",
@@ -517,9 +523,6 @@ NON_TOOL_TERMS = {
     "estimated",
     "evidence",
     "measured",
-    "range_mi",
-    "mass_lb",
-    "latency_ms",
     # BL-105 bounded reads (cap:bounded-reads): scan_nodes answers with a page
     # and names what it withheld, so the skills that read big types must be able
     # to talk about the page fields.
