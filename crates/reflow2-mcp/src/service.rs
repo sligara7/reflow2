@@ -3240,6 +3240,20 @@ pub struct AddConstraintReq {
     /// this one and reports the rest; the unit sweep reports a limit with none (2026-09-16).
     #[serde(default)]
     pub unit: Option<String>,
+    /// HOW `limit` WAS OBTAINED: `measured` (an instrument, a model, a tool run) / `computed`
+    /// (derived by a check with an executable form) / `asserted` (somebody's word). No default —
+    /// a limit with a number and no source is reported as `quantity_without_source`; `asserted`
+    /// naming the agent is allowed and visible.
+    #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::constraint_limit_basis_opt")]
+    pub limit_basis: Option<String>,
+    /// WHO OR WHAT the number came from — an id where one exists: the Artifact or tool that
+    /// measured it, the Verification that computed it, the Contributor who asserted it.
+    #[serde(default)]
+    pub limit_source: Option<String>,
+    /// When a measured limit was taken, where you can say.
+    #[serde(default)]
+    pub limit_measured_at: Option<String>,
     /// The budget number, in the quantity's unit. On a `kpp` this is the
     /// THRESHOLD — the value that, if missed, fails the effort.
     #[serde(default)]
@@ -3300,6 +3314,12 @@ pub struct ConstrainsReq {
     /// trusted: a contribution in another unit is reported and left out of the total.
     #[serde(default)]
     pub unit: Option<String>,
+    /// WHO OR WHAT the contribution came from — the measuring tool or Artifact (an IFC take-off,
+    /// a ray trace), the check that computed it, or the Contributor who estimated it, by id where
+    /// one exists. With `basis: measured` this is a measurement; a number with no source is named
+    /// by budget_report as unsourced.
+    #[serde(default)]
+    pub source: Option<String>,
     /// `estimated` (default) / `evidence` / `measured`.
     #[serde(default)]
     #[schemars(schema_with = "crate::enum_schema::constrains_basis_opt")]
@@ -4749,6 +4769,10 @@ pub struct RecordFindingReq {
     #[serde(default)]
     #[schemars(schema_with = "crate::enum_schema::temporal_fact_basis_opt")]
     pub basis: Option<String>,
+    /// WHO OR WHAT the fact's value came from — an Artifact, tool, Verification or Contributor,
+    /// by id where one exists. A value with no source is somebody's word and reads as such.
+    #[serde(default)]
+    pub source: Option<String>,
     /// How much weight the author puts behind the assertion, 0.0 to 1.0.
     /// Stated by the author, never computed. Absent reads as unstated.
     #[serde(default)]

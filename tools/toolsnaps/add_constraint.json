@@ -85,6 +85,36 @@
           "null"
         ]
       },
+      "limit_basis": {
+        "default": null,
+        "description": "HOW `limit` WAS OBTAINED: `measured` (an instrument, a model, a tool run) / `computed`\n(derived by a check with an executable form) / `asserted` (somebody's word). No default —\na limit with a number and no source is reported as `quantity_without_source`; `asserted`\nnaming the agent is allowed and visible.",
+        "enum": [
+          "measured",
+          "computed",
+          "asserted",
+          null
+        ],
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "limit_measured_at": {
+        "default": null,
+        "description": "When a measured limit was taken, where you can say.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "limit_source": {
+        "default": null,
+        "description": "WHO OR WHAT the number came from — an id where one exists: the Artifact or tool that\nmeasured it, the Verification that computed it, the Contributor who asserted it.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
       "name": {
         "default": null,
         "type": [

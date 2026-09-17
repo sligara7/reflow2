@@ -46,6 +46,7 @@ fn a_contribution_in_another_unit_is_reported_and_left_out_of_the_total() {
         None,
         None,
         None,
+        None,
     )
     .unwrap();
     g.constrains_in(
@@ -54,6 +55,7 @@ fn a_contribution_in_another_unit_is_reported_and_left_out_of_the_total() {
         "cmp:tank",
         Some(30.0),
         Some("kg"),
+        None,
         None,
         None,
         None,
@@ -66,6 +68,7 @@ fn a_contribution_in_another_unit_is_reported_and_left_out_of_the_total() {
         "cmp:legs",
         Some(6.9),
         Some("lb"),
+        None,
         None,
         None,
         None,
@@ -103,6 +106,7 @@ fn a_contribution_with_no_unit_is_reported_but_still_totalled() {
         None,
         None,
         None,
+        None,
     )
     .unwrap();
     g.constrains(
@@ -134,6 +138,7 @@ fn matching_units_add_up_and_nothing_is_reported() {
         None,
         None,
         None,
+        None,
     )
     .unwrap();
     g.constrains_in(
@@ -142,6 +147,7 @@ fn matching_units_add_up_and_nothing_is_reported() {
         "cmp:tank",
         Some(30.0),
         Some("kg"),
+        None,
         None,
         None,
         None,
@@ -174,6 +180,7 @@ fn a_constraint_with_no_unit_cannot_judge_its_contributions_and_says_so() {
         "cmp:a",
         Some(50.0),
         Some("ms"),
+        None,
         None,
         None,
         None,

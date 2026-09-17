@@ -50,18 +50,11 @@ const CORPUS: &str = include_str!("fixtures/find_tools_corpus.json");
 /// corpora — a 4-char floor on the name-prefix rule (neutral: 177/36) and a
 /// gentler length normalisation (worse: 174/34) — and both were reverted,
 /// because a change the corpus does not reward is noise.
-const EXEMPT: &[(&str, &str)] = &[
-    (
-        "consumption_report",
-        "rank 6 — outranked by five shorter descriptions sharing 'what'/'built'; \
+const EXEMPT: &[(&str, &str)] = &[(
+    "consumption_report",
+    "rank 6 — outranked by five shorter descriptions sharing 'what'/'built'; \
       the length normalisation that recovers seven other tools costs this one",
-    ),
-    (
-        "governed_by",
-        "rank 6 — 'rule' and 'decision' are in the NAMES of violates_rule and \
-      collapse_decision, which the name rule scores 5x over a description hit",
-    ),
-];
+)];
 
 fn corpus() -> BTreeMap<String, String> {
     let v: Value = serde_json::from_str(CORPUS).expect("corpus parses");

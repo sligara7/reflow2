@@ -118,7 +118,7 @@ description, which an agent sees in the tool schema; this table is for a person 
 | `allocate` | **write** | Allocate a Capability to a Component (ALLOCATED_TO) — say WHICH PART of the design will provide the function. |
 | `authored_by` | **write** | Attribute a design node to a Contributor (AUTHORED_BY) — whose word this Decision/Requirement/… is. |
 | `budget_report` | read | Roll a budget Constraint up (BL-11): total of stated contributions vs the limit, the worst dependency path among contributors (the path-cumulative rollup — end-to-end latency, mass down a chain), basis coverage (estimated vs measured), and an honest verdict — `incomplete` when any contribution is unstated, because a partial sum passed off as a total is how budgets lie |
-| `constrains` | **write** | Record that a Constraint CONSTRAINS a target, with the target's `contribution` to the budget (in the Constraint's quantity unit) and the `basis` for the number (estimated/evidence/measured). |
+| `constrains` | **write** | Record that a Constraint CONSTRAINS a target, with the target's `contribution` to the budget (in the Constraint's quantity unit) and the `basis` for the number (estimated/evidence/measured) and its `source` — the tool, artifact or person the number came from. |
 | `consumes` | **write** | Record that a Component CONSUMES an Interface — it is the side that depends on the contract. |
 | `contain_component` | **write** | Nest one Component inside another (parent CONTAINS child) — the assembly spine. |
 | `contains` | **write** | Link a Project to a child node it CONTAINS — project membership, so a Requirement, Capability or Component is counted under the project whose gaps and rollups it belongs to. |
