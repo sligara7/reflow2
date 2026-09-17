@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:de5a97baae0b1a72109e4872294880fcc10dc2caf13de113c8da5453de5f95a6",
+  "content_hash": "sha256:3a45d70498a903cccaa70dfa8957fa33ae942e4bc33d22be57433c1d697faff7",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -3527,6 +3527,14 @@
         "confidence": 1.0
       },
       "to_id": "dec:idea-how-does-a-content-only-client-get-an-answer"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "dec:a-tool-carries-the-users-phrasing-and-the-corpus-is-the-test",
+      "properties": {
+        "evidence": "The corpus gives every tool a job stated in a user's words and a scorer that ranks tools against it — the job vector the dimension analogy needs. The top-5 test proves each tool is findable; the confusability read this idea proposes (which other tools land in a tool's top 5) is the same instrument asked the second question."
+      },
+      "to_id": "dec:idea-prune-the-tool-surface-to-an-orthogonal-essential-set"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -12444,6 +12452,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:cap:establish-taxonomy-before-bulk-capture",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:cap:every-tool-carries-the-users-phrasing-and-the-corpus-is-the-test",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
@@ -16920,6 +16934,12 @@
           "author"
         ]
       },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-prune-the-tool-surface-to-an-orthogonal-essential-set",
+      "properties": {},
       "to_id": "who:ajs"
     },
     {
@@ -48277,6 +48297,177 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-taxonomy-is-decided-once-before-bulk-capture-and-every-instance-cites-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:adopt-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-taxonomy-is-decided-once-before-bulk-capture-and-every-instance-cites-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-taxonomy-is-decided-once-before-bulk-capture-and-every-instance-cites-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect-and-ask-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-taxonomy-is-decided-once-before-bulk-capture-and-every-instance-cites-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:enum-schema"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-taxonomy-is-decided-once-before-bulk-capture-and-every-instance-cites-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:establish-taxonomy-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-taxonomy-is-decided-once-before-bulk-capture-and-every-instance-cites-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:genesis"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-taxonomy-is-decided-once-before-bulk-capture-and-every-instance-cites-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:genesis-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-taxonomy-is-decided-once-before-bulk-capture-and-every-instance-cites-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-taxonomy-is-decided-once-before-bulk-capture-and-every-instance-cites-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-taxonomy-is-decided-once-before-bulk-capture-and-every-instance-cites-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skills"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-taxonomy-is-decided-once-before-bulk-capture-and-every-instance-cites-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skills-and-tools"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-taxonomy-is-decided-once-before-bulk-capture-and-every-instance-cites-it",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:taxonomy-command"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-taxonomy-is-decided-once-before-bulk-capture-and-every-instance-cites-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-a-near-match-of-another-type-is-named-as-a-layer"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-taxonomy-is-decided-once-before-bulk-capture-and-every-instance-cites-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-a-prescribed-layer-pair-no-longer-refuses"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-taxonomy-is-decided-once-before-bulk-capture-and-every-instance-cites-it",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:test-a-taxonomy-is-decided-once-before-bulk-capture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-taxonomy-is-decided-once-before-bulk-capture-and-every-instance-cites-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-the-commonest-edge-has-a-typed-helper"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-taxonomy-is-decided-once-before-bulk-capture-and-every-instance-cites-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-the-guard-reads-the-request-before-refusing"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-taxonomy-is-decided-once-before-bulk-capture-and-every-instance-cites-it",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:test-the-taxonomy-skill-is-served-and-the-finding-reaches-the-surface"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-taxonomy-is-decided-once-before-bulk-capture-and-every-instance-cites-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-third-leg-notices-an-unconnected-idea",
       "properties": {
         "accepted_baseline": true,
@@ -53878,6 +54069,16 @@
         "weight_basis": "estimated"
       },
       "to_id": "req:a-project-declares-its-unit-system-as-a-governed-rule-and-undeclared-or-off-system-units-are-reported"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-prune-the-tool-surface-to-an-orthogonal-essential-set",
+      "properties": {
+        "evidence": "A prune list needs to tell an unused tool from an unreachable one; BL-155 is exactly that open question and its instrument (surface_usage, now the per-project usage ledger). Pruning on closeness alone would remove reads nobody could find rather than tools nobody needs.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:bl-155"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -67225,6 +67426,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:establish-taxonomy-before-bulk-capture",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:cap:establish-taxonomy-before-bulk-capture"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "cap:every-tool-carries-the-users-phrasing-and-the-corpus-is-the-test",
       "properties": {},
       "to_id": "snap:epoch:preserved-on-write:cap:every-tool-carries-the-users-phrasing-and-the-corpus-is-the-test"
@@ -70319,6 +70526,14 @@
     },
     {
       "edge_type": "IMPLEMENTS",
+      "from_id": "art:test-a-taxonomy-is-decided-once-before-bulk-capture",
+      "properties": {
+        "covers": "whole"
+      },
+      "to_id": "ver:a-taxonomy-is-decided-once-before-bulk-capture"
+    },
+    {
+      "edge_type": "IMPLEMENTS",
       "from_id": "art:test-a-unit-crosses-a-seam-and-the-two-sides-are-compared",
       "properties": {
         "covers": "whole"
@@ -70356,6 +70571,14 @@
         "covers": "whole"
       },
       "to_id": "ver:the-guard-reads-the-request-before-refusing"
+    },
+    {
+      "edge_type": "IMPLEMENTS",
+      "from_id": "art:test-the-taxonomy-skill-is-served-and-the-finding-reaches-the-surface",
+      "properties": {
+        "covers": "whole"
+      },
+      "to_id": "ver:the-taxonomy-skill-is-served-and-the-finding-reaches-the-surface"
     },
     {
       "edge_type": "INCLUDES",
@@ -209281,6 +209504,16 @@
       "edge_type": "REALIZES",
       "from_id": "art:adopt-skill",
       "properties": {
+        "completeness": "partial",
+        "conformance": "unchecked",
+        "note": "the instruction leg: adopt points at the skill after the breadth pass"
+      },
+      "to_id": "cap:establish-taxonomy-before-bulk-capture"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:adopt-skill",
+      "properties": {
         "conformance": "unchecked"
       },
       "to_id": "cap:the-domain-standard-is-asked-recorded-and-its-absence-noticed"
@@ -210048,6 +210281,16 @@
       "edge_type": "REALIZES",
       "from_id": "art:detect",
       "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked",
+        "note": "the detector leg: encoding_undecided"
+      },
+      "to_id": "cap:establish-taxonomy-before-bulk-capture"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:detect",
+      "properties": {
         "completeness": "partial",
         "conformance": "unchecked"
       },
@@ -210257,6 +210500,25 @@
         "conformance": "unchecked"
       },
       "to_id": "cap:mcp-surface"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:establish-taxonomy-skill",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked",
+        "note": "the skill leg"
+      },
+      "to_id": "cap:establish-taxonomy-before-bulk-capture"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:establish-taxonomy-skill",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "chg:the-taxonomy-is-decided-once-before-bulk-capture-and-every-instance-cites-it"
     },
     {
       "edge_type": "REALIZES",
@@ -210481,6 +210743,16 @@
         "conformance": "unchecked"
       },
       "to_id": "cap:a-projects-unit-system-is-a-governed-rule-and-a-sweep-reports-unitless-and-off-system-quantities"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:genesis-skill",
+      "properties": {
+        "completeness": "partial",
+        "conformance": "unchecked",
+        "note": "the instruction leg: genesis points at the skill after seeding"
+      },
+      "to_id": "cap:establish-taxonomy-before-bulk-capture"
     },
     {
       "edge_type": "REALIZES",
@@ -212531,6 +212803,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:taxonomy-command",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "chg:the-taxonomy-is-decided-once-before-bulk-capture-and-every-instance-cites-it"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:temporal",
       "properties": {
         "completeness": "complete",
@@ -212816,6 +213097,15 @@
         "conformance": "unchecked"
       },
       "to_id": "cap:claims-carry-their-age"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:test-a-taxonomy-is-decided-once-before-bulk-capture",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "chg:the-taxonomy-is-decided-once-before-bulk-capture-and-every-instance-cites-it"
     },
     {
       "edge_type": "REALIZES",
@@ -213221,6 +213511,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:test-the-taxonomy-skill-is-served-and-the-finding-reaches-the-surface",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "chg:the-taxonomy-is-decided-once-before-bulk-capture-and-every-instance-cites-it"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:test-the-two-reported-fields",
       "properties": {
         "completeness": "complete",
@@ -213461,6 +213760,16 @@
         "note": "the served set_closure_criterion tool and margin on add_constraint"
       },
       "to_id": "cap:closure-report"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:tools-capture",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked",
+        "note": "the typed leg: add_component kind"
+      },
+      "to_id": "cap:establish-taxonomy-before-bulk-capture"
     },
     {
       "edge_type": "REALIZES",
@@ -218130,6 +218439,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:a-taxonomy-is-decided-once-before-bulk-capture",
+      "properties": {},
+      "to_id": "cap:establish-taxonomy-before-bulk-capture"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:a-topic-report-groups-hits-names-the-latest-dated-change-and-always-says-what-it-did-not-find",
       "properties": {},
       "to_id": "cap:the-design-holds-about-one-subject-is-read-back-in-one-call"
@@ -219456,6 +219771,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:the-taxonomy-skill-is-served-and-the-finding-reaches-the-surface",
+      "properties": {},
+      "to_id": "cap:establish-taxonomy-before-bulk-capture"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:the-tool-surface-predicts-itself",
       "properties": {},
       "to_id": "cap:a-tool-description-predicts-what-the-tool-does"
@@ -220293,6 +220614,14 @@
         "action": "created"
       },
       "to_id": "art:enum-schema"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:establish-taxonomy-skill",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:establish-taxonomy-skill"
     },
     {
       "edge_type": "YIELDED",
@@ -221336,6 +221665,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:taxonomy-command",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:taxonomy-command"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:temporal",
       "properties": {
         "action": "created"
@@ -221509,6 +221846,14 @@
         "action": "created"
       },
       "to_id": "art:test-a-superseded-finding-does-not-read-as-current"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:test-a-taxonomy-is-decided-once-before-bulk-capture",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-a-taxonomy-is-decided-once-before-bulk-capture"
     },
     {
       "edge_type": "YIELDED",
@@ -221789,6 +222134,14 @@
         "action": "created"
       },
       "to_id": "art:test-the-guard-reads-the-request-before-refusing"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:test-the-taxonomy-skill-is-served-and-the-finding-reaches-the-surface",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-the-taxonomy-skill-is-served-and-the-finding-reaches-the-surface"
     },
     {
       "edge_type": "YIELDED",
@@ -222365,7 +222718,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:ca1c1a158ee5ebcc76e997aa3c92e784518cb5e3990ea776b461e838e7e33656",
+        "checksum": "sha256:1a1bf56e7495bd3e112b8d585b5bcf71ee1c577edd94a0bc35885fd72d06b64d",
         "granularity": "atomic",
         "location": "getting-started/skills/adopt/SKILL.md",
         "name": "adopt/SKILL.md",
@@ -223083,7 +223436,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:a12d7b8a53802b1426864e859256ab321fc2b10bf8764e89c547534ceacf3495",
+        "checksum": "sha256:6cf32d70418e33e456de484569c7bb1e171f22af1290dd4bda073a2ce7065143",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
@@ -223096,7 +223449,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:c90d525d70dbfa2c6e26484815ebbbe2a18ca80d63a6504499982f43946d814f",
+        "checksum": "sha256:4bd66616c9eb5138318239244dd92f82bc3f5b44faaa378691171f24f6ddb5a4",
         "location": "getting-started/skills/detect-and-ask/SKILL.md",
         "name": "detect-and-ask/SKILL.md — the ask half of the loop, and now the rule for when NOT to ask",
         "status": "realized"
@@ -223315,9 +223668,21 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:2b0269946dc592f2fb45a3af5b6136046a8fc819b01b09234f7e32e457a763f9",
+        "checksum": "sha256:228686fd53e8c694a4aefb960ef2ab8a5818efec4c1407e6e12dd6954ac39e6a",
         "location": "crates/reflow2-mcp/src/enum_schema.rs",
         "name": "enum_schema.rs — one schema_with fn per enum request field, reading legal values from the compiled-in schema (or the handler's own const) at tool-listing time",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:establish-taxonomy-skill",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:d5c3d0ec77a9bceaf4cba69ed97ea3b719abfe887cc899109167e9135bef315d",
+        "description": "Six steps: recognise the moment (after adopt's breadth pass, after genesis seeding, or on encoding_undecided), list the categories in the user's words, decide the encoding per category (type, discriminator, edges, name pattern), put it to the owner and record it as an accepted Decision on their word, govern every instance with governed_by, and what the finding is and is not. The honest limit stated first: reflow2 cannot know a repository's categories.",
+        "location": "getting-started/skills/establish-taxonomy/SKILL.md",
+        "name": "establish-taxonomy/SKILL.md — decide once, per recurring category, how an instance is encoded, as an accepted Decision the owner confirms, and govern every instance by it",
         "status": "realized"
       }
     },
@@ -223596,7 +223961,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:0e4d23abcb6db9d16dde512a9ecdbad6a930c350c259269c80cff307291e888a",
+        "checksum": "sha256:4656ea730bdd666f9b13ff8441faa0db8b21601957dfc2db928006e4412d22e5",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/genesis.rs",
         "name": "genesis.rs",
@@ -223609,7 +223974,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:d1889b4b1b06af63281e461a9a312d891accfbd7c9284387bd93a636048fc154",
+        "checksum": "sha256:a31d97dde0bbd96d25d2ec880c7b5dab1f7070b814089572163c8f3dd6497d7f",
         "granularity": "atomic",
         "location": "getting-started/skills/genesis/SKILL.md",
         "name": "genesis/SKILL.md",
@@ -225184,7 +225549,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:78aa52577e399ebef6559ac4355142c3aeefc812c5d7b21ae74bcb99734b234e",
+        "checksum": "sha256:aa87e3f4361b41feedb1202d381d02afc8a59c1355ac9e7d38a5e2add9153042",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -225271,7 +225636,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:e7ce1db21f9188276372d881978a2011aa05ff0838815c2b4665c2cef3d197fd",
+        "checksum": "sha256:12c849fcb7d88fdbe4c05188de99cb5622cf229b33847410815e043d6bb454da",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -225297,7 +225662,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:7ad7dfc6220c8b0f11a7cc584074c729e66427d58fbfd57380767337b3f37b59",
+        "checksum": "sha256:89fc4822ba373e95327c923189c8cedd9f90f8be26457b55846116d296dfed8d",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/skills.rs",
         "name": "skills.rs",
@@ -225310,7 +225675,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:0f28629efea72a69d317186c326edb5519028a634751c12eb1c3289e6480dc8a",
+        "checksum": "sha256:05d25328fe5eac8890bc742a23e6504ffd375c6bca10c4430f3a232e6529bcd8",
         "location": "docs/skills-and-tools.md",
         "name": "skills-and-tools.md",
         "status": "realized"
@@ -225500,6 +225865,18 @@
       }
     },
     {
+      "node_id": "art:taxonomy-command",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:237104c69d8d7d54c2aa07dd3eaf42180fc9aee1f1cdaaf056e87397c4a90934",
+        "description": "Copied to .claude/commands and the user-scope commands folder; aliased in skills.rs so asking for the command by name resolves to the skill.",
+        "location": "getting-started/commands/taxonomy.md",
+        "name": "commands/taxonomy.md — the /taxonomy shortcut onto the establish-taxonomy skill",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:temporal",
       "node_type": "Artifact",
       "properties": {
@@ -225610,7 +225987,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:ed73f44735754e7052fe0017306e93d6502e9619d545e35637734dd65c3b1155",
+        "checksum": "sha256:8f613bbe9ee979c9f1d0469ced904041fbaf7640160f8bdb5ab736e2eca68c55",
         "location": "crates/reflow2-mcp/tests/a_near_match_of_another_type_is_named_as_a_layer.rs",
         "name": "a_near_match_of_another_type_is_named_as_a_layer.rs",
         "status": "realized"
@@ -225656,7 +226033,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:fb02c18c78a942cb6e5f709a717b1c87fdc51ad555cb1202e3f389b64e4d801e",
+        "checksum": "sha256:6b7fdb06a34adf40e6d7324e29f8d4bd85194ae71da501c1a565cbed3704687a",
         "location": "crates/reflow2-mcp/tests/a_prescribed_layer_pair_no_longer_refuses.rs",
         "name": "a_prescribed_layer_pair_no_longer_refuses.rs",
         "status": "realized"
@@ -225775,6 +226152,18 @@
         "checksum": "sha256:5fb495e40e597cfca8dcd9fe2e9003f6cfc62e75b3c4ec28894558aa86dfbf07",
         "location": "crates/reflow2-core/tests/a_superseded_finding_does_not_read_as_current.rs",
         "name": "a_superseded_finding_does_not_read_as_current.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:test-a-taxonomy-is-decided-once-before-bulk-capture",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:f8f3397b33e62a4d96b28cc2dc7f0eca75949fcb1d290dd4036e46afb37d211f",
+        "description": "Also pins that a materialised unspecified Interface.medium reads as nothing said, and that a proposed decision governs nothing.",
+        "location": "crates/reflow2-core/tests/a_taxonomy_is_decided_once_before_bulk_capture.rs",
+        "name": "a_taxonomy_is_decided_once_before_bulk_capture.rs — six cases over encoding_undecided: the silences (under three, once every silent instance cites an accepted decision, under five where nobody has said) and the mixed encoding named with its counts, keyed on the pair",
         "status": "realized"
       }
     },
@@ -226268,7 +226657,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:a5f290cb7ff25798036c3b73509ea0c799b90db35814464b73db7f7452684e39",
+        "checksum": "sha256:a330be745f651a141775ca6e5500ac3f4a2d874f3d37185d9780e13c48f84f66",
         "location": "crates/reflow2-mcp/tests/the_commonest_edge_has_a_typed_helper.rs",
         "name": "the_commonest_edge_has_a_typed_helper.rs",
         "status": "realized"
@@ -226302,10 +226691,22 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "test",
-        "checksum": "sha256:5ac25ee15d4ad10823071195e43cf64f97a066143fb4ef7c921598a08f84b0b2",
+        "checksum": "sha256:9360712a824c01bd1ba8501a3108d91e2a960b1d4b3292feb8922f83ea13f700",
         "description": "Three cases, observed failing against the stashed unfixed guard (2 refused, the counterweight passed before and after — which is what shows the change narrows the guard rather than blinding it).",
         "location": "crates/reflow2-mcp/tests/the_guard_reads_the_request_before_refusing.rs",
         "name": "the_guard_reads_the_request_before_refusing.rs — a near-match the write names as its own relation target is never refused; Requirement↔Component reports and does not refuse; a same-type near duplicate still does",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:test-the-taxonomy-skill-is-served-and-the-finding-reaches-the-surface",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:b77ca1e1f019bbd42a7151708297330a8b8c50f85b685e60112f3237c68c5db5",
+        "description": "Driven through the JSON request shapes so a renamed or unreachable field fails here rather than in front of somebody.",
+        "location": "crates/reflow2-mcp/tests/the_taxonomy_skill_is_served_and_the_finding_reaches_the_surface.rs",
+        "name": "the_taxonomy_skill_is_served_and_the_finding_reaches_the_surface.rs — the three legs on the served surface: the skill is served and names its finding, add_component takes kind, encoding_undecided arrives through detect_gaps",
         "status": "realized"
       }
     },
@@ -226422,7 +226823,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:08276b1329b7b0ec4a40587d9402b6ed99016054639371c3a4066c94bcdf9417",
+        "checksum": "sha256:36eb03ff10f84bb50ff7960c903a0e8c26ba92e22b5bdd7bff53507e0b514b2f",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
         "name": "crates/reflow2-mcp/src/tools/capture.rs",
@@ -228442,10 +228843,10 @@
       "node_id": "cap:establish-taxonomy-before-bulk-capture",
       "node_type": "Capability",
       "properties": {
-        "description": "Planned. (1) A served establish-taxonomy skill: list the categories this design will hold many of; for each, decide once how an instance is encoded (type, kind, edges, name pattern) as an accepted Decision, and GOVERN every instance by it. (2) adopt points at it after the breadth pass and genesis after seeding. (3) A detector that notices several nodes of one type whose encoding differs and no Decision governs them, and asks whether an encoding decision is owed. Reflow2 cannot know a repository's categories; it can notice inconsistency and ask.",
+        "description": "As built (2026-09-17). (1) The served establish-taxonomy skill (/taxonomy, aliased in skills.rs): list the categories the design will hold many of in the user's words; decide once per category how an instance is encoded (node type, discriminator, edges, name pattern); put it to the owner and record it as an accepted Decision on their word, one per category; govern every instance with governed_by now and at every later capture; the honest limit stated first. (2) adopt points at it after the breadth pass, genesis after seeding, and genesis's next_steps checklist names it. (3) encoding_undecided: per (type, discriminator) over Component.kind, Interface.medium, Requirement.kind and Verification.method — the discriminators with no materialised default, or whose default is unspecified — fires when live nodes of one type are encoded differently and the silent ones cite no accepted Decision; silent under three; a type where nobody has said fires only at five at lower severity; keyed on the pair. Artifact.artifact_type and Flow.flow_type are not swept because they default to a real value. Plus the typed reach: add_component accepts kind, which no tool could write before.",
         "name": "Establish the taxonomy once: a served skill, an instruction at the moment between structure and bulk capture, and a detector that names siblings encoded differently with no governing Decision",
         "provenance": "authored",
-        "status": "planned"
+        "status": "realized"
       }
     },
     {
@@ -239103,6 +239504,17 @@
       }
     },
     {
+      "node_id": "chg:the-taxonomy-is-decided-once-before-bulk-capture-and-every-instance-cites-it",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-09-17",
+        "name": "The taxonomy is decided once, before bulk capture, and every instance cites it",
+        "rationale": "First of Alex's three ideas promoted on Anthony's word 2026-09-17 (\"accept/promote all of Alex's ideas. We can work them after the current set of tasks\"), built after #529. The three-legs rule applied once more: an instruction alone was the state Alex measured (his repos did it by hand), so the skill is joined by a detector that notices absence and by a typed field so the discriminator the skill names can actually be written. Artifact.artifact_type and Flow.flow_type are deliberately not swept: they default to a real value, so a presence test would read every node as encoded — the same trap Interface.medium's unspecified default set for the seam check.",
+        "summary": "Three legs. A served establish-taxonomy skill (command /taxonomy, alias in skills.rs): list the categories the design will hold many of; decide ONCE per category how an instance is encoded (node type, discriminator, edges, name pattern) as an accepted Decision on the owner's word; govern every instance by it with governed_by; the honest limit stated first (reflow2 cannot know a repository's categories). adopt points at it after the breadth pass, genesis after seeding, and the genesis next_steps checklist names it. Detector encoding_undecided (detect.rs): per (type, discriminator) over Component.kind, Interface.medium, Requirement.kind, Verification.method — the properties with no materialised default, or whose default is unspecified — fires when live nodes of one type are encoded differently (some carry the discriminator, some nothing) and the silent ones are governed by no accepted Decision; silent under three instances; a type where nobody has said fires only at five and at lower severity; keyed on the pair so an acknowledgement sticks. add_component gains kind (typed reach; before this no tool could write Component.kind). detect-and-ask row, gap-surfacing row, CHANGELOG entry. Tests: a_taxonomy_is_decided_once_before_bulk_capture.rs (core, six cases) and the_taxonomy_skill_is_served_and_the_finding_reaches_the_surface.rs (served, three)."
+      }
+    },
+    {
       "node_id": "chg:the-third-leg-notices-an-unconnected-idea",
       "node_type": "ChangeEvent",
       "properties": {
@@ -244146,6 +244558,17 @@
         "kind": "exploratory",
         "name": "OPEN — prose_currency cuts its excerpt at 240 characters; when the stale words sit past the cut the reader fetches the node anyway. Quote the whole description under ~1 KB, or the first sentence and a diff-worthy tail?",
         "rationale": "COUNTER-ARGUMENTS. (a) is the reporter's ask and keeps the reply bounded; the 'diff-worthy tail' is a guess about where stale words live (the field said the tail, once). (b) is simpler and costs up to 1 KB on every status move that carries prose — measured cost unknown. (c) is what shipped and it worked three times out of three, with one extra read. A RANKING IS A FINDING: (a) with the cap measured against this design's median description length before choosing the number. Anthony's call.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-prune-the-tool-surface-to-an-orthogonal-essential-set",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-09-17, in his words: \"pruning amount of tools. I think I saw we have 180+ tools now. One thing I learned on storyflow project on dimensions of an entity is that each dimension needs to be orthogonal to the rest (dot product is near 0 to the rest of the dimensional vectors). While we are talking about tools versus dimensions, I feel there is some similarities. If any tool is not orthogonal/unique to the rest, it leaves the agent debating which of 2 or more tools it should use, which also leads to cases where results are inconsistent based on whether you used tool_A or tool_B, which were too close in function that the agent couldn't determine which of the two tools to use. Pruning also allows us to get down to an essential set of tools, which eases the amount\" [of context every session pays].\n\n═══ THE FAILURE HE NAMES, WITNESSED THIS SAME DAY ═══\nNot hypothetical. In one session on 2026-09-17 the agent building reflow2 itself: called record_change when it meant add_change_event (one is the epoch-snapshot form, the other the design-change record — the refusal explained the difference after the fact); confused set_artifact_checksum with set_artifact_checksums; hit the contain_component / move_component pair the design already records as the discoverable sequence that CAUSES the multiple_parents defect. Each is exactly \"tool_A or tool_B, too close to tell, different results\".\n\n═══ MEASURED BEFORE RECORDING, 2026-09-17 ═══\n· 184 toolsnaps on disk, 186 served after #529. By verb: set_* 21, add_* 20, reconcile_* 4, release_* 4, create_* 4, acknowledge_* 3, get_* 3, record_* 3.\n· Five singular/plural pairs by name alone: acknowledge_gap(s), create_edge(s), create_node(s), dimension_drift(s), set_artifact_checksum(s); plus gap_to_prompt / gaps_to_prompts and release_includes / release_includes_all.\n· A DOT PRODUCT OVER DESCRIPTIONS (bag of words, tf-idf, cosine, run on the toolsnaps): 10 pairs at cosine >= 0.5. The closest: add_interface ~ add_project 0.87, add_epoch ~ plan_epoch 0.78, acknowledge_defect ~ acknowledge_gap 0.64, propagate_change ~ propagate_from 0.62, acknowledge_gaps ~ set_artifact_checksums 0.57, create_edges ~ create_nodes 0.54.\n· ⚠️ AND THE INSTRUMENT'S OWN LESSON: the top pair (add_interface ~ add_project) shares almost no FUNCTION — it shares the boilerplate sentence every constructor carries (\"calling again with an existing id REVISES\"); the bulk tools cluster on \"all or nothing\". A dot product over the words of descriptions measures shared prose, not shared job. The dimension analogy holds for the JOB vector, and the job is what the find_tools corpus already encodes: one query per tool in a user's words.\n\n═══ WHAT THE DESIGN ALREADY HOLDS ═══\n· dec:a-tool-carries-the-users-phrasing-and-the-corpus-is-the-test (accepted): every tool must reach find_tools' top 5 for its own query; two are exempt at rank 6 with the measured reason. That test is HALF an orthogonality check — it says each tool is findable, not that two tools are distinguishable.\n· fact:find-tools-misses-split… (2026-09-11): 41 of 53 misses were tools crowded out by neighbours with shared words — closeness, measured, from the other side.\n· dec:bl-155 (open): 40 of 132 tools never called in a retained sample, and reflow2 cannot tell \"unused\" from \"unreachable\"; usage_report now keeps a ledger per project.\n· dec:the-tool-surface-slices-hold-no-function-of-their-own: the twelve slices are surface, so a prune moves nothing in the engine.\n· The typed-helper rule (the_commonest_edge_has_a_typed_helper): satisfies, constrains, allocate … exist beside create_edge ON PURPOSE, each carrying a guard or a computation the generic call lacks. That is the criterion a prune must respect: a tool earns its place by DOING something no other tool does; a second name for the same behaviour is the thing to remove.\n· Every served tool's schema is loaded by every MCP client on every session (Grok Build hides them behind a search precisely because of this); the context cost he names is real and per-session.\n\n═══ THE OPTIONS, none chosen ═══\nA. ⭐ MEASURE CONFUSABILITY FROM THE CORPUS, NOT THE PROSE: for each tool's query, which OTHER tools land in the top 5 — a confusability graph (the scorer and the corpus exist; this is a few lines over them). Join it with the usage ledger (dec:bl-155's instrument, per project) and hand the person a ranked list of pairs: \"these two answer the same question and one is never called\". The prune list becomes a finding, never taste. Cheapest first step; decides nothing by itself.\nB. FOLD THE SINGULAR/PLURAL PAIRS: one tool taking one-or-many (the bulk forms are already all-or-nothing) — up to seven tools gone, and the record_change / add_change_event kind of confusion is not among them. ⚠️ Counter: the bulk forms carry the item-numbered refusal (\"[6] CONTAINS … not found\"), which the singular reply never needed; folding must keep it.\nC. THE EARNS-ITS-PLACE RULE AS A GATE: a served tool must do something no other tool does (a guard, a computation, a read shape); a tool that only renames another is refused at the surface the way an undescribed tool is today. Turns pruning from a one-off into a discipline; ⚠️ it needs A's instrument to be checkable rather than argued.\nD. A DEFAULT SURFACE AND AN ON-DEMAND REST: serve the core (the tools most sessions call) by default and the rest through find_tools / a profile (tools/agent_surface_profile.py already exists; the latent surface already grows itself). Cuts the per-session cost without deleting anything. ⚠️ Counter: a tool nobody sees is a tool nobody calls — the unreachable half of dec:bl-155 gets worse by construction, and the three-legs rule says the detector and the instruction still have to point at it.\nE. NOTHING: the corpus test is the check, and 2 of 186 are exempt. ⚠️ Counter, his and this session's: the failure is not findability, it is two findable tools for one job, and today's session produced three instances of it.\n\n═══ THE HONEST LIMIT ═══\nDimensions of an entity are measures and can be made independent; tools are verbs on one shared graph, and some overlap is composition — a report reading what a write wrote — not redundancy. Orthogonality is the right test for PAIRS THAT ANSWER THE SAME QUESTION, and the corpus is where that question is written down; it is the wrong test for a read and the write it reads.",
+        "kind": "exploratory",
+        "name": "OPEN — 186 served tools: should the surface be pruned to an essential set on an orthogonality test (no two tools close enough that an agent debates which to call and gets different results from each), and what instrument measures closeness — description words, the corpus, or usage?",
+        "rationale": "Captured under the brainstorm skill from Anthony's question, nothing promoted. Measured before recording because the analogy suggested an instrument (a dot product) that could be run in a minute, and running it showed the instrument measures the wrong thing — shared prose, not shared job — which is the most useful finding in the record: the corpus, not the descriptions, is where a tool's job vector lives. Recorded separately from dec:bl-155 because that one is about tools nobody calls and this one is about tools nobody can tell apart; a prune needs both.",
         "status": "proposed"
       }
     },
@@ -252786,6 +253209,16 @@
       }
     },
     {
+      "node_id": "frag:art:establish-taxonomy-skill",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered establish-taxonomy/SKILL.md — decide once, per recurring category, how an instance is encoded, as an accepted Decision the owner confirms, and govern every instance by it"
+      }
+    },
+    {
       "node_id": "frag:art:every-declared-enum-is-wired-or-exempt-test",
       "node_type": "Fragment",
       "properties": {
@@ -254086,6 +254519,16 @@
       }
     },
     {
+      "node_id": "frag:art:taxonomy-command",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered commands/taxonomy.md — the /taxonomy shortcut onto the establish-taxonomy skill"
+      }
+    },
+    {
       "node_id": "frag:art:temporal",
       "node_type": "Fragment",
       "properties": {
@@ -254304,6 +254747,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered a_superseded_finding_does_not_read_as_current.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:test-a-taxonomy-is-decided-once-before-bulk-capture",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered a_taxonomy_is_decided_once_before_bulk_capture.rs — six cases over encoding_undecided: the silences (under three, once every silent instance cites an accepted decision, under five where nobody has said) and the mixed encoding named with its counts, keyed on the pair"
       }
     },
     {
@@ -254657,6 +255110,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered the_guard_reads_the_request_before_refusing.rs — a near-match the write names as its own relation target is never refused; Requirement↔Component reports and does not refuse; a same-type near duplicate still does"
+      }
+    },
+    {
+      "node_id": "frag:art:test-the-taxonomy-skill-is-served-and-the-finding-reaches-the-surface",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered the_taxonomy_skill_is_served_and_the_finding_reaches_the_surface.rs — the three legs on the served surface: the skill is served and names its finding, add_component takes kind, encoding_undecided arrives through detect_gaps"
       }
     },
     {
@@ -261757,6 +262220,16 @@
         "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:closure\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:schema-core\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\",\"note\":\"Project.closure_legs, Project.closure_threshold, Constraint.margin\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:tools-capture\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\",\"note\":\"the served set_closure_criterion tool and margin on add_constraint\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:tools-coherence\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\",\"note\":\"the served closure_report tool\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:a-closure-criterion-is-declared-on-the-served-surface\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:a-design-closes-against-a-declared-threshold\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:report\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:a-design-closes-against-a-declared-threshold-and-the-report-names-the-first-hole\",\"properties\":{}}]",
         "state": "{\"description\":\"One read that sums the computations that already exist — the delivery line, budget_report, seam_coverage, what_next's open decisions, and quantity provenance — into a closure verdict against a threshold the project declared. Each leg says what it swept and names its worst offender. No declared threshold reads as \\\"no closure criterion stated\\\". A report, never a gate.\",\"name\":\"A closure report: five legs, what each swept, the first hole, and a verdict against the declared threshold\",\"provenance\":\"authored\",\"status\":\"realized\"}",
         "target_id": "cap:closure-report",
+        "target_type": "Capability"
+      }
+    },
+    {
+      "node_id": "snap:epoch:preserved-on-write:cap:establish-taxonomy-before-bulk-capture",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"CONTAINS\",\"other_type\":\"Project\",\"other_id\":\"proj:reflow2\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:adopt-skill\",\"properties\":{\"completeness\":\"partial\",\"conformance\":\"unchecked\",\"note\":\"the instruction leg: adopt points at the skill after the breadth pass\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:detect\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\",\"note\":\"the detector leg: encoding_undecided\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:establish-taxonomy-skill\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\",\"note\":\"the skill leg\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:genesis-skill\",\"properties\":{\"completeness\":\"partial\",\"conformance\":\"unchecked\",\"note\":\"the instruction leg: genesis points at the skill after seeding\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:tools-capture\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\",\"note\":\"the typed leg: add_component kind\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:a-taxonomy-is-decided-once-before-bulk-capture\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:the-taxonomy-skill-is-served-and-the-finding-reaches-the-surface\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:skills\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:alex\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:a-taxonomy-is-decided-once-before-bulk-capture-and-every-instance-cites-it\",\"properties\":{}}]",
+        "state": "{\"description\":\"Planned. (1) A served establish-taxonomy skill: list the categories this design will hold many of; for each, decide once how an instance is encoded (type, kind, edges, name pattern) as an accepted Decision, and GOVERN every instance by it. (2) adopt points at it after the breadth pass and genesis after seeding. (3) A detector that notices several nodes of one type whose encoding differs and no Decision governs them, and asks whether an encoding decision is owed. Reflow2 cannot know a repository's categories; it can notice inconsistency and ask.\",\"name\":\"Establish the taxonomy once: a served skill, an instruction at the moment between structure and bulk capture, and a detector that names siblings encoded differently with no governing Decision\",\"provenance\":\"authored\",\"status\":\"realized\"}",
+        "target_id": "cap:establish-taxonomy-before-bulk-capture",
         "target_type": "Capability"
       }
     },
@@ -272165,6 +272638,20 @@
       }
     },
     {
+      "node_id": "ver:a-taxonomy-is-decided-once-before-bulk-capture",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-core/tests/a_taxonomy_is_decided_once_before_bulk_capture.rs — six cases over encoding_undecided.",
+        "findings": "tax3 run: 6 passed, 0 failed.",
+        "kind": "verification",
+        "last_run_at": "2026-09-17",
+        "level": "unit",
+        "method": "test",
+        "name": "Under three instances nothing is asked; a mixed encoding under no decision is named with its counts and the silent ones, keyed on the type and discriminator; an instance that cites an accepted decision is encoded and a proposed one governs nothing; stating the discriminator on every instance closes it; a type where nobody has said is asked only at five; a materialised unspecified medium reads as nothing said",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:a-topic-report-groups-hits-names-the-latest-dated-change-and-always-says-what-it-did-not-find",
       "node_type": "Verification",
       "properties": {
@@ -274688,6 +275175,20 @@
       }
     },
     {
+      "node_id": "ver:the-taxonomy-skill-is-served-and-the-finding-reaches-the-surface",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-mcp/tests/the_taxonomy_skill_is_served_and_the_finding_reaches_the_surface.rs — three cases, the three legs.",
+        "findings": "tax3 run: 3 passed, 0 failed; the command-surface test (4) also green with the new /taxonomy alias.",
+        "kind": "verification",
+        "last_run_at": "2026-09-17",
+        "level": "integration",
+        "method": "test",
+        "name": "The establish-taxonomy skill is served and names its finding; add_component says a part's kind on the typed constructor; a mixed encoding reaches the surface as encoding_undecided through detect_gaps",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:the-tool-surface-predicts-itself",
       "node_type": "Verification",
       "properties": {
@@ -274936,7 +275437,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:9a55f67303f8a0eee110555e9e46b41536f798b1b930ade9167520e413531692",
+  "prev_content_hash": "sha256:de5a97baae0b1a72109e4872294880fcc10dc2caf13de113c8da5453de5f95a6",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -275528,8 +276029,8 @@
     "schema_version": 1
   },
   "taken_at": {
-    "branch": "a-design-closes-against-a-declared-threshold",
-    "commit": "03a685ae134ad409513c26cd26fbe41c510ff866",
+    "branch": "a-taxonomy-is-decided-once-before-bulk-capture",
+    "commit": "088592035b4cee35ec7921badc0bfba574ae4141",
     "dirty": true
   }
 }
