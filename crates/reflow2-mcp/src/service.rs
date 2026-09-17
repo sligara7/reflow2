@@ -1775,6 +1775,20 @@ pub struct ProjectModeReq {
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct SetClosureCriterionReq {
+    /// The Project (`proj:…`) declaring what closure means for its design.
+    pub project_id: String,
+    /// Which legs count, in the owner's order — the first named leg that
+    /// fails is the first hole closure_report names. At least one.
+    #[schemars(schema_with = "crate::enum_schema::closure_legs_list")]
+    pub legs: Vec<String>,
+    /// The share of each counted leg that must close, 0 to 100. 100 is a legal
+    /// declaration and so is 50; nothing is defaulted.
+    pub threshold: f64,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct ClaimReq {
     /// The `Contributor` taking the region in hand.
     pub contributor_id: String,
@@ -3264,6 +3278,12 @@ pub struct AddConstraintReq {
     /// inventing a number the design would then assert on their behalf.
     #[serde(default)]
     pub objective: Option<f64>,
+    /// Headroom the owner wants kept inside the limit, in the limit's unit:
+    /// with a `maximum` the budget CLOSES only when total <= limit - margin.
+    /// Read by closure_report's budgets leg; budget_report judges the bare
+    /// limit. Leave unset when no margin was declared — never invent one.
+    #[serde(default)]
+    pub margin: Option<f64>,
     /// `maximum` (default: total must stay at or under) / `minimum`.
     #[serde(default)]
     #[schemars(schema_with = "crate::enum_schema::constraint_direction_opt")]
@@ -5025,6 +5045,10 @@ pub struct SyncStatusReq {}
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct MaturityReportReq {}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct ClosureReportReq {}
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]

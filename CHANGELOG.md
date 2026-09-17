@@ -31,6 +31,22 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **A design closes against a threshold the owner declares, and the closure report names the first
+  hole.** Anthony, 2026-09-16: "need to ensure that designs close and are verified." `closure_report`
+  sums five computations that already existed — the delivery thread, every budget's rollup, seam
+  coverage, the scheduled work still governed by open decisions, and quantity provenance — into one
+  read. Each leg says what it swept, its share and its worst offender, so a leg with nothing to run
+  on cannot read as clean; `first_hole` is the first leg in the DECLARED order that fails. The
+  criterion is the owner's: `set_closure_criterion` records `Project.closure_legs` and
+  `Project.closure_threshold` (100 is a legal declaration, and so is "traceability and budgets
+  only"); a design that never declared one reads `no_closure_criterion_stated`, never a default.
+  `closure_criterion_undeclared` asks, once, on a design with live requirements. Closure is a
+  report, never a gate: `release_report` carries the verdict beside its own answer. Constraint gains
+  `margin` (headroom inside the limit, read by the budgets leg); `add_constraint` accepts it.
+  Genesis asks what done means; where-am-i reads the closure line back.
+
 ## [0.62.0] — 2026-09-16
 
 ### Added

@@ -711,6 +711,13 @@ pub enum GapSource {
     /// no IMPLEMENTS from any Artifact — a check on a number that no tool can
     /// re-run. Keyed on the set of checks.
     QuantityCheckWithoutExecutableForm,
+    /// The design has live requirements and no Project has declared what
+    /// closure means — which legs count and what share must close
+    /// (`req:a-design-closes-against-a-declared-threshold-and-the-report-names-the-first-hole`).
+    /// closure_report reads "no closure criterion stated" until the owner
+    /// says; this is the ask. Aggregate, one per design; silent on a design
+    /// with nothing to close.
+    ClosureCriterionUndeclared,
 }
 
 impl GapSource {
@@ -784,6 +791,7 @@ impl GapSource {
             GapSource::QuantityCheckWithoutExecutableForm => {
                 "quantity_check_without_executable_form"
             }
+            GapSource::ClosureCriterionUndeclared => "closure_criterion_undeclared",
         }
     }
 
@@ -888,6 +896,7 @@ impl GapSource {
             // acknowledged set stays acknowledged.
             GapSource::QuantityWithoutSource => false,
             GapSource::QuantityCheckWithoutExecutableForm => false,
+            GapSource::ClosureCriterionUndeclared => true,
             // AGGREGATE, and the call was close enough to record the losing
             // side. Per-component keying would be the more honest key for the
             // answer people will actually give — "cmp:bulk is a namespace, not
@@ -2129,6 +2138,7 @@ impl DesignGraph {
         self.detect_artifact_standard(&mut gaps)?;
         self.detect_unit_sweep(&mut gaps)?;
         self.detect_quantity_provenance(&mut gaps)?;
+        self.detect_closure_criterion(&mut gaps)?;
         self.detect_failing_verifications(&mut gaps)?;
         self.detect_unresolved_drift(&mut gaps)?;
         self.detect_unreleased_components(&mut gaps)?;
@@ -5933,53 +5943,71 @@ impl DesignGraph {
     ///
     /// Silent when the design carries no numeric limits: nothing to run on is
     /// not clean, and the finding says nothing rather than reading green.
-    fn detect_quantity_provenance(&self, gaps: &mut Vec<GapCandidate>) -> Result<(), DynoError> {
-        let clean = |v: Option<&Value>| {
-            v.and_then(Value::as_str)
-                .map(str::trim)
-                .filter(|s| !s.is_empty())
-                .map(str::to_string)
-        };
-        let mut unsourced: Vec<(String, String)> = Vec::new(); // (affected id, what)
-        let mut checks_without_form: Vec<(String, String)> = Vec::new(); // (check, limit)
-        let mut checks_seen: BTreeSet<String> = BTreeSet::new();
-        let mut limits = 0usize;
-        for c in self.scan_live_nodes(node::CONSTRAINT)? {
-            if c.properties.get("limit").and_then(Value::as_f64).is_none() {
-                continue;
-            }
-            limits += 1;
-            if clean(c.properties.get("limit_source")).is_none() {
-                unsourced.push((c.node_id.clone(), format!("the limit of '{}'", c.node_id)));
-            }
-            for e in self.outgoing(&c.node_id, Some(edge::CONSTRAINS))? {
-                let has_number = e
-                    .properties
-                    .get("contribution")
-                    .and_then(Value::as_f64)
-                    .is_some();
-                if has_number && clean(e.properties.get("source")).is_none() {
-                    unsourced.push((
-                        e.to_id.clone(),
-                        format!("the contribution of '{}' to '{}'", e.to_id, c.node_id),
-                    ));
-                }
-            }
-            for v in self.incoming(&c.node_id, Some(edge::VERIFIES))? {
-                if !checks_seen.insert(v.from_id.clone()) {
-                    continue;
-                }
-                if self
-                    .incoming(&v.from_id, Some(edge::IMPLEMENTS))?
-                    .is_empty()
-                {
-                    checks_without_form.push((v.from_id.clone(), c.node_id.clone()));
-                }
-            }
-        }
-        if limits == 0 {
+    /// `closure_criterion_undeclared` — live requirements exist and no Project
+    /// says what closure means. Silent with nothing to close: a design with no
+    /// requirement has no closure to declare yet, and asking would be noise.
+    fn detect_closure_criterion(&self, gaps: &mut Vec<GapCandidate>) -> Result<(), DynoError> {
+        let live_reqs = self
+            .scan_live_nodes(node::REQUIREMENT)?
+            .into_iter()
+            .filter(|r| r.properties.get("status").and_then(Value::as_str) != Some("dropped"))
+            .count();
+        if live_reqs == 0 {
             return Ok(());
         }
+        let mut projects = self.scan_live_nodes(node::PROJECT)?;
+        projects.sort_by(|a, b| a.node_id.cmp(&b.node_id));
+        if projects.is_empty() {
+            return Ok(());
+        }
+        let declared = projects.iter().any(|p| {
+            matches!(p.properties.get("closure_legs"), Some(Value::List(items)) if !items.is_empty())
+                && p.properties.get("closure_threshold").and_then(Value::as_f64).is_some()
+        });
+        if declared {
+            return Ok(());
+        }
+        let affected: Vec<String> = projects.iter().map(|p| p.node_id.clone()).collect();
+        gaps.push(GapCandidate {
+            id: gap_id(GapSource::ClosureCriterionUndeclared, &[]),
+            gap_source: GapSource::ClosureCriterionUndeclared,
+            scope: GapScope::Project,
+            severity: 0.4,
+            title: format!(
+                "This design carries {live_reqs} live requirement(s) and has not said what DONE means"
+            ),
+            description: "Ask the owner what closure means for this design and record it with \
+                 set_closure_criterion: which legs count — traceability (every live requirement \
+                 traced to a built, passing capability), budgets (every limit met with its \
+                 declared margin), seams (every coupling specified on both sides), decisions \
+                 (no scheduled work governed by an open decision), provenance (no number \
+                 without a source) — and the share of each that must close. 100 is a legal \
+                 answer and so is 'traceability and budgets only'. Until then closure_report \
+                 reads 'no closure criterion stated' and offers no verdict; it never closes on \
+                 silence and never supplies a default. Closure is a report, not a gate."
+                .to_string(),
+            affected_ids: affected,
+            suggested_depth: 1,
+            evidence: format!(
+                "{live_reqs} live requirement(s); {} Project(s), none carrying closure_legs and \
+                 closure_threshold.",
+                projects.len()
+            ),
+        });
+        Ok(())
+    }
+
+    fn detect_quantity_provenance(&self, gaps: &mut Vec<GapCandidate>) -> Result<(), DynoError> {
+        // One sweep, shared with the closure report's provenance leg
+        // (closure.rs), so the detector and the report cannot disagree about
+        // what an unsourced number is.
+        let sweep = self.quantity_provenance_sweep()?;
+        if sweep.limits == 0 {
+            return Ok(());
+        }
+        let limits = sweep.limits;
+        let unsourced = sweep.unsourced;
+        let checks_without_form = sweep.checks_without_form;
 
         if !unsourced.is_empty() {
             let ids: BTreeSet<&str> = unsourced.iter().map(|(id, _)| id.as_str()).collect();
