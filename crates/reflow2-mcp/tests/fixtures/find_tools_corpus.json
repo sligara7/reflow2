@@ -77,6 +77,7 @@
   "find_tools": "which tool do I use to do this thing I can describe but cannot name",
   "flow_report": "walk me through this end-to-end process step by step and what is missing",
   "forecast_readiness": "record when we expect this technology to reach the maturity we need",
+  "frontier": "where did I leave off \u2014 what have I captured the structure of but not the intent, what did I put off, and what have I not looked at yet",
   "gap_to_prompt": "turn this gap into a question I can put to the owner",
   "gaps_to_prompts": "turn these gaps into questions for the owner",
   "gate_on": "this release cannot ship until that technology reaches this maturity",

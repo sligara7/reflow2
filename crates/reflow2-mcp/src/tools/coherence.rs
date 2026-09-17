@@ -1277,6 +1277,43 @@ impl ReflowService {
     }
 
     #[tool(
+        description = "WHERE DID I LEAVE OFF? The worklist and resume point of an incremental, \
+                       region-by-region adopt: `structure_without_intent` (capabilities no \
+                       requirement asks for, leaf components nothing is allocated to — the same \
+                       rules the detectors apply), `deferred` (parts whose intent was deliberately \
+                       left for later, recorded with record_finding fact_type \
+                       `deferred_derivation`, oldest first), `uncaptured` (the unclaimed regions \
+                       of the sweep you hand in as `observed`), and `resume_point` (the most \
+                       recent deferral — you were here). A deferral QUIETS the intent findings on \
+                       its subject and is LISTED AS OWED here and in loop_status, so it is never a \
+                       way to make a question disappear; closing it (`valid_to`, or `invalidates` \
+                       from the record that answered it) brings the finding back. WITHOUT A SWEEP \
+                       `uncaptured` is absent, not empty: what you have not looked at is not known \
+                       until you look, which is the breadth-first warning kept honest. Never a \
+                       verdict. Ask for this when you are resuming an adopt, working one region \
+                       at a time, or want to know what has been captured without its intent.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn frontier(
+        &self,
+        Parameters(req): Parameters<FrontierReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let observed: Vec<reflow2_core::coverage::ObservedPath> = req
+            .observed
+            .into_iter()
+            .map(|o| serde_json::from_value(JsonValue::Object(o)))
+            .collect::<Result<_, _>>()
+            .map_err(|e| McpError::invalid_params(format!("invalid observation: {e}"), None))?;
+        let g = self.graph.read().await;
+        let sweep = if observed.is_empty() {
+            None
+        } else {
+            Some(observed.as_slice())
+        };
+        ok_json(g.frontier(sweep, &req.exclusions).map_err(dyno_err)?)
+    }
+
+    #[tool(
         description = "Does the BUILD separate what the DESIGN separates? Reports one fact and \
                        refuses a verdict: an artifact realizing N capabilities the design \
                        distinguishes is the build holding as one thing what the design holds as \

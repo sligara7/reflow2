@@ -50,6 +50,7 @@ pub mod edge_prose;
 pub mod export;
 pub mod fielded;
 pub mod flow;
+pub mod frontier;
 pub mod genesis;
 pub mod granularity;
 pub mod graph;
@@ -145,6 +146,7 @@ pub use fielded::{
     FieldedDriftKind, FieldedFinding, FieldedOptions, FieldedReport, ObservedEnvironment,
 };
 pub use flow::{FlowCycle, FlowReport, FlowStep, FlowTransition};
+pub use frontier::{DEFERRED_DERIVATION, Deferral, FrontierItem, FrontierReport};
 pub use genesis::{GENESIS_EPOCH_ID, GenesisOptions, GenesisReport};
 pub use granularity::{GranularityObservation, GranularityReport};
 pub use graph::{DEFAULT_GRAPH_ID, DesignGraph, node_content_hash};

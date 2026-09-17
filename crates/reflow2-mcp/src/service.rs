@@ -5060,6 +5060,21 @@ pub struct ClosureReportReq {}
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct FrontierReq {
+    /// The tree you swept, as `{path, mass}` objects (paths relative to the
+    /// project root, mass in your own unit) — derive it (`git ls-files`),
+    /// never hand-pick it. OPTIONAL: without it the frontier still lists
+    /// structure without intent and the deferrals, and says plainly that what
+    /// is adjacent and uncaptured is not known.
+    #[serde(default)]
+    pub observed: Vec<JsonObject>,
+    /// Paths left out of the sweep, each named so "ignored" never reads as "covered".
+    #[serde(default)]
+    pub exclusions: Vec<String>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct IlityReportReq {}
 
 #[derive(Debug, Deserialize, JsonSchema)]

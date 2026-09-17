@@ -1,0 +1,31 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "WHERE DID I LEAVE OFF? The worklist and resume point of an incremental, region-by-region adopt: `structure_without_intent` (capabilities no requirement asks for, leaf components nothing is allocated to — the same rules the detectors apply), `deferred` (parts whose intent was deliberately left for later, recorded with record_finding fact_type `deferred_derivation`, oldest first), `uncaptured` (the unclaimed regions of the sweep you hand in as `observed`), and `resume_point` (the most recent deferral — you were here). A deferral QUIETS the intent findings on its subject and is LISTED AS OWED here and in loop_status, so it is never a way to make a question disappear; closing it (`valid_to`, or `invalidates` from the record that answered it) brings the finding back. WITHOUT A SWEEP `uncaptured` is absent, not empty: what you have not looked at is not known until you look, which is the breadth-first warning kept honest. Never a verdict. Ask for this when you are resuming an adopt, working one region at a time, or want to know what has been captured without its intent.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "exclusions": {
+        "default": [],
+        "description": "Paths left out of the sweep, each named so \"ignored\" never reads as \"covered\".",
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "observed": {
+        "default": [],
+        "description": "The tree you swept, as `{path, mass}` objects (paths relative to the\nproject root, mass in your own unit) — derive it (`git ls-files`),\nnever hand-pick it. OPTIONAL: without it the frontier still lists\nstructure without intent and the deferrals, and says plainly that what\nis adjacent and uncaptured is not known.",
+        "items": {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "type": "object"
+  },
+  "name": "frontier"
+}

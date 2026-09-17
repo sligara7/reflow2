@@ -31,6 +31,19 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **Adopt can proceed one region at a time and be resumed.** Alex, 2026-09-17: "a native
+  incremental adopt mode needing two primitives: a frontier query and a deferred-derivation
+  marker." A deferral is a recorded finding with `fact_type: deferred_derivation` on the part whose
+  intent is deliberately left for later; while open it quiets `unmotivated_capability` and
+  `unallocated_component` on that part and is listed as owed in `loop_status` (`deferrals`), so it
+  never makes a question disappear; closing it brings the finding back. `frontier` is the worklist
+  and resume point: structure without intent, the deferrals oldest first, the unclaimed regions of
+  the sweep handed in, and `resume_point` — the most recent deferral. Without a sweep the frontier
+  says what is uncaptured is not known, never that nothing is. The adopt skill gains a region mode
+  built on the two.
+
 ## [0.63.0] — 2026-09-17
 
 ### Added
