@@ -7,6 +7,20 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
     "properties": {
+      "coverage": {
+        "default": null,
+        "description": "HOW MUCH of the requirement this capability meets: `full` / `partial` / `planned`. The\ndelivery line counts only a `full` (or unstated) satisfier: a capability that only partly\nmeets a need does not deliver it, and before 2026-09-16 this field was declared on the\nedge, unreachable from this tool, and every SATISFIES read as full (bhome).",
+        "enum": [
+          "full",
+          "partial",
+          "planned",
+          null
+        ],
+        "type": [
+          "string",
+          "null"
+        ]
+      },
       "from_id": {
         "description": "The `Capability` that satisfies it.",
         "type": "string"

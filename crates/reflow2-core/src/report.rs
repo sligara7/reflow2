@@ -213,6 +213,13 @@ pub struct DeliveryCoverage {
     /// recovered by inference — excluded from `delivered` on purpose. See the
     /// type docs.
     pub inferred_only: usize,
+    /// SATISFIES edges whose `coverage` says `partial` or `planned` — a
+    /// capability that only partly meets a need, or has not met it yet. Counted
+    /// here and NOT as satisfaction: before 2026-09-16 the field was declared
+    /// on the edge, unreachable from the typed tool, and every satisfier read as
+    /// full (bhome, "the model shows this" versus "the model proves this").
+    /// An unstated coverage still reads as full, so older designs do not move.
+    pub partially_satisfied: usize,
     /// SATISFIES edges skipped because the capability at the far end was
     /// DISCONTINUED — built, then decided against by an accepted Decision.
     ///
@@ -1276,6 +1283,7 @@ impl DesignGraph {
             delivered: 0,
             satisfied_only_by_discontinued: 0,
             inferred_only: 0,
+            partially_satisfied: 0,
         };
         for req in self.scan_nodes(node::REQUIREMENT)? {
             // A dropped requirement is a withdrawn need, not unfinished work.
@@ -1296,6 +1304,17 @@ impl DesignGraph {
             for e in self.incoming(&req.node_id, Some(edge::SATISFIES))? {
                 if self.is_discontinued(&e.from_id)? {
                     d.satisfied_only_by_discontinued += 1;
+                    continue;
+                }
+                // A partial or planned satisfier is counted as what it says it
+                // is. Only `full` — or nothing said — meets the need.
+                if matches!(
+                    e.properties
+                        .get("coverage")
+                        .and_then(crate::foundation::core::Value::as_str),
+                    Some("partial" | "planned")
+                ) {
+                    d.partially_satisfied += 1;
                     continue;
                 }
                 satisfiers.push(e.from_id);

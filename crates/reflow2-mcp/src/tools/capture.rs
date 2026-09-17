@@ -157,9 +157,29 @@ const PRESCRIBED_LAYER_PAIRS: &[(&str, &str)] = &[
     // evening (recurrence #3 of fact:the-duplicate-guard-cannot-tell-a-second-
     // layer-from-a-second-copy).
     ("Capability", "Verification"),
+    // 2026-09-16, on the xrt-demo genesis count (7 refusals on these pairs, 7
+    // distinct, 0 duplicates; 19/0 across three designs): a capability and the
+    // part it is allocated to, a requirement and the part that meets it, a
+    // capability and the rule or limit that binds it — thread pairs by
+    // construction. Component↔Component (a grouping and its member) is
+    // deliberately NOT here: measured once, and a same-type near match is the
+    // one case the guard was built for.
+    ("Capability", "Component"),
+    ("Requirement", "Component"),
+    ("Capability", "DesignRule"),
+    ("Capability", "Constraint"),
 ];
 
 /// Is this pair one the capture loop prescribes, in either direction?
+/// The ids a write names as its own relation targets (`satisfies`,
+/// `allocated_to`, `related_to`). A near-match on one of these is not a
+/// duplicate to refuse: the request has already said how the two relate.
+/// Refusing on that ground was "the tool refusing a write because its own
+/// argument is too similar to it" (xrt-demo, 2026-09-16 — three of seven).
+fn declared_targets<'a>(ids: &[Option<&'a str>]) -> Vec<&'a str> {
+    ids.iter().flatten().copied().collect()
+}
+
 fn is_prescribed_layer(creating: &str, hit: &NearMatch) -> bool {
     // The one SAME-TYPE exemption, and it needs the `kind` rather than the
     // type: step 5 of the brainstorm skill promotes an `exploratory` Decision
@@ -964,6 +984,7 @@ fn refuse_unless_deliberate(
     distinct_from: Option<&Vec<String>>,
     node_id: &str,
     creating: &str,
+    declared: &[&str],
 ) -> Result<(), McpError> {
     let Some(sf) = found else { return Ok(()) };
     if sf.near_matches.is_empty() {
@@ -988,6 +1009,8 @@ fn refuse_unless_deliberate(
         .iter()
         .filter(|m| !acknowledged.contains(m.node_id.as_str()))
         .filter(|m| !is_prescribed_layer(creating, m))
+        // The request's own relation targets are read, not allow-listed.
+        .filter(|m| !declared.contains(&m.node_id.as_str()))
         .collect();
     if unacknowledged.is_empty() {
         return Ok(());
@@ -1277,9 +1300,13 @@ impl ReflowService {
                 .map_err(dyno_err)?,
         );
         let found = search_first(&g, &req.id, existed, &format!("{name} {statement}"));
-        if let Err(e) =
-            refuse_unless_deliberate(&found, req.distinct_from.as_ref(), &req.id, "Requirement")
-        {
+        if let Err(e) = refuse_unless_deliberate(
+            &found,
+            req.distinct_from.as_ref(),
+            &req.id,
+            "Requirement",
+            &[],
+        ) {
             // Roll back the node we just wrote. The check needs the node in the
             // index to have an in-query baseline, so the write comes first and
             // is undone when the caller has not yet chosen. Only ever undoes a
@@ -1422,9 +1449,13 @@ impl ReflowService {
             None => node,
         };
         let found = search_first(&g, &req.id, existed, &format!("{name} {statement}"));
-        if let Err(e) =
-            refuse_unless_deliberate(&found, req.distinct_from.as_ref(), &req.id, "DesignRule")
-        {
+        if let Err(e) = refuse_unless_deliberate(
+            &found,
+            req.distinct_from.as_ref(),
+            &req.id,
+            "DesignRule",
+            &[],
+        ) {
             if !existed {
                 let _ = g.delete_node(node_ty, &req.id);
             }
@@ -1538,9 +1569,13 @@ impl ReflowService {
         };
         let node = NodeDto::from(stored);
         let found = search_first(&g, &req.id, existed, &format!("{name} {description}"));
-        if let Err(e) =
-            refuse_unless_deliberate(&found, req.distinct_from.as_ref(), &req.id, "Capability")
-        {
+        if let Err(e) = refuse_unless_deliberate(
+            &found,
+            req.distinct_from.as_ref(),
+            &req.id,
+            "Capability",
+            &declared_targets(&[req.satisfies.as_deref(), req.allocated_to.as_deref()]),
+        ) {
             // Roll back the node we just wrote. The check needs the node in the
             // index to have an in-query baseline, so the write comes first and
             // is undone when the caller has not yet chosen. Only ever undoes a
@@ -1799,9 +1834,13 @@ impl ReflowService {
                 .unwrap_or(stored);
         let node = NodeDto::from(stored);
         let found = search_first(&g, &req.id, existed, &format!("{name} {description}"));
-        if let Err(e) =
-            refuse_unless_deliberate(&found, req.distinct_from.as_ref(), &req.id, "Component")
-        {
+        if let Err(e) = refuse_unless_deliberate(
+            &found,
+            req.distinct_from.as_ref(),
+            &req.id,
+            "Component",
+            &[],
+        ) {
             // Roll back the node we just wrote. The check needs the node in the
             // index to have an in-query baseline, so the write comes first and
             // is undone when the caller has not yet chosen. Only ever undoes a
@@ -1885,7 +1924,8 @@ impl ReflowService {
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await?;
         ok_json(EdgeDto::from(
-            g.satisfies(&req.from_id, &req.to_id).map_err(dyno_err)?,
+            g.satisfies_with_coverage(&req.from_id, &req.to_id, req.coverage.as_deref())
+                .map_err(dyno_err)?,
         ))
     }
 
@@ -2488,9 +2528,16 @@ impl ReflowService {
         }
         let node = NodeDto::from(stored);
         let found = search_first(&g, &req.id, existed, &format!("{name} {decision}"));
-        if let Err(e) =
-            refuse_unless_deliberate(&found, req.distinct_from.as_ref(), &req.id, "Decision")
-        {
+        if let Err(e) = refuse_unless_deliberate(
+            &found,
+            req.distinct_from.as_ref(),
+            &req.id,
+            "Decision",
+            &req.related_to
+                .as_ref()
+                .map(|v| v.iter().map(|r| r.other_id.as_str()).collect::<Vec<_>>())
+                .unwrap_or_default(),
+        ) {
             // Roll back the node we just wrote. The check needs the node in the
             // index to have an in-query baseline, so the write comes first and
             // is undone when the caller has not yet chosen. Only ever undoes a

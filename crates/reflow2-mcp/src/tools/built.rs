@@ -419,6 +419,13 @@ impl ReflowService {
             req.description.as_deref(),
         )?
         .unwrap_or(stored);
+        let stored = crate::tools::capture::set_optional_props(
+            &mut g,
+            reflow2_core::nodes::node::ARTIFACT,
+            &req.id,
+            &[("status", req.status.as_deref())],
+        )?
+        .unwrap_or(stored);
         let stored = match req.checksum.as_deref() {
             Some(c) => g.set_artifact_baseline(&req.id, c).map_err(dyno_err)?,
             None => stored,

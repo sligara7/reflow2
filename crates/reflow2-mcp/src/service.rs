@@ -1956,6 +1956,13 @@ pub struct SatisfiesReq {
     /// The `Requirement` being satisfied.
     #[serde(alias = "requirement_id")]
     pub to_id: String,
+    /// HOW MUCH of the requirement this capability meets: `full` / `partial` / `planned`. The
+    /// delivery line counts only a `full` (or unstated) satisfier: a capability that only partly
+    /// meets a need does not deliver it, and before 2026-09-16 this field was declared on the
+    /// edge, unreachable from this tool, and every SATISFIES read as full (bhome).
+    #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::satisfies_coverage_opt")]
+    pub coverage: Option<String>,
 }
 
 /// A Component PROVIDES an Interface. `from_id` / `to_id` is the taught spelling; the role names
@@ -2220,6 +2227,13 @@ pub struct AddArtifactReq {
     /// (`fact:six-constructors-cannot-write-any-prose-because-the-class-was-fixed-one-report-at-a-time-and-never-swept`).
     #[serde(default)]
     pub description: Option<String>,
+    /// `planned` / `in_progress` / `realized` / `verified`. NO DEFAULT since 2026-09-16: it used to
+    /// land `realized` with no way to say otherwise, so an artifact registered before the file
+    /// existed read as produced. Absent means nobody said. `link_artifact` sets `realized` itself,
+    /// because it read the file's checksum off disk.
+    #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::artifact_status_opt")]
+    pub status: Option<String>,
     /// A content hash of the file (`sha256:<hex>`) — the baseline that makes a later edit detectable.
     /// Supply it on creation, as `link_artifact` does: without one, `reconcile_artifacts` can say the file
     /// vanished but never that its contents changed. On a REVISE of an artifact that already carries one it

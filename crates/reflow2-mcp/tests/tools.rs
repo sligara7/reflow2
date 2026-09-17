@@ -116,7 +116,8 @@ async fn seeded() -> ReflowService {
     })));
     j!(s.satisfies(Parameters(SatisfiesReq {
         from_id: "cap:flight".into(),
-        to_id: "req:physics".into()
+        to_id: "req:physics".into(),
+        coverage: None,
     })));
     s
 }
@@ -232,7 +233,8 @@ async fn genesis_bootstraps_then_detect_hands_off() {
     })));
     j!(s.satisfies(Parameters(SatisfiesReq {
         from_id: "cap:flight".into(),
-        to_id: "req:physics".into()
+        to_id: "req:physics".into(),
+        coverage: None,
     })));
 
     // Seeded P0/P1 with no P2 → DETECT's first-round structure gap fires.
@@ -1606,6 +1608,7 @@ async fn documents_links_a_doc_over_the_surface_and_refuses_a_ghost() {
         name: Some("README.md".into()),
         artifact_type: Some("document".into()),
         location: Some("README.md".into()),
+        status: None,
         description: None,
         checksum: None,
     })));
@@ -2313,6 +2316,7 @@ async fn temporal_resource_and_realization_tools_round_trip() {
         name: Some("flight.rs".into()),
         artifact_type: Some("code".into()),
         location: Some("src/flight.rs".into()),
+        status: None,
         description: None,
         checksum: None,
     })));

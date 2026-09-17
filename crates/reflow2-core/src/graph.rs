@@ -2003,13 +2003,28 @@ impl DesignGraph {
         capability_id: &str,
         requirement_id: &str,
     ) -> Result<StoredEdge, DynoError> {
+        self.satisfies_with_coverage(capability_id, requirement_id, None)
+    }
+
+    /// [`satisfies`](Self::satisfies) saying HOW MUCH of the requirement the
+    /// capability meets — `full` / `partial` / `planned`. Declared on the edge
+    /// since the schema existed and unreachable from the typed tool until
+    /// 2026-09-16 (bhome: a capability that only partly met a need was
+    /// recorded as fully meeting it). The delivery line reads it: only `full`
+    /// (or unstated) counts.
+    pub fn satisfies_with_coverage(
+        &mut self,
+        capability_id: &str,
+        requirement_id: &str,
+        coverage: Option<&str>,
+    ) -> Result<StoredEdge, DynoError> {
         self.create_edge(
             edge::SATISFIES,
             node::CAPABILITY,
             capability_id,
             node::REQUIREMENT,
             requirement_id,
-            Props::new(),
+            Props::new().set_opt("coverage", coverage),
         )
     }
 

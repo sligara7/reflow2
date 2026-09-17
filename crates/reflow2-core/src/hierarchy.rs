@@ -384,7 +384,8 @@ impl DesignGraph {
                     relation: None,
                     message: format!(
                         "'{}' ({}) is not contained by anything above it and contains \
-                         nothing below it",
+                         nothing below it — if it is a top-level part, contain it under the \
+                         Project with `contains`; a Project parent satisfies this rule",
                         id, lvl
                     ),
                 });

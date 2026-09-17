@@ -63,6 +63,21 @@
           "string",
           "null"
         ]
+      },
+      "status": {
+        "default": null,
+        "description": "`planned` / `in_progress` / `realized` / `verified`. NO DEFAULT since 2026-09-16: it used to\nland `realized` with no way to say otherwise, so an artifact registered before the file\nexisted read as produced. Absent means nobody said. `link_artifact` sets `realized` itself,\nbecause it read the file's checksum off disk.",
+        "enum": [
+          "planned",
+          "in_progress",
+          "realized",
+          "verified",
+          null
+        ],
+        "type": [
+          "string",
+          "null"
+        ]
       }
     },
     "required": [
