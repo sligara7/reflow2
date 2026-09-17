@@ -42,6 +42,19 @@ Before reading code, list what else exists, because intent lives outside the imp
 - Record each source as a `Fragment` node (with its `provenance`) and link what it produced
   with `YIELDED` edges — in the import document of Phase 1, not as per-node tool calls. This is
   the provenance ledger the user will later use to judge every recovered claim.
+- **Record the repository's own conventions where they will be delivered, and register the
+  file the agent reads first.** How imports resolve, how tests run, what a commit must carry —
+  the per-repo procedural know-how reflow2 cannot hold because it does no file I/O — goes in as
+  `add_design_rule` with `category` `convention` and `steps` naming the served skills it bears
+  on (adopt, link-artifacts, root-cause, ci-gate); `get_skill` then hands the convention over
+  beside the skill, at the moment it matters, and a convention with no steps comes back as
+  `convention_delivered_nowhere`. The instruction file itself (AGENTS.md, CLAUDE.md, a
+  project-local skill) is the thin adapter: register it with `add_artifact` (`document`) and
+  `documents` to the Project with `doc_kind` `agent_instructions`, so the design knows the
+  adapter exists and `reconcile_artifacts` notices when it goes stale; a design with a real
+  number of artifacts and no registered adapter comes back as `agent_instructions_unregistered`.
+  Alex measured the residue after served skills (2026-09-17): "thin project adapters, not
+  competing playbooks" — and nothing in reflow2 knew they were there.
 
 ## Phase 1 · Scan — breadth first, deliberately coarse, the whole system
 

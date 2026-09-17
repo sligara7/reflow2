@@ -33,6 +33,17 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **A repository's procedural know-how reaches the agent at the step it bears on, and the design
+  knows the adapter exists.** Alex, 2026-09-17: after served skills what remains in a repo is "a
+  thin adapter, not a competing playbook" — import, resolver and test conventions reflow2 cannot
+  hold because it does no file I/O. The delivery already existed (`add_design_rule … steps`,
+  carried by `get_skill` and the tool list); what was missing was the noticing.
+  `convention_delivered_nowhere` names a `category: convention` rule with no `steps`;
+  `agent_instructions_unregistered` names a design with five or more artifacts and no Artifact
+  documenting a Project with `doc_kind: agent_instructions`. Adopt's Phase 0 records the conventions
+  where they will be delivered and registers the instruction file; link-artifacts names the
+  doc_kind. Measured on reflow2's own design: 8 of 9 conventions undelivered, root AGENTS.md
+  unregistered — both now on the record.
 - **Adopt can proceed one region at a time and be resumed.** Alex, 2026-09-17: "a native
   incremental adopt mode needing two primitives: a frontier query and a deferred-derivation
   marker." A deferral is a recorded finding with `fact_type: deferred_derivation` on the part whose

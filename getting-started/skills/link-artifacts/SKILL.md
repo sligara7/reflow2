@@ -115,7 +115,9 @@ prefer `link_artifact` — provenance is cheap and makes the as-built view trust
 
 Not every file *implements* something. A design doc, ADR, README, runbook or agent-instruction
 file (AGENTS.md, CLAUDE.md) **describes** the design instead: register it with `add_artifact`
-(artifact_type `document`) and link it with `documents` (+ `doc_kind`), not `realizes`. The
+(artifact_type `document`) and link it with `documents` (+ `doc_kind`), not `realizes` — and for
+the file an agent reads FIRST (AGENTS.md, CLAUDE.md, a project-local skill), `doc_kind`
+`agent_instructions` on the Project, which is how the design knows its thin adapter exists. The
 criterion for whether a file belongs in the graph at all: **would something be wrong if it
 drifted out of step with the design?** Two instruction files disagreeing about the build
 command is exactly the coherence failure this exists to catch — and generated files, lockfiles

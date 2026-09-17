@@ -729,6 +729,19 @@ pub enum GapSource {
     /// reads as nothing said. It asks whether an encoding decision is owed and
     /// never picks one.
     EncodingUndecided,
+    /// A DesignRule of `category: convention` names no `steps`: the rule is
+    /// findable and reaches nobody at the moment it matters, because get_skill
+    /// and the tool list carry a rule only where its steps name them
+    /// (`req:a-repos-procedural-know-how-is-delivered-at-the-step-it-bears-on-and-the-design-knows-the-adapter-exists`,
+    /// Alex 2026-09-17). Keyed on the set of undelivered conventions.
+    ConventionDeliveredNowhere,
+    /// The design holds a real number of artifacts and no Artifact DOCUMENTS
+    /// a Project with `doc_kind: agent_instructions` — the design does not
+    /// know where the agent's instructions live, so the thin adapter that
+    /// holds what reflow2 cannot (how to navigate the repo, how imports
+    /// resolve, how tests run) is invisible to it and never checked for
+    /// drift. One per design; silent under five artifacts.
+    AgentInstructionsUnregistered,
 }
 
 impl GapSource {
@@ -804,6 +817,8 @@ impl GapSource {
             }
             GapSource::ClosureCriterionUndeclared => "closure_criterion_undeclared",
             GapSource::EncodingUndecided => "encoding_undecided",
+            GapSource::ConventionDeliveredNowhere => "convention_delivered_nowhere",
+            GapSource::AgentInstructionsUnregistered => "agent_instructions_unregistered",
         }
     }
 
@@ -910,6 +925,8 @@ impl GapSource {
             GapSource::QuantityCheckWithoutExecutableForm => false,
             GapSource::ClosureCriterionUndeclared => true,
             GapSource::EncodingUndecided => true,
+            GapSource::ConventionDeliveredNowhere => true,
+            GapSource::AgentInstructionsUnregistered => true,
             // AGGREGATE, and the call was close enough to record the losing
             // side. Per-component keying would be the more honest key for the
             // answer people will actually give — "cmp:bulk is a namespace, not
@@ -2153,6 +2170,7 @@ impl DesignGraph {
         self.detect_quantity_provenance(&mut gaps)?;
         self.detect_closure_criterion(&mut gaps)?;
         self.detect_encoding_undecided(&mut gaps)?;
+        self.detect_repo_know_how(&mut gaps)?;
         self.detect_failing_verifications(&mut gaps)?;
         self.detect_unresolved_drift(&mut gaps)?;
         self.detect_unreleased_components(&mut gaps)?;
@@ -6134,6 +6152,122 @@ impl DesignGraph {
                 ),
             });
         }
+        Ok(())
+    }
+
+    /// `convention_delivered_nowhere` and `agent_instructions_unregistered` —
+    /// the two absences behind a repository's procedural know-how (see the
+    /// variant docs). Both silent when there is nothing to run on.
+    fn detect_repo_know_how(&self, gaps: &mut Vec<GapCandidate>) -> Result<(), DynoError> {
+        // Conventions the project follows, delivered at no step.
+        let mut undelivered: Vec<String> = Vec::new();
+        let mut conventions = 0usize;
+        for r in self.scan_live_nodes(node::DESIGN_RULE)? {
+            if r.properties.get("category").and_then(Value::as_str) != Some("convention") {
+                continue;
+            }
+            conventions += 1;
+            let delivered = matches!(
+                r.properties.get("steps"),
+                Some(Value::List(items)) if items.iter().any(|v| v.as_str().is_some_and(|s| !s.trim().is_empty()))
+            );
+            if !delivered {
+                undelivered.push(r.node_id.clone());
+            }
+        }
+        undelivered.sort();
+        if !undelivered.is_empty() {
+            let sample: Vec<String> = undelivered.iter().take(4).cloned().collect();
+            gaps.push(GapCandidate {
+                id: gap_id(GapSource::ConventionDeliveredNowhere, &undelivered),
+                gap_source: GapSource::ConventionDeliveredNowhere,
+                scope: GapScope::Project,
+                severity: 0.35,
+                title: format!(
+                    "{} of {} convention(s) the project follows are delivered at no step",
+                    undelivered.len(),
+                    conventions
+                ),
+                description: format!(
+                    "A convention is a rule the project follows at particular moments — how imports \
+                     resolve, how tests run, what a commit must carry. get_skill and the tool list \
+                     carry a rule ONLY where its `steps` name the served skill or tool it bears on; \
+                     a convention with no steps is findable and reaches nobody at the moment it \
+                     matters. Set `steps` on each (add_design_rule again with the same id) naming \
+                     the skills — adopt, link-artifacts, root-cause, ci-gate — or the tools it \
+                     concerns. A convention that bears on no served step at all (a shell command, \
+                     a CI job) is honestly delivered nowhere: acknowledge_gap it with that reason. \
+                     First few: {}.",
+                    sample.join(", ")
+                ),
+                affected_ids: undelivered,
+                suggested_depth: 1,
+                evidence: format!(
+                    "{conventions} live DesignRule(s) of category `convention`; {} carry no `steps`.",
+                    sample.len().max(1)
+                ),
+            });
+        }
+
+        // The adapter the design does not know about.
+        let artifacts = self.scan_live_nodes(node::ARTIFACT)?.len();
+        if artifacts < 5 {
+            return Ok(());
+        }
+        let mut projects: Vec<String> = self
+            .scan_live_nodes(node::PROJECT)?
+            .into_iter()
+            .filter(|p| {
+                p.properties
+                    .get("mirror_of")
+                    .and_then(Value::as_str)
+                    .is_none()
+            })
+            .map(|p| p.node_id)
+            .collect();
+        projects.sort();
+        if projects.is_empty() {
+            return Ok(());
+        }
+        let mut registered = false;
+        for pid in &projects {
+            for e in self.incoming(pid, Some(edge::DOCUMENTS))? {
+                if e.properties.get("doc_kind").and_then(Value::as_str)
+                    == Some("agent_instructions")
+                {
+                    registered = true;
+                    break;
+                }
+            }
+            if registered {
+                break;
+            }
+        }
+        if registered {
+            return Ok(());
+        }
+        gaps.push(GapCandidate {
+            id: gap_id(GapSource::AgentInstructionsUnregistered, &[]),
+            gap_source: GapSource::AgentInstructionsUnregistered,
+            scope: GapScope::Project,
+            severity: 0.3,
+            title: "The design does not know where the agent's instructions live".to_string(),
+            description: "Every agent that works this repository reads an instruction file before it \
+                 knows reflow2 exists — AGENTS.md, CLAUDE.md, a project-local skill — and that file \
+                 is the thin adapter holding what reflow2 cannot: how to navigate the repo, how \
+                 imports resolve, how tests run. Register it: add_artifact (artifact_type \
+                 `document`) and `documents` to the Project with doc_kind `agent_instructions`. \
+                 From then on the design can say the adapter exists and reconcile_artifacts \
+                 notices when it drifts. If this design genuinely has no instruction file, say so \
+                 once with acknowledge_gap."
+                .to_string(),
+            affected_ids: projects,
+            suggested_depth: 1,
+            evidence: format!(
+                "{artifacts} artifact(s) registered; 0 DOCUMENTS edge(s) to a Project carry \
+                 doc_kind `agent_instructions`."
+            ),
+        });
         Ok(())
     }
 
