@@ -212,6 +212,7 @@ async fn a_rules_power_is_settled_intent_and_needs_the_owners_name() {
         statement: Some("Nothing lands on main directly.".into()),
         category: Some("convention".into()),
         enforced,
+        units: None,
         distinct_from: None,
         approver: approver.map(str::to_string),
         acted_at: None,

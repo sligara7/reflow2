@@ -69,6 +69,25 @@ impl DesignGraph {
         )
     }
 
+    /// The unit a Constraint's `limit` is in, stated explicitly rather than
+    /// read off a `quantity` suffix — a suffix convention is exactly the thing
+    /// nobody compares. Every other property is carried.
+    pub fn set_constraint_unit(&mut self, id: &str, unit: &str) -> Result<StoredNode, DynoError> {
+        let Some(existing) = self.get_node(node::CONSTRAINT, id)? else {
+            return Err(DynoError::NodeNotFound {
+                node_type: node::CONSTRAINT.to_string(),
+                node_id: id.to_string(),
+            });
+        };
+        let mut props = Props::new().set("unit", unit.trim());
+        for (k, v) in &existing.properties {
+            if k != "unit" {
+                props = props.set(k, v.clone());
+            }
+        }
+        self.upsert_node(node::CONSTRAINT, id, props)
+    }
+
     /// `Constraint CONSTRAINS target` — the target spends `contribution` of
     /// the budget (in the Constraint's quantity unit). `from_type` is fixed:
     /// budgets hang off Constraints; `target_type` is free because anything
@@ -89,6 +108,34 @@ impl DesignGraph {
         target_type: &str,
         target_id: &str,
         contribution: Option<f64>,
+        basis: Option<&str>,
+        measured_at: Option<&str>,
+        note: Option<&str>,
+    ) -> Result<StoredEdge, DynoError> {
+        self.constrains_in(
+            constraint_id,
+            target_type,
+            target_id,
+            contribution,
+            None,
+            basis,
+            measured_at,
+            note,
+        )
+    }
+
+    /// [`constrains`](Self::constrains) with the UNIT the contribution is in,
+    /// so `budget_report` can compare it with the Constraint's instead of
+    /// trusting it: 6.9 lb against a 100 kg limit rolled up silently before
+    /// this existed (2026-09-16).
+    #[allow(clippy::too_many_arguments)]
+    pub fn constrains_in(
+        &mut self,
+        constraint_id: &str,
+        target_type: &str,
+        target_id: &str,
+        contribution: Option<f64>,
+        unit: Option<&str>,
         basis: Option<&str>,
         measured_at: Option<&str>,
         note: Option<&str>,
@@ -114,6 +161,7 @@ impl DesignGraph {
             target_id,
             Props::new()
                 .set_opt("contribution", contribution)
+                .set_opt("unit", unit.map(str::trim).filter(|u| !u.is_empty()))
                 .set_opt("basis", basis)
                 .set_opt("measured_at", measured_at)
                 .set_opt("note", note),
@@ -127,6 +175,9 @@ pub struct BudgetContributor {
     pub node_id: String,
     /// `None` means the edge states no number — reported, never zeroed.
     pub contribution: Option<f64>,
+    /// The unit the contribution is in, as the edge stated it. `None` is a
+    /// silence, reported in `unit_unstated`.
+    pub unit: Option<String>,
     pub basis: Option<String>,
     /// When the contribution was observed, where the caller said.
     ///
@@ -157,6 +208,10 @@ pub struct BudgetReport {
     pub constraint_name: String,
     /// The unit-bearing quantity name, if stated.
     pub quantity: Option<String>,
+    /// The unit `limit` is in, if the Constraint stated one. None means the
+    /// unit sweep has something to say about this budget, and nothing here can
+    /// judge a contribution's unit.
+    pub unit: Option<String>,
     pub limit: Option<f64>,
     /// `maximum` (default) or `minimum`.
     pub direction: String,
@@ -167,6 +222,15 @@ pub struct BudgetReport {
     /// Contributors whose edge states no contribution — the reason a verdict
     /// can be `incomplete`.
     pub unstated: Vec<String>,
+    /// Contributors whose edge states a number and NO unit, when the
+    /// Constraint has one. Still totalled — the old behaviour, kept so a design
+    /// written before units existed does not turn Incomplete overnight — but
+    /// the silence is named, which is what was missing.
+    pub unit_unstated: Vec<String>,
+    /// Contributors whose stated unit DIFFERS from the Constraint's. NOT
+    /// totalled: a pound figure is not added to a kilogram budget, and the
+    /// verdict is left open the way an unstated contribution leaves it.
+    pub unit_mismatched: Vec<String>,
     /// How many contributions rest on each basis — a total over `estimated`
     /// numbers is a weaker claim than one over `measured`, and the caller
     /// must see that.
@@ -225,6 +289,11 @@ impl DesignGraph {
             contributors.push(BudgetContributor {
                 node_id: e.to_id,
                 contribution: e.properties.get("contribution").and_then(Value::as_f64),
+                unit: e
+                    .properties
+                    .get("unit")
+                    .and_then(Value::as_str)
+                    .map(str::to_string),
                 basis: e
                     .properties
                     .get("basis")
@@ -239,7 +308,27 @@ impl DesignGraph {
         }
         contributors.sort_by(|a, b| a.node_id.cmp(&b.node_id));
 
-        let total: f64 = contributors.iter().filter_map(|c| c.contribution).sum();
+        let unit = sprop("unit");
+        let unit_mismatched: Vec<String> = contributors
+            .iter()
+            .filter(|c| c.contribution.is_some())
+            .filter(|c| matches!((&unit, &c.unit), (Some(cu), Some(u)) if cu != u))
+            .map(|c| c.node_id.clone())
+            .collect();
+        let unit_unstated: Vec<String> = contributors
+            .iter()
+            .filter(|c| c.contribution.is_some() && unit.is_some() && c.unit.is_none())
+            .map(|c| c.node_id.clone())
+            .collect();
+        // Only numbers in the Constraint's own unit are added. A mismatched one
+        // is reported beside the total, never converted (reflow2 knows no
+        // conversion table, on purpose) and never silently summed.
+        let comparable: Vec<BudgetContributor> = contributors
+            .iter()
+            .filter(|c| !unit_mismatched.contains(&c.node_id))
+            .cloned()
+            .collect();
+        let total: f64 = comparable.iter().filter_map(|c| c.contribution).sum();
         let unstated: Vec<String> = contributors
             .iter()
             .filter(|c| c.contribution.is_none())
@@ -268,12 +357,13 @@ impl DesignGraph {
         // limit is definitely Within. Only when the stated side leaves the
         // outcome genuinely open do the unstated contributions make it
         // Incomplete.
+        let open = !unstated.is_empty() || !unit_mismatched.is_empty();
         let verdict = match limit {
             None => BudgetVerdict::Ungated,
             Some(l) if direction == "minimum" => {
                 if total >= l {
                     BudgetVerdict::Within
-                } else if !unstated.is_empty() {
+                } else if open {
                     BudgetVerdict::Incomplete
                 } else {
                     BudgetVerdict::Exceeded // all stated and still short of the minimum
@@ -282,7 +372,7 @@ impl DesignGraph {
             Some(l) => {
                 if total > l {
                     BudgetVerdict::Exceeded
-                } else if !unstated.is_empty() {
+                } else if open {
                     BudgetVerdict::Incomplete
                 } else {
                     BudgetVerdict::Within // all stated and within the maximum
@@ -290,18 +380,20 @@ impl DesignGraph {
             }
         };
 
-        let (worst_path, worst_path_total, path_note) =
-            self.worst_path(&contributors, &direction)?;
+        let (worst_path, worst_path_total, path_note) = self.worst_path(&comparable, &direction)?;
 
         Ok(BudgetReport {
             constraint_id: constraint_id.to_string(),
             constraint_name: sprop("name").unwrap_or_else(|| constraint_id.to_string()),
             quantity: sprop("quantity"),
+            unit,
             limit,
             direction,
             contributors,
             total,
             unstated,
+            unit_unstated,
+            unit_mismatched,
             basis_coverage,
             undated_measurements,
             verdict,

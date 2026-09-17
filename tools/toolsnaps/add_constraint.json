@@ -130,6 +130,14 @@
           "string",
           "null"
         ]
+      },
+      "unit": {
+        "default": null,
+        "description": "THE UNIT `limit` IS IN — `kg`, `ms`, `N·s`, `USD` — stated explicitly rather than read\noff a suffix of `quantity`. budget_report adds a contribution only when its unit matches\nthis one and reports the rest; the unit sweep reports a limit with none (2026-09-16).",
+        "type": [
+          "string",
+          "null"
+        ]
       }
     },
     "required": [

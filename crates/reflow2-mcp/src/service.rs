@@ -1630,6 +1630,11 @@ pub struct DesignRuleReq {
     /// and it is theirs to state (governance-proposal skill).
     #[serde(default)]
     pub enforced: Option<bool>,
+    /// For `category: unit_system`: the unit each quantity KIND is done in, one entry per kind
+    /// as `kind=unit` — `mass=kg`, `length=mm`, `energy=eV`. Per kind, not one blanket system.
+    /// The unit sweep reports any stated unit not among these.
+    #[serde(default)]
+    pub units: Option<Vec<String>>,
     /// Ids you read and judged DIFFERENT from this one, when a near match was
     /// reported. Omit on a first attempt.
     #[serde(default)]
@@ -3216,6 +3221,11 @@ pub struct AddConstraintReq {
     /// For a numeric budget: unit-bearing name, e.g. `mass_kg`, `latency_ms`.
     #[serde(default)]
     pub quantity: Option<String>,
+    /// THE UNIT `limit` IS IN — `kg`, `ms`, `N·s`, `USD` — stated explicitly rather than read
+    /// off a suffix of `quantity`. budget_report adds a contribution only when its unit matches
+    /// this one and reports the rest; the unit sweep reports a limit with none (2026-09-16).
+    #[serde(default)]
+    pub unit: Option<String>,
     /// The budget number, in the quantity's unit. On a `kpp` this is the
     /// THRESHOLD — the value that, if missed, fails the effort.
     #[serde(default)]
@@ -3272,6 +3282,10 @@ pub struct ConstrainsReq {
     /// participates but unstated; budget_report reports it, never zeroes it.
     #[serde(default)]
     pub contribution: Option<f64>,
+    /// The unit `contribution` is in, so it can be COMPARED with the Constraint's rather than
+    /// trusted: a contribution in another unit is reported and left out of the total.
+    #[serde(default)]
+    pub unit: Option<String>,
     /// `estimated` (default) / `evidence` / `measured`.
     #[serde(default)]
     #[schemars(schema_with = "crate::enum_schema::constrains_basis_opt")]
@@ -4340,6 +4354,12 @@ pub struct InterfaceSpecReq {
     /// Status vocabulary and the shape of a failure response.
     #[serde(default)]
     pub error_model: Option<String>,
+    /// THE TENTH AXIS: the unit of each quantity this boundary carries, one entry per quantity
+    /// as `quantity=unit` (`impulse=N·s`, `mass=kg`); the single entry `none` for a boundary
+    /// that carries no quantity. The seam check compares the two sides quantity by quantity —
+    /// the Mars Climate Orbiter check — and a published boundary that has not said is reported.
+    #[serde(default)]
+    pub units: Option<Vec<String>>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]

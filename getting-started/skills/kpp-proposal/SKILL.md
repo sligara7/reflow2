@@ -54,7 +54,8 @@ handshake turns into a leading question.
 
 `add_constraint` with `category: kpp`, plus:
 
-- `quantity` — a unit-bearing name (`range_mi`, `mass_lb`, `latency_ms`), so the rollup can add up.
+- `quantity` — the name of what is budgeted: range, mass, latency.
+- `unit` — the unit `limit` is in — mi, lb, ms — stated explicitly so a contribution in another unit is REPORTED rather than added. Compared by exact spelling.
 - `limit` — the **threshold**: the value that, if missed, fails the effort.
 - `direction` — `maximum` (stay at or under, the default) or `minimum` (stay at or above).
 - `objective` — what success looks like, where the threshold is merely acceptable. **Ask for it;
@@ -68,8 +69,9 @@ goal belongs — a KPP is not a promoted requirement, it is the line under it.
 ## 4. Bind it to what spends the quantity
 
 A KPP that constrains nothing can never be violated. `constrains` it to the parts that actually
-spend the quantity — components, interfaces, resources — with each one's `contribution` in the
-KPP's unit and the `basis` for that number (`estimated` / `evidence` / `measured`, the same rigor
+spend the quantity — components, interfaces, resources — with each one's `contribution`, its
+`unit` (the rollup adds only contributions whose unit matches the KPP's, and names the ones that
+do not) and the `basis` for that number (`estimated` / `evidence` / `measured`, the same rigor
 ladder as everywhere else). An edge with no contribution is *reported* as unstated, never counted
 as zero.
 

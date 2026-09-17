@@ -682,6 +682,22 @@ pub enum GapSource {
     /// models: a parametric script that GENERATES the drawing is `code`, and
     /// is exactly the reviewable source the agent may write.
     ArtifactNotUnderDeclaredStandard,
+    /// The design carries unit-bearing quantities — a Constraint with a
+    /// `limit`, a CONSTRAINS edge with a `contribution`, an Interface with
+    /// `units` — and no live DesignRule of `category: unit_system` says what
+    /// units it is done in. The Mars Climate Orbiter board found the SE
+    /// function "not robust enough" to catch a unit mismatch; this is that
+    /// review made mechanical
+    /// (`req:a-project-declares-its-unit-system-as-a-governed-rule-and-undeclared-or-off-system-units-are-reported`).
+    /// SILENT when the design carries no quantities: nothing to check is not
+    /// clean, and the finding says nothing rather than reading green.
+    UnitSystemUndeclared,
+    /// A Constraint with a `limit` and no `unit`, or a CONSTRAINS edge with a
+    /// `contribution` and no `unit`. One rollup keyed on the set of offenders.
+    QuantityWithoutUnit,
+    /// A stated unit that is not among the declared unit system's. Keyed on
+    /// the set of offenders; louder when the rule is `enforced`.
+    UnitOutsideDeclaredSystem,
 }
 
 impl GapSource {
@@ -748,6 +764,9 @@ impl GapSource {
             GapSource::ProhibitionInProse => "prohibition_in_prose",
             GapSource::ArtifactStandardUndeclared => "artifact_standard_undeclared",
             GapSource::ArtifactNotUnderDeclaredStandard => "artifact_not_under_declared_standard",
+            GapSource::UnitSystemUndeclared => "unit_system_undeclared",
+            GapSource::QuantityWithoutUnit => "quantity_without_unit",
+            GapSource::UnitOutsideDeclaredSystem => "unit_outside_declared_system",
         }
     }
 
@@ -841,6 +860,13 @@ impl GapSource {
             // Keyed on the SET of artifacts it names: a new drawing re-asks,
             // an acknowledged set stays acknowledged.
             GapSource::ArtifactNotUnderDeclaredStandard => false,
+            // ONE question about the project: "what units is this design done
+            // in?" — a claim that must survive somebody adding a budget.
+            GapSource::UnitSystemUndeclared => true,
+            // Keyed on the SET of offenders: a new one re-asks, an acknowledged
+            // set stays acknowledged.
+            GapSource::QuantityWithoutUnit => false,
+            GapSource::UnitOutsideDeclaredSystem => false,
             // AGGREGATE, and the call was close enough to record the losing
             // side. Per-component keying would be the more honest key for the
             // answer people will actually give — "cmp:bulk is a namespace, not
@@ -2080,6 +2106,7 @@ impl DesignGraph {
         self.detect_unverified_enforced_rules(&pop, &mut gaps)?;
         self.detect_compliance_gaps(&mut gaps)?;
         self.detect_artifact_standard(&mut gaps)?;
+        self.detect_unit_sweep(&mut gaps)?;
         self.detect_failing_verifications(&mut gaps)?;
         self.detect_unresolved_drift(&mut gaps)?;
         self.detect_unreleased_components(&mut gaps)?;
@@ -5637,6 +5664,238 @@ impl DesignGraph {
         Ok(())
     }
 
+    /// The unit sweep: every unit-bearing field the design holds, checked for a
+    /// unit at all and for a unit inside the declared system
+    /// (`req:a-project-declares-its-unit-system-as-a-governed-rule-and-undeclared-or-off-system-units-are-reported`).
+    ///
+    /// Three findings, none of which fires when there is nothing to run on: a
+    /// design with no quantities has answered nothing and reads as unchecked,
+    /// never as clean. Compared by exact spelling on purpose — `N·s` and
+    /// `N s` are two answers until somebody says they are one — and no
+    /// conversion is attempted, because a design tool that converted units
+    /// would be the thing that hid the Mars Climate Orbiter's mismatch.
+    fn detect_unit_sweep(&self, gaps: &mut Vec<GapCandidate>) -> Result<(), DynoError> {
+        struct Bearing {
+            id: String,
+            what: String,
+            unit: Option<String>,
+        }
+        let clean = |v: Option<&Value>| {
+            v.and_then(Value::as_str)
+                .map(str::trim)
+                .filter(|s| !s.is_empty())
+                .map(str::to_string)
+        };
+        let mut bearings: Vec<Bearing> = Vec::new();
+        for c in self.scan_live_nodes(node::CONSTRAINT)? {
+            let has_limit = c.properties.get("limit").and_then(Value::as_f64).is_some();
+            let unit = clean(c.properties.get("unit"));
+            if has_limit || unit.is_some() {
+                bearings.push(Bearing {
+                    id: c.node_id.clone(),
+                    what: format!("the limit of '{}'", c.node_id),
+                    unit,
+                });
+            }
+            for e in self.outgoing(&c.node_id, Some(edge::CONSTRAINS))? {
+                let has = e
+                    .properties
+                    .get("contribution")
+                    .and_then(Value::as_f64)
+                    .is_some();
+                let unit = clean(e.properties.get("unit"));
+                if has || unit.is_some() {
+                    bearings.push(Bearing {
+                        id: e.to_id.clone(),
+                        what: format!("the contribution of '{}' to '{}'", e.to_id, c.node_id),
+                        unit,
+                    });
+                }
+            }
+        }
+        for i in self.scan_live_nodes(node::INTERFACE)? {
+            let Some(Value::List(items)) = i.properties.get("units") else {
+                continue;
+            };
+            for it in items {
+                let Some(s) = it.as_str() else { continue };
+                let s = s.trim();
+                if s.is_empty() || s == "none" {
+                    continue;
+                }
+                let (q, unit) = match s.split_once('=') {
+                    Some((q, u)) => (
+                        q.trim().to_string(),
+                        Some(u.trim().to_string()).filter(|u| !u.is_empty()),
+                    ),
+                    None => (s.to_string(), None),
+                };
+                bearings.push(Bearing {
+                    id: i.node_id.clone(),
+                    what: format!("'{q}' on boundary '{}'", i.node_id),
+                    unit,
+                });
+            }
+        }
+        if bearings.is_empty() {
+            // Nothing to run on. Deliberately no finding: a zero here would read
+            // exactly like a design that answered.
+            return Ok(());
+        }
+
+        let ids_of = |items: &[&Bearing]| -> Vec<String> {
+            let set: BTreeSet<&str> = items.iter().map(|b| b.id.as_str()).collect();
+            set.into_iter().map(str::to_string).collect()
+        };
+
+        let unitless: Vec<&Bearing> = bearings.iter().filter(|b| b.unit.is_none()).collect();
+        if !unitless.is_empty() {
+            let affected = ids_of(&unitless);
+            gaps.push(GapCandidate {
+                id: gap_id(GapSource::QuantityWithoutUnit, &affected),
+                gap_source: GapSource::QuantityWithoutUnit,
+                scope: GapScope::Project,
+                severity: 0.5,
+                title: format!(
+                    "{} quantity(ies) carry a number and no unit",
+                    unitless.len()
+                ),
+                description: format!(
+                    "A number nobody has said the unit of cannot be compared with anything, \
+                     and a rollup that adds it is trusting a guess. Say what each is IN — \
+                     add_constraint with `unit` for a limit, constrains with `unit` for a \
+                     contribution — rather than reading it off the quantity's name; a suffix \
+                     convention is exactly the thing nobody compares. Missing: {}.",
+                    unitless
+                        .iter()
+                        .map(|b| b.what.clone())
+                        .collect::<Vec<_>>()
+                        .join("; ")
+                ),
+                affected_ids: affected,
+                suggested_depth: 2,
+                evidence: format!(
+                    "{} unit-bearing field(s) swept (Constraint.limit, CONSTRAINS.contribution, \
+                     Interface.units); {} state no unit.",
+                    bearings.len(),
+                    unitless.len()
+                ),
+            });
+        }
+
+        // The declared system: every live `unit_system` rule's units, pooled.
+        let mut system: Option<(Vec<String>, bool, BTreeSet<String>)> = None;
+        for r in self.scan_live_nodes(node::DESIGN_RULE)? {
+            if r.properties.get("category").and_then(Value::as_str) != Some("unit_system") {
+                continue;
+            }
+            let enforced = r
+                .properties
+                .get("enforced")
+                .and_then(Value::as_bool)
+                .unwrap_or(false);
+            let mut units = BTreeSet::new();
+            if let Some(Value::List(items)) = r.properties.get("units") {
+                for it in items {
+                    if let Some(s) = it.as_str() {
+                        let u = s.split_once('=').map(|(_, u)| u).unwrap_or(s).trim();
+                        if !u.is_empty() {
+                            units.insert(u.to_string());
+                        }
+                    }
+                }
+            }
+            if units.is_empty() {
+                continue;
+            }
+            match &mut system {
+                None => system = Some((vec![r.node_id.clone()], enforced, units)),
+                Some((ids, e, set)) => {
+                    ids.push(r.node_id.clone());
+                    *e |= enforced;
+                    set.extend(units);
+                }
+            }
+        }
+        let Some((rule_ids, enforced, declared)) = system else {
+            gaps.push(GapCandidate {
+                id: gap_id(GapSource::UnitSystemUndeclared, &[]),
+                gap_source: GapSource::UnitSystemUndeclared,
+                scope: GapScope::Project,
+                severity: 0.45,
+                title: format!(
+                    "This design carries {} quantity(ies) and has not said what units it is done in",
+                    bearings.len()
+                ),
+                description: "Declare the unit system as a rule the project follows — a \
+                     DesignRule with `category: unit_system` and `units` naming the unit per \
+                     quantity KIND (`mass=kg`, `length=mm`, `energy=eV`), because real designs \
+                     are legitimately mixed — and say, as for any rule, whether breaking it \
+                     stops the build. From then on every limit, contribution and boundary \
+                     quantity is checked against it. The Mars Climate Orbiter's review board \
+                     found the systems-engineering function not robust enough to catch a unit \
+                     mismatch; this is that review, made mechanical. Never infer the system from \
+                     the numbers already present."
+                    .to_string(),
+                affected_ids: Vec::new(),
+                suggested_depth: 2,
+                evidence: format!(
+                    "{} unit-bearing field(s) in the design; 0 live DesignRule(s) of category \
+                     `unit_system` carrying `units`.",
+                    bearings.len()
+                ),
+            });
+            return Ok(());
+        };
+
+        let outside: Vec<&Bearing> = bearings
+            .iter()
+            .filter(|b| b.unit.as_ref().is_some_and(|u| !declared.contains(u)))
+            .collect();
+        if outside.is_empty() {
+            return Ok(());
+        }
+        let mut affected = ids_of(&outside);
+        affected.extend(rule_ids.iter().cloned());
+        let offending: BTreeSet<String> = outside.iter().filter_map(|b| b.unit.clone()).collect();
+        gaps.push(GapCandidate {
+            id: gap_id(GapSource::UnitOutsideDeclaredSystem, &affected),
+            gap_source: GapSource::UnitOutsideDeclaredSystem,
+            scope: GapScope::Project,
+            severity: if enforced { 0.8 } else { 0.6 },
+            title: format!(
+                "{} quantity(ies) are in a unit outside the declared system: {}",
+                outside.len(),
+                offending.iter().cloned().collect::<Vec<_>>().join(", ")
+            ),
+            description: format!(
+                "The design's unit system ({}) declares {}; these do not use it: {}. Either the \
+                 number is in the wrong unit — convert it, and say so in its `basis` — or the \
+                 system is incomplete and the kind belongs in the rule's `units`. Both are the \
+                 person's call; reflow2 converts nothing, because a tool that converted units \
+                 would be the thing that hid the mismatch. Units compare by exact spelling: two \
+                 spellings of one unit are two answers until somebody says they are one.",
+                rule_ids.join(", "),
+                declared.iter().cloned().collect::<Vec<_>>().join(", "),
+                outside
+                    .iter()
+                    .map(|b| format!("{} in `{}`", b.what, b.unit.clone().unwrap_or_default()))
+                    .collect::<Vec<_>>()
+                    .join("; ")
+            ),
+            affected_ids: affected,
+            suggested_depth: 2,
+            evidence: format!(
+                "{} unit-bearing field(s) swept; {} declared unit(s); {} outside; rule enforced: {}.",
+                bearings.len(),
+                declared.len(),
+                outside.len(),
+                enforced
+            ),
+        });
+        Ok(())
+    }
+
     /// A published contract with no passing check, and the posture question
     /// when a design has published nothing at all.
     ///
@@ -5780,6 +6039,11 @@ impl DesignGraph {
         // schema actually has fields for, paired with the words the requirement
         // uses — so the finding speaks the need's language rather than the
         // column names.
+        // The tenth axis is a LIST, not a string, so it is tested apart from
+        // the nine below: present means a non-empty `units` list, and the
+        // single entry `none` is an answer (this boundary carries no quantity).
+        const UNITS_AXIS: (&str, &str) =
+            ("units", "the unit of each quantity it carries, or `none`");
         const AXES: &[(&str, &str)] = &[
             ("medium", "the technology it runs over"),
             ("paradigm", "synchronous or event-driven"),
@@ -5804,7 +6068,7 @@ impl DesignGraph {
             ) {
                 continue;
             }
-            let missing: Vec<&(&str, &str)> = AXES
+            let mut missing: Vec<&(&str, &str)> = AXES
                 .iter()
                 .filter(|(field, _)| {
                     match n
@@ -5836,6 +6100,13 @@ impl DesignGraph {
                     }
                 })
                 .collect();
+            let units_stated = matches!(
+                n.properties.get("units"),
+                Some(Value::List(items)) if !items.is_empty()
+            );
+            if !units_stated {
+                missing.push(&UNITS_AXIS);
+            }
             if missing.is_empty() {
                 continue;
             }

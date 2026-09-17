@@ -35,6 +35,15 @@ because nobody had asked what a plan sheet must be, and the person who would hav
 the city planner. reflow2 opens no file — whether an IFC file is valid IFC is the checker's job,
 run by you or by CI, and its output is the evidence on the compliance edge.
 
+**And ask what UNITS the design is done in** — per quantity kind, because real designs are
+legitimately mixed: mass in kg, length in mm, energy in eV. Record it as a `DesignRule` with
+`category: unit_system` and `units` (`mass=kg`, `length=mm`), and ask, as for any rule, whether
+breaking it should stop the build. From then on every budget (`add_constraint … unit`), every
+contribution (`constrains … unit`) and every quantity crossing a boundary
+(`set_interface_spec … units`) is checked against it, and a quantity with no unit or a unit outside
+the system is reported. The Mars Climate Orbiter was lost because nobody compared two sides'
+units; this is that review, made mechanical, from day one.
+
 ⚠️ **Never ask which node type to use.** The mapping from their words to the vocabulary is yours —
 `describe_schema` is how you look it up, and **capture-intent** carries the routing table. A user
 who is asked to pick a node type has been handed the one decision they cannot check.

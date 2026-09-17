@@ -61,6 +61,14 @@
           "string",
           "null"
         ]
+      },
+      "unit": {
+        "default": null,
+        "description": "The unit `contribution` is in, so it can be COMPARED with the Constraint's rather than\ntrusted: a contribution in another unit is reported and left out of the total.",
+        "type": [
+          "string",
+          "null"
+        ]
       }
     },
     "required": [

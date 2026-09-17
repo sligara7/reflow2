@@ -144,6 +144,17 @@
           "string",
           "null"
         ]
+      },
+      "units": {
+        "default": null,
+        "description": "THE TENTH AXIS: the unit of each quantity this boundary carries, one entry per quantity\nas `quantity=unit` (`impulse=N·s`, `mass=kg`); the single entry `none` for a boundary\nthat carries no quantity. The seam check compares the two sides quantity by quantity —\nthe Mars Climate Orbiter check — and a published boundary that has not said is reported.",
+        "items": {
+          "type": "string"
+        },
+        "type": [
+          "array",
+          "null"
+        ]
       }
     },
     "required": [

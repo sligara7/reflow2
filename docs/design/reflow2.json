@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:e544b8e968a257bfc342d23bc2a0843d825dcd7507b06eef8c3afb4acaf13d0d",
+  "content_hash": "sha256:ed8ebea1eea1c2a4209e07534968d57587b7c910f8da5dd7c52856615f3449dc",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -3897,6 +3897,14 @@
     },
     {
       "edge_type": "ANTICIPATES",
+      "from_id": "dec:the-other-uaf-domains-wait-for-a-project-that-needs-them",
+      "properties": {
+        "evidence": "That deferral named its own re-ask trigger: a project that needs materiel or physical modelling. xrt-demo is a physical beamline and bhome is a building, and both hit the same three walls in one day."
+      },
+      "to_id": "dec:idea-physical-domains-need-ordered-parts-dimensioned-quantities-and-a-physical-medium"
+    },
+    {
+      "edge_type": "ANTICIPATES",
       "from_id": "dec:the-transition-is-two-halves-and-reads-are-the-unscheduled-one",
       "properties": {
         "evidence": "That decision said the failing half of 'documents to graph' is READING THE GRAPH BACK, and that reads were the unscheduled half. A topic view is exactly a read-back surface — the earlier decision saw this need coming before anyone asked for a skill by name."
@@ -4263,6 +4271,14 @@
         "evidence": "The three-legs finding — that vocabulary reaches a user's design only with a typed tool AND an instruction AND a detector that notices absence — is the same claim one level down: a mechanic present in one skill and enforced nowhere has an instruction and no detector. \"Speak the reader's domain\" is stated in the served instructions for every skill, carried by one and enforced for one, which is exactly the two-of-three failure that finding names."
       },
       "to_id": "fact:the-contracts-are-the-same-shape-and-the-code-says-so-twice"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "req:a-quantity-carries-how-it-was-obtained-and-an-unsourced-one-is-reported",
+      "properties": {
+        "evidence": "The measuring-instrument idea here — a Verification whose method is measurement and whose executor is a named external tool — is the provenance requirement's 'measured (by which instrument or artifact, when)' seen from the tool's side; whichever lands first supplies the other's vocabulary."
+      },
+      "to_id": "dec:idea-the-tool-partnership-needs-a-named-contract-basis-measured-subject-record-and-a-word-for-apparatus"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -23575,6 +23591,16 @@
     },
     {
       "edge_type": "CAUSES",
+      "from_id": "chg:the-prescribed-layer-pairs-stop-refusing",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "That repair's own text: \"THE SET IS THE PAIRS WITH EVIDENCE, NOT EVERY PAIR THAT COULD BE ARGUED FOR. Requirement↔Component is plausibly a layer pair and is deliberately absent — nobody has measured it.\" PRESCRIBED_LAYER_PAIRS in capture.rs (read 2026-09-16) holds ten pairs and none of Capability↔Component, Requirement↔Component, Component↔Component or Capability↔DesignRule. The xrt-demo genesis supplies the measurement the repair said it was waiting for: 7 refusals on those pairs, 7 judged distinct with distinct_from, 0 duplicates; bhome's 2026-08-31 count was 12/0 on other pairs. The repair worked as designed and its stated reopening condition has now been met.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:root-cause-the-guard-still-refuses-thread-pairs-because-the-prescribed-set-was-built-from-evidence-and-the-evidence-for-capability-component-arrived-today"
+    },
+    {
+      "edge_type": "CAUSES",
       "from_id": "cmp:graph",
       "properties": {
         "basis": "correlational",
@@ -24272,6 +24298,16 @@
         "validation_status": "unvalidated"
       },
       "to_id": "fact:the-servers-resident-memory-is-export-retention-not-rocksdb-2026-09-13"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "req:edge-defaults-do-not-assert",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "That requirement's own text measured 19 defaulted edge properties over 3,226 edges on 2026-07-28, named the exact shape (\"a default that describes a value which does not exist … weight_basis on 225 edges and ZERO carry a weight\"), and its status is `dropped`. CONSTRAINS.basis defaults to `estimated` in schema/core.yaml (read 2026-09-16) — the same shape one edge over: a provenance stated for a contribution that is absent. SatisfiesReq in service.rs declares from_id and to_id only, while schema SATISFIES carries `coverage` and report.rs reads it — the reach hole the requirement's dropping left unswept on edges.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:root-cause-two-field-holes-a-rejected-coverage-and-a-basis-asserted-for-a-number-that-is-not-there-share-one-cause-the-edge-sweep-was-dropped"
     },
     {
       "edge_type": "CAUSES",
@@ -29929,6 +29965,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-1b061d516cb51cdb",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:a-lesson-is-served-at-the-step-handler-test"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-1cc581fcc536b948",
       "properties": {
         "accepted_baseline": true,
@@ -34284,6 +34329,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:baseline-1e5b8bbacda77284",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-a-budget-adds-only-numbers-in-its-own-unit"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:baseline-238b75c11ad92d98",
       "properties": {
         "accepted_baseline": true,
@@ -34416,6 +34470,15 @@
         "action": "modified"
       },
       "to_id": "art:hxm-program-feedback-2026-08-19"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:baseline-441a432f5b17bb9e",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-a-unit-crosses-a-seam-and-the-two-sides-are-compared"
     },
     {
       "edge_type": "CHANGED",
@@ -34929,6 +34992,15 @@
         "action": "modified"
       },
       "to_id": "art:graph-probe"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:baseline-f90d70e1add732fa",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-a-project-declares-its-unit-system-and-the-sweep-reports"
     },
     {
       "edge_type": "CHANGED",
@@ -48348,6 +48420,132 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:units-are-declared-compared-at-the-seam-and-governed-by-a-rule",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:budget"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:units-are-declared-compared-at-the-seam-and-governed-by-a-rule",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:capture-intent-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:units-are-declared-compared-at-the-seam-and-governed-by-a-rule",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:units-are-declared-compared-at-the-seam-and-governed-by-a-rule",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:detect-and-ask-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:units-are-declared-compared-at-the-seam-and-governed-by-a-rule",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:genesis-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:units-are-declared-compared-at-the-seam-and-governed-by-a-rule",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:units-are-declared-compared-at-the-seam-and-governed-by-a-rule",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:kpp-proposal-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:units-are-declared-compared-at-the-seam-and-governed-by-a-rule",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:schema-core"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:units-are-declared-compared-at-the-seam-and-governed-by-a-rule",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:schema-structure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:units-are-declared-compared-at-the-seam-and-governed-by-a-rule",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:seam"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:units-are-declared-compared-at-the-seam-and-governed-by-a-rule",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:seam-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:units-are-declared-compared-at-the-seam-and-governed-by-a-rule",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:units-are-declared-compared-at-the-seam-and-governed-by-a-rule",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:units-are-declared-compared-at-the-seam-and-governed-by-a-rule",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:unresolved-setup-skips-on-either-side-not-both",
       "properties": {
         "accepted_baseline": true,
@@ -52650,6 +52848,16 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-genesis-ergonomics-a-brief-that-already-answers-the-structure-a-schema-read-that-answers-one-question-tools-a-skill-needs-and-one-finding-for-nothing-built",
+      "properties": {
+        "evidence": "The one-finding-for-nothing-built idea is that capability's question again — when does a per-node finding become a rollup — asked about unrealized_capability on a design where by definition nothing is built.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "cap:aggregate-gap-keying"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "dec:idea-governance-rides-the-tool-that-does-the-thing",
       "properties": {
         "evidence": "Same conversation, 2026-08-30, and the two answers interact: if the governance layer's six unused vocabulary items are removed rather than made real, then delivering obligations at the tool becomes the WHOLE mechanism rather than one half of it. Deciding how governance is delivered before deciding what governance vocabulary survives would be the wrong order.",
@@ -52837,6 +53045,16 @@
         "weight_basis": "estimated"
       },
       "to_id": "dec:idea-who-authors-the-domain-artifact"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-physical-domains-need-ordered-parts-dimensioned-quantities-and-a-physical-medium",
+      "properties": {
+        "evidence": "A dimensioned quantity on a Component is only worth declaring if the unit machinery can read it; that requirement's sweep (built 2026-09-16) reads Constraint, CONSTRAINS and Interface units and would need one more field to reach a part's own dimensions.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "req:a-project-declares-its-unit-system-as-a-governed-rule-and-undeclared-or-off-system-units-are-reported"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -53050,6 +53268,16 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-the-tool-partnership-needs-a-named-contract-basis-measured-subject-record-and-a-word-for-apparatus",
+      "properties": {
+        "evidence": "This is what the bhome trial of that idea found the partnership needs on reflow2's side once the loop actually closed: the contract was already there (constrains, basis: measured) and nothing named it; the vocabulary lacked a word for the tool itself.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-pair-with-mcp-for-blender-as-the-hands-that-make-and-show-the-cad-artifact"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "dec:idea-the-user-declares-an-se-unit-on-purpose-with-a-skill-per-unit",
       "properties": {
         "evidence": "The agent-facing half of this idea IS that question's subject matter: it measured the translate-to-the-user lens on 2 of 177 tools and the black-box frame in no served instruction. If the answer there is 'state the principle and keep a term table', the agent-facing half of this is already built and this reduces to the user-facing half alone.",
@@ -53067,6 +53295,16 @@
         "weight_basis": "estimated"
       },
       "to_id": "req:the-agent-learns-who-it-is-talking-to"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-what-did-the-agent-infer-provenance-per-field-per-type-and-as-a-report",
+      "properties": {
+        "evidence": "A per-field 'the agent supplied this' record is only meaningful once a stored value can be told from a materialised default; the July sweep is what makes 'nobody said' a readable state, and this idea extends it from defaults to agent-chosen values.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "req:defaults-do-not-assert"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -67918,9 +68156,21 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:the-spine-is-checked-for-two-parents-and-for-level-disagreement",
+      "properties": {},
+      "to_id": "fact:root-cause-a-childless-root-part-has-no-legal-level-because-two-self-limiting-hierarchy-rules-were-never-checked-jointly"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "cap:tool-search",
       "properties": {},
       "to_id": "fact:the-builder-reads-source-where-a-consumer-has-only-the-surface-and-find-tools-returned-the-negation"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "chg:the-prescribed-layer-pairs-stop-refusing",
+      "properties": {},
+      "to_id": "fact:root-cause-the-guard-still-refuses-thread-pairs-because-the-prescribed-set-was-built-from-evidence-and-the-evidence-for-capability-component-arrived-today"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -68572,6 +68822,18 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "dec:idea-an-mcp-around-xrt-so-a-beamline-design-is-ray-traced-not-asserted",
+      "properties": {},
+      "to_id": "fact:field-report-xrt-demo-genesis-2026-09-16-eight-frictions-eight-things-that-worked"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "dec:idea-an-mcp-around-xrt-so-a-beamline-design-is-ray-traced-not-asserted",
+      "properties": {},
+      "to_id": "fact:xrt-mcp-exists-and-xrt-demo-is-the-field-trial-for-the-simulator-pairing"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "dec:idea-can-reflow2-see-the-work-a-session-did-by-hand",
       "properties": {},
       "to_id": "fact:a-work-project-hand-rolled-four-analyses-and-the-conversion-test-says-one-had-a-home-in-the-dev-repo-only"
@@ -68671,6 +68933,12 @@
       "from_id": "dec:idea-pair-with-mcp-for-blender-as-the-hands-that-make-and-show-the-cad-artifact",
       "properties": {},
       "to_id": "fact:bhome-is-the-field-trial-for-the-cad-pairing-and-build-to-code-not-seths-houses"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "dec:idea-pair-with-mcp-for-blender-as-the-hands-that-make-and-show-the-cad-artifact",
+      "properties": {},
+      "to_id": "fact:field-report-bhome-cad-demo-2026-09-16-the-loop-closed-and-the-seam-was-basis-measured"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -68884,6 +69152,18 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "req:defaults-do-not-assert",
+      "properties": {},
+      "to_id": "fact:root-cause-add-artifact-materialises-realized-because-the-affirmative-default-was-outside-the-2026-07-28-sweep-and-the-constructor-has-no-status"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "req:edge-defaults-do-not-assert",
+      "properties": {},
+      "to_id": "fact:root-cause-two-field-holes-a-rejected-coverage-and-a-basis-asserted-for-a-number-that-is-not-there-share-one-cause-the-edge-sweep-was-dropped"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "req:every-served-tool-is-reachable-by-find-tools-on-a-users-words",
       "properties": {},
       "to_id": "fact:after-the-scorer-fix-120-of-180-tools-reach-the-top-five-and-42-still-miss"
@@ -69012,6 +69292,22 @@
     },
     {
       "edge_type": "IMPLEMENTS",
+      "from_id": "art:test-a-budget-adds-only-numbers-in-its-own-unit",
+      "properties": {
+        "covers": "whole"
+      },
+      "to_id": "ver:a-budget-adds-only-numbers-in-its-own-unit"
+    },
+    {
+      "edge_type": "IMPLEMENTS",
+      "from_id": "art:test-a-project-declares-its-unit-system-and-the-sweep-reports",
+      "properties": {
+        "covers": "whole"
+      },
+      "to_id": "ver:a-project-declares-its-unit-system-and-the-sweep-reports"
+    },
+    {
+      "edge_type": "IMPLEMENTS",
       "from_id": "art:test-a-project-is-asked-what-its-artifacts-must-be-in",
       "properties": {
         "covers": "whole"
@@ -69025,6 +69321,14 @@
         "covers": "whole"
       },
       "to_id": "ver:a-repair-can-say-what-it-invalidated"
+    },
+    {
+      "edge_type": "IMPLEMENTS",
+      "from_id": "art:test-a-unit-crosses-a-seam-and-the-two-sides-are-compared",
+      "properties": {
+        "covers": "whole"
+      },
+      "to_id": "ver:a-unit-crosses-a-seam-and-the-two-sides-are-compared"
     },
     {
       "edge_type": "IMPLEMENTS",
@@ -208043,6 +208347,14 @@
       "edge_type": "REALIZES",
       "from_id": "art:budget",
       "properties": {
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-projects-unit-system-is-a-governed-rule-and-a-sweep-reports-unitless-and-off-system-quantities"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:budget",
+      "properties": {
         "completeness": "complete",
         "conformance": "unchecked"
       },
@@ -208581,6 +208893,14 @@
       "edge_type": "REALIZES",
       "from_id": "art:detect",
       "properties": {
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-projects-unit-system-is-a-governed-rule-and-a-sweep-reports-unitless-and-off-system-quantities"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:detect",
+      "properties": {
         "completeness": "complete",
         "conformance": "verified"
       },
@@ -209051,6 +209371,14 @@
         "conformance": "unchecked"
       },
       "to_id": "cmp:genesis"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:genesis-skill",
+      "properties": {
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-projects-unit-system-is-a-governed-rule-and-a-sweep-reports-unitless-and-off-system-quantities"
     },
     {
       "edge_type": "REALIZES",
@@ -210409,6 +210737,14 @@
       "edge_type": "REALIZES",
       "from_id": "art:schema-core",
       "properties": {
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-projects-unit-system-is-a-governed-rule-and-a-sweep-reports-unitless-and-off-system-quantities"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:schema-core",
+      "properties": {
         "completeness": "complete",
         "conformance": "unchecked"
       },
@@ -210498,6 +210834,14 @@
       "edge_type": "REALIZES",
       "from_id": "art:schema-structure",
       "properties": {
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-boundary-quantity-carries-its-unit-and-the-seam-compares-them"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:schema-structure",
+      "properties": {
         "completeness": "complete",
         "conformance": "unchecked"
       },
@@ -210564,6 +210908,14 @@
         "conformance": "unchecked"
       },
       "to_id": "cmp:docs"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:seam",
+      "properties": {
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-boundary-quantity-carries-its-unit-and-the-seam-compares-them"
     },
     {
       "edge_type": "REALIZES",
@@ -211141,6 +211493,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:test-a-budget-adds-only-numbers-in-its-own-unit",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "chg:units-are-declared-compared-at-the-seam-and-governed-by-a-rule"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:test-a-choice-is-not-a-musing",
       "properties": {
         "completeness": "complete",
@@ -211222,6 +211583,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:test-a-project-declares-its-unit-system-and-the-sweep-reports",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "chg:units-are-declared-compared-at-the-seam-and-governed-by-a-rule"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:test-a-project-is-asked-what-its-artifacts-must-be-in",
       "properties": {
         "completeness": "complete",
@@ -211264,6 +211634,15 @@
         "conformance": "unchecked"
       },
       "to_id": "cap:claims-carry-their-age"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:test-a-unit-crosses-a-seam-and-the-two-sides-are-compared",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "chg:units-are-declared-compared-at-the-seam-and-governed-by-a-rule"
     },
     {
       "edge_type": "REALIZES",
@@ -216066,6 +216445,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:a-budget-adds-only-numbers-in-its-own-unit",
+      "properties": {},
+      "to_id": "cap:a-projects-unit-system-is-a-governed-rule-and-a-sweep-reports-unitless-and-off-system-quantities"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:a-capability-claiming-reach-beyond-this-repo-is-realized-by-something-a-consumer-gets",
       "properties": {},
       "to_id": "cap:a-capability-claiming-reach-beyond-this-repo-is-realized-by-something-a-consumer-gets"
@@ -216255,6 +216640,12 @@
       "from_id": "ver:a-prescribed-layer-pair-is-reported-not-refused",
       "properties": {},
       "to_id": "cap:search-first-at-the-tool"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:a-project-declares-its-unit-system-and-the-sweep-reports",
+      "properties": {},
+      "to_id": "cap:a-projects-unit-system-is-a-governed-rule-and-a-sweep-reports-unitless-and-off-system-quantities"
     },
     {
       "edge_type": "VERIFIES",
@@ -216465,6 +216856,12 @@
       "from_id": "ver:a-tracked-graph-store-is-reported",
       "properties": {},
       "to_id": "cap:kit"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:a-unit-crosses-a-seam-and-the-two-sides-are-compared",
+      "properties": {},
+      "to_id": "cap:a-boundary-quantity-carries-its-unit-and-the-seam-compares-them"
     },
     {
       "edge_type": "VERIFIES",
@@ -219636,6 +220033,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:test-a-budget-adds-only-numbers-in-its-own-unit",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-a-budget-adds-only-numbers-in-its-own-unit"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:test-a-choice-is-not-a-musing",
       "properties": {
         "action": "created"
@@ -219700,6 +220105,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:test-a-project-declares-its-unit-system-and-the-sweep-reports",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-a-project-declares-its-unit-system-and-the-sweep-reports"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:test-a-project-is-asked-what-its-artifacts-must-be-in",
       "properties": {
         "action": "created"
@@ -219737,6 +220150,14 @@
         "action": "created"
       },
       "to_id": "art:test-a-superseded-finding-does-not-read-as-current"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:test-a-unit-crosses-a-seam-and-the-two-sides-are-compared",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-a-unit-crosses-a-seam-and-the-two-sides-are-compared"
     },
     {
       "edge_type": "YIELDED",
@@ -220455,7 +220876,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "test",
-        "checksum": "sha256:af3bce297a44036e5c7b506f53bb912b94f7f37d842cc6440f9fbb30cfd37c48",
+        "checksum": "sha256:e7d72b0896a101e0d41b4c0e7c607a2f266c5a4f6dcf3faf14aebf15ad55dc7c",
         "description": "Five handler-level pins: get_skill carries the lessons naming that skill and no other; the tool list carries a lesson on its tool and nowhere else; a no-step lesson is kept and delivered nowhere; an unserved step is refused with the nearest names and nothing written; rules take steps and the newest lesson comes first. Shown to fail on the deliver-everything-everywhere mutation (2 pins).",
         "location": "crates/reflow2-mcp/tests/a_lesson_is_served_at_the_step_it_concerns.rs",
         "name": "a_lesson_is_served_at_the_step_it_concerns.rs",
@@ -220713,7 +221134,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:7eb081d6f71f3cd68b87cf4e8083321ec39830a76971f96d9dcb4542b21aab78",
+        "checksum": "sha256:0b289f850b763a40e86f906e3b7188a454c51e5b6e8e39e3152ead74384cf558",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/budget.rs",
         "name": "budget.rs",
@@ -220774,7 +221195,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:2bb920a608f0c465fa88fb6dbb99e4a9d2bf22b8b536275e0b41547365742202",
+        "checksum": "sha256:5ad912f194abd88c5e49426838ca6b0b58264fe4d6d0a6081913c6e6b5d10d53",
         "granularity": "atomic",
         "location": "getting-started/skills/capture-intent/SKILL.md",
         "name": "capture-intent SKILL.md — the conversational capture path, now registering the document it captured from",
@@ -221255,7 +221676,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:ed0daf742ee948d6a1a3e277c6cbe8846d21adba869cccb67eb423871b16fc71",
+        "checksum": "sha256:5e8201577421019b36c55d0ade28e59ac60168911ce16c5dce0e1bb98682354e",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
@@ -221268,7 +221689,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:cc118b9d857a6058e214e96809778deb56ca703ed34b746aa914d699942d2257",
+        "checksum": "sha256:6747696473bef9cd952ea1c20175ef280507c48ef1bce1107563517d9662c13b",
         "location": "getting-started/skills/detect-and-ask/SKILL.md",
         "name": "detect-and-ask/SKILL.md — the ask half of the loop, and now the rule for when NOT to ask",
         "status": "realized"
@@ -221781,7 +222202,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:a721d727869297c40d9949fb0ccee4e3d5d3bd9166b0e09ab3346605cfe8eda5",
+        "checksum": "sha256:98f42e1e805c29eab00029854c6d3bfb8292584fc8637e1ade97e2026ff508ae",
         "granularity": "atomic",
         "location": "getting-started/skills/genesis/SKILL.md",
         "name": "genesis/SKILL.md",
@@ -221845,7 +222266,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:9061fd98d6ed06fae5270ae8c3f64149f23c2efcf320c8875afd83dff52c8c02",
+        "checksum": "sha256:afecba32a33121ec5c1d49f6804d3c3ff6c76bcf2d91067ba0728eb4b5230eac",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/graph.rs",
         "name": "crates/reflow2-core/src/graph.rs",
@@ -222162,7 +222583,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:ead324e7675472c13826a11ff72eb5357974d7190a046c6997589d6b2353bc65",
+        "checksum": "sha256:c29c4b0599336c7d42cb8143943e22cdbe9fc48b7d99a75e2b074ed8e6946e1b",
         "granularity": "atomic",
         "location": "getting-started/skills/kpp-proposal/SKILL.md",
         "name": "kpp-proposal/SKILL.md",
@@ -223088,7 +223509,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:9036020434b599158795373027aa4ab2ea09ab41c4e38234cd666051f63d1808",
+        "checksum": "sha256:a6a267458269d90769e96dda3cbca4efdcbc8fa13701c61d5715f889b826c9c7",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/core.yaml",
@@ -223186,7 +223607,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:f21eb36bc6f0db496e687dea69e3527fdbaa60fe65b38bf365013efe4c3a08eb",
+        "checksum": "sha256:a85efa87addfdc744cdce6eb58df1dc3673de90ad328fdc6f23ce515062cbf38",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/structure.yaml",
@@ -223267,7 +223688,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:693efbf6acfc8a4952bb44383d38b772b4f6901579612c97fb07170c71a03fe8",
+        "checksum": "sha256:88a69b9ae360a4cf88d5c3d2dee918d7686bea20078d7b064db67033b350dfbd",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/seam.rs",
         "name": "seam.rs",
@@ -223291,7 +223712,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:de223cb188288e14d9e9836d0131cfc044c0a640b4dc50e7d626947e5d4cdbf2",
+        "checksum": "sha256:83ef9f672ce8f420e9fccaa94e7d48f942c712e7d7468adac814b87d20447d2d",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/seam.rs",
         "name": "tests/seam.rs",
@@ -223356,7 +223777,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:56d1a66ec29ad803bd8469d2187e71f36c2550419ab79b72f9928adfb8f1293c",
+        "checksum": "sha256:b30203723690caba875c5a644d03affa98d7351ba8699e6970c4140d5ce0cb52",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -223443,7 +223864,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:3f123b25569a0ee577fb1b727ca53125f1aaa3bbc9d4cce5677f1927d1957139",
+        "checksum": "sha256:0de98d511ac45b30211f34a24d77d48e6ff5426fc9c9f48e2497ad8c538106d9",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -223685,6 +224106,18 @@
       }
     },
     {
+      "node_id": "art:test-a-budget-adds-only-numbers-in-its-own-unit",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:aa2a734e886359f7539aaa274e1ed066ccd4d0602aef22d63a342b5bb78e9b68",
+        "description": "Four cases over budget_report with set_constraint_unit and constrains_in. The 6.9 lb against 100 kg case from the brainstorm is the first test.",
+        "location": "crates/reflow2-core/tests/a_budget_adds_only_numbers_in_its_own_unit.rs",
+        "name": "a_budget_adds_only_numbers_in_its_own_unit.rs — the rollup adds only matching units, reports a mismatch beside the total and leaves the verdict open, names a silent unit but still totals it",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:test-a-choice-is-not-a-musing",
       "node_type": "Artifact",
       "properties": {
@@ -223787,6 +224220,18 @@
       }
     },
     {
+      "node_id": "art:test-a-project-declares-its-unit-system-and-the-sweep-reports",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:97a97cd9075721ab11693d5b27044944de6ed20dad7f48fe754453453c0fb751",
+        "description": "Seven cases over unit_system_undeclared, quantity_without_unit and unit_outside_declared_system, with set_design_rule_units and set_interface_units. The enforced-rule case asserts the finding gets louder, not that it changes kind.",
+        "location": "crates/reflow2-core/tests/a_project_declares_its_unit_system_and_the_sweep_reports.rs",
+        "name": "a_project_declares_its_unit_system_and_the_sweep_reports.rs — the three sweep findings pinned, including that nothing to run on raises nothing rather than reading clean",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:test-a-project-is-asked-what-its-artifacts-must-be-in",
       "node_type": "Artifact",
       "properties": {
@@ -223851,6 +224296,18 @@
         "checksum": "sha256:5fb495e40e597cfca8dcd9fe2e9003f6cfc62e75b3c4ec28894558aa86dfbf07",
         "location": "crates/reflow2-core/tests/a_superseded_finding_does_not_read_as_current.rs",
         "name": "a_superseded_finding_does_not_read_as_current.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:test-a-unit-crosses-a-seam-and-the-two-sides-are-compared",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:f697452e4b8e3289d48b8a884f206c09cd60ee8e171308fb2c874800193f83ba",
+        "description": "Five cases. Uses set_interface_units on a consumer graph and an exported provider, then seam_report; asserts the incompatible finding names the quantity and the reason, that a quantity only one side names lands as unstated with that quantity in the detail, and that a side that said nothing is one unstated finding.",
+        "location": "crates/reflow2-core/tests/a_unit_crosses_a_seam_and_the_two_sides_are_compared.rs",
+        "name": "a_unit_crosses_a_seam_and_the_two_sides_are_compared.rs — the tenth seam axis pinned: the Mars Climate Orbiter seam is an incompatibility, silence is never agreement, `none` is an answer",
         "status": "realized"
       }
     },
@@ -224462,7 +224919,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:548efa38a97bdddaf6a4ce58dfad1245f26a292c34b074a4a616f83eca47ad0b",
+        "checksum": "sha256:6f1c9e226e58bc5eaf1fd0d009f052dd4eba2d2e7c8a770d3d4e31772ec48fe4",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
         "name": "crates/reflow2-mcp/src/tools/capture.rs",
@@ -224936,7 +225393,7 @@
         "description": "The write side: set_interface_spec gains a tenth agreement axis — a small structure of quantity name to unit (not a free string and not an enum), on the provider's published boundary and on the consumer's required boundary. The read side: the seam-incompatibility check, which already compares paradigm, payload_format, auth and transport_security across a published/required pair, compares the two unit maps quantity by quantity and reports a disagreement; and the incomplete-published-contract finding names the axis when a boundary that carries quantities states no units. `unspecified` and absence read as UNKNOWN, never as agreement — the materialised-default trap (fact:a-materialised-default-defeats-a-completeness-check) applies to this axis as to the other nine. Unit strings compare by exact spelling in the first cut; whether a canonical unit vocabulary is needed is the brainstorm's option F, deliberately not taken first. Planned 2026-09-13.",
         "name": "A published boundary declares the unit of each quantity it carries, and the seam check reports the two sides disagreeing or one side silent",
         "provenance": "authored",
-        "status": "planned",
+        "status": "realized",
         "tier": "operational"
       }
     },
@@ -225278,7 +225735,7 @@
         "description": "A DesignRule of a declared kind carries the unit system per quantity kind (e.g. mass: kg, energy: eV, length: mm); it is captured through governance-proposal, so the owner says whether a violation stops the build and the answer is recorded either way. A detector walks the unit-bearing fields the design holds — Constraint.quantity and CONSTRAINS.contribution, the unit axis on published boundaries, and any field added later that carries a unit — and reports (i) a quantity with no unit, (ii) a unit outside the declared system. It reports its own population (how many unit-bearing fields it examined) and says plainly when that was zero, per the rule that a detector with nothing to run on must not read like one that ran clean. Planned 2026-09-13; depends on the boundary unit axis existing, since Constraint.quantity is today the only unit-bearing field and it carries its unit as a name suffix.",
         "name": "A project's unit system is a governed rule, and a sweep reports every quantity with no unit or a unit outside the system, saying when it had nothing to run on",
         "provenance": "authored",
-        "status": "planned",
+        "status": "realized",
         "tier": "operational"
       }
     },
@@ -229400,6 +229857,16 @@
       }
     },
     {
+      "node_id": "chg:accept-1b061d516cb51cdb",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-09-16",
+        "name": "DesignRuleReq gained `units`; this fixture's struct literal names the new field as None. No behaviour moved.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-1cc581fcc536b948",
       "node_type": "ChangeEvent",
       "properties": {
@@ -232656,6 +233123,15 @@
       }
     },
     {
+      "node_id": "chg:baseline-1e5b8bbacda77284",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "name": "First baseline recorded: the artifact was registered without a checksum and nothing was compared",
+        "subject": "record"
+      }
+    },
+    {
       "node_id": "chg:baseline-238b75c11ad92d98",
       "node_type": "ChangeEvent",
       "properties": {
@@ -232797,6 +233273,15 @@
       "properties": {
         "change_type": "baseline_established",
         "name": "First baseline, taken at the v0.37.0 cut so the release manifest can say WHAT it shipped. These are frozen field reports — parked by ruling, correctly attaching to nothing — and a baseline records that nothing moved rather than a change that never happened.",
+        "subject": "record"
+      }
+    },
+    {
+      "node_id": "chg:baseline-441a432f5b17bb9e",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "name": "First baseline recorded: the artifact was registered without a checksum and nothing was compared",
         "subject": "record"
       }
     },
@@ -233346,6 +233831,15 @@
         "change_type": "baseline_established",
         "detected_at": "2026-08-24",
         "name": "First baseline — a new file, so nothing moved. The detached graph probe for cap:stop-nudge-asks-the-graph.",
+        "subject": "record"
+      }
+    },
+    {
+      "node_id": "chg:baseline-f90d70e1add732fa",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "name": "First baseline recorded: the artifact was registered without a checksum and nothing was compared",
         "subject": "record"
       }
     },
@@ -237290,6 +237784,17 @@
       "properties": {
         "change_type": "scope_change",
         "name": "req:skill-adherence-is-measured is UN-DEFERRED on Anthony's word, 2026-08-06 — \"un-defer req:skill-adherence-is-measured\". Deferring it left cap:skill-triggers (verified) with a hole nothing but a human could see: every shape that capability recognises is a shape in the graph-write stream, and \"no skill has been loaded\" is not a graph write. Twice now the decay has been found by asking an agent rather than by any mechanism, which is the state this requirement's own statement calls \"not a mechanism\"."
+      }
+    },
+    {
+      "node_id": "chg:units-are-declared-compared-at-the-seam-and-governed-by-a-rule",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-09-16",
+        "name": "Units are declared per quantity, compared at the seam, added only when they match, and governed by a per-kind rule the design is swept against",
+        "rationale": "Honest limit, stated in the brainstorm and kept: reflow2 sees only what a design DECLARES. It forces the declaration to exist (absence is a finding), compares two declarations (disagreement is a finding), and rolls a rule across the design (an off-system unit is a finding). It cannot read the unit a program computes in — MCO's defect was in code whose spec said the right thing. What it adds is the review the MCO board said was missing: the two sides' declarations put side by side, mechanically, every time. Built ahead of quantity provenance because a number with no unit cannot be checked by anything, and that requirement depends on this one.",
+        "summary": "The two accepted-and-unbuilt unit requirements (Anthony, 2026-09-13, after the Mars Climate Orbiter account), built together because the second has nothing to check until the first declares units. (1) The seam: Interface gains `units`, a list of `quantity=unit` entries (`none` = carries no quantity), the tenth agreement axis; seam_report compares it quantity by quantity — same quantity in two units is an incompatibility, a quantity one side never named is a silence about it, a side that said nothing is one unstated finding; incomplete_published_contract names the axis when a published boundary has not said. (2) The budget: Constraint gains `unit`, CONSTRAINS gains `unit`; budget_report adds a contribution only when its unit matches the constraint's, reports `unit_mismatched` (left out of the total, verdict left open like an unstated one) and `unit_unstated` (still totalled, so older designs do not turn Incomplete overnight, but named). (3) The rule: DesignRule gains `units` (`kind=unit`, per kind because real designs are mixed) under category `unit_system`; the sweep reads every unit-bearing field and raises `quantity_without_unit` (keyed on the set), `unit_system_undeclared` (once per project, only when quantities exist — nothing to run on says nothing rather than clean) and `unit_outside_declared_system` (keyed on the set, louder when the rule is enforced). Compared by exact spelling; no conversion, on purpose. Core setters set_constraint_unit / constrains_in / set_design_rule_units / set_interface_units keep every existing constructor signature; MCP gains `unit` on add_constraint and constrains, `units` on add_design_rule and set_interface_spec. Skills: genesis asks the units question at the start; detect-and-ask says how to answer each finding; capture-intent and kpp-proposal ask for the unit beside the number. Three new core test files; seam.rs's axis count pin moves 8→9."
       }
     },
     {
@@ -241385,6 +241890,17 @@
       }
     },
     {
+      "node_id": "dec:idea-genesis-ergonomics-a-brief-that-already-answers-the-structure-a-schema-read-that-answers-one-question-tools-a-skill-needs-and-one-finding-for-nothing-built",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. From the xrt-demo genesis report (F4, F5, F7, N3) and bhome Session 2 (the skew table), 2026-09-16.\n\n═══ THE FIVE, with the cheapest answer beside each ═══\n(1) ⭐ F5 — the genesis skill: \"if the brief already states the structure concretely, capture it and let DETECT check it, rather than withholding what they wrote.\" One sentence; the reporter followed the rule, withheld five elements with positions in metres, and flagged it. The rule's reasoning (fire concept_without_design so structure is answered WITH the user) is right for a vague brief and wrong for a specific one. Cheapest of the five and the only one with no design question in it.\n(2) F4 — describe_schema: `required_only` is useless for \"does Artifact declare status?\" and the full read is 24,005 characters of edge catalogue. A `fields: required | all | none` three-way, or `properties_only`. Cheap; the budget machinery already exists.\n(3) F7 — schema-loading cost: ~20 ToolSearch fetches across four rounds before the first write, because the harness defers ~200 tools. Partly the harness's. But add_design_rule's `steps` already validates against served skill and tool names, so get_skill could return the tools a skill names — a `tools` list per skill, derived, not maintained.\n(4) N3 — unrealized_capability at genesis: 14 of 21 findings one per capability where nothing is built; the phase gaps already say it once. A rollup when EVERY capability is unrealized (the design has not started building) would read more honestly than enumeration — the aggregate/per-node question cap:aggregate-gap-keying holds, applied to the empty-build case. ⚠️ Counter: per-capability keying is what lets one acknowledgement not silence the next capability; the rollup must be keyed on \"nothing built yet\" and dissolve into per-node findings the moment one is.\n(5) VERSION SKEW (bhome, nine calls): errors arrive one field at a time — add_decision cost three round trips for one logical call — and the skew is silent until the first failure. The RequiredFields helper already lists every required field at once; unknown-field errors come from serde one at a time. A handshake notice in get_instructions (\"your client's tool list is N versions behind; reconnect\") would turn nine failures into one warning; the server knows its version and the client's connection time. Precedent: fact:defect-a-clients-tool-list-is-fixed-at-connection (2026-09-06) — known, and the field cost is now measured at nine per session.\n\n═══ WHAT IS NOT HERE ═══\nThe two worst findings of the same report — add_artifact writing `realized`, and the guard refusing thread pairs — are root-caused separately (fact:root-cause-add-artifact-…, fact:root-cause-the-guard-still-refuses-thread-pairs-…) because they are defects with causes, not ergonomics.",
+        "kind": "exploratory",
+        "name": "OPEN — five genesis frictions from one run: the skill's bolded \"do NOT create Components yet\" has no clause for a brief that already states the structure; describe_schema cannot answer \"does this type have field X?\" in under 24 KB; ~20 tool schemas were fetched before the first write and get_skill could name the tools a skill needs; 14 of 21 findings were unrealized_capability on a project where nothing is built; and nine calls failed on version skew one field at a time with no warning at handshake",
+        "rationale": "Captured under the brainstorm skill from two field reports, nothing promoted. Five items in one node because each is a genesis-round cost with a one-line cheapest answer, and a person deciding \"which of these do we do\" wants them side by side; the two defects were kept out so this node cannot be half-answered by fixing them.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-genesis-reflow3-from-the-requirements-alone",
       "node_type": "Decision",
       "properties": {
@@ -241996,6 +242512,17 @@
         "decision": "RECORDED AS A FINDING, 2026-08-19. Nothing built, nothing asked for yet.\n\n**A THIRD MEASURED INSTANCE of `req:a-deliberate-state-is-not-a-defect` — and the first one where THE FIX WAS ALREADY SHIPPED.** Instances (a) and (b) on that requirement are from dev_storyflow, 2026-08-04 and 2026-08-15, and `cap:a-ruling-parks-a-node-and-parked-nodes-are-counted` was built to answer them. This instance happened afterwards, in reflow2's OWN repo, with `governed_by(ruling: \"parks\")` available and served.\n\n**WHAT HAPPENED.** Anthony registered two agent-authored field reports as Artifacts with no claim edges — a deliberate no-claim registration, exactly the genre the requirement describes. Structural defects went **35 → 38** and the BL-199 CI gate turned the PR red. The agent triaged it, argued at length that no honest edge existed (of the five the orphan message names, four are false for a dated field report and DOCUMENTS asserts the file should stay in step with the design, which is backwards for a frozen record), recommended DELETING both Artifact nodes, and did so on Anthony's word (`fbc8e55`). Defects fell to 36. The gate went green.\n\n🛑 **THAT IS THE EXACT FAILURE MODE `req:a-deliberate-state-is-not-a-defect` PREDICTED, QUOTED FROM ITS OWN TEXT:** *\"a later seat watching the count climb has an incentive to stop registering documents and leave them absent, which is the worse state.\"* The prediction came true against an agent that had the remedy in its own tool list and did not reach it.\n\n⭐ **WHY IT WAS NOT REACHED — and this is the whole finding.** `parks` is documented ON THE TOOL (`governed_by`'s parameter hint). A person in this situation is not reading tool hints; they are reading the three messages that told them they had a problem, and NONE of the three names parking:\n· `orphan_node`'s text lists the five claim edges, then says *\"No mechanical repair. Linking this node to something would assert a relationship nobody drew\"* — which reads as **there is nothing you can honestly do**, when in fact there is;\n· `tools/self_host_uses_documents.py`'s FAIL text says *\"nothing in the graph says what the file is FOR\"*, with no hint that *\"it is FOR nothing, deliberately\"* is a sayable thing;\n· the **link-artifacts** skill covers REALIZES / DOCUMENTS / SPECIFIES and stops.\n\n📌 **THE DOCTRINE THIS IS AN INSTANCE OF:** vocabulary reaches a design only with a TYPED TOOL **and** an INSTRUCTION **and** a DETECTOR THAT NOTICES ABSENCE. `parks` has the tool and the detector. The instruction is missing precisely where it would be read. A shipped capability nobody can find at the moment of need is, from the user's side, indistinguishable from one that was never built — and the defect count is what makes that visible.\n\n✅ **IT ALSO CLOSES A BOUND THE REQUIREMENT LEFT OPEN.** That node records as NOT ESTABLISHED: *\"whether reflow2's own graph holds any deliberate no-claim registrations — it holds 14 DOCUMENTS-only artifacts, which is a different state and not this one.\"* As of 2026-08-19 it held exactly two, they were the first, and they were deleted rather than parked before anyone counted them.\n\n**WHAT WOULD FIX THE MISS, cheapest first — text, not mechanism:**\n1. `orphan_node`'s `repair_is_a_judgement` names `ruling: parks` as the honest alternative when the node's unattached state may be deliberate. It already contains the sentence *\"a parked thought that correctly governs nothing yet\"* — it describes the remedy without naming it.\n2. The BL-199 gate's FAIL text says the same.\n3. **link-artifacts** grows the case: a document that correctly claims nothing is registered and parked, not left bare and not given a false DOCUMENTS.\n\n**FOR A USER'S PROJECT, which is the point rather than the self-host trivia:** any brownfield project carries observations of a system it did not build — incident reports, customer complaints, field trial data, a vendor's test certificate. Each is an Artifact that correctly describes and implements nothing. Today the first thing such a user meets is a defect offering five edges, all false, and a repair note that reads as a dead end. Brookhaven's ~10-year-old bluesky stack is the live case.\n\n🛑 REVERSIBLE, AND IT NEEDS ANTHONY'S WORD: the two reports are still files in `docs/feedback/`, unchanged. Re-registering and parking them requires an ACCEPTED Decision — `parks` refuses a `proposed` ruling by design, so that a musing cannot suppress a finding. The agent cannot give itself that word.\n\nSEPARATE AND STILL OPEN: whether `artifact_type` should gain a value for human evidence (it has `test_result` for the machine kind). Parking says \"attaches to nothing on purpose\", which is not the same as \"this is dated evidence and it ages\" — cf. `req:evidence-carries-the-date-it-was-taken`.\n\n⚠️ RECORD-KEEPING NOTE: the first write of this node was MALFORMED — a closing tag and the rationale were sent inside the decision body, so the node briefly carried trailing markup and no `rationale` property. Corrected in place the same session; the prior value survives only in that call's reply.",
         "name": "OPEN — `parks` shipped, and an agent with the tool available still deleted the documents instead: the mechanism is named on the TOOL and the person is reading the DEFECT",
         "rationale": "Recorded rather than folded into req:a-deliberate-state-is-not-a-defect because it is a different claim about a different failure: that requirement asks the DETECTOR to read a ruling, and it has been answered by cap:a-ruling-parks-a-node-and-parked-nodes-are-counted; this says the answer is not reachable from where the problem is met, which no existing node states. Kept as a finding rather than a proposal because Anthony's standing instruction this session was to capture the feedback and defer the work. Recorded at all because the reasoning behind a wrong recommendation exists nowhere else: commit fbc8e55 argues that no honest edge exists for a dated field report, and it will keep asserting that to every future reader unless something says otherwise. The three named neighbours were read in full before writing, on the dedup guard's refusal, and the guard is the reason this node is a third instance rather than a fourth restatement.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-physical-domains-need-ordered-parts-dimensioned-quantities-and-a-physical-medium",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. From the xrt-demo genesis report (2026-09-16) F9, F10, F12, and bhome's Session 2 in the same direction. In the agent's words: \"This will recur in every physical domain — an assembly line, a pipeline, a process plant, a building's circulation.\" \"I am not asking for a physics schema.\"\n\n═══ THE THREE WALLS ═══\n(1) ORDER OF PARTS. The beam goes source → slit → DCM → mirror → sample; capture-intent routes \"first this, then that\" to Flow, but PART_OF_FLOW is Capability→Flow, so the sequence of parts is inexpressible without inventing a capability per element \"purely to have something to order, which would be modelling for the tool rather than the domain\". The ordering was left as a position_m property nothing reads. fact:capture-is-blind-to-three-families already measured Flow at 1 node in 4,477 — a family the table routes to and the design never reaches; this report says why a physical design cannot reach it either.\n(2) DIMENSIONED QUANTITIES ON A PART. Positions, pitch, opening, coating, crystal — \"all core design data, all explicitly covered by the units constraint\" — landed as undeclared keys through create_node, which reported them honestly under `undeclared` and then nothing read them: the unit sweep cannot check them, budget_report cannot roll them up.\n(3) A PHYSICAL MEDIUM. Interface.medium offers REST … mechanical, electrical, human, procedural; a photon beam is none, and `mechanical`/`electrical` \"would both be wrong in a way a domain reader would notice immediately\". Three boundaries left `unspecified`, honestly and permanently.\n\n═══ THE OPTIONS, none chosen ═══\nA. ⭐ THE SMALLEST THREE: (1) let PART_OF_FLOW's source be Capability OR Component, so a physical path is a Flow of parts with step_order; (2) a declared, generic `quantities` list on Component and Interface — `name=value unit` entries, the same shape as `units` — that the unit sweep reads and the provenance requirement can later hang a source on; (3) `optical` and/or a general `physical` value on Interface.medium. Each is additive; the version stamp does not move. ⚠️ Cost: (2) is a second place a number can live beside a Constraint's limit, and the line between \"a part's dimension\" and \"a budget's limit\" needs stating: a dimension is what a part IS, a limit is what it must stay under.\nB. A PHYSICAL-DOMAIN LAYER — Resource/materiel from the UAF deferral, dimensions as first-class quantities, a Quantity node. The over-engineered road the reporter explicitly declined.\nC. NOTHING: physical designs carry dimensions in prose and positions in undeclared keys. ⚠️ Counter: the units requirement accepted 2026-09-13 says a quantity with no unit is a finding, and these quantities are invisible to it.\n\n═══ THE HONEST LIMIT ═══\nreflow2 will not know what a mirror pitch means. What it can do is hold the number with its unit and its source, order the parts the beam passes through, and let the domain's tool (xrt-mcp, IfcMCP) be the thing that knows.",
+        "kind": "exploratory",
+        "name": "OPEN — two physical designs in one day hit the same three walls: a Flow cannot order PARTS (part_of_flow takes a capability), a Component has nowhere to put a dimensioned quantity (25.5 m, 3 mrad, Rh) so it went into undeclared keys nothing reads, and Interface.medium has no value for a beam or a field. Is this the re-ask the UAF-domains deferral named?",
+        "rationale": "Captured under the brainstorm skill from two field reports, nothing promoted. Recorded as the re-ask of the UAF-domains deferral rather than as three unrelated frictions because the deferral named exactly this trigger and both projects that hit it today are physical.",
         "status": "proposed"
       }
     },
@@ -242870,6 +243397,17 @@
       }
     },
     {
+      "node_id": "dec:idea-the-tool-partnership-needs-a-named-contract-basis-measured-subject-record-and-a-word-for-apparatus",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Raised by the bhome Session 2 report (2026-09-16, relayed by Anthony) after the loop closed: a 280 sq ft estimate measured at 288.9 off an IFC shell, written back, and budget_report saying \"exceeded by 8, and all ten contributions are still estimated\".\n\n═══ WHAT THE REPORT FOUND ═══\n(1) ⭐ THE SEAM EXISTED AND WAS NOT FOUND WHILE DESIGNING. `constrains` with `basis: measured` against a budget Constraint IS the partnership contract; the agent reasoned inside the relation vocabulary, drew no edge (correctly, for that vocabulary), and found the constructor afterwards with find_tools. Second instance of \"an agent reasoning carefully inside the relation table does not discover a typed constructor\" — the first was EVOLVES_INTO for promotions. (2) `subject: record` was \"the only honest answer and it was obvious\" for a measurement, and record_change's description does not say it is the common case for a measuring partner. (3) NO WORD FOR APPARATUS: the geometry model had to be a Component whose description disclaims its own type; cap:produce-build-package has sat unallocated for the same reason. (4) An authoritative artifact (\"this file is the single source of truth for this geometry\") had to be prose in a requirement. (5) SAVE CADENCE: ifc_render crashed the server and lost work added after the last save while the artifact was checksummed against the earlier file — \"reflow2 knows when a file it tracks has drifted; it has no notion that an external tool holds unsaved state the file does not\". (6) An accepted sequencing decision does not quiet the findings for its own deferred steps; each costs an acknowledgement.\n\n═══ THE OPTIONS, none chosen ═══\nA. ⭐ A HANDOFF SKILL (\"make-it-in-the-tool\" / cad-handoff), which is option A of the CAD-pairing idea made concrete by the report: the budget and its unit come from the graph; the tool measures; the number returns as a contribution with basis: measured (or a revised limit with subject: record), unit stated, measured_at stated, and the executor named; budget_report says whether it fits. Plus two sentences in `constrains` and `record_change` naming the case. Cheap; and the report says it would have made the whole partnership legible.\nB. `Component.kind: apparatus` — one enum value, so a part can say \"I am how this gets designed, not what gets designed\", and allocation/modularity readings exclude it. Cheap. ⚠️ Counter: it is a Component still; the real thing is a tool, and dec:the-other-uaf-domains-wait-for-a-project-that-needs-them says materiel/resources wait for a project that needs them — this may be that project.\nC. AN AUTHORITATIVE ARTIFACT: a property or edge saying this file is the source of truth for a geometry and these records derive from it. Moderate. Composes with the artifact-standard requirement built today (the standard's checker validates it).\nD. A MEASURING INSTRUMENT: a Verification whose method is `measurement` and whose executor is a named external tool — \"most of the way to closing the loop automatically\". Largest; overlaps the provenance requirement's \"measured (by which instrument)\". ⚠️ Counter: reflow2 opens no file and calls no tool; the executor is named, never run, by reflow2.\nE. LIVE-TOOL STATE: an Artifact flagged as produced by a live external tool, and set_artifact_checksum asking \"saved?\" — or at least the handoff skill saying save before every checksum. Cheap in the skill; the property is a judgement.\nF. SEQUENCING QUIETS ITS STEPS: a capability SCHEDULED_FOR a planned epoch reads \"not yet owed\" in unrealized_capability rather than \"unanswered\" — the same shape as suppressed_by_parked_idea for defects. Moderate.\n\n═══ THE HONEST LIMIT ═══\nNone of this makes the tool's number true. The IFC take-off was 26.84 m² off a model built on two assumptions, and the report said so; the vocabulary here is for saying where a number came from and what it is worth, which is exactly the provenance requirement, one seam over.",
+        "kind": "exploratory",
+        "name": "OPEN — the reflow2↔tool partnership closed its first loop on bhome with vocabulary that already existed and nothing pointed at; does it need a NAMED contract (a handoff skill; `basis: measured` and `subject: record` said in the tools' own descriptions), a word for DESIGN APPARATUS, a way to say an artifact is authoritative and may be unsaved in a live tool, and a sequencing decision that quiets the findings for its own deferred steps?",
+        "rationale": "Captured under the brainstorm skill from a field report, nothing promoted. Kept as one question rather than six because every item is the same discovery: the partnership works with vocabulary that exists, and what is missing is the NAMING — of the contract, of the tool, of the file's authority, of the unsaved state. The A option is the same as the CAD-pairing idea's option A; recording it again here is deliberate, because the report supplies the evidence that idea lacked.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-the-user-declares-an-se-unit-on-purpose-with-a-skill-per-unit",
       "node_type": "Decision",
       "properties": {
@@ -242940,6 +243478,17 @@
         "name": "OPEN — should `verifies` take a LIST of targets, as `set_artifact_checksums` takes a list of baselines, so a check covering a capability and two artifacts is one call rather than three?",
         "no_relation_note": "Searched for bulk verifies and target lists; nearest were the one-call constructor ruling (dec:idea-should-a-constructor-accept-the-owners-word-in-one-call, which shipped the create-time list and is named in the text) and cap:bulk-forms; neither is the same question (this is the standalone edge tool after creation), so no edge was drawn.",
         "rationale": "COUNTER-ARGUMENTS beside each. (a) is small and consistent with the bulk-forms precedent, but a second way to say the same thing on a surface whose naming inconsistency was the largest friction class — the one-call constructor may already be the right answer, and dec:idea-one-way-to-name-which-node-across-the-tool-surface argues for fewer shapes, not more. (b) leaves the add-targets-later case at one call per target, which is what the reporter met. (c) needs measuring: `create_edges` exists and takes typed endpoints; if it draws VERIFIES it is the answer and `find_tools` should rank it for this ask. A RANKING IS A FINDING: measure (c) first; if it covers the case, the fix is one sentence in the verifies description; if not, (a). Anthony's call.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-what-did-the-agent-infer-provenance-per-field-per-type-and-as-a-report",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. From the xrt-demo genesis report (2026-09-16), F2, F3, I1, I2, in the agent's words: \"separating what the user said from what the agent inferred is the single thing genesis most needs to get right — the user explicitly asked me for it, in those words.\" What it could do: set_provenance on Requirement, Capability, Component, Interface only — the schema declares `provenance` on those four and Fragment; six Constraints and two DesignRules quoted from the brief had nowhere to say so, and authored_by was the proxy (\"authorship, not how it entered\"). Every requirement's statement was verbatim the user's while its priority and concern were the agent's invention, and the node reads `authored` throughout; the caveat lived in a chat message — \"exactly the private translator living outside the design that record_alias exists to abolish\".\n\n═══ THE OPTIONS, none chosen ═══\nA. DECLARE `provenance` ON THE FOUR MISSING TYPES (Constraint, DesignRule, Decision, Artifact) and widen set_provenance's allowlist to what the schema declares — the cheap half, and the reach half is the class fixed today for other properties. ⚠️ Counter: `inferred` already has a precise meaning (read out of the implementation, satisfied by construction); a Constraint quoted from a brief is `authored`, and the missing word may be `quoted` versus `composed`, not a new type list.\nB. PER-FIELD PROVENANCE, cheaply: an `agent_supplied: [\"priority\", \"concern\"]` list a constructor can set, so the node itself says which of its fields nobody asked the user about. ⚠️ Cost: another property on every intent type; and the constructors that DEFAULT priority already assert on the user's behalf — this would at least make the assertion visible, which req:defaults-do-not-assert asks for.\nC. \"WHAT DID I INFER?\" AS A REPORT: every node and field the agent supplied without the user's word, in one call, so a genesis round can be audited before it is accepted. Composes with B (it reads B) and with the confirmation ledger (which already records whose word moved a status).\nD. A GENESIS-FROM-FILE PATH (I1): a single-brief ingest that proposes the node set for the user to correct, making the authored/inferred split explicit by construction. ⚠️ Counter: ingest_corpus_step exists for folders and the extraction-is-two-pass decision (dec:idea-extraction-is-two-pass-against-an-se-schema-stated-up-front) already holds this question; a brief is a one-file corpus.\nE. NOTHING NEW: authored_by with two contributors (the user, the agent) is the proxy and it worked. ⚠️ Counter: it answers who wrote, not how it entered, and it is per node.\n\n═══ THE HONEST LIMIT ═══\nNo field-level record makes an invented priority correct; it makes it visible. That is the whole of what the provenance requirement asks for numbers, applied to words.",
+        "kind": "exploratory",
+        "name": "OPEN — a genesis round's single most important distinction is what the USER said versus what the AGENT supplied, and today it can be recorded only per node, on four types, or in chat: should provenance reach Constraint, DesignRule, Decision and Artifact, should a node say WHICH FIELDS the agent chose (priority, concern), and should \"what did I infer?\" be one report a user can audit?",
+        "rationale": "Captured under the brainstorm skill from a field report, nothing promoted. Recorded beside req:defaults-do-not-assert because the reporter's F1 (a default asserting done) and F3 (an agent asserting priority) are two ends of one scale: a value nobody chose, and a value the wrong party chose.",
         "status": "proposed"
       }
     },
@@ -251893,6 +252442,16 @@
       }
     },
     {
+      "node_id": "frag:art:test-a-budget-adds-only-numbers-in-its-own-unit",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered a_budget_adds_only_numbers_in_its_own_unit.rs — the rollup adds only matching units, reports a mismatch beside the total and leaves the verdict open, names a silent unit but still totals it"
+      }
+    },
+    {
       "node_id": "frag:art:test-a-choice-is-not-a-musing",
       "node_type": "Fragment",
       "properties": {
@@ -251974,6 +252533,16 @@
       }
     },
     {
+      "node_id": "frag:art:test-a-project-declares-its-unit-system-and-the-sweep-reports",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered a_project_declares_its_unit_system_and_the_sweep_reports.rs — the three sweep findings pinned, including that nothing to run on raises nothing rather than reading clean"
+      }
+    },
+    {
       "node_id": "frag:art:test-a-project-is-asked-what-its-artifacts-must-be-in",
       "node_type": "Fragment",
       "properties": {
@@ -252021,6 +252590,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered a_superseded_finding_does_not_read_as_current.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:test-a-unit-crosses-a-seam-and-the-two-sides-are-compared",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered a_unit_crosses_a_seam_and_the_two_sides_are_compared.rs — the tenth seam axis pinned: the Mars Climate Orbiter seam is an incompatibility, silence is never agreement, `none` is an answer"
       }
     },
     {
@@ -265201,6 +265780,18 @@
       }
     },
     {
+      "node_id": "fact:field-report-bhome-cad-demo-2026-09-16-the-loop-closed-and-the-seam-was-basis-measured",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "field_report",
+        "name": "FIELD REPORT (bhome, Session 2, 2026-09-16): the reflow2↔IfcMCP loop CLOSED — a 280 sq ft floor-area limit the design called an estimate was measured off an IFC shell at 288.9 sq ft, written back as `subject: record`, and budget_report then said \"exceeded by 8, and all ten contributions are still estimated\"; the seam was `basis: measured` all along and nothing pointed at it; nine calls failed on version skew; reflow2 has no word for design apparatus",
+        "statement": "Reported by the agent on /home/ajs7/project/bhome (its file: feedback.md lines 710–994, Session 2 and 2 part 2; copied to docs/feedback/2026-09-16-bhome-cad-demo-feedback.md). ifc (IfcMCP) and blender mounted beside reflow2; Blender's addon was not running and \"turned out not to matter, because Blender returns pictures and IFC returns numbers\".\n\n⭐ THE LOOP, in order: con:interior-floor-area held 280 sq ft and said of itself \"an estimate with the assumption named, not a measurement\". A 40 ft high-cube shell was built in IFC4 at ISO nominal (spatial hierarchy, four walls, floor and roof slabs, an interior space, a finish-floor slab inside a 2 in service cavity). ifc_quantify → Qto_SlabBaseQuantities.GrossArea = 26.8425 m² = 288.9 sq ft, cross-checked against wall Length 12.192 / Height 2.698 / Width 0.043. Written back with record_change (constraint_change, subject: record — \"the shell did not change, our knowledge of it did\"), limit revised 280→288.9 with provenance in the statement. budget_report → verdict exceeded, total 297 against 288.9, basis_coverage {estimated: 10}. \"The design now says: you are 8 sq ft over a limit we measured, and every one of the ten things spending against it is still a guess. Before today it said: you are 17 sq ft over a limit we guessed.\" The estimate was conservative by 3 %; the measurement did not rescue the design. Recorded honestly: a measurement taken off a model built on two assumptions (manufacturer-typical clear dimensions; an assumed service cavity), and ver:floor-area-take-off records the procedure.\n\n⭐ HEADLINE: the seam ALREADY EXISTED — constrains' `basis: measured` against a budget Constraint — and the agent did not find it while designing; it found it afterwards running find_tools to write the report. During the work it reasoned inside the relation vocabulary, concluded nothing honest fit, and drew no edge. \"An agent reasoning carefully inside the relation vocabulary does not discover that a typed constructor covers the case\" — second instance after EVOLVES_INTO. Ask: a cad-handoff skill, or two sentences in constrains: design the budget in reflow2, measure it in the tool, write it back as basis: measured, let budget_report say whether it fits.\n\nWHAT WORKED because a partner was coming: the 3D-model EXCLUSION was in the graph in the user's words as an answer to a Question, search_design surfaced it, and because it was traceable to a question about deliverables the collision was diagnosed as scope, not substance, and narrowed rather than overturned. record_change snapshotted the requirement and its edges before the wording changed. The stop hook's nudge timestamps its own reading and says not to trust it; all three findings it raised were correct and none was debt — acknowledge_gaps with a reason each, \"not a fabricated artifact\".\n\nFRICTION: nine calls failed on version skew (add_decision ×3 — statement/decision, missing id, related_to shape; review_relations relations/links; propagate_from node_id/seed_ids; record_change description/target_type; add_epoch sequence; satisfies coverage; contains parent_id/project_id; acknowledge_gaps gaps/gap_ids) — \"the error messages are best-in-class … the cost is structural: ~8 extra round trips clustered at the moment an agent writes a batch\"; errors arrive one field at a time; the skew is silent until the first failure. The duplicate guard fired on the 4th of 4 parallel add_decision calls, order-dependent. satisfies REJECTS `coverage` while the stored SATISFIES edge carries coverage: full and graph_report's delivery roll reads it — a capability that only partly satisfies is recorded as fully satisfying. reflow2 has no word for DESIGN APPARATUS: the geometry model had to be a Component whose description disclaims its own type (\"NOT A PART OF THE POD\"); cap:produce-build-package has sat unallocated for the same reason. An accepted sequencing decision does not suppress findings for its own deferred steps. subject: record is the single most common case a measuring partner will produce and the tool description does not say so. SAVE CADENCE: ifc_render crashed the server and lost units and placements added after the last ifc_save while the artifact was checksummed against the earlier file — \"reflow2 knows when a file it tracks has drifted; it has no notion that an external tool holds unsaved state the file does not\".\n\nIFC-SIDE (not reflow2's, bounds what an agent can drive): dicts and lists must be passed as JSON strings inside params; a scalar is accepted where a list is required; ifc_quantify and ifc_select disagree about selectors; IfcSpace gets no base quantities; no units ⇒ no drawings, with an error naming attribute 8; ifc_render crashes the server; ifc_plot needs CairoSVG, not installed. Unproven: drawing generation, rendering, Blender entirely, and any measurement of the ten contributions.",
+        "subject_id": "dec:idea-pair-with-mcp-for-blender-as-the-hands-that-make-and-show-the-cad-artifact",
+        "valid_from": "2026-09-16"
+      }
+    },
+    {
       "node_id": "fact:field-report-genesis-on-grok-build-cannot-finish-because-next-step-names-mcp-and-the-latent-server-is-never-replaced",
       "node_type": "TemporalFact",
       "properties": {
@@ -265235,6 +265826,18 @@
         ],
         "subject_id": "art:loop-nudge",
         "valid_from": "2026-09-14"
+      }
+    },
+    {
+      "node_id": "fact:field-report-xrt-demo-genesis-2026-09-16-eight-frictions-eight-things-that-worked",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "field_report",
+        "name": "FIELD REPORT (xrt-demo genesis, Claude Code on Opus 5, 2026-09-16): a 7.5 KB brief seeded into 41 nodes with no xrt call yet — 8 wins, 12 frictions, 3 ideas; worst: add_artifact silently wrote `realized` on six deliverables that do not exist, and the cross-type duplicate guard refused seven writes that were all golden-thread pairs",
+        "statement": "Reported by the agent running /genesis on /home/ajs7/project/xrt-demo/demo.md (its file: reflow2_feedback.md, 336 lines; copied to docs/feedback/2026-09-16-xrt-demo-genesis-feedback.md). No xrt-mcp call was made, so every finding is about reflow2 alone.\n\nWORKED (its words, condensed): W1 reflow2_start_design attached the full surface with no client restart, via tools/list_changed — \"the happy path is clean and should be stated first rather than after three paragraphs of caveat\". W2 the near-duplicate guard's two tiers (refuse across types, advise within) \"subtle and correct\" — before the structure round. W3 add_capability's inline satisfies \"saved roughly ten round-trips\"; refusing the whole write when the id names nothing is the right failure mode. W4 \"tool descriptions that carry their own evidence changed my behaviour … worth naming as a deliberate convention, because it is doing real work\". W5 create_node's merge + prior_state_preserved_in made recovering from its own mistake one call per node. W6 the constraint/requirement/rule three-way split \"held up under a real brief\". W7 inline satisfies/allocated_to survived distinct_from — proved by re-running detection (unallocated 5→1). W8 detect_gaps \"degraded honestly under a tight budget … the best-behaved truncation I have seen in a tool API\".\n\nFRICTION: F1 (worst) add_artifact has no `status` and the schema default `realized` was materialised on all eight artifacts, six of which do not exist — \"an affirmative claim that work is done\"; set_artifact_intent does not cover status; fallback was create_node. F2 set_provenance accepts four types; Constraint, DesignRule, Decision, Artifact cannot say how they entered the graph — worked around with authored_by, \"authorship, not how it entered\". F3 provenance is per node but captured nodes are mixed: statement verbatim the user's, priority/concern invented by the agent — no field-level provenance. F4 describe_schema has no properties-only mode: required_only useless for the question, full 24,005 chars. F5 genesis's bolded \"do NOT create Components yet\" has no escape clause for a brief that already states the structure concretely — the agent withheld what the user wrote to fire a detector that would ask for it. F6 constrains defaults basis=estimated when no contribution is passed — nine edges assert the basis of a number that isn't there. F7 ~20 tool schemas fetched across four rounds before the first write; get_skill could return the tools a skill needs. F8 (jointly worst, after the structure round) the cross-type guard blocked seven writes — cap↔rule, cmp:dcm↔req:bandwidth, cmp:agent-seam↔req:agent-is-the-seam, cmp:tooling↔cmp:verify-script, and three capability↔the component it was being ALLOCATED_TO in the same call — all resolved distinct_from, none a duplicate: \"the pairs the guard flags are exactly the pairs reflow2's own golden thread is built to join\". F9 a Flow cannot model a physical ordered path — part_of_flow takes a capability, the beam path is parts. F10 nowhere to put a dimensioned physical property (25.5 m, 3 mrad, 1.0 mm, Rh, Si111) — undeclared keys, which nothing reads and the units constraint cannot check. F11 a childless root component cannot satisfy both hierarchy rules: `component` → level_spine_disagreement, `system` → orphan_level. F12 Interface.medium has no value for a photon beam; three boundaries left `unspecified`.\n\nNEUTRAL: N1 loop hints well judged. N2 \"detecting is not asking\" was right and nearly broken. N3 14 of 21 open findings are unrealized_capability one per capability on a project where nothing is built — \"two thirds of everything the design has to say is one detector repeating itself\". N4 the guard caught a cross-type pair it would have missed.\n\nIDEAS: I1 a genesis-from-file path. I2 a \"what did I infer?\" report. I3 \"status defaults should never be affirmative claims\" — a sweep of the constructor class.",
+        "subject_id": "dec:idea-an-mcp-around-xrt-so-a-beamline-design-is-ray-traced-not-asserted",
+        "valid_from": "2026-09-16"
       }
     },
     {
@@ -266441,6 +267044,18 @@
       }
     },
     {
+      "node_id": "fact:root-cause-a-childless-root-part-has-no-legal-level-because-two-self-limiting-hierarchy-rules-were-never-checked-jointly",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "root_cause",
+        "name": "ROOT CAUSE (walked, measured): a single indivisible top-level part always carries a hierarchy finding — declared `component` it trips level_spine_disagreement (a non-top root while `system` exists), declared `system` it trips orphan_level (above rank 0, no parent, no child) — unless the Project CONTAINS it, which both rules accept and neither message names",
+        "statement": "RUN AS THE SKILL on xrt-demo F11 (cmp:agent-seam), 2026-09-16. ① OBSERVED: with `level: component` → \"declares level 'component' but sits at the ROOT of the spine, while 'system' exists above it\"; with `level: system` → \"is not contained by anything above it and contains nothing below it\". The reporter: \"There is no third option.\" Expected: a way to say \"atomic and top-level\" once. NOT affected: designs whose top rung is the finest, or where every root has children.\n\n② PRECEDENT: none for the pair; chg:accept-09bee61653a4e59a records level_spine_disagreement as \"self-limiting — it compares against the highest level PRESENT\". ③ CANDIDATES: (a) the exemptions are disjoint — orphan_level exempts rank 0 only, the spine rule exempts rank ≥ top only, so a top-rank node with no children and no parent escapes the spine rule and trips orphan_level, and a bottom-rank root escapes orphan_level and trips the spine rule; (b) the ladder is wrong for the design; (c) the part is not CONTAINED BY THE PROJECT, and both rules count a Project parent as \"higher\"; (d) the observation is wrong. ④ ⑤ MEASURED in hierarchy.rs (read 2026-09-16): orphan_level's has_higher_parent accepts `projects.contains(&e.from_id)`; level_spine_disagreement's has_parent accepts the same. So a top-rung childless part that the Project CONTAINS trips NEITHER rule — the \"third option\" exists and is the genesis skill's own instruction (\"contains each new node under the Project\"). Whether cmp:agent-seam carried a Project CONTAINS edge is not in the report; if it did not, (c) is the cause and (a) is latent; if it did, (a) is the cause. One get_node in xrt-demo's graph decides it. (d) refuted by the two verbatim messages.\n\n⑥ CLASS: a detector message that names the condition and not the cure — \"not contained by anything above it\" without saying the Project can contain it — so the reporter reached for the level field, the one knob the message mentioned, and found both settings wrong. Same class as the 2026-09-14 register finding: the design holds the answer and the words do not carry it. ⑦ PIN: a Project containing one top-rung part with no children raises nothing; the same part uncontained raises exactly one finding whose message names `contains` under the Project. ⑧ FIX (his word, after the measurement): orphan_level's message says \"contain it under the Project with `contains` if it is a top-level part\"; and if the joint case is real, exempt a top-rung childless node the Project contains — which today's code already does. ⑨ NOT ESTABLISHED: the CONTAINS state of cmp:agent-seam.",
+        "subject_id": "cap:the-spine-is-checked-for-two-parents-and-for-level-disagreement",
+        "valid_from": "2026-09-16"
+      }
+    },
+    {
       "node_id": "fact:root-cause-a-default-put-every-reconcile-pass-into-the-fix-population-and-the-gap-offered-to-decline-the-rule",
       "node_type": "TemporalFact",
       "properties": {
@@ -266461,6 +267076,18 @@
       }
     },
     {
+      "node_id": "fact:root-cause-add-artifact-materialises-realized-because-the-affirmative-default-was-outside-the-2026-07-28-sweep-and-the-constructor-has-no-status",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "root_cause",
+        "name": "ROOT CAUSE (walked, measured): add_artifact writes `status: realized` on a file that does not exist because Artifact.status carries a schema default of `realized` that the store materialises on write, AddArtifactReq declares no `status`, and set_artifact_intent covers granularity/volatility/audience but not status — an affirmative default the defaults-do-not-assert sweep never measured, on the one type where \"done\" is the claim",
+        "statement": "RUN AS THE SKILL on the xrt-demo field report, 2026-09-16.\n\n① OBSERVED (the agent's words): \"All eight artifacts I registered — six of which do not exist yet — were written as status: realized. Nothing warned me.\" Expected: an artifact registered before it exists reads planned, or carries no status. NOT affected: add_capability honours an explicit status; add_decision lands proposed.\n\n② PRECEDENT: dec:idea-four-sibling-constructors-four-status-contracts (2026-09-02) — four constructors, four status contracts; its own \"NOT ESTABLISHED\" line asks whether a caller can assert `realized` with nothing built. This instance is worse: no caller asserted anything; the schema did. req:defaults-do-not-assert (2026-07-28) measured ten node properties and did not include Artifact.status.\n\n③ CANDIDATES from the design: (a) the schema default `realized` on Artifact.status, materialised on write; (b) AddArtifactReq has no `status` parameter (a reach hole, req:declared-vocabulary-is-reachable-from-the-surface's class); (c) set_artifact_intent's scope (granularity, volatility, audience) omits status; (d) the observation is wrong — the artifacts were realized in some sense.\n\n④ ⑤ MEASURED: schema/build.yaml line 20: `status: { type: enum, values: [planned, in_progress, realized, verified], default: realized }`. AddArtifactReq (service.rs) declares id, name, artifact_type, location, description, checksum — 0 occurrences of `status`. set_artifact_intent (artifact.rs:823) sets granularity/volatility/audience. (d) refuted: beamline.json, verify.py and three images did not exist on disk. All three candidates hold together; none alone explains it — with (a) alone a caller could still correct it, with (b) alone the default would be neutral.\n\n⑥ CLASS: an affirmative default on a status field, unreachable from the typed constructor. Same class as the 2026-09-14 checksum-acceptance default (every reconcile pass entered the fix population wearing test_failure_fix) and as Artifact.granularity/volatility/audience, which were DELIBERATELY UNDEFAULTED on 2026-08-15 for exactly this reason (music_graph F23) — the same type's neighbouring fields already carry the fix and `status` was left out. Would fixing it have stopped the earlier reports? The four-constructors report asked for the constructor to accept status (option A); this instance is the case where the not-asserting default is clearly `planned` or absent, so it does not collide with the epoch counter-example.\n\n⑦ PIN: a test that registers an artifact with no status and asserts the stored status is not `realized` — to be written first and observed failing when the fix is built. ⑧ FIX AT THE CAUSE (not built here; his word): remove the default (absent means nobody said, like audience) or default `planned`; add `status` to add_artifact and to set_artifact_intent; migration is not retroactive, and every existing artifact keeps what it has. ⑨ NOT ESTABLISHED: how many artifacts across the field designs read `realized` for want of a choice — measurable per export.",
+        "subject_id": "req:defaults-do-not-assert",
+        "valid_from": "2026-09-16"
+      }
+    },
+    {
       "node_id": "fact:root-cause-the-853-is-an-older-binary-writing-the-old-role-default-onto-a-newer-document-not-the-export-leaving-a-default-implicit",
       "node_type": "TemporalFact",
       "properties": {
@@ -266477,6 +267104,18 @@
         ],
         "subject_id": "dec:export-hash-chain",
         "valid_from": "2026-09-14"
+      }
+    },
+    {
+      "node_id": "fact:root-cause-the-guard-still-refuses-thread-pairs-because-the-prescribed-set-was-built-from-evidence-and-the-evidence-for-capability-component-arrived-today",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "root_cause",
+        "name": "ROOT CAUSE (walked, measured): seven cross-type refusals in one genesis, all thread pairs, none a duplicate — Capability↔Component (three of them the component named in the same call's `allocated_to`), Requirement↔Component, Component↔Component, Capability↔DesignRule — because PRESCRIBED_LAYER_PAIRS was deliberately limited to pairs with evidence and those pairs had none until today; and the guard never exempts the target the write itself declares a relation to",
+        "statement": "RUN AS THE SKILL on xrt-demo F8 and the bhome \"4th of 4 parallel writes\" note, 2026-09-16.\n\n① OBSERVED: seven `add_*` writes refused with the cross-type layer wording; each resolved with distinct_from; none was a duplicate. Three of the seven were a capability refused against the component passed as its own `allocated_to`. Expected: a write that declares its own relation to a node is not refused for resembling that node. NOT affected: same-type near matches (advisory, correct); the ten prescribed pairs.\n\n② PRECEDENT: fact:twelve-near-match-refusals-across-two-designs-and-not-one-was-a-duplicate (2026-08-31, 12/0); chg:the-prescribed-layer-pairs-stop-refusing (2026-08-31) which fixed ten pairs and named Requirement↔Component as deliberately absent for want of a measurement; dec:idea-the-near-match-repair-can-now-be-reopened-because-the-count-exists.\n\n③ CANDIDATES: (a) the prescribed set omits the thread pairs that fired; (b) the guard has no notion that the call's own arguments (allocated_to, satisfies) name the near-match — refusing on that ground is \"the tool refusing a write because its own argument is too similar to it\"; (c) the similarity threshold is too low; (d) the design vocabulary makes thread pairs share words by construction, so ANY content similarity guard fires hardest on the links the design most needs.\n\n④ ⑤ MEASURED: (a) confirmed by reading PRESCRIBED_LAYER_PAIRS; (b) confirmed — refuse_unless_deliberate filters by is_prescribed_layer only, never by the request's declared targets; (c) cannot be separated from (d) by this report and is not claimed; (d) is the reporter's diagnosis and is consistent with 19 of 19 cross-type refusals across three designs being non-duplicates — but it predicts the same observation as (a), so it is recorded as the class, not proven as the mechanism.\n\n⑥ CLASS: a hand-maintained allowlist standing in for a rule the design already states (the golden thread joins semantically adjacent nodes), extended one measurement at a time. ⑦ PIN: two tests written first — a capability created with allocated_to: cmp:X is not refused against cmp:X; Requirement↔Component reports and does not refuse — observed failing. ⑧ FIX AT THE CAUSE (his word): (1) exempt any near-match the call itself names as a relation target — that is not an allowlist, it is reading the request; (2) add Capability↔Component, Requirement↔Component, Capability↔DesignRule, Capability↔Constraint to the prescribed set on today's evidence; (3) leave Component↔Component (a grouping and its member) refusing until it is measured more than once, and say so. The 2026-08-29 counterweight stands: a same-type near duplicate still refuses. ⑨ NOT ESTABLISHED: the miss rate — whether any cross-type refusal has ever caught a real duplicate; three designs and 19 refusals say no, which is evidence, not proof.",
+        "subject_id": "chg:the-prescribed-layer-pairs-stop-refusing",
+        "valid_from": "2026-09-16"
       }
     },
     {
@@ -266552,6 +267191,18 @@
         ],
         "subject_id": "cap:a-declared-wall-is-checked-against-the-coupling-it-contains",
         "valid_from": "2026-09-14"
+      }
+    },
+    {
+      "node_id": "fact:root-cause-two-field-holes-a-rejected-coverage-and-a-basis-asserted-for-a-number-that-is-not-there-share-one-cause-the-edge-sweep-was-dropped",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "root_cause",
+        "name": "ROOT CAUSE (walked, measured): two edge findings from two projects on one day — `satisfies` rejects `coverage` although the stored SATISFIES edge carries it and the delivery roll reads it (bhome), and `constrains` materialises `basis: estimated` on an edge with no contribution (xrt-demo) — are one class: edge properties were never swept for reach or for asserting defaults, because the requirement that would have done it was DROPPED",
+        "statement": "RUN AS THE SKILL on bhome (\"satisfies cannot express partial coverage, but the edge property exists\") and xrt-demo F6 (\"constrains defaults basis to estimated even when no contribution is passed\"), 2026-09-16.\n\n① OBSERVED: bhome — `satisfies` rejected `coverage`; a later snapshot showed the stored edge carrying coverage: full, and graph_report's delivery line reads it; one capability that only partly satisfies its requirement is recorded as fully satisfying. xrt-demo — nine CONSTRAINS edges drawn deliberately without contributions all came back basis: estimated, \"asserting the basis of a number that isn't there\". Expected: coverage settable where it is read; basis absent when the number is absent. NOT affected: node-property defaults swept in July (Requirement.priority etc.).\n\n② PRECEDENT: req:edge-defaults-do-not-assert — measured, precise, and dropped; req:defaults-do-not-assert (nodes) accepted and acted on; req:declared-vocabulary-is-reachable-from-the-surface, whose instrument (vocabulary_reach) reads node properties against toolsnaps.\n\n③ CANDIDATES: (a) the edge sweep was dropped, so edge defaults and edge reach were never checked; (b) vocabulary_reach only measures node properties, so an edge property read by a report and unreachable by its tool never shows as a HOLE; (c) constrains' handler passes basis through set_opt and the store applies the schema default on absence — a mechanism, not a decision; (d) the observation is wrong — coverage was never meant to be settable. ④ ⑤ MEASURED: (a) status dropped, read; (b) vocabulary_reach's docstring: \"Every declared node property and edge property, from schema/*.yaml\" — it DOES enumerate edge properties, so (b) is partly refuted: the hole should appear in its output; whether SATISFIES.coverage is listed as a candidate was not checked this session and is the open measurement; (c) confirmed in budget.rs — no logic ties basis to contribution; (d) refuted — report.rs reads coverage for delivery.\n\n⑥ CLASS: the July node sweep's own rule, applied to edges, and never carried through because the requirement that stated it was dropped. Would fixing the class have stopped both reports? Yes: an edge-reach check would have named SATISFIES.coverage; an edge-default check would have named CONSTRAINS.basis. ⑦ PIN: satisfies with coverage: partial stores it and the delivery roll reads partial; constrains with no contribution stores no basis. ⑧ FIX AT THE CAUSE (his word): reopen req:edge-defaults-do-not-assert or record why it was dropped beside a narrower replacement; add `coverage` to satisfies; make constrains leave basis unset when contribution is absent (or refuse basis without contribution); run vocabulary_reach's edge half and read its HOLE list. ⑨ NOT ESTABLISHED: why the requirement was dropped — the record says dropped and nothing says by whom or for what.",
+        "subject_id": "req:edge-defaults-do-not-assert",
+        "valid_from": "2026-09-16"
       }
     },
     {
@@ -268730,6 +269381,18 @@
       }
     },
     {
+      "node_id": "fact:xrt-mcp-exists-and-xrt-demo-is-the-field-trial-for-the-simulator-pairing",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "decision_input",
+        "name": "Anthony built xrt-mcp the same evening (2026-09-16, /home/ajs7/project/xrt-mcp: nine tools, a typed BeamlineSpec instead of executed Python, its own reflow2 design of 68 nodes) and asked for xrt-demo — a light trial on this box that tunes xrt-mcp and demonstrates the reflow2 pairing; brief written at /home/ajs7/project/xrt-demo/demo.md for /genesis",
+        "statement": "Anthony, 2026-09-16: \"I built out the xrt-mcp at /home/ajs7/project/xrt-mcp. /brainstorm a project at /home/ajs7/project/xrt-demo that will: 1) fine-tune the newly developed but unused xrt-mcp and 2) demonstrate some useful demonstration that exercises the partnership between reflow2 and xrt-demo. Remember, this machine is not powerful — so the test can't be too intensive (we can save that for my work computer).\" WHAT xrt-mcp IS (read from its README and code): xrt 2.0.0b1 behind the MCP Python SDK 2.x; nine tools — crystal_at_energy, crystal_energy_range, mirror_cutoff, undulator_harmonics (reference, no trace) and list_beamlines, load_beamline, trace_beamline, beam_image, scan_element (whole-beamline); a beamline is sent as a typed pydantic BeamlineSpec (source + elements: aperture, DCM Si(111/220/311/333), flat/toroidal mirror with coating and pitch, screen; positions in metres along the beam) and the server builds the xrt objects itself — it never executes agent-written Python, which answers the arbitrary-code risk recorded on the CAD-pairing idea; four templates, one geometric-source \"fast\" variant (seconds) and undulator variants (20–60 s per trace, minutes per scan); flux is null for a geometric source rather than a made-up number; stateless; limits stated honestly (four element types, ray tracing only, templates plausible not as-built, vertical deflection only). It has its own reflow2 design: 11 requirements accepted, 9 capabilities (6 verified), req:demo-for-nsls-ii. THE BRIEF written for /genesis at xrt-demo/demo.md: a hard x-ray endstation from the nsls2-hard-xray template at 9 keV; four requirements (spot ≤ 30×5 µm, bandwidth ≤ 2 eV, transmission ≥ 0.5 %, flux stated but UNVERIFIABLE on this box because the geometric source carries no flux weight — the design must say so); a compute budget (≤ 20 000 rays, ≤ 60 s, no undulator, no GPU here); the artifact standard is the BeamlineSpec JSON with trace_beamline as its checker; a per-kind unit system (eV, m, µm, mrad, mm, ph/s, W); every number computed by an xrt-mcp call with provenance; two changes (mirror pitch 3.0→3.5 mrad, slit 1.0→0.5 mm) recorded and propagated BEFORE re-tracing; rough edges logged into xrt-mcp's own design with /log-issue. Quality attribute: testability. .mcp.json for xrt-demo names the xrt server (the xrt-mcp venv python with PYTHONPATH). This is the same figure as bhome/IfcMCP one domain over, and the first trial where the tool is his own.",
+        "subject_id": "dec:idea-an-mcp-around-xrt-so-a-beamline-design-is-ray-traced-not-asserted",
+        "valid_from": "2026-09-16"
+      }
+    },
+    {
       "node_id": "ver:a-band-carries-what-it-was-computed-over",
       "node_type": "Verification",
       "properties": {
@@ -268740,6 +269403,17 @@
         "level": "unit",
         "method": "test",
         "name": "A band that can read low for a correct design says so, and the caveat survives into the rendered report",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:a-budget-adds-only-numbers-in-its-own-unit",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-core/tests/a_budget_adds_only_numbers_in_its_own_unit.rs — four cases. The honest claim pinned: absence and disagreement are reported; a wrong number under the right label looks identical to a right one.",
+        "kind": "verification",
+        "last_run_at": "2026-09-16",
+        "name": "A contribution in another unit is reported and left out of the total and the verdict stays open; a contribution with no unit is reported but still totalled; matching units add up; a constraint with no unit has nothing to judge against and says so",
         "status": "passing"
       }
     },
@@ -269119,6 +269793,17 @@
         "level": "unit",
         "method": "test",
         "name": "A prescribed layer pair is reported and not refused, and everything else still refuses",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:a-project-declares-its-unit-system-and-the-sweep-reports",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-core/tests/a_project_declares_its_unit_system_and_the_sweep_reports.rs — seven cases over the three sweep findings.",
+        "kind": "verification",
+        "last_run_at": "2026-09-16",
+        "name": "A design with no quantities raises nothing rather than reading clean; a limit or a contribution with no unit is named; quantities with no declared system are asked once; a unit outside the system is named and louder under an enforced rule; a boundary's units are swept too; everything in the system raises nothing",
         "status": "passing"
       }
     },
@@ -269566,6 +270251,17 @@
         "level": "integration",
         "method": "test",
         "name": "A committed .reflow2/ is reported by both install and --check with a remedy that works on a directory, and an untracked one stays quiet",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:a-unit-crosses-a-seam-and-the-two-sides-are-compared",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-core/tests/a_unit_crosses_a_seam_and_the_two_sides_are_compared.rs — five cases over the tenth axis, compared quantity by quantity.",
+        "kind": "verification",
+        "last_run_at": "2026-09-16",
+        "name": "The Mars Climate Orbiter seam is an incompatibility; the same unit both sides is agreement; a silent side and a quantity only one side names are unstated, never agreed; `none` on both sides is an answer",
         "status": "passing"
       }
     },
@@ -272282,7 +272978,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:30ea9d38e233c662f45e6f4080125f530842c957472650ae34a1b88e9e4f1717",
+  "prev_content_hash": "sha256:e544b8e968a257bfc342d23bc2a0843d825dcd7507b06eef8c3afb4acaf13d0d",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -272874,8 +273570,8 @@
     "schema_version": 1
   },
   "taken_at": {
-    "branch": "artifact-standard-from-the-beginning",
-    "commit": "349e6fc10660ba1eccc8ddd5eca4088a2018f1cb",
+    "branch": "units-declared-compared-and-governed",
+    "commit": "b6944a6988b654caaa5fa4ad751b1813010e15c7",
     "dirty": true
   }
 }
