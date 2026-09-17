@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:4ab7e56a1f5748ff34fe78bb05fecedb198091d60ae6b134b518c033ee94bc5d",
+  "content_hash": "sha256:9a55f67303f8a0eee110555e9e46b41536f798b1b930ade9167520e413531692",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -1357,6 +1357,14 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-repos-conventions-are-delivered-by-step-and-its-adapter-is-registered",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:a-revising-write-keeps-what-it-would-have-lost",
       "properties": {
         "weight_basis": "estimated"
@@ -2045,6 +2053,14 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:establish-taxonomy-before-bulk-capture",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:every-oversized-reply-offers-a-bound",
       "properties": {
         "weight_basis": "estimated"
@@ -2226,6 +2242,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:ility"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:incremental-adopt-with-a-frontier-and-a-deferred-derivation-marker",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:temporal"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -3530,6 +3554,14 @@
     },
     {
       "edge_type": "ANTICIPATES",
+      "from_id": "dec:idea-a-principle-has-a-universal-core-and-local-clothes",
+      "properties": {
+        "evidence": "That idea's option C — a shipped core with a project-local instantiation slot — is exactly what a thin project adapter is: the served skill is the core, the repo's import/resolver/test conventions are the clothes."
+      },
+      "to_id": "dec:idea-the-thin-project-adapter-is-where-a-repos-procedural-know-how-lives"
+    },
+    {
+      "edge_type": "ANTICIPATES",
       "from_id": "dec:idea-a-problem-in-the-users-words-should-retrieve-the-tool-that-answers-it",
       "properties": {
         "evidence": "That question asks how a problem stated in the user's words retrieves the TOOL that answers it. This asks how a thing named in the user's words retrieves the right NODE TYPE. Same gap on two surfaces, and the earlier one framed the retrieval problem first."
@@ -3600,6 +3632,14 @@
         "evidence": "Recorded 2026-08-01 asking whether reflow2 should adopt embeddings and the HNSW index or stay lexical. It anticipated the same choice this capability made in the small: increment 1 dropped `hnsw.rs` and `distance.rs` (1,941 lines) on the ground that reflow2 calls neither, which is the 'stay lexical' answer taken by construction rather than by decision. ⚠️ The idea remains OPEN and this does not settle it — but a later reader should know the code it would need is no longer in the tree."
       },
       "to_id": "cap:graph-algorithms"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "dec:idea-extraction-is-two-pass-against-an-se-schema-stated-up-front",
+      "properties": {
+        "evidence": "That idea already holds that capture should run against a schema stated up front rather than one improvised per node; Alex's ask is the project-level instance of it — the encoding of THIS project's recurring parts, decided once and cited by every later capture."
+      },
+      "to_id": "dec:idea-establish-the-taxonomy-once-before-bulk-capture"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -3894,6 +3934,14 @@
         "evidence": "The earlier one saw this coming and wrote the reopening condition into its own deferral list: \"world-scoping IF SIMULTANEOUS IN-GRAPH AoA PROVES NEEDED\". Its argument against world-scoping was explicitly conditional on the benefit being \"not yet needed\". This is the first field report supplying that condition, with a measured cost rather than a preference."
       },
       "to_id": "fact:the-fork-ask-is-a-deferred-branch-whose-reopening-condition-is-now-met"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "dec:reflow2-serves-source-reading-analyses-that-report-and-never-write",
+      "properties": {
+        "evidence": "The 2026-09-14 ruling already has reflow2 reading source trees for analyses that report and never write; it crossed the 'no file I/O' line for READING and left the question of MEASURING a registered artifact (hash, existence) unasked. This idea is that remainder, and its option C is that ruling's delivery half."
+      },
+      "to_id": "dec:idea-should-reflow2-measure-files-itself-and-what-the-no-file-io-rule-actually-protects"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -4271,6 +4319,14 @@
         "evidence": "The three-legs finding — that vocabulary reaches a user's design only with a typed tool AND an instruction AND a detector that notices absence — is the same claim one level down: a mechanic present in one skill and enforced nowhere has an instruction and no detector. \"Speak the reader's domain\" is stated in the served instructions for every skill, carried by one and enforced for one, which is exactly the two-of-three failure that finding names."
       },
       "to_id": "fact:the-contracts-are-the-same-shape-and-the-code-says-so-twice"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "req:a-quantity-carries-how-it-was-obtained-and-an-unsourced-one-is-reported",
+      "properties": {
+        "evidence": "The provenance requirement says every number must say whether it was measured or asserted. A checksum an agent pasted is asserted; one the server computed is measured. The requirement supplies the vocabulary that makes this idea decidable, and the checksum is the one number in reflow2's own graph the requirement does not yet reach."
+      },
+      "to_id": "dec:idea-should-reflow2-measure-files-itself-and-what-the-no-file-io-rule-actually-protects"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -12338,6 +12394,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:cap:a-quantity-carries-its-provenance-and-an-unsourced-one-is-named",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:cap:a-reader-that-cannot-read-the-vocabulary-is-told-what-it-lacks",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
@@ -12500,6 +12562,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:dec:idea-an-incremental-resumable-region-scoped-adopt-with-a-frontier-and-a-deferral-marker",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:dec:idea-diff-driven-impact",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
@@ -12513,6 +12581,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:dec:idea-does-the-graph-write-itself-through-to-the-repo-on-every-change",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:dec:idea-establish-the-taxonomy-once-before-bulk-capture",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
     },
@@ -12608,6 +12682,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:dec:idea-should-reflow2-measure-files-itself-and-what-the-no-file-io-rule-actually-protects",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:dec:idea-should-reflow2-ship-a-companion-for-the-file-side-work-it-refuses-to-do",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
@@ -12621,6 +12701,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:dec:idea-the-store-becomes-a-session-cache-and-the-export-becomes-the-truth",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:dec:idea-the-thin-project-adapter-is-where-a-repos-procedural-know-how-lives",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
     },
@@ -13737,6 +13823,12 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "cap:a-repos-conventions-are-delivered-by-step-and-its-adapter-is-registered",
+      "properties": {},
+      "to_id": "who:alex"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "cap:atomic-requirement",
       "properties": {
         "authored_at": "2026-07-25",
@@ -13836,6 +13928,12 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "cap:establish-taxonomy-before-bulk-capture",
+      "properties": {},
+      "to_id": "who:alex"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "cap:fork-alternatives",
       "properties": {
         "authored_at": "2026-07-22",
@@ -13877,6 +13975,12 @@
         ]
       },
       "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "cap:incremental-adopt-with-a-frontier-and-a-deferred-derivation-marker",
+      "properties": {},
+      "to_id": "who:alex"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -15442,6 +15546,27 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-an-incremental-resumable-region-scoped-adopt-with-a-frontier-and-a-deferral-marker",
+      "properties": {
+        "approved_at": "2026-09-17",
+        "roles": [
+          "approver"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-an-incremental-resumable-region-scoped-adopt-with-a-frontier-and-a-deferral-marker",
+      "properties": {
+        "roles": [
+          "author"
+        ]
+      },
+      "to_id": "who:alex"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-an-mcp-around-xrt-so-a-beamline-design-is-ray-traced-not-asserted",
       "properties": {
         "roles": [
@@ -16041,6 +16166,27 @@
         ]
       },
       "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-establish-the-taxonomy-once-before-bulk-capture",
+      "properties": {
+        "approved_at": "2026-09-17",
+        "roles": [
+          "approver"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-establish-the-taxonomy-once-before-bulk-capture",
+      "properties": {
+        "roles": [
+          "author"
+        ]
+      },
+      "to_id": "who:alex"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -17115,6 +17261,12 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-should-reflow2-measure-files-itself-and-what-the-no-file-io-rule-actually-protects",
+      "properties": {},
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-should-reflow2-serve-a-root-cause-analysis-method",
       "properties": {
         "approved_at": "2026-08-28",
@@ -17580,6 +17732,27 @@
         ]
       },
       "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-the-thin-project-adapter-is-where-a-repos-procedural-know-how-lives",
+      "properties": {
+        "approved_at": "2026-09-17",
+        "roles": [
+          "approver"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-the-thin-project-adapter-is-where-a-repos-procedural-know-how-lives",
+      "properties": {
+        "roles": [
+          "author"
+        ]
+      },
+      "to_id": "who:alex"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -21673,6 +21846,23 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-repos-procedural-know-how-is-delivered-at-the-step-it-bears-on-and-the-design-knows-the-adapter-exists",
+      "properties": {
+        "approved_at": "2026-09-17",
+        "roles": [
+          "approver"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-repos-procedural-know-how-is-delivered-at-the-step-it-bears-on-and-the-design-knows-the-adapter-exists",
+      "properties": {},
+      "to_id": "who:alex"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:a-rule-is-recorded-with-its-consequence",
       "properties": {
         "authored_at": "2026-08-08",
@@ -21794,6 +21984,23 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-taxonomy-is-decided-once-before-bulk-capture-and-every-instance-cites-it",
+      "properties": {
+        "approved_at": "2026-09-17",
+        "roles": [
+          "approver"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-taxonomy-is-decided-once-before-bulk-capture-and-every-instance-cites-it",
+      "properties": {},
+      "to_id": "who:alex"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:a-user-can-see-that-the-process-was-followed",
       "properties": {
         "authored_at": "2026-08-16",
@@ -21835,6 +22042,23 @@
         ]
       },
       "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:adopt-can-be-incremental-and-resumable-with-a-frontier-and-a-deferred-derivation-marker",
+      "properties": {
+        "approved_at": "2026-09-17",
+        "roles": [
+          "approver"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:adopt-can-be-incremental-and-resumable-with-a-frontier-and-a-deferred-derivation-marker",
+      "properties": {},
+      "to_id": "who:alex"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -27761,6 +27985,186 @@
         "action": "modified"
       },
       "to_id": "ifc:mcp-tools-http"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-quantity-says-how-it-was-obtained-and-a-check-on-it-has-a-form-a-tool-can-rerun",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:a-lesson-is-served-at-the-step-handler-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-quantity-says-how-it-was-obtained-and-a-check-on-it-has-a-form-a-tool-can-rerun",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:budget"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-quantity-says-how-it-was-obtained-and-a-check-on-it-has-a-form-a-tool-can-rerun",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:capture-intent-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-quantity-says-how-it-was-obtained-and-a-check-on-it-has-a-form-a-tool-can-rerun",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-quantity-says-how-it-was-obtained-and-a-check-on-it-has-a-form-a-tool-can-rerun",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:detect-and-ask-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-quantity-says-how-it-was-obtained-and-a-check-on-it-has-a-form-a-tool-can-rerun",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:enum-schema"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-quantity-says-how-it-was-obtained-and-a-check-on-it-has-a-form-a-tool-can-rerun",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:every-tool-is-found-by-a-query-in-the-users-words-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-quantity-says-how-it-was-obtained-and-a-check-on-it-has-a-form-a-tool-can-rerun",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:genesis-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-quantity-says-how-it-was-obtained-and-a-check-on-it-has-a-form-a-tool-can-rerun",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:kpp-proposal-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-quantity-says-how-it-was-obtained-and-a-check-on-it-has-a-form-a-tool-can-rerun",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:schema-core"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-quantity-says-how-it-was-obtained-and-a-check-on-it-has-a-form-a-tool-can-rerun",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:schema-temporal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-quantity-says-how-it-was-obtained-and-a-check-on-it-has-a-form-a-tool-can-rerun",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-quantity-says-how-it-was-obtained-and-a-check-on-it-has-a-form-a-tool-can-rerun",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-quantity-says-how-it-was-obtained-and-a-check-on-it-has-a-form-a-tool-can-rerun",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:skills-and-tools"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-quantity-says-how-it-was-obtained-and-a-check-on-it-has-a-form-a-tool-can-rerun",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:test-a-budget-adds-only-numbers-in-its-own-unit"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-quantity-says-how-it-was-obtained-and-a-check-on-it-has-a-form-a-tool-can-rerun",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:test-a-number-names-its-source"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-quantity-says-how-it-was-obtained-and-a-check-on-it-has-a-form-a-tool-can-rerun",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:test-a-project-declares-its-unit-system-and-the-sweep-reports"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-quantity-says-how-it-was-obtained-and-a-check-on-it-has-a-form-a-tool-can-rerun",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:test-a-quantity-says-how-it-was-obtained"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-quantity-says-how-it-was-obtained-and-a-check-on-it-has-a-form-a-tool-can-rerun",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-quantity-says-how-it-was-obtained-and-a-check-on-it-has-a-form-a-tool-can-rerun",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:tools-temporal"
     },
     {
       "edge_type": "CHANGED",
@@ -49859,6 +50263,12 @@
       "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
+      "to_id": "cap:a-repos-conventions-are-delivered-by-step-and-its-adapter-is-registered"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
       "to_id": "cap:bounded-reads"
     },
     {
@@ -49895,6 +50305,12 @@
       "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
+      "to_id": "cap:establish-taxonomy-before-bulk-capture"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
       "to_id": "cap:git-merge-driver"
     },
     {
@@ -49902,6 +50318,12 @@
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "cap:heal"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "cap:incremental-adopt-with-a-frontier-and-a-deferred-derivation-marker"
     },
     {
       "edge_type": "CONTAINS",
@@ -50022,6 +50444,24 @@
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "req:a-project-records-how-it-ships"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "req:a-repos-procedural-know-how-is-delivered-at-the-step-it-bears-on-and-the-design-knows-the-adapter-exists"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "req:a-taxonomy-is-decided-once-before-bulk-capture-and-every-instance-cites-it"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "req:adopt-can-be-incremental-and-resumable-with-a-frontier-and-a-deferred-derivation-marker"
     },
     {
       "edge_type": "CONTAINS",
@@ -52773,6 +53213,26 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-an-incremental-resumable-region-scoped-adopt-with-a-frontier-and-a-deferral-marker",
+      "properties": {
+        "evidence": "A region-scoped capture that does not trip false gaps rests on the scoped detectors saying what they did not see; that capability exists and two recorded defects (a scoped detector at default depth returning two thirds of the design; a degenerate region not flagged) are the partial-graph gap problem Alex names, measured.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "cap:scoped-analysis"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-an-incremental-resumable-region-scoped-adopt-with-a-frontier-and-a-deferral-marker",
+      "properties": {
+        "evidence": "An adopt that captures structure first and intent later is a design where most intent is legitimately absent for a while; how the gap reporter behaves in that state is exactly what that open question asks.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:gap-reporting-when-most-intent-is-unbuilt"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "dec:idea-an-mcp-around-xrt-so-a-beamline-design-is-ray-traced-not-asserted",
       "properties": {
         "evidence": "A ray trace is proof against a MODEL of the beamline, not against the beamline as commissioned; flux and spot size from xrt must land as model-fidelity evidence, and only a measurement at the beamline promotes them. Without that distinction the pairing would let a simulation read as reality, which is the founding fear in a new coat.",
@@ -52951,6 +53411,16 @@
         "weight_basis": "estimated"
       },
       "to_id": "fact:defect-link-artifact-has-no-type-for-a-test-source"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-establish-the-taxonomy-once-before-bulk-capture",
+      "properties": {
+        "evidence": "A taxonomy is a project's domain nouns mapped to reflow2's types; that open question is about exactly the translator that would produce it, so the two are one job seen from the skill side and the routing side.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-the-routing-table-routes-grammar-not-domain-nouns"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -53204,6 +53674,16 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-outward-docs-are-rendered-from-the-graph",
+      "properties": {
+        "evidence": "Docs rendered from the graph are projections; whether the server writes them itself (write-through, one writer, cannot go stale) or hands the agent text to save is decided by where this question puts the I/O boundary. Anthony widened the question to exactly this on 2026-09-17.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-should-reflow2-measure-files-itself-and-what-the-no-file-io-rule-actually-protects"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "dec:idea-pair-with-mcp-for-blender-as-the-hands-that-make-and-show-the-cad-artifact",
       "properties": {
         "evidence": "A pairing with a CAD tool is only worth anything if the answer to who-holds-the-pen is 'the agent carries the design INTO the tool that makes the artifact'. If the agent authors geometry directly (the bhome road), there is nothing to pair with.",
@@ -53326,6 +53806,16 @@
       "edge_type": "DEPENDS_ON",
       "from_id": "dec:idea-should-reflow2-ship-a-companion-for-the-file-side-work-it-refuses-to-do",
       "properties": {
+        "evidence": "The companion idea asks WHO does the file-side work and takes the no-I/O boundary as given; whether a companion is needed at all is decided by where this question puts the boundary. Its own unresolved note (\"the useful verb needs the graph AND the disk in one process\") is this question stated from the other side.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-should-reflow2-measure-files-itself-and-what-the-no-file-io-rule-actually-protects"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-should-reflow2-ship-a-companion-for-the-file-side-work-it-refuses-to-do",
+      "properties": {
         "evidence": "A companion that walks the registered artifacts is only worth building if the artifact surface can be asked what it holds — which is the accepted intent the DesignRule and note-parameter findings say is half-built. A helper standing outside a surface that cannot enumerate itself has nothing to walk. Drawn on the second attempt: the first was lost when the parameter block landed in prose instead of being interpreted.",
         "optional": false,
         "weight_basis": "estimated"
@@ -53431,6 +53921,16 @@
         "weight_basis": "estimated"
       },
       "to_id": "dec:idea-what-guarantees-the-export-if-the-export-is-the-only-durable-copy"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-the-thin-project-adapter-is-where-a-repos-procedural-know-how-lives",
+      "properties": {
+        "evidence": "Served skills are what made the project-side skills thin; the question of what the residue IS only arises once that decision has landed, and Alex's report is the measurement that it has.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:skills-served"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -56486,6 +56986,14 @@
     },
     {
       "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-an-incremental-resumable-region-scoped-adopt-with-a-frontier-and-a-deferral-marker",
+      "properties": {
+        "evidence": "Promoted on Anthony's word, 2026-09-17: \"I'd like to accept/promote all of Alex's ideas. We can work them after the current set of tasks.\" Option A (the two primitives on existing vocabulary) is the shape the requirement took; option B (the scoped-detector defects) is recorded as a dependency inside it."
+      },
+      "to_id": "req:adopt-can-be-incremental-and-resumable-with-a-frontier-and-a-deferred-derivation-marker"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
       "from_id": "dec:idea-can-a-design-graph-be-reduced-to-its-essential-core",
       "properties": {
         "evidence": "Drawn FROM the 2026-08-18 node INTO this one: the earlier form of the same thought, three weeks on, through a different formal framework. NOT SUPERSEDED, and this is the part to read before acting on the edge — that node's measured prior-art survey is still the better half of the pair, and it is where the transitive-reduction composition-table trap is recorded. What evolved is the argument, not the evidence. DUPLICATES was the other candidate and was rejected deliberately: it marks a candidate for consolidation and apply_heal merges on an asserted one, and merging these two would destroy the fact that the same conclusion was reached twice by independent routes, which is most of what the pair is worth."
@@ -56523,6 +57031,14 @@
         "evidence": "Drawn FROM that node INTO this one: it held 'maybe the graph should keep a table of terms' as a standalone idea; this is the same thought grown up, with a procedure that would FILL the table and, more importantly, a different answer about where the table lives. Same conversation, minutes apart, and the second form is materially better than the first — which is the reason to keep both rather than overwrite."
       },
       "to_id": "dec:idea-the-term-table-is-the-residue-of-a-capture-procedure-not-a-maintained-artifact"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-establish-the-taxonomy-once-before-bulk-capture",
+      "properties": {
+        "evidence": "Promoted on Anthony's word, 2026-09-17: \"I'd like to accept/promote all of Alex's ideas. We can work them after the current set of tasks.\" Option A (the three legs) is the shape the requirement took."
+      },
+      "to_id": "req:a-taxonomy-is-decided-once-before-bulk-capture-and-every-instance-cites-it"
     },
     {
       "edge_type": "EVOLVES_INTO",
@@ -56699,6 +57215,14 @@
         "evidence": "The brainstormed idea became intent. That node measured four of five steps as already built and named the alias as the one with nowhere to write; this requirement is that one step, promoted on Anthony's word. Drawn from the idea to what it became, which is how a promotion is recorded."
       },
       "to_id": "req:a-node-records-what-the-user-calls-it"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-the-thin-project-adapter-is-where-a-repos-procedural-know-how-lives",
+      "properties": {
+        "evidence": "Promoted on Anthony's word, 2026-09-17: \"I'd like to accept/promote all of Alex's ideas. We can work them after the current set of tasks.\" Options A and B together (conventions delivered by step; the local adapter registered as a document) are the shape the requirement took."
+      },
+      "to_id": "req:a-repos-procedural-know-how-is-delivered-at-the-step-it-bears-on-and-the-design-knows-the-adapter-exists"
     },
     {
       "edge_type": "EVOLVES_INTO",
@@ -66350,6 +66874,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:a-quantity-carries-its-provenance-and-an-unsourced-one-is-named",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:cap:a-quantity-carries-its-provenance-and-an-unsourced-one-is-named"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "cap:a-reader-that-cannot-read-the-vocabulary-is-told-what-it-lacks",
       "properties": {},
       "to_id": "snap:epoch:planned-a-vocabulary-change-is-never-silent:cap:a-reader-that-cannot-read-the-vocabulary-is-told-what-it-lacks"
@@ -66992,6 +67522,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:idea-an-incremental-resumable-region-scoped-adopt-with-a-frontier-and-a-deferral-marker",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:dec:idea-an-incremental-resumable-region-scoped-adopt-with-a-frontier-and-a-deferral-marker"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "dec:idea-backlog-belongs-in-the-graph",
       "properties": {},
       "to_id": "snap:epoch:backlog-in-the-graph-brainstorm:dec:idea-backlog-belongs-in-the-graph"
@@ -67061,6 +67597,12 @@
       "from_id": "dec:idea-embeddings-adoption",
       "properties": {},
       "to_id": "snap:epoch:embeddings-question-gets-its-findings:dec:idea-embeddings-adoption"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:idea-establish-the-taxonomy-once-before-bulk-capture",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:dec:idea-establish-the-taxonomy-once-before-bulk-capture"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -67172,6 +67714,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:idea-should-reflow2-measure-files-itself-and-what-the-no-file-io-rule-actually-protects",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:dec:idea-should-reflow2-measure-files-itself-and-what-the-no-file-io-rule-actually-protects"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "dec:idea-should-reflow2-ship-a-companion-for-the-file-side-work-it-refuses-to-do",
       "properties": {},
       "to_id": "snap:epoch:preserved-on-write:dec:idea-should-reflow2-ship-a-companion-for-the-file-side-work-it-refuses-to-do"
@@ -67193,6 +67741,12 @@
       "from_id": "dec:idea-the-store-becomes-a-session-cache-and-the-export-becomes-the-truth",
       "properties": {},
       "to_id": "snap:epoch:preserved-on-write:dec:idea-the-store-becomes-a-session-cache-and-the-export-becomes-the-truth"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:idea-the-thin-project-adapter-is-where-a-repos-procedural-know-how-lives",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:dec:idea-the-thin-project-adapter-is-where-a-repos-procedural-know-how-lives"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -69194,6 +69748,12 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "dec:skills-served",
+      "properties": {},
+      "to_id": "fact:field-report-alex-2026-09-17-served-skills-removed-the-redundancy-and-what-remains-is-repo-know-how-taxonomy-and-incremental-adopt"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "env:dev",
       "properties": {},
       "to_id": "fact:the-claude-code-harness-on-the-dev-box-kills-background-cargo-runs-and-blocks-long-sleeps"
@@ -69512,6 +70072,14 @@
     },
     {
       "edge_type": "IMPLEMENTS",
+      "from_id": "art:test-a-number-names-its-source",
+      "properties": {
+        "covers": "whole"
+      },
+      "to_id": "ver:a-number-names-its-source"
+    },
+    {
+      "edge_type": "IMPLEMENTS",
       "from_id": "art:test-a-project-declares-its-unit-system-and-the-sweep-reports",
       "properties": {
         "covers": "whole"
@@ -69525,6 +70093,14 @@
         "covers": "whole"
       },
       "to_id": "ver:a-project-is-asked-what-its-artifacts-must-be-in"
+    },
+    {
+      "edge_type": "IMPLEMENTS",
+      "from_id": "art:test-a-quantity-says-how-it-was-obtained",
+      "properties": {
+        "covers": "whole"
+      },
+      "to_id": "ver:a-quantity-says-how-it-was-obtained"
     },
     {
       "edge_type": "IMPLEMENTS",
@@ -208648,6 +209224,14 @@
       "edge_type": "REALIZES",
       "from_id": "art:budget",
       "properties": {
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-quantity-carries-its-provenance-and-an-unsourced-one-is-named"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:budget",
+      "properties": {
         "completeness": "complete",
         "conformance": "unchecked"
       },
@@ -209207,6 +209791,14 @@
         "conformance": "verified"
       },
       "to_id": "cap:a-published-contract-says-what-two-systems-must-agree-on"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:detect",
+      "properties": {
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-quantity-carries-its-provenance-and-an-unsourced-one-is-named"
     },
     {
       "edge_type": "REALIZES",
@@ -210172,6 +210764,14 @@
       "edge_type": "REALIZES",
       "from_id": "art:kpp-proposal-skill",
       "properties": {
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-quantity-carries-its-provenance-and-an-unsourced-one-is-named"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:kpp-proposal-skill",
+      "properties": {
         "completeness": "complete",
         "conformance": "unchecked"
       },
@@ -211038,6 +211638,14 @@
       "edge_type": "REALIZES",
       "from_id": "art:schema-core",
       "properties": {
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-quantity-carries-its-provenance-and-an-unsourced-one-is-named"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:schema-core",
+      "properties": {
         "completeness": "complete",
         "conformance": "unchecked"
       },
@@ -211867,6 +212475,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:test-a-number-names-its-source",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "chg:a-quantity-says-how-it-was-obtained-and-a-check-on-it-has-a-form-a-tool-can-rerun"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:test-a-prescribed-layer-pair-no-longer-refuses",
       "properties": {
         "completeness": "complete",
@@ -211900,6 +212517,15 @@
         "conformance": "unchecked"
       },
       "to_id": "chg:a-project-is-asked-what-standard-its-artifacts-must-be-in-from-the-beginning"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:test-a-quantity-says-how-it-was-obtained",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "chg:a-quantity-says-how-it-was-obtained-and-a-check-on-it-has-a-form-a-tool-can-rerun"
     },
     {
       "edge_type": "REALIZES",
@@ -213560,6 +214186,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:a-repos-conventions-are-delivered-by-step-and-its-adapter-is-registered",
+      "properties": {},
+      "to_id": "req:a-repos-procedural-know-how-is-delivered-at-the-step-it-bears-on-and-the-design-knows-the-adapter-exists"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:a-revising-write-keeps-what-it-would-have-lost",
       "properties": {},
       "to_id": "req:intent-preserved"
@@ -214088,6 +214720,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:establish-taxonomy-before-bulk-capture",
+      "properties": {},
+      "to_id": "req:a-taxonomy-is-decided-once-before-bulk-capture-and-every-instance-cites-it"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:every-oversized-reply-offers-a-bound",
       "properties": {},
       "to_id": "req:every-oversized-reply-offers-a-bound"
@@ -214262,6 +214900,12 @@
       "from_id": "cap:ility-signals",
       "properties": {},
       "to_id": "req:computed-evidence-reaches-its-axis"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:incremental-adopt-with-a-frontier-and-a-deferred-derivation-marker",
+      "properties": {},
+      "to_id": "req:adopt-can-be-incremental-and-resumable-with-a-frontier-and-a-deferred-derivation-marker"
     },
     {
       "edge_type": "SATISFIES",
@@ -216981,6 +217625,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:a-number-names-its-source",
+      "properties": {},
+      "to_id": "cap:a-quantity-carries-its-provenance-and-an-unsourced-one-is-named"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:a-prescribed-layer-pair-is-reported-not-refused",
       "properties": {},
       "to_id": "cap:search-first-at-the-tool"
@@ -217014,6 +217664,12 @@
       "from_id": "ver:a-published-contract-says-what-two-systems-must-agree-on",
       "properties": {},
       "to_id": "cap:a-published-contract-says-what-two-systems-must-agree-on"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:a-quantity-says-how-it-was-obtained",
+      "properties": {},
+      "to_id": "cap:a-quantity-carries-its-provenance-and-an-unsourced-one-is-named"
     },
     {
       "edge_type": "VERIFIES",
@@ -220467,6 +221123,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:test-a-number-names-its-source",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-a-number-names-its-source"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:test-a-prescribed-layer-pair-no-longer-refuses",
       "properties": {
         "action": "created"
@@ -220496,6 +221160,14 @@
         "action": "created"
       },
       "to_id": "art:test-a-project-is-asked-what-its-artifacts-must-be-in"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:test-a-quantity-says-how-it-was-obtained",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-a-quantity-says-how-it-was-obtained"
     },
     {
       "edge_type": "YIELDED",
@@ -221286,7 +221958,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "test",
-        "checksum": "sha256:e7d72b0896a101e0d41b4c0e7c607a2f266c5a4f6dcf3faf14aebf15ad55dc7c",
+        "checksum": "sha256:76d6207507030c987c1566a913315d0672e6fe6dfbe97286a16ab4ebb1d77c5f",
         "description": "Five handler-level pins: get_skill carries the lessons naming that skill and no other; the tool list carries a lesson on its tool and nowhere else; a no-step lesson is kept and delivered nowhere; an unserved step is refused with the nearest names and nothing written; rules take steps and the newest lesson comes first. Shown to fail on the deliver-everything-everywhere mutation (2 pins).",
         "location": "crates/reflow2-mcp/tests/a_lesson_is_served_at_the_step_it_concerns.rs",
         "name": "a_lesson_is_served_at_the_step_it_concerns.rs",
@@ -221556,7 +222228,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f40f0e34349f19c9cb866edaf4174c3b07109516124fdf92959247dfdff3b3b8",
+        "checksum": "sha256:81a97fe87d140850adc532349884725212b65018796e57c64e38dc28106e939d",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/budget.rs",
         "name": "budget.rs",
@@ -221617,7 +222289,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:5ad912f194abd88c5e49426838ca6b0b58264fe4d6d0a6081913c6e6b5d10d53",
+        "checksum": "sha256:7a6f5d2bdc0cbdf7436ff7ac2c218a7ba3eb3479291384d0378c7b1acbdb59d1",
         "granularity": "atomic",
         "location": "getting-started/skills/capture-intent/SKILL.md",
         "name": "capture-intent SKILL.md — the conversational capture path, now registering the document it captured from",
@@ -222098,7 +222770,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:5e8201577421019b36c55d0ade28e59ac60168911ce16c5dce0e1bb98682354e",
+        "checksum": "sha256:2677201cc214107926eac78ead7dc30cc2e5358175a3251df005b171f19f17b5",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
@@ -222111,7 +222783,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:6747696473bef9cd952ea1c20175ef280507c48ef1bce1107563517d9662c13b",
+        "checksum": "sha256:6bc66f158c543707bd88d110f9d2a00a007e03c288f88051bc57d520a9e53a04",
         "location": "getting-started/skills/detect-and-ask/SKILL.md",
         "name": "detect-and-ask/SKILL.md — the ask half of the loop, and now the rule for when NOT to ask",
         "status": "realized"
@@ -222330,7 +223002,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:0323aad949f08c289cc3da86c8ae66b86cdbcd33ec57811c4ba86dadd4fdfca1",
+        "checksum": "sha256:b54afd174e0c08ef4f47f13d09a49c6082f455c5ec8d0d5eeb01a4de6e1bb693",
         "location": "crates/reflow2-mcp/src/enum_schema.rs",
         "name": "enum_schema.rs — one schema_with fn per enum request field, reading legal values from the compiled-in schema (or the handler's own const) at tool-listing time",
         "status": "realized"
@@ -222377,7 +223049,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "test",
-        "checksum": "sha256:90b6b9277566bb5d4984ad03ce967ddbd9f9fb10261a13c2d2a4396b8fb3b27a",
+        "checksum": "sha256:0e186e7a30108276834cf9518f6442ab272acd7891055fdfeaf0db82e4909a8e",
         "description": "The criterion-1 acceptance test, on Anthony's condition that the corpus is the test: every served tool must reach find_tools' default top 5 for its query in tests/fixtures/find_tools_corpus.json. TWO tools are EXEMPT at rank 6 with the measured reason (consumption_report, governed_by — scan_nodes rose into the top 5 during increment 434 and its exemption came out), and a second test fails if an exemption goes stale in either direction. A third test refuses any served tool absent from the corpus, so a new tool cannot ship unfindable by omission. Its header names the trap it cannot see — a sentence tuned to its query — and points at the held-out paraphrase corpus that guards it, kept deliberately out of CI. It earned its place a second time on 2026-09-12: a description pass that rewrote tools \"from purpose\" dropped eight from their top 5, and this test refused the branch until the user-phrased sentence was back on each.",
         "location": "crates/reflow2-mcp/tests/every_tool_is_found_by_a_query_in_the_users_words.rs",
         "name": "every_tool_is_found_by_a_query_in_the_users_words.rs",
@@ -222624,7 +223296,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:98f42e1e805c29eab00029854c6d3bfb8292584fc8637e1ade97e2026ff508ae",
+        "checksum": "sha256:e0334491fcacb79a68da5c74f8569bea455bd26ac385dbd050581fe938dd79e1",
         "granularity": "atomic",
         "location": "getting-started/skills/genesis/SKILL.md",
         "name": "genesis/SKILL.md",
@@ -223005,7 +223677,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:c29c4b0599336c7d42cb8143943e22cdbe9fc48b7d99a75e2b074ed8e6946e1b",
+        "checksum": "sha256:74401541278a6e6f87ce09b4e584b86caf4e2ee24c2e1567f737d3e5f2a04d6b",
         "granularity": "atomic",
         "location": "getting-started/skills/kpp-proposal/SKILL.md",
         "name": "kpp-proposal/SKILL.md",
@@ -223931,7 +224603,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:fca2dfbdf78961542268cff6f669ab5a30f913cd0fd2d5f944423e667330f8d1",
+        "checksum": "sha256:35cae3cc2e90e7a627bb8e7650a11dfd3240cb8b6780ebdeda42b2ab006685ab",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/core.yaml",
@@ -224043,7 +224715,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:0d01ff201bac24d325a5d94def61e8626d2db7b1dda220eb35b43cd35c7d7a95",
+        "checksum": "sha256:fe5ce26eab87ff04fc7d32b70c7d10e9d850d5bc17b97554c0f3d8ed62477796",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/temporal.yaml",
@@ -224199,7 +224871,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:7c02d25452c3f9ac9185dc9cbbb6717759575c74c8a929e50b9ccad5439983fc",
+        "checksum": "sha256:4f8ed8059860d7b46b4256ca09932e1ac32835d4fce5ab54fb19eac639869b8e",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -224286,7 +224958,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:0de98d511ac45b30211f34a24d77d48e6ff5426fc9c9f48e2497ad8c538106d9",
+        "checksum": "sha256:4c5bb01bbd5e04ad27d5f429e7d7ee14919472c0065ca6169d9470657e08cc0a",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -224325,7 +224997,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:1c3e42f709770778c775d82fb5d531ddc74eae21bb5c158d4ff7539df20e3af7",
+        "checksum": "sha256:247b390bd1e76c73c75261c9599ed3063fc5933ee40e4a1e6932133f66d9bccc",
         "location": "docs/skills-and-tools.md",
         "name": "skills-and-tools.md",
         "status": "realized"
@@ -224532,7 +225204,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "test",
-        "checksum": "sha256:aa2a734e886359f7539aaa274e1ed066ccd4d0602aef22d63a342b5bb78e9b68",
+        "checksum": "sha256:f2f2b223a5995a29000506dd3da8ee8bc148c451c441d9e4c4dc3e707764eb5a",
         "description": "Four cases over budget_report with set_constraint_unit and constrains_in. The 6.9 lb against 100 kg case from the brainstorm is the first test.",
         "location": "crates/reflow2-core/tests/a_budget_adds_only_numbers_in_its_own_unit.rs",
         "name": "a_budget_adds_only_numbers_in_its_own_unit.rs — the rollup adds only matching units, reports a mismatch beside the total and leaves the verdict open, names a silent unit but still totals it",
@@ -224631,6 +225303,18 @@
       }
     },
     {
+      "node_id": "art:test-a-number-names-its-source",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:546cdc7102fadeb1ad60485d4b4f0d1bb3a49a308e1914fe86346d7ea13d6cf0",
+        "description": "Three cases driven through the tool handlers with JSON request shapes, so a renamed or unreachable field fails here rather than in front of somebody.",
+        "location": "crates/reflow2-mcp/tests/a_number_names_its_source.rs",
+        "name": "a_number_names_its_source.rs — the served surface can say where a number came from on add_constraint, constrains and record_finding",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:test-a-prescribed-layer-pair-no-longer-refuses",
       "node_type": "Artifact",
       "properties": {
@@ -224658,7 +225342,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "test",
-        "checksum": "sha256:97a97cd9075721ab11693d5b27044944de6ed20dad7f48fe754453453c0fb751",
+        "checksum": "sha256:4a5259a44e27c9d23ac65d9350bd8429843cde80ee46a3a54849dae514d6a564",
         "description": "Seven cases over unit_system_undeclared, quantity_without_unit and unit_outside_declared_system, with set_design_rule_units and set_interface_units. The enforced-rule case asserts the finding gets louder, not that it changes kind.",
         "location": "crates/reflow2-core/tests/a_project_declares_its_unit_system_and_the_sweep_reports.rs",
         "name": "a_project_declares_its_unit_system_and_the_sweep_reports.rs — the three sweep findings pinned, including that nothing to run on raises nothing rather than reading clean",
@@ -224674,6 +225358,18 @@
         "description": "Seven cases in one file so the constructor property (`checker`), the Project→rule edge and the two detectors land together or not at all. The two-state key is pinned as behaviour: the acknowledged \"none known\" gap id and the re-asked one are asserted different, because collapsing them is exactly the \"asked once, silenced forever\" failure the aggregate-acknowledgement ruling warns about.",
         "location": "crates/reflow2-core/tests/a_project_is_asked_what_its_artifacts_must_be_in.rs",
         "name": "a_project_is_asked_what_its_artifacts_must_be_in.rs — the artifact-standard question pinned: asked on an empty project, ended by a declaration, \"none known\" re-asked once when a drawing appears, a drawing that does not say is named, a generating source is not, a mirror is not asked",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:test-a-quantity-says-how-it-was-obtained",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:5cf91c278506bde2f4a865edebf16f8503e9b991e934f941192c50229961da89",
+        "description": "Five cases over quantity_without_source and quantity_check_without_executable_form, set_constraint_provenance, constrains_in's source and budget_report's unsourced. The fixture is bhome's floor-area budget at its measured 288.9 sq ft.",
+        "location": "crates/reflow2-core/tests/a_quantity_says_how_it_was_obtained.rs",
+        "name": "a_quantity_says_how_it_was_obtained.rs — a limit or contribution nobody sourced is named, the agent's own word is an answer, a source with no number is not stored, and a check on a limit with no executable form is named until the file that is the check is linked",
         "status": "realized"
       }
     },
@@ -225389,7 +226085,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:92fa10135bdd033d2f8c3a644117d409f254b0842a7cda213073a736ac0b32ab",
+        "checksum": "sha256:f9349aae2eef07d1cd7c72a941f9e9b1b67e9d2b548ded5225c0d6e8af06e292",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
         "name": "crates/reflow2-mcp/src/tools/capture.rs",
@@ -225489,7 +226185,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:a41acf7e0b4bbca93e83a5bb8ea4ac9b76604aa49a0c3e3d35daf633f2a5fc33",
+        "checksum": "sha256:2695f16f238bf6de3c330d823ffdf75cb8ed4a076db759d1dbc404d45a0e70a9",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/temporal_tools.rs",
         "name": "tools/temporal_tools.rs",
@@ -226245,10 +226941,10 @@
       "node_id": "cap:a-quantity-carries-its-provenance-and-an-unsourced-one-is-named",
       "node_type": "Capability",
       "properties": {
-        "description": "A provenance record on every stored quantity: measured (instrument or artifact, when), computed (from which quantities, by which executable check), or asserted (by whom, or by nobody). A detector reports asserted quantities with no name and verifications that bear on a quantity without an executable form; both are counted at the boundary. Built after the unit-system capability, which it depends on.",
+        "description": "As built (2026-09-17): a Constraint's limit carries limit_basis (measured | computed | asserted), limit_source (the tool, artifact or person it came from) and limit_measured_at; a contribution on CONSTRAINS carries source beside its basis and measured_at, stored only when there is a number for it to describe; a TemporalFact carries source. quantity_without_source names a limit with no limit_source and a contribution with a number and no source — an asserted number that names who asserted it is an answer, and the detector is silent on a design with no numeric limit. quantity_check_without_executable_form names a Verification that VERIFIES a Constraint with a limit and has no incoming IMPLEMENTS from an Artifact. budget_report reports limit_basis, limit_source and the unsourced contributors beside the total, which still includes them. The partnership contract is stated on the constrains tool: design the budget here, measure it in the partner tool, write the number back with basis measured and source naming the tool. Built after the unit-system capability, which it depends on.",
         "name": "A quantity carries its provenance (measured, computed, asserted-by) and an unsourced one is named",
         "provenance": "authored",
-        "status": "planned"
+        "status": "realized"
       }
     },
     {
@@ -226332,6 +227028,16 @@
         "name": "A registered report that produced no finding is reported, and never blocks",
         "provenance": "authored",
         "status": "realized"
+      }
+    },
+    {
+      "node_id": "cap:a-repos-conventions-are-delivered-by-step-and-its-adapter-is-registered",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Planned. Conventions land as DesignRules of category convention whose steps name the served skills they bear on, so get_skill hands the convention over beside the skill. A project-local skill file carrying the procedural half is registered as an Artifact that DOCUMENTS the Project as agent instructions, so reconcile notices when it drifts. The adopt and genesis skills say where a repo's import, resolver and test conventions go. Reflow2 will not navigate a repository; it knows the adapter exists, delivers it at the right step, and notices when it goes stale.",
+        "name": "A repository's conventions are delivered at the served step they bear on, and its project-local adapter is registered as agent instructions the design can see drift on",
+        "provenance": "authored",
+        "status": "planned"
       }
     },
     {
@@ -227396,6 +228102,16 @@
       }
     },
     {
+      "node_id": "cap:establish-taxonomy-before-bulk-capture",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Planned. (1) A served establish-taxonomy skill: list the categories this design will hold many of; for each, decide once how an instance is encoded (type, kind, edges, name pattern) as an accepted Decision, and GOVERN every instance by it. (2) adopt points at it after the breadth pass and genesis after seeding. (3) A detector that notices several nodes of one type whose encoding differs and no Decision governs them, and asks whether an encoding decision is owed. Reflow2 cannot know a repository's categories; it can notice inconsistency and ask.",
+        "name": "Establish the taxonomy once: a served skill, an instruction at the moment between structure and bulk capture, and a detector that names siblings encoded differently with no governing Decision",
+        "provenance": "authored",
+        "status": "planned"
+      }
+    },
+    {
       "node_id": "cap:every-oversized-reply-offers-a-bound",
       "node_type": "Capability",
       "properties": {
@@ -227653,6 +228369,16 @@
         "provenance": "authored",
         "status": "verified",
         "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:incremental-adopt-with-a-frontier-and-a-deferred-derivation-marker",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Planned. A deferred_derivation fact kind read the way follow_up is: dated, keyed to a node, listed at every boundary as owed, and suppressing the intent gaps on its subject so a regional pass does not report false gaps for what was left on purpose. A frontier read that lists nodes captured structurally with no recovered intent, nodes carrying the marker, and unmodelled neighbours adjacent to what is captured, as the worklist and the resume point. Adopt gains a region mode that writes the marker on what it leaves. Depends on the scoped detectors telling the truth about a region (two measured defects). The frontier must keep saying what has not been looked at, or the regional pass becomes the local optimum the adopt skill warns about.",
+        "name": "Incremental, resumable adopt: a frontier read (structure without intent, deferred parts, uncaptured neighbours) and a deferred-derivation marker that is listed as owed and suppresses the intent gaps on its subject",
+        "provenance": "authored",
+        "status": "planned"
       }
     },
     {
@@ -229523,6 +230249,17 @@
         "change_type": "new_feature",
         "name": "A published contract with no check is reported — and a design that publishes nothing is asked which it meant",
         "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:a-quantity-says-how-it-was-obtained-and-a-check-on-it-has-a-form-a-tool-can-rerun",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-09-17",
+        "name": "A quantity says how it was obtained and by what, a number nobody sourced is reported, and a check on a numeric limit with no executable form is reported",
+        "rationale": "\"Asserted by the agent\" is an allowed, visible state on purpose: the point is not to refuse a proposed number but to make one with no source look different from one with a source, and to count them at the boundary — the same discipline reflow2 applies to a requirement nobody confirmed. No design tool can rule out a made-up number; this is the whole of what one can do about it. Built on existing edge vocabulary (CONSTRAINS.basis was kept, and `source` added beside it) rather than a new Quantity type, per the over-engineering counterweight recorded on the brainstorm.",
+        "summary": "The second of the three requirements Anthony accepted on 2026-09-16 (req:a-quantity-carries-how-it-was-obtained-and-an-unsourced-one-is-reported), built on the units increment it depends on. THE HOMES: Constraint gains `limit_basis` (measured / computed / asserted, no default), `limit_source` (the instrument, artifact, check or person, by id) and `limit_measured_at`; CONSTRAINS gains `source` beside its existing `basis`/`measured_at`, stored only beside a contribution; TemporalFact gains `source` beside `basis`. THE SURFACE: add_constraint takes the three limit fields, constrains takes `source`, record_finding takes `source`; the core gains set_constraint_provenance, and constrains_in gains a source argument. THE READS: budget_report reports `limit_basis`, `limit_source` and `unsourced` (contributions with a number and no source — still totalled, but named). THE DETECTORS: `quantity_without_source` (a limit or a contribution with a number and no source; keyed on the set; silent when the design holds no numeric limit) and `quantity_check_without_executable_form` (a Verification that VERIFIES a Constraint with a limit and has no IMPLEMENTS from any Artifact — a claim wearing a status). THE INSTRUCTIONS: kpp-proposal and capture-intent ask where the number came from; genesis says every number says where it came from; detect-and-ask says how to answer each finding. THE PARTNERSHIP SENTENCE: constrains' own description now names `basis: measured` + `source` as the contract with an external measuring tool, and record_change's names `subject: record` as what a measurement fed back is — the two sentences the bhome report said were missing."
       }
     },
     {
@@ -241742,6 +242479,17 @@
       }
     },
     {
+      "node_id": "dec:idea-an-incremental-resumable-region-scoped-adopt-with-a-frontier-and-a-deferral-marker",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Alex, by email, relayed by Anthony 2026-09-17, in his words: \"Adopt and ingest-corpus are whole repo. Reflow2 has no incremental, interactive, resumable capture mode. The unique skill: write through instead of accumulate-then-commit; the graph as worklist + memory + resume-state as an explicit contract; a typed structural-vs-intent gap with a findable deferral marker. Asking for a native incremental adopt mode needing two new primitives: a frontier query and a deferred-derivation marker.\" And, on why his skill exists: \"A vertical slice orchestration adopt doesn't do: adopt is breadth-first over an entire repo. It says it will report false gaps if done regionally.\"\n\n═══ WHAT THE DESIGN ALREADY HOLDS, piece by piece ═══\n· cap:scoped-analysis — \"a team asks the detectors about its own part, and is told what it did not see\"; detect_gaps takes `scope` and `depth`. Two defects measured on it: a scoped detector at default depth returned two thirds of the design (2026-08-17), and a degenerate region was not flagged (2026-08-07). That is the false-gaps-on-a-region problem, with numbers.\n· The adopt skill's own rule: breadth first, deliberately, because the payoff findings came from breadth; and its honest warning that a regional pass reports false gaps.\n· /log-issue's `follow_up` TemporalFact (2026-09-16) — a findable, dated, owed-until-settled marker on a node, listed at every boundary. A deferred-derivation marker is that shape with a different fact_type: \"structure captured, intent deliberately not yet recovered\".\n· Capability/Component `provenance: inferred` — the structural half already says it was read off the artifact.\n· Write-through: the server keeps the export current after every change (req:the-server-keeps-the-working-tree-export-current); accumulate-then-commit is what the OLD export discipline was.\n\n═══ THE TWO PRIMITIVES HE NAMES, in reflow2's terms ═══\n(1) A FRONTIER QUERY: \"what is captured structurally and not yet recovered as intent, and what is adjacent and not captured at all?\" Half exists — unmotivated_capability, unsatisfied_requirement and coverage_report's unmodelled files are each a frontier from one side — and none of them is a resume point: nothing says \"you were here\".\n(2) A DEFERRED-DERIVATION MARKER: a typed way to say \"this part's intent is deliberately deferred\" so the loop does not ask about it as a gap and DOES list it as owed — the follow_up shape, keyed to a node, with the structural-versus-intent distinction typed rather than in prose.\n\n═══ THE OPTIONS, none chosen ═══\nA. ⭐ THE TWO PRIMITIVES ON EXISTING VOCABULARY: a `deferred_derivation` fact_type read the way `follow_up` is (listed at boundaries, suppresses the intent gaps on its subject the way suppressed_by_parked_idea suppresses defects), and a `frontier` read that lists nodes with structure and no intent, nodes with a deferral marker, and unmodelled neighbours — the worklist. Then adopt gains a region mode that writes the marker on what it leaves for later. Costs: one fact_type convention, one read, a paragraph in adopt.\nB. FIX THE SCOPED DETECTORS FIRST: the two recorded defects are the reason a regional adopt lies; with them fixed, a region pass may not need a new mode at all. ⚠️ Counter: even a correct scoped detector cannot tell \"not yet captured on purpose\" from \"missing\" without the marker.\nC. A NEW NODE TYPE for the worklist. ⚠️ The Task-node objection that keeps reflow2 from growing one stands.\nD. NOTHING: his skill does it. ⚠️ \"The unique skill\" is one person's; the copy drifts.\n\n═══ THE HONEST LIMIT ═══\nBreadth-first was chosen because the payoff findings on every brownfield trial were structural and came from breadth. An incremental mode must not lose that: the frontier must keep saying \"here is what you have not looked at\", or the regional pass becomes the local optimum the adopt skill warns about.",
+        "kind": "exploratory",
+        "name": "OPEN — adopt and ingest-corpus are whole-repo; should reflow2 have a native incremental, interactive, resumable capture mode — write-through rather than accumulate-then-commit, the graph as worklist and resume-state by contract, a typed structural-versus-intent gap with a findable deferral marker — needing two primitives: a FRONTIER query and a DEFERRED-DERIVATION marker?",
+        "rationale": "Captured under the brainstorm skill from a relayed field report, nothing promoted at capture. Recorded as one question with the two primitives inside it because Alex named them as the unit of the ask, and because the design's own pieces (scoped analysis, the follow-up marker, write-through export) cover more of it than the report assumes — the gap is the two joins, not the parts.\n\nANSWERED 2026-09-17, by promotion on Anthony's word (\"I'd like to accept/promote all of Alex's ideas. We can work them after the current set of tasks.\"): it became req:adopt-can-be-incremental-and-resumable-with-a-frontier-and-a-deferred-derivation-marker, accepted the same day, with option A (the two primitives on existing vocabulary) as its shape and option B's scoped-detector defects recorded as a dependency; cap:incremental-adopt-with-a-frontier-and-a-deferred-derivation-marker is planned to deliver it after the three intents accepted on 2026-09-16.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:idea-an-mcp-around-xrt-so-a-beamline-design-is-ray-traced-not-asserted",
       "node_type": "Decision",
       "properties": {
@@ -242308,6 +243056,17 @@
         "name": "OPEN — should an enum field accept an obvious near-synonym (`test` → `code`, `additive` → `new_feature`) and say so in the reply, or is a synonym a judgement the caller has to make?",
         "rationale": "COUNTER-ARGUMENTS. (a) makes a judgement on the caller's behalf — `test` → `code` throws away the very distinction the test-source defect says is missing, and `additive` → `new_feature` could equally mean `scope_change`; a synonym table also grows without bound and the reply note is easy to skim. (b) is what exists, is honest, and the reporter called it 'the right failure mode' — the cost is one round-trip per new vocabulary word, paid once per agent. (c) is the one case where the ask is really a vocabulary gap, and it is already on the record. A RANKING IS A FINDING: (b) with (c) fixed, and (a) only for a spelling that maps to exactly one value with no meaning lost — if any such pair exists. Anthony's call.",
         "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-establish-the-taxonomy-once-before-bulk-capture",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Alex, by email, relayed by Anthony 2026-09-17, in his words: \"Perhaps a skill, like establish-taxonomy, that runs early in adopt (or after genesis), notices you are about to model repeated instances of the same category, and drives you to author the encoding once as accepted Decisions before bulk capture, so every later capture cites them instead of re-deciding ad-hoc. It's the missing bridge between genesis/adopt and 'how does this project represent its own recurring parts'. This exists as the 'master representation decision' but nothing helps you write them.\"\n\n═══ WHAT THE DESIGN ALREADY HOLDS ═══\n· \"The taxonomy lives as Decisions\" — his repos already do this by hand: accepted Decisions that say how a recurring thing is encoded (a service is a Component of kind service; a bus is an Interface with medium event; a scan is a Flow …), and later captures GOVERNED_BY them. The vocabulary exists; no skill produces it and no detector notices its absence.\n· dec:idea-extraction-is-two-pass-against-an-se-schema-stated-up-front — the same idea one level up: state the schema, then extract against it.\n· Component.kind, Interface.medium, Flow.flow_type, Artifact.artifact_type — the per-type vocabulary the encoding would cite.\n· possible_duplicate fires on near-identical nodes; nothing fires on \"the fifth Component that looks like the first four and was encoded differently\".\n\n═══ THE OPTIONS, none chosen ═══\nA. ⭐ THE SKILL, three legs. (1) A served `establish-taxonomy` skill, invoked by adopt after Phase 1's breadth pass and by genesis after seeding: \"list the categories this design will hold many of; for each, decide once how one instance is encoded — type, kind, which edges, what its name pattern is — as an accepted Decision, and GOVERN every instance by it.\" (2) An instruction in adopt/genesis pointing at it. (3) A detector that notices the trigger Alex names — several nodes of one type whose encoding differs (some with a kind, some without; some with an edge the others lack) and no Decision governing them — and asks whether an encoding decision is owed. The three-legs rule, again.\nB. A DETECTOR ONLY: report inconsistent encoding among siblings and let the person write the decision. Cheaper; ⚠️ nothing then helps write it, which is the sentence he closed on.\nC. A TEMPLATE: ship starter taxonomies per domain. ⚠️ dec:idea-who-warrants-a-domain-template — a template asserts what a domain is, and reflow2 has no basis for that.\nD. NOTHING: his repos already do it by hand. ⚠️ Counter: \"nothing helps you write them\" is the report, and a discipline that works only where its author is present is the copy that drifts.\n\n═══ THE HONEST LIMIT ═══\nA taxonomy decided once is only as good as the person's category list; reflow2 can notice inconsistency among instances and can ask for the decision, and cannot know what the categories of a repository are.",
+        "kind": "exploratory",
+        "name": "OPEN — should an `establish-taxonomy` step run early in adopt or after genesis, notice that the agent is about to model repeated instances of one category, and drive it to author the encoding ONCE as accepted Decisions so every later capture cites them instead of re-deciding ad hoc?",
+        "rationale": "Captured under the brainstorm skill from a relayed field report, nothing promoted at capture. Recorded separately from the two-pass extraction idea because that one is about a CORPUS and a schema; this is about a PROJECT's own recurring parts and the moment between structure and bulk capture where the encoding is either decided or improvised — and Alex's repos have already done it by hand, which is the evidence the earlier idea lacked.\n\nANSWERED 2026-09-17, by promotion on Anthony's word (\"I'd like to accept/promote all of Alex's ideas. We can work them after the current set of tasks.\"): it became req:a-taxonomy-is-decided-once-before-bulk-capture-and-every-instance-cites-it, accepted the same day, with option A (skill, instruction, detector) as its shape and cap:establish-taxonomy-before-bulk-capture planned to deliver it after the three intents accepted on 2026-09-16.",
+        "status": "accepted"
       }
     },
     {
@@ -243442,6 +244201,17 @@
       }
     },
     {
+      "node_id": "dec:idea-should-reflow2-measure-files-itself-and-what-the-no-file-io-rule-actually-protects",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-09-17, on Alex's sentence \"reflow2 does no file I/O\": \"should it? What would it give us if we did?\"\n\n═══ FIRST, THE SLOGAN IS NOT THE RULE — measured on the code, 2026-09-17 ═══\nThe server already reads and writes files: its own export, stamp, identity, sync and rendezvous sidecars (provenance.rs, identity.rs, shared.rs, discover.rs). And on 2026-09-14 Anthony ruled that reflow2 reads SOURCE TREES for analyses that report and never write (dec:reflow2-serves-source-reading-analyses-that-report-and-never-write) — so the line was crossed, on the record, three days ago. What reflow2 still does not do is touch a USER'S ARTIFACT: link_artifact, set_artifact_checksum and reconcile_artifacts take a checksum the caller computed; coverage_report takes the file list the agent observed. The rule that has actually held is dec:agent-navigates-content: the agent reads for MEANING, the graph records where it landed and never interprets. \"No file I/O\" was always a shorthand for \"no interpretation\" — and hashing a file is not interpreting it.\n\n═══ WHAT IT WOULD GIVE US, in order of how much it changes ═══\n1. A CHECKSUM BECOMES A MEASUREMENT INSTEAD OF AN ASSERTION. Requirement 2 of the 2026-09-16 set (built this same day) draws exactly this line for every number in a design: measured by a tool, or asserted by an agent. Today every checksum in reflow2's own graph is the second kind — an agent ran sha256sum and pasted the result, and the graph cannot tell a pasted hash from a made-up one. On this very increment the agent hashed 18 files by hand and one had to be re-hashed after a later edit. The qs project agent counted forty pastes and a hand-built table of 69 ids to paths (dec:idea-should-reflow2-ship-a-companion-…). A server that hashes what the graph registers turns the design's own as-built evidence from asserted to measured.\n2. RECONCILE BECOMES ONE CALL WITH NO TABLE. reconcile_artifacts already refuses without `observed`; the graph is the only thing that holds the id-to-path mapping, so the table the agent builds by hand is a table reflow2 already has.\n3. DRIFT IS SEEN LIVE, NOT ONLY IN CI. reflow2_check.py finds DRIFT and missing_artifact at commit time by walking the tree in Python. With the same read in the server, loop_status could say \"3 registered files differ from their checksum\" at every boundary, and a gate would be the second reader rather than the first.\n4. THE FRONTIER GETS ITS THIRD LEG FROM THE DISK. Alex's incremental adopt (req:adopt-can-be-incremental-and-resumable-…, accepted today) needs \"unmodelled neighbours adjacent to what is captured\". coverage_report can only name unmodelled files the agent told it about; a root listing from the server makes the frontier a fact rather than a recollection.\n5. THE SOURCE-READING ANALYSES BECOME SERVABLE IN-PROCESS. The 2026-09-14 ruling's own delivery condition is served + named + gated; tools/wall_check.py is none of those because the file read lives in Python. This is the same question from the other side.\n\n═══ WHAT IT WOULD COST, and these are real ═══\n· THE MACHINE. The graph is shared; the disk is not. A server reached over HTTP (cmp:mcp-http, the Boss+workers fleet) or a shared server on a box that does not hold the checkout would hash nothing, and a detector with nothing to run on reads exactly like one that ran clean (the standing rule). Any read must say \"not on this machine\" rather than report zero drift.\n· GRAPH TEXT AS INSTRUCTION. An Artifact's `location` is a string somebody wrote into the graph. The moment the server dereferences it, graph text has become a directive to the server — the one thing AGENTS.md's standing rule forbids. A registered location of ../../etc/passwd would be read. So: root-bounded (never outside the directory the graph lives under), no symlink following, registered-or-listed only, and NEVER RETURNS CONTENT — a hash, a size, a mtime, an existence. Bytes in, a number out.\n· THE DOCTRINE, kept: dec:three-party-checks — the LLM speaks, the graph remembers and COUNTS, the human decides. Hashing is counting. Parsing, extracting, navigating a thousand pages is speaking, and stays the agent's (dec:agent-navigates-content stands untouched).\n· THE WRENCH. Every item above is reflow2 work for reflow2's users. What makes it admissible is that two users asked (qs, 2026-09-04; Alex, 2026-09-17) and the standing rule says to wait for exactly that.\n\n═══ THE OPTIONS, none chosen ═══\nA. KEEP THE SLOGAN, SHIP THE COMPANION: a CLI verb beside the server hashes the registered set and calls reconcile (the open idea of 2026-09-04, option ②). Cheapest; keeps the MCP surface pure. ⚠️ The companion needs the graph AND the disk in one process anyway, so \"pure\" is a matter of which binary.\nB. ⭐ RESTATE THE RULE AS \"reflow2 MEASURES files and never reads them for meaning\", and let the server do the measuring under the conditions above: link_artifact and set_artifact_checksum compute the hash when the caller omits it and record `basis: measured` (asserted when pasted — the provenance vocabulary of requirement 2, applied to the design's own evidence); reconcile_artifacts takes `observed` OR walks the registered set; coverage_report can list the root; loop_status reports live drift; every read refuses, by name, on a machine that does not hold the tree. ⚠️ Cost: the boundary that granularity and consumption state in their module docs moves, and moves for all of them at once.\nC. GO ALL THE WAY: the source analyses read content in-process, as the 2026-09-14 ruling already permits. ⚠️ Counter: that ruling has its own order (the wall check first) and its own three conditions; folding it in here decides it twice.\nD. NOTHING: the rule is deliberate, the workaround is a shell script. ⚠️ Counter, in the users' words: \"the most repetitive work of the day\", forty times, and the graph's own checksums remain the one number in the design that says how it was obtained by saying nothing.\n\n═══ THE HONEST LIMIT ═══\nA server-side hash proves the file on disk is the file the design describes. It says nothing about whether the file is right — that stays with the check the design names for it (requirement 3, closure), and with the partner tool that can open the format (requirement 1, the domain standard). Measuring bytes is the smallest true thing reflow2 can say about an artifact, and the point of this idea is that today it says even that on somebody else's word.\n\n═══ WIDENED the same day by Anthony: \"reflow2 leaves it up to the agent to render design artifacts and export the reflow2 graph, but there might be some other things that would be good to have as I/O\" ═══\nAN INVENTORY OF WHO DOES WHAT TODAY, measured on the code. The server itself: the export (write-through after every change), its sidecars, and by the 2026-09-14 ruling, source reads for analyses. The server hands the agent TEXT and the agent writes the file: the changelog (changelog_view), the report (graph_report_markdown), the ten views (tools/render_views.py), the skills-and-tools table (a Python renderer, a CI check that it matches), the served-skill mirrors into .claude/ and .grok/ (three byte-identical copies guarded by a lint), the field-report file /log-issue appends to, the kit files reflow2_init writes. The server asks the agent to READ and relay: file hashes and presence (reconcile), the file list (coverage), test outcomes (reconcile_verification's observed), a git range (impact_of_diff.py), a corpus (the ingest handshake).\n\nTHE LINE THAT SORTS THEM — one principle per direction:\nOUT: reflow2 may WRITE anything that is a PURE PROJECTION of the graph, meaning a thing it could regenerate from the graph alone with no agent fill-in. Anthony's own doctrine (a view is a pure projection; a renderer fill-in is a defect) says this is exactly the set the server should render itself, because an agent in the rendering loop is where fill-ins come from. The export already is this, and it is the one rendering nobody complains has gone stale. The changelog, the report, the views, the docs-as-views idea (dec:idea-outward-docs-are-rendered-from-the-graph), the skills-and-tools table, the skill mirrors, and the interchange forms (SysML v2 text — dec:idea-sysml-v2-boundary; ReqIF for a requirements shop; DOT or mermaid for a picture; CSV for a manager) are all projections. Kept current the way the export is, they cannot go stale, and every \"the mirror must be byte-identical\" check becomes unnecessary because there is one writer.\nIN: reflow2 may READ anything it can reduce to a number, a status or a name WITHOUT INTERPRETING IT: a hash, a size, an existence, a directory listing, a test report (JUnit or cargo's JSON → a Verification's status and last_run_at, basis measured, source the runner), a git commit range (which files changed → impact, as impact_of_diff.py does in Python today), a stamp. Reading a document for what it MEANS stays the agent's (dec:agent-navigates-content); reading a domain artifact for its properties stays the partner tool's (IfcMCP quantifies, xrt traces).\n\nCANDIDATES, by what each removes:\n· TEST REPORTS IN → a check's status is measured, not relayed. Today \"passing\" is the agent's word after reading a terminal; a report the server reads makes the status carry its source — requirement 2 applied to checks, and requirement 3's closure legs then add up from measurements rather than claims.\n· VIEWS, DOCS AND CHANGELOG OUT, write-through → \"the documents are a realization of the graph\" becomes a property of the server instead of a discipline the agent keeps.\n· SKILL MIRRORS AND SLASH COMMANDS OUT → the kit installs and updates itself; three copies and a lint become one writer.\n· THE FIELD-REPORT FILE OUT → /log-issue writes the file a person reads; the untracked-because-public decision stands.\n· A GIT RANGE IN → diff-driven impact becomes served, named and gated (the 2026-09-14 delivery condition), instead of a script in one checkout.\n· INTERCHANGE OUT → the design is legible to the shops that live in SysML, ReqIF or a spreadsheet, without an agent transcribing.\n\nONE MORE COST, for writes: a file the server writes is a file the agent must NOT also write, or the two fight — so every projection gets ONE writer and the agent's version is retired, the way the hand-kept export was.\n\nNOT ESTABLISHED: which of these anyone has asked for. The hashing has two asks (qs, Alex); the docs-as-views has Anthony's; the rest are inferred from what the agent does by hand today — a count worth taking before any is built. The options above stand; the widening adds the OUT half to option B.",
+        "kind": "exploratory",
+        "name": "OPEN — \"reflow2 does no file I/O\": should it? What would reading the disk give us, and what does the rule actually protect — the bytes, or the meaning?",
+        "rationale": "Captured under the brainstorm skill from Anthony's question, nothing promoted. Recorded as its own question rather than folded into the 2026-09-04 companion idea because that one asks WHO does the file work and takes the boundary as given; this one asks WHAT THE BOUNDARY IS, and finds on the code that the slogan already differs from the rule. The distinction that makes it answerable — measure bytes versus read for meaning — is borrowed from the provenance requirement built the same day.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-should-reflow2-serve-a-root-cause-analysis-method",
       "node_type": "Decision",
       "properties": {
@@ -243888,6 +244658,17 @@
         "name": "OPEN — a five-step black-box capture procedure, of which four steps largely exist and ONE does not: no node type in the schema can record what the user calls it. The term table may be an alias on the node, formed as a by-product of capture",
         "rationale": "Recorded via the brainstorm skill: the ideas enter as ideas, nothing is promoted, and the objection sits beside each rather than replacing it.\n\nAN AGENT'S READING, offered as a finding rather than an answer. Two things are worth more than the algorithm itself.\n\nFirst, measuring the five steps against what exists turned a five-item wish into a ONE-item gap: no node type can record what the user calls it. That is a much smaller and much more decidable thing than 'build a translator', and it is the only step with nowhere to write.\n\nSecond, the procedure quietly relocates the term table from a maintained artifact to an alias on the node — and that relocation defeats the strongest objection recorded against the table ten minutes earlier, which was that a stored mapping ossifies an early wrong answer where nobody revisits it. An alias is revisited whenever its node is. That is a better idea than the one it came from, arrived at by thinking about the procedure rather than about the table, and it is the reason both nodes are kept.\n\nThe counter about steps 1 and 2 is the one to carry forward: a procedure that opens by asking for 'internal functions and external interfaces' has reintroduced the jargon problem at its first step, and reflow2 already knows how to phrase that question without the jargon.",
         "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-the-thin-project-adapter-is-where-a-repos-procedural-know-how-lives",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Alex, by email, relayed by Anthony 2026-09-17, in his words: \"Repo nav know-how is per-project, per-repo procedural knowledge. reflow2 does no file I/O by design. The agent is storing information about how to navigate the repos.\" \"After upgrade, these are thin project adapters, not competing playbooks.\" He asks for \"a first-class way to teach the agent a repo's import/resolver/test conventions.\"\n\n═══ WHAT THE DESIGN ALREADY HOLDS ═══\n· dec:skills-served (accepted, his own 2026-07-25 idea) — its option (4) LOCAL OVERRIDE: \"a skill present in the project's own .claude/skills/ wins over the served one, so customisation survives and the served set is a default rather than a cage.\" The adapter is that override, seen from the project side.\n· dec:idea-a-principle-has-a-universal-core-and-local-clothes, option C — the served core with a project-local instantiation slot; the same figure for principles.\n· DesignRule with `category: convention` and `steps` — a convention the project follows, delivered at the step it concerns. \"Imports resolve through X; tests run with Y\" is a convention in exactly that sense, and get_skill already carries rules naming that skill beside it.\n· AGENTS.md — the file every agent reads before it knows reflow2 exists, and where this repo's own build conventions live; a consumer's AGENTS.md is the same slot.\n\n═══ THE OPTIONS, none chosen ═══\nA. ⭐ THE ADAPTER IS A DESIGN RULE WITH STEPS, and the design knows it. A repo's conventions land as DesignRules of category `convention` whose `steps` name the served skills they bear on (adopt, link-artifacts, root-cause), so get_skill delivers them beside the skill — no project-local skill file needed for the know-how half, and the design can say what conventions a project follows. Cheap; the vocabulary exists. ⚠️ Counter: a rule is a sentence and repo navigation is often a procedure; the `steps` field delivers, it does not execute.\nB. A PROJECT-LOCAL SKILL, ACKNOWLEDGED: keep the thin adapter as a .claude/skills file, and register it as an Artifact that DOCUMENTS the Project with doc_kind `agent_instructions`, so the design knows the adapter exists and reconcile notices when it drifts. The override already wins; this only makes it visible.\nC. A `conventions` PROPERTY ON PROJECT — import root, resolver, test command — read by nothing. ⚠️ The declared-field-nobody-reads trap.\nD. NOTHING: AGENTS.md already is the adapter. ⚠️ Counter: it is a file nobody in the graph points at, so it is a document in exactly the sense the design refuses to keep design information in.\n\n═══ THE HONEST LIMIT ═══\nreflow2 will not navigate a repository. The adapter remains a text a person or agent maintains; what reflow2 can add is to know it exists, deliver it at the right step, and notice when it goes stale.",
+        "kind": "exploratory",
+        "name": "OPEN — after served skills, what remains in a project is \"a thin adapter, not a competing playbook\": per-repo procedural know-how (import, resolver and test conventions, how to navigate the repo) that reflow2 cannot hold because it does no file I/O. Is there a first-class way to teach an agent a repo's conventions, and should the design know that such an adapter exists?",
+        "rationale": "Captured under the brainstorm skill from a relayed field report, nothing promoted at capture. Recorded because the served-skills decision predicted a residue and never said what it was; Alex has measured it — \"thin project adapters\" — and the two ideas already in the design that describe it (local override; core and clothes) had not been joined.\n\nANSWERED 2026-09-17, by promotion on Anthony's word (\"I'd like to accept/promote all of Alex's ideas. We can work them after the current set of tasks.\"): it became req:a-repos-procedural-know-how-is-delivered-at-the-step-it-bears-on-and-the-design-knows-the-adapter-exists, accepted the same day, with options A and B together (conventions delivered by step; the local adapter registered as a document) as its shape; cap:a-repos-conventions-are-delivered-by-step-and-its-adapter-is-registered is planned to deliver it after the three intents accepted on 2026-09-16.",
+        "status": "accepted"
       }
     },
     {
@@ -253038,6 +253819,16 @@
       }
     },
     {
+      "node_id": "frag:art:test-a-number-names-its-source",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered a_number_names_its_source.rs — the served surface can say where a number came from on add_constraint, constrains and record_finding"
+      }
+    },
+    {
       "node_id": "frag:art:test-a-prescribed-layer-pair-no-longer-refuses",
       "node_type": "Fragment",
       "properties": {
@@ -253075,6 +253866,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered a_project_is_asked_what_its_artifacts_must_be_in.rs — the artifact-standard question pinned: asked on an empty project, ended by a declaration, \"none known\" re-asked once when a drawing appears, a drawing that does not say is named, a generating source is not, a mirror is not asked"
+      }
+    },
+    {
+      "node_id": "frag:art:test-a-quantity-says-how-it-was-obtained",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered a_quantity_says_how_it_was_obtained.rs — a limit or contribution nobody sourced is named, the agent's own word is an answer, a source with no number is not stored, and a check on a limit with no executable form is named until the file that is the check is linked"
       }
     },
     {
@@ -256417,6 +257218,18 @@
       }
     },
     {
+      "node_id": "req:a-repos-procedural-know-how-is-delivered-at-the-step-it-bears-on-and-the-design-knows-the-adapter-exists",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "A repository's procedural know-how (import, resolver and test conventions, how to navigate the repo) reaches the agent at the served step it bears on, and the design knows that the project's thin adapter exists and notices when it goes stale",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "After served skills, what remains in a project is a thin adapter, not a competing playbook: per-repo procedural knowledge that reflow2 cannot hold because it does no file I/O. reflow2 gives that residue a first-class home. A repo's conventions are recorded in the design as conventions delivered at the step they concern (a DesignRule of category convention whose steps name the served skills it bears on — adopt, link-artifacts, root-cause — so get_skill hands the convention over beside the skill); a project-local skill file that carries the procedural half is registered as an Artifact that DOCUMENTS the Project as agent instructions, so the design can say the adapter exists and reconcile notices when it drifts from what was registered. The local override already wins over the served skill; this makes it visible and delivered. Honest limit: reflow2 will not navigate a repository; the adapter stays a text a person or agent maintains, and what reflow2 adds is to know it exists, deliver it at the right step, and notice when it goes stale. Promoted from Alex's idea (relayed by Anthony 2026-09-17) on Anthony's word the same day: \"accept/promote all of Alex's ideas\".",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "req:a-rule-is-recorded-with-its-consequence",
       "node_type": "Requirement",
       "properties": {
@@ -256623,6 +257436,18 @@
       }
     },
     {
+      "node_id": "req:a-taxonomy-is-decided-once-before-bulk-capture-and-every-instance-cites-it",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "A project's recurring parts are encoded once, as accepted Decisions, before bulk capture; every later instance cites its encoding, and instances of one category that are encoded differently with no governing Decision are named",
+        "priority": "high",
+        "provenance": "authored",
+        "statement": "Between structure and bulk capture — after adopt's breadth pass, or after genesis has seeded a design — reflow2 drives the agent to list the categories the design will hold many of and, for each, to decide ONCE how one instance is encoded (node type, kind, which edges, name pattern) as an accepted Decision, so that every later capture of an instance is GOVERNED_BY that Decision instead of re-deciding ad hoc. Three legs: a served establish-taxonomy skill; an instruction in adopt and genesis that points at it at that moment; and a detector that notices several nodes of one type whose encoding differs (some with a kind, some without; some carrying an edge the others lack) with no Decision governing them, and asks whether an encoding decision is owed. Honest limit: reflow2 can notice inconsistency among instances and ask for the decision; it cannot know what a repository's categories are. Promoted from Alex's idea (relayed by Anthony 2026-09-17) on Anthony's word the same day: \"accept/promote all of Alex's ideas\".",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "req:a-user-can-see-that-the-process-was-followed",
       "node_type": "Requirement",
       "properties": {
@@ -256697,6 +257522,18 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "Where a person has written down what they want to build over a long period — documents, drawings, proposals, notes — and has built NOTHING, reflow2 must be able to turn that corpus into a real design. Anthony, 2026-08-04: \"a daydreamer may just document thoughts (maybe over years about some dream project) - then one day, they say, I want to actually build it… it must create a reflow2 project from multiple fragments (and potentially contradicting or imperfect requirements/ideas/proposals) and turn them into an actual reflow2 project.\"\n\nTHREE THINGS DISTINGUISH THIS FROM req:corpus-ingest, which is about CONVERGENCE (the same component named in forty specs resolving to one node). (1) CONTRADICTION IS THE EXPECTED STATE, NOT A DEFECT. A 2019 idea disagreeing with a 2024 one is not an error to heal — both were genuinely held, and the disagreement is the most informative thing in the corpus. The design must be able to say \"you changed your mind here, forty times\" as a READING rather than as forty defects. (2) THERE IS NOTHING BUILT TO RECONCILE AGAINST. Every capability is `planned`, every requirement `proposed`, and the as-built half of the loop has no subject — which is honest and must not read as catastrophic. (3) THE CORPUS IS THE ONLY ARTIFACT. For a codebase the documents are one source among several and the code arbitrates; here the documents are the whole of what exists, so nothing outside them can settle a disagreement between them and the user is the only arbiter.\n\nIT ALSO SITS UNDER BOTH SIBLING SKILLS RATHER THAN BESIDE THEM, which is the structural half of the same observation. `adopt` is described for a system with \"little or no requirements documentation\" and recovers intent by reverse-engineering code — but a corpus this size falsifies that premise, and adopt's Phase 0 only REGISTERS documents as Fragments while Phase 3 is told to recover requirements ONLY from them. Measured on dev_storyflow: 17 Fragments and 9 Requirements recovered from 1,124 documents, after which a separate multi-session campaign had to read them by hand. `genesis` assumes an opening BRIEF — one statement — and has no shape for an opening FOLDER. So mass ingest is a primitive both skills should consume, not a third skill beside them.\n\nStatus deliberately `proposed`: this is Anthony's framing captured in his own words and awaiting his confirmation of the wording, not a settled requirement.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:adopt-can-be-incremental-and-resumable-with-a-frontier-and-a-deferred-derivation-marker",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "Adopt can proceed one region at a time and be resumed: a frontier read says what is captured structurally and not yet recovered as intent and what is adjacent and uncaptured, and a deferred-derivation marker says a part's intent is deliberately left for later so the loop lists it as owed instead of asking about it as a gap",
+        "priority": "high",
+        "provenance": "authored",
+        "statement": "reflow2 has a native incremental, interactive, resumable capture mode for an existing system, write-through rather than accumulate-then-commit, with the graph as worklist, memory and resume-state by explicit contract. Two primitives carry it. (1) A FRONTIER read: the nodes captured structurally with no recovered intent, the nodes carrying a deferral marker, and the unmodelled neighbours adjacent to what is captured — the worklist, and the resume point (\"you were here\"). (2) A DEFERRED-DERIVATION marker: a typed, dated, findable way to say \"this part's intent is deliberately deferred\", read the way a follow-up is — listed at every boundary as owed, and suppressing the intent gaps on its subject so a regional pass does not report false gaps for what was left on purpose. Adopt gains a region mode that writes the marker on what it leaves. The breadth-first payoff must not be lost: the frontier keeps saying what has not been looked at, or the regional pass becomes the local optimum the adopt skill warns about. Depends on the scoped detectors telling the truth about a region (two measured defects). Promoted from Alex's idea (relayed by Anthony 2026-09-17) on Anthony's word the same day: \"accept/promote all of Alex's ideas\".",
         "status": "accepted"
       }
     },
@@ -260476,6 +261313,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:preserved-on-write:cap:a-quantity-carries-its-provenance-and-an-unsourced-one-is-named",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:budget\",\"properties\":{\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:detect\",\"properties\":{\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:kpp-proposal-skill\",\"properties\":{\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:schema-core\",\"properties\":{\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:a-number-names-its-source\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:a-quantity-says-how-it-was-obtained\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:a-quantity-carries-how-it-was-obtained-and-an-unsourced-one-is-reported\",\"properties\":{}}]",
+        "state": "{\"description\":\"A provenance record on every stored quantity: measured (instrument or artifact, when), computed (from which quantities, by which executable check), or asserted (by whom, or by nobody). A detector reports asserted quantities with no name and verifications that bear on a quantity without an executable form; both are counted at the boundary. Built after the unit-system capability, which it depends on.\",\"name\":\"A quantity carries its provenance (measured, computed, asserted-by) and an unsourced one is named\",\"provenance\":\"authored\",\"status\":\"realized\"}",
+        "target_id": "cap:a-quantity-carries-its-provenance-and-an-unsourced-one-is-named",
+        "target_type": "Capability"
+      }
+    },
+    {
       "node_id": "snap:epoch:preserved-on-write:cap:a-reader-that-cannot-read-the-vocabulary-is-told-what-it-lacks",
       "node_type": "Snapshot",
       "properties": {
@@ -260746,6 +261593,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:preserved-on-write:dec:idea-an-incremental-resumable-region-scoped-adopt-with-a-frontier-and-a-deferral-marker",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"approved_at\":\"2026-09-17\",\"roles\":[\"approver\"]}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:alex\",\"properties\":{\"roles\":[\"author\"]}},{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Capability\",\"other_id\":\"cap:scoped-analysis\",\"properties\":{\"evidence\":\"A region-scoped capture that does not trip false gaps rests on the scoped detectors saying what they did not see; that capability exists and two recorded defects (a scoped detector at default depth returning two thirds of the design; a degenerate region not flagged) are the partial-graph gap problem Alex names, measured.\",\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Decision\",\"other_id\":\"dec:gap-reporting-when-most-intent-is-unbuilt\",\"properties\":{\"evidence\":\"An adopt that captures structure first and intent later is a design where most intent is legitimately absent for a while; how the gap reporter behaves in that state is exactly what that open question asks.\",\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"EVOLVES_INTO\",\"other_type\":\"Requirement\",\"other_id\":\"req:adopt-can-be-incremental-and-resumable-with-a-frontier-and-a-deferred-derivation-marker\",\"properties\":{\"evidence\":\"Promoted on Anthony's word, 2026-09-17: \\\"I'd like to accept/promote all of Alex's ideas. We can work them after the current set of tasks.\\\" Option A (the two primitives on existing vocabulary) is the shape the requirement took; option B (the scoped-detector defects) is recorded as a dependency inside it.\"}}]",
+        "state": "{\"decision\":\"RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Alex, by email, relayed by Anthony 2026-09-17, in his words: \\\"Adopt and ingest-corpus are whole repo. Reflow2 has no incremental, interactive, resumable capture mode. The unique skill: write through instead of accumulate-then-commit; the graph as worklist + memory + resume-state as an explicit contract; a typed structural-vs-intent gap with a findable deferral marker. Asking for a native incremental adopt mode needing two new primitives: a frontier query and a deferred-derivation marker.\\\" And, on why his skill exists: \\\"A vertical slice orchestration adopt doesn't do: adopt is breadth-first over an entire repo. It says it will report false gaps if done regionally.\\\"\\n\\n═══ WHAT THE DESIGN ALREADY HOLDS, piece by piece ═══\\n· cap:scoped-analysis — \\\"a team asks the detectors about its own part, and is told what it did not see\\\"; detect_gaps takes `scope` and `depth`. Two defects measured on it: a scoped detector at default depth returned two thirds of the design (2026-08-17), and a degenerate region was not flagged (2026-08-07). That is the false-gaps-on-a-region problem, with numbers.\\n· The adopt skill's own rule: breadth first, deliberately, because the payoff findings came from breadth; and its honest warning that a regional pass reports false gaps.\\n· /log-issue's `follow_up` TemporalFact (2026-09-16) — a findable, dated, owed-until-settled marker on a node, listed at every boundary. A deferred-derivation marker is that shape with a different fact_type: \\\"structure captured, intent deliberately not yet recovered\\\".\\n· Capability/Component `provenance: inferred` — the structural half already says it was read off the artifact.\\n· Write-through: the server keeps the export current after every change (req:the-server-keeps-the-working-tree-export-current); accumulate-then-commit is what the OLD export discipline was.\\n\\n═══ THE TWO PRIMITIVES HE NAMES, in reflow2's terms ═══\\n(1) A FRONTIER QUERY: \\\"what is captured structurally and not yet recovered as intent, and what is adjacent and not captured at all?\\\" Half exists — unmotivated_capability, unsatisfied_requirement and coverage_report's unmodelled files are each a frontier from one side — and none of them is a resume point: nothing says \\\"you were here\\\".\\n(2) A DEFERRED-DERIVATION MARKER: a typed way to say \\\"this part's intent is deliberately deferred\\\" so the loop does not ask about it as a gap and DOES list it as owed — the follow_up shape, keyed to a node, with the structural-versus-intent distinction typed rather than in prose.\\n\\n═══ THE OPTIONS, none chosen ═══\\nA. ⭐ THE TWO PRIMITIVES ON EXISTING VOCABULARY: a `deferred_derivation` fact_type read the way `follow_up` is (listed at boundaries, suppresses the intent gaps on its subject the way suppressed_by_parked_idea suppresses defects), and a `frontier` read that lists nodes with structure and no intent, nodes with a deferral marker, and unmodelled neighbours — the worklist. Then adopt gains a region mode that writes the marker on what it leaves for later. Costs: one fact_type convention, one read, a paragraph in adopt.\\nB. FIX THE SCOPED DETECTORS FIRST: the two recorded defects are the reason a regional adopt lies; with them fixed, a region pass may not need a new mode at all. ⚠️ Counter: even a correct scoped detector cannot tell \\\"not yet captured on purpose\\\" from \\\"missing\\\" without the marker.\\nC. A NEW NODE TYPE for the worklist. ⚠️ The Task-node objection that keeps reflow2 from growing one stands.\\nD. NOTHING: his skill does it. ⚠️ \\\"The unique skill\\\" is one person's; the copy drifts.\\n\\n═══ THE HONEST LIMIT ═══\\nBreadth-first was chosen because the payoff findings on every brownfield trial were structural and came from breadth. An incremental mode must not lose that: the frontier must keep saying \\\"here is what you have not looked at\\\", or the regional pass becomes the local optimum the adopt skill warns about.\",\"kind\":\"exploratory\",\"name\":\"OPEN — adopt and ingest-corpus are whole-repo; should reflow2 have a native incremental, interactive, resumable capture mode — write-through rather than accumulate-then-commit, the graph as worklist and resume-state by contract, a typed structural-versus-intent gap with a findable deferral marker — needing two primitives: a FRONTIER query and a DEFERRED-DERIVATION marker?\",\"rationale\":\"Captured under the brainstorm skill from a relayed field report, nothing promoted. Recorded as one question with the two primitives inside it because Alex named them as the unit of the ask, and because the design's own pieces (scoped analysis, the follow-up marker, write-through export) cover more of it than the report assumes — the gap is the two joins, not the parts.\",\"status\":\"accepted\"}",
+        "target_id": "dec:idea-an-incremental-resumable-region-scoped-adopt-with-a-frontier-and-a-deferral-marker",
+        "target_type": "Decision"
+      }
+    },
+    {
       "node_id": "snap:epoch:preserved-on-write:dec:idea-diff-driven-impact",
       "node_type": "Snapshot",
       "properties": {
@@ -260772,6 +261629,16 @@
         "edges": "[{\"direction\":\"in\",\"edge_type\":\"EVOLVES_INTO\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-what-guarantees-the-export-if-the-export-is-the-only-durable-copy\",\"properties\":{\"evidence\":\"The older thought, grown up. That node listed 'export on every write' as road 1 and recorded it as dead, on the ground that a whole-document write is fatal on a per-change path. A full export measured 1,168 ms when that was written and 265 ms after #330 and the BTreeMap backend change, so the road reopens on a number rather than on an argument — and it reopens with a new distinction the original road did not have: write to the working tree, not to git history.\"}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-08-25T01:30:00Z\",\"role\":\"author\"}},{\"direction\":\"out\",\"edge_type\":\"CONTRADICTS\",\"other_type\":\"Decision\",\"other_id\":\"dec:export-once-per-pr\",\"properties\":{\"alignment\":\"opposing\",\"evidence\":\"Both cannot hold as written, and the design will have to pick. That decision is ACCEPTED and says exactly one commit on a branch may write docs/design/reflow2.json and it should be the last, because prev_content_hash chains each export to the one it replaced and squash-merge collapses a longer chain. Auto-exporting on every graph change writes that file hundreds of times per session, so the chain advances continuously and 'one export, last' stops being enforceable by construction rather than by forgetting.\"}},{\"direction\":\"out\",\"edge_type\":\"RISKS\",\"other_type\":\"Requirement\",\"other_id\":\"req:stale-seat-knows\",\"properties\":{\"evidence\":\"One is a hazard to the other. That requirement's overwrite refusal compares an export file's current hash against what this seat believes it last wrote there — a guard designed for an occasional deliberate act. Under continuous export with two sessions on one design, every write by one seat invalidates the other's belief, so a check meant to fire rarely runs on a hot path and would either refuse constantly or be turned off.\"}}]",
         "state": "{\"decision\":\"RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-25, following the no-database line of thinking. Nothing here is intent and nothing is planned.\\n\\nHIS WORDS: *\\\"if we remove a db and go strictly with in-memory, then exporting the graph becomes a necessary step. curious if we at every instance the reflow2 graph is changed, that the graph is automatically exported to the git repo (don't have to do a git commit/push with every export).\\\"*\\n\\n⭐ THE DISTINCTION HE DREW IS THE LOAD-BEARING ONE, and it is easy to miss: **write to the WORKING TREE, not to git history.** Those are different acts. The file landing in the repo gives durability — it survives the process dying, it is on a disk somebody backs up, and it is where every existing reader (`reflow2_check.py`, `compare_designs`, the merge driver) already looks. Committing it is a separate, human, deliberate act. Nothing about continuous export requires continuous history.\\n\\n⭐⭐ THE OBJECTION THAT KILLED THIS ROAD IS MEASURED AWAY, TODAY. `dec:idea-what-guarantees-the-export-if-the-export-is-the-only-durable-copy` listed \\\"export on every write\\\" FIRST and recorded it as **dead**, on the hosted-tier node's ground that a whole-document write is \\\"correct for an archival action and fatal on a per-change path\\\". That was true when a full export cost seconds. Measured 2026-08-25 after two fixes (#330 and #331):\\n\\n    build export doc   1,137 ms  ->  236 ms\\n    serialize to JSON     31 ms  ->   29 ms\\n    TOTAL full export  1,168 ms  ->  265 ms\\n\\n**A whole-document export of the largest design in existence is a quarter of a second.** A typical design would be a small fraction of that. The road was closed on a number that is no longer the number.\\n\\n🛑 BUT IT COLLIDES HEAD-ON WITH AN ACCEPTED DECISION. `dec:export-once-per-pr` is ACCEPTED: *\\\"A branch may hold as many commits as it likes; exactly ONE of them may write docs/design/reflow2.json, and it should be the last.\\\"* Its reason is the lineage chain — `prev_content_hash` links each export to the one it replaced, and squash-merge collapses the branch to one commit, so intermediate links point at content no commit contains and the chain becomes unfollowable. **Auto-exporting on every graph change writes that file hundreds of times per session**, so the discipline stops being enforceable by construction rather than by forgetting.\\n\\n═══════════════════════════════════════════════════════════════════════\\n⭐ THE ROAD RECOMMENDED, 2026-08-25 — **TWO FILES**, and it is an AGENT'S\\nFINDING, NOT A DECISION. Anthony asked for the recommendation on the record;\\nrecording it does not settle it, and the node stays `proposed`.\\n═══════════════════════════════════════════════════════════════════════\\n\\n**Separate the thing that keeps you safe from the thing that goes in git.**\\n\\n- A **LIVE FILE** — written continuously (or debounced), **gitignored**, in `.reflow2/`. Pure durability. Nothing chains it, nobody diffs it, it never appears in `git status`. It needs no new format: it is the same export document.\\n- The **COMMITTED EXPORT** — `docs/design/reflow2.json`, written once, deliberately, exactly as today. The RECORD: the lineage chain, what a PR carries, what a reviewer reads.\\n\\nIT ANSWERS ALL FOUR OBJECTIONS AT ONCE, which is why it is preferred over debounce-alone or chain-at-commit:\\n1. The lineage chain stays meaningful, because only deliberate exports chain. `dec:export-once-per-pr` survives UNCHANGED rather than being amended — the collision disappears instead of being negotiated.\\n2. The working tree stays clean, so half-finished design state cannot be committed by accident.\\n3. `req:stale-seat-knows` keeps guarding an occasional deliberate act instead of running on a hot path.\\n4. `git diff docs/design/reflow2.json` keeps meaning *\\\"what this session decided to record\\\"* rather than everything that happened including what was retracted.\\n\\n⭐⭐ AND THE DURABILITY ARGUMENT INVERTS ON INSPECTION — the strongest reason for the road, found while writing this up. **Today's setup already has the gap this is accused of introducing.** reflow2 keeps two copies: the RocksDB store and the export. The store protects against the PROCESS dying; it does NOT protect against the directory dying, and `loop_status` says so on every call — *\\\"The file is the only copy that survives losing the graph directory.\\\"* So the copy that survives real loss is the export, **and today it is written only when somebody remembers**. Measured on this very session: nine nodes sat unexported for hours.\\n\\n    protects against:        process crash   disk/machine loss   written\\n    today   RocksDB store         yes              NO            continuously\\n    today   export file           yes              yes           WHEN SOMEBODY REMEMBERS\\n    two-file  live file           yes              yes           continuously\\n    two-file  committed export    yes              yes           deliberately\\n\\n⇒ Anthony's reading is right, and stronger than he put it: this is not a trade of durability for convenience. **The two-file shape CLOSES a durability gap that exists today.** What is given up is only the window between one live-file write and the next — one change, or a few seconds under a debounce, which is the resilience an editor or a browser tab gives and nobody calls those unreliable. His own framing: *\\\"most things are not that resilient to crashes, so I would expect that reflow2 keeps the same level of resilience as most other services.\\\"*\\n\\n⚠️ WHAT THE RECOMMENDATION DOES NOT COVER, stated so it is not read as settled:\\n- **265 ms is THIS design's number, the largest in existence.** Per-change export at that size adds a quarter-second to every write. Debounce — write on idle, or at most every N seconds — rather than literally per change, and MEASURE a typical-sized design before assuming the figure generalises. (Two performance predictions were wrong today before being measured; the habit is the finding.)\\n- **Where the live file lives when there is no repo.** A hosted tenant at flo2 has no working tree; the same shape needs an object-store answer, which `dec:idea-a-hosted-tier-of-many-single-writer-tenants` holds.\\n- **`last_synced` still has to endure.** `fact:a-hydrated-seat-keeps-every-confirmation-date-and-loses-only-its-sync-state` measured that a hydrated seat loses exactly this one map; a live file carries the design, not the sidecar, so that remains a separate loose end.\\n\\nROADS NOT TAKEN, kept with their reasoning:\\n- **Export on every write, one file.** Simplest, and it is what breaks `dec:export-once-per-pr` outright plus all four objections above.\\n- **Advance the lineage chain on COMMIT rather than on write.** Coherent — the chain's purpose is to relate committed records — but it puts the chain's correctness in git's hands rather than reflow2's, and reflow2 cannot see a commit.\\n- **Recompute the chain at commit time** from whatever file is there. Same objection, plus it needs a hook nobody has.\\n- **Do nothing; keep the store authoritative.** Costs nothing and keeps the manual-export durability gap the table above measures.\\n\\nRECORDED AS A QUESTION WITH A RECOMMENDED ROAD, NOT AS A CONCLUSION.\",\"name\":\"OPEN — with no database, should every graph change auto-export to the working tree (no commit, no push)? The cost objection is now measured away; the collision with export-once-per-PR is not\",\"rationale\":\"Captured under the brainstorm skill: recorded as an idea, nothing promoted, nothing settled.\\n\\nKept separate from the two ideas it sits between, both read in full first. `dec:idea-what-guarantees-the-export-if-the-export-is-the-only-durable-copy` asks WHAT MECHANISM makes the document reliable and lists five roads; this takes one of those roads — the one it recorded as dead — and asks whether a measurement that has since changed reopens it, which is a different question with a different answer. `dec:idea-does-reflow2-need-a-byte-store-at-all-or-only-durability` asks whether the store should exist at all. This one is specifically about the INTERACTION between continuous export and git discipline, and it can be settled without either of the others — the collision with `dec:export-once-per-pr` is live today for anyone exporting more than once per branch.\",\"status\":\"proposed\"}",
         "target_id": "dec:idea-does-the-graph-write-itself-through-to-the-repo-on-every-change",
+        "target_type": "Decision"
+      }
+    },
+    {
+      "node_id": "snap:epoch:preserved-on-write:dec:idea-establish-the-taxonomy-once-before-bulk-capture",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"ANTICIPATES\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-extraction-is-two-pass-against-an-se-schema-stated-up-front\",\"properties\":{\"evidence\":\"That idea already holds that capture should run against a schema stated up front rather than one improvised per node; Alex's ask is the project-level instance of it — the encoding of THIS project's recurring parts, decided once and cited by every later capture.\"}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"approved_at\":\"2026-09-17\",\"roles\":[\"approver\"]}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:alex\",\"properties\":{\"roles\":[\"author\"]}},{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-the-routing-table-routes-grammar-not-domain-nouns\",\"properties\":{\"evidence\":\"A taxonomy is a project's domain nouns mapped to reflow2's types; that open question is about exactly the translator that would produce it, so the two are one job seen from the skill side and the routing side.\",\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"EVOLVES_INTO\",\"other_type\":\"Requirement\",\"other_id\":\"req:a-taxonomy-is-decided-once-before-bulk-capture-and-every-instance-cites-it\",\"properties\":{\"evidence\":\"Promoted on Anthony's word, 2026-09-17: \\\"I'd like to accept/promote all of Alex's ideas. We can work them after the current set of tasks.\\\" Option A (the three legs) is the shape the requirement took.\"}}]",
+        "state": "{\"decision\":\"RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Alex, by email, relayed by Anthony 2026-09-17, in his words: \\\"Perhaps a skill, like establish-taxonomy, that runs early in adopt (or after genesis), notices you are about to model repeated instances of the same category, and drives you to author the encoding once as accepted Decisions before bulk capture, so every later capture cites them instead of re-deciding ad-hoc. It's the missing bridge between genesis/adopt and 'how does this project represent its own recurring parts'. This exists as the 'master representation decision' but nothing helps you write them.\\\"\\n\\n═══ WHAT THE DESIGN ALREADY HOLDS ═══\\n· \\\"The taxonomy lives as Decisions\\\" — his repos already do this by hand: accepted Decisions that say how a recurring thing is encoded (a service is a Component of kind service; a bus is an Interface with medium event; a scan is a Flow …), and later captures GOVERNED_BY them. The vocabulary exists; no skill produces it and no detector notices its absence.\\n· dec:idea-extraction-is-two-pass-against-an-se-schema-stated-up-front — the same idea one level up: state the schema, then extract against it.\\n· Component.kind, Interface.medium, Flow.flow_type, Artifact.artifact_type — the per-type vocabulary the encoding would cite.\\n· possible_duplicate fires on near-identical nodes; nothing fires on \\\"the fifth Component that looks like the first four and was encoded differently\\\".\\n\\n═══ THE OPTIONS, none chosen ═══\\nA. ⭐ THE SKILL, three legs. (1) A served `establish-taxonomy` skill, invoked by adopt after Phase 1's breadth pass and by genesis after seeding: \\\"list the categories this design will hold many of; for each, decide once how one instance is encoded — type, kind, which edges, what its name pattern is — as an accepted Decision, and GOVERN every instance by it.\\\" (2) An instruction in adopt/genesis pointing at it. (3) A detector that notices the trigger Alex names — several nodes of one type whose encoding differs (some with a kind, some without; some with an edge the others lack) and no Decision governing them — and asks whether an encoding decision is owed. The three-legs rule, again.\\nB. A DETECTOR ONLY: report inconsistent encoding among siblings and let the person write the decision. Cheaper; ⚠️ nothing then helps write it, which is the sentence he closed on.\\nC. A TEMPLATE: ship starter taxonomies per domain. ⚠️ dec:idea-who-warrants-a-domain-template — a template asserts what a domain is, and reflow2 has no basis for that.\\nD. NOTHING: his repos already do it by hand. ⚠️ Counter: \\\"nothing helps you write them\\\" is the report, and a discipline that works only where its author is present is the copy that drifts.\\n\\n═══ THE HONEST LIMIT ═══\\nA taxonomy decided once is only as good as the person's category list; reflow2 can notice inconsistency among instances and can ask for the decision, and cannot know what the categories of a repository are.\",\"kind\":\"exploratory\",\"name\":\"OPEN — should an `establish-taxonomy` step run early in adopt or after genesis, notice that the agent is about to model repeated instances of one category, and drive it to author the encoding ONCE as accepted Decisions so every later capture cites them instead of re-deciding ad hoc?\",\"rationale\":\"Captured under the brainstorm skill from a relayed field report, nothing promoted. Recorded separately from the two-pass extraction idea because that one is about a CORPUS and a schema; this is about a PROJECT's own recurring parts and the moment between structure and bulk capture where the encoding is either decided or improvised — and Alex's repos have already done it by hand, which is the evidence the earlier idea lacked.\",\"status\":\"accepted\"}",
+        "target_id": "dec:idea-establish-the-taxonomy-once-before-bulk-capture",
         "target_type": "Decision"
       }
     },
@@ -260926,6 +261793,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:preserved-on-write:dec:idea-should-reflow2-measure-files-itself-and-what-the-no-file-io-rule-actually-protects",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"ANTICIPATES\",\"other_type\":\"Decision\",\"other_id\":\"dec:reflow2-serves-source-reading-analyses-that-report-and-never-write\",\"properties\":{\"evidence\":\"The 2026-09-14 ruling already has reflow2 reading source trees for analyses that report and never write; it crossed the 'no file I/O' line for READING and left the question of MEASURING a registered artifact (hash, existence) unasked. This idea is that remainder, and its option C is that ruling's delivery half.\"}},{\"direction\":\"in\",\"edge_type\":\"ANTICIPATES\",\"other_type\":\"Requirement\",\"other_id\":\"req:a-quantity-carries-how-it-was-obtained-and-an-unsourced-one-is-reported\",\"properties\":{\"evidence\":\"The provenance requirement says every number must say whether it was measured or asserted. A checksum an agent pasted is asserted; one the server computed is measured. The requirement supplies the vocabulary that makes this idea decidable, and the checksum is the one number in reflow2's own graph the requirement does not yet reach.\"}},{\"direction\":\"in\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-should-reflow2-ship-a-companion-for-the-file-side-work-it-refuses-to-do\",\"properties\":{\"evidence\":\"The companion idea asks WHO does the file-side work and takes the no-I/O boundary as given; whether a companion is needed at all is decided by where this question puts the boundary. Its own unresolved note (\\\"the useful verb needs the graph AND the disk in one process\\\") is this question stated from the other side.\",\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{}}]",
+        "state": "{\"decision\":\"RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-09-17, on Alex's sentence \\\"reflow2 does no file I/O\\\": \\\"should it? What would it give us if we did?\\\"\\n\\n═══ FIRST, THE SLOGAN IS NOT THE RULE — measured on the code, 2026-09-17 ═══\\nThe server already reads and writes files: its own export, stamp, identity, sync and rendezvous sidecars (provenance.rs, identity.rs, shared.rs, discover.rs). And on 2026-09-14 Anthony ruled that reflow2 reads SOURCE TREES for analyses that report and never write (dec:reflow2-serves-source-reading-analyses-that-report-and-never-write) — so the line was crossed, on the record, three days ago. What reflow2 still does not do is touch a USER'S ARTIFACT: link_artifact, set_artifact_checksum and reconcile_artifacts take a checksum the caller computed; coverage_report takes the file list the agent observed. The rule that has actually held is dec:agent-navigates-content: the agent reads for MEANING, the graph records where it landed and never interprets. \\\"No file I/O\\\" was always a shorthand for \\\"no interpretation\\\" — and hashing a file is not interpreting it.\\n\\n═══ WHAT IT WOULD GIVE US, in order of how much it changes ═══\\n1. A CHECKSUM BECOMES A MEASUREMENT INSTEAD OF AN ASSERTION. Requirement 2 of the 2026-09-16 set (built this same day) draws exactly this line for every number in a design: measured by a tool, or asserted by an agent. Today every checksum in reflow2's own graph is the second kind — an agent ran sha256sum and pasted the result, and the graph cannot tell a pasted hash from a made-up one. On this very increment the agent hashed 18 files by hand and one had to be re-hashed after a later edit. The qs project agent counted forty pastes and a hand-built table of 69 ids to paths (dec:idea-should-reflow2-ship-a-companion-…). A server that hashes what the graph registers turns the design's own as-built evidence from asserted to measured.\\n2. RECONCILE BECOMES ONE CALL WITH NO TABLE. reconcile_artifacts already refuses without `observed`; the graph is the only thing that holds the id-to-path mapping, so the table the agent builds by hand is a table reflow2 already has.\\n3. DRIFT IS SEEN LIVE, NOT ONLY IN CI. reflow2_check.py finds DRIFT and missing_artifact at commit time by walking the tree in Python. With the same read in the server, loop_status could say \\\"3 registered files differ from their checksum\\\" at every boundary, and a gate would be the second reader rather than the first.\\n4. THE FRONTIER GETS ITS THIRD LEG FROM THE DISK. Alex's incremental adopt (req:adopt-can-be-incremental-and-resumable-…, accepted today) needs \\\"unmodelled neighbours adjacent to what is captured\\\". coverage_report can only name unmodelled files the agent told it about; a root listing from the server makes the frontier a fact rather than a recollection.\\n5. THE SOURCE-READING ANALYSES BECOME SERVABLE IN-PROCESS. The 2026-09-14 ruling's own delivery condition is served + named + gated; tools/wall_check.py is none of those because the file read lives in Python. This is the same question from the other side.\\n\\n═══ WHAT IT WOULD COST, and these are real ═══\\n· THE MACHINE. The graph is shared; the disk is not. A server reached over HTTP (cmp:mcp-http, the Boss+workers fleet) or a shared server on a box that does not hold the checkout would hash nothing, and a detector with nothing to run on reads exactly like one that ran clean (the standing rule). Any read must say \\\"not on this machine\\\" rather than report zero drift.\\n· GRAPH TEXT AS INSTRUCTION. An Artifact's `location` is a string somebody wrote into the graph. The moment the server dereferences it, graph text has become a directive to the server — the one thing AGENTS.md's standing rule forbids. A registered location of ../../etc/passwd would be read. So: root-bounded (never outside the directory the graph lives under), no symlink following, registered-or-listed only, and NEVER RETURNS CONTENT — a hash, a size, a mtime, an existence. Bytes in, a number out.\\n· THE DOCTRINE, kept: dec:three-party-checks — the LLM speaks, the graph remembers and COUNTS, the human decides. Hashing is counting. Parsing, extracting, navigating a thousand pages is speaking, and stays the agent's (dec:agent-navigates-content stands untouched).\\n· THE WRENCH. Every item above is reflow2 work for reflow2's users. What makes it admissible is that two users asked (qs, 2026-09-04; Alex, 2026-09-17) and the standing rule says to wait for exactly that.\\n\\n═══ THE OPTIONS, none chosen ═══\\nA. KEEP THE SLOGAN, SHIP THE COMPANION: a CLI verb beside the server hashes the registered set and calls reconcile (the open idea of 2026-09-04, option ②). Cheapest; keeps the MCP surface pure. ⚠️ The companion needs the graph AND the disk in one process anyway, so \\\"pure\\\" is a matter of which binary.\\nB. ⭐ RESTATE THE RULE AS \\\"reflow2 MEASURES files and never reads them for meaning\\\", and let the server do the measuring under the conditions above: link_artifact and set_artifact_checksum compute the hash when the caller omits it and record `basis: measured` (asserted when pasted — the provenance vocabulary of requirement 2, applied to the design's own evidence); reconcile_artifacts takes `observed` OR walks the registered set; coverage_report can list the root; loop_status reports live drift; every read refuses, by name, on a machine that does not hold the tree. ⚠️ Cost: the boundary that granularity and consumption state in their module docs moves, and moves for all of them at once.\\nC. GO ALL THE WAY: the source analyses read content in-process, as the 2026-09-14 ruling already permits. ⚠️ Counter: that ruling has its own order (the wall check first) and its own three conditions; folding it in here decides it twice.\\nD. NOTHING: the rule is deliberate, the workaround is a shell script. ⚠️ Counter, in the users' words: \\\"the most repetitive work of the day\\\", forty times, and the graph's own checksums remain the one number in the design that says how it was obtained by saying nothing.\\n\\n═══ THE HONEST LIMIT ═══\\nA server-side hash proves the file on disk is the file the design describes. It says nothing about whether the file is right — that stays with the check the design names for it (requirement 3, closure), and with the partner tool that can open the format (requirement 1, the domain standard). Measuring bytes is the smallest true thing reflow2 can say about an artifact, and the point of this idea is that today it says even that on somebody else's word.\",\"kind\":\"exploratory\",\"name\":\"OPEN — \\\"reflow2 does no file I/O\\\": should it? What would reading the disk give us, and what does the rule actually protect — the bytes, or the meaning?\",\"rationale\":\"Captured under the brainstorm skill from Anthony's question, nothing promoted. Recorded as its own question rather than folded into the 2026-09-04 companion idea because that one asks WHO does the file work and takes the boundary as given; this one asks WHAT THE BOUNDARY IS, and finds on the code that the slogan already differs from the rule. The distinction that makes it answerable — measure bytes versus read for meaning — is borrowed from the provenance requirement built the same day.\",\"status\":\"proposed\"}",
+        "target_id": "dec:idea-should-reflow2-measure-files-itself-and-what-the-no-file-io-rule-actually-protects",
+        "target_type": "Decision"
+      }
+    },
+    {
       "node_id": "snap:epoch:preserved-on-write:dec:idea-should-reflow2-ship-a-companion-for-the-file-side-work-it-refuses-to-do",
       "node_type": "Snapshot",
       "properties": {
@@ -260952,6 +261829,16 @@
         "edges": "[{\"direction\":\"in\",\"edge_type\":\"ANTICIPATES\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-where-does-the-10k-work-actually-land\",\"properties\":{\"evidence\":\"The earlier one saw this coming. It measured that the ceiling at 10k is not RocksDB's throughput but the number of OPEN INSTANCES, since reflow2 welds one design = one directory = one StorageEngine, and it named the unaddressed engineering question as 'make opening a design cheap'. A per-session derived store is an answer aimed at exactly that question.\"}},{\"direction\":\"in\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-should-the-export-be-compressed-or-committed-less-often\",\"properties\":{\"evidence\":\"This asks about the ARCHIVAL copy while that one decides whether the export becomes the DURABLE copy, and the two answers are coupled. If durability moves to a gitignored autosave path, how often the committed copy is written becomes a free variable and option D stops fighting export-once-per-PR; if it does not, the committed copy is the only copy and committing it LESS often is unsafe. Option D is unjudgeable until that settles.\",\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"EVOLVES_INTO\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-a-byte-backend-that-compiles-in-seconds\",\"properties\":{\"evidence\":\"The older thought, grown up. That node asks which embedded engine to pick on compile-speed grounds, and its own premise note says 'faster to compile' is true for a cold build and false for the iteration loop. This one changes what the question IS: if the store is a derived per-session cache, compile speed and durability stop being traded against each other, and picking wrong costs a re-hydrate rather than a migration.\"}},{\"direction\":\"in\",\"edge_type\":\"EVOLVES_INTO\",\"other_type\":\"Decision\",\"other_id\":\"dec:the-export-becomes-the-durable-copy-and-rocksdb-goes-later\",\"properties\":{\"evidence\":\"Direction is deliberate and reads FROM the older thought TO this one: Anthony's 2026-08-24 musing — \\\"maybe we stand up a db just for a session and the reflow.json file becomes the enduring thing\\\" — grown up into a settled staged decision once its blockers were measured. That node stays proposed and keeps the reasoning; this is what it became.\"}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-08-24T22:50:00Z\",\"role\":\"author\"}},{\"direction\":\"out\",\"edge_type\":\"CONTRADICTS\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-a-hosted-tier-of-many-single-writer-tenants\",\"properties\":{\"alignment\":\"opposing\",\"evidence\":\"Corroboration, not conflict (alignment is supporting): the 2026-08-09 node's FIFTH ROAD states this same shape — object storage holds the export as the source of truth, a node hydrates a RocksDB+tantivy cache on demand, eviction is free because the cache is derived. Anthony reached it again independently on 2026-08-24 from a compile-speed question rather than a hosting question. Two derivations from different premises landing on one shape is evidence about the shape.\"}},{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-what-guarantees-the-export-if-the-export-is-the-only-durable-copy\",\"properties\":{\"evidence\":\"The inversion is only worth taking if this lands first. Making reflow2.json the enduring artifact turns an unexported session from an annoyance into loss of the design itself, so the durability mechanism is a precondition of the storage model rather than a follow-on to it. Direction is deliberate: the inversion depends on the guarantee, not the other way round — the guarantee is worth building on its own, because the export is already the only copy that survives losing the graph directory.\",\"optional\":false,\"weight_basis\":\"estimated\"}}]",
         "state": "{\"decision\":\"RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony thinking out loud 2026-08-24, reconsidering redb after raising it the same day. Nothing here is intent and nothing is planned.\\n\\nHIS WORDS: *\\\"I was thinking about going to redb, but after thinking about it, I'm starting to think about scalability, particularly if my brother and I move forward with flo2... let's say flo2 has 10000+ users (either collaborating on the same project OR each having their own project)... While the redb and others may compile faster, I'm concerned that they won't scale like rocksdb can. rocksdb was built to support huge amounts of data, so I'm thinking about sticking with it. That being said, there are alternate ways to do things. Maybe we stand up a redb db just for a session and the reflow.json file becomes the enduring thing between each session (may have to make safeguards to ensure that the reflow2 graph is exported at the conclusion of each session). There could be multiple iterations of this that get around using the db as the enduring/persistent storage of the graph and instead switching to making the reflow2.json object file the enduring piece?\\\"*\\n\\n⭐⭐ THE SHARP PART, AND IT IS HIS: HIS TWO WORRIES DISSOLVE EACH OTHER RATHER THAN TRADING OFF. The redb question was \\\"which store compiles faster\\\"; the scale question is \\\"which store survives 10k tenants\\\". Those look like a straight trade until the store stops being durable. **If the store is a per-session cache derived from the export, then neither property is being chosen at the same altitude any more:** durability and scale move to the export/object layer, and the embedded engine is judged only on hydrate-and-query speed for ONE design — which is small. reflow2's own design is the largest one anybody has, and it is 3,142 nodes / 8.4 MB. A store that \\\"does not scale like RocksDB\\\" is not being asked to.\\n\\n🛑 AND HE HAS ARRIVED HERE BEFORE, FROM A DIFFERENT DIRECTION — WHICH IS EVIDENCE, NOT DUPLICATION. `dec:idea-a-hosted-tier-of-many-single-writer-tenants` (2026-08-09) already records this as its FIFTH ROAD, in almost the same words: *\\\"OBJECT STORAGE HOLDS THE EXPORT AS THE SOURCE OF TRUTH, a node HYDRATES a RocksDB+tantivy cache on demand, and eviction is free because the cache is derived... reflow2 already has the primitive: the export is deterministic, sorted, content-hashed and self-contained — that IS a per-tenant blob, and the store is already derived rather than authoritative.\\\"* Two independent derivations two weeks apart, from a hosting question and from a compile-speed question, landing on one shape. READ IN FULL AND JUDGED DISTINCT rather than merged (`distinct_from`), because the reasons differ and both matter.\\n\\nWHAT IS NEW HERE, over the 2026-08-09 record — the grounds on which it was kept separate:\\n1. **THE GRANULARITY IS THE SESSION, NOT THE TENANT.** The fifth road hydrates per tenant on demand, as part of a hosted tier. This proposes the store's lifetime be a SESSION — the same mechanism aimed at a smaller unit, and it applies to the LOCAL single-user case where there is no tenancy at all. That matters because **it is testable today, on one laptop, with no flo2 and no hosting decision.** The fifth road cannot be tried until somebody builds a tier.\\n2. **IT MAKES THE BACKEND CHOICE REVERSIBLE RATHER THAN CORRECT.** If the store is derived, picking wrong costs a re-hydrate, not a migration. `dec:absorb-rocksdb-024-unchanged-then-switch-separately` and the redb question both get cheaper, and the rust-rocksdb switch stops being a one-way door.\\n3. **IT NAMES THE SAFEGUARD AS PART OF THE IDEA** — recorded separately, because \\\"what is the enduring artifact\\\" and \\\"what makes the enduring artifact reliable\\\" are answered by different work.\\n\\n⚠️ THE COUNTER-ARGUMENT, RECORDED BESIDE THE IDEA RATHER THAN USED TO ARGUE IT DOWN. The prior node measured the thing that bites: **~9x inflation from export to store** (its figures: 1,828 nodes = 3.8 MB export = 33 MB store, RocksDB plus the tantivy index), and it flagged that `shared.rs` budgets **30 seconds for a cold open**. If hydrate-and-index is seconds rather than milliseconds, \\\"a store per session\\\" turns every session start into that cost — and the local single-user case, the one that works well today, pays it for a benefit only the hosted case collects. **That is the risk this idea has to clear, and it is measurable rather than arguable.**\\n\\n📌 ONE DATA POINT TAKEN TODAY, AND WHAT IT IS NOT. Opening reflow2's own 3,142-node RocksDB store cold, to a served MCP `initialize`, measured **2.4 seconds** (2026-08-24, after `--stop-shared`). ⚠️ THAT IS NOT THE HYDRATE NUMBER: it opens an EXISTING store with its tantivy index already built, which is the cheap half. The measurement the prior node asks for — import an 8.4 MB export to first query, index included — has still not been taken, and it is the one that decides this.\\n\\n🛑 WHAT NOBODY HAS CHECKED, and it is the way this fails LATE rather than early: whether a session hydrated from an export can still answer the questions that depend on ACCUMULATED STORE STATE rather than on the design — the confirmation ledger's dates, drift baselines, `write_gen`, the sidecar identity files (`.id.json`, `.sync.json`). The export is self-contained about the DESIGN; that it is self-contained about everything a running seat believes is a DIFFERENT claim, and nobody has tested it.\\n\\nRECORDED AS A QUESTION, NOT A CONCLUSION. Nothing here says the weld should be loosened; it says the trade Anthony thought he was facing may not be one.\",\"name\":\"OPEN — if the store is a per-session DERIVED cache and reflow2.json is the enduring artifact, does the byte-backend question dissolve rather than get answered?\",\"rationale\":\"Captured under the brainstorm skill: recorded as an idea, nothing promoted, nothing settled.\\n\\nKept separate from `dec:idea-a-byte-backend-that-compiles-in-seconds` (which asks which engine, on compile-speed grounds) and — after reading it in full — from `dec:idea-a-hosted-tier-of-many-single-writer-tenants` (which asks what a HOSTED TIER looks like at 1k/100k/1M and what must not be foreclosed). This asks a third thing settleable without either: WHAT IS THE ENDURING ARTIFACT — the store or the export? It is answerable on one laptop with no hosting tier and no tenancy, and the answer changes how much the other two cost.\\n\\n═══════════════════════════════════════════════\\n🔻 PARTIAL SUPERSESSION — 2026-08-25. ONE PARAGRAPH OF `decision` IS NOW FALSE.\\n═══════════════════════════════════════════════\\n\\n**Recorded HERE rather than by editing `decision`, deliberately** — the same discipline `dec:the-rust-rocksdb-switch-is-parked-until-the-store-question-settles` states in its own rationale: re-sending a 6,000-character field to append one note destroys its pre-image, which is the hazard `fact:the-revising-write-warning-fired-correctly-and-the-overwrite-happened-anyway` measured twice. **The `decision` text is untouched; read it with this note beside it.**\\n\\n❌ **THE PARAGRAPH BEGINNING \\\"🛑 WHAT NOBODY HAS CHECKED, and it is the way this fails LATE rather than early\\\" HAS SINCE BEEN CHECKED.** It asked whether a session hydrated from an export can still answer what depends on ACCUMULATED STORE STATE — the confirmation ledger's dates, drift baselines, `write_gen`, the sidecar identity files.\\n\\n⭐⭐ **THE ANSWER, measured the same day at main `39dbf6d` and recorded in full at `fact:a-hydrated-seat-keeps-every-confirmation-date-and-loses-only-its-sync-state`: IT SURVIVES ALMOST COMPLETELY.** 208 capability claims on both sides, the same ids, and **ZERO differing fields** across every per-capability date, drift count and accept-ledger entry. The dates and drift history are NODES AND EDGES, so the document carries them. **The fear this paragraph names is measured and false.**\\n\\n🛑 **ONE THING IS ACTUALLY LOST, and it is narrow:** `last_synced`, a path→content-hash map in the `.sync.json` sidecar — not in the store, not in the document. A hydrated seat answers `sync_status` with the same empty result it uses to mean \\\"never synced\\\", so the stale-seat export refusal (`req:stale-seat-knows`) has no baseline on the first export after a hydrate. **That map is three lines of JSON**, and carrying it is bookkeeping rather than architecture.\\n\\n📌 **SECOND, THEORETICAL TODAY:** `CF_EMBEDDINGS` has no field in `GraphExport`, so vectors would not survive a hydrate. Nothing outside tests writes any, so it becomes real only when `dec:idea-embeddings-adoption` lands.\\n\\n⚠️ **THE OTHER COUNTER-ARGUMENT IN `decision` — the ~9x store inflation and the cold-open cost — HAS ALSO MOVED,** and is NOT superseded here because it was never fully stated as a blocker in this node: `dec:the-rust-rocksdb-switch-is-parked-until-the-store-question-settles` now records **load to fully searchable with no database at all: 1,156 ms; save: 265 ms**, against the 30-second budget this node worried about.\\n\\n✅ **WHAT REMAINS TRUE AND IS THE WHOLE POINT OF THE NODE:** nothing here settles what the enduring artifact should BE. Three of five blockers measured away is not a decision, and the node stays `proposed`.\",\"status\":\"proposed\"}",
         "target_id": "dec:idea-the-store-becomes-a-session-cache-and-the-export-becomes-the-truth",
+        "target_type": "Decision"
+      }
+    },
+    {
+      "node_id": "snap:epoch:preserved-on-write:dec:idea-the-thin-project-adapter-is-where-a-repos-procedural-know-how-lives",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"ANTICIPATES\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-a-principle-has-a-universal-core-and-local-clothes\",\"properties\":{\"evidence\":\"That idea's option C — a shipped core with a project-local instantiation slot — is exactly what a thin project adapter is: the served skill is the core, the repo's import/resolver/test conventions are the clothes.\"}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"approved_at\":\"2026-09-17\",\"roles\":[\"approver\"]}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:alex\",\"properties\":{\"roles\":[\"author\"]}},{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Decision\",\"other_id\":\"dec:skills-served\",\"properties\":{\"evidence\":\"Served skills are what made the project-side skills thin; the question of what the residue IS only arises once that decision has landed, and Alex's report is the measurement that it has.\",\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"EVOLVES_INTO\",\"other_type\":\"Requirement\",\"other_id\":\"req:a-repos-procedural-know-how-is-delivered-at-the-step-it-bears-on-and-the-design-knows-the-adapter-exists\",\"properties\":{\"evidence\":\"Promoted on Anthony's word, 2026-09-17: \\\"I'd like to accept/promote all of Alex's ideas. We can work them after the current set of tasks.\\\" Options A and B together (conventions delivered by step; the local adapter registered as a document) are the shape the requirement took.\"}}]",
+        "state": "{\"decision\":\"RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Alex, by email, relayed by Anthony 2026-09-17, in his words: \\\"Repo nav know-how is per-project, per-repo procedural knowledge. reflow2 does no file I/O by design. The agent is storing information about how to navigate the repos.\\\" \\\"After upgrade, these are thin project adapters, not competing playbooks.\\\" He asks for \\\"a first-class way to teach the agent a repo's import/resolver/test conventions.\\\"\\n\\n═══ WHAT THE DESIGN ALREADY HOLDS ═══\\n· dec:skills-served (accepted, his own 2026-07-25 idea) — its option (4) LOCAL OVERRIDE: \\\"a skill present in the project's own .claude/skills/ wins over the served one, so customisation survives and the served set is a default rather than a cage.\\\" The adapter is that override, seen from the project side.\\n· dec:idea-a-principle-has-a-universal-core-and-local-clothes, option C — the served core with a project-local instantiation slot; the same figure for principles.\\n· DesignRule with `category: convention` and `steps` — a convention the project follows, delivered at the step it concerns. \\\"Imports resolve through X; tests run with Y\\\" is a convention in exactly that sense, and get_skill already carries rules naming that skill beside it.\\n· AGENTS.md — the file every agent reads before it knows reflow2 exists, and where this repo's own build conventions live; a consumer's AGENTS.md is the same slot.\\n\\n═══ THE OPTIONS, none chosen ═══\\nA. ⭐ THE ADAPTER IS A DESIGN RULE WITH STEPS, and the design knows it. A repo's conventions land as DesignRules of category `convention` whose `steps` name the served skills they bear on (adopt, link-artifacts, root-cause), so get_skill delivers them beside the skill — no project-local skill file needed for the know-how half, and the design can say what conventions a project follows. Cheap; the vocabulary exists. ⚠️ Counter: a rule is a sentence and repo navigation is often a procedure; the `steps` field delivers, it does not execute.\\nB. A PROJECT-LOCAL SKILL, ACKNOWLEDGED: keep the thin adapter as a .claude/skills file, and register it as an Artifact that DOCUMENTS the Project with doc_kind `agent_instructions`, so the design knows the adapter exists and reconcile notices when it drifts. The override already wins; this only makes it visible.\\nC. A `conventions` PROPERTY ON PROJECT — import root, resolver, test command — read by nothing. ⚠️ The declared-field-nobody-reads trap.\\nD. NOTHING: AGENTS.md already is the adapter. ⚠️ Counter: it is a file nobody in the graph points at, so it is a document in exactly the sense the design refuses to keep design information in.\\n\\n═══ THE HONEST LIMIT ═══\\nreflow2 will not navigate a repository. The adapter remains a text a person or agent maintains; what reflow2 can add is to know it exists, deliver it at the right step, and notice when it goes stale.\",\"kind\":\"exploratory\",\"name\":\"OPEN — after served skills, what remains in a project is \\\"a thin adapter, not a competing playbook\\\": per-repo procedural know-how (import, resolver and test conventions, how to navigate the repo) that reflow2 cannot hold because it does no file I/O. Is there a first-class way to teach an agent a repo's conventions, and should the design know that such an adapter exists?\",\"rationale\":\"Captured under the brainstorm skill from a relayed field report, nothing promoted. Recorded because the served-skills decision predicted a residue and never said what it was; Alex has measured it — \\\"thin project adapters\\\" — and the two ideas already in the design that describe it (local override; core and clothes) had not been joined.\",\"status\":\"accepted\"}",
+        "target_id": "dec:idea-the-thin-project-adapter-is-where-a-repos-procedural-know-how-lives",
         "target_type": "Decision"
       }
     },
@@ -266345,6 +267232,18 @@
       }
     },
     {
+      "node_id": "fact:field-report-alex-2026-09-17-served-skills-removed-the-redundancy-and-what-remains-is-repo-know-how-taxonomy-and-incremental-adopt",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "field_report",
+        "name": "FIELD REPORT (Alex, relayed by Anthony 2026-09-17): after the update, \"many redundant things were removed from my repos' skills; many now use get_skill\" — so the served-skills decision landed as designed — and what his repos still need is per-repo procedural know-how (reflow2 does no file I/O), a taxonomy decided once before bulk capture, and an incremental, resumable, region-scoped adopt with a frontier query and a deferred-derivation marker",
+        "statement": "Alex, by email, relayed by Anthony 2026-09-17, from asking Claude why his repos still keep skills of their own beside reflow2. In his words, condensed:\n\n\"After update to latest version, many redundant things were removed from my repos' skills. Many now use the get-skill from the reflow2 mcp. The taxonomy lives as Decisions.\" — the measurement dec:skills-served (his own 2026-07-25 proposal) was waiting for: served skills replaced the copied ones, and the project-side residue is thin.\n\nWHY SKILLS ARE STILL NEEDED, his three reasons: (1) \"Repo nav know-how is per-project, per-repo procedural knowledge. reflow2 does no file I/O by design. The agent is storing information about how to navigate the repos\" — import/resolver/test conventions. (2) \"A vertical slice orchestration adopt doesn't do: adopt is breadth-first over an entire repo. It says it will report false gaps if done regionally.\" (3) A human-in-the-loop reviews artifacts. \"After upgrade, these are thin project adapters, not competing playbooks.\"\n\nWHAT HE ASKS FOR: (a) \"a first-class way to teach the agent a repo's import/resolver/test conventions\"; (b) \"a golden-thread or region-scoped capture mode that doesn't trip the partial-graph gap problem\"; (c) an `establish-taxonomy` skill \"that runs early in adopt (or after genesis), notices you are about to model repeated instances of the same category, and drives you to author the encoding once as accepted Decisions before bulk capture, so every later capture cites them instead of re-deciding ad hoc. It's the missing bridge between genesis/adopt and 'how does this project represent its own recurring parts'. This exists as the master representation decision but nothing helps you write them\"; (d) \"reflow2 has no incremental, interactive, resumable capture mode\" — the unique thing his skill does is \"write through instead of accumulate-then-commit; the graph as worklist + memory + resume-state as an explicit contract; a typed structural-vs-intent gap with a findable deferral marker\" — and he names the two primitives a native mode would need: \"a frontier query and a deferred-derivation marker.\"\n\nHe offered to explain anything that does not make sense; nothing here was reworded beyond condensing.",
+        "subject_id": "dec:skills-served",
+        "valid_from": "2026-09-17"
+      }
+    },
+    {
       "node_id": "fact:field-report-bhome-cad-demo-2026-09-16-the-loop-closed-and-the-seam-was-basis-measured",
       "node_type": "TemporalFact",
       "properties": {
@@ -270371,6 +271270,17 @@
       }
     },
     {
+      "node_id": "ver:a-number-names-its-source",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-mcp/tests/a_number_names_its_source.rs — three cases; reach is the point, since each of these would otherwise be a property the core reads and no tool can write.",
+        "kind": "verification",
+        "last_run_at": "2026-09-17",
+        "name": "The served surface can say where a number came from: a limit's basis, source and date on add_constraint; a contribution's source on constrains; a fact's source on record_finding",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:a-prescribed-layer-pair-is-reported-not-refused",
       "node_type": "Verification",
       "properties": {
@@ -270445,6 +271355,17 @@
         "level": "integration",
         "method": "test",
         "name": "Six probes, six mutations, and the one that caught a detector which could not have failed",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:a-quantity-says-how-it-was-obtained",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-core/tests/a_quantity_says_how_it_was_obtained.rs — five cases over the two detectors, set_constraint_provenance, constrains_in's source and budget_report's unsourced.",
+        "kind": "verification",
+        "last_run_at": "2026-09-17",
+        "name": "A design with no numeric limit raises nothing; a limit nobody sourced is named and the agent's own word is an answer; a contribution with a number and no source is named and the rollup lists it; a source on an edge with no number is not stored; a check on a limit with no executable form is named until the file that is the check is linked",
         "status": "passing"
       }
     },
@@ -273599,7 +274520,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:ed8ebea1eea1c2a4209e07534968d57587b7c910f8da5dd7c52856615f3449dc",
+  "prev_content_hash": "sha256:4ab7e56a1f5748ff34fe78bb05fecedb198091d60ae6b134b518c033ee94bc5d",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -274191,8 +275112,8 @@
     "schema_version": 1
   },
   "taken_at": {
-    "branch": "four-root-causes-from-two-field-reports",
-    "commit": "0b876d9137467ebd901c41aa5c0ff58983de902a",
+    "branch": "a-quantity-says-how-it-was-obtained",
+    "commit": "e4927609b0b9d6c6616ba9279435968d640da4be",
     "dirty": true
   }
 }
