@@ -97,6 +97,7 @@ impl DesignGraph {
         authority: Option<&str>,
         jurisdiction: Option<&str>,
         reference: Option<&str>,
+        checker: Option<&str>,
         mandatory: Option<bool>,
     ) -> Result<StoredNode, DynoError> {
         let mut props = Props::new()
@@ -105,7 +106,8 @@ impl DesignGraph {
             .set_opt("rule_type", rule_type)
             .set_opt("authority", authority)
             .set_opt("jurisdiction", jurisdiction)
-            .set_opt("reference", reference);
+            .set_opt("reference", reference)
+            .set_opt("checker", checker);
         if let Some(m) = mandatory {
             props = props.set("mandatory", m);
         }

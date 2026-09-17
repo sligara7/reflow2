@@ -71,6 +71,7 @@ fn an_externally_imposed_rule_can_be_recorded_with_its_authority() {
             Some("City of Kennewick"),
             Some("Kennewick, WA"),
             Some("IBC 2021 §1608"),
+            None,
             Some(true),
         )
         .expect("rule");
@@ -103,6 +104,7 @@ fn the_compliance_edges_are_writable_without_the_escape_hatch() {
         Some("City of Kennewick"),
         Some("Kennewick, WA"),
         Some("IBC 2021 §1608"),
+        None,
         Some(true),
     )
     .expect("rule");
@@ -157,6 +159,7 @@ fn a_mandatory_rule_nobody_has_answered_is_asked_about() {
         Some("City of Kennewick"),
         Some("Kennewick, WA"),
         Some("IRC 2021 §R310"),
+        None,
         Some(true),
     )
     .expect("rule");
@@ -206,6 +209,7 @@ fn an_advisory_rule_is_not_asked_about() {
         Some("Design review board"),
         Some("Kennewick, WA"),
         None,
+        None,
         Some(false),
     )
     .expect("rule");
@@ -235,6 +239,7 @@ fn a_violation_nobody_has_triaged_is_asked_about() {
         Some("City of Kennewick"),
         Some("Kennewick, WA"),
         Some("KMC 18.12"),
+        None,
         Some(true),
     )
     .expect("rule");

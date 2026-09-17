@@ -663,6 +663,25 @@ pub enum GapSource {
     /// severity — nothing here is wrong, the intent is recorded; it is in a
     /// home no computation reads.
     ProhibitionInProse,
+    /// A Project that has never said what STANDARD its design artifacts must
+    /// be in — no `EnvironmentRule` of `rule_type: standard` it `COMPLIES_WITH`.
+    /// Asked from the very beginning, on a Project with nothing else in it,
+    /// because the answer decides the pipeline before anyone draws: the
+    /// measurement is bhome (2026-08-31), where an agent drew a house plan
+    /// sheet in HTML because nothing in the design had asked what a plan sheet
+    /// must be. "None known for this domain" is a real answer, recorded by
+    /// acknowledging this with that reason — and the finding is keyed on
+    /// whether any drawing/model artifact exists yet, so a project that said
+    /// none and later grows a drawing is asked once more rather than never
+    /// (`req:a-project-names-its-domains-artifact-standard-from-the-beginning-and-its-absence-is-reported`).
+    ArtifactStandardUndeclared,
+    /// The Project declared a standard and a `drawing` or `model` Artifact
+    /// does not say whether it is in it — no `COMPLIES_WITH` and no
+    /// `VIOLATES_RULE` from the artifact to any declared standard. One rollup
+    /// per project, keyed on the set of artifacts it names. Only drawings and
+    /// models: a parametric script that GENERATES the drawing is `code`, and
+    /// is exactly the reviewable source the agent may write.
+    ArtifactNotUnderDeclaredStandard,
 }
 
 impl GapSource {
@@ -727,6 +746,8 @@ impl GapSource {
             GapSource::DefectOvertakenByChange => "defect_overtaken_by_change",
             GapSource::DecisionOvertakenByPromotion => "decision_overtaken_by_promotion",
             GapSource::ProhibitionInProse => "prohibition_in_prose",
+            GapSource::ArtifactStandardUndeclared => "artifact_standard_undeclared",
+            GapSource::ArtifactNotUnderDeclaredStandard => "artifact_not_under_declared_standard",
         }
     }
 
@@ -813,6 +834,13 @@ impl GapSource {
             // finding names the practice and lists the sentences; one
             // acknowledgement is a judgement about the practice.
             GapSource::ProhibitionInProse => true,
+            // PER-PROJECT, and keyed twice on purpose: once with no drawing or
+            // model in the design and once with some, so "none known" accepted
+            // at genesis does not also accept the first drawing that arrives.
+            GapSource::ArtifactStandardUndeclared => false,
+            // Keyed on the SET of artifacts it names: a new drawing re-asks,
+            // an acknowledged set stays acknowledged.
+            GapSource::ArtifactNotUnderDeclaredStandard => false,
             // AGGREGATE, and the call was close enough to record the losing
             // side. Per-component keying would be the more honest key for the
             // answer people will actually give — "cmp:bulk is a namespace, not
@@ -2051,6 +2079,7 @@ impl DesignGraph {
         self.detect_unverified_capabilities(&pop, &mut gaps)?;
         self.detect_unverified_enforced_rules(&pop, &mut gaps)?;
         self.detect_compliance_gaps(&mut gaps)?;
+        self.detect_artifact_standard(&mut gaps)?;
         self.detect_failing_verifications(&mut gaps)?;
         self.detect_unresolved_drift(&mut gaps)?;
         self.detect_unreleased_components(&mut gaps)?;
@@ -5426,6 +5455,185 @@ impl DesignGraph {
                 listed.join("; ")
             ),
         });
+        Ok(())
+    }
+
+    /// The artifact-standard question, answered with vocabulary that already
+    /// existed: an `EnvironmentRule` of `rule_type: standard` the Project
+    /// `COMPLIES_WITH`. Two findings on purpose — the same split as
+    /// `UncheckedCompliance` / `OpenViolation`: "what standard are your
+    /// artifacts in?" is a question about the PROJECT, asked once; "this
+    /// drawing does not say whether it is in it" is about ONE FILE.
+    ///
+    /// Asked from the very beginning — a Project with nothing else in it is
+    /// asked — because the answer decides the pipeline before anyone draws
+    /// (`req:a-project-names-its-domains-artifact-standard-from-the-beginning-and-its-absence-is-reported`).
+    /// reflow2 opens no file: it asks by DECLARED format only, and whether an
+    /// IFC file is valid IFC is the standard's `checker` run by the agent or
+    /// CI, whose output is the evidence on the compliance edge.
+    ///
+    /// Artifacts are not linked to a Project, so every own (non-mirror)
+    /// Project in a store sees the same drawing/model population; a store
+    /// holds one own project in every design measured so far.
+    fn detect_artifact_standard(&self, gaps: &mut Vec<GapCandidate>) -> Result<(), DynoError> {
+        use crate::foundation::store::StoredNode;
+        let standards: BTreeMap<String, StoredNode> = self
+            .scan_live_nodes(node::ENVIRONMENT_RULE)?
+            .into_iter()
+            .filter(|r| r.properties.get("rule_type").and_then(Value::as_str) == Some("standard"))
+            .map(|r| (r.node_id.clone(), r))
+            .collect();
+        // The artifacts a standard is ABOUT. `code`, `spec`, `document` … carry
+        // their own conventions (an OpenAPI file already IS one), and a
+        // parametric script that GENERATES the drawing is exactly the
+        // reviewable source the agent may write — so only drawings and models
+        // are asked.
+        let mut domain_artifacts: Vec<StoredNode> = self
+            .scan_live_nodes(node::ARTIFACT)?
+            .into_iter()
+            .filter(|a| {
+                matches!(
+                    a.properties.get("artifact_type").and_then(Value::as_str),
+                    Some("drawing" | "model")
+                )
+            })
+            .collect();
+        domain_artifacts.sort_by(|a, b| a.node_id.cmp(&b.node_id));
+
+        for project in self.scan_live_nodes(node::PROJECT)? {
+            // A mirror is somebody else's design as received; its standard is
+            // theirs to declare, in their design.
+            if project.properties.contains_key("mirror_of") {
+                continue;
+            }
+            let declared: Vec<&StoredNode> = self
+                .outgoing(&project.node_id, Some(edge::COMPLIES_WITH))?
+                .iter()
+                .filter_map(|e| standards.get(&e.to_id))
+                .collect();
+            let pname = node_name(&project);
+            let domain = project
+                .properties
+                .get("domain")
+                .and_then(Value::as_str)
+                .map(|d| format!(" ({d})"))
+                .unwrap_or_default();
+
+            if declared.is_empty() {
+                let at_stake = domain_artifacts.len();
+                // TWO KEYS FOR ONE QUESTION, on purpose. "None known" is
+                // recorded by acknowledging this finding, and an
+                // acknowledgement is permanent for its id — so the id changes
+                // the day a drawing or model exists, and the project that said
+                // "the code is the artifact" is asked once more, not never.
+                let key = if at_stake == 0 {
+                    vec![project.node_id.clone()]
+                } else {
+                    vec![project.node_id.clone(), "with-domain-artifacts".to_string()]
+                };
+                gaps.push(GapCandidate {
+                    id: gap_id(GapSource::ArtifactStandardUndeclared, &key),
+                    gap_source: GapSource::ArtifactStandardUndeclared,
+                    scope: GapScope::Project,
+                    severity: if at_stake == 0 { 0.35 } else { 0.65 },
+                    title: if at_stake == 0 {
+                        format!(
+                            "\u{201c}{pname}\u{201d}{domain} has not said what standard its design \
+                             artifacts must be in"
+                        )
+                    } else {
+                        format!(
+                            "\u{201c}{pname}\u{201d}{domain} holds {at_stake} drawing/model artifact(s) \
+                             and has not said what standard they must be in"
+                        )
+                    },
+                    description: format!(
+                        "{}Ask what recognized standard the domain exchanges and checks its design \
+                         artifacts in \u{2014} IFC for a building model, STEP for a machined part, \
+                         Gerber for a board, SysML for a systems model \u{2014} who issues it, and \
+                         what tool checks a file against it. Record it with add_environment_rule \
+                         (rule_type `standard`, with `authority`, `reference` and `checker`) and say \
+                         the Project complies_with it. \u{1f6d1} \u{201c}THERE IS NO RECOGNIZED \
+                         STANDARD FOR THIS\u{201d} IS A REAL ANSWER: record it by acknowledging this \
+                         finding with that reason. Silence is the one thing that must not stand in \
+                         for it \u{2014} a design that never said is one where whatever the agent \
+                         produces is, by default, the standard.",
+                        if at_stake == 0 {
+                            "Nothing in the design says what form its drawings, models or part files \
+                             must take, and the answer decides the pipeline before anyone draws. "
+                        } else {
+                            "Drawings or models already exist in this design and nothing says what \
+                             standard they were meant to be in, so nothing can say whether they are \
+                             in it. "
+                        }
+                    ),
+                    affected_ids: vec![project.node_id.clone()],
+                    suggested_depth: 2,
+                    evidence: format!(
+                        "Project '{}' has 0 outgoing COMPLIES_WITH to an EnvironmentRule with \
+                         rule_type=standard ({} such rule(s) exist in the design); {} live \
+                         Artifact(s) of type drawing/model.",
+                        project.node_id,
+                        standards.len(),
+                        at_stake
+                    ),
+                });
+                continue;
+            }
+
+            // Declared: each drawing or model must say whether it is in it.
+            let declared_ids: BTreeSet<&str> =
+                declared.iter().map(|r| r.node_id.as_str()).collect();
+            let mut unsaid: Vec<String> = Vec::new();
+            for a in &domain_artifacts {
+                let mut answered = false;
+                for e in self.outgoing(&a.node_id, Some(edge::COMPLIES_WITH))? {
+                    answered |= declared_ids.contains(e.to_id.as_str());
+                }
+                for e in self.outgoing(&a.node_id, Some(edge::VIOLATES_RULE))? {
+                    answered |= declared_ids.contains(e.to_id.as_str());
+                }
+                if !answered {
+                    unsaid.push(a.node_id.clone());
+                }
+            }
+            if unsaid.is_empty() {
+                continue;
+            }
+            let standard_names: Vec<String> = declared.iter().map(|r| node_name(r)).collect();
+            let standard_names = standard_names.join(", ");
+            let mut affected = vec![project.node_id.clone()];
+            affected.extend(unsaid.iter().cloned());
+            gaps.push(GapCandidate {
+                id: gap_id(GapSource::ArtifactNotUnderDeclaredStandard, &affected),
+                gap_source: GapSource::ArtifactNotUnderDeclaredStandard,
+                scope: GapScope::Project,
+                severity: 0.55,
+                title: format!(
+                    "{} drawing/model artifact(s) do not say whether they are in \u{201c}{standard_names}\u{201d}",
+                    unsaid.len()
+                ),
+                description: format!(
+                    "\u{201c}{pname}\u{201d} declared that its design artifacts follow \
+                     \u{201c}{standard_names}\u{201d}, and these do not say whether they do: {}. For \
+                     each, either complies_with the standard \u{2014} `verified: true` with the \
+                     checker's output as `evidence` only when the checker actually ran \u{2014} or \
+                     violates_rule saying what format it is in instead and why. reflow2 judges by \
+                     what is declared and opens no file; a drawing nobody has run the checker on is \
+                     a claim, not a check.",
+                    unsaid.join(", ")
+                ),
+                affected_ids: affected,
+                suggested_depth: 2,
+                evidence: format!(
+                    "{} live drawing/model Artifact(s) with no COMPLIES_WITH or VIOLATES_RULE to any \
+                     of the {} declared standard rule(s) ({}).",
+                    unsaid.len(),
+                    declared.len(),
+                    declared_ids.iter().copied().collect::<Vec<_>>().join(", ")
+                ),
+            });
+        }
         Ok(())
     }
 

@@ -181,6 +181,28 @@ fn baseline() -> DesignGraph {
     )
     .unwrap();
 
+    // …and it has answered what STANDARD its artifacts must be in, for the
+    // same reason as the two answers above, one detector along (2026-09-16):
+    // `artifact_standard_undeclared` asks every Project from the very
+    // beginning, and a complete design has answered. For a cache service the
+    // honest answer is "none known — the code is the artifact", recorded the
+    // way the detector says: by acknowledging the finding with that reason.
+    // Declaring a standard nobody follows would be the fixture lying to pass;
+    // acknowledging is the design saying what is true, and it pins the
+    // "none known" road in the one place that claims to be complete.
+    let asked = g
+        .detect_gaps()
+        .unwrap()
+        .into_iter()
+        .find(|x| x.gap_source == reflow2_core::GapSource::ArtifactStandardUndeclared)
+        .expect("a complete design is asked what its artifacts must be in");
+    g.acknowledge_gap(
+        &asked.id,
+        &asked.affected_ids,
+        "Software: the code is the artifact; no recognized artifact standard applies.",
+    )
+    .unwrap();
+
     g.add_epoch("epoch:v1", "v1 baseline", EpochType::Baseline, 1)
         .unwrap();
     // …and the baseline is pinned AT it. Added 2026-08-16 for the same reason

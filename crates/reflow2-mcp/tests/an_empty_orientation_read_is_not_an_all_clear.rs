@@ -109,6 +109,28 @@ async fn an_empty_answer_on_a_clean_loop_says_so_explicitly() {
     ))
     .await
     .expect("project");
+    // A project is asked FROM THE VERY BEGINNING what standard its design
+    // artifacts must be in (2026-09-16), so a clean loop is one that has
+    // answered. This one declares a standard and says the project follows it.
+    s.add_environment_rule(Parameters(
+        serde_json::from_value(serde_json::json!({
+            "id": "envrule:openapi", "name": "OpenAPI 3.1",
+            "statement": "Every published boundary is described as an OpenAPI 3.1 document.",
+            "rule_type": "standard", "authority": "OpenAPI Initiative",
+            "checker": "spectral lint"
+        }))
+        .unwrap(),
+    ))
+    .await
+    .expect("standard");
+    s.complies_with(Parameters(
+        serde_json::from_value(serde_json::json!({
+            "element_id": "proj:p", "rule_id": "envrule:openapi"
+        }))
+        .unwrap(),
+    ))
+    .await
+    .expect("declared");
 
     let out = j!(s.open_questions());
     assert_eq!(
