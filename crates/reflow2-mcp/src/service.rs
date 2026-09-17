@@ -2624,6 +2624,11 @@ pub struct EnvironmentRuleReq {
     /// reader check the claim against the source rather than trust it.
     #[serde(default)]
     pub reference: Option<String>,
+    /// THE TOOL THAT CHECKS A FILE AGAINST THIS STANDARD — `ifcopenshell validate`,
+    /// a STEP conformance checker, `kicad-cli`. For rule_type `standard`: what turns
+    /// `complies_with … verified: true` from a word into a claim somebody can re-run.
+    #[serde(default)]
+    pub checker: Option<String>,
     /// HARD (must comply, and a design that has said nothing is asked about it)
     /// versus advisory. Defaults to true: a rule whose force nobody stated is
     /// not safely assumed to be advice.

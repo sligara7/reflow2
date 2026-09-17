@@ -482,6 +482,13 @@ NON_TOOL_TERMS = {
     "empty_because",
     "pool_type",
     "quality_target_unstated",
+    # The artifact-standard pair (2026-09-16): gap names the genesis, adopt and
+    # detect-and-ask skills tell the user to expect, plus the property they answer with.
+    "artifact_standard_undeclared",
+    "artifact_not_under_declared_standard",
+    "checker",
+    "authority",
+    "reference",
     "undocumented_addition",
     "unknown_seeds",
     "unmotivated_capability",

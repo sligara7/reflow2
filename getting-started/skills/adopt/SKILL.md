@@ -33,6 +33,12 @@ Before reading code, list what else exists, because intent lives outside the imp
   out to be another organisation's review package: 7 of 25 rows out of scope, and it omitted
   the system's central correctness property entirely. A found document seeds *candidates*, not
   facts.
+- **Name the standard the existing drawings, models and part files are in.** They arrive in some
+  format already — IFC, STEP, DXF, Gerber, or a house format nobody outside can check. Record it
+  as an `EnvironmentRule` (`rule_type: standard`, with `authority`, `reference` and the `checker`
+  that validates a file) that the Project `complies_with`; if they follow no recognized standard,
+  say so by acknowledging `artifact_standard_undeclared` with that reason. Either way the design
+  records what the files ARE instead of leaving it to whoever opens them next.
 - Record each source as a `Fragment` node (with its `provenance`) and link what it produced
   with `YIELDED` edges — in the import document of Phase 1, not as per-node tool calls. This is
   the provenance ledger the user will later use to judge every recovered claim.

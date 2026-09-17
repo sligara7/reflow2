@@ -25,6 +25,7 @@ schema:
         statement: { type: string, required: true, fulltext: true, description: "What the rule requires or forbids, in plain terms." }
         rule_type: { type: enum, values: [regulatory, building_code, zoning, safety, environmental, standard, physical_law, interface, constraint], default: regulatory, indexed: true }
         authority: { type: string, indexed: true, description: "Who issues/enforces it — a city, county, state, agency (NASA), standards body (ISO), or 'physics'." }
+        checker: { type: string, description: "THE TOOL THAT CHECKS A FILE AGAINST THIS STANDARD — `ifcopenshell validate` for IFC, a STEP conformance checker, `kicad-cli` for a board. Meaningful for rule_type `standard`; what turns `complies_with … verified: true` from a word into a claim somebody can re-run. reflow2 opens no file: the checker is named here and run by the agent or a CI step, and its result comes back as the evidence on the compliance edge (req:a-project-names-its-domains-artifact-standard-from-the-beginning-and-its-absence-is-reported)." }
         jurisdiction: { type: string, indexed: true, description: "Where it applies — 'Kennewick, WA', 'Benton County', 'WA State', 'Mars surface'." }
         effects: { type: string, fulltext: true, description: "What it grants/forbids — the design must not contradict this (the HARD-grounding text)." }
         reference: { type: string, description: "Citation — e.g. 'IBC 2021 §1607', 'NFPA 101', a datasheet." }
@@ -59,9 +60,14 @@ schema:
         operates in it — its "codes and physics". One edge per rule.
 
     COMPLIES_WITH:
-      from: ["Capability", "Component", "Artifact", "Release", "Interface"]
+      from: ["Project", "Capability", "Component", "Artifact", "Release", "Interface"]
       to: EnvironmentRule
-      extraction_hint: A design element satisfies an EnvironmentRule.
+      extraction_hint: >
+        A design element satisfies an EnvironmentRule. From a PROJECT it is the
+        declaration that the design's artifacts follow a standard (rule_type
+        `standard`) — the answer to "what must your drawings and models be in?",
+        asked at genesis and adopt; artifact_standard_undeclared fires until it
+        is drawn or "none known" is acknowledged (2026-09-16).
       properties:
         verified: { type: bool, default: false, description: "Whether compliance has been demonstrated (vs. merely asserted)." }
         evidence: { type: string }

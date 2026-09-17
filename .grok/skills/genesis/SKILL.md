@@ -23,6 +23,18 @@ you what the Artifacts are**, and people answer it concretely when they cannot y
 else. Blueprints, structural and electrical drawings and a permit set are as much an artifact layer
 as schemas and migrations.
 
+**Then ask what STANDARD those artifacts must be in** — the recognized form the domain exchanges
+and checks them in (IFC for a building model, STEP for a machined part, Gerber for a board, SysML
+for a systems model), who issues it, and what tool checks a file against it. Record the answer as
+an `EnvironmentRule` with `rule_type: standard` (its `authority`, `reference` and `checker`) that
+the Project `complies_with`, **before a single artifact exists**. *"There is no recognized standard
+for this"* is a real answer: the first `detect_gaps` raises `artifact_standard_undeclared`, and
+that answer is recorded by acknowledging it with the reason. Silence is the one thing that must
+not stand in for it. Measured once (bhome, 2026-08-31): an agent drew a house plan sheet in HTML
+because nobody had asked what a plan sheet must be, and the person who would have caught it was
+the city planner. reflow2 opens no file — whether an IFC file is valid IFC is the checker's job,
+run by you or by CI, and its output is the evidence on the compliance edge.
+
 ⚠️ **Never ask which node type to use.** The mapping from their words to the vocabulary is yours —
 `describe_schema` is how you look it up, and **capture-intent** carries the routing table. A user
 who is asked to pick a node type has been handed the one decision they cannot check.

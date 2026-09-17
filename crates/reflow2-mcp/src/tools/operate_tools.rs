@@ -118,6 +118,7 @@ impl ReflowService {
                 req.authority.as_deref(),
                 req.jurisdiction.as_deref(),
                 req.reference.as_deref(),
+                req.checker.as_deref(),
                 req.mandatory,
             )
             .map_err(dyno_err)?;

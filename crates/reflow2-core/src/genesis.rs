@@ -80,6 +80,13 @@ fn genesis_next_steps() -> Vec<String> {
         "Capture deployment/consumer context as Requirements: target platform(s), the driving \
          agent, how it is invoked, and where the design persists."
             .to_string(),
+        "Ask what STANDARD the design's artifacts must be in — IFC for a building model, STEP \
+         for a part, Gerber for a board, SysML for a systems model — who issues it, and what \
+         tool checks a file against it: add_environment_rule with rule_type `standard`, \
+         `authority`, `reference` and `checker`, then complies_with from the Project. `None \
+         known for this domain` is a real answer, recorded by acknowledging the \
+         artifact_standard_undeclared finding with that reason; silence is not."
+            .to_string(),
         "Run detect_gaps for the first round (expect concept_without_design), then use \
          gap_to_prompt to ask the user each surfaced gap."
             .to_string(),

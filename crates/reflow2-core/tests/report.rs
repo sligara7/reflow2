@@ -150,6 +150,24 @@ fn the_total_counts_every_node_including_the_provenance_layer() {
 fn a_design_with_nothing_owed_reads_clean() {
     let mut g = DesignGraph::open_in_memory().unwrap();
     g.add_project("proj:p", "P").unwrap();
+    // A project is asked FROM THE VERY BEGINNING what standard its design
+    // artifacts must be in (2026-09-16), so "nothing owed" now includes having
+    // answered that. This one answers by declaring: its artifacts are OpenAPI
+    // documents, checked by a linter.
+    g.add_environment_rule(
+        "envrule:openapi",
+        "OpenAPI 3.1",
+        "Every published boundary is described as an OpenAPI 3.1 document.",
+        Some("standard"),
+        Some("OpenAPI Initiative"),
+        None,
+        Some("OpenAPI Specification v3.1.0"),
+        Some("spectral lint"),
+        None,
+    )
+    .unwrap();
+    g.complies_with("Project", "proj:p", "envrule:openapi", None, None)
+        .unwrap();
 
     let status = g.loop_status().unwrap();
 

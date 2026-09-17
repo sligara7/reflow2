@@ -15,6 +15,14 @@
           "null"
         ]
       },
+      "checker": {
+        "default": null,
+        "description": "THE TOOL THAT CHECKS A FILE AGAINST THIS STANDARD — `ifcopenshell validate`,\na STEP conformance checker, `kicad-cli`. For rule_type `standard`: what turns\n`complies_with … verified: true` from a word into a claim somebody can re-run.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
       "id": {
         "description": "The rule's id — `envrule:<slug>` by convention. An EnvironmentRule is a code, standard or physical law an Environment IMPOSES (`imposes`); a rule the project sets for itself is a DesignRule (`add_design_rule`). Calling again with an existing id REVISES it.",
         "type": "string"
