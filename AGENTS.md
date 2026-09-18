@@ -229,6 +229,19 @@ sources *older* than the last-built binary — which silently served stale code 
 until this was added. All wrapper output goes to stderr; stdout is the JSON-RPC channel and must
 stay clean.
 
+**A cut ENDS by rebuilding the binary this box serves — step 9 of `flow:release-cut`.** The
+launcher's banner only fires inside this repo. Every *other* project on this machine reaches
+reflow2 through the user-scope registration in `~/.claude.json`, which points straight at
+`target/release/reflow2-mcp` with no wrapper in the path, so nothing tells those sessions the
+binary is behind. Measured 2026-09-18: a full adopt of a real building design ran on 0.62.0 for a
+whole session while 0.64.0 was tagged and published, because the two cuts in between rebuilt the
+debug binary for the export and never touched release. So after the tag's assets are verified
+(step 8), run `tools/reflow2-rebuild.sh`, then stop every shared daemon (`--stop-shared` in each
+project, or a full restart of those sessions — a `/mcp` reconnect does not do it, see below) and
+confirm with `pgrep -fa target/release/reflow2-mcp` plus `ls -l /proc/<pid>/exe`: `(deleted)`
+means that server is still the old build. The rule is delivered on `release_report`, the step
+before it (`rule:a-cut-ends-by-rebuilding-the-served-release-binary`).
+
 > ⚠️ **`/mcp` RECONNECT DOES NOT PICK UP YOUR REBUILD, AND THIS PARAGRAPH SAID IT DID UNTIL
 > 2026-08-17.** The old wording — *"you must `/mcp` reconnect reflow2 (or restart the session) for
 > the live tools to pick it up"* — is wrong wherever a **shared server** is running, which is the
