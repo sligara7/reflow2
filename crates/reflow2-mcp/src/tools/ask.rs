@@ -69,7 +69,8 @@ impl ReflowService {
                        \u{26a0} A gap that has CLOSED since you took it is REFUSED rather than \
                        served from your stale copy, because recording a question against a \
                        finding nobody has is the worse outcome. Unmatched answers still come \
-                       back in `unused_answers`, and `degrade_reason` says what went wrong.",
+                       back in `unused_answers`, and `degrade_reason` says what went wrong. \
+                       Ask for this to turn a batch of gaps into questions for the owner.",
         annotations(read_only_hint = false)
     )]
     pub async fn gaps_to_prompts(
@@ -332,7 +333,8 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Withdraw a question asked in error or overtaken by events. Kept in the graph, not deleted. \u{1f6d1} THIS IS NOT HOW YOU FIX BAD WORDING, AND THERE IS NO TOOL THAT IS. A Question records WHAT WAS ASKED, and the answer stored beside it was given to those exact words \u{2014} so editing it afterwards would make the record a claim about what somebody wishes they had asked. The immutability is deliberate, not a missing feature: two projects went looking for an edit tool in the 2026-09-02 reports and the absence cost them more than the wording did. IF THE PHRASING CAME OUT AS RAW DETECTOR JARGON, the cause was almost certainly the replayed gap being mutilated between the two passes \u{2014} fixed 2026-09-02, so asking again now produces the phrasing you meant. Withdraw is for a question that should not have been asked or no longer applies; a question asked BADLY is a different fact.",
+        description = "Withdraw a question asked in error or overtaken by events. Kept in the graph, not deleted. \u{1f6d1} THIS IS NOT HOW YOU FIX BAD WORDING, AND THERE IS NO TOOL THAT IS. A Question records WHAT WAS ASKED, and the answer stored beside it was given to those exact words \u{2014} so editing it afterwards would make the record a claim about what somebody wishes they had asked. The immutability is deliberate, not a missing feature: two projects went looking for an edit tool in the 2026-09-02 reports and the absence cost them more than the wording did. IF THE PHRASING CAME OUT AS RAW DETECTOR JARGON, the cause was almost certainly the replayed gap being mutilated between the two passes \u{2014} fixed 2026-09-02, so asking again now produces the phrasing you meant. Withdraw is for a question that should not have been asked or no longer applies; a question asked BADLY is a different fact. \
+                       Ask for this to retract a question.",
         annotations(read_only_hint = false)
     )]
     pub async fn withdraw_question(

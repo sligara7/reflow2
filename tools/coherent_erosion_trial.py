@@ -88,7 +88,7 @@ def main() -> int:
                      else f"# fix {i}: edge case\n")
 
             # The artifact moved: record it as a fix forced by a failed test.
-            s.call("record_change", {
+            s.call("snapshot_before_change", {
                 "epoch_id": ep, "change_event_id": f"chg:art{i}",
                 "name": f"Fix {i} to charge.py", "target_type": "Artifact",
                 "target_id": "art:charge", "change_type": "test_failure_fix",
@@ -102,7 +102,7 @@ def main() -> int:
             # that in the wrong order). Z keeps the original, so the backwards
             # update costs no intent.
             if widens:
-                s.call("record_change", {
+                s.call("snapshot_before_change", {
                     "epoch_id": ep, "change_event_id": f"chg:cap{i}",
                     "name": "Dedup window widened to 7d by the fix",
                     "target_type": "Capability", "target_id": "cap:charge",

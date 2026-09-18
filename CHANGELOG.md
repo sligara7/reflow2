@@ -31,6 +31,25 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Changed
+
+- **Every served tool is asked to rank FIRST for its own job, and the surface may not grow more
+  confusable.** Anthony, 2026-09-17, on pruning the 186 tools: a tool that is not orthogonal to the
+  rest leaves the agent debating which of two to call. Measured before deciding: 61 mutually
+  confusable pairs, 73 of 185 tools not ranked first for their own job sentence. Pruning deferred
+  on his word ("hesitant to delete tools"); the debate is removed with words instead. 61 tools gain
+  one sentence carrying the job in a user's words; 25 remain not-first, each beaten on a name match
+  (five times a description hit), and they are the baseline of a new rank ratchet: a tool must rank
+  first for its own job or be listed, a pair must not become mutually confusable, and both lists
+  only shrink. `tools/tool_confusability.py` is the instrument (an offline replica of the scorer,
+  185/185 top-1 agreement with the binary). The two measured confusions are renamed with refusing
+  stubs for one release: `record_change` → `snapshot_before_change` (it shared its words with
+  `add_change_event`; the agent building reflow2 called the wrong one), `manual_work_report` →
+  `manual_work_ledger` (the read differed from the write only by word order). `contain_component`
+  now detaches any existing parent and names it, as `move_component` does — the second parent was
+  the recorded cause of `multiple_parents`. Nothing deleted; the singular/plural and
+  constructor-plus-edge folds wait for usage evidence across projects.
+
 ## [0.64.0] — 2026-09-17
 
 ### Added

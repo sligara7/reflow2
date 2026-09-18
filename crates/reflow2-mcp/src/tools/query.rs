@@ -262,7 +262,8 @@ impl ReflowService {
                        allocate, realizes. Those helpers only fill in the endpoint types, so \
                        naming both types per item is the whole difference. ALL OF IT OR NONE OF \
                        IT: every item is attempted so you learn every failure at once, and if \
-                       anything failed nothing is written.",
+                       anything failed nothing is written. \
+                       Ask for this to link many pairs of items in one call.",
         annotations(read_only_hint = false)
     )]
     pub async fn create_edges(
@@ -343,7 +344,8 @@ impl ReflowService {
                        is FOR this pair, ask for a new edge type\" and \"the answer is below, \
                        declared\" are different facts needing opposite actions, and until \
                        2026-09-02 they were rendered identically. Three projects acted on the \
-                       wrong one and two drew an edge they themselves called a stand-in.",
+                       wrong one and two drew an edge they themselves called a stand-in. \
+                       Ask for this to see which fields each type takes before you use it.",
         annotations(read_only_hint = true)
     )]
     pub async fn describe_schema(
@@ -401,7 +403,8 @@ impl ReflowService {
                        READ IT — the stored `status` still records what was BUILT, so a \
                        withdrawn capability goes on saying `realized` and only this field \
                        tells you the thing is gone. \
-                       Ask for this when you want everything recorded about one item — pull up the full record for a requirement, a component, any single node.",
+                       Ask for this when you want everything recorded about one item — pull up the full record for a requirement, a component, any single node. \
+                       Ask for this to show me everything recorded about one item.",
         annotations(read_only_hint = true)
     )]
     pub async fn get_node(
@@ -664,7 +667,12 @@ impl ReflowService {
             .split(|c: char| !c.is_alphanumeric() && c != '_')
             .filter(|t| !t.is_empty())
             .collect();
-        let all = self.tool_router.list_all();
+        let all: Vec<_> = self
+            .tool_router
+            .list_all()
+            .into_iter()
+            .filter(|t| !crate::service::DEPRECATED_TOOLS.contains(&t.name.as_ref()))
+            .collect();
         let searched = all.len();
         // Document frequency over the whole served surface, computed per call
         // rather than cached: the surface is fixed at startup but small enough
@@ -736,7 +744,8 @@ impl ReflowService {
                        Search BEFORE creating a node that might already exist, and to map the \
                        user's words to the node they mean. Result reports its own bounds: \
                        hits.len() == limit means there may be more, and a non-empty `stale` \
-                       list means the index has drifted from the store.",
+                       list means the index has drifted from the store. \
+                       Ask for this to find out whether anyone has written something down about a subject, such as budgets.",
         output_schema = search_design_output_schema(),
         annotations(read_only_hint = true)
     )]
@@ -768,7 +777,8 @@ impl ReflowService {
                        ⭐ ALSO THE FIRST READ BEFORE YOU ASSERT A PROJECT'S STATUS TO ANYONE — a \
                        progress report or deck for management, \"what has this project achieved\", \
                        \"where does it stand\": call it on the project's name before you write a \
-                       word (field report 2026-09-14). Writes nothing.",
+                       word (field report 2026-09-14). Writes nothing. \
+                       Ask for this to read everything the design says about one subject in one place.",
         annotations(read_only_hint = true)
     )]
     pub async fn topic_report(
@@ -806,7 +816,8 @@ impl ReflowService {
                        an allocation that never happened. A link that WAS true and stopped being \
                        true is design history, not an error: record it (record_change) rather \
                        than erasing it. Until this tool existed the only way to remove a wrong \
-                       edge over MCP was to delete one of its endpoints.",
+                       edge over MCP was to delete one of its endpoints. \
+                       Ask for this to remove one link between two items.",
         annotations(read_only_hint = false)
     )]
     pub async fn delete_edge(

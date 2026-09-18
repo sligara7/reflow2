@@ -2280,7 +2280,7 @@ async fn temporal_resource_and_realization_tools_round_trip() {
         affected: None,
     }),));
     // record_change snapshots the prior state before applying — the axis-Z write.
-    let rec = j!(s.record_change(Parameters(RecordChangeReq {
+    let rec = j!(s.snapshot_before_change(Parameters(RecordChangeReq {
         epoch_id: "epoch:v2".into(),
         change_event_id: "chg:tune".into(),
         name: "cap:flight description reworded".into(),

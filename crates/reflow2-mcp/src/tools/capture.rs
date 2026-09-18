@@ -1175,7 +1175,8 @@ impl ReflowService {
                        CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it \
                        again with the same id and only what you are changing \u{2014} omitted \
                        fields keep their stored value, so correcting one never means re-sending \
-                       a 2 KB field you did not touch.",
+                       a 2 KB field you did not touch. \
+                       Ask for this to start the top-level record of the thing being designed.",
         annotations(read_only_hint = false)
     )]
     pub async fn add_project(
@@ -1527,7 +1528,8 @@ impl ReflowService {
                        CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it \
                        again with the same id and only what you are changing \u{2014} omitted \
                        fields keep their stored value, so correcting one never means re-sending \
-                       a 2 KB field you did not touch.",
+                       a 2 KB field you did not touch. \
+                       Ask for this to record something the system does — one function it performs, in a line.",
         annotations(read_only_hint = false)
     )]
     pub async fn add_capability(
@@ -1717,7 +1719,8 @@ impl ReflowService {
                        report names. A design that never declared one reads 'no closure \
                        criterion stated' — nothing is defaulted. Closure is a report, never a \
                        gate. Ask for this when the user says what finished means for this project, \
-                       or when closure_criterion_undeclared is raised.",
+                       or when closure_criterion_undeclared is raised. \
+                       Ask for this to record how much of the design must be done before it counts as finished.",
         annotations(read_only_hint = false)
     )]
     pub async fn set_closure_criterion(
@@ -1736,7 +1739,8 @@ impl ReflowService {
         description = "Set a Capability's lifecycle status: `planned` (the default) / \
                        `in_progress` / `realized` / `verified`. Use it as a capability moves \
                        through its life; to record one that already ships, pass `status` to \
-                       add_capability instead and save a write. CARRIES `prose_currency` WHEN THE STATUS ACTUALLY MOVES and the node holds prose: the description was written under the OLD status and this call did not touch it, so the block names both statuses and QUOTES the prose so you can judge it here rather than in another call. It never says the prose is wrong - only a person can. From a 2026-09-02 field report where a capability went `realized` twenty minutes after a description saying the fix was not installed, and nothing noticed.",
+                       add_capability instead and save a write. CARRIES `prose_currency` WHEN THE STATUS ACTUALLY MOVES and the node holds prose: the description was written under the OLD status and this call did not touch it, so the block names both statuses and QUOTES the prose so you can judge it here rather than in another call. It never says the prose is wrong - only a person can. From a 2026-09-02 field report where a capability went `realized` twenty minutes after a description saying the fix was not installed, and nothing noticed. \
+                       Ask for this to mark a capability as built.",
         annotations(read_only_hint = false)
     )]
     pub async fn set_capability_status(
@@ -1802,7 +1806,8 @@ impl ReflowService {
                        a requirement backed out of the code that implements it is satisfied by \
                        construction and cannot contradict anything, and a reader has no other way \
                        to tell. For bulk adoption prefer import_graph, which carries this at \
-                       create time.",
+                       create time. \
+                       Ask for this to record where an item came from.",
         annotations(read_only_hint = false)
     )]
     pub async fn set_provenance(
@@ -1899,7 +1904,9 @@ impl ReflowService {
 
     #[tool(
         description = "Nest one Component inside another (parent CONTAINS child) — the assembly \
-                       spine. The parent should sit exactly one level above the child: nesting \
+                       spine — DETACHING any parent it already had and naming it in the reply, so a \
+                       child has one place on the spine (a second parent was the recorded cause of \
+                       the multiple_parents defect). The parent should sit exactly one level above the child: nesting \
                        two components at the same level is reported as a level_mismatch, and \
                        skipping a level as a missing_intermediate_level. Set `level` on both via \
                        add_component first, or every containment looks like a mismatch.",
@@ -1909,11 +1916,16 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<ContainComponentReq>,
     ) -> Result<CallToolResult, McpError> {
+        // DETACHES BY DEFAULT since 2026-09-18. The bare edge write ADDED a
+        // parent and never removed one, and the discoverable sequence
+        // (contain, then contain again) was the recorded cause of the
+        // multiple_parents defect. A child has one parent on the spine; the
+        // reply names what was detached, so a re-parenting is visible.
         let mut g = self.write_lock().await?;
-        ok_json(EdgeDto::from(
-            g.contain_component(&req.from_id, &req.to_id)
+        ok_json(
+            g.move_component(&req.to_id, &req.from_id)
                 .map_err(dyno_err)?,
-        ))
+        )
     }
 
     #[tool(
@@ -2053,7 +2065,8 @@ impl ReflowService {
                        CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it \
                        again with the same id and only what you are changing \u{2014} omitted \
                        fields keep their stored value, so correcting one never means re-sending \
-                       a 2 KB field you did not touch.",
+                       a 2 KB field you did not touch. \
+                       Ask for this to record where two parts meet — the contract at the seam.",
         annotations(read_only_hint = false)
     )]
     pub async fn add_interface(
@@ -2107,7 +2120,8 @@ impl ReflowService {
                        CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it \
                        again with the same id and only what you are changing \u{2014} omitted \
                        fields keep their stored value, so correcting one never means re-sending \
-                       a 2 KB field you did not touch.",
+                       a 2 KB field you did not touch. \
+                       Ask for this to record a process made of ordered steps, end to end.",
         annotations(read_only_hint = false)
     )]
     pub async fn add_flow(
@@ -2204,7 +2218,8 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Link a Project to a child node it CONTAINS — project membership, so a Requirement, Capability or Component is counted under the project whose gaps and rollups it belongs to. NOT decomposition: a Component inside another Component is `contain_component` (adds a parent) or `move_component` (moves it on the spine). Most typed constructors draw this edge for you when a project exists; use it directly for nodes created with `create_node`. Ask for this when a node sits in no project and the reports are not seeing it.",
+        description = "Link a Project to a child node it CONTAINS — project membership, so a Requirement, Capability or Component is counted under the project whose gaps and rollups it belongs to. NOT decomposition: a Component inside another Component is `contain_component` (adds a parent) or `move_component` (moves it on the spine). Most typed constructors draw this edge for you when a project exists; use it directly for nodes created with `create_node`. Ask for this when a node sits in no project and the reports are not seeing it. \
+                       Ask for this to attach an item under its project.",
         annotations(read_only_hint = false)
     )]
     pub async fn contains(
@@ -2244,7 +2259,8 @@ impl ReflowService {
                        CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it \
                        again with the same id and only what you are changing \u{2014} omitted \
                        fields keep their stored value, so correcting one never means re-sending \
-                       a 2 KB field you did not touch.",
+                       a 2 KB field you did not touch. \
+                       Ask for this to record a hard cap, a forbidden value, or a budget figure the design must stay inside.",
         annotations(read_only_hint = false)
     )]
     pub async fn add_constraint(
@@ -2352,7 +2368,8 @@ impl ReflowService {
                        \"is this part severable\" is computed instead of asserted, and pair_designs \
                        matches `published`/`both` against `required`/`both` to compute a seam. \
                        NOT a claim the boundary has held; whether it stayed stable is its drift \
-                       history.",
+                       history. \
+                       Ask for this to mark a contract as public, internal, or required from outside.",
         annotations(read_only_hint = false)
     )]
     pub async fn set_interface_designation(
@@ -2376,7 +2393,8 @@ impl ReflowService {
                        everything else is still withheld and still counted. Internal until \
                        someone says otherwise, because publishing is a commitment — the same rule \
                        as set_interface_designation. It is NOT a claim the promise is kept; \
-                       whether it held is its verification and drift history.",
+                       whether it held is its verification and drift history. \
+                       Ask for this to mark a requirement as a public commitment.",
         annotations(read_only_hint = false)
     )]
     pub async fn set_requirement_designation(
@@ -2467,7 +2485,8 @@ impl ReflowService {
                        never ideas somebody reviewed. Decisions carrying no `kind` are counted \
                        apart and excluded from every ratio — their only evidence of being ideas \
                        is an id prefix deliberately retired, and reading it here would launder it \
-                       back in.",
+                       back in. \
+                       Ask for this to see whether our brainstormed ideas are connected to anything or floating.",
         annotations(read_only_hint = true)
     )]
     pub async fn linking_report(&self) -> Result<CallToolResult, McpError> {
@@ -2859,7 +2878,8 @@ impl ReflowService {
                        structured author behind a node; it is deliberately not a \
                        traceability edge, so it never enlarges a blast radius. \
                        Record it when a decision is MADE, not at session end — \
-                       captured-when-decided is what keeps the authorship honest.",
+                       captured-when-decided is what keeps the authorship honest. \
+                       Ask for this to record whose idea this was.",
         annotations(read_only_hint = false)
     )]
     pub async fn authored_by(

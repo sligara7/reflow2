@@ -184,7 +184,7 @@ Then write the cause down where a later session will meet it:
   2026-09-07, when it was skipped on a field report by an agent that had recorded the rule
   requiring it hours earlier.
 
-- The **repair's own record**: `record_change` takes `repair` — `corrected_cause` when the class
+- The **repair's own record**: `snapshot_before_change` takes `repair` — `corrected_cause` when the class
   should not recur, `contained_symptom` when it can and something is standing in the way. A
   containment must also carry `stands_in_for`: the sentence naming what the proper fix would be.
   **Leaving it off is a true answer** and means nobody said; it is never inferred from

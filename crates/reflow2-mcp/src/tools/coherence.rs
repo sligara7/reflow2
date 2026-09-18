@@ -69,7 +69,8 @@ impl ReflowService {
                        call outright. `budget` says which tier this reply landed in and exactly what it \
                        withheld; `count` and `by_source` cover every gap either way, so a shorter answer is \
                        never a quieter one. Raise `budget_chars` if your client has the room. Ask for this when \
-                       you want to know what is missing or unanswered in the design.",
+                       you want to know what is missing or unanswered in the design. \
+                       Ask for this to learn what the owner should be asked about.",
         annotations(read_only_hint = true)
     )]
     pub async fn detect_gaps(
@@ -201,9 +202,7 @@ impl ReflowService {
                        same answer — so scoped, `clean` means nothing is owed BY THAT PERSON, not that the \
                        design is clean. An unknown contributor_id is REFUSED: a typo would otherwise give the \
                        most reassuring reply there is. `verifications` is a DIGEST: counts by status, how many \
-                       never ran, and every check not currently passing. Ask for this to learn what the \
-                       design process still needs from you, \
-                       and what to do next.",
+                       never ran, and every check not currently passing. Ask for this to learn what the design process is owed right now and what you should do next.",
         annotations(read_only_hint = true)
     )]
     pub async fn loop_status(
@@ -719,7 +718,8 @@ impl ReflowService {
                        \"196 passing, 1 planned\". What comes back instead is the same digest \
                        `loop_status` returns: counts by status, how many never ran, and every \
                        check NOT currently passing, in full. \
-                       Ask for this when you want the overall health summary of the design — how healthy it is right now, how the project is doing.",
+                       Ask for this when you want the overall health summary of the design — how healthy it is right now, how the project is doing. \
+                       Ask for this to give me the overall health of the design in one read.",
         annotations(read_only_hint = true)
     )]
     pub async fn graph_report(
@@ -761,7 +761,8 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "The graph report rendered as Markdown — `graph_report`'s computed snapshot (counts, requirement certainty, the delivery line, top gaps, allocation, confirmation, coverage, the maturity trajectory) as prose a person reads rather than JSON an agent parses; the substance is documented on `graph_report`. Withholds the per-check roll for the same reason it does. Ask for this when you want the design's health and status as readable prose — a plain-English rundown of how the project is doing.",
+        description = "The graph report rendered as Markdown — `graph_report`'s computed snapshot (counts, requirement certainty, the delivery line, top gaps, allocation, confirmation, coverage, the maturity trajectory) as prose a person reads rather than JSON an agent parses; the substance is documented on `graph_report`. Withholds the per-check roll for the same reason it does. Ask for this when you want the design's health and status as readable prose — a plain-English rundown of how the project is doing. \
+                       Ask for this to give me the status as prose.",
         annotations(read_only_hint = true)
     )]
     pub async fn graph_report_markdown(&self) -> Result<CallToolResult, McpError> {
@@ -794,8 +795,7 @@ impl ReflowService {
                        empty graph does); `coupling_by_level` says how much coupling exists AT each declared \
                        level, and that is the one that bites — measured here, the cycle rule walked 182 pairs \
                        and found none while ZERO joined two subsystems, so a clean result was SILENT about the \
-                       subsystems rather than clean about them. Ask for this to find structural problems — \
-                       loops, a single point of failure, contradictions.",
+                       subsystems rather than clean about them. Ask for this to find structural trouble like cycles, single points of failure and orphans.",
         annotations(read_only_hint = true)
     )]
     pub async fn detect_defects(
@@ -978,7 +978,8 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "All declining quality dimensions across the design, worst first — every node whose latest recorded observation on some `-ility` is worse than the one before, ranked by how far it fell. AN EMPTY LIST SAYS WHICH EMPTY: no observations have been recorded at all (nothing could drift), observations exist but none declined, or every decline is already dispositioned — the reply names which, because \"nothing is getting worse\" and \"nobody is measuring\" must never read the same. `dimension_drift` (singular) reads one node. Ask for this when you want to know what in the design is getting worse.",
+        description = "All declining quality dimensions across the design, worst first — every node whose latest recorded observation on some `-ility` is worse than the one before, ranked by how far it fell. AN EMPTY LIST SAYS WHICH EMPTY: no observations have been recorded at all (nothing could drift), observations exist but none declined, or every decline is already dispositioned — the reply names which, because \"nothing is getting worse\" and \"nobody is measuring\" must never read the same. `dimension_drift` (singular) reads one node. Ask for this when you want to know what in the design is getting worse. \
+                       Ask for this to see which quality measures are sliding across the whole design.",
         annotations(read_only_hint = true)
     )]
     pub async fn dimension_drifts(&self) -> Result<CallToolResult, McpError> {
@@ -1177,7 +1178,8 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Withdraw a gap's acceptance: the Decision `acknowledge_gap` minted is marked `superseded` — kept, not deleted, so the record shows the gap was once judged fine and then reconsidered — and the gap returns to `detect_gaps`' open list on its next run. Withdrawing an acknowledgement that does not exist returns `withdrawn: false` and names that, exactly as documented; it does not invent one to withdraw. Ask for this when a review turns out to have been wrong and a parked gap needs attention again.",
+        description = "Withdraw a gap's acceptance: the Decision `acknowledge_gap` minted is marked `superseded` — kept, not deleted, so the record shows the gap was once judged fine and then reconsidered — and the gap returns to `detect_gaps`' open list on its next run. Withdrawing an acknowledgement that does not exist returns `withdrawn: false` and names that, exactly as documented; it does not invent one to withdraw. Ask for this when a review turns out to have been wrong and a parked gap needs attention again. \
+                       Ask for this to reopen a gap you previously accepted.",
         annotations(read_only_hint = false)
     )]
     pub async fn withdraw_gap_acknowledgement(
@@ -1212,7 +1214,8 @@ impl ReflowService {
                        rather than reading clean. The output worth reading is `worth_weighing`: \
                        targets where somebody asserted a good score on an axis a detector found \
                        something against. That is a disagreement between two records, and reflow2 \
-                       rules on neither.",
+                       rules on neither. \
+                       Ask for this to see how my design scores on reliability and the other qualities.",
         annotations(read_only_hint = true)
     )]
     pub async fn ility_report(
@@ -1407,7 +1410,8 @@ impl ReflowService {
                        `signals_read` names the edges counted so a missing one can be argued for, and \
                        `not_observed_about` names what it cannot see. Pure arithmetic over existing edges — no \
                        file I/O. Ask for this when you want to know what has been built that nothing actually \
-                       uses — capabilities with no consumer, unused work.",
+                       uses — capabilities with no consumer, unused work. \
+                       Ask for this to see what we have built that nothing actually uses.",
         annotations(read_only_hint = true)
     )]
     pub async fn consumption_report(

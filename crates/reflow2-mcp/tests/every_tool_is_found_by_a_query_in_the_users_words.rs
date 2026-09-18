@@ -50,11 +50,13 @@ const CORPUS: &str = include_str!("fixtures/find_tools_corpus.json");
 /// corpora — a 4-char floor on the name-prefix rule (neutral: 177/36) and a
 /// gentler length normalisation (worse: 174/34) — and both were reverted,
 /// because a change the corpus does not reward is noise.
-const EXEMPT: &[(&str, &str)] = &[(
-    "consumption_report",
-    "rank 6 — outranked by five shorter descriptions sharing 'what'/'built'; \
-      the length normalisation that recovers seven other tools costs this one",
-)];
+/// Served names that are refusing STUBS for a renamed tool (2026-09-18):
+/// they carry no query, rank for nothing, and go away next release.
+const DEPRECATED: &[&str] = &["record_change", "manual_work_report"];
+
+const RANK_BASELINE: &str = include_str!("fixtures/find_tools_rank_baseline.json");
+
+const EXEMPT: &[(&str, &str)] = &[];
 
 fn corpus() -> BTreeMap<String, String> {
     let v: Value = serde_json::from_str(CORPUS).expect("corpus parses");
@@ -81,6 +83,10 @@ async fn top5(s: &ReflowService, query: &str) -> Vec<String> {
         .iter()
         .filter_map(|i| i["tool"].as_str().map(String::from))
         .collect()
+}
+
+fn is_deprecated(name: &str) -> bool {
+    DEPRECATED.contains(&name)
 }
 
 fn served() -> Vec<String> {
@@ -158,6 +164,7 @@ fn every_served_tool_has_a_query_in_the_corpus() {
     let corpus = corpus();
     let absent: Vec<String> = served()
         .into_iter()
+        .filter(|t| !is_deprecated(t))
         .filter(|t| !corpus.contains_key(t))
         .collect();
     assert!(
@@ -173,5 +180,105 @@ fn every_served_tool_has_a_query_in_the_corpus() {
         "corpus names {} tool(s) no longer served: {:?}",
         stale.len(),
         stale
+    );
+}
+
+/// THE RANK RATCHET (dec:idea-prune-the-tool-surface-to-an-orthogonal-essential-set,
+/// Anthony 2026-09-18: "Go with your recommendation" — words before deletion).
+///
+/// The top-5 test above passes a tool even when ANOTHER tool owns its words;
+/// measured 2026-09-17, 73 of 185 were not ranked FIRST for their own job.
+/// A description pass took that to 25, every one beaten on a NAME match
+/// (five times a description hit). Those 25 are the baseline, and the list
+/// may only shrink: a new tool must rank first for its job, and an entry that
+/// has become first must leave the baseline.
+#[tokio::test]
+async fn every_tool_ranks_first_for_its_own_job_or_is_in_the_baseline() {
+    let s = ReflowService::in_memory().expect("service");
+    let baseline: Value = serde_json::from_str(RANK_BASELINE).expect("baseline parses");
+    let listed: Vec<String> = baseline["not_first"]
+        .as_array()
+        .expect("not_first")
+        .iter()
+        .filter_map(|v| v.as_str().map(String::from))
+        .collect();
+    let corpus = corpus();
+    let mut not_first = Vec::new();
+    for (tool, query) in &corpus {
+        let got = top5(&s, query).await;
+        if got.first() != Some(tool) {
+            not_first.push(tool.clone());
+        }
+    }
+    let new: Vec<&String> = not_first.iter().filter(|t| !listed.contains(t)).collect();
+    assert!(
+        new.is_empty(),
+        "{} tool(s) are no longer ranked FIRST for their own job and are not in the \
+         baseline: {new:?}. Give the tool's description the job in the user's words (not the \
+         corpus sentence), or shorten the tool that now outranks it; the baseline only shrinks.",
+        new.len()
+    );
+    let stale: Vec<&String> = listed.iter().filter(|t| !not_first.contains(t)).collect();
+    assert!(
+        stale.is_empty(),
+        "{} baseline entry(ies) now rank FIRST — remove them from \
+         fixtures/find_tools_rank_baseline.json so the ratchet holds: {stale:?}",
+        stale.len()
+    );
+}
+
+/// The orthogonality half: no NEW pair of tools may become mutually
+/// confusable (each in the other's top 5 for its own job). The recorded pairs
+/// are the ceiling; a pair that comes apart leaves the baseline.
+#[tokio::test]
+async fn no_new_mutually_confusable_pair() {
+    let s = ReflowService::in_memory().expect("service");
+    let baseline: Value = serde_json::from_str(RANK_BASELINE).expect("baseline parses");
+    let listed: Vec<(String, String)> = baseline["mutual"]
+        .as_array()
+        .expect("mutual")
+        .iter()
+        .filter_map(|p| {
+            let a = p[0].as_str()?;
+            let b = p[1].as_str()?;
+            Some((a.to_string(), b.to_string()))
+        })
+        .collect();
+    let corpus = corpus();
+    let mut top: BTreeMap<String, Vec<String>> = BTreeMap::new();
+    for (tool, query) in &corpus {
+        top.insert(tool.clone(), top5(&s, query).await);
+    }
+    let mut mutual: Vec<(String, String)> = Vec::new();
+    for (t, list) in &top {
+        for u in list {
+            if u == t || !corpus.contains_key(u) {
+                continue;
+            }
+            if top[u].contains(t) {
+                let pair = if t < u {
+                    (t.clone(), u.clone())
+                } else {
+                    (u.clone(), t.clone())
+                };
+                if !mutual.contains(&pair) {
+                    mutual.push(pair);
+                }
+            }
+        }
+    }
+    let new: Vec<&(String, String)> = mutual.iter().filter(|p| !listed.contains(p)).collect();
+    assert!(
+        new.is_empty(),
+        "{} NEW mutually confusable pair(s): {new:?}. Two tools now answer the same job \
+         sentence; sharpen the first sentence of one, or fold them. The baseline only shrinks.",
+        new.len()
+    );
+    let stale: Vec<&(String, String)> = listed.iter().filter(|p| !mutual.contains(p)).collect();
+    assert!(
+        stale.is_empty(),
+        "{} baseline pair(s) have come apart — remove them from \
+         fixtures/find_tools_rank_baseline.json: {stale:?}",
+        stale.len()
     );
 }

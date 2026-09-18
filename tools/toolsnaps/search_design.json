@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": true
   },
-  "description": "Find design nodes by what they say, when you don't know their ids — 'what does the design say about persistence?', 'is there already a requirement about latency?'. BM25 keyword search over every node's name/statement/description, ranked, optionally scoped to one node type. Search BEFORE creating a node that might already exist, and to map the user's words to the node they mean. Result reports its own bounds: hits.len() == limit means there may be more, and a non-empty `stale` list means the index has drifted from the store.",
+  "description": "Find design nodes by what they say, when you don't know their ids — 'what does the design say about persistence?', 'is there already a requirement about latency?'. BM25 keyword search over every node's name/statement/description, ranked, optionally scoped to one node type. Search BEFORE creating a node that might already exist, and to map the user's words to the node they mean. Result reports its own bounds: hits.len() == limit means there may be more, and a non-empty `stale` list means the index has drifted from the store. Ask for this to find out whether anyone has written something down about a subject, such as budgets.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,

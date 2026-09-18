@@ -1,8 +1,8 @@
-//! The served `record_change` can state WHICH AXIS a change is on.
+//! The served `snapshot_before_change` can state WHICH AXIS a change is on.
 //!
 //! `subject` — `system` (the thing changed) or `record` (the thing did not
 //! change and only the design's knowledge of it did) — reached the schema and
-//! `add_change_event`, and stopped there. `record_change` is the composed
+//! `add_change_event`, and stopped there. `snapshot_before_change` is the composed
 //! CHANGE step: the call a session makes when it snapshots a node before
 //! editing it, and the one it is on when accepting drift. It took no `subject`,
 //! so the axis was unreachable from the path that needed it most.
@@ -68,7 +68,7 @@ async fn subject_of(s: &ReflowService, id: &str) -> Option<String> {
 #[tokio::test]
 async fn the_record_axis_reaches_the_stored_event() {
     let s = svc_with_an_epoch_and_a_target().await;
-    j!(s.record_change(Parameters(RecordChangeReq {
+    j!(s.snapshot_before_change(Parameters(RecordChangeReq {
         epoch_id: "epoch:e".into(),
         change_event_id: "chg:only-our-knowledge-moved".into(),
         name: "re-synced against what was already there".into(),
@@ -94,7 +94,7 @@ async fn the_record_axis_reaches_the_stored_event() {
 #[tokio::test]
 async fn the_system_axis_reaches_the_stored_event() {
     let s = svc_with_an_epoch_and_a_target().await;
-    j!(s.record_change(Parameters(RecordChangeReq {
+    j!(s.snapshot_before_change(Parameters(RecordChangeReq {
         epoch_id: "epoch:e".into(),
         change_event_id: "chg:the-thing-moved".into(),
         name: "the capability was reworded because it now does something else".into(),
@@ -119,7 +119,7 @@ async fn the_system_axis_reaches_the_stored_event() {
 #[tokio::test]
 async fn omitting_the_axis_is_accepted_and_writes_nothing() {
     let s = svc_with_an_epoch_and_a_target().await;
-    j!(s.record_change(Parameters(RecordChangeReq {
+    j!(s.snapshot_before_change(Parameters(RecordChangeReq {
         epoch_id: "epoch:e".into(),
         change_event_id: "chg:unstated".into(),
         name: "nobody said which axis this is on".into(),
@@ -146,7 +146,7 @@ async fn omitting_the_axis_is_accepted_and_writes_nothing() {
 async fn an_axis_outside_the_enum_is_refused() {
     let s = svc_with_an_epoch_and_a_target().await;
     let err = s
-        .record_change(Parameters(RecordChangeReq {
+        .snapshot_before_change(Parameters(RecordChangeReq {
             epoch_id: "epoch:e".into(),
             change_event_id: "chg:typo".into(),
             name: "a typo in the axis".into(),

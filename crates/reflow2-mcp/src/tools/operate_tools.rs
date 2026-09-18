@@ -96,7 +96,8 @@ impl ReflowService {
                        instead of trusting it. `mandatory` defaults TRUE and is load-bearing: a \
                        mandatory rule the design has said nothing about is raised as a gap, an \
                        advisory one is not. Wire it with imposes, then answer it with \
-                       complies_with or violates_rule.",
+                       complies_with or violates_rule. \
+                       Ask for this to record a regulation, code or law the environment imposes on us.",
         annotations(read_only_hint = false)
     )]
     pub async fn add_environment_rule(
@@ -130,7 +131,8 @@ impl ReflowService {
                        (OPERATES_IN). Change the environment and the whole constraint space \
                        changes: a house in Kennewick meets city ordinances and seismic \
                        provisions; the same house on Mars faces 0.38 g and no atmosphere. A \
-                       project may target more than one, and each brings its own imposed rules.",
+                       project may target more than one, and each brings its own imposed rules. \
+                       Ask for this to record which environment a project runs in.",
         annotations(read_only_hint = false)
     )]
     pub async fn operates_in(
@@ -266,7 +268,8 @@ impl ReflowService {
                        CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it \
                        again with the same id and only what you are changing \u{2014} omitted \
                        fields keep their stored value, so correcting one never means re-sending \
-                       a 2 KB field you did not touch.",
+                       a 2 KB field you did not touch. \
+                       Ask for this to record the place a system will run — a site, a lab, a data centre, a rig.",
         annotations(read_only_hint = false)
     )]
     pub async fn add_environment(
@@ -385,7 +388,8 @@ impl ReflowService {
                        the manifest is reported as already_present and its frozen checksum is \
                        never rewritten, because what a past release shipped must not move with \
                        the live drift baseline. without_checksum names the artifacts whose entry \
-                       cannot say WHAT shipped.",
+                       cannot say WHAT shipped. \
+                       Ask for this to put everything built since the last release into this one.",
         annotations(read_only_hint = false)
     )]
     pub async fn release_includes_all(
@@ -427,7 +431,8 @@ impl ReflowService {
                        CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it \
                        again with the same id and only what you are changing \u{2014} omitted \
                        fields keep their stored value, so correcting one never means re-sending \
-                       a 2 KB field you did not touch.",
+                       a 2 KB field you did not touch. \
+                       Ask for this to record how mature a technology is, like a TRL rung.",
         annotations(read_only_hint = false)
     )]
     pub async fn add_readiness(
@@ -468,7 +473,8 @@ impl ReflowService {
                        increment can demand different levels of the SAME technology. \
                        CONVENTION: there is no default threshold. An increment with no gate \
                        reports 'ungated', never 'ready' — silence about a gate is not evidence \
-                       there is none.",
+                       there is none. \
+                       Ask for this when this release cannot ship until that technology is mature enough.",
         annotations(read_only_hint = false)
     )]
     pub async fn gate_on(
@@ -511,7 +517,8 @@ impl ReflowService {
                        CONVENTION: confidence is YOURS to state and reflow2 never derives one \
                        from the horizon, because a decay curve is a judgement about risk \
                        appetite. The epoch must already exist — plan_epoch it first. \
-                       Ask for this when you want to put on record when a technology is expected to reach a maturity or readiness level (a TRL) by some date.",
+                       Ask for this when you want to put on record when a technology is expected to reach a maturity or readiness level (a TRL) by some date. \
+                       Ask for this to record when we expect a technology to reach the maturity we need.",
         annotations(read_only_hint = false)
     )]
     pub async fn forecast_readiness(
@@ -553,7 +560,8 @@ impl ReflowService {
                        level and no clearing forecast, so no date can be derived — reported \
                        loudly rather than dropped from the max, which would return an \
                        optimistic date built by ignoring the inconvenient evidence). \
-                       Ask for this when you want to know when a release can ship given the technology maturity it depends on.",
+                       Ask for this when you want to know when a release can ship given the technology maturity it depends on. \
+                       Ask for this to learn when a release can ship, given the technology it depends on.",
         annotations(read_only_hint = true)
     )]
     pub async fn readiness_report(
@@ -598,7 +606,8 @@ impl ReflowService {
                        With record_events each divergence becomes a persistent DriftEvent (and \
                        an unresolved_drift gap) that a later reconcile resolves automatically \
                        when the divergence is gone; the design-side fix is deploy_to with the \
-                       true status.",
+                       true status. \
+                       Ask for this to see whether what is deployed agrees with the design — does it, and where does it not?",
         annotations(read_only_hint = false)
     )]
     pub async fn reconcile_deployment(

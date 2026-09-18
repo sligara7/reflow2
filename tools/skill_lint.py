@@ -799,6 +799,9 @@ def served_tools() -> set[str]:
 # either unrouted work or a tool that should not exist, and this forces the
 # author to say which.
 UNROUTED_REPORTS: dict[str, str] = {
+    # Renamed 2026-09-18 to `manual_work_ledger` (which capture-session names);
+    # this name is a refusing stub kept for one release and needs no skill.
+    "manual_work_report": "needs no skill — a refusing stub for the renamed manual_work_ledger",
     # TWO KINDS OF ENTRY LIVE HERE AND THEY ARE NOT THE SAME, so each reason
     # says which: "needs no skill" is settled, "no skill owns this yet" is a
     # routing gap recorded rather than papered over by naming the tool in a
@@ -831,7 +834,7 @@ TOOL_CONVENTIONS: dict[str, str] = {
     # `planned` is not evidence, and existing is not passing.
     "set_verification_status": "not confirmation",
     # The snapshot captures NOW, so the order of operations is the whole rule.
-    "record_change": "record the change BEFORE you make it",
+    "snapshot_before_change": "record the change BEFORE you make it",
     # The lineage link anchors at the COMMITTED record, not at the file on
     # disk (2026-09-12). The pinned phrase moved with the rule: "export ONCE
     # between commits" was the DISCIPLINE the old anchor demanded of the
@@ -989,7 +992,7 @@ CLASSES: dict[str, dict[str, tuple[str, ...]]] = {
         ),
     },
     "REVISES": {
-        "records the change BEFORE the edit": ("record_change", "snapshot", "BEFORE the edit"),
+        "records the change BEFORE the edit": ("snapshot_before_change", "snapshot", "BEFORE the edit"),
     },
     "REPORTS": {
         "speaks the reader's domain": (

@@ -170,7 +170,8 @@ impl ReflowService {
                        this before starting on an area someone else may already be in. Overlaps \
                        are ranked by how much they share, and two claims by the SAME person are \
                        not reported as a collision. An overlap is a WARNING, not a refusal: the \
-                       merge still resolves it correctly if two people do collide.",
+                       merge still resolves it correctly if two people do collide. \
+                       Ask for this to see who holds what right now and whether any two people are overlapping.",
         annotations(read_only_hint = true)
     )]
     pub async fn claim_report(&self) -> Result<CallToolResult, McpError> {
