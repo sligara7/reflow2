@@ -15,6 +15,7 @@ pub mod handshake;
 pub mod latent;
 pub mod lessons;
 pub mod mcp_http;
+pub mod measure;
 pub mod nudge;
 pub mod prose_currency;
 pub mod proxy;

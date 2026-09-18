@@ -582,6 +582,7 @@ async fn reconcile_surfaces_a_code_change_back_to_the_design() {
         }))],
         record_events: false,
         exhaustive: false,
+        budget_chars: None,
         detected_at: None,
     })));
     assert_eq!(clean["findings"].as_array().unwrap().len(), 0);
@@ -594,6 +595,7 @@ async fn reconcile_surfaces_a_code_change_back_to_the_design() {
         }))],
         record_events: true,
         exhaustive: false,
+        budget_chars: None,
         detected_at: Some("2026-07-18T00:00:00Z".into()),
     })));
     let findings = drifted["findings"].as_array().expect("findings");
@@ -627,7 +629,7 @@ async fn reconcile_surfaces_a_code_change_back_to_the_design() {
     // fix_without_recorded_cause asks about.
     j!(s.set_artifact_checksum(Parameters(SetChecksumReq {
         artifact_id: "art:flight".into(),
-        checksum: "sha256:v2".into(),
+        checksum: Some("sha256:v2".into()),
         disposition: "design_holds".into(),
         change_type: Some("refactor".into()),
         design_change_event_id: None,
@@ -640,6 +642,7 @@ async fn reconcile_surfaces_a_code_change_back_to_the_design() {
         }))],
         record_events: false,
         exhaustive: false,
+        budget_chars: None,
         detected_at: None,
     })));
     assert_eq!(after["findings"].as_array().unwrap().len(), 0);
@@ -674,7 +677,7 @@ async fn the_surface_can_say_that_nothing_moved() {
     // refused inside a batch, one such item discarded the rest).
     let first = j!(s.set_artifact_checksum(Parameters(SetChecksumReq {
         artifact_id: "art:flight".into(),
-        checksum: "sha256:v1".into(),
+        checksum: Some("sha256:v1".into()),
         disposition: "design_holds".into(),
         change_type: None,
         design_change_event_id: None,
@@ -693,7 +696,7 @@ async fn the_surface_can_say_that_nothing_moved() {
     assert!(
         s.set_artifact_checksum(Parameters(SetChecksumReq {
             artifact_id: "art:flight".into(),
-            checksum: "sha256:v1".into(),
+            checksum: Some("sha256:v1".into()),
             disposition: "baseline_established".into(),
             change_type: Some("refactor".into()),
             design_change_event_id: None,
@@ -707,7 +710,7 @@ async fn the_surface_can_say_that_nothing_moved() {
 
     j!(s.set_artifact_checksum(Parameters(SetChecksumReq {
         artifact_id: "art:flight".into(),
-        checksum: "sha256:v1".into(),
+        checksum: Some("sha256:v1".into()),
         disposition: "baseline_established".into(),
         change_type: None,
         design_change_event_id: None,
@@ -722,6 +725,7 @@ async fn the_surface_can_say_that_nothing_moved() {
         }))],
         record_events: true,
         exhaustive: false,
+        budget_chars: None,
         detected_at: Some("2026-08-02".into()),
     })));
     assert_eq!(clean["unchanged"], 1);

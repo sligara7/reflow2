@@ -232,21 +232,24 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Check the design against what was actually built. You supply what you \
-                       observed — for each registered artifact, whether it still exists and its \
-                       current content hash — and reflow2 reports the divergences: files that \
-                       vanished, files whose content changed since they were registered, and \
-                       files present but unknown to the design. reflow2 performs no file I/O; \
-                       compute the hashes yourself (any algorithm, used consistently). The \
-                       result's `propagation_seeds` are the design nodes the changes land on — \
-                       feed them to `propagate_from` to see what a code change means upstream.",
+        description = "Check the design against what was actually built. Called with NOTHING, \
+                       reflow2 MEASURES every registered artifact that has a location under the \
+                       project root itself — presence and sha256, never content — and reports the \
+                       divergences: files that vanished, files whose content changed since they \
+                       were registered, and files it could not reach, each named with why. The \
+                       reply's `measurement` block says the basis (measured or asserted), the root, \
+                       and what was unmeasurable. Pass `observed` only for a tree this server does \
+                       not hold; a server holding no tree refuses an empty call by name rather than \
+                       reporting zero. The result's `propagation_seeds` are the design nodes the \
+                       changes land on — feed them to `propagate_from` to see what a code change \
+                       means upstream. The reply is bounded (`budget_chars`); counts survive the cut.",
         annotations(read_only_hint = false)
     )]
     pub async fn reconcile_artifacts(
         &self,
         Parameters(req): Parameters<ReconcileArtifactsReq>,
     ) -> Result<CallToolResult, McpError> {
-        let observed: Vec<ObservedArtifact> = req
+        let asserted: Vec<ObservedArtifact> = req
             .observed
             .into_iter()
             .map(|o| serde_json::from_value(JsonValue::Object(o)))
@@ -258,7 +261,42 @@ impl ReflowService {
             detected_at: req.detected_at,
         };
         let mut g = self.write_lock().await?;
-        ok_json(g.reconcile_artifacts(&observed, &opts).map_err(dyno_err)?)
+        // MEASURED OR ASSERTED, and the reply says which. An empty `observed`
+        // used to mean "nothing checked"; since 2026-09-18 it means "measure
+        // it yourself", which this server can do only when it holds the tree.
+        let (observed, measurement) = if asserted.is_empty() {
+            if self.tree_root().is_none() {
+                return Err(McpError::invalid_params(
+                    format!(
+                        "nothing to reconcile: {}",
+                        crate::measure::NotMeasured::NoTree.reason()
+                    ),
+                    None,
+                ));
+            }
+            let (obs, block) = self.measure_registered(&g)?;
+            (obs, block)
+        } else {
+            (
+                asserted,
+                json!({ "basis": "asserted", "note": "observations were supplied by the caller and used as given; nothing was measured" }),
+            )
+        };
+        let mut out =
+            serde_json::to_value(g.reconcile_artifacts(&observed, &opts).map_err(dyno_err)?)
+                .map_err(ser_err)?;
+        if let Some(o) = out.as_object_mut() {
+            o.insert("measurement".into(), measurement);
+        }
+        // BOUNDED like every other report: a no-argument sweep of a real
+        // design answered 124,716 characters in CI the day this shipped.
+        ok_json(crate::reply_budget::bound_reply_sampling(
+            out,
+            req.budget_chars
+                .unwrap_or(crate::reply_budget::DEFAULT_REPLY_BUDGET_CHARS),
+            "`unchanged`, `measurement` and every count survive trimming; pass `observed` for \
+             the artifacts you care about to read their findings in full, or raise `budget_chars`.",
+        ))
     }
 
     #[tool(
@@ -284,18 +322,24 @@ impl ReflowService {
             req.design_change_event_id.as_deref(),
             artifact_has_baseline(&g, &req.artifact_id)?,
         )?;
-        let (artifact, change_event_id) = g
+        let (checksum, basis, measurement) =
+            self.checksum_or_measure(&g, &req.artifact_id, req.checksum.as_deref())?;
+        let (_, change_event_id) = g
             .set_artifact_checksum(
                 &req.artifact_id,
-                &req.checksum,
+                &checksum,
                 disposition,
                 req.note.as_deref(),
                 req.at.as_deref(),
             )
             .map_err(dyno_err)?;
+        let artifact = g
+            .set_checksum_basis(&req.artifact_id, basis)
+            .map_err(dyno_err)?;
         ok_json(serde_json::json!({
             "artifact": NodeDto::from(artifact),
             "change_event_id": change_event_id,
+            "measurement": measurement,
         }))
     }
 
@@ -356,6 +400,8 @@ impl ReflowService {
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await?;
         let mut accepts = Vec::with_capacity(req.accepts.len());
+        let mut bases: Vec<(String, &'static str)> = Vec::with_capacity(req.accepts.len());
+        let mut measurements = Vec::with_capacity(req.accepts.len());
         for a in &req.accepts {
             let disposition = parse_disposition(
                 &a.disposition,
@@ -368,9 +414,16 @@ impl ReflowService {
                 // is silent sends the caller back to guess across fifty.
                 McpError::invalid_params(format!("{}: {}", a.artifact_id, e.message), None)
             })?;
+            let (checksum, basis, measurement) = self
+                .checksum_or_measure(&g, &a.artifact_id, a.checksum.as_deref())
+                .map_err(|e| {
+                    McpError::invalid_params(format!("{}: {}", a.artifact_id, e.message), None)
+                })?;
+            bases.push((a.artifact_id.clone(), basis));
+            measurements.push(json!({ "artifact_id": a.artifact_id, "measurement": measurement }));
             accepts.push(BulkChecksumAccept {
                 artifact_id: a.artifact_id.clone(),
-                checksum: a.checksum.clone(),
+                checksum,
                 disposition,
                 note: a.note.clone(),
                 at: a.at.clone(),
@@ -379,10 +432,25 @@ impl ReflowService {
         let report = g
             .set_artifact_checksums_with(&accepts, req.check_only)
             .map_err(dyno_err)?;
-        bulk_result(
+        // The basis rides only on a batch that applied: a check-only pass
+        // writes nothing, and a refused batch moves no baseline.
+        if !req.check_only && report.applied {
+            for (id, basis) in &bases {
+                g.set_checksum_basis(id, basis).map_err(dyno_err)?;
+            }
+        }
+        let mut out = bulk_result(
             report,
             |(artifact, change_event_id)| json!({ "artifact": NodeDto::from(artifact), "change_event_id": change_event_id }),
-        )
+        )?;
+        if let Some(sc) = out
+            .structured_content
+            .as_mut()
+            .and_then(|v| v.as_object_mut())
+        {
+            sc.insert("measurements".into(), json!(measurements));
+        }
+        Ok(out)
     }
 
     // ---- Artifact linking (connect real files to the design) ----
@@ -499,7 +567,10 @@ impl ReflowService {
                        as-designed vs as-built stays honest. RE-LINKING IS SAFE: `name` and `description` are \
                        required only on the FIRST link, and omitting either afterwards LEAVES THE STORED ONE \
                        ALONE — so attaching a file to a second target never renames it or drops its prose. Pass \
-                       them again only when you mean to change them. Ask for this when you want to record that \
+                       them again only when you mean to change them. OMIT `checksum` for a file under the \
+                       project root: the server measures it (sha256, never content) and records \
+                       `checksum_basis: measured`; a supplied one is `asserted` and the reply says whether it \
+                       agrees. Ask for this when you want to record that \
                        a source file or document implements a capability or part — register the file against \
                        the design.",
         annotations(read_only_hint = false)
@@ -522,15 +593,188 @@ impl ReflowService {
             conformance: req.conformance,
             provenance: req.provenance,
             fragment_id: req.fragment_id,
-            checksum: req.checksum,
+            checksum: None,
             content_ref: req.content_ref.clone(),
             note_kind: req.note_kind.clone(),
         };
         let mut g = self.write_lock().await?;
+        // MEASURED WHEN IT CAN BE. The location the caller registers is the
+        // one measured; an artifact re-linked without a location keeps its
+        // stored one, so look that up. A location this server cannot reach is
+        // registered all the same — the reply names why it was not measured,
+        // and the artifact simply carries no baseline until one is supplied.
+        let location = opts.location.clone().or_else(|| {
+            g.get_node(reflow2_core::nodes::node::ARTIFACT, &opts.artifact_id)
+                .ok()
+                .flatten()
+                .and_then(|n| {
+                    n.properties
+                        .get("location")
+                        .and_then(|v| v.as_str())
+                        .map(str::to_string)
+                })
+        });
+        let measured = location.as_deref().map(|l| self.measure(l));
+        let (checksum, basis, measurement): (Option<String>, Option<&str>, JsonValue) = match (
+            req.checksum.as_deref(),
+            measured,
+        ) {
+            (Some(given), Some(Ok(m))) => {
+                let agrees = reflow2_core::artifact::checksums_agree(
+                    &reflow2_core::artifact::canonical_checksum(given),
+                    &m.checksum,
+                );
+                (
+                    Some(given.to_string()),
+                    Some("asserted"),
+                    json!({ "basis": "asserted", "measured_checksum": m.checksum, "bytes": m.bytes,
+                                "measured_path": m.measured_path, "agrees": agrees }),
+                )
+            }
+            (Some(given), Some(Err(why))) => (
+                Some(given.to_string()),
+                Some("asserted"),
+                json!({ "basis": "asserted", "not_measured": why, "note": why.reason() }),
+            ),
+            (Some(given), None) => (
+                Some(given.to_string()),
+                Some("asserted"),
+                json!({ "basis": "asserted", "note": "no location to measure" }),
+            ),
+            (None, Some(Ok(m))) => (
+                Some(m.checksum.clone()),
+                Some("measured"),
+                json!({ "basis": "measured", "checksum": m.checksum, "bytes": m.bytes, "measured_path": m.measured_path }),
+            ),
+            (None, Some(Err(why))) => (
+                None,
+                None,
+                json!({ "basis": "none", "not_measured": why, "note": format!("no baseline recorded — {}", why.reason()) }),
+            ),
+            (None, None) => (
+                None,
+                None,
+                json!({ "basis": "none", "note": "no location and no checksum: nothing to measure, no baseline recorded" }),
+            ),
+        };
+        let opts = LinkArtifactOptions { checksum, ..opts };
+        let artifact_id = opts.artifact_id.clone();
+        let link = g.link_artifact(opts).map_err(dyno_err)?;
+        if let Some(b) = basis {
+            g.set_checksum_basis(&artifact_id, b).map_err(dyno_err)?;
+        }
+        let mut out = serde_json::to_value(link).map_err(ser_err)?;
+        if let Some(o) = out.as_object_mut() {
+            o.insert("measurement".into(), measurement);
+        }
         with_loop_hint(
-            g.link_artifact(opts).map_err(dyno_err)?,
+            out,
             "loop: as-built moved — reconcile_artifacts confirms the design still describes \
              what's on disk; loop_status says what else is owed",
         )
+    }
+
+    /// The checksum an accept records, and how it came to be: the caller's
+    /// (asserted) or the server's (measured, when the caller passed none).
+    /// An omitted checksum the server cannot measure is REFUSED by name —
+    /// the one thing an accept must never do is move a baseline to a guess.
+    fn checksum_or_measure(
+        &self,
+        g: &DesignGraph,
+        artifact_id: &str,
+        given: Option<&str>,
+    ) -> Result<(String, &'static str, JsonValue), McpError> {
+        if let Some(c) = given {
+            return Ok((c.to_string(), "asserted", json!({ "basis": "asserted" })));
+        }
+        let location = g
+            .get_node(reflow2_core::nodes::node::ARTIFACT, artifact_id)
+            .map_err(dyno_err)?
+            .and_then(|n| {
+                n.properties
+                    .get("location")
+                    .and_then(|v| v.as_str())
+                    .map(str::to_string)
+            })
+            .ok_or_else(|| {
+                McpError::invalid_params(
+                    format!(
+                        "`{artifact_id}` has no location, so there is nothing to measure — pass \
+                         `checksum` to assert one"
+                    ),
+                    None,
+                )
+            })?;
+        match self.measure(&location) {
+            Ok(m) => Ok((
+                m.checksum.clone(),
+                "measured",
+                json!({ "basis": "measured", "checksum": m.checksum, "bytes": m.bytes, "measured_path": m.measured_path }),
+            )),
+            Err(why) => Err(McpError::invalid_params(
+                format!(
+                    "`{artifact_id}` was not measured: {} — pass `checksum` to assert one",
+                    why.reason()
+                ),
+                None,
+            )),
+        }
+    }
+
+    /// Measure every registered artifact that has a location, as the
+    /// observations a reconcile takes — presence and digest, nothing read for
+    /// meaning — plus the block the reply carries saying what was reached.
+    /// Locations this server cannot measure are NOT reported absent: they are
+    /// left out of the observations and named, with why, in the block.
+    pub(crate) fn measure_registered(
+        &self,
+        g: &DesignGraph,
+    ) -> Result<(Vec<ObservedArtifact>, JsonValue), McpError> {
+        let mut observed = Vec::new();
+        let mut unmeasurable = Vec::new();
+        let mut absent = 0usize;
+        let mut measured = 0usize;
+        let mut without_location = 0usize;
+        for a in g
+            .scan_nodes(reflow2_core::nodes::node::ARTIFACT)
+            .map_err(dyno_err)?
+        {
+            let Some(location) = a.properties.get("location").and_then(|v| v.as_str()) else {
+                without_location += 1;
+                continue;
+            };
+            match self.measure(location) {
+                Ok(m) => {
+                    measured += 1;
+                    observed.push(ObservedArtifact {
+                        artifact_id: a.node_id.clone(),
+                        present: true,
+                        checksum: Some(m.checksum),
+                        realizes: None,
+                    });
+                }
+                Err(crate::measure::NotMeasured::Absent { .. }) => {
+                    absent += 1;
+                    observed.push(ObservedArtifact {
+                        artifact_id: a.node_id.clone(),
+                        present: false,
+                        checksum: None,
+                        realizes: None,
+                    });
+                }
+                Err(why) => unmeasurable.push(
+                    json!({ "artifact_id": a.node_id, "location": location, "not_measured": why }),
+                ),
+            }
+        }
+        let block = json!({
+            "basis": "measured",
+            "root": self.tree_root().map(|r| r.display().to_string()),
+            "measured": measured,
+            "absent": absent,
+            "without_location": without_location,
+            "unmeasurable": unmeasurable,
+        });
+        Ok((observed, block))
     }
 }

@@ -317,7 +317,92 @@ pub struct ReconcileOptions {
     pub detected_at: Option<String>,
 }
 
+/// The read-only twin of [`DesignGraph::reconcile_artifacts`]: the same
+/// classification of a set of observations, as COUNTS, writing nothing and
+/// taking no write lock — so `loop_status` can say, at every boundary, how
+/// many registered files differ from their baseline right now. The rules are
+/// the reconcile's (volatility turns a change into an expected one; a retiring
+/// decision turns an absence into an expected one); what is left out is the
+/// directional judgement and the event ledger, which only a reconcile owes.
+#[derive(Debug, Clone, Default, serde::Serialize)]
+pub struct DriftSummary {
+    /// Observations classified.
+    pub checked: usize,
+    pub unchanged: usize,
+    /// Changed, and the artifact's volatility says that is drift.
+    pub changed: usize,
+    /// Changed, and the artifact declares itself append-only or living.
+    pub expected_change: usize,
+    /// Absent, and nothing retired it.
+    pub missing: usize,
+    /// Absent, and an accepted decision retired it.
+    pub expected_absence: usize,
+    /// Present but no checksum on one side or the other.
+    pub no_baseline: usize,
+    /// Observed but not registered.
+    pub unregistered: usize,
+    /// The ids behind `changed` and `missing`, in that order, capped.
+    pub attention: Vec<String>,
+}
+
 impl DesignGraph {
+    /// See [`DriftSummary`].
+    pub fn drift_summary(&self, observed: &[ObservedArtifact]) -> Result<DriftSummary, DynoError> {
+        const CAP: usize = 12;
+        let mut s = DriftSummary::default();
+        let mut changed_ids = Vec::new();
+        let mut missing_ids = Vec::new();
+        for obs in observed {
+            s.checked += 1;
+            let Some(artifact) = self.get_node(node::ARTIFACT, &obs.artifact_id)? else {
+                s.unregistered += 1;
+                continue;
+            };
+            if !obs.present {
+                if self.is_discontinued(&obs.artifact_id)? {
+                    s.expected_absence += 1;
+                } else {
+                    s.missing += 1;
+                    missing_ids.push(obs.artifact_id.clone());
+                }
+                continue;
+            }
+            let recorded = artifact
+                .properties
+                .get("checksum")
+                .and_then(|v| v.as_str())
+                .filter(|c| !c.is_empty())
+                .map(crate::artifact::canonical_checksum);
+            let current = obs
+                .checksum
+                .as_deref()
+                .map(crate::artifact::canonical_checksum);
+            match (recorded, current) {
+                (Some(r), Some(c)) if crate::artifact::checksums_agree(&r, &c) => s.unchanged += 1,
+                (Some(_), Some(_)) => {
+                    let volatility = artifact
+                        .properties
+                        .get("volatility")
+                        .and_then(|v| v.as_str())
+                        .unwrap_or("stable");
+                    if matches!(volatility, "append_only" | "living") {
+                        s.expected_change += 1;
+                    } else {
+                        s.changed += 1;
+                        changed_ids.push(obs.artifact_id.clone());
+                    }
+                }
+                _ => s.no_baseline += 1,
+            }
+        }
+        s.attention = changed_ids
+            .into_iter()
+            .chain(missing_ids)
+            .take(CAP)
+            .collect();
+        Ok(s)
+    }
+
     /// Compare observed reality against the design's `Artifact` records.
     ///
     /// Never mutates unless `record_events` is set, and then only *adds*

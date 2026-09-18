@@ -431,6 +431,16 @@ pub struct ReflowService {
     /// property of the SERVER — one file, one task — and a per-session copy
     /// would mean N tasks racing to write one path.
     auto_export: Option<Arc<crate::auto_export::AutoExport>>,
+    /// The project tree this design describes, when this server holds it —
+    /// `<root>` for a store at `<root>/.reflow2/graph`. `None` for an
+    /// in-memory design, a registry-served one, or any server told it does not
+    /// hold the checkout: measuring a registered file
+    /// (`crate::measure`) then refuses BY NAME instead of finding nothing.
+    /// A property of the SERVER like the graph, shared across sessions.
+    tree_root: Option<std::path::PathBuf>,
+    /// Measurements memoised on (length, mtime), shared across sessions for
+    /// the same reason `auto_export` is: one server, one disk.
+    measure_memo: crate::measure::SharedMemo,
 }
 
 /// See [`ReflowService::read_hint`]. `computed_gen: None` means nothing has been
@@ -2372,8 +2382,11 @@ pub struct LinkArtifactReq {
     #[serde(default)]
     pub fragment_id: Option<String>,
     /// Content hash of the file as registered — the baseline `reconcile_artifacts`
-    /// compares against later. Supply it whenever you can; without it a content
-    /// change is reported as `no_baseline` instead of being caught.
+    /// compares against later. OMIT IT when the file is under the project root:
+    /// since 2026-09-18 the server measures it (sha256) and records
+    /// `checksum_basis: measured`; a supplied value is recorded as `asserted`,
+    /// and the reply says whether it agrees with what was measured. Supply one
+    /// only for a location this server cannot reach.
     #[serde(default)]
     pub checksum: Option<String>,
     /// A pointer to the SOURCE CONTENT — a path or a hash — rather than
@@ -2921,7 +2934,10 @@ pub struct CreateEdgesReq {
 #[serde(deny_unknown_fields)]
 pub struct ChecksumAcceptReq {
     pub artifact_id: String,
-    pub checksum: String,
+    /// Omitted: measured by the server under the project root (basis
+    /// `measured`); supplied: recorded as `asserted`.
+    #[serde(default)]
+    pub checksum: Option<String>,
     /// `design_holds` (the change carries no design meaning), `design_updated`
     /// (behaviour moved and the design moved with it), or
     /// `baseline_established` (no checksum yet — a FIRST baseline, so nothing
@@ -4565,7 +4581,20 @@ pub struct WallCheckReq {
 pub struct ReconcileArtifactsReq {
     /// What you observed, one entry per artifact you checked:
     /// `{ "artifact_id", "present": bool, "checksum": "<hash>"? }`.
+    /// OPTIONAL since 2026-09-18: omitted, the server measures every
+    /// registered artifact that has a location under the project root itself
+    /// (basis `measured`) and the reply's `measurement` block says what it
+    /// could and could not reach; supplied, your observations are used as
+    /// given (basis `asserted`). A server that does not hold the tree refuses
+    /// an omitted sweep by name.
+    #[serde(default)]
     pub observed: Vec<JsonObject>,
+    /// Bound the report to this many characters (default the shared reply
+    /// budget). Measured 2026-09-18: a no-argument sweep of reflow2's own 400
+    /// registered files answered 124,716 characters. The counts and the
+    /// `measurement` block survive trimming; the report says when it was cut.
+    #[serde(default)]
+    pub budget_chars: Option<usize>,
     /// Record what this pass found (default false — looking is not writing): a
     /// `DriftEvent` per divergence, and a dated confirmation on every artifact
     /// observed to still match its baseline, so a clean sweep is
@@ -4630,8 +4659,13 @@ pub struct ArtifactIntentReq {
 pub struct SetChecksumReq {
     /// The registered Artifact (`art:…`) whose drift baseline is being accepted — the one `reconcile_artifacts` or `reflow2_check` reported as `checksum_change`.
     pub artifact_id: String,
-    /// The accepted content hash — the new drift baseline.
-    pub checksum: String,
+    /// The accepted content hash — the new drift baseline. OPTIONAL since
+    /// 2026-09-18: omitted, the server MEASURES the file at the artifact's
+    /// location under the project root and records the basis as `measured`;
+    /// supplied, it is recorded as `asserted`. A server that does not hold the
+    /// tree refuses an omitted checksum by name rather than guessing.
+    #[serde(default)]
+    pub checksum: Option<String>,
     /// The answer to the second question — required, because "accept the file,
     /// leave the design alone, say nothing" is the option that erodes a design
     /// (BL-33). `design_holds`: the change carries no design meaning (a
@@ -5385,6 +5419,10 @@ impl ReflowService {
             graph: Arc::new(RwLock::new(graph)),
             read_only: false,
             seat: std::sync::Arc::new(reflow2_core::identity::SeatLease::attach()),
+            tree_root: graph_path
+                .as_deref()
+                .map(|gp| crate::wall_check::project_root(Some(gp), None)),
+            measure_memo: Default::default(),
             graph_path,
             written_by: None,
             // adding a store did not have to change every constructor.
@@ -5442,6 +5480,39 @@ impl ReflowService {
     /// What the write-through has done, for the reports. `None` when the server
     /// was not started with `--export-to`, which is a different fact from
     /// "it has done nothing" and must not share a reply with it.
+    /// Serve this design as one whose project tree is at `root` — the
+    /// operator's word over the path-derived default, and what a test uses to
+    /// give an in-memory design a directory to measure under.
+    pub fn with_tree_root(mut self, root: impl Into<std::path::PathBuf>) -> Self {
+        self.tree_root = Some(root.into());
+        self
+    }
+
+    /// Serve this design as one whose tree is NOT here — a registry of designs,
+    /// a read surface on another machine. Every measurement then refuses by
+    /// name (`NotMeasured::NoTree`) rather than reporting files absent.
+    pub fn without_tree(mut self) -> Self {
+        self.tree_root = None;
+        self
+    }
+
+    /// Where a registered location is measured under, if anywhere.
+    pub fn tree_root(&self) -> Option<&std::path::Path> {
+        self.tree_root.as_deref()
+    }
+
+    /// Measure a registered location under this server's tree — hash, size,
+    /// presence; never content. See `crate::measure` for the bounds.
+    pub(crate) fn measure(
+        &self,
+        location: &str,
+    ) -> Result<crate::measure::Measurement, crate::measure::NotMeasured> {
+        let Some(root) = self.tree_root.as_deref() else {
+            return Err(crate::measure::NotMeasured::NoTree);
+        };
+        crate::measure::measure(root, location, Some(&self.measure_memo))
+    }
+
     pub fn auto_export_status(&self) -> Option<(String, crate::auto_export::Status)> {
         self.auto_export
             .as_ref()
@@ -5484,6 +5555,8 @@ impl ReflowService {
             seat: std::sync::Arc::new(reflow2_core::identity::SeatLease::attach()),
             read_hint: Arc::new(std::sync::Mutex::new(ReadHintCache::default())),
             auto_export: self.auto_export.clone(),
+            tree_root: self.tree_root.clone(),
+            measure_memo: Arc::clone(&self.measure_memo),
         }
     }
 

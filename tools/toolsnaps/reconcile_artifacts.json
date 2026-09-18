@@ -2,11 +2,21 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Check the design against what was actually built. You supply what you observed — for each registered artifact, whether it still exists and its current content hash — and reflow2 reports the divergences: files that vanished, files whose content changed since they were registered, and files present but unknown to the design. reflow2 performs no file I/O; compute the hashes yourself (any algorithm, used consistently). The result's `propagation_seeds` are the design nodes the changes land on — feed them to `propagate_from` to see what a code change means upstream.",
+  "description": "Check the design against what was actually built. Called with NOTHING, reflow2 MEASURES every registered artifact that has a location under the project root itself — presence and sha256, never content — and reports the divergences: files that vanished, files whose content changed since they were registered, and files it could not reach, each named with why. The reply's `measurement` block says the basis (measured or asserted), the root, and what was unmeasurable. Pass `observed` only for a tree this server does not hold; a server holding no tree refuses an empty call by name rather than reporting zero. The result's `propagation_seeds` are the design nodes the changes land on — feed them to `propagate_from` to see what a code change means upstream. The reply is bounded (`budget_chars`); counts survive the cut.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
     "properties": {
+      "budget_chars": {
+        "default": null,
+        "description": "Bound the report to this many characters (default the shared reply\nbudget). Measured 2026-09-18: a no-argument sweep of reflow2's own 400\nregistered files answered 124,716 characters. The counts and the\n`measurement` block survive trimming; the report says when it was cut.",
+        "format": "uint",
+        "minimum": 0,
+        "type": [
+          "integer",
+          "null"
+        ]
+      },
       "detected_at": {
         "default": null,
         "description": "Timestamp for recorded events (reflow2 takes no clock). Also dates the\nconfirmations: without it, matched artifacts come back listed under\n`unconfirmed_undated` rather than being confirmed with no date.",
@@ -21,7 +31,8 @@
         "type": "boolean"
       },
       "observed": {
-        "description": "What you observed, one entry per artifact you checked:\n`{ \"artifact_id\", \"present\": bool, \"checksum\": \"<hash>\"? }`.",
+        "default": [],
+        "description": "What you observed, one entry per artifact you checked:\n`{ \"artifact_id\", \"present\": bool, \"checksum\": \"<hash>\"? }`.\nOPTIONAL since 2026-09-18: omitted, the server measures every\nregistered artifact that has a location under the project root itself\n(basis `measured`) and the reply's `measurement` block says what it\ncould and could not reach; supplied, your observations are used as\ngiven (basis `asserted`). A server that does not hold the tree refuses\nan omitted sweep by name.",
         "items": {
           "additionalProperties": true,
           "type": "object"
@@ -34,9 +45,6 @@
         "type": "boolean"
       }
     },
-    "required": [
-      "observed"
-    ],
     "type": "object"
   },
   "name": "reconcile_artifacts"

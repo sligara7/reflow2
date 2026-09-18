@@ -136,7 +136,9 @@ pub use detect::{
 };
 pub use dimensions::{Dimension, DimensionDrift, DriftDirection};
 pub use discover::{DesignAtPath, DesignPathState, describe_at};
-pub use drift::{DriftFinding, DriftKind, DriftReport, ObservedArtifact, ReconcileOptions};
+pub use drift::{
+    DriftFinding, DriftKind, DriftReport, DriftSummary, ObservedArtifact, ReconcileOptions,
+};
 pub use export::ImportOptions;
 pub use export::{
     ExportedEdge, ExportedNode, GraphExport, ImportReport, MirrorRef, MirrorReport,

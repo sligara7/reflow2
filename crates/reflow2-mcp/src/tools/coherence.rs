@@ -337,6 +337,57 @@ impl ReflowService {
                 obj.insert("auto_export".into(), block);
             }
         }
+        // WHAT IS ON DISK RIGHT NOW against what the design recorded — measured
+        // here, at the boundary, rather than only when a gate runs at commit
+        // time (`req:reflow2-measures-registered-files-and-never-reads-them-for-meaning`).
+        // Same shape as `served_by`: a block always, a line in `next` only
+        // when something is owed. A server that does not hold the tree says
+        // so in the block instead of reporting zero drift — a detector with
+        // nothing to run on must never read like one that ran clean.
+        {
+            let block = match self.tree_root() {
+                None => json!({
+                    "measured": false,
+                    "note": crate::measure::NotMeasured::NoTree.reason(),
+                }),
+                Some(root) => {
+                    let (observed, reach) = self.measure_registered(&g)?;
+                    let summary = g.drift_summary(&observed).map_err(dyno_err)?;
+                    let owed = summary.changed + summary.missing;
+                    if owed > 0
+                        && let Some(arr) = payload.get_mut("next").and_then(|v| v.as_array_mut())
+                    {
+                        arr.insert(
+                            0,
+                            json!(format!(
+                                "ON DISK NOW: {} registered file(s) differ from their baseline and {} \
+                                 are missing — reconcile_artifacts (no arguments) names each, then \
+                                 set_artifact_checksums with a disposition per file: {}",
+                                summary.changed,
+                                summary.missing,
+                                summary.attention.join(", ")
+                            )),
+                        );
+                    }
+                    let mut b = serde_json::to_value(&summary).map_err(ser_err)?;
+                    if let Some(o) = b.as_object_mut() {
+                        o.insert("measured".into(), json!(true));
+                        o.insert("root".into(), json!(root.display().to_string()));
+                        o.insert(
+                            "unmeasurable".into(),
+                            reach
+                                .get("unmeasurable")
+                                .cloned()
+                                .unwrap_or_else(|| json!([])),
+                        );
+                    }
+                    b
+                }
+            };
+            if let Some(obj) = payload.as_object_mut() {
+                obj.insert("artifacts".into(), block);
+            }
+        }
         // THE LENS RIDES THIS REPLY TOO, and the reason is a field report.
         //
         // 2026-09-14: a session closed with *"6 structural findings and 1

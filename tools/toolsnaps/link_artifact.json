@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Register a real file against the design WITH provenance, atomically: Artifact + a provenance Fragment (YIELDED) + a REALIZES edge to the Capability/Component it implements. Fails loud if the target is missing. Use after building a file so as-designed vs as-built stays honest. RE-LINKING IS SAFE: `name` and `description` are required only on the FIRST link, and omitting either afterwards LEAVES THE STORED ONE ALONE — so attaching a file to a second target never renames it or drops its prose. Pass them again only when you mean to change them. Ask for this when you want to record that a source file or document implements a capability or part — register the file against the design.",
+  "description": "Register a real file against the design WITH provenance, atomically: Artifact + a provenance Fragment (YIELDED) + a REALIZES edge to the Capability/Component it implements. Fails loud if the target is missing. Use after building a file so as-designed vs as-built stays honest. RE-LINKING IS SAFE: `name` and `description` are required only on the FIRST link, and omitting either afterwards LEAVES THE STORED ONE ALONE — so attaching a file to a second target never renames it or drops its prose. Pass them again only when you mean to change them. OMIT `checksum` for a file under the project root: the server measures it (sha256, never content) and records `checksum_basis: measured`; a supplied one is `asserted` and the reply says whether it agrees. Ask for this when you want to record that a source file or document implements a capability or part — register the file against the design.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
@@ -20,7 +20,7 @@
       },
       "checksum": {
         "default": null,
-        "description": "Content hash of the file as registered — the baseline `reconcile_artifacts`\ncompares against later. Supply it whenever you can; without it a content\nchange is reported as `no_baseline` instead of being caught.",
+        "description": "Content hash of the file as registered — the baseline `reconcile_artifacts`\ncompares against later. OMIT IT when the file is under the project root:\nsince 2026-09-18 the server measures it (sha256) and records\n`checksum_basis: measured`; a supplied value is recorded as `asserted`,\nand the reply says whether it agrees with what was measured. Supply one\nonly for a location this server cannot reach.",
         "type": [
           "string",
           "null"

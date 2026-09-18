@@ -86,6 +86,10 @@ NON_TOOL_TERMS = {
     # discover that from a refusal. Field terms, not tools. Declared 2026-09-07
     # alongside the constructor that closes
     # `fact:the-root-cause-skill-is-demanded-by-no-tool-and-named-by-no-trigger-so-it-loads-only-by-luck`.
+    # link-artifacts (2026-09-18): the FIELDS of the replies the skill reads —
+    # `measurement` on link_artifact / reconcile_artifacts, `artifacts` on
+    # loop_status — since reflow2 measures registered files itself.
+    "measurement", "artifacts",
     "caused_by",
     "cause_evidence",
 

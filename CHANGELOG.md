@@ -33,6 +33,23 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **reflow2 measures registered files, and never reads them for meaning.** Anthony, 2026-09-18,
+  closing the "reflow2 does no file I/O — should it?" brainstorm on the narrow reading: the slogan
+  was always shorthand for "no interpretation", and hashing is counting. Until now every checksum
+  on an Artifact was a value an agent pasted, and the graph could not tell a pasted hash from a
+  made-up one (on reflow2's own design an agent hashed 18 files by hand in one increment; the
+  Seattle building adopt pasted every one). Now `link_artifact`, `set_artifact_checksum` and
+  `set_artifact_checksums` measure the file (sha256, streamed) when `checksum` is omitted and
+  record `checksum_basis: measured`; a supplied value is `asserted`, and the reply says whether it
+  agrees with what was measured. `reconcile_artifacts` called with nothing measures every
+  registered artifact with a location and reports what it could not reach, by name. `loop_status`
+  gains an `artifacts` block with the live count of drifted and missing files, and a line in
+  `next` when any are. The bounds are the design: a location is resolved only under the project
+  root (a symlink or `..` that escapes is refused unread), nothing returns content, nothing walks a
+  tree, and a server that does not hold the tree (in memory, a registry over HTTP) says "not on
+  this machine" instead of reporting zero. New schema property `Artifact.checksum_basis`.
+  `reflow2-core` still reads no file; the measuring lives in the served crate.
+
 - **A cut ends by rebuilding the binary this box serves — step 9 of the release-cut flow.**
   Measured 2026-09-18: a real building design was adopted on 0.62.0 for a whole session while
   0.64.0 was published, because the user-scope registration serves `target/release` straight,

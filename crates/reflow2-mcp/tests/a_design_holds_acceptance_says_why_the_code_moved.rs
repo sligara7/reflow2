@@ -76,7 +76,7 @@ async fn seeded(checksum: Option<&str>) -> ReflowService {
 fn accept(change_type: Option<&str>) -> SetChecksumReq {
     SetChecksumReq {
         artifact_id: "art:flight".into(),
-        checksum: "sha256:v2".into(),
+        checksum: Some("sha256:v2".into()),
         disposition: "design_holds".into(),
         change_type: change_type.map(str::to_string),
         design_change_event_id: None,
@@ -156,7 +156,7 @@ async fn the_bulk_form_refuses_the_silent_item_and_names_it() {
         .set_artifact_checksums(Parameters(SetChecksumsReq {
             accepts: vec![ChecksumAcceptReq {
                 artifact_id: "art:flight".into(),
-                checksum: "sha256:v2".into(),
+                checksum: Some("sha256:v2".into()),
                 disposition: "design_holds".into(),
                 change_type: None,
                 design_change_event_id: None,
