@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:d106804ce589037ffb370d82b9877a3e312cf80c9542650ac25f16cb1356f5aa",
+  "content_hash": "sha256:6c0d9f7cf88afe385e3256a0795da8bcf08c49625df1325050560254f4d5c345",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -1314,6 +1314,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-registered-file-is-measured-under-the-project-root-and-the-record-says-measured-or-asserted",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:tools-built"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -3796,6 +3804,14 @@
     },
     {
       "edge_type": "ANTICIPATES",
+      "from_id": "dec:idea-prune-the-tool-surface-to-an-orthogonal-essential-set",
+      "properties": {
+        "evidence": "The article's 'one way to do things' is the standardization argument the prune idea made from the other side (two doors for one job); the article adds granularity as a criterion for which door stays."
+      },
+      "to_id": "dec:idea-does-mcp-is-unnecessary-change-where-the-llm-graph-human-line-is-drawn"
+    },
+    {
+      "edge_type": "ANTICIPATES",
       "from_id": "dec:idea-reflow2-serves-a-project-that-is-not-software",
       "properties": {
         "evidence": "That node (Alex, 2026-08-14) named the shape this one instantiates: the vocabulary is neutral and 'EVERYTHING WRAPPED AROUND IT' is software-shaped. Who authors a domain artifact is a concrete instance of that wrapping, and it is deliberately NOT among its five options — so the earlier node saw the territory without covering this question."
@@ -3990,6 +4006,14 @@
         "evidence": "That decision said the failing half of 'documents to graph' is READING THE GRAPH BACK, and that reads were the unscheduled half. A topic view is exactly a read-back surface — the earlier decision saw this need coming before anyone asked for a skill by name."
       },
       "to_id": "dec:idea-a-topic-view-shows-what-the-design-holds-about-one-subject-read-only"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "dec:three-party-checks",
+      "properties": {
+        "evidence": "The 2026-07-19 division of labour already answers the premise Anthony restated; the article is about the wire, and the line it does not move was drawn here."
+      },
+      "to_id": "dec:idea-does-mcp-is-unnecessary-change-where-the-llm-graph-human-line-is-drawn"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -16288,6 +16312,16 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-does-mcp-is-unnecessary-change-where-the-llm-graph-human-line-is-drawn",
+      "properties": {
+        "roles": [
+          "author"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-does-reflow2-need-a-byte-store-at-all-or-only-durability",
       "properties": {
         "approved_at": "2026-09-11",
@@ -17514,8 +17548,10 @@
       "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-should-reflow2-measure-files-itself-and-what-the-no-file-io-rule-actually-protects",
       "properties": {
+        "approved_at": "2026-09-18",
         "roles": [
-          "author"
+          "author",
+          "approver"
         ]
       },
       "to_id": "who:ajs"
@@ -22938,6 +22974,18 @@
       "properties": {
         "authored_at": "2026-08-14",
         "roles": [
+          "author"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:reflow2-measures-registered-files-and-never-reads-them-for-meaning",
+      "properties": {
+        "approved_at": "2026-09-18",
+        "roles": [
+          "approver",
           "author"
         ]
       },
@@ -43517,6 +43565,132 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:reflow2-measures-registered-files-and-never-reads-them-for-meaning",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:artifact"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:reflow2-measures-registered-files-and-never-reads-them-for-meaning",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:coverage"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:reflow2-measures-registered-files-and-never-reads-them-for-meaning",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:design-holds-says-why-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:reflow2-measures-registered-files-and-never-reads-them-for-meaning",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:drift"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:reflow2-measures-registered-files-and-never-reads-them-for-meaning",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:link-artifacts-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:reflow2-measures-registered-files-and-never-reads-them-for-meaning",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:measure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:reflow2-measures-registered-files-and-never-reads-them-for-meaning",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:reflow2-measures-a-registered-file-and-never-reads-it-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:reflow2-measures-registered-files-and-never-reads-them-for-meaning",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:registry-http"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:reflow2-measures-registered-files-and-never-reads-them-for-meaning",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-build"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:reflow2-measures-registered-files-and-never-reads-them-for-meaning",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:reflow2-measures-registered-files-and-never-reads-them-for-meaning",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:reflow2-measures-registered-files-and-never-reads-them-for-meaning",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-built"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:reflow2-measures-registered-files-and-never-reads-them-for-meaning",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:reflow2-measures-registered-files-and-never-reads-them-for-meaning",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:vocabulary-reach"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:reflow2-states-its-own-rules-20260808",
       "properties": {
         "accepted_baseline": false,
@@ -51373,6 +51547,12 @@
       "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
+      "to_id": "cap:a-registered-file-is-measured-under-the-project-root-and-the-record-says-measured-or-asserted"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
       "to_id": "cap:a-repos-conventions-are-delivered-by-step-and-its-adapter-is-registered"
     },
     {
@@ -51800,6 +51980,12 @@
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "req:recursive-black-box-decomposition"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "req:reflow2-measures-registered-files-and-never-reads-them-for-meaning"
     },
     {
       "edge_type": "CONTAINS",
@@ -58324,6 +58510,14 @@
     },
     {
       "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-should-reflow2-measure-files-itself-and-what-the-no-file-io-rule-actually-protects",
+      "properties": {
+        "evidence": "Promoted on Anthony's word 2026-09-18 ('Go with your recommendation'): option B, the narrow reading — measure, never read for meaning."
+      },
+      "to_id": "req:reflow2-measures-registered-files-and-never-reads-them-for-meaning"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
       "from_id": "dec:idea-slash-feedback-emits-a-computed-tally-not-an-agents-recollection",
       "properties": {
         "evidence": "Anthony promoted the idea to intent on 2026-09-12 (\"I want to continue with implementing /feedback\"); the requirement is the idea's lean (A + B, unit = the project since the last report) stated as what is owed."
@@ -58803,6 +58997,14 @@
       "from_id": "cap:a-finding-describes-the-walk-that-produced-it",
       "properties": {},
       "to_id": "dec:a-misnaming-is-fixed-in-the-message-not-the-key"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:a-registered-file-is-measured-under-the-project-root-and-the-record-says-measured-or-asserted",
+      "properties": {
+        "note": "reading for meaning stays the agent's; this measures only"
+      },
+      "to_id": "dec:agent-navigates-content"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -71349,6 +71551,14 @@
         "note": "The first IMPLEMENTS edge in this design, drawn on the check that proves the edge works - dogfooded rather than declared. All seven cases live in this file, so `covers: whole` is exact."
       },
       "to_id": "ver:record-to-record-relations-are-modelled"
+    },
+    {
+      "edge_type": "IMPLEMENTS",
+      "from_id": "art:reflow2-measures-a-registered-file-and-never-reads-it-test",
+      "properties": {
+        "covers": "whole"
+      },
+      "to_id": "ver:a-registered-file-is-measured-a-pasted-hash-is-compared-an-escape-is-refused-and-no-tree-says-so"
     },
     {
       "edge_type": "IMPLEMENTS",
@@ -220130,6 +220340,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:measure",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-registered-file-is-measured-under-the-project-root-and-the-record-says-measured-or-asserted"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:merge",
       "properties": {
         "completeness": "complete",
@@ -220458,6 +220677,15 @@
         "conformance": "unchecked"
       },
       "to_id": "cap:a-session-serves-a-release-binary"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:reflow2-measures-a-registered-file-and-never-reads-it-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-registered-file-is-measured-under-the-project-root-and-the-record-says-measured-or-asserted"
     },
     {
       "edge_type": "REALIZES",
@@ -223444,6 +223672,12 @@
         "evidence": "One instance of an accepted requirement — get_skill's refusal. No new requirement was written for it, deliberately."
       },
       "to_id": "req:a-refusal-names-what-would-have-worked"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:a-registered-file-is-measured-under-the-project-root-and-the-record-says-measured-or-asserted",
+      "properties": {},
+      "to_id": "req:reflow2-measures-registered-files-and-never-reads-them-for-meaning"
     },
     {
       "edge_type": "SATISFIES",
@@ -227026,6 +227260,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:a-registered-file-is-measured-a-pasted-hash-is-compared-an-escape-is-refused-and-no-tree-says-so",
+      "properties": {},
+      "to_id": "cap:a-registered-file-is-measured-under-the-project-root-and-the-record-says-measured-or-asserted"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:a-release-that-shipped-nothing-is-reported",
       "properties": {},
       "to_id": "cap:a-release-that-shipped-nothing-is-reported"
@@ -229826,6 +230066,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:measure",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:measure"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:merge-driver-test",
       "properties": {
         "action": "created"
@@ -229983,6 +230231,14 @@
         "action": "created"
       },
       "to_id": "art:reflow2-mcp-launch"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:reflow2-measures-a-registered-file-and-never-reads-it-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:reflow2-measures-a-registered-file-and-never-reads-it-test"
     },
     {
       "edge_type": "YIELDED",
@@ -231631,7 +231887,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:5672ece57a00511fb0eaf59e1eded05f53c459a3f5b4d740d34600e5405b11e9",
+        "checksum": "sha256:ed3c5df0dd44d7939495998b05dd577cbb170539de5380c7a2456c2a38ab7c39",
+        "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/artifact.rs",
         "name": "artifact.rs",
@@ -232158,7 +232415,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:4ed612fcf25d35996c67781ce9e8fb6194d2170279f0c41153c1b2671dcaca77",
+        "checksum": "sha256:1446bbd34b90cabd11613b4a80695eaf02ef04685e242d79560b6a25d8a6f699",
+        "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/coverage.rs",
         "name": "coverage.rs",
@@ -232271,7 +232529,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "test",
-        "checksum": "sha256:58e67fc980828f7fd4355d3da009a93e138e5a520c9c1b4917dc74bc5e1904ce",
+        "checksum": "sha256:d45039f856beec3122d8c5938e5f6229916ca84f5e09c022b2a4495afe0a9bac",
+        "checksum_basis": "measured",
         "description": "Five tests on the acceptance surface: a baselined artifact accepted as design_holds with no change_type is refused and the refusal names the repair labels and the reconcile labels; a stated reason is recorded as given; a repair may still be accepted as a repair; a first baseline needs no reason; the bulk form refuses the silent item and names it. The two refusal cases observed failing before the default was removed.",
         "location": "crates/reflow2-mcp/tests/a_design_holds_acceptance_says_why_the_code_moved.rs",
         "name": "a_design_holds_acceptance_says_why_the_code_moved.rs",
@@ -232453,7 +232712,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:9f7fed9119d5ce435171c1d5ae1ea66d0737f0cfa230a48dc2ff13675fa29fbd",
+        "checksum": "sha256:4ab1eb52f82d4c69aecfd80c96cb3dd579709cfb44c6e496f529135624c3fe28",
+        "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/drift.rs",
         "name": "drift.rs",
@@ -233320,7 +233580,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:7327b9189d0d34691039c547887b6c8b5ee29a4be15eb7a2dfc7ca6951cbf4d7",
+        "checksum": "sha256:d0dcc3407426e80fa685b6d15fc07f155ef3629730c554424c64e8356d19d4ab",
+        "checksum_basis": "measured",
         "location": "getting-started/skills/link-artifacts/SKILL.md",
         "name": "link-artifacts/SKILL.md — registering what was built against what it realizes, and the doc_kind that tells the design its adapter exists",
         "status": "realized"
@@ -233434,6 +233695,18 @@
         "checksum": "sha256:a4d20ec48d8a0a3e024497ab67e55c49bba13ea12794ed3d92ad6877b56a46a6",
         "location": "crates/reflow2-mcp/src/mcp_http.rs",
         "name": "mcp_http.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:measure",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:61f85f9f00e1fb61f1c05008c6aa5c64b932ee54a5dc345ebb96ac144f127f9e",
+        "checksum_basis": "measured",
+        "location": "crates/reflow2-mcp/src/measure.rs",
+        "name": "measure.rs — a registered location measured under the project root: sha256 streamed, size, presence; refused by name outside the root; never content",
         "status": "realized"
       }
     },
@@ -233850,6 +234123,18 @@
       }
     },
     {
+      "node_id": "art:reflow2-measures-a-registered-file-and-never-reads-it-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:4df030bd7a01963e34aab4043e560c7bf75d50b3b97fbc66d524d250d043985f",
+        "checksum_basis": "measured",
+        "location": "crates/reflow2-mcp/tests/reflow2_measures_a_registered_file_and_never_reads_it.rs",
+        "name": "reflow2_measures_a_registered_file_and_never_reads_it.rs — the six properties that make measuring admissible",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:reflow2-rebuild",
       "node_type": "Artifact",
       "properties": {
@@ -233890,7 +234175,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:db04212f650fe01e840ce708319bf1f6744100d9c1c478129559b1eb85e03a49",
+        "checksum": "sha256:24e3f85a44ed7ad10a66dfa695ce2e5a2ea982aa788fe25632638b1cd0028cd4",
+        "checksum_basis": "measured",
         "description": "The `/g/&lt;graph_id&gt;/` router — the transport half of per-session design selection, and the thing that gave Registry::discover a caller outside its own tests. A hand-written hyper/tower Service because this crate deliberately does not take axum. Holds one StreamableHttpService per design, opened ON DEMAND, with a per-id OnceCell so concurrent first requests for one design collapse into a single open rather than racing, and a cap that REFUSES past its limit rather than evicting. Isolation holds by construction: the only way to name a design is the id segment, it goes straight to Registry::attach, and each design has its own session manager so a session id minted under one prefix is unknown under another.",
         "location": "crates/reflow2-mcp/src/registry_http.rs",
         "name": "registry_http.rs",
@@ -234147,7 +234433,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:8a314ca35376c559c9e5464fb584ef6d840e920501c1ff1213e1b18c8c1b17e7",
+        "checksum": "sha256:163a8ab074bedcdda4db820f5d3b707066ebe2d5b5e15cee8bd1bd0c856606bd",
+        "checksum_basis": "measured",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/build.yaml",
@@ -234429,7 +234716,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:1c3ac2cf00577356e64b9d477e96795b9a7493a8c1b2a7b924d297fd9de74425",
+        "checksum": "sha256:41f3e38bf2af625301c0c2e71f020b70724f0f4301cfe16f42f3788f7d27d5f2",
+        "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -234516,7 +234804,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:59bc1aeed19b247135e89a43c1ec2aa0cde554f9b2195a641f2b78c4b3ce0d35",
+        "checksum": "sha256:d5a3571e0eab11d8e481bd3d6af98f61af9ab8549f3c8df320e9a30e0d31495d",
+        "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -235745,7 +236034,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:d50617a8d0c062f14c8d66ff77a7945a45d693e83f202689f435c3e8e573f299",
+        "checksum": "sha256:58df2740483e756ddbd372e4d045a27e2c05dd1228ab00cdcc07dfd701a4ccce",
+        "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/built.rs",
         "name": "tools/built.rs",
@@ -235784,7 +236074,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:80f08f317842c310166489d55ec8e26467e41e50dc07990d260e700ee6f4f584",
+        "checksum": "sha256:60186dc52a32d54a8045e69bf700e6c2ee0719a9a9aaf6b78a62bbdc33e4fa5f",
+        "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
@@ -236165,7 +236456,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:bcc0ae89e5cfc7361be0780c9f608ba7b81d682f4fadad286300b03d71cf4748",
+        "checksum": "sha256:fb3fe08bdc802aac242f2764ca970ec53fd7f9342f0df3232310df29b98c94bc",
+        "checksum_basis": "measured",
         "location": "tools/vocabulary_reach.py",
         "name": "tools/vocabulary_reach.py",
         "status": "realized"
@@ -236651,6 +236943,16 @@
         "provenance": "authored",
         "status": "realized",
         "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:a-registered-file-is-measured-under-the-project-root-and-the-record-says-measured-or-asserted",
+      "node_type": "Capability",
+      "properties": {
+        "description": "As built 2026-09-18. `crate::measure` (reflow2-mcp) resolves a location under the server's tree root — `<root>` for a store at `<root>/.reflow2/graph`, the operator's `with_tree_root` otherwise — canonicalises it and refuses anything that lands outside (OutsideRoot), tells Absent from NotAFile, streams sha256 in 64 KB reads, and memoises on (length, mtime) per server so the loop pays for a 114 MB drawing set once. `link_artifact`, `set_artifact_checksum` and `set_artifact_checksums` take `checksum` as optional: omitted → measured (`checksum_basis: measured`); supplied → `asserted`, with `agrees` in the reply when the file was reachable. An accept that cannot measure refuses by name rather than moving a baseline to a guess. `reconcile_artifacts` with empty `observed` measures every registered artifact with a location and the reply's `measurement` block names the root, counts, and each unmeasurable location with why; a server holding no tree refuses the empty call by name. `loop_status.artifacts` carries `DesignGraph::drift_summary` (the read-only twin of reconcile: same volatility and retirement rules, counts only) and inserts a line in `next` when drifted+missing > 0. Registry-served designs are opened `without_tree()`. Schema: `Artifact.checksum_basis` (string, written only by the server). What it does NOT do, on purpose: list a root (the frontier's third leg waits), return content, or read for meaning.",
+        "name": "A registered file is measured under the project root, the record says measured or asserted, a reconcile with no arguments sweeps the registered set, and the loop reports live drift",
+        "provenance": "authored",
+        "status": "realized"
       }
     },
     {
@@ -246872,6 +247174,17 @@
       }
     },
     {
+      "node_id": "chg:reflow2-measures-registered-files-and-never-reads-them-for-meaning",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-09-18",
+        "name": "reflow2 measures registered files and never reads them for meaning: measure.rs, optional checksum on three tools, a sweeping reconcile, live drift in loop_status, checksum_basis",
+        "rationale": "Anthony 2026-09-18, 'Go with your recommendation on the file-measuring requirement', after the brainstorm found on the code that the server already reads and writes its own files and that the rule which actually held was no interpretation. Measured on the same day: the Seattle adopt pasted every checksum by hand.",
+        "summary": "New crates/reflow2-mcp/src/measure.rs (root-bounded measure, NotMeasured by name, memo, unit tests). ReflowService gains tree_root (derived from the graph path; with_tree_root / without_tree) and a shared measure memo; registry_http opens designs without_tree. link_artifact / set_artifact_checksum / set_artifact_checksums: checksum optional, basis recorded, reply carries a measurement block; reconcile_artifacts: observed optional, measures the registered set, reply carries measurement; loop_status: artifacts block + next line. Core: artifact::canonical_checksum and checksums_agree made pub, set_checksum_basis, drift::DriftSummary + DesignGraph::drift_summary. Schema build.yaml: checksum description rewritten, checksum_basis added, granularity's 'does no file IO' sentence corrected. sha2 returned to the mcp crate for one use site; tempfile as a dev-dependency. link-artifacts skill steps 1 and 4 rewritten (+ mirrors). Six integration tests. CHANGELOG entry."
+      }
+    },
+    {
       "node_id": "chg:reflow2-states-its-own-rules-20260808",
       "node_type": "ChangeEvent",
       "properties": {
@@ -252737,6 +253050,17 @@
       }
     },
     {
+      "node_id": "dec:idea-does-mcp-is-unnecessary-change-where-the-llm-graph-human-line-is-drawn",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-09-18, asking whether Tim Kellogg's \"MCP is unnecessary\" (https://timkellogg.me/blog/2025/04/27/mcp-is-unnecessary) changes anything about how or what reflow2 should and should not do, restating the premise: \"reflow2 is designed to partner with an LLM and human, not replace it. If there are things an LLM does better, reflow2 shouldn't try to replace that functionality. The partnership between LLM, human, and graph should be synergistic and help mitigate each other's weaknesses.\"\n\n═══ WHAT THE ARTICLE ACTUALLY CLAIMS (read 2026-09-18) ═══\nMCP has no strong technological justification — a tool declaration is text you could paste into a prompt in JSON, XML or Python; OpenAPI already advertises and calls operations — but it is necessary SOCIOLOGICALLY: \"the absolute strongest argument for MCP is that there's mostly only a single way to do things\", where OpenAPI leaves POST-vs-PUT ambiguities; and its one technical merit is GRANULARITY, wrapping a start/poll/result sequence into one operation so the model has fewer places to err. Concession: \"standards are mostly sociological advancements.\"\n\n═══ DOES IT CHANGE WHAT REFLOW2 SHOULD OR SHOULD NOT DO? — the finding, not a verdict ═══\nThe article is about the WIRE and the DECLARATION; Anthony's premise is about the DIVISION OF LABOUR. They are orthogonal: dec:three-party-checks (2026-07-19, \"the LLM speaks, the graph remembers and counts, the human decides\") holds whether reflow2 is reached over MCP, OpenAPI or a CLI, and dec:agent-navigates-content applies it to content. So the article changes nothing about WHAT reflow2 does. It says three things about HOW the surface should look, each of which the design already leans toward and one of which sharpens a criterion:\n\n1. THE DECLARATIONS ARE THE PRODUCT. If a tool declaration is just text the model reads, then the description is not documentation of the tool, it IS the interface — which is what the 2026-09-18 ruling \"words before pruning\" already acted on (every tool first for its own job), and what the lessons-on-tools mechanism (a design's rules appended to a tool's description) exploits. Counter: reflow2's own instrument found that a dot product over descriptions measures shared prose, not shared job; the words matter, but the corpus of user-phrased jobs is the test, not the words themselves.\n\n2. \"ONE WAY TO DO THINGS\" IS THE VALUE OF A STANDARD, and reflow2 serves 186 ways. This is the strongest thing the article says against the current surface: every second door for one job spends the exact thing a standard buys. It argues FOR continuing the prune-with-evidence path (dec:a-tool-is-never-deleted-without-usage-evidence…), not against it. Counter, kept: the folds still wait for usage evidence from more than one project; the article supplies the argument, not the evidence.\n\n3. GRANULARITY IS A CRITERION FOR WHEN A TOOL EARNS ITS PLACE — the article's one technical point. An operation exists to collapse a multi-step sequence the model would otherwise get wrong between the steps (link_artifact = artifact + fragment + edge, atomically, is exactly this). Read against the 6 constructor-plus-edge fold candidates: the question for each is not \"are these two names?\" but \"does the model err BETWEEN the two calls?\" — the multiple_parents defect (contain, then contain again) was such an error. This is a sharper test than orthogonality alone. Counter: the typed-helper rule already says a helper earns its place by a guard or a computation the generic call lacks; granularity is a third way to earn it, not a replacement.\n\n═══ WHERE THE LINE IS QUESTIONABLE TODAY — candidates, in the spirit of the premise, none judged ═══\nPlaces where reflow2 arguably does something the LLM does better, recorded so they can be looked at rather than argued from memory:\n· gaps_to_prompts / gap_to_prompt: the graph phrasing a question for a human is speaking, not counting; the `rephrase_degraded` flag exists because the agent is expected to re-say it. Is the template the graph's job at all, or only the gap and its affected ids?\n· graph_report_markdown: prose narration of state is what the where-am-i skill has the AGENT do in the reader's words; a markdown projection from the graph competes with that. (Anthony's own doctrine: views are pure projections; a renderer that fills in is a defect.)\n· find_tools: a deterministic ranker choosing tools for a model that, per the article, reads all the declarations anyway. It exists for the latent surface and the corpus test; is it a crutch for a surface that is too large?\n· propose_heal / propose_allocation: the graph proposing design changes. Structural arithmetic with the human deciding — inside the line — but worth saying so explicitly.\nAnd the converse, where the LLM's weaknesses are caught (inside the line, working): tool choice between two doors (the rank ratchet), arithmetic on quantities (budget_report, closure), memory across sessions (the graph), its own confidence (measured vs asserted — extended to checksums the same day this was recorded).\n\n═══ WHAT REFLOW2 SHOULD NOT DO ON THIS EVIDENCE ═══\nNot build a second protocol surface (OpenAPI, GraphQL) for its own sake: the article's conclusion is that MCP won sociologically, and dec:the-mcp-surface-is-two-boundaries-not-one-medium already keeps the CONTRACT in the toolsnaps with transports as projections, so a non-MCP client (flo2's GraphQL edge, a CLI) is cheap when a consumer needs one and pointless before. dec:idea-mcp-has-no-openapi-and-reflow2-already-speaks-that-vocabulary stays open and separate.\n\n═══ THE OPTIONS, none chosen ═══\nA. NOTHING — the doctrine already answers the premise; keep this as the record that the article was read. \nB. ADD GRANULARITY TO THE EARNS-ITS-PLACE TEST — when a fold candidate is judged, ask whether the model errs between the two calls; if yes, the folded single operation is the one that stays. Cheap: a sentence in the tool-pruning decision and the instrument. \nC. AUDIT THE FOUR CANDIDATES ABOVE against the three-party line, each as a finding with a measured instance or a note that none was found. \nD. RESTATE dec:three-party-checks AS A DESIGN RULE delivered on the capture skills, so the line is read at the moment a new capability is proposed rather than remembered.",
+        "kind": "exploratory",
+        "name": "OPEN — does 'MCP is unnecessary' (Kellogg, 2025-04-27) change what reflow2 should or should not do, and where is the LLM/graph/human line questionable today?",
+        "rationale": "Captured under the brainstorm skill from Anthony's question, nothing promoted. Recorded as its own question rather than appended to dec:three-party-checks because that decision is settled and this asks whether an outside argument moves it (it does not); linked to it and to the prune idea, which the article's standardization point argues for.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-does-reflow2-enforce-an-se-process-or-only-supply-the-vocabulary",
       "node_type": "Decision",
       "properties": {
@@ -254020,7 +254344,7 @@
         "kind": "exploratory",
         "name": "OPEN — \"reflow2 does no file I/O\": should it? What would reading the disk give us, and what does the rule actually protect — the bytes, or the meaning?",
         "rationale": "Captured under the brainstorm skill from Anthony's question, nothing promoted. Recorded as its own question rather than folded into the 2026-09-04 companion idea because that one asks WHO does the file work and takes the boundary as given; this one asks WHAT THE BOUNDARY IS, and finds on the code that the slogan already differs from the rule. The distinction that makes it answerable — measure bytes versus read for meaning — is borrowed from the provenance requirement built the same day.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -262854,6 +263178,16 @@
       }
     },
     {
+      "node_id": "frag:art:measure",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered measure.rs — a registered location measured under the project root: sha256 streamed, size, presence; refused by name outside the root; never content"
+      }
+    },
+    {
       "node_id": "frag:art:merge-driver-test",
       "node_type": "Fragment",
       "properties": {
@@ -263051,6 +263385,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered reflow2-mcp-launch.sh"
+      }
+    },
+    {
+      "node_id": "frag:art:reflow2-measures-a-registered-file-and-never-reads-it-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered reflow2_measures_a_registered_file_and_never_reads_it.rs — the six properties that make measuring admissible"
       }
     },
     {
@@ -269242,6 +269586,18 @@
         "provenance": "authored",
         "statement": "ANTHONY, 2026-08-14, sequenced explicitly AFTER the next release: *\"post release, i'd like to do something like this for: To show your repository's HTML files on a live web page like username.github.io, use GitHub Pages.\"*\n\nWHAT IS ASKED FOR, stated only as far as he stated it: reflow2's repository publishes a live web page on GitHub Pages, reachable at a public URL, so a reader meets the project without cloning the repo, installing the binary, or running an agent. Today every description of reflow2 lives in files you must already have checked out.\n\nHE SUPPLIED A MECHANISM SKETCH AND IT IS NOT TAKEN AS SETTLED, because he prefaced it with \"something like this\": `index.html` at the repository root, Pages configured to deploy from a branch (`main`, folder `/root`). ⚠️ THE ROOT PLACEMENT IS THE PART TO RE-EXAMINE RATHER THAN IMPLEMENT — this repository's root is a Rust workspace (`Cargo.toml`, `crates/`), and GitHub Pages also serves from `/docs` or from an Actions deploy, both of which keep generated HTML out of the build root. Which mechanism is right is a decision, not a transcription.\n\n📌 ALREADY PRESENT AND WORTH KNOWING BEFORE ANYTHING IS BUILT: `docs/loop-dag.html` is the repo's one existing HTML page, and `tools/render_views.py` already renders design viewpoints as pure projections with a CONFESSIONS list for anything the graph cannot supply.\n\n⚠️ WHAT THE PAGE SHOWS IS NOT STATED AND IS NOT INFERRED HERE. That question is `dec:idea-what-is-on-reflow2s-public-page`, and it is the one that decides how much work this is.\n\nStatus stays `proposed`: this is his word about wanting it, and the wording is not yet confirmed.",
         "status": "proposed"
+      }
+    },
+    {
+      "node_id": "req:reflow2-measures-registered-files-and-never-reads-them-for-meaning",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "reflow2 measures a registered file — hash, size, presence, under the project root — and never reads a file for meaning; every checksum says whether it was measured or asserted",
+        "priority": "high",
+        "provenance": "authored",
+        "statement": "Anthony, 2026-09-18, closing the file-I/O brainstorm on its narrow option: the slogan 'reflow2 does no file I/O' was always shorthand for 'no interpretation', and hashing is counting. A registered artifact's checksum is MEASURED by the server when the caller omits it (sha256, streamed; bytes in, a digest out) and the record says `checksum_basis: measured`; a supplied value is recorded as `asserted` and, when the file is reachable, compared. `reconcile_artifacts` called with nothing measures every registered artifact with a location and names, with why, each it could not reach. `loop_status` reports the live count of drifted and missing files at every boundary. THE BOUNDS ARE THE REQUIREMENT: a location is resolved only under the directory the design lives in, and a path or symlink that escapes it is refused unread; nothing returns content; nothing lists or walks a tree; and a server that does not hold the tree — in memory, a registry served over HTTP, a shared server on another machine — says 'not on this machine' by name instead of reporting files absent or drift zero. Reading for meaning (parsing, extracting, navigating) stays the agent's (dec:agent-navigates-content); reflow2-core still reads no file. Why: until this, every checksum in reflow2's own graph was a pasted sha256sum and the graph could not tell a pasted hash from a made-up one; two users asked (qs 2026-09-04, Alex 2026-09-17) and the Seattle building adopt pasted every one of its checksums the morning this was accepted.",
+        "status": "accepted"
       }
     },
     {
@@ -281633,6 +281989,20 @@
       }
     },
     {
+      "node_id": "ver:a-registered-file-is-measured-a-pasted-hash-is-compared-an-escape-is-refused-and-no-tree-says-so",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-mcp/tests/reflow2_measures_a_registered_file_and_never_reads_it.rs (six tests) plus the unit tests in crates/reflow2-mcp/src/measure.rs (escape, symlink out of root, absent vs directory, fragment, memo invalidation).",
+        "findings": "pr run 2026-09-18: all six integration tests and the six unit tests pass.",
+        "kind": "verification",
+        "last_run_at": "2026-09-18",
+        "level": "integration",
+        "method": "test",
+        "name": "A file under the root is measured and the basis says so; a pasted hash is recorded as asserted and compared; a location outside the root is refused unread; reconcile with nothing finds the edit and loop_status reports it; a server with no tree says so; an accept without a checksum measures and an unreachable one is refused by name",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:a-release-that-shipped-nothing-is-reported",
       "node_type": "Verification",
       "properties": {
@@ -284803,7 +285173,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:4ae986e3cb5fcdbcc546236a8713d5da2625aa5823cf4238798574418d195460",
+  "prev_content_hash": "sha256:d106804ce589037ffb370d82b9877a3e312cf80c9542650ac25f16cb1356f5aa",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -285400,8 +285770,8 @@
     "schema_version": 1
   },
   "taken_at": {
-    "branch": "a-cut-ends-by-rebuilding-the-served-release-binary",
-    "commit": "cb9fe7835b3091aa50c2f93e1741aff5b2f1b6e9",
+    "branch": "reflow2-measures-registered-files",
+    "commit": "c3695c6fd1588eeceb9c553b5ccf8fb4f15c02e8",
     "dirty": true
   }
 }
