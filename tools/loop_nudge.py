@@ -89,7 +89,7 @@ LOOP_OPS = {"loop_status", "detect_gaps", "detect_defects"}
 EXTRA_WRITE_OPS = {
     "allocate", "consumes", "contain_component", "contains", "deploy_to",
     "genesis", "import_graph", "link_artifact", "part_of_flow", "pin_at_epoch",
-    "precedes", "provides", "record_change", "release_includes",
+    "precedes", "provides", "snapshot_before_change", "record_change", "release_includes",
     "require_resource", "satisfies", "set_capability_status",
     "set_provenance", "set_requirement_status", "set_verification_status",
     "verifies",
@@ -135,7 +135,7 @@ EDIT_TOOLS = {"Edit", "Write", "MultiEdit", "NotebookEdit"}
 # exactly as the bulk forms succeed. When a tool gains a bulk form, add it here.
 
 # Recording that something moved, on the record, before it moves.
-CHANGE_OPS = {"record_change", "add_change_event"}
+CHANGE_OPS = {"snapshot_before_change", "record_change", "add_change_event"}
 
 # LOOKING at what the recorded change reaches. The distinction between this set
 # and CHANGE_OPS is the whole of BL-163, and it is worth stating plainly because

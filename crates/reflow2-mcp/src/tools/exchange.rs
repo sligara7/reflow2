@@ -65,9 +65,7 @@ impl ReflowService {
                        actions. Boundaries carrying no role are counted and NAMED, because `internal` is the \
                        DEFAULT and cannot tell \"deliberately internal\" from \"never classified\" — otherwise \
                        a design that did no labelling reports a clean seam. Feed `paired` to seam_report to \
-                       learn whether the full contracts agree (req:complementary-pairing). Ask for this when \
-                       you want to match up the interfaces you require with what another system or team \
-                       publishes — find the seam.",
+                       learn whether the full contracts agree (req:complementary-pairing). Ask for this to match our required contracts against what the other system publishes.",
         annotations(read_only_hint = true)
     )]
     pub async fn pair_designs(
@@ -94,7 +92,8 @@ impl ReflowService {
                        never as incompatible, because a machine cannot tell a real mismatch \
                        from different wording; and the report always names what it did NOT \
                        examine — the types that CROSS these boundaries are part of the contract \
-                       and are invisible to it.",
+                       and are invisible to it. \
+                       Ask for this to check whether both sides of an interface actually agree.",
         annotations(read_only_hint = true)
     )]
     pub async fn seam_report(
@@ -128,12 +127,12 @@ impl ReflowService {
                        `chain_note` why, because a hash cannot say where it came from. \
                        \u{1F6D1} NEVER ISSUE THIS IN THE SAME PARALLEL BATCH AS WRITES YOU EXPECT \
                        IT TO CONTAIN: calls a harness emits together are unordered and this takes \
-                       the same lock, so it can run BEFORE them — measured early in 91 of 200 \
-                       trials. THE FAILURE \
+                       the same lock, so it can run BEFORE them. THE FAILURE \
                        IS SILENT: the export succeeds, it is simply early, and the document you \
                        commit carries artifact hashes that will not match disk. Sequence it after \
                        the writes return. \u{26A0} The unexported-work nudge will NOT catch it — \
-                       it compares NODE COUNTS, so a missed PROPERTY change is invisible.",
+                       it compares NODE COUNTS, so a missed PROPERTY change is invisible. \
+                       Ask for this to save the design to a file you can commit.",
         annotations(read_only_hint = true)
     )]
     pub async fn export_graph(
@@ -247,7 +246,8 @@ impl ReflowService {
                        another team or a vendor without handing over the design. Deliberately not \
                        part of the export hash chain: this is a derived view, not a record of the \
                        design, and it is not a backup. A design with no designated boundary gets \
-                       an EMPTY SURFACE warning rather than a quietly empty file.",
+                       an EMPTY SURFACE warning rather than a quietly empty file. \
+                       Ask for this to give a vendor just our public contracts.",
         annotations(read_only_hint = true)
     )]
     pub async fn export_surface(
@@ -611,7 +611,8 @@ impl ReflowService {
                        conflict's *content* (values, not location), one recorded decision is \
                        recalled for every node with the identical conflict — resolve the shape \
                        once, then apply_merge with use_recorded, or feed these suggestions back as \
-                       explicit resolutions. A suggestion, never an auto-decision.",
+                       explicit resolutions. A suggestion, never an auto-decision. \
+                       Ask for this to see how we settled the same conflict last time.",
         annotations(read_only_hint = true)
     )]
     pub async fn recall_resolutions(
@@ -653,7 +654,8 @@ impl ReflowService {
                        branch's structural divergence from the baseline (added/removed/changed). \
                        Makes alternatives comparable on measures, not advocacy; it opens its own \
                        throwaway graphs, so it never touches and is never blocked by the live one. \
-                       Collapse the winner with merge_designs/apply_merge and retire the losers.",
+                       Collapse the winner with merge_designs/apply_merge and retire the losers. \
+                       Ask for this to line candidate designs up on the same numbers.",
         annotations(read_only_hint = true)
     )]
     pub async fn analyze_alternatives(
@@ -682,7 +684,8 @@ impl ReflowService {
                        rather than settle, and on `accepted` -> `accepted`. From a 2026-09-09 \
                        incident where a requirement said \"NOT YET DECIDED … his call to make\" \
                        three weeks after the call had been made, and the owner was asked the \
-                       settled question a second time.",
+                       settled question a second time. \
+                       Ask for this to mark a decision accepted with the owner's name.",
         annotations(read_only_hint = false, destructive_hint = false)
     )]
     pub async fn set_decision_status(
@@ -841,7 +844,8 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "List the alternatives registered under a decision point (BL-70) — the Artifact pointers GOVERNED_BY the Decision, each with its export location, ready to feed to analyze_alternatives. AN EMPTY LIST SAYS WHICH EMPTY: the reply distinguishes a decision that exists but has no alternatives registered, a decision that is not `proposed` (only an open decision point can carry forks), and an id that names no Decision at all — three different facts that used to share one bare zero. Ask for this when you want to see the roads recorded under an open choice before comparing them.",
+        description = "List the alternatives registered under a decision point (BL-70) — the Artifact pointers GOVERNED_BY the Decision, each with its export location, ready to feed to analyze_alternatives. AN EMPTY LIST SAYS WHICH EMPTY: the reply distinguishes a decision that exists but has no alternatives registered, a decision that is not `proposed` (only an open decision point can carry forks), and an id that names no Decision at all — three different facts that used to share one bare zero. Ask for this when you want to see the roads recorded under an open choice before comparing them. \
+                       Ask for this to see which candidate designs we did register against a decision.",
         annotations(read_only_hint = true)
     )]
     pub async fn alternatives_for(
@@ -878,7 +882,8 @@ impl ReflowService {
                        (OBSOLETES — retired on the record, not deleted), and the outcome is \
                        written into the Decision's own `alternatives` field with the rationale. \
                        This records the choice; merge the winner's design content into the \
-                       baseline separately with apply_merge.",
+                       baseline separately with apply_merge. \
+                       Ask for this to pick the winner and retire the others.",
         annotations(read_only_hint = false, destructive_hint = false)
     )]
     pub async fn collapse_decision(

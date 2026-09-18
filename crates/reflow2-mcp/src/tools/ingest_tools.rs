@@ -66,7 +66,8 @@ impl ReflowService {
                        document-shaped: it is what gives you provenance Fragments back to the \
                        source, snapshot-before-overwrite when a re-ingest changes something, the \
                        resolution bands that ask instead of guessing, and the structural pass \
-                       that catches `Auth` versus `Authentication Service`.",
+                       that catches `Auth` versus `Authentication Service`. \
+                       Ask for this to extract requirements and parts from a brief or a spec.",
         annotations(read_only_hint = false)
     )]
     pub async fn ingest_step(
@@ -111,9 +112,7 @@ impl ReflowService {
                        the same question forty times. RE-RUNNING IS SAFE AND IS THE RESUME PATH: a document \
                        whose fragment_id already exists comes back `skipped`, not `failed`, so pointing it at a \
                        grown folder ingests only what is new. Read `failures` before you trust the result — it \
-                       names every document that could not be taken. Ask for this when you have a folder or set \
-                       of specs and documents and want the design content extracted or pulled out of all of \
-                       them at once.",
+                       names every document that could not be taken. Ask for this to extract design content from a set of documents.",
         annotations(read_only_hint = false)
     )]
     pub async fn ingest_corpus_step(

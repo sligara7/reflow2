@@ -5,7 +5,7 @@
 //!
 //! # The failure this closes
 //!
-//! The revision block already said *"`record_change` BEFORE the merge is what
+//! The revision block already said *"`snapshot_before_change` BEFORE the merge is what
 //! puts the old state in the design's own timeline"* — **unconditionally**, to
 //! a caller who had just done exactly that and to a caller who had destroyed
 //! something, in identical words. That is the catalogue problem in miniature:
@@ -119,7 +119,7 @@ async fn a_preserved_state_is_told_there_is_nothing_to_do() {
     // to stop reading.
     let s = svc().await;
     with_a_decision(&s).await;
-    let _ = j!(s.record_change(Parameters(
+    let _ = j!(s.snapshot_before_change(Parameters(
         serde_json::from_value(serde_json::json!({
             "epoch_id":"epoch:e","change_event_id":"chg:c","name":"revising",
             "target_type":"Decision","target_id":"dec:x","change_type":"scope_change",
@@ -159,7 +159,7 @@ async fn the_two_replies_actually_differ_which_is_the_entire_requirement() {
 
     let b = svc().await;
     with_a_decision(&b).await;
-    let _ = j!(b.record_change(Parameters(
+    let _ = j!(b.snapshot_before_change(Parameters(
         serde_json::from_value(serde_json::json!({
             "epoch_id":"epoch:e","change_event_id":"chg:c","name":"revising",
             "target_type":"Decision","target_id":"dec:x","change_type":"scope_change",
@@ -195,7 +195,7 @@ async fn the_preserved_state_is_the_one_this_write_replaced_not_a_stale_one() {
     // answer: a reassurance that the thing you destroyed is recoverable.
     let s = svc().await;
     with_a_decision(&s).await;
-    let _ = j!(s.record_change(Parameters(
+    let _ = j!(s.snapshot_before_change(Parameters(
         serde_json::from_value(serde_json::json!({
             "epoch_id":"epoch:e","change_event_id":"chg:c","name":"revising",
             "target_type":"Decision","target_id":"dec:x","change_type":"scope_change",
@@ -310,7 +310,7 @@ async fn an_ordinary_enrichment_is_not_warned_about_at_all() {
 /// second revision, and the one that used to be reported as catastrophic.
 async fn snapshot_then_two_writes(s: &ReflowService) -> serde_json::Value {
     with_a_decision(s).await;
-    let _ = j!(s.record_change(Parameters(
+    let _ = j!(s.snapshot_before_change(Parameters(
         serde_json::from_value(serde_json::json!({
             "epoch_id":"epoch:e","change_event_id":"chg:c","name":"revising",
             "target_type":"Decision","target_id":"dec:x","change_type":"scope_change",
@@ -382,7 +382,7 @@ async fn a_mixed_write_preserves_only_the_field_that_needed_it() {
     // its undo instruction applied to a preserved field is the corruption.
     let s = svc().await;
     with_a_decision(&s).await;
-    let _ = j!(s.record_change(Parameters(
+    let _ = j!(s.snapshot_before_change(Parameters(
         serde_json::from_value(serde_json::json!({
             "epoch_id":"epoch:e","change_event_id":"chg:c","name":"revising",
             "target_type":"Decision","target_id":"dec:x","change_type":"scope_change",

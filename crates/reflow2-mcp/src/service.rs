@@ -855,6 +855,13 @@ pub(crate) const SCAN_PAYLOAD_BUDGET_BYTES: usize = 40_000;
 /// surface the search exists to avoid loading.
 pub(crate) const DEFAULT_TOOL_SEARCH_RESULTS: usize = 5;
 
+/// Served names that are refusing STUBS for a renamed tool (2026-09-18).
+/// Still callable — each refuses and names its replacement — but never
+/// offered by find_tools: a stub that ranks for a job it refuses to do is
+/// exactly the door-versus-door confusion the rename exists to end. Removed
+/// next release, with the stubs.
+pub(crate) const DEPRECATED_TOOLS: &[&str] = &["record_change", "manual_work_report"];
+
 /// The `brief: true` shape — what a node IS, without its prose. `name` and
 /// `status` are the two properties every orientation read actually uses.
 pub(crate) fn brief_node(node: &StoredNode) -> JsonValue {

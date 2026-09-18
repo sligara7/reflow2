@@ -208,7 +208,8 @@ impl ReflowService {
                        hold is shorter than `returned_bytes`, your client truncated it and you \
                        can fetch the rest a section at a time with `section`. A capped read used \
                        to be silent, and what it removed was the tail — the gap→question \
-                       handshake and the whole tool inventory.",
+                       handshake and the whole tool inventory. \
+                       Ask for this first: it says how I am supposed to work with the design here.",
         annotations(read_only_hint = true)
     )]
     pub async fn get_instructions(
@@ -384,7 +385,8 @@ impl ReflowService {
                        the start instead; `peek` to look without closing the window. An in-memory design has no \
                        ledger and says so. What it cannot see: anything outside reflow2's own tool calls — a \
                        shell error, a git failure — and WHICH MODEL the agent is, which no harness sends. \
-                       Ask for this when you want a tally of which reflow2 tools were used and which calls failed, for feedback on reflow2 itself.",
+                       Ask for this when you want a tally of which reflow2 tools were used and which calls failed, for feedback on reflow2 itself. \
+                       Ask for this to give me the numbers on how this project has been using reflow2, to send a maintainer.",
         annotations(read_only_hint = false)
     )]
     pub async fn usage_report(

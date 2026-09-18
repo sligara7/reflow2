@@ -58,7 +58,7 @@ be — do not capture it.
 ## Test 7 is different, and it exists because the other six caused the problem
 
 The first six ADD. So does every other mechanism in the loop: capture-intent adds nodes,
-`record_change` adds an event, `loop_status` counts what is OWED. **Nothing anywhere ASKED what a
+`snapshot_before_change` adds an event, `loop_status` counts what is OWED. **Nothing anywhere ASKED what a
 session made false**, so a finding that motivated a fix survived the fix and went on proposing work
 that is already done. `unclaimed_findings` is the computation that now asks; this test is where you
 act on its answer.
@@ -236,7 +236,7 @@ design and must never reach a telemetry payload
 ⚠️ **THE HONEST LIMIT, AND IT IS NOT SMALL:** this depends on you having NOTICED the tool existed.
 It measures what you were aware enough to miss, which is the same blind spot it exists to see.
 Recording nothing is therefore never evidence that nothing was hand-rolled — and
-`manual_work_report` says so when it comes back empty. `find_tools` before you conclude
+`manual_work_ledger` says so when it comes back empty. `find_tools` before you conclude
 `tool_missing`; the difference between that and `tool_not_found` is a different piece of work for
 whoever reads it.
 

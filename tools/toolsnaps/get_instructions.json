@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": true
   },
-  "description": "How to work THIS project with reflow2: the loop, the standing rules, and what to do first on an existing design. Served by the server rather than stored in the project, so it always matches the reflow2 you are talking to. Read it before the first design action of a session — the file in the repo is only a pointer here. IT IS ~27 KB AND SOME CLIENTS CAP A TOOL RESULT, so every reply states `total_bytes` and a `sections` manifest: if what you hold is shorter than `returned_bytes`, your client truncated it and you can fetch the rest a section at a time with `section`. A capped read used to be silent, and what it removed was the tail — the gap→question handshake and the whole tool inventory.",
+  "description": "How to work THIS project with reflow2: the loop, the standing rules, and what to do first on an existing design. Served by the server rather than stored in the project, so it always matches the reflow2 you are talking to. Read it before the first design action of a session — the file in the repo is only a pointer here. IT IS ~27 KB AND SOME CLIENTS CAP A TOOL RESULT, so every reply states `total_bytes` and a `sections` manifest: if what you hold is shorter than `returned_bytes`, your client truncated it and you can fetch the rest a section at a time with `section`. A capped read used to be silent, and what it removed was the tail — the gap→question handshake and the whole tool inventory. Ask for this first: it says how I am supposed to work with the design here.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,

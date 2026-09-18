@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Record an OBSERVED technology-readiness level (TRL or MRL, 1-9) for an enabling technology — the input fact a derived roadmap is computed from (BL-68). CONVENTION: this is an observation, not a plan. A level you EXPECT a technology to reach later is forecast_readiness, never this — recording a projection as an observation puts a fiction inside the machinery the roadmap is computed from, where it propagates. A rung outside 1-9 is refused rather than clamped. CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it again with the same id and only what you are changing — omitted fields keep their stored value, so correcting one never means re-sending a 2 KB field you did not touch.",
+  "description": "Record an OBSERVED technology-readiness level (TRL or MRL, 1-9) for an enabling technology — the input fact a derived roadmap is computed from (BL-68). CONVENTION: this is an observation, not a plan. A level you EXPECT a technology to reach later is forecast_readiness, never this — recording a projection as an observation puts a fiction inside the machinery the roadmap is computed from, where it propagates. A rung outside 1-9 is refused rather than clamped. CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it again with the same id and only what you are changing — omitted fields keep their stored value, so correcting one never means re-sending a 2 KB field you did not touch. Ask for this to record how mature a technology is, like a TRL rung.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,

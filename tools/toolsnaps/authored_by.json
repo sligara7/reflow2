@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Attribute a design node to a Contributor (AUTHORED_BY) — whose word this Decision/Requirement/… is. `role` is author (default), reviewer, or approver. This is the structured author behind a node; it is deliberately not a traceability edge, so it never enlarges a blast radius. Record it when a decision is MADE, not at session end — captured-when-decided is what keeps the authorship honest.",
+  "description": "Attribute a design node to a Contributor (AUTHORED_BY) — whose word this Decision/Requirement/… is. `role` is author (default), reviewer, or approver. This is the structured author behind a node; it is deliberately not a traceability edge, so it never enlarges a blast radius. Record it when a decision is MADE, not at session end — captured-when-decided is what keeps the authorship honest. Ask for this to record whose idea this was.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,

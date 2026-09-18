@@ -406,9 +406,9 @@ impl ReflowService {
                        OBSERVATION, asserted once, re-derived by nothing. READ \
                        `subjects_examined`: zero means your work touched no anchored ground, \
                        which is a different fact from 'nothing was retired' and must not be \
-                       read as it. THE COST OF NOT HAVING THIS, measured: `INVALIDATES` shipped \
-                       with its reader and a day later ZERO edges had ever been drawn \u{2014} \
-                       reachable, and unused, because nothing noticed the absence.",
+                       read as it. THE COST OF NOT HAVING THIS: `INVALIDATES` shipped \
+                       with its reader and a day later ZERO edges were drawn \u{2014} nothing had noticed the absence. \
+                       Ask for this to learn whether my recent changes made any recorded findings false.",
         annotations(read_only_hint = true)
     )]
     pub async fn unclaimed_findings(
@@ -473,7 +473,8 @@ impl ReflowService {
                        indistinguishable, so a capability proven only against a model reads \
                        exactly like one proven against reality. Point it at an Environment whose \
                        `env_type` says what kind of place that is — `simulation` for a rig, a \
-                       digital twin, a physics model.",
+                       digital twin, a physics model. \
+                       Ask for this to record where a test was run.",
         annotations(read_only_hint = false)
     )]
     pub async fn performed_in(
@@ -596,7 +597,8 @@ impl ReflowService {
                        files. Read them next to `claimed`: that is how you say '53 artifacts, of \
                        which 3 stand in for the rest' instead of just 'covered'. Exclusions \
                        come back named. Run it at the end of an adopt pass, so a thin pass is \
-                       measured rather than felt.",
+                       measured rather than felt. \
+                       Ask for this to find what my repository holds that the design has never heard of.",
         annotations(read_only_hint = true)
     )]
     pub async fn coverage_report(

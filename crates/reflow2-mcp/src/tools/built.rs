@@ -346,7 +346,8 @@ impl ReflowService {
                        would be exactly the silent bulk accept that erodes a design into fiction. \
                        The round trip collapses; the judgement stays per artifact. ALL OF IT OR \
                        NONE OF IT — every item is attempted so you learn every failure at once, \
-                       and if anything failed no baseline moves.",
+                       and if anything failed no baseline moves. \
+                       Ask for this to accept several files' new content at once.",
         annotations(read_only_hint = false)
     )]
     pub async fn set_artifact_checksums(

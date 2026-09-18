@@ -79,7 +79,7 @@ changed outside the loop (someone edited by hand, a merge landed, you refactored
    - `design_holds` — the change carries no design meaning (a refactor, a fix restoring intended
      behaviour). Your claim is recorded as a dated ChangeEvent; say why in `note`.
    - `design_updated` — the behaviour moved, so the design moved with it. Update the design
-     *first* (run **capture-intent**, record it with `record_change` — and **impact-check** if it
+     *first* (run **capture-intent**, record it with `snapshot_before_change` — and **impact-check** if it
      touches anything else), then accept passing that ChangeEvent's id as
      `design_change_event_id`. A reference to an edit that never happened is refused.
 

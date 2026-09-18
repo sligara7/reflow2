@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": true
   },
-  "description": "Compare parallel design alternatives on the same measures — an analysis of alternatives (BL-70). Pass the paths to two or more alternative export documents (branch-by-file); the first is the baseline. Returns each branch's measures side by side — design nodes, open gaps, structural defects, allocation modularity, capabilities verified — plus every non-baseline branch's structural divergence from the baseline (added/removed/changed). Makes alternatives comparable on measures, not advocacy; it opens its own throwaway graphs, so it never touches and is never blocked by the live one. Collapse the winner with merge_designs/apply_merge and retire the losers.",
+  "description": "Compare parallel design alternatives on the same measures — an analysis of alternatives (BL-70). Pass the paths to two or more alternative export documents (branch-by-file); the first is the baseline. Returns each branch's measures side by side — design nodes, open gaps, structural defects, allocation modularity, capabilities verified — plus every non-baseline branch's structural divergence from the baseline (added/removed/changed). Makes alternatives comparable on measures, not advocacy; it opens its own throwaway graphs, so it never touches and is never blocked by the live one. Collapse the winner with merge_designs/apply_merge and retire the losers. Ask for this to line candidate designs up on the same numbers.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,

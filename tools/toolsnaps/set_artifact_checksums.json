@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Accept MANY drift baselines in one call — the bulk form of set_artifact_checksum, which was 244 consecutive calls across 22 sessions of recorded usage. EACH ITEM CARRIES ITS OWN DISPOSITION, and that is the point rather than an inconvenience: a batch under one shared disposition would be exactly the silent bulk accept that erodes a design into fiction. The round trip collapses; the judgement stays per artifact. ALL OF IT OR NONE OF IT — every item is attempted so you learn every failure at once, and if anything failed no baseline moves.",
+  "description": "Accept MANY drift baselines in one call — the bulk form of set_artifact_checksum, which was 244 consecutive calls across 22 sessions of recorded usage. EACH ITEM CARRIES ITS OWN DISPOSITION, and that is the point rather than an inconvenience: a batch under one shared disposition would be exactly the silent bulk accept that erodes a design into fiction. The round trip collapses; the judgement stays per artifact. ALL OF IT OR NONE OF IT — every item is attempted so you learn every failure at once, and if anything failed no baseline moves. Ask for this to accept several files' new content at once.",
   "inputSchema": {
     "$defs": {
       "ChecksumAcceptReq": {

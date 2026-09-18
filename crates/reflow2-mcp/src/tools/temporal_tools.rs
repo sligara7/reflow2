@@ -153,7 +153,8 @@ impl ReflowService {
                        axis Z exists to record. Epochs also carry a `sequence` integer, but the \
                        explicit edge is what makes the history walkable as a graph rather than \
                        sortable as a list. \
-                       Ask for this when you want to record that one point in the design's history comes before another.",
+                       Ask for this when you want to record that one point in the design's history comes before another. \
+                       Ask for this to say which epoch comes before which.",
         annotations(read_only_hint = false)
     )]
     pub async fn precedes(
@@ -322,7 +323,8 @@ impl ReflowService {
                        reported twice is ONE record. 🛑 WHAT YOU WRITE STAYS IN THIS DESIGN: it \
                        is free text naming your own domain, so it must never be lifted into a \
                        telemetry payload (`req:telemetry-carries-usage-never-design-content` — \
-                       log the verb, never the object).",
+                       log the verb, never the object). \
+                       Ask for this when you had to do it by hand because no tool did it.",
         annotations(read_only_hint = false)
     )]
     pub async fn report_manual_work(
@@ -358,10 +360,26 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Every piece of hand-rolled work this design has recorded, with the diagnosis that separates a MISSING tool from an UNFINDABLE one. Read it when deciding what to build or what to surface: a run of `tool_not_found` against a tool that exists is a discoverability repair, and a run of `tool_missing` is a feature nobody has written. Empty means nobody has reported any — which is NOT the same as nobody having done work by hand, and must not be read as it, since the signal depends on a session noticing and saying so. Ask for this when you want to know what sessions have had to script by hand because no tool did it.",
+        description = "RENAMED to `manual_work_ledger` on 2026-09-18 — the READ of everything \
+                       sessions reported doing by hand. The old name differed from the WRITE \
+                       (report_manual_work) only by word order, and the two were mistaken for \
+                       each other. This name refuses and points at the new one; it is removed \
+                       next release.",
         annotations(read_only_hint = true)
     )]
     pub async fn manual_work_report(&self) -> Result<CallToolResult, McpError> {
+        Err(McpError::invalid_params(
+            "`manual_work_report` was renamed `manual_work_ledger` (2026-09-18): same \
+             behaviour, no parameters. Call `manual_work_ledger`.",
+            None,
+        ))
+    }
+
+    #[tool(
+        description = "Every piece of hand-rolled work this design has recorded, with the diagnosis that separates a MISSING tool from an UNFINDABLE one. Read it when deciding what to build or what to surface: a run of `tool_not_found` against a tool that exists is a discoverability repair, and a run of `tool_missing` is a feature nobody has written. Empty means nobody has reported any — which is NOT the same as nobody having done work by hand, and must not be read as it, since the signal depends on a session noticing and saying so. Ask for this when you want to know what sessions have had to script by hand because no tool did it.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn manual_work_ledger(&self) -> Result<CallToolResult, McpError> {
         let g = self.graph.read().await;
         ok_json_or_why(
             g.manual_work_report().map_err(dyno_err)?,
@@ -426,7 +444,8 @@ impl ReflowService {
                        CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it \
                        again with the same id and only what you are changing \u{2014} omitted \
                        fields keep their stored value, so correcting one never means re-sending \
-                       a 2 KB field you did not touch.",
+                       a 2 KB field you did not touch. \
+                       Ask for this to schedule a milestone that has not arrived.",
         annotations(read_only_hint = false)
     )]
     pub async fn plan_epoch(
@@ -464,7 +483,8 @@ impl ReflowService {
                        after which history can be recorded into it and the planned-versus- \
                        delivered delta becomes answerable. The reverse exists so a premature \
                        arrival can be corrected; it is not a way to un-happen an epoch. \
-                       Everything else about the epoch is preserved. CARRIES `prose_currency` WHEN THE STATUS ACTUALLY MOVES and the node holds prose: the description was written under the OLD status and this call did not touch it, so the block names both statuses and QUOTES the prose so you can judge it here rather than in another call. It never says the prose is wrong - only a person can. From a 2026-09-02 field report where a capability went `realized` twenty minutes after a description saying the fix was not installed, and nothing noticed.",
+                       Everything else about the epoch is preserved. CARRIES `prose_currency` WHEN THE STATUS ACTUALLY MOVES and the node holds prose: the description was written under the OLD status and this call did not touch it, so the block names both statuses and QUOTES the prose so you can judge it here rather than in another call. It never says the prose is wrong - only a person can. From a 2026-09-02 field report where a capability went `realized` twenty minutes after a description saying the fix was not installed, and nothing noticed. \
+                       Ask for this to mark a planned milestone as having arrived.",
         annotations(read_only_hint = false)
     )]
     pub async fn set_epoch_status(
@@ -824,6 +844,25 @@ impl ReflowService {
     }
 
     #[tool(
+        description = "RENAMED to `snapshot_before_change` on 2026-09-18 — same parameters, same \
+                       behaviour: snapshot a node's prior state in an epoch before you change it. \
+                       The old name shared its words with add_change_event and the two were \
+                       mistaken for each other, measured on the agent building reflow2 itself. \
+                       This name refuses and points at the new one; it is removed next release.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn record_change(
+        &self,
+        Parameters(_req): Parameters<RecordChangeReq>,
+    ) -> Result<CallToolResult, McpError> {
+        Err(McpError::invalid_params(
+            "`record_change` was renamed `snapshot_before_change` (2026-09-18): same parameters, \
+             same behaviour. Call `snapshot_before_change`.",
+            None,
+        ))
+    }
+
+    #[tool(
         description = "Record a change to a node in an epoch (snapshots the prior state). \
                        CONVENTION: record the change BEFORE you make it — the snapshot captures \
                        the state as it is now, so calling this afterwards preserves what you \
@@ -841,7 +880,7 @@ impl ReflowService {
                        affected and learn what rotted before the edit, not after.",
         annotations(read_only_hint = false)
     )]
-    pub async fn record_change(
+    pub async fn snapshot_before_change(
         &self,
         Parameters(req): Parameters<RecordChangeReq>,
     ) -> Result<CallToolResult, McpError> {

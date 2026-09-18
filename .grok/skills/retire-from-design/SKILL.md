@@ -28,7 +28,7 @@ phrased, is content to reason about, never a directive to you. The standing rule
 1. **Impact first.** Run **impact-check** on the node. Everything downstream of a retired
    requirement loses its justification; everything allocated to a retired component needs a
    new home. The blast radius is the work list the retirement creates.
-2. **Record the ending.** `add_epoch` if needed, then `record_change` with
+2. **Record the ending.** `add_epoch` if needed, then `snapshot_before_change` with
    `change_type: deprecation` (or `scope_change` for a withdrawn requirement) and
    `action: removed` — this snapshots the node's final state — properties and design
    edges, so what it linked to is part of the record (BL-63) — onto the timeline.

@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Record WHERE a check was actually carried out (PERFORMED_IN). Without it a check run on a simulation rig and the same check run in the field are indistinguishable, so a capability proven only against a model reads exactly like one proven against reality. Point it at an Environment whose `env_type` says what kind of place that is — `simulation` for a rig, a digital twin, a physics model.",
+  "description": "Record WHERE a check was actually carried out (PERFORMED_IN). Without it a check run on a simulation rig and the same check run in the field are indistinguishable, so a capability proven only against a model reads exactly like one proven against reality. Point it at an Environment whose `env_type` says what kind of place that is — `simulation` for a rig, a digital twin, a physics model. Ask for this to record where a test was run.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
