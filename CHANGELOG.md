@@ -31,6 +31,16 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **A cut ends by rebuilding the binary this box serves — step 9 of the release-cut flow.**
+  Measured 2026-09-18: a real building design was adopted on 0.62.0 for a whole session while
+  0.64.0 was published, because the user-scope registration serves `target/release` straight,
+  with no launcher banner in the path, and no step of the cut rebuilt it. The flow gains a ninth
+  step (`tools/reflow2-rebuild.sh`, then stop every shared daemon), and a design rule carrying
+  it is delivered on `release_report`, the step before it. AGENTS.md says the same where the
+  launcher is described. No code change; the mechanism that delivers it shipped in 0.64.0.
+
 ### Changed
 
 - **Every served tool is asked to rank FIRST for its own job, and the surface may not grow more
