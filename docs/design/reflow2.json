@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:49454a0887d26c3e6bcb5efeaddb39005e8ee1f70a702d83ca812dd98b0e2e05",
+  "content_hash": "sha256:4ae986e3cb5fcdbcc546236a8713d5da2625aa5823cf4238798574418d195460",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -3186,6 +3186,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:the-rank-ratchet-and-the-confusability-instrument",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:tools-query"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -12824,6 +12832,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:dec:idea-prune-the-tool-surface-to-an-orthogonal-essential-set",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:dec:idea-root-cause-runs-at-the-moment-a-cause-is-about-to-be-written-not-on-every-failure",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
@@ -14527,6 +14541,17 @@
       "from_id": "dec:a-tool-carries-the-users-phrasing-and-the-corpus-is-the-test",
       "properties": {
         "approved_at": "2026-09-11",
+        "roles": [
+          "approver"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:a-tool-is-never-deleted-without-usage-evidence-across-projects-and-never-without-a-refusing-stub-first",
+      "properties": {
+        "approved_at": "2026-09-18",
         "roles": [
           "approver"
         ]
@@ -17108,8 +17133,10 @@
       "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-prune-the-tool-surface-to-an-orthogonal-essential-set",
       "properties": {
+        "approved_at": "2026-09-18",
         "roles": [
-          "author"
+          "author",
+          "approver"
         ]
       },
       "to_id": "who:ajs"
@@ -22607,6 +22634,18 @@
       "properties": {
         "authored_at": "2026-09-11",
         "roles": [
+          "author"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:every-served-tool-ranks-first-for-its-own-job-and-the-surface-does-not-grow-more-confusable",
+      "properties": {
+        "approved_at": "2026-09-18",
+        "roles": [
+          "approver",
           "author"
         ]
       },
@@ -40165,6 +40204,258 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:every-tool-ranks-first-for-its-own-job-and-the-surface-does-not-grow-more-confusable",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:capture-session-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-tool-ranks-first-for-its-own-job-and-the-surface-does-not-grow-more-confusable",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect-and-ask-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-tool-ranks-first-for-its-own-job-and-the-surface-does-not-grow-more-confusable",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:every-declared-enum-is-wired-or-exempt-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-tool-ranks-first-for-its-own-job-and-the-surface-does-not-grow-more-confusable",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:every-tool-is-found-by-a-query-in-the-users-words-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-tool-ranks-first-for-its-own-job-and-the-surface-does-not-grow-more-confusable",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:find-tools-corpus-fixture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-tool-ranks-first-for-its-own-job-and-the-surface-does-not-grow-more-confusable",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:find-tools-rank-baseline"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-tool-ranks-first-for-its-own-job-and-the-surface-does-not-grow-more-confusable",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:impact-check-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-tool-ranks-first-for-its-own-job-and-the-surface-does-not-grow-more-confusable",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:kit-instructions"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-tool-ranks-first-for-its-own-job-and-the-surface-does-not-grow-more-confusable",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:link-artifacts-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-tool-ranks-first-for-its-own-job-and-the-surface-does-not-grow-more-confusable",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:loop-nudge"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-tool-ranks-first-for-its-own-job-and-the-surface-does-not-grow-more-confusable",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:retire-from-design-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-tool-ranks-first-for-its-own-job-and-the-surface-does-not-grow-more-confusable",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:root-cause-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-tool-ranks-first-for-its-own-job-and-the-surface-does-not-grow-more-confusable",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-tool-ranks-first-for-its-own-job-and-the-surface-does-not-grow-more-confusable",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-tool-ranks-first-for-its-own-job-and-the-surface-does-not-grow-more-confusable",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skills-and-tools"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-tool-ranks-first-for-its-own-job-and-the-surface-does-not-grow-more-confusable",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:tool-confusability"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-tool-ranks-first-for-its-own-job-and-the-surface-does-not-grow-more-confusable",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-ask"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-tool-ranks-first-for-its-own-job-and-the-surface-does-not-grow-more-confusable",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-assure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-tool-ranks-first-for-its-own-job-and-the-surface-does-not-grow-more-confusable",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-built"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-tool-ranks-first-for-its-own-job-and-the-surface-does-not-grow-more-confusable",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-tool-ranks-first-for-its-own-job-and-the-surface-does-not-grow-more-confusable",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-claims"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-tool-ranks-first-for-its-own-job-and-the-surface-does-not-grow-more-confusable",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-tool-ranks-first-for-its-own-job-and-the-surface-does-not-grow-more-confusable",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-exchange"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-tool-ranks-first-for-its-own-job-and-the-surface-does-not-grow-more-confusable",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-ingest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-tool-ranks-first-for-its-own-job-and-the-surface-does-not-grow-more-confusable",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-operate"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-tool-ranks-first-for-its-own-job-and-the-surface-does-not-grow-more-confusable",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-query"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-tool-ranks-first-for-its-own-job-and-the-surface-does-not-grow-more-confusable",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-skills"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-tool-ranks-first-for-its-own-job-and-the-surface-does-not-grow-more-confusable",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-temporal"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:evidence-fidelity",
       "properties": {
         "accepted_baseline": true,
@@ -51154,6 +51445,12 @@
       "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
+      "to_id": "cap:the-rank-ratchet-and-the-confusability-instrument"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
       "to_id": "cap:tool-search"
     },
     {
@@ -51317,6 +51614,12 @@
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "req:epochs-can-be-planned"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "req:every-served-tool-ranks-first-for-its-own-job-and-the-surface-does-not-grow-more-confusable"
     },
     {
       "edge_type": "CONTAINS",
@@ -57942,6 +58245,14 @@
         "evidence": "The idea asked for one way to name a node across the surface; Anthony ruled convention (i) on 2026-09-06 and this change built it: the type is optional and resolved from the id wherever an existing node is named, refused on collision. The argument NAMES (from_id vs target_id vs node_id) are the remaining half of the idea and stay open."
       },
       "to_id": "chg:a-node-is-named-by-its-id-and-the-type-is-optional-across-the-relation-surface"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-prune-the-tool-surface-to-an-orthogonal-essential-set",
+      "properties": {
+        "evidence": "Promoted on Anthony's word 2026-09-18 ('Go with your recommendation'): the orthogonality test became a ratchet on rank and mutual confusability, and deletion was deferred to usage evidence with stubs first."
+      },
+      "to_id": "req:every-served-tool-ranks-first-for-its-own-job-and-the-surface-does-not-grow-more-confusable"
     },
     {
       "edge_type": "EVOLVES_INTO",
@@ -66661,6 +66972,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "req:every-served-tool-ranks-first-for-its-own-job-and-the-surface-does-not-grow-more-confusable",
+      "properties": {},
+      "to_id": "dec:a-tool-is-never-deleted-without-usage-evidence-across-projects-and-never-without-a-refusing-stub-first"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "req:export-says-what-it-cannot-carry",
       "properties": {},
       "to_id": "decision:ack:31748fe70566dfa2"
@@ -68550,6 +68867,12 @@
       "from_id": "dec:idea-pair-with-mcp-for-blender-as-the-hands-that-make-and-show-the-cad-artifact",
       "properties": {},
       "to_id": "snap:epoch:preserved-on-write:dec:idea-pair-with-mcp-for-blender-as-the-hands-that-make-and-show-the-cad-artifact"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:idea-prune-the-tool-surface-to-an-orthogonal-essential-set",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:dec:idea-prune-the-tool-surface-to-an-orthogonal-essential-set"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -70587,6 +70910,12 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "dec:idea-prune-the-tool-surface-to-an-orthogonal-essential-set",
+      "properties": {},
+      "to_id": "fact:tool-confusability-measured-61-mutual-pairs-73-not-first-for-their-own-job-and-the-pairs-sort-into-four-kinds"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "dec:idea-should-a-finding-be-required-to-bound-its-own-claim",
       "properties": {},
       "to_id": "fact:the-overreach-is-n1-of-312-and-89-percent-of-facts-have-no-name-at-all"
@@ -70922,6 +71251,14 @@
       "from_id": "ver:the-graph-asks-what-a-session-made-false",
       "properties": {},
       "to_id": "fact:unclaimed-findings-cannot-join-a-change-to-a-finding-hung-off-a-different-node"
+    },
+    {
+      "edge_type": "IMPLEMENTS",
+      "from_id": "art:every-tool-is-found-by-a-query-in-the-users-words-test",
+      "properties": {
+        "covers": "whole"
+      },
+      "to_id": "ver:every-tool-ranks-first-for-its-own-job-or-is-in-the-baseline"
     },
     {
       "edge_type": "IMPLEMENTS",
@@ -218698,6 +219035,16 @@
       "from_id": "art:every-tool-is-found-by-a-query-in-the-users-words-test",
       "properties": {
         "completeness": "complete",
+        "conformance": "unchecked",
+        "note": "the two ratchet tests"
+      },
+      "to_id": "cap:the-rank-ratchet-and-the-confusability-instrument"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:every-tool-is-found-by-a-query-in-the-users-words-test",
+      "properties": {
+        "completeness": "complete",
         "conformance": "reviewed"
       },
       "to_id": "cap:tool-search"
@@ -218827,6 +219174,24 @@
         "conformance": "reviewed"
       },
       "to_id": "cap:tool-search"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:find-tools-rank-baseline",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:the-rank-ratchet-and-the-confusability-instrument"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:find-tools-rank-baseline",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "chg:every-tool-ranks-first-for-its-own-job-and-the-surface-does-not-grow-more-confusable"
     },
     {
       "edge_type": "REALIZES",
@@ -221784,6 +222149,24 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:tool-confusability",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:the-rank-ratchet-and-the-confusability-instrument"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:tool-confusability",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "chg:every-tool-ranks-first-for-its-own-job-and-the-surface-does-not-grow-more-confusable"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:tools-ask",
       "properties": {
         "conformance": "unchecked"
@@ -224451,6 +224834,12 @@
         "evidence": "The bit already satisfied the requirement; this makes the answer reachable from the call sessions actually make. Partial because only loop_status and graph_report were examined."
       },
       "to_id": "req:the-server-is-the-authority-on-its-own-currency"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:the-rank-ratchet-and-the-confusability-instrument",
+      "properties": {},
+      "to_id": "req:every-served-tool-ranks-first-for-its-own-job-and-the-surface-does-not-grow-more-confusable"
     },
     {
       "edge_type": "SATISFIES",
@@ -227137,6 +227526,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:every-tool-ranks-first-for-its-own-job-or-is-in-the-baseline",
+      "properties": {},
+      "to_id": "cap:the-rank-ratchet-and-the-confusability-instrument"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:evidence-fidelity",
       "properties": {},
       "to_id": "cap:evidence-fidelity"
@@ -229015,6 +229410,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:find-tools-rank-baseline",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:find-tools-rank-baseline"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:find-tools-ranks-what-the-query-means-test",
       "properties": {
         "action": "created"
@@ -230495,6 +230898,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:tool-confusability",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:tool-confusability"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:tools-ask",
       "properties": {
         "action": "created"
@@ -231269,7 +231680,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:1863f714f3d6bd6ed1af23bced79cd18b3885d783c9a6d9e4e913f03952ed788",
+        "checksum": "sha256:949d7107052b51fe8125d746d674ebffa39792c934ad7a71f6b3d6421949d857",
         "granularity": "atomic",
         "location": "getting-started/skills/capture-session/SKILL.md",
         "name": "getting-started/skills/capture-session/SKILL.md",
@@ -231773,7 +232184,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:32d42579c50892903e4840d9acd7d3e559bea7c61f6bf571827b7548642ca457",
+        "checksum": "sha256:945aa78921246d8793089d442f742e1567791fb510188a44e51b533b1ab6d58b",
         "location": "getting-started/skills/detect-and-ask/SKILL.md",
         "name": "detect-and-ask/SKILL.md — the ask half of the loop, and now the rule for when NOT to ask",
         "status": "realized"
@@ -232015,7 +232426,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:23179bf29bcd17553ef5cce8ceb92d9a61a971ffd1c801c055b2948ef08c9eb3",
+        "checksum": "sha256:80e9da3a2a1b616c9d33efa79a5e6f44dcf1d218b57df7a03bfdd44543a26b05",
         "description": "Two probes. FIRST: each of 31 wired request fields (30 top-level plus one nested in a list item's `$defs`) publishes exactly the values `reflow2_core::schema::enum_values` returns for its type — so the served list cannot drift from what the server enforces. SECOND, and the reason this is a class guard rather than a snapshot: every enum the schema DECLARES is either wired somewhere in enum_schema.rs or named in EXEMPT with a reason, so a newly declared enum fails the build until somebody decides which it is. A staleness check runs the other way too — an EXEMPT entry naming something the schema no longer declares is a stale excuse that would quietly shrink what the test can see.\n\n⭐ BOTH OF ITS OWN BUGS ARE RECORDED IN IT, because each was caught by the half of the test that was right. (1) It parsed `schema_enum!` LINE BY LINE, and `cargo fmt` wraps long invocations across four lines, so its first run reported 41 unwired of which a dozen were wired — a guard wrong in the SAFE direction is still wrong, and would have had somebody write exemptions for fields that did not need them. (2) The staleness half then caught four of the five original \"must not wire\" entries being name-collisions rather than declared enums, so they never belonged in a list keyed on declared enums; that reasoning moved to the module doc.\n\n⚠️ THE WIRED LIST IS HAND-MADE ON PURPOSE and the test does not derive it. Five request fields share a name with a declared enum and mean something else — `add_component`'s `level` is the deliberately-open decomposition ladder, and wiring it by name would contradict `dec:the-decomposition-ladder-is-open-not-a-fixed-enum`.",
         "location": "crates/reflow2-mcp/tests/every_declared_enum_is_wired_or_exempt.rs",
         "name": "every_declared_enum_is_wired_or_exempt.rs — the wired publish the schema's values, and nothing declared is unaccounted for",
@@ -232051,7 +232462,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "test",
-        "checksum": "sha256:0e186e7a30108276834cf9518f6442ab272acd7891055fdfeaf0db82e4909a8e",
+        "checksum": "sha256:722b56ace4c4be001c2ad396f142c4ba50f09eeca8f8615eeb3e75adeed28d13",
         "description": "The criterion-1 acceptance test, on Anthony's condition that the corpus is the test: every served tool must reach find_tools' default top 5 for its query in tests/fixtures/find_tools_corpus.json. TWO tools are EXEMPT at rank 6 with the measured reason (consumption_report, governed_by — scan_nodes rose into the top 5 during increment 434 and its exemption came out), and a second test fails if an exemption goes stale in either direction. A third test refuses any served tool absent from the corpus, so a new tool cannot ship unfindable by omission. Its header names the trap it cannot see — a sentence tuned to its query — and points at the held-out paraphrase corpus that guards it, kept deliberately out of CI. It earned its place a second time on 2026-09-12: a description pass that rewrote tools \"from purpose\" dropped eight from their top 5, and this test refused the branch until the user-phrased sentence was back on each.",
         "location": "crates/reflow2-mcp/tests/every_tool_is_found_by_a_query_in_the_users_words.rs",
         "name": "every_tool_is_found_by_a_query_in_the_users_words.rs",
@@ -232213,10 +232624,21 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "test",
-        "checksum": "sha256:6fe9449a5781067d53c3ea6f043131c6653b4f79b3351d9f91d8e2c8a9a55cdd",
+        "checksum": "sha256:5ed36e9838ad1653f0bb67932ed54ffb92d6d564e9d81fe654655c5e15b0fa05",
         "description": "The 180-query criterion-1 corpus: one query per served tool, phrased as a user states the job — never the tool's name, never a phrase lifted from its description. Authored 2026-09-11 by an agent that had read every description, so informed rather than blind; a query from a field report supersedes the one here. Read by every_tool_is_found_by_a_query_in_the_users_words.rs via include_str!, so adding a tool without a query fails the build.",
         "location": "crates/reflow2-mcp/tests/fixtures/find_tools_corpus.json",
         "name": "find_tools_corpus.json",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:find-tools-rank-baseline",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:01755a1feb64272363718602c69fdb263d032b00c1d60fa25412b348d17c2b55",
+        "location": "crates/reflow2-mcp/tests/fixtures/find_tools_rank_baseline.json",
+        "name": "find_tools_rank_baseline.json — the rank ratchet: tools not first for their own job (name matches) and the mutual pairs; both lists only shrink",
         "status": "realized"
       }
     },
@@ -232564,7 +232986,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:a4e5b0e626b7f8af544c86a244aba01577d7522c1977ddd04ee47c43a75ff8be",
+        "checksum": "sha256:6137a87b2ccf561902793ee0e5ac8c817cfa97ea4c94e4aa57ce635549c7f18c",
         "location": "getting-started/skills/impact-check/SKILL.md",
         "name": "impact-check/SKILL.md",
         "status": "realized"
@@ -232664,7 +233086,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:6f25c2bf05689e35e8b60c1c1266250e8bd3157852b5f839e4376a50fc829d9d",
+        "checksum": "sha256:73cdb8bb55ae345eae41b9301955c67e813f1b02e6266111e1509e5c0ed253c4",
         "granularity": "atomic",
         "location": "getting-started/AGENTS.md",
         "name": "getting-started/AGENTS.md",
@@ -232786,7 +233208,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:e56238e5ea3bc67c823220d7901575c34f0b05a02dda3892c0d135240d4f195d",
+        "checksum": "sha256:7327b9189d0d34691039c547887b6c8b5ee29a4be15eb7a2dfc7ca6951cbf4d7",
         "location": "getting-started/skills/link-artifacts/SKILL.md",
         "name": "link-artifacts/SKILL.md — registering what was built against what it realizes, and the doc_kind that tells the design its adapter exists",
         "status": "realized"
@@ -232822,7 +233244,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:408725831816ecf284d1e1cce9a2feda092580d62cc05229fc3d2caa720cb272",
+        "checksum": "sha256:8a2814a1e33c27d9d68ee15d06205c25642afea7aa1d2968761fe40cfcf6f508",
         "granularity": "atomic",
         "location": "tools/loop_nudge.py",
         "name": "loop_nudge.py",
@@ -233531,7 +233953,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:1cdba38827046a8673390d785aee6be80484bf1ceedb3a29adeb2ec8ef9d683a",
+        "checksum": "sha256:3d4a39d43905d53a48dd7c5aa6cd441bdf4648f215abd02520795d2a4a4be130",
         "location": "getting-started/skills/retire-from-design/SKILL.md",
         "name": "retire-from-design/SKILL.md",
         "status": "realized"
@@ -233565,7 +233987,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:4c7a08752f07fe7ba3ae47fbf7ce2858fdf2ca12d3f4cb214dc2580db6581c6d",
+        "checksum": "sha256:3cef7ea1d30d1982ab3d4ca06307b0ca98ba41fcb271eb6b9ed8f9048599486e",
         "location": "getting-started/skills/root-cause/SKILL.md",
         "name": "root-cause/SKILL.md",
         "status": "realized"
@@ -233895,7 +234317,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:4e61000c663f3005bdb230e47d6a7f31d677e4feba7b2467ba279954c6d32f85",
+        "checksum": "sha256:1c3ac2cf00577356e64b9d477e96795b9a7493a8c1b2a7b924d297fd9de74425",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -233982,7 +234404,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:67d10b64072ddfc2eefbc883f33b23335ffee3a515ca2f8a948583077f0824e3",
+        "checksum": "sha256:59bc1aeed19b247135e89a43c1ec2aa0cde554f9b2195a641f2b78c4b3ce0d35",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -234021,7 +234443,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:cbb45bf54040141eb312b9a42d9e0abcbd210410c9fb0402eebbf5b3d627ee59",
+        "checksum": "sha256:faac4656a06c0f0148dcafa38313287629e8d61c99fe9ed27f2470cbf2a20132",
         "location": "docs/skills-and-tools.md",
         "name": "skills-and-tools.md",
         "status": "realized"
@@ -235170,11 +235592,22 @@
       }
     },
     {
+      "node_id": "art:tool-confusability",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:82a3e0a7de40c69c7620dd6a8df05309924789161b2ac578c906ef2401cd175c",
+        "location": "tools/tool_confusability.py",
+        "name": "tool_confusability.py — the offline replica of find_tools' scorer: not-first tools and who beats them, mutual pairs, crowders, never-called tools; --baseline rewrites the ratchet fixture",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:tools-ask",
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:d03d9db60c259504adfddc1711dfb8fdfa340b18950ae3ae5aa36afd519fa932",
+        "checksum": "sha256:a2375de74c692c06d41eba0576699f03acea0a49147d1e8e6c366090874e8db8",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/ask.rs",
         "name": "tools/ask.rs",
@@ -235187,7 +235620,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:37d8858759ceec37d6fea0eb36902eae33f6bf50d494f3fa2a81040e3ca93f86",
+        "checksum": "sha256:12a897d8c6564688c56fbcfd61f9dac75e0e37e5a6321f4d68a4ed83848ce259",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/assure.rs",
         "name": "tools/assure.rs",
@@ -235200,7 +235633,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:8a578ec9ed3456acb3fd4ed4a029ff187d65572cc4627a7c5f687aabdfa21e27",
+        "checksum": "sha256:d50617a8d0c062f14c8d66ff77a7945a45d693e83f202689f435c3e8e573f299",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/built.rs",
         "name": "tools/built.rs",
@@ -235213,7 +235646,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:36eb03ff10f84bb50ff7960c903a0e8c26ba92e22b5bdd7bff53507e0b514b2f",
+        "checksum": "sha256:306e2b6d70bbad60f978b61d8f552fd5e6f2d42647a88ef9d49f2846fa1d1b86",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
         "name": "crates/reflow2-mcp/src/tools/capture.rs",
@@ -235226,7 +235659,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b734894b4375b214df2ba827d918649123009f5361b91220b2370847545a6a6e",
+        "checksum": "sha256:7589d256894c0f9f8e2f61e9c24afdf279e2fb3f0d7f16bf1abda78ce40c0884",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/claims_tools.rs",
         "name": "tools/claims_tools.rs",
@@ -235239,7 +235672,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:9bf9b63ca356c076a2b55701ccf6cfc4754132f409581ec0027030dbd11f4c22",
+        "checksum": "sha256:80f08f317842c310166489d55ec8e26467e41e50dc07990d260e700ee6f4f584",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
@@ -235252,7 +235685,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:ed20ffbb94562b3495a6a59240bdcbbdc807695a814fcb0878ab05e284addd0a",
+        "checksum": "sha256:c42a18b87a81406b831f3a07417d5680c356c239ea6d9d546f6208ef676941b0",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/exchange.rs",
         "name": "tools/exchange.rs",
@@ -235265,7 +235698,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:0532f1b20cbaa164e073cf8f89ac8b154df063abc8590d7f8dcc02cdfb2792e1",
+        "checksum": "sha256:2d0709bc16a3017ff8dc6a7c5100586de906e5dfb0437ed2c9fe65eb4b9912ac",
         "location": "crates/reflow2-mcp/src/tools/ingest_tools.rs",
         "name": "ingest_tools.rs",
         "status": "realized"
@@ -235276,7 +235709,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:fe5c0abba655a382ae3b7734cc288729be7df7fceb62fb0556b0e00b57b10578",
+        "checksum": "sha256:4d0aec6c2934d4900dbd828b827f2249e7db55818e5742ff86432adba72831b3",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/operate_tools.rs",
         "name": "tools/operate_tools.rs",
@@ -235289,7 +235722,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:573d72b69e2ab8606559bf0b2e0bac0968aff6f5495857b76b9a77d8567340c9",
+        "checksum": "sha256:87f67afdf21e6fe5422227bafa5a88827cc682ab9bb41ef770acc7711eb5cc95",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/query.rs",
         "name": "tools/query.rs",
@@ -235302,7 +235735,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f027d37d372a4c2e9b33cd676a3bb743b999d34c98a1ae8a4878f164343c95d9",
+        "checksum": "sha256:3cbcb99c25d34b6a428432ed0bd960783b6eb82c0593c8224d0c47acb6e8825a",
         "location": "crates/reflow2-mcp/src/tools/skills_tools.rs",
         "name": "skills_tools.rs",
         "status": "realized"
@@ -235313,7 +235746,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:2695f16f238bf6de3c330d823ffdf75cb8ed4a076db759d1dbc404d45a0e70a9",
+        "checksum": "sha256:21c26e81b025fe02e204ce5bc6da323652c5a40f0f7c36e7886f886d8c1ed1e8",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/temporal_tools.rs",
         "name": "tools/temporal_tools.rs",
@@ -238666,6 +239099,16 @@
       "properties": {
         "description": "Item 3 of v0.50.0 (dec:idea-should-a-constructor-accept-the-owners-word-in-one-call, ruled 2026-09-06). add_decision and add_requirement accept optional `status` + `approver` + `acted_at`; add_design_rule accepts `approver` + `acted_at` beside `enforced`. A status past the landing default (Decision accepted, Requirement off proposed, DesignRule with enforced stated) is REFUSED unless `approver` names a Contributor — checked before any write, so a refusal leaves no half-signed node — and the approver is written as the AUTHORED_BY role=approver edge the intent-authority gate reads. set_decision_status and set_requirement_status take the same two fields; a settling status written without an approver is recorded but the reply carries `carries_nobodys_name`, the sentence the gate would say later, said now. add_verification takes `verifies` (targets, types resolved from ids), `status`, `findings` and `last_run_at`; findings or a run date without a status are refused; an unresolvable target refuses the whole create. add_epoch and plan_epoch share the sequence hint, so the planned form names the current maximum exactly as the past form does (recurrence #2 of the generic-refusal class, fixed at the shared point). Does not judge whether the named approver is the right person: it records whose word a status carries, and refuses the case where it carries nobody's.",
         "name": "The owner's word rides the same call as the status it signs: constructors take status + approver, a settling status without a name is refused, setters report one, and a check records its targets and its run in one call",
+        "provenance": "authored",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "cap:the-rank-ratchet-and-the-confusability-instrument",
+      "node_type": "Capability",
+      "properties": {
+        "description": "As built 2026-09-18. Two tests beside the corpus test (every_tool_ranks_first_for_its_own_job_or_is_in_the_baseline; no_new_mutually_confusable_pair) read fixtures/find_tools_rank_baseline.json and refuse growth in either list and stale entries in either. tools/tool_confusability.py replicates find_tools' scorer over the toolsnaps (185/185 top-1 agreement with the binary, validated 2026-09-18), reports the not-first tools with who beats them, the mutual pairs, the crowders, and this project's never-called tools, and rewrites the baseline on --baseline. 61 tools gained one sentence carrying the job in a user's words; 25 remain not-first (name matches) and are the baseline. record_change is renamed snapshot_before_change and manual_work_report is renamed manual_work_ledger, each old name a served stub that refuses and points at the new one for one release. contain_component detaches an existing parent and names it, as move_component does.",
+        "name": "The rank ratchet: every tool first for its own job or listed, no new mutual pair, checked beside the corpus; the confusability instrument that measures it offline; the two renames with stubs; contain_component detaching by default",
         "provenance": "authored",
         "status": "realized"
       }
@@ -245390,6 +245833,17 @@
       }
     },
     {
+      "node_id": "chg:every-tool-ranks-first-for-its-own-job-and-the-surface-does-not-grow-more-confusable",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-09-18",
+        "name": "Every tool ranks first for its own job, or is listed; the surface does not grow more confusable; two renames with stubs; contain_component detaches",
+        "rationale": "On Anthony's word 2026-09-18 after the measurement: words before deletion. The 25 that stay not-first lose to a tool whose NAME carries the query's word at five times a description hit; words cannot overturn that, so they are the honest baseline rather than exemptions to argue.",
+        "summary": "61 served tools gain one sentence carrying the job in a user's words (appended to the description; no corpus sentence copied). Two ratchet tests beside the corpus test read fixtures/find_tools_rank_baseline.json: not_first (25 tools, each beaten on a name match) and mutual (72 pairs), both lists may only shrink. tools/tool_confusability.py is the offline replica of the scorer (185/185 top-1 agreement) with a --baseline mode. record_change → snapshot_before_change and manual_work_report → manual_work_ledger, old names as refusing stubs (DEPRECATED in the corpus tests); skills, lint contracts, loop_nudge, the erosion trial and the MCP tests renamed; corpus keys renamed. contain_component now calls move_component (detach and name). CHANGELOG entry."
+      }
+    },
+    {
       "node_id": "chg:evidence-fidelity",
       "node_type": "ChangeEvent",
       "properties": {
@@ -250124,6 +250578,17 @@
       }
     },
     {
+      "node_id": "dec:a-tool-is-never-deleted-without-usage-evidence-across-projects-and-never-without-a-refusing-stub-first",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Anthony, 2026-09-18, on the measured prune list: 'I'm a little hesitant to delete tools.' The ruling, on the agent's recommendation and his word: nothing is deleted on one project's ledger. A fold or removal waits for usage evidence from more than one project (Alex's repos through usage_report, the work project), and when it comes it ships first as a stub under the old name that refuses and names the replacement — for one release — so a removed door is never a silent absence (req:a-refusal-names-what-would-have-worked). The confusion is removed with words instead: every tool first for its own job, no new mutual pair, both ratcheted. The prunable kinds stay on the record as candidates: 7 singular/plural doors, 6 constructor-plus-edge pairs, 3 two-doors pairs (186 → 170 if all taken).",
+        "kind": "choice",
+        "name": "A tool is never deleted without usage evidence across projects, and never without shipping as a refusing stub for one release first",
+        "rationale": "The failure he named is the agent's debate at the moment of choosing, and the ranker is where that moment lives; making each tool first for its own job removes the debate without removing capability, and the ratchet stops the surface growing more confusable. Deleting on one project's ledger would remove reads nobody could find rather than tools nobody needs — BL-155's own caveat.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:a-windows-build-waits-for-a-windows-user",
       "node_type": "Decision",
       "properties": {
@@ -253007,11 +253472,11 @@
       "node_id": "dec:idea-prune-the-tool-surface-to-an-orthogonal-essential-set",
       "node_type": "Decision",
       "properties": {
-        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-09-17, in his words: \"pruning amount of tools. I think I saw we have 180+ tools now. One thing I learned on storyflow project on dimensions of an entity is that each dimension needs to be orthogonal to the rest (dot product is near 0 to the rest of the dimensional vectors). While we are talking about tools versus dimensions, I feel there is some similarities. If any tool is not orthogonal/unique to the rest, it leaves the agent debating which of 2 or more tools it should use, which also leads to cases where results are inconsistent based on whether you used tool_A or tool_B, which were too close in function that the agent couldn't determine which of the two tools to use. Pruning also allows us to get down to an essential set of tools, which eases the amount\" [of context every session pays].\n\n═══ THE FAILURE HE NAMES, WITNESSED THIS SAME DAY ═══\nNot hypothetical. In one session on 2026-09-17 the agent building reflow2 itself: called record_change when it meant add_change_event (one is the epoch-snapshot form, the other the design-change record — the refusal explained the difference after the fact); confused set_artifact_checksum with set_artifact_checksums; hit the contain_component / move_component pair the design already records as the discoverable sequence that CAUSES the multiple_parents defect. Each is exactly \"tool_A or tool_B, too close to tell, different results\".\n\n═══ MEASURED BEFORE RECORDING, 2026-09-17 ═══\n· 184 toolsnaps on disk, 186 served after #529. By verb: set_* 21, add_* 20, reconcile_* 4, release_* 4, create_* 4, acknowledge_* 3, get_* 3, record_* 3.\n· Five singular/plural pairs by name alone: acknowledge_gap(s), create_edge(s), create_node(s), dimension_drift(s), set_artifact_checksum(s); plus gap_to_prompt / gaps_to_prompts and release_includes / release_includes_all.\n· A DOT PRODUCT OVER DESCRIPTIONS (bag of words, tf-idf, cosine, run on the toolsnaps): 10 pairs at cosine >= 0.5. The closest: add_interface ~ add_project 0.87, add_epoch ~ plan_epoch 0.78, acknowledge_defect ~ acknowledge_gap 0.64, propagate_change ~ propagate_from 0.62, acknowledge_gaps ~ set_artifact_checksums 0.57, create_edges ~ create_nodes 0.54.\n· ⚠️ AND THE INSTRUMENT'S OWN LESSON: the top pair (add_interface ~ add_project) shares almost no FUNCTION — it shares the boilerplate sentence every constructor carries (\"calling again with an existing id REVISES\"); the bulk tools cluster on \"all or nothing\". A dot product over the words of descriptions measures shared prose, not shared job. The dimension analogy holds for the JOB vector, and the job is what the find_tools corpus already encodes: one query per tool in a user's words.\n\n═══ WHAT THE DESIGN ALREADY HOLDS ═══\n· dec:a-tool-carries-the-users-phrasing-and-the-corpus-is-the-test (accepted): every tool must reach find_tools' top 5 for its own query; two are exempt at rank 6 with the measured reason. That test is HALF an orthogonality check — it says each tool is findable, not that two tools are distinguishable.\n· fact:find-tools-misses-split… (2026-09-11): 41 of 53 misses were tools crowded out by neighbours with shared words — closeness, measured, from the other side.\n· dec:bl-155 (open): 40 of 132 tools never called in a retained sample, and reflow2 cannot tell \"unused\" from \"unreachable\"; usage_report now keeps a ledger per project.\n· dec:the-tool-surface-slices-hold-no-function-of-their-own: the twelve slices are surface, so a prune moves nothing in the engine.\n· The typed-helper rule (the_commonest_edge_has_a_typed_helper): satisfies, constrains, allocate … exist beside create_edge ON PURPOSE, each carrying a guard or a computation the generic call lacks. That is the criterion a prune must respect: a tool earns its place by DOING something no other tool does; a second name for the same behaviour is the thing to remove.\n· Every served tool's schema is loaded by every MCP client on every session (Grok Build hides them behind a search precisely because of this); the context cost he names is real and per-session.\n\n═══ THE OPTIONS, none chosen ═══\nA. ⭐ MEASURE CONFUSABILITY FROM THE CORPUS, NOT THE PROSE: for each tool's query, which OTHER tools land in the top 5 — a confusability graph (the scorer and the corpus exist; this is a few lines over them). Join it with the usage ledger (dec:bl-155's instrument, per project) and hand the person a ranked list of pairs: \"these two answer the same question and one is never called\". The prune list becomes a finding, never taste. Cheapest first step; decides nothing by itself.\nB. FOLD THE SINGULAR/PLURAL PAIRS: one tool taking one-or-many (the bulk forms are already all-or-nothing) — up to seven tools gone, and the record_change / add_change_event kind of confusion is not among them. ⚠️ Counter: the bulk forms carry the item-numbered refusal (\"[6] CONTAINS … not found\"), which the singular reply never needed; folding must keep it.\nC. THE EARNS-ITS-PLACE RULE AS A GATE: a served tool must do something no other tool does (a guard, a computation, a read shape); a tool that only renames another is refused at the surface the way an undescribed tool is today. Turns pruning from a one-off into a discipline; ⚠️ it needs A's instrument to be checkable rather than argued.\nD. A DEFAULT SURFACE AND AN ON-DEMAND REST: serve the core (the tools most sessions call) by default and the rest through find_tools / a profile (tools/agent_surface_profile.py already exists; the latent surface already grows itself). Cuts the per-session cost without deleting anything. ⚠️ Counter: a tool nobody sees is a tool nobody calls — the unreachable half of dec:bl-155 gets worse by construction, and the three-legs rule says the detector and the instruction still have to point at it.\nE. NOTHING: the corpus test is the check, and 2 of 186 are exempt. ⚠️ Counter, his and this session's: the failure is not findability, it is two findable tools for one job, and today's session produced three instances of it.\n\n═══ THE HONEST LIMIT ═══\nDimensions of an entity are measures and can be made independent; tools are verbs on one shared graph, and some overlap is composition — a report reading what a write wrote — not redundancy. Orthogonality is the right test for PAIRS THAT ANSWER THE SAME QUESTION, and the corpus is where that question is written down; it is the wrong test for a read and the write it reads.",
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-09-17, in his words: \"pruning amount of tools. I think I saw we have 180+ tools now. One thing I learned on storyflow project on dimensions of an entity is that each dimension needs to be orthogonal to the rest (dot product is near 0 to the rest of the dimensional vectors). While we are talking about tools versus dimensions, I feel there is some similarities. If any tool is not orthogonal/unique to the rest, it leaves the agent debating which of 2 or more tools it should use, which also leads to cases where results are inconsistent based on whether you used tool_A or tool_B, which were too close in function that the agent couldn't determine which of the two tools to use. Pruning also allows us to get down to an essential set of tools, which eases the amount\" [of context every session pays].\n\n═══ THE FAILURE HE NAMES, WITNESSED THIS SAME DAY ═══\nNot hypothetical. In one session on 2026-09-17 the agent building reflow2 itself: called record_change when it meant add_change_event (one is the epoch-snapshot form, the other the design-change record — the refusal explained the difference after the fact); confused set_artifact_checksum with set_artifact_checksums; hit the contain_component / move_component pair the design already records as the discoverable sequence that CAUSES the multiple_parents defect. Each is exactly \"tool_A or tool_B, too close to tell, different results\".\n\n═══ MEASURED BEFORE RECORDING, 2026-09-17 ═══\n· 184 toolsnaps on disk, 186 served after #529. By verb: set_* 21, add_* 20, reconcile_* 4, release_* 4, create_* 4, acknowledge_* 3, get_* 3, record_* 3.\n· Five singular/plural pairs by name alone: acknowledge_gap(s), create_edge(s), create_node(s), dimension_drift(s), set_artifact_checksum(s); plus gap_to_prompt / gaps_to_prompts and release_includes / release_includes_all.\n· A DOT PRODUCT OVER DESCRIPTIONS (bag of words, tf-idf, cosine, run on the toolsnaps): 10 pairs at cosine >= 0.5. The closest: add_interface ~ add_project 0.87, add_epoch ~ plan_epoch 0.78, acknowledge_defect ~ acknowledge_gap 0.64, propagate_change ~ propagate_from 0.62, acknowledge_gaps ~ set_artifact_checksums 0.57, create_edges ~ create_nodes 0.54.\n· ⚠️ AND THE INSTRUMENT'S OWN LESSON: the top pair (add_interface ~ add_project) shares almost no FUNCTION — it shares the boilerplate sentence every constructor carries (\"calling again with an existing id REVISES\"); the bulk tools cluster on \"all or nothing\". A dot product over the words of descriptions measures shared prose, not shared job. The dimension analogy holds for the JOB vector, and the job is what the find_tools corpus already encodes: one query per tool in a user's words.\n\n═══ WHAT THE DESIGN ALREADY HOLDS ═══\n· dec:a-tool-carries-the-users-phrasing-and-the-corpus-is-the-test (accepted): every tool must reach find_tools' top 5 for its own query; two are exempt at rank 6 with the measured reason. That test is HALF an orthogonality check — it says each tool is findable, not that two tools are distinguishable.\n· fact:find-tools-misses-split… (2026-09-11): 41 of 53 misses were tools crowded out by neighbours with shared words — closeness, measured, from the other side.\n· dec:bl-155 (open): 40 of 132 tools never called in a retained sample, and reflow2 cannot tell \"unused\" from \"unreachable\"; usage_report now keeps a ledger per project.\n· dec:the-tool-surface-slices-hold-no-function-of-their-own: the twelve slices are surface, so a prune moves nothing in the engine.\n· The typed-helper rule (the_commonest_edge_has_a_typed_helper): satisfies, constrains, allocate … exist beside create_edge ON PURPOSE, each carrying a guard or a computation the generic call lacks. That is the criterion a prune must respect: a tool earns its place by DOING something no other tool does; a second name for the same behaviour is the thing to remove.\n· Every served tool's schema is loaded by every MCP client on every session (Grok Build hides them behind a search precisely because of this); the context cost he names is real and per-session.\n\n═══ THE OPTIONS, none chosen ═══\nA. ⭐ MEASURE CONFUSABILITY FROM THE CORPUS, NOT THE PROSE: for each tool's query, which OTHER tools land in the top 5 — a confusability graph (the scorer and the corpus exist; this is a few lines over them). Join it with the usage ledger (dec:bl-155's instrument, per project) and hand the person a ranked list of pairs: \"these two answer the same question and one is never called\". The prune list becomes a finding, never taste. Cheapest first step; decides nothing by itself.\nB. FOLD THE SINGULAR/PLURAL PAIRS: one tool taking one-or-many (the bulk forms are already all-or-nothing) — up to seven tools gone, and the record_change / add_change_event kind of confusion is not among them. ⚠️ Counter: the bulk forms carry the item-numbered refusal (\"[6] CONTAINS … not found\"), which the singular reply never needed; folding must keep it.\nC. THE EARNS-ITS-PLACE RULE AS A GATE: a served tool must do something no other tool does (a guard, a computation, a read shape); a tool that only renames another is refused at the surface the way an undescribed tool is today. Turns pruning from a one-off into a discipline; ⚠️ it needs A's instrument to be checkable rather than argued.\nD. A DEFAULT SURFACE AND AN ON-DEMAND REST: serve the core (the tools most sessions call) by default and the rest through find_tools / a profile (tools/agent_surface_profile.py already exists; the latent surface already grows itself). Cuts the per-session cost without deleting anything. ⚠️ Counter: a tool nobody sees is a tool nobody calls — the unreachable half of dec:bl-155 gets worse by construction, and the three-legs rule says the detector and the instruction still have to point at it.\nE. NOTHING: the corpus test is the check, and 2 of 186 are exempt. ⚠️ Counter, his and this session's: the failure is not findability, it is two findable tools for one job, and today's session produced three instances of it.\n\n═══ THE HONEST LIMIT ═══\nDimensions of an entity are measures and can be made independent; tools are verbs on one shared graph, and some overlap is composition — a report reading what a write wrote — not redundancy. Orthogonality is the right test for PAIRS THAT ANSWER THE SAME QUESTION, and the corpus is where that question is written down; it is the wrong test for a read and the write it reads.\n\n═══ MEASURED 2026-09-17/18, on Anthony's \"let's take up the tool pruning brainstorm\" — option A run, nothing pruned ═══\nINSTRUMENT: every one of the 185 corpus queries (one per served tool, in a user's words) put to find_tools on the 0.64.0 binary, top 5 kept; joined with the usage ledger of THIS project (.reflow2/graph.usage.jsonl, 2,082 calls, 98 distinct tools — one project, weak evidence, exactly BL-155's caveat).\n· 61 MUTUAL PAIRS: each tool lands in the other's top 5 for its own job sentence. 58 more one-way neighbours at rank 2 within 3 points of the tool's own score. 73 of 185 tools are NOT RANKED FIRST for their own job — the corpus test asks for top 5, so a tool can pass it while another tool owns its words.\n· THE CROWDERS (tools that sit in the most other tools' top 5): answer_question 21, reviewed_defects 16, release_report 14, reviewed_gaps 13, require_resource 13, documents 11, graph_report_markdown 11.\n· 87 served tools never called in this ledger — the same shape as BL-155's 40 of 132 (2026-08-01); still \"unused OR unreachable\", not a verdict.\nTHE PAIRS SORT INTO FOUR KINDS, and only three are prunable:\n(a) SINGULAR/PLURAL DOORS — 7 pairs (set_artifact_checksum/s 9/69 calls, acknowledge_gap/s 7/0, create_edge/s, create_node/s 36/0, dimension_drift/s 0/1, gap_to_prompt/s 0/3, release_includes/_all 2/13). The bulk form subsumes the singular; one tool taking one-or-many keeps the item-numbered refusal. −7.\n(b) CONSTRUCTOR + ITS COMMONEST EDGE — add_interface/provides, add_environment/operates_in, add_resource/require_resource, add_verification/verifies (verifies is ALREADY a parameter of add_verification), add_artifact/realizes, add_environment_rule/imposes. add_capability already takes satisfies and allocated_to in one call (the 2026-09-06 owner's-word decision); the same shape absorbs these six edge tools, with create_edge left for the rare second edge. −6.\n(c) TWO DOORS ONTO ONE COMPUTATION — propagate_change (from a recorded change) / propagate_from (from seed ids): one tool with either seed. graph_report / graph_report_markdown: one tool with a format. contain_component / move_component: the first ADDS a parent and is the recorded cause of the multiple_parents defect; one tool that detaches by default. −3.\n(d) NOT PRUNABLE, BUT THE MEASURED CONFUSION HIS QUESTION NAMED — add_change_event (26 calls) vs record_change (30): different jobs (a design change record vs an epoch snapshot of one node), shared words, mutual top-5, and the agent building reflow2 called the wrong one this very day. manual_work_report vs report_manual_work: a read/write pair distinguished by word order. These want NAMES and first sentences, not deletion.\nIF (a)+(b)+(c) were all taken: 186 → 170. A GATE FOR THE FUTURE (option C, made checkable by this instrument): \"a served tool is ranked FIRST for its own job sentence\" — 73 fail it today, so it would be a ratchet from here, not a bar cleared now.\nNothing above is decided. The instrument is ~60 lines over find_tools and the ledger and is not yet in tools/; it becomes one the moment he says option A is the practice.",
         "kind": "exploratory",
         "name": "OPEN — 186 served tools: should the surface be pruned to an essential set on an orthogonality test (no two tools close enough that an agent debates which to call and gets different results from each), and what instrument measures closeness — description words, the corpus, or usage?",
         "rationale": "Captured under the brainstorm skill from Anthony's question, nothing promoted. Measured before recording because the analogy suggested an instrument (a dot product) that could be run in a minute, and running it showed the instrument measures the wrong thing — shared prose, not shared job — which is the most useful finding in the record: the corpus, not the descriptions, is where a tool's job vector lives. Recorded separately from dec:bl-155 because that one is about tools nobody calls and this one is about tools nobody can tell apart; a prune needs both.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -261863,6 +262328,16 @@
       }
     },
     {
+      "node_id": "frag:art:find-tools-rank-baseline",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered find_tools_rank_baseline.json — the rank ratchet: tools not first for their own job (name matches) and the mutual pairs; both lists only shrink"
+      }
+    },
+    {
       "node_id": "frag:art:find-tools-ranks-what-the-query-means-test",
       "node_type": "Fragment",
       "properties": {
@@ -263714,6 +264189,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered the_server_keeps_the_export_current.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:tool-confusability",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered tool_confusability.py — the offline replica of find_tools' scorer: not-first tools and who beats them, mutual pairs, crowders, never-called tools; --baseline rewrites the ratchet fixture"
       }
     },
     {
@@ -267815,6 +268300,18 @@
       }
     },
     {
+      "node_id": "req:every-served-tool-ranks-first-for-its-own-job-and-the-surface-does-not-grow-more-confusable",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "Every served tool ranks first for its own job sentence, no new pair of tools becomes mutually confusable, and a tool is never deleted without usage evidence across projects nor without a refusing stub for a release",
+        "priority": "high",
+        "provenance": "authored",
+        "statement": "The failure Anthony named (2026-09-17): a tool that is not orthogonal to the rest leaves the agent debating which of two to call, and the result differs by the door taken. The remedy he chose over deletion (2026-09-18, 'Go with your recommendation'): words before pruning. Every served tool must rank FIRST in find_tools for its own job sentence in the corpus, or be listed in a baseline that only shrinks with the measured reason (beaten on a name match, which words cannot overturn); no new pair of tools may land in each other's top 5 for their own jobs; both are checked in the same test file as the corpus. The two measured confusions are renamed with refusing stubs kept for one release. A tool is deleted only on usage evidence from more than one project, and then only after shipping as a stub that refuses and names its replacement — a removed door must never be a silent absence. Measured at acceptance: 73 of 185 not first, 61 mutual pairs; after the description pass 25 and 72, the baseline.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "req:every-tool-description-is-accurate-about-what-the-tool-does",
       "node_type": "Requirement",
       "properties": {
@@ -271196,6 +271693,16 @@
         "edges": "[{\"direction\":\"in\",\"edge_type\":\"ANTICIPATES\",\"other_type\":\"Decision\",\"other_id\":\"dec:github-mcp-tandem\",\"properties\":{\"evidence\":\"The GitHub tandem idea (2026-07-25) settled the architectural point this one rests on: MCP composes AT THE AGENT, so a pairing lives in a served skill that knows both surfaces, costs the core nothing, and must be additive and never required. The same ruling decides how expensive a Blender pairing is before any of its merits are weighed.\"}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"roles\":[\"author\"]}},{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-who-authors-the-domain-artifact\",\"properties\":{\"evidence\":\"A pairing with a CAD tool is only worth anything if the answer to who-holds-the-pen is 'the agent carries the design INTO the tool that makes the artifact'. If the agent authors geometry directly (the bhome road), there is nothing to pair with.\",\"optional\":false,\"weight_basis\":\"estimated\"}}]",
         "state": "{\"decision\":\"RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-09-16, in his words: *\\\"Versus competing or reinventing the wheel, would it be beneficial to partner with something like https://mcp-for-blender.com/ (github.com/ahujasid/mcp-for-blender)? I feel like visualization or CAD representations of your design is really important part of design.\\\"*\\n\\n═══ WHAT IT IS (read from the repository, 2026-09-16) ═══\\nA Blender addon opening a localhost socket (port 9876, no auth) plus an MCP server that talks to it. Tools: `execute_blender_code` (arbitrary Python inside Blender), `get_scene_info` / `get_object_info` (read the scene back), create/modify/delete shapes, materials, `export_scene` (GLB/FBX), asset sourcing (Poly Haven, Sketchfab, Hyper3D, Hunyuan3D generation). MIT. 28.8k stars, 2.7k forks, active. It does NOT document IFC or STEP in or out. It warns: arbitrary Python is dangerous, save first; an optional safe mode blocks file/network/subprocess.\\n\\n⭐ THE ARCHITECTURAL POINT IS ALREADY SETTLED, by dec:github-mcp-tandem: MCP composes at the agent. reflow2 would never call Blender and never learn what a mesh is. A pairing is a SERVED SKILL that knows both surfaces exist — zero coupling, nothing in the core, reversible, and it must be ADDITIVE AND NEVER REQUIRED or reflow2 stops working with no service, no account, no GPU.\\n\\n═══ WHERE IT WOULD PAY, strongest first ═══\\n(1) ⭐ THE PEN GOES TO THE TOOL, NOT THE AGENT. Today's accepted requirement asks every project to name its artifact standard and the tool that checks it; the who-authors idea leans \\\"carry the design into the tool that makes the artifact\\\". Blender-MCP is exactly that door for anything Blender can make: the agent hands it requirements and dimensions from the graph, Blender makes geometry, reflow2 registers the exported file with a checksum. bhome's HTML plan sheet would not have happened through this door.\\n(2) ⭐ A NUMBER READ BACK FROM THE SCENE IS MEASURED, NOT ASSERTED. `get_object_info` returns dimensions the tool computed. That is the provenance the made-up-number requirement asks for (`req:a-quantity-carries-how-it-was-obtained-and-an-unsourced-one-is-reported`): \\\"the bedroom is 11 ft wide\\\" becomes a quantity MEASURED by Blender at a time, against a Constraint the graph holds, rather than a figure the agent typed. The check is deterministic and repeatable, which is the thing reflow2 was built to get.\\n(3) VISUALIZATION OF THE THING, on demand: a rendered view of what the design describes, for a person who does not read a graph. Cheap once (1) exists; nothing to build in reflow2.\\n(4) A REAL FIELD TRIAL WITH ZERO NEW CODE: the Seattle houses (dec:idea-seattle-houses-as-the-field-trial-for-non-software-design) could run tomorrow with a session holding both servers and a skill that says how.\\n\\n═══ THE HONEST COUNTER: BLENDER IS A MESH MODELLER, NOT THE TOOL OF THE TRADE ═══\\nA city planner accepts a stamped PDF set, and the exchange standard for a building model is IFC; a machinist wants STEP; a board house wants Gerber. Blender-MCP exports GLB/FBX, which none of them accept, and Blender geometry is not parametric — change a wall thickness and nothing else follows, which is the exact \\\"late change ripples nowhere\\\" failure reflow2's vision names. So for Seth's houses the tool of the trade is BIM (Bonsai — formerly BlenderBIM — inside Blender, or FreeCAD BIM), and for a part it is FreeCAD / CadQuery / OpenSCAD, where the source is a script reflow2 can register and diff.\\n⭐ BUT THE DOOR IS THE SAME: Bonsai runs inside Blender and its API (ifcopenshell) is Python, so it is reachable through `execute_blender_code` — IFC in and out through the same socket. UNVERIFIED as of this record: nobody here has driven Bonsai through this server; it is \\\"reachable in principle\\\", to be tried before it is claimed.\\n\\n═══ THE RISKS, beside the ideas ═══\\n· `execute_blender_code` runs whatever the agent writes, and reflow2's graph text is data never instructions — a design whose nodes carried Python would now have hands. Safe mode on, and the skill says so.\\n· No auth on the socket: localhost only; never on a shared box.\\n· Context cost: reflow2 serves 184 tools; Blender-MCP adds ~20 and the agent pays in tool-selection noise, the same objection the GitHub idea recorded (find_tools is the partial answer).\\n· Asset generation (Hyper3D, Hunyuan3D, Sketchfab) is the part that is tempting and the part a design does not want: a generated house is exactly a made-up artifact with no source.\\n\\n═══ THE OPTIONS, none chosen ═══\\nA. ⭐ TRY IT ON ONE THING, SKILL-SHAPED: one served skill (\\\"make-it-in-the-tool\\\") that says: the standard and checker come from the graph; hand Blender the requirements and quantities; read dimensions back with `get_object_info` and record them as MEASURED against the constraints; export; register the file with `link_artifact` + `complies_with` (verified only when the checker ran). Run it on one room of Seth's plan. Cost: a skill and a day. Tells you whether (2) is real.\\nB. BLENDER + BONSAI FOR THE HOUSES SPECIFICALLY — same as A but the artifact is IFC via Bonsai's API, and the checker is `ifcopenshell validate`. Proves the door reaches the tool of the trade. Cost: verify Bonsai drives through the socket first.\\nC. NOTHING IN REFLOW2 — the agent can already hold both servers; leave it to the user. ⚠️ Counter: bhome is the measurement that an agent with the option and no instruction draws HTML.\\nD. DECLINE BLENDER, PAIR WITH FREECAD/CADQUERY INSTEAD — parametric, scriptable, STEP/IFC native, the source is a script reflow2 can diff. ⚠️ Counter: no comparably mature MCP server exists for them today (unchecked beyond a glance), so this is \\\"build the door\\\" rather than \\\"use one\\\".\\n\\n═══ WHAT THIS IS NOT ═══\\nNot a way to visualize the DESIGN GRAPH — that is `render_views.py` and the viewpoints doctrine (`dec:views-are-projections`), and a projection of requirements into 3D would be a fill-in. This is about visualizing and making the THING the design describes.\",\"kind\":\"exploratory\",\"name\":\"OPEN — rather than reinvent CAD or visualization, does reflow2 PAIR with mcp-for-blender (28.8k stars, MIT; arbitrary Python in Blender, scene inspection, GLB/FBX export) as the hands that make and show the artifact — and is Blender the tool of the trade for Seth's houses, or only the door to Bonsai/IFC?\",\"rationale\":\"Captured under the brainstorm skill, nothing promoted. Recorded with the repository read today because the two facts that decide it — arbitrary Python in Blender (so Bonsai/IFC is reachable in principle) and no IFC/STEP export of its own (so Blender alone is not the tool of the trade for a building) — are the kind that get remembered as \\\"Blender does CAD\\\" within a session. The strongest reason to try it is not visualization, which he named, but provenance, which he named earlier today: a dimension read out of the tool is a measured number, and that is the founding fear answered at the seam rather than in the graph.\",\"status\":\"proposed\"}",
         "target_id": "dec:idea-pair-with-mcp-for-blender-as-the-hands-that-make-and-show-the-cad-artifact",
+        "target_type": "Decision"
+      }
+    },
+    {
+      "node_id": "snap:epoch:preserved-on-write:dec:idea-prune-the-tool-surface-to-an-orthogonal-essential-set",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"ANTICIPATES\",\"other_type\":\"Decision\",\"other_id\":\"dec:a-tool-carries-the-users-phrasing-and-the-corpus-is-the-test\",\"properties\":{\"evidence\":\"The corpus gives every tool a job stated in a user's words and a scorer that ranks tools against it — the job vector the dimension analogy needs. The top-5 test proves each tool is findable; the confusability read this idea proposes (which other tools land in a tool's top 5) is the same instrument asked the second question.\"}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"roles\":[\"author\"]}},{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Decision\",\"other_id\":\"dec:bl-155\",\"properties\":{\"evidence\":\"A prune list needs to tell an unused tool from an unreachable one; BL-155 is exactly that open question and its instrument (surface_usage, now the per-project usage ledger). Pruning on closeness alone would remove reads nobody could find rather than tools nobody needs.\",\"optional\":false,\"weight_basis\":\"estimated\"}}]",
+        "state": "{\"decision\":\"RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-09-17, in his words: \\\"pruning amount of tools. I think I saw we have 180+ tools now. One thing I learned on storyflow project on dimensions of an entity is that each dimension needs to be orthogonal to the rest (dot product is near 0 to the rest of the dimensional vectors). While we are talking about tools versus dimensions, I feel there is some similarities. If any tool is not orthogonal/unique to the rest, it leaves the agent debating which of 2 or more tools it should use, which also leads to cases where results are inconsistent based on whether you used tool_A or tool_B, which were too close in function that the agent couldn't determine which of the two tools to use. Pruning also allows us to get down to an essential set of tools, which eases the amount\\\" [of context every session pays].\\n\\n═══ THE FAILURE HE NAMES, WITNESSED THIS SAME DAY ═══\\nNot hypothetical. In one session on 2026-09-17 the agent building reflow2 itself: called record_change when it meant add_change_event (one is the epoch-snapshot form, the other the design-change record — the refusal explained the difference after the fact); confused set_artifact_checksum with set_artifact_checksums; hit the contain_component / move_component pair the design already records as the discoverable sequence that CAUSES the multiple_parents defect. Each is exactly \\\"tool_A or tool_B, too close to tell, different results\\\".\\n\\n═══ MEASURED BEFORE RECORDING, 2026-09-17 ═══\\n· 184 toolsnaps on disk, 186 served after #529. By verb: set_* 21, add_* 20, reconcile_* 4, release_* 4, create_* 4, acknowledge_* 3, get_* 3, record_* 3.\\n· Five singular/plural pairs by name alone: acknowledge_gap(s), create_edge(s), create_node(s), dimension_drift(s), set_artifact_checksum(s); plus gap_to_prompt / gaps_to_prompts and release_includes / release_includes_all.\\n· A DOT PRODUCT OVER DESCRIPTIONS (bag of words, tf-idf, cosine, run on the toolsnaps): 10 pairs at cosine >= 0.5. The closest: add_interface ~ add_project 0.87, add_epoch ~ plan_epoch 0.78, acknowledge_defect ~ acknowledge_gap 0.64, propagate_change ~ propagate_from 0.62, acknowledge_gaps ~ set_artifact_checksums 0.57, create_edges ~ create_nodes 0.54.\\n· ⚠️ AND THE INSTRUMENT'S OWN LESSON: the top pair (add_interface ~ add_project) shares almost no FUNCTION — it shares the boilerplate sentence every constructor carries (\\\"calling again with an existing id REVISES\\\"); the bulk tools cluster on \\\"all or nothing\\\". A dot product over the words of descriptions measures shared prose, not shared job. The dimension analogy holds for the JOB vector, and the job is what the find_tools corpus already encodes: one query per tool in a user's words.\\n\\n═══ WHAT THE DESIGN ALREADY HOLDS ═══\\n· dec:a-tool-carries-the-users-phrasing-and-the-corpus-is-the-test (accepted): every tool must reach find_tools' top 5 for its own query; two are exempt at rank 6 with the measured reason. That test is HALF an orthogonality check — it says each tool is findable, not that two tools are distinguishable.\\n· fact:find-tools-misses-split… (2026-09-11): 41 of 53 misses were tools crowded out by neighbours with shared words — closeness, measured, from the other side.\\n· dec:bl-155 (open): 40 of 132 tools never called in a retained sample, and reflow2 cannot tell \\\"unused\\\" from \\\"unreachable\\\"; usage_report now keeps a ledger per project.\\n· dec:the-tool-surface-slices-hold-no-function-of-their-own: the twelve slices are surface, so a prune moves nothing in the engine.\\n· The typed-helper rule (the_commonest_edge_has_a_typed_helper): satisfies, constrains, allocate … exist beside create_edge ON PURPOSE, each carrying a guard or a computation the generic call lacks. That is the criterion a prune must respect: a tool earns its place by DOING something no other tool does; a second name for the same behaviour is the thing to remove.\\n· Every served tool's schema is loaded by every MCP client on every session (Grok Build hides them behind a search precisely because of this); the context cost he names is real and per-session.\\n\\n═══ THE OPTIONS, none chosen ═══\\nA. ⭐ MEASURE CONFUSABILITY FROM THE CORPUS, NOT THE PROSE: for each tool's query, which OTHER tools land in the top 5 — a confusability graph (the scorer and the corpus exist; this is a few lines over them). Join it with the usage ledger (dec:bl-155's instrument, per project) and hand the person a ranked list of pairs: \\\"these two answer the same question and one is never called\\\". The prune list becomes a finding, never taste. Cheapest first step; decides nothing by itself.\\nB. FOLD THE SINGULAR/PLURAL PAIRS: one tool taking one-or-many (the bulk forms are already all-or-nothing) — up to seven tools gone, and the record_change / add_change_event kind of confusion is not among them. ⚠️ Counter: the bulk forms carry the item-numbered refusal (\\\"[6] CONTAINS … not found\\\"), which the singular reply never needed; folding must keep it.\\nC. THE EARNS-ITS-PLACE RULE AS A GATE: a served tool must do something no other tool does (a guard, a computation, a read shape); a tool that only renames another is refused at the surface the way an undescribed tool is today. Turns pruning from a one-off into a discipline; ⚠️ it needs A's instrument to be checkable rather than argued.\\nD. A DEFAULT SURFACE AND AN ON-DEMAND REST: serve the core (the tools most sessions call) by default and the rest through find_tools / a profile (tools/agent_surface_profile.py already exists; the latent surface already grows itself). Cuts the per-session cost without deleting anything. ⚠️ Counter: a tool nobody sees is a tool nobody calls — the unreachable half of dec:bl-155 gets worse by construction, and the three-legs rule says the detector and the instruction still have to point at it.\\nE. NOTHING: the corpus test is the check, and 2 of 186 are exempt. ⚠️ Counter, his and this session's: the failure is not findability, it is two findable tools for one job, and today's session produced three instances of it.\\n\\n═══ THE HONEST LIMIT ═══\\nDimensions of an entity are measures and can be made independent; tools are verbs on one shared graph, and some overlap is composition — a report reading what a write wrote — not redundancy. Orthogonality is the right test for PAIRS THAT ANSWER THE SAME QUESTION, and the corpus is where that question is written down; it is the wrong test for a read and the write it reads.\",\"kind\":\"exploratory\",\"name\":\"OPEN — 186 served tools: should the surface be pruned to an essential set on an orthogonality test (no two tools close enough that an agent debates which to call and gets different results from each), and what instrument measures closeness — description words, the corpus, or usage?\",\"rationale\":\"Captured under the brainstorm skill from Anthony's question, nothing promoted. Measured before recording because the analogy suggested an instrument (a dot product) that could be run in a minute, and running it showed the instrument measures the wrong thing — shared prose, not shared job — which is the most useful finding in the record: the corpus, not the descriptions, is where a tool's job vector lives. Recorded separately from dec:bl-155 because that one is about tools nobody calls and this one is about tools nobody can tell apart; a prune needs both.\",\"status\":\"proposed\"}",
+        "target_id": "dec:idea-prune-the-tool-surface-to-an-orthogonal-essential-set",
         "target_type": "Decision"
       }
     },
@@ -280184,6 +280691,19 @@
       }
     },
     {
+      "node_id": "fact:tool-confusability-measured-61-mutual-pairs-73-not-first-for-their-own-job-and-the-pairs-sort-into-four-kinds",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "measurement",
+        "name": "Tool confusability measured on the 185-query corpus: 61 mutual pairs, 58 near one-way neighbours, 73 of 185 tools not ranked first for their own job; the pairs sort into singular/plural doors (7), constructor-plus-edge (6), two doors onto one computation (3), and confusions that want names not deletion (2)",
+        "source": "find_tools on target/debug 0.64.0 over crates/reflow2-mcp/tests/fixtures/find_tools_corpus.json; .reflow2/graph.usage.jsonl",
+        "statement": "Every corpus query (one per served tool, in a user's words) put to find_tools on the 0.64.0 binary, top 5 kept, joined with this project's usage ledger (2,082 calls, 98 distinct tools; 87 served tools never called here — one project, weak evidence, BL-155's caveat). 61 pairs are MUTUAL (each in the other's top 5 for its own job); 58 one-way neighbours sit at rank 2 within 3 points; 73 of 185 tools are not ranked first for their own job, so the top-5 test passes them while another tool owns their words. Crowders: answer_question in 21 other tools' top 5, reviewed_defects 16, release_report 14, reviewed_gaps 13, require_resource 13. Prunable by the earns-its-place rule: 7 singular/plural pairs (the bulk form subsumes the singular), 6 constructor+commonest-edge pairs (the add_capability shape already absorbs satisfies and allocated_to; verifies is already a parameter of add_verification), 3 two-doors pairs (propagate_change/propagate_from; graph_report/graph_report_markdown; contain_component/move_component — the first is the recorded cause of multiple_parents). Not prunable but the confusion his question named: add_change_event vs record_change (26 vs 30 calls, mutual, the agent building reflow2 called the wrong one this day) and manual_work_report vs report_manual_work — names and first sentences, not deletion. All three prunable kinds taken: 186 → 170. A first-for-its-own-job gate would be a ratchet from here (73 fail today), not a bar cleared now. Instrument: ~60 lines over find_tools and the ledger, in the session scratchpad, not yet in tools/.",
+        "subject_id": "dec:idea-prune-the-tool-surface-to-an-orthogonal-essential-set",
+        "valid_from": "2026-09-18"
+      }
+    },
+    {
       "node_id": "fact:topic-report-is-keyword-only-and-finds-the-project-node-without-offering-to-expand-it",
       "node_type": "TemporalFact",
       "properties": {
@@ -282211,6 +282731,20 @@
       }
     },
     {
+      "node_id": "ver:every-tool-ranks-first-for-its-own-job-or-is-in-the-baseline",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-mcp/tests/every_tool_is_found_by_a_query_in_the_users_words.rs — the two ratchet tests, beside the corpus test.",
+        "findings": "pr run: the ratchet tests pass on the regenerated baseline.",
+        "kind": "verification",
+        "last_run_at": "2026-09-18",
+        "level": "integration",
+        "method": "test",
+        "name": "Every served tool is ranked first for its own corpus query or listed in the baseline, and no listed tool has quietly become first; no new mutually confusable pair, and no listed pair has come apart",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:evidence-fidelity",
       "node_type": "Verification",
       "properties": {
@@ -284109,7 +284643,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:94645e7eaf9eb69caceb88f40a349f425c5cf3258fc44ddc8eb6def67dd9b610",
+  "prev_content_hash": "sha256:49454a0887d26c3e6bcb5efeaddb39005e8ee1f70a702d83ca812dd98b0e2e05",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -284706,8 +285240,8 @@
     "schema_version": 1
   },
   "taken_at": {
-    "branch": "cut-v0.64.0",
-    "commit": "47337a09368fcee368c7646abea0ad91f7f21cf4",
+    "branch": "every-tool-ranks-first-for-its-own-job",
+    "commit": "f1d6ee537150a665b5db280e6be21f28b55cc5d5",
     "dirty": true
   }
 }
