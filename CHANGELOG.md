@@ -31,6 +31,8 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.64.0] — 2026-09-17
+
 ### Added
 
 - **A repository's procedural know-how reaches the agent at the step it bears on, and the design
