@@ -44,7 +44,12 @@
             ]
           },
           "checksum": {
-            "type": "string"
+            "default": null,
+            "description": "Omitted: measured by the server under the project root (basis\n`measured`); supplied: recorded as `asserted`.",
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "design_change_event_id": {
             "default": null,
@@ -68,7 +73,6 @@
         },
         "required": [
           "artifact_id",
-          "checksum",
           "disposition"
         ],
         "type": "object"

@@ -207,6 +207,11 @@ impl GraphRouter {
             .map_err(|e| format!("the open task failed: {e}"))?
             .map_err(|e| format!("{e}"))?;
 
+            // A registry holds DESIGNS, not checkouts: the directory a store
+            // sits under is not the tree its artifacts describe, so a
+            // measurement here would find every file absent and call it
+            // missing. Say "not on this machine" instead (`crate::measure`).
+            let opened = opened.without_tree();
             let svc = if read_only {
                 opened.into_read_only()
             } else {

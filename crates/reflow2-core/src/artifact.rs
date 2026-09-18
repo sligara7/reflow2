@@ -51,7 +51,7 @@ use crate::temporal::{ChangeAction, ChangeType};
 /// same bare hash to `reconcile_artifacts` was told every artifact of an
 /// untouched tree had drifted. A normalisation that only one end of a comparison
 /// performs is not a normalisation.
-pub(crate) fn canonical_checksum(checksum: &str) -> String {
+pub fn canonical_checksum(checksum: &str) -> String {
     let is_bare_hex = !checksum.is_empty()
         && checksum.len() <= 64
         && checksum.chars().all(|c| c.is_ascii_hexdigit());
@@ -90,7 +90,7 @@ pub(crate) fn canonical_checksum(checksum: &str) -> String {
 /// strength is decided when it is registered — the write side takes a 16-char
 /// digest without complaint, and a read side that then refused to honour it
 /// would be the same write/read disagreement all over again.
-pub(crate) fn checksums_agree(a: &str, b: &str) -> bool {
+pub fn checksums_agree(a: &str, b: &str) -> bool {
     if a == b {
         return true;
     }
@@ -253,6 +253,40 @@ impl DesignGraph {
                 .set("name", name)
                 .set_opt("artifact_type", artifact_type)
                 .set_opt("location", location),
+        )
+    }
+
+    /// Say HOW an artifact's checksum came to be on the record: `measured`
+    /// (the server hashed the file itself, under the project root) or
+    /// `asserted` (a caller pasted the value). The distinction is the one
+    /// `req:every-quantity-says-whether-it-was-measured-or-asserted` draws for
+    /// every number in a design, applied to the design's own as-built
+    /// evidence: until 2026-09-18 every checksum in reflow2's own graph was a
+    /// pasted `sha256sum`, and the graph could not tell a pasted hash from a
+    /// made-up one. A plain property write, no ChangeEvent: the basis is a
+    /// fact about the record, not a change to the system.
+    pub fn set_checksum_basis(
+        &mut self,
+        artifact_id: &str,
+        basis: &str,
+    ) -> Result<StoredNode, DynoError> {
+        if self.get_node(node::ARTIFACT, artifact_id)?.is_none() {
+            return Err(DynoError::NodeNotFound {
+                node_type: node::ARTIFACT.to_string(),
+                node_id: artifact_id.to_string(),
+            });
+        }
+        if !matches!(basis, "measured" | "asserted") {
+            return Err(DynoError::Validation {
+                node_type: node::ARTIFACT.into(),
+                property: "checksum_basis".into(),
+                message: format!("checksum_basis must be `measured` or `asserted`, got {basis:?}"),
+            });
+        }
+        self.upsert_node(
+            node::ARTIFACT,
+            artifact_id,
+            Props::new().set("checksum_basis", basis),
         )
     }
 

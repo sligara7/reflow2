@@ -44,8 +44,12 @@
         ]
       },
       "checksum": {
-        "description": "The accepted content hash — the new drift baseline.",
-        "type": "string"
+        "default": null,
+        "description": "The accepted content hash — the new drift baseline. OPTIONAL since\n2026-09-18: omitted, the server MEASURES the file at the artifact's\nlocation under the project root and records the basis as `measured`;\nsupplied, it is recorded as `asserted`. A server that does not hold the\ntree refuses an omitted checksum by name rather than guessing.",
+        "type": [
+          "string",
+          "null"
+        ]
       },
       "design_change_event_id": {
         "default": null,
@@ -70,7 +74,6 @@
     },
     "required": [
       "artifact_id",
-      "checksum",
       "disposition"
     ],
     "type": "object"

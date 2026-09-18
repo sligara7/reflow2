@@ -126,6 +126,10 @@ ALIASED = {
     ("Component", "purpose"): "add_component's `description` parameter",
     ("Project", "closure_legs"): "set_closure_criterion's `legs` parameter",
     ("Project", "closure_threshold"): "set_closure_criterion's `threshold` parameter",
+    # Written ONLY by the server, on purpose: link_artifact / set_artifact_checksum(s)
+    # record whether the checksum was measured or asserted, and a caller has no
+    # parameter to claim either (2026-09-18).
+    ("Artifact", "checksum_basis"): "recorded by the server on link_artifact and set_artifact_checksum(s); no parameter, by design",
 }
 
 

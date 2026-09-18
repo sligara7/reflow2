@@ -57,11 +57,11 @@ tokio = { version = "1", features = ["macros", "rt-multi-thread", "io-std", "syn
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 schemars = "1"
-# `sha2` was declared here for `prior_content_hash` and never called directly:
-# the canonical hash is computed by reflow2-core (graph.rs) and this crate
-# only carries the result. Zero use sites when checked 2026-09-15, so the
-# declaration was removed rather than bumped — the reliance is on the core
-# function, and that one is real.
+# `sha2` was removed 2026-09-15 as unused and RETURNED 2026-09-18 for one use
+# site: `measure.rs` streams a registered file through it so a checksum can be
+# MEASURED by the server rather than pasted by a caller. The file read lives in
+# this crate on purpose — reflow2-core still reads no file.
+sha2 = "0.11"
 clap = { version = "4", features = ["derive", "env"] }
 anyhow = "1"
 tracing = "0.1"
@@ -75,3 +75,6 @@ tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 # v2, and a silent major-version swap would change the whole tool surface.
 # [patch.crates-io]
 # rmcp = { path = "/home/ajs7/project/rust-sdk/crates/rmcp" }
+
+[dev-dependencies]
+tempfile = "3"

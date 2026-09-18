@@ -32,7 +32,9 @@
 //!
 //! ## Contract
 //!
-//! **reflow2 performs no file I/O**, exactly as `reconcile_artifacts` does not:
+//! **The core performs no file I/O** (the served `reconcile_artifacts` measures
+//! registered files since 2026-09-18, in the MCP crate, and hands the core
+//! observations — the core itself still reads nothing):
 //! the caller sweeps the tree and supplies what it saw. This keeps the core
 //! free of a filesystem and keeps the sweep's scope something a person chose.
 //!
