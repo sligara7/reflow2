@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:4ae986e3cb5fcdbcc546236a8713d5da2625aa5823cf4238798574418d195460",
+  "content_hash": "sha256:d106804ce589037ffb370d82b9877a3e312cf80c9542650ac25f16cb1356f5aa",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -1106,6 +1106,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:depends"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-cut-ends-with-the-served-binary-matching-the-tag",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:packaging"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -14010,6 +14018,16 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "cap:a-cut-ends-with-the-served-binary-matching-the-tag",
+      "properties": {
+        "roles": [
+          "author"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "cap:a-declared-upstream-is-read-where-it-lies",
       "properties": {
         "authored_at": "2026-08-28",
@@ -23322,6 +23340,17 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "rule:a-cut-ends-by-rebuilding-the-served-release-binary",
+      "properties": {
+        "approved_at": "2026-09-18",
+        "roles": [
+          "approver"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "rule:a-design-is-named-by-an-id-not-a-path",
       "properties": {
         "authored_at": "2026-08-09",
@@ -26248,6 +26277,25 @@
         "action": "modified"
       },
       "to_id": "cap:search-first-at-the-tool"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-cut-ends-by-rebuilding-the-served-release-binary",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:agent-instructions"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-cut-ends-by-rebuilding-the-served-release-binary",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified",
+        "note": "ninth step and description"
+      },
+      "to_id": "flow:release-cut"
     },
     {
       "edge_type": "CHANGED",
@@ -51319,6 +51367,12 @@
       "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
+      "to_id": "cap:a-cut-ends-with-the-served-binary-matching-the-tag"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
       "to_id": "cap:a-repos-conventions-are-delivered-by-step-and-its-adapter-is-registered"
     },
     {
@@ -51806,6 +51860,12 @@
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "req:vocabulary-covers-states"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "rule:a-cut-ends-by-rebuilding-the-served-release-binary"
     },
     {
       "edge_type": "CONTAINS",
@@ -58725,6 +58785,12 @@
       "from_id": "cap:a-check-records-what-it-found-separately-from-what-it-is",
       "properties": {},
       "to_id": "rule:fix-it-properly-while-it-is-still-cheap"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:a-cut-ends-with-the-served-binary-matching-the-tag",
+      "properties": {},
+      "to_id": "rule:a-cut-ends-by-rebuilding-the-served-release-binary"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -66413,6 +66479,12 @@
       "from_id": "fact:two-heal-rules-assert-a-condition-they-never-test",
       "properties": {},
       "to_id": "decision:ack:cc397662b1ff2064"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "flow:release-cut",
+      "properties": {},
+      "to_id": "rule:a-cut-ends-by-rebuilding-the-served-release-binary"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -216919,6 +216991,15 @@
     },
     {
       "edge_type": "PART_OF_FLOW",
+      "from_id": "cap:a-cut-ends-with-the-served-binary-matching-the-tag",
+      "properties": {
+        "step_order": 9,
+        "weight_basis": "estimated"
+      },
+      "to_id": "flow:release-cut"
+    },
+    {
+      "edge_type": "PART_OF_FLOW",
       "from_id": "cap:a-cut-exports-the-record-once-from-the-new-binary",
       "properties": {
         "step_order": 6,
@@ -217980,6 +218061,16 @@
         "conformance": "unchecked"
       },
       "to_id": "cmp:agent"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:agent-instructions",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked",
+        "note": "the launcher section's step-9 paragraph"
+      },
+      "to_id": "cap:a-cut-ends-with-the-served-binary-matching-the-tag"
     },
     {
       "edge_type": "REALIZES",
@@ -220367,6 +220458,15 @@
         "conformance": "unchecked"
       },
       "to_id": "cap:a-session-serves-a-release-binary"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:reflow2-rebuild",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-cut-ends-with-the-served-binary-matching-the-tag"
     },
     {
       "edge_type": "REALIZES",
@@ -223158,6 +223258,12 @@
       "from_id": "cap:a-coupling-has-a-typed-call-of-its-own",
       "properties": {},
       "to_id": "req:a-coupling-is-one-typed-call-and-the-name-that-says-so-means-that"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:a-cut-ends-with-the-served-binary-matching-the-tag",
+      "properties": {},
+      "to_id": "req:a-session-runs-a-release-binary"
     },
     {
       "edge_type": "SATISFIES",
@@ -228348,6 +228454,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:the-rebuild-rule-rides-on-release-report",
+      "properties": {},
+      "to_id": "cap:a-cut-ends-with-the-served-binary-matching-the-tag"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:the-record-moved-is-surfaced",
       "properties": {},
       "to_id": "cap:the-record-moved-is-surfaced"
@@ -231457,7 +231569,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:a3740f0e62445c6d1428d7d99e10baa57e51c4228a6a6867b4f3f7583d043a0c",
+        "checksum": "sha256:09b14f3639b10f2ce2095fea5a7e1af3f4b2a8b49206209b98fdba47ccbee45d",
         "location": "AGENTS.md",
         "name": "AGENTS.md — the primary instruction file every agent reads before it knows reflow2 exists: commands, architecture, the rules for changing the project",
         "status": "realized"
@@ -236239,6 +236351,17 @@
       }
     },
     {
+      "node_id": "cap:a-cut-ends-with-the-served-binary-matching-the-tag",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Step 9 of flow:release-cut, added 2026-09-18. After the tag's assets are verified published, tools/reflow2-rebuild.sh rebuilds target/release/reflow2-mcp (and writes the stamp the launcher compares; a bare cargo build --release does not), then every shared daemon is stopped so the next call respawns on the new build, confirmed by /proc/<pid>/exe not reading (deleted).\n\nWHY IT IS A STEP OF THE CUT AND NOT A REMINDER: the launcher's staleness banner fires only inside this repo. Every other project on the builder's box reaches reflow2 through the user-scope registration in ~/.claude.json, which names target/release/reflow2-mcp directly, so no guard is in that path. Measured 2026-09-18: the adopt of a real 24-unit building design (proj:sedu-wetmore, 186 nodes) ran for a whole session on 0.62.0 while 0.64.0 was tagged and published; the two cuts between rebuilt the debug binary for the export and never touched release. Eleven questions 0.64.0 raises on that design (units, sources, encoding, closure criterion) were never put to its owner.\n\nREALIZED BY what already exists (tools/reflow2-rebuild.sh, the AGENTS.md launcher section) plus the flow step and a DesignRule delivered on release_report, the step before it. What it does not do: rebuild for you. The 34-minute cold build stays a deliberate act; the cut is the moment it is deliberately owed.",
+        "name": "A cut ends with the binary this box serves matching the tag: rebuild release, then stop every shared daemon",
+        "provenance": "authored",
+        "status": "realized",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:a-cut-exports-the-record-once-from-the-new-binary",
       "node_type": "Capability",
       "properties": {
@@ -239492,6 +239615,17 @@
         "rationale": "Reported by Alex 2026-08-29 (art:grok-shell-feedback-2026-08-29): after recording a ChangeEvent for a code change, capturing the same idea as a Requirement was refused naming that ChangeEvent, and a Decision restating a Capability was refused naming the Capability. The served instructions ASK for both records, so an agent following the loop honestly tripped the guard every time — his words, \"distinct_from works; it is just the default path now.\"\n\n🛑 THE REFUSAL WAS KEPT ON PURPOSE, AND THE OTHER REPAIR WAS REJECTED. Excluding cross-type pairs from the filter would have removed the friction and also removed a real catch when an agent genuinely duplicates an idea across layers — trading a false alarm for a silent miss, which is the failure this guard was built to stop. Nobody has counted how often a cross-type hit IS a real duplicate, so suppressing the check would act on an unmeasured assumption.\n\n🛑 SO THIS DOES NOT REACH THE CAUSE, AND SAYS SO. fact:the-near-match-filter-has-no-node-type-term stays OPEN and stays literally true: the selection is still `not-itself AND score-above-floor`, with no type term. What changed is the WORDING, one layer later. That is the conservative half of the repair and it matches how the guard was justified — refuse_unless_deliberate is documented as forcing a CHOICE, never as preventing a write.\n\nRoot-caused with the root-cause skill; pinned by two tests written first and OBSERVED FAILING — cross-type FAILED and same-type PASSED against the unfixed code, which is the split that shows the tests discriminate rather than merely rejecting current behaviour.",
         "subject": "system",
         "summary": "The search-before-you-add guard now words its refusal according to whether the near-match is the SAME TYPE as the node being created. A same-type hit reads as before and offers SHARPEN. A hit of another type is described as a different KIND of record, says that recording what shipped and recording what must stay true are different acts on the same work, and does NOT offer sharpening — calling `add_requirement` with a ChangeEvent's id is not a route that exists. `refuse_unless_deliberate` takes the created node's type; the four constructors that refuse (Requirement, Capability, Component, Decision) pass it."
+      }
+    },
+    {
+      "node_id": "chg:a-cut-ends-by-rebuilding-the-served-release-binary",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-09-18",
+        "name": "A cut ends by rebuilding the served release binary: step 9 of the release-cut flow, a rule delivered on release_report, AGENTS.md",
+        "rationale": "Anthony 2026-09-18 ('Do the ninth release-cut step') after his assumption that the dev box serves the latest reflow2 was proven wrong by the Seattle adopt running on 0.62.0. The root is the procedure, not the person: nothing in the eight steps rebuilt the binary other projects are served, and the only guard that would have warned is bypassed by the user-scope registration.",
+        "summary": "flow:release-cut gains step 9 (cap realized by tools/reflow2-rebuild.sh and the AGENTS.md launcher section); the flow's description now says nine steps and why step 9 sits after step 8; rule:a-cut-ends-by-rebuilding-the-served-release-binary with steps [release_report] so it is appended to that tool's description at the moment of the cut; AGENTS.md paragraph in the launcher section; CHANGELOG entry. No Rust change."
       }
     },
     {
@@ -260621,6 +260755,18 @@
       }
     },
     {
+      "node_id": "rule:a-cut-ends-by-rebuilding-the-served-release-binary",
+      "node_type": "DesignRule",
+      "properties": {
+        "category": "convention",
+        "name": "A cut ends by rebuilding the release binary this box serves, then stopping every shared daemon",
+        "statement": "After release_report confirms the release is out and its assets are verified, run tools/reflow2-rebuild.sh and stop every shared daemon (--stop-shared per project, or a full restart of those sessions; a /mcp reconnect does not replace a running server). Confirm with pgrep -fa target/release/reflow2-mcp and ls -l /proc/<pid>/exe: (deleted) means that server is still the old build. Why: the user-scope registration serves target/release with no launcher in the path, so nothing else tells other projects' sessions the binary is behind. Measured 2026-09-18: a real building design was adopted on 0.62.0 for a whole session while 0.64.0 was published.",
+        "steps": [
+          "release_report"
+        ]
+      }
+    },
+    {
       "node_id": "rule:a-design-is-named-by-an-id-not-a-path",
       "node_type": "DesignRule",
       "properties": {
@@ -261421,7 +261567,7 @@
       "node_id": "flow:release-cut",
       "node_type": "Flow",
       "properties": {
-        "description": "The ordered procedure for producing a reflow2 release, recorded so a cut is read from the design rather than reconstructed from the last one. Eight steps; read back with `flow_report`.\n\nORDER IS LOAD-BEARING IN THREE PLACES, and each was learned by getting it wrong:\n— Step 1 before step 4, because `release_includes_all` freezes each artifact's CURRENT checksum and the version bump drifts `reflow2.toml`.\n— The binary is rebuilt after step 1 and before step 6, because the export's schema stamp carries the version of the binary that wrote it.\n— Step 6 is last of the graph work, because exporting from the real store means killing the server and ending MCP access for the session.\n\nTAGGING AND PUBLISHING IS THIS PROJECT'S DEPLOY. It reaches other people's machines and cannot be recalled, so AGENTS.md makes it per-session: ask every time, however recently it was granted.\n\nWHAT THIS FLOW DOES NOT COVER: which of the release's contents are worth an increment at all. That is `dec:release-trigger` and the `plan-increments` skill, upstream of step 1.",
+        "description": "The ordered procedure for producing a reflow2 release, recorded so a cut is read from the design rather than reconstructed from the last one. Nine steps; read back with `flow_report`.\n\nORDER IS LOAD-BEARING IN THREE PLACES, and each was learned by getting it wrong:\n— Step 1 before step 4, because `release_includes_all` freezes each artifact's CURRENT checksum and the version bump drifts `reflow2.toml`.\n— The binary is rebuilt after step 1 and before step 6, because the export's schema stamp carries the version of the binary that wrote it.\n— Step 9 is after the tag is verified published (step 8), because the binary it rebuilds is the one every OTHER project on the builder's box is served at user scope, with no launcher banner in the path; until it runs, those sessions keep the previous release. Added 2026-09-18 after a real adopt ran on 0.62.0 while 0.64.0 was out.\n— Step 6 is last of the graph work, because exporting from the real store means killing the server and ending MCP access for the session.\n\nTAGGING AND PUBLISHING IS THIS PROJECT'S DEPLOY. It reaches other people's machines and cannot be recalled, so AGENTS.md makes it per-session: ask every time, however recently it was granted.\n\nWHAT THIS FLOW DOES NOT COVER: which of the release's contents are worth an increment at all. That is `dec:release-trigger` and the `plan-increments` skill, upstream of step 1.",
         "entry_point": "cap:a-cut-moves-every-version-claim-together",
         "exit_point": "cap:a-release-that-shipped-nothing-is-reported",
         "flow_type": "process",
@@ -284269,6 +284415,20 @@
       }
     },
     {
+      "node_id": "ver:the-rebuild-rule-rides-on-release-report",
+      "node_type": "Verification",
+      "properties": {
+        "description": "tools/list against the real store after the rule is written: release_report's description ends with the lesson; every other tool's does not.",
+        "findings": "tools/list on the real store 2026-09-18: the lesson is appended to ['release_report'] and to no other tool.",
+        "kind": "verification",
+        "last_run_at": "2026-09-18",
+        "level": "integration",
+        "method": "demonstration",
+        "name": "The rebuild rule is delivered on release_report: the served tool list carries it in that tool's description on a design holding the rule",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:the-record-moved-is-surfaced",
       "node_type": "Verification",
       "properties": {
@@ -284643,7 +284803,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:49454a0887d26c3e6bcb5efeaddb39005e8ee1f70a702d83ca812dd98b0e2e05",
+  "prev_content_hash": "sha256:4ae986e3cb5fcdbcc546236a8713d5da2625aa5823cf4238798574418d195460",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -285240,8 +285400,8 @@
     "schema_version": 1
   },
   "taken_at": {
-    "branch": "every-tool-ranks-first-for-its-own-job",
-    "commit": "f1d6ee537150a665b5db280e6be21f28b55cc5d5",
+    "branch": "a-cut-ends-by-rebuilding-the-served-release-binary",
+    "commit": "cb9fe7835b3091aa50c2f93e1741aff5b2f1b6e9",
     "dirty": true
   }
 }
