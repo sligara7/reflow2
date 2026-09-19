@@ -35,7 +35,8 @@
           "environment_change",
           "deprecation",
           "resync",
-          "baseline_established"
+          "baseline_established",
+          "decision_settled"
         ],
         "type": "string"
       },

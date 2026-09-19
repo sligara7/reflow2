@@ -94,6 +94,9 @@ NON_TOOL_TERMS = {
     # revise-design because the pair is the whole contract — a unique `old`
     # becomes `new`, or `new` is appended when `old` is omitted.
     "old", "new",
+    # retire-from-design (2026-09-18): the finding kind for a retired file's
+    # absence, named in backticks because it is the whole answer.
+    "expected_absence",
     "caused_by",
     "cause_evidence",
 

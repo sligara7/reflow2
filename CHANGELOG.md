@@ -55,6 +55,28 @@ This file is the third view: *what changed, and when*.
   exceed 4 KB, 92 preserved re-sends. `old` must occur exactly once (absent or repeated is refused
   with the count), `new` replaces it; omit `old` to append a dated note. Same revision guard as
   every write: the prior state is preserved and the reply's `revision` names what moved.
+- **`change_type: decision_settled`.** An open Decision moving to accepted is the commonest design
+  event and no value named it (flo2, 2026-09-18); the two-axes ruling had left `change_type`
+  required while `subject` is optional. The settlement itself is still the status move, the
+  approver edge and the preserved snapshot; this is the honest label when an event is written.
+
+### Fixed
+
+- **An unknown-field refusal names the nearest served parameter first.** It used to lead with
+  "your client's tool list may predate the server", and a field report filed eight guessed names
+  (`node_id` for `id`, `parent_id` for `project_id`) as schema drift on the strength of that
+  sentence — five of the six had never existed in any release. The stale-client line is now a
+  possibility offered second.
+- **`reflow2 check` with no `--export` reads the export the graph is in step with**
+  (`.reflow2/graph.sync.json`), then `design.json`. Three designs on one box kept theirs at three
+  paths and none was the old default.
+- **capture-intent's routing table no longer says operational know-how has no home.** A
+  DesignRule with `category: "runbook"`, governed by the Environment or Component it concerns,
+  always fit; the row said "nothing fits cleanly" and a droplet's run configuration went into a
+  Decision's prose because of it.
+- **retire-from-design says a retired file's absence is `expected_absence`, never drift.** The
+  gate has honoured the `OBSOLETES` edge since the 2026-08-15 defect was fixed; a field report
+  reasoned the opposite from the fact recorded before the fix.
 
 - **reflow2 measures registered files, and never reads them for meaning.** Anthony, 2026-09-18,
   closing the "reflow2 does no file I/O — should it?" brainstorm on the narrow reading: the slogan

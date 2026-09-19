@@ -69,13 +69,115 @@ pub fn export_stale_refusal(stale: Option<bool>, note: &str) -> Option<McpError>
 /// keeps the tool list it fetched at connection, so a server restarted on a
 /// newer binary knows fields the client cannot send
 /// (`fact:defect-a-clients-tool-list-is-fixed-at-connection-so-a-restarted-servers-new-fields-are-unreachable`).
+/// What an unknown-field refusal says. THE NEAREST LEGAL NAME COMES FIRST,
+/// and the stale-client possibility is offered as exactly that — a
+/// possibility. Measured 2026-09-18 (flo2): eight rejected calls were reported
+/// upstream as "client/server schema drift" because this text led with it,
+/// when five of the six names had never existed in any release; the agent had
+/// guessed `node_id` for `id` and `parent_id` for `project_id`. The server
+/// cannot know its own history, but it can say which served name is closest,
+/// and that is the answer in the common case.
 pub fn stale_client_hint(message: &str) -> String {
+    let nearest = nearest_legal_field(message)
+        .map(|n| format!(" Nearest served parameter: `{n}`."))
+        .unwrap_or_default();
     format!(
-        "{message} — If this reflow2 was updated after your client connected, your client's \
-         tool list may predate the server ({}): the field may exist here and not there. \
-         Reconnect (a new session) to refresh the schema, or use the older call shape.",
+        "{message} —{nearest} If nothing listed is what you meant, your client's tool list \
+         may predate the server ({}). Reconnect (a new session) to refresh the schema.",
         env!("CARGO_PKG_VERSION")
     )
+}
+
+/// From serde's `unknown field \`x\`, expected one of \`a\`, \`b\`` (or `expected
+/// \`a\``), the legal name closest to `x` by edit distance — ties broken by a
+/// shared prefix or suffix, which is how `node_id` reaches `id` and
+/// `parent_id` reaches `project_id`.
+pub(crate) fn nearest_legal_field(message: &str) -> Option<String> {
+    let unknown = message.split("unknown field `").nth(1)?.split('`').next()?;
+    let legal: Vec<&str> = message
+        .split("expected ")
+        .nth(1)?
+        .split('`')
+        .skip(1)
+        .step_by(2)
+        .collect();
+    if legal.is_empty() {
+        return None;
+    }
+    // THE SAME CONCEPT UNDER A DIFFERENT NAME is the case that matters (flo2
+    // F10, 2026-09-19: `id` for `decision_id`, `node_id` for `target_id`,
+    // `properties` for `props`), and edit distance alone gets it wrong —
+    // `id` is closer to `status` than to `decision_id` by letters. Three
+    // rules, in order: (1) a node-naming field (`id`, `…_id`) maps to the
+    // tool's node-naming fields — `id`/`node_id` to the FIRST one served,
+    // which is the primary node (serde lists fields in declaration order),
+    // any other `…_id` to the closest by letters; (2) otherwise a candidate
+    // sharing a whole `_` token or a four-letter prefix with the unknown
+    // (`props`/`properties`) wins, closest by letters among those; (3) only
+    // then letters alone, and a far guess is NOT offered — a wrong "nearest"
+    // is worse than none.
+    let indexed: Vec<(usize, &str)> = legal.iter().copied().enumerate().collect();
+    if is_node_field(unknown) {
+        let node_fields: Vec<(usize, &str)> = indexed
+            .iter()
+            .copied()
+            .filter(|(_, c)| is_node_field(c))
+            .collect();
+        if !node_fields.is_empty() {
+            let pick = if unknown == "id" || unknown == "node_id" {
+                node_fields.first().copied()
+            } else {
+                closest_by_letters(unknown, node_fields)
+            };
+            return pick.map(|(_, c)| c.to_string());
+        }
+    }
+    let sharing: Vec<(usize, &str)> = indexed
+        .iter()
+        .copied()
+        .filter(|(_, c)| shares_a_token(unknown, c))
+        .collect();
+    if let Some((_, c)) = closest_by_letters(unknown, sharing) {
+        return Some(c.to_string());
+    }
+    let (_, c) = closest_by_letters(unknown, indexed)?;
+    let d = edit_distance(unknown, c);
+    (d * 2 < unknown.len().max(c.len())).then(|| c.to_string())
+}
+
+fn is_node_field(s: &str) -> bool {
+    s == "id" || s.ends_with("_id")
+}
+
+fn name_tokens(s: &str) -> Vec<&str> {
+    s.split('_').filter(|t| !t.is_empty()).collect()
+}
+
+fn shares_a_token(unknown: &str, cand: &str) -> bool {
+    let unknown_tokens = name_tokens(unknown);
+    name_tokens(cand).iter().any(|t| unknown_tokens.contains(t))
+        || (unknown.len() >= 4 && cand.len() >= 4 && unknown[..4] == cand[..4])
+}
+
+fn closest_by_letters<'a>(unknown: &str, cands: Vec<(usize, &'a str)>) -> Option<(usize, &'a str)> {
+    cands
+        .into_iter()
+        .min_by_key(|(order, c)| (edit_distance(unknown, c), *order))
+}
+
+fn edit_distance(a: &str, b: &str) -> usize {
+    let a: Vec<char> = a.chars().collect();
+    let b: Vec<char> = b.chars().collect();
+    let mut prev: Vec<usize> = (0..=b.len()).collect();
+    for (i, ca) in a.iter().enumerate() {
+        let mut cur = vec![i + 1];
+        for (j, cb) in b.iter().enumerate() {
+            let cost = usize::from(ca != cb);
+            cur.push((prev[j] + cost).min(prev[j + 1] + 1).min(cur[j] + 1));
+        }
+        prev = cur;
+    }
+    prev[b.len()]
 }
 
 /// Turn a deserialiser's bare `missing field` string into a refusal that names
