@@ -80,6 +80,13 @@ python3 tools/validate_schema.py
 # call cap:kit verified.
 python3 tools/test_init.py
 
+# Call ONE tool from the shell — the door a build script or a Makefile uses.
+# Prints the reply's JSON on stdout; a refusal goes to stderr with exit 1; a
+# reply the tool marked as an error exits 2. Read-only tools work while a server
+# holds the graph (best-effort snapshot, stderr says so); writers refuse then.
+./target/release/reflow2-mcp --graph-path .reflow2/graph --call graph_report
+./target/release/reflow2-mcp --graph-path .reflow2/graph --call budget_report --args '{"constraint_id":"con:mass"}'
+
 # Load a design into a graph without speaking MCP — the sibling of --export.
 # Upsert, so it layers onto whatever is there. Takes `-` for stdin, so an export
 # on one machine pipes into an import on another. The graph is single-writer:

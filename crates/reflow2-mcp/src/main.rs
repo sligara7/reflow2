@@ -339,6 +339,34 @@ struct Cli {
         num_args = 3
     )]
     merge_driver: Vec<String>,
+
+    /// Call ONE tool and print its reply as JSON on stdout — the door a build
+    /// script, a Makefile or a CI step uses to read a report from the design
+    /// without speaking MCP.
+    ///
+    /// Why this exists: bhome's plan-sheet generator (2026-09-18) read the
+    /// budget from a hand-transcribed JSON file "because reflow2 is an MCP
+    /// server and not a library the script can import", so the half of the
+    /// sheet the design owned was the half with no mechanical guarantee. The
+    /// CLI had --export, --import, --diff and --merge-driver, and no one-shot
+    /// door to a report.
+    ///
+    /// The tool runs through the SAME server path a session uses (an
+    /// in-process client over an in-memory pipe), so a refusal is worded the
+    /// same, usage is recorded the same, and nothing here paraphrases a tool.
+    /// Exit 0 with the reply's JSON on stdout; exit 1 with the refusal on
+    /// stderr; exit 2 when the tool marked its own reply an error.
+    ///
+    /// If another process holds the graph, a READ-ONLY tool still answers,
+    /// from the best-effort snapshot copy `--export-snapshot` uses, and stderr
+    /// says so; a tool that WRITES refuses, because a copy is not the design.
+    #[arg(long, value_name = "TOOL")]
+    call: Option<String>,
+
+    /// The arguments for `--call`, as one JSON object (default `{}`). `-`
+    /// reads the object from stdin, so a script can build it with a heredoc.
+    #[arg(long = "args", value_name = "JSON", default_value = "{}")]
+    call_args: String,
 }
 
 /// A throwaway copy of a graph directory, opened without disturbing its holder.
@@ -404,6 +432,167 @@ impl GraphSnapshot {
 }
 
 /// Copy a graph directory to a temporary location and drop its lock file.
+/// The client `--call` speaks as, so `usage_report` names the door rather than
+/// an anonymous peer.
+#[derive(Clone)]
+struct OneShotClient;
+
+impl rmcp::ClientHandler for OneShotClient {
+    fn get_info(&self) -> rmcp::model::ClientConfig {
+        let mut cfg = rmcp::model::ClientConfig::default();
+        cfg.client_info.name = "reflow2-mcp --call".to_string();
+        cfg.client_info.version = env!("CARGO_PKG_VERSION").to_string();
+        cfg
+    }
+}
+
+/// Run one served tool against the graph at `--graph-path` and print its
+/// reply. Returns the process exit code: 0 for a reply, 1 for a refusal (on
+/// stderr), 2 when the tool marked its own reply an error.
+async fn call_one_tool(cli: &Cli, tool: &str) -> anyhow::Result<i32> {
+    // Arguments first: a bad object should not touch the graph.
+    let raw = if cli.call_args == "-" {
+        std::io::read_to_string(std::io::stdin()).context("failed to read --args from stdin")?
+    } else {
+        cli.call_args.clone()
+    };
+    let parsed: serde_json::Value = serde_json::from_str(raw.trim())
+        .with_context(|| format!("--args is not JSON: {}", raw.trim()))?;
+    let Some(arguments) = parsed.as_object().cloned() else {
+        anyhow::bail!(
+            "--args must be one JSON object ({{\"field\": value, …}}) — the tool's parameters by \
+             name — not {}",
+            raw.trim()
+        );
+    };
+
+    // Is the tool served, and does it only read? Decided from the served list
+    // itself, so this verb can never disagree with what a session is offered.
+    let probe = ReflowService::in_memory().context("could not build the tool list")?;
+    let tools = probe.tools_with_lessons().await;
+    let Some(served) = tools.iter().find(|t| t.name == tool) else {
+        anyhow::bail!(
+            "no tool named `{tool}` is served. --call takes a served tool name; `--call \
+             find_tools --args '{{\"query\":\"…\"}}'` finds one from a sentence in your own words, \
+             and `--call list_skills` names the skills."
+        );
+    };
+    let read_only = served
+        .annotations
+        .as_ref()
+        .and_then(|a| a.read_only_hint)
+        .unwrap_or(false);
+
+    let (service, snapshot) = match ReflowService::new(&cli.graph_path) {
+        Ok(s) => (s, None),
+        Err(e) if read_only && is_lock_contention(&format!("{e:#}")) => {
+            let snapshot = snapshot_dir(&cli.graph_path)?;
+            eprintln!(
+                "reflow2: WARNING — BEST-EFFORT SNAPSHOT. The graph at {} is held by another \
+                 process, so `{tool}` reads a COPY: the design as of about now, which can lack \
+                 the newest unflushed writes. A read-only tool is answered this way rather than \
+                 refused; nothing was written.",
+                cli.graph_path
+            );
+            let s = ReflowService::new(snapshot.path())
+                .map_err(|e| anyhow::anyhow!("{e}"))
+                .with_context(|| {
+                    format!(
+                        "the snapshot at {} could not be opened: the copy caught the store \
+                         mid-write. Try again, or ask the holder to release the graph.",
+                        snapshot.path()
+                    )
+                })?;
+            (s.into_read_only(), Some(snapshot))
+        }
+        Err(e) => {
+            let why = explain_open_failure(&e.into(), &cli.graph_path);
+            if read_only {
+                return Err(why);
+            }
+            return Err(why.context(format!(
+                "`{tool}` writes, so it needs the graph itself and not a snapshot copy"
+            )));
+        }
+    };
+
+    let outcome = call_over_pipe(service, tool, arguments).await;
+    if let Some(snapshot) = snapshot {
+        snapshot.cleanup();
+    }
+    let result = match outcome.with_context(|| format!("`{tool}` did not answer"))? {
+        Ok(r) => r,
+        Err(refusal) => {
+            eprintln!("reflow2: `{tool}` refused — {}", refusal.message);
+            return Ok(1);
+        }
+    };
+    let body = match result.structured_content {
+        Some(v) => v,
+        None => {
+            // A tool with no structured reply answers in text blocks; hand
+            // them over as one JSON string each, so stdout is still JSON.
+            let texts: Vec<serde_json::Value> = result
+                .content
+                .iter()
+                .filter_map(|c| {
+                    c.as_text()
+                        .map(|t| serde_json::Value::String(t.text.clone()))
+                })
+                .collect();
+            if texts.len() == 1 {
+                texts.into_iter().next().unwrap_or(serde_json::Value::Null)
+            } else {
+                serde_json::Value::Array(texts)
+            }
+        }
+    };
+    println!("{}", serde_json::to_string_pretty(&body)?);
+    Ok(if result.is_error.unwrap_or(false) {
+        2
+    } else {
+        0
+    })
+}
+
+/// Serve `service` to an in-process client over an in-memory pipe, make one
+/// call, and take the server down. The call goes through `call_tool` exactly
+/// as a session's would — usage recorded, refusals hinted — because the point
+/// of this door is that it opens onto the same room.
+async fn call_over_pipe(
+    service: ReflowService,
+    tool: &str,
+    arguments: rmcp::model::JsonObject,
+) -> anyhow::Result<Result<rmcp::model::CallToolResult, rmcp::ErrorData>> {
+    let (server_rx, client_tx) = tokio::io::duplex(1 << 22);
+    let (client_rx, server_tx) = tokio::io::duplex(1 << 22);
+    let server = tokio::spawn(async move {
+        match service.serve((server_rx, server_tx)).await {
+            Ok(running) => {
+                let _ = running.waiting().await;
+            }
+            Err(e) => eprintln!("reflow2: the in-process server did not start — {e}"),
+        }
+    });
+    let client = OneShotClient
+        .serve((client_rx, client_tx))
+        .await
+        .map_err(|e| anyhow::anyhow!("{e}"))
+        .context("the in-process handshake failed")?;
+    let result = client
+        .call_tool(
+            rmcp::model::CallToolRequestParams::new(tool.to_string()).with_arguments(arguments),
+        )
+        .await;
+    let _ = client.cancel().await;
+    let _ = server.await;
+    match result {
+        Ok(r) => Ok(Ok(r)),
+        Err(rmcp::service::ServiceError::McpError(e)) => Ok(Err(e)),
+        Err(e) => Err(anyhow::anyhow!("{e}")),
+    }
+}
+
 fn snapshot_dir(graph_path: &str) -> anyhow::Result<GraphSnapshot> {
     let source = std::path::Path::new(graph_path);
     if !source.is_dir() {
@@ -976,6 +1165,13 @@ async fn main() -> anyhow::Result<()> {
             .context("failed to export the design")?;
         println!("{}", serde_json::to_string_pretty(&doc)?);
         return Ok(());
+    }
+
+    // One tool, one reply, and exit: the door a build uses. Before the server
+    // is built for the same reason --export is.
+    if let Some(tool) = cli.call.clone() {
+        let code = call_one_tool(&cli, &tool).await?;
+        std::process::exit(code);
     }
 
     // Import-and-exit, the sibling of --export. Without it a design could be
