@@ -46,6 +46,7 @@ fn epoch(id: &str) -> AddEpochReq {
         sequence: Some(1),
         checksum: None,
         description: None,
+        status: None,
     }
 }
 

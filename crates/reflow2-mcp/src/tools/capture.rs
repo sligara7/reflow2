@@ -1282,7 +1282,9 @@ impl ReflowService {
     // ---- Golden-thread constructors (deterministic, mutating) ----
 
     #[tool(
-        description = "Create a Project node. \
+        description = "Create a Project node. Lands `status: active` unless you pass one \
+                       (`paused` / `archived`) — every constructor of a type that carries a \
+                       status takes it, and names what omitting it lands. \
                        CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it \
                        again with the same id and only what you are changing \u{2014} omitted \
                        fields keep their stored value, so correcting one never means re-sending \
@@ -1292,7 +1294,7 @@ impl ReflowService {
     )]
     pub async fn add_project(
         &self,
-        Parameters(req): Parameters<IdName>,
+        Parameters(req): Parameters<ProjectReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await?;
         let mut __rf =
@@ -1305,6 +1307,16 @@ impl ReflowService {
             reflow2_core::nodes::node::PROJECT,
             &req.id,
             req.description.as_deref(),
+        )?
+        .unwrap_or(stored);
+        // Written only when the caller SAID one; omitting it leaves the landing
+        // status exactly as it was. An undeclared value is refused by the
+        // schema before it is stored, and the refusal names the legal set.
+        let stored = set_optional_props(
+            &mut g,
+            reflow2_core::nodes::node::PROJECT,
+            &req.id,
+            &[("status", req.status.as_deref())],
         )?
         .unwrap_or(stored);
         // The ladder is a LIST, so it cannot go through the string helper.
@@ -1943,6 +1955,9 @@ impl ReflowService {
                        rather than a leaf (`subsystem`, `system`, `system_of_systems`, \
                        `enterprise`; default `component`), then use contain_component to nest \
                        it — that pair is what gives hierarchy_issues something to check. \
+                       Lands `status: planned` unless you pass one: say `realized` when the part \
+                       already exists (adopt), so the design does not call a shipped system \
+                       unbuilt. \
                        CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it \
                        again with the same id and only what you are changing \u{2014} omitted \
                        fields keep their stored value, so correcting one never means re-sending \
@@ -1977,7 +1992,11 @@ impl ReflowService {
             &mut g,
             node_ty,
             &req.id,
-            &[("tier", req.tier.as_deref()), ("kind", req.kind.as_deref())],
+            &[
+                ("tier", req.tier.as_deref()),
+                ("kind", req.kind.as_deref()),
+                ("status", req.status.as_deref()),
+            ],
         )?
         .unwrap_or(stored);
         let node = NodeDto::from(stored);

@@ -71,12 +71,12 @@ fn obj(v: &serde_json::Value) -> serde_json::Map<String, serde_json::Value> {
 
 async fn seeded() -> ReflowService {
     let s = ReflowService::in_memory().expect("in-memory service");
-    j!(s.add_project(Parameters(IdName {
+    j!(s.add_project(Parameters(ProjectReq {
         id: "proj:sb".into(),
         name: Some("Softball".into()),
         description: None,
-        spec: None,
         decomposition_levels: None,
+        status: None,
     })));
     j!(s.add_requirement(Parameters(RequirementReq {
         id: "req:physics".into(),
@@ -109,6 +109,7 @@ async fn seeded() -> ReflowService {
         level: None,
         distinct_from: None,
         tier: None,
+        status: None,
     })));
     j!(s.contains(Parameters(ContainsReq {
         project_id: "proj:sb".into(),
@@ -483,13 +484,13 @@ async fn interface_tools_pair_both_sides_of_a_contract() {
         level: None,
         distinct_from: None,
         tier: None,
+        status: None,
     })));
     j!(s.add_interface(Parameters(IdName {
         id: "ifc:state".into(),
         name: Some("Game state feed".into()),
         description: None,
         spec: None,
-        decomposition_levels: None,
     })));
     j!(s.provides(Parameters(ProvidesReq {
         from_id: "cmp:physics".into(),
@@ -534,7 +535,6 @@ async fn a_contract_with_no_provider_surfaces_as_a_gap_over_the_surface() {
         name: Some("Game state feed".into()),
         description: None,
         spec: None,
-        decomposition_levels: None,
     })));
     j!(s.consumes(Parameters(ConsumesReq {
         from_id: "cmp:physics".into(),
@@ -826,6 +826,7 @@ async fn the_write_side_can_answer_what_detect_asks_for() {
         version: Some("1.0.0".into()),
         unit_type: Some("bundle".into()),
         description: None,
+        status: None,
     })));
     j!(s.add_environment(Parameters(EnvironmentReq {
         id: "env:itch".into(),
@@ -1107,12 +1108,12 @@ async fn describe_schema_rejects_a_half_given_pair() {
 #[tokio::test]
 async fn a_rejected_edge_names_the_alternatives() {
     let s = ReflowService::in_memory().expect("in-memory service");
-    j!(s.add_project(Parameters(IdName {
+    j!(s.add_project(Parameters(ProjectReq {
         id: "proj:x".into(),
         name: Some("X".into()),
         description: None,
-        spec: None,
         decomposition_levels: None,
+        status: None,
     })));
     let err = s
         .create_edge(Parameters(CreateEdgeReq {
@@ -1182,6 +1183,7 @@ async fn a_well_formed_hierarchy_reports_no_issues() {
             level: Some(level.into()),
             distinct_from: None,
             tier: None,
+            status: None,
         })));
     }
     j!(s.contain_component(Parameters(ContainComponentReq {
@@ -1213,6 +1215,7 @@ async fn skipping_a_level_is_reported() {
             level: Some(level.into()),
             distinct_from: None,
             tier: None,
+            status: None,
         })));
     }
     j!(s.contain_component(Parameters(ContainComponentReq {
@@ -1245,6 +1248,7 @@ async fn nesting_two_defaulted_components_is_a_mismatch_not_silence() {
             level: None,
             distinct_from: None,
             tier: None,
+            status: None,
         })));
     }
     j!(s.contain_component(Parameters(ContainComponentReq {
@@ -1265,12 +1269,12 @@ async fn nesting_two_defaulted_components_is_a_mismatch_not_silence() {
 #[tokio::test]
 async fn marking_a_requirement_dropped_stops_the_nagging() {
     let s = ReflowService::in_memory().expect("in-memory service");
-    j!(s.add_project(Parameters(IdName {
+    j!(s.add_project(Parameters(ProjectReq {
         id: "proj:p".into(),
         name: Some("P".into()),
         description: None,
-        spec: None,
         decomposition_levels: None,
+        status: None,
     })));
     j!(s.add_requirement(Parameters(RequirementReq {
         id: "req:maybe".into(),
@@ -1960,6 +1964,7 @@ async fn loop_status_reports_debt_and_the_write_tools_point_at_the_loop() {
         level: None,
         distinct_from: None,
         tier: None,
+        status: None,
     })));
     assert!(
         cmp["loop_hint"].as_str().unwrap().contains("check-health"),
@@ -2249,6 +2254,7 @@ async fn temporal_resource_and_realization_tools_round_trip() {
         sequence: Some(0),
         checksum: None,
         description: None,
+        status: None,
     })));
     j!(s.add_epoch(Parameters(AddEpochReq {
         id: "epoch:v2".into(),
@@ -2257,6 +2263,7 @@ async fn temporal_resource_and_realization_tools_round_trip() {
         sequence: Some(1),
         checksum: None,
         description: None,
+        status: None,
     })));
     j!(s.precedes(Parameters(PrecedesReq {
         earlier_epoch: "epoch:v1".into(),
@@ -2380,6 +2387,7 @@ async fn temporal_resource_and_realization_tools_round_trip() {
         level: None,
         distinct_from: None,
         tier: None,
+        status: None,
     })));
     let deleted = j!(s.delete_node(Parameters(TypedIdReq {
         node_type: "Component".into(),
@@ -2860,12 +2868,12 @@ async fn the_tool_catalogue_finds_a_tool_by_the_job_it_does() {
 /// A seat to claim with, and something to claim.
 async fn claimable() -> ReflowService {
     let s = ReflowService::in_memory().expect("in-memory service");
-    j!(s.add_project(Parameters(IdName {
+    j!(s.add_project(Parameters(ProjectReq {
         id: "proj:seat".into(),
         name: Some("Seat".into()),
         description: None,
-        spec: None,
         decomposition_levels: None,
+        status: None,
     })));
     j!(s.add_contributor(Parameters(ContributorReq {
         id: "who:ann".into(),
@@ -3010,12 +3018,12 @@ async fn minting_a_seat_writes_nothing() {
 #[tokio::test]
 async fn a_project_mode_can_be_chosen_after_genesis() {
     let s = ReflowService::in_memory().expect("in-memory service");
-    j!(s.add_project(Parameters(IdName {
+    j!(s.add_project(Parameters(ProjectReq {
         id: "proj:m".into(),
         name: Some("Modey".into()),
         description: None,
-        spec: None,
         decomposition_levels: None,
+        status: None,
     })));
 
     let set = j!(s.set_project_mode(Parameters(ProjectModeReq {
@@ -3032,12 +3040,12 @@ async fn a_project_mode_can_be_chosen_after_genesis() {
 #[tokio::test]
 async fn choosing_a_mode_preserves_everything_else_about_the_project() {
     let s = ReflowService::in_memory().expect("in-memory service");
-    j!(s.add_project(Parameters(IdName {
+    j!(s.add_project(Parameters(ProjectReq {
         id: "proj:m".into(),
         name: Some("Modey".into()),
         description: None,
-        spec: None,
         decomposition_levels: None,
+        status: None,
     })));
     j!(s.set_project_mode(Parameters(ProjectModeReq {
         project_id: "proj:m".into(),
@@ -3058,12 +3066,12 @@ async fn choosing_a_mode_preserves_everything_else_about_the_project() {
 #[tokio::test]
 async fn an_unknown_mode_fails_loud_rather_than_leaving_the_old_one() {
     let s = ReflowService::in_memory().expect("in-memory service");
-    j!(s.add_project(Parameters(IdName {
+    j!(s.add_project(Parameters(ProjectReq {
         id: "proj:m".into(),
         name: Some("Modey".into()),
         description: None,
-        spec: None,
         decomposition_levels: None,
+        status: None,
     })));
     j!(s.set_project_mode(Parameters(ProjectModeReq {
         project_id: "proj:m".into(),
@@ -3322,6 +3330,7 @@ async fn an_unknown_node_type_is_refused_rather_than_answered_null() {
         sequence: Some(1),
         checksum: None,
         description: None,
+        status: None,
     })));
 
     // THE REPRODUCTION: the type name they used.
@@ -3388,6 +3397,7 @@ async fn scan_nodes_filters_by_decomposition_level() {
             level: level.map(str::to_string),
             distinct_from: None,
             tier: None,
+            status: None,
         })));
     }
 
@@ -3440,6 +3450,7 @@ async fn a_bad_level_is_refused_rather_than_answered_empty() {
         level: Some("subsystem".into()),
         distinct_from: None,
         tier: None,
+        status: None,
     })));
 
     let bad_level = s
@@ -3484,12 +3495,12 @@ async fn add_design_rule_is_a_typed_constructor() {
     // typed constructor takes name+statement, optional category, and leaves
     // `enforced` UNSET unless stated.
     let s = ReflowService::in_memory().expect("service");
-    j!(s.add_project(Parameters(IdName {
+    j!(s.add_project(Parameters(ProjectReq {
         id: "prj:p".into(),
         name: Some("P".into()),
         description: None,
-        spec: None,
         decomposition_levels: None,
+        status: None,
     })));
     let node = j!(s.add_design_rule(Parameters(DesignRuleReq {
         id: "rule:branch-then-pr".into(),
@@ -3725,7 +3736,6 @@ async fn interface_auth_refusal_says_it_is_authentication_not_authorization() {
         name: Some("X".into()),
         description: None,
         spec: None,
-        decomposition_levels: None,
     })));
     let e = s
         .set_interface_spec(Parameters(

@@ -65,12 +65,12 @@ macro_rules! j {
 /// the `cap:content-store` shape, reduced.
 async fn withdrawn() -> ReflowService {
     let s = ReflowService::in_memory().expect("in-memory service");
-    j!(s.add_project(Parameters(IdName {
+    j!(s.add_project(Parameters(ProjectReq {
         id: "proj:x".into(),
         name: Some("X".into()),
         description: None,
-        spec: None,
         decomposition_levels: None,
+        status: None,
     })));
     j!(s.add_capability(Parameters(CapabilityReq {
         satisfies: None,
