@@ -1,0 +1,10 @@
+{
+  "_what": "The rank ratchet for find_skills, the sibling of find_tools_rank_baseline.json (2026-09-19). not_first: served skills NOT ranked first for their own corpus query. The list may only shrink: a new skill must rank first for its job, and an entry that has become first must leave. Measured 2026-09-19 at first build: 30 of 30 in the top 5, 25 of 30 first; the five below are beaten by neighbours on incidental words (check-health by where-am-i, feedback by ingest-corpus, link-ideas by onboarding, revise-design by retire-from-design, topic by parallel-work).",
+  "not_first": [
+    "check-health",
+    "feedback",
+    "link-ideas",
+    "revise-design",
+    "topic"
+  ]
+}
