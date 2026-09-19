@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:6c0d9f7cf88afe385e3256a0795da8bcf08c49625df1325050560254f4d5c345",
+  "content_hash": "sha256:3c2d1487f79952ca08dc4c23432d50199b1dba9a492067f88f5f140fb3b458e9",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -3165,6 +3165,14 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:the-loop-counts-this-sessions-reads-and-writes-and-says-when-a-write-is-owed",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:tools-coherence"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:the-loop-holds-the-invitation",
       "properties": {
         "weight_basis": "estimated"
@@ -3314,6 +3322,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:triage-feedback-is-a-served-step-and-the-feedback-rules-are-delivered-on-it",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:skills"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -4453,6 +4469,14 @@
         "evidence": "His 2026-08-20 rule already demands that an identified issue become a node, a named Question, or a recurring finding before moving on; this idea is about giving that rule a MOMENT and a mechanism mid-task, where the agent is least likely to stop."
       },
       "to_id": "dec:idea-a-failure-met-mid-task-is-parked-where-a-boundary-revisits-it"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "rule:field-feedback-issues-are-root-caused-and-ideas-are-brainstormed",
+      "properties": {
+        "evidence": "The rule states the obligation and its own text records that memory-based delivery had already failed three times; this asks where a delivery that is not memory could live."
+      },
+      "to_id": "dec:idea-how-does-a-standing-rule-reach-a-moment-that-is-not-a-reflow2-step"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -15580,6 +15604,26 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-a-record-only-change-event-needs-a-record-shaped-why",
+      "properties": {
+        "roles": [
+          "author"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-a-refusal-for-an-unknown-field-should-name-the-nearest-parameter-and-never-guess-that-the-client-is-stale",
+      "properties": {
+        "roles": [
+          "author"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-a-rejected-field-says-whether-it-moved-or-was-never-there",
       "properties": {
         "authored_at": "2026-09-07T00:00:00Z",
@@ -15617,6 +15661,18 @@
       "properties": {
         "roles": [
           "author"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-a-session-that-reads-and-never-writes-is-the-one-the-loop-cannot-see",
+      "properties": {
+        "approved_at": "2026-09-18",
+        "roles": [
+          "author",
+          "approver"
         ]
       },
       "to_id": "who:ajs"
@@ -16626,6 +16682,18 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-how-does-a-standing-rule-reach-a-moment-that-is-not-a-reflow2-step",
+      "properties": {
+        "approved_at": "2026-09-18",
+        "roles": [
+          "author",
+          "approver"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-how-does-a-users-project-acquire-vocabulary-it-never-uses",
       "properties": {
         "authored_at": "2026-08-18T05:00:00Z",
@@ -17108,6 +17176,16 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-operational-know-how-is-a-design-rule-governing-the-environment-and-the-routing-table-should-say-so",
+      "properties": {
+        "roles": [
+          "author"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-other-centralities",
       "properties": {
         "authored_at": "2026-08-01",
@@ -17247,6 +17325,16 @@
         ]
       },
       "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-replace-one-sentence-in-a-field-without-resending-the-field",
+      "properties": {
+        "roles": [
+          "author"
+        ]
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -21905,6 +21993,18 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-field-report-is-triaged-by-a-served-step-and-the-standing-rules-ride-it",
+      "properties": {
+        "approved_at": "2026-09-18",
+        "roles": [
+          "approver",
+          "author"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:a-finding-has-somewhere-to-put-its-evidence",
       "properties": {
         "approved_at": "2026-08-16",
@@ -22251,6 +22351,18 @@
         "approved_at": "2026-08-26",
         "roles": [
           "approver"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-session-that-reads-and-never-writes-is-seen",
+      "properties": {
+        "approved_at": "2026-09-18",
+        "roles": [
+          "approver",
+          "author"
         ]
       },
       "to_id": "who:ajs"
@@ -23410,6 +23522,17 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "rule:a-finding-is-written-before-the-answer-and-needs-no-permission",
+      "properties": {
+        "approved_at": "2026-09-18",
+        "roles": [
+          "approver"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "rule:a-gate-is-run-against-the-state-it-will-be-judged-in",
       "properties": {
         "approved_at": "2026-08-14",
@@ -24142,6 +24265,16 @@
     },
     {
       "edge_type": "CAUSES",
+      "from_id": "cap:session-memory",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "req accepted, cap planned; grep of skills for a write-before-answer instruction: none; loop_status fields: none read-side; usage.rs records seat + tool per call",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:field-report-flo2-2026-09-18-findings-stayed-in-chat-and-the-accepted-session-memory-requirement-has-only-a-planned-capability"
+    },
+    {
+      "edge_type": "CAUSES",
       "from_id": "cap:the-record-moved-is-surfaced",
       "properties": {
         "basis": "correlational",
@@ -24149,6 +24282,16 @@
         "validation_status": "unvalidated"
       },
       "to_id": "fact:defect-the-unexported-claim-was-computed-per-file-and-stated-per-seat"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "cap:the-server-writes-the-export-through-and-chains-it-from-main",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "reflow2_check.py:781; ls of the three projects; graph.sync.json shape",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:field-report-flo2-2026-09-18-the-gate-defaults-to-a-file-none-of-three-layouts-has"
     },
     {
       "edge_type": "CAUSES",
@@ -24235,6 +24378,16 @@
     },
     {
       "edge_type": "CAUSES",
+      "from_id": "dec:change-type-splits-into-two-axes",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "schema/temporal.yaml change_type required: true; export count of subject=record events by change_type",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:field-report-flo2-2026-09-18-change-type-is-required-while-subject-is-optional-so-a-record-only-event-picks-a-system-shaped-why"
+    },
+    {
+      "edge_type": "CAUSES",
       "from_id": "dec:derived-scans-are-memoised-per-write-generation",
       "properties": {
         "basis": "correlational",
@@ -24285,6 +24438,26 @@
     },
     {
       "edge_type": "CAUSES",
+      "from_id": "dec:idea-one-way-to-name-which-node-across-the-tool-surface",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "git show v0.62.0/v0.59.0/v0.50.0 toolsnaps: five of six fields absent in every release; flo2 session first ts 22:55Z vs rebuild 13:00 local; nine 'unknown field' refusals in the session log between 23:07 and 23:38",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:field-report-flo2-2026-09-18-eight-rejected-calls-were-guessed-names-not-a-stale-client-and-the-refusal-said-stale"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "dec:idea-should-a-node-say-it-has-layers-and-let-a-reader-ask-for-them",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "export counts: 210/743 decisions >4 KB, 164 with ═══ sections, 92 Snapshots on decisions; the 2026-09-04 fact records the same cost from two other projects",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:field-report-flo2-2026-09-18-settling-a-prose-option-decision-costs-a-full-resend-and-the-house-style-is-measured"
+    },
+    {
+      "edge_type": "CAUSES",
       "from_id": "dec:idea-the-instruction-layer-runs-ahead-of-the-typed-tool-layer",
       "properties": {
         "basis": "correlational",
@@ -24332,6 +24505,16 @@
         "validation_status": "unvalidated"
       },
       "to_id": "dec:idea-does-the-deferred-structuring-step-need-a-skill-of-its-own"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "dec:idea-where-does-a-disk-space-rule-live-when-the-gate-runs-on-the-wrong-machine",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "toolsnap add_design_rule.category description; schema GOVERNED_BY endpoints; getting-started/skills/capture-intent/SKILL.md:57",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:field-report-flo2-2026-09-18-operational-know-how-has-a-home-and-the-routing-table-says-it-has-none"
     },
     {
       "edge_type": "CAUSES",
@@ -24509,6 +24692,16 @@
         "validation_status": "validated"
       },
       "to_id": "dec:idea-a-capability-declares-its-input-path"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:defect-a-retired-artifact-still-reports-missing-forever",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "scratch reconcile 2026-09-18: expected_absence; flo2 session timestamps; retire-from-design SKILL.md has no mention of expected_absence",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:field-report-flo2-2026-09-18-the-retired-artifact-drift-was-reasoned-from-a-stale-fact-not-measured-and-the-current-binary-answers-expected-absence"
     },
     {
       "edge_type": "CAUSES",
@@ -24920,6 +25113,16 @@
         "validation_status": "unvalidated"
       },
       "to_id": "dec:idea-a-gap-can-be-scheduled-into-an-increment-like-any-other-work"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "rule:field-feedback-issues-are-root-caused-and-ideas-are-brainstormed",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "detect_gaps 2026-09-18: convention_delivered_nowhere names 5 of 10 conventions incl. this rule (steps: None); grep of served skills: no maintainer-side triage skill exists, `feedback` is the usage-tally renderer; the flo2 session log shows the same lapse in the other direction the same day (F0)",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:field-feedback-was-triaged-by-reading-a-fourth-time-after-the-rule-and-the-rule-is-delivered-at-no-step"
     },
     {
       "edge_type": "CAUSES",
@@ -26930,6 +27133,96 @@
         "action": "modified"
       },
       "to_id": "ver:kit-manifest-agrees"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-field-report-is-triaged-by-a-served-step-and-a-finding-is-written-before-the-answer",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:a-session-that-reads-and-never-writes-is-seen-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-field-report-is-triaged-by-a-served-step-and-a-finding-is-written-before-the-answer",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:capture-intent-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-field-report-is-triaged-by-a-served-step-and-a-finding-is-written-before-the-answer",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:loop-nudge"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-field-report-is-triaged-by-a-served-step-and-a-finding-is-written-before-the-answer",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-field-report-is-triaged-by-a-served-step-and-a-finding-is-written-before-the-answer",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skills"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-field-report-is-triaged-by-a-served-step-and-a-finding-is-written-before-the-answer",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skills-and-tools"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-field-report-is-triaged-by-a-served-step-and-a-finding-is-written-before-the-answer",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-loop-nudge"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-field-report-is-triaged-by-a-served-step-and-a-finding-is-written-before-the-answer",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-field-report-is-triaged-by-a-served-step-and-a-finding-is-written-before-the-answer",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:triage-command"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-field-report-is-triaged-by-a-served-step-and-a-finding-is-written-before-the-answer",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:triage-feedback-skill"
     },
     {
       "edge_type": "CHANGED",
@@ -51679,6 +51972,12 @@
       "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
+      "to_id": "cap:the-loop-counts-this-sessions-reads-and-writes-and-says-when-a-write-is-owed"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
       "to_id": "cap:the-rank-ratchet-and-the-confusability-instrument"
     },
     {
@@ -51686,6 +51985,12 @@
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "cap:tool-search"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "cap:triage-feedback-is-a-served-step-and-the-feedback-rules-are-delivered-on-it"
     },
     {
       "edge_type": "CONTAINS",
@@ -51739,6 +52044,12 @@
       "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
+      "to_id": "req:a-field-report-is-triaged-by-a-served-step-and-the-standing-rules-ride-it"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
       "to_id": "req:a-project-records-how-it-ships"
     },
     {
@@ -51746,6 +52057,12 @@
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "req:a-repos-procedural-know-how-is-delivered-at-the-step-it-bears-on-and-the-design-knows-the-adapter-exists"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "req:a-session-that-reads-and-never-writes-is-seen"
     },
     {
       "edge_type": "CONTAINS",
@@ -52052,6 +52369,12 @@
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "rule:a-cut-ends-by-rebuilding-the-served-release-binary"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "rule:a-finding-is-written-before-the-answer-and-needs-no-permission"
     },
     {
       "edge_type": "CONTAINS",
@@ -54497,6 +54820,16 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-a-session-that-reads-and-never-writes-is-the-one-the-loop-cannot-see",
+      "properties": {
+        "evidence": "Every option is a way of building the capability that requirement already asks for.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "req:session-memory-in-graph"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "dec:idea-a-tool-is-exercised-as-a-consumer-before-it-is-changed",
       "properties": {
         "evidence": "Sibling question, deliberately separate. That one asks HOW a problem in a user's words finds its tool; this asks HOW A FAILURE TO FIND IT WOULD EVER BE NOTICED, given the builder has a second channel the consumer does not. Better retrieval reduces what this must catch, and a discipline for noticing is worth little if retrieval never improves — so this is only worth anything alongside that.",
@@ -54828,6 +55161,16 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-how-does-a-standing-rule-reach-a-moment-that-is-not-a-reflow2-step",
+      "properties": {
+        "evidence": "Whatever the answer is, it must not make the user the trigger; that requirement is accepted.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "req:skill-use-survives-a-long-session"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "dec:idea-how-does-reflow2-enforce-the-contract-regime-a-domain-already-has",
       "properties": {
         "evidence": "That question is the structural floor beneath this one: enforcing a contract regime is meaningless while a component can be claimed without stating any boundary at all. If it is answered no, most of the options here have nothing to attach to.",
@@ -55065,6 +55408,16 @@
         "weight_basis": "estimated"
       },
       "to_id": "dec:idea-the-requirement-tiers-exist-and-nothing-reads-them"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-should-a-node-say-it-has-layers-and-let-a-reader-ask-for-them",
+      "properties": {
+        "evidence": "If a field can be edited in place, the strata the layers idea worries about stop accumulating; the layers question depends on whether this lands first.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-replace-one-sentence-in-a-field-without-resending-the-field"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -58151,6 +58504,15 @@
     },
     {
       "edge_type": "DUPLICATES",
+      "from_id": "dec:idea-operational-know-how-is-a-design-rule-governing-the-environment-and-the-routing-table-should-say-so",
+      "properties": {
+        "basis": "suspected",
+        "evidence": "The same question asked by two projects for two rules; linked rather than merged because the disk rule also asks about the gate's machine."
+      },
+      "to_id": "dec:idea-where-does-a-disk-space-rule-live-when-the-gate-runs-on-the-wrong-machine"
+    },
+    {
+      "edge_type": "DUPLICATES",
       "from_id": "dec:idea-who-warrants-a-domain-template-and-how-does-it-stay-current",
       "properties": {
         "basis": "suspected",
@@ -58209,6 +58571,14 @@
         "evidence": "The shipped block is the thing being sized; this idea is that capability's excerpt rule grown from a fixed cut to a judgement-preserving one."
       },
       "to_id": "dec:idea-prose-currency-quotes-enough-to-judge-without-a-second-read"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:change-type-splits-into-two-axes",
+      "properties": {
+        "evidence": "The two-axes ruling answered the as-built-defect instance; this is the next instance on the record axis it left required."
+      },
+      "to_id": "dec:idea-a-record-only-change-event-needs-a-record-shaped-why"
     },
     {
       "edge_type": "EVOLVES_INTO",
@@ -58323,6 +58693,14 @@
         "evidence": "Option A of the brainstorm, promoted to accepted intent on Anthony's word 2026-09-13: units become a tenth agreement axis on the interface contract and the seam check compares them."
       },
       "to_id": "req:a-quantity-that-crosses-a-published-boundary-declares-its-unit-and-the-seam-check-compares-them"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-a-session-that-reads-and-never-writes-is-the-one-the-loop-cannot-see",
+      "properties": {
+        "evidence": "Promoted 2026-09-18: options (a) the skill line, (b) loop_status per-seat reads/writes and (c) the stop hook's inverse all taken; (d) cap:session-memory remains the wider capability."
+      },
+      "to_id": "req:a-session-that-reads-and-never-writes-is-seen"
     },
     {
       "edge_type": "EVOLVES_INTO",
@@ -58454,6 +58832,14 @@
     },
     {
       "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-how-does-a-standing-rule-reach-a-moment-that-is-not-a-reflow2-step",
+      "properties": {
+        "evidence": "Promoted 2026-09-18: options (a) a served triage skill the rules ride and (c)'s spirit (findings recorded into the graph) taken; (b) a hook noticing a newer feedback file deferred to evidence; (d) rejected."
+      },
+      "to_id": "req:a-field-report-is-triaged-by-a-served-step-and-the-standing-rules-ride-it"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
       "from_id": "dec:idea-how-should-the-loop-know-that-an-answer-reached-the-design",
       "properties": {
         "confidence": 1.0
@@ -58491,6 +58877,14 @@
         "evidence": "The idea asked for one way to name a node across the surface; Anthony ruled convention (i) on 2026-09-06 and this change built it: the type is optional and resolved from the id wherever an existing node is named, refused on collision. The argument NAMES (from_id vs target_id vs node_id) are the remaining half of the idea and stay open."
       },
       "to_id": "chg:a-node-is-named-by-its-id-and-the-type-is-optional-across-the-relation-surface"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-one-way-to-name-which-node-across-the-tool-surface",
+      "properties": {
+        "evidence": "That decision settled the families for relation tools; this asks about the constructor/reader seam it left."
+      },
+      "to_id": "dec:idea-a-refusal-for-an-unknown-field-should-name-the-nearest-parameter-and-never-guess-that-the-client-is-stale"
     },
     {
       "edge_type": "EVOLVES_INTO",
@@ -63230,6 +63624,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:the-loop-counts-this-sessions-reads-and-writes-and-says-when-a-write-is-owed",
+      "properties": {},
+      "to_id": "rule:a-finding-is-written-before-the-answer-and-needs-no-permission"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:the-loop-holds-the-invitation",
       "properties": {},
       "to_id": "decision:ack:a961bfe399679dbf"
@@ -63311,6 +63711,12 @@
       "from_id": "cap:tool-search",
       "properties": {},
       "to_id": "decision:ack:f9214aec3d2feb1b"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:triage-feedback-is-a-served-step-and-the-feedback-rules-are-delivered-on-it",
+      "properties": {},
+      "to_id": "rule:field-feedback-issues-are-root-caused-and-ideas-are-brainstormed"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -70338,6 +70744,12 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:session-memory",
+      "properties": {},
+      "to_id": "fact:field-report-flo2-2026-09-18-findings-stayed-in-chat-and-the-accepted-session-memory-requirement-has-only-a-planned-capability"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "cap:shared-sessions",
       "properties": {},
       "to_id": "fact:an-orphaned-serve-shared-daemon-holds-the-store-and-475mb-2026-09-13"
@@ -70389,6 +70801,12 @@
       "from_id": "cap:the-register-rule-reaches-the-words",
       "properties": {},
       "to_id": "fact:root-cause-the-lens-rode-the-skill-rail-and-the-closing-words-are-chosen-on-the-loop-rail"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:the-server-writes-the-export-through-and-chains-it-from-main",
+      "properties": {},
+      "to_id": "fact:field-report-flo2-2026-09-18-the-gate-defaults-to-a-file-none-of-three-layouts-has"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -70980,6 +71398,12 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "dec:change-type-splits-into-two-axes",
+      "properties": {},
+      "to_id": "fact:field-report-flo2-2026-09-18-change-type-is-required-while-subject-is-optional-so-a-record-only-event-picks-a-system-shaped-why"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "dec:design-authorship-identity",
       "properties": {},
       "to_id": "fact:defect-approving-a-node-you-authored-silently-erases-that-you-authored-it"
@@ -71162,6 +71586,12 @@
       "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "dec:idea-one-way-to-name-which-node-across-the-tool-surface",
       "properties": {},
+      "to_id": "fact:field-report-flo2-2026-09-18-eight-rejected-calls-were-guessed-names-not-a-stale-client-and-the-refusal-said-stale"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "dec:idea-one-way-to-name-which-node-across-the-tool-surface",
+      "properties": {},
       "to_id": "fact:option-d-of-the-naming-decision-was-already-satisfied-by-the-v0500-and-v0510-work"
     },
     {
@@ -71196,6 +71626,12 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "dec:idea-should-a-node-say-it-has-layers-and-let-a-reader-ask-for-them",
+      "properties": {},
+      "to_id": "fact:field-report-flo2-2026-09-18-settling-a-prose-option-decision-costs-a-full-resend-and-the-house-style-is-measured"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "dec:idea-should-reflow2-serve-a-root-cause-analysis-method",
       "properties": {},
       "to_id": "fact:surfacing-a-known-cause-is-cheap-and-reaches-the-wrong-half"
@@ -71217,6 +71653,12 @@
       "from_id": "dec:idea-what-makes-a-field-report-owed",
       "properties": {},
       "to_id": "fact:the-defect-backlog-is-real-not-bookkeeping-residue"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "dec:idea-where-does-a-disk-space-rule-live-when-the-gate-runs-on-the-wrong-machine",
+      "properties": {},
+      "to_id": "fact:field-report-flo2-2026-09-18-operational-know-how-has-a-home-and-the-routing-table-says-it-has-none"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -71253,6 +71695,12 @@
       "from_id": "fact:a-piped-gate-reports-the-pipes-exit-code-not-the-gates",
       "properties": {},
       "to_id": "fact:the-pipe-trap-recurred-twice-on-2026-09-12-a-month-after-it-was-written-down"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "fact:defect-a-retired-artifact-still-reports-missing-forever",
+      "properties": {},
+      "to_id": "fact:field-report-flo2-2026-09-18-the-retired-artifact-drift-was-reasoned-from-a-stale-fact-not-measured-and-the-current-binary-answers-expected-absence"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -71456,6 +71904,12 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "rule:field-feedback-issues-are-root-caused-and-ideas-are-brainstormed",
+      "properties": {},
+      "to_id": "fact:field-feedback-was-triaged-by-reading-a-fourth-time-after-the-rule-and-the-rule-is-delivered-at-no-step"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "rule:nothing-lands-on-main-directly",
       "properties": {},
       "to_id": "fact:gh-pr-edit-fails-on-a-projects-classic-error-and-changes-nothing"
@@ -71525,6 +71979,14 @@
       "from_id": "ver:the-graph-asks-what-a-session-made-false",
       "properties": {},
       "to_id": "fact:unclaimed-findings-cannot-join-a-change-to-a-finding-hung-off-a-different-node"
+    },
+    {
+      "edge_type": "IMPLEMENTS",
+      "from_id": "art:a-session-that-reads-and-never-writes-is-seen-test",
+      "properties": {
+        "covers": "whole"
+      },
+      "to_id": "ver:twenty-five-reads-and-no-write-puts-a-line-in-next-and-one-write-removes-it"
     },
     {
       "edge_type": "IMPLEMENTS",
@@ -218173,6 +218635,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:a-session-that-reads-and-never-writes-is-seen-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:the-loop-counts-this-sessions-reads-and-writes-and-says-when-a-write-is-owed"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:a-set-aside-decision-is-not-debt-test",
       "properties": {
         "completeness": "complete",
@@ -223021,6 +223492,24 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:triage-command",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:triage-feedback-is-a-served-step-and-the-feedback-rules-are-delivered-on-it"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:triage-feedback-skill",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:triage-feedback-is-a-served-step-and-the-feedback-rules-are-delivered-on-it"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:unreachable-decision-test",
       "properties": {
         "completeness": "complete",
@@ -225147,6 +225636,21 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:the-loop-counts-this-sessions-reads-and-writes-and-says-when-a-write-is-owed",
+      "properties": {},
+      "to_id": "req:a-session-that-reads-and-never-writes-is-seen"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:the-loop-counts-this-sessions-reads-and-writes-and-says-when-a-write-is-owed",
+      "properties": {
+        "completeness": "partial",
+        "note": "the detector half; cap:session-memory stays planned for the rest"
+      },
+      "to_id": "req:session-memory-in-graph"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:the-loop-holds-the-invitation",
       "properties": {},
       "to_id": "req:detecting-is-not-asking"
@@ -225243,6 +225747,12 @@
       "from_id": "cap:tool-search",
       "properties": {},
       "to_id": "req:agent-native"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:triage-feedback-is-a-served-step-and-the-feedback-rules-are-delivered-on-it",
+      "properties": {},
+      "to_id": "req:a-field-report-is-triaged-by-a-served-step-and-the-standing-rules-ride-it"
     },
     {
       "edge_type": "SATISFIES",
@@ -226371,6 +226881,14 @@
         "evidence": "The measured defect (a generic refusal that cannot name the sequence) is what raises this question. The fact records the mechanism; this idea records Alex's two proposed responses to it and the counter-argument from the record. A measurement and the decision it informs — the prescribed pair."
       },
       "to_id": "dec:idea-add-epoch-assigns-the-next-sequence-or-names-it"
+    },
+    {
+      "edge_type": "TRIGGERS",
+      "from_id": "fact:field-feedback-was-triaged-by-reading-a-fourth-time-after-the-rule-and-the-rule-is-delivered-at-no-step",
+      "properties": {
+        "evidence": "The finding is the measured fourth lapse; this decision is the design question it raises. The observation triggers the question; neither restates the other."
+      },
+      "to_id": "dec:idea-how-does-a-standing-rule-reach-a-moment-that-is-not-a-reflow2-step"
     },
     {
       "edge_type": "TRIGGERS",
@@ -228784,6 +229302,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:the-two-feedback-rules-ride-the-triage-skill-and-the-root-cause-step",
+      "properties": {},
+      "to_id": "cap:triage-feedback-is-a-served-step-and-the-feedback-rules-are-delivered-on-it"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:the-v0510-field-feedback-fixes-are-pinned",
       "properties": {},
       "to_id": "cap:artifact-declares-its-own-shape"
@@ -228835,6 +229359,12 @@
       "from_id": "ver:tools-reject-unknown-args",
       "properties": {},
       "to_id": "cap:mcp-surface"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:twenty-five-reads-and-no-write-puts-a-line-in-next-and-one-write-removes-it",
+      "properties": {},
+      "to_id": "cap:the-loop-counts-this-sessions-reads-and-writes-and-says-when-a-write-is-owed"
     },
     {
       "edge_type": "VERIFIES",
@@ -229199,6 +229729,14 @@
         "action": "created"
       },
       "to_id": "art:a-prose-field-that-swallowed-a-parameter-says-so"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:a-session-that-reads-and-never-writes-is-seen-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:a-session-that-reads-and-never-writes-is-seen-test"
     },
     {
       "edge_type": "YIELDED",
@@ -231394,6 +231932,22 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:triage-command",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:triage-command"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:triage-feedback-skill",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:triage-feedback-skill"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:unreachable-decision-test",
       "properties": {
         "action": "created"
@@ -231735,6 +232289,18 @@
       }
     },
     {
+      "node_id": "art:a-session-that-reads-and-never-writes-is-seen-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:b9b43d0cb4b05848262d50d95a0c9c555bc76b0504984ca51a7ca3291b9933a9",
+        "checksum_basis": "measured",
+        "location": "crates/reflow2-mcp/tests/a_session_that_reads_and_never_writes_is_seen.rs",
+        "name": "a_session_that_reads_and_never_writes_is_seen.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:a-set-aside-decision-is-not-debt-test",
       "node_type": "Artifact",
       "properties": {
@@ -232036,7 +232602,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:7a6f5d2bdc0cbdf7436ff7ac2c218a7ba3eb3479291384d0378c7b1acbdb59d1",
+        "checksum": "sha256:2b09d28c5c170215ad7ecd91bb68ba440fcd2be21c592ad1d6bb2fe8383a06f9",
+        "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "getting-started/skills/capture-intent/SKILL.md",
         "name": "capture-intent SKILL.md — the conversational capture path, now registering the document it captured from",
@@ -233617,7 +234184,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:8a2814a1e33c27d9d68ee15d06205c25642afea7aa1d2968761fe40cfcf6f508",
+        "checksum": "sha256:dff675caf1c436129466f86764757d3a016896109d1258ee718a8d734060ffa2",
+        "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "tools/loop_nudge.py",
         "name": "loop_nudge.py",
@@ -234716,7 +235284,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:41f3e38bf2af625301c0c2e71f020b70724f0f4301cfe16f42f3788f7d27d5f2",
+        "checksum": "sha256:0b2cbdede0e239d087f218f4c7e3d30ac4a168781bf33717962e2c537051e086",
         "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
@@ -234831,7 +235399,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:89fc4822ba373e95327c923189c8cedd9f90f8be26457b55846116d296dfed8d",
+        "checksum": "sha256:f202451c180300e206ef0597b56dbb87d4809c3d42e29320db5635465f37690f",
+        "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/skills.rs",
         "name": "skills.rs",
@@ -234844,7 +235413,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:faac4656a06c0f0148dcafa38313287629e8d61c99fe9ed27f2470cbf2a20132",
+        "checksum": "sha256:3559b48cf23fca3c20f6db791004266a6ae2e3cc893f01e4ec7f30e914d7a360",
+        "checksum_basis": "measured",
         "location": "docs/skills-and-tools.md",
         "name": "skills-and-tools.md",
         "status": "realized"
@@ -235615,7 +236185,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:79ce30b159bbde1aaaf9e03a7c71af384ce865691dd6788245b6d08adb681f86",
+        "checksum": "sha256:ff529b53470296cbf6209e8c2e9a9030d0df74dcf97bd480a6d15bac47975663",
+        "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "tools/test_loop_nudge.py",
         "name": "test_loop_nudge.py",
@@ -236074,7 +236645,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:60186dc52a32d54a8045e69bf700e6c2ee0719a9a9aaf6b78a62bbdc33e4fa5f",
+        "checksum": "sha256:b1deebf563c6f8e8e66d7885cc7d007262fd2cee33ac3f69cb166eebde07bd85",
         "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
@@ -236187,6 +236758,30 @@
         "checksum": "sha256:37af03042f7e864c482c266f03dbd4924384f3224593a73fe6cbbabd6b7462b4",
         "location": "getting-started/skills/topic/SKILL.md",
         "name": "topic/SKILL.md — the thin instruction leg of the /topic view: one call, render in the reader's domain, always read out not_found, write nothing",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:triage-command",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:88a4cc5cdca6f2706bd723b08064174adc27151dddc6ce94e2c2c74720101e43",
+        "checksum_basis": "measured",
+        "location": "getting-started/commands/triage.md",
+        "name": "triage.md — the /triage command",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:triage-feedback-skill",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:a7bf6b7d7b1168d811a691dfeacf9cef7f5d855b804bc532caa71e52fb667573",
+        "checksum_basis": "measured",
+        "location": "getting-started/skills/triage-feedback/SKILL.md",
+        "name": "triage-feedback SKILL.md — the served step a field report is triaged at",
         "status": "realized"
       }
     },
@@ -239487,6 +240082,16 @@
       }
     },
     {
+      "node_id": "cap:the-loop-counts-this-sessions-reads-and-writes-and-says-when-a-write-is-owed",
+      "node_type": "Capability",
+      "properties": {
+        "description": "As built 2026-09-18. ReflowService gains session_reads / session_writes (fresh per session, like the seat), counted in record_usage for every call by the tool's own read_only_hint (is_write_tool, computed once from the served surface). loop_status adds a `session` block (seat, reads, writes, read_only, threshold 25) and inserts a `next` line when !read_only && writes == 0 && reads >= 25. tools/loop_nudge.py tallies `reads` (cumulative, never cleared) and at Stop blocks once with the same message when wrote == 0 and reads >= REFLOW2_READS_WITHOUT_WRITES_THRESHOLD (25). capture-intent gains the 'a finding is yours to write; intent is theirs to give' paragraph; rule:a-finding-is-written-before-the-answer-and-needs-no-permission is delivered on capture-intent, where-am-i, brainstorm, root-cause, triage-feedback.",
+        "name": "loop_status counts this session's reads and writes and says in next when a session that could write has read past a threshold and written nothing; the stop hook nudges once on the same inverse",
+        "provenance": "authored",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "cap:the-loop-holds-the-invitation",
       "node_type": "Capability",
       "properties": {
@@ -239657,6 +240262,16 @@
         "provenance": "authored",
         "status": "verified",
         "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:triage-feedback-is-a-served-step-and-the-feedback-rules-are-delivered-on-it",
+      "node_type": "Capability",
+      "properties": {
+        "description": "As built 2026-09-18. getting-started/skills/triage-feedback/SKILL.md, served like every skill (build.rs), mirrored to .claude and .grok, command getting-started/commands/triage.md copied to .claude/commands and user scope, alias ('triage', triage-feedback) in COMMAND_ALIASES. The skill: read the report as observations; per issue get_skill root-cause, measure the reporter's cause, record_finding with caused_by/cause_evidence; per idea get_skill brainstorm, one exploratory Decision each, review_relations; what-worked recorded as findings; never fold findings into the document; loop_status; ask once which ideas to promote. rule:field-feedback-issues-are-root-caused-and-ideas-are-brainstormed now carries steps [triage-feedback]; rule:every-failure-is-searched-and-every-cause-is-root-caused-before-it-is-written carries steps [root-cause, record_finding]. Verified: get_skill triage-feedback returns the feedback rule among its lessons.",
+        "name": "triage-feedback is a served skill (/triage) and the two feedback rules are delivered on it and on root-cause / record_finding",
+        "provenance": "authored",
+        "status": "realized"
       }
     },
     {
@@ -240058,6 +240673,17 @@
         "rationale": "Anthony's word 2026-08-28, on all three parts. Two landed; the third could not.\n\n⭐ THE INSTRUCTION WAS MANUFACTURING BAD FIELD REPORTS, WHICH IS WHY IT WENT FIRST. A skill reflow2 SERVES told the reporter to cite a file that said 0.11.0 while the server answering was 0.39.0. Alex cross-checked four sources and caught it; a reporter who did not would have filed against a version that was never running. The fix depends on `cap:the-handshake-is-written-down-beside-the-graph`, built hours earlier — which gave the skill an accurate source to point AT rather than only a warning to point AWAY from.\n\n⚠️ VERIFIED, NOT TRUSTED, TWICE. The installer's dry run was read before it was run (11 changes, all `keep`, nothing deleted — it recognises the edited skill mirrors and leaves them). Afterwards the manifest was read OUT OF THE FILE — 0.41.0, d3cb4ab, 36 files — rather than from the installer's own \"Now: reflow2 0.41.0\" line, because `fact:the-v0380-manifest-shipped-empty-because-a-dry-run-reads-like-a-write` records a dry run reading exactly like a write. The pre-existing failure was confirmed by stashing the tree and re-running: still exit 1 without this session's edits.\n\n🛑 THE CI GATE WAS ADDED, MEASURED AND REVERTED, AND THAT IS THE MOST USEFUL PART. Everything that motivated it was true: the check existed, failed on a clean tree, and ran nowhere. What nobody had checked was whether CI has an installation to check. It does not — `.reflow2/` is gitignored, `git ls-files .reflow2/` is empty, and the check exits 2 on such a tree, so the gate would have turned every build red. The fresh-install case that COULD run there is already covered by `test_init.py`. An `INVALIDATES` claiming the finding closed was drawn and then deleted; `fact:the-kit-manifest-gate-cannot-run-in-ci-because-ci-is-never-installed-into` carries the measurement.\n\n📌 A CANDIDATE THAT WOULD REACH IT, recorded rather than built: the server already writes `reflow2_version` into `<graph>.client.json` and `.reflow2/kit-version.json` sits beside it. Comparing them and saying so — as `served_by.stale` already does for a replaced binary — reaches the developer AND the field without CI being involved at all.\n\n⚠️ NOT FIXED, AND SEPARATE: the RELEASE binary is stale relative to its source, which the installer warned about. A cousin of this staleness, left as its own thing.",
         "subject": "system",
         "summary": "Item 3 of the 2026-08-27 field report. `report-friction` told reporters to cite `.reflow2/kit-version.json`; it now says to read `.reflow2/graph.client.json`, the handshake sidecar, which names the reflow2 that actually ANSWERED the session plus the client and negotiated MCP revision. The installer was re-run to clear the drift (0.30.0 → 0.41.0, verified by reading the file). 🛑 THE CI GATE WAS ATTEMPTED AND REVERTED: `check_kit_manifest.py` cannot run in CI because `.reflow2/` is gitignored, so a checkout has no installation and the check exits 2. `fact:defect-kit-manifest-drift-is-invisible-to-ci` is NOT closed — it is sharpened, and the sharpening makes it harder."
+      }
+    },
+    {
+      "node_id": "chg:a-field-report-is-triaged-by-a-served-step-and-a-finding-is-written-before-the-answer",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-09-18",
+        "name": "A field report is triaged by a served step (triage-feedback, /triage) with the feedback rules riding it; a finding is written before the answer; loop_status and the stop hook see reads without writes",
+        "rationale": "Anthony 2026-09-18: 'let's start addressing these and implementing fixes', on the seven root-caused flo2 findings and the lapse; this increment is the pair that share a cause — a rule and a finding that could not reach the moment they bore on.",
+        "summary": "New skill triage-feedback (+ mirrors), command triage.md (+ copies), COMMAND_ALIASES entry; capture-intent paragraph; service.rs session_reads/session_writes + is_write_tool + count_call + note_call_for_test; coherence.rs loop_status `session` block + next line; tools/loop_nudge.py reads tally + Stop inverse nudge (REFLOW2_READS_WITHOUT_WRITES_THRESHOLD); tests: crates/reflow2-mcp/tests/a_session_that_reads_and_never_writes_is_seen.rs (3) and two in tools/test_loop_nudge.py; graph: two rules gain steps, one new rule, two requirements accepted, two ideas accepted; CHANGELOG."
       }
     },
     {
@@ -252313,6 +252939,17 @@
       }
     },
     {
+      "node_id": "dec:idea-a-record-only-change-event-needs-a-record-shaped-why",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL (the field-feedback rule: every idea gets the brainstorm skill). From flo2 F2. OPTIONS, none chosen: (a) add `decision_settled` — one enum line, nothing computes over it, the reporter's suggestion; (b) make change_type optional when subject=record — closer to the axis decision's intent, but 'absent means nobody said' then hides the why; (c) no event for a settlement at all, and say so in the capture skills — the status move, approver edge and snapshot already are the record. COUNTER: 49 record-axis events already wear the nearest code label on this design; an added value cleans the future, not the past.",
+        "kind": "exploratory",
+        "name": "OPEN — should `change_type` gain `decision_settled` (and other record-shaped whys), or become optional when `subject: record`, so a record-only event is not forced to wear a code-shaped label?",
+        "rationale": "Recorded from the field report.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-a-recorded-questions-wording-can-be-corrected",
       "node_type": "Decision",
       "properties": {
@@ -252320,6 +252957,17 @@
         "kind": "exploratory",
         "name": "OPEN — a Question's recorded wording is indelible. Is that a deliberate anti-forgery property, or an unintended one nobody chose?",
         "rationale": "Recorded as an idea because chama asked for a specific mechanism (\"some way to re-derive or amend a Question's text\") and the mechanism is the least interesting part — the question underneath is what a Question node is FOR, and that has never been stated. Answering the mechanism without answering that would produce a tool whose correct use nobody could describe.\n\nNot promoted to a requirement: nobody has been asked, and immutability may well be the right answer.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-a-refusal-for-an-unknown-field-should-name-the-nearest-parameter-and-never-guess-that-the-client-is-stale",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL (the field-feedback rule: every idea gets the brainstorm skill). From flo2 F1 (2026-09-18), where the refusal's staleness hint produced a wrong field report. OPTIONS, none chosen: (a) nearest-name suggestion on unknown-field refusals (the steps validator already does this for step names) and drop the staleness sentence unless the server can know it; (b) `#[serde(alias = \"node_id\")]` on every constructor's `id`, and `parent_id` on `contains` — the accepted naming decision extended to the constructor/reader seam; (c) the refusal includes the corrected call, as the reporter suggested — the server knows the legal set but not the caller's intent, so this over-promises; (d) leave it: the reporter praised the refusal text. COUNTER to (b): an alias for a name that never existed encodes a guess as vocabulary; the rank-first ratchet treats words as the interface, and two names for one field is two doors.",
+        "kind": "exploratory",
+        "name": "OPEN — when a call names a field that no version ever served, should the refusal say 'nearest is `id`' instead of suggesting a stale client — and should constructors accept `node_id` as an alias of `id`, the way relation tools already accept both families?",
+        "rationale": "Recorded from the field report after the measurement overturned the report's own cause.",
         "status": "proposed"
       }
     },
@@ -252373,6 +253021,17 @@
         "name": "OPEN — the degraded-session family: an RCA done while the server is down is lost, a /where from the export is blind to gaps, and findings about the RUNNING system have no home even when it is up",
         "no_relation_note": "Searched for the degraded-operation work. Nearest were cmp:degraded with ver:degraded-surface and ver:degraded-follows-transport — but those answer a DIFFERENT failure: the server is UP and the graph is held by another process, so a reduced tool surface can be served and can explain itself. This wish is the case where the server is not reachable at all, where by construction no tool can be served and the session has nowhere to put an RCA it has already done. Also considered dec:idea-how-does-the-graph-learn-what-a-session-invalidated, which is about capture being additive, not about reachability. No real relation to any of them.",
         "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-a-session-that-reads-and-never-writes-is-the-one-the-loop-cannot-see",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL (the field-feedback rule: every idea gets the brainstorm skill). From flo2 F0 (2026-09-18) and this session's own lapse the same day, the same class from both sides. OPTIONS, none chosen: (a) a line in capture-intent / where-am-i / brainstorm: a finding is the agent's observation, write it before answering, no permission owed — cheapest and closest to the cause the flo2 agent named; (b) loop_status reports, per seat, reads and writes this session from the usage ledger the server already keeps, and `next` says 'N reads, 0 writes' past a threshold; (c) the stop hook's inverse: a long session with few or no graph writes blocks once with that reason; (d) build cap:session-memory as accepted in July — the requirement is already the owner's word. COUNTER: a session that reads and rightly writes nothing (a pure question) must not be nagged; the threshold is a judgement, and req:detecting-is-not-asking says the count is computed always and put to the user at a boundary, never mid-thought.",
+        "kind": "exploratory",
+        "name": "OPEN — a session that reads the design for an hour and writes nothing is invisible to every loop signal; should the loop report reads-without-writes per seat, should the stop hook fire on the inverse, and should the capture skills say 'write a finding before answering'?",
+        "rationale": "Recorded from the field report; the requirement exists, the capability does not.",
+        "status": "accepted"
       }
     },
     {
@@ -253391,6 +254050,17 @@
       }
     },
     {
+      "node_id": "dec:idea-how-does-a-standing-rule-reach-a-moment-that-is-not-a-reflow2-step",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL (the field-feedback rule: every idea gets the brainstorm skill). Anthony, 2026-09-18, after the fourth reminder: 'we also need to run /root-cause on why you didn't obey a design rule'. The question the lapse leaves: the delivery mechanism built for Alex's third requirement reaches only steps that go through reflow2 (get_skill, a tool call); reading a file is not one. OPTIONS, none chosen: (a) a served maintainer-side skill `triage-feedback` (a `/triage` command), with the two rules' `steps` naming it, so the rule rides the skill the moment it is pulled — cheap, but the agent still has to pull it, which is the trigger problem in a smaller box; (b) a session-start hook that notices a feedback file newer than its last triage (the hook runs client-side and may read the tree) and says 'a field report is waiting; get_skill triage-feedback' — makes the file the trigger instead of the user, which is what req:skill-use-survives-a-long-session asks; (c) the report is captured INTO the graph by the reporting project (report-friction already writes record_finding), so the maintainer's step is a graph read (`open follow-ups`, `unclaimed findings`) that IS a reflow2 step and can carry the rule — the strongest, and it is the F0 shape from the other side; (d) treat 'delivered at no step' as a gate on reflow2's own design so a rule cannot be accepted without a step — honest, but a rule about a non-step moment would then be un-recordable, which is worse than undelivered. COUNTER to all: four lapses is also evidence that reading a report is a long, absorbing act; a delivery that fires once at its start may not survive to the moment a cause is written; the root-cause skill's own author skipped it an hour after writing it.",
+        "kind": "exploratory",
+        "name": "OPEN — how does a standing rule reach a moment that is not a reflow2 step? Triaging a field report has no served step, so the rule that issues get /root-cause and ideas get /brainstorm can only be remembered — and was forgotten 4 of 4 times",
+        "rationale": "Recorded on the day of the fourth lapse, as the design question behind it rather than a fifth reminder.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:idea-how-does-a-users-project-acquire-vocabulary-it-never-uses",
       "node_type": "Decision",
       "properties": {
@@ -253843,6 +254513,17 @@
       }
     },
     {
+      "node_id": "dec:idea-operational-know-how-is-a-design-rule-governing-the-environment-and-the-routing-table-should-say-so",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL (the field-feedback rule: every idea gets the brainstorm skill). From flo2 F5 and reflow2's own open disk-rule question. OPTIONS, none chosen: (a) rewrite the routing row: DesignRule, category runbook, GOVERNED_BY from the Environment — no vocabulary change; (b) a typed `add_runbook`/`Runbook` node — new vocabulary for a distinction nothing would compute over; (c) leave the row, since the reporter still found a place. COUNTER to (a): a runbook rule about a moment outside reflow2 (a container flag) has no step to be delivered at, the same limit dec:idea-how-does-a-standing-rule-reach-a-moment-that-is-not-a-reflow2-step names.",
+        "kind": "exploratory",
+        "name": "OPEN — should capture-intent's 'this is how we do X here' row route to a DesignRule (category `runbook`) governing the Environment or Component it concerns, and should such a rule be delivered at the step it bears on when one exists?",
+        "rationale": "Recorded from the field report.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-other-centralities",
       "node_type": "Decision",
       "properties": {
@@ -253996,6 +254677,17 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. From item 1 of the Grok 4.6 agent feedback (2026-08-13), verified on reflow2's own export at `c18a4a1` on 2026-08-14.\n\n⚠️ **SUBORDINATE TO `dec:idea-silence-is-reported-not-inferred`.** Anthony asked for this node AND for a step back, on the ground that patching one blind spot with one detector is how a tool overfits. **The narrow options below are only safe to take if they do not become the third instance of that pattern** — which is why (a), the obvious fix, is measured and argued against here.\n\nTHE MEASURED STATE (`fact:the-build-list-is-suppressed-by-realized-via-component`): `what_next` returns Decisions only — 12 of 12. `arrival_delta` needs a Release/Epoch `target_id`. 43 live planned capabilities and 9 accepted-undelivered requirements appear in no tool's answer. `unrealized_capability` fires 3 times against them, 34 of 39 silenced by `realized_via_component`.\n\n═══ ⭐⭐ THE FINDING THAT DECIDES THE SHAPE: THE ARTIFACT LAYER CANNOT ANSWER THIS ═══\n\n**81 of 161 capabilities have no artifact of their own.** That is not neglect — reflow2 models artifacts at COMPONENT granularity, so a capability is realized *via* the component that carries the code. `realized_via_component` is not a hack; **it encodes the modelling convention the design actually uses.**\n\n⇒ **THEREFORE \"WHICH CAPABILITY LACKS AN ARTIFACT\" IS NOT A MEANINGFUL QUESTION IN THIS DESIGN, AND NO REPAIR OF THE DETECTOR MAKES IT ONE.** The build list has to be computed from `Capability.status` and the golden thread — the things that DO carry per-capability truth — not from artifact presence. That is the load-bearing conclusion, and it removes the most tempting option rather than adding one.\n\n═══ THE OPTIONS, WITH MEASURED COSTS ═══\n\n(a) **FIX THE GUARD** so `realized_via_component` no longer inherits the component's artifacts.\n    🛑 **MEASURED COST: `unrealized_capability` goes from ~3 to ~81 gaps** — a 27× increase, every one of them firing on correct modelling. This is precisely BL-42's original failure returning at scale (*\"13 of 51 gaps, every one produced by following the adopt skill's own instruction\"*), and BL-5's recorded lesson says a loud detector needs a different QUESTION, not a tuned number. **Argued against on this node's own evidence.**\n\n(b) ⭐ **A REMAINING-WORK VIEW over data already held** — accepted/scheduled Requirements and Capabilities that are not computed-delivered, excluding `dropped`/`deferred`/discontinued and acknowledged-gap targets. The Grok report's own proposal, and a *sibling of `what_next`, not a replacement*.\n    Cost: a new surface to maintain. Benefit: **adds no new judgement to the instrument** — it reads `status` and the golden thread, both of which already exist — so it cannot overfit a detector, and it answers the audience half (`dec:idea-silence-is-reported-not-inferred`: the loop and the delivery plan should not share a dashboard).\n    ⚠️ It inherits the drift the Grok report names separately: `status` is ASSERTED while delivery is COMPUTED, and the two disagree. A view that reads `status` will be as stale as the statuses are.\n\n(c) **REPORT THE SUPPRESSION** — *\"34 capabilities not asked about: their component already has an artifact.\"* Generalises beyond this case; it is option (a) of the parent node. Cost: a convention every detector must honour. Benefit: the only option that makes the NEXT blind spot visible instead of the current one.\n\n(d) **SCHEDULE THE WORK, SO `arrival_delta` ANSWERS IT.** The machinery exists and is already the designed home for this.\n    🛑 **MEASURED: 23 `SCHEDULED_FOR` edges across 122 epochs and 31 releases.** The scheduling layer is built and effectively unused, so today this option answers almost nothing — and the Grok report hit exactly that, with its remaining-work list living as prose on an accepted Decision. Their item 9 proposes a detector for that shape (*an accepted Decision whose statement is a running delivery list with no `SCHEDULED_FOR` edges*). **Not free: it asks users to schedule before they can be told what is unbuilt.**\n\n(e) **NOTHING.** Counter: three agents in three weeks have now gone outside the graph to answer this.\n\n📌 (b), (c) and (d) COMPOSE and are not rivals: (d) makes the plan structural, (b) reads it back for the person who asked, (c) says what neither could see. **(a) is the only one that has to be chosen against.**",
         "name": "OPEN — how should \"what is left to build?\" be answered, given the artifact layer is modelled at COMPONENT granularity and therefore cannot answer it at all?",
         "rationale": "Captured under the brainstorm skill, with each option's cost measured on reflow2's own export rather than estimated, because Anthony's stated worry was that a narrow fix creates the next problem and that worry cannot be settled by argument alone. The measurement changed the answer: the obvious repair — making the unrealized-capability detector honest at capability granularity — would raise gaps 27-fold against a modelling convention that is correct, so the artifact layer is the wrong source for this question entirely. Recorded as subordinate to `dec:idea-silence-is-reported-not-inferred` rather than as a standalone fix so that a future session cannot take the narrow option without meeting the general question first.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-replace-one-sentence-in-a-field-without-resending-the-field",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL (the field-feedback rule: every idea gets the brainstorm skill). From flo2 F3/F4, the third project to report it. OPTIONS, none chosen: (a) `revise_text {node, field, old, new}` with the uniqueness refusal — the same operation the artifact tools already offer for files; (b) `append_section {node, field, text}` — narrower, matches the ═══ house style exactly; (c) the layers idea: the node says it has layers and a reader asks for one — larger, and already open; (d) structural instead of prose: `set_decision_status` takes a `chosen` sentence stored as its own property, so 'which option won' never lives in the body. COUNTER: (a) makes graph text the target of an edit instruction, which the standing rule forbids for reading; for writing it is the caller's own text and the uniqueness refusal bounds it.",
+        "kind": "exploratory",
+        "name": "OPEN — should a node's prose be editable by replacing one unique string in one field (refused if absent or not unique), so settling a prose-option decision or appending a dated section never re-sends the body?",
+        "rationale": "Recorded from the field report beside the open layers question rather than folded into it: that one asks how a reader sees strata; this asks how a writer avoids making them.",
         "status": "proposed"
       }
     },
@@ -261101,6 +261793,22 @@
       }
     },
     {
+      "node_id": "rule:a-finding-is-written-before-the-answer-and-needs-no-permission",
+      "node_type": "DesignRule",
+      "properties": {
+        "category": "convention",
+        "name": "A finding is written before the answer and needs nobody's permission — intent waits for the owner's word, an observation does not",
+        "statement": "A contradiction you noticed, a number that does not add up, a measurement you took, a cause you established: these are the agent's own observations. Write each with record_finding the moment you have it, before the next answer, and never offer to fold it into a document. Only INTENT waits for the owner's word — a requirement, a decision, a status. Measured 2026-09-18 on flo2: six design findings from a document review stayed in chat because the agent had generalised 'intent waits' into 'everything waits'; the same day the maintainer's own triage repeated the class. A session that reads for an hour and writes nothing looks clean to every signal that counts nodes; loop_status now counts this session's reads and writes and says so.",
+        "steps": [
+          "capture-intent",
+          "where-am-i",
+          "brainstorm",
+          "root-cause",
+          "triage-feedback"
+        ]
+      }
+    },
+    {
       "node_id": "rule:a-gate-is-run-against-the-state-it-will-be-judged-in",
       "node_type": "DesignRule",
       "properties": {
@@ -261232,7 +261940,11 @@
         "category": "methodology",
         "enforced": false,
         "name": "Every failure gets its raw error searched in the design; the full /root-cause skill runs at the moment a CAUSE is about to be written — not on every failure",
-        "statement": "Set by Anthony on 2026-09-06 (his words: \"I'd like to make the use of /root-cause more automatic by the agent when it finds an issue in implementing/creating design artifacts or in its testing … probably some caveats about which types of issues … might not be a blanket rule\"), ruling on dec:idea-root-cause-runs-at-the-moment-a-cause-is-about-to-be-written-not-on-every-failure: the tiered option (c) as the floor and the cause-moment trigger (b) as the judgement above it; the blanket rule (a) rejected as ritual.\n\n═══ TIER 1 — ON ANY FAILURE, ALWAYS: SEARCH BEFORE YOU THINK ═══\nWhenever a command, test, build, tool call or check fails while building or testing — however trivial it looks — run step ② of the root-cause skill first: `search_design` on the RAW error text (the exact string, not your summary of it) and READ what comes back. Measured cold at 0.08 s, so cost is never the reason to skip it. If a recorded cause matches, apply the recorded remedy and COUNT the recurrence on the record that holds the cause (revise the fact, or note the occurrence); do not re-derive it. This step alone would have prevented both measured failures on this project — the error of 2026-08-22 that reached eleven occurrences while its cause sat in the graph, and the 2026-09-06 re-fix of an already-fixed defect (fact:a-defect-fixed-but-never-closed-on-the-record-was-re-fixed-wrongly-a-day-later).\n\n═══ TIER 2 — THE FULL SKILL, AT THE MOMENT A CAUSE IS ABOUT TO BE WRITTEN ═══\nRun the whole root-cause skill (get_skill root-cause; steps ①–⑨, every step leaving an artifact) the moment you have formed an explanation for something you did not predict. The trigger is not the failure; it is the sentence: \"because\", \"the problem is\", \"it must be\", \"that explains it\". Concretely, that moment arrives on: an unpredicted test failure; a measurement or count you cannot account for (something slower, larger or emptier than it should be — the quiet case the skill's own author missed); a surprise in your own build (\"why did that pass?\"); a defect reported from the field (already rule:field-feedback-issues-are-root-caused-and-ideas-are-brainstormed); and any \"because\" written before a discriminating measurement was taken.\n\n═══ EXEMPT FROM TIER 2 — NEVER FROM TIER 1 ═══\nThe full skill is NOT run on a failure that never reaches a cause: an error whose remedy is stated in the error itself (a compile error naming the line; a refusal that lists the legal values or fields; a missing argument); a known-class friction whose cause tier 1 found already recorded — but COUNT it (five argument-shape refusals in one triage on 2026-09-05 were evidence, not five investigations); a typo. The exemption is bounded by CONSTRUCTION, not by judgement: it covers errors you read, fix and move on from without ever writing a cause. \"This one is obvious\" is not an exemption — the skill's own author-case says the obvious one is the case to run it on, and the overconfident symptom-fix that Anthony described produces no failing command at all, which is why tier 2 keys on the cause moment rather than on a failure.\n\n═══ WHY TIERED AND NOT BLANKET ═══\nThe skill costs real time, and run on every trivial refusal it becomes a ritual; a step performed ritually stops being performed at all (the skill's own warning). Tier 1 is the cheapest honest floor and catches the recorded-cause class mechanically; it does not reach the abstract third of defect facts that no error string matches (68 of 192, measured), which is what tier 2 is for.\n\n═══ WHAT COMPLIANCE LEAVES BEHIND ═══\nTier 1 leaves a counted recurrence when it hits and nothing when it misses — the floor is invisible on a miss, which is accepted. Tier 2 leaves a dated TemporalFact per cause carrying the candidates considered, the discriminating measurement, a CAUSES edge from the artifact holding the cause, and a stated bound on what was not established; and a test observed failing first (rule:an-issue-is-root-caused-then-pinned-by-a-test-then-fixed). A fix recorded as defect_fix or test_failure_fix whose touched artifacts carry no CAUSES edge did not follow this rule, whatever it concluded — that is the detector owed under dec:idea-how-does-root-cause-become-automatic-rule-hook-detector-or-composition, the third leg of fact:vocabulary-needs-three-legs.\n\nENFORCEMENT IS DELIBERATELY UNSTATED, as for its sibling rule: whether a fix with no recorded cause should block anything is a policy Anthony has not ruled on. The detector will report it as a gap first; a gate is the later question."
+        "statement": "Set by Anthony on 2026-09-06 (his words: \"I'd like to make the use of /root-cause more automatic by the agent when it finds an issue in implementing/creating design artifacts or in its testing … probably some caveats about which types of issues … might not be a blanket rule\"), ruling on dec:idea-root-cause-runs-at-the-moment-a-cause-is-about-to-be-written-not-on-every-failure: the tiered option (c) as the floor and the cause-moment trigger (b) as the judgement above it; the blanket rule (a) rejected as ritual.\n\n═══ TIER 1 — ON ANY FAILURE, ALWAYS: SEARCH BEFORE YOU THINK ═══\nWhenever a command, test, build, tool call or check fails while building or testing — however trivial it looks — run step ② of the root-cause skill first: `search_design` on the RAW error text (the exact string, not your summary of it) and READ what comes back. Measured cold at 0.08 s, so cost is never the reason to skip it. If a recorded cause matches, apply the recorded remedy and COUNT the recurrence on the record that holds the cause (revise the fact, or note the occurrence); do not re-derive it. This step alone would have prevented both measured failures on this project — the error of 2026-08-22 that reached eleven occurrences while its cause sat in the graph, and the 2026-09-06 re-fix of an already-fixed defect (fact:a-defect-fixed-but-never-closed-on-the-record-was-re-fixed-wrongly-a-day-later).\n\n═══ TIER 2 — THE FULL SKILL, AT THE MOMENT A CAUSE IS ABOUT TO BE WRITTEN ═══\nRun the whole root-cause skill (get_skill root-cause; steps ①–⑨, every step leaving an artifact) the moment you have formed an explanation for something you did not predict. The trigger is not the failure; it is the sentence: \"because\", \"the problem is\", \"it must be\", \"that explains it\". Concretely, that moment arrives on: an unpredicted test failure; a measurement or count you cannot account for (something slower, larger or emptier than it should be — the quiet case the skill's own author missed); a surprise in your own build (\"why did that pass?\"); a defect reported from the field (already rule:field-feedback-issues-are-root-caused-and-ideas-are-brainstormed); and any \"because\" written before a discriminating measurement was taken.\n\n═══ EXEMPT FROM TIER 2 — NEVER FROM TIER 1 ═══\nThe full skill is NOT run on a failure that never reaches a cause: an error whose remedy is stated in the error itself (a compile error naming the line; a refusal that lists the legal values or fields; a missing argument); a known-class friction whose cause tier 1 found already recorded — but COUNT it (five argument-shape refusals in one triage on 2026-09-05 were evidence, not five investigations); a typo. The exemption is bounded by CONSTRUCTION, not by judgement: it covers errors you read, fix and move on from without ever writing a cause. \"This one is obvious\" is not an exemption — the skill's own author-case says the obvious one is the case to run it on, and the overconfident symptom-fix that Anthony described produces no failing command at all, which is why tier 2 keys on the cause moment rather than on a failure.\n\n═══ WHY TIERED AND NOT BLANKET ═══\nThe skill costs real time, and run on every trivial refusal it becomes a ritual; a step performed ritually stops being performed at all (the skill's own warning). Tier 1 is the cheapest honest floor and catches the recorded-cause class mechanically; it does not reach the abstract third of defect facts that no error string matches (68 of 192, measured), which is what tier 2 is for.\n\n═══ WHAT COMPLIANCE LEAVES BEHIND ═══\nTier 1 leaves a counted recurrence when it hits and nothing when it misses — the floor is invisible on a miss, which is accepted. Tier 2 leaves a dated TemporalFact per cause carrying the candidates considered, the discriminating measurement, a CAUSES edge from the artifact holding the cause, and a stated bound on what was not established; and a test observed failing first (rule:an-issue-is-root-caused-then-pinned-by-a-test-then-fixed). A fix recorded as defect_fix or test_failure_fix whose touched artifacts carry no CAUSES edge did not follow this rule, whatever it concluded — that is the detector owed under dec:idea-how-does-root-cause-become-automatic-rule-hook-detector-or-composition, the third leg of fact:vocabulary-needs-three-legs.\n\nENFORCEMENT IS DELIBERATELY UNSTATED, as for its sibling rule: whether a fix with no recorded cause should block anything is a policy Anthony has not ruled on. The detector will report it as a gap first; a gate is the later question.",
+        "steps": [
+          "root-cause",
+          "record_finding"
+        ]
       }
     },
     {
@@ -261251,7 +261963,10 @@
         "category": "methodology",
         "enforced": false,
         "name": "Field feedback is processed by skill, not by reading: every issue or gap it names gets /root-cause, every idea for improvement or a new feature gets /brainstorm",
-        "statement": "When reflow2 receives feedback from a project that uses it — a field report, a friction log, an appended feedback file, a first-use write-up — the agent triaging it MUST run the root-cause skill on every issue, defect or gap the feedback identifies, and MUST run the brainstorm skill on every idea for improvement or new feature it proposes. Automatically, as the standing way feedback is read; not when reminded. Set by Anthony on 2026-09-05 after reminding the agent of it on three consecutive triages (\"then I don't have to remind this every time\").\n\nWHY THE SKILLS AND NOT JUST 'READ CAREFULLY': the same day this rule was set, a triage that read the code and wrote down a cause without the skill's steps got two of four causes wrong — a 'missing setter' that was really the schema-default injector (the BL-198 class), and 'two missing pairs' that were three — and running the skipped steps overturned both (fact:defect-a-verifications-level-and-method-can-be-set-only-at-birth-so-a-wrong-default-is-on-the-record-forever, revised the same day). The skill's own text predicts this: a cause reached at speed feels like understanding.\n\nWHAT EACH HALF PRODUCES, so compliance is visible rather than claimed: root-cause leaves a dated TemporalFact per issue carrying the candidates considered, the discriminating measurement taken, a CAUSES edge from the artifact holding the cause, and a stated bound on what was not established; brainstorm leaves one exploratory Decision per idea in the reporter's words with the counter-argument beside it, linked (or carrying a written no-relation note) via review_relations. A triage that leaves neither has not followed this rule, whatever it concluded.\n\nCOMPLEMENTS rule:feedback-sources-have-a-priority-order-and-anthony-set-it, which says which feedback is read first; this says how each piece is read once it is.\n\nENFORCEMENT IS ADVISORY, AND THAT WAS CHOSEN — Anthony, 2026-09-09, asked directly: a triage that skips these skills blocks nothing. Nothing is gate-blocking; the rule stands as guidance and the detector below only reports.\n\n⚠️ THE PROPERTY AND THIS PARAGRAPH USED TO DISAGREE, and that disagreement is why the ruling was put to him rather than assumed. The node already carried `enforced: false` — the schema's word for \"advisory, and somebody said so\" — while this text claimed nobody had ruled. Under this schema `false` and ABSENT are deliberately different states: `false` is a decision, absence is silence, and `dec:does-enforced-default-to-gate-blocking` removed the default precisely so the two could not be confused. A node asserting one while its own prose claimed the other is that same confusion, one layer up. It now says what it means.\n\nTHE DETECTOR IS BUILT AND IT REPORTS ONLY (`untriaged_report`, 2026-09-09): an Artifact GOVERNED_BY a `methodology` DesignRule with no outgoing CAUSES edge — a parked field report that produced no root-cause finding. Severity is a note and it never blocks, matching the ruling above.\n\n⭐ WHAT MADE IT BUILDABLE WAS MEASURING WHY IT WAS NOT. The compliance edge this rule names — CAUSES, from the report to the finding it caused — existed in the vocabulary the whole time and had been drawn ONCE across seventeen field reports (measured 2026-09-09; 7 of the 17 carry any DOCUMENTS back-edge at all, and none of the four this rule governs carried a CAUSES edge except `art:dev-storyflow-feedback-2026-09-07b`). So the third leg was not missing for want of a detector: the second leg never told anybody to draw the edge, and a rule whose compliance nothing records cannot be checked by anything. The triage of 2026-09-09 drew its own seven back-edges before the detector was written, which is what gave the detector a true negative to distinguish from its three true positives."
+        "statement": "When reflow2 receives feedback from a project that uses it — a field report, a friction log, an appended feedback file, a first-use write-up — the agent triaging it MUST run the root-cause skill on every issue, defect or gap the feedback identifies, and MUST run the brainstorm skill on every idea for improvement or new feature it proposes. Automatically, as the standing way feedback is read; not when reminded. Set by Anthony on 2026-09-05 after reminding the agent of it on three consecutive triages (\"then I don't have to remind this every time\").\n\nWHY THE SKILLS AND NOT JUST 'READ CAREFULLY': the same day this rule was set, a triage that read the code and wrote down a cause without the skill's steps got two of four causes wrong — a 'missing setter' that was really the schema-default injector (the BL-198 class), and 'two missing pairs' that were three — and running the skipped steps overturned both (fact:defect-a-verifications-level-and-method-can-be-set-only-at-birth-so-a-wrong-default-is-on-the-record-forever, revised the same day). The skill's own text predicts this: a cause reached at speed feels like understanding.\n\nWHAT EACH HALF PRODUCES, so compliance is visible rather than claimed: root-cause leaves a dated TemporalFact per issue carrying the candidates considered, the discriminating measurement taken, a CAUSES edge from the artifact holding the cause, and a stated bound on what was not established; brainstorm leaves one exploratory Decision per idea in the reporter's words with the counter-argument beside it, linked (or carrying a written no-relation note) via review_relations. A triage that leaves neither has not followed this rule, whatever it concluded.\n\nCOMPLEMENTS rule:feedback-sources-have-a-priority-order-and-anthony-set-it, which says which feedback is read first; this says how each piece is read once it is.\n\nENFORCEMENT IS ADVISORY, AND THAT WAS CHOSEN — Anthony, 2026-09-09, asked directly: a triage that skips these skills blocks nothing. Nothing is gate-blocking; the rule stands as guidance and the detector below only reports.\n\n⚠️ THE PROPERTY AND THIS PARAGRAPH USED TO DISAGREE, and that disagreement is why the ruling was put to him rather than assumed. The node already carried `enforced: false` — the schema's word for \"advisory, and somebody said so\" — while this text claimed nobody had ruled. Under this schema `false` and ABSENT are deliberately different states: `false` is a decision, absence is silence, and `dec:does-enforced-default-to-gate-blocking` removed the default precisely so the two could not be confused. A node asserting one while its own prose claimed the other is that same confusion, one layer up. It now says what it means.\n\nTHE DETECTOR IS BUILT AND IT REPORTS ONLY (`untriaged_report`, 2026-09-09): an Artifact GOVERNED_BY a `methodology` DesignRule with no outgoing CAUSES edge — a parked field report that produced no root-cause finding. Severity is a note and it never blocks, matching the ruling above.\n\n⭐ WHAT MADE IT BUILDABLE WAS MEASURING WHY IT WAS NOT. The compliance edge this rule names — CAUSES, from the report to the finding it caused — existed in the vocabulary the whole time and had been drawn ONCE across seventeen field reports (measured 2026-09-09; 7 of the 17 carry any DOCUMENTS back-edge at all, and none of the four this rule governs carried a CAUSES edge except `art:dev-storyflow-feedback-2026-09-07b`). So the third leg was not missing for want of a detector: the second leg never told anybody to draw the edge, and a rule whose compliance nothing records cannot be checked by anything. The triage of 2026-09-09 drew its own seven back-edges before the detector was written, which is what gave the detector a true negative to distinguish from its three true positives.",
+        "steps": [
+          "triage-feedback"
+        ]
       }
     },
     {
@@ -262074,6 +262789,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered a_prose_field_that_swallowed_a_parameter_says_so.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:a-session-that-reads-and-never-writes-is-seen-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered a_session_that_reads_and_never_writes_is_seen.rs"
       }
     },
     {
@@ -264852,6 +265577,26 @@
       }
     },
     {
+      "node_id": "frag:art:triage-command",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered triage.md — the /triage command"
+      }
+    },
+    {
+      "node_id": "frag:art:triage-feedback-skill",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered triage-feedback SKILL.md — the served step a field report is triaged at"
+      }
+    },
+    {
       "node_id": "frag:art:unreachable-decision-test",
       "node_type": "Fragment",
       "properties": {
@@ -267271,6 +268016,18 @@
       }
     },
     {
+      "node_id": "req:a-field-report-is-triaged-by-a-served-step-and-the-standing-rules-ride-it",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "A field report is triaged by a served step, and the standing rules about it ride that step — so the rule that issues get root-cause and ideas get brainstorm is delivered, not remembered",
+        "priority": "high",
+        "provenance": "authored",
+        "statement": "Anthony, 2026-09-18 ('let's start addressing these and implementing fixes'), after rule:field-feedback-issues-are-root-caused-and-ideas-are-brainstormed — set 2026-09-05 after three reminders — was broken a fourth time. Root-caused the same day: the rule named no step, and no served step existed for a maintainer reading a field report, so the 0.64.0 lesson delivery could not carry it and memory failed 4 of 4 times. The moment 'an agent reads a field report' must be a reflow2 step: a served skill the agent pulls (get_skill triage-feedback, /triage), whose reply carries the two rules (`steps` naming it), and whose text runs root-cause per issue and brainstorm per idea, records each finding and question, and never writes a cause it has not measured. The user must not be the trigger (req:skill-use-survives-a-long-session); the skill's own description and the command are the triggers this increment delivers, and a hook that notices a newer feedback file is deferred to evidence.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "req:a-finding-has-somewhere-to-put-its-evidence",
       "node_type": "Requirement",
       "properties": {
@@ -267764,6 +268521,18 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "Promoted to intent from `dec:idea-can-reflow2-see-the-work-a-session-did-by-hand` on Anthony's word, 2026-08-26. That node is the OPEN QUESTION with its four options and their counter-arguments; this is the INTENT chosen out of it. Both are kept, per the brainstorm discipline: the road taken is recorded on the question, and the question keeps the roads not taken.\n\nEvery measurement reflow2 has of its own adoption looks at what a session DID with it: `surface_usage.py` counts calls, `cap:skill-loads-are-counted` counts loads, `dec:how-should-reflow2-log-its-own-usage` asks where the log lives. All are blind to the same thing — **the work a session performed by hand that reflow2 already serves.**\n\nTHAT NEGATIVE SPACE IS A STRONGER SIGNAL THAN ABSENCE-OF-A-CALL, BECAUSE IT CARRIES INTENT. `dec:bl-155` measured 40 of 132 tools never called and states outright that it *\"cannot tell unused from unreachable\"*, listing three explanations it has no way to separate: genuinely young, no use case yet, or findable by nobody. **Hand-rolled work discriminates between them.** A session that wrote a script to do X proves somebody wanted X, at a moment, badly enough to build it — which a zero in a usage table can never show.\n\nMEASURED THREE TIMES ACROSS FIVE WEEKS, AND TWICE IT FOUND THE SESSION'S CENTRAL RESULT:\n- **2026-08-26** — comparing the allocation layer against the artifact layer (212 capabilities: 59 agree, 23 disagree, 130 no evidence) was done with hand-written Python over the export. **No reflow2 tool does it**: `reconcile_artifacts` compares design against DISK, `compare_designs` compares design against DESIGN, and neither compares two layers of ONE design. Here the signal names a MISSING tool.\n- **2026-08-20** — *\"does my declared decomposition match the real coupling?\"* — again hand-written, again the session's finding.\n- **The v0.19.0–v0.31.0 release cuts** — a JSON-RPC export driver written and rewritten until it was promoted into `tools/`. The same signal, acted on late.\n\n⭐ THE SIGNAL PRODUCES TWO DIFFERENT DIAGNOSES AND DOES NOT NEED TO TELL THEM APART: sometimes the tool is MISSING, sometimes it exists and was not FOUND. A human reading the list can, and either answer is worth having.\n\nWHAT MUST BE TRUE OF ANY IMPLEMENTATION:\n- It must respect `req:telemetry-carries-usage-never-design-content` — the SHAPE of the work, never its content. A script's source is design content and must not travel.\n- It must not depend on the agent having noticed the tool existed, or it measures the same blind spot it is trying to see. **This is the standing objection to the chosen form and it is NOT resolved by choosing it.**\n\n📌 THE FORM CHOSEN, deliberately the cheapest: **ask the agent at session end what it did by hand that reflow2 should have done.** Both prior findings surfaced exactly that way — an agent noticing and saying so, unprompted — so the mechanism is known to work at least sometimes, and a transcript-side detector is a larger build with a privacy posture reflow2 has never taken. If asking proves unreliable the detector remains available; starting with it would have been building before measuring, which is the over-engineering this project watches for by name.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:a-session-that-reads-and-never-writes-is-seen",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "A finding is written the moment it is made and needs nobody's permission, and a session that reads the design at length and writes nothing is seen by the loop",
+        "priority": "high",
+        "provenance": "authored",
+        "statement": "Anthony, 2026-09-18, promoting flo2's F0 (2026-09-18) and this session's own lapse the same day. The distinction: intent (a requirement, a decision, a status) waits for the owner's word; a finding (a contradiction noticed, a measurement, a cause established) is the agent's own observation and is written before the answer, no permission owed. Two legs were missing and both are required: the INSTRUCTION — the capture skills say it, and a design rule carrying it is delivered on capture-intent, where-am-i, brainstorm, root-cause and triage-feedback; the DETECTOR — every loop signal counts nodes that exist, so loop_status must count THIS SESSION's reads and writes and say, in `next`, when a session that could write has read past a threshold and written nothing; the stop hook nudges once on the same inverse. Never for a read-only surface, and never as a question mid-thought (req:detecting-is-not-asking). The accepted req:session-memory-in-graph asked for this in July; its capability was still planned.",
         "status": "accepted"
       }
     },
@@ -277705,6 +278474,20 @@
       }
     },
     {
+      "node_id": "fact:field-feedback-was-triaged-by-reading-a-fourth-time-after-the-rule-and-the-rule-is-delivered-at-no-step",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.9,
+        "fact_type": "defect",
+        "name": "A fourth triage after the rule was set read the feedback and wrote causes without the root-cause skill; the rule names no step, no served step exists for triaging a field report, and the design's own gap detector already lists the rule among five conventions delivered nowhere",
+        "source": "flo2 reflow2_feedback.md, session 2026-09-18 (Anthony's own project; the agent triaging was this session, root-cause skill run at Anthony's prompt)",
+        "statement": "OBSERVED 2026-09-18: asked 'please review flo2's reflow2_feedback.md', this agent read the file, verified two claims by measurement and wrote seven causes in prose; the root-cause skill was not invoked and the brainstorm skill was not invoked; Anthony asked afterwards whether the skill had been run. The rule (set 2026-09-05 after three reminders, 'then I don't have to remind this every time') was therefore reminded a fourth time. SEARCHED (step 2): the root-cause skill's own text records its author skipping it an hour after writing it; rule:an-issue-is-root-caused… records the fix that prompted it skipped the step. CANDIDATES from the design and what distinguished them: (A) the rule has steps: None, so the 0.64.0 lesson delivery cannot carry it — MEASURED: detect_gaps on this design reports '5 of 10 conventions the project follows are delivered at no step' and this rule is one; (B) there is NO served step to deliver it AT — MEASURED: the only skill whose description mentions a feedback file is `feedback`, the consumer-side usage-tally renderer; no served skill covers a maintainer triaging a field report, so 'please review this file' matched nothing and no get_skill happened; (C) the agent's trigger — it formed causes while reading, the quiet moment the skill warns about — true, and it is the symptom the rule exists to catch, not a cause to fix. A rule remembered failed 4 of 4 times; a rule delivered at a step cannot fail this way. The cause is B: the moment 'an agent reads a field report' is not a reflow2 step, so nothing can put the rule in front of the agent, and req:skill-use-survives-a-long-session says the user must never be the trigger — which is exactly who was.",
+        "subject_id": "rule:field-feedback-issues-are-root-caused-and-ideas-are-brainstormed",
+        "valid_from": "2026-09-18"
+      }
+    },
+    {
       "node_id": "fact:field-friction-is-captured-and-then-owed-to-nobody",
       "node_type": "TemporalFact",
       "properties": {
@@ -277739,6 +278522,104 @@
         "statement": "Reported by the agent on /home/ajs7/project/bhome (its file: feedback.md lines 710–994, Session 2 and 2 part 2; copied to docs/feedback/2026-09-16-bhome-cad-demo-feedback.md). ifc (IfcMCP) and blender mounted beside reflow2; Blender's addon was not running and \"turned out not to matter, because Blender returns pictures and IFC returns numbers\".\n\n⭐ THE LOOP, in order: con:interior-floor-area held 280 sq ft and said of itself \"an estimate with the assumption named, not a measurement\". A 40 ft high-cube shell was built in IFC4 at ISO nominal (spatial hierarchy, four walls, floor and roof slabs, an interior space, a finish-floor slab inside a 2 in service cavity). ifc_quantify → Qto_SlabBaseQuantities.GrossArea = 26.8425 m² = 288.9 sq ft, cross-checked against wall Length 12.192 / Height 2.698 / Width 0.043. Written back with record_change (constraint_change, subject: record — \"the shell did not change, our knowledge of it did\"), limit revised 280→288.9 with provenance in the statement. budget_report → verdict exceeded, total 297 against 288.9, basis_coverage {estimated: 10}. \"The design now says: you are 8 sq ft over a limit we measured, and every one of the ten things spending against it is still a guess. Before today it said: you are 17 sq ft over a limit we guessed.\" The estimate was conservative by 3 %; the measurement did not rescue the design. Recorded honestly: a measurement taken off a model built on two assumptions (manufacturer-typical clear dimensions; an assumed service cavity), and ver:floor-area-take-off records the procedure.\n\n⭐ HEADLINE: the seam ALREADY EXISTED — constrains' `basis: measured` against a budget Constraint — and the agent did not find it while designing; it found it afterwards running find_tools to write the report. During the work it reasoned inside the relation vocabulary, concluded nothing honest fit, and drew no edge. \"An agent reasoning carefully inside the relation vocabulary does not discover that a typed constructor covers the case\" — second instance after EVOLVES_INTO. Ask: a cad-handoff skill, or two sentences in constrains: design the budget in reflow2, measure it in the tool, write it back as basis: measured, let budget_report say whether it fits.\n\nWHAT WORKED because a partner was coming: the 3D-model EXCLUSION was in the graph in the user's words as an answer to a Question, search_design surfaced it, and because it was traceable to a question about deliverables the collision was diagnosed as scope, not substance, and narrowed rather than overturned. record_change snapshotted the requirement and its edges before the wording changed. The stop hook's nudge timestamps its own reading and says not to trust it; all three findings it raised were correct and none was debt — acknowledge_gaps with a reason each, \"not a fabricated artifact\".\n\nFRICTION: nine calls failed on version skew (add_decision ×3 — statement/decision, missing id, related_to shape; review_relations relations/links; propagate_from node_id/seed_ids; record_change description/target_type; add_epoch sequence; satisfies coverage; contains parent_id/project_id; acknowledge_gaps gaps/gap_ids) — \"the error messages are best-in-class … the cost is structural: ~8 extra round trips clustered at the moment an agent writes a batch\"; errors arrive one field at a time; the skew is silent until the first failure. The duplicate guard fired on the 4th of 4 parallel add_decision calls, order-dependent. satisfies REJECTS `coverage` while the stored SATISFIES edge carries coverage: full and graph_report's delivery roll reads it — a capability that only partly satisfies is recorded as fully satisfying. reflow2 has no word for DESIGN APPARATUS: the geometry model had to be a Component whose description disclaims its own type (\"NOT A PART OF THE POD\"); cap:produce-build-package has sat unallocated for the same reason. An accepted sequencing decision does not suppress findings for its own deferred steps. subject: record is the single most common case a measuring partner will produce and the tool description does not say so. SAVE CADENCE: ifc_render crashed the server and lost units and placements added after the last ifc_save while the artifact was checksummed against the earlier file — \"reflow2 knows when a file it tracks has drifted; it has no notion that an external tool holds unsaved state the file does not\".\n\nIFC-SIDE (not reflow2's, bounds what an agent can drive): dicts and lists must be passed as JSON strings inside params; a scalar is accepted where a list is required; ifc_quantify and ifc_select disagree about selectors; IfcSpace gets no base quantities; no units ⇒ no drawings, with an error naming attribute 8; ifc_render crashes the server; ifc_plot needs CairoSVG, not installed. Unproven: drawing generation, rendering, Blender entirely, and any measurement of the ten contributions.",
         "subject_id": "dec:idea-pair-with-mcp-for-blender-as-the-hands-that-make-and-show-the-cad-artifact",
         "valid_from": "2026-09-16"
+      }
+    },
+    {
+      "node_id": "fact:field-report-flo2-2026-09-18-change-type-is-required-while-subject-is-optional-so-a-record-only-event-picks-a-system-shaped-why",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.8,
+        "fact_type": "defect",
+        "name": "FIELD REPORT (flo2, 2026-09-18): a settled decision has no change_type; MEASURED on this design, 117 record-axis events carry code-shaped types (12 scope_change, 11 resync, 9 defect_fix, 9 documentation, 5 new_feature, 3 refactor) — the axis decision made `subject` optional and left `change_type` required",
+        "source": "flo2 reflow2_feedback.md, session 2026-09-18 (Anthony's own project; the agent triaging was this session, root-cause skill run at Anthony's prompt)",
+        "statement": "F2: 'an open Decision moving to accepted is the most common design event in this project and none of the values names it'; the reporter used new_feature. SEARCHED: dec:change-type-splits-into-two-axes (2026-08-15) chose a second axis over more values. MEASURED: schema/temporal.yaml declares change_type `required: true`; ChangeEvent.subject is optional; 117 ChangeEvents on reflow2's own design carry subject=record, 49 of them with a system-shaped change_type (68 are baseline_established). Also noted: a settlement is already recorded by the status move, the approver edge and the preserved snapshot, so no ChangeEvent is OWED for it — the gap bites only when one is written.",
+        "subject_id": "dec:change-type-splits-into-two-axes",
+        "valid_from": "2026-09-18"
+      }
+    },
+    {
+      "node_id": "fact:field-report-flo2-2026-09-18-eight-rejected-calls-were-guessed-names-not-a-stale-client-and-the-refusal-said-stale",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.9,
+        "fact_type": "defect",
+        "name": "FIELD REPORT (flo2, 2026-09-18): eight calls rejected for unknown fields were reported as client/server schema drift — MEASURED: five of the six names never existed in any release, and the session began ten hours after the last server rebuild; the agent guessed by analogy across an inconsistent surface, and the refusal's 'your client's tool list may predate the server' named a cause that was false",
+        "source": "flo2 reflow2_feedback.md, session 2026-09-18 (Anthony's own project; the agent triaging was this session, root-cause skill run at Anthony's prompt)",
+        "statement": "F1 claimed 'my tool list predated the running 0.64.0'. MEASURED against the toolsnaps at v0.62.0, v0.59.0 and v0.50.0: add_decision.node_id, contains.parent_id, review_relations.relations, authored_by.authored_at and add_requirement.rationale existed in NONE; only add_change_event.description had. The flo2 session's first timestamp is 22:55Z; the release binary was rebuilt at 13:00 local. So the client was not stale: the names were guessed — `node_id` where the constructor takes `id`, `parent_id` where `contains` takes `project_id` — and the refusal's self-diagnosis ('if this reflow2 was updated after your client connected…') was accepted as the cause and written into the field report. Precedent: dec:idea-one-way-to-name-which-node-across-the-tool-surface (accepted 2026-09-06) made relation tools accept both name families as serde aliases; constructors (`id`) and readers (`node_id`) remain two families, and that seam is where the guesses landed. The refusal is excellent at naming the legal set and wrong about why.",
+        "subject_id": "dec:idea-one-way-to-name-which-node-across-the-tool-surface",
+        "valid_from": "2026-09-18"
+      }
+    },
+    {
+      "node_id": "fact:field-report-flo2-2026-09-18-findings-stayed-in-chat-and-the-accepted-session-memory-requirement-has-only-a-planned-capability",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.8,
+        "fact_type": "defect",
+        "name": "FIELD REPORT (flo2, 2026-09-18): a document review produced six design findings and a hosting analysis that stayed in chat; every loop signal is about nodes that exist, so a session that writes nothing reads as clean — and the accepted requirement covering this is satisfied only by a PLANNED capability",
+        "source": "flo2 reflow2_feedback.md, session 2026-09-18 (Anthony's own project; the agent triaging was this session, root-cause skill run at Anthony's prompt)",
+        "statement": "F0 in flo2's feedback, in the agent's words: 'A session that reasons about the design for an hour and writes none of it down is, to every detector, a clean session.' Its own cause: it generalised 'intent waits for the owner's word' into 'everything waits for permission'; a finding is the agent's observation and needs none. SEARCHED: req:session-memory-in-graph ('what a session learns is written to the graph as it is learned') is ACCEPTED and satisfied by cap:session-memory, status PLANNED. MEASURED: no served skill contains an instruction to write a finding before answering (grep over getting-started/skills: none); loop_status has no field about reads without writes; the usage ledger records every call per seat with the tool name, so reads-without-writes per session is computable today. The two missing legs are the instruction and the detector; the vocabulary (record_finding) exists.",
+        "subject_id": "cap:session-memory",
+        "valid_from": "2026-09-18"
+      }
+    },
+    {
+      "node_id": "fact:field-report-flo2-2026-09-18-operational-know-how-has-a-home-and-the-routing-table-says-it-has-none",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.85,
+        "fact_type": "defect",
+        "name": "FIELD REPORT (flo2, 2026-09-18): a droplet runbook (pin --idle-timeout, sidecars beside the store, snapshot export for backups, no network filesystem) went into a Decision's prose because capture-intent's routing table says 'nothing fits cleanly' — MEASURED: a DesignRule takes any category and GOVERNED_BY is legal from an Environment, so the vocabulary fits and the row is what is wrong",
+        "source": "flo2 reflow2_feedback.md, session 2026-09-18 (Anthony's own project; the agent triaging was this session, root-cause skill run at Anthony's prompt)",
+        "statement": "F5 in the reporter's words: 'None of that is a Requirement, a Constraint or a Decision… add_environment_rule looked right by name but is explicitly for rules that cannot be negotiated'. SEARCHED: dec:idea-where-does-a-disk-space-rule-live-when-the-gate-runs-on-the-wrong-machine (OPEN) is the same shape on this project. MEASURED: add_design_rule's `category` is free text ('a free-text grouping; the schema does not fix the set'); schema/structure.yaml declares GOVERNED_BY from `*` to [Decision, DesignRule, Requirement], so env:droplet GOVERNED_BY rule:droplet-runbook is legal today; capture-intent line 57 still says '⚠️ Nothing fits cleanly'. The reporter followed the table, and the table is wrong.",
+        "subject_id": "dec:idea-where-does-a-disk-space-rule-live-when-the-gate-runs-on-the-wrong-machine",
+        "valid_from": "2026-09-18"
+      }
+    },
+    {
+      "node_id": "fact:field-report-flo2-2026-09-18-settling-a-prose-option-decision-costs-a-full-resend-and-the-house-style-is-measured",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.85,
+        "fact_type": "defect",
+        "name": "FIELD REPORT (flo2, 2026-09-18): collapse_decision cannot settle a decision whose options live in prose (the brainstorm skill's own design), and saying which option won means re-sending the whole body; MEASURED on this design: 210 of 743 decisions exceed 4 KB, 164 carry dated ═══ sections, 92 preserved re-sends exist",
+        "source": "flo2 reflow2_feedback.md, session 2026-09-18 (Anthony's own project; the agent triaging was this session, root-cause skill run at Anthony's prompt)",
+        "statement": "F3 and F4 are one finding: the settle-a-prose-decision path has no structured home for 'option (b) won' and amending a sentence costs the whole field, so the reporter left 'Options, none chosen' standing as a false line. SEARCHED: fact:defect-the-reply-costs-more-than-the-answer-and-amending-prose-costs-the-whole-field (2026-09-04, two projects) and dec:idea-should-a-node-say-it-has-layers-and-let-a-reader-ask-for-them (OPEN) record the same cost; the house style the graph encourages is measured above. The revision guard preserves the prior state (snap:epoch:preserved-on-write), which protects against loss, not against transcription.",
+        "subject_id": "dec:idea-should-a-node-say-it-has-layers-and-let-a-reader-ask-for-them",
+        "valid_from": "2026-09-18"
+      }
+    },
+    {
+      "node_id": "fact:field-report-flo2-2026-09-18-the-gate-defaults-to-a-file-none-of-three-layouts-has",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.9,
+        "fact_type": "defect",
+        "name": "FIELD REPORT (flo2, 2026-09-18): `reflow2 check` with no arguments looks for `design.json`; the three designs on the maintainer's box keep their export at docs/design/reflow2.json, docs/design/flo2.json and .reflow2/design.json, and the graph's own sync sidecar already records which export it is in step with",
+        "source": "flo2 reflow2_feedback.md, session 2026-09-18 (Anthony's own project; the agent triaging was this session, root-cause skill run at Anthony's prompt)",
+        "statement": "F6: 'the bare reflow2 check fails with a helpful message naming --export. Minor, but the default does not match the layout the tool's own init produces.' MEASURED: tools/reflow2_check.py line 781 `--export default=\"design.json\"`; the three exports on this box are at three other paths; .reflow2/graph.sync.json holds `last_synced: {<absolute export path>: <hash>}` — the honest default is already on disk.",
+        "subject_id": "cap:the-server-writes-the-export-through-and-chains-it-from-main",
+        "valid_from": "2026-09-18"
+      }
+    },
+    {
+      "node_id": "fact:field-report-flo2-2026-09-18-the-retired-artifact-drift-was-reasoned-from-a-stale-fact-not-measured-and-the-current-binary-answers-expected-absence",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.9,
+        "fact_type": "observation",
+        "name": "FIELD REPORT (flo2, 2026-09-18): 'a correctly-executed retirement adds a permanent missing_artifact DRIFT' — NOT REPRODUCIBLE: flo2's committed export imported under 0.64.0 and reconciled with the proposal absent answers `expected_absence`, which the gate files as a note; the session drew the OBSOLETES edge at 23:39:12Z and never ran the gate again; the 2026-08-15 fact recording this defect is still on the record as if live",
+        "source": "flo2 reflow2_feedback.md, session 2026-09-18 (Anthony's own project; the agent triaging was this session, root-cause skill run at Anthony's prompt)",
+        "statement": "MEASURED: import flo2.json into a scratch store under target/debug 0.64.0; get_node art:multi-graph-proposal → discontinued: true; reconcile_artifacts observed present:false → kind expected_absence, 'an accepted decision retired it — the design and the build agree'; tools/reflow2_check.py fails only on checksum_change and missing_artifact. TIMELINE from the flo2 session log: gate runs at 23:21Z, OBSOLETES edge at 23:39:12Z, no gate run after. PRECEDENT: fact:defect-a-retired-artifact-still-reports-missing-forever (2026-08-15) records exactly this defect, which has since been fixed in drift.rs (is_discontinued → ExpectedAbsence); nothing marks the fact as closed, and the retire-from-design skill never says the gate reads OBSOLETES as an answer. The reporter reasoned from what the record still says rather than measuring — the staleness bone.",
+        "subject_id": "fact:defect-a-retired-artifact-still-reports-missing-forever",
+        "valid_from": "2026-09-18"
       }
     },
     {
@@ -284939,6 +285820,20 @@
       }
     },
     {
+      "node_id": "ver:the-two-feedback-rules-ride-the-triage-skill-and-the-root-cause-step",
+      "node_type": "Verification",
+      "properties": {
+        "description": "Against the real store after the rules gained steps: get_skill triage-feedback → lessons include rule:field-feedback-issues-are-root-caused-and-ideas-are-brainstormed; get_skill root-cause → lessons include the every-failure rule and the finding rule.",
+        "findings": "Real store 2026-09-18: get_skill triage-feedback lessons = [rule:a-finding-is-written-before-the-answer-and-needs-no-permission, rule:field-feedback-issues-are-root-caused-and-ideas-are-brainstormed]; get_skill root-cause lessons = [the finding rule, rule:every-failure-is-searched-and-every-cause-is-root-caused-before-it-is-written].",
+        "kind": "verification",
+        "last_run_at": "2026-09-18",
+        "level": "integration",
+        "method": "demonstration",
+        "name": "get_skill triage-feedback carries the feedback rule among its lessons, and get_skill root-cause carries the every-failure rule",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:the-v0510-field-feedback-fixes-are-pinned",
       "node_type": "Verification",
       "properties": {
@@ -285014,6 +285909,20 @@
         "method": "test",
         "name": "A served tool refuses an argument it does not know — including a tool whose FIRST parameter is new, where the old surface has nothing to reject with (friction 2026-07-25, unwritten)",
         "status": "planned"
+      }
+    },
+    {
+      "node_id": "ver:twenty-five-reads-and-no-write-puts-a-line-in-next-and-one-write-removes-it",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-mcp/tests/a_session_that_reads_and_never_writes_is_seen.rs (3 tests) and tools/test_loop_nudge.py (2 tests).",
+        "findings": "pr run: 3 Rust tests and 2 hook tests pass.",
+        "kind": "verification",
+        "last_run_at": "2026-09-18",
+        "level": "integration",
+        "method": "test",
+        "name": "Twenty-five reads and no write put a line in next and one write removes it; below the threshold nothing is said; a read-only surface is never told it owes a finding; the stop hook nudges once on the same inverse and one write settles it",
+        "status": "passing"
       }
     },
     {
@@ -285173,7 +286082,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:d106804ce589037ffb370d82b9877a3e312cf80c9542650ac25f16cb1356f5aa",
+  "prev_content_hash": "sha256:6c0d9f7cf88afe385e3256a0795da8bcf08c49625df1325050560254f4d5c345",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -285770,8 +286679,8 @@
     "schema_version": 1
   },
   "taken_at": {
-    "branch": "reflow2-measures-registered-files",
-    "commit": "c3695c6fd1588eeceb9c553b5ccf8fb4f15c02e8",
+    "branch": "a-field-report-is-triaged-by-a-served-step",
+    "commit": "d14c641c8c76b38fb3c5cb9c67260115ff3c78a5",
     "dirty": true
   }
 }
