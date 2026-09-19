@@ -149,6 +149,17 @@ mis-file things**; this one names where it runs out, and that boundary is where 
 5. If a piece of intent is ambiguous or under-specified, do NOT invent an answer — leave it as
    a gap for the **detect-and-ask** workflow to surface.
 6. Confirm back to the user what you captured (ids + names), briefly.
+   ⭐ **A FINDING IS YOURS TO WRITE; INTENT IS THEIRS TO GIVE.** Everything above about the
+   owner's word is about INTENT — a requirement, a decision, a status. It does not apply to what
+   you OBSERVE while working: a contradiction you noticed in a document, a number that does not
+   add up, a measurement you took, a cause you established. Those are your findings, and they
+   need nobody's permission — `record_finding` writes one the moment you have it, before you
+   answer. Measured 2026-09-18 on a user's project: an agent produced six design findings in a
+   document review and offered to fold them back into the document, because it had generalised
+   "intent waits for the owner's word" into "everything waits for permission". A finding that
+   waits is a finding that is lost, and a session that reads for an hour and writes nothing
+   looks clean to every signal the loop has.
+
 7. **Before moving on, call `loop_status`.** Capturing nodes is bookkeeping, not the loop — a
    busy session that only ever adds nodes leaves gaps nobody surfaced and claims nobody proved,
    and it *feels* like using reflow2 the whole time. `loop_status` is one cheap call that says

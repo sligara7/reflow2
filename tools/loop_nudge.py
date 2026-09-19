@@ -302,7 +302,7 @@ def blank_state() -> dict:
     """A session nobody has recorded anything for. Correct ONLY when the tally
     is genuinely absent — see [`update_state`] for why that distinction is the
     whole bug this file once had."""
-    return {"writes": 0, "edits": 0, "touched": False,
+    return {"writes": 0, "edits": 0, "touched": False, "reads": 0,
             "changes": 0, "propagates": 0, "artifacts": 0, "captures": 0,
             "gap_pass": 0, "renderings": 0, "skills": 0,
             # Graph writes for the WHOLE session, never reset by a loop check —
@@ -344,6 +344,11 @@ def parse_state(text: str) -> dict | None:
         raw = json.loads(text)
         return {
             "writes": int(raw.get("writes", 0)),
+            # Graph READS this session, cumulative and never cleared — the
+            # inverse of `writes`. A session that read the design at length and
+            # wrote nothing is invisible to every graph-side signal
+            # (flo2, 2026-09-18); this is the one place that can see it.
+            "reads": int(raw.get("reads", 0)),
             "edits": int(raw.get("edits", 0)),
             "touched": bool(raw.get("touched", False)),
             # cap:skill-triggers — the shape fields. Absent in older state
@@ -480,6 +485,7 @@ def update_state(session_id: str, mutate) -> None:
         try:
             tmp.write_text(json.dumps({
                 "writes": int(state.get("writes", 0)),
+                "reads": int(state.get("reads", 0)),
                 "edits": int(state.get("edits", 0)),
                 "touched": bool(state.get("touched", False)),
                 "changes": int(state.get("changes", 0)),
@@ -564,8 +570,52 @@ def claim_nudge(session_id: str) -> bool:
     return claimed
 
 
+# EVERY served tool whose `read_only_hint` is false, read off the toolsnaps —
+# `tools/test_loop_nudge.py` fails when this set and the goldens disagree, so
+# a new write tool cannot quietly become an uncounted one. The prefix
+# heuristic and EXTRA_WRITE_OPS stay as the backstop for an op the goldens do
+# not know. Generated 2026-09-18, when `record_finding` — the one write the
+# reads-without-writes nudge exists to ask for — turned out not to be counted.
+WRITE_OPS = frozenset({
+    "acknowledge_defect", "acknowledge_gap", "acknowledge_gaps", "add_actor", "add_artifact",
+    "add_capability", "add_change_event", "add_component", "add_constraint", "add_contributor",
+    "add_decision", "add_design_rule", "add_environment", "add_environment_rule", "add_epoch",
+    "add_flow", "add_interface", "add_project", "add_readiness", "add_release",
+    "add_requirement", "add_resource", "add_verification", "allocate", "answer_question",
+    "answers", "apply_heal", "apply_merge", "authored_by", "calibrated_against",
+    "claim_region", "collapse_decision", "complies_with", "constrains", "consumes",
+    "contain_component", "contains", "create_edge", "create_edges", "create_node",
+    "create_nodes", "decomposes", "delete_edge", "delete_node", "depends_on",
+    "deploy_to", "design_identity", "documents", "external_dependency", "forecast_readiness",
+    "gap_to_prompt", "gaps_to_prompts", "gate_on", "genesis", "governed_by",
+    "import_graph", "imposes", "ingest_corpus_step", "ingest_step", "invalidates",
+    "link_artifact", "mirror_surface", "move_component", "operates_in", "owned_by",
+    "part_of_flow", "performed_in", "pin_at_epoch", "plan_epoch", "precedes",
+    "provides", "realizes", "reconcile_artifacts", "reconcile_deployment", "reconcile_verification",
+    "record_alias", "record_finding", "register_alternative", "release_claim", "release_includes",
+    "release_includes_all", "report_manual_work", "require_resource", "review_relations", "satisfies",
+    "schedule_for", "set_artifact_checksum", "set_artifact_checksums", "set_artifact_intent", "set_capability_delivery",
+    "set_capability_signature", "set_capability_status", "set_closure_criterion", "set_decision_status", "set_epoch_status",
+    "set_evidence_scope", "set_interface_designation", "set_interface_spec", "set_project_mode", "set_provenance",
+    "set_quality_target", "set_requirement_designation", "set_requirement_lineage", "set_requirement_status", "set_verification_kind",
+    "set_verification_status", "set_violation_status", "snapshot_before_change", "usage_report", "verifies",
+    "violates_rule", "withdraw_defect_acknowledgement", "withdraw_gap_acknowledgement", "withdraw_question"
+})
+
+
 def is_write(op: str) -> bool:
+    """A CAPTURE that owes a loop check — deliberately NARROWER than every
+    graph write: answering a question, accepting a checksum or acknowledging a
+    gap are resolutions the loop asked for, and counting them as unchecked debt
+    would nudge a session for doing what the last nudge said."""
     return op.startswith(("add_", "create_", "delete_")) or op in EXTRA_WRITE_OPS
+
+
+def is_graph_write(op: str) -> bool:
+    """ANY served write — the question the reads-without-writes nudge asks. A
+    resolution is a write here: a session that answered a question did not read
+    the design for an hour and record nothing."""
+    return op in WRITE_OPS or is_write(op)
 
 
 def env_threshold(name: str, default: int) -> int:
@@ -1243,8 +1293,10 @@ def main() -> int:
                     state["writes"] += 1
                 # Cumulative and never cleared — see `blank_state`. A loop check
                 # settles the DEBT, it does not un-write what was written.
-                if is_write(op):
+                if is_graph_write(op):
                     state["wrote"] += 1
+                elif op not in LOOP_OPS:
+                    state["reads"] = int(state.get("reads", 0)) + 1
                 # Shape tallies are cumulative and are NOT cleared by a loop
                 # check: detect_gaps does not un-edit a file or un-capture
                 # intent.
@@ -1335,6 +1387,29 @@ def main() -> int:
                     f"reflow2: {n} graph write(s) this session and no loop check. "
                     f"{detail} Bookkeeping is not the loop. (This nudge fires "
                     f"once; stopping again proceeds.)"
+                ),
+            }))
+            return 0
+
+        # READS WITHOUT WRITES — the inverse of the nudge above, and the one
+        # session the graph itself cannot see: it consulted the design at
+        # length, produced findings in chat, and recorded none of them. A
+        # positive count, so it survives the negative-claim rule below.
+        reads = int(state.get("reads", 0))
+        if state.get("wrote", 0) == 0 and reads >= env_threshold(
+            "REFLOW2_READS_WITHOUT_WRITES_THRESHOLD", 25
+        ):
+            if not claim_nudge(session):
+                return 0
+            print(json.dumps({
+                "decision": "block",
+                "reason": ride_along(
+                    session,
+                    f"reflow2: {reads} graph read(s) this session and no write. A finding "
+                    f"is the agent's own observation and needs no permission — if this "
+                    f"session noticed anything (a contradiction, a number, a cause), "
+                    f"record_finding writes it now. If it genuinely produced nothing to "
+                    f"record, stopping again proceeds. (This nudge fires once.)"
                 ),
             }))
             return 0

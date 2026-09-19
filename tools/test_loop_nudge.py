@@ -72,6 +72,58 @@ class LoopNudge(unittest.TestCase):
         f = self.project / ".reflow2" / "loop-nudge" / f"{session}.json"
         return json.loads(f.read_text()).get("edits", 0) if f.exists() else 0
 
+    def test_a_session_that_reads_at_length_and_never_writes_is_nudged_once(self):
+        """The inverse of the writes nudge. Every graph-side loop signal is about
+        nodes that exist, so a session that read the design for an hour and
+        recorded none of its findings was clean by all of them (flo2,
+        2026-09-18). The hook's own tally is the one place that can see it."""
+        for _ in range(25):
+            run_hook(self.project, post_tool("mcp__reflow2__get_node"))
+        r = run_hook(self.project, stop())
+        self.assertEqual(r.returncode, 0)
+        out = json.loads(r.stdout)
+        self.assertEqual(out["decision"], "block")
+        self.assertIn("no write", out["reason"])
+        self.assertIn("record_finding", out["reason"])
+        # Fires once: the second stop proceeds.
+        r2 = run_hook(self.project, stop(active=True))
+        self.assertNotIn("block", r2.stdout)
+
+    def test_one_write_settles_the_reads_without_writes_nudge(self):
+        for _ in range(30):
+            run_hook(self.project, post_tool("mcp__reflow2__search_design"))
+        run_hook(self.project, post_tool("mcp__reflow2__record_finding"))
+        run_hook(self.project, post_tool("mcp__reflow2__loop_status"))
+        r = run_hook(self.project, stop())
+        self.assertNotIn("no write", r.stdout)
+
+    def test_the_write_set_matches_the_served_surface(self):
+        """`is_graph_write` must agree with every toolsnap's read_only_hint: a write
+        the hook does not count makes the reads-without-writes nudge fire on a
+        session that DID write (found with `record_finding`, 2026-09-18)."""
+        import glob
+        import importlib.util
+        # Loaded by PATH, not by package: CI runs this file as a script
+        # (`python3 tools/test_loop_nudge.py`), where `tools` is not a module.
+        spec = importlib.util.spec_from_file_location("loop_nudge_under_test", SCRIPT)
+        nudge = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(nudge)
+        snaps = sorted(glob.glob(str(pathlib.Path(__file__).parent / "toolsnaps" / "*.json")))
+        self.assertGreater(len(snaps), 100, "toolsnaps present")
+        wrong = []
+        for f in snaps:
+            d = json.loads(pathlib.Path(f).read_text())
+            ann = d.get("annotations") or {}
+            ro = ann.get("readOnlyHint", ann.get("read_only_hint"))
+            # A renamed tool's stub refuses and points at the new name: it is
+            # served read-only, and the hook keeps the OLD name in its write set
+            # so transcripts from before the rename still count.
+            if ro is None or str(d.get("description", "")).startswith("RENAMED"):
+                continue
+            if (not ro) != nudge.is_graph_write(d["name"]):
+                wrong.append((d["name"], ro))
+        self.assertEqual(wrong, [], f"is_write disagrees with the goldens for: {wrong}")
+
     def test_session_start_prints_the_orientation(self):
         r = run_hook(self.project, {"hook_event_name": "SessionStart",
                                     "session_id": "s1"})
