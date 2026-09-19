@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:a010b9d93e85731713859cc4907815ffbbceffbe507dfc3667d9e5301cf26abb",
+  "content_hash": "sha256:d62891209593aca34441fa0bc3a9f5d077338f42ac49f6d977c19c98cfec1085",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -13554,6 +13554,24 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:rule:a-rule-the-project-follows-lives-in-the-graph-not-in-an-agents-memory",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:rule:a-rule-the-project-follows-lives-in-the-graph-not-in-an-agents-memory:r2",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:rule:a-rule-the-project-follows-lives-in-the-graph-not-in-an-agents-memory:r3",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:rule:field-feedback-issues-are-root-caused-and-ideas-are-brainstormed",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
@@ -22323,6 +22341,17 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-lesson-lands-in-the-cheapest-correct-place-and-the-rule-saying-so-arrives-at-the-step",
+      "properties": {
+        "approved_at": "2026-09-19",
+        "roles": [
+          "approver"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:a-node-can-say-who-may-change-it",
       "properties": {
         "authored_at": "2026-08-09",
@@ -23911,7 +23940,7 @@
       "edge_type": "AUTHORED_BY",
       "from_id": "rule:a-rule-the-project-follows-lives-in-the-graph-not-in-an-agents-memory",
       "properties": {
-        "approved_at": "2026-09-07T13:00:00Z",
+        "approved_at": "2026-09-19",
         "roles": [
           "approver"
         ]
@@ -24327,6 +24356,16 @@
     },
     {
       "edge_type": "CAUSES",
+      "from_id": "art:brainstorm-skill",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The skill states the hazard (direction is part of the claim, a backwards edge asserts something false) at the exact step where the flag would be used, and never names the flag, so the reader meets the warning and no remedy.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:the-direction-flag-on-a-relation-exists-and-no-skill-names-it-so-two-edges-landed-reversed"
+    },
+    {
+      "edge_type": "CAUSES",
       "from_id": "art:dates",
       "properties": {
         "basis": "correlational",
@@ -24537,6 +24576,16 @@
     },
     {
       "edge_type": "CAUSES",
+      "from_id": "cap:a-declared-dependency-is-watched-not-imported",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The detail sentence is formatted from the dependency's name, date and version and never from the export path held on the same struct, so the prose and the data disagree about what the reader is given.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:the-upstream-moved-nag-withholds-the-path-it-is-already-carrying"
+    },
+    {
+      "edge_type": "CAUSES",
       "from_id": "cap:a-published-contract-says-what-two-systems-must-agree-on",
       "properties": {
         "basis": "correlational",
@@ -24567,6 +24616,16 @@
     },
     {
       "edge_type": "CAUSES",
+      "from_id": "cap:init-asks-which-harness",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The install reads its content from the kit path, and on this box that path is a symlink to the live checkout rather than a released snapshot, so the installer's input is the maintainer's uncommitted tree.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:the-kit-a-consumer-installs-from-is-a-symlink-to-the-maintainers-live-checkout"
+    },
+    {
+      "edge_type": "CAUSES",
       "from_id": "cap:latent-surface",
       "properties": {
         "basis": "correlational",
@@ -24584,6 +24643,16 @@
         "validation_status": "unvalidated"
       },
       "to_id": "fact:root-cause-a-default-put-every-reconcile-pass-into-the-fix-population-and-the-gap-offered-to-decline-the-rule"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "cap:replace-text-moves-one-unique-sentence-or-appends-under-the-revision-guard",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The revising write returns the prior value but performs no comparison, so a rewrite that removes content and one that does not produce replies a reader cannot tell apart.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:a-revising-write-that-shrinks-a-field-reports-nothing-and-two-load-bearing-paragraphs-were-lost"
     },
     {
       "edge_type": "CAUSES",
@@ -24918,6 +24987,26 @@
         "validation_status": "hypothesis"
       },
       "to_id": "dec:idea-a-contract-is-declared-at-the-lowest-level-and-rolled-up"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "dec:the-four-2026-09-rules-are-advisory-because-no-detector-can-yet-see-a-violation",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "Leaving the rule advisory with no detector and no steps is what left it with no moment of delivery, which is the failure this question is about.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "dec:idea-what-belongs-in-the-graph-and-what-belongs-in-an-agents-memory-and-why-the-rule-keeps-losing"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:a-revising-write-that-shrinks-a-field-reports-nothing-and-two-load-bearing-paragraphs-were-lost",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The measured losses are what put this question on the table.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "dec:idea-should-a-revising-write-say-what-it-removed"
     },
     {
       "edge_type": "CAUSES",
@@ -25397,6 +25486,16 @@
     },
     {
       "edge_type": "CAUSES",
+      "from_id": "fact:the-direction-flag-on-a-relation-exists-and-no-skill-names-it-so-two-edges-landed-reversed",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The two reversed edges are what put the echo question on the table; the flag answers the other half.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "dec:idea-should-a-drawn-relation-be-echoed-back-as-a-sentence"
+    },
+    {
+      "edge_type": "CAUSES",
       "from_id": "fact:the-field-feedback-rule-was-broken-the-same-day-it-was-ruled-on-and-the-half-that-held-was-the-half-already-in-context",
       "properties": {
         "basis": "correlational",
@@ -25595,6 +25694,16 @@
         "validation_status": "unvalidated"
       },
       "to_id": "fact:the-unknown-field-interception-was-dead-from-the-day-it-shipped-and-its-test-could-not-see-it"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "ver:edges-need-both-ends",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The helper resolves the id under its own fixed node type and the not-found path reports that lookup verbatim; nothing looks the id up under any other type, so the message cannot distinguish 'no such node' from 'that node is not a Component'.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:a-typed-edge-helper-given-a-wrong-typed-node-reports-it-absent-and-blames-a-race-that-did-not-happen"
     },
     {
       "edge_type": "CHANGED",
@@ -49693,6 +49802,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-memory-boundary-is-settled-into-three-places-and-the-rule-is-delivered-at-the-step",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "rule:a-rule-the-project-follows-lives-in-the-graph-not-in-an-agents-memory"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-moment-a-cause-is-written-becomes-a-tool-call-and-the-tool-demands-the-skill",
       "properties": {
         "accepted_baseline": true,
@@ -53436,6 +53554,12 @@
       "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
+      "to_id": "req:a-lesson-lands-in-the-cheapest-correct-place-and-the-rule-saying-so-arrives-at-the-step"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
       "to_id": "req:a-project-records-how-it-ships"
     },
     {
@@ -56917,6 +57041,16 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-should-every-finding-say-who-it-is-for-and-should-ids-be-de-slugged-where-they-surface",
+      "properties": {
+        "evidence": "Both rows are instances of that rule: a fact reflow2 knows at emission time and makes every consumer re-derive.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "rule:a-consumer-facing-fact-about-the-served-surface-is-served-never-copied"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "dec:idea-should-help-expand-a-single-command-with-examples",
       "properties": {
         "evidence": "Option ③ — drawing examples from real recorded use rather than writing them — is only available if session tool and skill use is logged, which that decision is open on.",
@@ -57114,6 +57248,26 @@
         "weight_basis": "estimated"
       },
       "to_id": "req:the-agent-learns-who-it-is-talking-to"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-what-belongs-in-the-graph-and-what-belongs-in-an-agents-memory-and-why-the-rule-keeps-losing",
+      "properties": {
+        "evidence": "Option (a) is entirely the lesson-at-the-step mechanism that requirement built, applied to this rule.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "req:a-lesson-is-served-at-the-step-it-concerns"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-what-belongs-in-the-graph-and-what-belongs-in-an-agents-memory-and-why-the-rule-keeps-losing",
+      "properties": {
+        "evidence": "This question is about how to make that rule bind; it is worth nothing if the rule itself does not stand.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "rule:a-rule-the-project-follows-lives-in-the-graph-not-in-an-agents-memory"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -57811,6 +57965,16 @@
         "weight_basis": "evidence"
       },
       "to_id": "req:read-surfaces-debt"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "req:a-lesson-lands-in-the-cheapest-correct-place-and-the-rule-saying-so-arrives-at-the-step",
+      "properties": {
+        "evidence": "The delivery half is entirely that requirement's mechanism, applied to this rule.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "req:a-lesson-is-served-at-the-step-it-concerns"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -60017,6 +60181,15 @@
     },
     {
       "edge_type": "DUPLICATES",
+      "from_id": "dec:idea-should-settling-a-decision-record-which-option-won",
+      "properties": {
+        "basis": "suspected",
+        "evidence": "The same complaint from the same project one day earlier; both are kept because the second arrives with the measurement of what the rewrite costs."
+      },
+      "to_id": "fact:field-report-flo2-2026-09-18-settling-a-prose-option-decision-costs-a-full-resend-and-the-house-style-is-measured"
+    },
+    {
+      "edge_type": "DUPLICATES",
       "from_id": "dec:idea-the-served-surface-carries-what-a-consumer-needs-to-present-it-so-no-copy-is-kept",
       "properties": {
         "basis": "suspected",
@@ -60606,6 +60779,14 @@
         "evidence": "Promoted on Anthony's word, 2026-09-14: options (a) skill-only and (b) names on the lens line were taken together; (c) the seat carrying the reader and (d) asking every session were not."
       },
       "to_id": "req:the-agent-says-which-recorded-reader-it-assumes-and-the-lens-names-them"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-what-belongs-in-the-graph-and-what-belongs-in-an-agents-memory-and-why-the-rule-keeps-losing",
+      "properties": {
+        "evidence": "Promoted 2026-09-19 on his word: options (a) and (b); (c) and (e) dropped, (d) kept unbuilt and named in the requirement."
+      },
+      "to_id": "req:a-lesson-lands-in-the-cheapest-correct-place-and-the-rule-saying-so-arrives-at-the-step"
     },
     {
       "edge_type": "EVOLVES_INTO",
@@ -72045,6 +72226,24 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "rule:a-rule-the-project-follows-lives-in-the-graph-not-in-an-agents-memory",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:rule:a-rule-the-project-follows-lives-in-the-graph-not-in-an-agents-memory"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "rule:a-rule-the-project-follows-lives-in-the-graph-not-in-an-agents-memory",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:rule:a-rule-the-project-follows-lives-in-the-graph-not-in-an-agents-memory:r2"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "rule:a-rule-the-project-follows-lives-in-the-graph-not-in-an-agents-memory",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:rule:a-rule-the-project-follows-lives-in-the-graph-not-in-an-agents-memory:r3"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "rule:bl-135",
       "properties": {},
       "to_id": "snap:epoch:reflow2-states-its-own-rules:rule:bl-135"
@@ -72156,6 +72355,12 @@
       "from_id": "cap:a-cut-ends-with-the-served-binary-matching-the-tag",
       "properties": {},
       "to_id": "fact:field-report-bhome-2026-09-18-a-dependency-installed-under-a-live-mcp-server-does-not-exist-until-it-restarts"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:a-declared-dependency-is-watched-not-imported",
+      "properties": {},
+      "to_id": "fact:the-upstream-moved-nag-withholds-the-path-it-is-already-carrying"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -72309,6 +72514,12 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:kit",
+      "properties": {},
+      "to_id": "fact:the-kit-a-consumer-installs-from-is-a-symlink-to-the-maintainers-live-checkout"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "cap:latent-surface",
       "properties": {},
       "to_id": "fact:field-report-genesis-on-grok-build-cannot-finish-because-next-step-names-mcp-and-the-latent-server-is-never-replaced"
@@ -72351,6 +72562,12 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:one-status-contract-across-sibling-constructors-and-a-node-is-named-by-the-key-the-last-tool-used",
+      "properties": {},
+      "to_id": "fact:three-of-flo2s-2026-09-19-entries-were-answered-by-v0650-before-the-report-was-read"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "cap:optimize-skill",
       "properties": {},
       "to_id": "fact:the-optimize-skill-hands-cause-finding-to-nothing-and-a-session-fell-through-it"
@@ -72384,6 +72601,12 @@
       "from_id": "cap:release-publishes-a-container",
       "properties": {},
       "to_id": "fact:the-cut-verified-the-assets-and-never-the-image-2026-09-14"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:replace-text-moves-one-unique-sentence-or-appends-under-the-revision-guard",
+      "properties": {},
+      "to_id": "fact:a-revising-write-that-shrinks-a-field-reports-nothing-and-two-load-bearing-paragraphs-were-lost"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -73413,6 +73636,12 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it",
+      "properties": {},
+      "to_id": "fact:the-direction-flag-on-a-relation-exists-and-no-skill-names-it-so-two-edges-landed-reversed"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "ifc:graph-export",
       "properties": {},
       "to_id": "fact:flo2-watches-the-reflow2-export-and-inherits-its-stale-facts-2026-09-13"
@@ -73670,6 +73899,18 @@
       "from_id": "sys:store",
       "properties": {},
       "to_id": "fact:bl-218"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "ver:edges-need-both-ends",
+      "properties": {},
+      "to_id": "fact:a-typed-edge-helper-given-a-wrong-typed-node-reports-it-absent-and-blames-a-race-that-did-not-happen"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "ver:edges-need-both-ends",
+      "properties": {},
+      "to_id": "fact:flo2-2026-09-19-names-what-worked-and-it-is-the-refusals-that-teach"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -255486,6 +255727,17 @@
       }
     },
     {
+      "node_id": "chg:the-memory-boundary-is-settled-into-three-places-and-the-rule-is-delivered-at-the-step",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "documentation",
+        "detected_at": "2026-09-19",
+        "name": "The memory boundary is settled into three places, and the rule that says so is delivered at the step",
+        "rationale": "Anthony 2026-09-19: 'Promote your recommended fix.' Options (a) and (b) of the brainstorm; (c) dropped because reflow2 cannot see an agent's memory directory and should not learn to; (d) kept as the unbuilt local check; (e) dropped as the status quo that produced the problem.",
+        "summary": "The rule's operative sentence now names ENCODE / GRAPH / MEMORY and sits inside the 600 characters a served lesson carries; the rule gained `steps` (capture-session, root-cause, triage-feedback, record_finding, add_design_rule); the dated ruling, its measured basis, its stated limit and one withdrawn counter-argument were appended with replace_text rather than a full-field rewrite."
+      }
+    },
+    {
       "node_id": "chg:the-moment-a-cause-is-written-becomes-a-tool-call-and-the-tool-demands-the-skill",
       "node_type": "ChangeEvent",
       "properties": {
@@ -261358,6 +261610,16 @@
       }
     },
     {
+      "node_id": "dec:idea-should-a-drawn-relation-be-echoed-back-as-a-sentence",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Recorded as brainstorming on 2026-09-19 from what remains of flo2's F16 after the reporter corrected it themselves, not as a proposal.\n\nThe direction flag exists, so the workaround half of F16 is void. This half is not: `incoming` lets you draw the edge you meant and does nothing to confirm you got it right. The reporter landed two BLOCKS edges asserting the reverse of what their own evidence prose said and caught both only by re-reading their own call.\n\nTHE ASK: echo the drawn edge as a sentence. 'drawn: req:X BLOCKS cmp:Y' reads wrong immediately, where the current shape — \"drawn\": [\"BLOCKS -> cmp:artifact-store\"] — does not, because it omits the subject and leaves the reader to supply it from memory.\n\nSCOPE, and it is the reporter's: the relations that go wrong are the ASYMMETRIC ones (BLOCKS, CAUSES, DEPENDS_ON, EVOLVES_INTO, OBSOLETES). A symmetric relation cannot be drawn backwards, so echoing every edge would add noise to the cases that cannot fail.\n\n⚠️ COUNTER: the generic create_edge has no such problem, because from_id and to_id are explicit at the call site — which is the second time in one report that the generic tool is safer than the typed helper it is a fallback for. That suggests the question may really be about what typed helpers owe their callers, not about an echo string.",
+        "kind": "exploratory",
+        "name": "OPEN — should a drawn relation be echoed back as a readable sentence, so a reversed edge reads wrong immediately?",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-should-a-finding-be-required-to-bound-its-own-claim",
       "node_type": "Decision",
       "properties": {
@@ -261422,6 +261684,16 @@
       }
     },
     {
+      "node_id": "dec:idea-should-a-revising-write-say-what-it-removed",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Recorded as brainstorming on 2026-09-19 from flo2's F4 SHARPENED, not as a proposal.\n\nTHE OPTIONS, the reporter's own, cheapest first.\n(a) A DELTA IN THE REPLY. The prior value is already returned; comparing lengths is trivial. 'replaced `statement`: 4,102 → 3,741 chars (−361)' would have caught both measured losses instantly. Cheapest, adds no parameter, changes no contract, and is a report rather than a judgement.\n(b) REFUSE A SHRINK WITHOUT A FLAG — `allow_shrink: true`, the way export_graph asks for `overwrite`. Strongest, and the one that can be wrong: a deliberate deletion is a legitimate edit and would now cost a retry every time. A threshold (more than N characters, or more than X%) softens it and introduces a number nobody can justify.\n(c) DO NEITHER, on the grounds that `replace_text` (v0.65.0) removes the pressure that caused the rewrites. COUNTER, and it is the reporter's: the pressure is reduced, not the operation; a rewrite somebody performs anyway is still unguarded, and the API cannot know which edits were deliberate.\n\n⚠️ WHAT MAKES THIS ONE DIFFERENT FROM THE REST OF THAT FILE, in their words: 'Every other entry costs a retry or a confusing message. This one degrades the record permanently unless a human re-reads a four-thousand-character field character by character, which nobody does twice.'\n\n⭐ AND A MITIGATION ALREADY IN USE, worth knowing while this is open: the exposure is per-FIELD, not per-node. A typed constructor merges, so passing only the field being changed leaves every other field untouched. The reporter halved their own blast radius this way, and `revise-design` documents the merge behaviour — it simply was not being used.",
+        "kind": "exploratory",
+        "name": "OPEN — should a revising write report what it REMOVED (a length delta, or a refusal to shrink without a flag), given that two of thirteen rewrites in one session silently dropped a load-bearing paragraph?",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-should-an-edge-write-report-and-preserve-what-it-replaced-the-way-a-node-write-does",
       "node_type": "Decision",
       "properties": {
@@ -261482,6 +261754,16 @@
         "name": "OPEN — should edge `evidence` and `note` be governed like node prose: a staleness check, a `written_at` stamp, or a warning inside propagate_change?",
         "rationale": "bhome's ideas, relayed in its own order of cheapness. The heuristic caution is this project's same-day measurement, not the reporter's.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:idea-should-every-finding-say-who-it-is-for-and-should-ids-be-de-slugged-where-they-surface",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Recorded as brainstorming on 2026-09-19 from what survives of flo2's F14, not as a proposal. Two of its four rows are void — skills DO carry `audience` and `summary`, which the reporter corrected themselves — and these two stand.\n\nTHE MEASUREMENT THAT MADE IT CONCRETE: loop_status, detect_gaps and detect_defects against a live 12-node greenhouse design. The output splits almost perfectly into two piles. Findings about the GREENHOUSE ('the UV clarifier is not connected to anything') read as plain English and are valuable to the person who owns it. Findings about the RECORD ('2 of 2 open ideas connect to nothing … use review_relations') are reflow2 talking to itself. Nothing in the returned shape distinguishes them, so every consumer re-derives the split by heuristic, each slightly differently, and none can be corrected upstream.\n\n⚠️ THE HONEST COUNTER, which the reporter supplies: on that one sample `gap_source` and `category` track the split cleanly. So the data may already be there and the ask may be to STATE the rule rather than add a field. Against that: 'a consumer keying off those is guessing at a rule reflow2 could simply state.'\n\nTHE SECOND ROW, smaller and separable: node ids are slugs everywhere they surface, and findings quote the id rather than the `name`. 'cmp:sump-pump-in-basement-return-line is one punctuation pass away from \"the sump pump in the basement return line\"', so every consumer writes the same de-slugging transform. The design already has a rule that a consumer-facing fact about the served surface is served and never copied, which is the same argument arriving from a different direction.\n\nOPTIONS: (a) state the existing rule in the docs and change no code; (b) an explicit marker on each finding; (c) have findings carry the subject's `name` beside its id and leave the audience question alone; (d) both (a) and (c).",
+        "kind": "exploratory",
+        "name": "OPEN — should a finding state WHO IT IS FOR (the thing being designed, or the record of it), and should the surfaces that quote a node's id quote its name instead?",
+        "status": "proposed"
       }
     },
     {
@@ -261587,6 +261869,16 @@
         "name": "Define reflow2's black boxes and the contracts between them — DEFERRED behind bug work, on Anthony's word",
         "rationale": "Anthony's ruling, 2026-08-16, given at the close of the systems-engineering thread he opened the same day. The measurements are mine; the choice, the priority ordering, and the reason for accepting the delay are his. Recorded as ACCEPTED with the work deferred rather than left `proposed`, because a deferral IS a decision — leaving it open would misreport an answered question as an unanswered one, and `arrival_delta` would keep asking. The sibling `dec:idea-does-reflow2-enforce-an-se-process-or-only-supply-the-vocabulary` stays `proposed`: he stated a BELIEF about it, not a ruling, and the distinction is his to close.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:idea-should-settling-a-decision-record-which-option-won",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Recorded as brainstorming on 2026-09-19 from flo2's F12, not as a proposal.\n\nTHE OBSERVATION. `set_decision_status` takes the id, the status, the approver and the date, and nothing else. It moved two decisions to `accepted` correctly and left both NAMED 'OPEN — is … the one thing flo2 is missing?' with bodies ending 'Options, none chosen.' Their sentence is the argument: 'An accepted Decision that still reads as an open question is worse than an unsettled one, because a later reader trusts the prose over the status field.'\n\nWHY THE EXISTING ROUTE DOES NOT APPLY. `collapse_decision` is the tool for naming a winner and it needs REGISTERED alternatives; these options were prose paragraphs inside the decision text, which is what the brainstorm skill asks for. So the only route left is re-sending the whole node through add_decision with the name and body rewritten — a four-kilobyte upsert to change a status and a heading, and the exact operation measured to lose content elsewhere in the same report.\n\nTHE OPTIONS.\n(a) A free-text `chose` or `outcome` on set_decision_status: the settling act says what it settled, beside the status it sets, without touching the deliberation. Smallest, and it adds a field to a setter rather than a concept to the model.\n(b) Lean on `replace_text` (v0.65.0) instead: settle, then replace the 'OPEN —' heading in one call. Costs nothing to build and is available today; COUNTER — it is two acts where the user performed one, and nothing ties the new heading to the settlement.\n(c) Make collapse_decision work over prose options by registering them at settle time. Largest, and it argues the options should have been alternatives all along.\n\n⚠️ THREE ENTRIES IN THAT FILE PUSH TOWARD THE SAME DANGEROUS OPERATION — this one, the append request, and the absence of an epoch-free snapshot — and it is the one operation with no guard on it.",
+        "kind": "exploratory",
+        "name": "OPEN — should settling a Decision be able to say WHICH option won, without rewriting the deliberation that produced it?",
+        "status": "proposed"
       }
     },
     {
@@ -262122,6 +262414,17 @@
         "name": "OPEN — should `verifies` take a LIST of targets, as `set_artifact_checksums` takes a list of baselines, so a check covering a capability and two artifacts is one call rather than three?",
         "no_relation_note": "Searched for bulk verifies and target lists; nearest were the one-call constructor ruling (dec:idea-should-a-constructor-accept-the-owners-word-in-one-call, which shipped the create-time list and is named in the text) and cap:bulk-forms; neither is the same question (this is the standalone edge tool after creation), so no edge was drawn.",
         "rationale": "COUNTER-ARGUMENTS beside each. (a) is small and consistent with the bulk-forms precedent, but a second way to say the same thing on a surface whose naming inconsistency was the largest friction class — the one-call constructor may already be the right answer, and dec:idea-one-way-to-name-which-node-across-the-tool-surface argues for fewer shapes, not more. (b) leaves the add-targets-later case at one call per target, which is what the reporter met. (c) needs measuring: `create_edges` exists and takes typed endpoints; if it draws VERIFIES it is the answer and `find_tools` should rank it for this ask. A RANKING IS A FINDING: measure (c) first; if it covers the case, the fix is one sentence in the verifies description; if not, (a). Anthony's call.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-what-belongs-in-the-graph-and-what-belongs-in-an-agents-memory-and-why-the-rule-keeps-losing",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "OPEN — recorded as brainstorming on 2026-09-19, not as a proposal. Anthony: \"Why are the lessons learned in memory vs stored in the graph? Probably need to settle this once and for all which type of information goes into the graph and which goes into a model's internal memory. I feel like I'm always battling the agent's desire (probably what it was trained to do) to use memory documents versus using the design graph, which has governance/management rules for precisely this. The big win for the graph is that I can push the graph to a git repo and my brother can git pull on his end and have all the design rules transferred to him. I think memory files are primarily used locally on a machine.\"\n\nTHE RULE ALREADY EXISTS AND HE ALREADY WROTE IT. rule:a-rule-the-project-follows-lives-in-the-graph-not-in-an-agents-memory, his words, 2026-09-04, with his three reasons: portability, the graph can act on a rule where a file cannot, and it is what reflow2 is for. It says a memory file may hold a POINTER and never the content. So the open question is NOT what the policy is. It is why the policy keeps losing, and whether the boundary it draws is the right one.\n\n⭐ THE MEASUREMENT THAT MAKES THIS ANSWERABLE, taken 2026-09-19. Of 32 DesignRules, 10 carry `steps` and are therefore DELIVERED at the moment they bear on (req:a-lesson-is-served-at-the-step-it-concerns, built in 0.64.0: a rule naming a skill or tool is appended when that skill is fetched or that tool is described). This rule carries NO steps and is enforced: false (his own ruling, dec:the-four-2026-09-rules-are-advisory-because-no-detector-can-yet-see-a-violation, 2026-09-07). Its SIBLING from the same ruling — rule:field-feedback-issues-are-root-caused-and-ideas-are-brainstormed — was given a step (the triage-feedback skill) after being broken a fourth time, and stopped being broken. Two rules, same author, same day, same advisory status; the one with a delivery point holds and the one without does not. That is an A/B inside his own ruleset, and it says the failure is delivery, not discipline.\n\nTHE EVIDENCE FROM THIS SESSION, which is the occasion for the question: fifteen numbered traps were written into a machine-local memory file (gates order, the pgrep regex, the memory ceiling, the rank ratchet's length sensitivity, the two artifacts a cut drifts) while the graph already holds traps of exactly that kind — fact:format-before-the-export-or-the-export-is-written-twice and rule:never-a-bare-cargo-clean-on-the-dev-box are both in the graph, and both are MACHINE-SHAPED lessons. So the graph was already the established home for this class and the memory file was written anyway.\n\nTHE OPTIONS.\n\n(a) GIVE THE RULE A DELIVERY POINT, and change nothing else. Add `steps` to it naming where a lesson is actually recorded — record_finding, add_design_rule, and the capture-session, root-cause and triage-feedback skills — so it arrives at the moment the agent is writing one down. Cheapest by far; uses a mechanism that already exists and already fixed the sibling rule. What it does not do: reach the moment an agent appends to a memory file, because that is a harness action reflow2 does not see.\n\n(b) SHARPEN THE BOUNDARY INTO THREE PLACES, NOT TWO, because graph-versus-memory is a false binary and the best home for most of this session's traps was neither. ① ENCODE IT — a trap that can be a gate step, a test or a CI job should be automated and written down nowhere; proved twice today, when `reflow2_check` was moved from a hand habit into the gate script and when the missing-fields refusal replaced a rule about reading refusals carefully. ② THE GRAPH — what a person or an agent must READ and judge: conventions, rulings, causes, the shape of a trap that cannot be automated. Travels with the repository, can carry `steps`, can owe a detector. ③ MEMORY — only what is true of THIS MACHINE ALONE and of nobody else's: absolute paths, this box's RAM ceiling, this box's gh build, credentials. Note the boundary is contested even there, since the cargo-clean rule is a dev-box fact that lives in the graph and helps anyone who builds.\n\n(c) A DETECTOR, so the rule stops being advisory. The honest difficulty is that reflow2 cannot see an agent's memory directory — it is outside every tree reflow2 reads, and pointing it there would be the file-reading boundary the project just refused to cross. What IS visible: a session that took many reads and recorded nothing (the reads-without-writes nudge, already built). A detector for THIS rule would have to run where the memory lives, which makes it a local script, not a reflow2 capability — and therefore itself unportable, which is the joke.\n\n(d) MAKE MEMORY A PURE INDEX BY CONTRACT. Every memory file must name the graph node it points at; a memory file holding content with no node id is the violation. Checkable by a small local script, and it makes the existing rule's \"a pointer, not the content\" clause testable rather than aspirational.\n\n(e) DO NOTHING; let traps accumulate locally and sweep them into the graph at a boundary (capture-session). This is the status quo and it is what produced fifteen entries in one file in one day.\n\nTHE COUNTER-ARGUMENTS, kept because they are the reason the cheap path keeps winning.\n\n⚠️ MEMORY HAS ONE REAL ADVANTAGE AND IT IS NOT A HABIT: a memory index is loaded into the session's context automatically at session start, and a graph rule is not — it requires a call somebody has to decide to make. That asymmetry is why memory wins in the moment, and it is exactly what `steps` on a rule neutralises, but only for rules attached to a step someone actually takes.\n\n⚠️ THE COST AT THE MOMENT OF LEARNING IS ASYMMETRIC, and this is a design fact rather than a discipline failure. Appending a paragraph to a memory file is one cheap edit. Recording the same lesson in the graph is a constructor call that may be refused by the near-match guard, plus `distinct_from`, plus `related_to`, plus edges, plus an export commit that must be last in its pull request. Under time pressure the cheap path wins. If the boundary is to hold, the graph path for a one-line lesson has to get cheaper — which is the same complaint flo2 made about amending prose, arriving from a different direction.\n\n⚠️ AND THE HONEST ONE: the agent wrote to memory this session while the rule sat in the graph unread. Whether that is training pull, as he suspects, or simply the absence of a delivery point, the measurement above cannot separate — both predict the same behaviour. What it can say is that the sibling rule with a delivery point held.\n\nNOTHING IS PROMOTED HERE. His word decides which of (a)–(e) becomes intent.",
+        "kind": "exploratory",
+        "name": "OPEN — what belongs in the design graph and what belongs in an agent's memory, and why the rule that already says so keeps losing",
+        "rationale": "Captured under the brainstorm skill on Anthony's /brainstorm, 2026-09-19, after a session that wrote fifteen traps into a machine-local memory file while the graph held the rule forbidding exactly that. Recorded as one question rather than two because he asked for the boundary to be settled once, and the delivery mechanism is an option within it rather than a separate subject. Kept separate from dec:idea-does-the-agent-keep-a-notepad-in-the-graph-for-the-next-agent, which asks whether an agent would READ notes left for it; this asks where a lesson BELONGS and why the existing rule does not bind.",
         "status": "proposed"
       }
     },
@@ -268425,7 +268728,14 @@
         "category": "convention",
         "enforced": false,
         "name": "A rule the project follows lives in the graph, not in an agent's memory file",
-        "statement": "Anthony, 2026-09-04, when offered a habit for the agent's memory: 'I prefer to add rules to the graph. If for instance I change development to another machine, I don't think memories are transferable. This is one of the reasons for reflow2.'\n\nTHE RULE: when a session learns something the PROJECT should keep — a working habit, a convention, a trap, a way of doing a step — it is recorded in the design graph, as a DesignRule, Decision or TemporalFact hung off the node it concerns. An agent's memory file may hold a POINTER to that node; it does not hold the content.\n\nWHY, in three parts, all his:\n\n① PORTABILITY. A memory file is machine-local and harness-local. The graph is a committed file that travels with the repository, so it resolves on any machine, for any agent, in any harness — `req:content-reaches-every-seat` states the same property for blob pointers and this extends it to governance. A rule only one seat can see is not a project rule.\n\n② THE GRAPH IS THE PLACE THAT CAN ACT ON IT. A DesignRule can carry `enforced`, owe a detector, raise `unstated_rule_enforcement`, and be VIOLATED by a computation. A memory file can do none of those; it is prose an agent may or may not read. `rule:success-is-read-from-the-authoritative-object` is the case in point — it is enforced, it is in the graph, and it was still broken five times on 2026-09-04 by an agent whose memory held a paraphrase of it. The paraphrase reached nobody; the rule at least owes a check.\n\n③ IT IS WHAT REFLOW2 IS FOR. His words: 'this is one of the reasons for reflow2'. A design brain that keeps its own operating rules somewhere it cannot read is the storyflow failure `dec:what-lives-where` describes — prose you navigate rather than a graph you query — applied to the tool's own conduct.\n\nWHAT THE MEMORY FILE IS STILL FOR: who the user is, how they like to be spoken to, where things are on THIS machine, and pointers into the graph. Those are facts about a seat, not rules of a project, and a seat is exactly what a memory file is scoped to.\n\nWHAT THIS DOES NOT SETTLE: whether breaking it should stop the build. Nothing enforces where a session writes a lesson, and no detector could read a memory file it cannot see. `enforced` is deliberately left unstated here for the owner to rule on, per `dec:does-enforced-default-to-gate-blocking`."
+        "statement": "THE RULE, settled 2026-09-19 into THREE PLACES, cheapest first: ① ENCODE IT — a lesson that can become a gate step, a test or a CI job is automated and written down nowhere. ② THE GRAPH — whatever a person or an agent must read and judge, and anything true on another machine, hung off the node it concerns. ③ MEMORY — only what is true of THIS BOX alone. Memory holds a POINTER to a node, never the content.\n\nAnthony, 2026-09-04, when offered a habit for the agent's memory: 'I prefer to add rules to the graph. If for instance I change development to another machine, I don't think memories are transferable. This is one of the reasons for reflow2.'\n\nWHY, in three parts, all his:\n\n① PORTABILITY. A memory file is machine-local and harness-local. The graph is a committed file that travels with the repository, so it resolves on any machine, for any agent, in any harness — `req:content-reaches-every-seat` states the same property for blob pointers and this extends it to governance. A rule only one seat can see is not a project rule.\n\n② THE GRAPH IS THE PLACE THAT CAN ACT ON IT. A DesignRule can carry `enforced`, owe a detector, raise `unstated_rule_enforcement`, and be VIOLATED by a computation. A memory file can do none of those; it is prose an agent may or may not read. `rule:success-is-read-from-the-authoritative-object` is the case in point — it is enforced, it is in the graph, and it was still broken five times on 2026-09-04 by an agent whose memory held a paraphrase of it. The paraphrase reached nobody; the rule at least owes a check.\n\n③ IT IS WHAT REFLOW2 IS FOR. His words: 'this is one of the reasons for reflow2'. A design brain that keeps its own operating rules somewhere it cannot read is the storyflow failure `dec:what-lives-where` describes — prose you navigate rather than a graph you query — applied to the tool's own conduct.\n\nWHAT THE MEMORY FILE IS STILL FOR: who the user is, how they like to be spoken to, where things are on THIS machine, and pointers into the graph. Those are facts about a seat, not rules of a project, and a seat is exactly what a memory file is scoped to.\n\nWHAT THIS DOES NOT SETTLE: whether breaking it should stop the build. Nothing enforces where a session writes a lesson, and no detector could read a memory file it cannot see. `enforced` is deliberately left unstated here for the owner to rule on, per `dec:does-enforced-default-to-gate-blocking`.\n\nSETTLED 2026-09-19, on the brainstorm Anthony called after a session wrote fifteen traps into a machine-local file while this rule sat in the graph unread (dec:idea-what-belongs-in-the-graph-and-what-belongs-in-an-agents-memory-and-why-the-rule-keeps-losing). His word: \"Promote your recommended fix.\"\n\nWHAT MOVED, and why each.\n\n① THE BOUNDARY IS THREE PLACES, NOT TWO. Graph-versus-memory was a false binary: the best home for most of the traps in question was neither. Two of the fifteen were proved encodable the same day — the design-coherence check moved out of a hand habit into the gate script, and a rule about reading refusals carefully was replaced by a refusal that lists the missing fields itself. A lesson that can be automated is not written down at all; what remains is split by WHO MUST READ IT, which is the portability test this rule already made.\n\n② THE RULE NOW CARRIES `steps`, so it arrives at the moments a lesson is legitimately recorded rather than waiting to be looked up. MEASURED BASIS: of 32 DesignRules on 2026-09-19, 10 carried steps. This one carried none and was left advisory (dec:the-four-2026-09-rules-are-advisory-because-no-detector-can-yet-see-a-violation, 2026-09-07); its sibling from that same ruling — rule:field-feedback-issues-are-root-caused-and-ideas-are-brainstormed — was given a step after being broken a fourth time and has held since. Same author, same day, same advisory status; the one with a delivery point holds.\n\n⚠️ THE LIMIT, STATED PLAINLY BECAUSE IT CANNOT BE ENGINEERED AWAY. Writing to an agent's memory file is not an act reflow2 can see, so no rule delivery reaches the moment of violation. Delivery reaches the moments a lesson is CORRECTLY recorded and makes the graph the default there. The remaining guard is option (d), kept and not yet built: every memory file names the graph node it points at, and a file holding content with no node id is the violation — checkable by a small local script, since the memory directory is outside every tree reflow2 reads.\n\n⭐ AND ONE ARGUMENT WITHDRAWN. The session's own counter-argument — that the graph path costs a constructor plus relations plus an export commit, where a file costs one edit — was overstated and is retracted here. Recording an observation is ONE call that needs nobody's permission, and the export happens anyway at the end of every increment. The cost asymmetry that made this look unwinnable is close to zero.",
+        "steps": [
+          "capture-session",
+          "root-cause",
+          "triage-feedback",
+          "record_finding",
+          "add_design_rule"
+        ]
       }
     },
     {
@@ -274765,6 +275075,18 @@
       }
     },
     {
+      "node_id": "req:a-lesson-lands-in-the-cheapest-correct-place-and-the-rule-saying-so-arrives-at-the-step",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "A lesson lands in the cheapest correct place of three, and the rule that says so arrives at the step where a lesson is recorded",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Anthony, 2026-09-19, promoting the recommended fix: a lesson a session learns is ENCODED where it can be automated (a gate step, a test, a CI job), recorded in the GRAPH where a person or an agent must read and judge it or where it is true on another machine, and left in an agent's MEMORY only where it is true of one box alone. The rule stating this carries `steps`, so it is served at the moments a lesson is recorded rather than waiting to be looked up. Basis: of 32 DesignRules, 10 carried steps; this one carried none and kept being broken, while its sibling from the same advisory ruling was given a step and held. The unbuilt remainder, deliberately named rather than assumed: a check that every memory file points at a node and holds no content of its own — which must run locally, because the memory directory is outside every tree reflow2 reads.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "req:a-node-can-say-who-may-change-it",
       "node_type": "Requirement",
       "properties": {
@@ -280422,6 +280744,36 @@
       }
     },
     {
+      "node_id": "snap:epoch:preserved-on-write:rule:a-rule-the-project-follows-lives-in-the-graph-not-in-an-agents-memory",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-what-belongs-in-the-graph-and-what-belongs-in-an-agents-memory-and-why-the-rule-keeps-losing\",\"properties\":{\"evidence\":\"This question is about how to make that rule bind; it is worth nothing if the rule itself does not stand.\",\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"ANTICIPATES\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-does-the-agent-keep-a-notepad-in-the-graph-for-the-next-agent\",\"properties\":{\"evidence\":\"His 2026-09-04 rule already answers this idea's own counter-argument (\\\"Memory.md serves the purpose\\\"): a memory file is machine-local, so the notepad belongs in the graph with memory holding only a pointer.\"}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"approved_at\":\"2026-09-07T13:00:00Z\",\"roles\":[\"approver\"]}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:the-four-2026-09-rules-are-advisory-because-no-detector-can-yet-see-a-violation\",\"properties\":{}}]",
+        "state": "{\"category\":\"convention\",\"enforced\":false,\"name\":\"A rule the project follows lives in the graph, not in an agent's memory file\",\"statement\":\"Anthony, 2026-09-04, when offered a habit for the agent's memory: 'I prefer to add rules to the graph. If for instance I change development to another machine, I don't think memories are transferable. This is one of the reasons for reflow2.'\\n\\nTHE RULE: when a session learns something the PROJECT should keep — a working habit, a convention, a trap, a way of doing a step — it is recorded in the design graph, as a DesignRule, Decision or TemporalFact hung off the node it concerns. An agent's memory file may hold a POINTER to that node; it does not hold the content.\\n\\nWHY, in three parts, all his:\\n\\n① PORTABILITY. A memory file is machine-local and harness-local. The graph is a committed file that travels with the repository, so it resolves on any machine, for any agent, in any harness — `req:content-reaches-every-seat` states the same property for blob pointers and this extends it to governance. A rule only one seat can see is not a project rule.\\n\\n② THE GRAPH IS THE PLACE THAT CAN ACT ON IT. A DesignRule can carry `enforced`, owe a detector, raise `unstated_rule_enforcement`, and be VIOLATED by a computation. A memory file can do none of those; it is prose an agent may or may not read. `rule:success-is-read-from-the-authoritative-object` is the case in point — it is enforced, it is in the graph, and it was still broken five times on 2026-09-04 by an agent whose memory held a paraphrase of it. The paraphrase reached nobody; the rule at least owes a check.\\n\\n③ IT IS WHAT REFLOW2 IS FOR. His words: 'this is one of the reasons for reflow2'. A design brain that keeps its own operating rules somewhere it cannot read is the storyflow failure `dec:what-lives-where` describes — prose you navigate rather than a graph you query — applied to the tool's own conduct.\\n\\nWHAT THE MEMORY FILE IS STILL FOR: who the user is, how they like to be spoken to, where things are on THIS machine, and pointers into the graph. Those are facts about a seat, not rules of a project, and a seat is exactly what a memory file is scoped to.\\n\\nWHAT THIS DOES NOT SETTLE: whether breaking it should stop the build. Nothing enforces where a session writes a lesson, and no detector could read a memory file it cannot see. `enforced` is deliberately left unstated here for the owner to rule on, per `dec:does-enforced-default-to-gate-blocking`.\"}",
+        "target_id": "rule:a-rule-the-project-follows-lives-in-the-graph-not-in-an-agents-memory",
+        "target_type": "DesignRule"
+      }
+    },
+    {
+      "node_id": "snap:epoch:preserved-on-write:rule:a-rule-the-project-follows-lives-in-the-graph-not-in-an-agents-memory:r2",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-what-belongs-in-the-graph-and-what-belongs-in-an-agents-memory-and-why-the-rule-keeps-losing\",\"properties\":{\"evidence\":\"This question is about how to make that rule bind; it is worth nothing if the rule itself does not stand.\",\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"ANTICIPATES\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-does-the-agent-keep-a-notepad-in-the-graph-for-the-next-agent\",\"properties\":{\"evidence\":\"His 2026-09-04 rule already answers this idea's own counter-argument (\\\"Memory.md serves the purpose\\\"): a memory file is machine-local, so the notepad belongs in the graph with memory holding only a pointer.\"}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"approved_at\":\"2026-09-07T13:00:00Z\",\"roles\":[\"approver\"]}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:the-four-2026-09-rules-are-advisory-because-no-detector-can-yet-see-a-violation\",\"properties\":{}}]",
+        "state": "{\"category\":\"convention\",\"enforced\":false,\"name\":\"A rule the project follows lives in the graph, not in an agent's memory file\",\"statement\":\"Anthony, 2026-09-04, when offered a habit for the agent's memory: 'I prefer to add rules to the graph. If for instance I change development to another machine, I don't think memories are transferable. This is one of the reasons for reflow2.'\\n\\nTHE RULE, settled 2026-09-19 into THREE PLACES, cheapest first: ① ENCODE IT — a lesson that can become a gate step, a test or a CI job is automated and written down nowhere. ② THE GRAPH — whatever a person or an agent must read and judge, and anything true on another machine, hung off the node it concerns. ③ MEMORY — only what is true of THIS BOX alone. Memory holds a POINTER to a node, never the content.\\n\\nWHY, in three parts, all his:\\n\\n① PORTABILITY. A memory file is machine-local and harness-local. The graph is a committed file that travels with the repository, so it resolves on any machine, for any agent, in any harness — `req:content-reaches-every-seat` states the same property for blob pointers and this extends it to governance. A rule only one seat can see is not a project rule.\\n\\n② THE GRAPH IS THE PLACE THAT CAN ACT ON IT. A DesignRule can carry `enforced`, owe a detector, raise `unstated_rule_enforcement`, and be VIOLATED by a computation. A memory file can do none of those; it is prose an agent may or may not read. `rule:success-is-read-from-the-authoritative-object` is the case in point — it is enforced, it is in the graph, and it was still broken five times on 2026-09-04 by an agent whose memory held a paraphrase of it. The paraphrase reached nobody; the rule at least owes a check.\\n\\n③ IT IS WHAT REFLOW2 IS FOR. His words: 'this is one of the reasons for reflow2'. A design brain that keeps its own operating rules somewhere it cannot read is the storyflow failure `dec:what-lives-where` describes — prose you navigate rather than a graph you query — applied to the tool's own conduct.\\n\\nWHAT THE MEMORY FILE IS STILL FOR: who the user is, how they like to be spoken to, where things are on THIS machine, and pointers into the graph. Those are facts about a seat, not rules of a project, and a seat is exactly what a memory file is scoped to.\\n\\nWHAT THIS DOES NOT SETTLE: whether breaking it should stop the build. Nothing enforces where a session writes a lesson, and no detector could read a memory file it cannot see. `enforced` is deliberately left unstated here for the owner to rule on, per `dec:does-enforced-default-to-gate-blocking`.\"}",
+        "target_id": "rule:a-rule-the-project-follows-lives-in-the-graph-not-in-an-agents-memory",
+        "target_type": "DesignRule"
+      }
+    },
+    {
+      "node_id": "snap:epoch:preserved-on-write:rule:a-rule-the-project-follows-lives-in-the-graph-not-in-an-agents-memory:r3",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-what-belongs-in-the-graph-and-what-belongs-in-an-agents-memory-and-why-the-rule-keeps-losing\",\"properties\":{\"evidence\":\"This question is about how to make that rule bind; it is worth nothing if the rule itself does not stand.\",\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"ANTICIPATES\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-does-the-agent-keep-a-notepad-in-the-graph-for-the-next-agent\",\"properties\":{\"evidence\":\"His 2026-09-04 rule already answers this idea's own counter-argument (\\\"Memory.md serves the purpose\\\"): a memory file is machine-local, so the notepad belongs in the graph with memory holding only a pointer.\"}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"approved_at\":\"2026-09-19\",\"roles\":[\"approver\"]}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:the-four-2026-09-rules-are-advisory-because-no-detector-can-yet-see-a-violation\",\"properties\":{}}]",
+        "state": "{\"category\":\"convention\",\"enforced\":false,\"name\":\"A rule the project follows lives in the graph, not in an agent's memory file\",\"statement\":\"Anthony, 2026-09-04, when offered a habit for the agent's memory: 'I prefer to add rules to the graph. If for instance I change development to another machine, I don't think memories are transferable. This is one of the reasons for reflow2.'\\n\\nTHE RULE, settled 2026-09-19 into THREE PLACES, cheapest first: ① ENCODE IT — a lesson that can become a gate step, a test or a CI job is automated and written down nowhere. ② THE GRAPH — whatever a person or an agent must read and judge, and anything true on another machine, hung off the node it concerns. ③ MEMORY — only what is true of THIS BOX alone. Memory holds a POINTER to a node, never the content.\\n\\nWHY, in three parts, all his:\\n\\n① PORTABILITY. A memory file is machine-local and harness-local. The graph is a committed file that travels with the repository, so it resolves on any machine, for any agent, in any harness — `req:content-reaches-every-seat` states the same property for blob pointers and this extends it to governance. A rule only one seat can see is not a project rule.\\n\\n② THE GRAPH IS THE PLACE THAT CAN ACT ON IT. A DesignRule can carry `enforced`, owe a detector, raise `unstated_rule_enforcement`, and be VIOLATED by a computation. A memory file can do none of those; it is prose an agent may or may not read. `rule:success-is-read-from-the-authoritative-object` is the case in point — it is enforced, it is in the graph, and it was still broken five times on 2026-09-04 by an agent whose memory held a paraphrase of it. The paraphrase reached nobody; the rule at least owes a check.\\n\\n③ IT IS WHAT REFLOW2 IS FOR. His words: 'this is one of the reasons for reflow2'. A design brain that keeps its own operating rules somewhere it cannot read is the storyflow failure `dec:what-lives-where` describes — prose you navigate rather than a graph you query — applied to the tool's own conduct.\\n\\nWHAT THE MEMORY FILE IS STILL FOR: who the user is, how they like to be spoken to, where things are on THIS machine, and pointers into the graph. Those are facts about a seat, not rules of a project, and a seat is exactly what a memory file is scoped to.\\n\\nWHAT THIS DOES NOT SETTLE: whether breaking it should stop the build. Nothing enforces where a session writes a lesson, and no detector could read a memory file it cannot see. `enforced` is deliberately left unstated here for the owner to rule on, per `dec:does-enforced-default-to-gate-blocking`.\\n\\nSETTLED 2026-09-19, on the brainstorm Anthony called after a session wrote fifteen traps into a machine-local file while this rule sat in the graph unread (dec:idea-what-belongs-in-the-graph-and-what-belongs-in-an-agents-memory-and-why-the-rule-keeps-losing). His word: \\\"Promote your recommended fix.\\\"\\n\\nWHAT MOVED, and why each.\\n\\n① THE BOUNDARY IS THREE PLACES, NOT TWO. Graph-versus-memory was a false binary: the best home for most of the traps in question was neither. Two of the fifteen were proved encodable the same day — the design-coherence check moved out of a hand habit into the gate script, and a rule about reading refusals carefully was replaced by a refusal that lists the missing fields itself. A lesson that can be automated is not written down at all; what remains is split by WHO MUST READ IT, which is the portability test this rule already made.\\n\\n② THE RULE NOW CARRIES `steps`, so it arrives at the moments a lesson is legitimately recorded rather than waiting to be looked up. MEASURED BASIS: of 32 DesignRules on 2026-09-19, 10 carried steps. This one carried none and was left advisory (dec:the-four-2026-09-rules-are-advisory-because-no-detector-can-yet-see-a-violation, 2026-09-07); its sibling from that same ruling — rule:field-feedback-issues-are-root-caused-and-ideas-are-brainstormed — was given a step after being broken a fourth time and has held since. Same author, same day, same advisory status; the one with a delivery point holds.\\n\\n⚠️ THE LIMIT, STATED PLAINLY BECAUSE IT CANNOT BE ENGINEERED AWAY. Writing to an agent's memory file is not an act reflow2 can see, so no rule delivery reaches the moment of violation. Delivery reaches the moments a lesson is CORRECTLY recorded and makes the graph the default there. The remaining guard is option (d), kept and not yet built: every memory file names the graph node it points at, and a file holding content with no node id is the violation — checkable by a small local script, since the memory directory is outside every tree reflow2 reads.\\n\\n⭐ AND ONE ARGUMENT WITHDRAWN. The session's own counter-argument — that the graph path costs a constructor plus relations plus an export commit, where a file costs one edit — was overstated and is retracted here. Recording an observation is ONE call that needs nobody's permission, and the export happens anyway at the end of every increment. The cost asymmetry that made this look unwinnable is close to zero.\",\"steps\":[\"capture-session\",\"root-cause\",\"triage-feedback\",\"record_finding\",\"add_design_rule\"]}",
+        "target_id": "rule:a-rule-the-project-follows-lives-in-the-graph-not-in-an-agents-memory",
+        "target_type": "DesignRule"
+      }
+    },
+    {
       "node_id": "snap:epoch:preserved-on-write:rule:field-feedback-issues-are-root-caused-and-ideas-are-brainstormed",
       "node_type": "Snapshot",
       "properties": {
@@ -281892,6 +282244,24 @@
       }
     },
     {
+      "node_id": "fact:a-revising-write-that-shrinks-a-field-reports-nothing-and-two-load-bearing-paragraphs-were-lost",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.9,
+        "fact_type": "defect",
+        "name": "A full-field rewrite that drops a paragraph is reported by nothing — measured at two losses in thirteen rewrites in one session",
+        "source": "flo2 reflow2_feedback.md, session of 2026-09-19",
+        "statement": "FLO2 F4 SHARPENED, and the reporter calls it the compounding one: 'Every other entry in this file costs a retry or a confusing message. This one degrades the record permanently.' THEIR MEASUREMENT, one session, 2026-09-19: thirteen full-field rewrites of Decision, Requirement, Component and DesignRule nodes; TWO silently dropped a load-bearing paragraph. One lost a clause bounding when a rule binds; one lost the paragraph explaining that a requirement pulls against another, and had to be restored in a second pass. Both were caught by the author re-reading their own call. NEITHER was caught by anything reflow2 said. The `revision.replaced` reply does return the prior value, which is what makes the loss recoverable, but it arrives AFTER the write and nothing compares old to new. ⭐ AND THE PRESSURE IS CREATED BY THE API, which is why it is not simply carelessness: with no append, adding a dated note to a long node meant resending the whole thing, so the safest possible edit was the one most likely to lose an unrelated paragraph in the middle. `replace_text` (v0.65.0) removes that pressure. It does not guard the rewrite that still happens. THEIR THREE REMEDIES, cheapest first, none built: a length delta in the reply ('replaced statement: 4,102 → 3,741 chars (−361)'); an append mode (now built); refuse a shrink without an explicit flag.",
+        "steps": [
+          "revise-design",
+          "capture-intent"
+        ],
+        "subject_id": "cap:replace-text-moves-one-unique-sentence-or-appends-under-the-revision-guard",
+        "valid_from": "2026-09-19"
+      }
+    },
+    {
       "node_id": "fact:a-ruling-already-silences-orphan-node-but-cannot-be-counted",
       "node_type": "TemporalFact",
       "properties": {
@@ -282006,6 +282376,25 @@
         "subject_id": "cap:propagate",
         "valid_from": "2026-09-11",
         "value": "{\"walks\":108,\"node_visits\":4502,\"distinct_nodes\":589,\"redundancy\":7.6,\"ms_per_visit\":4,\"redundant_seconds\":18.0,\"fixed_per_call_overhead_ms\":5,\"after\":{\"propagate_from_warm_ms\":60,\"design_regions_s\":12.5},\"history\":{\"original_s\":\">300 (never returned)\",\"after_betweenness_memo_s\":29.6,\"after_adjacency_memo_s\":12.5},\"refuted\":{\"memo_clone_cost\":\"a zero-edge seed costs 5 ms, so cloning the memoised maps is negligible\",\"startup_confound\":\"re-timed fully warm at 30.0 s, so the 29.6 s was never hydration\"}}"
+      }
+    },
+    {
+      "node_id": "fact:a-typed-edge-helper-given-a-wrong-typed-node-reports-it-absent-and-blames-a-race-that-did-not-happen",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.95,
+        "fact_type": "defect",
+        "name": "A typed edge helper handed a node of the wrong type reports the node as MISSING, then spends a paragraph on a parallel-batch race that did not happen — while create_edge draws the same edge without complaint",
+        "source": "flo2 reflow2_feedback.md, session of 2026-09-19",
+        "statement": "FLO2 F11, twice in one session (`depends_on` on two Decisions, `operates_in` on a Component), and REPRODUCED on the current binary 0.65.0 on 2026-09-19: `depends_on {from_id: dec:a, to_id: dec:b}` against a scratch design holding both answers `Node not found: Component dec:a`, followed by the parallel-batch paragraph. `create_edge {edge_type: DEPENDS_ON, from_id: dec:a, to_id: dec:b}` on the SAME pair, the same second, succeeds — DEPENDS_ON between two Decisions is a legal edge. So the helper reports as ABSENT a node that exists, names a type the caller never mentioned, and offers a cause (an unordered batch) that was not what happened. The reporter nearly re-created a node that was already there. ⭐ AND THE CONTRAST IS THE USEFUL PART, in their words: falling back to the generic tool produced an excellent refusal — 'Invalid edge: OPERATES_IN cannot connect Component to Environment' plus every edge type that WOULD accept the pair — which taught them the model and stopped them forcing a wrong edge. THE GENERIC TOOL GIVES A BETTER ERROR THAN THE TYPED HELPER IT IS A FALLBACK FOR, which is backwards from what a caller expects, and this is the second entry in that file to say so.",
+        "steps": [
+          "depends_on",
+          "operates_in",
+          "create_edge"
+        ],
+        "subject_id": "ver:edges-need-both-ends",
+        "valid_from": "2026-09-19"
       }
     },
     {
@@ -285620,6 +286009,20 @@
       }
     },
     {
+      "node_id": "fact:flo2-2026-09-19-names-what-worked-and-it-is-the-refusals-that-teach",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.85,
+        "fact_type": "status",
+        "name": "What flo2 said must not regress, 2026-09-19: the refusals that teach the model, and prose_currency",
+        "source": "flo2 reflow2_feedback.md, session of 2026-09-19",
+        "statement": "Recorded as evidence a regression check can read later. ① `create_edge`'s invalid-pair refusal — it names why the pair is illegal, then every edge type that WOULD accept it, each with its hint, distinguishing exact matches from wildcard ones. The reporter: it 'taught me the model' and they dropped an edge they were about to force. ② `set_epoch_status`'s `prose_currency` block — it quoted the description back and pointed out the prose was written under the old status: 'the best safety response I have seen from this surface.' ③ `add_decision` refusing an unapproved `accepted`. ④ The revision-safety note firing on all four revise calls, not just the first: 'consistency matters more than cleverness for a safety net.'",
+        "subject_id": "ver:edges-need-both-ends",
+        "valid_from": "2026-09-19"
+      }
+    },
+    {
       "node_id": "fact:flo2-watches-the-reflow2-export-and-inherits-its-stale-facts-2026-09-13",
       "node_type": "TemporalFact",
       "properties": {
@@ -287499,6 +287902,25 @@
       }
     },
     {
+      "node_id": "fact:the-direction-flag-on-a-relation-exists-and-no-skill-names-it-so-two-edges-landed-reversed",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.9,
+        "fact_type": "defect",
+        "name": "`incoming` exists on every relation link and no served skill mentions it, so a reporter drew two edges backwards and then filed the flag as missing",
+        "source": "flo2 reflow2_feedback.md, session of 2026-09-19",
+        "statement": "FLO2 F16 was filed claiming `review_relations` can only draw edges FROM its own node, and CORRECTED the same day by its own author: the `incoming` flag exists and works. MEASURED 2026-09-19: `incoming` is in review_relations' published schema, and `grep` over all 30 served skills finds the word in NONE of them. The cost was paid twice before the correction — two BLOCKS edges landed asserting the reverse of what their own `evidence` prose said, caught only by the reporter re-reading their own call — and then a third time in work: believing no flag existed, they routed two relations through create_edge by hand and wrote a script to verify direction. ⭐ THE SHAPE, and the reporter names it as the fifth instance in one file: the field existed, the tool served it, and its absence was inferred from a reply and from a skill that did not mention it. 'An API is not a schema — and a skill is not an API reference either.' This is the three-legs rule with the INSTRUCTION leg missing: the brainstorm skill's step 4 tells an agent that direction is part of the claim and that nothing will catch a reversal, and then does not name the remedy the tool already offers.",
+        "steps": [
+          "brainstorm",
+          "link-ideas",
+          "review_relations"
+        ],
+        "subject_id": "fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it",
+        "valid_from": "2026-09-19"
+      }
+    },
+    {
       "node_id": "fact:the-dominant-failure-mode-of-this-work-is-asserting-instead-of-measuring",
       "node_type": "TemporalFact",
       "properties": {
@@ -287845,6 +288267,20 @@
         "subject_id": "proj:reflow2",
         "valid_from": "2026-08-29",
         "value": "{\"found\":\"2026-08-29, by Anthony challenging this session's claim\",\"claim_that_was_false\":\"nothing in the orientation reads measures whether the design is delivering\",\"the_measure_that_exists\":\"graph_report_markdown line 7: Delivered 151 of 193 requirements, computed from the thread\",\"evaluative_report_functions_in_core\":9,\"named_in_served_skills\":{\"detect_gaps\":16,\"loop_status\":12,\"coverage_report\":5,\"graph_report\":3,\"seam_report\":2,\"evidence_report\":1,\"maturity_report\":0,\"readiness_report\":0,\"consumption_report\":0,\"ility_report\":0,\"forecast_readiness\":0},\"also_absent_from\":[\"AGENTS.md\",\"service.rs\"],\"sharpest_instance\":\"where-am-i gathers graph_report_markdown and its 8-step narration script never says to report delivery; the words deliver/coverage/satisfied appear 0 times in that skill\",\"class\":\"built, correct, and not routed - same shape as cap:built-and-consumed-by-nothing, the zero-instance linking layer, and the 93-session finding that an always-injected surface predicts use\",\"not_established\":[\"whether the zero-mention reports are unused in the field or merely unmentioned - naming was measured, invocation was not\",\"whether 'Delivered N of M' is the right headline for a user's project: it is computed from the thread, so it measures the design's own chain rather than the system working\"]}"
+      }
+    },
+    {
+      "node_id": "fact:the-kit-a-consumer-installs-from-is-a-symlink-to-the-maintainers-live-checkout",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.95,
+        "fact_type": "defect",
+        "name": "Every project on the builder's box installs from the maintainer's LIVE WORKING TREE, because the kit path is a symlink to the development checkout",
+        "source": "flo2 reflow2_feedback.md, session of 2026-09-19",
+        "statement": "FLO2 F15 reported `reflow2 init .` refusing to install all 30 skills — \"['audience','summary'] are not read by every harness\" — and concluded that \"the validator and the skill library disagree with each other\". MEASURED 2026-09-19 and the conclusion does not hold for any committed state. ① `readlink -f ~/.local/share/reflow2/kit` resolves to `/home/ajs7/project/reflow2`: the kit path is a SYMLINK to the development checkout, made 2026-08-07, sharing its .git. ② `git log --all -S` for those top-level keys on a skill file finds them in NO commit: `summary`/`audience` have lived inside `metadata:` since they were introduced (bc157eb, PR #541), because the installer's harness-portability check refused the top-level form during that very PR and the fields were moved to satisfy it. ③ Running the installer today into a throwaway repo exits 0 and writes the full set. SO WHAT FLO2 MET WAS AN UNCOMMITTED WORKING TREE, mid-edit, half-way through the change that fixed it — not a released or committed state, and not a disagreement between the validator and the library. The validator was right and its input was a half-finished edit. ⭐ THE REAL FINDING IS LARGER THAN THE ONE REPORTED: a consumer project on this machine installs from whatever the maintainer's editor holds at that second. Every `init` in flo2, bhome or SeattleArch has been reading the dev tree, so a consumer's install can be broken, or silently ahead of every release, by an edit in progress. The workaround flo2 documented — skip `init`, since the machine-wide registration is enough — sidesteps it without addressing it.",
+        "subject_id": "cap:kit",
+        "valid_from": "2026-09-19"
       }
     },
     {
@@ -288787,6 +289223,24 @@
       }
     },
     {
+      "node_id": "fact:the-upstream-moved-nag-withholds-the-path-it-is-already-carrying",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.9,
+        "fact_type": "defect",
+        "name": "The one loop_status line that says to go and read something is the only one that does not say where — and it carries the path in its own struct",
+        "source": "flo2 reflow2_feedback.md, session of 2026-09-19",
+        "statement": "FLO2 F17: of seven items loop_status put in `next` on 2026-09-19, six name their instrument ('read them (open_questions)', 'run detect_defects', 'export before you finish'). The seventh says \"Read what changed before assuming that pin still describes it\" and names no tool, no file and no path. MEASURED 2026-09-19 at crates/reflow2-core/src/depends.rs:764: the finding this sentence belongs to is an `UpstreamFinding` whose OWN STRUCT already carries `design_export: Some(path)`, and the `detail` string it formats beside that field does not use it. `upstream_status` returns the same path plus the hash and the date last seen. So the answer is one field away from the sentence, in the same value, and the sentence withholds it — in the one place a reader is already looking. ⚠️ Filed by the reporter as friction rather than as a defect: it did not cause the failure it was found in, and find_tools on 'mirror' reaches the right tools anyway. The claim is narrow and it is correct.",
+        "steps": [
+          "loop_status",
+          "upstream_status"
+        ],
+        "subject_id": "cap:a-declared-dependency-is-watched-not-imported",
+        "valid_from": "2026-09-19"
+      }
+    },
+    {
       "node_id": "fact:the-upstream-watch-is-findable-only-in-reflow2s-own-words",
       "node_type": "TemporalFact",
       "properties": {
@@ -288882,6 +289336,20 @@
         "subject_id": "proj:reflow2",
         "valid_from": "2026-08-17",
         "value": "{\"repaired\":\"2026-08-19\",\"change_event\":\"chg:foundation-consumes-redrawn-from-imports-2026-08-19\",\"change_type\":\"resync\",\"subject\":\"record\",\"retracted\":[[\"cmp:propagate\",\"ifc:req-dyno-graph-api\"],[\"cmp:search\",\"ifc:req-dyno-vector-api\"],[\"cmp:heal\",\"ifc:req-dyno-resolution-api\"]],\"drawn\":[[\"cmp:structure\",\"ifc:req-dyno-graph-api\"],[\"cmp:allocate\",\"ifc:req-dyno-graph-api\"],[\"cmp:flow\",\"ifc:req-dyno-graph-api\"],[\"cmp:dimensions\",\"ifc:req-dyno-vector-api\"],[\"cmp:ingest\",\"ifc:req-dyno-resolution-api\"]],\"weight_basis\":\"evidence\",\"imports_reverified_at_head\":true,\"reached_the_cause\":false,\"cause_still_open\":\"nothing checks a CONSUMES edge against what the build imports; reconcile_artifacts does this for files and has no edge equivalent\",\"incomplete\":\"seam.rs imports dynograph_resolution but no cmp:seam exists; art:seam REALIZES no Component. Edge left undrawn rather than inventing a node.\"}"
+      }
+    },
+    {
+      "node_id": "fact:three-of-flo2s-2026-09-19-entries-were-answered-by-v0650-before-the-report-was-read",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.95,
+        "fact_type": "status",
+        "name": "Three of flo2's entries were already answered by v0.65.0, cut the same day the report was written",
+        "source": "flo2 reflow2_feedback.md, session of 2026-09-19",
+        "statement": "Checked entry by entry against the v0.65.0 surface on 2026-09-19. ① F13 ('add_epoch lands at arrived, so creating a FUTURE release cut asserts it already shipped') — ANSWERED: add_epoch now takes `status`, its description names what omitting it lands, and `planned` is sayable on the same call. ② The F8/F9/F14 correction's real ask ('list_skills DROPS them — the data exists one layer down and never reaches a consumer') — ANSWERED: list_skills and get_skill now serve `summary` and `audience`, and `find_skills` finds a skill from a sentence in a person's words. flo2's palette can show real human copy without a hand-maintained allowlist. ③ F4's original ask, an append or section-replace on a long prose field — ANSWERED by `replace_text`, which moves one sentence or appends a dated note without re-sending the field. WHAT IS NOT ANSWERED and stands as its own finding: F4 SHARPENED's measurement that a full-field rewrite SILENTLY DROPS content, and its cheapest remedy, a length delta in the reply. replace_text removes the pressure to rewrite; it does not guard a rewrite somebody performs anyway.",
+        "subject_id": "cap:one-status-contract-across-sibling-constructors-and-a-node-is-named-by-the-key-the-last-tool-used",
+        "valid_from": "2026-09-19"
       }
     },
     {
@@ -293080,7 +293548,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:bde986e1c32c39dac6ae532838e54f35a269b7849093d2cb0bd07baa765edf09",
+  "prev_content_hash": "sha256:a010b9d93e85731713859cc4907815ffbbceffbe507dfc3667d9e5301cf26abb",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -293678,8 +294146,8 @@
     "schema_version": 1
   },
   "taken_at": {
-    "branch": "cut-v0.65.0",
-    "commit": "11e8b805f551ecc3a92a64f319d10db736a61558",
+    "branch": "the-memory-boundary-is-settled-and-flo2s-report-is-triaged",
+    "commit": "f997e743955f2bcba94cdddd293dbccd438ba321",
     "dirty": true
   }
 }
