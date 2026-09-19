@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:6e2b30bd109fe9f605d36149e6b082184b7647e527ef4eef5116beda9ad49817",
+  "content_hash": "sha256:f2a76ee772f3476e13b994838ea76ec5b9a347de040affbc3b0c11fa9f68acc4",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -1034,6 +1034,14 @@
         "evidence": "Field evidence for exactly this open question: three of eight gaps a real project reported as missing were already built (PERFORMED_IN with its performed_in tool, SUPERSEDES between Verifications, and pinned/swept via set_evidence_scope). The vocabulary existed and the project that needed it never acquired it."
       },
       "to_id": "dec:idea-how-does-a-users-project-acquire-vocabulary-it-never-uses"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-build-can-call-one-tool-from-the-shell-and-read-the-reply-as-json",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:service"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -3849,6 +3857,14 @@
         "evidence": "Written 2026-08-01 in the dynograph-foundation review, three weeks before this requirement existed, and it is an instance of exactly what the requirement asks: read the design's shape with more than one centrality. It saw the requirement coming. ⚠️ AND THE ABSORPTION CHANGED ITS COST — increment 3 left `centrality.rs`, `closeness.rs`, `eigenvector.rs` and `clustering.rs` (590 lines) upstream, so acting on it is now a retrieval from tag v0.12.0 rather than a call to code already linked."
       },
       "to_id": "req:graph-theory-undergirds-the-design-brain"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "dec:idea-outward-docs-are-rendered-from-the-graph",
+      "properties": {
+        "evidence": "Docs rendered from the graph need a way for a build to read the graph; this is that way, for one tool at a time."
+      },
+      "to_id": "cap:a-build-can-call-one-tool-from-the-shell-and-read-the-reply-as-json"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -25091,6 +25107,16 @@
     },
     {
       "edge_type": "CAUSES",
+      "from_id": "fact:field-report-bhome-2026-09-18-a-build-script-has-no-door-to-a-report-but-an-mcp-session-so-the-budget-was-hand-transcribed",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The finding measured the missing door; this is the door.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "chg:a-build-can-call-one-tool-from-the-shell"
+    },
+    {
+      "edge_type": "CAUSES",
       "from_id": "fact:field-report-flo2-2026-09-19-f10-seven-more-rejections-are-the-constructor-half-of-a-defect-recorded-by-three-projects-and-half-fixed",
       "properties": {
         "basis": "correlational",
@@ -25787,6 +25813,42 @@
         "action": "modified"
       },
       "to_id": "art:test-no-per-design-globals"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-build-can-call-one-tool-from-the-shell",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:a-build-can-call-one-tool-from-the-shell-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-build-can-call-one-tool-from-the-shell",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:agent-instructions"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-build-can-call-one-tool-from-the-shell",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:main"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-build-can-call-one-tool-from-the-shell",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:setup"
     },
     {
       "edge_type": "CHANGED",
@@ -52821,6 +52883,12 @@
       "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
+      "to_id": "cap:a-build-can-call-one-tool-from-the-shell-and-read-the-reply-as-json"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
       "to_id": "cap:a-cut-ends-with-the-served-binary-matching-the-tag"
     },
     {
@@ -54777,6 +54845,16 @@
         "evidence": "Two halves of one arrangement, recorded as SUPPORTING so it reinforces rather than conflicts (req:supporting-is-not-conflict). The third-party rule says a fix is judged by what it does for somebody else's project; this says the self-host is what GENERATES the finding, because reflow2's own design is the first place a missing detector shows up as pain. Neither replaces the other, and this one explicitly does not weaken the third-party rule's named failure: patch it here, mark it met, leave every consumer with the hole."
       },
       "to_id": "rule:fixes-are-judged-by-the-third-party"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cap:a-build-can-call-one-tool-from-the-shell-and-read-the-reply-as-json",
+      "properties": {
+        "evidence": "Reuses the export path's lock explanation and the --export-snapshot copy for a read while the graph is held.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "cap:the-server-writes-the-export-through-and-chains-it-from-main"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -60521,6 +60599,12 @@
         "note": "This file holds the node-count comparison the decision rules on: the `live_nodes > export_nodes` arm stays, the in-step arm gains the sentence naming what it cannot see, and no further detector is built here. A later session proposing to add one — or to reach for `write_gen` — should read the rejection before writing code."
       },
       "to_id": "dec:the-unexported-work-check-keeps-its-node-count-and-says-so"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:a-build-can-call-one-tool-from-the-shell-and-read-the-reply-as-json",
+      "properties": {},
+      "to_id": "dec:idea-a-derived-document-cites-the-graph-the-way-it-cites-the-model-through-a-door-a-build-can-use"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -217250,6 +217334,15 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:a-build-can-call-one-tool-from-the-shell",
+      "properties": {
+        "at": "2026-09-19",
+        "note": "bhome's plan-sheet generator can now read budget_report at build time with one shell call instead of a hand transcription; the finding stands as the measurement."
+      },
+      "to_id": "fact:field-report-bhome-2026-09-18-a-build-script-has-no-door-to-a-report-but-an-mcp-session-so-the-budget-was-hand-transcribed"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:a-client-replaces-a-mismatched-server-instead-of-reporting-it",
       "properties": {
         "at": "2026-08-29",
@@ -219956,6 +220049,15 @@
         "weight_basis": "estimated"
       },
       "to_id": "ifc:temporal-api"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:a-build-can-call-one-tool-from-the-shell-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-build-can-call-one-tool-from-the-shell-and-read-the-reply-as-json"
     },
     {
       "edge_type": "REALIZES",
@@ -228954,6 +229056,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:a-build-can-call-one-tool-from-the-shell",
+      "properties": {},
+      "to_id": "cap:a-build-can-call-one-tool-from-the-shell-and-read-the-reply-as-json"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:a-capability-claiming-reach-beyond-this-repo-is-realized-by-something-a-consumer-gets",
       "properties": {},
       "to_id": "cap:a-capability-claiming-reach-beyond-this-repo-is-realized-by-something-a-consumer-gets"
@@ -231167,6 +231275,14 @@
         "action": "created"
       },
       "to_id": "art:setup"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:a-build-can-call-one-tool-from-the-shell-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:a-build-can-call-one-tool-from-the-shell-test"
     },
     {
       "edge_type": "YIELDED",
@@ -233727,6 +233843,18 @@
       }
     },
     {
+      "node_id": "art:a-build-can-call-one-tool-from-the-shell-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:257a9e64ba62c4b8354188ae2a43c90114ac03a4c5cf94b9256e3142f573ab44",
+        "checksum_basis": "measured",
+        "location": "crates/reflow2-mcp/tests/a_build_can_call_one_tool_from_the_shell.rs",
+        "name": "a_build_can_call_one_tool_from_the_shell.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:a-capability-carries-its-thread-test",
       "node_type": "Artifact",
       "properties": {
@@ -233932,7 +234060,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:09b14f3639b10f2ce2095fea5a7e1af3f4b2a8b49206209b98fdba47ccbee45d",
+        "checksum": "sha256:da1fd73aacbed28d5f7fe82e112ad829105425fdcb4d33452150f93fdb34c3ef",
+        "checksum_basis": "measured",
         "location": "AGENTS.md",
         "name": "AGENTS.md — the primary instruction file every agent reads before it knows reflow2 exists: commands, architecture, the rules for changing the project",
         "status": "realized"
@@ -235795,7 +235924,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:ab39283cdff3e8ee2e43c77c51856f9290331ea29c1e0396b42fe214a2cd8c11",
+        "checksum": "sha256:0a4dd00e6265e3216470b40e9095104981ea15dff9b33bdaceaa3c8cd53af4e3",
+        "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/main.rs",
         "name": "main.rs",
@@ -236915,7 +237045,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:c5ae98896e2558c42d86c890f7348c6c3b4f5d8895e6aafb723516edc24c2e56",
+        "checksum": "sha256:ef07d52ac9cbe4f2df6cea3c16deae3d82335331e49232acefffbb5a8736ba0d",
+        "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "getting-started/SETUP.md",
         "name": "getting-started/SETUP.md",
@@ -238754,6 +238885,16 @@
         "provenance": "authored",
         "status": "realized",
         "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:a-build-can-call-one-tool-from-the-shell-and-read-the-reply-as-json",
+      "node_type": "Capability",
+      "properties": {
+        "description": "As built 2026-09-19. `reflow2-mcp --graph-path <dir> --call <tool> [--args '<json object>' | --args -]` opens the graph, serves it to an in-process client over an in-memory pipe, makes ONE call through the same `call_tool` path a session uses (usage recorded under the client name `reflow2-mcp --call`; refusals hinted and worded identically), prints the reply's structured JSON on stdout (text blocks become JSON strings when a tool has no structured reply), and exits 0; a refusal goes to stderr with exit 1; a reply the tool marked `is_error` exits 2. Arguments are validated as a JSON object and the tool name is checked against the served list BEFORE the graph is opened, so a typo never mints a graph directory. While another process holds the graph, a tool whose annotation says read-only answers from the same best-effort snapshot copy `--export-snapshot` uses and stderr says SNAPSHOT; a writer refuses with the lock explanation plus the sentence that it needs the graph itself. Documented in getting-started/SETUP.md and AGENTS.md. Test: crates/reflow2-mcp/tests/a_build_can_call_one_tool_from_the_shell.rs (five cases against the real binary, one against a real held lock). Built under the OPEN idea dec:idea-a-derived-document-cites-the-graph-the-way-it-cites-the-model-through-a-door-a-build-can-use on the owner's 'work through them one by one'; the idea's other options (a report the server writes through like the export; a documented stdio client) are not taken and the idea stays open for his word.",
+        "name": "A build can call one tool from the shell and read the reply as JSON: `reflow2-mcp --call <tool> --args <json>`",
+        "provenance": "authored",
+        "status": "realized"
       }
     },
     {
@@ -242094,6 +242235,17 @@
         "name": "A budget is what makes optimisation stop",
         "rationale": "THE FIRST PERFORMANCE BUDGET THIS PROJECT HAS EVER STATED, and it was written BEFORE the code was touched, on purpose. `con:graph-construction-is-setup-not-work` (1 ms) was derived rather than picked: construction is setup, so a caller that builds a graph and does twenty writes should spend most of its time on the writes.\\n\\nTHE CAUSE, found by measuring rather than guessing: `open_in_memory` cost 41.3 ms against 54.7 us for an `add_capability` write - 750x - because `load_schema()` re-parsed and re-merged eleven include_str!'d YAML documents on every call, in a binary where those bytes are fixed at compile time.\\n\\nTHE FIX caches the parsed Result in a LazyLock. The Result and not the Schema, so a malformed domain still fails loud on every call; and `load_schema()` hands out a CLONE, because StorageEngine takes the schema by value and two graphs must not share one.\\n\\nWHAT THE BUDGET BOUGHT: the first re-measurement read 2.79 ms - a 14.8x speedup AND OVER BUDGET. Without a number written down beforehand that is exactly where the work stops. The warm figure was 266 us, under budget, so it stopped there - leaving the obvious next move (Arc instead of cloning, worth 252 of those 266 us) undone because it needs a dependency's API in another repo. A defensible stopping point at a repo boundary.\\n\\nTWO LESSONS FOUND BY DOING. (1) A DURATION ASSERTION IN A PARALLEL SUITE MEASURES CONTENTION: the first durable test asserted 5 ms, measured 266 us alone and 6 ms inside `cargo test --workspace`, and failed. The usual response - raise the threshold until it stops complaining - retires the gate without anyone deciding to. It now asserts a cold-versus-warm RATIO, which survives contention because both halves are slowed equally and which pins the thing that actually broke. AN OPTIMISATION GUARD SHOULD ASSERT THE STRUCTURE THAT MAKES CODE FAST, NOT THE TIME IT TAKES. (2) OPTIMISATION IS WHERE ARCHITECTURAL RULES GET TRADED AWAY: the LazyLock tripped `no_per_design_process_globals`, whose own words are 'the door closes one convenient static at a time, each individually reasonable'. Paying it cost one paragraph stating why a compile-time-embedded schema is a fact about the BINARY and not about any design.",
         "summary": "The schema is parsed once per process instead of once per graph: construction 41.3ms -> 266us, suite 191.8s -> 96.5s."
+      }
+    },
+    {
+      "node_id": "chg:a-build-can-call-one-tool-from-the-shell",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-09-19",
+        "name": "A build can call one tool from the shell: `--call <tool> --args <json>` runs a served tool through the server path and prints its reply as JSON",
+        "rationale": "bhome S3 (2026-09-18): the plan sheet's budget was a hand transcription because no door existed for a script. Anthony 2026-09-19: 'work your way through them one by one'. The one-shot call was the cheapest of the idea's three options and reuses two things that already existed — the server's own call path and the snapshot read — so nothing here paraphrases a tool.",
+        "summary": "main.rs: --call and --args flags, call_one_tool (argument and tool-name checks before the graph opens; read-only tools fall back to the snapshot copy while the graph is held; exit codes 0/1/2), call_over_pipe (in-process rmcp client over tokio duplex), OneShotClient naming the door; Cargo.toml: rmcp `client` feature; SETUP.md and AGENTS.md; one test file; CHANGELOG."
       }
     },
     {
@@ -264578,6 +264730,16 @@
       }
     },
     {
+      "node_id": "frag:art:a-build-can-call-one-tool-from-the-shell-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered a_build_can_call_one_tool_from_the_shell.rs"
+      }
+    },
+    {
       "node_id": "frag:art:a-capability-carries-its-thread-test",
       "node_type": "Fragment",
       "properties": {
@@ -284360,6 +284522,20 @@
       }
     },
     {
+      "node_id": "ver:a-build-can-call-one-tool-from-the-shell",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-mcp/tests/a_build_can_call_one_tool_from_the_shell.rs: five tests run the built binary (CARGO_BIN_EXE) against temp graph directories; the last spawns a second binary on stdio to hold the RocksDB lock for real.",
+        "findings": "pr run: 5 passing; full workspace suite green.",
+        "kind": "verification",
+        "last_run_at": "2026-09-19",
+        "level": "system",
+        "method": "test",
+        "name": "A write then a report from the shell reply as JSON; a refusal is stderr + exit 1; an unknown tool or non-object args refuse before the graph exists; args read from stdin; a read answers from a snapshot while a server holds the graph and a write refuses",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:a-capability-claiming-reach-beyond-this-repo-is-realized-by-something-a-consumer-gets",
       "node_type": "Verification",
       "properties": {
@@ -288266,7 +288442,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:60ee00fd9def1d36500ba5e9425bca4d9c7caa266b830e9f34e932f20f612378",
+  "prev_content_hash": "sha256:6e2b30bd109fe9f605d36149e6b082184b7647e527ef4eef5116beda9ad49817",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -288864,8 +289040,8 @@
     "schema_version": 1
   },
   "taken_at": {
-    "branch": "one-status-contract-across-sibling-constructors",
-    "commit": "5a73678bb73bf720699a75ecbfefff3775a03ed2",
+    "branch": "a-build-can-call-one-tool-from-the-shell",
+    "commit": "c39a33c8ef2b0f7a3a96f1055de67514be61f417",
     "dirty": true
   }
 }
