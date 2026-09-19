@@ -1,7 +1,7 @@
 ---
 name: parallel-work
 description: Use when two or more people (or agents) need to work on one design at the same time without colliding — "my brother and I are both editing this", "can we split this up", "how do we avoid stepping on each other", or before starting a large change on a design someone else is also touching. Sets up an isolated worktree with its own copy of the graph, claims the region you are taking, and merges back through reflow2's own three-way merge rather than through git's line merge.
-metadata: {composes: [STANDING, WRITES, DESTROYS]}
+metadata: {composes: [STANDING, WRITES, DESTROYS], audience: operator, summary: "Work on one design with several people without colliding."}
 ---
 
 # Two people, one design, no collisions

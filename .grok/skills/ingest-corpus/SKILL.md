@@ -1,7 +1,7 @@
 ---
 name: ingest-corpus
 description: Use when reflow2 is pointed at a FOLDER of documents rather than one — a directory of specifications, years of accumulated notes, a handover pack, "here is everything we ever wrote about this". Walks the folder, turns the whole corpus into one design in a single batched handshake, and reports what it could not read. The scale sibling of capture-intent, and the mass-ingest primitive that adopt and genesis should consume rather than reimplement.
-metadata: {composes: [STANDING, WRITES, MINTS, MEASURES]}
+metadata: {composes: [STANDING, WRITES, MINTS, MEASURES], audience: operator, summary: "Pull a folder of documents into the design, with provenance for every claim."}
 ---
 
 # INGEST A CORPUS — a folder of documents becomes one design

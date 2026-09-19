@@ -112,17 +112,29 @@ impl ReflowService {
                 json!({
                     "name": s.name,
                     "shortcut": crate::skills::shortcut_for(s.name),
+                    "summary": s.summary,
+                    "audience": s.audience,
                     "description": s.description,
                 })
             })
             .collect();
+        // COUNTED, not written: the note used to say "eight of these differ"
+        // while the live list differed in nine, then ten (flo2 F9, 2026-09-18).
+        let differing = SKILLS
+            .iter()
+            .filter(|s| crate::skills::shortcut_for(s.name) != format!("/{}", s.name))
+            .count();
         let mut payload = json!({
             "count": items.len(),
             "skills": items,
-            "note": "Served from the reflow2 binary (dec:skills-served), so they cannot drift from \
-                     the version you are running. Your harness does NOT auto-load these — call \
-                     get_skill to read one in full. `shortcut` is what a PERSON types; eight of \
-                     these differ from the skill name, so never derive it by matching names."
+            "note": format!(
+                "Served from the reflow2 binary (dec:skills-served), so they cannot drift from \
+                 the version you are running. Your harness does NOT auto-load these — call \
+                 get_skill to read one in full. `shortcut` is what a PERSON types; {differing} of \
+                 these differ from the skill name, so never derive it by matching names. \
+                 `summary` is the line a person reads and `audience` says who it is for \
+                 (anyone / operator / agent); `description` is the trigger an agent matches on."
+            )
         });
         // The reminder rides the response the agent is already reading.
         if let (Some(lens), Some(obj)) = (self.lens_for_response().await, payload.as_object_mut()) {
@@ -168,6 +180,8 @@ impl ReflowService {
         };
         let mut payload = json!({
             "name": skill.name,
+            "summary": skill.summary,
+            "audience": skill.audience,
             "description": skill.description,
             "body": skill.body,
         });

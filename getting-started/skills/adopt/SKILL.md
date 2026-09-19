@@ -1,7 +1,7 @@
 ---
 name: adopt
 description: Use when reflow2 is pointed at a system that ALREADY EXISTS — a codebase, a product, a device — with little or no requirements documentation. The sibling of genesis, it brings the existing system under design control by the accepted reverse-engineering lifecycle - gather, scan, analyze (static and dynamic), recover intent, validate - producing a graph that says honestly what exists, what it is for, and what nobody can know from the artifact alone.
-metadata: {composes: [STANDING, WRITES, MINTS, MEASURES, REPORTS]}
+metadata: {composes: [STANDING, WRITES, MINTS, MEASURES, REPORTS], audience: operator, summary: "Bring a system that already exists under design control, one region at a time."}
 ---
 
 # ADOPT — bring a system that already exists under design control

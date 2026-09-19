@@ -1,7 +1,7 @@
 ---
 name: feedback
 description: Use when the user types /feedback or asks for feedback on reflow2 itself — "how did reflow2 do", "what did we use", "give me the feedback for the maintainer". Renders the tally the SERVER kept of every tool call on this project (which tools, how often, which calls it refused and why-class, which skills were fetched, which harnesses connected, versions and OS), adds the one field only the agent knows, invites a one-line disposition per refusal, and writes it to the project's own feedback file for the person to carry. Never sends anything. Not for a single failure you just hit (report-friction), and not for the project you are designing.
-metadata: {composes: [STANDING, REPORTS, MEASURES]}
+metadata: {composes: [STANDING, REPORTS, MEASURES], audience: anyone, summary: "Produce the usage report reflow2's maintainer can act on."}
 ---
 
 # Feedback on reflow2, computed rather than recalled

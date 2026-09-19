@@ -1,7 +1,7 @@
 ---
 name: log-issue
 description: Use when the user wants to capture something to come back to later, in one word — "/log-issue", "log this", "note this for later", "the queue service was misbehaving, look at it later", a thing noticed away from the desk, a colleague's remark, a failure with no cause yet. Records a dated follow-up on the thing it is about, in the user's own words, demanding nothing — no cause, no node type, no root-cause. Not for an idea (brainstorm), not for intent (capture-intent), not for a failure you are about to EXPLAIN (root-cause). The loop lists open follow-ups at every boundary until each is settled.
-metadata: {composes: [STANDING, WRITES]}
+metadata: {composes: [STANDING, WRITES], audience: anyone, summary: "Note something to come back to later, in one line."}
 ---
 
 # Log something to come back to

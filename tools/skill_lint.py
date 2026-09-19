@@ -1364,6 +1364,22 @@ def main() -> int:
             for label, phrasings in CLASSES[cls].items():
                 if not any(ph in text for ph in phrasings):
                     composed_failures.append(f"{d.name} [{cls}] {label}")
+    # flo2 F8/F9 (2026-09-18): the line a person reads and who it is for.
+    bad_summary, bad_audience = [], []
+    for d in skill_dirs:
+        raw_meta = frontmatter((d / "SKILL.md").read_text()).get("metadata", "")
+        ms = re.search(r'summary:\s*"([^"]*)"', raw_meta)
+        ma = re.search(r"audience:\s*([a-z]+)", raw_meta)
+        summ = (ms.group(1) if ms else "").strip()
+        aud = (ma.group(1) if ma else "").strip()
+        if not summ or summ.startswith("Use ") or len(summ) > 120:
+            bad_summary.append(d.name)
+        if aud not in ("anyone", "operator", "agent"):
+            bad_audience.append(d.name)
+    check("every skill carries a `summary` a person can read (no 'Use when', at most 120 chars)",
+          not bad_summary, f"missing or trigger-shaped: {bad_summary}")
+    check("every skill says who it is for (`audience`: anyone / operator / agent)",
+          not bad_audience, f"missing or unknown: {bad_audience}")
     check(
         "every skill declares the attribute classes it composes",
         not undeclared,

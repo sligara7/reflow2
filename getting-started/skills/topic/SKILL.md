@@ -1,7 +1,7 @@
 ---
 name: topic
 description: Use when someone wants to SEE what the design already holds about one subject — "what do we have on X", "show me something about the export lineage", "is there anything about rainfall totals" — when it is neither a brainstorm nor a link-artifacts effort, just a look. Reads one server-computed digest (grouped hits, each with its status, its connections and the latest dated change or measurement) and renders it in the reader's own words, always including what the search did NOT find. Writes nothing.
-metadata: {composes: [STANDING]}
+metadata: {composes: [STANDING], audience: anyone, summary: "Read everything the design holds about one subject."}
 ---
 
 # Show what the design holds about one subject

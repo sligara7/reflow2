@@ -1,7 +1,7 @@
 ---
 name: impact-check
 description: Use BEFORE changing or removing anything in an existing design — a new feature, a tweaked requirement, "what if we add wind?". Records the change and runs reflow2's propagate to show the blast radius, so you edit only what's actually affected and confirm nothing else rotted.
-metadata: {composes: [STANDING, WRITES, MEASURES], demanded_by: [snapshot_before_change]}
+metadata: {composes: [STANDING, WRITES, MEASURES], demanded_by: [snapshot_before_change], audience: anyone, summary: "See what a change would affect before making it."}
 ---
 
 # Check impact before you change code

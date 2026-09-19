@@ -1,7 +1,7 @@
 ---
 name: governance-proposal
 description: Use when the user states a rule the project follows rather than a thing it must do — "we always branch before pushing", "never edit generated files", a review step, a house style, a stack choice. Asks them whether breaking it should STOP THE BUILD instead of deciding for them, and records the answer either way rather than leaving the rule's power unstated. The capture half of governance; the violations are computed by detect_gaps.
-metadata: {composes: [STANDING, WRITES, MINTS, REPORTS]}
+metadata: {composes: [STANDING, WRITES, MINTS, REPORTS], audience: operator, summary: "Record a rule the project follows and say whether breaking it stops the build."}
 ---
 
 # Notice a rule the project follows — and ask what breaking it costs

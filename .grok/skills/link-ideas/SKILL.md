@@ -1,7 +1,7 @@
 ---
 name: link-ideas
 description: Use when the design has ideas connected to nothing — the `unreviewed_ideas` finding, "link the half-ideas", "why didn't you find that node", or when a session discovers a recorded idea it should have met earlier. Works the backlog a few at a time: asks the graph which ideas might belong together, puts the candidates to the user, and records either the relation or the note saying nothing was honestly related.
-metadata: {composes: [STANDING, WRITES, REPORTS]}
+metadata: {composes: [STANDING, WRITES, REPORTS], audience: anyone, summary: "Connect ideas that are floating to what they relate to."}
 ---
 
 # Join the half-ideas into a line of reasoning

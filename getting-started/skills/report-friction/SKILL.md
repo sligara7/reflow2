@@ -1,7 +1,7 @@
 ---
 name: report-friction
 description: Use when reflow2 itself gets in your way while you are designing — a tool that fails without saying why, a gap that fires on correct work, something you cannot record, a rejection you cannot act on. Writes a report the maintainer can act on, redacted of the user's design content, and offers to file it. Not for problems with the project you are designing; only for reflow2 itself.
-metadata: {composes: [STANDING, WRITES, MINTS, REPORTS]}
+metadata: {composes: [STANDING, WRITES, MINTS, REPORTS], audience: anyone, summary: "Report a problem with reflow2 itself to its maintainer."}
 ---
 
 # Report friction with reflow2

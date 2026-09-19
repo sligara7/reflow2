@@ -1,7 +1,7 @@
 ---
 name: plan-increments
 description: Use when the user asks what to do next, in what order, or what goes in which release — "what's the plan", "what ships in v2", "do these in this order", a numbered list of upcoming work, or when work has been agreed and nothing says when it lands. Also use when you catch yourself keeping a to-do list in the conversation: that is a delivery plan, and it belongs in the graph where everyone can see it.
-metadata: {composes: [STANDING, WRITES, MINTS]}
+metadata: {composes: [STANDING, WRITES, MINTS], audience: anyone, summary: "Decide what to build next and in what order."}
 ---
 
 # Plan the delivery, on the record

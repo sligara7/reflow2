@@ -1,7 +1,7 @@
 ---
 name: onboarding
 description: Use when someone who did not build the system needs to add to it — "we need to add X, where does it go?", "I've inherited this, where do I start?", a new hire's first ticket on a mature codebase, or any question of the form "where does this belong". Answers from the design: which part should own it, what touching that would reach, which decisions already govern there and who made them, what intent it must not break — and honestly which parts of the real system the design cannot see.
-metadata: {composes: [STANDING, REPORTS]}
+metadata: {composes: [STANDING, REPORTS], audience: anyone, summary: "Find where a new piece of work belongs in a design you did not build."}
 ---
 
 # Where does this new piece of work belong?
