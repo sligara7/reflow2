@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:60ee00fd9def1d36500ba5e9425bca4d9c7caa266b830e9f34e932f20f612378",
+  "content_hash": "sha256:6e2b30bd109fe9f605d36149e6b082184b7647e527ef4eef5116beda9ad49817",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2549,6 +2549,14 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:one-status-contract-across-sibling-constructors-and-a-node-is-named-by-the-key-the-last-tool-used",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:optimize-skill",
       "properties": {
         "weight_basis": "estimated"
@@ -3720,6 +3728,14 @@
         "evidence": "That idea already holds that capture should run against a schema stated up front rather than one improvised per node; Alex's ask is the project-level instance of it — the encoding of THIS project's recurring parts, decided once and cited by every later capture."
       },
       "to_id": "dec:idea-establish-the-taxonomy-once-before-bulk-capture"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "dec:idea-four-sibling-constructors-four-status-contracts",
+      "properties": {
+        "evidence": "The idea's refutation of 'make them all the same' was that it would overturn the landing defaults; this change keeps every landing default and adds the parameter, which is the contract the idea was reaching for. Its surviving option (echo the status assigned) is not taken here, so it stays open."
+      },
+      "to_id": "chg:one-status-contract-across-sibling-constructors-and-a-node-is-named-by-the-key-the-last-tool-used"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -25075,6 +25091,16 @@
     },
     {
       "edge_type": "CAUSES",
+      "from_id": "fact:field-report-flo2-2026-09-19-f10-seven-more-rejections-are-the-constructor-half-of-a-defect-recorded-by-three-projects-and-half-fixed",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "F10 named the constructor/setter half and measured it across the served surface; this is that half.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "chg:one-status-contract-across-sibling-constructors-and-a-node-is-named-by-the-key-the-last-tool-used"
+    },
+    {
+      "edge_type": "CAUSES",
       "from_id": "fact:find-tools-misses-split-into-a-vocabulary-gap-no-ranking-can-close-and-a-scorer-that-lets-long-descriptions-crowd",
       "properties": {
         "basis": "correlational",
@@ -43507,6 +43533,195 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:one-status-contract-across-sibling-constructors-and-a-node-is-named-by-the-key-the-last-tool-used",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:a-lesson-is-served-at-the-step-handler-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:one-status-contract-across-sibling-constructors-and-a-node-is-named-by-the-key-the-last-tool-used",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:a-node-is-named-by-the-key-the-last-tool-used-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:one-status-contract-across-sibling-constructors-and-a-node-is-named-by-the-key-the-last-tool-used",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:adopt-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:one-status-contract-across-sibling-constructors-and-a-node-is-named-by-the-key-the-last-tool-used",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:design-holds-says-why-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:one-status-contract-across-sibling-constructors-and-a-node-is-named-by-the-key-the-last-tool-used",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:enum-schema"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:one-status-contract-across-sibling-constructors-and-a-node-is-named-by-the-key-the-last-tool-used",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:find-tools-rank-baseline"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:one-status-contract-across-sibling-constructors-and-a-node-is-named-by-the-key-the-last-tool-used",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:lens-handler-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:one-status-contract-across-sibling-constructors-and-a-node-is-named-by-the-key-the-last-tool-used",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:lens-names-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:one-status-contract-across-sibling-constructors-and-a-node-is-named-by-the-key-the-last-tool-used",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:loop-status-lens-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:one-status-contract-across-sibling-constructors-and-a-node-is-named-by-the-key-the-last-tool-used",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:mint-seat-liveness-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:one-status-contract-across-sibling-constructors-and-a-node-is-named-by-the-key-the-last-tool-used",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:one-status-contract-across-sibling-constructors-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:one-status-contract-across-sibling-constructors-and-a-node-is-named-by-the-key-the-last-tool-used",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:revising-an-epochs-prose-keeps-its-status-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:one-status-contract-across-sibling-constructors-and-a-node-is-named-by-the-key-the-last-tool-used",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:one-status-contract-across-sibling-constructors-and-a-node-is-named-by-the-key-the-last-tool-used",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-a-near-match-of-another-type-is-named-as-a-layer"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:one-status-contract-across-sibling-constructors-and-a-node-is-named-by-the-key-the-last-tool-used",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-a-prescribed-layer-pair-no-longer-refuses"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:one-status-contract-across-sibling-constructors-and-a-node-is-named-by-the-key-the-last-tool-used",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-the-commonest-edge-has-a-typed-helper"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:one-status-contract-across-sibling-constructors-and-a-node-is-named-by-the-key-the-last-tool-used",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-the-guard-reads-the-request-before-refusing"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:one-status-contract-across-sibling-constructors-and-a-node-is-named-by-the-key-the-last-tool-used",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-built"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:one-status-contract-across-sibling-constructors-and-a-node-is-named-by-the-key-the-last-tool-used",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:one-status-contract-across-sibling-constructors-and-a-node-is-named-by-the-key-the-last-tool-used",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-operate"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:one-status-contract-across-sibling-constructors-and-a-node-is-named-by-the-key-the-last-tool-used",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-temporal"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:one-tool-declares-its-output-contract",
       "properties": {
         "accepted_baseline": true,
@@ -52708,6 +52923,12 @@
       "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
+      "to_id": "cap:one-status-contract-across-sibling-constructors-and-a-node-is-named-by-the-key-the-last-tool-used"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
       "to_id": "cap:parallel-work"
     },
     {
@@ -54556,6 +54777,16 @@
         "evidence": "Two halves of one arrangement, recorded as SUPPORTING so it reinforces rather than conflicts (req:supporting-is-not-conflict). The third-party rule says a fix is judged by what it does for somebody else's project; this says the self-host is what GENERATES the finding, because reflow2's own design is the first place a missing detector shows up as pain. Neither replaces the other, and this one explicitly does not weaken the third-party rule's named failure: patch it here, mark it met, leave every consumer with the hole."
       },
       "to_id": "rule:fixes-are-judged-by-the-third-party"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cap:one-status-contract-across-sibling-constructors-and-a-node-is-named-by-the-key-the-last-tool-used",
+      "properties": {
+        "evidence": "Extends the status+approver contract that capability built for three constructors to every constructor of a status-carrying type, keeping approver on the three.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "cap:the-owners-word-rides-the-same-call-as-the-status-it-signs"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -63110,6 +63341,18 @@
       "from_id": "cap:onboarding",
       "properties": {},
       "to_id": "decision:ack:f58dc09a846a8783"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:one-status-contract-across-sibling-constructors-and-a-node-is-named-by-the-key-the-last-tool-used",
+      "properties": {},
+      "to_id": "dec:idea-one-way-to-name-which-node-across-the-tool-surface"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:one-status-contract-across-sibling-constructors-and-a-node-is-named-by-the-key-the-last-tool-used",
+      "properties": {},
+      "to_id": "dec:idea-should-a-constructor-accept-the-owners-word-in-one-call"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -217417,6 +217660,24 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:one-status-contract-across-sibling-constructors-and-a-node-is-named-by-the-key-the-last-tool-used",
+      "properties": {
+        "at": "2026-09-19",
+        "note": "The naming half was fixed on the relation surface 2026-09-06 and on the setters here (id/node_id accepted where a typed key names the node); the status half here (every constructor takes status and names the landing). Their remaining wish — echo the status assigned in a sentence — is the open idea dec:idea-four-sibling-constructors-four-status-contracts."
+      },
+      "to_id": "fact:defect-sibling-constructors-disagree-on-how-to-name-a-node-and-what-status-it-lands-in"
+    },
+    {
+      "edge_type": "INVALIDATES",
+      "from_id": "chg:one-status-contract-across-sibling-constructors-and-a-node-is-named-by-the-key-the-last-tool-used",
+      "properties": {
+        "at": "2026-09-19",
+        "note": "Both halves now fixed: the refusal names the nearest parameter (PR #540) and the constructors and setters take the same names and the same status contract (this change). The measurement stands as the record."
+      },
+      "to_id": "fact:field-report-flo2-2026-09-19-f10-seven-more-rejections-are-the-constructor-half-of-a-defect-recorded-by-three-projects-and-half-fixed"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:orientation-fires-on-the-status-claim-and-the-catalogue-answers-a-status-question-in-the-askers-words",
       "properties": {
         "at": "2026-09-14",
@@ -219743,6 +220004,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:a-node-is-named-by-the-key-the-last-tool-used-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:one-status-contract-across-sibling-constructors-and-a-node-is-named-by-the-key-the-last-tool-used"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:a-parked-report-that-produced-nothing-test",
       "properties": {
         "completeness": "complete",
@@ -222060,6 +222330,15 @@
         "conformance": "reviewed"
       },
       "to_id": "cap:onboarding"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:one-status-contract-across-sibling-constructors-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:one-status-contract-across-sibling-constructors-and-a-node-is-named-by-the-key-the-last-tool-used"
     },
     {
       "edge_type": "REALIZES",
@@ -226279,6 +226558,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:one-status-contract-across-sibling-constructors-and-a-node-is-named-by-the-key-the-last-tool-used",
+      "properties": {},
+      "to_id": "req:defaults-do-not-assert"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:owed-to-a-contributor",
       "properties": {},
       "to_id": "req:an-assigned-open-decision-is-reported"
@@ -229890,6 +230175,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:one-status-contract-and-one-naming-key-across-constructors-and-setters",
+      "properties": {},
+      "to_id": "cap:one-status-contract-across-sibling-constructors-and-a-node-is-named-by-the-key-the-last-tool-used"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:one-tool-declares-its-output-contract",
       "properties": {},
       "to_id": "cap:mcp-surface"
@@ -230919,6 +231210,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:a-node-is-named-by-the-key-the-last-tool-used-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:a-node-is-named-by-the-key-the-last-tool-used-test"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:a-parked-report-that-produced-nothing-test",
       "properties": {
         "action": "created"
@@ -231860,6 +232159,14 @@
         "action": "created"
       },
       "to_id": "art:onboarding-skill"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:one-status-contract-across-sibling-constructors-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:one-status-contract-across-sibling-constructors-test"
     },
     {
       "edge_type": "YIELDED",
@@ -233458,7 +233765,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "test",
-        "checksum": "sha256:76d6207507030c987c1566a913315d0672e6fe6dfbe97286a16ab4ebb1d77c5f",
+        "checksum": "sha256:9f5a377772f4cc9c3cd13b111d18eb56563cba983cd038d78f53a53d0bafc9f7",
+        "checksum_basis": "measured",
         "description": "Five handler-level pins: get_skill carries the lessons naming that skill and no other; the tool list carries a lesson on its tool and nowhere else; a no-step lesson is kept and delivered nowhere; an unserved step is refused with the nearest names and nothing written; rules take steps and the newest lesson comes first. Shown to fail on the deliver-everything-everywhere mutation (2 pins).",
         "location": "crates/reflow2-mcp/tests/a_lesson_is_served_at_the_step_it_concerns.rs",
         "name": "a_lesson_is_served_at_the_step_it_concerns.rs",
@@ -233474,6 +233782,18 @@
         "description": "The wire pin on the real binary: tools/list — the listing a harness reads before every call — carries the lesson on exactly one tool's description, keeps that description whole, leaves the other 180 byte-identical, before and after in one process; get_skill carries it for its skill only; a typo'd step is refused naming the nearest. Shown to fail on the deliver-everything mutation (2 pins). Wired into CI.",
         "location": "tools/test_a_lesson_is_served_at_the_step.py",
         "name": "test_a_lesson_is_served_at_the_step.py",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:a-node-is-named-by-the-key-the-last-tool-used-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:f5de5b1c5cde0a65bfae66406a0b1a0e5a9ecc8a392ba15531f77606c3c4ff4f",
+        "checksum_basis": "measured",
+        "location": "crates/reflow2-mcp/tests/a_node_is_named_by_the_key_the_last_tool_used.rs",
+        "name": "a_node_is_named_by_the_key_the_last_tool_used.rs",
         "status": "realized"
       }
     },
@@ -233585,7 +233905,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:2f3d066ebff6ef6cc0f2650442c2864fec9f60970e663156d23c3667b3e2c8fc",
+        "checksum": "sha256:61d297a55066953d3e628ffbfbea3a1f63085986b2b1e7776d28c6d044065d73",
         "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "getting-started/skills/adopt/SKILL.md",
@@ -234333,7 +234653,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "test",
-        "checksum": "sha256:d45039f856beec3122d8c5938e5f6229916ca84f5e09c022b2a4495afe0a9bac",
+        "checksum": "sha256:db4bdf4b04cd86cf5963817b131bfaee488f94e1d0c4ca2ec41219962ec1d2b4",
         "checksum_basis": "measured",
         "description": "Five tests on the acceptance surface: a baselined artifact accepted as design_holds with no change_type is refused and the refusal names the repair labels and the reconcile labels; a stated reason is recorded as given; a repair may still be accepted as a repair; a first baseline needs no reason; the bulk form refuses the silent item and names it. The two refusal cases observed failing before the default was removed.",
         "location": "crates/reflow2-mcp/tests/a_design_holds_acceptance_says_why_the_code_moved.rs",
@@ -234580,7 +234900,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:228686fd53e8c694a4aefb960ef2ab8a5818efec4c1407e6e12dd6954ac39e6a",
+        "checksum": "sha256:18c47270cc209eb7922a0037cdd497cd37a342dc39d12bd8d347ac64c96706c3",
+        "checksum_basis": "measured",
         "location": "crates/reflow2-mcp/src/enum_schema.rs",
         "name": "enum_schema.rs — one schema_with fn per enum request field, reading legal values from the compiled-in schema (or the handler's own const) at tool-listing time",
         "status": "realized"
@@ -234816,7 +235137,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "test",
-        "checksum": "sha256:54e3553bc89e5cf07c632ff730cefe267c033acebdf4881acc2d7106fe2b0940",
+        "checksum": "sha256:08efee5fdd52cb8b514193ff6c50bf0e3992f41e9f5be4b36496d89191af3bbe",
         "checksum_basis": "measured",
         "location": "crates/reflow2-mcp/tests/fixtures/find_tools_rank_baseline.json",
         "name": "find_tools_rank_baseline.json — the rank ratchet: tools not first for their own job (name matches) and the mutual pairs; both lists only shrink",
@@ -235359,7 +235680,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:8aac2ece8f2e57bcc7c8c9d00b935f8e1e4a15472465ce26e4c9ca5199ca429e",
+        "checksum": "sha256:02b506fd2efbbd16453c65f830b247a82343ad12117765c03eb53a40b8ec302d",
+        "checksum_basis": "measured",
         "location": "crates/reflow2-mcp/tests/a_skill_response_says_who_it_is_for.rs",
         "name": "tests/a_skill_response_says_who_it_is_for.rs",
         "status": "realized"
@@ -235370,7 +235692,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "test",
-        "checksum": "sha256:eae6bdcae1c60f8a8501049abfe43ffcfe193d735e8e71ff24101925c8780919",
+        "checksum": "sha256:20a8c05e623d35e08d85526517151f6f7a62926688887427bdc575ed55e4ce6e",
+        "checksum_basis": "measured",
         "description": "Four served-reply tests: two recorded readers are named beside their ids on the skill lens; the askable people in the silent case are named too; a person with no name is still listed by id with no empty parenthesis; loop_status carries the names as well. Three observed failing before ReaderLens carried names.",
         "location": "crates/reflow2-mcp/tests/the_lens_names_the_person_beside_the_id.rs",
         "name": "the_lens_names_the_person_beside_the_id.rs",
@@ -235446,7 +235769,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "test",
-        "checksum": "sha256:0079a81b693f5848de54f458d5ff143a4f6c3f438735515fc7261beb88650fe5",
+        "checksum": "sha256:6bbc52afa91cd06347ad499da9b8a68fb964851ba5492b7e242d6b6707654f7b",
+        "checksum_basis": "measured",
         "description": "Four handler tests pinning that the loop_status reply carries the lens: the silent case names who could be asked; the recorded case names them; the lens names `next` as the agent's to-do list; the lens never withholds `next`. Written first and observed failing (0 passed, 4 failed) before the fix in coherence.rs, from the 2026-09-14 field report where a loop_status reply was read out to a person verbatim.",
         "location": "crates/reflow2-mcp/tests/a_loop_status_reply_says_whose_words_to_use.rs",
         "name": "a_loop_status_reply_says_whose_words_to_use.rs",
@@ -235570,7 +235894,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:608714022a94028fab531d33b148e3671f6f63809415f14d39afefa88eeea063",
+        "checksum": "sha256:8c68109b4d6a03012d7ce0a0183bc3c4abae616c11a4d5999ca1ad895721bbc5",
+        "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/tests/mint_seat_liveness.rs",
         "name": "mint_seat_liveness.rs",
@@ -235635,6 +235960,18 @@
         "checksum_basis": "measured",
         "location": "getting-started/skills/onboarding/SKILL.md",
         "name": "onboarding/SKILL.md — where does this new piece of work belong?",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:one-status-contract-across-sibling-constructors-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:d785b80eed7fd4a7b13d256305d538b622a19fdfc74ae94fae9710622c219112",
+        "checksum_basis": "measured",
+        "location": "crates/reflow2-mcp/tests/one_status_contract_across_sibling_constructors.rs",
+        "name": "one_status_contract_across_sibling_constructors.rs",
         "status": "realized"
       }
     },
@@ -236196,7 +236533,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "test",
-        "checksum": "sha256:6fe3ef632ff109c4b6cc670f47602055ca1a4e57cd63209f7037b13b99c088b7",
+        "checksum": "sha256:d88ddc5bc19740c53e84dc546b64dc612571622509f1311d33169f60856a59de",
+        "checksum_basis": "measured",
         "description": "Two pins: arrive an epoch, revise its prose with plan_epoch, still arrived (read `planned` before the fix — shown to fail first); a new epoch lands planned and a revise of a still-planned one leaves it planned (which caught the first draft of the fix: the write replaces the property set, so status had to be carried forward, not omitted).",
         "location": "crates/reflow2-mcp/tests/revising_an_epochs_prose_keeps_its_status.rs",
         "name": "revising_an_epochs_prose_keeps_its_status.rs",
@@ -236552,7 +236890,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b6be42159177a09bc21a7df916729d636edc31141e7d0bb51a2e739fe1f1c6f2",
+        "checksum": "sha256:f989fa39da0ec8c8f2ca636cdd95c359ba62bfaef848767192d9306369243083",
         "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
@@ -237009,7 +237347,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:8f613bbe9ee979c9f1d0469ced904041fbaf7640160f8bdb5ab736e2eca68c55",
+        "checksum": "sha256:5fe3320f1340265f67dac22148d83c98a69379ab9f21837a801446b276c23aa1",
+        "checksum_basis": "measured",
         "location": "crates/reflow2-mcp/tests/a_near_match_of_another_type_is_named_as_a_layer.rs",
         "name": "a_near_match_of_another_type_is_named_as_a_layer.rs",
         "status": "realized"
@@ -237055,7 +237394,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:6b7fdb06a34adf40e6d7324e29f8d4bd85194ae71da501c1a565cbed3704687a",
+        "checksum": "sha256:4651d550556fb2540419af4993e3af9246af99a890511c8ec1e81a17899a307a",
+        "checksum_basis": "measured",
         "location": "crates/reflow2-mcp/tests/a_prescribed_layer_pair_no_longer_refuses.rs",
         "name": "a_prescribed_layer_pair_no_longer_refuses.rs",
         "status": "realized"
@@ -237703,7 +238043,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:a330be745f651a141775ca6e5500ac3f4a2d874f3d37185d9780e13c48f84f66",
+        "checksum": "sha256:405e163255f18ead9bc5823e8ee2cd83af575ae77cb2409b49d5c65957d10a3e",
+        "checksum_basis": "measured",
         "location": "crates/reflow2-mcp/tests/the_commonest_edge_has_a_typed_helper.rs",
         "name": "the_commonest_edge_has_a_typed_helper.rs",
         "status": "realized"
@@ -237748,7 +238089,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "test",
-        "checksum": "sha256:9360712a824c01bd1ba8501a3108d91e2a960b1d4b3292feb8922f83ea13f700",
+        "checksum": "sha256:1cb14fcba5c5dd3bda15e050cf80c8e5fb142480871d05dad106121d1dc9ec41",
+        "checksum_basis": "measured",
         "description": "Three cases, observed failing against the stashed unfixed guard (2 refused, the counterweight passed before and after — which is what shows the change narrows the guard rather than blinding it).",
         "location": "crates/reflow2-mcp/tests/the_guard_reads_the_request_before_refusing.rs",
         "name": "the_guard_reads_the_request_before_refusing.rs — a near-match the write names as its own relation target is never refused; Requirement↔Component reports and does not refuse; a same-type near duplicate still does",
@@ -237878,7 +238220,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:58df2740483e756ddbd372e4d045a27e2c05dd1228ab00cdcc07dfd701a4ccce",
+        "checksum": "sha256:c1674a0b655c27195288b7fb9154ee51e367ba59e70d14b100a267c634462465",
         "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/built.rs",
@@ -237892,7 +238234,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:601a4d405c2c1967f890bee8637903dd1cc2564fe7bf1e7e11831b6208339f94",
+        "checksum": "sha256:f83f36dd81185b66300a8d49fa86e27ce587f22e5ae4c3459658e7e142887524",
         "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
@@ -237957,7 +238299,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:4d0aec6c2934d4900dbd828b827f2249e7db55818e5742ff86432adba72831b3",
+        "checksum": "sha256:f10ae2ddc57fcb878837a5341ecae25d2b22e3a2b0b81dbcfa3abc4cd7b6cfc5",
+        "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/operate_tools.rs",
         "name": "tools/operate_tools.rs",
@@ -237995,7 +238338,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:21c26e81b025fe02e204ce5bc6da323652c5a40f0f7c36e7886f886d8c1ed1e8",
+        "checksum": "sha256:90f1d1388a906ba574f58e61cd3b46cbfae02f0700c960861afbd6a79d406651",
+        "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/temporal_tools.rs",
         "name": "tools/temporal_tools.rs",
@@ -240580,6 +240924,16 @@
         "provenance": "authored",
         "status": "realized",
         "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:one-status-contract-across-sibling-constructors-and-a-node-is-named-by-the-key-the-last-tool-used",
+      "node_type": "Capability",
+      "properties": {
+        "description": "As built 2026-09-19. STATUS: every constructor of a type that carries a status takes an optional `status` and its description names what omitting it lands — add_component, add_release, add_project and add_epoch join add_capability, add_artifact, add_verification, add_requirement and add_decision (nine of nine; Question and Fragment are minted by ask/ingest, not by a constructor). The landing defaults STAY, because the detectors read them (closure.rs, detect.rs, heal.rs read `planned`; the certainty doctrine reads Requirement `proposed`) — what was missing was the parameter, which is the F10 row exactly: add_component wrote a status it offered no way to say. `approver` + `acted_at` stay on exactly the three constructors whose status is settled intent (Requirement, Decision, DesignRule — the three cases tools/check_intent_authority.py reads); a build status is a measurement, not a signature, and the test pins that set so a fourth cannot drift in unnoticed. NAMING: 25 tools whose primary parameter names a design node by a typed key (decision_id, capability_id, epoch_id, requirement_id, verification_id, interface_id, artifact_id, project_id, release_id, flow_id, constraint_id, change_event_id, subject_id, target_id) accept `id` and `node_id` as serde aliases — the key search_design hands back, or the name the last tool used — and the published schema still teaches the typed key only; `props` accepts `properties` on create_edge, create_node, create_edges and create_nodes. Tools whose key names a FINDING (gap_id, defect_id) are deliberately outside it. add_project has its own request shape (ProjectReq) instead of sharing add_interface's with half the fields ignored for the other. The adopt skill says to pass `status: realized` in the constructor call, since there is no component status setter. Tests: crates/reflow2-mcp/tests/one_status_contract_across_sibling_constructors.rs, crates/reflow2-mcp/tests/a_node_is_named_by_the_key_the_last_tool_used.rs.",
+        "name": "One status contract across sibling constructors, and a node is named by the key the last tool used",
+        "provenance": "authored",
+        "status": "realized"
       }
     },
     {
@@ -248892,6 +249246,17 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "set_verification_status stops deleting last_run_at when the optional parameter is omitted — the convention three sibling setters already documented"
+      }
+    },
+    {
+      "node_id": "chg:one-status-contract-across-sibling-constructors-and-a-node-is-named-by-the-key-the-last-tool-used",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-09-19",
+        "name": "One status contract across sibling constructors; a node is named by the key the last tool used; add_project gets its own request shape",
+        "rationale": "Anthony 2026-09-19: 'prioritize most important and work your way through them one by one' over the flo2 and bhome field reports; F10 is the constructor/setter half of a defect three projects recorded and the 2026-09-06 fix left. Built under the two standing rulings (constructors accept the owner's word in one call, 2026-09-06; type optional and one way to name a node, ruling #3b) rather than a new decision; the open 'four status contracts' idea is left open because its surviving option (echo the status assigned) is not taken here.",
+        "summary": "service.rs: `status` on ComponentReq/ReleaseReq/AddEpochReq, new ProjectReq (IdName keeps add_interface only), `id`/`node_id` aliases on 25 typed keys, `properties` alias on props ×4; enum_schema.rs: four status helpers; capture.rs/operate_tools.rs/temporal_tools.rs: the four constructors store the status they are told and their descriptions name the landing; adopt skill (+mirrors); two test files; CHANGELOG."
       }
     },
     {
@@ -264263,6 +264628,16 @@
       }
     },
     {
+      "node_id": "frag:art:a-node-is-named-by-the-key-the-last-tool-used-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered a_node_is_named_by_the_key_the_last_tool_used.rs"
+      }
+    },
+    {
       "node_id": "frag:art:a-parked-report-that-produced-nothing-test",
       "node_type": "Fragment",
       "properties": {
@@ -265461,6 +265836,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered onboarding/SKILL.md — where does this new piece of work belong?"
+      }
+    },
+    {
+      "node_id": "frag:art:one-status-contract-across-sibling-constructors-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered one_status_contract_across_sibling_constructors.rs"
       }
     },
     {
@@ -286445,6 +286830,20 @@
       }
     },
     {
+      "node_id": "ver:one-status-contract-and-one-naming-key-across-constructors-and-setters",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-mcp/tests/one_status_contract_across_sibling_constructors.rs (4 tests: the constructor set is derived from the schema's status defaults + Artifact and pinned; approver set == {add_decision, add_design_rule, add_requirement} each with acted_at; a passed status is stored and an omitted one lands as named on Component/Release/Project/DesignEpoch, a revise leaves it alone; an undeclared value is refused by name). crates/reflow2-mcp/tests/a_node_is_named_by_the_key_the_last_tool_used.rs (4 tests: 25 structs × 2 aliases deserialize on the wire path; properties→props on 4 writers; the published schema carries the typed key only; node_id moves a capability end to end).",
+        "findings": "pr run: 8 tests passing; full workspace suite green.",
+        "kind": "verification",
+        "last_run_at": "2026-09-19",
+        "level": "integration",
+        "method": "test",
+        "name": "Every constructor of a status-carrying type takes status and names the landing; approver is on exactly the three intent constructors; 25 typed keys accept id and node_id; props accepts properties; the schema teaches the typed key only",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:one-tool-declares-its-output-contract",
       "node_type": "Verification",
       "properties": {
@@ -287867,7 +288266,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:6f010f958736af2b28717ee962adcfadaa209cd5da35d3df29d9b1c29b27f8e9",
+  "prev_content_hash": "sha256:60ee00fd9def1d36500ba5e9425bca4d9c7caa266b830e9f34e932f20f612378",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -288465,8 +288864,8 @@
     "schema_version": 1
   },
   "taken_at": {
-    "branch": "a-projects-first-session-leaves-the-adapter-in-place",
-    "commit": "642dae64419599aad45229ea775192d77e762f57",
+    "branch": "one-status-contract-across-sibling-constructors",
+    "commit": "5a73678bb73bf720699a75ecbfefff3775a03ed2",
     "dirty": true
   }
 }

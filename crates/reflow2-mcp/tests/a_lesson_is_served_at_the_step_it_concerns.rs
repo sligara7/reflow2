@@ -60,12 +60,12 @@ fn finding(id: &str, name: &str, steps: Option<Vec<&str>>, valid_from: &str) -> 
 
 async fn seeded() -> ReflowService {
     let s = ReflowService::in_memory().expect("service");
-    j!(s.add_project(Parameters(IdName {
+    j!(s.add_project(Parameters(ProjectReq {
         id: "proj:the-design".into(),
         name: Some("The design".into()),
         description: None,
-        spec: None,
         decomposition_levels: None,
+        status: None,
     })));
     s
 }

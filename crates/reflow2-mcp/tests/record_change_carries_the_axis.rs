@@ -39,6 +39,7 @@ async fn svc_with_an_epoch_and_a_target() -> ReflowService {
         sequence: Some(1),
         checksum: None,
         description: None,
+        status: None,
     })));
     j!(s.add_capability(Parameters(CapabilityReq {
         satisfies: None,

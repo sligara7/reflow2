@@ -52,7 +52,8 @@ impl ReflowService {
     #[tool(
         description = "Record a Release — a packaged, operable version: a container image, a \
                        published package, a manufactured build. Part of answering the \
-                       `no_deploy_operate` gap. \
+                       `no_deploy_operate` gap. Lands `status: planned` unless you pass one (`built` \
+                       or `deployed` once it ships). \
                        CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it \
                        again with the same id and only what you are changing \u{2014} omitted \
                        fields keep their stored value, so correcting one never means re-sending \
@@ -80,6 +81,15 @@ impl ReflowService {
             reflow2_core::nodes::node::RELEASE,
             &req.id,
             req.description.as_deref(),
+        )?
+        .unwrap_or(stored);
+        // Written only when the caller SAID one; the schema refuses an
+        // undeclared value and names the legal set.
+        let stored = crate::tools::capture::set_optional_props(
+            &mut g,
+            reflow2_core::nodes::node::RELEASE,
+            &req.id,
+            &[("status", req.status.as_deref())],
         )?
         .unwrap_or(stored);
         ok_json(NodeDto::from(stored))

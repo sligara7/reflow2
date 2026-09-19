@@ -393,9 +393,10 @@ impl ReflowService {
         description = "Create a `DesignEpoch` that HAS HAPPENED — a point on the time axis you \
                        are recording, which is what an epoch has always meant here. NOTE THE \
                        STORED TYPE NAME is `DesignEpoch`, not `Epoch`: that is the string \
-                       `get_node` and `scan_nodes` want. For a point that has NOT happened yet, \
-                       use plan_epoch instead; planning is a deliberate act and reads better as \
-                       its own verb than as a flag. \
+                       `get_node` and `scan_nodes` want. Lands `status: arrived` unless you \
+                       pass `status: planned` — for a point that has NOT happened yet, \
+                       plan_epoch is the same call with `planned` as its landing status, and \
+                       either spelling records the tense you meant. \
                        CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it \
                        again with the same id and only what you are changing \u{2014} omitted \
                        fields keep their stored value, so correcting one never means re-sending \
@@ -427,6 +428,15 @@ impl ReflowService {
             &req.id,
             req.description.as_deref(),
             req.checksum.as_deref(),
+        )?
+        .unwrap_or(node);
+        // The tense the caller SAID, when they said one. `planned` here is
+        // exactly what plan_epoch lands; omitted, the landing status stands.
+        let node = crate::tools::capture::set_optional_props(
+            &mut g,
+            reflow2_core::nodes::node::DESIGN_EPOCH,
+            &req.id,
+            &[("status", req.status.as_deref())],
         )?
         .unwrap_or(node);
         ok_json(NodeDto::from(node))

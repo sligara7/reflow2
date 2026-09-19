@@ -255,6 +255,7 @@ async fn an_unmeasured_cross_type_pair_still_refuses_with_the_layer_wording() {
         level: None,
         distinct_from: None,
         tier: None,
+        status: None,
     }))
     .await
     .expect("the component lands");

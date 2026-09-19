@@ -35,6 +35,7 @@ fn plan(id: &str, description: &str) -> AddEpochReq {
         sequence: Some(900),
         description: Some(description.into()),
         checksum: None,
+        status: None,
     }
 }
 

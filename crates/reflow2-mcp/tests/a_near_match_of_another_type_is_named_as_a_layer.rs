@@ -130,6 +130,7 @@ async fn a_cross_type_near_match_names_the_layering_not_a_duplicate() {
             level: None,
             distinct_from: None,
             tier: None,
+            status: None,
         }))
         .await
         .expect_err("an unmeasured cross-type pair still refuses, because ② survives");

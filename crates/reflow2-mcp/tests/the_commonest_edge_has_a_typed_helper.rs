@@ -80,6 +80,7 @@ async fn component(s: &ReflowService, id: &str, name: &str) {
         level: None,
         distinct_from: None,
         tier: None,
+        status: None,
     }))
     .await
     .expect("component lands");
