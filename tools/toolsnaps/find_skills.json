@@ -1,0 +1,31 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "Find the skill that fits a job you can describe but not name — the skills counterpart of find_tools. Say the job in your own words (\"we already have a working codebase, get it under control\", \"if I change this what else moves\"); the served skills are ranked by their names, one-line summaries and trigger descriptions, and every match carries the skill's name (what get_skill takes), the shortcut a PERSON types, its summary and who it is for. With thirty skills nobody remembers which one fits, including their author; this is the catalogue you ask instead of reading them all. Ask for this when you want to know which skill fits the job you are about to do.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "limit": {
+        "default": null,
+        "description": "Maximum matches to return, best first (default 5). The result says how\nmany matched and how many it left out.",
+        "format": "uint",
+        "minimum": 0,
+        "type": [
+          "integer",
+          "null"
+        ]
+      },
+      "query": {
+        "description": "The job you are about to do, in your own words — \"we already have a\nworking codebase, get it under control\", \"if I change this, what else\nmoves\", \"save what we decided before I close this\".",
+        "type": "string"
+      }
+    },
+    "required": [
+      "query"
+    ],
+    "type": "object"
+  },
+  "name": "find_skills"
+}

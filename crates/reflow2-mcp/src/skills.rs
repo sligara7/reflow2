@@ -229,7 +229,8 @@ pub fn catalogue() -> String {
         "SKILLS ARE SERVED, NOT INSTALLED. This project's reflow2 skills live in the server, so \
          they always match the running version and nothing in your repo goes stale. They are NOT \
          auto-loaded by your harness — call `get_skill` to read one in full before doing the work \
-         it covers, and `list_skills` for the complete trigger conditions. Available:",
+         it covers, `list_skills` for the complete trigger conditions, and `find_skills` to find \
+         the one for a job you can describe but not name. Available:",
     );
     for skill in SKILLS {
         out.push_str("\n- ");

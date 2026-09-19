@@ -58,6 +58,14 @@ This file is the third view: *what changed, and when*.
   the graph, from the same best-effort snapshot `--export-snapshot` uses, and stderr says so; a
   tool that writes refuses, because a copy is not the design. `--args -` reads the object from
   stdin.
+- **A skill is found by describing the job, the way a tool is.** flo2 F8 (2026-09-18): "the only
+  way to find a skill you cannot name is to read all 29 descriptions" — and the owner's own line,
+  "I continually forget which skills are available". `find_skills` ranks the served skills by a
+  sentence in a person's words over each skill's name, one-line summary and trigger description,
+  and each match carries the name (for `get_skill`), the shortcut a person types, the summary
+  and who it is for. It has its own held-out corpus, one query per skill in a person's words, and
+  the same rank-first ratchet the tools have. The served catalogue line and the session-start
+  hook now name it beside `get_skill` and `list_skills`.
 
 - **A project's first session leaves the adapter in place.** Three of the maintainer's own projects
   (flo2, SeattleArch, bhome) carried no pointer file, no kit stamp and mostly no hooks, because they

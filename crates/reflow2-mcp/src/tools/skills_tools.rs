@@ -150,6 +150,80 @@ impl ReflowService {
 
     /// One skill, in full.
     #[tool(
+        description = "Find the skill that fits a job you can describe but not name — the \
+                       skills counterpart of find_tools. Say the job in your own words (\"we \
+                       already have a working codebase, get it under control\", \"if I change \
+                       this what else moves\"); the served skills are ranked by their names, \
+                       one-line summaries and trigger descriptions, and every match carries the \
+                       skill's name (what get_skill takes), the shortcut a PERSON types, its \
+                       summary and who it is for. With thirty skills nobody remembers which one \
+                       fits, including their author; this is the catalogue you ask instead of \
+                       reading them all. Ask for this when you want to know which skill fits the \
+                       job you are about to do.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn find_skills(
+        &self,
+        Parameters(req): Parameters<crate::service::FindSkillsReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let query = req.query.to_lowercase();
+        let terms: Vec<&str> = query
+            .split(|c: char| !c.is_alphanumeric() && c != '_')
+            .filter(|t| !t.is_empty())
+            .collect();
+        // The same scorer find_tools uses, over the same shape: a name, a text
+        // (summary then description, so the person's line counts), no
+        // parameters. One scorer, two catalogues, so they cannot drift apart.
+        let corpus: Vec<(String, String)> = SKILLS
+            .iter()
+            .map(|s| {
+                (
+                    s.name.to_lowercase(),
+                    format!("{} {}", s.summary, s.description).to_lowercase(),
+                )
+            })
+            .collect();
+        let weighted = crate::service::term_weights(&terms, &corpus);
+        let mut scored: Vec<(f64, serde_json::Value)> = SKILLS
+            .iter()
+            .filter_map(|s| {
+                let text = format!("{} {}", s.summary, s.description);
+                let score = crate::service::score_tool(s.name, &text, &[], &weighted);
+                (score > 0.0).then(|| {
+                    (
+                        score,
+                        json!({
+                            "name": s.name,
+                            "shortcut": crate::skills::shortcut_for(s.name),
+                            "summary": s.summary,
+                            "audience": s.audience,
+                            "score": score,
+                        }),
+                    )
+                })
+            })
+            .collect();
+        scored.sort_by(|a, b| {
+            b.0.partial_cmp(&a.0)
+                .unwrap_or(std::cmp::Ordering::Equal)
+                .then_with(|| a.1["name"].as_str().cmp(&b.1["name"].as_str()))
+        });
+        let matched = scored.len();
+        let limit = req.limit.unwrap_or(5).max(1);
+        let items: Vec<serde_json::Value> =
+            scored.into_iter().take(limit).map(|(_, v)| v).collect();
+        structured(json!({
+            "count": items.len(),
+            "items": items,
+            "matched": matched,
+            "omitted": matched.saturating_sub(items.len()),
+            "searched": SKILLS.len(),
+            "query": req.query,
+            "note": "`name` is what get_skill takes; `shortcut` is what a person types and can differ from the name.",
+        }))
+    }
+
+    #[tool(
         description = "Read one reflow2 skill in full, by name (see list_skills). Returns the \
                        whole SKILL.md — follow it as written. Call this BEFORE the work the skill \
                        covers, not after: these describe how to do the step, not how to report it. \

@@ -1,4 +1,4 @@
-# What reflow2 offers: 30 skills and 188 tools
+# What reflow2 offers: 30 skills and 189 tools
 
 Generated from the **running server**, not from memory — the skill list came from `list_skills`,
 the tool list and every read/write marking from `tools/list`, and the command mapping from
@@ -94,7 +94,7 @@ Read one in full with `get_skill` before doing the work it covers.
 
 ---
 
-## The 188 tools
+## The 189 tools
 
 `read` never changes the design. **write** does. That marking is the tool's own `readOnlyHint`
 annotation, read off the served surface — 58 read, 97 write.
@@ -407,6 +407,7 @@ description, which an agent sees in the tool schema; this table is for a person 
 | `get_skill` | **read** | Read one reflow2 skill in full, by name (see list_skills). |
 | `list_skills` | **read** | List the reflow2 skills this server carries — name and the full description an agent matches on to decide whether a skill applies. |
 | `usage_report` | **write** | What this project's sessions actually asked reflow2 to do, and where reflow2 declined — computed from the usage ledger the server keeps beside the design (`<graph>.usage.jsonl`), never from an agent's memory. |
+| `find_skills` | **read** | Find the skill that fits a job you can describe but not name — the skills counterpart of find_tools. |
 
 ---
 

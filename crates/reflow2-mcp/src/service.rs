@@ -4491,6 +4491,19 @@ pub struct FindToolsReq {
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct FindSkillsReq {
+    /// The job you are about to do, in your own words — "we already have a
+    /// working codebase, get it under control", "if I change this, what else
+    /// moves", "save what we decided before I close this".
+    pub query: String,
+    /// Maximum matches to return, best first (default 5). The result says how
+    /// many matched and how many it left out.
+    #[serde(default)]
+    pub limit: Option<usize>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct PropagateFromReq {
     /// Seed node ids to propagate impact from.
     /// Any node type — the blast radius is walked outward from these.
