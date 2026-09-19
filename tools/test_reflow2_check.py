@@ -231,6 +231,29 @@ class Reflow2Check(unittest.TestCase):
             f"a budgeted reply must not turn a design full of gaps green\n{r.stdout}\n{r.stderr}")
         self.assertIn("GAP", r.stdout, "and the gaps must be named, not merely counted")
 
+    def test_without_an_export_argument_the_gate_reads_the_export_the_graph_is_in_step_with(self):
+        """A bare `reflow2 check` finds the export the store's own sync sidecar
+        names. Three designs on one box kept theirs at three paths and none was
+        `design.json` (flo2, 2026-09-18)."""
+        export = self.export(coherent)
+        side = self.tmp / ".reflow2"
+        side.mkdir(exist_ok=True)
+        (side / "graph.sync.json").write_text(json.dumps({"last_synced": {str(export): "sha256:x"}}))
+        cmd = [sys.executable, str(CHECK), "--root", str(self.tmp), "--bin", BIN]
+        r = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
+        self.assertEqual(r.returncode, 0, f"{r.stdout}\n{r.stderr}")
+        self.assertIn("design and build agree", r.stdout)
+
+    def test_a_sidecar_naming_a_vanished_export_says_where_the_name_came_from(self):
+        side = self.tmp / ".reflow2"
+        side.mkdir(exist_ok=True)
+        (side / "graph.sync.json").write_text(json.dumps({"last_synced": {str(self.tmp / "gone.json"): "sha256:x"}}))
+        cmd = [sys.executable, str(CHECK), "--root", str(self.tmp), "--bin", BIN]
+        r = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
+        self.assertEqual(r.returncode, 2)
+        self.assertIn("no design export", r.stderr)
+        self.assertIn("graph.sync.json", r.stderr)
+
     def test_a_missing_export_cannot_run(self):
         r = self.gate(self.tmp / "does-not-exist.json")
         self.assertEqual(r.returncode, 2, "a missing export is 'could not run', never a pass")

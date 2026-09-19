@@ -448,6 +448,17 @@ pub enum ChangeType {
     /// refuse it, so the confirmation ledger's count of first baselines cannot
     /// be inflated by hand.
     BaselineEstablished,
+    /// **An open Decision was settled** — the record moved, nothing in the
+    /// system did. Added 2026-09-18 after flo2 reported that a settlement is
+    /// "the most common design event in this project and none of the values
+    /// names it": the two-axes ruling made `subject` optional and left
+    /// `change_type` required, so a record-only event had to wear a
+    /// code-shaped label (measured on reflow2's own design: 49 record-axis
+    /// events carrying scope_change / resync / defect_fix / refactor). A
+    /// settlement is already recorded by the status move, the approver edge
+    /// and the preserved snapshot; this is the honest label when a ChangeEvent
+    /// is written for one anyway.
+    DecisionSettled,
 }
 
 impl ChangeType {
@@ -467,6 +478,7 @@ impl ChangeType {
             ChangeType::Deprecation => "deprecation",
             ChangeType::Resync => "resync",
             ChangeType::BaselineEstablished => "baseline_established",
+            ChangeType::DecisionSettled => "decision_settled",
         }
     }
 }

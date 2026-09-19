@@ -776,9 +776,35 @@ def check_taken_on_this_branch(path: str, doc: dict) -> str | None:
     )
 
 
+def synced_export_path(root: str) -> str | None:
+    """The export the graph under `root` last recorded itself in step with —
+    `.reflow2/graph.sync.json`'s `last_synced` keys — the first that exists,
+    else the first named (so a vanished export is reported by the name the
+    graph gave it, not as a missing `design.json`). None only when there is
+    no sidecar or it names nothing."""
+    sidecar = os.path.join(root, ".reflow2", "graph.sync.json")
+    try:
+        with open(sidecar, encoding="utf-8") as fh:
+            synced = json.load(fh).get("last_synced") or {}
+    except (OSError, ValueError):
+        return None
+    named = [p if os.path.isabs(p) else os.path.join(root, p) for p in synced]
+    for candidate in named:
+        if os.path.exists(candidate):
+            return candidate
+    return named[0] if named else None
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    ap.add_argument("--export", default="design.json", help="committed design export (JSON)")
+    ap.add_argument(
+        "--export",
+        default=None,
+        help=(
+            "committed design export (JSON). Default: the export the graph under --root says "
+            "it is in step with (.reflow2/graph.sync.json), else design.json"
+        ),
+    )
     ap.add_argument("--root", default=".", help="project root artifact locations are relative to")
     ap.add_argument("--bin", default=default_bin(), help="reflow2-mcp binary")
     ap.add_argument(
@@ -800,10 +826,25 @@ def main() -> int:
     )
     opts = ap.parse_args()
 
+    # THE DEFAULT IS WHAT THE GRAPH ITSELF RECORDS. The three designs on the
+    # maintainer's own box keep their export at three different paths and none
+    # of them was `design.json` (flo2, 2026-09-18); the store's sync sidecar
+    # already names the export it is in step with, so that is the honest
+    # default and a bare `reflow2 check` finds it.
+    export_from_sidecar = None
+    if opts.export is None:
+        export_from_sidecar = synced_export_path(opts.root)
+        opts.export = export_from_sidecar or "design.json"
+
     if not os.path.exists(opts.export):
+        where = (
+            f"'{opts.export}' (named by {os.path.join(opts.root, '.reflow2', 'graph.sync.json')})"
+            if export_from_sidecar
+            else f"'{opts.export}'"
+        )
         die(
             2,
-            f"no design export at '{opts.export}'. Commit one "
+            f"no design export at {where}. Commit one "
             f"(export_graph to a repo path, or reflow2-mcp --export) and point --export at it — "
             f"the gate reads the committed design, never the live .reflow2/ store.",
         )

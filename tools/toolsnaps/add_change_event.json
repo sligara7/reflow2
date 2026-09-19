@@ -72,6 +72,7 @@
           "deprecation",
           "resync",
           "baseline_established",
+          "decision_settled",
           null
         ],
         "type": [
