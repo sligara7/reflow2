@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:6f010f958736af2b28717ee962adcfadaa209cd5da35d3df29d9b1c29b27f8e9",
+  "content_hash": "sha256:60ee00fd9def1d36500ba5e9425bca4d9c7caa266b830e9f34e932f20f612378",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -3226,6 +3226,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:the-pointer-is-served-as-a-section-and-genesis-and-adopt-leave-the-adapter-in-place",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:skills"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -16673,8 +16681,10 @@
       "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-genesis-and-adopt-write-the-served-pointer-into-a-project-with-no-instruction-file",
       "properties": {
+        "approved_at": "2026-09-19",
         "roles": [
-          "author"
+          "author",
+          "approver"
         ]
       },
       "to_id": "who:ajs"
@@ -22228,6 +22238,18 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-projects-first-session-leaves-the-adapter-in-place-whichever-route-reached-reflow2",
+      "properties": {
+        "approved_at": "2026-09-19",
+        "roles": [
+          "approver",
+          "author"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:a-quantity-carries-how-it-was-obtained-and-an-unsourced-one-is-reported",
       "properties": {
         "approved_at": "2026-09-16",
@@ -23695,6 +23717,17 @@
       "from_id": "rule:a-new-refusal-claim-is-asserted-before-it-ships",
       "properties": {
         "approved_at": "2026-09-02",
+        "roles": [
+          "approver"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "rule:a-projects-first-session-leaves-the-adapter-in-place",
+      "properties": {
+        "approved_at": "2026-09-19",
         "roles": [
           "approver"
         ]
@@ -28925,6 +28958,60 @@
         "action": "modified"
       },
       "to_id": "art:tools-operate"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-projects-first-session-leaves-the-adapter-in-place",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:adopt-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-projects-first-session-leaves-the-adapter-in-place",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:genesis-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-projects-first-session-leaves-the-adapter-in-place",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:skills"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-projects-first-session-leaves-the-adapter-in-place",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:skills-build"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-projects-first-session-leaves-the-adapter-in-place",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:test-served-skills"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-projects-first-session-leaves-the-adapter-in-place",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:tools-skills"
     },
     {
       "edge_type": "CHANGED",
@@ -52675,6 +52762,12 @@
       "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
+      "to_id": "cap:the-pointer-is-served-as-a-section-and-genesis-and-adopt-leave-the-adapter-in-place"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
       "to_id": "cap:the-rank-ratchet-and-the-confusability-instrument"
     },
     {
@@ -52748,6 +52841,12 @@
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "req:a-project-records-how-it-ships"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "req:a-projects-first-session-leaves-the-adapter-in-place-whichever-route-reached-reflow2"
     },
     {
       "edge_type": "CONTAINS",
@@ -53090,6 +53189,12 @@
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "rule:a-finding-is-written-before-the-answer-and-needs-no-permission"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "rule:a-projects-first-session-leaves-the-adapter-in-place"
     },
     {
       "edge_type": "CONTAINS",
@@ -57103,6 +57208,16 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "req:a-projects-first-session-leaves-the-adapter-in-place-whichever-route-reached-reflow2",
+      "properties": {
+        "evidence": "This supplies the adapter that requirement expects to exist and be registered.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "req:a-repos-procedural-know-how-is-delivered-at-the-step-it-bears-on-and-the-design-knows-the-adapter-exists"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "req:a-quantity-carries-how-it-was-obtained-and-an-unsourced-one-is-reported",
       "properties": {
         "evidence": "A quantity with no unit cannot be checked by anything, so provenance on a quantity is only meaningful once the unit is a modelled fact; the unit-system requirement is accepted and unbuilt and is realized first.",
@@ -59597,6 +59712,14 @@
         "evidence": "Option A, promoted on Anthony's word 2026-09-13 and sharpened by him in the promotion: the one-page layer is a reference for the implementing agent, held like pseudocode, not a rendering for a person."
       },
       "to_id": "req:the-implementing-agent-holds-a-compact-design-reference-derived-from-the-graph"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-genesis-and-adopt-write-the-served-pointer-into-a-project-with-no-instruction-file",
+      "properties": {
+        "evidence": "Promoted 2026-09-19: option (c) — served pointer + skill instruction, with the init preferred when the kit is present; (d), the server writing into a repo, rejected."
+      },
+      "to_id": "req:a-projects-first-session-leaves-the-adapter-in-place-whichever-route-reached-reflow2"
     },
     {
       "edge_type": "EVOLVES_INTO",
@@ -64469,6 +64592,12 @@
         "note": "The ruling this capability implements: proposal ① and ② adopted, the setters lenient-but-reporting, ③ not taken."
       },
       "to_id": "dec:idea-should-a-constructor-accept-the-owners-word-in-one-call"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:the-pointer-is-served-as-a-section-and-genesis-and-adopt-leave-the-adapter-in-place",
+      "properties": {},
+      "to_id": "rule:a-projects-first-session-leaves-the-adapter-in-place"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -216968,6 +217097,15 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:a-projects-first-session-leaves-the-adapter-in-place",
+      "properties": {
+        "at": "2026-09-19",
+        "note": "The next first session on each of those projects can now leave the adapter; the finding stays as the measurement."
+      },
+      "to_id": "fact:three-consumer-projects-on-the-dev-box-carry-no-pointer-file-and-no-hook-because-init-never-ran-the-user-scope-route-bypasses-it"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:a-restore-judges-a-reference-against-the-document-not-the-walk",
       "properties": {
         "at": "2026-08-29",
@@ -226690,6 +226828,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:the-pointer-is-served-as-a-section-and-genesis-and-adopt-leave-the-adapter-in-place",
+      "properties": {},
+      "to_id": "req:a-projects-first-session-leaves-the-adapter-in-place-whichever-route-reached-reflow2"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:the-rank-ratchet-and-the-confusability-instrument",
       "properties": {},
       "to_id": "req:every-served-tool-ranks-first-for-its-own-job-and-the-surface-does-not-grow-more-confusable"
@@ -230253,6 +230397,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:the-pointer-is-served-as-a-section-and-the-first-session-skills-say-to-leave-it",
+      "properties": {},
+      "to_id": "cap:the-pointer-is-served-as-a-section-and-genesis-and-adopt-leave-the-adapter-in-place"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:the-probe-slot-is-claimed-atomically",
       "properties": {},
       "to_id": "art:loop-nudge"
@@ -233435,7 +233585,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:89573dfee8fc8297f312911b1786c8bfb154638bd99bf7cd737e520e2cfc6b17",
+        "checksum": "sha256:2f3d066ebff6ef6cc0f2650442c2864fec9f60970e663156d23c3667b3e2c8fc",
         "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "getting-started/skills/adopt/SKILL.md",
@@ -234762,7 +234912,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:348675df7aa6ef44a4aca0ee6c372a5695a07bc9d1931dc71a490d1e58a60f95",
+        "checksum": "sha256:d5c48632ca2356c9037e744d6a7e81c22be14897e5ef7b7a4ba150740f908cf4",
         "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "getting-started/skills/genesis/SKILL.md",
@@ -236519,7 +236669,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:233a58d15ecf669dbe6a2d5360f07593e7f68a59b43de20a01b1c26292eba225",
+        "checksum": "sha256:26afea09a81b706bb50c89965d2a6a54834f82b28981a5aee6bfb178e00a74ad",
         "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/skills.rs",
@@ -236545,7 +236695,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:2d9374276cfa377fc313275439c5ce986d0d58de6d966fa174524bf61bb0bbaa",
+        "checksum": "sha256:cefb310c80047e41a5f1276b2112a7e82b4adea317d8c9663129cf8be0053b3c",
         "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/build.rs",
@@ -237463,7 +237613,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:df77fef463bc66674d8f3fc37d62a79fa58b356453412f6ee804a8bd8a7d28c7",
+        "checksum": "sha256:928e65c849f70ebe4e504ef603cb30ad6bc0db2759775e3c0d9f46514533fa1e",
         "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/tests/served_skills.rs",
@@ -237833,7 +237983,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:19a6de84272500870e46e1f82e2e10cac6e105e76a1d4dd2898b87b3aa538887",
+        "checksum": "sha256:b4f871e77f37d33e686b3366ac88bb0eb8e19e6552bf535d5c15fcac5989a748",
         "checksum_basis": "measured",
         "location": "crates/reflow2-mcp/src/tools/skills_tools.rs",
         "name": "skills_tools.rs",
@@ -241281,6 +241431,16 @@
       }
     },
     {
+      "node_id": "cap:the-pointer-is-served-as-a-section-and-genesis-and-adopt-leave-the-adapter-in-place",
+      "node_type": "Capability",
+      "properties": {
+        "description": "As built 2026-09-19: build.rs embeds getting-started/POINTER.md as POINTER; skills::instruction_sections() serves it as section `pointer` (in the manifest, fetchable by name); genesis gains step 0 and adopt's Phase 0 bullet gains the no-instruction-file branch (init when the kit is present, else write the served pointer, then register). Test in tests/served_skills.rs.",
+        "name": "The pointer is served as a get_instructions section and genesis and adopt say when and how to leave the adapter in place",
+        "provenance": "authored",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "cap:the-rank-ratchet-and-the-confusability-instrument",
       "node_type": "Capability",
       "properties": {
@@ -242014,6 +242174,17 @@
         "name": "A project is asked, from genesis, what standard its design artifacts must be in; a drawing that does not say is named; the checking tool is part of the declaration",
         "rationale": "reflow2 opens no file: it judges by declared format, and validity is the checker's run, whose output is the evidence on the compliance edge. Measured cause: bhome 2026-08-31, an HTML plan sheet for a house because nothing in the design asked what a plan sheet must be, and the person who would have caught it was the city planner. \"None known\" is recorded with the existing acknowledge_gap rather than a new property, so the \"none\" case adds no vocabulary; the cost is the two-state key, which exists because an acknowledgement is permanent for its id.",
         "summary": "Built on Anthony's word 2026-09-16 (\"accept all 3 as intent ... build them in that order\"), the first of three. THREE LEGS: (1) typed home — EnvironmentRule gains `checker` (the tool that validates a file against the standard) and COMPLIES_WITH now accepts a Project as its source, so \"this design's artifacts follow IFC\" is one existing edge from the Project to a rule of rule_type `standard`; (2) instruction — the genesis and adopt skills ask what standard the handed-over artifacts must be in, who issues it and what checks it, before any artifact exists, and the genesis tool's next_steps say the same; (3) detectors — `artifact_standard_undeclared` fires on a Project with nothing else in it (0.35) and harder once drawings or models exist unasked (0.65), keyed twice so \"none known\" acknowledged at genesis does not also swallow the first drawing that arrives; `artifact_not_under_declared_standard` names each drawing/model with neither COMPLIES_WITH nor VIOLATES_RULE to the declared standard, one rollup keyed on the set. Test: crates/reflow2-core/tests/a_project_is_asked_what_its_artifacts_must_be_in.rs (7 cases)."
+      }
+    },
+    {
+      "node_id": "chg:a-projects-first-session-leaves-the-adapter-in-place",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-09-19",
+        "name": "A project's first session leaves the adapter in place: the pointer is served as a section; genesis and adopt say to leave it",
+        "rationale": "Anthony 2026-09-19 (his idea, my recommended route: served text + skill instruction + init when present; the server never writes into a repo).",
+        "summary": "build.rs embeds POINTER.md; skills.rs serves it as the `pointer` section; genesis step 0 and adopt Phase 0 branch (+ mirrors); served_skills.rs test; CHANGELOG. Graph: requirement, capability, rule delivered on genesis/adopt, idea accepted."
       }
     },
     {
@@ -255217,7 +255388,7 @@
         "kind": "exploratory",
         "name": "OPEN — should genesis and adopt, on a project with no instruction file, hand the agent the served pointer text and say 'put this in AGENTS.md' (and register it), so the user-scope route leaves the same adapter the init does?",
         "rationale": "His idea, recorded beside the measured absence it answers; the question is the route (skill vs init vs server), not whether a new project should end up with the adapter — req:a-repos-procedural-know-how-is-delivered-at-the-step-it-bears-on-and-the-design-knows-the-adapter-exists already says it should.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -263149,6 +263320,19 @@
       }
     },
     {
+      "node_id": "rule:a-projects-first-session-leaves-the-adapter-in-place",
+      "node_type": "DesignRule",
+      "properties": {
+        "category": "convention",
+        "name": "A project's first session leaves the adapter in place: no instruction file means run the init when the kit is present, otherwise write the served pointer and register it",
+        "statement": "On genesis or adopt of a project with no instruction file an agent reads first: run `reflow2 init .` when ~/.local/share/reflow2/kit exists (pointer + hooks + MCP config); otherwise get_instructions {section: pointer} and write it as AGENTS.md, or REFLOW2.md when the project owns an AGENTS.md; then register the file as the adapter (add_artifact document, documents doc_kind agent_instructions). Never have the server write it. Why: three of the owner's projects had none on 2026-09-19 — the user-scope route installs nothing, the session hooks then never fire, and agent_instructions_unregistered fires on the design.",
+        "steps": [
+          "genesis",
+          "adopt"
+        ]
+      }
+    },
+    {
       "node_id": "rule:a-reflow2-tool-failure-met-while-working-is-captured-as-a-to-do",
       "node_type": "DesignRule",
       "properties": {
@@ -269527,6 +269711,18 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "A design that has Releases shall also record the ordered procedure for producing one — the steps, their order, and the external conventions they depend on — so that cutting a release is read from the design rather than reconstructed from what was done last time.\n\nANTHONY'S WORDS, 2026-07-31, raised while watching the v0.19.0 cut: \"should every reflow2 project have a requirement to describe its 'release instructions'? ... having a set of release instructions (what are all the steps that need to occur) would be nice. Then the agent doesn't have to look at what was done previously to release or whether it was released on pypi or whatever makes sense for the project being developed.\"\n\nTHE VOCABULARY ALREADY EXISTS AND SHOULD BE USED RATHER THAN EXTENDED. A release procedure is an ordered process, which is what Flow models: add_flow, part_of_flow with step_order, TRIGGERS transitions carrying a role, read back by flow_report. This wants no new node type and no new document.\n\nWHY THIS IS NOT dec:orientation-is-computed-not-written IN REVERSE. That decision refused a START-HERE file because orientation is DERIVABLE — a projection of design state, so the answer was build the view. Release steps are NOT derivable from the graph: which registry (PyPI / crates.io / GitHub releases / a manufactured build), which workflow, which credential, what the tag format is, which files carry a version claim. These are facts about the world outside the design, and no projection can compute them. The same derivability test therefore argues FOR recording them. That distinction is the load-bearing part of this requirement: record what cannot be computed, compute what can.\n\nEVIDENCE, from the v0.19.0 cut itself. The procedure was reconstructed from `git show v0.18.0` plus grepping AGENTS.md for \"release\" — seven steps that exist nowhere as a list: the version in three files plus the lockfile; the CHANGELOG heading plus a fresh empty Unreleased; an upgrade doc REQUIRED IF AND ONLY IF the schema stamp moved; version claims in docs/overview.md and AGENTS.md; the graph manifest, release epoch and prior-release retirement; export exactly once onto the committed file; tag and push. At least two of those are unguessable and were discoverable only by reading a past commit message.\n\nWHERE IT BITES AS A DETECTOR: a Project holding Release nodes with no release Flow is a gap worth surfacing, the same shape as unrealized_capability. Scope deliberately unsettled here — whether this is a reflow2-wide obligation on every governed design or advice the genesis/adopt skills ask for is Anthony's call, not this requirement's.\n\nPROPOSED — captured in his wording, not yet his signature.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:a-projects-first-session-leaves-the-adapter-in-place-whichever-route-reached-reflow2",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "A project's first session with reflow2 leaves the thin adapter in place — the pointer file, registered — whichever route reached the server, and the server never writes into a repository itself",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Anthony, 2026-09-19, on finding that flo2, SeattleArch and bhome carried no pointer file and mostly no hooks because they reached reflow2 through the user-scope registration and reflow2_init never ran: 'can get_instructions pass the text to the agent and say put this in AGENTS.md on /genesis or /adopt?' The pointer the init installs is served (get_instructions, section `pointer`), and the two first-session skills say: no instruction file → run `reflow2 init .` when the kit is present on the machine (pointer, hooks, MCP config), otherwise write the served pointer as AGENTS.md (REFLOW2.md beside an existing one) and register it as the adapter the way adopt already does. The agent does the write on that instruction; the server writes nothing into a repository unasked. Serves req:a-repos-procedural-know-how-is-delivered-at-the-step-it-bears-on-and-the-design-knows-the-adapter-exists, which expects the adapter to exist and be registered.",
         "status": "accepted"
       }
     },
@@ -287227,6 +287423,20 @@
       }
     },
     {
+      "node_id": "ver:the-pointer-is-served-as-a-section-and-the-first-session-skills-say-to-leave-it",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-mcp/tests/served_skills.rs::the_pointer_a_project_holds_is_served_as_a_section_and_the_first_session_skills_say_to_leave_it",
+        "findings": "pr run: passing.",
+        "kind": "verification",
+        "last_run_at": "2026-09-19",
+        "level": "integration",
+        "method": "test",
+        "name": "The pointer section is served and equals the kit's POINTER.md; genesis and adopt name the section, the init, and the sidecar",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:the-probe-slot-is-claimed-atomically",
       "node_type": "Verification",
       "properties": {
@@ -287657,7 +287867,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:c1176e5d25282056076d63240497e2adf612024d471c96cf38b3fbe6f35b05f7",
+  "prev_content_hash": "sha256:6f010f958736af2b28717ee962adcfadaa209cd5da35d3df29d9b1c29b27f8e9",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -288255,8 +288465,8 @@
     "schema_version": 1
   },
   "taken_at": {
-    "branch": "every-skill-carries-a-line-for-a-person",
-    "commit": "c3a55a9b86e7d37379da44a3cf8ca50f3ebd62ec",
+    "branch": "a-projects-first-session-leaves-the-adapter-in-place",
+    "commit": "642dae64419599aad45229ea775192d77e762f57",
     "dirty": true
   }
 }
