@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:3c2d1487f79952ca08dc4c23432d50199b1dba9a492067f88f5f140fb3b458e9",
+  "content_hash": "sha256:9c57289f88b40472dfe0abf7eb804b7c5d08dec8eaad2b74dacf209b14033d40",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2754,6 +2754,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:main"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:replace-text-moves-one-unique-sentence-or-appends-under-the-revision-guard",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:tools-capture"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -17330,8 +17338,10 @@
       "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-replace-one-sentence-in-a-field-without-resending-the-field",
       "properties": {
+        "approved_at": "2026-09-19",
         "roles": [
-          "author"
+          "author",
+          "approver"
         ]
       },
       "to_id": "who:ajs"
@@ -23009,6 +23019,18 @@
       "properties": {
         "authored_at": "2026-09-13",
         "roles": [
+          "author"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:one-sentence-of-a-nodes-text-can-change-without-resending-the-field",
+      "properties": {
+        "approved_at": "2026-09-19",
+        "roles": [
+          "approver",
           "author"
         ]
       },
@@ -44191,6 +44213,87 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:replace-text-moves-one-sentence-without-resending-the-field",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:brainstorm-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:replace-text-moves-one-sentence-without-resending-the-field",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:find-tools-corpus-fixture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:replace-text-moves-one-sentence-without-resending-the-field",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:find-tools-rank-baseline"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:replace-text-moves-one-sentence-without-resending-the-field",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:loop-nudge"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:replace-text-moves-one-sentence-without-resending-the-field",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:replace-text-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:replace-text-moves-one-sentence-without-resending-the-field",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:replace-text-moves-one-sentence-without-resending-the-field",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:replace-text-moves-one-sentence-without-resending-the-field",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skills-and-tools"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:replace-text-moves-one-sentence-without-resending-the-field",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:required-to-create-optional-to-revise",
       "properties": {
         "accepted_baseline": true,
@@ -51954,6 +52057,12 @@
       "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
+      "to_id": "cap:replace-text-moves-one-unique-sentence-or-appends-under-the-revision-guard"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
       "to_id": "cap:sanitize-ingress"
     },
     {
@@ -52261,6 +52370,12 @@
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "req:one-open-design-costs-a-deliberate-amount-of-memory"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "req:one-sentence-of-a-nodes-text-can-change-without-resending-the-field"
     },
     {
       "edge_type": "CONTAINS",
@@ -58893,6 +59008,14 @@
         "evidence": "Promoted on Anthony's word 2026-09-18 ('Go with your recommendation'): the orthogonality test became a ratchet on rank and mutual confusability, and deletion was deferred to usage evidence with stubs first."
       },
       "to_id": "req:every-served-tool-ranks-first-for-its-own-job-and-the-surface-does-not-grow-more-confusable"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-replace-one-sentence-in-a-field-without-resending-the-field",
+      "properties": {
+        "evidence": "Promoted 2026-09-18: option (a), the unique-string replace with an append mode; (d) a `chosen` property on Decision rejected as one-type; (c) the layers idea stays open."
+      },
+      "to_id": "req:one-sentence-of-a-nodes-text-can-change-without-resending-the-field"
     },
     {
       "edge_type": "EVOLVES_INTO",
@@ -72021,6 +72144,14 @@
         "covers": "whole"
       },
       "to_id": "ver:a-registered-file-is-measured-a-pasted-hash-is-compared-an-escape-is-refused-and-no-tree-says-so"
+    },
+    {
+      "edge_type": "IMPLEMENTS",
+      "from_id": "art:replace-text-test",
+      "properties": {
+        "covers": "whole"
+      },
+      "to_id": "ver:replace-text-replaces-a-unique-sentence-refuses-absent-or-repeated-appends-and-preserves-the-prior-state"
     },
     {
       "edge_type": "IMPLEMENTS",
@@ -221293,6 +221424,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:replace-text-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:replace-text-moves-one-unique-sentence-or-appends-under-the-revision-guard"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:replies-are-bounded-gate",
       "properties": {
         "completeness": "complete",
@@ -225333,6 +225473,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:replace-text-moves-one-unique-sentence-or-appends-under-the-revision-guard",
+      "properties": {},
+      "to_id": "req:one-sentence-of-a-nodes-text-can-change-without-resending-the-field"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:report",
       "properties": {},
       "to_id": "req:modularity-computed"
@@ -228831,6 +228977,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:replace-text-replaces-a-unique-sentence-refuses-absent-or-repeated-appends-and-preserves-the-prior-state",
+      "properties": {},
+      "to_id": "cap:replace-text-moves-one-unique-sentence-or-appends-under-the-revision-guard"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:report",
       "properties": {},
       "to_id": "cap:report"
@@ -230852,6 +231004,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:replace-text-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:replace-text-test"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:replies-are-bounded-gate",
       "properties": {
         "action": "created"
@@ -232528,7 +232688,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:0391a0b35b71576a7b0265bb3a4c89f2f2e114815d91e5159232da0e29e4aed9",
+        "checksum": "sha256:c44b1c8d6c63edd9489d2cd374e88da7c265abf872021e5560e7af7a22a403a3",
+        "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "getting-started/skills/brainstorm/SKILL.md",
         "name": "brainstorm/SKILL.md",
@@ -233563,7 +233724,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "test",
-        "checksum": "sha256:5ed36e9838ad1653f0bb67932ed54ffb92d6d564e9d81fe654655c5e15b0fa05",
+        "checksum": "sha256:44869e4a01fff82be779e8421f274d9ee57e88350b75ea41e3f5a50ae338d8a5",
+        "checksum_basis": "measured",
         "description": "The 180-query criterion-1 corpus: one query per served tool, phrased as a user states the job — never the tool's name, never a phrase lifted from its description. Authored 2026-09-11 by an agent that had read every description, so informed rather than blind; a query from a field report supersedes the one here. Read by every_tool_is_found_by_a_query_in_the_users_words.rs via include_str!, so adding a tool without a query fails the build.",
         "location": "crates/reflow2-mcp/tests/fixtures/find_tools_corpus.json",
         "name": "find_tools_corpus.json",
@@ -233575,7 +233737,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "test",
-        "checksum": "sha256:01755a1feb64272363718602c69fdb263d032b00c1d60fa25412b348d17c2b55",
+        "checksum": "sha256:54e3553bc89e5cf07c632ff730cefe267c033acebdf4881acc2d7106fe2b0940",
+        "checksum_basis": "measured",
         "location": "crates/reflow2-mcp/tests/fixtures/find_tools_rank_baseline.json",
         "name": "find_tools_rank_baseline.json — the rank ratchet: tools not first for their own job (name matches) and the mutual pairs; both lists only shrink",
         "status": "realized"
@@ -234184,7 +234347,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:dff675caf1c436129466f86764757d3a016896109d1258ee718a8d734060ffa2",
+        "checksum": "sha256:7c0c5ae60698e37183bb56fdcb45c2a1a95a7bf59b8664f44d8464823b390f3f",
         "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "tools/loop_nudge.py",
@@ -234834,6 +234997,18 @@
       }
     },
     {
+      "node_id": "art:replace-text-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:252ef66435416fb966ca72a1f22c7efc7078db3a655431620a2d3db00a0e9247",
+        "checksum_basis": "measured",
+        "location": "crates/reflow2-mcp/tests/replace_text_moves_one_sentence_without_resending_the_field.rs",
+        "name": "replace_text_moves_one_sentence_without_resending_the_field.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:replies-are-bounded-gate",
       "node_type": "Artifact",
       "properties": {
@@ -235284,7 +235459,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:0b2cbdede0e239d087f218f4c7e3d30ac4a168781bf33717962e2c537051e086",
+        "checksum": "sha256:22b03b23cea2dbb0b5b0134276b4e49d2207875c0687799de3419f8981531231",
         "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
@@ -235372,7 +235547,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:d5a3571e0eab11d8e481bd3d6af98f61af9ab8549f3c8df320e9a30e0d31495d",
+        "checksum": "sha256:4f503053a25cdcc32a582ffd40b7246bc5d2fa0f09acd27b390c3d8aa320d0bf",
         "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
@@ -235413,7 +235588,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:3559b48cf23fca3c20f6db791004266a6ae2e3cc893f01e4ec7f30e914d7a360",
+        "checksum": "sha256:a25f0c4057b268f07b207b601fae93cf25acb117480320a5514079f33e205147",
         "checksum_basis": "measured",
         "location": "docs/skills-and-tools.md",
         "name": "skills-and-tools.md",
@@ -236619,7 +236794,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:306e2b6d70bbad60f978b61d8f552fd5e6f2d42647a88ef9d49f2846fa1d1b86",
+        "checksum": "sha256:601a4d405c2c1967f890bee8637903dd1cc2564fe7bf1e7e11831b6208339f94",
+        "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
         "name": "crates/reflow2-mcp/src/tools/capture.rs",
@@ -239593,6 +239769,16 @@
         "provenance": "authored",
         "status": "verified",
         "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:replace-text-moves-one-unique-sentence-or-appends-under-the-revision-guard",
+      "node_type": "Capability",
+      "properties": {
+        "description": "As built 2026-09-19: replace_text {node_id, node_type?, field, old?, new} in tools/capture.rs. Resolves the type from the id; refuses a missing node, a non-text field (naming the node's text fields), an empty `old`, and an `old` that occurs 0 or ≥2 times (naming the count) — nothing written in every refusal. `old` omitted appends after a blank line. Unchanged text replies changed:false without a write. Writes through upsert_node, then preserve_prior and revision_of, so the reply carries `revision` with the replaced field and prior_state_preserved_in. Named in brainstorm step 5 and revise-design step 3. Corpus query ranks it first.",
+        "name": "replace_text: a unique `old` in one text field becomes `new`, or `new` is appended, under the same revision guard as every write",
+        "provenance": "authored",
+        "status": "realized"
       }
     },
     {
@@ -247884,6 +248070,17 @@
       }
     },
     {
+      "node_id": "chg:replace-text-moves-one-sentence-without-resending-the-field",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-09-19",
+        "name": "replace_text: one sentence of a node's text moves, or a note is appended, without re-sending the field",
+        "rationale": "Anthony 2026-09-18 ('let's start addressing these and implementing fixes'), increment B of the flo2 triage: option (a) of the idea — a unique-string replace with an append mode — chosen over a Decision-level `chosen` property because it serves every long field, not one type.",
+        "summary": "New tool replace_text (capture.rs) + ReplaceTextReq (service.rs); corpus entry; brainstorm and revise-design skill lines (+ mirrors); four integration tests; CHANGELOG."
+      }
+    },
+    {
       "node_id": "chg:required-to-create-optional-to-revise",
       "node_type": "ChangeEvent",
       "properties": {
@@ -254688,7 +254885,7 @@
         "kind": "exploratory",
         "name": "OPEN — should a node's prose be editable by replacing one unique string in one field (refused if absent or not unique), so settling a prose-option decision or appending a dated section never re-sends the body?",
         "rationale": "Recorded from the field report beside the open layers question rather than folded into it: that one asks how a reader sees strata; this asks how a writer avoids making them.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -264213,6 +264410,16 @@
       }
     },
     {
+      "node_id": "frag:art:replace-text-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered replace_text_moves_one_sentence_without_resending_the_field.rs"
+      }
+    },
+    {
       "node_id": "frag:art:replies-are-bounded-gate",
       "node_type": "Fragment",
       "properties": {
@@ -270162,6 +270369,18 @@
         "provenance": "authored",
         "statement": "The resident memory a single open design costs is set deliberately — write buffer per column family, a block cache shared across the families rather than one each, and a ceiling on open file handles — rather than inherited from RocksDB's per-column-family defaults. Any change to those settings is measured on the same design before and after, and the write throughput traded away is measured alongside the memory saved, because this trades one for the other.\n\nRaised by @ajs from flo2's 2026-09-13 session, relayed in conversation. flo2 cannot make a capacity claim about hosting N designs while the per-design cost is unmeasured, so this requirement is what stands between flo2's arithmetic and a number.\n\nSCOPE NOTE — this says the cost is CHOSEN and MEASURED. It does not state what the number should be; that is a judgement about what reflow2 is for and is not settled here.",
         "status": "proposed"
+      }
+    },
+    {
+      "node_id": "req:one-sentence-of-a-nodes-text-can-change-without-resending-the-field",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "One sentence of a node's text can change, or a dated note be appended, without re-sending the field — and never without the revision guard",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Anthony, 2026-09-18, promoting flo2's F3/F4 (the third project to report it after qs and dev_storyflow, 2026-09-04): settling a decision whose options live in prose — which the brainstorm skill asks for on purpose — meant re-sending a 6 KB body to move one line, or leaving 'Options, none chosen' standing false. Measured on reflow2's own design: 210 of 743 decisions exceed 4 KB, 164 carry dated ═══ sections, 92 preserved re-sends. The edit must be bounded: the text to replace occurs exactly once or the call is refused with the count and nothing is written; omitting it appends after a blank line; the prior state is preserved and the reply names what moved, exactly as every other write. Graph text stays data: the caller supplies both strings, and the server never reads a node's prose for meaning.",
+        "status": "accepted"
       }
     },
     {
@@ -284975,6 +285194,20 @@
       }
     },
     {
+      "node_id": "ver:replace-text-replaces-a-unique-sentence-refuses-absent-or-repeated-appends-and-preserves-the-prior-state",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-mcp/tests/replace_text_moves_one_sentence_without_resending_the_field.rs (4 tests).",
+        "findings": "pr run: 4 tests pass; the corpus ratchet ranks replace_text first for its own query.",
+        "kind": "verification",
+        "last_run_at": "2026-09-19",
+        "level": "integration",
+        "method": "test",
+        "name": "A unique sentence is replaced and the prior state preserved; an absent or repeated old is refused with the count and nothing is written; omitting old appends; a non-text field is refused by name",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:report",
       "node_type": "Verification",
       "properties": {
@@ -286082,7 +286315,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:6c0d9f7cf88afe385e3256a0795da8bcf08c49625df1325050560254f4d5c345",
+  "prev_content_hash": "sha256:3c2d1487f79952ca08dc4c23432d50199b1dba9a492067f88f5f140fb3b458e9",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -286221,6 +286454,7 @@
       "ChangeEvent.change_type": [
         "baseline_established",
         "constraint_change",
+        "decision_settled",
         "defect_fix",
         "deprecation",
         "documentation",
@@ -286679,8 +286913,8 @@
     "schema_version": 1
   },
   "taken_at": {
-    "branch": "a-field-report-is-triaged-by-a-served-step",
-    "commit": "d14c641c8c76b38fb3c5cb9c67260115ff3c78a5",
+    "branch": "replace-one-sentence-in-a-field",
+    "commit": "1480dc972781624c9d21e8900e8985cc3c5f5bbc",
     "dirty": true
   }
 }

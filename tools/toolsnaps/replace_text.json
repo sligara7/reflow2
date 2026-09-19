@@ -1,0 +1,46 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Replace ONE piece of a node's text without re-sending the field: `old` must occur exactly once in `field` and is replaced by `new` (absent or repeated is refused, naming the count); omit `old` to append `new` after a blank line. Same revision guard as every write — the earlier text is kept and the reply's `revision` names what moved. Measured 2026-09-18 on three projects: settling a prose-option decision or appending a dated section meant re-sending a 6 KB body to move one sentence, or leaving a line that was now false (210 of 743 decisions here exceed 4 KB; 92 re-sends kept in full). Ask for this to replace one sentence in a decision or requirement's text, or to add a dated note to it, without rewriting the whole thing.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "field": {
+        "description": "The string property to edit — `decision`, `statement`, `description`,\n`rationale`, `summary` … Refused by name if the property is absent or\nnot text.",
+        "type": "string"
+      },
+      "new": {
+        "description": "The replacement (or, with `old` omitted, the text appended). Empty\nwith `old` deletes that one occurrence.",
+        "type": "string"
+      },
+      "node_id": {
+        "description": "The node whose text moves — any type; resolved from the id prefix when\n`node_type` is omitted.",
+        "type": "string"
+      },
+      "node_type": {
+        "default": null,
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "old": {
+        "default": null,
+        "description": "The exact text to replace. It must occur EXACTLY ONCE in the field —\nabsent or repeated is refused, naming how many times it occurs, so a\nsentence can never land in the wrong paragraph. Omit it to APPEND\n`new` after a blank line (a dated section, a settlement note).",
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "required": [
+      "node_id",
+      "field",
+      "new"
+    ],
+    "type": "object"
+  },
+  "name": "replace_text"
+}

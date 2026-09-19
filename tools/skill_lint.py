@@ -90,6 +90,10 @@ NON_TOOL_TERMS = {
     # `measurement` on link_artifact / reconcile_artifacts, `artifacts` on
     # loop_status — since reflow2 measures registered files itself.
     "measurement", "artifacts",
+    # replace_text (2026-09-18): its two FIELDS, named in brainstorm and
+    # revise-design because the pair is the whole contract — a unique `old`
+    # becomes `new`, or `new` is appended when `old` is omitted.
+    "old", "new",
     "caused_by",
     "cause_evidence",
 

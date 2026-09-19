@@ -139,6 +139,7 @@
   "release_includes_all": "put everything built since the last release into this one",
   "release_report": "what is in this release and is it ready to cut",
   "repair_report": "which fixes were real fixes and which were workarounds still standing in for one",
+  "replace_text": "replace one sentence in a decision's text without re-sending the whole field",
   "report_manual_work": "I had to do this by hand because no tool did it \u2014 record that",
   "require_resource": "record that this part needs that resource",
   "review_relations": "record what this idea relates to, or that nothing does",
