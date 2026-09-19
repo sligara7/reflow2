@@ -388,6 +388,42 @@ impl ReflowService {
                 obj.insert("artifacts".into(), block);
             }
         }
+        // THIS SESSION, BY THE ONLY THING EVERY OTHER SIGNAL CANNOT SEE: a
+        // session that reads the design at length and writes nothing. Every
+        // count above is about nodes that exist; a session that produced six
+        // findings in chat and recorded none of them was clean by all of them
+        // (flo2, 2026-09-18). A block always; a line in `next` only past the
+        // threshold and only for a session that COULD write — a read-only
+        // surface has no finding to owe.
+        {
+            let (reads, writes) = self.session_counts();
+            const READS_BEFORE_A_WRITE_IS_OWED: u64 = 25;
+            let owed = !self.is_read_only() && writes == 0 && reads >= READS_BEFORE_A_WRITE_IS_OWED;
+            if owed && let Some(arr) = payload.get_mut("next").and_then(|v| v.as_array_mut()) {
+                arr.insert(
+                    0,
+                    json!(format!(
+                        "THIS SESSION: {reads} read(s) of the design and no write. A finding is \
+                         the agent's own observation and needs no permission — if this session \
+                         has noticed anything (a contradiction, a number, a cause), record_finding \
+                         writes it now, before the next answer; a session that reads for an hour \
+                         and writes nothing looks clean to every other signal here."
+                    )),
+                );
+            }
+            if let Some(obj) = payload.as_object_mut() {
+                obj.insert(
+                    "session".into(),
+                    json!({
+                        "seat": self.seat.id().to_string(),
+                        "reads": reads,
+                        "writes": writes,
+                        "read_only": self.is_read_only(),
+                        "reads_before_a_write_is_owed": READS_BEFORE_A_WRITE_IS_OWED,
+                    }),
+                );
+            }
+        }
         // THE LENS RIDES THIS REPLY TOO, and the reason is a field report.
         //
         // 2026-09-14: a session closed with *"6 structural findings and 1

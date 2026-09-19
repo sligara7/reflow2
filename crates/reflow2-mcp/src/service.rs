@@ -441,6 +441,19 @@ pub struct ReflowService {
     /// Measurements memoised on (length, mtime), shared across sessions for
     /// the same reason `auto_export` is: one server, one disk.
     measure_memo: crate::measure::SharedMemo,
+    /// THIS SESSION's calls, split by whether the tool it named is a write
+    /// (`read_only_hint = false`). Fresh per session like the seat, because
+    /// the question they answer is about one session: a session that read the
+    /// design for an hour and wrote nothing is invisible to every loop signal,
+    /// which are all about nodes that exist
+    /// (`req:a-session-that-reads-and-never-writes-is-seen`, flo2 2026-09-18).
+    session_reads: Arc<AtomicU64>,
+    session_writes: Arc<AtomicU64>,
+    /// Every served tool whose `read_only_hint` is false, read off the router
+    /// this service was assembled with — a field rather than a process-wide
+    /// static, so the served surface a session is counted against is the one
+    /// it is actually served (`rule:per-design-state-is-never-a-process-global`).
+    write_tools: Arc<std::collections::HashSet<String>>,
 }
 
 /// See [`ReflowService::read_hint`]. `computed_gen: None` means nothing has been
@@ -5415,6 +5428,19 @@ impl ReflowService {
     /// `req:stale-seat-knows` is a sibling of the store, so the path is the one
     /// thing the service needs to keep.
     fn wrap_at(graph: DesignGraph, graph_path: Option<String>) -> Self {
+        let tool_router = Self::tool_router()
+            + Self::skills_router()
+            + Self::capture_router()
+            + Self::coherence_router()
+            + Self::ask_router()
+            + Self::assure_router()
+            + Self::operate_tools_router()
+            + Self::temporal_tools_router()
+            + Self::ingest_tools_router()
+            + Self::built_router()
+            + Self::exchange_router()
+            + Self::query_router()
+            + Self::claims_tools_router();
         Self {
             graph: Arc::new(RwLock::new(graph)),
             read_only: false,
@@ -5423,25 +5449,16 @@ impl ReflowService {
                 .as_deref()
                 .map(|gp| crate::wall_check::project_root(Some(gp), None)),
             measure_memo: Default::default(),
+            session_reads: Arc::new(AtomicU64::new(0)),
+            session_writes: Arc::new(AtomicU64::new(0)),
+            write_tools: Arc::new(Self::write_tools_of(&tool_router)),
             graph_path,
             written_by: None,
             // adding a store did not have to change every constructor.
             // The skills are served, not installed (dec:skills-served), and
             // their tools live in their own module — combined here so
             // find_tools and tools/list see one surface.
-            tool_router: Self::tool_router()
-                + Self::skills_router()
-                + Self::capture_router()
-                + Self::coherence_router()
-                + Self::ask_router()
-                + Self::assure_router()
-                + Self::operate_tools_router()
-                + Self::temporal_tools_router()
-                + Self::ingest_tools_router()
-                + Self::built_router()
-                + Self::exchange_router()
-                + Self::query_router()
-                + Self::claims_tools_router(),
+            tool_router,
             write_gen: Arc::new(AtomicU64::new(0)),
             read_hint: Arc::new(std::sync::Mutex::new(ReadHintCache::default())),
             auto_export: None,
@@ -5557,6 +5574,10 @@ impl ReflowService {
             auto_export: self.auto_export.clone(),
             tree_root: self.tree_root.clone(),
             measure_memo: Arc::clone(&self.measure_memo),
+            // Fresh per session, like the seat: the count is about one client.
+            session_reads: Arc::new(AtomicU64::new(0)),
+            session_writes: Arc::new(AtomicU64::new(0)),
+            write_tools: Arc::clone(&self.write_tools),
         }
     }
 
@@ -5879,6 +5900,10 @@ impl ReflowService {
         client_version: String,
         skill: Option<String>,
     ) {
+        // Counted for EVERY design, in memory included — the ledger below is
+        // for a store on disk, but the reads-without-writes question is about
+        // the session and is asked of the loop, not of a file.
+        self.count_call(tool);
         let Some(graph_path) = self.graph_path.as_deref() else {
             return;
         };
@@ -5926,6 +5951,56 @@ impl ReflowService {
     /// The lessons this design holds for one step (a skill or tool name),
     /// newest first. Best effort and read-only: never able to withhold the
     /// skill or the listing it rides on. See [`crate::lessons`].
+    /// Whether a served tool is a WRITE, read off its own `read_only_hint`
+    /// rather than off a hand-kept list — the list would be one more thing
+    /// nothing checks. The set is a property of the served surface (the same
+    /// for every design this binary serves), so it is computed once.
+    fn is_write_tool(&self, tool: &str) -> bool {
+        self.write_tools.contains(tool)
+    }
+
+    /// The write tools of a router: every tool whose own annotation says it
+    /// is not read-only. Computed once per service at assembly.
+    fn write_tools_of(router: &ToolRouter<Self>) -> std::collections::HashSet<String> {
+        router
+            .list_all()
+            .into_iter()
+            .filter(|t| {
+                t.annotations
+                    .as_ref()
+                    .and_then(|a| a.read_only_hint)
+                    .is_some_and(|ro| !ro)
+            })
+            .map(|t| t.name.to_string())
+            .collect()
+    }
+
+    /// Count one served call against this session — the one line the loop's
+    /// reads-without-writes answer rests on. Called from `call_tool` for every
+    /// call; exposed for tests because the served path needs a request
+    /// context no test can build.
+    fn count_call(&self, tool: &str) {
+        if self.is_write_tool(tool) {
+            self.session_writes.fetch_add(1, Ordering::Relaxed);
+        } else {
+            self.session_reads.fetch_add(1, Ordering::Relaxed);
+        }
+    }
+
+    /// Test seam for `count_call`.
+    #[doc(hidden)]
+    pub fn note_call_for_test(&self, tool: &str) {
+        self.count_call(tool);
+    }
+
+    /// (reads, writes) this session has made so far — see `session_reads`.
+    pub fn session_counts(&self) -> (u64, u64) {
+        (
+            self.session_reads.load(Ordering::Relaxed),
+            self.session_writes.load(Ordering::Relaxed),
+        )
+    }
+
     pub(crate) async fn lessons_for_step(&self, step: &str) -> Vec<crate::lessons::Lesson> {
         let g = self.graph.read().await;
         crate::lessons::lessons_by_step(&g)

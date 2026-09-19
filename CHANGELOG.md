@@ -33,6 +33,22 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **A field report is triaged by a served step, and a finding is written before the answer.**
+  Anthony, 2026-09-18, after the rule that every feedback issue gets root-cause and every idea
+  gets brainstorm (set 2026-09-05 "so I don't have to remind this every time") was broken a fourth
+  time: root-caused, the rule named no step and no served step existed for a maintainer reading a
+  field report, so nothing could deliver it. New skill `triage-feedback` (`/triage`) is that
+  step; the two standing rules now name it and `root-cause`/`record_finding` in their `steps`.
+  The same day flo2 reported the other half: an agent produced six design findings in chat and
+  recorded none, because it had generalised "intent waits for the owner's word" into "everything
+  waits for permission" — and every loop signal counts nodes that exist, so the session read as
+  clean. capture-intent now says a finding is the agent's to write, before the answer; a design
+  rule carries the same line on the capture and root-cause skills; `loop_status` gains a `session`
+  block (this seat's reads and writes) and a `next` line past 25 reads with no write, never for a
+  read-only surface; the stop hook nudges once on the same inverse. Requirement
+  `req:a-session-that-reads-and-never-writes-is-seen` and
+  `req:a-field-report-is-triaged-by-a-served-step-and-the-standing-rules-ride-it`, accepted.
+
 - **reflow2 measures registered files, and never reads them for meaning.** Anthony, 2026-09-18,
   closing the "reflow2 does no file I/O — should it?" brainstorm on the narrow reading: the slogan
   was always shorthand for "no interpretation", and hashing is counting. Until now every checksum

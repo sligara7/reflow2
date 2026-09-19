@@ -1,4 +1,4 @@
-# What reflow2 offers: 29 skills and 187 tools
+# What reflow2 offers: 30 skills and 187 tools
 
 Generated from the **running server**, not from memory — the skill list came from `list_skills`,
 the tool list and every read/write marking from `tools/list`, and the command mapping from
@@ -51,7 +51,7 @@ procedure behind them. Every other command names a skill.
 
 ---
 
-## The 29 skills
+## The 30 skills
 
 Each is a procedure, not a tool call: it says what to do, in what order, and what *not* to do.
 Read one in full with `get_skill` before doing the work it covers.

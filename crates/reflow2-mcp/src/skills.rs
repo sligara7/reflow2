@@ -140,6 +140,7 @@ const COMMAND_ALIASES: &[(&str, Result<&str, &str>)] = &[
     ("where", Ok("where-am-i")),
     ("kpp", Ok("kpp-proposal")),
     ("health", Ok("check-health")),
+    ("triage", Ok("triage-feedback")),
     (
         "decisions",
         Err("no skill — it calls `scan_nodes` for the `Decision` type directly"),
