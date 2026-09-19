@@ -57,6 +57,19 @@
           "integer",
           "null"
         ]
+      },
+      "status": {
+        "default": null,
+        "description": "`arrived` (the landing status of add_epoch: a point that HAS happened) or\n`planned` (one that has not). plan_epoch is the same call with `planned`\nas its landing status; both are sayable here so a caller who reached\nfor add_epoch first does not record unstarted work as history (flo2,\n2026-09-19: \"returned `status: arrived`, which is the graph stating that\nv0.2.0 has happened\"). Tense, not intent: no `approver`.",
+        "enum": [
+          "planned",
+          "arrived",
+          null
+        ],
+        "type": [
+          "string",
+          "null"
+        ]
       }
     },
     "required": [

@@ -104,6 +104,7 @@ schema_enum!(
 schema_enum!(change_event_subject_opt, "ChangeEvent", "subject", opt);
 schema_enum!(component_tier_opt, "Component", "tier", opt);
 schema_enum!(component_kind_opt, "Component", "kind", opt);
+schema_enum!(component_status_opt, "Component", "status", opt);
 schema_enum!(constraint_concern_opt, "Constraint", "concern", opt);
 schema_enum!(constraint_direction_opt, "Constraint", "direction", opt);
 schema_enum!(constraint_priority_opt, "Constraint", "priority", opt);
@@ -150,6 +151,7 @@ schema_enum!(verification_level_opt, "Verification", "level", opt);
 schema_enum!(verification_status_req, "Verification", "status", req);
 schema_enum!(verification_status_opt, "Verification", "status", opt);
 schema_enum!(release_unit_type_opt, "Release", "unit_type", opt);
+schema_enum!(release_status_opt, "Release", "status", opt);
 schema_enum!(environment_env_type_opt, "Environment", "env_type", opt);
 schema_enum!(flow_type_opt, "Flow", "flow_type", opt);
 schema_enum!(constraint_category_opt, "Constraint", "category", opt);
@@ -176,6 +178,8 @@ schema_enum!(
     opt
 );
 schema_enum!(epoch_type_opt, "DesignEpoch", "epoch_type", opt);
+schema_enum!(epoch_status_opt, "DesignEpoch", "status", opt);
+schema_enum!(project_status_opt, "Project", "status", opt);
 schema_enum!(repair_req, "ChangeEvent", "repair", opt);
 schema_enum!(decision_status_req, "Decision", "status", req);
 // The one-call landing status on the constructors (2026-09-06,

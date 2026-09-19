@@ -1653,36 +1653,52 @@ pub struct GenesisReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct IdName {
-    /// Stable node id (e.g. `req:offline`).
+    /// Stable node id (e.g. `ifc:state`).
     pub id: String,
     /// Human-readable name.
     #[serde(default)]
     pub name: Option<String>,
-    /// WHAT THIS IS, in prose. Added 2026-09-07. BOTH users of this struct are
-    /// constructors — `add_interface` and `add_project` — and both their types
-    /// declare `description` as the ONLY prose field they have, so until this
-    /// landed the surface let a caller name an interface or a project and never
-    /// say what it was. Six of the eleven types declaring a description were in
-    /// that state, because the class was fixed one report at a time and never
-    /// swept
+    /// WHAT THIS IS, in prose. Added 2026-09-07: an Interface declares
+    /// `description` as the ONLY prose field it has, so until this landed the
+    /// surface let a caller name an interface and never say what it was
     /// (`fact:six-constructors-cannot-write-any-prose-because-the-class-was-fixed-one-report-at-a-time-and-never-swept`).
-    /// A third user of this struct that is NOT a constructor would want it
-    /// split; there is none today.
+    /// Since 2026-09-19 this struct has ONE user, `add_interface`; `add_project`
+    /// has its own (`ProjectReq`), because the two types had come to share a
+    /// struct where half the fields were "ignored for the other".
     #[serde(default)]
     pub description: Option<String>,
-    /// FREE-TEXT DETAIL the structured fields do not carry, on an Interface:
-    /// a prose note, a link to an OpenAPI document, a header layout. 13 of 22
-    /// interfaces carried one and no tool could set it. Ignored for a Project,
-    /// which declares no such property — the two constructors share this
-    /// struct and a third user would want them split.
+    /// FREE-TEXT DETAIL the structured fields do not carry: a prose note, a
+    /// link to an OpenAPI document, a header layout. 13 of 22 interfaces
+    /// carried one and no tool could set it.
     #[serde(default)]
     pub spec: Option<String>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct ProjectReq {
+    /// The project's id — `proj:<slug>` by convention. Calling again with an EXISTING id REVISES that node: what you pass overwrites, what you omit survives.
+    pub id: String,
+    /// Human-readable name.
+    #[serde(default)]
+    pub name: Option<String>,
+    /// WHAT THIS IS, in prose — the only prose field a Project declares.
+    #[serde(default)]
+    pub description: Option<String>,
     /// THIS DESIGN'S DECOMPOSITION LADDER, ordered bottom-first: index 0 is
-    /// the finest grain. On a Project. `hierarchy.rs` READS it on every level
-    /// check and nothing could write it, which made it the sharpest of the
-    /// fourteen holes. Ignored for an Interface.
+    /// the finest grain. `hierarchy.rs` READS it on every level check and
+    /// nothing could write it, which made it the sharpest of the fourteen
+    /// holes (2026-09-07).
     #[serde(default)]
     pub decomposition_levels: Option<Vec<String>>,
+    /// `active` (the landing status) / `paused` / `archived`. One status
+    /// contract across every constructor of a type that carries one
+    /// (2026-09-19): omitted lands the type's landing status, stated here;
+    /// passed, it is stored as given. A project's status is a fact about the
+    /// work, not settled intent, so there is no `approver` on it.
+    #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::project_status_opt")]
+    pub status: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -1879,6 +1895,8 @@ pub struct CapabilityReq {
 #[serde(deny_unknown_fields)]
 pub struct RequirementStatusReq {
     /// The Requirement (`req:…`) whose lifecycle status moves. Every move off `proposed` records the USER's word — pass `approver`.
+    #[serde(alias = "id")]
+    #[serde(alias = "node_id")]
     pub requirement_id: String,
     /// `proposed` (default) / `accepted` / `deferred` / `dropped` / `met`.
     #[schemars(schema_with = "crate::enum_schema::requirement_status_req")]
@@ -1898,6 +1916,8 @@ pub struct RequirementStatusReq {
 #[serde(deny_unknown_fields)]
 pub struct ProjectModeReq {
     /// The Project (`proj:…`) whose governance mode is being set — `flexible` lets `apply_heal` apply structural repairs, `rigid` makes it propose and stop.
+    #[serde(alias = "id")]
+    #[serde(alias = "node_id")]
     pub project_id: String,
     /// `flexible` (the schema default) / `rigid`. In `rigid`, `apply_heal`
     /// proposes structural repairs and stops instead of applying them.
@@ -1909,6 +1929,8 @@ pub struct ProjectModeReq {
 #[serde(deny_unknown_fields)]
 pub struct SetClosureCriterionReq {
     /// The Project (`proj:…`) declaring what closure means for its design.
+    #[serde(alias = "id")]
+    #[serde(alias = "node_id")]
     pub project_id: String,
     /// Which legs count, in the owner's order — the first named leg that
     /// fails is the first hole closure_report names. At least one.
@@ -1960,6 +1982,8 @@ pub struct ReleaseClaimReq {
 #[serde(deny_unknown_fields)]
 pub struct RequirementLineageReq {
     /// The Requirement (`req:…`) whose lineage is being set — `original`, `decomposed` (a 1:1 split of a parent) or `derived` (technical necessity a Decision created).
+    #[serde(alias = "id")]
+    #[serde(alias = "node_id")]
     pub requirement_id: String,
     /// `original` (default) / `decomposed` / `derived`.
     #[schemars(schema_with = "crate::enum_schema::requirement_lineage_req")]
@@ -1970,6 +1994,8 @@ pub struct RequirementLineageReq {
 #[serde(deny_unknown_fields)]
 pub struct CapabilityStatusReq {
     /// The Capability (`cap:…`) whose lifecycle status moves. A status past `planned` with no passing check is reported as an unproven claim by `loop_status`.
+    #[serde(alias = "id")]
+    #[serde(alias = "node_id")]
     pub capability_id: String,
     /// `planned` (default) / `in_progress` / `realized` / `verified`.
     #[schemars(schema_with = "crate::enum_schema::capability_status_req")]
@@ -2052,6 +2078,17 @@ pub struct ComponentReq {
     #[serde(default)]
     #[schemars(schema_with = "crate::enum_schema::component_tier_opt")]
     pub tier: Option<String>,
+    /// `planned` (the landing status) / `in_progress` / `realized` / `verified`.
+    /// Leave it unset when designing forwards — a new part really is planned.
+    /// Set it when recording a part that ALREADY EXISTS (adopt), so the graph
+    /// does not call a shipped system unbuilt. Until 2026-09-19 this
+    /// constructor refused the field and then returned `status: planned`
+    /// (flo2 F10) — the same contract `add_capability` had, now on every
+    /// constructor of a type that carries a status. A build status is a
+    /// measurement, not settled intent, so there is no `approver` on it.
+    #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::component_status_opt")]
+    pub status: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -2224,6 +2261,7 @@ pub struct CreateNodeReq {
     /// The new node's id. Use the prefix convention the typed constructors use (`req:`, `cap:`, `dec:` …) so the type is readable from the id anywhere it appears.
     pub id: String,
     /// Property object; validated against the schema.
+    #[serde(alias = "properties")]
     #[serde(default)]
     pub props: Option<JsonObject>,
     /// The node's `prior_content_hash` as you last READ it. Supply it and this
@@ -2264,6 +2302,7 @@ pub struct CreateEdgeReq {
     pub to_type: Option<String>,
     /// The target node; its type is `to_type`.
     pub to_id: String,
+    #[serde(alias = "properties")]
     #[serde(default)]
     pub props: Option<JsonObject>,
 }
@@ -2578,6 +2617,8 @@ pub struct VerifyTargetReq {
 #[serde(deny_unknown_fields)]
 pub struct VerificationStatusReq {
     /// The Verification (`ver:…`) whose run outcome is being recorded. Pass the real outcome: a check left at `planned` counts as no confirmation.
+    #[serde(alias = "id")]
+    #[serde(alias = "node_id")]
     pub verification_id: String,
     /// `planned` / `passing` / `failing` / `skipped` / `blocked`.
     #[schemars(schema_with = "crate::enum_schema::verification_status_req")]
@@ -2600,6 +2641,8 @@ pub struct VerificationStatusReq {
 #[serde(deny_unknown_fields)]
 pub struct VerificationKindReq {
     /// The Verification (`ver:…`) being marked `verification` (built right) or `validation` (built the right thing).
+    #[serde(alias = "id")]
+    #[serde(alias = "node_id")]
     pub verification_id: String,
     /// `verification` (built right — meets the spec) or `validation` (the right
     /// thing — meets the operational intent).
@@ -2914,6 +2957,10 @@ pub struct ReleaseReq {
     /// (`fact:six-constructors-cannot-write-any-prose-because-the-class-was-fixed-one-report-at-a-time-and-never-swept`).
     #[serde(default)]
     pub description: Option<String>,
+    /// `planned` (omitted lands here) / `built` / `deployed` / `retired`.
+    #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::release_status_opt")]
+    pub status: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -2992,6 +3039,7 @@ pub struct NodeSpecReq {
     pub id: String,
     /// Property object; validated against the schema exactly as `create_node`
     /// validates it.
+    #[serde(alias = "properties")]
     #[serde(default)]
     pub props: Option<JsonObject>,
 }
@@ -3025,6 +3073,7 @@ pub struct EdgeSpecReq {
     #[serde(default)]
     pub to_type: Option<String>,
     pub to_id: String,
+    #[serde(alias = "properties")]
     #[serde(default)]
     pub props: Option<JsonObject>,
 }
@@ -3134,6 +3183,8 @@ pub struct AcknowledgeGapsReq {
 #[serde(deny_unknown_fields)]
 pub struct ReleaseIncludesAllReq {
     /// The Release (`rel:…`) that ships everything realized since the previous cut — the roll-call `release_includes` would otherwise need one call per item.
+    #[serde(alias = "id")]
+    #[serde(alias = "node_id")]
     pub release_id: String,
     /// Artifact or Component ids this release does NOT ship. An id that names
     /// nothing in the design is refused rather than ignored — a caller who
@@ -3152,6 +3203,8 @@ pub struct ReleaseIncludesAllReq {
 #[serde(deny_unknown_fields)]
 pub struct ReleaseReportReq {
     /// The Release (`rel:…`) to report — what it includes, where it is deployed, and what it is pinned to.
+    #[serde(alias = "id")]
+    #[serde(alias = "node_id")]
     pub release_id: String,
 }
 
@@ -3258,6 +3311,8 @@ pub struct ReadinessReportReq {
     /// The increment to derive a delivery epoch for.
     /// A `Release`, `Capability` or `Requirement` — whatever carries the
     /// `GATED_ON` edges.
+    #[serde(alias = "id")]
+    #[serde(alias = "node_id")]
     pub subject_id: String,
 }
 
@@ -3319,6 +3374,8 @@ pub struct PartOfFlowReq {
 #[serde(deny_unknown_fields)]
 pub struct FlowReportReq {
     /// The Flow (`flow:…`) to report — its steps in `step_order`, with unordered steps listed after and said so.
+    #[serde(alias = "id")]
+    #[serde(alias = "node_id")]
     pub flow_id: String,
 }
 
@@ -3559,6 +3616,8 @@ pub struct RelationLinkReq {
 #[serde(deny_unknown_fields)]
 pub struct BudgetReportReq {
     /// The Constraint (`con:…`) holding the limit to roll up against — one with a `quantity`, `limit` and `direction`, typically a KPP (`category: kpp`).
+    #[serde(alias = "id")]
+    #[serde(alias = "node_id")]
     pub constraint_id: String,
 }
 
@@ -3641,6 +3700,8 @@ pub struct ReportManualWorkReq {
 #[serde(deny_unknown_fields)]
 pub struct ArrivalDeltaReq {
     /// The DesignEpoch or Release to read the schedule of.
+    #[serde(alias = "id")]
+    #[serde(alias = "node_id")]
     pub target_id: String,
 }
 
@@ -4088,6 +4149,8 @@ pub struct DefectIdReq {
 #[serde(deny_unknown_fields)]
 pub struct CapabilityDeliveryReq {
     /// The Capability (`cap:…`) whose delivery form is being set — `artifact` (realised by a file) or `model` (realised by the design itself).
+    #[serde(alias = "id")]
+    #[serde(alias = "node_id")]
     pub capability_id: String,
     /// `artifact` (the default) — a file realizes it, and delivery needs both
     /// the file and a passing check. `model` — the deliverable IS the design
@@ -4101,6 +4164,8 @@ pub struct CapabilityDeliveryReq {
 #[serde(deny_unknown_fields)]
 pub struct InterfaceDesignationReq {
     /// The Interface (`ifc:…`) whose role at the boundary is being set — `internal`, `published`, `required` or `both`. Read by `export_surface` and `pair_designs`.
+    #[serde(alias = "id")]
+    #[serde(alias = "node_id")]
     pub interface_id: String,
     /// `internal` (the default state), `published` (a boundary others are
     /// entitled to rely on), `required` (one this design needs FROM OUTSIDE), or
@@ -4212,6 +4277,8 @@ pub struct ObservedDependencyDto {
 #[serde(deny_unknown_fields)]
 pub struct RequirementDesignationReq {
     /// The Requirement (`req:…`) being marked `published` (a promise a consumer may rely on, carried by `export_surface`) or `internal`.
+    #[serde(alias = "id")]
+    #[serde(alias = "node_id")]
     pub requirement_id: String,
     /// `internal` (the default state) or `published` — a behavioural promise a
     /// consumer of this design is entitled to rely on.
@@ -4374,6 +4441,8 @@ pub struct RegionsReq {
 pub struct CapabilitySignatureReq {
     /// The Capability whose signature this is. Refused if it does not exist —
     /// a typo must not mint a capability whose only content is a signature.
+    #[serde(alias = "id")]
+    #[serde(alias = "node_id")]
     pub capability_id: String,
     /// What KIND of capability this is: validation / transform / query /
     /// persistence / decision / actuation / io / compute. Free text and
@@ -4441,6 +4510,8 @@ pub struct PropagateFromReq {
 #[serde(deny_unknown_fields)]
 pub struct PropagateChangeReq {
     /// The ChangeEvent to propagate from.
+    #[serde(alias = "id")]
+    #[serde(alias = "node_id")]
     pub change_event_id: String,
     /// Max traversal depth (default 5).
     #[serde(default)]
@@ -4502,6 +4573,8 @@ pub struct ProposeHealReq {
 #[serde(deny_unknown_fields)]
 pub struct InterfaceSpecReq {
     /// The Interface (`ifc:…`) whose contract axes are being stated — medium, paradigm, payload format, auth, transport security, operations, error model, schema.
+    #[serde(alias = "id")]
+    #[serde(alias = "node_id")]
     pub interface_id: String,
     /// How the contract is CARRIED: `REST` / `gRPC` / `json_rpc` / `event` /
     /// `graphql` / `cli` / `library` / `data` / `mechanical` / `electrical` /
@@ -4738,6 +4811,8 @@ pub struct ReconcileArtifactsReq {
 #[serde(deny_unknown_fields)]
 pub struct ArtifactIntentReq {
     /// The registered Artifact (`art:…`, from `link_artifact` or `add_artifact`) whose intent and note are being set.
+    #[serde(alias = "id")]
+    #[serde(alias = "node_id")]
     pub artifact_id: String,
     /// `atomic` (one deliverable — the default), `opaque` (a subtree claimed as
     /// a unit ON PURPOSE: a settled archive, a vendored tree — do not descend),
@@ -4870,6 +4945,8 @@ pub struct ProposeAllocationReq {
 pub struct DimensionDriftReq {
     /// The assessed node — any node type carrying `HAS_OBSERVATION` edges
     /// to `DimensionObservation` records.
+    #[serde(alias = "id")]
+    #[serde(alias = "node_id")]
     pub target_id: String,
     /// Quality dimension key (e.g. `reliability`, `security`).
     #[schemars(schema_with = "crate::enum_schema::dimension_assessment_dimension_req")]
@@ -4909,12 +4986,23 @@ pub struct AddEpochReq {
     /// fused reach with adoption.
     #[serde(default)]
     pub checksum: Option<String>,
+    /// `arrived` (the landing status of add_epoch: a point that HAS happened) or
+    /// `planned` (one that has not). plan_epoch is the same call with `planned`
+    /// as its landing status; both are sayable here so a caller who reached
+    /// for add_epoch first does not record unstarted work as history (flo2,
+    /// 2026-09-19: "returned `status: arrived`, which is the graph stating that
+    /// v0.2.0 has happened"). Tense, not intent: no `approver`.
+    #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::epoch_status_opt")]
+    pub status: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct EpochStatusReq {
     /// The DesignEpoch (`epoch:…`) moving between `planned` and `arrived`. Note the stored type name is `DesignEpoch`, not `Epoch`.
+    #[serde(alias = "id")]
+    #[serde(alias = "node_id")]
     pub epoch_id: String,
     /// `arrived` (it has happened) or `planned` (a claim about one that has
     /// not). `planned` → `arrived` is ARRIVAL.
@@ -5338,6 +5426,8 @@ pub struct AnalyzeAlternativesReq {
 #[serde(deny_unknown_fields)]
 pub struct SetDecisionStatusReq {
     /// The Decision whose lifecycle status moves. `dec:…` by convention; `search_design` finds one by its words.
+    #[serde(alias = "id")]
+    #[serde(alias = "node_id")]
     pub decision_id: String,
     /// `proposed` (opens a decision point) / `accepted` / `deferred` (set aside,
     /// not debt — carries an approver like `accepted`) / `superseded` /
@@ -5384,6 +5474,8 @@ pub struct RelationCandidatesReq {
 #[serde(deny_unknown_fields)]
 pub struct SetQualityTargetReq {
     /// The Decision that STATES what the design is built for.
+    #[serde(alias = "id")]
+    #[serde(alias = "node_id")]
     pub decision_id: String,
     /// The quality axis this design is aiming at — `reliability` /
     /// `performance` / `maintainability` / `security` / `scalability` /
@@ -5417,6 +5509,8 @@ pub struct RegisterAlternativeReq {
 #[serde(deny_unknown_fields)]
 pub struct AlternativesForReq {
     /// The Decision whose registered alternatives to list — a `proposed` decision point that `register_alternative` has been called on.
+    #[serde(alias = "id")]
+    #[serde(alias = "node_id")]
     pub decision_id: String,
 }
 

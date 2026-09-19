@@ -48,6 +48,7 @@ fn component(id: &str, name: &str) -> ComponentReq {
         level: None,
         distinct_from: None,
         tier: None,
+        status: None,
     }
 }
 

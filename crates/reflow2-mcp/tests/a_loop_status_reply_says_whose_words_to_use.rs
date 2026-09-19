@@ -32,12 +32,12 @@ macro_rules! j {
 
 async fn service() -> ReflowService {
     let s = ReflowService::in_memory().expect("in-memory service");
-    j!(s.add_project(Parameters(IdName {
+    j!(s.add_project(Parameters(ProjectReq {
         id: "proj:x".into(),
         name: Some("X".to_string()),
         description: None,
-        spec: None,
         decomposition_levels: None,
+        status: None,
     })));
     s
 }

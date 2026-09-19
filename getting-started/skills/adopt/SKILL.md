@@ -135,7 +135,10 @@ recorded.
 - **Statuses honest, provenance marked**: what ships is `realized` (or `verified` only where a
   passing check will actually back it), and everything read out of the artifact carries
   `provenance: inferred`. A graph that calls a production system `planned` asserts it is
-  unbuilt.
+  unbuilt — so pass `status: "realized"` **in the constructor call** (`add_component`,
+  `add_capability`, `add_release` all take it; every constructor of a type that carries a status
+  does, and names what omitting it lands). Omitted, a part lands `planned`, and there is no
+  component status setter to fix it afterwards.
 - **Build one export document and `import_graph` it once.** ⭐ **The reason is FIDELITY, not
   speed: a document reaches the WHOLE schema, and the typed constructors do not.** `add_verification`
   cannot set `description` or `location`; several constructors cannot reach properties their nodes

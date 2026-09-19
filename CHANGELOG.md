@@ -33,6 +33,22 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **One status contract across sibling constructors, and a node is named by the key the last tool
+  used.** flo2 F10 (2026-09-19), on top of dev_storyflow (2026-09-02) and bhome (2026-09-04): seven
+  more rejected calls, four of them one concept under an adjacent tool's name — `add_component`
+  refusing `status` and returning `status: planned`; `set_decision_status` wanting `decision_id`
+  where the last reply said `node_id`; `create_edge` wanting `props` for `properties`. The
+  relation surface had been fixed on 2026-09-06 and the constructor/setter half left. Now every
+  constructor of a type that carries a status takes an optional `status` and its description names
+  what omitting it lands (`add_component`, `add_release`, `add_project`, `add_epoch` join
+  `add_capability`, `add_artifact`, `add_verification`, `add_requirement`, `add_decision`); `approver`
+  stays on exactly the three whose status is settled intent (Requirement, Decision, DesignRule —
+  the cases the intent gate reads), because a build status is a measurement, not a signature.
+  Twenty-five tools whose primary parameter names a node by a typed key (`decision_id`,
+  `capability_id`, `epoch_id`, …) accept `id` and `node_id` as aliases; `props` accepts
+  `properties` on `create_edge`, `create_node` and the bulk forms. `add_project` has its own request
+  shape instead of sharing `add_interface`'s with half the fields "ignored for the other".
+
 - **A project's first session leaves the adapter in place.** Three of the maintainer's own projects
   (flo2, SeattleArch, bhome) carried no pointer file, no kit stamp and mostly no hooks, because they
   reached reflow2 through the user-scope registration and the init never ran (2026-09-19). The
