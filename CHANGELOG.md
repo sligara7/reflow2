@@ -31,6 +31,8 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.65.0] — 2026-09-19
+
 ### Added
 
 - **One status contract across sibling constructors, and a node is named by the key the last tool
