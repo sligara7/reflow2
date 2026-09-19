@@ -204,6 +204,21 @@ fn edit_distance(a: &str, b: &str) -> usize {
 /// Anything that is not a missing-field deserialisation error is returned
 /// unchanged — this must never rewrite an ordinary refusal.
 pub fn missing_field_hint(message: &str, tool: &str, schema: &serde_json::Value) -> String {
+    missing_fields_hint(message, tool, schema, None)
+}
+
+/// [`missing_field_hint`] with the call's own arguments in hand, so the list
+/// of required fields can say which ones THIS call lacked rather than only
+/// what the tool requires. The deserialiser names one field; the caller
+/// passed some of the rest and not others, and only the server can tell
+/// which — flo2 F10 and bhome (2026-09-18) both learned the shape one round
+/// trip at a time.
+pub fn missing_fields_hint(
+    message: &str,
+    tool: &str,
+    schema: &serde_json::Value,
+    given: Option<&serde_json::Map<String, serde_json::Value>>,
+) -> String {
     let Some(field) = message
         .split_once("missing field `")
         .and_then(|(_, rest)| rest.split_once('`'))
@@ -246,16 +261,53 @@ pub fn missing_field_hint(message: &str, tool: &str, schema: &serde_json::Value)
     }
 
     if required.len() > 1 {
-        out.push_str(
-            "\nEVERY argument this tool requires, listed together because the deserialiser \
-             reports only the FIRST one missing and learning them one refusal at a time costs a \
-             round trip each. This is what the tool requires, NOT a claim that you omitted all \
-             of them:\n",
-        );
-        for f in &required {
-            match brief(schema, f) {
-                Some(d) => out.push_str(&format!("  · {f} — {d}\n")),
-                None => out.push_str(&format!("  · {f}\n")),
+        match given {
+            Some(args) => {
+                let missing: Vec<&String> =
+                    required.iter().filter(|f| !args.contains_key(*f)).collect();
+                let passed: Vec<&String> =
+                    required.iter().filter(|f| args.contains_key(*f)).collect();
+                out.push_str(&format!(
+                    "\nMISSING FROM THIS CALL, all of them at once so the shape costs one round \
+                     trip: {}.{}\n",
+                    missing
+                        .iter()
+                        .map(|f| format!("`{f}`"))
+                        .collect::<Vec<_>>()
+                        .join(", "),
+                    if passed.is_empty() {
+                        String::new()
+                    } else {
+                        format!(
+                            " Already passed: {}.",
+                            passed
+                                .iter()
+                                .map(|f| format!("`{f}`"))
+                                .collect::<Vec<_>>()
+                                .join(", ")
+                        )
+                    }
+                ));
+                for f in missing {
+                    match brief(schema, f) {
+                        Some(d) => out.push_str(&format!("  · {f} — {d}\n")),
+                        None => out.push_str(&format!("  · {f}\n")),
+                    }
+                }
+            }
+            None => {
+                out.push_str(
+                    "\nEVERY argument this tool requires, listed together because the \
+                     deserialiser reports only the FIRST one missing and learning them one \
+                     refusal at a time costs a round trip each. This is what the tool requires, \
+                     NOT a claim that you omitted all of them:\n",
+                );
+                for f in &required {
+                    match brief(schema, f) {
+                        Some(d) => out.push_str(&format!("  · {f} — {d}\n")),
+                        None => out.push_str(&format!("  · {f}\n")),
+                    }
+                }
             }
         }
     }
@@ -3531,6 +3583,8 @@ pub struct ConstrainsReq {
     pub target_id: String,
     /// This target's spend, in the Constraint's quantity unit. Omitted =
     /// participates but unstated; budget_report reports it, never zeroes it.
+    /// May be NEGATIVE: a reclaim or credit (space stacked back, mass removed)
+    /// is a contribution below zero and rolls into the total like any other.
     #[serde(default)]
     pub contribution: Option<f64>,
     /// The unit `contribution` is in, so it can be COMPARED with the Constraint's rather than
@@ -6324,6 +6378,10 @@ impl ServerHandler for ReflowService {
         // model only the text block gets the payload there too.
         let policy = crate::content_policy::for_client(Some(client.as_str()));
         let started = std::time::Instant::now();
+        // Kept for the missing-field refusal, which can then say which of
+        // the required fields THIS call lacked rather than only what the
+        // tool requires.
+        let given = request.arguments.clone();
         let tcc = rmcp::handler::server::tool::ToolCallContext::new(self, request, context);
         let answer = self.tool_router.call(tcc).await;
         self.record_usage(
@@ -6349,8 +6407,12 @@ impl ServerHandler for ReflowService {
                 Err(McpError::invalid_params(hinted, e.data.clone()))
             }
             Err(e) if e.message.contains("missing field") => {
-                let hinted =
-                    missing_field_hint(&e.message, &tool_name, &self.schema_of(&tool_name));
+                let hinted = missing_fields_hint(
+                    &e.message,
+                    &tool_name,
+                    &self.schema_of(&tool_name),
+                    given.as_ref(),
+                );
                 Err(McpError::invalid_params(hinted, e.data.clone()))
             }
             Ok(rmcp::model::CallToolResponse::Complete(r)) if r.is_error == Some(true) => {

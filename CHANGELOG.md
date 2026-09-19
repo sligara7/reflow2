@@ -66,6 +66,13 @@ This file is the third view: *what changed, and when*.
   and who it is for. It has its own held-out corpus, one query per skill in a person's words, and
   the same rank-first ratchet the tools have. The served catalogue line and the session-start
   hook now name it beside `get_skill` and `list_skills`.
+- **A contribution may be negative, and a missing-field refusal says which fields this call
+  lacked.** Two instruction gaps from the field reports. bhome (2026-09-18) modelled reclaimed floor
+  area by hand because nothing said `constrains` takes a contribution below zero — it always did,
+  and `budget_report` rolls it up; the tool, its parameter and the optimize skill now say so. And
+  the refusal for a missing required argument, which already listed every field the tool requires,
+  now has the call's own arguments in hand and names the ones MISSING FROM THIS CALL, with the ones
+  already passed set apart, so the shape of a call costs one round trip instead of one per field.
 
 - **A project's first session leaves the adapter in place.** Three of the maintainer's own projects
   (flo2, SeattleArch, bhome) carried no pointer file, no kit stamp and mostly no hooks, because they

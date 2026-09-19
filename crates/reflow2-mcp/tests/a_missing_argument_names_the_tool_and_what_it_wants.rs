@@ -160,3 +160,45 @@ fn an_unrelated_refusal_is_left_alone() {
         "only a missing-field deserialisation error may be rewritten"
     );
 }
+
+/// With the call's own arguments in hand the refusal says which required
+/// fields THIS call lacked, and sets the ones already passed apart — instead
+/// of listing the whole obligation and leaving the caller to diff it.
+#[test]
+fn with_the_arguments_in_hand_the_refusal_names_what_this_call_lacked() {
+    use reflow2_mcp::service::missing_fields_hint;
+    let schema = schema_for("record_change");
+    let required: Vec<String> = schema["required"]
+        .as_array()
+        .expect("record_change has required fields")
+        .iter()
+        .filter_map(|v| v.as_str().map(String::from))
+        .collect();
+    assert!(required.len() >= 3);
+    let passed = required[0].clone();
+    let mut given = serde_json::Map::new();
+    given.insert(passed.clone(), Value::String("x".into()));
+    let msg = format!(
+        "failed to deserialize parameters: missing field `{}`",
+        required[1]
+    );
+    let hint = missing_fields_hint(&msg, "record_change", &schema, Some(&given));
+    assert!(hint.contains("MISSING FROM THIS CALL"), "{hint}");
+    let (before, after) = hint
+        .split_once("Already passed")
+        .expect("the passed field is set apart");
+    for f in &required[1..] {
+        assert!(
+            before.contains(&format!("`{f}`")),
+            "{f} was not passed and must be named as missing:\n{hint}"
+        );
+    }
+    assert!(
+        after.contains(&format!("`{passed}`")),
+        "{passed} was passed and must be set apart, not listed as missing:\n{hint}"
+    );
+    assert!(
+        !before.contains(&format!("`{passed}`")),
+        "{passed} was passed and must not be listed as missing:\n{hint}"
+    );
+}

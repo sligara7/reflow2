@@ -2544,6 +2544,9 @@ impl ReflowService {
                        (estimated/evidence/measured) and its `source` — the tool, artifact or person the \
                        number came from. An edge without a contribution is reported by budget_report as \
                        unstated — never treated as zero; a number with no source is named as unsourced. \
+                       A contribution may be NEGATIVE — a reclaim, a credit, stacking that gives floor \
+                       area back — and rolls into the total like any other (bhome 2026-09-18: the \
+                       mechanism existed and nothing said so, so reclaimed space went uncounted). \
                        ⭐ THIS IS THE CONTRACT WITH AN EXTERNAL MEASURING TOOL: design the budget here, \
                        measure it in the tool (an IFC take-off, a ray trace), write the number back with \
                        `basis: measured`, `source` naming the tool, `unit` and `measured_at`, and \

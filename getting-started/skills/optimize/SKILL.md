@@ -63,7 +63,10 @@ Expect to be wrong here. Two falsified hypotheses before the real cause is a nor
 This is the step the skill exists for, and it is the one that will feel skippable.
 
 Record it as a **Constraint** with `add_constraint`: what quantity, what limit, which direction.
-Then `constrains` it to the thing it governs, and `budget_report` can roll it up later.
+Then `constrains` it to the thing it governs, and `budget_report` can roll it up later. A
+contribution may be **negative** — a reclaim, a credit, space stacked back — and it rolls into the
+total like any other; record the give-back the same way you record the spend, or the report
+counts only one side.
 
 **Derive the number; do not pick it.** A budget with a reason can be argued with; a round number
 cannot. Good derivations look like *"setup must not dominate the work it sets up, and the work
