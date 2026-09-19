@@ -108,6 +108,9 @@ Three records, three questions — kept separate on purpose:
   to a collaborator as-is.
 
 ### 3½ · Upgrade notes — *read before updating a consumer project*
+- [upgrading-to-v0.65.0.md](upgrading-to-v0.65.0.md) — **upgrade everywhere, together**: the stamp
+  moves again, `ChangeEvent.change_type` gains `decision_settled`, and an older binary refuses by
+  name a design that stores it.
 - [upgrading-to-v0.59.0.md](upgrading-to-v0.59.0.md) — **upgrade everywhere, together**: the stamp
   moves by an ENUM VALUE (`Decision.status` gains `deferred`) that an older binary cannot see — it
   opens the graph with no warning and shows a deferred decision as gone. Nothing to migrate; only

@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:bde986e1c32c39dac6ae532838e54f35a269b7849093d2cb0bd07baa765edf09",
+  "content_hash": "sha256:a010b9d93e85731713859cc4907815ffbbceffbe507dfc3667d9e5301cf26abb",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -5562,6 +5562,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:a-build-can-call-one-tool-from-the-shell",
+      "properties": {},
+      "to_id": "epoch:v0650-cut"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:a-capability-carries-its-thread-in-one-call",
       "properties": {},
       "to_id": "epoch:2026-09-10-three-capture-surface-fixes-from-the-field"
@@ -5616,9 +5622,21 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:a-contribution-may-be-negative-and-a-refusal-says-which-fields-are-missing",
+      "properties": {},
+      "to_id": "epoch:v0650-cut"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:a-cross-type-near-match-is-named-as-a-layer",
       "properties": {},
       "to_id": "epoch:v0440"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:a-cut-ends-by-rebuilding-the-served-release-binary",
+      "properties": {},
+      "to_id": "epoch:v0650-cut"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -5697,6 +5715,12 @@
       "from_id": "chg:a-field-report-can-cite-the-version-that-answered-it",
       "properties": {},
       "to_id": "epoch:v0420"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:a-field-report-is-triaged-by-a-served-step-and-a-finding-is-written-before-the-answer",
+      "properties": {},
+      "to_id": "epoch:v0650-cut"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -5817,6 +5841,12 @@
       "from_id": "chg:a-project-is-asked-what-standard-its-artifacts-must-be-in-from-the-beginning",
       "properties": {},
       "to_id": "epoch:v0630-cut"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:a-projects-first-session-leaves-the-adapter-in-place",
+      "properties": {},
+      "to_id": "epoch:v0650-cut"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -5991,6 +6021,12 @@
       "from_id": "chg:a-settled-decision-names-governed-prose-that-still-reads-open",
       "properties": {},
       "to_id": "epoch:2026-09-09-prose-that-outlives-its-decision-says-so"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:a-skill-is-found-by-describing-the-job-the-way-a-tool-is",
+      "properties": {},
+      "to_id": "epoch:v0650-cut"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -7902,6 +7938,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:an-unknown-field-refusal-names-the-nearest-served-parameter-first",
+      "properties": {},
+      "to_id": "epoch:v0650-cut"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:anchor-decision-second-hint",
       "properties": {},
       "to_id": "epoch:reflow-workflow-review"
@@ -8418,6 +8460,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:baseline-e28a1b8dd9b981cf",
+      "properties": {},
+      "to_id": "epoch:v0650-cut"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:baseline-ed680e569e475393",
       "properties": {},
       "to_id": "epoch:v0420"
@@ -8670,6 +8718,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:capture-intents-routing-table-sends-operational-know-how-to-a-runbook-design-rule",
+      "properties": {},
+      "to_id": "epoch:v0650-cut"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:central-host-status-corrected",
       "properties": {},
       "to_id": "epoch:v0250"
@@ -8685,6 +8739,12 @@
       "from_id": "chg:certification-requirement-widened",
       "properties": {},
       "to_id": "epoch:v0230"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:change-type-gains-decision-settled",
+      "properties": {},
+      "to_id": "epoch:v0650-cut"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -8940,6 +9000,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:cut-v0650",
+      "properties": {},
+      "to_id": "epoch:v0650-cut"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:decision-status-gains-deferred",
       "properties": {},
       "to_id": "epoch:planned-a-set-aside-decision-is-not-debt"
@@ -9174,6 +9240,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:every-served-skill-carries-a-line-for-a-person-and-says-who-it-is-for",
+      "properties": {},
+      "to_id": "epoch:v0650-cut"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:every-skill-has-a-command",
       "properties": {},
       "to_id": "epoch:every-skill-has-a-command"
@@ -9183,6 +9255,12 @@
       "from_id": "chg:every-tool-carries-the-job-in-the-users-words-and-the-corpus-is-the-acceptance-test",
       "properties": {},
       "to_id": "epoch:a-tool-says-when-you-would-ask-for-it"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:every-tool-ranks-first-for-its-own-job-and-the-surface-does-not-grow-more-confusable",
+      "properties": {},
+      "to_id": "epoch:v0650-cut"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -9654,6 +9732,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:one-status-contract-across-sibling-constructors-and-a-node-is-named-by-the-key-the-last-tool-used",
+      "properties": {},
+      "to_id": "epoch:v0650-cut"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:one-tool-declares-its-output-contract",
       "properties": {},
       "to_id": "epoch:v0440"
@@ -9846,9 +9930,21 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:reflow2-check-defaults-to-the-export-the-graph-is-in-step-with",
+      "properties": {},
+      "to_id": "epoch:v0650-cut"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:reflow2-declares-its-required-interfaces",
       "properties": {},
       "to_id": "epoch:reflow2-declares-what-it-requires"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:reflow2-measures-registered-files-and-never-reads-them-for-meaning",
+      "properties": {},
+      "to_id": "epoch:v0650-cut"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -9930,6 +10026,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:replace-text-moves-one-sentence-without-resending-the-field",
+      "properties": {},
+      "to_id": "epoch:v0650-cut"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:required-to-create-optional-to-revise",
       "properties": {},
       "to_id": "epoch:v0390"
@@ -9957,6 +10059,12 @@
       "from_id": "chg:resolution-bands",
       "properties": {},
       "to_id": "epoch:v0150"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:retire-from-design-says-a-retired-files-absence-is-expected",
+      "properties": {},
+      "to_id": "epoch:v0650-cut"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -11925,6 +12033,12 @@
       "from_id": "rel:v0640",
       "properties": {},
       "to_id": "epoch:v0640-cut"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "epoch:v0650-cut"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -33237,6 +33351,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-8c71df06fe598502",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:dependency-manifest"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-8c9c475cb4ccb492",
       "properties": {
         "accepted_baseline": true,
@@ -34350,6 +34473,15 @@
         "action": "modified"
       },
       "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-e694096a8061f630",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:agent-instructions"
     },
     {
       "edge_type": "CHANGED",
@@ -59348,6 +59480,24 @@
       "properties": {
         "status": "active"
       },
+      "to_id": "env:dev"
+    },
+    {
+      "edge_type": "DEPLOYED_TO",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "env:ci"
+    },
+    {
+      "edge_type": "DEPLOYED_TO",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "env:container"
+    },
+    {
+      "edge_type": "DEPLOYED_TO",
+      "from_id": "rel:v0650",
+      "properties": {},
       "to_id": "env:dev"
     },
     {
@@ -216633,6 +216783,3950 @@
     },
     {
       "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:257a9e64ba62c4b8354188ae2a43c90114ac03a4c5cf94b9256e3142f573ab44"
+      },
+      "to_id": "art:a-build-can-call-one-tool-from-the-shell-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:7d4b3af14b4f8bfecd3c0fb60cd5bcc34e915b7904c522ae6cfa965a88eb4060"
+      },
+      "to_id": "art:a-capability-carries-its-thread-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:4e127110709dbea79d1678e11f3f42bbd9aa9fd5c55072b50d19e04e72dc9d90"
+      },
+      "to_id": "art:a-design-says-what-fraction-carries-a-relation-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:d7cd41644a25d6624d9be6381718482cfb8db6a1e8c656738a776afe9197e76c"
+      },
+      "to_id": "art:a-fix-says-whether-it-corrected-the-cause-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:9f5a377772f4cc9c3cd13b111d18eb56563cba983cd038d78f53a53d0bafc9f7"
+      },
+      "to_id": "art:a-lesson-is-served-at-the-step-handler-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:4940d9706d076502fcee690c692d213a154a07d70ddc256cf169bee975504c3c"
+      },
+      "to_id": "art:a-lesson-is-served-at-the-step-wire-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:7e50b05237a2d9cfe3bd651bcee63577f87978fd68ccee5837b693ed5a313bd5"
+      },
+      "to_id": "art:a-missing-argument-names-the-tool-and-what-it-wants-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:f5de5b1c5cde0a65bfae66406a0b1a0e5a9ecc8a392ba15531f77606c3c4ff4f"
+      },
+      "to_id": "art:a-node-is-named-by-the-key-the-last-tool-used-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:66ac2fa5e29087d6d1e4dad6145243a6a54e7a7eb2508e9ab0ccfbd894321bc3"
+      },
+      "to_id": "art:a-parked-report-that-produced-nothing-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:ee98058fda54443ade6c2f284ea3df2588a5b7712e472e98ab9f7e3bcaf375f9"
+      },
+      "to_id": "art:a-prose-field-that-swallowed-a-parameter-says-so"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:b9b43d0cb4b05848262d50d95a0c9c555bc76b0504984ca51a7ca3291b9933a9"
+      },
+      "to_id": "art:a-session-that-reads-and-never-writes-is-seen-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:ac89469647eeae5031fb5f4951bfd668a717ba5d72754aaae1de018347810430"
+      },
+      "to_id": "art:a-set-aside-decision-is-not-debt-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "art:a-settled-decision-has-a-change-type-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:8edd39e9957e27b892c9aa1e72f290e9c6709fbe7120be2ca15e4bf5ebb7e431"
+      },
+      "to_id": "art:a-settled-decision-names-governed-prose-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:e912878324db0ab31e3b810b7376bbcb8b013ad752c29b8ffdec22dab18ea625"
+      },
+      "to_id": "art:a-vocabulary-change-is-never-silent-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:b6954f0e2b434cc8ee6f2755899354133a9bc88550f27650e800581d681267a9"
+      },
+      "to_id": "art:acknowledgement-approver-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:f98207e93320fb897b7af91db801e092fee74025f2fb29a9c23d7fd60dfe1aad"
+      },
+      "to_id": "art:acknowledgement-not-structure-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:61d297a55066953d3e628ffbfbea3a1f63085986b2b1e7776d28c6d044065d73"
+      },
+      "to_id": "art:adopt-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:1f33791557b16c5bc6a2cb0f4e03849ad2c24b1991353ce5d217271b417d356d"
+      },
+      "to_id": "art:agent"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:70510cea034d4eaa9480f92618fdaa6c266a3ba15ab6f8a88771314f27634e72"
+      },
+      "to_id": "art:agent-instructions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:0318c29079069fab4d59770f29f5b9ec9895208d658b9b829f8cb46f019bc387"
+      },
+      "to_id": "art:alex-grok-feedback-2026-08-14"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:4f76eaad50c3776e8dc8c434ac7199897db2b8b0a8614b596ccb9f114c026dbe"
+      },
+      "to_id": "art:allocate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:f4da350a3ec3fb73f2de5e7f59e44413eb7ef4638e77780474eeaa38c49a30fc"
+      },
+      "to_id": "art:alternatives"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:3489bed4575740549db69a02b52d7f678d0d031d4b7b759c5c1ca16e8f1077fe"
+      },
+      "to_id": "art:an-undated-change-event-says-so-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:eb0afcf00e3e476e85b753f07a2c86b6dfbb756b8b396f29a6e1478f817ce0ab"
+      },
+      "to_id": "art:an-unknown-field-refusal-names-the-nearest-parameter-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:ed3c5df0dd44d7939495998b05dd577cbb170539de5380c7a2456c2a38ab7c39"
+      },
+      "to_id": "art:artifact"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:7befd2e936958a6b7d3ea06a1ec1d2edde451ca31354d7c8b49719cddd0d4b75"
+      },
+      "to_id": "art:artifact-intent-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:9f791fcfdcf8172f9d2af4a29730f2b527937131e625c80ed2eb079cf9b740a2"
+      },
+      "to_id": "art:auto-export"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:04201e13e15c834d5bcfa2252552d2d1f0a04da827e45c2db326e1af838ae77a"
+      },
+      "to_id": "art:bhome-cad-demo-feedback-2026-09-16"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:b11bb9070a9e3e15f099bdd5f1ee6cd04a50ac4b8afe184dca96177e6903478f"
+      },
+      "to_id": "art:bhome-genesis-feedback-2026-08-31"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:06b64e606511407badac652aaf530cc2f9d012bb1bc53f95124cc32152c2e979"
+      },
+      "to_id": "art:bl124-instrument"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:95cacba02844b22fa7880ada2f383d0f0602b0c074c33e2323b90b731ab3538f"
+      },
+      "to_id": "art:brainstorm-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:4faf540183635a75d94bdb1e21c9e69d27eebf409a371fbce3fda1ceee7bf571"
+      },
+      "to_id": "art:budget"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:8f5ffbc7c6e84b5e"
+      },
+      "to_id": "art:built-right-review"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:86063e51335cd74b4e8a2fd59c6e7c9c2dbce176ab162be3923d59fd6b716196"
+      },
+      "to_id": "art:bulk"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:c6b836d74cf80defe412d3f729468a593d410d2efd92ca7af90cd7d007bfa891"
+      },
+      "to_id": "art:by-hand-names-a-real-tool-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:efe95161ecab4c2235ae8bdd9d71436141545fd047f6049e966c4705f56a24b1"
+      },
+      "to_id": "art:by-hand-signal-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:ab4e617fed81bc9b2ff9b5d3981e694f326c1e6d6915bfc496a5d0f993e86aca"
+      },
+      "to_id": "art:capture-intent-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:9c13e3fbbfd0a42a9f8a1696414c79c06331b2a8079a39cb07322744d06599e1"
+      },
+      "to_id": "art:capture-session-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:1a56aff917cd90cefc32df68d3e90c00d67297242987186ec3eb90f70e5d530d"
+      },
+      "to_id": "art:chama-genesis-feedback-2026-09-02"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:14cb6d8e21e7323133b1bbb9958a9981a424b9b7ffcda2d7fd428c01e23d04fd"
+      },
+      "to_id": "art:change-event-text-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:6f43fe8421f71dfd843545d7855603e69107eba5891d7e3c077cfc583e320c29"
+      },
+      "to_id": "art:changelog-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:5e1eced160c4878e2dba0b8005cdda1ba4a24dd182bfc3ccef9a6b458725fb04"
+      },
+      "to_id": "art:check"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:98520529c34049639c0ee453cd47c50f86fdad67c356e5cc271d73ef63513881"
+      },
+      "to_id": "art:check-command-surface"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "art:check-consumer-reach"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:70ee71252899b6d9071934fc187021199c323241d20c0f819cbccb8bdf828199"
+      },
+      "to_id": "art:check-doc-versions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:225f50d3f3e6b0c4f05aa0bc823497c76e2058b79503a390f9df73e05acb7382"
+      },
+      "to_id": "art:check-health-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:f390f897c67d58b4be330da1d79e661acd428ca61a13b29abac8ea6fdcdab7e8"
+      },
+      "to_id": "art:check-intent-authority"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:657e883ee56d1b66e564c990a780c2953659b6c1bd3b9e4254bf88d8de4226e1"
+      },
+      "to_id": "art:check-intent-authority-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:c4fa5ee3d8e3671ca2bb39a71f5cae07a7f33d20ebc16a72a832e73ad2540d0b"
+      },
+      "to_id": "art:check-kit-manifest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:0821236d8afe47d3f27b1d4553ae874b24ff8a2c062de175ad6c013254f4260c"
+      },
+      "to_id": "art:checksum-dialect-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:dccfaf23ecae26729bfff2673b75432f2b13d766053f8b5fe2f2447e44cab6ed"
+      },
+      "to_id": "art:claim-age-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:43b2258a9537a2cbb3e131acb781e11085a4b1e89fa599bd5325d46c1e42fe2f"
+      },
+      "to_id": "art:claim-not-hidden-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:35bcd48855523f6a8f388268f6bb34b8a0f7e7948a603124bd31a7a32ac264db"
+      },
+      "to_id": "art:claims"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:e3ef5ba8cb2d5e43158506ab2be377f4ed513e3c0f016d51161892c41dd72c58"
+      },
+      "to_id": "art:claude-instructions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:a61b7c6f6b9edcbbeb5add57ea720484465e95b4ef75c8012f0cba59c6097f98"
+      },
+      "to_id": "art:closure"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:3a7d8bd347646669fcb8898923aa119a0cb0a56b28a63bba2a59e940b2fb99a8"
+      },
+      "to_id": "art:coherence-gate-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:2575d415a74a3266b208ddf798e5e6516186d6c345324efb6f9b66e46b7367a3"
+      },
+      "to_id": "art:collaborating"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:61c3eca67e1f7d3a79922ae9654c7cad0d3f675c116aa7dc522b1fcc907774ca"
+      },
+      "to_id": "art:compare"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:ef10b15ba2af84eeb56e84fb4717c00a0c17b22b2a44d7288ad92520b86d3bc3"
+      },
+      "to_id": "art:compose"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:6b58139a0fd5f095c64c4c465f03cfed8200015ef0e7af3a4e7cca064727de39"
+      },
+      "to_id": "art:compose-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:5944fe9d654192200fd5aaf50df9bb7bea7873f3e767d276e145f53a0a8b1066"
+      },
+      "to_id": "art:confirm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:935cc0bbab78d4c14b20409f1a03c71980531f2e479d90a69b9b6d9d5929b18b"
+      },
+      "to_id": "art:confirmation-vocabulary-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:71a4b80afa8feb6caad3bc7c4b597cae532fe94dc909b497ce8f18656bbd19bc"
+      },
+      "to_id": "art:conformance-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:0bdc96bb6e30b497e094a5174dd1bd12d68c430b4e0be1b059593cf67ef94b1a"
+      },
+      "to_id": "art:consumption"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:e67e8dfa5f3b19aa3b79efe9c6992da19c51791042d375cc704f643d6ae67ded"
+      },
+      "to_id": "art:content-policy"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:94524681284a3bcd44a76a603ec790f9bf53d4fda8991b8dd0e2a8f1c87ff724"
+      },
+      "to_id": "art:contradiction-alignment-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:fdfcd5ae491237075b2db61066191b9d6d80f687f2167f4c987be4e9c34f41bb"
+      },
+      "to_id": "art:corpus"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:1446bbd34b90cabd11613b4a80695eaf02ef04685e242d79560b6a25d8a6f699"
+      },
+      "to_id": "art:coverage"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:6f68a66b8a16c7fe96abc529cba05c0c4d3ebc8fdb145ed72b5b7df5882b5eb8"
+      },
+      "to_id": "art:coverage-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:a62c88bd9814737dd97b620eda586cd5c28420031c057f7f196da584a79e1f72"
+      },
+      "to_id": "art:cycles-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:cdf79dc7ad6348d36c6b38232b299a8def1164c1e7ef00642bd8389376f2b4c2"
+      },
+      "to_id": "art:dates"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:bbc4ed6f24cb12d182ce302e0deb125b312abb903af26711701d573a9fb286a2"
+      },
+      "to_id": "art:degraded"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:dcf79ca95ec1dae48c5ee69284cdd0edcf79e61acd798d59244762d1807cc4cb"
+      },
+      "to_id": "art:delivery-kind-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:8a398b3432baa233f00d6c871ca58578ebfbd3326fa281694c97c1ba37b729b3"
+      },
+      "to_id": "art:dependency-manifest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:5bd5d7bf6725d644c834115b9dc9279a958612e3eed3d82ffc4eda4fd51bbe2b"
+      },
+      "to_id": "art:depends"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:05f53c2cc91f2cece257545a3c6222532aa9345417af5f72ea869093ec2028a9"
+      },
+      "to_id": "art:depends-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:db4bdf4b04cd86cf5963817b131bfaee488f94e1d0c4ca2ec41219962ec1d2b4"
+      },
+      "to_id": "art:design-holds-says-why-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:29a280e2d6f498d6b81483cd97c39cc900785b062ed6e2d18045d2965719aa8a"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:abc83e19844114ce9f8128ead62efc85ff341acbc879fca71fae382d57c90816"
+      },
+      "to_id": "art:detect-and-ask-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:6da88dfcba0cb3bd4d2128020f6c99e0bfe247dddd00563a5783847bcebff49f"
+      },
+      "to_id": "art:dev-storyflow-feedback-2026-08-23"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:a7b5f95a773c99768480f59353b2873e9e3e7f2ba432e0bfa4d6971b1fab8db8"
+      },
+      "to_id": "art:dev-storyflow-feedback-2026-09-04"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:3fed2751904673bd7030783f37ebf6a1a314c4d0aab07f21b128d3a950d79330"
+      },
+      "to_id": "art:dev-storyflow-feedback-2026-09-07"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:1809d9de2628c8660fd6af7c6190f0f8778eceacf0516751d7ba8b990678c515"
+      },
+      "to_id": "art:dev-storyflow-feedback-2026-09-07b"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:86c69ac8ba774eb5f7000776c422135f533dfe657393821ea15dea8f17daccf3"
+      },
+      "to_id": "art:dev-storyflow-feedback-2026-09-08"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:f862aec1084c4bf761af311d45d4f12cb5f878ba9db6dcbcf3cd4cd340c7cfb2"
+      },
+      "to_id": "art:dimensions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:37383d08df9d73efdcc71041c7a1e992d09d6e6373618f7483ac5406561bb162"
+      },
+      "to_id": "art:discover"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:8ce13281f0b54b9b1457f770a731c0b5051cce49e6424152b62f7e29eb247c7c"
+      },
+      "to_id": "art:discover-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:43efb3dd59d17efa2aab4c25c5dc57495077f8d6fd31b1743e0bc8fa5df201fe"
+      },
+      "to_id": "art:doc-impact-propagation"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:9ad56c234dcffbca6f016d50b71c5ffab9e33a3380d18c5fafb445de5474e079"
+      },
+      "to_id": "art:docker-build-script"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:aa8bf548734106bce707178d4c784afc34285c1b026f4f2d9dfa9a80c36ca1ef"
+      },
+      "to_id": "art:docker-smoke-script"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:6bb1e0d8684f4df5af82a8fb4e425126f74c39243ba0f2603b9e3d503e47cbab"
+      },
+      "to_id": "art:dockerfile"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:4ab1eb52f82d4c69aecfd80c96cb3dd579709cfb44c6e496f529135624c3fe28"
+      },
+      "to_id": "art:drift"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:9fbb226a81d3f26ebef7619997d7b6a1318aee3fe45c5f2081261e125003a832"
+      },
+      "to_id": "art:dto"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:419d73ebc5b87068e523eec0ac898c918f04a544cd367fdb5a344067cb173186"
+      },
+      "to_id": "art:edge-prose"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:35150dd61c7b7eb34c9139056d6204f2d3117b92661dfc13feed35a01bf12ff8"
+      },
+      "to_id": "art:empty-speaks-gate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:7e94e450dbda74bbb0e6b367ea082d0efecc5d353472db92c57d02728051aec2"
+      },
+      "to_id": "art:enforced-rule-detector-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:18c47270cc209eb7922a0037cdd497cd37a342dc39d12bd8d347ac64c96706c3"
+      },
+      "to_id": "art:enum-schema"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:2d87e73d61d09f2c3217868aacd0986b950ccab734390a5243dd3c4cf29e82d3"
+      },
+      "to_id": "art:establish-taxonomy-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:80e9da3a2a1b616c9d33efa79a5e6f44dcf1d218b57df7a03bfdd44543a26b05"
+      },
+      "to_id": "art:every-declared-enum-is-wired-or-exempt-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:429aed138b99595ab8434fe1ad7e03f36bfbec7622120fa920e2561e9ac1f3f9"
+      },
+      "to_id": "art:every-reference-parameter-names-its-type-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:6f0b8be258b9fb487d57e3e0b44465516278e7f0e9c326a7a0eb43c9ad460f5a"
+      },
+      "to_id": "art:every-required-parameter-is-described-gate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:63b71b7213c85f9f485a943b14818cd7fe5ce5bc0551cc68761944a612dda8c4"
+      },
+      "to_id": "art:every-skill-is-found-by-a-query-in-the-users-words-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:722b56ace4c4be001c2ad396f142c4ba50f09eeca8f8615eeb3e75adeed28d13"
+      },
+      "to_id": "art:every-tool-is-found-by-a-query-in-the-users-words-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:8956d2d0d4f31fe1"
+      },
+      "to_id": "art:evidence-quality-instrument"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:edff3aa9e9469319c76f745c2e22d20a4e87b67ba2aff267cca10034d467f932"
+      },
+      "to_id": "art:evidence-quality-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:7f9fad8c07f55057160caa8cab59660a6bfb1fdea295b8eb26f48bcc96ebbb40"
+      },
+      "to_id": "art:evidence-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:81063ce1b20caaed58dd02ce407f3acecb37e323c315f77836e65afae7450336"
+      },
+      "to_id": "art:export"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:2e185fb4b41f451b48d35c0127c8961f3e0b93b2d2194baac155ddf077a1bd7a"
+      },
+      "to_id": "art:export-to-reaches-the-daemon-gate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:0eec67e9d35aba549853dfdb058371975fcf5fd1aa1b062b8872415e2babbd43"
+      },
+      "to_id": "art:export-via-binary"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:4dd6db54fe4471ca2d1bd7a8eabff6e24a96a031a37d33c18226a21dfa296a3a"
+      },
+      "to_id": "art:export-write"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:a8487fcbbe68241067371ce65859777c421472bd9915401b4e9dc9dfcb360d04"
+      },
+      "to_id": "art:feedback-command"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:5f56b945f7593ad8af45b3821f1ae22d24171bc6c1d9a7cbdfc9afb3c4dfc346"
+      },
+      "to_id": "art:feedback-is-a-computed-tally-report-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:5b07038e52fe79ae18183e61d926a1798e49e15379df33fac34e49035c9e98f0"
+      },
+      "to_id": "art:feedback-is-a-computed-tally-wire-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:9a6f9a9f99b2ba80f5c49b71dcf2444d6a48f8f6de7fc4143dafaaded45b900e"
+      },
+      "to_id": "art:feedback-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:8c3c78378baf76139a8f8ccd64c4947fca6edb5ce70aad1712f0397daeb0e78f"
+      },
+      "to_id": "art:fielded"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:5b30fd6b958918ebc6e460e41aeb17f309643102ddedc2640452aab11d9cbe2a"
+      },
+      "to_id": "art:find-skills-corpus"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:6bf8bd04d6f0ab7a3470e0d05adaad77f37109022875de8be623e3f216adda8b"
+      },
+      "to_id": "art:find-skills-rank-baseline"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:6270c357bdaa5ed39e843760541e0632a2095e213f1ba18761895375b0674a74"
+      },
+      "to_id": "art:find-tools-corpus-fixture"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:08efee5fdd52cb8b514193ff6c50bf0e3992f41e9f5be4b36496d89191af3bbe"
+      },
+      "to_id": "art:find-tools-rank-baseline"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:87b2c6be141af091f6b276b222efa2a50ea755ad84011796d5111f0f066a9146"
+      },
+      "to_id": "art:find-tools-ranks-what-the-query-means-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:196fa38802309fd377a360769264f4916825fa2fcfaf7e5cc35ed3b1b87f60d2"
+      },
+      "to_id": "art:fleet-lessons"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:470f2ba28f3b2e512b1f02567c670e02004ef35e7417b666f3e03a3266ba83d5"
+      },
+      "to_id": "art:flow"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:6bfeb48735dad56038ae617a0a9b4a1cbd0234d6030cd7c4f9d8d28a5b48f468"
+      },
+      "to_id": "art:foundation"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:8a61f6c37a5fca8ba64b3300e8616c05baa5d5e689d4779fbe40c2affbe296e9"
+      },
+      "to_id": "art:frontier"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:82db721a91d72a4e6dd454ce65e24e37e107b01e47d9de7a41a8c929e08979d4"
+      },
+      "to_id": "art:fuzzy"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:4656ea730bdd666f9b13ff8441faa0db8b21601957dfc2db928006e4412d22e5"
+      },
+      "to_id": "art:genesis"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:d5c48632ca2356c9037e744d6a7e81c22be14897e5ef7b7a4ba150740f908cf4"
+      },
+      "to_id": "art:genesis-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:f970327b2b2981ca7c0e8a71bfcf9cc3867d7aa1a34d8758cf767586378bd654"
+      },
+      "to_id": "art:git-anchor"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:34701500af93dbcf"
+      },
+      "to_id": "art:github-mcp-study"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:d595559e8a0206549bdcc918de6a9a096141942a0af19e8de45d5e29471ad5e8"
+      },
+      "to_id": "art:governance-proposal-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:5655660611869f181b62586abb5d0b6ae70effc628d15d481f60cb1eee2a8948"
+      },
+      "to_id": "art:granularity"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:2743a0c8817437f980230692a0ac0e84a4b62a04edbe7152da20839f327ccb15"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:cab8605c9f5a37bf88e04583ba0610474a0a9316628516292b61de49186458c0"
+      },
+      "to_id": "art:graph-probe"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:ec717f40c6706439a724e4ad6cbfd321bae85a11817964af783d74eeaa025087"
+      },
+      "to_id": "art:graph-read"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:1abdd5814c7558dd42b5b3206a22eed0022cea26c3752b15333459d73482b592"
+      },
+      "to_id": "art:graphalg"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:4ca6237c63f7555f0f54d1a4c73cded628b7659d607313d8051f15c40807613a"
+      },
+      "to_id": "art:grok-build-tui-feedback-2026-08-27"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:07512b3c6c62c66e95749f7fb26e0ff6b82201f22d04fc2a9560e6f14404fa04"
+      },
+      "to_id": "art:grok-shell-feedback-2026-08-29"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:7c221ff092dae097f9ae49d2c3d1ecaa229cc4b3d1f2774ce2329969c49efda6"
+      },
+      "to_id": "art:grok-shell-feedback-2026-08-30"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:9e805541a2352379adb5e74bc3f5f82510ca76f7b6aeea323981d0618e5dfc66"
+      },
+      "to_id": "art:handshake"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:fac8501b5736b813f542e38569c8ec006de10aa6461750a93df1fdbe245168eb"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:776f5f51a5f48edaae06329bb92982d96c805e720df40387c9f27a9082a36a98"
+      },
+      "to_id": "art:help-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:a54dd685a9670e87db2761cfb86c953fe0b1dfbb29e2c5027e346ec0eb421035"
+      },
+      "to_id": "art:hierarchy"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:a5457da81bf1f13ddfbaad6f3a5269897d900a40882e97da5f6d0fbfa7cfc92e"
+      },
+      "to_id": "art:hxm-program-feedback-2026-08-19"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:76fd03eaab1983e4adafa8a3d51a7f3832e90861df83b52c9771624741603db2"
+      },
+      "to_id": "art:hxm-program-feedback-2026-08-26"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:bd1abef8706285c61eab97c4f71a32a6b52cee68a1a1f8ccfe48e6f395984c77"
+      },
+      "to_id": "art:hxm-program-feedback-2026-09-10"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:378737305f5a5ca0170a005cebd04e39b1be8d0101264bb816881ebebf4e1e83"
+      },
+      "to_id": "art:identity"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:65037b8764d25336c7d312ccfcd7d88ea319840b7c4c59c2d16754b89789eb18"
+      },
+      "to_id": "art:ility"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:3d9747b54bf878655d1f84909f884da267fb9f70033a139698d15ebee6e113ea"
+      },
+      "to_id": "art:impact-check-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:beb7c6931cbb87e15ad04994f628a5b012f73b2ea1047ad9a84ab3b013f993d4"
+      },
+      "to_id": "art:impact-of-diff"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:d4b635bbbc1d4faba5b0ee88055d6cf55ca3c9b3ca068e36a5749412b9a3dc3b"
+      },
+      "to_id": "art:import-from-a-newer-reflow2-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:d6a3a8bce014e75f1a2a524d0c76612ab8a1dc99ad32f7fbdeca286b51950652"
+      },
+      "to_id": "art:increment-plan"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:b87384b766738b315ba255197c0d27c7f12ada23d2a943fc01b299dc0ac623e3"
+      },
+      "to_id": "art:ingest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:ddfa7e13d3b56156a9b463f434cd691718e1af489f27aaba169395c226d14b9a"
+      },
+      "to_id": "art:ingest-handshake-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:d0e35bd9cb84125490f04c3df6fcd76b43a91f967634b2b71856e99b3577942c"
+      },
+      "to_id": "art:init"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:07c82cd7671c1241"
+      },
+      "to_id": "art:interface-spec-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:73cdb8bb55ae345eae41b9301955c67e813f1b02e6266111e1509e5c0ed253c4"
+      },
+      "to_id": "art:kit-instructions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:4329e5563666ab6708edfe68c0d0188818571b39ea408c70ef71663bc2f98f36"
+      },
+      "to_id": "art:kit-pointer"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:c578f678ccf74bf853da502cbc20b2155b456fab9a3608d6fb6d6365264e3eb1"
+      },
+      "to_id": "art:kpp-proposal-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:3ca3d913de7479ad5feec6680ca1d75a65e95f7aee2553d5764e2fdcc8de4f07"
+      },
+      "to_id": "art:latent"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:38d65413ac90420d5d951e3413320286a9fdf7c40dcb149378e7a26c9b08fa39"
+      },
+      "to_id": "art:latent-promotion-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:75b5715deb231ec83ac74b3c08f6ba0dc81334d73c6ae484ca7cb8b3689ac854"
+      },
+      "to_id": "art:launch-serves-release-gate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:d1e29bf14ff4e4c76cc21671140eeb264ac3a65db9612ace43117145e522fa28"
+      },
+      "to_id": "art:lens-core-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:02b506fd2efbbd16453c65f830b247a82343ad12117765c03eb53a40b8ec302d"
+      },
+      "to_id": "art:lens-handler-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:20a8c05e623d35e08d85526517151f6f7a62926688887427bdc575ed55e4ce6e"
+      },
+      "to_id": "art:lens-names-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:de1a8a952b8f23bf3e960769e9877b9c329a8e585697fbf6c018563a221a24d5"
+      },
+      "to_id": "art:lessons"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:e20d44f3ecdb4eae018d10eb56ce26016cef9e57d1759081c80c0c447077856b"
+      },
+      "to_id": "art:link-artifacts-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:6869d93e97fc9393"
+      },
+      "to_id": "art:llm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:b4efa81d63059bd71291377bbde7185d365dd9c0be48e6a717767fc45302e62c"
+      },
+      "to_id": "art:log-issue-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:eb56337ad4cc04d0006e95c7de870f13781744b46aa588187d9bb4dd861322f9"
+      },
+      "to_id": "art:loop-nudge"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:6bbc52afa91cd06347ad499da9b8a68fb964851ba5492b7e242d6b6707654f7b"
+      },
+      "to_id": "art:loop-status-lens-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:70526eac3e1332f9a8cd5fd2fb3ffeee00b6ea490f7ab4820db2b3e449f543af"
+      },
+      "to_id": "art:machine-install"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:0a4dd00e6265e3216470b40e9095104981ea15dff9b33bdaceaa3c8cd53af4e3"
+      },
+      "to_id": "art:main"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:07d63c0f4d0b5b79a213fe28a0132913e5d207d2068d590145342d28fa91e56b"
+      },
+      "to_id": "art:manual-work"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:6466478fa63bbc6982687e7c1d82680a0ec83df3593a99244fb68ee37741cf81"
+      },
+      "to_id": "art:maturity"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:a4d20ec48d8a0a3e024497ab67e55c49bba13ea12794ed3d92ad6877b56a46a6"
+      },
+      "to_id": "art:mcp-http"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:61f85f9f00e1fb61f1c05008c6aa5c64b932ee54a5dc345ebb96ac144f127f9e"
+      },
+      "to_id": "art:measure"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:0bd6c3a0a3a447993ae351e43f7483997859d03555a99ed9fb8af3984e764253"
+      },
+      "to_id": "art:merge"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:cddbea4165e0e3b0"
+      },
+      "to_id": "art:merge-driver-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:4d0783bbb657970305906ae38eb8a51badd40b1229881929e81026149478dd80"
+      },
+      "to_id": "art:migrate-backlog"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:8c68109b4d6a03012d7ce0a0183bc3c4abae616c11a4d5999ca1ad895721bbc5"
+      },
+      "to_id": "art:mint-seat-liveness-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:d096230f4c9b28747c2ec676526332ecf66aebe7487bb7bbc25faea165955e67"
+      },
+      "to_id": "art:move-component-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:40e11439739f8513d47c98fd0ce290ad4b127ea191defb159a352b1881082bb3"
+      },
+      "to_id": "art:musicjug-genesis-feedback-2026-08-31"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:eec80c6dc53e2f34055119b032b3ac49312cfd869178bdb676bd3790f8dc3cfb"
+      },
+      "to_id": "art:nodes"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:7dbdfa0bae226ef0dd447aaa882217a0a5996319d75d61bfade6409c284441c7"
+      },
+      "to_id": "art:nudge-detect"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:5bce5511379f9f153aae300433f80b107d2eef1249931ad8c107bc9535b73da8"
+      },
+      "to_id": "art:onboarding-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:d785b80eed7fd4a7b13d256305d538b622a19fdfc74ae94fae9710622c219112"
+      },
+      "to_id": "art:one-status-contract-across-sibling-constructors-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:92ca1c0d429ecf3f1b4d8fe67cf894a79b4cdbbbf09d65d2be4d821d6fd226f4"
+      },
+      "to_id": "art:opencode-loop-nudge-plugin"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:bc2b5cb90eca3a1124beb282aa9e9b9729d10c22684f575f74572abc6ef66082"
+      },
+      "to_id": "art:operate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:18ab1a2815d928cd7778a98e132bcb1fce46adb92b13bb66a57a926252a60e99"
+      },
+      "to_id": "art:ophyd-service-feedback-2026-08-19"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:02c32ab9b4c8a4efbeeb1e82f5529baa3a9653fbe1e8ba172f6ed5f5aab7e5f2"
+      },
+      "to_id": "art:ophyd-service-fork-feedback-2026-08-31"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:2e77d869536dd2ec9b41412e8ced1f4516682f0c546a16a620b6219fb7dc6ff7"
+      },
+      "to_id": "art:optimize-command"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:9d6d7822a38d848055571ea142d9e19b086fb914c33a40aa64117b929c0696f2"
+      },
+      "to_id": "art:optimize-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:9b9f0e13f76c8280676ec63aa2cd2637f83c64610545b11b01a8081422ec596f"
+      },
+      "to_id": "art:orphan-attachment-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:363556518dc66b351a28e6daa6ce42c718ff7494381b99441cf20daffdfb0e21"
+      },
+      "to_id": "art:parallel-work-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:e232809b444216b6da0bbadeb01c2a05a13c0de5c912347792d9a370ac64241b"
+      },
+      "to_id": "art:plan-increments-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:f11dca3fb6aa4ea3ded7f0dc0ba4bf5137ddcf54893645e851b439840194ed14"
+      },
+      "to_id": "art:planning-at-scale"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:e51e8e9ebee8095d896342c9c2639452873ca3c3931d7d4964ba952318ceb4e2"
+      },
+      "to_id": "art:preserve"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:bd1beaab1dc7705b0cc363b6234d2627239cd05a646e7610e52ba40bb4c428b8"
+      },
+      "to_id": "art:propagate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:647b3fdc35e7e0c198ffb37e31caeab215f1dd2bfff83a26b15d48769ad05227"
+      },
+      "to_id": "art:proposed-asserts-nothing-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:1001af62ca1d5cf7b837a1b075ca2890a55aaab39d9e5b54eb9f7436e0802c36"
+      },
+      "to_id": "art:prose-currency"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:5d2bf6ff2f723efca9dde5156f6aa39a4a750eaf185ead373de6df7244e13f89"
+      },
+      "to_id": "art:provenance"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:0600f136620ceb77adda6cbfef8fad3ca7c855cf8ddb442a86a977bf4b9531a1"
+      },
+      "to_id": "art:proxy"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:7979028e8c95724dd5696d9b1fee3f307c718b7d9f4e086a968620b602eec420"
+      },
+      "to_id": "art:publishable-promise-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:83b72d5821ca5ac8ee01174868ca17de9b66492bb53a558f9a55319b196382ad"
+      },
+      "to_id": "art:qs-project-feedback-2026-09-04"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:8732dbc16f9a0e9c840be89c07b168bef0e5b783e1132839b5515c1c23941d53"
+      },
+      "to_id": "art:read-cache"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:2bb942ef4cd7047b067c8974fb03d61864933afa166231316ce72dc05741f2b4"
+      },
+      "to_id": "art:read-only-surface-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:0fb8d5a09aae243e12ca8805081dd4bef30816d6f61b5ee97d5950977d753a4e"
+      },
+      "to_id": "art:readiness"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:2400856f1ce1ccf1ebb92ff1e98ccc7b3d6e9ab18516ba348f6a1446a9265d90"
+      },
+      "to_id": "art:readme"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:a61fa5294a57f780a019929ecc4268e44cc349111d7d377aeaaeb6fccda6b27b"
+      },
+      "to_id": "art:record-to-record-relations-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:acccfe9a30a4c45a273299fdf8cc35c8f722ff76dea00e8adf003824f3422e2e"
+      },
+      "to_id": "art:reflow-spirit-review-2026-09-13"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:c36a3f4561bbf3b1983b25c21514f27ee335e04a81d0109175ea78c01179f602"
+      },
+      "to_id": "art:reflow2-mcp-launch"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:4df030bd7a01963e34aab4043e560c7bf75d50b3b97fbc66d524d250d043985f"
+      },
+      "to_id": "art:reflow2-measures-a-registered-file-and-never-reads-it-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:f1e8b98cdfbe1d1509302009bedb3b90a24676d1c58171ce296134faaa35d68b"
+      },
+      "to_id": "art:reflow2-rebuild"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:7f3d5ab127e36ac15de0c7781b1e6b5554879cbca77198f3def12972900b3586"
+      },
+      "to_id": "art:regions-rs"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:d8d916c194760d36e108eb96fe403611fe7f9b2488301600e7c584840fe56d77"
+      },
+      "to_id": "art:registry"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:24e3f85a44ed7ad10a66dfa695ce2e5a2ea982aa788fe25632638b1cd0028cd4"
+      },
+      "to_id": "art:registry-http"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:8e0f99f550f050dc7b1f23c6ee9b8d7f3c58a51080aaf8873c338c5510b22ea5"
+      },
+      "to_id": "art:relate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:a32743008bb5e9d69f6ea0843b6294224fd7d81c239d27cd7e3b49d85c8c4fd0"
+      },
+      "to_id": "art:relation-coverage"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:f9c4ad1100c2c5a822525a410e77389fc1579cf387b403b4258849cacc858bf2"
+      },
+      "to_id": "art:release-workflow"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:db09b1f72da46dbab073672b58d9427ab2abe263051cb888131a80f3fb1ebdf2"
+      },
+      "to_id": "art:render-skills-and-tools"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:99fc5da421a04f5e"
+      },
+      "to_id": "art:render-views"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:bd0d36fec3fbd4c947cc9371049701bbe9f70124bd01eb8adc584a3af7472a67"
+      },
+      "to_id": "art:repair"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:f35c611572dfe346718c41d43a37eed2369a57354f12bf9feac686764daebb06"
+      },
+      "to_id": "art:repair-notes-lifted-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:252ef66435416fb966ca72a1f22c7efc7078db3a655431620a2d3db00a0e9247"
+      },
+      "to_id": "art:replace-text-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:98ea57e7b52febdb28bb3e58b1924c8b30fefd0ba606fc2a7592a9abab4f2594"
+      },
+      "to_id": "art:replies-are-bounded-gate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:f70590a55164e4a405d9abb5349f6d0e48957f264090f3884b04ea2b5e304d2d"
+      },
+      "to_id": "art:reply-budget"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:cf4c0cc47646f15612efbc79847ea2c9a72325ccc748e374b4eecfda40043786"
+      },
+      "to_id": "art:reply-budget-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:327f061047a9a2a3a81426b9ecfcfc1dbf3f6bd851bc084abc6b080a6c4140ef"
+      },
+      "to_id": "art:reply-sent-once-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:39f8b824a6c53184d1e79901d2108ddd742bb941962f4f16e0a9806e764e8cb9"
+      },
+      "to_id": "art:report"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:c30375e8c1c08d3740587bb2b069655d8ad315d3c544d50b9aea4845f8637631"
+      },
+      "to_id": "art:report-friction-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:4153e2b121b9d7c82e33bca52d8f9111465f6537d0ebcc5d6e8ccbecaf383232"
+      },
+      "to_id": "art:report-roll-withheld-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:91a829f67f34181032e7358d09148fc3b2a41707912553dc699697989f5de780"
+      },
+      "to_id": "art:retire-from-design-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:d88ddc5bc19740c53e84dc546b64dc612571622509f1311d33169f60856a59de"
+      },
+      "to_id": "art:revising-an-epochs-prose-keeps-its-status-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:26b80f1d7eda6ddf9a12ce916eca8365e334ebbdc7f298fffec9506094667ab9"
+      },
+      "to_id": "art:root-cause-command"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:9c6d901be277f4e96c48c0dedfb4e1ffb65b9085ea23b929d2fd466a9a3ae219"
+      },
+      "to_id": "art:root-cause-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:dc88dfbc4e1aacbc"
+      },
+      "to_id": "art:sanitize"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:24c201e5e508bd2f5ed6f8a96a71100e380f9b30eb9692616ff1565b0c374e66"
+      },
+      "to_id": "art:scheduling-a-question-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:0cf332b7cc7a404453ccac83eab937aec2b6159079df5c56bae1551ee4eccf47"
+      },
+      "to_id": "art:schema"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:163a8ab074bedcdda4db820f5d3b707066ebe2d5b5e15cee8bd1bd0c856606bd"
+      },
+      "to_id": "art:schema-build"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:25666817a106d14498ece7432d796396feaf80cbbdcd33660ddb9c9c1493acb3"
+      },
+      "to_id": "art:schema-core"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:815273502db4fed6800182446fb496a08aace3a9b34757395892e6da37dbcdb9"
+      },
+      "to_id": "art:schema-dimensions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:4d24ac56bcedd1da7cf758d4dd0c463b113c83748242f3af4161f3f3d700f96b"
+      },
+      "to_id": "art:schema-environment"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:d5bb6167c05efc1b1220077ba26cb6d502fcf2b7710326fbc8799dc35361c2fa"
+      },
+      "to_id": "art:schema-functional"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:8cd35a1ccce8a4bc404ec5bcd69d6f9360b5e5b6eac211916a2537753223713b"
+      },
+      "to_id": "art:schema-inference"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:a986d436e5575b86d26ab38c52bbb37ff91e1ead726ad6e04fe0d74889b71361"
+      },
+      "to_id": "art:schema-operate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:daf8ea6b9399cb16edfd8849adcd1bcd37ac1a7f3ae3acea80ecca8e035fdc9a"
+      },
+      "to_id": "art:schema-readiness"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:a85efa87addfdc744cdce6eb58df1dc3673de90ad328fdc6f23ce515062cbf38"
+      },
+      "to_id": "art:schema-structure"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:81a999d137c9e749b9331e23b0cc717a31355b6fd47a606c64ae03c12ee8def6"
+      },
+      "to_id": "art:schema-temporal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:b8a8839af6ae96f5a8d9a46b90ad2d0687de2aec37e7089bb9fd8717d1e9fbf6"
+      },
+      "to_id": "art:schema-verify"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:e30223c114e69ae086e68d175a12835caec5a36c350c390f6f97da71906a1856"
+      },
+      "to_id": "art:scope"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:de0871a98e6007aa5ee9e202d5396f014b3799efd72600f2a1a94de6d58ff182"
+      },
+      "to_id": "art:scope-corpus-ingest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:e192c58480dafaddf26abc1577a6317c1cc71fbded5a9aa5ac305bdf87a23aea"
+      },
+      "to_id": "art:scope-read-while-held"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:88a69b9ae360a4cf88d5c3d2dee918d7686bea20078d7b064db67033b350dfbd"
+      },
+      "to_id": "art:seam"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:24102ada053e17fa1f1f1519627b9cd3e6222b1cae6405c82270f45632473b75"
+      },
+      "to_id": "art:seam-coverage-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:83ef9f672ce8f420e9fccaa94e7d48f942c712e7d7468adac814b87d20447d2d"
+      },
+      "to_id": "art:seam-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:1e3c3fd1cdda5b393c0bf6449c6112d8f4648d798bd72f1ef3c7068192ddb765"
+      },
+      "to_id": "art:search"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:8e5af9fd122fc56d39472920dc28410b6a157ed889964b4c01eed80fb8cd52aa"
+      },
+      "to_id": "art:seat-liveness-shared-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:a8ea60ec60130ff3e563724bf43a50491849b18ece1d24fd4dfe6b1fe09f06c4"
+      },
+      "to_id": "art:self-host-documents-guard"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:1b8762d0754d990f05460f86d284a036276643685e7b346677f681429d2d4b63"
+      },
+      "to_id": "art:server-currency-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:13c7cb73e5c7ee5adb94329f66079c0c1806e1fba27f70f77fd31ecc3d6ddf21"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:062c1682b832952af474200bd28a7e046146cc8a2eefaca17dd42bfcecfc288d"
+      },
+      "to_id": "art:session-debt-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:ef07d52ac9cbe4f2df6cea3c16deae3d82335331e49232acefffbb5a8736ba0d"
+      },
+      "to_id": "art:setup"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:4434265932b24231898f3c30b45bc80a757b27e69c1738382daf4099b40510d1"
+      },
+      "to_id": "art:shared"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:f8d14a991b90377fab5074ee51dbbcf165d2ab813b1b5e742688b19d534c700b"
+      },
+      "to_id": "art:sibling-merge-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:4b04b8ac175fa6a9f73bc1e8d03cd2ed9e9227a9c49302d8cc63086bb09b9310"
+      },
+      "to_id": "art:skill-ingest-corpus"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:95a01788375527c4afb05bd62bfbafcea183e5b180386ca6319b4a5c6e89ec88"
+      },
+      "to_id": "art:skill-link-projects"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:26f78b68f087d97550964b09fb0e3fcb8365e45015126fcf178c6a1ae78d8dc2"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:a1c5f2a7114f8b29cef175420be55d82e9b3f46e01661cc34844a0200bb39737"
+      },
+      "to_id": "art:skill-lint-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:fd742f373873566627bd879f0e7178397500dfb37fddee09d70dbd7167b4684d"
+      },
+      "to_id": "art:skills"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:2e6c36f33463870e0394347dfdd131ba3a023e96c440a42a4f547554f1d66273"
+      },
+      "to_id": "art:skills-and-tools"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:cefb310c80047e41a5f1276b2112a7e82b4adea317d8c9663129cf8be0053b3c"
+      },
+      "to_id": "art:skills-build"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:1c3a2779a1848708582e8489463d54d4ae794d571a6b925b14a010364b727116"
+      },
+      "to_id": "art:skills-catalog"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:0cb52966e30c10155ca3fdb814dde9ecd914311a159219c229bfacb91a1878a8"
+      },
+      "to_id": "art:smoke-mcp"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:772b73a05ff491fe6dbca6adeb9697ad84e1ad9592e24b66793aae2716ae0783"
+      },
+      "to_id": "art:stateless-seat-probe"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:f44dda5865c39d5f8d301b33192096405930956e0a0adaf487a6eedead6e36f0"
+      },
+      "to_id": "art:stats"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:e9d506515e805248700ad848e0431f20bb9a87bb5daf69f0b49438af47d97a69"
+      },
+      "to_id": "art:status-question-finds-the-read-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:bf6a7fbb6a1fd489ab6964675a2544b83bb1e84162e3047466179685f907a7b5"
+      },
+      "to_id": "art:store-engine"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "art:storyflow-engineering-principles"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:ce30365401d775a82585729349538efe1a0fa43625783b2a39a6dc30f7d9ce83"
+      },
+      "to_id": "art:storyflow-resolution-study"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:ca3d21b614e5916c8f986159ab37ef67f324033e7af29f210ea6554d2b1a9234"
+      },
+      "to_id": "art:structure"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:b3b2bac1387c9c53"
+      },
+      "to_id": "art:surface-usage-instrument"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:8344d5c803961e9e9c25814e17995e021797fbdbc48969c4d4875e2e5e976777"
+      },
+      "to_id": "art:surprises"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:c47acbd5315df006de2e7209e7eb3c7d18f62e4d4630314be684512785d6659a"
+      },
+      "to_id": "art:sweep-coverage-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:c79d8c79905d00199a758e49e4ad91d27539c15223d89aeb675848a8cdfae464"
+      },
+      "to_id": "art:sync"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:e35b5e13ddf5552daaeb40750583bc20e6dadab8ea89fc9a1cb93e2eab5351b0"
+      },
+      "to_id": "art:sync-debt"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:237104c69d8d7d54c2aa07dd3eaf42180fc9aee1f1cdaaf056e87397c4a90934"
+      },
+      "to_id": "art:taxonomy-command"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:6e3cad6e8b50ba89092c9dc7f90704b921de4e50dfde80646ec071c3fdd24605"
+      },
+      "to_id": "art:temporal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:f2f2b223a5995a29000506dd3da8ee8bc148c451c441d9e4c4dc3e707764eb5a"
+      },
+      "to_id": "art:test-a-budget-adds-only-numbers-in-its-own-unit"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:1ef022b7cc39b9a498590f36f6c2b33e5b77497e0cdc89df7e403dc08e69a3f8"
+      },
+      "to_id": "art:test-a-choice-is-not-a-musing"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:a5cadde784b4cb2f8ff7d8a29010395456bd0f507c80fb07b0d6c215fd28cad1"
+      },
+      "to_id": "art:test-a-closure-criterion-is-declared-on-the-served-surface"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:d7c45552fbbe496538c59d284ba7fabdb9a619d974d220ab7153fbc9b3b2e4b2"
+      },
+      "to_id": "art:test-a-convention-reaches-the-skill-it-bears-on"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:eff5e13a0920d032a51e6b4471a05edd9021ac385c7b927b06de2c86e7092861"
+      },
+      "to_id": "art:test-a-dangling-reference-is-found-whatever-its-degree"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:6cc16ca10742fffe4358412d459e451e98af7f8eec7e5292647a24d424d9f8e9"
+      },
+      "to_id": "art:test-a-design-closes-against-a-declared-threshold"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:51c5f07c34b7149425c9847ee87ebf8e446617b4d24c696fb8b3c40da250fc7a"
+      },
+      "to_id": "art:test-a-detector-consults-what-the-graph-already-holds"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:ae3bc3ec58bce44a2599dbe377d2460d5a1a2f112c8b7aeacdb563edbd85a40d"
+      },
+      "to_id": "art:test-a-floating-root-part-is-told-the-cure"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:7f6cf82db40049b3e659d609132e2adca025e56653e8f5751da694790407a885"
+      },
+      "to_id": "art:test-a-follow-up-is-owed-until-it-is-settled"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:5fe3320f1340265f67dac22148d83c98a69379ab9f21837a801446b276c23aa1"
+      },
+      "to_id": "art:test-a-near-match-of-another-type-is-named-as-a-layer"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:b9baf0f3045e5a803820cdae146793c626fbe02dfeec56960ed092d1b91307b6"
+      },
+      "to_id": "art:test-a-node-is-named-by-its-id-and-the-type-is-optional"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:a38c17cb353e6074ddc473e97423e75ae841560e4b085e60c7320089f7b2727c"
+      },
+      "to_id": "art:test-a-node-records-what-the-user-calls-it"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:546cdc7102fadeb1ad60485d4b4f0d1bb3a49a308e1914fe86346d7ea13d6cf0"
+      },
+      "to_id": "art:test-a-number-names-its-source"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:4651d550556fb2540419af4993e3af9246af99a890511c8ec1e81a17899a307a"
+      },
+      "to_id": "art:test-a-prescribed-layer-pair-no-longer-refuses"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:53cfcd7ebf376ab905f6a31f5ff0630a536818152b6e18508f3ab140e209bac3"
+      },
+      "to_id": "art:test-a-procedural-boundary-has-a-word"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:4a5259a44e27c9d23ac65d9350bd8429843cde80ee46a3a54849dae514d6a564"
+      },
+      "to_id": "art:test-a-project-declares-its-unit-system-and-the-sweep-reports"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:da3403e99db87df4d908546166ce7fb13e72e96e44ab910fc0d2b9822bf98b37"
+      },
+      "to_id": "art:test-a-project-is-asked-what-its-artifacts-must-be-in"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:5cf91c278506bde2f4a865edebf16f8503e9b991e934f941192c50229961da89"
+      },
+      "to_id": "art:test-a-quantity-says-how-it-was-obtained"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:cb5a259ee2ba25c7b0c4558e727db2ad9dd6beab4275749571f96e4f29fc91a2"
+      },
+      "to_id": "art:test-a-registered-artifact-asserts-nothing-it-was-not-told"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:6770214bea12c53e80f106d2aba19e08171bd4cf7d0aea7d4dc95dfc12b29337"
+      },
+      "to_id": "art:test-a-repair-can-say-what-it-invalidated"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:78bbbdc28c1e794627fbe8015a33af44c839902d892d3c41cca5cb01e9531d74"
+      },
+      "to_id": "art:test-a-replaced-value-is-kept"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:879f7bb1235e0357298de014e71c8c9cff76be8601037825c83134b1c5d1f5f6"
+      },
+      "to_id": "art:test-a-repos-know-how-is-delivered-at-the-step-it-bears-on"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:d5b8136dc10bd65c239172c1f5153a1f101923114a3bb955be14670529033d8d"
+      },
+      "to_id": "art:test-a-rule-tests-the-condition-its-message-names"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:d7ad0005715563e4089ca5a4f2ff2a4a2cb2b07c8feafd611610cb278c9cf468"
+      },
+      "to_id": "art:test-a-session-with-no-seed-can-find-one"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:5fb495e40e597cfca8dcd9fe2e9003f6cfc62e75b3c4ec28894558aa86dfbf07"
+      },
+      "to_id": "art:test-a-superseded-finding-does-not-read-as-current"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:f8f3397b33e62a4d96b28cc2dc7f0eca75949fcb1d290dd4036e46afb37d211f"
+      },
+      "to_id": "art:test-a-taxonomy-is-decided-once-before-bulk-capture"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:f697452e4b8e3289d48b8a884f206c09cd60ee8e171308fb2c874800193f83ba"
+      },
+      "to_id": "art:test-a-unit-crosses-a-seam-and-the-two-sides-are-compared"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:2ac46b6977a7415dc6f1fb27e031088ed3b80ab66fd988745fe9809bdcd5e285"
+      },
+      "to_id": "art:test-absence-means-nobody-said-and-a-plan-holds-a-check"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:849b1a13e68dda4fc3a38bb19fc6df6363166ff014b7d2c042366a12fd4ee822"
+      },
+      "to_id": "art:test-add-artifact-takes-the-first-checksum"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:6e385bd8b44cd6da17118760dce6481c97d0fbc0023959b356dec3186b694386"
+      },
+      "to_id": "art:test-adopt-is-incremental-with-a-frontier-and-a-deferred-derivation-marker"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:53c91e013e1f7dcbf643a0148b95c4a692508b8ef0a40a7f6742441aac4df5a0"
+      },
+      "to_id": "art:test-an-edge-says-only-what-it-was-told"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:960bbd01b7f9efe6ce51f971a3a615b1f11c085ec65edb7b0e9ee991285903eb"
+      },
+      "to_id": "art:test-an-enum-field-publishes-its-legal-values"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:d65cab06ee2918cb57dde80235b25c2577b7feeed32b1662d1f9f33f20cd9d04"
+      },
+      "to_id": "art:test-an-export-says-where-it-was-taken"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:71032109bfbb1669564d107823b3b67677b1899569371706cc42cf075d7f08e4"
+      },
+      "to_id": "art:test-an-export-says-which-tree-it-was-taken-in"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:35bd149e47e2a2669241c63df99a4c7b31d1120dd1bb857779376464f39b9bcc"
+      },
+      "to_id": "art:test-check-kit-manifest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:201c2d26ef93416b356efa438304ad6241de0fbce74d39fbc1a4bbbc13f478d7"
+      },
+      "to_id": "art:test-constructors-preserve"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:3138f937a7b26e2943398718d4be60a21a20062bdb11537f915380af6f6c8734"
+      },
+      "to_id": "art:test-content-policy"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:ee85d86152c99d2dcdc335a1459db6f202b495b5109b64ea828b254677ca34c0"
+      },
+      "to_id": "art:test-degraded-server"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:cba77191420374d58d2360da9c1d2a73adcdd1d750d25dafc3991c1a525773af"
+      },
+      "to_id": "art:test-design-identity"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:e06c721f5f95ad1e42a8e97c53ca55c985a4a961ef256ff57489025891adb93b"
+      },
+      "to_id": "art:test-discontinued-is-read"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:dad53a2a19acf6c530fde3bae50cd36202dc47f57d1148470a035e156e663117"
+      },
+      "to_id": "art:test-edge-prose-is-governed-like-node-prose"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:d9c9e3e056e10bef30829b43018ffb321a643ce4b308c20dd1c79c560b06ab43"
+      },
+      "to_id": "art:test-edges-need-both-ends"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:f6c963c9d6dcc570f6f4a987e0f4c37b2cef4d70cf1f9acc2a392e799ec10214"
+      },
+      "to_id": "art:test-ephemeral-says-so"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:165aa3a49543a23668fcb50fdf421fa58c9e02c7ed413e23b67c60e8a864594d"
+      },
+      "to_id": "art:test-every-constructor-says-what-the-thing-is"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:2a2729f4077c0f08f966fde19d0313ab98cf5eade96305ab81eb62e4b3bb7dc8"
+      },
+      "to_id": "art:test-graph-construction-is-setup"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:e50add3bc1dec4a8122cfc7ab7905f668564b9a0ea98e8631e251d2582822323"
+      },
+      "to_id": "art:test-impact-of-diff"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:0d7b362984bea837ac03aa87b576c3a6b127cbf54a7d543eec6607abb781582f"
+      },
+      "to_id": "art:test-init"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:ff529b53470296cbf6209e8c2e9a9030d0df74dcf97bd480a6d15bac47975663"
+      },
+      "to_id": "art:test-loop-nudge"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:259d5952c7c46f429b9341e49c0aa91d7a9e65fe573c9acd1ca9ec5466af28d6"
+      },
+      "to_id": "art:test-mirror-refresh"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:9047e937c243342cccb68e2b37492cd9037e5100c260d7924337583378a95643"
+      },
+      "to_id": "art:test-no-per-design-globals"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:d267e70a75442d8bed9720830c0db470daabc3f8bda5442551d6cb5f57c6c874"
+      },
+      "to_id": "art:test-nothing-asks-what-a-session-made-false"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:39bcf1f944d3ceed42a1c6e10922eb00362b50cf37e8fefbee4a94ec4a35b8c6"
+      },
+      "to_id": "art:test-nudge-path"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:fd9380e4a6a47d2d8c55414c7ca675b40634afb353144b91a741b6a80f957d89"
+      },
+      "to_id": "art:test-one-tool-declares-its-output-contract"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:51cafb7d1de27950e7f05f9500c61e36a12e254b37ac350b0cade83294b56f32"
+      },
+      "to_id": "art:test-opencode-plugin"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:be6196c6181454d6249970f6273f7ba13272e5c4b025a73be5267009855e9db2"
+      },
+      "to_id": "art:test-orientation-needs-nothing-to-start"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:b06e7b2066b92dc02c3ff47c472f51becb7f06c6b4836fba17c812c8f7ca685a"
+      },
+      "to_id": "art:test-provenance"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:15e875957734e0ac3021f0e4d41bff0c169fea82a879d550bd752d4eb583d4d1"
+      },
+      "to_id": "art:test-recording-a-finding-demands-the-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:23ce30979251fee34495cd72eeaa3f9cc070931eb20b1d2b0730a42fc55732ff"
+      },
+      "to_id": "art:test-review-relations"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:e5d6934d9a4d09b62dfe3c6e3af603e1233fff8073bd740019f43f6d2cb03095"
+      },
+      "to_id": "art:test-schema-parsed-once"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:42558a34b466762d12c58b0cfc0b7c25fab7a03c7734c573854538cd87864e1b"
+      },
+      "to_id": "art:test-search-first"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:928e65c849f70ebe4e504ef603cb30ad6bc0db2759775e3c0d9f46514533fa1e"
+      },
+      "to_id": "art:test-served-skills"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:3c302ebd5675b5bc9407d9318f6c164fcad4954354db4b7008f01b6cc0039e6d"
+      },
+      "to_id": "art:test-session-names-its-design"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:771424fd9bca485932d2b5e429b16f8940e982566102bef0fc2a905a0211adea"
+      },
+      "to_id": "art:test-sessions-cannot-cross-designs"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:21673699d9d326c9db310fcb24068fa38074634b1949d2708c56f9f77a6c2e5f"
+      },
+      "to_id": "art:test-shared-sessions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:78b994c3da2476c2560bcd53dd776eb2232a1c4856a8427c63e9a08235cc628d"
+      },
+      "to_id": "art:test-stale-seat"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:9a86b59dc94de982a97460fbaa8e22a85d4929f2bbc0db0d6a62338bf0fbdede"
+      },
+      "to_id": "art:test-surface-orphaned"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:aac33ba9263e6dac48454b686a8682a45a1e43a3affad5f5c9272ce6f51dcf0d"
+      },
+      "to_id": "art:test-the-command-surface-answers-for-itself"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:405e163255f18ead9bc5823e8ee2cd83af575ae77cb2409b49d5c65957d10a3e"
+      },
+      "to_id": "art:test-the-commonest-edge-has-a-typed-helper"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:086f26e60d1b035d411ab0e1b4dffc80c697e5b74b6472e5b458e5ad1b1722da"
+      },
+      "to_id": "art:test-the-compliance-layer-is-whole"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:1b5622c2488252c1724147236f23c1433d77d7c8548068292985440f90f9ec41"
+      },
+      "to_id": "art:test-the-fourteen-holes-are-writable"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:6f0eddb8466447ff26874c6e731537bf02370a794d79a1d4932b3a296ae6f35a"
+      },
+      "to_id": "art:test-the-frontier-is-served-and-a-deferral-is-a-recorded-finding"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:1cb14fcba5c5dd3bda15e050cf80c8e5fb142480871d05dad106121d1dc9ec41"
+      },
+      "to_id": "art:test-the-guard-reads-the-request-before-refusing"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:b77ca1e1f019bbd42a7151708297330a8b8c50f85b685e60112f3237c68c5db5"
+      },
+      "to_id": "art:test-the-taxonomy-skill-is-served-and-the-finding-reaches-the-surface"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:3caa771c23353f9158501d475ea2f790570ece33d658eb1a2a393d4004848bab"
+      },
+      "to_id": "art:test-the-two-reported-fields"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:61245274748f547a7b6589bf8179ed4cd9099059dec77631fe7589ecc21bdef5"
+      },
+      "to_id": "art:test-two-designs-over-the-transport"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:d9aafa8273866d2daf9cbe7c5f61a5ef2f04867edd1d9c646da436ffcbcb037e"
+      },
+      "to_id": "art:test-vocabulary-reach"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:4f76fc487b0d7e857148b7e443a006f319846be8f8be2a4ea5a93732ff9dfec0"
+      },
+      "to_id": "art:the-export-can-be-ordered-before-its-writes"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:243fa75a8b6fa5be37fa8d626bf13cc47d03d48d16aa62b0d8c5b7eeba319500"
+      },
+      "to_id": "art:the-export-chains-from-main-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:3af2947547a0ddc4fd4cd38f74738331bcee2b2df319c0e4a23327ab8d8056c9"
+      },
+      "to_id": "art:the-server-keeps-the-export-current-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:82a3e0a7de40c69c7620dd6a8df05309924789161b2ac578c906ef2401cd175c"
+      },
+      "to_id": "art:tool-confusability"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:a2375de74c692c06d41eba0576699f03acea0a49147d1e8e6c366090874e8db8"
+      },
+      "to_id": "art:tools-ask"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:12a897d8c6564688c56fbcfd61f9dac75e0e37e5a6321f4d68a4ed83848ce259"
+      },
+      "to_id": "art:tools-assure"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:c1674a0b655c27195288b7fb9154ee51e367ba59e70d14b100a267c634462465"
+      },
+      "to_id": "art:tools-built"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:c8464debd4be7cfc1cd54655574a47ea2a8e607886bd78e4ebc6ac4b46213a94"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:7589d256894c0f9f8e2f61e9c24afdf279e2fb3f0d7f16bf1abda78ce40c0884"
+      },
+      "to_id": "art:tools-claims"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:b1deebf563c6f8e8e66d7885cc7d007262fd2cee33ac3f69cb166eebde07bd85"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:c42a18b87a81406b831f3a07417d5680c356c239ea6d9d546f6208ef676941b0"
+      },
+      "to_id": "art:tools-exchange"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:2d0709bc16a3017ff8dc6a7c5100586de906e5dfb0437ed2c9fe65eb4b9912ac"
+      },
+      "to_id": "art:tools-ingest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:f10ae2ddc57fcb878837a5341ecae25d2b22e3a2b0b81dbcfa3abc4cd7b6cfc5"
+      },
+      "to_id": "art:tools-operate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:87f67afdf21e6fe5422227bafa5a88827cc682ab9bb41ef770acc7711eb5cc95"
+      },
+      "to_id": "art:tools-query"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:b39ae30b3f31650f30ce2546e9424c097efc88d1738c88f1cd042fd6d7b4948c"
+      },
+      "to_id": "art:tools-skills"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:90f1d1388a906ba574f58e61cd3b46cbfae02f0700c960861afbd6a79d406651"
+      },
+      "to_id": "art:tools-temporal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:ac537a33576405b8079152950a5619ed7ca00d8429f0603f20e9ee3f3a1a74f3"
+      },
+      "to_id": "art:topic"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:e322352e25d0f6347e2f87d70074984f31e8a6b7452e86e296895cf81229a628"
+      },
+      "to_id": "art:topic-command"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:d2620fc0c18ad1542d7b36c982d21db14e394a26282bb611fb2f0b338a98eba6"
+      },
+      "to_id": "art:topic-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:88a4cc5cdca6f2706bd723b08064174adc27151dddc6ce94e2c2c74720101e43"
+      },
+      "to_id": "art:triage-command"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:655672e9914e77ec51e21e9804d35ce5356351a1859591458a042945c58435fb"
+      },
+      "to_id": "art:triage-feedback-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:1ea0fa6bd8dc3bfe8bb893de7431b87c84928efa0ba7b34ecd13f7e3d65f9111"
+      },
+      "to_id": "art:unreachable-decision-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:878315a480167a9296209d6b30a41f9f13318292db228829243a7acc24338c23"
+      },
+      "to_id": "art:updating-doc"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:ef7dbb708e027df2"
+      },
+      "to_id": "art:upgrade-v0110"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:c942d4189e9c77c9fb395b57909a43a2f71e7e93aca10996ebb28b56ac6e1e34"
+      },
+      "to_id": "art:upgrading-v0120"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:1b917d1e63831e3d1153783bd412a9d8b0ddd43853c465450473bf26d0972995"
+      },
+      "to_id": "art:upgrading-v0130"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:b1e1cee221b0bc6ed7f9e4411cda9dcd50a2dc2647785e06eaa7b1ce7329da28"
+      },
+      "to_id": "art:upgrading-v0150"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:00eea80c2a79cc4eed4d1db9402a4e90e23231745a8fdd4117f44a9f22f58f24"
+      },
+      "to_id": "art:upgrading-v0160"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:d1c21f5330ad0ea05f4efe46c08a010d5fb22ece05523922bb6324c7ec8a2eda"
+      },
+      "to_id": "art:upgrading-v0180"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:3a36b9b6b248af09"
+      },
+      "to_id": "art:upgrading-v0190"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:d16abc28ea59e3f9"
+      },
+      "to_id": "art:upgrading-v0210"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:6b9d7e9a3106aeb93da6040f6804e618845417db6599b75a03b50415bd131b91"
+      },
+      "to_id": "art:upgrading-v0270"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:2b31db5690be20d1a4de6e8be6726b6fd93e196de5d462ab4963e8fa94dc4b5b"
+      },
+      "to_id": "art:upgrading-v0400"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:94133afbb52d85336c580d54d1ed0a3a3b8db5bee2e1629fed48189eb07174e9"
+      },
+      "to_id": "art:upgrading-v0460"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:84ba28c9c462c570220de6852aa1e37350c98733ddd65480b8ca9afa6db3ac63"
+      },
+      "to_id": "art:upgrading-v0550"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:c5e88afb0418cb9bc8cbfe2c3075bc1a07cc994e08766ba40aa7ebb35baa5fdf"
+      },
+      "to_id": "art:upstream"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:96aacd4f4dd5a78bbaa9a73330808afd48adb323a9ed3616932530537de6ecc9"
+      },
+      "to_id": "art:upstream-judgement-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:258f9f6edd97fe586f71cbf9c9b6a12459f39b4243ed54d21ace4d5b63a5ac0b"
+      },
+      "to_id": "art:upstream-read-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:f97070598dd6f9bc2fb480185c70ac34513a6df45b3acf1249641a3a18546ce3"
+      },
+      "to_id": "art:usage-ledger"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:4f3ce1ca9ee00ff17079b8925e6dccaf8161b82857cb6746f2f756edd59772ac"
+      },
+      "to_id": "art:usgov-genesis-feedback-2026-08-15"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:fd00cd40b2d3deb951af1ce05413e63b2fd843590932db8afd5bd6a61d1cbb2e"
+      },
+      "to_id": "art:verify"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:fdc87d24e87c3e839914afa992cb3195c5297078c2502528a7a9de082c628767"
+      },
+      "to_id": "art:vocabulary"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:fb3fe08bdc802aac242f2764ca970ec53fd7f9342f0df3232310df29b98c94bc"
+      },
+      "to_id": "art:vocabulary-reach"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:6df5434dda567dd8a608ada66313aa4d7dbcc6ab206f4aae5d413b27648aea8d"
+      },
+      "to_id": "art:vocabulary-reach-baseline"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:5c9b19e383922f7922cac701f6c93ae03fdfade9af7f5b3dba663a18ab894d04"
+      },
+      "to_id": "art:wall-check"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "art:wall-check-served"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:8834f59d9cbca7b621d8645ecd5934d6d66bb3b7ead12f945e5d8830e48e5af9"
+      },
+      "to_id": "art:wall-check-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:5fa2d021f642a8ac29a59a63d299611f779665f8b98818e90811a357e8957a7b"
+      },
+      "to_id": "art:where-am-i-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {
+        "as_checksum": "sha256:df4c813eb186fe979b549095102e83a507ca090f21a57c56c2882be14b177c07"
+      },
+      "to_id": "art:xrt-demo-genesis-feedback-2026-09-16"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:agent"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:allocate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:alternatives"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:artifact"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:budget"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:bulk"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:byte-store"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:claims"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:compare"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:compose"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:confirm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:consumption"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:corpus"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:coverage"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:dates"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:degraded"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:depends"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:dimensions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:discover"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:docs"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:drift"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:dto"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:export"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:fielded"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:flow"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:foundation-vocabulary"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:genesis"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:granularity"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:graph-algorithms"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:handshake"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:heal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:hierarchy"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:identity"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:ility"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:ingest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:init"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:latent"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:llm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:main"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:manual-work"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:maturity"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:mcp-http"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:memory-backend"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:merge"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:nodes"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:nudge"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:operate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:packaging"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:preserve"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:propagate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:provenance"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:proxy"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:readiness"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:regions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:registry"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:relate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:report"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:rocksdb-backend"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:sanitize"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:schema"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:scope"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:seam"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:search"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:shared"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:structure"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:surprises"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:sync"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:sync-debt"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:temporal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:text-index"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:tools-ask"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:tools-assure"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:tools-built"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:tools-capture"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:tools-claims"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:tools-coherence"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:tools-exchange"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:tools-ingest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:tools-operate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:tools-query"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:tools-skills"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:tools-temporal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:upstream"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:verify"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "cmp:vocabulary"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "sub:across-designs"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "sub:change-and-structure"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "sub:evidence"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "sub:finding"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "sub:install"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "sub:serving"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "sub:session-posture"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "sub:surface-shaping"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "sub:telling"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "sub:tool-surface"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "sys:agent-surface"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "sys:coherence-loop"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "sys:documentation"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "sys:foundation"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "sys:human-channel"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "sys:intake"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "sys:store"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "sys:time-history"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0650",
+      "properties": {},
+      "to_id": "sys:vocabulary"
+    },
+    {
+      "edge_type": "INCLUDES",
       "from_id": "rel:v070",
       "properties": {
         "as_checksum": "sha256:ef54ecabcaf64bc5"
@@ -220121,6 +224215,12 @@
       "from_id": "epoch:v0630-cut",
       "properties": {},
       "to_id": "epoch:v0640-cut"
+    },
+    {
+      "edge_type": "PRECEDES",
+      "from_id": "epoch:v0640-cut",
+      "properties": {},
+      "to_id": "epoch:v0650-cut"
     },
     {
       "edge_type": "PRECEDES",
@@ -234398,7 +238498,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:da1fd73aacbed28d5f7fe82e112ad829105425fdcb4d33452150f93fdb34c3ef",
+        "checksum": "sha256:70510cea034d4eaa9480f92618fdaa6c266a3ba15ab6f8a88771314f27634e72",
         "checksum_basis": "measured",
         "location": "AGENTS.md",
         "name": "AGENTS.md — the primary instruction file every agent reads before it knows reflow2 exists: commands, architecture, the rules for changing the project",
@@ -235081,7 +239181,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "config",
-        "checksum": "sha256:91934c6a6471ece41e54b846f412abde86217e425f317f44894be128f622f823",
+        "checksum": "sha256:8a398b3432baa233f00d6c871ca58578ebfbd3326fa281694c97c1ba37b729b3",
+        "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "reflow2.toml",
         "name": "reflow2.toml",
@@ -245408,6 +249509,16 @@
       }
     },
     {
+      "node_id": "chg:accept-8c71df06fe598502",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "documentation",
+        "detected_at": "2026-09-19",
+        "name": "Version string moved to 0.65.0 by the cut. The design meaning of a cut lives in the Release and its epoch, never in a version string.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-8c9c475cb4ccb492",
       "node_type": "ChangeEvent",
       "properties": {
@@ -246573,6 +250684,16 @@
         "change_type": "refactor",
         "detected_at": "2026-08-14",
         "name": "One line: `decomposition_coverage` added to the not-a-tool term list, alphabetically beside `design_without_intent` and `missing_intermediate_level`, which are gap_source values too. The lint reads backticked identifiers in served skills and asks whether each names a tool; a new gap_source appearing in detect-and-ask's expectation list is a field term, not a tool, and the lint's own failure message names this list as the fix. NO RULE CHANGED — no check added, removed or weakened, and the trap this list can become (adding a REAL tool to it, which teaches you to lie to the gate) is not triggered here: nothing named decomposition_coverage is or ever was a served tool."
+      }
+    },
+    {
+      "node_id": "chg:accept-e694096a8061f630",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "documentation",
+        "detected_at": "2026-09-19",
+        "name": "Two version claims moved to 0.65.0 by the cut (the shipping-version line and the loop-status line). The design meaning of a cut lives in the Release and its epoch, never in a version string.",
+        "subject": "system"
       }
     },
     {
@@ -248820,6 +252941,17 @@
         "rationale": "ROOT CAUSE, from the record (fact:defect-currency-is-read-from-proc-self-exe-so-every-non-linux-run-answers-unknown-on-every-call): a Linux-only primitive used where the portable one already sat one module away, on a project whose accepted req:platform names macOS. Three candidates were tested; the old-build one was refuted, and both the mechanism (no fallback) and the amplifier (the note carried on every call) were confirmed. This fix reaches the CAUSE: on macOS the question now has an answer, so the per-call note disappears by construction rather than by suppression. WHAT IT TRADES: the fingerprint path reads a binary replaced by one of identical size and mtime as current — rare, and the Linux link path does not share it; the note says which path answered so a reader can weigh it. WHAT IS NOT CLOSED: whether an UNKNOWN (both paths failing) should still be carried on every loop_status or once per session is a smaller separate question, untouched. NOT RUN ON macOS: the darwin behaviour is asserted through the pure function on a Linux box; Alex's next run is the real verification.",
         "subject": "system",
         "summary": "exe_replaced_since_start (service.rs) read /proc/self/exe and nothing else, so on any non-Linux platform loop_status answered 'unknown, verify another way' on every call (Alex, macOS, v0.47.0). It now feeds a pure `currency_verdict(proc_link, start_fp, now_fp)`: STALE if the link carries ` (deleted)` OR the executable's size:mtime fingerprint differs from the one captured at process start; CURRENT only if the link is clean-or-absent AND fingerprints match-or-unavailable; UNKNOWN only when neither signal could be read. shared.rs gains `startup_fingerprint()` (a OnceLock initialised by `exe_fingerprint`, the portable primitive client election already used), called first thing in main so the value is genuinely the START one. Two new notes say WHICH check answered (FINGERPRINT_CURRENT_NOTE / FINGERPRINT_STALE_NOTE); UNKNOWN_NOTE now says both paths failed. The fingerprint also catches an in-place overwrite (same inode, clean link, moved mtime) that the link alone missed. STARTUP_FINGERPRINT is allowlisted in no_per_design_process_globals.rs with its reason (the executable is a fact about the process, not a design). Five pins in the_server_says_when_it_is_stale.rs, OBSERVED FAILING FIRST (E0425 — the function did not exist), then each branch pinned: no-proc+match -> current; no-proc+moved -> stale; neither -> unknown; deleted link wins; clean link + moved fingerprint -> stale. mcp 352/0, fmt/clippy clean."
+      }
+    },
+    {
+      "node_id": "chg:cut-v0650",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "documentation",
+        "detected_at": "2026-09-19",
+        "name": "Cut v0.65.0",
+        "rationale": "Anthony 2026-09-19: 'Please cut v0.65.0'. Eleven PRs since v0.64.0; minor by the changelog's own bucket rule — two new tools (replace_text, find_skills), a new CLI verb (--call), new constructor parameters and id aliases.",
+        "summary": "Version moved to 0.65.0 in Cargo.toml, reflow2.toml and Cargo.lock, and in the two AGENTS.md claims; CHANGELOG section closed; docs/upgrading-to-v0.65.0.md written and linked from the overview, owed because the schema stamp moved (ChangeEvent.change_type gained `decision_settled`)."
       }
     },
     {
@@ -264087,6 +268219,17 @@
       }
     },
     {
+      "node_id": "epoch:v0650-cut",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "description": "The v0.65.0 release cut. Follows the v0.64.0 cut; carries the eleven PRs merged between them.",
+        "epoch_type": "release_cut",
+        "name": "v0.65.0 cut",
+        "sequence": 505,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:v070",
       "node_type": "DesignEpoch",
       "properties": {
@@ -270285,9 +274428,20 @@
       "properties": {
         "description": "Cut 2026-09-17 on Anthony's word (\"Merge 533 and then cut v0.64.0\"). Ships two PRs since v0.63.0, the second and third of Alex's three ideas: #532 — adopt is incremental and resumable (a deferred_derivation marker that quiets unmotivated_capability and unallocated_component on its subject and is listed as owed in loop_status; the served frontier read: structure without intent, the deferred, the uncaptured from a handed-in sweep, the resume point; adopt's Region mode); #533 — a repository's procedural know-how is delivered at the step it bears on and the design knows the adapter exists (convention_delivered_nowhere, agent_instructions_unregistered, adopt Phase 0 and link-artifacts; reflow2 registers its own AGENTS.md and CLAUDE.md). Minor: one new tool (frontier) and two new loop_status fields. The schema stamp did not move (28/65/1); no upgrade note.",
         "name": "v0.64.0 — incremental adopt with a frontier and a deferral marker, and a repository's know-how delivered at the step it bears on",
-        "status": "deployed",
+        "status": "retired",
         "unit_type": "container",
         "version": "0.64.0"
+      }
+    },
+    {
+      "node_id": "rel:v0650",
+      "node_type": "Release",
+      "properties": {
+        "description": "Cut 2026-09-19 on Anthony's word. Eleven PRs since v0.64.0. THE SURFACE: `--call <tool> --args <json>` is the door a build script uses to read a report without an MCP session (bhome S3); `find_skills` finds a skill from a sentence in a person's words, with its own held-out corpus and rank ratchet (flo2 F8); `replace_text` moves one sentence of a node's text without re-sending the field; every constructor of a status-carrying type takes `status` and names what omitting it lands, and 25 tools accept `id`/`node_id` beside their typed key (flo2 F10, dev_storyflow, bhome — the constructor half of a defect three projects recorded). THE INSTRUCTIONS: every served skill carries a summary and an audience; a project's first session leaves the pointer file in place; a field report is triaged by a served step; a contribution may be negative; a missing-field refusal names what this call lacked. THE STAMP MOVED: ChangeEvent.change_type gained `decision_settled`, so docs/upgrading-to-v0.65.0.md is owed and written — an older binary refuses by name a design that stores it.",
+        "name": "v0.65.0 — the build door, the skill finder, and one status contract across the constructors",
+        "status": "deployed",
+        "unit_type": "container",
+        "version": "0.65.0"
       }
     },
     {
@@ -288926,7 +293080,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:2fdda7587f106534737b768dd32c0f84d2b6e01980b0a1c190aab39163d48286",
+  "prev_content_hash": "sha256:bde986e1c32c39dac6ae532838e54f35a269b7849093d2cb0bd07baa765edf09",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -289520,12 +293674,12 @@
       "Verification"
     ],
     "node_types": 28,
-    "reflow2_version": "0.64.0",
+    "reflow2_version": "0.65.0",
     "schema_version": 1
   },
   "taken_at": {
-    "branch": "a-contribution-may-be-negative-and-a-refusal-says-which-fields-are-missing",
-    "commit": "a173df066bba405bd394dd315fab96ff15044381",
+    "branch": "cut-v0.65.0",
+    "commit": "11e8b805f551ecc3a92a64f319d10db736a61558",
     "dirty": true
   }
 }
