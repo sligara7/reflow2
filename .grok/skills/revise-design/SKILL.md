@@ -1,7 +1,7 @@
 ---
 name: revise-design
 description: Use when the user changes their mind about something already IN the design — a requirement's wording, a capability's scope, a status, a link that points at the wrong thing. Walks the change onto the record (epoch, snapshot, ChangeEvent) BEFORE the edit, so the past survives, then makes the edit with the right tool. The update half of the loop; impact-check tells you what the change touches, this is how you then touch it.
-metadata: {composes: [STANDING, REVISES]}
+metadata: {composes: [STANDING, REVISES], audience: anyone, summary: "Change something already in the design, keeping the record of what it was."}
 ---
 
 # Revise the design on the record

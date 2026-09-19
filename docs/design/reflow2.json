@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:c1176e5d25282056076d63240497e2adf612024d471c96cf38b3fbe6f35b05f7",
+  "content_hash": "sha256:6f010f958736af2b28717ee962adcfadaa209cd5da35d3df29d9b1c29b27f8e9",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2094,6 +2094,14 @@
     {
       "edge_type": "ALLOCATED_TO",
       "from_id": "cap:every-served-report-is-reachable-from-an-instruction",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:every-skill-serves-a-summary-and-an-audience-and-the-shortcut-count-is-computed",
       "properties": {
         "weight_basis": "estimated"
       },
@@ -15727,8 +15735,10 @@
       "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-a-skill-carries-a-line-for-a-person-and-says-who-it-is-for",
       "properties": {
+        "approved_at": "2026-09-19",
         "roles": [
-          "author"
+          "author",
+          "approver"
         ]
       },
       "to_id": "who:ajs"
@@ -16653,6 +16663,16 @@
       "from_id": "dec:idea-gap-flows-to-the-dependency",
       "properties": {
         "authored_at": "2026-08-06T09:40:00Z",
+        "roles": [
+          "author"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-genesis-and-adopt-write-the-served-pointer-into-a-project-with-no-instruction-file",
+      "properties": {
         "roles": [
           "author"
         ]
@@ -18143,8 +18163,10 @@
       "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-the-served-surface-carries-what-a-consumer-needs-to-present-it-so-no-copy-is-kept",
       "properties": {
+        "approved_at": "2026-09-19",
         "roles": [
-          "author"
+          "author",
+          "approver"
         ]
       },
       "to_id": "who:ajs"
@@ -22393,6 +22415,18 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-served-skill-carries-a-line-a-person-reads-and-says-who-it-is-for",
+      "properties": {
+        "approved_at": "2026-09-19",
+        "roles": [
+          "approver",
+          "author"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:a-session-cannot-reach-another-designs-graph",
       "properties": {
         "authored_at": "2026-08-05T23:10:00Z",
@@ -23584,6 +23618,17 @@
       "from_id": "req:work-says-whether-it-reaches-a-consumer",
       "properties": {
         "approved_at": "2026-08-22T19:05:00Z",
+        "roles": [
+          "approver"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "rule:a-consumer-facing-fact-about-the-served-surface-is-served-never-copied",
+      "properties": {
+        "approved_at": "2026-09-19",
         "roles": [
           "approver"
         ]
@@ -40702,6 +40747,294 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:every-served-skill-carries-a-line-for-a-person-and-says-who-it-is-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:adopt-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-served-skill-carries-a-line-for-a-person-and-says-who-it-is-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:brainstorm-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-served-skill-carries-a-line-for-a-person-and-says-who-it-is-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:capture-intent-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-served-skill-carries-a-line-for-a-person-and-says-who-it-is-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:capture-session-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-served-skill-carries-a-line-for-a-person-and-says-who-it-is-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:check-health-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-served-skill-carries-a-line-for-a-person-and-says-who-it-is-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect-and-ask-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-served-skill-carries-a-line-for-a-person-and-says-who-it-is-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:establish-taxonomy-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-served-skill-carries-a-line-for-a-person-and-says-who-it-is-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:feedback-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-served-skill-carries-a-line-for-a-person-and-says-who-it-is-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:genesis-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-served-skill-carries-a-line-for-a-person-and-says-who-it-is-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:governance-proposal-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-served-skill-carries-a-line-for-a-person-and-says-who-it-is-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:help-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-served-skill-carries-a-line-for-a-person-and-says-who-it-is-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:impact-check-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-served-skill-carries-a-line-for-a-person-and-says-who-it-is-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:kpp-proposal-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-served-skill-carries-a-line-for-a-person-and-says-who-it-is-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:link-artifacts-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-served-skill-carries-a-line-for-a-person-and-says-who-it-is-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:log-issue-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-served-skill-carries-a-line-for-a-person-and-says-who-it-is-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:onboarding-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-served-skill-carries-a-line-for-a-person-and-says-who-it-is-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:optimize-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-served-skill-carries-a-line-for-a-person-and-says-who-it-is-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:parallel-work-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-served-skill-carries-a-line-for-a-person-and-says-who-it-is-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:plan-increments-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-served-skill-carries-a-line-for-a-person-and-says-who-it-is-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:report-friction-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-served-skill-carries-a-line-for-a-person-and-says-who-it-is-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:retire-from-design-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-served-skill-carries-a-line-for-a-person-and-says-who-it-is-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:root-cause-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-served-skill-carries-a-line-for-a-person-and-says-who-it-is-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-ingest-corpus"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-served-skill-carries-a-line-for-a-person-and-says-who-it-is-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-link-projects"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-served-skill-carries-a-line-for-a-person-and-says-who-it-is-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-served-skill-carries-a-line-for-a-person-and-says-who-it-is-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skills"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-served-skill-carries-a-line-for-a-person-and-says-who-it-is-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skills-build"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-served-skill-carries-a-line-for-a-person-and-says-who-it-is-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-served-skills"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-served-skill-carries-a-line-for-a-person-and-says-who-it-is-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-skills"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-served-skill-carries-a-line-for-a-person-and-says-who-it-is-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:topic-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-served-skill-carries-a-line-for-a-person-and-says-who-it-is-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:triage-feedback-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-served-skill-carries-a-line-for-a-person-and-says-who-it-is-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:where-am-i-skill"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:every-skill-has-a-command",
       "properties": {
         "accepted_baseline": true,
@@ -52246,6 +52579,12 @@
       "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
+      "to_id": "cap:every-skill-serves-a-summary-and-an-audience-and-the-shortcut-count-is-computed"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
       "to_id": "cap:git-merge-driver"
     },
     {
@@ -52415,6 +52754,12 @@
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "req:a-repos-procedural-know-how-is-delivered-at-the-step-it-bears-on-and-the-design-knows-the-adapter-exists"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "req:a-served-skill-carries-a-line-a-person-reads-and-says-who-it-is-for"
     },
     {
       "edge_type": "CONTAINS",
@@ -52727,6 +53072,12 @@
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "req:vocabulary-covers-states"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "rule:a-consumer-facing-fact-about-the-served-surface-is-served-never-copied"
     },
     {
       "edge_type": "CONTAINS",
@@ -55502,6 +55853,16 @@
         "weight_basis": "estimated"
       },
       "to_id": "fact:defect-add-verification-cannot-reach-its-own-fields"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-genesis-and-adopt-write-the-served-pointer-into-a-project-with-no-instruction-file",
+      "properties": {
+        "evidence": "Whatever route is chosen serves that requirement's adapter; it does not replace it.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "req:a-repos-procedural-know-how-is-delivered-at-the-step-it-bears-on-and-the-design-knows-the-adapter-exists"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -59111,6 +59472,14 @@
     },
     {
       "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-a-skill-carries-a-line-for-a-person-and-says-who-it-is-for",
+      "properties": {
+        "evidence": "Promoted 2026-09-19: option (a), both fields, required rather than optional on reflow2's own skills so the lint keeps them true."
+      },
+      "to_id": "req:a-served-skill-carries-a-line-a-person-reads-and-says-who-it-is-for"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
       "from_id": "dec:idea-a-status-that-advances-past-its-own-prose",
       "properties": {
         "evidence": "The idea, captured 2026-09-02 from the dev_storyflow report, turned over four options A-D. Anthony chose A on 2026-09-04 ('build the status-vs-prose sentence') and this capability is that build: one block in the reply the caller already receives, at the moment the divergence is created. The decision's status is left `proposed` deliberately - the ruling is his and recording it as accepted on his behalf is what dec:certainty-derived forbids."
@@ -59420,6 +59789,14 @@
         "evidence": "The older thought grown up, minutes later. That node found GraphRead already built and framed the work as migration; this one supplies the architectural name for what went wrong (behaviour smearing in a graph-centric architecture), scores three candidate patterns against decisions already taken, and adds a fourth remedy — the crate split — that the migration framing did not surface."
       },
       "to_id": "dec:idea-the-architecture-is-graph-centric-and-the-question-is-which-decoupling"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-the-served-surface-carries-what-a-consumer-needs-to-present-it-so-no-copy-is-kept",
+      "properties": {
+        "evidence": "Promoted 2026-09-19 as a DesignRule (option a), delivered on list_skills and find_tools — the calls a consumer makes to present the surface."
+      },
+      "to_id": "rule:a-consumer-facing-fact-about-the-served-surface-is-served-never-copied"
     },
     {
       "edge_type": "EVOLVES_INTO",
@@ -61302,6 +61679,12 @@
       "from_id": "cap:drift-direction",
       "properties": {},
       "to_id": "decision:ack:f78628387e7c41cc"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:every-skill-serves-a-summary-and-an-audience-and-the-shortcut-count-is-computed",
+      "properties": {},
+      "to_id": "rule:a-consumer-facing-fact-about-the-served-surface-is-served-never-copied"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -64030,6 +64413,12 @@
       "from_id": "cap:the-agent-asks-who-it-is-talking-to",
       "properties": {},
       "to_id": "decision:ack:a961bfe399679dbf"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:the-command-surface-answers-for-itself",
+      "properties": {},
+      "to_id": "rule:a-consumer-facing-fact-about-the-served-surface-is-served-never-copied"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -71206,6 +71595,12 @@
       "from_id": "cap:skills-served",
       "properties": {},
       "to_id": "fact:field-report-flo2-2026-09-18-skills-are-not-findable-by-words-find-tools-scores-tools-only"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:skills-served",
+      "properties": {},
+      "to_id": "fact:three-consumer-projects-on-the-dev-box-carry-no-pointer-file-and-no-hook-because-init-never-ran-the-user-scope-route-bypasses-it"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -216816,6 +217211,24 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:every-served-skill-carries-a-line-for-a-person-and-says-who-it-is-for",
+      "properties": {
+        "at": "2026-09-19",
+        "note": "The change answers the finding; the finding stays as the measurement that led to it."
+      },
+      "to_id": "fact:field-report-flo2-2026-09-18-a-skill-states-what-a-person-types-but-not-what-a-person-reads-nor-who-it-is-for"
+    },
+    {
+      "edge_type": "INVALIDATES",
+      "from_id": "chg:every-served-skill-carries-a-line-for-a-person-and-says-who-it-is-for",
+      "properties": {
+        "at": "2026-09-19",
+        "note": "The change answers the finding; the finding stays as the measurement that led to it."
+      },
+      "to_id": "fact:field-report-flo2-2026-09-18-the-list-skills-note-hard-codes-eight-differing-shortcuts-and-the-live-count-is-ten"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:four-root-causes-from-two-field-reports-are-fixed-at-the-cause",
       "properties": {
         "evidence": "orphan_level's message names the Project as the thing that can contain the part; the adopt skill says so where it teaches nesting. Pinned by a_floating_root_part_is_told_the_cure.rs."
@@ -225338,6 +225751,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:every-skill-serves-a-summary-and-an-audience-and-the-shortcut-count-is-computed",
+      "properties": {},
+      "to_id": "req:a-served-skill-carries-a-line-a-person-reads-and-says-who-it-is-for"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:every-tool-carries-the-users-phrasing-and-the-corpus-is-the-test",
       "properties": {},
       "to_id": "req:every-served-tool-is-reachable-by-find-tools-on-a-users-words"
@@ -227610,6 +228029,14 @@
     },
     {
       "edge_type": "TRIGGERS",
+      "from_id": "fact:three-consumer-projects-on-the-dev-box-carry-no-pointer-file-and-no-hook-because-init-never-ran-the-user-scope-route-bypasses-it",
+      "properties": {
+        "evidence": "The measured absence on his own box is what raised the question."
+      },
+      "to_id": "dec:idea-genesis-and-adopt-write-the-served-pointer-into-a-project-with-no-instruction-file"
+    },
+    {
+      "edge_type": "TRIGGERS",
       "from_id": "fact:unresolved-setup-says-nothing-follows-through-and-never-checks-whether-anything-did",
       "properties": {
         "evidence": "Instance ④, and the strongest one: `unresolved_setup`'s message says \"nothing follows through\" while its computation asks only \"is either side still a parked idea?\". The sentence and the code ask DIFFERENT QUESTIONS rather than the sentence merely over-reaching its data — and it was found by walking into it during ordinary work, not by looking."
@@ -228983,6 +229410,12 @@
       "from_id": "ver:every-served-report-is-reachable",
       "properties": {},
       "to_id": "cap:every-served-report-is-reachable-from-an-instruction"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:every-served-skill-carries-a-summary-for-a-person-and-an-audience",
+      "properties": {},
+      "to_id": "cap:every-skill-serves-a-summary-and-an-audience-and-the-shortcut-count-is-computed"
     },
     {
       "edge_type": "VERIFIES",
@@ -233002,7 +233435,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:24bfc890673b3567a94a79aace89beaab8806077237b26f4fa215fc1fc59dfd9",
+        "checksum": "sha256:89573dfee8fc8297f312911b1786c8bfb154638bd99bf7cd737e520e2cfc6b17",
+        "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "getting-started/skills/adopt/SKILL.md",
         "name": "adopt/SKILL.md",
@@ -233176,7 +233610,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:c44b1c8d6c63edd9489d2cd374e88da7c265abf872021e5560e7af7a22a403a3",
+        "checksum": "sha256:95cacba02844b22fa7880ada2f383d0f0602b0c074c33e2323b90b731ab3538f",
         "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "getting-started/skills/brainstorm/SKILL.md",
@@ -233251,7 +233685,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:72acade493d3ba77c7b245ded7094fa5725f49dec91a6404d1d211c6b8699e3d",
+        "checksum": "sha256:ab4e617fed81bc9b2ff9b5d3981e694f326c1e6d6915bfc496a5d0f993e86aca",
         "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "getting-started/skills/capture-intent/SKILL.md",
@@ -233265,7 +233699,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:949d7107052b51fe8125d746d674ebffa39792c934ad7a71f6b3d6421949d857",
+        "checksum": "sha256:9c13e3fbbfd0a42a9f8a1696414c79c06331b2a8079a39cb07322744d06599e1",
+        "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "getting-started/skills/capture-session/SKILL.md",
         "name": "getting-started/skills/capture-session/SKILL.md",
@@ -233362,7 +233797,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:607f3cffded2097239d2efb9ad30de33beb269fb4e81edde8c1a206f20e1cecd",
+        "checksum": "sha256:225f50d3f3e6b0c4f05aa0bc823497c76e2058b79503a390f9df73e05acb7382",
+        "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "getting-started/skills/check-health/SKILL.md",
         "name": "check-health/SKILL.md",
@@ -233773,7 +234209,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:945aa78921246d8793089d442f742e1567791fb510188a44e51b533b1ab6d58b",
+        "checksum": "sha256:abc83e19844114ce9f8128ead62efc85ff341acbc879fca71fae382d57c90816",
+        "checksum_basis": "measured",
         "location": "getting-started/skills/detect-and-ask/SKILL.md",
         "name": "detect-and-ask/SKILL.md — the ask half of the loop, and now the rule for when NOT to ask",
         "status": "realized"
@@ -234004,7 +234441,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:d5c3d0ec77a9bceaf4cba69ed97ea3b719abfe887cc899109167e9135bef315d",
+        "checksum": "sha256:2d87e73d61d09f2c3217868aacd0986b950ccab734390a5243dd3c4cf29e82d3",
+        "checksum_basis": "measured",
         "description": "Six steps: recognise the moment (after adopt's breadth pass, after genesis seeding, or on encoding_undecided), list the categories in the user's words, decide the encoding per category (type, discriminator, edges, name pattern), put it to the owner and record it as an accepted Decision on their word, govern every instance with governed_by, and what the finding is and is not. The honest limit stated first: reflow2 cannot know a repository's categories.",
         "location": "getting-started/skills/establish-taxonomy/SKILL.md",
         "name": "establish-taxonomy/SKILL.md — decide once, per recurring category, how an instance is encoded, as an accepted Decision the owner confirms, and govern every instance by it",
@@ -234189,7 +234627,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:9c13d01cd9fd0c0f970fd0788c1f9758b58234662ff9eea01b986d3ccbd2d9ed",
+        "checksum": "sha256:9a6f9a9f99b2ba80f5c49b71dcf2444d6a48f8f6de7fc4143dafaaded45b900e",
+        "checksum_basis": "measured",
         "description": "The served skill behind /feedback: get the tally from usage_report, add the self-reported model, disposition every refusal row (guard working / real defect / unexplained), read never_called honestly, append to the project's reflow2_feedback.md and show it — send it nowhere. Mirrored byte-for-byte into .claude/skills and .grok/skills as skill_lint requires; the command file is getting-started/commands/feedback.md.",
         "location": "getting-started/skills/feedback/SKILL.md",
         "name": "feedback SKILL.md",
@@ -234323,7 +234762,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:a31d97dde0bbd96d25d2ec880c7b5dab1f7070b814089572163c8f3dd6497d7f",
+        "checksum": "sha256:348675df7aa6ef44a4aca0ee6c372a5695a07bc9d1931dc71a490d1e58a60f95",
+        "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "getting-started/skills/genesis/SKILL.md",
         "name": "genesis/SKILL.md",
@@ -234361,7 +234801,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:9e2984d1e77f45216f34d473b6148c856bdca08df74880720c1d319cd948cafa",
+        "checksum": "sha256:d595559e8a0206549bdcc918de6a9a096141942a0af19e8de45d5e29471ad5e8",
+        "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "getting-started/skills/governance-proposal/SKILL.md",
         "name": "governance-proposal/SKILL.md",
@@ -234493,7 +234934,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:776dac29b2d37ee2139dc434d8de8edc523315dac4b91f4140dad826d94222c3",
+        "checksum": "sha256:776f5f51a5f48edaae06329bb92982d96c805e720df40387c9f27a9082a36a98",
+        "checksum_basis": "measured",
         "location": "getting-started/skills/help/SKILL.md",
         "name": "help/SKILL.md — explaining reflow2 to someone who has not been convinced yet",
         "status": "realized"
@@ -234578,7 +235020,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:6137a87b2ccf561902793ee0e5ac8c817cfa97ea4c94e4aa57ce635549c7f18c",
+        "checksum": "sha256:3d9747b54bf878655d1f84909f884da267fb9f70033a139698d15ebee6e113ea",
+        "checksum_basis": "measured",
         "location": "getting-started/skills/impact-check/SKILL.md",
         "name": "impact-check/SKILL.md",
         "status": "realized"
@@ -234704,7 +235147,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:74401541278a6e6f87ce09b4e584b86caf4e2ee24c2e1567f737d3e5f2a04d6b",
+        "checksum": "sha256:c578f678ccf74bf853da502cbc20b2155b456fab9a3608d6fb6d6365264e3eb1",
+        "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "getting-started/skills/kpp-proposal/SKILL.md",
         "name": "kpp-proposal/SKILL.md",
@@ -234800,7 +235244,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:d0dcc3407426e80fa685b6d15fc07f155ef3629730c554424c64e8356d19d4ab",
+        "checksum": "sha256:e20d44f3ecdb4eae018d10eb56ce26016cef9e57d1759081c80c0c447077856b",
         "checksum_basis": "measured",
         "location": "getting-started/skills/link-artifacts/SKILL.md",
         "name": "link-artifacts/SKILL.md — registering what was built against what it realizes, and the doc_kind that tells the design its adapter exists",
@@ -234825,7 +235269,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:91848cad61f2dfc6f331432410b4c3fc568ab3b0d0f7c28c78903bef1abbd31c",
+        "checksum": "sha256:b4efa81d63059bd71291377bbde7185d365dd9c0be48e6a717767fc45302e62c",
+        "checksum_basis": "measured",
         "description": "The door: take the sentence as given, find the subject from the user's noun (Project when nothing matches), record_finding with fact_type follow_up and the sentence verbatim, say one line back. Do not sort it at capture; do not run the loop check for it. 'Settling one, later' says how a boundary closes each. Served from the binary; byte-identical copies in .claude/skills and .grok/skills, and the /log-issue command in getting-started/commands.",
         "location": "getting-started/skills/log-issue/SKILL.md",
         "name": "log-issue/SKILL.md",
@@ -235036,7 +235481,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:a673256a273cfce6610d002c956f2f14e834643dc1da23bdab2b1de943152965",
+        "checksum": "sha256:5bce5511379f9f153aae300433f80b107d2eef1249931ad8c107bc9535b73da8",
+        "checksum_basis": "measured",
         "location": "getting-started/skills/onboarding/SKILL.md",
         "name": "onboarding/SKILL.md — where does this new piece of work belong?",
         "status": "realized"
@@ -235105,7 +235551,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:0c9c28a395e27132f80602735f3f24e2a05d31d11bd39266a1f06a2c34fbd7e4",
+        "checksum": "sha256:5a2c7ff45c45a2ac06df0cd2b9203990c315f3f12945a159a34db58066f40439",
+        "checksum_basis": "measured",
         "location": "getting-started/skills/optimize/SKILL.md",
         "name": "optimize/SKILL.md",
         "status": "realized"
@@ -235129,7 +235576,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:36b58d63938915517ba922a5d69aa28fb9e13906124dca9cc057798f60a89720",
+        "checksum": "sha256:363556518dc66b351a28e6daa6ce42c718ff7494381b99441cf20daffdfb0e21",
+        "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "getting-started/skills/parallel-work/SKILL.md",
         "name": "parallel-work/SKILL.md",
@@ -235142,7 +235590,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:4fda290182951d8825efc5cb3cbd1616da7ea5f13b38fba1a4f5a5e079ef077b",
+        "checksum": "sha256:e232809b444216b6da0bbadeb01c2a05a13c0de5c912347792d9a370ac64241b",
+        "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "getting-started/skills/plan-increments/SKILL.md",
         "name": "plan-increments/SKILL.md",
@@ -235562,7 +236011,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:806145d1b3d8099957f3a1cc24fc96443266b98a102344b7e9bdb93dacd52d2d",
+        "checksum": "sha256:c30375e8c1c08d3740587bb2b069655d8ad315d3c544d50b9aea4845f8637631",
+        "checksum_basis": "measured",
         "location": "getting-started/skills/report-friction/SKILL.md",
         "name": "report-friction/SKILL.md",
         "status": "realized"
@@ -235584,7 +236034,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:e873928cdc7c86bd718101b666081b2217b824228e503f4ed7e8b6d9bd1d2780",
+        "checksum": "sha256:91a829f67f34181032e7358d09148fc3b2a41707912553dc699697989f5de780",
         "checksum_basis": "measured",
         "location": "getting-started/skills/retire-from-design/SKILL.md",
         "name": "retire-from-design/SKILL.md",
@@ -235619,7 +236069,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:3cef7ea1d30d1982ab3d4ca06307b0ca98ba41fcb271eb6b9ed8f9048599486e",
+        "checksum": "sha256:9c6d901be277f4e96c48c0dedfb4e1ffb65b9085ea23b929d2fd466a9a3ae219",
+        "checksum_basis": "measured",
         "location": "getting-started/skills/root-cause/SKILL.md",
         "name": "root-cause/SKILL.md",
         "status": "realized"
@@ -236013,7 +236464,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:82d2cd02c3eeceaf3e39fef710e548bcb9847fa978ef0088eee128038ea64abb",
+        "checksum": "sha256:4b04b8ac175fa6a9f73bc1e8d03cd2ed9e9227a9c49302d8cc63086bb09b9310",
+        "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "getting-started/skills/ingest-corpus/SKILL.md",
         "name": "ingest-corpus SKILL.md — the folder walk, which reflow2 cannot do itself",
@@ -236026,7 +236478,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:1870c5dd57b8c45204a6169d60d0d782aade3204dd233abeff2628669aea9674",
+        "checksum": "sha256:95a01788375527c4afb05bd62bfbafcea183e5b180386ca6319b4a5c6e89ec88",
+        "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "getting-started/skills/link-projects/SKILL.md",
         "name": "link-projects/SKILL.md",
@@ -236039,7 +236492,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:d9e32de2b532dee4d5a5a89fed6c6bd1a96e53705265cbb5045d4f7e13a78d6f",
+        "checksum": "sha256:26f78b68f087d97550964b09fb0e3fcb8365e45015126fcf178c6a1ae78d8dc2",
         "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
@@ -236066,7 +236519,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f202451c180300e206ef0597b56dbb87d4809c3d42e29320db5635465f37690f",
+        "checksum": "sha256:233a58d15ecf669dbe6a2d5360f07593e7f68a59b43de20a01b1c26292eba225",
         "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/skills.rs",
@@ -236092,7 +236545,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:beaa4bd48ef2fae4b6cdb0604f5e0ff9ce644d9bb39f1a9c6a7f7f2a630aa797",
+        "checksum": "sha256:2d9374276cfa377fc313275439c5ce986d0d58de6d966fa174524bf61bb0bbaa",
+        "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/build.rs",
         "name": "build.rs",
@@ -237009,7 +237463,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b33081d7c44f07711a84643d0871d03272e2b1b85842082f197c5ce21ecd615b",
+        "checksum": "sha256:df77fef463bc66674d8f3fc37d62a79fa58b356453412f6ee804a8bd8a7d28c7",
+        "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/tests/served_skills.rs",
         "name": "served_skills.rs",
@@ -237378,7 +237833,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:3cbcb99c25d34b6a428432ed0bd960783b6eb82c0593c8224d0c47acb6e8825a",
+        "checksum": "sha256:19a6de84272500870e46e1f82e2e10cac6e105e76a1d4dd2898b87b3aa538887",
+        "checksum_basis": "measured",
         "location": "crates/reflow2-mcp/src/tools/skills_tools.rs",
         "name": "skills_tools.rs",
         "status": "realized"
@@ -237424,7 +237880,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:37af03042f7e864c482c266f03dbd4924384f3224593a73fe6cbbabd6b7462b4",
+        "checksum": "sha256:d2620fc0c18ad1542d7b36c982d21db14e394a26282bb611fb2f0b338a98eba6",
+        "checksum_basis": "measured",
         "location": "getting-started/skills/topic/SKILL.md",
         "name": "topic/SKILL.md — the thin instruction leg of the /topic view: one call, render in the reader's domain, always read out not_found, write nothing",
         "status": "realized"
@@ -237447,7 +237904,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:a7bf6b7d7b1168d811a691dfeacf9cef7f5d855b804bc532caa71e52fb667573",
+        "checksum": "sha256:655672e9914e77ec51e21e9804d35ce5356351a1859591458a042945c58435fb",
         "checksum_basis": "measured",
         "location": "getting-started/skills/triage-feedback/SKILL.md",
         "name": "triage-feedback SKILL.md — the served step a field report is triaged at",
@@ -237775,7 +238232,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:0b9ff961bee9b79f16141200ba351a504c12a5487064cb326c8a3993ba6d96f4",
+        "checksum": "sha256:5fa2d021f642a8ac29a59a63d299611f779665f8b98818e90811a357e8957a7b",
+        "checksum_basis": "measured",
         "location": "getting-started/skills/where-am-i/SKILL.md",
         "name": "where-am-i/SKILL.md — orientation, and the step that asks who the reader is",
         "status": "realized"
@@ -239377,6 +239835,16 @@
       "properties": {
         "description": "`skill_lint.py` walks TOOLS → SKILLS: every served `*_report` must be named in at least one served skill, or carry a written reason in `UNROUTED_REPORTS`. The mirror of the lint's oldest check, which walked skills → tools and caught a skill naming a tool that was gone.\n\nBOTH NEAR-MATCHES READ; THREE KINDS OF RECORD. The fact is the MEASUREMENT of the hole and keeps its own numbers. The ChangeEvent DATES the repair. This is the standing capability that keeps it from reopening — the thing that stays true after the event is history.\n\nWHY THE MIRROR WAS MISSING AND WHAT IT COST. Nothing walked the other way, so a report could be built, correct, verified, and reachable by nobody with every gate green. Measured 2026-08-29: of 14 served reports, SIX were named in no skill — `consumption_report`, `flow_report`, `ility_report`, `maturity_report`, `readiness_report`, `release_report` — and none of the evaluative ones was named in `AGENTS.md` or `service.rs` either. Against the same 23 skills, `detect_gaps` is named 16 times and `loop_status` 12. **The instruction surface was hygiene-weighted, so reflow2 PRESENTED AS a hygiene server while holding nine reports that answer whether a design is actually delivering.**\n\nTHE RULE IS A SUFFIX, NOT A LIST. `*_report` is a convention the code already keeps, so it needs no maintenance and cannot silently omit a new report. A hand-kept list of \"the evaluative ones\" is precisely the thing that rots — the same defect found this morning in `node_ref`, where a judgement made once for one property was never recorded for any other.\n\nTHE EXEMPTION REGISTER CARRIES TWO KINDS AND MUST SAY WHICH. `needs no skill` is settled; `GAP:` is a routing hole recorded rather than papered over. Enforced by a test, because the cheap way to pass this check is to name every orphan report in whatever skill is nearest — which satisfies the lint and defeats it. A gap that reads as settled never gets fixed.\n\n🛑 IT CHECKS REACHABILITY, NOT USE. Naming was measured; invocation was not. A report named in a skill is reachable, not necessarily read, and the 93-session skill-adoption result says what predicts use is an always-injected surface — which a skill is not. This closes the unreachable half and leaves the unread half open.",
         "name": "A report nobody is routed to fails the build, or says in writing why it needs no route",
+        "provenance": "authored",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "cap:every-skill-serves-a-summary-and-an-audience-and-the-shortcut-count-is-computed",
+      "node_type": "Capability",
+      "properties": {
+        "description": "As built 2026-09-19: `summary:` and `audience:` on all 30 skills (mirrored to .claude and .grok); build.rs frontmatter() parses both and panics on a missing field, an unknown audience, or a trigger-shaped/over-long summary; EmbeddedSkill carries them; list_skills adds both per skill and its note counts the shortcuts that differ from the name; get_skill adds both; skill_lint checks both; tests/served_skills.rs pins them. Audience as first assigned: 19 anyone, 10 operator, 1 agent (link-artifacts) — the owner's call to revise per skill.",
+        "name": "Every served skill carries summary and audience in its frontmatter, build.rs and the lint refuse a skill without them, list_skills and get_skill serve both, and the differing-shortcut count is computed",
         "provenance": "authored",
         "status": "realized"
       }
@@ -247602,6 +248070,17 @@
       }
     },
     {
+      "node_id": "chg:every-served-skill-carries-a-line-for-a-person-and-says-who-it-is-for",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-09-19",
+        "name": "Every served skill carries a line for a person and says who it is for; the shortcut count is computed; the served-surface seam rule",
+        "rationale": "Anthony 2026-09-19: address the flo2/bhome findings in priority order; this is the first — the third instance of the seam shape and what flo2's palette is blocked on.",
+        "summary": "30 SKILL.md frontmatters gain summary + audience (+ mirrors); build.rs parses and checks them; skills.rs EmbeddedSkill fields; skills_tools.rs list_skills/get_skill serve them and compute the differing-shortcut count; skill_lint two checks; served_skills.rs test; CHANGELOG. Graph: requirement, capability, rule, two ideas accepted."
+      }
+    },
+    {
       "node_id": "chg:every-skill-has-a-command",
       "node_type": "ChangeEvent",
       "properties": {
@@ -253813,7 +254292,7 @@
         "kind": "exploratory",
         "name": "OPEN — should a served skill carry, beside the trigger condition an agent matches on, a short line a person reads and a marker of who it is for (anyone / operator / agent), served by list_skills and get_skill — so no consumer writes its own 30 summaries?",
         "rationale": "Recorded from the field report; the same shape three times in one day on flo2's side of the seam (tool subset, MCP roster, skill menu).",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -254727,6 +255206,17 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-06: \"having somewhat independent reflow2 projects linked allows for requirements from one project to flow naturally to another without a user specifying we need to update package x because package y has a gap that only package x can fix. having reflow2 be able to do this automatically would be great.\"\n\nTHE WORKED EXAMPLE IS THIS REPOSITORY, AND IT WAS ENTIRELY BY HAND. flo2 hit a wall it could not climb from inside itself — a proposed Decision that nothing reported — and the fix had to land in reflow2. What carried it across was a human writing a markdown proposal in the flo2 repo, a human reading it, and an agent re-typing it as reflow2 nodes (chg:flo2-proposal-multi-graph-hosting). NOTHING IN EITHER GRAPH KNEW.\n\n⭐ SHARPENED 2026-08-06 BY A CONCRETE CASE AND A SCALING ARGUMENT THAT CHANGES THE ANSWER. Anthony: \"say my brother, who only has read access for reflow2, needs place a requirement upon reflow2 in order for flo2 to properly function... should my brother have the ability to add proposed ideas to reflow2 (write only for proposed, else read only) or should my brother place the external requirement in flo2 and when I open all 3 of my projects, it'll (the agent) see this requirement in the flo2 graph. I'm leaning towards the prior because say projectA (the one being depended upon) is huge and has multiple other projects dependent upon it and don't actually track any of the dependent projects/graphs, then option B may not function... think of it like a Google service is project A...they are not going to load every graph that is dependent upon them.\"\n\n⭐ THAT ARGUMENT DEFEATS OPTION (C) BELOW, WHICH THIS AGENT HAD RECOMMENDED, AND THE REFUTATION IS RECORDED RATHER THAN THE RECOMMENDATION QUIETLY WITHDRAWN. \"The upstream pulls rather than the downstream pushes\" rests on the upstream being able to ENUMERATE ITS DEPENDENTS. A widely-depended-on design cannot: it does not know who depends on it, and would not load their graphs if it did. And DISCOVERY OF DEPENDENTS IS ITSELF A PUSH — either the upstream somehow learns of every consumer, or consumers register, and registering is a write. Pull cannot bootstrap itself. It survives only in the SMALL federation case Anthony described earlier (C's owner asking who declares a dependency on C, finding exactly D).\n\n⭐ THE ANALOGY IS AN ISSUE TRACKER, NOT PUB/SUB. Anthony reached for \"socket publish/subscribe\". Pub/sub is the right shape for the OTHER direction and already exists: the upstream publishes its surface (export_surface, built), consumers mirror it (mirror_surface, built). The REVERSE channel in every real ecosystem is a tracker: you do not get write access to Google's codebase, you file an issue. ANYONE MAY FILE; ONLY MAINTAINERS TRIAGE. That is precisely \"write only for proposed, else read only\", and it scales because the upstream keeps ONE inbox rather than N graphs.\n\n⭐⭐ IN SYSTEMS-ENGINEERING TERMS THIS IS NOT EXOTIC, IT IS THE NORMAL DIRECTION. flo2 is a CUSTOMER of reflow2; reflow2 is the SUPPLIER. A customer levying a requirement on a supplier is the most ordinary transaction in the discipline. Framing it as \"writing into a design you do not own\" made an unremarkable act sound like a violation.\n\n⭐⭐ THE VOCABULARY IS ALREADY THERE, WHICH THIS AGENT PREVIOUSLY GOT WRONG BY NOT LOOKING. Checked against describe_schema, a Requirement already carries every field this needs: `source` (\"who/what stated it — a user, a regulation, a stakeholder\"), `provenance` with an `imported` value, `designation` published/internal so the downstream can mark what it publishes, `status` starting at `proposed` with only the owner's word moving it off (set_requirement_status), and AUTHORED_BY carrying role author/reviewer/approver. A levied requirement is expressible TODAY as: add_requirement (lands proposed) + authored_by <them> role=author + source \"<their design>\" + provenance imported. NOTHING IN THE SCHEMA NEEDS TO CHANGE.\n\n⭐ AND IT IS ALREADY REPORTABLE, BY WORK MERGED THE SAME DAY. loop_status gained `unsettled_assigned_decisions` (PR #81, 2026-08-06) — a Decision left proposed while carrying an approver edge. The identical shape answers \"a proposed Requirement from an external source is waiting on you\". THE INBOX IS ALREADY COMPUTABLE; it has never been pointed at this case.\n\nSO WHAT IS MISSING IS TWO THINGS: (1) TRANSPORT — how a node gets from their machine into this graph; (2) ENFORCEMENT — nothing stops a writer doing more than filing, because reflow2 HAS NO AUTHENTICATION and cannot acquire one without becoming a different product.\n\n⭐ TRANSPORT ALREADY EXISTS, AND IT IS **GIT** — NOT ANY ONE PROVIDER.\n⚠️ CORRECTED BY ANTHONY, 2026-08-06, and the correction matters because the first version of this node named GitHub: \"we can probably use GitHub for this example, but not every project will use GitHub. every project is designed to use a git repo though so other git providers like gitlab can also work.\"\n\nThe mechanism is a BRANCH CARRYING A PROPOSED-STATUS NODE IN THE COMMITTED EXPORT, offered to the owner, who merges it or does not. Every primitive that needs is plain git — a branch, a diff, a merge — and reflow2's own three-way merge driver already operates on the export FILE, provider-agnostic by construction. A hosted forge (GitHub pull request, GitLab merge request, Gitea, Bitbucket) is one CONVENIENT UI over those primitives and supplies the review gate and audit trail for free; NONE OF IT IS REQUIRED. With no forge at all the same exchange works by `git format-patch` and email, `git request-pull`, or a shared bare repo over SSH — which is also what makes it usable where a forge cannot go, including the disconnected case dec:idea-need-to-know-compartments cares about.\n\nTHE LOAD-BEARING FACT: dec:multi-writer-architecture (accepted) already made the repo file the unit of exchange, and req:persistence puts the design inside the consumer project. So \"the design travels as a file in a git repo\" is not a workaround adopted for this feature — it is the architecture, and this transport falls out of it for free. ZERO NEW REFLOW2 CODE.\n\nITS LIMIT, STATED PLAINLY: it requires the filer to have a clone and a git workflow, which is exactly what flo2's non-technical contributors do not have — so for the HOSTED case flo2's own layer must be the mailbox, and that lands back on req:reflow2-consumable-as-an-image and dec:one-process-many-stores.\n\nOPTIONS, NONE CHOSEN — REORDERED BY THE ARGUMENT ABOVE.\n\n(A) ⭐ ANTHONY'S LEAN: WRITE-ONLY-AT-PROPOSED. A consumer may create nodes at `proposed`, attributed and sourced, and may do nothing else — no accepting, no editing, no deleting. Expressible in today's schema, reportable by today's loop, transportable by plain git, and it scales because the upstream keeps one inbox rather than N graphs. Counter, and it is the honest one: reflow2 cannot enforce it. \"Write only for proposed\" is a property of WHATEVER HOLDS THE MAILBOX — a forge's branch permissions, a maintainer's judgement, or flo2's own layer — and calling it a reflow2 feature would be the same overclaim dec:idea-need-to-know-compartments warns about.\n\n(B) THE REQUIREMENT STAYS IN THE DOWNSTREAM GRAPH and the upstream owner sees it when they open both. Anthony's own counter is decisive at scale: a heavily-depended-on design will not load its dependents' graphs and does not know who they are. Still fine for the two-brothers case, and it is what the composition machinery already supports with no new anything.\n\n(C) THE UPSTREAM PULLS. Refuted above as a general mechanism. Retained for the small federation case only.\n\n(D) A THIRD, PROGRAM-LEVEL GRAPH holding cross-project intent, with the others as composed children. dec:nested-graphs and cap:derived-completion anticipate the shape. Answers \"where does shared intent live\" rather than \"how does a need travel\", and adds a design to maintain.\n\n⚠️ THE PREREQUISITE THAT STILL BOUNDS ALL OF IT: dec:linked-repos-poc was RUN 2026-08-06 and found reflow2 declares NO `required` interface at all, so nothing pairs across any seam. The channel this node is about has no labelled boundary to run along.\n\n⚠️ AND THE CONSTRAINT FROM dec:idea-need-to-know-compartments: an automatic cross-graph write is a channel between compartments, and the safe direction is defined against SENSITIVITY, not against the dependency arrow. Option (A) is materially safer than any automatic flow precisely because a human files it and a human accepts it — the write is deliberate at both ends.",
         "name": "OPEN — how does a downstream owner levy a requirement on an upstream design they do not own? (Anthony leans: write-only-at-proposed, carried by git)",
         "rationale": "Captured under the brainstorm skill 2026-08-06, then SHARPENED twice the same day.\n\n⭐ THREE CORRECTIONS TO THIS AGENT ARE PRESERVED IN THE NODE rather than edited away, because each was a different failure worth keeping visible.\n\n(1) Option (C), upstream-pulls, was RECOMMENDED here and is refuted by Anthony's Google-service argument: pull requires enumerating dependents, a widely-used design cannot, and discovery of dependents is itself a push, so pull cannot bootstrap.\n\n(2) This node previously implied the graph could not express a levied requirement. describe_schema shows it already can — `source`, `provenance: imported`, `designation`, `status: proposed` and AUTHORED_BY roles are all present. Same failure dec:idea-intent-crosses-designs corrected on 2026-08-05: asserting an absence from a summary instead of reading the surface. READ THE SCHEMA, NOT THE SUMMARY.\n\n(3) The transport was first written as \"a pull request... enforced by GitHub\". Anthony corrected it: not every project uses GitHub, but every project uses a git repo. The distinction is not pedantic — coupling reflow2's answer to one vendor's feature would narrow a product whose whole persistence story (req:persistence, dec:multi-writer-architecture) is already vendor-neutral, and would exclude exactly the disconnected and self-hosted environments where the file-and-merge model is the ONLY workable one. The primitives are branch/diff/merge; a forge is a UI over them.\n\nKept SEPARATE from dec:idea-a-session-holds-several-graphs (ACCESS — which graphs a session can see) because this is AUTHORITY — who may write what, and at which status. The federation node localises this question to each ownership seam; this node is what happens at one.\n\nThe reframe worth keeping even if every option here is rejected: this is a CUSTOMER REQUIREMENT LEVIED ON A SUPPLIER, the most ordinary transaction in systems engineering.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-genesis-and-adopt-write-the-served-pointer-into-a-project-with-no-instruction-file",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-09-19, after learning that flo2, SeattleArch and bhome carry no pointer file because reflow2_init never ran in them: 'can get_instructions pass the text to the agent and say put this in AGENTS.md on /genesis or /adopt skills on a new project?' OPTIONS, none chosen: (a) get_instructions gains a `pointer` section carrying POINTER.md's text, and genesis/adopt Phase 0 say: no instruction file → write that text as AGENTS.md (REFLOW2.md if AGENTS.md exists), then register it as art:agent-instructions — the agent does the file write, which is its side of the line; (b) the skills say 'run `reflow2 init .`' instead, which also writes the hooks and the MCP config the pointer alone does not — but needs the kit on the box, which the user-scope route does not guarantee; (c) both: (b) when the kit is present, (a) as the fallback the skill can always do; (d) the user-scope registration itself installs the pointer and hooks on first contact with a directory — the server would be writing into a user's repo, which crosses the line reflow2 keeps. COUNTER to (a): a pointer without hooks leaves the loop's nudges off; the Seattle adopt ran a whole session with no Stop hook and nobody noticed. COUNTER to (d): unsolicited files in a repo the user has not opted in. The delivery: a DesignRule with steps [genesis, adopt] so the instruction rides the skills the moment they are pulled.",
+        "kind": "exploratory",
+        "name": "OPEN — should genesis and adopt, on a project with no instruction file, hand the agent the served pointer text and say 'put this in AGENTS.md' (and register it), so the user-scope route leaves the same adapter the init does?",
+        "rationale": "His idea, recorded beside the measured absence it answers; the question is the route (skill vs init vs server), not whether a new project should end up with the adapter — req:a-repos-procedural-know-how-is-delivered-at-the-step-it-bears-on-and-the-design-knows-the-adapter-exists already says it should.",
         "status": "proposed"
       }
     },
@@ -256256,7 +256746,7 @@
         "kind": "exploratory",
         "name": "OPEN — is 'every time a consumer presents reflow2's surface to a person, the durable answer is a small upstream field' a rule of the seam, and should it be recorded as one — the restricted tool subset, the MCP roster and the skill menu being three instances in one day?",
         "rationale": "Recorded from the field report as the general shape behind F8 and F9.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -262572,6 +263062,19 @@
         "name": "Anthony accepts that work declares who it reaches — the requirement moves off `proposed` on his word, and its name stops being a paragraph (2026-08-22)",
         "sequence": 377,
         "status": "arrived"
+      }
+    },
+    {
+      "node_id": "rule:a-consumer-facing-fact-about-the-served-surface-is-served-never-copied",
+      "node_type": "DesignRule",
+      "properties": {
+        "category": "convention",
+        "name": "A consumer-facing fact about the served surface — what a person types, reads, or may use — is served by reflow2, never copied by a consumer; the choice of what to show stays the consumer's",
+        "statement": "flo2, 2026-09-18, three instances in one day: the restricted tool subset for an external endpoint, the roster of third-party MCPs, the skill menu — each time the cheap local answer was a hand-maintained copy of a moving upstream surface and the durable answer a small field served upstream. The rule: the FIELD is upstream (shortcut, summary, audience, read-only marking, the differing count) and the CHOICE stays downstream (which subset, to whom). A count the surface states about itself is computed, never written. Delivered where a consumer reads the surface to present it.",
+        "steps": [
+          "list_skills",
+          "find_tools"
+        ]
       }
     },
     {
@@ -269251,6 +269754,18 @@
         "provenance": "authored",
         "statement": "When another contributor's work has arrived in the shared design record and this graph has never seen it, the seat is told so at the point it orients itself — not at the point it tries to write, hours later.\n\nWHY THE MOMENT IS THE REQUIREMENT AND NOT AN ERGONOMIC PREFERENCE: the signal already existed and was already correct. `provenance::last_synced` was maintained by both the export and import paths, and `sync::assess_overwrite` already turned it into a three-way verdict. It was consulted in exactly one place — inside `export_graph`. So the design knew at the first moment of a session and spoke at the last, by which point the session had done its work against a record it did not know had moved.\n\nWHAT SATISFYING THIS MUST NOT COST: silence during ordinary work. A seat that is merely AHEAD of the record — unexported work in progress — is the normal state of every working session and must never be reported, or the signal is ignored inside a week. The distinguishing test is whether the RECORD moved, not whether the two differ.\n\nAND IT REPORTS RATHER THAN ACTS: taking the arrived work in is an upsert over live session state, so it stays the human's call.\n\n⚠️ WORDING IS AN AGENT'S DRAFT. Anthony chose the MECHANISM (option A, 2026-08-11) and directed the build; he has not ruled on this statement's text, which is why this sits at `proposed`.",
         "status": "proposed"
+      }
+    },
+    {
+      "node_id": "req:a-served-skill-carries-a-line-a-person-reads-and-says-who-it-is-for",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "A served skill carries a line a person reads and says who it is for, beside the trigger an agent matches on — so no consumer writes its own summaries",
+        "priority": "high",
+        "provenance": "authored",
+        "statement": "Anthony, 2026-09-19 ('start addressing the issues identified in flo2 and bhome feedback docs'), promoting flo2 F8/F9. The served surface stated what a person TYPES (the shortcut, gate-compared since cap:the-command-surface-answers-for-itself) and nothing a person READS: all 30 descriptions open 'Use …' (250–878 chars, median 437) because their job is the agent's trigger, so a consumer building a menu stripped the opener by hand or kept 30 summaries a rename would make quietly wrong. Every skill must carry `summary` (one line addressed to a person, never trigger-shaped, at most 120 characters) and `audience` (anyone / operator / agent — expertise, not human-versus-model), required at build and by the lint, served by list_skills and get_skill. Any count the surface states about itself is computed, never written ('eight of these differ' was nine, then ten).",
+        "status": "accepted"
       }
     },
     {
@@ -282980,6 +283495,19 @@
       }
     },
     {
+      "node_id": "fact:three-consumer-projects-on-the-dev-box-carry-no-pointer-file-and-no-hook-because-init-never-ran-the-user-scope-route-bypasses-it",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "observation",
+        "name": "MEASURED 2026-09-19: flo2, SeattleArch and bhome hold neither the pointer AGENTS.md nor a REFLOW2.md sidecar, none carries the kit stamp, only flo2 has the session hook and only bhome an .mcp.json — reflow2_init never ran in any of them; they reach reflow2 through the user-scope registration, which installs nothing",
+        "source": "Anthony's question 2026-09-19 ('did we get away from AGENTS.md being put in each project repo?'), checked on the dev box",
+        "statement": "Since 2026-07-25 (req:thin-install) the ~20 KB working instructions are served by get_instructions and reflow2_init writes only a short stable pointer (POINTER.md as AGENTS.md, or REFLOW2.md when the project owns an AGENTS.md), the hooks and the MCP config. On this box none of the three consumer projects went through init: the user-scope registration in ~/.claude.json serves every directory without it. They work — the server's connect-time instructions say 'call get_instructions first' and the Seattle adopt did — but the SessionStart/Stop hooks fire only where settings.json exists (flo2), and req:a-repos-procedural-know-how-is-delivered-at-the-step-it-bears-on-and-the-design-knows-the-adapter-exists now expects each project's instruction file to exist and be registered (agent_instructions_unregistered fired on the Seattle design for exactly this). Not a defect of the pointer design; a gap between the two install routes: init writes the adapter, user-scope writes nothing.",
+        "subject_id": "cap:skills-served",
+        "valid_from": "2026-09-19"
+      }
+    },
+    {
       "node_id": "fact:three-of-eight-reported-verification-gaps-were-already-built",
       "node_type": "TemporalFact",
       "properties": {
@@ -285091,6 +285619,20 @@
       }
     },
     {
+      "node_id": "ver:every-served-skill-carries-a-summary-for-a-person-and-an-audience",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-mcp/tests/served_skills.rs::every_served_skill_carries_a_line_for_a_person_and_says_who_it_is_for; build.rs refuses a skill without them.",
+        "findings": "pr run: passing on 30 skills.",
+        "kind": "verification",
+        "last_run_at": "2026-09-19",
+        "level": "integration",
+        "method": "test",
+        "name": "Every served skill carries a summary that is not trigger-shaped and at most 120 chars, and an audience in {anyone, operator, agent}",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:every-skill-has-a-command",
       "node_type": "Verification",
       "properties": {
@@ -287115,7 +287657,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:9c57289f88b40472dfe0abf7eb804b7c5d08dec8eaad2b74dacf209b14033d40",
+  "prev_content_hash": "sha256:c1176e5d25282056076d63240497e2adf612024d471c96cf38b3fbe6f35b05f7",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -287713,8 +288255,8 @@
     "schema_version": 1
   },
   "taken_at": {
-    "branch": "field-feedback-batch",
-    "commit": "a3929500c6872471b9401d3a263905f99198ff68",
+    "branch": "every-skill-carries-a-line-for-a-person",
+    "commit": "c3a55a9b86e7d37379da44a3cf8ca50f3ebd62ec",
     "dirty": true
   }
 }

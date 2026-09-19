@@ -1,7 +1,7 @@
 ---
 name: help
 description: Use when someone is NEW TO REFLOW2 and wants to know what it is, what it can do for them, or how to begin — "what is this?", "how do I use this?", "what can reflow2 actually do?", "someone set this up for me and I don't know what it's for", or a first session with a person who has clearly not met it before. NOT for questions about the project they are designing (where-am-i says where the design stands, onboarding says where new work belongs), and NOT for something reflow2 got wrong (report-friction).
-metadata: {composes: [STANDING]}
+metadata: {composes: [STANDING], audience: anyone, summary: "Learn what reflow2 is and how to begin."}
 ---
 
 # Explaining reflow2 to someone who has not been convinced yet

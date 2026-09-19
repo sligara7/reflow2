@@ -1,7 +1,7 @@
 ---
 name: detect-and-ask
 description: Use before building, and after capturing new intent, to find gaps in the design and ask the user about them. Runs reflow2's detect_gaps, phrases each gap as a plain question via the gap_to_prompt handshake, and writes the answers back — so decisions are explicit, not silently guessed.
-metadata: {composes: [STANDING, WRITES, MINTS, REPORTS]}
+metadata: {composes: [STANDING, WRITES, MINTS, REPORTS], audience: anyone, summary: "Find the open questions in the design and answer them."}
 ---
 
 # Detect gaps and ask the user

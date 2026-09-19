@@ -345,3 +345,27 @@ fn the_root_cause_skill_forces_the_steps_that_stop_a_premature_fix() {
         "the skill must name the rule it executes, so the two cannot drift apart unnoticed"
     );
 }
+
+#[test]
+fn every_served_skill_carries_a_line_for_a_person_and_says_who_it_is_for() {
+    // flo2 F8/F9, 2026-09-18: the served surface stated what a person TYPES
+    // (shortcut) and nothing a person READS; every consumer stripped "Use
+    // when…" by hand or kept a copy of 30 summaries that one rename would
+    // make quietly wrong.
+    for skill in SKILLS {
+        assert!(
+            !skill.summary.is_empty()
+                && !skill.summary.starts_with("Use ")
+                && skill.summary.len() <= 120,
+            "{}: summary must be a line for a person: {:?}",
+            skill.name,
+            skill.summary
+        );
+        assert!(
+            matches!(skill.audience, "anyone" | "operator" | "agent"),
+            "{}: audience {:?}",
+            skill.name,
+            skill.audience
+        );
+    }
+}

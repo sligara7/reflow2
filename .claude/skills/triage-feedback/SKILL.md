@@ -1,7 +1,7 @@
 ---
 name: triage-feedback
 description: Use when a field report reaches the maintainer — a project's reflow2_feedback.md, a friction log, a first-use write-up, "please review this feedback", "/triage". Reads it as a set of observations, runs the root-cause skill on every issue and the brainstorm skill on every idea, records each as a finding or an open question in the design, and never writes a cause it has not measured. Not for feedback ABOUT the user's own design (detect-and-ask), and not for producing a report (report-friction, feedback).
-metadata: {composes: [STANDING, WRITES, MINTS, MEASURES]}
+metadata: {composes: [STANDING, WRITES, MINTS, MEASURES], audience: operator, summary: "Work through a field report the way the maintainer's own rules require."}
 ---
 
 # Triage a field report by skill, not by reading

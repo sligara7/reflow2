@@ -1,7 +1,7 @@
 ---
 name: link-artifacts
 description: Use right after you create or substantially change a real source file (Unity C#, a spec, a doc), to register it in the reflow2 graph as an Artifact that REALIZES the capability it implements — with a content hash so later edits are detectable. Also use to reconcile the design against what is actually on disk. Keeps as-designed vs as-built honest and closes the unrealized_capability gap.
-metadata: {composes: [STANDING, WRITES, MINTS, MEASURES]}
+metadata: {composes: [STANDING, WRITES, MINTS, MEASURES], audience: agent, summary: "Register a file against the part of the design it realizes."}
 ---
 
 # Link real files back to the design

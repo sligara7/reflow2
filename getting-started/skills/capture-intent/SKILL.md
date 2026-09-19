@@ -1,7 +1,7 @@
 ---
 name: capture-intent
 description: Use whenever the user shares a new idea, feature, brief, or requirement for this project. Turns their words into reflow2 design-graph nodes (Requirements, Capabilities, Components, Interfaces) and links the golden thread — before any code is written.
-metadata: {composes: [STANDING, WRITES, MINTS]}
+metadata: {composes: [STANDING, WRITES, MINTS], audience: anyone, summary: "Turn what you want into requirements and capabilities the design tracks."}
 ---
 
 # Capture intent into the reflow2 graph

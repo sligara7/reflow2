@@ -1,7 +1,7 @@
 ---
 name: root-cause
 description: Use when something has FAILED and somebody is about to explain it — a test that broke, a defect reported from the field, a system misbehaving after deployment, "why is X happening", "let's fix Y". ALSO use it for the quiet case, which is the one that gets missed - a number that surprises you, a measurement you cannot account for, something slower or larger or emptier than it should be, "that's odd", "why is this taking so long". The trigger is not how loud the failure is; it is that you are about to write down a CAUSE. Forces the steps of root cause analysis in order and generates the candidate causes from the design itself, so the first plausible explanation has to survive a measurement that could refute it before anything gets built. Distinct from impact-check, which asks what a change would BREAK; this asks what already broke, or what is already strange, and why.
-metadata: {composes: [STANDING, WRITES, MINTS, MEASURES], demanded_by: [record_finding]}
+metadata: {composes: [STANDING, WRITES, MINTS, MEASURES], demanded_by: [record_finding], audience: anyone, summary: "Find the cause of a failure before fixing the symptom."}
 ---
 
 # Find the cause before you fix the symptom

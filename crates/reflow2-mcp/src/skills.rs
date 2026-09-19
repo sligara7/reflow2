@@ -107,6 +107,13 @@ pub struct EmbeddedSkill {
     /// The frontmatter `description`: *when to reach for this*, which is what
     /// an agent matches on.
     pub description: &'static str,
+    /// The frontmatter `summary`: *what this does for you*, one line a PERSON
+    /// reads — beside the trigger an agent matches on (flo2 F8/F9, 2026-09-18).
+    pub summary: &'static str,
+    /// The frontmatter `audience`: `anyone` (a non-technical person can drive
+    /// it), `operator` (whoever runs the project and its tooling), `agent`
+    /// (the agent reaches for it on its own). Expertise, not human-vs-model.
+    pub audience: &'static str,
     /// The whole SKILL.md, frontmatter included.
     pub body: &'static str,
 }

@@ -1,7 +1,7 @@
 ---
 name: link-projects
 description: Use when two or more separate reflow2 projects need to work together — "link projectA and projectB", "how does our service talk to theirs", "make the interface between these two real". Takes a correspondence the USER asserts and drives it to a fully specified contract, boundary by boundary. Distinct from parallel-work (several people on ONE design) and from link-artifacts (files inside one design).
-metadata: {composes: [STANDING, WRITES, MINTS, REPORTS]}
+metadata: {composes: [STANDING, WRITES, MINTS, REPORTS], audience: operator, summary: "Make two designs work together across the seam between them."}
 ---
 
 # Link two projects, and make the interface real

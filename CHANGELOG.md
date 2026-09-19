@@ -33,6 +33,15 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **Every served skill carries a line for a person and says who it is for.** flo2 (F8/F9,
+  2026-09-18) built a skill palette for a non-technical user and found the served surface stated
+  what a person types (the shortcut) and nothing a person reads: every description opens "Use
+  when…" for an agent, so the palette stripped the opener by hand — or kept 30 summaries a rename
+  would make quietly wrong. Two frontmatter fields, required on every skill and checked at build and
+  by the lint: `summary` (one line addressed to a person) and `audience` (anyone / operator /
+  agent — expertise, not human-versus-model). Served by `list_skills` and `get_skill`. The
+  list's "eight of these differ from the skill name" is now counted (it was ten).
+
 - **A field report is triaged by a served step, and a finding is written before the answer.**
   Anthony, 2026-09-18, after the rule that every feedback issue gets root-cause and every idea
   gets brainstorm (set 2026-09-05 "so I don't have to remind this every time") was broken a fourth
