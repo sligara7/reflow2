@@ -48,6 +48,13 @@ This file is the third view: *what changed, and when*.
   read-only surface; the stop hook nudges once on the same inverse. Requirement
   `req:a-session-that-reads-and-never-writes-is-seen` and
   `req:a-field-report-is-triaged-by-a-served-step-and-the-standing-rules-ride-it`, accepted.
+- **`replace_text` — change one sentence in a node's text without re-sending the field.** The
+  third project to report it (flo2, 2026-09-18, after qs and dev_storyflow on 2026-09-04): settling
+  a decision whose options live in prose meant re-sending a 6 KB body to move one line, or leaving
+  `Options, none chosen` standing false. Measured on reflow2's own design: 210 of 743 decisions
+  exceed 4 KB, 92 preserved re-sends. `old` must occur exactly once (absent or repeated is refused
+  with the count), `new` replaces it; omit `old` to append a dated note. Same revision guard as
+  every write: the prior state is preserved and the reply's `revision` names what moved.
 
 - **reflow2 measures registered files, and never reads them for meaning.** Anthony, 2026-09-18,
   closing the "reflow2 does no file I/O — should it?" brainstorm on the narrow reading: the slogan

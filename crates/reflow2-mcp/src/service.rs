@@ -4669,6 +4669,29 @@ pub struct ArtifactIntentReq {
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct ReplaceTextReq {
+    /// The node whose text moves — any type; resolved from the id prefix when
+    /// `node_type` is omitted.
+    pub node_id: String,
+    #[serde(default)]
+    pub node_type: Option<String>,
+    /// The string property to edit — `decision`, `statement`, `description`,
+    /// `rationale`, `summary` … Refused by name if the property is absent or
+    /// not text.
+    pub field: String,
+    /// The exact text to replace. It must occur EXACTLY ONCE in the field —
+    /// absent or repeated is refused, naming how many times it occurs, so a
+    /// sentence can never land in the wrong paragraph. Omit it to APPEND
+    /// `new` after a blank line (a dated section, a settlement note).
+    #[serde(default)]
+    pub old: Option<String>,
+    /// The replacement (or, with `old` omitted, the text appended). Empty
+    /// with `old` deletes that one occurrence.
+    pub new: String,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct SetChecksumReq {
     /// The registered Artifact (`art:…`) whose drift baseline is being accepted — the one `reconcile_artifacts` or `reflow2_check` reported as `checksum_change`.
     pub artifact_id: String,

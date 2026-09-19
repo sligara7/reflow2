@@ -1144,6 +1144,117 @@ impl ReflowService {
     // ---- GENESIS (bootstrap the graph from a brief) ----
 
     #[tool(
+        description = "Replace ONE piece of a node's text without re-sending the field: `old` must \
+                       occur exactly once in `field` and is replaced by `new` (absent or repeated is \
+                       refused, naming the count); omit `old` to append `new` after a blank line. \
+                       Same revision guard as every write — the earlier text is kept and the reply's \
+                       `revision` names what moved. Measured 2026-09-18 on three projects: settling \
+                       a prose-option decision or appending a dated section meant re-sending a 6 KB \
+                       body to move one sentence, or leaving a line that was now false (210 of 743 \
+                       decisions here exceed 4 KB; 92 re-sends kept in full). Ask for this to replace \
+                       one sentence in a decision or requirement's text, or to add a dated note to it, \
+                       without rewriting the whole thing.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn replace_text(
+        &self,
+        Parameters(req): Parameters<ReplaceTextReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let node_type = self
+            .resolve_type(req.node_type.as_deref(), &req.node_id, "node_type")
+            .await?;
+        let mut g = self.write_lock().await?;
+        let Some(prior) = g.get_node(&node_type, &req.node_id).map_err(dyno_err)? else {
+            return Err(McpError::invalid_params(
+                format!("no {node_type} `{}` to edit", req.node_id),
+                None,
+            ));
+        };
+        let Some(current) = prior.properties.get(&req.field).and_then(|v| v.as_str()) else {
+            let mut text_fields: Vec<&str> = prior
+                .properties
+                .iter()
+                .filter(|(_, v)| v.as_str().is_some())
+                .map(|(k, _)| k.as_str())
+                .collect();
+            text_fields.sort_unstable();
+            return Err(McpError::invalid_params(
+                format!(
+                    "`{}` has no text property `{}` — its text properties are {text_fields:?}",
+                    req.node_id, req.field
+                ),
+                None,
+            ));
+        };
+        let current = current.to_string();
+        let (next, mode) = match req.old.as_deref() {
+            Some("") => {
+                return Err(McpError::invalid_params(
+                    "`old` is empty: pass the exact text to replace, or omit `old` to append",
+                    None,
+                ));
+            }
+            Some(old) => {
+                let n = current.matches(old).count();
+                if n != 1 {
+                    let hint = if n == 0 {
+                        " Check spacing, quotes and dashes against the stored text."
+                    } else {
+                        ""
+                    };
+                    return Err(McpError::invalid_params(
+                        format!(
+                            "`old` occurs {n} time(s) in `{}` — nothing was written. Quote enough \
+                             surrounding text to make it unique; get_node shows the field.{hint}",
+                            req.field
+                        ),
+                        None,
+                    ));
+                }
+                (current.replacen(old, &req.new, 1), "replace")
+            }
+            None => (
+                if current.trim().is_empty() {
+                    req.new.clone()
+                } else {
+                    format!("{}\n\n{}", current.trim_end(), req.new)
+                },
+                "append",
+            ),
+        };
+        if next == current {
+            return with_capture_notes(
+                json!({ "node": NodeDto::from(prior.clone()), "edit": { "field": req.field, "mode": mode, "changed": false } }),
+                "loop: nothing moved — the text already read this way",
+                None,
+                None,
+                None,
+            );
+        }
+        let stored = g
+            .upsert_node(
+                &node_type,
+                &req.node_id,
+                reflow2_core::nodes::Props::new().set(&req.field, next.clone()),
+            )
+            .map_err(dyno_err)?;
+        let node = NodeDto::from(stored);
+        preserve_prior(&mut g, Some(&prior), &node);
+        let revision = revision_of(&g, Some(&prior), &node);
+        with_capture_notes(
+            json!({
+                "node": node,
+                "edit": { "field": req.field, "mode": mode, "changed": true,
+                          "chars_before": current.chars().count(), "chars_after": next.chars().count() }
+            }),
+            "loop: one field moved — if the change is a settlement, set_decision_status carries the owner's word; loop_status says what else is owed",
+            None,
+            revision,
+            None,
+        )
+    }
+
+    #[tool(
         description = "Bootstrap the design graph: create the Project + a genesis Epoch anchor \
                        and return a next-steps checklist. Guarded and idempotent — a no-op that \
                        reports already_initialized if a Project exists (unless rescan). Call this \

@@ -1,4 +1,4 @@
-# What reflow2 offers: 30 skills and 187 tools
+# What reflow2 offers: 30 skills and 188 tools
 
 Generated from the **running server**, not from memory — the skill list came from `list_skills`,
 the tool list and every read/write marking from `tools/list`, and the command mapping from
@@ -94,7 +94,7 @@ Read one in full with `get_skill` before doing the work it covers.
 
 ---
 
-## The 187 tools
+## The 188 tools
 
 `read` never changes the design. **write** does. That marking is the tool's own `readOnlyHint`
 annotation, read off the served surface — 58 read, 97 write.
@@ -151,6 +151,7 @@ description, which an agent sees in the tool schema; this table is for a person 
 | `linking_report` | **read** | IS THE LINKING DISCIPLINE BEING FOLLOWED? |
 | `record_alias` | **write** | Record WHAT THE USER CALLS a node, in their own words — the domain nouns that mean this thing. |
 | `set_closure_criterion` | **write** | Declare what DONE means for this design: which closure legs count — traceability (every live requirement traced to a built, passing capability), budgets (every limit met with its declared margin), seams (every coupling specified on both sides), decisions (no scheduled work governed by an open decision), provenance (no number without a source) — and the share of each that must close. |
+| `replace_text` | **write** | Replace ONE piece of a node's text without re-sending the field: `old` must occur exactly once in `field` and is replaced by `new` (absent or repeated is refused, naming the count); omit `old` to append `new` after a blank line. |
 
 ### Coherence — what the design says about itself
 

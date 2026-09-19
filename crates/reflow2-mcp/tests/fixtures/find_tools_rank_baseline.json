@@ -77,10 +77,6 @@
    "imposes"
   ],
   [
-   "add_environment",
-   "operates_in"
-  ],
-  [
    "add_environment_rule",
    "imposes"
   ],
@@ -159,10 +155,6 @@
   [
    "claim_report",
    "design_identity"
-  ],
-  [
-   "collapse_decision",
-   "register_alternative"
   ],
   [
    "complies_with",
