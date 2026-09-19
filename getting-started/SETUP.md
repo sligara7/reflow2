@@ -247,6 +247,12 @@ the day, stopping is a perfectly good answer. Everything decided so far is alrea
   get one is to ask your agent to export the design — a shared server holds the write lock, so a
   CLI `--export` needs `--stop-shared` first, or `--export-snapshot` for a best-effort read of a
   graph somebody else is holding.
+- **A build script can call one tool without speaking MCP.** `reflow2-mcp --graph-path
+  .reflow2/graph --call budget_report --args '{"constraint_id":"con:mass"}'` prints the reply as
+  JSON on stdout (the arguments are a JSON object; `-` reads them from stdin). A report a
+  document cites can be read from the graph at build time instead of hand-copied. If a server
+  holds the graph, a READ-ONLY tool answers from a best-effort snapshot copy (stderr says so);
+  a tool that writes refuses, because a copy is not the design.
 - **Gate CI on the committed export.** `tools/reflow2_check.py` (in the kit) rehashes every
   registered artifact against the working tree and runs the gap detectors, exiting non-zero on
   unaccepted drift or a serious open gap — so the design is checked on every commit, not once a

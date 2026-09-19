@@ -48,6 +48,16 @@ This file is the third view: *what changed, and when*.
   `capability_id`, `epoch_id`, …) accept `id` and `node_id` as aliases; `props` accepts
   `properties` on `create_edge`, `create_node` and the bulk forms. `add_project` has its own request
   shape instead of sharing `add_interface`'s with half the fields "ignored for the other".
+- **A build can call one tool from the shell.** bhome S3 (2026-09-18): the plan-sheet generator
+  read the budget from a hand-transcribed JSON file "because reflow2 is an MCP server and not a
+  library the script can import", so the half of the sheet the design owns was the half with no
+  mechanical guarantee. `reflow2-mcp --call <tool> [--args '<json>']` opens the graph, runs the
+  tool through the same server path a session uses (usage recorded, refusals worded the same),
+  and prints the reply's JSON on stdout: exit 0, or 1 on a refusal (message on stderr), or 2 when
+  the tool marked its own reply an error. A read-only tool still answers while a server holds
+  the graph, from the same best-effort snapshot `--export-snapshot` uses, and stderr says so; a
+  tool that writes refuses, because a copy is not the design. `--args -` reads the object from
+  stdin.
 
 - **A project's first session leaves the adapter in place.** Three of the maintainer's own projects
   (flo2, SeattleArch, bhome) carried no pointer file, no kit stamp and mostly no hooks, because they
