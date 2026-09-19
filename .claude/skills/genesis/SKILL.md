@@ -65,6 +65,17 @@ who is asked to pick a node type has been handed the one decision they cannot ch
 artifacts you expect — **never a switch on what reflow2 computes.** A cycle detector runs wherever
 there are dependency edges, whoever calls them.
 
+0. **Leave the adapter in place.** If the project has no instruction file an agent reads first
+   (AGENTS.md, CLAUDE.md, a project-local skill), it will reach reflow2 only through the server's
+   handshake, with no session hooks and no registered adapter. When the kit is installed on this
+   machine (`~/.local/share/reflow2/kit`), run `reflow2 init .` — it writes the pointer, the
+   hooks and the MCP config. Otherwise `get_instructions` with `section: pointer` returns the
+   pointer text: write it as `AGENTS.md`, or as `REFLOW2.md` when the project already owns an
+   `AGENTS.md`. Either way register the file as the adapter (`add_artifact` as a `document`, then
+   `documents` to the Project with `doc_kind` `agent_instructions`). Measured 2026-09-19: three
+   projects on the maintainer's own machine carried none, because the user-scope route never runs
+   the init. The server never writes into a repository itself; you do, on this instruction.
+
 1. **Scaffold.** Call the `genesis` tool with `project_id`, `name`, and (if known) `domain`,
    `objective`, and `mode` (`flexible` = design evolves with the build; `rigid` = design is the
    source of truth). It creates the Project + a genesis Epoch and returns a `next_steps`

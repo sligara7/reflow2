@@ -33,6 +33,14 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **A project's first session leaves the adapter in place.** Three of the maintainer's own projects
+  (flo2, SeattleArch, bhome) carried no pointer file, no kit stamp and mostly no hooks, because they
+  reached reflow2 through the user-scope registration and the init never ran (2026-09-19). The
+  server now serves the pointer the init installs (`get_instructions` with `section: pointer`), and
+  genesis and adopt say: no instruction file → `reflow2 init .` when the kit is present, otherwise
+  write the served pointer as `AGENTS.md` (or `REFLOW2.md` beside an existing one) and register it
+  as the adapter. The server never writes into a repository itself.
+
 - **Every served skill carries a line for a person and says who it is for.** flo2 (F8/F9,
   2026-09-18) built a skill palette for a non-technical user and found the served surface stated
   what a person types (the shortcut) and nothing a person reads: every description opens "Use

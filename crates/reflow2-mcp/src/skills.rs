@@ -77,6 +77,20 @@ pub fn instruction_sections() -> Vec<InstructionSection> {
     out
 }
 
+/// The pointer file a project holds, served as a section of its own — what an
+/// agent writes into a project that reached reflow2 without the init. NOT
+/// part of [`instruction_sections`], which must rejoin into the instructions
+/// byte for byte; `get_instructions` lists it beside them and serves it by
+/// name.
+pub fn pointer_section() -> InstructionSection {
+    InstructionSection {
+        slug: "pointer".to_string(),
+        title: "The pointer file a project holds (AGENTS.md, or REFLOW2.md beside an existing one)"
+            .to_string(),
+        body: POINTER.to_string(),
+    }
+}
+
 /// Heading text to a stable, typeable slug.
 fn slugify(s: &str) -> String {
     let mut out = String::new();

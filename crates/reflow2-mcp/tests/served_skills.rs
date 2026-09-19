@@ -14,7 +14,7 @@
 use std::collections::BTreeSet;
 use std::path::PathBuf;
 
-use reflow2_mcp::skills::{SKILLS, catalogue, find};
+use reflow2_mcp::skills::{POINTER, SKILLS, catalogue, find, pointer_section};
 
 fn kit() -> PathBuf {
     PathBuf::from(env!("CARGO_MANIFEST_DIR"))
@@ -366,6 +366,37 @@ fn every_served_skill_carries_a_line_for_a_person_and_says_who_it_is_for() {
             "{}: audience {:?}",
             skill.name,
             skill.audience
+        );
+    }
+}
+
+#[test]
+fn the_pointer_a_project_holds_is_served_as_a_section_and_the_first_session_skills_say_to_leave_it()
+{
+    // Three of the owner's own projects carried no pointer file because the
+    // user-scope route never runs the init (2026-09-19). The server serves the
+    // same text the init installs, and genesis/adopt tell the agent to write
+    // it — the server itself never writes into a repository.
+    let pointer = pointer_section();
+    assert_eq!(pointer.slug, "pointer");
+    assert_eq!(pointer.body, POINTER);
+    assert!(
+        POINTER.contains("reflow2 is the design brain"),
+        "the served pointer is the kit's POINTER.md"
+    );
+    for name in ["genesis", "adopt"] {
+        let skill = find(name).expect(name);
+        assert!(
+            skill.body.contains("section: pointer"),
+            "{name} names the served section"
+        );
+        assert!(
+            skill.body.contains("reflow2 init"),
+            "{name} prefers the init when the kit is present"
+        );
+        assert!(
+            skill.body.contains("REFLOW2.md"),
+            "{name} names the sidecar for a project that owns an AGENTS.md"
         );
     }
 }

@@ -54,7 +54,12 @@ Before reading code, list what else exists, because intent lives outside the imp
   adapter exists and `reconcile_artifacts` notices when it goes stale; a design with a real
   number of artifacts and no registered adapter comes back as `agent_instructions_unregistered`.
   Alex measured the residue after served skills (2026-09-17): "thin project adapters, not
-  competing playbooks" — and nothing in reflow2 knew they were there.
+  competing playbooks" — and nothing in reflow2 knew they were there. **And when there is no
+  instruction file at all**, leave one: `reflow2 init .` when the kit is installed on this machine
+  (pointer, hooks and MCP config), otherwise `get_instructions` with `section: pointer` and write
+  the text as `AGENTS.md` (`REFLOW2.md` beside an existing one), then register it as above.
+  Measured 2026-09-19: three of the maintainer's own projects carried none, because the
+  user-scope route never runs the init.
 
 ## Phase 1 · Scan — breadth first, deliberately coarse, the whole system
 

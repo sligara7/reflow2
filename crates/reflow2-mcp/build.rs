@@ -99,6 +99,22 @@ fn main() {
         "\npub static INSTRUCTIONS: &str = include_str!({:?});\n",
         instructions.display().to_string()
     ));
+    // THE POINTER A PROJECT HOLDS, served too: the init installs it, and a
+    // project that reached reflow2 without the init (the user-scope route)
+    // can fetch it from the server and leave it in place itself
+    // (dec:idea-genesis-and-adopt-write-the-served-pointer…, 2026-09-19 —
+    // three of the owner's own projects carried none).
+    let pointer = kit.parent().expect("kit has a parent").join("POINTER.md");
+    assert!(
+        pointer.exists(),
+        "reflow2: {} is missing — the server would serve no pointer",
+        pointer.display()
+    );
+    println!("cargo:rerun-if-changed={}", pointer.display());
+    out.push_str(&format!(
+        "\npub static POINTER: &str = include_str!({:?});\n",
+        pointer.display().to_string()
+    ));
 
     let dest =
         PathBuf::from(std::env::var("OUT_DIR").expect("OUT_DIR")).join("skills_generated.rs");

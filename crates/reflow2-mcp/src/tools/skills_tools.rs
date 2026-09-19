@@ -231,13 +231,23 @@ impl ReflowService {
         Parameters(req): Parameters<GetInstructionsReq>,
     ) -> Result<CallToolResult, McpError> {
         let sections = crate::skills::instruction_sections();
-        let manifest: Vec<serde_json::Value> = sections
+        let pointer = crate::skills::pointer_section();
+        let mut manifest: Vec<serde_json::Value> = sections
             .iter()
             .map(|s| json!({"section": s.slug, "title": s.title, "bytes": s.body.len()}))
             .collect();
+        // Listed beside the document's own sections, never inside them: the
+        // pointer is what a project HOLDS, not part of what it is told.
+        manifest.push(json!({
+            "section": pointer.slug, "title": pointer.title, "bytes": pointer.body.len(),
+            "note": "not part of this document — the file to write into a project that has no instruction file (genesis / adopt step 0)"
+        }));
 
         let (body, returned_section) = match req.section.as_deref() {
             None => (INSTRUCTIONS.to_string(), None),
+            Some(want) if want == pointer.slug => {
+                (pointer.body.clone(), Some(pointer.slug.clone()))
+            }
             Some(want) => {
                 let Some(hit) = sections.iter().find(|s| s.slug == want) else {
                     let legal: Vec<&str> = sections.iter().map(|s| s.slug.as_str()).collect();
