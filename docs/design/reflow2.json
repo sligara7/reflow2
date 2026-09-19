@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:f2a76ee772f3476e13b994838ea76ec5b9a347de040affbc3b0c11fa9f68acc4",
+  "content_hash": "sha256:2fdda7587f106534737b768dd32c0f84d2b6e01980b0a1c190aab39163d48286",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -1458,6 +1458,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:temporal"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-skill-is-found-by-describing-the-job-and-the-corpus-is-the-test",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:skills"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -25117,6 +25125,16 @@
     },
     {
       "edge_type": "CAUSES",
+      "from_id": "fact:field-report-flo2-2026-09-18-skills-are-not-findable-by-words-find-tools-scores-tools-only",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The finding measured that find_tools scores tools only; this is the skills' finder.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "chg:a-skill-is-found-by-describing-the-job-the-way-a-tool-is"
+    },
+    {
+      "edge_type": "CAUSES",
       "from_id": "fact:field-report-flo2-2026-09-19-f10-seven-more-rejections-are-the-constructor-half-of-a-defect-recorded-by-three-projects-and-half-fixed",
       "properties": {
         "basis": "correlational",
@@ -30326,6 +30344,87 @@
         "action": "added"
       },
       "to_id": "cap:a-settled-decision-names-governed-prose-that-still-reads-open"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-skill-is-found-by-describing-the-job-the-way-a-tool-is",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:every-skill-is-found-by-a-query-in-the-users-words-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-skill-is-found-by-describing-the-job-the-way-a-tool-is",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:find-skills-corpus"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-skill-is-found-by-describing-the-job-the-way-a-tool-is",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:find-skills-rank-baseline"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-skill-is-found-by-describing-the-job-the-way-a-tool-is",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:find-tools-corpus-fixture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-skill-is-found-by-describing-the-job-the-way-a-tool-is",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:loop-nudge"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-skill-is-found-by-describing-the-job-the-way-a-tool-is",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-skill-is-found-by-describing-the-job-the-way-a-tool-is",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skills"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-skill-is-found-by-describing-the-job-the-way-a-tool-is",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skills-and-tools"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-skill-is-found-by-describing-the-job-the-way-a-tool-is",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-skills"
     },
     {
       "edge_type": "CHANGED",
@@ -52907,6 +53006,12 @@
       "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
+      "to_id": "cap:a-skill-is-found-by-describing-the-job-and-the-corpus-is-the-test"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
       "to_id": "cap:bounded-reads"
     },
     {
@@ -54855,6 +54960,26 @@
         "weight_basis": "estimated"
       },
       "to_id": "cap:the-server-writes-the-export-through-and-chains-it-from-main"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cap:a-skill-is-found-by-describing-the-job-and-the-corpus-is-the-test",
+      "properties": {
+        "evidence": "The summary is what the person's words match against and what the match shows them; without it the corpus had only trigger conditions to hit.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "cap:every-skill-serves-a-summary-and-an-audience-and-the-shortcut-count-is-computed"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "cap:a-skill-is-found-by-describing-the-job-and-the-corpus-is-the-test",
+      "properties": {
+        "evidence": "Same scorer, same corpus discipline, same ratchet shape.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "cap:every-tool-carries-the-users-phrasing-and-the-corpus-is-the-test"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -60659,6 +60784,18 @@
         "note": "The capability exists in this shape — a claim with a reader, not an inferred bucket — because this decision chose that shape on Anthony's word."
       },
       "to_id": "dec:a-stale-finding-is-closed-by-a-claim-not-a-computation"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:a-skill-is-found-by-describing-the-job-and-the-corpus-is-the-test",
+      "properties": {},
+      "to_id": "dec:idea-a-skill-is-found-by-describing-it-the-way-a-tool-is"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:a-skill-is-found-by-describing-the-job-and-the-corpus-is-the-test",
+      "properties": {},
+      "to_id": "rule:a-consumer-facing-fact-about-the-served-surface-is-served-never-copied"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -217469,6 +217606,15 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:a-skill-is-found-by-describing-the-job-the-way-a-tool-is",
+      "properties": {
+        "at": "2026-09-19",
+        "note": "Skills are findable by words now; the finding stands as the measurement."
+      },
+      "to_id": "fact:field-report-flo2-2026-09-18-skills-are-not-findable-by-words-find-tools-scores-tools-only"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:a-status-advance-says-whether-its-prose-predates-it",
       "properties": {
         "at": "2026-09-04",
@@ -221293,6 +221439,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:every-skill-is-found-by-a-query-in-the-users-words-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-skill-is-found-by-describing-the-job-and-the-corpus-is-the-test"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:every-tool-is-found-by-a-query-in-the-users-words-test",
       "properties": {
         "completeness": "complete",
@@ -221435,6 +221590,24 @@
         "conformance": "unchecked"
       },
       "to_id": "cmp:fielded"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:find-skills-corpus",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-skill-is-found-by-describing-the-job-and-the-corpus-is-the-test"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:find-skills-rank-baseline",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-skill-is-found-by-describing-the-job-and-the-corpus-is-the-test"
     },
     {
       "edge_type": "REALIZES",
@@ -229962,6 +230135,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:every-skill-is-found-by-a-query-in-the-users-words",
+      "properties": {},
+      "to_id": "cap:a-skill-is-found-by-describing-the-job-and-the-corpus-is-the-test"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:every-skill-meets-the-classes-it-composes",
       "properties": {},
       "to_id": "cap:skills-are-composed-of-attribute-classes"
@@ -231806,6 +231985,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:every-skill-is-found-by-a-query-in-the-users-words-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:every-skill-is-found-by-a-query-in-the-users-words-test"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:every-tool-is-found-by-a-query-in-the-users-words-test",
       "properties": {
         "action": "created"
@@ -231907,6 +232094,22 @@
         "action": "created"
       },
       "to_id": "art:fielded"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:find-skills-corpus",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:find-skills-corpus"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:find-skills-rank-baseline",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:find-skills-rank-baseline"
     },
     {
       "edge_type": "YIELDED",
@@ -235086,6 +235289,18 @@
       }
     },
     {
+      "node_id": "art:every-skill-is-found-by-a-query-in-the-users-words-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:63b71b7213c85f9f485a943b14818cd7fe5ce5bc0551cc68761944a612dda8c4",
+        "checksum_basis": "measured",
+        "location": "crates/reflow2-mcp/tests/every_skill_is_found_by_a_query_in_the_users_words.rs",
+        "name": "every_skill_is_found_by_a_query_in_the_users_words.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:every-tool-is-found-by-a-query-in-the-users-words-test",
       "node_type": "Artifact",
       "properties": {
@@ -235249,11 +235464,35 @@
       }
     },
     {
+      "node_id": "art:find-skills-corpus",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "spec",
+        "checksum": "sha256:5b30fd6b958918ebc6e460e41aeb17f309643102ddedc2640452aab11d9cbe2a",
+        "checksum_basis": "measured",
+        "location": "crates/reflow2-mcp/tests/fixtures/find_skills_corpus.json",
+        "name": "find_skills_corpus.json",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:find-skills-rank-baseline",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "spec",
+        "checksum": "sha256:6bf8bd04d6f0ab7a3470e0d05adaad77f37109022875de8be623e3f216adda8b",
+        "checksum_basis": "measured",
+        "location": "crates/reflow2-mcp/tests/fixtures/find_skills_rank_baseline.json",
+        "name": "find_skills_rank_baseline.json",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:find-tools-corpus-fixture",
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "test",
-        "checksum": "sha256:44869e4a01fff82be779e8421f274d9ee57e88350b75ea41e3f5a50ae338d8a5",
+        "checksum": "sha256:6270c357bdaa5ed39e843760541e0632a2095e213f1ba18761895375b0674a74",
         "checksum_basis": "measured",
         "description": "The 180-query criterion-1 corpus: one query per served tool, phrased as a user states the job — never the tool's name, never a phrase lifted from its description. Authored 2026-09-11 by an agent that had read every description, so informed rather than blind; a query from a field report supersedes the one here. Read by every_tool_is_found_by_a_query_in_the_users_words.rs via include_str!, so adding a tool without a query fails the build.",
         "location": "crates/reflow2-mcp/tests/fixtures/find_tools_corpus.json",
@@ -235884,7 +236123,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:7c0c5ae60698e37183bb56fdcb45c2a1a95a7bf59b8664f44d8464823b390f3f",
+        "checksum": "sha256:eb56337ad4cc04d0006e95c7de870f13781744b46aa588187d9bb4dd861322f9",
         "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "tools/loop_nudge.py",
@@ -237020,7 +237259,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f989fa39da0ec8c8f2ca636cdd95c359ba62bfaef848767192d9306369243083",
+        "checksum": "sha256:343ffaed9b9417189985439754e55bb9f0bf04829368f2a1208482dcc17a6d1d",
         "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
@@ -237138,7 +237377,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:26afea09a81b706bb50c89965d2a6a54834f82b28981a5aee6bfb178e00a74ad",
+        "checksum": "sha256:fd742f373873566627bd879f0e7178397500dfb37fddee09d70dbd7167b4684d",
         "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/skills.rs",
@@ -237152,7 +237391,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:a25f0c4057b268f07b207b601fae93cf25acb117480320a5514079f33e205147",
+        "checksum": "sha256:2e6c36f33463870e0394347dfdd131ba3a023e96c440a42a4f547554f1d66273",
         "checksum_basis": "measured",
         "location": "docs/skills-and-tools.md",
         "name": "skills-and-tools.md",
@@ -238457,7 +238696,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b4f871e77f37d33e686b3366ac88bb0eb8e19e6552bf535d5c15fcac5989a748",
+        "checksum": "sha256:b39ae30b3f31650f30ce2546e9424c097efc88d1738c88f1cd042fd6d7b4948c",
         "checksum_basis": "measured",
         "location": "crates/reflow2-mcp/src/tools/skills_tools.rs",
         "name": "skills_tools.rs",
@@ -239477,6 +239716,16 @@
       "properties": {
         "description": "When a Decision reaches `accepted` from anything else, or a GOVERNED_BY edge is drawn to an already-accepted Decision, the reply carries a `settled_question_prose` block: each governed node whose prose still asserts the question is open, the phrase that matched, and an excerpt QUOTED AROUND THE MATCH so the reader sees the words that fired rather than the node's opening paragraph.\n\nTHE SIBLING OF `cap:a-status-advance-says-whether-its-prose-predates-it`, and built on its reasoning rather than beside it. That one catches a STATUS outrunning its own description inside one node. This one catches PROSE OUTRUNNING A DECISION THAT GOVERNS IT across an edge — the same rot, one relation out.\n\nBOTH TRIGGER MOMENTS ARE COVERED, and that is a design choice with a reason: the decision may be settled first and the edge drawn afterwards, which is the ordering the incident that prompted this actually had available. A hook on the status setter alone would have missed it entirely.\n\nWHY A REPLY AND NOT A DETECTOR, measured before building rather than argued: over reflow2's own design, 43 of 640 nodes governed by an accepted Decision carry one of the nine shipped markers somewhere in their prose, and a good share are legitimate — a node that QUOTES an old question, or discusses a different one in a long statement. As a sweep that is 43 findings of mixed quality, which is the noise that gets switched off in a week. Fired when somebody accepts the decision or draws the edge, it is one node in front of the person who just moved it.\n\n⚠️ HONEST LIMITS, all three real and none hidden.\n(1) IT IS LEXICAL. Nine marker phrases, chosen as words any project would write rather than this one's idioms — \"that is his call to make\" was in the incident and is deliberately NOT a marker, on `rule:reflow2-is-built-for-other-projects-not-for-itself`. It cannot tell an assertion from a quotation of one, and the test file records the moment that limit bit the test's own first draft.\n(2) IT NEVER SAYS THE PROSE IS WRONG, per `dec:report-dont-judge` — it names what matched, quotes the text, and asks. A node that quotes an old question is correct and looks identical from the outside; only a person can tell.\n(3) IT FIRES WHERE THE DIVERGENCE IS CREATED, NOT WHERE IT IS READ. A session that simply READS a stale node still gets no warning, and the other half of the originating finding — that `search_design` does not surface a governing Decision from a query about the node it governs — is untouched and still true.\n\n📌 THE CALIBRATION FIGURE IS A ONE-OFF, not a standing measurement. It was taken on 2026-09-09 and nothing re-runs it; if the markers start firing on correct nodes as the design grows, the test suite stays green while the instrument becomes noise. An earlier draft of this description quoted 48, measured with a looser marker list than the one that shipped — corrected the same day by re-measuring against the nine actually in the binary. Three of those nine (`to be decided`, `not been decided`, `awaiting a decision`) match nothing in this corpus and are kept as phrases other projects write, not as anything this one has evidence for.",
         "name": "A Decision that settles names the prose it governs that still says the question is open",
+        "provenance": "authored",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "cap:a-skill-is-found-by-describing-the-job-and-the-corpus-is-the-test",
+      "node_type": "Capability",
+      "properties": {
+        "description": "As built 2026-09-19: `find_skills` (skills_tools.rs) ranks the served skills with the SAME scorer find_tools uses (service.rs term_weights + score_tool) over each skill's name and its summary followed by its trigger description, no parameters — one scorer, two catalogues, so they cannot drift apart. Each match carries `name` (what get_skill takes), `shortcut` (what a person types; can differ from the name), `summary`, `audience` and the score; the envelope is find_tools' (count, items, matched, omitted, searched, query). The served catalogue line (skills.rs catalogue()) and the session-start hook (tools/loop_nudge.py) name it beside get_skill and list_skills. Corpus: crates/reflow2-mcp/tests/fixtures/find_skills_corpus.json, one query per skill in a person's words; test: crates/reflow2-mcp/tests/every_skill_is_found_by_a_query_in_the_users_words.rs (every skill has a query and nothing stale; every skill in the top 5; rank-first ratchet against crates/reflow2-mcp/tests/fixtures/find_skills_rank_baseline.json; a match carries what a person and an agent each need). Measured at first build: 30 of 30 in the top 5, 25 of 30 first; the five not first are listed in the baseline, which only shrinks. Built under the OPEN idea on the owner's 'work through them one by one'; option (a) — a separate finder — rather than find_tools scoring both, because the tools' ratchet corpus would otherwise have thirty skills competing in every tool's top-5 list.",
+        "name": "A skill is found by describing the job, and a committed 30-query corpus is the test that it can be",
         "provenance": "authored",
         "status": "realized"
       }
@@ -242951,6 +243200,17 @@
         "change_type": "new_feature",
         "name": "Prose that outlives the Decision governing it says so, in the reply that settled it",
         "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:a-skill-is-found-by-describing-the-job-the-way-a-tool-is",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-09-19",
+        "name": "A skill is found by describing the job, the way a tool is: find_skills, its corpus and its ratchet",
+        "rationale": "flo2 F8 and the owner's own line. Anthony 2026-09-19: 'work your way through them one by one'. Built as a separate finder (option a) so the tools' rank ratchet is untouched; reuses the tools' scorer so the two catalogues share one notion of a match.",
+        "summary": "skills_tools.rs: find_skills; service.rs: FindSkillsReq; skills.rs: catalogue line names it; tools/loop_nudge.py: session-start text names it; find_tools corpus gains its query; new corpus + baseline fixtures; new test file; CHANGELOG."
       }
     },
     {
@@ -265411,6 +265671,16 @@
       }
     },
     {
+      "node_id": "frag:art:every-skill-is-found-by-a-query-in-the-users-words-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered every_skill_is_found_by_a_query_in_the_users_words.rs"
+      }
+    },
+    {
       "node_id": "frag:art:every-tool-is-found-by-a-query-in-the-users-words-test",
       "node_type": "Fragment",
       "properties": {
@@ -265538,6 +265808,26 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered fielded.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:find-skills-corpus",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered find_skills_corpus.json"
+      }
+    },
+    {
+      "node_id": "frag:art:find-skills-rank-baseline",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered find_skills_rank_baseline.json"
       }
     },
     {
@@ -286404,6 +286694,20 @@
       }
     },
     {
+      "node_id": "ver:every-skill-is-found-by-a-query-in-the-users-words",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-mcp/tests/every_skill_is_found_by_a_query_in_the_users_words.rs: four tests over the served skills and the committed corpus.",
+        "findings": "pr run: 4 passing; 30/30 top-5, 25/30 first; full workspace suite green.",
+        "kind": "verification",
+        "last_run_at": "2026-09-19",
+        "level": "integration",
+        "method": "test",
+        "name": "Every served skill has a corpus query and is in find_skills' top 5 for it; the not-first list only shrinks; a match carries name, shortcut, summary and audience",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:every-skill-meets-the-classes-it-composes",
       "node_type": "Verification",
       "properties": {
@@ -288442,7 +288746,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:6e2b30bd109fe9f605d36149e6b082184b7647e527ef4eef5116beda9ad49817",
+  "prev_content_hash": "sha256:f2a76ee772f3476e13b994838ea76ec5b9a347de040affbc3b0c11fa9f68acc4",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -289040,8 +289344,8 @@
     "schema_version": 1
   },
   "taken_at": {
-    "branch": "a-build-can-call-one-tool-from-the-shell",
-    "commit": "c39a33c8ef2b0f7a3a96f1055de67514be61f417",
+    "branch": "skills-are-found-by-words",
+    "commit": "cefb00642d5c542921dd7899f8443dcc773ff1c6",
     "dirty": true
   }
 }
