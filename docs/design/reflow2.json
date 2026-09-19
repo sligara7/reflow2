@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:2fdda7587f106534737b768dd32c0f84d2b6e01980b0a1c190aab39163d48286",
+  "content_hash": "sha256:bde986e1c32c39dac6ae532838e54f35a269b7849093d2cb0bd07baa765edf09",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -1258,6 +1258,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-missing-field-refusal-names-the-fields-this-call-lacked",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:service"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -25115,6 +25123,16 @@
     },
     {
       "edge_type": "CAUSES",
+      "from_id": "fact:field-report-bhome-2026-09-18-a-budget-accepts-a-negative-contribution-and-nothing-says-so-so-stacking-went-uncounted",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The finding measured that a negative contribution rolled up correctly and nothing said so; this is the sentence, in the three places a caller reads.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "chg:a-contribution-may-be-negative-and-a-refusal-says-which-fields-are-missing"
+    },
+    {
+      "edge_type": "CAUSES",
       "from_id": "fact:field-report-bhome-2026-09-18-a-build-script-has-no-door-to-a-report-but-an-mcp-session-so-the-budget-was-hand-transcribed",
       "properties": {
         "basis": "correlational",
@@ -25122,6 +25140,16 @@
         "validation_status": "unvalidated"
       },
       "to_id": "chg:a-build-can-call-one-tool-from-the-shell"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:field-report-bhome-2026-09-18-every-constructor-lists-its-missing-fields-at-once-and-the-other-tools-refuse-one-at-a-time",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The finding measured that the non-constructor surface refused one field at a time; this names them all, and which.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "chg:a-contribution-may-be-negative-and-a-refusal-says-which-fields-are-missing"
     },
     {
       "edge_type": "CAUSES",
@@ -26866,6 +26894,42 @@
         "action": "modified"
       },
       "to_id": "art:schema-verify"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-contribution-may-be-negative-and-a-refusal-says-which-fields-are-missing",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:a-missing-argument-names-the-tool-and-what-it-wants-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-contribution-may-be-negative-and-a-refusal-says-which-fields-are-missing",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:optimize-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-contribution-may-be-negative-and-a-refusal-says-which-fields-are-missing",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-contribution-may-be-negative-and-a-refusal-says-which-fields-are-missing",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
     },
     {
       "edge_type": "CHANGED",
@@ -52994,6 +53058,12 @@
       "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
+      "to_id": "cap:a-missing-field-refusal-names-the-fields-this-call-lacked"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
       "to_id": "cap:a-registered-file-is-measured-under-the-project-root-and-the-record-says-measured-or-asserted"
     },
     {
@@ -60754,6 +60824,12 @@
       "from_id": "cap:a-finding-describes-the-walk-that-produced-it",
       "properties": {},
       "to_id": "dec:a-misnaming-is-fixed-in-the-message-not-the-key"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:a-missing-field-refusal-names-the-fields-this-call-lacked",
+      "properties": {},
+      "to_id": "dec:idea-should-a-refusal-teach-every-rule-it-knows-in-one-reply"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -217498,6 +217574,24 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:a-contribution-may-be-negative-and-a-refusal-says-which-fields-are-missing",
+      "properties": {
+        "at": "2026-09-19",
+        "note": "The instruction leg exists now: constrains, its contribution parameter and the optimize skill say a contribution may be negative. The finding stands as the measurement."
+      },
+      "to_id": "fact:field-report-bhome-2026-09-18-a-budget-accepts-a-negative-contribution-and-nothing-says-so-so-stacking-went-uncounted"
+    },
+    {
+      "edge_type": "INVALIDATES",
+      "from_id": "chg:a-contribution-may-be-negative-and-a-refusal-says-which-fields-are-missing",
+      "properties": {
+        "at": "2026-09-19",
+        "note": "Every tool's missing-field refusal now names the fields this call lacked, all at once; the constructors keep RequiredFields for their content fields. The finding stands as the measurement."
+      },
+      "to_id": "fact:field-report-bhome-2026-09-18-every-constructor-lists-its-missing-fields-at-once-and-the-other-tools-refuse-one-at-a-time"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:a-cross-type-near-match-is-named-as-a-layer",
       "properties": {
         "at": "2026-08-29",
@@ -220249,6 +220343,15 @@
         "conformance": "verified"
       },
       "to_id": "cap:a-lesson-is-served-at-the-step-it-concerns"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:a-missing-argument-names-the-tool-and-what-it-wants-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-missing-field-refusal-names-the-fields-this-call-lacked"
     },
     {
       "edge_type": "REALIZES",
@@ -225787,6 +225890,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:a-missing-field-refusal-names-the-fields-this-call-lacked",
+      "properties": {},
+      "to_id": "req:a-refusal-names-what-would-have-worked"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:a-module-can-be-read-swapped-and-tested-behind-a-contract",
       "properties": {},
       "to_id": "req:recursive-black-box-decomposition"
@@ -229415,6 +229524,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:a-missing-field-refusal-names-the-fields-this-call-lacked",
+      "properties": {},
+      "to_id": "cap:a-missing-field-refusal-names-the-fields-this-call-lacked"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:a-module-stands-behind-the-contract",
       "properties": {},
       "to_id": "cap:a-module-can-be-read-swapped-and-tested-behind-a-contract"
@@ -231502,6 +231617,14 @@
         "action": "created"
       },
       "to_id": "art:a-lesson-is-served-at-the-step-wire-test"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:a-missing-argument-names-the-tool-and-what-it-wants-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:a-missing-argument-names-the-tool-and-what-it-wants-test"
     },
     {
       "edge_type": "YIELDED",
@@ -234117,6 +234240,18 @@
       }
     },
     {
+      "node_id": "art:a-missing-argument-names-the-tool-and-what-it-wants-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:7e50b05237a2d9cfe3bd651bcee63577f87978fd68ccee5837b693ed5a313bd5",
+        "checksum_basis": "measured",
+        "location": "crates/reflow2-mcp/tests/a_missing_argument_names_the_tool_and_what_it_wants.rs",
+        "name": "a_missing_argument_names_the_tool_and_what_it_wants.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:a-node-is-named-by-the-key-the-last-tool-used-test",
       "node_type": "Artifact",
       "properties": {
@@ -236407,7 +236542,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:5a2c7ff45c45a2ac06df0cd2b9203990c315f3f12945a159a34db58066f40439",
+        "checksum": "sha256:9d6d7822a38d848055571ea142d9e19b086fb914c33a40aa64117b929c0696f2",
         "checksum_basis": "measured",
         "location": "getting-started/skills/optimize/SKILL.md",
         "name": "optimize/SKILL.md",
@@ -237259,7 +237394,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:343ffaed9b9417189985439754e55bb9f0bf04829368f2a1208482dcc17a6d1d",
+        "checksum": "sha256:13c7cb73e5c7ee5adb94329f66079c0c1806e1fba27f70f77fd31ecc3d6ddf21",
         "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
@@ -238604,7 +238739,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f83f36dd81185b66300a8d49fa86e27ce587f22e5ae4c3459658e7e142887524",
+        "checksum": "sha256:c8464debd4be7cfc1cd54655574a47ea2a8e607886bd78e4ebc6ac4b46213a94",
         "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
@@ -239436,6 +239571,16 @@
         "provenance": "authored",
         "status": "verified",
         "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:a-missing-field-refusal-names-the-fields-this-call-lacked",
+      "node_type": "Capability",
+      "properties": {
+        "description": "As built 2026-09-19: `call_tool` keeps the call's arguments; on the deserialiser's 'missing field' error, `missing_fields_hint` (service.rs) lists the required fields absent from the call under MISSING FROM THIS CALL, with each one's purpose quoted from the schema, and the required fields the caller did pass under 'Already passed'. Before this the refusal listed every required field and said plainly it was the obligation, not a claim about what was omitted — correct, and one diff short of useful. `missing_field_hint` (no arguments in hand) keeps the old shape for callers without them. Test: crates/reflow2-mcp/tests/a_missing_argument_names_the_tool_and_what_it_wants.rs::with_the_arguments_in_hand_the_refusal_names_what_this_call_lacked.",
+        "name": "A missing-field refusal names the required fields THIS call lacked, with the ones already passed set apart",
+        "provenance": "authored",
+        "status": "realized"
       }
     },
     {
@@ -242582,6 +242727,17 @@
       "properties": {
         "change_type": "new_feature",
         "name": "VERIFIES' target enumeration admits Interface — all 18 contracts carried zero checks because the edge was illegal, while the check for one of them already existed and had to hang off a Capability"
+      }
+    },
+    {
+      "node_id": "chg:a-contribution-may-be-negative-and-a-refusal-says-which-fields-are-missing",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "documentation",
+        "detected_at": "2026-09-19",
+        "name": "A contribution may be negative (said on the tool, its parameter and the optimize skill); a missing-field refusal names the fields this call lacked",
+        "rationale": "Two instruction gaps from bhome S3 and flo2 F10 (2026-09-18), taken in Anthony's 'work your way through them one by one' (2026-09-19). Both mechanisms already existed; what was missing was the sentence that says so (three-legs rule: typed tool + instruction + detector) and, for the refusal, the one fact only the server holds — which fields this call passed.",
+        "summary": "capture.rs: constrains description; service.rs: ConstrainsReq.contribution doc, missing_fields_hint with the call's arguments, call_tool keeps them; optimize skill (+mirrors); one test; CHANGELOG."
       }
     },
     {
@@ -265050,6 +265206,16 @@
       }
     },
     {
+      "node_id": "frag:art:a-missing-argument-names-the-tool-and-what-it-wants-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered a_missing_argument_names_the_tool_and_what_it_wants.rs"
+      }
+    },
+    {
       "node_id": "frag:art:a-node-is-named-by-the-key-the-last-tool-used-test",
       "node_type": "Fragment",
       "properties": {
@@ -285190,6 +285356,20 @@
       }
     },
     {
+      "node_id": "ver:a-missing-field-refusal-names-the-fields-this-call-lacked",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-mcp/tests/a_missing_argument_names_the_tool_and_what_it_wants.rs: the new case beside the three the capability's predecessor had (names the tool and the field's purpose; the whole obligation from one refusal; an unrelated refusal left alone).",
+        "findings": "pr run: 4 passing; full workspace suite green; refusal_speaks.py on the wire PASS.",
+        "kind": "verification",
+        "last_run_at": "2026-09-19",
+        "level": "unit",
+        "method": "test",
+        "name": "With the arguments in hand the refusal names what this call lacked and sets the passed fields apart",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:a-module-stands-behind-the-contract",
       "node_type": "Verification",
       "properties": {
@@ -288746,7 +288926,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:f2a76ee772f3476e13b994838ea76ec5b9a347de040affbc3b0c11fa9f68acc4",
+  "prev_content_hash": "sha256:2fdda7587f106534737b768dd32c0f84d2b6e01980b0a1c190aab39163d48286",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -289344,8 +289524,8 @@
     "schema_version": 1
   },
   "taken_at": {
-    "branch": "skills-are-found-by-words",
-    "commit": "cefb00642d5c542921dd7899f8443dcc773ff1c6",
+    "branch": "a-contribution-may-be-negative-and-a-refusal-says-which-fields-are-missing",
+    "commit": "a173df066bba405bd394dd315fab96ff15044381",
     "dirty": true
   }
 }
