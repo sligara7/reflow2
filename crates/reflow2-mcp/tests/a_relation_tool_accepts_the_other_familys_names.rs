@@ -269,6 +269,7 @@ async fn the_handoff_lands_end_to_end() {
         acted_at: None,
         priority: None,
         concern: None,
+        kind: None,
     })));
     j!(s.add_capability(Parameters(CapabilityReq {
         satisfies: None,

@@ -31,6 +31,27 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Fixed
+
+- **The gate that says every declared property has a typed writer now reads which TOOL writes which
+  TYPE, not which names happen to match.** flo2 F19 reported two properties with no way to set them:
+  `Requirement.kind`, which a detector reads and scolds users about, and `Verification.location`.
+  The instrument built to catch exactly that had reported zero holes, because every write tool it
+  could not place had its parameter NAMES pooled into every node type — 54 tools, 109 names — so
+  `kind` was excused by `forecast_readiness` and `gate_on` and `location` by `register_alternative`,
+  whose location is a path to a design export. 24 of 238 declared properties rested on that pool.
+  The pool is gone: a tool's parameters count toward a type only when the tool writes that type,
+  every write tool is placed in one of three categories, and a tool the file cannot place now STOPS
+  the gate instead of being pooled. Two mappings were under-specified and are widened (`link_artifact`
+  mints the provenance fragment; `snapshot_before_change` writes the snapshot it captures). The gate
+  now reports two real holes where it used to report none.
+
+- **`add_requirement` takes `kind` and `add_verification` takes `location`.** Both properties were
+  declared, one of them read by a detector, and neither could be written by any served tool: 154 of
+  247 requirements carried a kind written through the generic escape hatch, and the documented
+  creation path could not produce a requirement the detector was satisfied with.
+
+
 ## [0.65.0] — 2026-09-19
 
 ### Added

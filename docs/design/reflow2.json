@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:ce5102b9807466dab872e96e6405c2b3f7a7798b5d7d13f13f1cdfac0ff78fd0",
+  "content_hash": "sha256:07408b1729a36b7ee9c7010a43585448be9678508b5d907aa94594adc576b3a5",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -3274,6 +3274,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:tools-query"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:the-reachability-gate-reads-which-tool-writes-which-type",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:vocabulary"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -25904,6 +25912,16 @@
         "validation_status": "validated"
       },
       "to_id": "dec:idea-the-load-bearing-prose-is-unchecked-against-the-code-it-describes"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:the-reachability-gate-pools-54-tools-parameter-names-into-every-type-so-it-reported-zero-holes-while-two-properties-had-no-writer",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The measured miscalibration is what this change removes.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "chg:the-reachability-gate-reads-tools-not-names"
     },
     {
       "edge_type": "CAUSES",
@@ -50584,6 +50602,159 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-reachability-gate-reads-tools-not-names",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:enum-schema"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-reachability-gate-reads-tools-not-names",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-reachability-gate-reads-tools-not-names",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-a-near-match-of-another-type-is-named-as-a-layer"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-reachability-gate-reads-tools-not-names",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-a-node-is-named-by-its-id-and-the-type-is-optional"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-reachability-gate-reads-tools-not-names",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-a-prescribed-layer-pair-no-longer-refuses"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-reachability-gate-reads-tools-not-names",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-a-replaced-value-is-kept"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-reachability-gate-reads-tools-not-names",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-an-export-says-which-tree-it-was-taken-in"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-reachability-gate-reads-tools-not-names",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-search-first"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-reachability-gate-reads-tools-not-names",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-the-guard-reads-the-request-before-refusing"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-reachability-gate-reads-tools-not-names",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-vocabulary-reach"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-reachability-gate-reads-tools-not-names",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:the-export-can-be-ordered-before-its-writes"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-reachability-gate-reads-tools-not-names",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:the-export-chains-from-main-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-reachability-gate-reads-tools-not-names",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:the-server-keeps-the-export-current-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-reachability-gate-reads-tools-not-names",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-assure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-reachability-gate-reads-tools-not-names",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-reachability-gate-reads-tools-not-names",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:vocabulary-reach"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-reachability-gate-reads-tools-not-names",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:vocabulary-reach-baseline"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-readme-says-what-it-is-before-what-it-believes",
       "properties": {
         "accepted_baseline": true,
@@ -53833,6 +54004,12 @@
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "cap:the-rank-ratchet-and-the-confusability-instrument"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "cap:the-reachability-gate-reads-which-tool-writes-which-type"
     },
     {
       "edge_type": "CONTAINS",
@@ -65962,6 +66139,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:the-reachability-gate-reads-which-tool-writes-which-type",
+      "properties": {},
+      "to_id": "dec:idea-should-the-reachability-gate-attach-a-tools-parameters-only-to-the-types-it-writes"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:the-record-moved-is-surfaced",
       "properties": {},
       "to_id": "dec:idea-the-graph-notices-the-record-moved-without-being-asked"
@@ -73211,6 +73394,12 @@
       "from_id": "cap:the-design-holds-about-one-subject-is-read-back-in-one-call",
       "properties": {},
       "to_id": "fact:topic-report-is-keyword-only-and-finds-the-project-node-without-offering-to-expand-it"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:the-reachability-gate-reads-which-tool-writes-which-type",
+      "properties": {},
+      "to_id": "fact:a-test-that-builds-a-request-as-a-struct-literal-breaks-on-every-new-optional-field"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -223281,6 +223470,15 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:the-reachability-gate-reads-tools-not-names",
+      "properties": {
+        "at": "2026-09-20",
+        "note": "The pool is removed, every write tool is placed, an unplaceable one stops the gate, and both properties flo2 named now have parameters. The finding stands as the measurement."
+      },
+      "to_id": "fact:the-reachability-gate-pools-54-tools-parameter-names-into-every-type-so-it-reported-zero-holes-while-two-properties-had-no-writer"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:the-replayed-gap-is-an-echo",
       "properties": {
         "at": "2026-09-02",
@@ -232400,6 +232598,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:the-reachability-gate-reads-which-tool-writes-which-type",
+      "properties": {},
+      "to_id": "req:the-gate-that-says-every-property-can-be-written-reads-tools-not-names"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:the-record-moved-is-surfaced",
       "properties": {},
       "to_id": "req:a-seat-learns-the-record-moved-before-it-writes"
@@ -235162,6 +235366,12 @@
       "from_id": "ver:every-tool-ranks-first-for-its-own-job-or-is-in-the-baseline",
       "properties": {},
       "to_id": "cap:the-rank-ratchet-and-the-confusability-instrument"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:every-write-tool-is-placed-and-an-unplaceable-one-stops-the-gate",
+      "properties": {},
+      "to_id": "cap:the-reachability-gate-reads-which-tool-writes-which-type"
     },
     {
       "edge_type": "VERIFIES",
@@ -240259,7 +240469,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:18c47270cc209eb7922a0037cdd497cd37a342dc39d12bd8d347ac64c96706c3",
+        "checksum": "sha256:b9536a6a0e4dd84df075fe721f829dc15f3627996e4d2d2c223f4be5814bb9e1",
         "checksum_basis": "measured",
         "location": "crates/reflow2-mcp/src/enum_schema.rs",
         "name": "enum_schema.rs — one schema_with fn per enum request field, reading legal values from the compiled-in schema (or the handler's own const) at tool-listing time",
@@ -242286,7 +242496,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:13c7cb73e5c7ee5adb94329f66079c0c1806e1fba27f70f77fd31ecc3d6ddf21",
+        "checksum": "sha256:96c7ea646cc2d038a72adfd5e1b75f67e17222717e1f898ac001191bfdc81fe5",
         "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
@@ -242744,7 +242954,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:5fe3320f1340265f67dac22148d83c98a69379ab9f21837a801446b276c23aa1",
+        "checksum": "sha256:e5440967801989e0f6124b10cc6a26610474d1030f423e9a4644e7d22dff008b",
         "checksum_basis": "measured",
         "location": "crates/reflow2-mcp/tests/a_near_match_of_another_type_is_named_as_a_layer.rs",
         "name": "a_near_match_of_another_type_is_named_as_a_layer.rs",
@@ -242756,7 +242966,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b9baf0f3045e5a803820cdae146793c626fbe02dfeec56960ed092d1b91307b6",
+        "checksum": "sha256:7ffad444162083422bc00a902cf8e5f1bb66668962cf1846abab62ab46c6ee4a",
+        "checksum_basis": "measured",
         "location": "crates/reflow2-mcp/tests/a_node_is_named_by_its_id_and_the_type_is_optional.rs",
         "name": "a_node_is_named_by_its_id_and_the_type_is_optional.rs — verifies/governed_by resolve the type from the id; a collision is refused naming both; an unknown id says so; delete_node still requires the type",
         "status": "realized"
@@ -242791,7 +243002,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:4651d550556fb2540419af4993e3af9246af99a890511c8ec1e81a17899a307a",
+        "checksum": "sha256:fba631e9de9f32a2fb7433242378b9fbd7fb90f7e8069a4b2729a618e69dfab8",
         "checksum_basis": "measured",
         "location": "crates/reflow2-mcp/tests/a_prescribed_layer_pair_no_longer_refuses.rs",
         "name": "a_prescribed_layer_pair_no_longer_refuses.rs",
@@ -242874,7 +243085,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:78bbbdc28c1e794627fbe8015a33af44c839902d892d3c41cca5cb01e9531d74",
+        "checksum": "sha256:ab441f6b0f948209190400b1fc502c94a228d41f267bbe16b74fab7f93909ec1",
+        "checksum_basis": "measured",
         "location": "crates/reflow2-mcp/tests/a_replaced_value_is_kept_when_it_would_be_lost.rs",
         "name": "a_replaced_value_is_kept_when_it_would_be_lost.rs",
         "status": "realized"
@@ -243023,7 +243235,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "test",
-        "checksum": "sha256:71032109bfbb1669564d107823b3b67677b1899569371706cc42cf075d7f08e4",
+        "checksum": "sha256:ad8a77a08eb5214dc1fc3c72467c455aecc6a4c93d0c3ba451210ee3a094866d",
+        "checksum_basis": "measured",
         "description": "Against a real git repository: the receipt and the file carry branch and HEAD; dirty ignores the export file itself and notices anything else; an unchanged design keeps the coordinate it was taken at, byte-identical across a commit; outside git there is no coordinate rather than a made-up one.",
         "location": "crates/reflow2-mcp/tests/an_export_says_which_tree_it_was_taken_in.rs",
         "name": "an_export_says_which_tree_it_was_taken_in.rs",
@@ -243337,7 +243550,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:42558a34b466762d12c58b0cfc0b7c25fab7a03c7734c573854538cd87864e1b",
+        "checksum": "sha256:df37461d9652af93cf0513f2fa88391571dea2c74c9d664e791d3cd63ad5b84a",
+        "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/tests/search_first_fires_at_the_tool.rs",
         "name": "search_first_fires_at_the_tool.rs — six cases: the refusal, the rollback, both deliberate routes, the no-false-refusal counterweight, and the cross-type catch",
@@ -243486,7 +243700,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "test",
-        "checksum": "sha256:1cb14fcba5c5dd3bda15e050cf80c8e5fb142480871d05dad106121d1dc9ec41",
+        "checksum": "sha256:051de339ac691154c96483e0e5b32870ecc21452ac65d31396dd920f2ee843b7",
         "checksum_basis": "measured",
         "description": "Three cases, observed failing against the stashed unfixed guard (2 refused, the counterweight passed before and after — which is what shows the change narrows the guard rather than blinding it).",
         "location": "crates/reflow2-mcp/tests/the_guard_reads_the_request_before_refusing.rs",
@@ -243534,7 +243748,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "test",
-        "checksum": "sha256:d9aafa8273866d2daf9cbe7c5f61a5ef2f04867edd1d9c646da436ffcbcb037e",
+        "checksum": "sha256:94471313ef74849eccb7389fec64817e8c8d68c49500b0b354c8b51825980fc4",
+        "checksum_basis": "measured",
         "location": "tools/test_vocabulary_reach.py",
         "name": "test_vocabulary_reach.py",
         "status": "realized"
@@ -243545,7 +243760,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:4f76fc487b0d7e857148b7e443a006f319846be8f8be2a4ea5a93732ff9dfec0",
+        "checksum": "sha256:f152fce6e79a72e28bac3483f90cb14985dbed372a268b9a4db0a1bf32889178",
+        "checksum_basis": "measured",
         "location": "crates/reflow2-mcp/tests/the_export_can_be_ordered_before_its_writes.rs",
         "name": "the_export_can_be_ordered_before_its_writes.rs",
         "status": "realized"
@@ -243556,7 +243772,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "test",
-        "checksum": "sha256:243fa75a8b6fa5be37fa8d626bf13cc47d03d48d16aa62b0d8c5b7eeba319500",
+        "checksum": "sha256:591212f545ef19d7c9e99d848e20716735a75503adb642e7e60107e0298b4030",
+        "checksum_basis": "measured",
         "description": "Two hermetic tests over a scratch git repository. The first builds the shape dec:export-once-per-pr could not survive — a committed export on main, then TWO exports and a commit on a branch — and asserts both branch exports carry main's hash as prev_content_hash, so a squash lands one hop. The second asserts that outside a repository the on-disk chain still forms and the receipt says why. The first was shown to FAIL against the pre-fix behaviour before it was trusted.",
         "location": "crates/reflow2-mcp/tests/the_export_chains_from_main.rs",
         "name": "the_export_chains_from_main.rs",
@@ -243568,7 +243785,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "test",
-        "checksum": "sha256:3af2947547a0ddc4fd4cd38f74738331bcee2b2df319c0e4a23327ab8d8056c9",
+        "checksum": "sha256:e61b60ad303b7b1c454047b00057aff2fddb78f30cd9c79ad2931fba21f5a621",
+        "checksum_basis": "measured",
         "description": "Four tests on a real store: a write reaches disk with nobody asking; writes spread over three seconds still cost one export; a hand edit survives untouched AND loop_status carries the reason in `next`; a read-only server refuses the write-through. The debounce test carries its own warning — the obvious version of it passed with the debounce set to zero, because ten back-to-back writes coalesce whatever the quiet period is.",
         "location": "crates/reflow2-mcp/tests/the_server_keeps_the_export_current.rs",
         "name": "the_server_keeps_the_export_current.rs",
@@ -243604,7 +243822,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:12a897d8c6564688c56fbcfd61f9dac75e0e37e5a6321f4d68a4ed83848ce259",
+        "checksum": "sha256:fbe1cf0384baf962541cf0f7601ac93eb718ef1f12aabeb29483df0759e3c2ed",
+        "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/assure.rs",
         "name": "tools/assure.rs",
@@ -243631,7 +243850,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c8464debd4be7cfc1cd54655574a47ea2a8e607886bd78e4ebc6ac4b46213a94",
+        "checksum": "sha256:d85bbe565cf1aa5a9c634dd16fc3917424bec852cfa823deb978f35dfa8b5d4f",
         "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
@@ -244068,7 +244287,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:fb3fe08bdc802aac242f2764ca970ec53fd7f9342f0df3232310df29b98c94bc",
+        "checksum": "sha256:b14fb27f85740ae9fd8c9c1e2c33994a780c93b3e1a8bcd85be7417554a88d4b",
         "checksum_basis": "measured",
         "location": "tools/vocabulary_reach.py",
         "name": "tools/vocabulary_reach.py",
@@ -244080,7 +244299,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "config",
-        "checksum": "sha256:6df5434dda567dd8a608ada66313aa4d7dbcc6ab206f4aae5d413b27648aea8d",
+        "checksum": "sha256:f00ee652b74d042ab0dd05054c5f3cc2455a260e3f9c9795dd229dc3f539a41b",
+        "checksum_basis": "measured",
         "location": "tools/vocabulary_reach_baseline.json",
         "name": "vocabulary_reach_baseline.json",
         "status": "realized"
@@ -247227,6 +247447,16 @@
       "properties": {
         "description": "As built 2026-09-18. Two tests beside the corpus test (every_tool_ranks_first_for_its_own_job_or_is_in_the_baseline; no_new_mutually_confusable_pair) read fixtures/find_tools_rank_baseline.json and refuse growth in either list and stale entries in either. tools/tool_confusability.py replicates find_tools' scorer over the toolsnaps (185/185 top-1 agreement with the binary, validated 2026-09-18), reports the not-first tools with who beats them, the mutual pairs, the crowders, and this project's never-called tools, and rewrites the baseline on --baseline. 61 tools gained one sentence carrying the job in a user's words; 25 remain not-first (name matches) and are the baseline. record_change is renamed snapshot_before_change and manual_work_report is renamed manual_work_ledger, each old name a served stub that refuses and points at the new one for one release. contain_component detaches an existing parent and names it, as move_component does.",
         "name": "The rank ratchet: every tool first for its own job or listed, no new mutual pair, checked beside the corpus; the confusability instrument that measures it offline; the two renames with stubs; contain_component detaching by default",
+        "provenance": "authored",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "cap:the-reachability-gate-reads-which-tool-writes-which-type",
+      "node_type": "Capability",
+      "properties": {
+        "description": "As built 2026-09-20. THE POOL IS GONE: tool_parameters() used to add every parameter of every write tool it could not attribute to a type — 54 tools, 109 names — to EVERY node type, and the zero-usage branch asked the flat name set besides. A property therefore counted as writable when any unrelated tool used the same word. Now each write tool sits in exactly one of three categories: WRITES_TYPE (writes that type's own properties), EDGE_ONLY (writes an edge, or mints nodes through an operation rather than from caller-named properties), POLYMORPHIC (writes one named property on a caller-chosen type — set_provenance and `provenance`). A tool in none of them raises Unplaceable and the gate EXITS 2 naming it, so the map cannot rot silently as the surface grows. Two mappings were under-specified rather than absent and are widened: link_artifact mints the provenance fragment and writes its content_ref, note_kind and provenance; snapshot_before_change writes the Snapshot it captures as well as the ChangeEvent. The ingest steps moved from operations to Fragment writers. MEASURED OUTCOME: the gate reported `0 HOLE` before and reports 2 now, both real, and the 24 properties that rested on the pool are each judged against their own type's tools. Tests: tools/test_vocabulary_reach.py gained four cases, including a probe that adds an unplaced tool and asserts the gate stops.",
+        "name": "The reachability gate reads which tool writes which type, and refuses a tool it cannot place",
         "provenance": "authored",
         "status": "realized"
       }
@@ -256499,6 +256729,17 @@
         "rationale": "RECORDED AS `documentation` / `record` DELIBERATELY: nothing about the system changed, only what the design knows about its own prose. The tool's own guidance says a normative document that changes what somebody DOES takes a real label instead — this changes nothing anyone does, so it takes the honest small one.\n\n⭐ WHY A NULL RESULT IS WORTH A CHANGE EVENT. The five instances that opened this question made the prose look unreliable. Two surveys across 2,552 sentences found no sixth by sampling, which is the strongest available evidence that the base rate is genuinely low — and that is what decides the repair. An audit of the corpus would be the wrong build: at the observed rate a reader wades through fifty true sentences per false one, and would have found none of the six.\n\n⚠️ WHAT WOULD REFUTE THE CONCLUSION: all six known instances were found on the surfaces users touch most, and both surveys sampled the corpus UNIFORMLY. If rot concentrates where prose is heavily read and heavily edited — which is plausible, since those are the sentences that get outgrown — uniform sampling is the wrong instrument and would report exactly this null. A survey weighted by tool call frequency would test that, and nobody has run one.\n\nSO THE DIRECTION STANDS AND IS UNCHANGED BY THIS: pin the claims that CAN be pinned, on the pattern of `chg:the-replay-contract-is-pinned-by-a-round-trip-not-by-a-field` — a round-trip test rather than a corrected sentence — rather than auditing prose nobody can keep true by reading it.",
         "subject": "record",
         "summary": "EXTENDING `fact:the-served-prose-is-mostly-true-and-nothing-checks-any-of-it` to the population it named as unsurveyed: the 25 served skills.\n\nPOPULATION: 1,785 sentences. 631 (35%) carry an assertion marker — lower density than tool descriptions (45%), as expected since skills are mostly doctrine. Narrowing to sentences that ALSO name a served tool, which is where a checkable claim about tool behaviour actually lives: 101 sentences (6%), across 23 of 25 skills.\n\nA SAMPLE OF 22 WAS READ. ONE LOOKED LIKE A CLEAN ROT AND WAS NOT.\n\n`retire-from-design` opens its candidate section with *\"`consumption_report` names capabilities nothing is recorded as using.\"* The tool says the opposite where it matters: *\"if the design records a consumer for fewer than half of what it built, the list is WITHHELD.\"* Confirmed in code — `MIN_MODELLED_RATIO = 0.5`, and `if ratio < MIN_MODELLED_RATIO` withholds. On reflow2's own design (8% modelled) the tool names nothing, so the sentence is false exactly where an agent would rely on it.\n\n⭐ **AND THEN THE NEXT PARAGRAPH SAYS IT CORRECTLY**: *\"READ ITS REFUSAL AS THE FINDING. On a design where few capabilities have modelled consumers it declines to name them at all.\"* The section is RIGHT AS A WHOLE. The lead sentence overstates and is qualified three lines later.\n\n**SO THE FINDING IS THE METHOD, NOT THE SENTENCE.** Sentence-level extraction strips the qualifier that makes the prose true — which is the SAME failure dev_storyflow reported in the same week, when their regex for dishonest nodes was 40% wrong because it could not tell a claim from its denial. Their flaw was matching negations; this one is losing context. Both come of scoring prose in units smaller than the argument it makes.\n\n⚠️ THAT BOUND APPLIES BACKWARDS to the tool-description survey too, though more weakly: a tool description is one blob with no paragraph structure, so a qualifier is likelier to sit in the same sentence — but the 80% \"makes a checkable claim\" figure was also judged sentence by sentence and should be read with this in mind.\n\nRESULT ACROSS BOTH POPULATIONS: **zero rotted claims found by sampling.** 5 of 5 verified true in tool descriptions; 22 read in skills with one candidate refuted by its own context. All six known-false instances to date were found by USERS hitting them, never by inspection."
+      }
+    },
+    {
+      "node_id": "chg:the-reachability-gate-reads-tools-not-names",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-09-20",
+        "name": "The reachability gate reads tools not names; add_requirement takes kind and add_verification takes location",
+        "rationale": "flo2 F19 asked for an audit; the audit existed and was miscalibrated. Anthony 2026-09-20 promoted the fix and said to start with it, because it is the only item that was asserting something false.",
+        "summary": "vocabulary_reach.py: EDGE_ONLY and POLYMORPHIC categories, the Unplaceable refusal, no flat fallback in either branch, five tools placed and two mappings widened; baseline gained 8 classifications and lost 2 to real parameters; service.rs/enum_schema.rs/capture.rs/assure.rs: `kind` on add_requirement and `location` on add_verification; 26 test literals updated; test_vocabulary_reach.py gained four cases; CHANGELOG."
       }
     },
     {
@@ -283085,6 +283326,19 @@
       }
     },
     {
+      "node_id": "fact:a-test-that-builds-a-request-as-a-struct-literal-breaks-on-every-new-optional-field",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.85,
+        "fact_type": "finding",
+        "name": "A test that builds a request as a struct literal breaks on every new optional field; one built from JSON does not",
+        "statement": "Measured twice on 2026-09-19/20 while adding optional parameters to request structs. Adding `status` to four constructors broke 20 struct literals across the suite; adding `kind` and `location` broke 26 more. Each break is a compile error that says nothing about the change under test, and the bulk edit that fixes them is itself error-prone — it put the new field after the closing brace both times, costing a second gate run each time.\n\nTHE ALTERNATIVE IS ALREADY IN USE AND COSTS NOTHING: `serde_json::from_value::<RequirementReq>(json!({…}))` builds the same request from the fields the test actually cares about, ignores the ones it does not, and is unaffected when an optional field is added. The tests written for the status contract and the shell door use it; the older ones predate it.\n\nNOT A CALL TO REWRITE THE SUITE. The point is the direction of travel: a NEW test that constructs a request should build it from JSON, so the cost of adding an optional parameter stays proportional to the parameter rather than to the number of tests that happen to mention its struct.",
+        "subject_id": "cap:the-reachability-gate-reads-which-tool-writes-which-type",
+        "valid_from": "2026-09-20"
+      }
+    },
+    {
       "node_id": "fact:a-third-of-declared-properties-name-nothing-any-tool-accepts",
       "node_type": "TemporalFact",
       "properties": {
@@ -292401,6 +292655,20 @@
       }
     },
     {
+      "node_id": "ver:every-write-tool-is-placed-and-an-unplaceable-one-stops-the-gate",
+      "node_type": "Verification",
+      "properties": {
+        "description": "tools/test_vocabulary_reach.py: the four new cases beside the three it had. The refusal case writes an unplaced tool snapshot, runs the gate and asserts a non-zero exit naming it.",
+        "findings": "7 of 7 checks pass; the gate reports 2 HOLE, 19 written by an operation, 16 unused.",
+        "kind": "verification",
+        "last_run_at": "2026-09-20",
+        "level": "integration",
+        "method": "test",
+        "name": "Every served write tool is placed in exactly one category, no tool is in two, an unplaceable one stops the gate, and an edge tool's parameters reach no node type",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:evidence-fidelity",
       "node_type": "Verification",
       "properties": {
@@ -294397,7 +294665,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:526b595d6bd41fb80afa6fd69d01dda0a7c211195f0aff4cdfa3514ac5a0eea9",
+  "prev_content_hash": "sha256:ce5102b9807466dab872e96e6405c2b3f7a7798b5d7d13f13f1cdfac0ff78fd0",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -294995,8 +295263,8 @@
     "schema_version": 1
   },
   "taken_at": {
-    "branch": "the-open-ideas-are-settled-on-his-word",
-    "commit": "feb75d0fd7ecceaa108a7d33503cfec152aff88c",
+    "branch": "the-reachability-gate-reads-tools-not-names",
+    "commit": "dfae9f947dae3a5bc7da205b8a83de352bb67611",
     "dirty": true
   }
 }

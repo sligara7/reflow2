@@ -163,9 +163,18 @@ def declared() -> tuple[dict[str, dict], dict[str, dict]]:
 # `description`. One type's field covered another type's hole, and the property
 # stayed invisible in a report built to find exactly it.
 #
-# A type absent from this map has no known constructor, so its properties are
-# judged against the whole surface — the conservative reading, which under-reports
-# rather than inventing a finding.
+# ⭐ AND THE POOL IS GONE, 2026-09-20. Until then, every write tool this map could
+# not place had its parameter NAMES pooled into EVERY node type — 54 tools, 109
+# names. That is the same cross-type leak the paragraph above describes, arriving
+# through the fallback instead of the flat set, and it made this instrument report
+# `0 HOLE` on a tree where `Requirement.kind` had no writer at all (excused by
+# `forecast_readiness` and `gate_on`, which each take a parameter called `kind`)
+# and `Verification.location` had none (excused by `register_alternative`, whose
+# `location` is a path to a design export). flo2 found both by being refused;
+# 24 of 238 declared properties rested on that pool. A tool's parameters now count
+# toward a type ONLY when the tool writes that type, and a write tool this file
+# cannot place STOPS THE GATE rather than being pooled — see EDGE_ONLY,
+# POLYMORPHIC and `unplaceable` below.
 WRITES_TYPE = {
     "add_actor": "Actor",
     "add_artifact": "Artifact",
@@ -196,7 +205,12 @@ WRITES_TYPE = {
     # map was added to stop, so the map has to cover every tool that writes a
     # type's own properties, not only the ones named `add_*`.
     "plan_epoch": "DesignEpoch",
-    "link_artifact": "Artifact",
+    # link_artifact MINTS THE PROVENANCE FRAGMENT as well as the artifact, and
+    # its own parameters write that fragment's properties (content_ref,
+    # note_kind, provenance). Mapping it to Artifact alone made those read as
+    # holes when the pool was removed — the under-specified half of the same
+    # problem the pool was hiding.
+    "link_artifact": ("Artifact", "Fragment"),
     "set_artifact_checksum": "Artifact",
     "set_artifact_checksums": "Artifact",
     "set_artifact_intent": "Artifact",
@@ -248,10 +262,65 @@ WRITES_TYPE = {
     "violates_rule": "EnvironmentRule",
     "set_violation_status": "EnvironmentRule",
     "imposes": "EnvironmentRule",
+    # Placed 2026-09-20 when the pool was removed: each writes ONE type's own
+    # properties and was previously pooled across all of them.
+    "collapse_decision": "Decision",
+    "set_closure_criterion": "Project",
+    "register_alternative": "Artifact",
+    "forecast_readiness": "ReadinessAssessment",
+    # snapshot_before_change writes BOTH: the ChangeEvent it records and the
+    # Snapshot it captures, whose target it names.
+    "snapshot_before_change": ("ChangeEvent", "Snapshot"),
+    # The ingest steps name a fragment and write its title and provenance.
+    "ingest_step": "Fragment",
+    "ingest_corpus_step": "Fragment",
+}
+
+# TOOLS THAT WRITE NO NODE PROPERTY AT ALL, so they contribute nothing here.
+# Most are edge writers: their parameters are edge properties (`note`, `role`,
+# `evidence`, `coverage`) or addressing (`from_id`, `target_type`), and pooling
+# those into node types is what let `location` and `kind` look writable. The rest
+# are whole-graph or bookkeeping operations that mint nodes through an operation
+# rather than from caller-named properties — those properties are reachable
+# through the operation, which is what the `machine_written` bucket records, not
+# through a parameter of these tools.
+EDGE_ONLY = {
+    # Edge writers.
+    "allocate", "answers", "authored_by", "calibrated_against", "constrains", "consumes",
+    "contain_component", "contains", "decomposes", "delete_edge", "deploy_to", "depends_on",
+    "documents", "gate_on", "governed_by", "invalidates", "move_component",
+    "operates_in", "owned_by", "part_of_flow", "performed_in", "pin_at_epoch", "precedes",
+    "provides", "realizes", "release_includes", "release_includes_all", "require_resource",
+    "review_relations", "satisfies", "schedule_for", "set_evidence_scope", "verifies",
+    # Whole-graph and bookkeeping operations.
+    "acknowledge_defect", "apply_heal", "apply_merge", "claim_region", "delete_node",
+    "design_identity", "import_graph", "mirror_surface",
+    "release_claim", "report_manual_work", "usage_report", "withdraw_defect_acknowledgement",
+    # `replace_text` edits prose that is ALREADY THERE: it replaces a unique string
+    # in a named field, or appends to one. It cannot make an unset property set, so
+    # it cannot be what makes a property reachable, and counting it would make every
+    # string property on every type read as writable.
+    "replace_text",
+}
+
+# A tool that writes ONE NAMED PROPERTY on a type the CALLER chooses. It reaches
+# that property on every type and reaches nothing else, so it is neither typed nor
+# edge-only. Kept as a mapping rather than a set because the properties are the
+# whole of what it contributes.
+POLYMORPHIC = {
+    "set_provenance": {"provenance"},
 }
 
 
-def tool_parameters() -> tuple[set[str], dict[str, set[str]]]:
+class Unplaceable(Exception):
+    """A write tool belongs to no category, so the gate refuses to guess."""
+
+    def __init__(self, tools: list[str]) -> None:
+        super().__init__(", ".join(tools))
+        self.tools = tools
+
+
+def tool_parameters() -> tuple[set[str], dict[str, set[str]], set[str]]:
     """Parameters the surface accepts: the flat set, and the per-type view.
 
     The flat set is every name a non-generic tool takes. The per-type view is,
@@ -279,19 +348,23 @@ def tool_parameters() -> tuple[set[str], dict[str, set[str]]]:
         names = set(((snap.get("inputSchema") or {}).get("properties") or {}).keys())
         per_tool[f.stem] = names
         params |= names
-    shared: set[str] = set()
-    for tool, names in per_tool.items():
-        if tool not in WRITES_TYPE:
-            shared |= names
+    # EVERY WRITE TOOL MUST BE PLACED. An unplaceable one used to have its names
+    # pooled into every type, which is the leak this function exists to prevent.
+    unplaceable = sorted(
+        t for t in per_tool if t not in WRITES_TYPE and t not in EDGE_ONLY and t not in POLYMORPHIC
+    )
+    if unplaceable:
+        raise Unplaceable(unplaceable)
     by_type: dict[str, set[str]] = {}
     for tool, node_types in WRITES_TYPE.items():
         if isinstance(node_types, str):
             node_types = (node_types,)
         for node_type in node_types:
             by_type.setdefault(node_type, set()).update(per_tool.get(tool, set()))
-    for node_type in by_type:
-        by_type[node_type] |= shared
-    return params, by_type
+    reaches_every_type: set[str] = set()
+    for props in POLYMORPHIC.values():
+        reaches_every_type |= props
+    return params, by_type, reaches_every_type
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -304,7 +377,27 @@ def main(argv: list[str] | None = None) -> int:
         print("usage: vocabulary_reach.py [--check | --update-baseline]", file=sys.stderr)
         return 2
     node_props, edge_props = declared()
-    params, params_by_type = tool_parameters()
+    try:
+        params, params_by_type, reaches_every_type = tool_parameters()
+    except Unplaceable as e:
+        print("=" * 74, file=sys.stderr)
+        print(
+            f"{len(e.tools)} write tool(s) belong to no category in vocabulary_reach.py, "
+            "so this gate cannot say which type their parameters reach:",
+            file=sys.stderr,
+        )
+        for tool in e.tools:
+            print(f"  {tool}", file=sys.stderr)
+        print(
+            "\nPlace each one: WRITES_TYPE if it writes a type's own properties, "
+            "EDGE_ONLY if it\nwrites an edge or mints nodes through an operation, "
+            "POLYMORPHIC if it writes one named\nproperty on a caller-chosen type. "
+            "Guessing is what this refusal exists to prevent: an\nunplaced tool used to "
+            "have its parameter NAMES pooled into every node type, and that\nis why this "
+            "instrument once reported 0 HOLE while two properties had no writer.",
+            file=sys.stderr,
+        )
+        return 2
     doc = json.loads(EXPORT.read_text())
 
     # Corpus usage.
@@ -341,7 +434,13 @@ def main(argv: list[str] | None = None) -> int:
             # writable, and no amount of disuse makes an offered one unwritable.
             # Per-type when the type has a known constructor; the flat set
             # otherwise, which under-reports rather than inventing a finding.
-            offered = p in params_by_type.get(t, params) or (t, p) in ALIASED
+            # NO FLAT FALLBACK since 2026-09-20: a type with no mapped writer
+            # offers nothing, rather than borrowing the whole surface's names.
+            offered = (
+                p in params_by_type.get(t, set())
+                or p in reaches_every_type
+                or (t, p) in ALIASED
+            )
             if used:
                 if not offered and type_counts[t]:
                     why = (
@@ -361,11 +460,19 @@ def main(argv: list[str] | None = None) -> int:
                 # together would have been this tool committing the exact
                 # defect its own epoch is named after.
                 no_instances.append((t, p, 0))
-            elif p not in params and (t, p) not in ALIASED:
+            elif not offered:
                 # ALIASED applies here too: a property a tool writes under
                 # another parameter name is reachable whether or not the
                 # export happens to hold an instance yet (found 2026-09-17,
                 # when Project.closure_legs was aliased and still reported).
+                #
+                # ⚠️ THIS BRANCH ASKED THE FLAT SET UNTIL 2026-09-20, which is
+                # the other half of the pool leak: a property nobody had written
+                # counted as reachable when ANY tool anywhere took a parameter of
+                # that name. `Verification.location` sat here, reported as
+                # "unused but offered", because add_artifact and add_environment
+                # take a `location`. It now asks the same per-type question the
+                # used branch asks.
                 unreachable.append((t, p, type_counts[t]))
             else:
                 unused_but_offered.append((t, p, type_counts[t]))

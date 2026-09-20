@@ -125,6 +125,14 @@ impl ReflowService {
             )
             .map_err(dyno_err)?;
         }
+        // Written only when the caller SAID one; the schema refuses an
+        // undeclared value and names the legal set.
+        crate::tools::capture::set_optional_props(
+            &mut g,
+            reflow2_core::nodes::node::VERIFICATION,
+            &req.id,
+            &[("location", req.location.as_deref())],
+        )?;
         let node = g
             .get_node(reflow2_core::nodes::node::VERIFICATION, &req.id)
             .map_err(dyno_err)?

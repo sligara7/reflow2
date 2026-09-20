@@ -90,6 +90,7 @@ schema_enum!(requirement_provenance_req, "Requirement", "provenance", req);
 schema_enum!(requirement_provenance_opt, "Requirement", "provenance", opt);
 schema_enum!(requirement_priority_opt, "Requirement", "priority", opt);
 schema_enum!(requirement_concern_opt, "Requirement", "concern", opt);
+schema_enum!(requirement_kind_opt, "Requirement", "kind", opt);
 schema_enum!(artifact_audience_opt, "Artifact", "audience", opt);
 schema_enum!(artifact_granularity_opt, "Artifact", "granularity", opt);
 schema_enum!(artifact_volatility_opt, "Artifact", "volatility", opt);

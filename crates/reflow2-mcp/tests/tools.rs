@@ -88,6 +88,7 @@ async fn seeded() -> ReflowService {
         acted_at: None,
         priority: None,
         concern: None,
+        kind: None,
     })));
     j!(s.add_capability(Parameters(CapabilityReq {
         satisfies: None,
@@ -220,6 +221,7 @@ async fn genesis_bootstraps_then_detect_hands_off() {
         acted_at: None,
         priority: None,
         concern: None,
+        kind: None,
     })));
     j!(s.add_capability(Parameters(CapabilityReq {
         satisfies: None,
@@ -814,6 +816,7 @@ async fn the_write_side_can_answer_what_detect_asks_for() {
         status: None,
         findings: None,
         last_run_at: None,
+        location: None,
     })));
     j!(s.verifies(Parameters(VerifiesReq {
         verification_id: "ver:flight".into(),
@@ -1286,6 +1289,7 @@ async fn marking_a_requirement_dropped_stops_the_nagging() {
         acted_at: None,
         priority: None,
         concern: None,
+        kind: None,
     })));
 
     let flagged = |v: &serde_json::Value| {
@@ -2005,6 +2009,7 @@ async fn loop_status_digests_the_verification_roll_instead_of_rolling_it() {
             status: None,
             findings: None,
             last_run_at: None,
+            location: None,
         })));
         j!(s.set_verification_status(Parameters(VerificationStatusReq {
             verification_id: id,
@@ -2544,6 +2549,7 @@ async fn a_read_after_a_write_does_not_carry_a_loop_debt_hint() {
         acted_at: None,
         priority: None,
         concern: None,
+        kind: None,
     })));
     let after_write = j!(s.get_node(Parameters(GetNodeReq {
         node_type: Some("Capability".into()),
@@ -2569,6 +2575,7 @@ async fn a_read_after_a_write_does_not_carry_a_loop_debt_hint() {
         acted_at: None,
         priority: None,
         concern: None,
+        kind: None,
     })));
     assert!(
         write.get("loop_hint").is_some(),
@@ -3689,6 +3696,7 @@ async fn get_node_resolves_by_id_alone_and_refuses_a_collision() {
         acted_at: None,
         priority: None,
         concern: None,
+        kind: None,
     })));
     let got = j!(s.get_node(Parameters(GetNodeReq {
         id: "req:solo".into(),
