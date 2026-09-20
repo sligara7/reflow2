@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:22caf2ef77caf57a1978316c67cc13b21be5fe87af961236f7e8f304ac4c3845",
+  "content_hash": "sha256:9385e9be60356c8624f947c76d344a7f46046be37d7e739f9d460c137db8c6d2",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2978,6 +2978,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:temporal"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:settling-a-decision-records-which-option-won-without-rewriting-the-deliberation",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:tools-exchange"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -24964,6 +24972,16 @@
     },
     {
       "edge_type": "CAUSES",
+      "from_id": "cap:a-reply-takes-the-shape-its-client-can-read",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The policy is keyed on a client's self-reported name with a hardcoded fallback, so it can only serve clients somebody has already measured, and its fallback is the shape that fails the two populations it was meant to protect.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:the-per-client-reply-shape-exists-and-its-DEFAULT-is-the-one-shape-that-serves-neither-population-and-every-new-connector-is-unknown"
+    },
+    {
+      "edge_type": "CAUSES",
       "from_id": "cap:a-session-serves-a-release-binary",
       "properties": {
         "basis": "correlational",
@@ -25784,6 +25802,16 @@
     },
     {
       "edge_type": "CAUSES",
+      "from_id": "fact:field-report-flo2-2026-09-18-settling-a-prose-option-decision-costs-a-full-resend-and-the-house-style-is-measured",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The full resend that settling a prose-option decision cost is what this removes.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "chg:settling-a-decision-records-which-option-won"
+    },
+    {
+      "edge_type": "CAUSES",
       "from_id": "fact:field-report-flo2-2026-09-18-skills-are-not-findable-by-words-find-tools-scores-tools-only",
       "properties": {
         "basis": "correlational",
@@ -26054,6 +26082,16 @@
     },
     {
       "edge_type": "CAUSES",
+      "from_id": "fact:the-per-client-reply-shape-exists-and-its-DEFAULT-is-the-one-shape-that-serves-neither-population-and-every-new-connector-is-unknown",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The default serving neither population is what raises the question.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "dec:idea-what-should-the-reply-shape-be-for-a-client-nobody-has-measured"
+    },
+    {
+      "edge_type": "CAUSES",
       "from_id": "fact:the-preserve-on-revise-guard-draws-its-membership-on-a-call-name-not-on-a-behaviour",
       "properties": {
         "basis": "correlational",
@@ -26252,6 +26290,16 @@
         "validation_status": "unvalidated"
       },
       "to_id": "fact:the-unknown-field-interception-was-dead-from-the-day-it-shipped-and-its-test-could-not-see-it"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "ver:a-reply-is-sent-once",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The check that owns this invariant asserts it on ONE tool. tests/reply_is_sent_once.rs seeds a design and calls detect_gaps, then asserts the text block is smaller than the payload and names structuredContent. It never asks the other 190 tools, so a second reply-builder living in tools/skills_tools.rs stayed green for 28 days while six tools kept the shape the change was written to remove. The crate already enumerates the served surface for a dozen other properties, which is why the scope of this one is the cause rather than an accident: fixing the helper alone would have left the class open, and a surface-enumerating check would have failed on the day PR #304 landed.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:six-tools-still-send-the-payload-twice-because-the-reply-shape-is-pinned-by-instance-and-not-by-enumeration"
     },
     {
       "edge_type": "CAUSES",
@@ -34675,6 +34723,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-bc1ff200ecf4964c",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:a-set-aside-decision-is-not-debt-test"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-bc72adc4502de70f",
       "properties": {
         "accepted_baseline": true,
@@ -37731,6 +37788,15 @@
         "action": "modified"
       },
       "to_id": "art:ophyd-service-fork-feedback-2026-08-31"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:baseline-be51296bc2fb5ad4",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:settling-a-decision-records-which-option-won-test"
     },
     {
       "edge_type": "CHANGED",
@@ -47282,6 +47348,42 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:settling-a-decision-records-which-option-won",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-structure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:settling-a-decision-records-which-option-won",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:settling-a-decision-records-which-option-won",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:settling-a-decision-records-which-option-won-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:settling-a-decision-records-which-option-won",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-exchange"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:shared-by-default",
       "properties": {
         "accepted_baseline": true,
@@ -54283,6 +54385,12 @@
       "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
+      "to_id": "cap:settling-a-decision-records-which-option-won-without-rewriting-the-deliberation"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
       "to_id": "cap:store"
     },
     {
@@ -61133,6 +61241,15 @@
     },
     {
       "edge_type": "DUPLICATES",
+      "from_id": "dec:idea-what-should-the-reply-shape-be-for-a-client-nobody-has-measured",
+      "properties": {
+        "basis": "suspected",
+        "evidence": "The same question — how a content-only client gets an answer without the 2x cost — reached from the other side, by a consumer about to point three unmeasured connectors at the server. Linked rather than merged: the earlier one asks how to serve that client, this one asks what an UNKNOWN client should get by default, and the answers can differ."
+      },
+      "to_id": "dec:idea-how-does-a-content-only-client-get-an-answer"
+    },
+    {
+      "edge_type": "DUPLICATES",
       "from_id": "dec:idea-who-warrants-a-domain-template-and-how-does-it-stay-current",
       "properties": {
         "basis": "suspected",
@@ -66076,6 +66193,12 @@
       "from_id": "cap:session-memory",
       "properties": {},
       "to_id": "decision:ack:be224976b1f4f6e1"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:settling-a-decision-records-which-option-won-without-rewriting-the-deliberation",
+      "properties": {},
+      "to_id": "dec:idea-should-settling-a-decision-record-which-option-won"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -73507,6 +73630,24 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:a-reply-takes-the-shape-its-client-can-read",
+      "properties": {},
+      "to_id": "fact:flo2-settled-that-the-connector-surface-is-its-own-product-tools-and-reflow2-grows-no-authentication"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:a-reply-takes-the-shape-its-client-can-read",
+      "properties": {},
+      "to_id": "fact:six-tools-still-send-the-payload-twice-because-the-reply-shape-is-pinned-by-instance-and-not-by-enumeration"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:a-reply-takes-the-shape-its-client-can-read",
+      "properties": {},
+      "to_id": "fact:the-per-client-reply-shape-exists-and-its-DEFAULT-is-the-one-shape-that-serves-neither-population-and-every-new-connector-is-unknown"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "cap:a-revising-write-says-whether-the-state-survived",
       "properties": {},
       "to_id": "fact:the-revising-write-warning-fired-correctly-and-the-overwrite-happened-anyway"
@@ -73813,6 +73954,12 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:the-handshake-is-written-down-beside-the-graph",
+      "properties": {},
+      "to_id": "fact:reflow2-offers-2025-11-25-because-the-sdk-latest-is-that-and-not-the-2026-07-28-revision-it-also-knows"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "cap:the-reachability-gate-reads-which-tool-writes-which-type",
       "properties": {},
       "to_id": "fact:a-test-that-builds-a-request-as-a-struct-literal-breaks-on-every-new-optional-field"
@@ -73858,6 +74005,12 @@
       "from_id": "cap:tool-search",
       "properties": {},
       "to_id": "fact:the-builder-reads-source-where-a-consumer-has-only-the-surface-and-find-tools-returned-the-negation"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "chg:accept-9d03ab6c044e6ae6",
+      "properties": {},
+      "to_id": "fact:the-local-gate-subset-was-reconstructed-by-hand-a-third-time-and-this-one-truncated-the-suite-it-was-checking"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -74692,6 +74845,12 @@
       "from_id": "dec:idea-what-makes-a-field-report-owed",
       "properties": {},
       "to_id": "fact:the-defect-backlog-is-real-not-bookkeeping-residue"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "dec:idea-what-should-the-reply-shape-be-for-a-client-nobody-has-measured",
+      "properties": {},
+      "to_id": "fact:claude-code-measured-it-drops-the-text-block-when-structured-content-is-present-so-nothing-is-injected-twice"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -223598,6 +223757,15 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:settling-a-decision-records-which-option-won",
+      "properties": {
+        "at": "2026-09-20",
+        "note": "A settlement can now say which option won in the same call that moves the status, leaving the deliberation untouched. The finding stands as the measurement."
+      },
+      "to_id": "fact:field-report-flo2-2026-09-18-settling-a-prose-option-decision-costs-a-full-resend-and-the-house-style-is-measured"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:sidecar-loss-refused",
       "properties": {
         "at": "2026-08-07",
@@ -229232,6 +229400,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:settling-a-decision-records-which-option-won-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:settling-a-decision-records-which-option-won-without-rewriting-the-deliberation"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:setup",
       "properties": {
         "completeness": "complete",
@@ -232885,6 +233062,12 @@
       "from_id": "cap:session-memory",
       "properties": {},
       "to_id": "req:session-memory-in-graph"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:settling-a-decision-records-which-option-won-without-rewriting-the-deliberation",
+      "properties": {},
+      "to_id": "req:settling-a-decision-records-which-option-won"
     },
     {
       "edge_type": "SATISFIES",
@@ -236811,6 +236994,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:the-settlement-records-its-outcome-and-leaves-the-deliberation-verbatim",
+      "properties": {},
+      "to_id": "cap:settling-a-decision-records-which-option-won-without-rewriting-the-deliberation"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:the-sweep-does-not-scale-with-its-candidates",
       "properties": {},
       "to_id": "cap:heal"
@@ -238735,6 +238924,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:settling-a-decision-records-which-option-won-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:settling-a-decision-records-which-option-won-test"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:shared",
       "properties": {
         "action": "created"
@@ -240013,7 +240210,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "test",
-        "checksum": "sha256:ac89469647eeae5031fb5f4951bfd668a717ba5d72754aaae1de018347810430",
+        "checksum": "sha256:821a22a235b2de431678257aef49bd80a01790ec920f6be7559440f043f1bded",
+        "checksum_basis": "asserted",
         "description": "Four tests through the served tools. The same decision is debt while proposed and not while deferred — measured on ONE node before and after in loop_status' assigned decisions and what_next's open pool, so the test cannot pass by the lists being empty for another reason. Neither gap detector raises a deferred decision. Deferring wants the owner's name: refused at the constructor, reported at the setter. A deferred choice cannot have alternatives registered. Mutating the two readers to count deferred as owed makes exactly the first test fail, on the assertion that names the point.",
         "location": "crates/reflow2-mcp/tests/a_set_aside_decision_is_not_debt.rs",
         "name": "a_set_aside_decision_is_not_debt.rs",
@@ -242936,7 +243134,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:a85efa87addfdc744cdce6eb58df1dc3673de90ad328fdc6f23ce515062cbf38",
+        "checksum": "sha256:5655be2e418e627cfc22bf57f2c9db68244c354f50810fd100d309b89ecea378",
+        "checksum_basis": "asserted",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/structure.yaml",
@@ -243107,8 +243306,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:dbfb83e1e9a271383240ba2691d96e30e13504eea55e87fd0d9735f134fa5f0f",
-        "checksum_basis": "measured",
+        "checksum": "sha256:d3920c4b0cfeec14c2a1a4588a2de1246040ac1a8ef7c68ac60f0c00221865e1",
+        "checksum_basis": "asserted",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -243124,6 +243323,18 @@
         "checksum": "sha256:062c1682b832952af474200bd28a7e046146cc8a2eefaca17dd42bfcecfc288d",
         "location": "crates/reflow2-core/tests/debt_since_the_record.rs",
         "name": "debt_since_the_record.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:settling-a-decision-records-which-option-won-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:3ed55c409e7596de83b3fd09543d78756b675509dd99e7245b907feaefe79791",
+        "checksum_basis": "asserted",
+        "location": "crates/reflow2-mcp/tests/settling_a_decision_records_which_option_won.rs",
+        "name": "settling_a_decision_records_which_option_won.rs",
         "status": "realized"
       }
     },
@@ -244516,7 +244727,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c42a18b87a81406b831f3a07417d5680c356c239ea6d9d546f6208ef676941b0",
+        "checksum": "sha256:e5f26073ac6a3fe58756d4ac70dfc1e2e8a445ba33e4485c95170b7e607cc29e",
+        "checksum_basis": "asserted",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/exchange.rs",
         "name": "tools/exchange.rs",
@@ -247748,6 +247960,16 @@
         "provenance": "authored",
         "status": "planned",
         "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:settling-a-decision-records-which-option-won-without-rewriting-the-deliberation",
+      "node_type": "Capability",
+      "properties": {
+        "description": "As built 2026-09-20. `Decision.chose` is declared in the schema and written by `set_decision_status` from an optional `chose` parameter: which option won and why the others did not, in the settler's own words. WHY IT IS NOT `alternatives`: that holds REGISTERED forks and their reasons, which is what collapse_decision reads; this holds the settler's sentence for a decision whose options live in its own prose, which is what the brainstorm skill asks for and what collapse_decision cannot reach. A PROPERTY ADDITION, so the schema stamp does not move and no upgrade note is owed. Optional, and absent still means nobody said. It records an OUTCOME and never substitutes for AUTHORITY: a settlement with no approver still comes back carrying nobody's name, which one of the three tests asserts. Test: crates/reflow2-mcp/tests/settling_a_decision_records_which_option_won.rs; the load-bearing case is that the deliberation survives the settlement verbatim.",
+        "name": "Settling a decision records which option won, without rewriting the deliberation that produced it",
+        "provenance": "authored",
+        "status": "realized"
       }
     },
     {
@@ -251837,6 +252059,16 @@
       }
     },
     {
+      "node_id": "chg:accept-bc1ff200ecf4964c",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-09-20",
+        "name": "A struct literal gained the new optional field. Mechanical; what the test asserts is unchanged.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-bc72adc4502de70f",
       "node_type": "ChangeEvent",
       "properties": {
@@ -253644,6 +253876,16 @@
         "change_type": "baseline_established",
         "detected_at": "2026-08-31",
         "name": "First baseline. Copied byte-identical from the upload and verified NOT a strict prefix of art:ophyd-service-feedback-2026-08-19 before registering — a fresh document rather than an append, which is the opposite of dev_storyflow's pattern and had to be read off the file rather than assumed.",
+        "subject": "record"
+      }
+    },
+    {
+      "node_id": "chg:baseline-be51296bc2fb5ad4",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-09-20",
+        "name": "First baseline for the new test.",
         "subject": "record"
       }
     },
@@ -256346,6 +256588,17 @@
       "properties": {
         "change_type": "new_feature",
         "name": "Session memory belongs in the graph, captured as it happens — and the current enforcement points at markdown"
+      }
+    },
+    {
+      "node_id": "chg:settling-a-decision-records-which-option-won",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-09-20",
+        "name": "Settling a decision records which option won",
+        "rationale": "flo2 F12, promoted 2026-09-20 on Anthony's word and built last in the order he agreed. The free-text field was chosen over registering prose options as alternatives (far larger) and over leaning on replace_text (two acts where the user performed one, with nothing tying the new heading to the settlement).",
+        "summary": "structure.yaml: Decision.chose declared; service.rs: the `chose` parameter on SetDecisionStatusReq; exchange.rs: written at the moment the status moves, and named in the tool description; one test file; eight struct literals gained the field; CHANGELOG."
       }
     },
     {
@@ -264130,6 +264383,16 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Nothing here is intent. Anthony asked for it to be thought through this way rather than built on the spot, 2026-08-21: \"I'd like to capture as the third leg... maybe we brainstorm on it and test out our new concept to see if it links to other related ideas? then we accept the proposed idea and then implement?\"\n\nTHE OPEN QUESTION: what, if anything, should notice an idea that connects to nothing?\n\nWHY IT IS OPEN AT ALL. The brainstorm skill now asks for the honest edges AND for a written line when none is drawn. That is the INSTRUCTION leg. `fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it` says an instruction without a detector leaves the vocabulary empty in EVERY project, not just this one — and the 145-ideas-12-edges measurement is what that emptiness looks like when only two legs are present. So the missing leg is named and the shape of the hole is known.\n\n🛑🛑 AND THE OBVIOUS BUILD COLLIDES WITH THE SKILL IT WOULD SERVE. brainstorm/SKILL.md step 2 says, in as many words: \"Do not run detect-and-ask over brainstormed nodes. It would ask the user to firm up exactly what they deliberately left soft, which teaches them that thinking out loud has a cost.\" A detector that fires on every unlinked idea is precisely that. Built naively, the third leg would tax the one activity the whole skill exists to keep free.\n\n⭐ THE COLLISION WAS ALREADY SETTLED, ELEVEN DAYS EARLY, BY A REQUIREMENT NEITHER NODE MENTIONS. `req:detecting-is-not-asking` (Anthony, 2026-08-19): detecting a gap and inviting its closure are DIFFERENT ACTS and only one is urgent — detection stays unconditional, the invitation waits for a boundary. Every option below is really a position on WHERE this one lands on that line. That is the finding of this brainstorm, and it came out of the search the new linking step spends rather than from thinking harder.\n\n=== THE OPTIONS ===\n\n(a) A `detect_gaps` finding — say `unlinked_idea` — on any proposed Decision with no relation edge and no \"no real relation\" line. CHEAP: the detector framework exists and this is a two-predicate rule. EXPENSIVE: it lands in the list a user reads as their to-do, which is the nudge the skill forbids, and it would land there 111 times on this graph the day it shipped. A finding that fires a hundred times on day one teaches people to filter the whole category.\n\n(b) The same rule, but the INVITATION held until a boundary — a capture-session, an increment close — while the detection itself runs always. Exactly the shape `req:detecting-is-not-asking` describes, and it keeps thinking-out-loud free at the moment of thinking. More work than (a): the detector is the easy half, the boundary is the part that has to be chosen and honoured.\n\n(c) Not a per-node finding at all, but a POPULATION LINE in the sweep's coverage — \"145 ideas, 12 linked, 111 reaching nothing\" — reported as a number, never as a defect against any one idea. CHEAPEST and quietest, and it inherits the property the coverage work was built for: a detector that reports zero because it had NOTHING TO RUN ON is distinguishable from one that ran clean. It answers \"is the linking step working\" without ever telling any individual idea it is deficient. WEAKEST on the three legs, though: a number in a report is not something the loop asks about, and the leg was specified as a detector that surfaces absence.\n\n(d) Nothing on the ideas; the compliance check on the SKILL is the whole third leg. Already built as `LINK_CONTRACT` in skill_lint (2026-08-21). HONEST LIMIT, stated plainly: that check guards the INSTRUCTION against deletion, not the graph against being unlinked. It would pass green over a graph where no agent ever drew an edge. It is a real guard, but it is not this leg.\n\n(e) Do nothing and let the instruction carry it. The null option, and it deserves a fair hearing: it is exactly what was in force for the previous 145 ideas, and it is what produced 12 edges. The evidence against it is unusually direct.\n\n=== WHAT IS NOT YET KNOWN ===\nWhether the \"no real relation\" line can be READ mechanically at all. The skill asks for it in prose, and a detector that cannot tell \"somebody looked and found nothing\" from \"nobody looked\" would report the two identically — which is the exact failure the line was added to prevent. If it cannot be read, the line needs a structural home (a property, or an edge to nothing) before any of (a)-(c) can distinguish them. THAT QUESTION IS PRIOR TO THE CHOICE, and it is measurable rather than arguable.\n\n=== HOW THIS NODE WAS LINKED ===\nRecorded here because it is the first use of the step it is about. The near-matches came from four searches run before writing; four edges were drawn and each names its reason in `evidence`. The collision in the second paragraph and the reconciliation in the third were both found in those hits, not reasoned out — which is the case the linking step was arguing for.\n\n═══════════════════════════════════════════════════════════════════\n✅ ACCEPTED BY ANTHONY, 2026-08-21 — OPTION (b), WITH THE PRIOR QUESTION ANSWERED FIRST\n═══════════════════════════════════════════════════════════════════\n\nHIS CHOICE: detect always, invite at a boundary. The detector runs unconditionally so the record stays honest; the INVITATION waits for a boundary (a capture-session, an increment close) so that thinking out loud costs nothing at the moment of thinking. This is `req:detecting-is-not-asking` applied to the case it was not written for, and it is why the collision recorded above does not have to be paid for.\n\nAND THE PREREQUISITE IS PART OF THE ACCEPTANCE, not a caveat on it. \"Looked and found nothing\" needs a home a detector can READ. The skill asks for it in prose today, and prose cannot be told apart from silence — so the very first thing built has to be a structural place for that judgement, on the pattern `distinct_from` already uses on the dedup guard: the guard does not infer that you considered the duplicate, it makes you say so, and then the saying is a fact rather than an inference.\n\nWITHOUT IT THE DETECTOR WOULD REPORT THE TWO STATES IDENTICALLY — an idea somebody looked at and found genuinely new, and an idea nobody has opened — which is the exact failure the \"no real relation\" line was added to prevent. A detector that cannot tell those apart is not a weaker version of this leg. It is a machine for producing false findings about people who did the work.\n\n⭐ SO THE THREE STATES THE BUILD MUST DISTINGUISH ARE:\n  (A) LINKED — carries at least one relation to another node.\n  (B) REVIEWED AND DELIBERATELY UNLINKED — somebody judged the near-matches and drew nothing, and said so.\n  (C) NOBODY LOOKED — the only one of the three that is a finding.\n\nOption (c)'s population line is not a rival to this and should not be argued against it: a count over the whole graph answers \"is the linking step working at all\", which is a different question from \"which idea has nobody opened\". If it is cheap once (C) is computable, it is worth having beside it.",
         "name": "OPEN — what should notice an idea that connects to nothing?",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:idea-what-should-the-reply-shape-be-for-a-client-nobody-has-measured",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Recorded as brainstorming on 2026-09-20 from flo2 F26, not as a proposal. The three shapes and the per-client mechanism already exist; this is only about the FALLBACK.\n\nTHE BIND, stated exactly by the reporter: you cannot simultaneously keep the text block non-empty AND have an empty-fallback client read the structured object. The signpost exists to avoid SILENCE for a client reading the wrong field (req:never-silently-absent); an empty block is the only thing that reaches a client which falls back only on emptiness. Both cannot hold.\n\nOPTIONS.\n(a) DEFAULT TO DUPLICATE — the serialized payload in the text block, the spec's own worked shape. Serves every population without knowing anything about the client. COUNTER, and it is the measured one: fact:every-reply-was-sent-twice removed exactly this because it is a flat 2× on the wire, and it is why three rollups were refused by harnesses. reflow2's replies are large — the reporter measured describe_schema at 53,108 characters before trimming. Making this the default resurrects the cost for every unknown client.\n(b) DEFAULT TO EMPTY. Cheapest, serves the text-first population, and loses the signpost's protection: a client reading only `content` gets silence, which req:never-silently-absent says is indistinguishable from reflow2 never having been configured.\n(c) PER-TOOL RATHER THAN GLOBAL, the reporter's own suggestion: the handful of tools a constrained client actually calls get the payload in the text; the bulk keep the signpost. Their measured dependency is twelve tools. Bounds the doubling to small replies and leaves the large rollups alone — which is the shape of the cost.\n(d) KEEP THE SIGNPOST AND ADD CLIENTS BY NAME as they are measured. The status quo. COUNTER: a name-keyed policy cannot learn, and every connector is unknown at the moment it first connects, which is the moment that matters.\n\n⚠️ WHAT WOULD DECIDE IT AND HAS NOT BEEN MEASURED: whether any client injects BOTH representations into the model's context. The reporter is careful here — the doubling is wire bytes, and a client normally picks one representation, so the cost lands on a pipe rather than the context budget reflow2 guards with budget_chars. Nobody has checked whether a client exists that injects both. That measurement decides how bad (a) and (c) actually are.\n\n⭐ AND ONE CHEAP THING IS TRUE UNDER EVERY OPTION: the placeholder is the only shape wrong for every reader, so moving off it does not depend on choosing between these.",
+        "kind": "exploratory",
+        "name": "OPEN — what should the reply shape default to for a client nobody has measured, now that every new connector is one?",
+        "status": "proposed"
       }
     },
     {
@@ -273088,6 +273351,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered service.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:settling-a-decision-records-which-option-won-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered settling_a_decision_records_which_option_won.rs"
       }
     },
     {
@@ -285328,6 +285601,19 @@
       }
     },
     {
+      "node_id": "fact:claude-code-measured-it-drops-the-text-block-when-structured-content-is-present-so-nothing-is-injected-twice",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.85,
+        "fact_type": "finding",
+        "name": "MEASURED (Claude Code, this box, 2026-09-20): handed BOTH a text block and structuredContent, it injects only the structured payload and drops the text — so no client yet measured injects both, and the doubling flo2 feared is not observed",
+        "statement": "flo2 named one unmeasured thing as the fact that decides the reply-shape question: does any MCP client inject BOTH the text block and structuredContent into the model's context, so that duplicating costs the model twice rather than only the wire? MEASURED 2026-09-20 on Claude Code, this box. design_identity was called through this session's own MCP connection and what reached the model was a single compact representation, {\"graph_id\":\"reflow2\",\"label\":\"reflow2\",\"minted_by\":\"0.13.0\",\"origin\":\"adopted\"} — the structured payload. The measurement is stronger than it first read, because design_identity is one of the six tools that duplicate (see fact:six-tools-still-send-the-payload-twice-because-the-reply-shape-is-pinned-by-instance-and-not-by-enumeration): the server sent a pretty-printed text block AND structuredContent, and Claude Code injected only the structured one. So the client was handed the doubling and discarded half of it. THE STANDING OF THE THREE MEASURED CLIENTS IS NOW SYMMETRIC AND OPPOSITE: OpenCode and Grok Build hand the model only the TEXT block and drop structuredContent; Claude Code hands the model only the STRUCTURED payload and drops the text. No client measured so far reads both, so duplicating has never yet cost a model twice — only the wire. BOUNDS. Three clients out of an unknown population, one version each, on one box. It does not establish that no client reads both; it establishes that none of the three that reflow2 has actually met does, which is what the open question asked for. It also says nothing about how a client BEHAVES when the text block is a signpost rather than a payload, which is a different measurement and is the one that would decide the default.",
+        "subject_id": "dec:idea-what-should-the-reply-shape-be-for-a-client-nobody-has-measured",
+        "valid_from": "2026-09-20"
+      }
+    },
+    {
       "node_id": "fact:closure-was-one-question-with-two-answers-so-a-refuted-finding-read-as-current-on-the-surface-a-person-meets-first",
       "node_type": "TemporalFact",
       "properties": {
@@ -287873,6 +288159,20 @@
       }
     },
     {
+      "node_id": "fact:flo2-settled-that-the-connector-surface-is-its-own-product-tools-and-reflow2-grows-no-authentication",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.9,
+        "fact_type": "status",
+        "name": "flo2 settled that the connector surface is its own product-shaped tools, so most of what a connector needs is not reflow2's work — and two named things must NOT be built here",
+        "source": "flo2 reflow2_feedback.md, F26/F27/F28, 2026-09-20",
+        "statement": "FLO2 F28 corrects its own F27 the same day, after Anthony settled the architecture in flo2's graph: reflow2 stays an ENGINE and grows no authentication; flo2 is the OAuth 2.1 resource server; the connector surface is flo2's own outcome-shaped tools implemented USING reflow2, not reflow2's tools and not reflow2's tools filtered.\n\n🛑 TWO THINGS THEY EXPLICITLY ASK NOT TO BE BUILT, and the reasoning is theirs and is good.\n① NO CONNECTOR MODE, TOOL SUBSET OR ALLOW-LIST. Filtering 181 tools down to twelve 'still puts detect_gaps, scan_nodes and gap_to_prompt in front of somebody who came to design a greenhouse. Fewer of the wrong shape is not the right shape.' They cite published MCP guidance against converting endpoints 1:1 into tools and for intention-level capabilities. Their verdict on this surface: 'Its 181-tool surface is correct for what it is — an engine driven by a developer with a coding agent on a trusted network. Do not degrade it to serve a connector it should not be serving.'\n② NO OAUTH IN REFLOW2. 'It would be the wrong layer. Identity is per-product; reflow2 has several consumers and flo2 is one.' Adding it would bake one consumer's identity model into a component the others deploy differently.\n\n⭐ WHAT REMAINS ON REFLOW2, their list: the result shape (recorded separately), the protocol question (answered), and F24 and F25 from the earlier addendum, of which F24 is now MORE load-bearing because a product surface must classify correctly on somebody else's model with no system prompt to lean on.\n\nAND TWO THINGS THEY ASK NOT TO BREAK: `ingest_step` being stateless with explicit handles, which matches the spec's stateful-tools guidance, and `isError: true` plus an explanatory sentence, which is what the spec wants so a model can self-correct.",
+        "subject_id": "cap:a-reply-takes-the-shape-its-client-can-read",
+        "valid_from": "2026-09-20"
+      }
+    },
+    {
       "node_id": "fact:flo2-watches-the-reflow2-export-and-inherits-its-stale-facts-2026-09-13",
       "node_type": "TemporalFact",
       "properties": {
@@ -289004,6 +289304,20 @@
       }
     },
     {
+      "node_id": "fact:reflow2-offers-2025-11-25-because-the-sdk-latest-is-that-and-not-the-2026-07-28-revision-it-also-knows",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.95,
+        "fact_type": "status",
+        "name": "Answering flo2's unanswered question: reflow2 offers 2025-11-25, because the SDK's LATEST is that — the SDK knows the 2026-07-28 revision and does not make it latest",
+        "source": "flo2 reflow2_feedback.md, F26/F27/F28, 2026-09-20",
+        "statement": "FLO2 F28 item 2 asks what rmcp 3 negotiates, whether it implements 2026-07-28, and whether it provides `server/discover`, noting the question 'has never been checked'. Measured 2026-09-20 against the vendored rmcp 3.4.0 and reflow2's own source.\n\n① REFLOW2 OFFERS `ProtocolVersion::LATEST` (service.rs describe_protocol_version, deliberately following the SDK rather than pinning a literal, with a test that makes any move loud).\n② IN rmcp 3.4.0, `LATEST = V_2025_11_25`. So reflow2 offers 2025-11-25 — a HANDSHAKE-ERA revision, exactly as flo2 suspected.\n③ THE SDK KNOWS 2026-07-28: it is in KNOWN_VERSIONS and is named `STANDARD_HEADERS`, the first revision requiring SEP-2243 headers. It is simply not LATEST.\n④ `server/discover` EXISTS in the SDK as a request method constant. Whether reflow2 answers it is inherited from rmcp's server handler rather than implemented here, and was not exercised.\n\n⭐ WHAT THIS MEANS FOR THE CONNECTOR QUESTION: a connector speaking 2026-07-28 meets a server offering 2025-11-25, which the newer revision explicitly keeps an interop path for. So the compatibility question flo2 raised has an answer and it is not alarming — but it is the SDK's answer, not reflow2's, and it moves when the SDK moves. The existing test that pins which version LATEST resolves to is what makes that move loud rather than silent.",
+        "subject_id": "cap:the-handshake-is-written-down-beside-the-graph",
+        "valid_from": "2026-09-20"
+      }
+    },
+    {
       "node_id": "fact:reflow2-sends-a-structured-payload-for-tools-that-declare-no-output-contract",
       "node_type": "TemporalFact",
       "properties": {
@@ -289342,6 +289656,19 @@
         "statement": "RUN AS THE SKILL ON REQUEST, 2026-09-07. Anthony asked, on being shown five newly visible unreachable properties: \"should we run /root-cause on these 5 holes to see if it is something deeper?\" It is.\n\nSTEP 1 - THE OBSERVATION. Five properties the reachability gate reported as newly visible once its cross-type leak was closed: Actor.description, Interface.description, Release.description, Resource.description, DesignEpoch.checksum. Four of the five are the SAME FIELD NAME on four different types, which is a pattern rather than four coincidences.\n\nSTEP 3 - CANDIDATES, generated from the surface and the schema rather than from memory:\n(a) Coincidence; four independent omissions.\n(b) The property was declared on those types AFTER their constructors were written, and nothing checks.\n(c) Those types keep their prose in a DIFFERENT field, which their constructors do take, so description is genuinely redundant on them - the shape of chg:accept-0500fc47eb120e13, where a Component stores prose as `purpose` and add_component's resolver wrongly asked for `description`.\n(d) The class was fixed one report at a time, wherever somebody hit it, and never swept.\n\nSTEP 4 AND 5 - THE MEASUREMENTS.\n(c) IS REFUTED, and this is the finding that matters. Of the eleven types declaring `description`, six have a constructor that does not take it - Artifact, Environment, Interface, Project, Release, Resource - and for every one of those six, `description` IS THE ONLY PROSE FIELD THE TYPE DECLARES. None of the six takes statement, purpose, summary or any other prose parameter either. So on six of eleven types the surface lets a user NAME a thing and never SAY WHAT IT IS, except through the generic escape hatch. That is a bigger and simpler statement than five scattered holes.\n\n(d) IS SUPPORTED BY THE HISTORY. Walking every commit that touched service.rs: CapabilityReq carried `description` from 2026-07-18, at its introduction; ContributorReq from 2026-07-22, likewise. VerificationReq DID NOT - it gained one on 2026-08-17, in a commit named \"A check records what it FOUND separately from what it IS\". That is precisely the founding case this project's own reachability instrument records in its docstring: Verification.description declared, fulltext, the type's embedding field, used ONCE in 164 nodes because add_verification had no parameter for it. So the hole was found, reported, and fixed ON THAT ONE TYPE. Nobody asked which other types had it, and nothing could answer if they had - the instrument that would have said so was itself hiding these six behind the fused filter fixed earlier today.\n\nSTEP 6 - THE CLASS, and it is the skill's own test: would the fix have stopped the earlier occurrences? Adding a parameter to add_interface stops today's. The CAUSE is that a vocabulary hole is fixed where it is reported and the same question is never asked of the sibling types, so the class survives every instance fix. That is the same shape as the sequence-hint defect recurring on plan_epoch after being fixed in add_epoch, and the same shape as the leak in the reachability map fixed hours ago, where only the tools named add_* were mapped and every setter leaked. Three instances of one habit in one day.\n\nA SECOND STRUCTURAL FINDING, from the same sweep and not asked for: NINE OF 29 NODE TYPES HAVE NO TYPED WRITE TOOL AT ALL - Actor, Anchor, DimensionAssessment, DimensionObservation, DriftEvent, EnvironmentRule, Fragment, QualityGate, Snapshot. Several are correctly machine-written (Fragment, Snapshot, DriftEvent and the two Dimension types are produced by other operations), but Actor, EnvironmentRule and QualityGate are vocabulary a user would reasonably want to write, and Actor is why Actor.description cannot simply be given a parameter: there is no add_actor to give it to. This is the same class as fact:defect-designrule-has-no-constructor-reported-by-two-independent-projects, which two projects reported independently.\n\nSTEP 9 - WHAT IS NOT ESTABLISHED. Whether each of the six types SHOULD carry prose is a judgement, not a measurement; the reporter wanted it on two types and nobody has been asked about the rest. Whether the three user-facing types with no constructor should get one is a bigger question than this record settles. And the history walk read service.rs only, so a struct that moved to another file in the BL-181 split may have gained its parameter somewhere this measurement could not see - FlowReq and AddEpochReq both returned no date for that reason, and neither conclusion above rests on them.",
         "subject_id": "cap:mcp-surface",
         "valid_from": "2026-09-07"
+      }
+    },
+    {
+      "node_id": "fact:six-tools-still-send-the-payload-twice-because-the-reply-shape-is-pinned-by-instance-and-not-by-enumeration",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.95,
+        "fact_type": "defect",
+        "name": "MEASURED 2026-09-20: six tools still send the payload twice to every client, and the per-client shape is a no-op on all six — a second reply-builder in skills_tools.rs predates the signpost change and nothing enumerates the surface to notice",
+        "statement": "MEASURED 2026-09-20 against a real binary (target/debug/reflow2-mcp, one scratch graph per client, no --content-policy flag), three handshake names, eight tools each. Six tools return the payload duplicated into the text block, byte-identical across claude-code, opencode and grok-build: get_instructions (text 31,187 / structured 31,374 / wire 64,120), list_skills (21,123 / 20,119 / 42,568), get_skill (16,844 / 17,315 / 35,099), find_skills (1,350 / 1,130 / 2,716), usage_report (5,690 / 4,415 / 10,873), design_identity (111 / 101 / 317). The controls in the same processes varied correctly: loop_status and graph_report gave the signpost to claude-code, an empty block to opencode, a duplicate to grok-build. A session opening with get_instructions, list_skills and one get_skill pays 141,787 bytes on the wire for 68,808 of payload — the signpost shape would cost about 72,800, so 47% of it is the copy that fact:every-reply-was-sent-twice says was removed on 2026-08-23. Two consequences beyond the cost. The per-client policy is INERT on exactly these six: content_policy::apply returns early unless the reply is already in signpost shape, so opencode's Empty never fires and its measured empty-block fallback is defeated on the very tools that carry the instructions and the skills. And grok is served correctly only by accident. THE INSTANCE is a private helper, fn structured at crates/reflow2-mcp/src/tools/skills_tools.rs:554, whose doc comment asserts \"Same shape every other tool returns: structured content plus readable text\" — true when it was written, false since PR #304 made json_result a signpost, and read by nothing since. Its last touch was PR #262, a module-cycle refactor, so it predates the change that was supposed to end this and was never migrated. THE CLASS is that the reply-shape invariant is pinned by INSTANCE rather than by enumeration: tests/reply_is_sent_once.rs asserts the property on detect_gaps alone, and ver:a-reply-takes-the-shape-its-client-can-read checks one tool on the wire, in a crate that already carries a dozen checks which enumerate the served surface (every_constructor_can_say_what_the_thing_is, every_required_parameter_is_described, one_tool_declares_its_output_contract and more). A surface-enumerating check would have failed on the day #304 landed, because the helper already existed then; the instance fix stops today's six and leaves the next builder free to drift the same way. NOT ESTABLISHED: whether get_skill and get_instructions SHOULD duplicate, since they carry documents a content-only client must actually read — ok_markdown exists for exactly that and is a third answer. No Decision records a choice either way, and no test in the suite reads the text block of any of the six, so nothing depends on the current shape. That question belongs with dec:idea-how-does-a-content-only-client-get-an-answer and dec:idea-what-should-the-reply-shape-be-for-a-client-nobody-has-measured, and is the owner's to settle. ALSO NOT ESTABLISHED: latent.rs and degraded.rs duplicate at four more sites, which is defensible there (a client that cannot read the refusal learns nothing) and was not investigated.",
+        "subject_id": "cap:a-reply-takes-the-shape-its-client-can-read",
+        "valid_from": "2026-09-20"
       }
     },
     {
@@ -290318,6 +290645,19 @@
       }
     },
     {
+      "node_id": "fact:the-local-gate-subset-was-reconstructed-by-hand-a-third-time-and-this-one-truncated-the-suite-it-was-checking",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.9,
+        "fact_type": "defect",
+        "name": "THIRD OCCURRENCE 2026-09-20: the local gate set was hand-rebuilt again, ran 17 of the 40-odd gates ci.yml runs, and piped cargo test through `head -40` — which truncated the report and can SIGPIPE the run, so 40 green results proved nothing",
+        "statement": "This record already says \"A subset of a gate set is not the gate set\", and names a second occurrence on ver:a-session-can-report-and-read-back-hand-rolled-work where a split cargo run looked equivalent to --workspace and was 46 tests short. On 2026-09-20 a session did it a third time, writing a fresh gate script from memory before pushing the `chose` increment. It ran roughly 17 gates where ci.yml runs about forty, omitted test_loop_nudge, test_opencode_plugin, test_render_views, test_skill_lint, test_wall_check, launch_serves_release, smoke_mcp, test_merge_driver, test_shared_sessions, check_consumer_reach and more, called render_skills_and_tools without --check, and ran both clippy invocations without -D warnings, which is the exact flags-not-coverage defect that filed BL-159. A NEW FAILURE MODE ON TOP OF THE OLD ONE: every heavy step was written as `cargo ... 2>&1 | grep -E ... | head -N`. head closes the pipe at N matches, so the report stops at the fortieth \"test result\" line out of roughly two hundred test binaries, and the SIGPIPE can take the test run down with it. The log then shows forty consecutive passes and no failures, which is indistinguishable from a clean full run and is the more reassuring of the two readings. Measured: exactly 40 result lines captured, 43 lines in the whole step. THE CAUSE IS NOT THE SCRIPT. Three sessions wrote three different subsets because there is nothing to run: ci.yml is the authority, AGENTS.md carries a hand-kept list of it, skill_lint.py cross-checks the two for coverage and spelling — and no artifact in the repo EXECUTES that list. So the contract is checked and never run, and every session that wants a local pass reconstructs it from memory. The remedy that fits this project's own three-legs doctrine is ENCODE: one runner that reads the gate list rather than restating it, so a local pass and a CI pass cannot diverge by reconstruction. Raised for the owner rather than built, because it is a change to the build discipline and not to the increment in flight. NOT ESTABLISHED: whether the truncated run actually died on SIGPIPE or merely reported short. Nothing was lost either way, because the suite is being re-run uncapped before the push and CI runs the full set on the pull request.",
+        "subject_id": "chg:accept-9d03ab6c044e6ae6",
+        "valid_from": "2026-09-20"
+      }
+    },
+    {
       "node_id": "fact:the-local-lineage-gate-cannot-see-a-stacked-export",
       "node_type": "TemporalFact",
       "properties": {
@@ -290506,6 +290846,20 @@
           "detect_gaps"
         ],
         "subject_id": "req:a-finding-says-when-the-state-it-reports-is-normal-for-the-phase",
+        "valid_from": "2026-09-20"
+      }
+    },
+    {
+      "node_id": "fact:the-per-client-reply-shape-exists-and-its-DEFAULT-is-the-one-shape-that-serves-neither-population-and-every-new-connector-is-unknown",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.95,
+        "fact_type": "defect",
+        "name": "The per-client reply shape already implements all three options flo2 asks for, and its DEFAULT is the one shape that serves neither population — which is what every new connector gets, by construction",
+        "source": "flo2 reflow2_feedback.md, F26/F27/F28, 2026-09-20",
+        "statement": "FLO2 F26 argues that the text block carrying a placeholder sentence is 'wrong for every reader': an old client gets one useless sentence instead of the payload, and a TEXT-FIRST client that reads structuredContent only when the text is empty is defeated by the non-empty placeholder. They name three shapes — (a) placeholder, (b) empty, (c) the serialized payload — and ask for (c) on the tools a remote consumer reaches.\n\n⭐ MEASURED 2026-09-20, AND ALL THREE ALREADY EXIST. content_policy.rs serves exactly (a) Signpost, (b) Empty and (c) Duplicate, chosen per client at handshake by name: a client whose name starts with `grok` gets the payload in the text block, a name containing `opencode` gets an empty one, and EVERY OTHER CLIENT GETS THE SIGNPOST. There is also a `--content-policy` override. So the mechanism flo2 asks for is built, and was built from two measured clients (fact:grok-build-measured-on-this-box…, and the OpenCode measurement).\n\n🛑 SO THE DEFECT IS NARROWER AND SHARPER THAN REPORTED, AND IT IS IN THE DEFAULT. The fallback is Signpost — the one shape flo2 shows fails both populations — and a client is matched BY NAME, so anything not called grok or opencode gets it. Every connector flo2 is about to point at this server is unknown by construction: Claude, ChatGPT and Grok connectors have never been measured here, and a name-keyed policy cannot learn.\n\n⚠️ AND THE SIGNPOST WAS CHOSEN DELIBERATELY, WITH A REASON FLO2 DOES NOT HAVE. fact:every-reply-was-sent-twice records it: an empty content block saves the same bytes, and the signpost costs ~450 bytes 'and is what a client reading the wrong field gets INSTEAD OF SILENCE. Silence there is indistinguishable from reflow2 never having been configured', which is req:never-silently-absent. That reasoning is sound and it did not account for a client that treats a non-empty text block as the answer. THE TWO GOALS ARE CONTRADICTORY, and flo2 states it exactly: you cannot keep the text non-empty AND have an empty-fallback client read the structured object.\n\n⚠️ VERSION-GATING IS ALREADY REFUTED, twice over: fact:every-reply-was-sent-twice killed it by measurement, and flo2 independently reaches the same conclusion — population 1 (pre-2025-06-18) is visible on every request and population 2 is INVISIBLE, since no client capability says 'I read structuredContent'. Gating on the negotiated version would not have fixed the only failure anyone has observed.",
+        "subject_id": "cap:a-reply-takes-the-shape-its-client-can-read",
         "valid_from": "2026-09-20"
       }
     },
@@ -295308,6 +295662,20 @@
       }
     },
     {
+      "node_id": "ver:the-settlement-records-its-outcome-and-leaves-the-deliberation-verbatim",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-mcp/tests/settling_a_decision_records_which_option_won.rs: three tests. The first asserts the decision text is byte-identical after the settlement, which is the whole point — recording the outcome must not cost a rewrite of the reasoning.",
+        "findings": "3 of 3 passing; full gate set green.",
+        "kind": "verification",
+        "last_run_at": "2026-09-20",
+        "level": "integration",
+        "method": "test",
+        "name": "The settlement records what it chose and leaves the deliberation verbatim; a settlement naming no outcome is unchanged; the owner's name is still required",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:the-sweep-does-not-scale-with-its-candidates",
       "node_type": "Verification",
       "properties": {
@@ -295626,7 +295994,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:c041d52fb7c73f2b1c05693c0e4fd0e98bc6d1d616a7072b7a9520dce63fc2ec",
+  "prev_content_hash": "sha256:22caf2ef77caf57a1978316c67cc13b21be5fe87af961236f7e8f304ac4c3845",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -296224,8 +296592,8 @@
     "schema_version": 1
   },
   "taken_at": {
-    "branch": "a-drawn-relation-is-read-back-as-a-sentence",
-    "commit": "ecc5e79f9dd08198a81f737d1acdd648327e9d8a",
+    "branch": "settling-a-decision-records-which-option-won",
+    "commit": "e008f4b026df47145346c2ff9a03da8597dcc922",
     "dirty": true
   }
 }
