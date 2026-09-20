@@ -185,7 +185,9 @@ impl ReflowService {
     #[tool(
         description = "Phrase a gap as a plain question via the ambient agent. Call with empty `answers` to get \
                        {status:needs_llm, prompts}; fill them and call again with `answers` to get {status:ok, \
-                       prompt}. THE ANSWERS YOU FILL IN ARE WHERE THE TRANSLATION HAPPENS: the gap arrives in \
+                       prompt}. The first reply also carries `gap: {id, title, why}`, the values the prompt is built \
+                       from, so a consumer reads them instead of splitting the prompt. \
+                       THE ANSWERS YOU FILL IN ARE WHERE THE TRANSLATION HAPPENS: the gap arrives in \
                        the detector's vocabulary (`unallocated_capability`, `unsatisfied_requirement`) and the \
                        question a person reads must be in THEIRS — what is actually missing and why it matters \
                        to their design. Read who you are talking to (their `Contributor` description) and match \
@@ -195,7 +197,8 @@ impl ReflowService {
                        resolves the gap afresh. Trimming the description or mangling the title CANNOT re-key \
                        your answers \u{2014} it used to, and that is what silently served raw detector jargon \
                        to two projects' users before the guard was fixed on 2026-09-02. \u{26a0} A gap that has \
-                       CLOSED since you took it is REFUSED rather than served from your stale copy. Unmatched \
+                       CLOSED since you took it is REFUSED, carrying `reason: gap_closed` in its data so you can \
+                       branch on it without matching prose. Unmatched \
                        answers come back in `unused_answers`, and `degrade_reason` says what went wrong. Ask \
                        for this when you want to turn a gap into a question you can put to the owner.",
         annotations(read_only_hint = false)
@@ -211,9 +214,29 @@ impl ReflowService {
             // Prepare pass: harvest the prompt the op would issue.
             let collector = PromptCollector::new();
             let _discarded = gap.to_prompt(&collector);
+            // THE PIECES RIDE BACK BESIDE THE PROMPT THEY WERE COMPOSED INTO.
+            // The prompt is `format!("… Gap: {title}\nWhy it matters: {description}")`,
+            // so a consumer that wants the CONTEXT rather than a phrased
+            // question had only one way to get it: split the prompt string on
+            // the literal "Why it matters:". flo2 does exactly that, declares
+            // it as its single breach of the black-box rule, and guards it with
+            // a test — because that marker is prose in no schema, and rewording
+            // the template is a legitimate thing for any release to do
+            // (flo2 F18, 2026-09-19). The server held both halves and threw the
+            // seam away at the moment it joined them; now it does not.
+            //
+            // The two-phase protocol is UNCHANGED: fill `answers` and call again
+            // for the phrased question. This serves the consumer that wants the
+            // context folded into a model turn it is already paying for, without
+            // making it buy a second turn.
             return ok_json(json!({
                 "status": "needs_llm",
                 "prompts": collector.collected(),
+                "gap": {
+                    "id": gap.id,
+                    "title": gap.title,
+                    "why": gap.description,
+                },
             }));
         }
 
@@ -418,18 +441,26 @@ impl ReflowService {
             .collect()
     }
 
+    /// A gap that has closed since the caller took it.
+    ///
+    /// ⭐ THE REASON IS CARRIED AS DATA, NOT ONLY AS PROSE (flo2 F22,
+    /// 2026-09-19). The sentence below is good and a consumer cannot branch on
+    /// it without matching prose, which is the thing the black-box rule
+    /// forbids. flo2 therefore re-ran `detect_gaps` before EVERY send — a whole
+    /// graph computation per click — purely so it could tell "this chip is
+    /// stale" from any other refusal. With `reason: "gap_closed"` on the
+    /// error's data it can branch on the refusal instead, and drop the extra
+    /// call without becoming wrong.
     fn gap_is_gone(gap_id: &str) -> McpError {
-        {
-            McpError::invalid_params(
-                format!(
-                    "no open gap has the id {gap_id}. The gap you replayed is resolved by ID \
-                     against a fresh detect_gaps — the text you send back is an echo and is not \
-                     read — so this means the gap itself was CLOSED or ACKNOWLEDGED since you \
-                     took it, not that your payload was wrong. Re-run detect_gaps and ask about \
-                     what is still open."
-                ),
-                None,
-            )
-        }
+        McpError::invalid_params(
+            format!(
+                "no open gap has the id {gap_id}. The gap you replayed is resolved by ID \
+                 against a fresh detect_gaps — the text you send back is an echo and is not \
+                 read — so this means the gap itself was CLOSED or ACKNOWLEDGED since you \
+                 took it, not that your payload was wrong. Re-run detect_gaps and ask about \
+                 what is still open."
+            ),
+            Some(json!({ "reason": "gap_closed", "gap_id": gap_id })),
+        )
     }
 }

@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:07408b1729a36b7ee9c7010a43585448be9678508b5d907aa94594adc576b3a5",
+  "content_hash": "sha256:bef84cdf5621c2ceffb6bd6b818cc9115100324f5a07fd065b76de6a8a9b360e",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -1090,6 +1090,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:hierarchy"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-composed-prompt-serves-its-pieces-and-a-closed-gap-refuses-branchably",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:tools-ask"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -25707,10 +25715,30 @@
       "from_id": "fact:gap-to-prompt-takes-the-gap-as-an-object-and-reads-only-its-id-so-a-consumer-recomputes-every-gap-per-click",
       "properties": {
         "basis": "correlational",
+        "evidence": "The indistinguishable refusal is what made the consumer recompute; this makes it branchable.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "chg:a-composed-prompt-serves-its-pieces"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:gap-to-prompt-takes-the-gap-as-an-object-and-reads-only-its-id-so-a-consumer-recomputes-every-gap-per-click",
+      "properties": {
+        "basis": "correlational",
         "evidence": "The object-shaped parameter is what makes the key question live.",
         "validation_status": "unvalidated"
       },
       "to_id": "dec:idea-should-gap-to-prompt-serve-the-pieces-it-assembles-and-take-a-key-instead-of-an-echo"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:gap-to-prompt-welds-the-title-and-the-why-into-one-string-and-returns-only-the-string-so-the-one-consumer-splits-prose",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The welded string is what this change unwelds.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "chg:a-composed-prompt-serves-its-pieces"
     },
     {
       "edge_type": "CAUSES",
@@ -27422,6 +27450,24 @@
         "action": "modified"
       },
       "to_id": "art:shared"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-composed-prompt-serves-its-pieces",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:a-composed-prompt-serves-its-pieces-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-composed-prompt-serves-its-pieces",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-ask"
     },
     {
       "edge_type": "CHANGED",
@@ -53823,6 +53869,12 @@
       "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
+      "to_id": "cap:a-composed-prompt-serves-its-pieces-and-a-closed-gap-refuses-branchably"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
       "to_id": "cap:a-cut-ends-with-the-served-binary-matching-the-tag"
     },
     {
@@ -61804,6 +61856,12 @@
       "from_id": "cap:a-check-records-what-it-found-separately-from-what-it-is",
       "properties": {},
       "to_id": "rule:fix-it-properly-while-it-is-still-cheap"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:a-composed-prompt-serves-its-pieces-and-a-closed-gap-refuses-branchably",
+      "properties": {},
+      "to_id": "dec:idea-should-gap-to-prompt-serve-the-pieces-it-assembles-and-take-a-key-instead-of-an-echo"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -73028,6 +73086,12 @@
       "from_id": "art:vocabulary-reach",
       "properties": {},
       "to_id": "fact:the-reachability-gate-pools-54-tools-parameter-names-into-every-type-so-it-reported-zero-holes-while-two-properties-had-no-writer"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:a-composed-prompt-serves-its-pieces-and-a-closed-gap-refuses-branchably",
+      "properties": {},
+      "to_id": "fact:a-tool-description-sits-close-to-its-budget-and-two-sentences-break-the-lint-and-the-rank-ratchet-together"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -222627,6 +222691,24 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:a-composed-prompt-serves-its-pieces",
+      "properties": {
+        "at": "2026-09-20",
+        "note": "Built 2026-09-20: the pieces ride back beside the prompt, and a gap that has closed refuses with `reason: gap_closed` in its data. The findings stand as the measurements."
+      },
+      "to_id": "fact:gap-to-prompt-takes-the-gap-as-an-object-and-reads-only-its-id-so-a-consumer-recomputes-every-gap-per-click"
+    },
+    {
+      "edge_type": "INVALIDATES",
+      "from_id": "chg:a-composed-prompt-serves-its-pieces",
+      "properties": {
+        "at": "2026-09-20",
+        "note": "Built 2026-09-20: the pieces ride back beside the prompt, and a gap that has closed refuses with `reason: gap_closed` in its data. The findings stand as the measurements."
+      },
+      "to_id": "fact:gap-to-prompt-welds-the-title-and-the-why-into-one-string-and-returns-only-the-string-so-the-one-consumer-splits-prose"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:a-contract-can-carry-evidence",
       "properties": {
         "at": "2026-08-22",
@@ -225384,6 +225466,15 @@
         "conformance": "verified"
       },
       "to_id": "cap:the-owners-word-rides-the-same-call-as-the-status-it-signs"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:a-composed-prompt-serves-its-pieces-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-composed-prompt-serves-its-pieces-and-a-closed-gap-refuses-branchably"
     },
     {
       "edge_type": "REALIZES",
@@ -230829,6 +230920,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:a-composed-prompt-serves-its-pieces-and-a-closed-gap-refuses-branchably",
+      "properties": {},
+      "to_id": "req:a-composed-prompt-serves-the-pieces-it-was-composed-from"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:a-contract-answers-at-the-altitude-you-asked",
       "properties": {},
       "to_id": "req:a-design-says-what-crosses-each-boundary-between-its-parts"
@@ -236101,6 +236198,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:the-first-reply-carries-the-pieces-and-a-stale-gap-refuses-with-a-reason",
+      "properties": {},
+      "to_id": "cap:a-composed-prompt-serves-its-pieces-and-a-closed-gap-refuses-branchably"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:the-frontier-is-served-and-a-deferral-is-a-recorded-finding",
       "properties": {},
       "to_id": "cap:incremental-adopt-with-a-frontier-and-a-deferred-derivation-marker"
@@ -236686,6 +236789,14 @@
         "action": "created"
       },
       "to_id": "art:a-capability-carries-its-thread-test"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:a-composed-prompt-serves-its-pieces-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:a-composed-prompt-serves-its-pieces-test"
     },
     {
       "edge_type": "YIELDED",
@@ -239290,6 +239401,18 @@
         "description": "Three probes on `add_capability(satisfies=, allocated_to=)`. THE CASE: one call creates the node and draws both edges, read back through `propagate_from` rather than from the reply that claims to have drawn them — an echo that lies and an edge that exists must not be the same assertion. OMITTED: the parameters are additive and a capability with no thread yet is a normal thing to write. REFUSED: an id naming nothing is rejected and NOTHING PERSISTS, checked by reading the node back as null.\n\nThat third probe is the one that matters. `dec:idea-should-a-creation-call-carry-its-own-golden-thread` warned in its counter-argument (4) that \"inline links move failures earlier but make them coarser — a typo in one `satisfies` id refuses the capability itself\". This test makes that a pinned, deliberate trade rather than a hypothetical, and chooses it over the alternative (write the node, skip the edge, warn) because half a thread to a nonexistent id is worse than the retry the parameter removes.\n\nOBSERVED FAILING FIRST against the unfixed binary, 2026-09-10: `unknown field 'satisfies'` / `unknown field 'allocated_to'` on two probes, the third passing vacuously.",
         "location": "crates/reflow2-mcp/tests/a_capability_carries_its_thread_in_one_call.rs",
         "name": "a_capability_carries_its_thread_in_one_call.rs — the thread drawn, omitted, and refused",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:a-composed-prompt-serves-its-pieces-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:aa161eb699c50661abf83d0d7aa8ed7d7f8ce9fed11af4963d91326d70abcfdf",
+        "checksum_basis": "measured",
+        "location": "crates/reflow2-mcp/tests/a_composed_prompt_serves_its_pieces.rs",
+        "name": "a_composed_prompt_serves_its_pieces.rs",
         "status": "realized"
       }
     },
@@ -243809,7 +243932,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:a2375de74c692c06d41eba0576699f03acea0a49147d1e8e6c366090874e8db8",
+        "checksum": "sha256:7dde434de32c04ece797a8e51f3beb3626aebaeaa101e279eba30cac203c1381",
+        "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/ask.rs",
         "name": "tools/ask.rs",
@@ -244451,6 +244575,16 @@
       "properties": {
         "description": "PROPOSAL 1, built 2026-08-20 on Anthony's word. DISTINCT FROM the two nodes nearest it: one was a single re-placement of reflow2's own kernel, the other measures whether walls hold. This is the OPERATION a user of any project needs to do either.\n\nTHE GAP, found by using reflow2 and MEASURED the way a user would hit it. Asked in a user's own words — \"move a component to a different parent, re-decompose\" — find_tools ranked contain_component top of 152 served tools. contain_component ADDS a parent and removes nothing, so the discoverable route is also the wrong one: the spine stops being a tree, and hierarchy_issues reports multiple_parents AFTERWARDS, which is the wrong end of the act. Re-decomposition is not exotic — adopting a brownfield system, acting on a design review, and severability work all consist of it.\n\nVERIFIED THE SAME WAY THE GAP WAS MEASURED: the identical query now ranks move_component first of 153, scoring 67.5 against add_component's 44.9.\n\nWHAT IT DOES: move_component(child_id, new_parent_id) detaches EVERY parent the child had and names them.\n  · It detaches a Project parent too. A component with no subsystem is often wired straight to the project PRECISELY BECAUSE it is homeless, so a move that only looked for Component parents would create the very defect it exists to prevent. That is not hypothetical - it happened to cmp:identity the same day.\n  · An EMPTY detached list is reported rather than folded into success: \"placed for the first time\" and \"moved\" are different facts, and a caller who believed they were moving something learns they were not.\n  · The level relation is REPORTED in level_note, never enforced - hierarchy_issues is the authority, and one rule with two homes is one rule that can disagree with itself. But it fires AT THE MOMENT OF THE MOVE, which is the difference between a defect avoided and a defect found.\n  · It does not snapshot for the caller - choosing the epoch is their call - but history_note names the record_change that preserves the previous parent whenever anything was detached.\n\nFIRST USE ON A REAL DESIGN, not a fixture: cmp:skills had carried two parents since before this session. One call detached the stale proj:reflow2 containment; hierarchy_issues went 3 findings to 2.\n\nA BUG FOUND BY USING IT, fixed before it shipped: history_note originally stayed silent whenever the child had ANY snapshot. A snapshot from an earlier epoch is no evidence that THIS move was recorded, so the rule went quiet for exactly the long-lived node whose history matters most - silent in the dangerous direction. It now fires on any detachment and states a fact rather than making an accusation. an_earlier_snapshot_does_not_silence_the_history_note pins it.\n\nSTATED LIMIT: this fixes the CONTAINMENT spine only. DEPENDS_ON, PROVIDES and CONSUMES edges follow the component unchanged, so a move can put a contract across a wall it did not previously cross and nothing says so.",
         "name": "A component can be MOVED on the decomposition spine, not merely given another parent",
+        "provenance": "authored",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "cap:a-composed-prompt-serves-its-pieces-and-a-closed-gap-refuses-branchably",
+      "node_type": "Capability",
+      "properties": {
+        "description": "As built 2026-09-20. THE PIECES: the prepare pass now answers `{status: needs_llm, prompts, gap: {id, title, why}}`. The prompt is composed by joining the gap's title and description in one statement (detect.rs), and only the joined string came back — so flo2, which wants the CONTEXT folded into a model turn it already pays for rather than a phrased question bought with a second turn, split that string on the literal 'Why it matters:'. That marker is in no schema and rewording the template is legitimate for any release; flo2 declared it as its single breach of the black-box rule and guarded it with a test. The two-phase protocol is UNCHANGED. THE REFUSAL: a replayed gap that is no longer open was already refused with good prose and nothing else, so a consumer could only tell it apart by matching that prose — and flo2 therefore re-ran detect_gaps before EVERY send, a whole graph computation per click, purely to know whether a chip was stale. The refusal now carries `reason: gap_closed` and the id in the error's data. Test: crates/reflow2-mcp/tests/a_composed_prompt_serves_its_pieces.rs (the pieces are the values the prompt was built from, asserted against the composed text; a stale gap refuses with the reason, the id, and the prose intact).",
+        "name": "The first gap-prompt reply carries the gap's own pieces, and a gap that has closed refuses with a reason a consumer can branch on",
         "provenance": "authored",
         "status": "realized"
       }
@@ -247832,6 +247966,17 @@
         "rationale": "🛑 THE TESTS WERE WRITTEN AGAINST A STUB OF TODAY'S BEHAVIOUR AND OBSERVED FAILING: 3 failed, 2 passed. The two that passed are the counterweights — same build attaches, unknown attaches — which is the correct reading, because today's behaviour is right for those and wrong for the three real cases. Recorded because a failing-first test and one written after the fix both end green.\n\n⭐ WHY THIS CHANGES BEHAVIOUR RATHER THAN REPORTING, WHICH IS THE WHOLE POINT. The defect has been recorded six times since 2026-08-07 and every previous response improved a REPORT: `served_by.stale`, its stale_note, the AGENTS.md correction, `graph.client.json`. The skew went on happening — most expensively on 2026-08-08, when it cost a day of dogfooding and five merged PRs never ran through a live session. Five rounds of better reporting did not stop it, and that is the evidence for acting instead of announcing.\n\n📌 AND IT REACHES A PLATFORM THE OLD DETECTION CANNOT. `exe_replaced_since_start` reads `/proc/self/exe` and tests for a ` (deleted)` suffix — Linux only. On macOS it returns `unknown`, so `served_by.stale` can never be true there, which is why nothing surfaced this to Alex at all. Comparing two independently-published `stat` results is plain POSIX and works on both.\n\n⚠️ THE RISK ACCEPTED, STATED PLAINLY: this can stop a daemon another session is mid-write against. `--stop-shared` already accepts that risk, but with a human choosing the moment; this takes the choice automatically. It is judged the lesser harm because the alternative is a session silently writing through a surface that is not the one it was built against — which is what actually happened, six times. If it proves wrong, the mitigation is narrow: re-elect only when nothing else is attached, which the Activity tracker could answer.\n\nNOT ESTABLISHED: whether mtime is preserved by any installer path in use. reflow2's own uses `install -m 755` with no `-p`, verified today; a package manager or a `cp -p` would defeat this, and nothing checks.",
         "subject": "system",
         "summary": "Fixes `fact:the-attach-path-checks-liveness-and-identity-but-never-version` — the cause behind Alex's field report and five earlier instances since 2026-08-07.\n\n`Rendezvous` gains `exe_fingerprint: Option<String>` — `size:mtime_nanos` of the executable, captured when the daemon starts. `ensure_server_async` now asks `should_reelect` before attaching: on a mismatch it SIGTERMs the old daemon, clears the rendezvous and elects a fresh one. On a match it attaches exactly as before.\n\n⭐ THE COMPARAND WAS CHOSEN BY MEASUREMENT AND THE FIRST TWO CANDIDATES WERE BOTH REFUTED.\n• A VERSION STRING catches nothing that matters: `Cargo.toml` read `0.42.0` all day on 2026-08-29 while a development session lost SIX cycles to stale daemons — every daemon and every client published `0.42.0`. Its coverage equals the installer fix: the upgrade path only.\n• AN INODE was the second proposal and is worse: measured, `install -m 755` REWRITES IN PLACE and keeps the same inode, so it would have missed the very report that prompted the work.\n• SIZE + MTIME move under BOTH — verified on both paths the same day: `install -m 755` changed size and mtime with the inode unchanged; a real `cargo build` changed inode AND mtime (4481075 -> 4488902). One `stat`, no hashing of a 326 MB binary.\n\n⚠️ AN ABSENT FINGERPRINT MEANS REPLACE, NOT MATCH. Any daemon publishing none predates this field, so it is old by construction — and that is exactly Alex's 0.39.0 server on the first upgrade after this ships. Treating absence as agreement would have made the fix unable to fix the report that prompted it.\n\n🛑 AND IT REFUSES TO GUESS IN TWO PLACES. If this process cannot fingerprint itself it ATTACHES rather than killing a healthy daemon on no evidence — the same refusal `served_by.stale` makes when `/proc/self/exe` is unreadable. And if the SIGTERM fails (a foreign owner, or it exited between probe and signal) it attaches anyway with a loud warning naming the manual remedy, because a session on a stale surface is degraded while a session with no design brain is stopped."
+      }
+    },
+    {
+      "node_id": "chg:a-composed-prompt-serves-its-pieces",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-09-20",
+        "name": "A composed prompt serves the pieces it was composed from, and a closed gap refuses branchably",
+        "rationale": "flo2 F18 and F22, promoted 2026-09-20 on Anthony's word and built second in the order he agreed. The option chosen for F22 was the distinguishable refusal rather than accepting a bare id, because it removes the consumer's extra computation instead of making it cheaper to avoid.",
+        "summary": "ask.rs: the needs_llm reply carries `gap: {id, title, why}`; gap_is_gone carries `reason: gap_closed` and the id in the error data; the tool description says both. One test file. CHANGELOG."
       }
     },
     {
@@ -270461,6 +270606,16 @@
       }
     },
     {
+      "node_id": "frag:art:a-composed-prompt-serves-its-pieces-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered a_composed_prompt_serves_its_pieces.rs"
+      }
+    },
+    {
       "node_id": "frag:art:a-design-says-what-fraction-carries-a-relation-test",
       "node_type": "Fragment",
       "properties": {
@@ -283350,6 +283505,22 @@
       }
     },
     {
+      "node_id": "fact:a-tool-description-sits-close-to-its-budget-and-two-sentences-break-the-lint-and-the-rank-ratchet-together",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.9,
+        "fact_type": "finding",
+        "name": "A tool description sits close enough to its budget that two added sentences fail the lint AND the rank ratchet, and the second failure is caused by the first",
+        "statement": "Measured 2026-09-20 adding two sentences to gap_to_prompt's description: the lint failed at 1,624 characters against a 1,500 budget, and `no_new_mutually_confusable_pair` failed in the same run. They look like two problems and are one. The ranking scorer divides by a length term, so lengthening a description lowers its own scores and can move a neighbour into or out of a top-five list; a baseline pair therefore came apart. Trimming to 1,479 cleared both, and all five ranking tests passed unchanged.\n\n⭐ THE ORDER THAT SAVES A RUN: build, `toolsnap.py --update`, then read the description's length BEFORE running the ratchet, because the ratchet takes about 38 seconds and the length check takes none. A description near the budget is the signal; 1,479 of 1,500 leaves room for roughly one sentence.\n\nAND THE GENERAL SHAPE, which is why this is worth a record rather than a note: the served text is an input to two different gates with different failure messages, so a single edit reports twice and neither message names the other. The measurement is the link between them.",
+        "steps": [
+          "ci-gate"
+        ],
+        "subject_id": "cap:a-composed-prompt-serves-its-pieces-and-a-closed-gap-refuses-branchably",
+        "valid_from": "2026-09-20"
+      }
+    },
+    {
       "node_id": "fact:a-traversal-re-read-the-same-adjacency-7-times-over-because-region-walks-overlap",
       "node_type": "TemporalFact",
       "properties": {
@@ -294045,6 +294216,20 @@
       }
     },
     {
+      "node_id": "ver:the-first-reply-carries-the-pieces-and-a-stale-gap-refuses-with-a-reason",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-mcp/tests/a_composed_prompt_serves_its_pieces.rs: two tests. The first asserts the served title and why appear in the composed prompt, and that the marker it replaces still exists, so the test cannot pass vacuously. The second replays a real gap under an id no gap has, which is the stale-chip case exactly.",
+        "findings": "2 of 2 passing; full gate set green.",
+        "kind": "verification",
+        "last_run_at": "2026-09-20",
+        "level": "integration",
+        "method": "test",
+        "name": "The first reply carries the gap's pieces and they are the values the prompt was built from; a stale gap refuses with a machine-readable reason and keeps its prose",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:the-frontier-is-served-and-a-deferral-is-a-recorded-finding",
       "node_type": "Verification",
       "properties": {
@@ -294665,7 +294850,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:ce5102b9807466dab872e96e6405c2b3f7a7798b5d7d13f13f1cdfac0ff78fd0",
+  "prev_content_hash": "sha256:07408b1729a36b7ee9c7010a43585448be9678508b5d907aa94594adc576b3a5",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -295263,8 +295448,8 @@
     "schema_version": 1
   },
   "taken_at": {
-    "branch": "the-reachability-gate-reads-tools-not-names",
-    "commit": "dfae9f947dae3a5bc7da205b8a83de352bb67611",
+    "branch": "a-composed-prompt-serves-its-pieces",
+    "commit": "b5a5eda844204a26de000a42274a1c9bc1cb00a6",
     "dirty": true
   }
 }
