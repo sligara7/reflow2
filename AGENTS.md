@@ -314,6 +314,20 @@ design it drops a node someone wrote and nothing will tell you it is gone.
 > full wall-clock instead of stopping early, which is the right trade: a red run is already a
 > failure, and what you want from it is every fact it has, not the first one.
 
+⭐ **TO RUN THE WHOLE SET, DO NOT WRITE A SCRIPT — RUN `python3 tools/run_ci_gates.py`.** It
+executes exactly what `ci.yml` runs, in that order, reading the list through the same parser
+`skill_lint.py` uses rather than keeping a fourth copy of it. `--list` shows them without running
+anything, and a keyword argument narrows it (`run_ci_gates.py reflow2_check.py` re-runs just the
+export-dependent gates after an export).
+
+🛑 **THE REASON IT EXISTS IS THAT THREE SESSIONS HAND-WROTE THIS AND GOT THREE DIFFERENT SUBSETS.**
+The worst ran 17 of 48, called `render_skills_and_tools` without `--check`, ran both clippy
+invocations without `-D warnings`, and piped `cargo test` through `head -40` — which truncates the
+report at the fortieth of roughly two hundred test binaries and can kill the run through the closed
+pipe. Forty consecutive passes and no failures is indistinguishable from a clean full run, and is
+the more reassuring of the two readings. The block below is the everyday subset a person picks
+from; the runner is how you check the lot.
+
 **A change is done when all of these are clean** — the everyday subset, with the flags CI
 actually uses. **Both `-D warnings`, because that is what turns a local warning into a red build:**
 
@@ -331,6 +345,7 @@ python3 tools/toolsnap.py                                # tool schemas vs commi
 python3 tools/replies_are_bounded.py                     # a reply that outgrows the budget must offer a bound — and this FAILS if nothing overflowed
 python3 tools/a_reply_is_sent_once.py                    # every structured reply carries ONE payload and ONE signpost, asked of the whole surface
 python3 tools/skill_lint.py                              # after any skill or tool-surface edit
+python3 tools/test_run_ci_gates.py                       # the gate runner's own net — it must never report a pass having run nothing
 python3 tools/test_wall_check.py                         # the wall-check instrument's own net
 python3 tools/test_latent_promotion.py                  # the latent server promotes itself in place, on any client (real binary)
 python3 tools/test_content_policy.py                    # a reply takes the shape its client can read (per-client content policy, on the wire)
