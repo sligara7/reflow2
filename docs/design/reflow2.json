@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:d62891209593aca34441fa0bc3a9f5d077338f42ac49f6d977c19c98cfec1085",
+  "content_hash": "sha256:526b595d6bd41fb80afa6fd69d01dda0a7c211195f0aff4cdfa3514ac5a0eea9",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -24376,6 +24376,16 @@
     },
     {
       "edge_type": "CAUSES",
+      "from_id": "art:detect",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The prompt is formatted from the gap's title and description in one statement and only the formatted string is returned, so the structure the server had is destroyed at the moment of assembly and the consumer must reconstruct it by parsing.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:gap-to-prompt-welds-the-title-and-the-why-into-one-string-and-returns-only-the-string-so-the-one-consumer-splits-prose"
+    },
+    {
+      "edge_type": "CAUSES",
       "from_id": "art:dev-storyflow-feedback-2026-09-07b",
       "properties": {
         "basis": "correlational",
@@ -24443,6 +24453,16 @@
         "validation_status": "unvalidated"
       },
       "to_id": "fact:the-stale-probe-lock-reclaim-lets-two-winners-through-2026-09-13"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "art:release-workflow",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The release workflow stages the kit by naming each file it copies, and the schemas were never added to that list, so the published artifacts carry the product and not the contract the product is judged against.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:neither-the-container-nor-the-kit-carries-the-toolsnaps-so-a-consumer-cannot-diff-the-contract-it-is-told-to-check"
     },
     {
       "edge_type": "CAUSES",
@@ -24549,6 +24569,16 @@
       "from_id": "art:vocabulary-reach",
       "properties": {
         "basis": "correlational",
+        "evidence": "tool_parameters() unions the parameters of all 54 tools absent from the tool-to-type map into every type's offered set, so a name offered by any tool reads as offered for every type; Requirement.kind is excused by forecast_readiness and gate_on, Verification.location by register_alternative.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:the-reachability-gate-pools-54-tools-parameter-names-into-every-type-so-it-reported-zero-holes-while-two-properties-had-no-writer"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "art:vocabulary-reach",
+      "properties": {
+        "basis": "correlational",
         "evidence": "The instrument is invoked by no workflow step, no gate script and no build target, so it runs only when a person remembers it. That is a cause of the same missed defects, independent of what its filter does.",
         "validation_status": "unvalidated"
       },
@@ -24613,6 +24643,36 @@
         "validation_status": "unvalidated"
       },
       "to_id": "fact:field-report-bhome-2026-09-18-a-budget-accepts-a-negative-contribution-and-nothing-says-so-so-stacking-went-uncounted"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "cap:every-tool-carries-the-users-phrasing-and-the-corpus-is-the-test",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The catalogue was built to help a caller CHOOSE a tool and returns names for that purpose, so the shape a caller needs next has no served source; describe_schema answers the adjacent question about node types and is mistaken for it.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:the-contract-is-the-toolsnaps-and-no-served-tool-will-hand-a-session-one-tools-input-schema"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "cap:gap-carries-a-reading",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The parameter is typed as the whole object and its own description names no narrower obligation, so the schema asks for a finding while the implementation wants a key, and a consumer that reads the type pays for the difference on every call.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:gap-to-prompt-takes-the-gap-as-an-object-and-reads-only-its-id-so-a-consumer-recomputes-every-gap-per-click"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "cap:gap-carries-a-reading",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The per-source bodies were written one at a time as each detector was added, so the routing and the is-this-even-a-defect framing that two of them carry were never made an obligation of the third.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:one-gap-body-is-a-single-line-where-its-neighbours-carry-the-routing-and-it-fires-once-per-capability-on-a-young-design"
     },
     {
       "edge_type": "CAUSES",
@@ -25406,6 +25466,46 @@
     },
     {
       "edge_type": "CAUSES",
+      "from_id": "fact:gap-to-prompt-takes-the-gap-as-an-object-and-reads-only-its-id-so-a-consumer-recomputes-every-gap-per-click",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The object-shaped parameter is what makes the key question live.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "dec:idea-should-gap-to-prompt-serve-the-pieces-it-assembles-and-take-a-key-instead-of-an-echo"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:gap-to-prompt-welds-the-title-and-the-why-into-one-string-and-returns-only-the-string-so-the-one-consumer-splits-prose",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The welded string is what makes the pieces question live.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "dec:idea-should-gap-to-prompt-serve-the-pieces-it-assembles-and-take-a-key-instead-of-an-echo"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:neither-the-container-nor-the-kit-carries-the-toolsnaps-so-a-consumer-cannot-diff-the-contract-it-is-told-to-check",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The packaging half of the same hole.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "dec:idea-should-the-contract-be-readable-in-session-and-ship-with-the-artifact"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:one-gap-body-is-a-single-line-where-its-neighbours-carry-the-routing-and-it-fires-once-per-capability-on-a-young-design",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The seventeen single-line findings on a three-day-old design are what raise the question.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "dec:idea-should-a-gap-body-say-when-the-state-it-reports-is-normal-for-the-phase"
+    },
+    {
+      "edge_type": "CAUSES",
       "from_id": "fact:reflow2-has-a-vocabulary-for-the-users-word-and-none-for-the-agents",
       "properties": {
         "basis": "correlational",
@@ -25483,6 +25583,16 @@
         "validation_status": "unvalidated"
       },
       "to_id": "dec:idea-should-there-be-a-typed-depends-on-and-the-existing-name-freed"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:the-contract-is-the-toolsnaps-and-no-served-tool-will-hand-a-session-one-tools-input-schema",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The in-session half of the hole.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "dec:idea-should-the-contract-be-readable-in-session-and-ship-with-the-artifact"
     },
     {
       "edge_type": "CAUSES",
@@ -25564,6 +25674,16 @@
         "validation_status": "validated"
       },
       "to_id": "dec:idea-the-load-bearing-prose-is-unchecked-against-the-code-it-describes"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:the-reachability-gate-pools-54-tools-parameter-names-into-every-type-so-it-reported-zero-holes-while-two-properties-had-no-writer",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The measured miscalibration is what puts the gate's design, rather than the two fields, on the table.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "dec:idea-should-the-reachability-gate-attach-a-tools-parameters-only-to-the-types-it-writes"
     },
     {
       "edge_type": "CAUSES",
@@ -72346,6 +72466,12 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "art:vocabulary-reach",
+      "properties": {},
+      "to_id": "fact:the-reachability-gate-pools-54-tools-parameter-names-into-every-type-so-it-reported-zero-holes-while-two-properties-had-no-writer"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "cap:a-contract-answers-at-the-altitude-you-asked",
       "properties": {},
       "to_id": "fact:seam-coverage-counts-that-a-contract-exists-and-never-that-it-says-anything"
@@ -72496,9 +72622,39 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:every-tool-carries-the-users-phrasing-and-the-corpus-is-the-test",
+      "properties": {},
+      "to_id": "fact:the-contract-is-the-toolsnaps-and-no-served-tool-will-hand-a-session-one-tools-input-schema"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "cap:feedback-is-a-computed-tally",
       "properties": {},
       "to_id": "fact:the-first-real-usage-report-classed-four-of-five-refusals-as-other"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:gap-carries-a-reading",
+      "properties": {},
+      "to_id": "fact:flo2-2026-09-19-evening-names-what-worked-determinism-the-cross-type-duplicate-guard-and-prose-currency"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:gap-carries-a-reading",
+      "properties": {},
+      "to_id": "fact:gap-to-prompt-takes-the-gap-as-an-object-and-reads-only-its-id-so-a-consumer-recomputes-every-gap-per-click"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:gap-carries-a-reading",
+      "properties": {},
+      "to_id": "fact:gap-to-prompt-welds-the-title-and-the-why-into-one-string-and-returns-only-the-string-so-the-one-consumer-splits-prose"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:gap-carries-a-reading",
+      "properties": {},
+      "to_id": "fact:one-gap-body-is-a-single-line-where-its-neighbours-carry-the-routing-and-it-fires-once-per-capability-on-a-young-design"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -72595,6 +72751,12 @@
       "from_id": "cap:release-pinned-to-time",
       "properties": {},
       "to_id": "fact:deploy-to-does-not-move-a-releases-own-status-and-no-cut-step-says-to"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:release-publishes-a-container",
+      "properties": {},
+      "to_id": "fact:neither-the-container-nor-the-kit-carries-the-toolsnaps-so-a-consumer-cannot-diff-the-contract-it-is-told-to-check"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -261630,6 +261792,16 @@
       }
     },
     {
+      "node_id": "dec:idea-should-a-gap-body-say-when-the-state-it-reports-is-normal-for-the-phase",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Recorded as brainstorming on 2026-09-19 from flo2 F20, not as a proposal, and filed by its reporter as a quality observation rather than a blocker.\n\nTHE OBSERVATION: two gap sources answer with a paragraph that routes to who can answer and says whether the thing is even a defect; a third answers with one line. The third is the one that fires once per capability on a design with nothing built — 17 times on flo2's own graph — and a person reads seventeen of those as seventeen defects.\n\nOPTIONS. (a) One sentence in that body saying planned work is a normal state for a young design. Smallest, and it is what the reporter suggests. (b) Have the per-capability finding INHERIT the neighbouring aggregate one, which already states the phase correctly ('Design laid out, but nothing built yet') — structural, and it fixes the class rather than the instance. (c) Suppress the per-capability form entirely while the aggregate holds, so a young design gets one finding instead of seventeen. COUNTER to (c): the aggregate cannot say WHICH capability, and naming them is the useful part once building starts.\n\n⚠️ POSSIBLY DELIBERATE, and the reporter says so. The one-line form may be a considered choice about a detector whose answer really is just a question. What is not deliberate is the asymmetry: the routing and the is-this-a-defect framing were written per detector as each was added, so nothing made the third inherit what the first two carry.",
+        "kind": "exploratory",
+        "name": "OPEN — should a gap body say when the state it reports is a NORMAL phase rather than a defect, given one source fires once per capability on every young design?",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-should-a-large-node-be-changeable-one-field-at-a-time",
       "node_type": "Decision",
       "properties": {
@@ -261779,6 +261951,16 @@
       }
     },
     {
+      "node_id": "dec:idea-should-gap-to-prompt-serve-the-pieces-it-assembles-and-take-a-key-instead-of-an-echo",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Recorded as brainstorming on 2026-09-19 from flo2 F18 (as corrected by its author) and F22, not as a proposal. One question because both halves are the same tool's interface and the same consumer pays for both, and they would be decided together.\n\nHALF ONE — RETURN THE PIECES. `{status: needs_llm, prompts: [...], gap: {id, title, why}}`. The server already holds title and description as separate values and formats them together at detect.rs:1553; this returns what it had before it joined them. A consumer wanting a phrased question follows phase two as designed; a consumer wanting context for its own model turn reads `gap.why` and never touches prose. It is the only thing standing between flo2 and the black-box rule, and the reporter sizes it at one field.\nCOUNTER, such as it is: it widens the reply for every caller to serve one, and a reply that carries both the composed form and its parts invites a consumer to depend on both.\n\nHALF TWO — TAKE A KEY. Options: accept `gap_id` as a string alternative; or mark the object's other fields explicitly ignored in the schema; or put the echo caveat on the PARAMETER's own description, where a caller reading the type will meet it. Today the caveat is on the tool's description and the parameter reads 'A GapCandidate previously returned by detect_gaps', so the shape says hand me the finding while the semantics say hand me a key.\n\n⭐ THE THIRD OPTION THE REPORTER FOUND WHILE COMPLAINING, and it may be better than either: their redundant detect_gaps call is also how a stale chip is refused with 'that is no longer open'. If gap_to_prompt answered a VANISHED gap with a distinguishable refusal, the consumer could drop the extra call and still be correct. Taking an id closes the cost; a distinguishable refusal closes the cost AND the correctness question, and is the only one that removes the recomputation rather than making it cheaper to avoid.",
+        "kind": "exploratory",
+        "name": "OPEN — should gap_to_prompt return the gap's pieces beside the prompt it builds from them, and should it take a key rather than an object it only reads a key from?",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-should-help-expand-a-single-command-with-examples",
       "node_type": "Decision",
       "properties": {
@@ -261903,6 +262085,16 @@
       }
     },
     {
+      "node_id": "dec:idea-should-the-contract-be-readable-in-session-and-ship-with-the-artifact",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Recorded as brainstorming on 2026-09-19 from flo2 F21's residue and F23, not as a proposal. Two halves of one hole: a consumer is told the committed tool schemas are the contract, and can reach them neither from inside a session nor from the thing it runs.\n\nTHE IN-SESSION HALF. Options: (a) have find_tools return each tool's full inputSchema rather than parameter names; (b) a `describe_tool(name)`; (c) neither, on the grounds that a stale client's real remedy is reconnecting and the refusals now name the missing fields. COUNTER to (c), and it is the reporter's: their roughly 19 rejections were within-version shapes, not drift, so reconnecting would have fixed none of them. COUNTER to (a): every find_tools reply would carry full schemas for five tools when the caller wanted a name, which is the reply-size problem the budget work exists for — (b) pays only when asked.\n\nTHE PACKAGING HALF. Options: ship tools/toolsnaps inside the container image; publish them per tag as a release asset; or both. MEASURED: they appear in neither the Dockerfile nor the release workflow, and the kit is staged file by file, so this is an addition to a list rather than a new mechanism.\n\n⭐ WHAT IT UNLOCKS, and the reason to treat the two halves as one question: 'what changed, between these two versions, for THESE twelve tools?' is flo2's whole upgrade process under the black-box rule. Answering it needs the schemas of two versions side by side, which the in-session half alone does not give and the packaging half alone does.\n\n⚠️ AND A SCOPE QUESTION WORTH ASKING ONCE: if the schemas ship as an asset, they become a published surface with its own compatibility expectations — the contract about the contract. That is probably correct and it should be deliberate.",
+        "kind": "exploratory",
+        "name": "OPEN — if the tool schemas are the seam contract, should they be readable from inside a session and shipped with the artifact a consumer runs?",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-should-the-export-be-compressed-or-committed-less-often",
       "node_type": "Decision",
       "properties": {
@@ -261921,6 +262113,16 @@
         "name": "OPEN — a first-time user asked for the gaps in plain language and the agent wrote it by hand. Should reflow2 render the owner's view, and whose vocabulary is it in?",
         "no_relation_note": "Searched the open-list and reporting neighbourhood. The nearest nodes are the aggregation defect recorded today (one missing edge, three findings) and the instruction-surface finding about reports being reachable but unread. Neither is honestly related: this asks what LANGUAGE a rendering should use and who it is for, while those ask how many rows a cause produces and whether a report is reachable at all. Linking them would put a false neighbour in front of anyone searching either.",
         "rationale": "Captured under the brainstorm skill; recorded as an idea, nothing promoted. Kept as one node rather than two because their idea 7 and idea 8 are the same complaint at different scopes and a fix to the rendering path would plausibly serve both.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-should-the-reachability-gate-attach-a-tools-parameters-only-to-the-types-it-writes",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Recorded as brainstorming on 2026-09-19 from flo2 F19 GENERALISED, not as a proposal.\n\nTHE OPTIONS.\n(a) NARROW THE POOL by extending the tool-to-type map until no tool is pooled into every type. Direct, and it turns 24 excused properties into a list somebody reads once. COUNTER: the map is hand-maintained, so this trades a silent false all-clear for a file that goes stale — unless the gate refuses a tool it cannot place, which is the real version of the option.\n(b) RANK BY WHETHER ANYTHING READS THE PROPERTY. `Requirement.kind` is urgent because `encoding_undecided` scolds a user about it on flo2's page; `Verification.location` is documented and read by nothing. A property a DETECTOR reads and no tool can write is a promise the product breaks in front of a user, and deserves a louder bucket than an unused declaration.\n(c) FIX THE TWO KNOWN CASES AND LEAVE THE GATE. Cheapest, and it is what the reporter says is worth doing regardless. COUNTER, theirs: two found by accident is weak evidence that two is the total, and this leaves the instrument still blind.\n(d) DROP THE PER-TYPE VIEW and report the flat name match with its known over-reporting, on the grounds that a noisy true signal beats a quiet false one. COUNTER: that is the naive match this instrument was explicitly built to replace, and it was replaced because the noise made it unread.\n\n⚠️ WHATEVER IS CHOSEN, THE TWO KNOWN CASES ARE SEPARABLE AND SMALL: a `kind` parameter on add_requirement, and a `location` on add_verification. The gate question is the one that decides whether a third case is found by a consumer or by the build.",
+        "kind": "exploratory",
+        "name": "OPEN — should the reachability gate attach each tool's parameters only to the types that tool actually writes, and should a property a detector READS be held to a stricter bar than one nothing reads?",
         "status": "proposed"
       }
     },
@@ -286009,6 +286211,20 @@
       }
     },
     {
+      "node_id": "fact:flo2-2026-09-19-evening-names-what-worked-determinism-the-cross-type-duplicate-guard-and-prose-currency",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.85,
+        "fact_type": "status",
+        "name": "What flo2 said must not regress, 2026-09-19 evening: deterministic prompt composition, the cross-type duplicate guard, prose_currency, and the two-sided accept",
+        "source": "flo2 reflow2_feedback.md, session of 2026-09-19 (evening)",
+        "statement": "Recorded as evidence a regression check can read later. ① gap_to_prompt BEING DETERMINISTIC (needs_llm plus text, no model run) 'turned an idea whose standing objection was \"every click is a model call\" into one where that is simply false'. The ask in F18 is to expose more of what it already builds, NOT to change what it does — so anything that makes this tool run a model by default would break the feature it enabled. ② THE DUPLICATE GUARD REACHING ACROSS NODE TYPES: creating a capability was refused because a TemporalFact recorded minutes earlier said something close, with the framing 'Recording what shipped and recording what must stay true are different acts on the same work, and they are supposed to read alike'; distinct_from then carried on. 'That is a hard thing to get right and it was right.' ③ set_capability_status returning prose_currency, naming that the description was written while the status was `planned`, quoting it, and saying only a person can judge: 'Nothing else in any tool I use does this.' ④ set_artifact_checksum requiring a disposition and then refusing design_holds without a change_type, with its reason — six artifacts drifted on three files and the tool made them judge each separately.",
+        "subject_id": "cap:gap-carries-a-reading",
+        "valid_from": "2026-09-19"
+      }
+    },
+    {
       "node_id": "fact:flo2-2026-09-19-names-what-worked-and-it-is-the-refusals-that-teach",
       "node_type": "TemporalFact",
       "properties": {
@@ -286078,6 +286294,24 @@
       }
     },
     {
+      "node_id": "fact:gap-to-prompt-takes-the-gap-as-an-object-and-reads-only-its-id-so-a-consumer-recomputes-every-gap-per-click",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.9,
+        "fact_type": "defect",
+        "name": "gap_to_prompt requires the whole gap OBJECT and reads only its id, so its consumer re-runs detect_gaps on every click to rebuild something the server discards",
+        "source": "flo2 reflow2_feedback.md, session of 2026-09-19 (evening)",
+        "statement": "FLO2 F22. The tool's own description is honest — 'THE REPLAYED GAP IS AN ECHO: only its `id` is read, and the server resolves the gap afresh' — and the shape contradicts it.\n\nMEASURED 2026-09-19 on the committed toolsnap: `required: ['gap']`, `gap` is of type `object`, and the PARAMETER's own description reads in full 'A `GapCandidate` previously returned by `detect_gaps`.' The echo caveat lives on the TOOL's description, not on the parameter, so a caller reading the parameter meets an object and no hint that a key would do.\n\nflo2 believed the shape, which is the right instinct: A PARAMETER'S TYPE IS LOUDER THAN ITS PROSE. Its `gapPrompt()` therefore re-runs detect_gaps on EVERY send to rebuild an object the server immediately throws away and re-resolves — a whole graph computation per click, for nothing.\n\n⭐ AND THE REPORTER FOUND THE BETTER FIX WHILE COMPLAINING: their redundant call is also how a stale chip gets refused with 'that is no longer open'. If gap_to_prompt answered a vanished gap with a DISTINGUISHABLE refusal, flo2 could drop the extra call entirely and still be correct — which closes the cost and the correctness question together, where taking an id alone closes only the first.",
+        "steps": [
+          "gap_to_prompt",
+          "detect_gaps"
+        ],
+        "subject_id": "cap:gap-carries-a-reading",
+        "valid_from": "2026-09-19"
+      }
+    },
+    {
       "node_id": "fact:gap-to-prompt-tells-the-agent-to-strip-the-vocabulary-its-own-description-says-to-keep",
       "node_type": "TemporalFact",
       "properties": {
@@ -286087,6 +286321,23 @@
         "statement": "FOUND 2026-08-20 while putting two real gaps to Anthony through the handshake — the tool contradicts ITSELF, in the one place a user's vocabulary is decided.\n\n=== THE TWO TEXTS, both served by the same tool ===\n\nThe PROMPT it emits, verbatim:\n\n    \"Rewrite this design gap as one plain-language question for a non-engineer.\n     No graph/systems-engineering jargon. Return only the question.\"\n\nThe TOOL'S OWN DESCRIPTION, verbatim:\n\n    \"Read who you are talking to (their `Contributor` description) and match that\n     domain; a `plain` question is not automatically one in their vocabulary, and\n     swapping vocabulary is not simplifying — a systems engineer wants `interface`\n     and `verification` kept.\"\n\nThe description learned the lesson. The template it emits did not. An agent that follows the template strips exactly the vocabulary the reader needs, and it will do so while the description sitting beside it says not to.\n\n=== WHY IT IS THE EXPENSIVE KIND OF CONTRADICTION ===\n\nThis is the same failure shape the revise-design skill already carries a correction for — a skill and a tool description disagreeing, where the resolution was that THE TOOL IS WHAT AN AGENT READS AT CALL TIME. Here both texts come from the same tool, so that tie-breaker does not apply, and the one an agent acts on is the WORSE one: a prompt is an instruction and a description is context, so the instruction wins.\n\n=== WHAT IT COSTS AN ARBITRARY USER'S PROJECT ===\n\ngap_to_prompt is the single point where a detector's vocabulary becomes a human's. A beamline scientist, a flight-test engineer, an acquisitions officer: each has a domain register, and 'no jargon' flattens all of them toward the same non-engineer default. The result is a question that is easy to read and impossible to answer precisely, put to the one person who could have answered it precisely. The standing correction on file is that a persona is a VOCABULARY SWAP, not a difficulty dial — and this template is a difficulty dial.\n\n=== EVIDENCE IT MATTERS, from the same session ===\n\nBoth gaps were answered against the description rather than the template — SE register kept, reflow2-internal jargon dropped. The resulting questions name the decomposition spine and the hosted tier, which is what makes them answerable in one word. The template's version would have said neither.\n\n=== A SECOND, SMALLER FINDING IN THE SAME RUN, and it is a CREDIT ===\n\nReusing a prompt id from a previous gap's round returned `rephrase_degraded: true` and fell back to the raw detector text rather than silently accepting a mismatched answer. It said it had degraded. That is exactly the behaviour Proposal 2 wants generalised, already working here.\n\n=== NOT FIXED, DELIBERATELY ===\n\nChanging that template changes what every gap question sounds like on every project reflow2 is used on. That is Anthony's call, not a silent edit.",
         "subject_id": "cap:gap-carries-a-reading",
         "valid_from": "2026-08-20"
+      }
+    },
+    {
+      "node_id": "fact:gap-to-prompt-welds-the-title-and-the-why-into-one-string-and-returns-only-the-string-so-the-one-consumer-splits-prose",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.95,
+        "fact_type": "defect",
+        "name": "gap_to_prompt holds the gap's title and its why as separate values, welds them into one prompt string, and returns only the string — so its one consumer splits reflow2's prose on a literal marker",
+        "source": "flo2 reflow2_feedback.md, session of 2026-09-19 (evening)",
+        "statement": "FLO2 F18, corrected and sharpened by its own author. flo2 shipped clickable findings on top of a property it calls 'the single best thing reflow2 gave flo2 this week': gap_to_prompt is DETERMINISTIC — it composes a prompt and runs no model — so flo2 folds reflow2's own account of a finding into the one model turn the person's message already costs, with no verb table of its own and routing that tracks upstream for free.\n\nTHE COST: the part worth having is welded into a string. flo2 runs `composed.split(/\\nWhy it matters:\\s*/)` in proto/packages/graph-reflow2/index.mjs. That marker is prose inside a string, in no tool schema, never promised, and rewording the template is a legitimate thing for any release to do. flo2 declares it on a capability and guards it with a test that fails loudly — a known exception, not a hidden one — and it is THE ONLY PLACE FLO2 BREACHES the black-box rule Anthony stated while cutting v0.65.0.\n\nMEASURED 2026-09-19 at crates/reflow2-core/src/detect.rs:1553: the request is built with `format!(\"… Gap: {}\\nWhy it matters: {}\", self.title, self.description)`. The server holds both halves as separate fields on the gap, joins them, and the reply carries the joined string alone. The seam is created and discarded in one statement.\n\nTHE CORRECTION THE AUTHOR MADE THEMSELVES, and it narrows the ask: gap_to_prompt is a TWO-PHASE protocol — call with empty `answers` for `{status: needs_llm, prompts}`, fill them and call again for `{status: ok, prompt}`. flo2 deliberately does only phase one, because phase two buys a nicely worded question for the price of a second model turn and clicking a finding would stop being free. So the ask is not to change the protocol: it is to return `gap: {id, title, why}` beside the prompts the server already assembled them into.",
+        "steps": [
+          "gap_to_prompt"
+        ],
+        "subject_id": "cap:gap-carries-a-reading",
+        "valid_from": "2026-09-19"
       }
     },
     {
@@ -286774,6 +287025,23 @@
       }
     },
     {
+      "node_id": "fact:neither-the-container-nor-the-kit-carries-the-toolsnaps-so-a-consumer-cannot-diff-the-contract-it-is-told-to-check",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.95,
+        "fact_type": "defect",
+        "name": "Neither the container image nor the consumer kit carries the tool schemas, so the artifact a consumer runs does not include the contract it is told to check against",
+        "source": "flo2 reflow2_feedback.md, session of 2026-09-19 (evening)",
+        "statement": "FLO2 F23, the packaging half of F21. Answering 'did v0.65.0 break flo2?' took four commands and all four needed the reflow2 source checked out, because the tool schemas live only in the source repository. flo2's droplet consumes the published container image and has no repository, so it cannot answer the question at all.\n\nMEASURED 2026-09-19 on this tree: `tools/toolsnaps/` appears in neither the Dockerfile nor .github/workflows/release.yml. The kit tarball is staged file by file (reflow2_init.py, reflow2_install.py and the rest) and the schemas are not among them. Five release assets shipped with v0.65.0 and none carries the contract.\n\n⭐ AND THE QUESTION IT UNLOCKS is the one flo2 actually needs under the black-box rule: 'what changed, between these two versions, for THESE twelve tools?' Today that is a shell script only the maintainer can run, against a checkout only the maintainer has.",
+        "steps": [
+          "release_report"
+        ],
+        "subject_id": "cap:release-publishes-a-container",
+        "valid_from": "2026-09-19"
+      }
+    },
+    {
       "node_id": "fact:nine-of-twenty-skills-are-edited-without-a-drift-signal",
       "node_type": "TemporalFact",
       "properties": {
@@ -286821,6 +287089,23 @@
         "statement": "`CONSTRAINS.note` and `GOVERNED_BY.note` were INSTANCES 5 AND 6 of the pattern this requirement names, and the requirement's own statement still says \"four times in two days\". Both were declared in schema/*.yaml, neither was reachable from its typed constructor, and both request structs carry `deny_unknown_fields` so the refusal named a shorter allowlist with no hint that a longer one existed. Fixed 2026-08-23.\n\nWHY IT MATTERS MORE THAN THE TWO FIELDS: this requirement asks for a COMPUTATION over the schema and the served surface that answers which declared properties no typed tool can set, and clause (b) says the computation must not count raw `create_node`/`create_edge` as reachability. That computation is still not built. Instances 5 and 6 were found the way the first four were — BY HAND, and this time not even by us: a consumer hit them, fell back to raw `create_edge` twice in one session, and reported it. Every instance so far has been found by a person noticing, which is precisely the evidence that the detector is owed rather than optional.\n\nA CHEAP TEST NOW EXISTS FOR WHOEVER BUILDS IT: `describe_schema(from, to)` already reports each edge type's declared properties, and the toolsnaps in tools/toolsnaps/ already pin every served tool's accepted parameters. The two sources needed to compute the answer are both committed and machine-readable, so the detector needs no new plumbing.",
         "subject_id": "req:declared-vocabulary-is-reachable-from-the-surface",
         "valid_from": "2026-08-23"
+      }
+    },
+    {
+      "node_id": "fact:one-gap-body-is-a-single-line-where-its-neighbours-carry-the-routing-and-it-fires-once-per-capability-on-a-young-design",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.8,
+        "fact_type": "finding",
+        "name": "One gap body is a single line where its neighbours carry a paragraph of routing, and it is the one that fires once per capability on a young design",
+        "source": "flo2 reflow2_feedback.md, session of 2026-09-19 (evening)",
+        "statement": "FLO2 F20, filed as a quality observation rather than a blocker, and it is the best evidence in the file for why flo2 owns no table of verbs. Probing three gap sources on flo2's graph: `closure_criterion_undeclared` and `unallocated_component` each answer with a paragraph that routes to WHO can answer and says whether the thing is even a defect — 'Closure is a report, not a gate'; 'Allocating without asking silently picks performance'. The reporter: 'the routing is already in your text, and it already differs by who can answer.'\n\n`unrealized_capability` answers with one line entire: \"'Generate a document from the design' has no artifact realizing it — what actually gets built for it?\"\n\nWHY THE ODD ONE OUT MATTERS MOST on the designs flo2 exists to serve: a weekend design three days old has nothing built, so this source fires once per capability — MEASURED at 17 times on flo2's own graph — each phrased as a thing to answer, with no hint that 'nothing built yet' may simply be where the project IS. A person reads seventeen of those as seventeen defects. The neighbouring aggregate finding ('Design laid out, but nothing built yet') states the phase correctly and this one does not inherit it.\n\nThe reporter's own bound: not a blocker, possibly deliberate, and worth one sentence in the body saying planned work is a normal state for a young design.",
+        "steps": [
+          "gap_to_prompt"
+        ],
+        "subject_id": "cap:gap-carries-a-reading",
+        "valid_from": "2026-09-19"
       }
     },
     {
@@ -287763,6 +288048,24 @@
       }
     },
     {
+      "node_id": "fact:the-contract-is-the-toolsnaps-and-no-served-tool-will-hand-a-session-one-tools-input-schema",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.9,
+        "fact_type": "defect",
+        "name": "The tool schemas are the seam contract and nothing served will hand a session one tool's input schema — leaving roughly 19 rejected calls that were within-version shapes, not drift",
+        "source": "flo2 reflow2_feedback.md, session of 2026-09-19 (evening)",
+        "statement": "FLO2 F21, and its author's own addendum says v0.65.0 MOSTLY CLOSED IT unprompted: the id aliases on 25 typed-key tools, `props` accepting `properties`, and the refusal that names the fields missing from THIS call 'would have prevented most of the ~19 rejections tabled above'.\n\nTHE RESIDUE IS ONE THING AND IT IS MEASURED 2026-09-19: there is still no served way to read a single tool's `inputSchema`. `describe_schema` answers for NODE types (it will say a Verification has a `verifies` edge; it will not say add_verification wants `[{target_type, target_id}]`, because that is an argument shape, not a node property). `find_tools` returns `parameters` as a list of NAMES without shapes. `tools/list` carries the real schema and is a protocol call an in-session agent cannot reach. No served tool returns an inputSchema.\n\nWHY IT IS NOW LOAD-BEARING rather than a convenience: flo2 accepted that reflow2's committed tool schemas ARE the seam contract, so 'read the contract' has to mean something a consumer can do from inside a session.\n\n⚠️ AND A CORRECTION FLO2 VOLUNTEERED, which sharpens how this project should read their reports: v0.65.0's changelog noted an earlier flo2 report had filed eight guessed names as schema drift when five of six had never existed in any release. They accept that hit, and they label the rejections in this entry as within-version shapes with no served way to look them up, explicitly NOT as drift. That distinction is the whole of this entry, and it is a fair one.",
+        "steps": [
+          "find_tools",
+          "describe_schema"
+        ],
+        "subject_id": "cap:every-tool-carries-the-users-phrasing-and-the-corpus-is-the-test",
+        "valid_from": "2026-09-19"
+      }
+    },
+    {
       "node_id": "fact:the-contracts-are-the-same-shape-and-the-code-says-so-twice",
       "node_type": "TemporalFact",
       "properties": {
@@ -288645,6 +288948,23 @@
         "statement": "ROOT CAUSE OF THE UNCHECKED-PROSE CLASS, and it OVERTURNS the conclusion drawn from the prevalence survey earlier the same day.\n\nTHE SURVEY MEASURED HOW MUCH PROSE IS FALSE (about 2%) AND INFERRED A REPAIR FROM THE RATE. That skipped the step that matters: nobody asked WHY these sentences are false, or generated candidate causes and took a measurement that could tell them apart. Anthony pushed on exactly that — a conclusion carrying an untested \"what would refute this\" is not a root cause.\n\n**THE DISCRIMINATING QUESTION: WERE THESE SENTENCES EVER TRUE?**\n· \"Prose ROTS as code changes\" predicts each was true when written and outgrown later.\n· \"Prose is BORN FALSE\" predicts it never matched the code.\nOpposite repairs, and `git log -S` settles it.\n\n**MEASURED ACROSS THE SIX KNOWN INSTANCES:**\n\n① `loop_status` \"never reached the design\" — **BORN FALSE, 2026-07-21 (4f6e427).** At birth, line 222 computed `questions.iter().filter(|q| q.status == \"answered\").count()` and line 279 asserted the answer never reached the design. **The counter and the claim it cannot support were written in ONE COMMIT, 57 LINES APART.** Unreported for 26 days.\n② `describe_schema` ranking presented as modelled fit — born false structurally: the rank has always measured endpoint enumeration, and enumeration has never been what it is presented as.\n③ `authored_by` \"never enlarges a blast radius\" — **NOT FALSE.** True of propagation; it misleads by omission. Counted honestly rather than folded in.\n④ `unresolved_setup` \"nothing follows through\" — **BORN FALSE, 2026-07-17 (aea1fda), and the cleanest case.** At birth the loop had NO CONDITION AT ALL: it reported every ANTICIPATES edge with that message while checking nothing about follow-through. False for every edge from the first line of code.\n⑤ `Question.answer` \"the design nodes it produced are linked separately\" — **BORN FALSE, 2026-07-18 (069a28d).** The ANSWERS edge count in `nodes.rs` at that commit was ZERO. It described a structure that would not exist for 46 days.\n⑥ `gap_to_prompt` \"REPLAY UNCHANGED … re-keys every answer\" — **THE ONE GENUINE ROT.** True when written 2026-08-23, made false by the guard fix on 2026-09-02 — and caught in the same session that broke it.\n\n**TALLY: 4 BORN FALSE, 1 TRUE-THEN-ROTTED (caught within the hour), 1 NOT ACTUALLY FALSE.**\n\n⭐ **SO THE PROSE DOES NOT ROT. IT IS BORN FALSE.** There is no ageing mechanism to defend against, which is why the survey found no rot by sampling and why age is uncorrelated with falsity.\n\n⭐ **AND THE AUTHOR HAD THE CODE IN FRONT OF THEM.** In ① the computation and the sentence sit in one diff; in ④ the message describes a check that the same function visibly does not perform. The gap is not knowledge and not time — it is that a sentence describing a computation is written in a different mode from the computation, and NOTHING FORCES A COMPARISON AT THAT MOMENT.\n\n**WHAT THIS CHANGES:**\n· Auditing old prose is wrong, and MORE wrong than the prevalence survey said — not merely low-yield, but aimed at a mechanism that does not exist.\n· \"Pin the claims that can be pinned\" survives, but its TIMING is the whole point: the pin must be written WITH the claim, at authoring time. A retrofitted test cannot catch a sentence that was false before it was committed.\n· The untested alternative that made the earlier conclusion unsafe — \"rot concentrates on heavily-used surfaces\" — is IRRELEVANT to 4 of 6, because there is no wear. That hole is closed by a different route than the survey it threatened.\n\n⚠️ BOUNDS: six instances, all found by users, so this is the population of KNOWN failures and not a sample of all prose. Birth dates come from `git log -S` on a distinctive phrase, which finds the commit that introduced the WORDING — a sentence reworded later would date to the rewording. ①④⑤ were each confirmed by reading the code AT that commit rather than inferring from the date.",
         "subject_id": "cmp:foundation-vocabulary",
         "valid_from": "2026-09-02"
+      }
+    },
+    {
+      "node_id": "fact:the-reachability-gate-pools-54-tools-parameter-names-into-every-type-so-it-reported-zero-holes-while-two-properties-had-no-writer",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.95,
+        "fact_type": "defect",
+        "name": "The instrument built to catch properties with no typed writer reported 0 HOLE while two had none, because it pools every non-constructor tool's parameter NAMES into every type's offered set",
+        "source": "flo2 reflow2_feedback.md, session of 2026-09-19 (evening), entries F19 and F19 GENERALISED",
+        "statement": "FLO2 F19: `Requirement.kind` is listed by describe_schema, is READ by the `encoding_undecided` detector that flo2's own users see on the page, and is REJECTED by add_requirement; no `set_requirement_kind` exists. A second instance found the same accidental way: `Verification.location`, documented as 'Path to the test/inspection artifact', rejected by add_verification, with no setter. Their ask was an audit, on the honest grounds that finding two by accident is weak evidence that two is the total.\n\n⭐ THE AUDIT ALREADY EXISTS AND RUNS IN EVERY GATE RUN — tools/vocabulary_reach.py --check, which reported on this same tree: 'OK — 29 unreachable, none new (0 HOLE, 16 written by an operation, 13 unused)'. It was built for exactly this class and it called both of flo2's cases reachable.\n\nMEASURED 2026-09-19, why it cannot see them. tool_parameters() builds a per-type view as that type's constructor parameters PLUS `shared`, where `shared` is every parameter of every tool NOT known to write some type — 54 tools contributing 109 distinct NAMES, attached to EVERY node type at once. So a property counts as writable when an unrelated tool happens to use the same word:\n  · `Requirement.kind` looks offered because `forecast_readiness` and `gate_on` each take a parameter called `kind`. Neither writes a Requirement.\n  · `Verification.location` looks offered because `register_alternative` takes a `location` (the path to a per-branch design export). Nothing to do with a Verification.\nBLAST RADIUS, same measurement: 24 of 238 declared node properties are counted reachable ONLY on the strength of that pool, so 24 is the upper bound of what the gate may be excusing and 2 are confirmed false by direct call.\n\n⚠️ THE POOL IS DELIBERATE AND ITS REASON IS SOUND — the comment says keeping setters, relation tools and indirect writers in is 'what stops this becoming the naive name-match the module docstring rejects for over-reporting'. The defect is that it attaches them to every type rather than to the types they write, so avoiding a false alarm bought a false all-clear. The fix is to narrow the pool by extending the tool-to-type map, NOT to build the audit flo2 asked for: it exists.\n\n⭐ AND THE SHAPE FLO2 NAMES: this is F8/F9/F14 in reverse. There a field existed and was not served, and absence was wrongly inferred from a reply. Here the field exists, a detector READS it, and it genuinely has no typed writer — and the instrument that should have said so was reading names rather than tools.",
+        "steps": [
+          "ci-gate"
+        ],
+        "subject_id": "art:vocabulary-reach",
+        "valid_from": "2026-09-19"
       }
     },
     {
@@ -293548,7 +293868,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:a010b9d93e85731713859cc4907815ffbbceffbe507dfc3667d9e5301cf26abb",
+  "prev_content_hash": "sha256:d62891209593aca34441fa0bc3a9f5d077338f42ac49f6d977c19c98cfec1085",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -294146,8 +294466,8 @@
     "schema_version": 1
   },
   "taken_at": {
-    "branch": "the-memory-boundary-is-settled-and-flo2s-report-is-triaged",
-    "commit": "f997e743955f2bcba94cdddd293dbccd438ba321",
+    "branch": "flo2s-evening-report-is-triaged",
+    "commit": "45e564f997c2fd6d784ff1a90b4cce62889b30d2",
     "dirty": true
   }
 }
