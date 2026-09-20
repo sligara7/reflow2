@@ -344,6 +344,36 @@ pub(crate) struct ReplacedField {
     prior: JsonValue,
 }
 
+/// A text field this call made SHORTER, and by how much.
+///
+/// # Why this exists
+///
+/// flo2 measured it on 2026-09-19: thirteen full-field rewrites in one session,
+/// **two of which silently dropped a load-bearing paragraph**. One lost the
+/// clause bounding when a rule binds; one lost the paragraph explaining that a
+/// requirement pulls against another, and it had to be restored in a second
+/// pass. Both were caught by the author re-reading their own call, and neither
+/// was caught by anything reflow2 said. Their words: every other entry in that
+/// report costs a retry or a confusing message, and *"this one degrades the
+/// record permanently unless a human re-reads a four-thousand-character field
+/// character by character, which nobody does twice."*
+///
+/// The prior value was already returned — that is what makes the loss
+/// recoverable — but it arrives AFTER the write and nothing compared old to
+/// new. Comparing lengths is trivial and would have caught both instantly.
+///
+/// 🛑 **A REPORT, NEVER A GATE.** Refusing a shrink without a flag was
+/// considered and rejected: deleting on purpose is a legitimate edit, and a
+/// permission flag would tax every honest one. This says what happened and
+/// leaves the judgement where it belongs.
+#[derive(serde::Serialize)]
+pub(crate) struct ShortenedField {
+    field: String,
+    before_chars: usize,
+    after_chars: usize,
+    removed_chars: usize,
+}
+
 /// What a constructor call did to a node that was ALREADY THERE.
 ///
 /// # Why this exists
@@ -413,6 +443,11 @@ pub(crate) struct Revision {
     /// only ones the undo instruction now applies to.
     #[serde(skip_serializing_if = "Vec::is_empty")]
     fields_at_risk: Vec<String>,
+    /// Text fields this call made shorter, longest loss first. Absent when the
+    /// call removed no text, so an ordinary enrichment is unchanged and only a
+    /// caller who actually shortened something is told.
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    shortened: Vec<ShortenedField>,
     note: String,
 }
 
@@ -548,16 +583,37 @@ pub(crate) fn revision_of(
     let mut replaced = Vec::new();
     let mut added: Vec<String> = Vec::new();
 
+    let mut shortened: Vec<ShortenedField> = Vec::new();
+
     for (key, new_value) in &now.properties {
         match prior.properties.get(key) {
-            Some(old) if old != new_value => replaced.push(ReplacedField {
-                field: key.clone(),
-                prior: serde_json::to_value(old).unwrap_or(JsonValue::Null),
-            }),
+            Some(old) if old != new_value => {
+                // Only TEXT can be shortened in the sense that matters: a
+                // paragraph going missing. A number changing is not a loss.
+                if let (Some(before), Some(after)) = (
+                    serde_json::to_value(old)
+                        .ok()
+                        .and_then(|v| v.as_str().map(|s| s.chars().count())),
+                    new_value.as_str().map(|s| s.chars().count()),
+                ) && before > after
+                {
+                    shortened.push(ShortenedField {
+                        field: key.clone(),
+                        before_chars: before,
+                        after_chars: after,
+                        removed_chars: before - after,
+                    });
+                }
+                replaced.push(ReplacedField {
+                    field: key.clone(),
+                    prior: serde_json::to_value(old).unwrap_or(JsonValue::Null),
+                });
+            }
             Some(_) => {}
             None => added.push(key.clone()),
         }
     }
+    shortened.sort_by_key(|s| std::cmp::Reverse(s.removed_chars));
     replaced.sort_by(|a, b| a.field.cmp(&b.field));
     added.sort();
 
@@ -678,6 +734,30 @@ pub(crate) fn revision_of(
         )
     };
 
+    // THE SHRINK SENTENCE GOES FIRST when there is one. The rest of this note
+    // explains where the prior state lives; this says what left, which is the
+    // part a caller cannot recover by reading more carefully.
+    let note = if shortened.is_empty() {
+        note
+    } else {
+        let removed: usize = shortened.iter().map(|s| s.removed_chars).sum();
+        format!(
+            "⚠️ THIS CALL REMOVED {removed} CHARACTER(S) OF TEXT: {}. That may be exactly what \
+             you meant. It is reported because a rewrite that drops a paragraph and one that \
+             does not used to produce the same reply, and two paragraphs were lost that way in \
+             one session before anybody noticed. The prior value of each field is in `replaced` \
+             above. {note}",
+            shortened
+                .iter()
+                .map(|s| format!(
+                    "`{}` {} → {} chars (−{})",
+                    s.field, s.before_chars, s.after_chars, s.removed_chars
+                ))
+                .collect::<Vec<_>>()
+                .join(", "),
+        )
+    };
+
     Some(Revision {
         replaced,
         added,
@@ -686,6 +766,7 @@ pub(crate) fn revision_of(
         prior_state_preserved_in: preserved,
         fields_preserved_in,
         fields_at_risk,
+        shortened,
         note,
     })
 }

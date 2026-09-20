@@ -33,6 +33,15 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **A revising write says what it removed.** flo2 measured thirteen full-field rewrites in one
+  session, two of which silently dropped a load-bearing paragraph; both were caught only by the
+  author re-reading their own call. The prior value was already returned, which is what made the
+  loss recoverable, but nothing compared old to new. A revision reply now carries `shortened` —
+  the field, the sizes before and after, and the characters removed, longest loss first — and the
+  note leads with it. Absent when nothing was removed, so an ordinary enrichment is unchanged.
+  **A report, not a gate:** refusing a shrink was considered and rejected, because deleting on
+  purpose is a legitimate edit and a permission flag would tax every honest one.
+
 - **A composed prompt serves the pieces it was composed from, and a gap that has closed refuses in
   a way a consumer can branch on.** flo2 F18 and F22, under the black-box rule: a consumer should
   never have to read reflow2's prose to work. `gap_to_prompt` builds its prompt by joining the
