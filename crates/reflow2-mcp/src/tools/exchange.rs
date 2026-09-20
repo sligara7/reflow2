@@ -685,6 +685,9 @@ impl ReflowService {
                        incident where a requirement said \"NOT YET DECIDED … his call to make\" \
                        three weeks after the call had been made, and the owner was asked the \
                        settled question a second time. \
+                       PASS `chose` TO SAY WHICH OPTION WON, in your own words: the settling act \
+                       then records what it settled without rewriting the deliberation that \
+                       produced it. \
                        Ask for this to mark a decision accepted with the owner's name.",
         annotations(read_only_hint = false, destructive_hint = false)
     )]
@@ -718,6 +721,16 @@ impl ReflowService {
             req.approver.as_deref(),
             req.acted_at.as_deref(),
         )?;
+        // What the settlement CHOSE, when the settler said so. Written only
+        // when supplied, so a status move that names no outcome is unchanged
+        // and absence keeps meaning nobody said.
+        let node = crate::tools::capture::set_optional_props(
+            &mut g,
+            reflow2_core::nodes::node::DECISION,
+            &req.decision_id,
+            &[("chose", req.chose.as_deref())],
+        )?
+        .map_or(node, NodeDto::from);
         // TWO DIFFERENT QUESTIONS, and they used to share one flag.
         //
         // WHOSE WORD IS THIS? `accepted` AND `deferred` are the owner's act —

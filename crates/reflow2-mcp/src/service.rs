@@ -5528,6 +5528,23 @@ pub struct SetDecisionStatusReq {
     /// When the approver acted, as a plain date. Stored on the approver edge.
     #[serde(default)]
     pub acted_at: Option<String>,
+    /// WHAT THIS SETTLEMENT CHOSE, in your own words — which option won, and
+    /// why the others did not. Written onto the Decision as `chose`.
+    ///
+    /// It exists so the act that settles a question can say what it settled
+    /// WITHOUT rewriting the deliberation that produced it. flo2, 2026-09-19,
+    /// settled two decisions correctly and left both still NAMED
+    /// "OPEN — is …?" with bodies ending "Options, none chosen", because the
+    /// only route was re-sending the whole node — the operation measured the
+    /// same week to silently drop paragraphs. An accepted Decision that still
+    /// reads as an open question is worse than an unsettled one, because a
+    /// later reader trusts the prose over the status field.
+    ///
+    /// Optional, and absent means nobody said. `collapse_decision` remains the
+    /// tool when the options are REGISTERED alternatives; this is for the
+    /// common case where they live in the decision's own prose.
+    #[serde(default)]
+    pub chose: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]

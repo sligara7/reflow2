@@ -110,6 +110,20 @@ schema:
         decision: { type: string, required: true, fulltext: true, description: "What was decided." }
         rationale: { type: string, fulltext: true }
         alternatives: { type: string, description: "JSON array of options considered and why they lost." }
+        # WHAT THE SETTLEMENT CHOSE, added 2026-09-20 from flo2's F12.
+        #
+        # Settling two decisions correctly left both still NAMED "OPEN — is …?"
+        # with bodies ending "Options, none chosen", because the only way to say
+        # which option won was to re-send the whole node — the operation
+        # measured the same week to silently drop paragraphs. An accepted
+        # Decision that still reads as an open question is worse than an
+        # unsettled one, because a later reader trusts the prose over the status.
+        #
+        # DISTINCT FROM `alternatives`, which holds registered forks and why
+        # they lost: this holds the settler's own sentence for a decision whose
+        # options live in its prose, which is exactly the case collapse_decision
+        # cannot reach.
+        chose: { type: string, fulltext: true, description: "WHAT THE SETTLEMENT CHOSE, in the settler's own words — which option won, and why the others did not. Written by set_decision_status at the moment the status moves, so the act that settles a question can say what it settled WITHOUT rewriting the deliberation that produced it." }
         # BL: `proposed` is the default on purpose (2026-07-25, req:decision-status-not-asserted).
         # It used to be `accepted`, so recording an open question asserted that it
         # had been settled and reasoned — the same forgery dec:certainty-derived
