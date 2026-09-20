@@ -123,6 +123,7 @@ async fn the_same_decision_is_debt_while_proposed_and_not_while_deferred() {
         status: "deferred".into(),
         approver: Some("who:owner".into()),
         acted_at: Some("2026-09-12".into()),
+        chose: None,
     })));
 
     let after = j!(s.loop_status(Parameters(LoopScopeReq {
@@ -198,6 +199,7 @@ async fn no_gap_detector_raises_a_deferred_decision() {
             status: "deferred".into(),
             approver: Some("who:owner".into()),
             acted_at: None,
+            chose: None,
         })));
     }
     let after = j!(s.detect_gaps(Parameters(GapScopeReq {
@@ -251,6 +253,7 @@ async fn deferring_wants_the_owners_name() {
         status: "deferred".into(),
         approver: None,
         acted_at: None,
+        chose: None,
     })));
     let text = moved.to_string();
     assert!(

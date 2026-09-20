@@ -44,8 +44,6 @@ This file is the third view: *what changed, and when*.
   and that nothing would catch a reversal, and never named `incoming`, which has always existed.
   Believing no such flag existed, flo2 drew two edges backwards, then routed two more through the
   generic edge tool by hand and wrote a script to verify direction.
-
-
 ### Fixed
 
 - **`ility_report` bounds its reply.** It answered 30,301 characters against a 30,000 budget and was
@@ -56,6 +54,17 @@ This file is the third view: *what changed, and when*.
 
 
 ### Added
+
+- **Settling a decision records which option won.** `set_decision_status` takes `chose`: which
+  option won and why the others did not, in the settler's own words, written onto the Decision.
+  flo2 settled two decisions correctly and left both still named "OPEN — is …?" with bodies ending
+  "Options, none chosen", because the only route was re-sending the whole node — the operation
+  measured the same week to silently drop a load-bearing paragraph. An accepted decision that still
+  reads as an open question is worse than an unsettled one, because a later reader trusts the prose
+  over the status. `collapse_decision` stays the tool when the options are registered alternatives;
+  this is for the common case where they live in the decision's own prose. Optional, and absent
+  still means nobody said. It records the outcome and does not substitute for the owner's word: a
+  settlement with no approver is still reported as carrying nobody's name.
 
 - **A revising write says what it removed.** flo2 measured thirteen full-field rewrites in one
   session, two of which silently dropped a load-bearing paragraph; both were caught only by the
