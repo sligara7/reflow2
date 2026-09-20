@@ -1307,10 +1307,23 @@ impl ReflowService {
     )]
     pub async fn ility_report(
         &self,
-        Parameters(_req): Parameters<IlityReportReq>,
+        Parameters(req): Parameters<crate::reply_budget::BudgetReq>,
     ) -> Result<CallToolResult, McpError> {
         let g = self.graph.read().await;
-        ok_json(g.ility_report().map_err(dyno_err)?)
+        // BOUNDED 2026-09-20, when this design's own growth carried the reply
+        // past 30,000 characters and the instrument caught it as the only
+        // UNBOUNDED overflow of 40 no-argument reads. A report that cannot be
+        // narrowed is refused whole by a client, and the reader then sees a
+        // wall of harness text rather than the answer — which is the failure
+        // this budget exists to prevent, arriving by the design getting bigger
+        // rather than by anything changing here.
+        let full = serde_json::to_value(g.ility_report().map_err(dyno_err)?)
+            .map_err(crate::service::ser_err)?;
+        ok_json(crate::reply_budget::bound_reply_sampling(
+            full,
+            req.budget(),
+            "Read one quality attribute in full with get_node on the requirement or constraint it names.",
+        ))
     }
 
     #[tool(

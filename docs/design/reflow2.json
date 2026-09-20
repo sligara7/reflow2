@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:fe1d9b7df3db5fc3f18c72fb0afcc5fc55ef5508489c3109b1f921641dc0235f",
+  "content_hash": "sha256:c041d52fb7c73f2b1c05693c0e4fd0e98bc6d1d616a7072b7a9520dce63fc2ec",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -3671,6 +3671,14 @@
         "evidence": "The GitHub tandem idea (2026-07-25) settled the architectural point this one rests on: MCP composes AT THE AGENT, so a pairing lives in a served skill that knows both surfaces, costs the core nothing, and must be additive and never required. The same ruling decides how expensive a Blender pairing is before any of its merits are weighed."
       },
       "to_id": "dec:idea-pair-with-mcp-for-blender-as-the-hands-that-make-and-show-the-cad-artifact"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "dec:idea-a-detector-can-read-the-phase-the-design-already-declares",
+      "properties": {
+        "evidence": "That 2026-09-02 idea asks whether a detector should read the phase the design already declares; if flo2's artifact count shows a real early-building complaint, this is its second instance and belongs there rather than in a per-body sentence."
+      },
+      "to_id": "fact:the-per-capability-build-question-is-already-silent-while-nothing-is-built-so-the-promoted-sentence-was-unreachable"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -24614,6 +24622,14 @@
     },
     {
       "edge_type": "BLOCKS",
+      "from_id": "fact:the-per-capability-build-question-is-already-silent-while-nothing-is-built-so-the-promoted-sentence-was-unreachable",
+      "properties": {
+        "evidence": "The cheapest option that idea offered is unreachable, so the choice among its options cannot be made until the artifact count is known."
+      },
+      "to_id": "dec:idea-should-a-gap-body-say-when-the-state-it-reports-is-normal-for-the-phase"
+    },
+    {
+      "edge_type": "BLOCKS",
       "from_id": "req:kit-reaches-the-agent",
       "properties": {
         "evidence": "The install reported success while leaving the kit invisible to the harness in the target repo. dynograph-foundation, 2026-07-28."
@@ -24847,6 +24863,16 @@
         "validation_status": "unvalidated"
       },
       "to_id": "fact:defect-two-prescribed-layer-pairs-are-missing-so-a-check-beside-its-ruling-is-refused-as-a-duplicate"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "art:tools-coherence",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The tool declared an empty request struct, so there was no parameter a caller could narrow with and no branch that could trim; every neighbouring report that grew past the cap had one.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:a-report-with-no-way-to-narrow-itself-crossed-its-cap-because-the-design-grew-not-because-anything-changed"
     },
     {
       "edge_type": "CAUSES",
@@ -25361,6 +25387,16 @@
         "validation_status": "unvalidated"
       },
       "to_id": "dec:idea-what-belongs-in-the-graph-and-what-belongs-in-an-agents-memory-and-why-the-rule-keeps-losing"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:a-report-with-no-way-to-narrow-itself-crossed-its-cap-because-the-design-grew-not-because-anything-changed",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The measured overflow is what this bounds.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "chg:the-ility-report-is-bounded-when-the-designs-own-growth-crossed-the-cap"
     },
     {
       "edge_type": "CAUSES",
@@ -26128,6 +26164,16 @@
         "validation_status": "unvalidated"
       },
       "to_id": "fact:the-servers-resident-memory-is-export-retention-not-rocksdb-2026-09-13"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "req:a-finding-says-when-the-state-it-reports-is-normal-for-the-phase",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The requirement was accepted from a report's framing without the artifact count that decides whether the case it describes can arise, and the detector's own guard makes that case impossible.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:the-per-capability-build-question-is-already-silent-while-nothing-is-built-so-the-promoted-sentence-was-unreachable"
     },
     {
       "edge_type": "CAUSES",
@@ -49450,6 +49496,24 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-ility-report-is-bounded-when-the-designs-own-growth-crossed-the-cap",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-ility-report-is-bounded-when-the-designs-own-growth-crossed-the-cap",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-image-smoke-waits-for-the-store-instead-of-breaking-on-running",
       "properties": {
         "accepted_baseline": true,
@@ -55885,6 +55949,15 @@
         "evidence": "alignment=supporting. That 2026-08-09 pass established the mechanism — the RwLock serialises access, not intent, so a parallel batch carries no ordering and Node not found is the correct answer. This pass confirms it holds for a different tool pair twenty-one days later, and confirms its own stated limit is still unmet: neither pass reproduced it with a concurrent client."
       },
       "to_id": "fact:the-decision-race-is-caller-ordering-not-read-after-write"
+    },
+    {
+      "edge_type": "CONTRADICTS",
+      "from_id": "fact:the-per-capability-build-question-is-already-silent-while-nothing-is-built-so-the-promoted-sentence-was-unreachable",
+      "properties": {
+        "alignment": "opposing",
+        "evidence": "The report's framing implies the finding fires while nothing is built; the guard makes that impossible, so the seventeen were on a design that had started building."
+      },
+      "to_id": "fact:one-gap-body-is-a-single-line-where-its-neighbours-carry-the-routing-and-it-fires-once-per-capability-on-a-young-design"
     },
     {
       "edge_type": "CONTRADICTS",
@@ -73446,6 +73519,12 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:every-oversized-reply-offers-a-bound",
+      "properties": {},
+      "to_id": "fact:a-report-with-no-way-to-narrow-itself-crossed-its-cap-because-the-design-grew-not-because-anything-changed"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "cap:every-tool-carries-the-users-phrasing-and-the-corpus-is-the-test",
       "properties": {},
       "to_id": "fact:flo2-2026-09-19-addendum-the-two-finders-worked-and-both-discoveries-came-from-them"
@@ -74745,6 +74824,12 @@
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "fact:the-live-graph-does-not-branch-so-two-open-prs-collide"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "req:a-finding-says-when-the-state-it-reports-is-normal-for-the-phase",
+      "properties": {},
+      "to_id": "fact:the-per-capability-build-question-is-already-silent-while-nothing-is-built-so-the-promoted-sentence-was-unreachable"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -230112,6 +230197,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:the-build-question-is-silent-while-nothing-is-built-test",
+      "properties": {
+        "completeness": "partial",
+        "conformance": "unchecked"
+      },
+      "to_id": "req:a-finding-says-when-the-state-it-reports-is-normal-for-the-phase"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:the-export-can-be-ordered-before-its-writes",
       "properties": {
         "completeness": "partial",
@@ -236387,6 +236481,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:the-build-question-is-silent-while-nothing-is-built-and-asked-once-building-starts",
+      "properties": {},
+      "to_id": "req:a-finding-says-when-the-state-it-reports-is-normal-for-the-phase"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:the-capture-skills-do-not-hand-the-vocabulary-back",
       "properties": {},
       "to_id": "cap:the-design-interview-precedes-the-capture"
@@ -239200,6 +239300,14 @@
         "action": "created"
       },
       "to_id": "art:test-vocabulary-reach"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:the-build-question-is-silent-while-nothing-is-built-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:the-build-question-is-silent-while-nothing-is-built-test"
     },
     {
       "edge_type": "YIELDED",
@@ -242882,7 +242990,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:96c7ea646cc2d038a72adfd5e1b75f67e17222717e1f898ac001191bfdc81fe5",
+        "checksum": "sha256:dbfb83e1e9a271383240ba2691d96e30e13504eea55e87fd0d9735f134fa5f0f",
         "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
@@ -244142,6 +244250,18 @@
       }
     },
     {
+      "node_id": "art:the-build-question-is-silent-while-nothing-is-built-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:bc2c77f761e7a7142338dde8baf3a486527f4b982ce1165b120651bd4d471c0d",
+        "checksum_basis": "measured",
+        "location": "crates/reflow2-core/tests/a_finding_says_when_the_state_is_normal_for_the_phase.rs",
+        "name": "a_finding_says_when_the_state_is_normal_for_the_phase.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:the-export-can-be-ordered-before-its-writes",
       "node_type": "Artifact",
       "properties": {
@@ -244264,7 +244384,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b1deebf563c6f8e8e66d7885cc7d007262fd2cee33ac3f69cb166eebde07bd85",
+        "checksum": "sha256:109ed187e81105f8e89464aec4308925349fce364a78087fefe91b9e839ed237",
         "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
@@ -256660,6 +256780,17 @@
         "change_type": "defect_fix",
         "name": "The `do-ideas-form-a-graph` → `exploratory-staging` dependency is retracted — it asserted DISTINCTNESS, not dependency, and made a real dependency unreadable",
         "subject": "record"
+      }
+    },
+    {
+      "node_id": "chg:the-ility-report-is-bounded-when-the-designs-own-growth-crossed-the-cap",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-09-20",
+        "name": "The ility report is bounded, after the design's own growth carried it past the cap",
+        "rationale": "Caught by tools/replies_are_bounded.py during an ordinary gate run on 2026-09-20. Not planned work: the session's own records grew the design past 30,000 characters.",
+        "summary": "coherence.rs: ility_report takes the shared budget request and bounds its reply by sampling; service.rs: the empty request struct it used is removed. Plus a test pinning that the per-capability build question stays silent while nothing is built."
       }
     },
     {
@@ -273655,6 +273786,16 @@
       }
     },
     {
+      "node_id": "frag:art:the-build-question-is-silent-while-nothing-is-built-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered a_finding_says_when_the_state_is_normal_for_the_phase.rs"
+      }
+    },
+    {
       "node_id": "frag:art:the-export-can-be-ordered-before-its-writes",
       "node_type": "Fragment",
       "properties": {
@@ -283701,6 +283842,20 @@
       }
     },
     {
+      "node_id": "fact:a-report-with-no-way-to-narrow-itself-crossed-its-cap-because-the-design-grew-not-because-anything-changed",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.95,
+        "fact_type": "defect",
+        "name": "A report with no way to narrow itself crossed its reply cap because the design GREW, not because anything about the report changed",
+        "source": "tools/replies_are_bounded.py against the live export, 2026-09-20",
+        "statement": "MEASURED 2026-09-20 by the gate that seeds a real design from the committed export and calls every no-argument read tool: `ility_report` answered 30,301 characters against a 30,000 budget and was the ONLY UNBOUNDED overflow of the 40 measured. Five other reports also exceeded the cap and all five narrow themselves, so the instrument reported them and passed.\n\n⭐ NOTHING ABOUT THE REPORT CHANGED. The session's own records — a release, two triages, twelve settled ideas and four increments — grew the design past the line. That is the failure mode the reply budget exists for arriving by growth rather than by an edit, which is the case a test written once at a fixed size can never catch and a gate run against the real export catches for free.\n\nFIXED IN THE SAME PASS: the tool took an empty request struct, which is why it had nowhere to put a bound; it now takes the shared budget request and samples like its neighbours. The counts are never budgeted away, so a shorter answer is not a quieter one.",
+        "subject_id": "cap:every-oversized-reply-offers-a-bound",
+        "valid_from": "2026-09-20"
+      }
+    },
+    {
       "node_id": "fact:a-retired-dependencys-facts-keep-describing-this-project",
       "node_type": "TemporalFact",
       "properties": {
@@ -290189,6 +290344,23 @@
       }
     },
     {
+      "node_id": "fact:the-per-capability-build-question-is-already-silent-while-nothing-is-built-so-the-promoted-sentence-was-unreachable",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.95,
+        "fact_type": "finding",
+        "name": "The per-capability build question is ALREADY silent while nothing is built, so the promoted phase sentence was unreachable code and the premise needs one number from the reporter",
+        "source": "Measured while building req:a-finding-says-when-the-state-it-reports-is-normal-for-the-phase, 2026-09-20",
+        "statement": "PROMOTED 2026-09-20 on Anthony's word from flo2 F20: put one sentence in the unrealized-capability body saying that having built nothing is a normal stage, because it fires once per capability — 17 times on their three-day-old graph — and a person reads seventeen of those as seventeen defects.\n\n⭐ MEASURED WHILE BUILDING IT, AND IT CHANGES THE ANSWER. detect.rs guards the whole detector with `if pop.artifacts == 0 { return Ok(()); }`. A design with NOTHING BUILT raises none of these findings at all. A sentence conditional on that case is unreachable, and a test written against it failed by finding zero where it expected three — which is how this was caught rather than shipped.\n\n⚠️ SO FLO2'S SEVENTEEN WERE RAISED ON A DESIGN THAT HAD ALREADY STARTED BUILDING, where 'what actually gets built for this?' is the live forward-looking question the finding exists to ask. Their complaint may still be real — seventeen of anything reads as a wall — but it is not the complaint the requirement describes, and the phase is already stated once, by the aggregate `design_without_build` that owns that question.\n\n🛑 AND THE OTHER OBVIOUS FIX IS RULED OUT IN THE SOURCE ITSELF, nine lines above the guard and dated to an earlier lesson: 'No threshold and no proportion — BL-5's lesson was that a loud detector needs a different QUESTION, not a tuned number.' Reporting the phase when the realized fraction is low is exactly that tuned number.\n\nWHAT WOULD SETTLE IT, and it is one number: how many artifacts did flo2's design hold when the seventeen fired? If it was a handful against seventeen capabilities, there is a real early-building complaint and it belongs to dec:idea-a-detector-can-read-the-phase-the-design-already-declares, which asks whether a detector should read the phase the design already declares rather than each body carrying prose. If it was many, the seventeen are ordinary unrealized capabilities and the finding is working.\n\nWHAT WAS KEPT: a test pinning the silence, because the silence is precisely what a phase sentence would have been added to compensate for and nothing was protecting it.",
+        "steps": [
+          "detect_gaps"
+        ],
+        "subject_id": "req:a-finding-says-when-the-state-it-reports-is-normal-for-the-phase",
+        "valid_from": "2026-09-20"
+      }
+    },
+    {
       "node_id": "fact:the-per-open-design-cost-measured-in-one-process-2026-09-13",
       "node_type": "TemporalFact",
       "properties": {
@@ -294530,6 +294702,20 @@
       }
     },
     {
+      "node_id": "ver:the-build-question-is-silent-while-nothing-is-built-and-asked-once-building-starts",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-core/tests/a_finding_says_when_the_state_is_normal_for_the_phase.rs: two tests pinning the behaviour the promoted sentence would have changed.",
+        "findings": "2 of 2 passing. Pins a behaviour rather than a change; the requirement stays open pending one number from the reporter.",
+        "kind": "verification",
+        "last_run_at": "2026-09-20",
+        "level": "unit",
+        "method": "test",
+        "name": "The build question is silent while nothing is built, the phase is stated once by the aggregate, and the question is asked per capability once building starts",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:the-capture-skills-do-not-hand-the-vocabulary-back",
       "node_type": "Verification",
       "properties": {
@@ -295277,7 +295463,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:bef84cdf5621c2ceffb6bd6b818cc9115100324f5a07fd065b76de6a8a9b360e",
+  "prev_content_hash": "sha256:fe1d9b7df3db5fc3f18c72fb0afcc5fc55ef5508489c3109b1f921641dc0235f",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -295875,8 +296061,8 @@
     "schema_version": 1
   },
   "taken_at": {
-    "branch": "a-revising-write-says-what-it-removed",
-    "commit": "1de8521c0be1412496140f3598a786588fca6bf4",
+    "branch": "a-finding-says-when-the-state-is-normal-for-the-phase",
+    "commit": "88982c3a6966ed6dbd62fb039f57acdc902d971b",
     "dirty": true
   }
 }
