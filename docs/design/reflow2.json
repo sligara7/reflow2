@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:526b595d6bd41fb80afa6fd69d01dda0a7c211195f0aff4cdfa3514ac5a0eea9",
+  "content_hash": "sha256:ce5102b9807466dab872e96e6405c2b3f7a7798b5d7d13f13f1cdfac0ff78fd0",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -13032,6 +13032,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:dec:idea-four-sibling-constructors-four-status-contracts",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:dec:idea-how-does-a-content-only-client-get-an-answer",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
@@ -15491,8 +15497,10 @@
       "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-a-derived-document-cites-the-graph-the-way-it-cites-the-model-through-a-door-a-build-can-use",
       "properties": {
+        "approved_at": "2026-09-20",
         "roles": [
-          "author"
+          "author",
+          "approver"
         ]
       },
       "to_id": "who:ajs"
@@ -15935,8 +15943,10 @@
       "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-a-skill-is-found-by-describing-it-the-way-a-tool-is",
       "properties": {
+        "approved_at": "2026-09-20",
         "roles": [
-          "author"
+          "author",
+          "approver"
         ]
       },
       "to_id": "who:ajs"
@@ -16848,6 +16858,17 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-four-sibling-constructors-four-status-contracts",
+      "properties": {
+        "approved_at": "2026-09-20",
+        "roles": [
+          "approver"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-gap-flows-to-the-dependency",
       "properties": {
         "authored_at": "2026-08-06T09:40:00Z",
@@ -17726,11 +17747,33 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-should-a-drawn-relation-be-echoed-back-as-a-sentence",
+      "properties": {
+        "approved_at": "2026-09-20",
+        "roles": [
+          "approver"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-should-a-finding-be-required-to-bound-its-own-claim",
       "properties": {
         "authored_at": "2026-08-27",
         "roles": [
           "author"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-should-a-gap-body-say-when-the-state-it-reports-is-normal-for-the-phase",
+      "properties": {
+        "approved_at": "2026-09-20",
+        "roles": [
+          "approver"
         ]
       },
       "to_id": "who:ajs"
@@ -17777,6 +17820,17 @@
         "authored_at": "2026-08-11",
         "roles": [
           "author"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-should-a-revising-write-say-what-it-removed",
+      "properties": {
+        "approved_at": "2026-09-20",
+        "roles": [
+          "approver"
         ]
       },
       "to_id": "who:ajs"
@@ -17859,6 +17913,17 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-should-every-finding-say-who-it-is-for-and-should-ids-be-de-slugged-where-they-surface",
+      "properties": {
+        "approved_at": "2026-09-20",
+        "roles": [
+          "approver"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-should-find-tools-be-discoverable-and-serve-workflow-bundles",
       "properties": {
         "authored_at": "2026-08-31",
@@ -17867,6 +17932,17 @@
         ]
       },
       "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-should-gap-to-prompt-serve-the-pieces-it-assembles-and-take-a-key-instead-of-an-echo",
+      "properties": {
+        "approved_at": "2026-09-20",
+        "roles": [
+          "approver"
+        ]
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -17937,6 +18013,17 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-should-settling-a-decision-record-which-option-won",
+      "properties": {
+        "approved_at": "2026-09-20",
+        "roles": [
+          "approver"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-should-the-agents-own-word-get-a-first-class-record",
       "properties": {
         "authored_at": "2026-08-31",
@@ -17959,11 +18046,33 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-should-the-contract-be-readable-in-session-and-ship-with-the-artifact",
+      "properties": {
+        "approved_at": "2026-09-20",
+        "roles": [
+          "approver"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-should-the-export-be-compressed-or-committed-less-often",
       "properties": {
         "authored_at": "2026-08-25",
         "roles": [
           "author"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-should-the-reachability-gate-attach-a-tools-parameters-only-to-the-types-it-writes",
+      "properties": {
+        "approved_at": "2026-09-20",
+        "roles": [
+          "approver"
         ]
       },
       "to_id": "who:ajs"
@@ -18507,6 +18616,17 @@
         "authored_at": "2026-09-06",
         "roles": [
           "author"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-what-belongs-in-the-graph-and-what-belongs-in-an-agents-memory-and-why-the-rule-keeps-losing",
+      "properties": {
+        "approved_at": "2026-09-20",
+        "roles": [
+          "approver"
         ]
       },
       "to_id": "who:ajs"
@@ -22174,6 +22294,17 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-build-reads-a-report-from-the-design-without-an-agent-in-the-loop",
+      "properties": {
+        "approved_at": "2026-09-20",
+        "roles": [
+          "approver"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:a-cluster-can-be-declared-deliberately-separate",
       "properties": {
         "authored_at": "2026-08-09",
@@ -22182,6 +22313,17 @@
         ]
       },
       "to_id": "who:storyflow-storybug-boss"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-composed-prompt-serves-the-pieces-it-was-composed-from",
+      "properties": {
+        "approved_at": "2026-09-20",
+        "roles": [
+          "approver"
+        ]
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -22285,6 +22427,17 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-drawn-relation-is-read-back-as-a-sentence",
+      "properties": {
+        "approved_at": "2026-09-20",
+        "roles": [
+          "approver"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:a-field-report-is-triaged-by-a-served-step-and-the-standing-rules-ride-it",
       "properties": {
         "approved_at": "2026-09-18",
@@ -22297,9 +22450,31 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-finding-carries-the-name-a-person-uses-and-the-audience-rule-is-stated",
+      "properties": {
+        "approved_at": "2026-09-20",
+        "roles": [
+          "approver"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:a-finding-has-somewhere-to-put-its-evidence",
       "properties": {
         "approved_at": "2026-08-16",
+        "roles": [
+          "approver"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-finding-says-when-the-state-it-reports-is-normal-for-the-phase",
+      "properties": {
+        "approved_at": "2026-09-20",
         "roles": [
           "approver"
         ]
@@ -22573,6 +22748,17 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-revising-write-says-what-it-removed",
+      "properties": {
+        "approved_at": "2026-09-20",
+        "roles": [
+          "approver"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:a-rule-is-recorded-with-its-consequence",
       "properties": {
         "authored_at": "2026-08-08",
@@ -22699,6 +22885,17 @@
       "from_id": "req:a-session-with-no-seed-can-still-orient",
       "properties": {
         "approved_at": "2026-08-16",
+        "roles": [
+          "approver"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-skill-is-reachable-from-a-description-of-the-job-in-a-persons-words",
+      "properties": {
+        "approved_at": "2026-09-20",
         "roles": [
           "approver"
         ]
@@ -23488,6 +23685,17 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:settling-a-decision-records-which-option-won",
+      "properties": {
+        "approved_at": "2026-09-20",
+        "roles": [
+          "approver"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:skill-adherence-is-measured",
       "properties": {
         "authored_at": "2026-07-31",
@@ -23598,11 +23806,33 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:the-contract-ships-with-the-artifact-and-is-readable-from-a-session",
+      "properties": {
+        "approved_at": "2026-09-20",
+        "roles": [
+          "approver"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:the-design-says-what-was-built-and-never-used",
       "properties": {
         "authored_at": "2026-08-09",
         "roles": [
           "author"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:the-gate-that-says-every-property-can-be-written-reads-tools-not-names",
+      "properties": {
+        "approved_at": "2026-09-20",
+        "roles": [
+          "approver"
         ]
       },
       "to_id": "who:ajs"
@@ -53668,7 +53898,37 @@
       "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
+      "to_id": "req:a-build-reads-a-report-from-the-design-without-an-agent-in-the-loop"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "req:a-composed-prompt-serves-the-pieces-it-was-composed-from"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "req:a-drawn-relation-is-read-back-as-a-sentence"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
       "to_id": "req:a-field-report-is-triaged-by-a-served-step-and-the-standing-rules-ride-it"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "req:a-finding-carries-the-name-a-person-uses-and-the-audience-rule-is-stated"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "req:a-finding-says-when-the-state-it-reports-is-normal-for-the-phase"
     },
     {
       "edge_type": "CONTAINS",
@@ -53698,6 +53958,12 @@
       "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
+      "to_id": "req:a-revising-write-says-what-it-removed"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
       "to_id": "req:a-served-skill-carries-a-line-a-person-reads-and-says-who-it-is-for"
     },
     {
@@ -53705,6 +53971,12 @@
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "req:a-session-that-reads-and-never-writes-is-seen"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "req:a-skill-is-reachable-from-a-description-of-the-job-in-a-persons-words"
     },
     {
       "edge_type": "CONTAINS",
@@ -53962,7 +54234,25 @@
       "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
+      "to_id": "req:settling-a-decision-records-which-option-won"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
       "to_id": "req:survives-upgrade"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "req:the-contract-ships-with-the-artifact-and-is-readable-from-a-session"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "req:the-gate-that-says-every-property-can-be-written-reads-tools-not-names"
     },
     {
       "edge_type": "CONTAINS",
@@ -60446,6 +60736,14 @@
     },
     {
       "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-a-derived-document-cites-the-graph-the-way-it-cites-the-model-through-a-door-a-build-can-use",
+      "properties": {
+        "evidence": "Promoted 2026-09-20 on Anthony's word ('Agree with all your recommendations'). Option chosen: The one-shot call, not a report the server writes through and not a documented stdio client: it reuses the server's own call path and the existing snapshot read, so nothing paraphrases a tool."
+      },
+      "to_id": "req:a-build-reads-a-report-from-the-design-without-an-agent-in-the-loop"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
       "from_id": "dec:idea-a-design-cements-from-the-core-outward-and-past-a-point-starting-over-is-cheaper-than-unwinding",
       "properties": {
         "evidence": "The cement idea asked whether a design becomes too cemented to unwind; this is that thought grown into a measurement — layers of decisions a change must unpeel, per node and design-wide."
@@ -60539,6 +60837,14 @@
         "evidence": "Promoted 2026-09-19: option (a), both fields, required rather than optional on reflow2's own skills so the lint keeps them true."
       },
       "to_id": "req:a-served-skill-carries-a-line-a-person-reads-and-says-who-it-is-for"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-a-skill-is-found-by-describing-it-the-way-a-tool-is",
+      "properties": {
+        "evidence": "Promoted 2026-09-20 on Anthony's word ('Agree with all your recommendations'). Option chosen: A separate finder rather than find_tools scoring both, so the tools' own rank ratchet is untouched; the scorer is shared, so the two catalogues cannot drift apart."
+      },
+      "to_id": "req:a-skill-is-reachable-from-a-description-of-the-job-in-a-persons-words"
     },
     {
       "edge_type": "EVOLVES_INTO",
@@ -60758,6 +61064,22 @@
     },
     {
       "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-should-a-drawn-relation-be-echoed-back-as-a-sentence",
+      "properties": {
+        "evidence": "Promoted 2026-09-20 on Anthony's word ('Agree with all your recommendations'). Option chosen: The sentence echo. Scoped to asymmetric relations so the cases that cannot fail add no noise."
+      },
+      "to_id": "req:a-drawn-relation-is-read-back-as-a-sentence"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-should-a-gap-body-say-when-the-state-it-reports-is-normal-for-the-phase",
+      "properties": {
+        "evidence": "Promoted 2026-09-20 on Anthony's word ('Agree with all your recommendations'). Option chosen: One sentence in that body, the cheapest of the three options. Suppressing the per-capability form was rejected because naming which capability is the useful part once building starts."
+      },
+      "to_id": "req:a-finding-says-when-the-state-it-reports-is-normal-for-the-phase"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
       "from_id": "dec:idea-should-a-node-carry-its-git-coordinate",
       "properties": {
         "evidence": "Options ② and ⑤ of the brainstorm are what shipped: the coordinate on the export, kept while unchanged, and the gate reading it for the one case that is a defect. Option ①, the per-node field, was not built for the reasons the idea itself recorded."
@@ -60766,11 +61088,59 @@
     },
     {
       "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-should-a-revising-write-say-what-it-removed",
+      "properties": {
+        "evidence": "Promoted 2026-09-20 on Anthony's word ('Agree with all your recommendations'). Option chosen: The notice only. The shrink-refusal option was rejected because a deliberate deletion is legitimate and the flag would tax every honest edit."
+      },
+      "to_id": "req:a-revising-write-says-what-it-removed"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-should-every-finding-say-who-it-is-for-and-should-ids-be-de-slugged-where-they-surface",
+      "properties": {
+        "evidence": "Promoted 2026-09-20 on Anthony's word ('Agree with all your recommendations'). Option chosen: Carry the name (certain, cheap). For the audience, state the rule consumers can already key on rather than adding a field, because the data is there."
+      },
+      "to_id": "req:a-finding-carries-the-name-a-person-uses-and-the-audience-rule-is-stated"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-should-gap-to-prompt-serve-the-pieces-it-assembles-and-take-a-key-instead-of-an-echo",
+      "properties": {
+        "evidence": "Promoted 2026-09-20 on Anthony's word ('Agree with all your recommendations'). Option chosen: Return the pieces AND make a vanished finding refuse distinguishably; the bare-id alternative closes only the cost, not the correctness question."
+      },
+      "to_id": "req:a-composed-prompt-serves-the-pieces-it-was-composed-from"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
       "from_id": "dec:idea-should-reflow2-measure-files-itself-and-what-the-no-file-io-rule-actually-protects",
       "properties": {
         "evidence": "Promoted on Anthony's word 2026-09-18 ('Go with your recommendation'): option B, the narrow reading — measure, never read for meaning."
       },
       "to_id": "req:reflow2-measures-registered-files-and-never-reads-them-for-meaning"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-should-settling-a-decision-record-which-option-won",
+      "properties": {
+        "evidence": "Promoted 2026-09-20 on Anthony's word ('Agree with all your recommendations'). Option chosen: A free-text field on the status setter. Registering prose options as alternatives at settle time was rejected as far larger, and leaning on the sentence-level edit was rejected because it is two acts where the user performed one."
+      },
+      "to_id": "req:settling-a-decision-records-which-option-won"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-should-the-contract-be-readable-in-session-and-ship-with-the-artifact",
+      "properties": {
+        "evidence": "Promoted 2026-09-20 on Anthony's word ('Agree with all your recommendations'). Option chosen: Both halves, shipping first because it is a line in a workflow; the in-session half as a tool that pays only when asked, rather than widening every catalogue reply."
+      },
+      "to_id": "req:the-contract-ships-with-the-artifact-and-is-readable-from-a-session"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-should-the-reachability-gate-attach-a-tools-parameters-only-to-the-types-it-writes",
+      "properties": {
+        "evidence": "Promoted 2026-09-20 on Anthony's word ('Agree with all your recommendations'). Option chosen: Narrow the pool by extending the tool-to-type map AND refuse a tool that cannot be placed, so the map cannot go stale silently; the two known fields are fixed regardless."
+      },
+      "to_id": "req:the-gate-that-says-every-property-can-be-written-reads-tools-not-names"
     },
     {
       "edge_type": "EVOLVES_INTO",
@@ -71401,6 +71771,12 @@
       "from_id": "dec:idea-extraction-is-two-pass-against-an-se-schema-stated-up-front",
       "properties": {},
       "to_id": "snap:epoch:preserved-on-write:dec:idea-extraction-is-two-pass-against-an-se-schema-stated-up-front"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:idea-four-sibling-constructors-four-status-contracts",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:dec:idea-four-sibling-constructors-four-status-contracts"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -230204,6 +230580,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:a-build-can-call-one-tool-from-the-shell-and-read-the-reply-as-json",
+      "properties": {},
+      "to_id": "req:a-build-reads-a-report-from-the-design-without-an-agent-in-the-loop"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:a-capability-claiming-reach-beyond-this-repo-is-realized-by-something-a-consumer-gets",
       "properties": {},
       "to_id": "req:an-analysis-a-consumer-needs-is-served-named-and-gated"
@@ -230560,6 +230942,12 @@
       "from_id": "cap:a-settled-decision-names-governed-prose-that-still-reads-open",
       "properties": {},
       "to_id": "req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:a-skill-is-found-by-describing-the-job-and-the-corpus-is-the-test",
+      "properties": {},
+      "to_id": "req:a-skill-is-reachable-from-a-description-of-the-job-in-a-persons-words"
     },
     {
       "edge_type": "SATISFIES",
@@ -255963,6 +256351,17 @@
       }
     },
     {
+      "node_id": "chg:the-open-ideas-are-settled-on-his-word",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "decision_settled",
+        "detected_at": "2026-09-20",
+        "name": "The open ideas are settled on his word: ten promoted to accepted intent, one closed as answered, one given the status its promotion should have set",
+        "rationale": "Anthony 2026-09-20, on a plain-English readback of the twelve open ideas with a recommendation on each: 'Agree with all your recommendations.'",
+        "summary": "Ten Requirements accepted with the owner as approver, each carrying the option chosen on its EVOLVES_INTO edge from the idea it came from; the two already built (the shell door and the skill finder) wired to the intent they satisfy, which also clears their unmotivated-capability state; the four-status-contracts idea superseded as answered by v0.65.0; the memory-boundary idea moved to accepted, the status its own promotion on 2026-09-19 should have set and did not."
+      }
+    },
+    {
       "node_id": "chg:the-optimize-skill-ships-with-its-own-n-of-2-stated",
       "node_type": "ChangeEvent",
       "properties": {
@@ -259494,7 +259893,7 @@
         "kind": "exploratory",
         "name": "OPEN — how does a build script read a budget (or any report) from the graph without an agent and without a hand transcription — a one-shot CLI call, a report the server writes through like the export, or a documented stdio client?",
         "rationale": "Recorded from the field report beside the docs-as-views idea rather than folded into it: that one asks whether the AGENT renders documents from graph data; this asks for a door a BUILD can use with no agent in the loop.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -259953,7 +260352,7 @@
         "kind": "exploratory",
         "name": "OPEN — should skills be findable by words the way tools are (a find_skills, or find_tools scoring both), with one corpus query per skill in a user's words and the same rank-first ratchet?",
         "rationale": "Recorded from the field report; depends on the summary field for the corpus to have a person's words to match.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -260845,8 +261244,8 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Measured by the dev_storyflow fleet in one session, 2026-09-02, all four observed live:\n\n| constructor | what it does with status |\n| --- | --- |\n| `add_decision` | lands `proposed` — and the brainstorm skill tells you to VERIFY it |\n| `add_capability` | accepts an explicit `status` and honours it |\n| `add_epoch` | lands `arrived` and does not take the field |\n| `add_verification` | REJECTS the field (`unknown field 'status'`) and lands `planned`; recording a check that FAILED takes two calls |\n\nTheir point: *\"for four sibling constructors there are four different contracts, and two of them require a second call to say the true thing. A design brain's whole value is that its statuses are true; the constructors should make the true thing the cheap thing.\"*\n\n🛑 **ONE OF THEIR FOUR IS ALREADY ANSWERED AND THEIR PROPOSED FIX WOULD BE WRONG.** Wish #6 asks that `add_epoch` default to `planned`. But `plan_epoch` EXISTS for exactly that; `add_epoch`'s own description says it creates an epoch that \"HAS HAPPENED\" and names `plan_epoch` as the alternative; and `cap:planned-epochs` records the reasoning — *\"The default is `arrived`, which is a record rather than a choice (`req:defaults-do-not-assert`): add_epoch's 27 call sites have only ever meant recording the point you are at.\"* Measured 2026-09-02: `find_tools` ranks `plan_epoch` FIRST for \"create a milestone for work that has not started yet\". The discovery surface worked and was not used. **Changing that default would break a reasoned decision to fix a discovery miss.**\n\n⭐ SO THE REAL QUESTION IS NARROWER AND MORE INTERESTING: `add_decision` and `add_epoch` both follow `req:defaults-do-not-assert` and land at the not-yet-true end — and reach OPPOSITE-LOOKING answers, because for an epoch the not-asserting default IS `arrived` (you are recording where you are). `add_verification` refusing the field is a THIRD thing again, and has its own precedent: `fact:defect-add-verification-cannot-reach-its-own-fields` (2026-08-15) already records that constructor as too narrow, \"half addressed\".\n\nOPTIONS, none preferred:\n· **A — Accept `status` on every constructor, defaulting to the not-yet-done end.** Their wish #9. Uniform and cheap to describe. ⚠️ Collides with `req:defaults-do-not-assert` for epochs, where \"not yet done\" is the WRONG default — so it would have to carve out the one case that prompted the complaint.\n· **B — Leave the defaults; make every constructor ECHO the status it assigned.** The half of their ask that survives the refutation above, and it is what they actually needed: *\"Nothing warned me; I caught it only because I read the reply.\"* Costs one field.\n· **C — Fix only `add_verification`**, the one with a standing recorded defect and no sibling tool to redirect to. Narrowest, and it closes a report already 18 days old.\n· **D — Point the constructors at each other in prose**, as `add_epoch` already does for `plan_epoch`. ⚠️ `add_epoch` DID that and it did not work, which is evidence against prose as the whole answer.\n· **E — Do nothing; the contracts differ because the node types differ.** ⚠️ Has to answer why four sibling calls in one workflow surprised an experienced reporter four times.\n\n⚠️ NOT ESTABLISHED: whether `add_capability` honouring an explicit status is itself right, or whether it lets a caller assert `realized` with nothing built. Nobody has asked.",
         "kind": "exploratory",
         "name": "OPEN — four sibling constructors answer \"what status does this land in\" four different ways. Is there one contract, and does defaults-do-not-assert already decide it?",
-        "rationale": "Worth recording rather than acting on because the obvious repair — \"make them all the same\" — is refuted for the specific case that prompted it, and acting on the report as written would overturn `req:defaults-do-not-assert` and a documented 27-call-site rationale to fix something `find_tools` already answers.\n\nWhat survives refutation is smaller and better: ECHO the status assigned (option B), and the standing `add_verification` narrowness (option C) which was recorded on 2026-08-15 and is still half-addressed.",
-        "status": "proposed"
+        "rationale": "Worth recording rather than acting on because the obvious repair — \"make them all the same\" — is refuted for the specific case that prompted it, and acting on the report as written would overturn `req:defaults-do-not-assert` and a documented 27-call-site rationale to fix something `find_tools` already answers.\n\nWhat survives refutation is smaller and better: ECHO the status assigned (option B), and the standing `add_verification` narrowness (option C) which was recorded on 2026-08-15 and is still half-addressed.\n\nCLOSED 2026-09-20 as ANSWERED, on Anthony's word. v0.65.0 settled the real complaint by letting every constructor of a status-carrying type state the status outright and name in its description what omitting it lands, so the case that prompted this — a constructor asserting more than the caller said — cannot arise. The surviving option, echoing back the status a call landed in, was declined as adding little once the caller can simply say it.",
+        "status": "superseded"
       }
     },
     {
@@ -261778,7 +262177,7 @@
         "decision": "Recorded as brainstorming on 2026-09-19 from what remains of flo2's F16 after the reporter corrected it themselves, not as a proposal.\n\nThe direction flag exists, so the workaround half of F16 is void. This half is not: `incoming` lets you draw the edge you meant and does nothing to confirm you got it right. The reporter landed two BLOCKS edges asserting the reverse of what their own evidence prose said and caught both only by re-reading their own call.\n\nTHE ASK: echo the drawn edge as a sentence. 'drawn: req:X BLOCKS cmp:Y' reads wrong immediately, where the current shape — \"drawn\": [\"BLOCKS -> cmp:artifact-store\"] — does not, because it omits the subject and leaves the reader to supply it from memory.\n\nSCOPE, and it is the reporter's: the relations that go wrong are the ASYMMETRIC ones (BLOCKS, CAUSES, DEPENDS_ON, EVOLVES_INTO, OBSOLETES). A symmetric relation cannot be drawn backwards, so echoing every edge would add noise to the cases that cannot fail.\n\n⚠️ COUNTER: the generic create_edge has no such problem, because from_id and to_id are explicit at the call site — which is the second time in one report that the generic tool is safer than the typed helper it is a fallback for. That suggests the question may really be about what typed helpers owe their callers, not about an echo string.",
         "kind": "exploratory",
         "name": "OPEN — should a drawn relation be echoed back as a readable sentence, so a reversed edge reads wrong immediately?",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -261798,7 +262197,7 @@
         "decision": "Recorded as brainstorming on 2026-09-19 from flo2 F20, not as a proposal, and filed by its reporter as a quality observation rather than a blocker.\n\nTHE OBSERVATION: two gap sources answer with a paragraph that routes to who can answer and says whether the thing is even a defect; a third answers with one line. The third is the one that fires once per capability on a design with nothing built — 17 times on flo2's own graph — and a person reads seventeen of those as seventeen defects.\n\nOPTIONS. (a) One sentence in that body saying planned work is a normal state for a young design. Smallest, and it is what the reporter suggests. (b) Have the per-capability finding INHERIT the neighbouring aggregate one, which already states the phase correctly ('Design laid out, but nothing built yet') — structural, and it fixes the class rather than the instance. (c) Suppress the per-capability form entirely while the aggregate holds, so a young design gets one finding instead of seventeen. COUNTER to (c): the aggregate cannot say WHICH capability, and naming them is the useful part once building starts.\n\n⚠️ POSSIBLY DELIBERATE, and the reporter says so. The one-line form may be a considered choice about a detector whose answer really is just a question. What is not deliberate is the asymmetry: the routing and the is-this-a-defect framing were written per detector as each was added, so nothing made the third inherit what the first two carry.",
         "kind": "exploratory",
         "name": "OPEN — should a gap body say when the state it reports is a NORMAL phase rather than a defect, given one source fires once per capability on every young design?",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -261862,7 +262261,7 @@
         "decision": "Recorded as brainstorming on 2026-09-19 from flo2's F4 SHARPENED, not as a proposal.\n\nTHE OPTIONS, the reporter's own, cheapest first.\n(a) A DELTA IN THE REPLY. The prior value is already returned; comparing lengths is trivial. 'replaced `statement`: 4,102 → 3,741 chars (−361)' would have caught both measured losses instantly. Cheapest, adds no parameter, changes no contract, and is a report rather than a judgement.\n(b) REFUSE A SHRINK WITHOUT A FLAG — `allow_shrink: true`, the way export_graph asks for `overwrite`. Strongest, and the one that can be wrong: a deliberate deletion is a legitimate edit and would now cost a retry every time. A threshold (more than N characters, or more than X%) softens it and introduces a number nobody can justify.\n(c) DO NEITHER, on the grounds that `replace_text` (v0.65.0) removes the pressure that caused the rewrites. COUNTER, and it is the reporter's: the pressure is reduced, not the operation; a rewrite somebody performs anyway is still unguarded, and the API cannot know which edits were deliberate.\n\n⚠️ WHAT MAKES THIS ONE DIFFERENT FROM THE REST OF THAT FILE, in their words: 'Every other entry costs a retry or a confusing message. This one degrades the record permanently unless a human re-reads a four-thousand-character field character by character, which nobody does twice.'\n\n⭐ AND A MITIGATION ALREADY IN USE, worth knowing while this is open: the exposure is per-FIELD, not per-node. A typed constructor merges, so passing only the field being changed leaves every other field untouched. The reporter halved their own blast radius this way, and `revise-design` documents the merge behaviour — it simply was not being used.",
         "kind": "exploratory",
         "name": "OPEN — should a revising write report what it REMOVED (a length delta, or a refusal to shrink without a flag), given that two of thirteen rewrites in one session silently dropped a load-bearing paragraph?",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -261935,7 +262334,7 @@
         "decision": "Recorded as brainstorming on 2026-09-19 from what survives of flo2's F14, not as a proposal. Two of its four rows are void — skills DO carry `audience` and `summary`, which the reporter corrected themselves — and these two stand.\n\nTHE MEASUREMENT THAT MADE IT CONCRETE: loop_status, detect_gaps and detect_defects against a live 12-node greenhouse design. The output splits almost perfectly into two piles. Findings about the GREENHOUSE ('the UV clarifier is not connected to anything') read as plain English and are valuable to the person who owns it. Findings about the RECORD ('2 of 2 open ideas connect to nothing … use review_relations') are reflow2 talking to itself. Nothing in the returned shape distinguishes them, so every consumer re-derives the split by heuristic, each slightly differently, and none can be corrected upstream.\n\n⚠️ THE HONEST COUNTER, which the reporter supplies: on that one sample `gap_source` and `category` track the split cleanly. So the data may already be there and the ask may be to STATE the rule rather than add a field. Against that: 'a consumer keying off those is guessing at a rule reflow2 could simply state.'\n\nTHE SECOND ROW, smaller and separable: node ids are slugs everywhere they surface, and findings quote the id rather than the `name`. 'cmp:sump-pump-in-basement-return-line is one punctuation pass away from \"the sump pump in the basement return line\"', so every consumer writes the same de-slugging transform. The design already has a rule that a consumer-facing fact about the served surface is served and never copied, which is the same argument arriving from a different direction.\n\nOPTIONS: (a) state the existing rule in the docs and change no code; (b) an explicit marker on each finding; (c) have findings carry the subject's `name` beside its id and leave the audience question alone; (d) both (a) and (c).",
         "kind": "exploratory",
         "name": "OPEN — should a finding state WHO IT IS FOR (the thing being designed, or the record of it), and should the surfaces that quote a node's id quote its name instead?",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -261957,7 +262356,7 @@
         "decision": "Recorded as brainstorming on 2026-09-19 from flo2 F18 (as corrected by its author) and F22, not as a proposal. One question because both halves are the same tool's interface and the same consumer pays for both, and they would be decided together.\n\nHALF ONE — RETURN THE PIECES. `{status: needs_llm, prompts: [...], gap: {id, title, why}}`. The server already holds title and description as separate values and formats them together at detect.rs:1553; this returns what it had before it joined them. A consumer wanting a phrased question follows phase two as designed; a consumer wanting context for its own model turn reads `gap.why` and never touches prose. It is the only thing standing between flo2 and the black-box rule, and the reporter sizes it at one field.\nCOUNTER, such as it is: it widens the reply for every caller to serve one, and a reply that carries both the composed form and its parts invites a consumer to depend on both.\n\nHALF TWO — TAKE A KEY. Options: accept `gap_id` as a string alternative; or mark the object's other fields explicitly ignored in the schema; or put the echo caveat on the PARAMETER's own description, where a caller reading the type will meet it. Today the caveat is on the tool's description and the parameter reads 'A GapCandidate previously returned by detect_gaps', so the shape says hand me the finding while the semantics say hand me a key.\n\n⭐ THE THIRD OPTION THE REPORTER FOUND WHILE COMPLAINING, and it may be better than either: their redundant detect_gaps call is also how a stale chip is refused with 'that is no longer open'. If gap_to_prompt answered a VANISHED gap with a distinguishable refusal, the consumer could drop the extra call and still be correct. Taking an id closes the cost; a distinguishable refusal closes the cost AND the correctness question, and is the only one that removes the recomputation rather than making it cheaper to avoid.",
         "kind": "exploratory",
         "name": "OPEN — should gap_to_prompt return the gap's pieces beside the prompt it builds from them, and should it take a key rather than an object it only reads a key from?",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -262060,7 +262459,7 @@
         "decision": "Recorded as brainstorming on 2026-09-19 from flo2's F12, not as a proposal.\n\nTHE OBSERVATION. `set_decision_status` takes the id, the status, the approver and the date, and nothing else. It moved two decisions to `accepted` correctly and left both NAMED 'OPEN — is … the one thing flo2 is missing?' with bodies ending 'Options, none chosen.' Their sentence is the argument: 'An accepted Decision that still reads as an open question is worse than an unsettled one, because a later reader trusts the prose over the status field.'\n\nWHY THE EXISTING ROUTE DOES NOT APPLY. `collapse_decision` is the tool for naming a winner and it needs REGISTERED alternatives; these options were prose paragraphs inside the decision text, which is what the brainstorm skill asks for. So the only route left is re-sending the whole node through add_decision with the name and body rewritten — a four-kilobyte upsert to change a status and a heading, and the exact operation measured to lose content elsewhere in the same report.\n\nTHE OPTIONS.\n(a) A free-text `chose` or `outcome` on set_decision_status: the settling act says what it settled, beside the status it sets, without touching the deliberation. Smallest, and it adds a field to a setter rather than a concept to the model.\n(b) Lean on `replace_text` (v0.65.0) instead: settle, then replace the 'OPEN —' heading in one call. Costs nothing to build and is available today; COUNTER — it is two acts where the user performed one, and nothing ties the new heading to the settlement.\n(c) Make collapse_decision work over prose options by registering them at settle time. Largest, and it argues the options should have been alternatives all along.\n\n⚠️ THREE ENTRIES IN THAT FILE PUSH TOWARD THE SAME DANGEROUS OPERATION — this one, the append request, and the absence of an epoch-free snapshot — and it is the one operation with no guard on it.",
         "kind": "exploratory",
         "name": "OPEN — should settling a Decision be able to say WHICH option won, without rewriting the deliberation that produced it?",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -262091,7 +262490,7 @@
         "decision": "Recorded as brainstorming on 2026-09-19 from flo2 F21's residue and F23, not as a proposal. Two halves of one hole: a consumer is told the committed tool schemas are the contract, and can reach them neither from inside a session nor from the thing it runs.\n\nTHE IN-SESSION HALF. Options: (a) have find_tools return each tool's full inputSchema rather than parameter names; (b) a `describe_tool(name)`; (c) neither, on the grounds that a stale client's real remedy is reconnecting and the refusals now name the missing fields. COUNTER to (c), and it is the reporter's: their roughly 19 rejections were within-version shapes, not drift, so reconnecting would have fixed none of them. COUNTER to (a): every find_tools reply would carry full schemas for five tools when the caller wanted a name, which is the reply-size problem the budget work exists for — (b) pays only when asked.\n\nTHE PACKAGING HALF. Options: ship tools/toolsnaps inside the container image; publish them per tag as a release asset; or both. MEASURED: they appear in neither the Dockerfile nor the release workflow, and the kit is staged file by file, so this is an addition to a list rather than a new mechanism.\n\n⭐ WHAT IT UNLOCKS, and the reason to treat the two halves as one question: 'what changed, between these two versions, for THESE twelve tools?' is flo2's whole upgrade process under the black-box rule. Answering it needs the schemas of two versions side by side, which the in-session half alone does not give and the packaging half alone does.\n\n⚠️ AND A SCOPE QUESTION WORTH ASKING ONCE: if the schemas ship as an asset, they become a published surface with its own compatibility expectations — the contract about the contract. That is probably correct and it should be deliberate.",
         "kind": "exploratory",
         "name": "OPEN — if the tool schemas are the seam contract, should they be readable from inside a session and shipped with the artifact a consumer runs?",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -262123,7 +262522,7 @@
         "decision": "Recorded as brainstorming on 2026-09-19 from flo2 F19 GENERALISED, not as a proposal.\n\nTHE OPTIONS.\n(a) NARROW THE POOL by extending the tool-to-type map until no tool is pooled into every type. Direct, and it turns 24 excused properties into a list somebody reads once. COUNTER: the map is hand-maintained, so this trades a silent false all-clear for a file that goes stale — unless the gate refuses a tool it cannot place, which is the real version of the option.\n(b) RANK BY WHETHER ANYTHING READS THE PROPERTY. `Requirement.kind` is urgent because `encoding_undecided` scolds a user about it on flo2's page; `Verification.location` is documented and read by nothing. A property a DETECTOR reads and no tool can write is a promise the product breaks in front of a user, and deserves a louder bucket than an unused declaration.\n(c) FIX THE TWO KNOWN CASES AND LEAVE THE GATE. Cheapest, and it is what the reporter says is worth doing regardless. COUNTER, theirs: two found by accident is weak evidence that two is the total, and this leaves the instrument still blind.\n(d) DROP THE PER-TYPE VIEW and report the flat name match with its known over-reporting, on the grounds that a noisy true signal beats a quiet false one. COUNTER: that is the naive match this instrument was explicitly built to replace, and it was replaced because the noise made it unread.\n\n⚠️ WHATEVER IS CHOSEN, THE TWO KNOWN CASES ARE SEPARABLE AND SMALL: a `kind` parameter on add_requirement, and a `location` on add_verification. The gate question is the one that decides whether a third case is found by a consumer or by the build.",
         "kind": "exploratory",
         "name": "OPEN — should the reachability gate attach each tool's parameters only to the types that tool actually writes, and should a property a detector READS be held to a stricter bar than one nothing reads?",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -262627,7 +263026,7 @@
         "kind": "exploratory",
         "name": "OPEN — what belongs in the design graph and what belongs in an agent's memory, and why the rule that already says so keeps losing",
         "rationale": "Captured under the brainstorm skill on Anthony's /brainstorm, 2026-09-19, after a session that wrote fifteen traps into a machine-local memory file while the graph held the rule forbidding exactly that. Recorded as one question rather than two because he asked for the boundary to be settled once, and the delivery mechanism is an option within it rather than a separate subject. Kept separate from dec:idea-does-the-agent-keep-a-notepad-in-the-graph-for-the-next-agent, which asks whether an agent would READ notes left for it; this asks where a lesson BELONGS and why the existing rule does not bind.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -274990,6 +275389,18 @@
       }
     },
     {
+      "node_id": "req:a-build-reads-a-report-from-the-design-without-an-agent-in-the-loop",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "A build script, a Makefile or a CI step reads a report from the design without an agent session",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Promoted 2026-09-20 on Anthony's word. bhome's plan-sheet generator read the budget from a hand-transcribed file 'because reflow2 is an MCP server and not a library the script can import', so the half of the sheet the design owned was the half with no mechanical guarantee. A consumer must be able to read any served report from a shell, get JSON, and get an exit code it can branch on. BUILT in v0.65.0 as `--call <tool> --args '<json>'`: it runs the tool through the same path a session uses, so refusals are worded the same and usage is recorded the same; a read-only tool still answers while a server holds the graph, from the snapshot the export already uses, and a writer refuses.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "req:a-change-record-carries-why-in-the-same-act",
       "node_type": "Requirement",
       "properties": {
@@ -275029,6 +275440,18 @@
         "provenance": "authored",
         "statement": "When two design records being compared were written by different reflow2 builds, the comparison discloses that and says that property-only differences may be attributable to the build change rather than to anything anybody decided. Every export already carries `reflow2_version` in its stamp, so the input exists and is not read. THIS IS DISCLOSURE, NOT A THRESHOLD, and the distinction is the requirement: nothing is suppressed, reweighted or hidden — the reader is told what could confound their reading, the way `propose_heal` discloses that the alphabet chose a merge survivor. Tuning severity until phantom findings fall below a cut-off is explicitly NOT this, because it silences true and false findings at the same rate. THE EVIDENCE IS TWO INCIDENTS, NOT AN ARGUMENT: 2026-08-08 and 2026-08-10 were both cross-build comparisons, both produced a confident false data-loss claim written into a PR body, and neither reader could see the confound (`fact:bl-198-cost-measured-twice-in-both-directions`). It is also what step 1 does not fix — suppressing defaults cleans the steady state and moves the disagreement to the version transition, which every upgrading consumer meets once.",
         "status": "proposed"
+      }
+    },
+    {
+      "node_id": "req:a-composed-prompt-serves-the-pieces-it-was-composed-from",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "A composed prompt serves the pieces it was composed from, and a replayed finding that has gone is refused distinguishably",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Promoted 2026-09-20 on Anthony's word, under his black-box rule: a consumer must never have to read reflow2's prose to work. The prompt builder holds a finding's title and its why as separate values, joins them in one statement and returns only the joined string, so flo2 splits that string on a literal marker — the only place it breaches the rule. The pieces ride back beside the prompt. AND the second half, which the reporter found while complaining: their redundant re-computation of every finding per click is also how they refuse a stale one, so a VANISHED finding must refuse distinguishably — that removes the recomputation instead of making it cheaper to avoid, which taking a bare id would not.",
+        "status": "accepted"
       }
     },
     {
@@ -275186,6 +275609,18 @@
       }
     },
     {
+      "node_id": "req:a-drawn-relation-is-read-back-as-a-sentence",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "A drawn relation is read back as a sentence, so a reversed one reads wrong immediately",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Promoted 2026-09-20 on Anthony's word. flo2 landed two BLOCKS edges asserting the reverse of what their own evidence prose said, in one session, caught only by re-reading their own call. The direction flag exists and lets a caller draw the edge they meant; it does nothing to confirm they got it right. 'Requirement X blocks component Y' reads wrong instantly where a bare arrow and a target does not. Scope: the asymmetric relations, since a symmetric one cannot be drawn backwards.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "req:a-field-report-is-triaged-by-a-served-step-and-the-standing-rules-ride-it",
       "node_type": "Requirement",
       "properties": {
@@ -275194,6 +275629,18 @@
         "priority": "high",
         "provenance": "authored",
         "statement": "Anthony, 2026-09-18 ('let's start addressing these and implementing fixes'), after rule:field-feedback-issues-are-root-caused-and-ideas-are-brainstormed — set 2026-09-05 after three reminders — was broken a fourth time. Root-caused the same day: the rule named no step, and no served step existed for a maintainer reading a field report, so the 0.64.0 lesson delivery could not carry it and memory failed 4 of 4 times. The moment 'an agent reads a field report' must be a reflow2 step: a served skill the agent pulls (get_skill triage-feedback, /triage), whose reply carries the two rules (`steps` naming it), and whose text runs root-cause per issue and brainstorm per idea, records each finding and question, and never writes a cause it has not measured. The user must not be the trigger (req:skill-use-survives-a-long-session); the skill's own description and the command are the triggers this increment delivers, and a hook that notices a newer feedback file is deferred to evidence.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:a-finding-carries-the-name-a-person-uses-and-the-audience-rule-is-stated",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "A finding carries the name a person uses, not only the internal id, and the rule for telling design findings from record findings is stated rather than re-derived",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Promoted 2026-09-20 on Anthony's word, in two unequal halves. THE NAMES HALF IS THE CERTAIN ONE: findings quote a node's id where a human name exists, so every consumer writes the same de-slugging transform and each writes it slightly differently. A finding carries the subject's name beside its id. THE AUDIENCE HALF IS ANSWERED BY STATING A RULE, NOT BY ADDING A FIELD: flo2 measured that the split between findings about the design and findings about the record already tracks the existing source and category fields cleanly, so what is owed is to STATE that rule where a consumer reads it, rather than add a marker that duplicates data already present.",
         "status": "accepted"
       }
     },
@@ -275219,6 +275666,18 @@
         "provenance": "authored",
         "statement": "When reflow2 reports that something is wrong, the report names what the reader can honestly DO about it. A finding that describes a problem and stops leaves the reader to invent a repair, and the repair they invent is often worse than the state being reported.\n\nTHE CASE THAT FORCED IT, measured 2026-08-19. `orphan_node` reported two registered documents as attached to nothing, and its repair note said \"No mechanical repair. Linking this node to something would assert a relationship nobody drew.\" True — and it reads as THERE IS NOTHING YOU CAN HONESTLY DO. There was: `governed_by(..., ruling: \"parks\")` declares the unattached state deliberate and is purpose-built for exactly that genre. It is documented on the TOOL. The reader is looking at the FINDING. The documents were deleted instead.\n\nTWO PROJECTS, SAME DAY, OPPOSITE DIRECTIONS. ophyd-service asked in writing whether `parks` covered their case and said \"neither the tool docs nor the skills say... I wasn't confident enough to try\", and backed off. Hours later an agent in this repo did not find it at all and deleted the evidence. One under-used the mechanism; one destroyed data for want of it.\n\nWHAT THIS DEMANDS, AND ITS LIMIT. The finding names the remedy AND the remedy's SCOPE — \"read by these detectors and not those\" — because a mechanism named without its boundary produces the first failure above rather than the second. It does NOT demand that reflow2 apply the remedy: `dec:ask-not-repair` and `repair_is_a_judgement` stand, and naming an option is not taking it.\n\nDISTINCT FROM `req:a-refusal-names-what-would-have-worked`, which is accepted and covers REFUSALS — a rejected argument returning its legal values. `orphan_node` refused nothing: it succeeded, reported accurately, and described a dead end that was not one. A report is not a refusal, and the gap between them is where this sits.\n\nPROMOTED FROM `dec:idea-parks-shipped-and-was-still-not-reached-the-instruction-is-missing-where-the-person-is-stuck`, which records the observation and stays open as the finding. The dedup guard named that Decision twice and was answered twice — the node was read (this session wrote it) and judged different in kind: the Decision says what happened, this says what must be true.",
         "status": "proposed"
+      }
+    },
+    {
+      "node_id": "req:a-finding-says-when-the-state-it-reports-is-normal-for-the-phase",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "A finding says when the state it reports is a normal stage rather than a defect",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Promoted 2026-09-20 on Anthony's word. On a design three days old with nothing built, one finding fires once per capability — 17 times on flo2's own graph — each phrased as something to answer, with no hint that having built nothing yet is where the project IS. Its neighbours carry a paragraph that routes to who can answer and says whether the thing is even a defect; this one carries a single line. A person reads seventeen of them as seventeen defects.",
+        "status": "accepted"
       }
     },
     {
@@ -275553,6 +276012,18 @@
       }
     },
     {
+      "node_id": "req:a-revising-write-says-what-it-removed",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "A revising write says what it removed, and never silently shortens the record",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Promoted 2026-09-20 on Anthony's word. flo2 measured thirteen full-field rewrites in one session; two silently dropped a load-bearing paragraph, both caught only by the author re-reading their own call. The reply already carries the prior value and compares nothing. THE OBLIGATION: a write that shortens a field says so in its reply, naming the field and the size of the loss. DELIBERATELY NOT a refusal: deleting on purpose is a legitimate edit, and a flag to permit it would cost a retry on every honest one. This is a report, not a gate.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "req:a-rule-is-recorded-with-its-consequence",
       "node_type": "Requirement",
       "properties": {
@@ -275751,6 +276222,18 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "A session that has not yet been given a lane, a scope or a seed node must still be able to ask what the design holds — because that is the moment it has the most time and the least to do. (Distinct from the FACT the guard named, which records the observation; this is the intent, and it gathers three adjacent costs the fact does not carry.)\n\n⭐ THE REPORTER'S SENTENCE IS THE REQUIREMENT: \"the moment with the most time available — sitting AVAILABLE, nothing to do — is the moment the design brain is LEAST USABLE, and the moment I am busiest (mid-lane) is when I am told to orient.\"\n\nTHE MEASURED SHAPE. Every piece of guidance says orient before you touch anything, and the orientation tools are built around a SEED: `detect_gaps` and `detect_defects` want a scope, `claim_region` wants a `seed_id`. A worker at pool check-in has no lane and therefore no seed. The only seedless calls are global rollups, which their own doctrine forbids attributing to the caller. So the honest options are (a) call nothing or (b) call an unscoped tool and hedge the number in a paragraph. THEY CHOSE (a) AND RECORDED WHY — a design brain that a willing, idle, correctly-behaving session cannot use.\n\nTHREE ADJACENT COSTS FROM THE SAME SESSIONS, all about the price of asking a first question:\n(a) `get_node` RETURNS PROPERTIES AND NO EDGES, so \"what does this capability connect to\" needs a second call and a guess about which edge type to ask for.\n(b) `describe_schema{node_type}` COSTS ~15 000 TOKENS to answer \"what properties does this type have\", because it inlines every wildcard edge in both directions; `required_only: true` is the compact escape and drops the edges entirely. Filed twice, on two dates.\n(c) `get_skill` CARRIES NO VERSION OR HASH, so a session that read a skill at minute 0 cannot tell it was revised by minute 90. Skills are SERVED precisely so they cannot go stale relative to the binary — this is the one hole left in that argument, and their words are \"it makes 'I read the skill' a checkable claim rather than a durable-sounding one.\"\n\nWHAT IS OWED: a seedless orientation answer — their suggestion is a `search_design`-backed \"what regions exist and how big are they\", or letting `detect_gaps` take a free-text topic instead of a node id, so a session can FIND its seed rather than needing one to start.\n\nWHY THIS RANKS LAST OF THE FIVE, stated so the ordering is not mistaken for a judgement about the report's quality: nothing here produces a FALSE statement. Every requirement above it does — a green that could not fail, a write that reported success while losing data, a defect that is not one, a name that is really a report. This one is friction on correct use, which is cheaper to carry and still worth removing.\n\nREPORTED BY dev_storyflow's fleet, 2026-08-08, with (b) also on 2026-08-09.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:a-skill-is-reachable-from-a-description-of-the-job-in-a-persons-words",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "A skill is reachable from a description of the job, in the words a person would use",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Promoted 2026-09-20 on Anthony's word. flo2 F8: 'the only way to find a skill you cannot name is to read all 29 descriptions', and the owner's own line, 'I continually forget which skills are available.' BUILT in v0.65.0 as `find_skills`, with a held-out corpus of one query per skill and the same rank-first ratchet the tools have: 30 of 30 in the top five, 25 of 30 first.",
         "status": "accepted"
       }
     },
@@ -277825,6 +278308,18 @@
       }
     },
     {
+      "node_id": "req:settling-a-decision-records-which-option-won",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "Settling a decision records which option won, without rewriting the deliberation that produced it",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Promoted 2026-09-20 on Anthony's word. flo2 settled two decisions correctly and both kept reading 'OPEN — is …?' with bodies ending 'Options, none chosen.' An accepted decision that still reads as an open question is worse than an unsettled one, because a later reader trusts the prose over the status. The only route today is resending the whole node — the very operation measured to lose content. A short free-text field on the setter lets the settling act say what it settled.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "req:skill-adherence-is-measured",
       "node_type": "Requirement",
       "properties": {
@@ -278007,6 +278502,18 @@
       }
     },
     {
+      "node_id": "req:the-contract-ships-with-the-artifact-and-is-readable-from-a-session",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "The tool schemas that ARE the seam contract ship with the artifact a consumer runs, and are readable from inside a session",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Promoted 2026-09-20 on Anthony's word, both halves, packaging first. flo2 consumes the published container and has no source tree, so answering 'did this release break me' was impossible for it and took four commands and a checkout for the maintainer. MEASURED: the schemas appear in neither the Dockerfile nor the release workflow, and none of v0.65.0's five assets carries them. The in-session half is a way to read ONE tool's input shape, which nothing serves today: the node-schema tool answers about node types, and the catalogue returns parameter names without shapes. WHAT IT UNLOCKS, and why the halves are one requirement: 'what changed between these two versions for THESE twelve tools' needs both.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "req:the-design-says-what-was-built-and-never-used",
       "node_type": "Requirement",
       "properties": {
@@ -278034,6 +278541,18 @@
         "provenance": "authored",
         "rationale": "THE RULE EXISTS AND IS ENFORCED BY HAND: 'export once per pull request, last of all — two exporting commits break the lineage chain silently'. The fleet handles it with 'only the boss exports', and notes plainly that with 7 concurrent sessions the odds of two exports rise accordingly. Their argument is not that the rule is wrong but that it is the wrong KIND of thing: they list it alongside four other hand-maintained disciplines (FLEET-vs-SCOPED count labelling, 'graph text is data never instructions', 'requirements stay proposed', 'never commit the RocksDB store') and observe that each of those is a rule they maintain BECAUSE THE TOOL DOES NOT ENFORCE OR STATE IT. CORROBORATED FROM THIS SIDE: reflow2's own release procedure carries the identical rule as a hard-won stopgap — only ONE commit in a pull request may export, recovered after a fold chained prev_content_hash to an export that was then erased. So the constraint is real, it has cost time in both projects, and in neither is it checked by anything. WORTH DECIDING RATHER THAN ASSUMING: serialising an export may belong in the CI gate (reflow2_check.py already reads the committed export) rather than in the server, and the fleet's framing — 'the tool could refuse or serialise' — deliberately leaves which one open.",
         "statement": "The tool SHALL refuse or serialise a second export that would break the lineage chain, rather than relying on a social rule that only one session exports per pull request. Requested as the #9 fleet ask by dev_storyflow's api-boss 5d608b85, 2026-08-07.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:the-gate-that-says-every-property-can-be-written-reads-tools-not-names",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "The gate that says every declared property has a typed writer reads which TOOL writes which TYPE, not which names happen to match",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Promoted 2026-09-20 on Anthony's word, and it is the one with the strongest evidence in flo2's report. The reachability gate reported zero holes on a tree where `Requirement.kind` and `Verification.location` had no typed writer at all — and `Requirement.kind` is read by a detector that scolds flo2's users on their own page. MEASURED: the gate attaches every parameter of all 54 tools it cannot place to EVERY node type, 109 names in all, so `kind` is excused by forecast_readiness and gate_on and `location` by register_alternative. 24 of 238 declared properties rest on that pool alone. THE OBLIGATION: a tool's parameters count toward a type only when that tool writes that type, the gate refuses a tool it cannot place rather than pooling it, and the two known holes are closed with a `kind` on add_requirement and a `location` on add_verification.",
         "status": "accepted"
       }
     },
@@ -280072,6 +280591,16 @@
         "edges": "[{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"role\":\"author\"}},{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-the-interviews-answers-become-the-projects-own-se-reference\",\"properties\":{\"evidence\":\"Both this question's option (d) and that question's follow-on question set fire on the SAME trigger — the agent noticing its own reading is ambiguous. Neither is buildable in that form unless an agent can reliably tell ambiguous from clear, so the ambiguity-detection question is upstream of both.\",\"optional\":false,\"weight_basis\":\"estimated\"}}]",
         "state": "{\"decision\":\"**RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL.** Anthony, 2026-09-14.\\n\\n═══ THE IDEA, in his words ═══\\n\\n\\\"In the storyflow project (you can ssh to the other machine and look for the 2 pass extraction process), but this would maybe be similar in that you would have a schema (with all the SE terms defined up-front) that tell the agent how to parse a user provided description. It could be done at /genesis or /adopt, but might be good when the agent is looking is given any design related prompt to help it extract the content in a systematic extraction manner.\\\"\\n\\n═══ WHAT IS ACTUALLY BEING PROPOSED ═══\\n\\nNot new vocabulary — a new **ORDER OF OPERATIONS**. Today extraction is one pass: the agent reads the user's words and produces nodes, with its own judgement doing the routing in flight. Two-pass means the SE terms are laid out first, as a schema the parse is performed AGAINST, and only then is the description read. The claim is that a parse against a stated schema is more systematic — and, crucially, more REVIEWABLE — than a parse against an agent's priors.\\n\\n**⭐ THE REASON THIS IS NOT THE SAME AS `describe_schema`**: the vocabulary is already served on demand. What is proposed is that it be CONSULTED AS A FIRST STEP rather than available as a lookup. That is a behavioural claim, not a content one, and it is the same distinction `dec:idea-does-the-black-box-frame-reach-the-agent-at-call-time` drew when it found the frame stated nowhere the agent reads at call time.\\n\\n═══ THE SECOND QUESTION, AND IT MAY BE THE HARDER ONE: WHEN ═══\\n\\nAnthony offers three answers and does not choose:\\n\\n- **At `/genesis` or `/adopt`** — once, at the start. Cheap; nothing recurring. ⚠️ But Alex's failure was not at genesis; it arrived mid-project, on a word nobody had needed before.\\n- **On any design-related prompt** — every capture parses against the schema. Most thorough. ⚠️ And it is a cost on every single capture, paid to serve the ambiguous minority — the exact objection recorded against option (b) of `dec:idea-a-users-domain-vocabulary-has-no-route-into-se-vocabulary`.\\n- **On ambiguity only** — implied rather than stated, and it is the same trigger the follow-on question set in `dec:idea-the-interviews-answers-become-the-projects-own-se-reference` would use.\\n\\n═══ ⚠️ THE REFERENCE HAS NOT BEEN READ ═══\\n\\nstoryflow's two-pass extraction lives on the LAN peer (ajs77, `~/projects/`) and **nobody has looked at it for this purpose**. Everything above is inference from one sentence describing it. What it actually does, what the two passes actually are, and whether the analogy holds are all unchecked — and this project has a standing lesson about exactly this shape (`fact:dev-storyflow-feedback...`: a file's identity and age are read off the FILE, never off a note about it). **Reading it is the cheapest thing that would make this decidable**, and it has not been done.\\n\\n═══ OPTIONS, none chosen ═══\\n\\n**(a) NOTHING. One-pass extraction with a routing table is what shipped, and it works for most captures.** ⚠️ Counter: it demonstrably did not work for Alex, and its failure mode is silent — a confident wrong category, not an error.\\n\\n**(b) SCHEMA-FIRST AT GENESIS AND ADOPT ONLY.** Cheapest real change; fits where the interview already runs. ⚠️ Counter: misses the mid-project arrival, which is when it actually broke.\\n\\n**(c) SCHEMA-FIRST ON EVERY DESIGN PROMPT.** ⚠️ Counter: pays on every capture for the ambiguous minority, and reflow2's own recorded objection to that pattern is on file.\\n\\n**(d) SCHEMA-FIRST ONLY ON AMBIGUITY**, sharing a trigger with the follow-on interview questions. ⚠️ Counter: requires the agent to DETECT its own ambiguity, which is the part nothing has ever demonstrated — Alex's agent did not notice it was unsure, it noticed it was stuck and asked him. Detecting \\\"I have two defensible readings\\\" is a harder problem than either pass.\\n\\n═══ WHAT WOULD MAKE THIS DECIDABLE ═══\\n\\nTwo things, both cheap and neither done: **read storyflow's two-pass extraction** rather than reasoning from a description of it; and establish whether an agent can reliably tell \\\"ambiguous\\\" from \\\"clear\\\", because options (d) and the whole follow-on-questions idea rest on it.\",\"kind\":\"exploratory\",\"name\":\"OPEN — should extraction be TWO-PASS against an SE schema stated up front, the way storyflow parses, and does it run at genesis/adopt or on every design prompt?\",\"rationale\":\"Recorded as an open question via the brainstorm discipline, and deliberately NOT researched before recording — the reference on the LAN peer is named as unread rather than summarised from one sentence about it, which is this project's own standing lesson about reading a thing rather than a note about it.\\n\\nKept separate from the interview-reference question because they answer different halves: that one asks what is KEPT, this asks in what ORDER the parse happens. They share a trigger in one option each, which is the relation drawn rather than a reason to merge them.\",\"status\":\"proposed\"}",
         "target_id": "dec:idea-extraction-is-two-pass-against-an-se-schema-stated-up-front",
+        "target_type": "Decision"
+      }
+    },
+    {
+      "node_id": "snap:epoch:preserved-on-write:dec:idea-four-sibling-constructors-four-status-contracts",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[]",
+        "state": "{\"decision\":\"RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Measured by the dev_storyflow fleet in one session, 2026-09-02, all four observed live:\\n\\n| constructor | what it does with status |\\n| --- | --- |\\n| `add_decision` | lands `proposed` — and the brainstorm skill tells you to VERIFY it |\\n| `add_capability` | accepts an explicit `status` and honours it |\\n| `add_epoch` | lands `arrived` and does not take the field |\\n| `add_verification` | REJECTS the field (`unknown field 'status'`) and lands `planned`; recording a check that FAILED takes two calls |\\n\\nTheir point: *\\\"for four sibling constructors there are four different contracts, and two of them require a second call to say the true thing. A design brain's whole value is that its statuses are true; the constructors should make the true thing the cheap thing.\\\"*\\n\\n🛑 **ONE OF THEIR FOUR IS ALREADY ANSWERED AND THEIR PROPOSED FIX WOULD BE WRONG.** Wish #6 asks that `add_epoch` default to `planned`. But `plan_epoch` EXISTS for exactly that; `add_epoch`'s own description says it creates an epoch that \\\"HAS HAPPENED\\\" and names `plan_epoch` as the alternative; and `cap:planned-epochs` records the reasoning — *\\\"The default is `arrived`, which is a record rather than a choice (`req:defaults-do-not-assert`): add_epoch's 27 call sites have only ever meant recording the point you are at.\\\"* Measured 2026-09-02: `find_tools` ranks `plan_epoch` FIRST for \\\"create a milestone for work that has not started yet\\\". The discovery surface worked and was not used. **Changing that default would break a reasoned decision to fix a discovery miss.**\\n\\n⭐ SO THE REAL QUESTION IS NARROWER AND MORE INTERESTING: `add_decision` and `add_epoch` both follow `req:defaults-do-not-assert` and land at the not-yet-true end — and reach OPPOSITE-LOOKING answers, because for an epoch the not-asserting default IS `arrived` (you are recording where you are). `add_verification` refusing the field is a THIRD thing again, and has its own precedent: `fact:defect-add-verification-cannot-reach-its-own-fields` (2026-08-15) already records that constructor as too narrow, \\\"half addressed\\\".\\n\\nOPTIONS, none preferred:\\n· **A — Accept `status` on every constructor, defaulting to the not-yet-done end.** Their wish #9. Uniform and cheap to describe. ⚠️ Collides with `req:defaults-do-not-assert` for epochs, where \\\"not yet done\\\" is the WRONG default — so it would have to carve out the one case that prompted the complaint.\\n· **B — Leave the defaults; make every constructor ECHO the status it assigned.** The half of their ask that survives the refutation above, and it is what they actually needed: *\\\"Nothing warned me; I caught it only because I read the reply.\\\"* Costs one field.\\n· **C — Fix only `add_verification`**, the one with a standing recorded defect and no sibling tool to redirect to. Narrowest, and it closes a report already 18 days old.\\n· **D — Point the constructors at each other in prose**, as `add_epoch` already does for `plan_epoch`. ⚠️ `add_epoch` DID that and it did not work, which is evidence against prose as the whole answer.\\n· **E — Do nothing; the contracts differ because the node types differ.** ⚠️ Has to answer why four sibling calls in one workflow surprised an experienced reporter four times.\\n\\n⚠️ NOT ESTABLISHED: whether `add_capability` honouring an explicit status is itself right, or whether it lets a caller assert `realized` with nothing built. Nobody has asked.\",\"kind\":\"exploratory\",\"name\":\"OPEN — four sibling constructors answer \\\"what status does this land in\\\" four different ways. Is there one contract, and does defaults-do-not-assert already decide it?\",\"rationale\":\"Worth recording rather than acting on because the obvious repair — \\\"make them all the same\\\" — is refuted for the specific case that prompted it, and acting on the report as written would overturn `req:defaults-do-not-assert` and a documented 27-call-site rationale to fix something `find_tools` already answers.\\n\\nWhat survives refutation is smaller and better: ECHO the status assigned (option B), and the standing `add_verification` narrowness (option C) which was recorded on 2026-08-15 and is still half-addressed.\",\"status\":\"proposed\"}",
+        "target_id": "dec:idea-four-sibling-constructors-four-status-contracts",
         "target_type": "Decision"
       }
     },
@@ -293868,7 +294397,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:d62891209593aca34441fa0bc3a9f5d077338f42ac49f6d977c19c98cfec1085",
+  "prev_content_hash": "sha256:526b595d6bd41fb80afa6fd69d01dda0a7c211195f0aff4cdfa3514ac5a0eea9",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -294466,8 +294995,8 @@
     "schema_version": 1
   },
   "taken_at": {
-    "branch": "flo2s-evening-report-is-triaged",
-    "commit": "45e564f997c2fd6d784ff1a90b4cce62889b30d2",
+    "branch": "the-open-ideas-are-settled-on-his-word",
+    "commit": "feb75d0fd7ecceaa108a7d33503cfec152aff88c",
     "dirty": true
   }
 }
