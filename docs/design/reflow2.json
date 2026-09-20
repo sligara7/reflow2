@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:b7b1a838e763c91977b86761ceaedad7b4f9396802a9ce86f66acd7e23794d32",
+  "content_hash": "sha256:af7caa2d514088846d10a0bc1b2e38f0ea8bb8267b77cba0e9e2c395004a9af7",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -23896,6 +23896,17 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:the-gate-list-is-run-not-only-cross-checked",
+      "properties": {
+        "approved_at": "2026-09-20",
+        "roles": [
+          "approver"
+        ]
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:the-gate-that-says-every-property-can-be-written-reads-tools-not-names",
       "properties": {
         "approved_at": "2026-09-20",
@@ -24772,6 +24783,16 @@
     },
     {
       "edge_type": "CAUSES",
+      "from_id": "art:init",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "This file decides which config files a project gets. Its HARNESS_ALIASES maps \"grok\" to \"claude\" so that answering \"grok\" writes .mcp.json and nothing else, and its config-writer comment states the premise outright: \"Grok CLI also loads it as a compatibility source, so this one file covers both\". Measured false for Grok Build 1.0.30 on 2026-09-20: `grok mcp list` inside a project holding that exact file reports no servers configured, and grok's own help names ~/.grok/config.toml and ./.grok/config.toml as its only sources. The self-cause is deliberate rather than a placeholder — the defect is the claim this file makes about another product, and the same file demonstrates the correct standard twelve lines away, where the Copilot claim is recorded as measured end to end.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:grok-build-does-not-read-mcp-json-so-the-installer-writes-a-config-that-client-never-opens"
+    },
+    {
+      "edge_type": "CAUSES",
       "from_id": "art:kit-instructions",
       "properties": {
         "basis": "correlational",
@@ -24879,6 +24900,16 @@
         "validation_status": "unvalidated"
       },
       "to_id": "fact:defect-two-prescribed-layer-pairs-are-missing-so-a-check-beside-its-ruling-is-refused-as-a-duplicate"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "art:tools-capture",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "add_contributor is declared in this file, and its `id` parameter carries the only worked example an agent sees when it invents a contributor id: \"Stable id (e.g. `who:ajs`, `who:claude-code`)\". Both are real Contributor rows in this project's graph and the first is a named private individual. The description is served verbatim to every client in every project, so the example travels wherever reflow2 is installed. Named as the cause rather than the schema files because this one is attached to the operation that WRITES a contributor; schema/core.yaml and schema/temporal.yaml carry the same class of example on fields that are read rather than authored.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:the-served-surface-offers-a-real-persons-contributor-id-as-the-worked-example-on-the-field-that-creates-contributors"
     },
     {
       "edge_type": "CAUSES",
@@ -49364,6 +49395,51 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-gate-list-is-run-not-only-cross-checked",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:agent-instructions"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-gate-list-is-run-not-only-cross-checked",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:run-ci-gates"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-gate-list-is-run-not-only-cross-checked",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:run-ci-gates-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-gate-list-is-run-not-only-cross-checked",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:sweep-harness"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-gate-list-is-run-not-only-cross-checked",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:the-gate-list-is-run-not-only-cross-checked"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-gate-names-the-unmodelled-files-you-just-touched",
       "properties": {
         "accepted_baseline": true,
@@ -73567,6 +73643,12 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "art:init",
+      "properties": {},
+      "to_id": "fact:grok-build-does-not-read-mcp-json-so-the-installer-writes-a-config-that-client-never-opens"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "art:kit-instructions",
       "properties": {},
       "to_id": "fact:the-served-instructions-name-no-way-to-ask-whether-a-thing-already-exists-and-one-consumer-rebuilt-four-that-did"
@@ -75282,6 +75364,12 @@
       "from_id": "ver:the-graph-asks-what-a-session-made-false",
       "properties": {},
       "to_id": "fact:unclaimed-findings-cannot-join-a-change-to-a-finding-hung-off-a-different-node"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "who:ajs",
+      "properties": {},
+      "to_id": "fact:the-served-surface-offers-a-real-persons-contributor-id-as-the-worked-example-on-the-field-that-creates-contributors"
     },
     {
       "edge_type": "IMPLEMENTS",
@@ -228983,6 +229071,24 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:run-ci-gates",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:the-gate-list-is-run-not-only-cross-checked"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:run-ci-gates-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:the-gate-list-is-run-not-only-cross-checked"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:sanitize",
       "properties": {
         "completeness": "complete",
@@ -229693,6 +229799,15 @@
         "conformance": "verified"
       },
       "to_id": "cap:a-sweep-says-what-it-could-not-have-found"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:sweep-harness",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-reply-takes-the-shape-its-client-can-read"
     },
     {
       "edge_type": "REALIZES",
@@ -233275,6 +233390,12 @@
         "rationale": "Makes one of the two declared boundaries actually severable. The requirement also asks for encapsulation and cohesion, which this does not touch."
       },
       "to_id": "req:modularity-computed"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:the-gate-list-is-run-not-only-cross-checked",
+      "properties": {},
+      "to_id": "req:the-gate-list-is-run-not-only-cross-checked"
     },
     {
       "edge_type": "SATISFIES",
@@ -236892,6 +237013,18 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:the-gate-runner-never-passes-having-run-nothing",
+      "properties": {},
+      "to_id": "art:run-ci-gates"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:the-gate-runner-never-passes-having-run-nothing",
+      "properties": {},
+      "to_id": "cap:the-gate-list-is-run-not-only-cross-checked"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:the-git-exchange-path-is-defended",
       "properties": {},
       "to_id": "cap:the-design-record-merges-per-node-in-every-clone"
@@ -238814,6 +238947,22 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:run-ci-gates",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:run-ci-gates"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:run-ci-gates-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:run-ci-gates-test"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:sanitize",
       "properties": {
         "action": "created"
@@ -239131,6 +239280,14 @@
         "action": "created"
       },
       "to_id": "art:sweep-coverage-test"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:sweep-harness",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:sweep-harness"
     },
     {
       "edge_type": "YIELDED",
@@ -240394,7 +240551,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:496819ea7dd48e365aeacdb6ccbf6aed7c608d6871492e491404c5290b0e8cd5",
+        "checksum": "sha256:4986f4f50988015171196952afc78c4594cbede50c844ac2d5c70e4588106b49",
         "checksum_basis": "asserted",
         "location": "AGENTS.md",
         "name": "AGENTS.md — the primary instruction file every agent reads before it knows reflow2 exists: commands, architecture, the rules for changing the project",
@@ -243068,6 +243225,32 @@
       }
     },
     {
+      "node_id": "art:run-ci-gates",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:2585b59c1931a81361c95b880a8f99f7797889d281756e7569fb8b5d80b16475",
+        "checksum_basis": "measured",
+        "description": "The local gate runner. Executes exactly what ci.yml runs, in its order, reading the list through skill_lint's ci_gates() rather than restating it. Standard library only, deliberately: pyyaml is not in the base image, which is why skill_lint's parser is a text scan and why reusing it is the right call rather than writing a second one. Refuses to report a pass on zero gates, refuses a near-empty parse as broken, and returns the failure in the exit code. Nothing is piped through head.",
+        "location": "tools/run_ci_gates.py",
+        "name": "run_ci_gates.py",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:run-ci-gates-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:2bfbc18ca72fd2aa5b7de40b2b7ee8e7e799d114e044648edfc58804e1cf9a9b",
+        "checksum_basis": "measured",
+        "description": "The gate runner's own hermetic net, run in CI. Pins the four ways the runner could lie: a failing gate must fail the run in the exit code and not only in the printed summary; a filter matching nothing is a failure rather than a clean sweep; a near-empty read of ci.yml is refused as broken rather than reported as a short workflow; and the real workflow still yields a plausible gate count, so a future change to its shape cannot quietly reduce the runner to a no-op. It also pins that the runner never grows its own copy of the gate list or a pyyaml dependency. Written because the runner's first draft had that exact failure twice over — it printed a clean summary on a filter matching nothing, and never returned a non-zero exit code at all, so every sweep that day was read off the log by eye.",
+        "location": "tools/test_run_ci_gates.py",
+        "name": "test_run_ci_gates.py",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:sanitize",
       "node_type": "Artifact",
       "properties": {
@@ -243700,6 +243883,19 @@
         "checksum": "sha256:c47acbd5315df006de2e7209e7eb3c7d18f62e4d4630314be684512785d6659a",
         "location": "crates/reflow2-core/tests/sweep_coverage.rs",
         "name": "sweep_coverage.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:sweep-harness",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:142b56a51cb02b1c2c172d067bdd1ebfab369915e3c696930c538b47e4558227",
+        "checksum_basis": "measured",
+        "description": "Exercises reflow2's served tools against an ISOLATED COPY of the design graph, over stdio JSON-RPC, from a JSON plan of {tool, args, label, expect} steps. The copy is built by importing the committed export into a fresh store, so the live graph at .reflow2/graph is never opened and a running server cannot be disturbed. It is the instrument behind fact:179-of-180-tools-have-a-machine-record-of-a-real-call-and-zero-crashed, which answered Anthony's question of 2026-09-11 — how many of the 180 tools have actually been exercised — with 479 calls over 179 tools and nothing crashing. REGISTERED 2026-09-20 ON HIS WORD, correcting an earlier recommendation to delete it: it was committed by accident in PR #551 through a `git add -A tools` glob, and a session that had not opened the file advised removing it as scratch. It is not scratch. Deleting it would make a cited measurement unreproducible. HONEST LIMITS: it arrived by accident rather than by decision and has never been reviewed as a permanent instrument, and it has no regression net of its own, unlike run_ci_gates.py and the other tools in this directory.",
+        "location": "tools/sweep_harness.py",
+        "name": "sweep_harness.py",
         "status": "realized"
       }
     },
@@ -248311,6 +248507,17 @@
         "name": "The foundation is one subsystem, not two halves — the kernel stops being bisected by the decomposition",
         "provenance": "authored",
         "status": "realized"
+      }
+    },
+    {
+      "node_id": "cap:the-gate-list-is-run-not-only-cross-checked",
+      "node_type": "Capability",
+      "properties": {
+        "description": "tools/run_ci_gates.py executes the gate list in ci.yml's own order. It reads the list through skill_lint's ci_gates() — the parser the build already trusts, itself covered by test_skill_lint.py — rather than carrying a fourth copy of the contract, because a fourth hand-kept copy would be the drift it exists to end. It takes optional keyword filters, so the export-dependent gates can be re-run alone after an export, and --list shows the set without running anything. Three refusals are built in: running zero gates is a failure rather than a pass, a near-empty parse of the workflow is refused as broken rather than reported as a short workflow, and a failing gate fails the run in the EXIT CODE rather than only in the printed summary. Nothing is piped through head. tools/test_run_ci_gates.py is its regression net and pins all three, plus the requirement that the runner never grows its own copy of the list or a pyyaml dependency.",
+        "name": "Every gate CI runs can be run locally in one command, read from the workflow rather than restated",
+        "provenance": "authored",
+        "status": "realized",
+        "tier": "operational"
       }
     },
     {
@@ -257146,6 +257353,18 @@
       "properties": {
         "change_type": "new_feature",
         "name": "`reflow2_check.py` gains a ROUND TRIP check: export → import → re-export, compared structurally, so a committed export that cannot be read back is caught. The only probe that sees this class — content_hash, the lineage chain and sync_status all compare the export to ITSELF and never run the importer. dev_storyflow's export had been unrestorable for four days with every one of those green."
+      }
+    },
+    {
+      "node_id": "chg:the-gate-list-is-run-not-only-cross-checked",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-09-20",
+        "name": "The build's gate list becomes runnable, and the sweep harness is registered rather than deleted",
+        "rationale": "THE CONTRACT WAS CHECKED AND NEVER RUN. Three records of the gate list existed — ci.yml runs it, AGENTS.md lists it for a person, skill_lint fails the build when those two disagree on coverage or flags — and no artifact executed it. So a local pass had to be reconstructed from memory, and three sessions produced three different subsets: a split cargo run 46 tests short, a subset that missed the gate which would have caught the defect, and on 2026-09-20 a script running 17 of 48 with cargo test piped through head -40, which truncates the report at the fortieth of roughly two hundred test binaries and can kill the run through the closed pipe. Forty consecutive passes reads exactly like a clean sweep. THE RUNNER READS THE LIST RATHER THAN RESTATING IT, and that is the whole design: a fourth hand-kept copy would be the drift it exists to end, so it imports the parser the build already trusts instead of writing a second one — the same second-builder mistake chg:a-reply-carries-its-payload-once-on-every-tool was fixing one file over, which is why it was not made again here. It stays standard-library-only because pyyaml is not in the base image, which is exactly why skill_lint's parser is a text scan. ITS OWN FIRST DRAFT HAD THE FAILURE IT EXISTS TO END, twice: it printed a clean summary on a filter matching nothing, and it never returned a non-zero exit code at all, so that day's sweeps were read off the log by eye. Both are now refusals and both are pinned. The net's own first run then failed on a test that was wrong rather than on the runner, and that is recorded on the Verification rather than quietly corrected.",
+        "subject": "system",
+        "summary": "tools/run_ci_gates.py runs every gate ci.yml defines, in its order, reading the list through skill_lint's ci_gates() rather than restating it. tools/test_run_ci_gates.py is its hermetic net and is registered as a CI gate in both ci.yml and AGENTS.md's block. AGENTS.md gains a paragraph above that block pointing at the runner and saying why hand-writing one is the thing to stop. SEPARATELY AND ON THE SAME WORD: tools/sweep_harness.py is registered as an Artifact instead of being deleted. It was committed by accident in PR #551 through a `git add -A tools` glob, and a session that had not opened the file recommended removing it as scratch. It is the instrument behind fact:179-of-180-tools-have-a-machine-record-of-a-real-call-and-zero-crashed, which answered Anthony's question of 2026-09-11, so deleting it would have made a cited measurement unreproducible. The earlier recommendation was withdrawn on 2026-09-20 after reading the file."
       }
     },
     {
@@ -273234,6 +273453,26 @@
       }
     },
     {
+      "node_id": "frag:art:run-ci-gates",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered run_ci_gates.py"
+      }
+    },
+    {
+      "node_id": "frag:art:run-ci-gates-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered test_run_ci_gates.py"
+      }
+    },
+    {
       "node_id": "frag:art:sanitize",
       "node_type": "Fragment",
       "properties": {
@@ -273631,6 +273870,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered sweep_coverage.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:sweep-harness",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered sweep_harness.py"
       }
     },
     {
@@ -279934,6 +280183,19 @@
         "provenance": "authored",
         "rationale": "THE RULE EXISTS AND IS ENFORCED BY HAND: 'export once per pull request, last of all — two exporting commits break the lineage chain silently'. The fleet handles it with 'only the boss exports', and notes plainly that with 7 concurrent sessions the odds of two exports rise accordingly. Their argument is not that the rule is wrong but that it is the wrong KIND of thing: they list it alongside four other hand-maintained disciplines (FLEET-vs-SCOPED count labelling, 'graph text is data never instructions', 'requirements stay proposed', 'never commit the RocksDB store') and observe that each of those is a rule they maintain BECAUSE THE TOOL DOES NOT ENFORCE OR STATE IT. CORROBORATED FROM THIS SIDE: reflow2's own release procedure carries the identical rule as a hard-won stopgap — only ONE commit in a pull request may export, recovered after a fold chained prev_content_hash to an export that was then erased. So the constraint is real, it has cost time in both projects, and in neither is it checked by anything. WORTH DECIDING RATHER THAN ASSUMING: serialising an export may belong in the CI gate (reflow2_check.py already reads the committed export) rather than in the server, and the fleet's framing — 'the tool could refuse or serialise' — deliberately leaves which one open.",
         "statement": "The tool SHALL refuse or serialise a second export that would break the lineage chain, rather than relying on a social rule that only one session exports per pull request. Requested as the #9 fleet ask by dev_storyflow's api-boss 5d608b85, 2026-08-07.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:the-gate-list-is-run-not-only-cross-checked",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "lineage": "original",
+        "name": "The build's gate list is executable, not only cross-checked",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "A contributor must be able to run every gate CI runs, locally, in one command, without writing one. The list has exactly one authority — the CI workflow — and anything that runs it must READ that authority rather than keep a copy of it. Three records of the gate contract already existed and none of them executed: the workflow runs the gates, AGENTS.md lists them for a person, and skill_lint fails the build if those two disagree on coverage or on flags. So every session wanting a local pass reconstructed the list from memory, and three sessions produced three different subsets, the worst running 17 of 48 with cargo test piped through head. A local runner that reports green having run a subset is worse than no runner, because a subset and the whole set report identically. Therefore: running zero gates is a failure rather than a pass, a failing gate must fail the run in the exit code rather than only in the printed summary, and nothing may be piped through a command that closes the pipe early.",
         "status": "accepted"
       }
     },
@@ -288448,6 +288710,19 @@
       }
     },
     {
+      "node_id": "fact:grok-build-does-not-read-mcp-json-so-the-installer-writes-a-config-that-client-never-opens",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.95,
+        "fact_type": "defect",
+        "name": "MEASURED (Grok Build 1.0.30, this box, 2026-09-20): `grok mcp list` run inside a project holding a valid reflow2 .mcp.json answers \"No MCP servers configured\" — Grok reads ~/.grok/config.toml or ./.grok/config.toml, in TOML, so the harness alias grok→claude writes a file Grok never opens",
+        "statement": "SYMPTOM AS REPORTED, second-hand: Alex, at home on Grok Build, starting a NEW project — the .reflow2 folder gets created, then Grok reports the MCP server is not registered for that project. He asked whether he must run something like \"reflow2 --init\" per project. THE MEASUREMENT, taken on this box 2026-09-20 against Grok Build 1.0.30, the same product and version already characterised in fact:grok-build-measured-on-this-box-it-hands-the-model-only-the-text-block-and-hides-mcp-tools-behind-a-search. Run inside /home/ajs7/project/reflow2, which holds a valid .mcp.json declaring the reflow2 stdio server, `grok mcp list` answers: \"No MCP servers configured. Run `grok mcp add --help` to get started.\" Its own help states its two sources, and neither is .mcp.json: \"user: ~/.grok/config.toml, available in all your projects\" and \"project: ./.grok/config.toml, shared with everyone working in this directory\". Confirmed end to end in a scratch directory: `grok mcp add reflow2 --scope project -- <binary> --graph-path ./.reflow2/graph --shared` wrote a TOML block [mcp_servers.reflow2] into ./.grok/config.toml, and `grok mcp list` then printed the server. So the registration path works; it is simply a different file in a different format from the one reflow2 writes. WHAT THIS REFUTES IN THE SOURCE. tools/reflow2_init.py resolves the harness name \"grok\" to \"claude\" through HARNESS_ALIASES, on the stated ground that \"Grok CLI reads .mcp.json, so it is served by claude\", and its config-writer comment repeats it: \".mcp.json — Claude Code (Grok CLI also loads it as a compatibility source, so this one file covers both)\". AGENTS-facing prose says the same. For Grok Build 1.0.30 that is false. A user who answers \"grok\" to --harness therefore gets .mcp.json, .reflow2/ and a pointer file, and nothing Grok will ever open — which presents to the agent as reflow2 not being registered for the project, exactly as reported. ⭐ THE CLASS, AND IT IS VISIBLE IN THE SAME FILE. Twelve lines below the grok alias sits the Copilot entry, and it is exemplary: \"MEASURED 2026-08-14, not assumed. `copilot mcp --help` states its sources... confirmed end to end: `copilot mcp list`, run inside a project set up by this installer, printed 'Workspace servers: reflow2 (local)'.\" The grok alias was added the same week, and its recorded reason is a fact about the PERSON — \"on learning the second user runs Grok at home and Claude at work\" — not a measurement of the CLIENT. So the class is that reflow2 asserts where other products keep their MCP configuration, one product at a time, with no check; the neighbour was measured and this one rode along on an assumption. A fix that only adds a grok entry leaves the next client to be guessed at. WHAT WOULD PIN IT: a gate that, for every harness the installer claims to serve, runs that product's own list command inside a directory the installer has just set up and fails if the product does not report the server. It cannot run in CI where those binaries are absent, so the honest form is a local instrument plus a recorded per-client measurement date, in the shape check_doc_versions already uses for version claims. A SECOND, INDEPENDENT CAUSE IS ALSO LIVE and must not be collapsed into this one: fact:field-report-genesis-on-grok-build-cannot-finish-because-next-step-names-mcp-and-the-latent-server-is-never-replaced records Alex hitting the same PRESENTATION on 2026-09-14 at v0.60.2, where reflow2_start_design created an empty .reflow2/ and the latent two-tool surface was never promoted. That was fixed in v0.61.0 and is superseded. If Alex is below v0.61.0 it alone explains the report; if he is at or above it, this config-location defect does. THE DISCRIMINATOR IS ONE COMMAND, and it is his to run in the new project: `grok mcp doctor`, or `grok mcp list`. No reflow2 listed means the config never reached Grok, which is this finding. reflow2 listed but only a tool or two served means the latent surface never promoted, which is the older one. NOT ESTABLISHED: Alex's installed reflow2 version; how he registered reflow2 on Grok in the first place, since the installer has no Grok path at all and reflow2_install.py contains no occurrence of the string; whether Grok CLI, a different product from Grok Build, ever read .mcp.json as the source claims; and the exact wording of his report, which arrived paraphrased through Anthony. ⚠️ ONE THING IS SETTLED EITHER WAY: running an init per project is NOT the missing step. Init writes .mcp.json, which Grok does not read. The step that works on Grok is `grok mcp add`.",
+        "subject_id": "art:init",
+        "valid_from": "2026-09-20"
+      }
+    },
+    {
       "node_id": "fact:grok-build-measured-on-this-box-it-hands-the-model-only-the-text-block-and-hides-mcp-tools-behind-a-search",
       "node_type": "TemporalFact",
       "properties": {
@@ -291369,6 +291644,19 @@
         "statement": "THE SETTLING MEASUREMENT for `dec:idea-the-load-bearing-prose-is-unchecked-against-the-code-it-describes`, run 2026-09-02 on Anthony's word. IT DOES NOT SAY WHAT THE FIVE INSTANCES SUGGESTED IT WOULD.\n\n**POPULATION** — the 167 committed toolsnaps, which are the served descriptions byte-for-byte:\n· 767 sentences total.\n· 343 (45%) carry a marker of an assertion about behaviour (never / always / cannot / refuses / only / silently / …).\n· 127 of 167 tools (76%) carry at least one.\n\n**READ, NOT COUNTED** — a reproducible random sample of 40 (seed 20260902) was READ and classified, because dev_storyflow's own lesson from the same week is that a grep cannot tell a claim from its denial: their regex was 40% wrong on first run, matching negations like \"STATUS is planned: nothing is built\" on the word \"built\".\n· ~32 of 40 (80%) make a CHECKABLE claim about what the computation does.\n· 4 are advice (\"Never set kpp on your own reading\"), 4 are descriptive or historical (\"Until this tool existed …\").\n\nSO THE ANSWER TO THE DECISION'S OWN TEST IS **HIGH HIT RATE — IT IS ONE THING, NOT THREE BUGS.** Extrapolated, roughly 270 checkable behavioural claims stand on the served surface, and nothing systematically checks any of them.\n\n⭐ **AND THEN THE RESULT THAT REFRAMES THE WHOLE QUESTION: THE PROSE IS MOSTLY TRUE.** Five sampled claims were verified against the code and ALL FIVE HELD:\n· `propose_heal` \"never mutates\" — takes `&self`, cannot.\n· `mint_seat` \"Writes NOTHING\" — no graph access, no write lock, mints and returns.\n· `plan_epoch` \"a planned epoch REFUSES record_change\" — temporal.rs:809.\n· `loop_status` \"an unknown contributor_id is REFUSED\" — and it is PINNED BY A TEST (`an_unknown_contributor_is_refused_rather_than_answered_with_an_empty_list`).\n· `seam_coverage` \"every coupling is lifted to the nearest container at that level\" — TRUE, and the id-prefix bug that once made it false was fixed 2026-08-30 with the measurement in the code comment.\n\n**SO THE DEFECT RATE IS LOW AND THE DETECTION LATENCY IS THE PROBLEM.** Five known-false claims against ~270 is on the order of 2%. Every one of the five was found by a USER, weeks after it rotted, and none by sampling — which is what a low base rate plus no checking produces. The class is real; the frequency is not the thing that hurts.\n\n⭐ **THAT CHANGES WHAT THE REPAIR SHOULD BE.** Auditing the corpus is low-yield: at ~2% a reader would wade through fifty true sentences to find one false. The generalisable answer already exists in this design's own history — `chg:the-replay-contract-is-pinned-by-a-round-trip-not-by-a-field` root-caused an earlier instance as \"a stated contract maintained by hand with nothing checking it\" and fixed it with a ROUND-TRIP TEST rather than a corrected sentence. `loop_status`'s contributor refusal shows the same shape working: the claim is pinned, so it cannot rot.\n\n⚠️ BOUNDS, and they matter for anyone acting on this. FIVE verifications cannot establish a rate — they establish that the prose is not obviously rotten, which was worth knowing and was not known. The sample was 40 of 343 and only 5 were traced to code, because each trace is a manual read. Skills and gap texts were NOT surveyed, only tool descriptions. And the five known-false instances were found by users on the surfaces users actually touch, so the true rate on HEAVILY-USED prose may be higher than on the whole corpus.",
         "subject_id": "cmp:foundation-vocabulary",
         "valid_from": "2026-09-02"
+      }
+    },
+    {
+      "node_id": "fact:the-served-surface-offers-a-real-persons-contributor-id-as-the-worked-example-on-the-field-that-creates-contributors",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.8,
+        "fact_type": "finding",
+        "name": "MEASURED 2026-09-20 in the SHIPPED v0.65.0 binary: the only worked example for add_contributor's `id` is `who:ajs`, a real private individual and a real row in this project's own contributor table — served verbatim into every project reflow2 is installed in",
+        "statement": "SYMPTOM AS REPORTED, second-hand and not yet measured at the source: on a separate reflow2 design at Anthony's brother's workplace, the contributor \"ajs\" appears on many nodes. Anthony has never worked on that project. WHAT WAS MEASURED HERE, 2026-09-20, against the SHIPPED artifacts rather than the working tree. The published kit tarball contains no occurrence of the string \"ajs\" anywhere. The published linux binary contains five, all of them in text the server SERVES to every client: add_contributor's `id` parameter reads \"Stable id (e.g. `who:ajs`, `who:claude-code`)\"; its `handle` parameter offers \"(`@ajs`)\"; Constraint.limit_source, served by describe_schema, offers \"the Contributor who asserted it (`who:ajs`, `who:claude-code`)\"; and Snapshot.target_id recounts \"ctr:anthony merged into who:ajs\". All four are real rows in THIS project's own contributor table: who:ajs is Anthony Sligar with handle @ajs, and who:claude-code is a real Contributor too. So the single worked example an agent reads at the exact moment it invents a contributor id is a named private individual's real id. TWO CANDIDATES REMAIN AND THEY ARE DISTINGUISHABLE. (C) An agent on that machine followed the served example and wrote who:ajs for somebody else, in which case the id now denotes two different people in two graphs. (D) That graph absorbed Anthony's nodes wholesale, through import_graph, merge_designs, a copied .reflow2/graph, or the git-pull-the-design-rules workflow Anthony has described wanting, in which case who:ajs correctly denotes him and simply should not be there. THE DISCRIMINATING MEASUREMENT, two calls on the brother's graph, which nobody here can take: read who:ajs and look at its name and description. \"Anthony Sligar\" with the long systems-engineer persona means D. The brother's own name, a colleague's, or a blank one means C, which is the worse reading because the identity has forked. Then scan for Project nodes: if reflow2's own project or requirements are present, D is settled regardless. REFUTED IN SOURCE, so it is not a third candidate: the server never creates a Contributor by itself and never derives an identity from the environment, the git config or the OS user. claim_region explicitly REFUSES an unknown contributor id rather than minting one, and no env::var on USER or LOGNAME exists in either crate. Nothing can put a name in a graph that an agent or an import did not put there. THE CLASS IS LARGER THAN ONE NAME. The served surface draws its worked examples from real projects, and who:ajs is only the instance that was noticed. @ajs is a second. Constraint.limit_source also offers `art:ifc-shell-model` and `ifc_quantify`, which are bhome's artifact and an IfcMCP tool — a different customer's identifiers, shipped to everybody. A fix that changes who:ajs alone leaves the class open, and the class is what makes this a privacy question rather than a typo: reflow2 is a wrench for other people's projects, and its examples are currently drawn from the hands that made it. WHAT WOULD PIN IT: a gate asserting that no served tool or schema description contains a Contributor id, handle or display name that this project's own graph holds. That is checkable from the export plus the served surface, it would have failed on the day the example was written, and it is the same shape as the surface-enumerating gates the crate already carries. NOT ESTABLISHED: whether C or D is actually the case at the brother's site; the exact wording of the report, which reached here paraphrased; whether any OTHER project has the same contributor; and whether an agent demonstrably copies this example, which is a behavioural claim no static reading can settle.",
+        "subject_id": "who:ajs",
+        "valid_from": "2026-09-20"
       }
     },
     {
@@ -295498,6 +295786,20 @@
       }
     },
     {
+      "node_id": "ver:the-gate-runner-never-passes-having-run-nothing",
+      "node_type": "Verification",
+      "properties": {
+        "description": "tools/test_run_ci_gates.py, five hermetic tests, run in CI. Nothing here runs cargo, spawns a server or touches the design. It exists because the runner's own failure mode is the one the runner exists to end, and a runner that reports green having run nothing would be the joke telling itself.",
+        "findings": "First run 2026-09-20: four passed and ONE FAILED, and the failing one was the test rather than the runner. It asserted that running from a directory with no ci.yml must be refused; the runner resolves the workflow from its own file location, so it is correctly immune to the working directory and that cannot be used to fake a broken read. The test was rewritten to drive the guard directly with a patched parser, which is what it should have done in the first place. All five pass. The runner itself was corrected before this net existed: its first draft printed a clean summary on a filter matching nothing and never returned a non-zero exit code at all.",
+        "kind": "verification",
+        "last_run_at": "2026-09-20",
+        "level": "unit",
+        "method": "test",
+        "name": "The gate runner fails on zero gates, on a broken workflow read, and in its exit code",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:the-git-exchange-path-is-defended",
       "node_type": "Verification",
       "properties": {
@@ -296118,7 +296420,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:9385e9be60356c8624f947c76d344a7f46046be37d7e739f9d460c137db8c6d2",
+  "prev_content_hash": "sha256:b7b1a838e763c91977b86761ceaedad7b4f9396802a9ce86f66acd7e23794d32",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -296716,8 +297018,8 @@
     "schema_version": 1
   },
   "taken_at": {
-    "branch": "a-reply-carries-its-payload-once-on-every-tool",
-    "commit": "4fbca4e75a8a5e2b08e335612f05f78192ac6a6c",
+    "branch": "the-gate-list-is-run-not-only-cross-checked",
+    "commit": "1343a5cc7bb1c9cd1d24deffd2dd5cf1517547b6",
     "dirty": true
   }
 }
