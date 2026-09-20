@@ -329,6 +329,7 @@ python3 tools/empty_speaks.py                            # an empty answer says 
 python3 tools/refusal_speaks.py                          # a missing argument names the TOOL and what it wants — no bare serde string
 python3 tools/toolsnap.py                                # tool schemas vs committed goldens; --update to bless
 python3 tools/replies_are_bounded.py                     # a reply that outgrows the budget must offer a bound — and this FAILS if nothing overflowed
+python3 tools/a_reply_is_sent_once.py                    # every structured reply carries ONE payload and ONE signpost, asked of the whole surface
 python3 tools/skill_lint.py                              # after any skill or tool-surface edit
 python3 tools/test_wall_check.py                         # the wall-check instrument's own net
 python3 tools/test_latent_promotion.py                  # the latent server promotes itself in place, on any client (real binary)
