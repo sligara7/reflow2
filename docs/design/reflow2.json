@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:9385e9be60356c8624f947c76d344a7f46046be37d7e739f9d460c137db8c6d2",
+  "content_hash": "sha256:b7b1a838e763c91977b86761ceaedad7b4f9396802a9ce86f66acd7e23794d32",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -30767,6 +30767,51 @@
         "action": "added"
       },
       "to_id": "cap:a-repair-says-which-kind-it-was"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-reply-carries-its-payload-once-on-every-tool",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:a-reply-is-sent-once-gate"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-reply-carries-its-payload-once-on-every-tool",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:agent-instructions"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-reply-carries-its-payload-once-on-every-tool",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:reply-sent-once-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-reply-carries-its-payload-once-on-every-tool",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-skills"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-reply-carries-its-payload-once-on-every-tool",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:a-reply-takes-the-shape-its-client-can-read"
     },
     {
       "edge_type": "CHANGED",
@@ -226109,6 +226154,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:a-reply-is-sent-once-gate",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-reply-takes-the-shape-its-client-can-read"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:a-revising-write-says-what-it-removed-test",
       "properties": {
         "completeness": "complete",
@@ -235488,6 +235542,18 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:a-reply-is-sent-once-on-every-tool",
+      "properties": {},
+      "to_id": "art:a-reply-is-sent-once-gate"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:a-reply-is-sent-once-on-every-tool",
+      "properties": {},
+      "to_id": "cap:a-reply-takes-the-shape-its-client-can-read"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:a-reply-takes-the-shape-its-client-can-read",
       "properties": {},
       "to_id": "cap:a-reply-takes-the-shape-its-client-can-read"
@@ -237497,6 +237563,14 @@
         "action": "created"
       },
       "to_id": "art:a-prose-field-that-swallowed-a-parameter-says-so"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:a-reply-is-sent-once-gate",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:a-reply-is-sent-once-gate"
     },
     {
       "edge_type": "YIELDED",
@@ -240182,6 +240256,19 @@
       }
     },
     {
+      "node_id": "art:a-reply-is-sent-once-gate",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:790a462d59ce647ded51903883e88ef51e67d13f39e750f68288326ba9c2f140",
+        "checksum_basis": "asserted",
+        "description": "The wire-level gate that asks the WHOLE served surface whether a JSON reply carries its payload once. It seeds a scratch graph from the committed export, calls every tool that needs no arguments plus two named ones that do, and for every reply carrying structuredContent asserts the text block is not the payload again, is not empty, names the field to read, and is the same single signpost across the surface. It fails if it measured nothing, because a detector with nothing to run on reads exactly like one that ran clean. Written 2026-09-20 after the invariant, pinned on detect_gaps alone since 2026-08-23, missed six tools for 28 days. It deliberately does NOT assert the signpost is smaller than the payload: that holds on a large reply and is false across the surface, since the signpost is one fixed sentence and some replies are shorter than it, and keeping it would need a tuned size threshold this project has twice rejected in favour of asking a better question.",
+        "location": "tools/a_reply_is_sent_once.py",
+        "name": "a_reply_is_sent_once.py",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:a-revising-write-says-what-it-removed-test",
       "node_type": "Artifact",
       "properties": {
@@ -240307,8 +240394,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:70510cea034d4eaa9480f92618fdaa6c266a3ba15ab6f8a88771314f27634e72",
-        "checksum_basis": "measured",
+        "checksum": "sha256:496819ea7dd48e365aeacdb6ccbf6aed7c608d6871492e491404c5290b0e8cd5",
+        "checksum_basis": "asserted",
         "location": "AGENTS.md",
         "name": "AGENTS.md — the primary instruction file every agent reads before it knows reflow2 exists: commands, architecture, the rules for changing the project",
         "status": "realized"
@@ -242889,7 +242976,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:327f061047a9a2a3a81426b9ecfcfc1dbf3f6bd851bc084abc6b080a6c4140ef",
+        "checksum": "sha256:7a232ee86ce23f4d74a40169ea1d1752f0c83968f024c9f44c201722910228bd",
+        "checksum_basis": "asserted",
         "location": "crates/reflow2-mcp/tests/reply_is_sent_once.rs",
         "name": "reply_is_sent_once.rs",
         "status": "realized"
@@ -244779,8 +244867,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b39ae30b3f31650f30ce2546e9424c097efc88d1738c88f1cd042fd6d7b4948c",
-        "checksum_basis": "measured",
+        "checksum": "sha256:1963fb74c77f364650048185ec13539d133e10a8b1b69e56a0e99dda68707a14",
+        "checksum_basis": "asserted",
         "location": "crates/reflow2-mcp/src/tools/skills_tools.rs",
         "name": "skills_tools.rs",
         "status": "realized"
@@ -249235,6 +249323,18 @@
         "change_type": "new_feature",
         "name": "A repair records whether it corrected the cause or contained a symptom, a containment names the fix it stands in for, and repair_report says what still rests on a patch — with UNSTATED as a first-class count, because on day one it is 248 of 248",
         "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:a-reply-carries-its-payload-once-on-every-tool",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-09-20",
+        "name": "A reply carries its payload once, on every tool, and the per-client shape reaches the six it never reached",
+        "rationale": "THE CAUSE WAS THE SCOPE OF THE CHECK, NOT THE HELPER. tests/reply_is_sent_once.rs has owned this invariant since 2026-08-23 and asks it of detect_gaps alone, in a crate that already enumerates the served surface for a dozen other properties. So a second reply builder could sit in another module, keep the pre-2026-08-23 shape, and stay green for 28 days. Fixing only the helper would have stopped today's six and left the next builder free to drift the same way, which is why the gate is the substance of this change and the one-line delegation is the smaller half. The helper's own doc-comment was the tell: it asserted \"Same shape every other tool returns\", which was true when written and silently became false, and nothing reads a comment. A SECOND COST, LARGER THAN THE BYTES: content_policy::apply rewrites a reply only when it is already in signpost shape, so the per-client rule was inert on exactly those six. OpenCode's empty-block fallback, the one it fills from structuredContent itself, never fired on the tools carrying the instructions and the skills; Grok was served correctly by accident. All three measured clients now get the shape they were meant to. WHAT WAS DROPPED AND WHY: the gate does not assert the signpost is smaller than the payload. That assertion is correct on detect_gaps and false across the surface, because the signpost is one fixed sentence and several replies are shorter than it; seven tools failed on it with nothing wrong. Keeping it would have required a size threshold, and this project has twice recorded that a loud detector needs a different question rather than a tuned number. The question that generalises is whether the payload was sent twice, and the gate asks that directly.",
+        "subject": "system",
+        "summary": "The private `structured` helper in tools/skills_tools.rs now delegates to service::json_result instead of building a second reply shape, so get_instructions, list_skills, get_skill, find_skills, usage_report and design_identity stop sending the payload twice. Measured on the wire before and after, three handshake names: get_instructions went from 64,120 bytes to 32,710 for claude-code and to 31,430 for opencode, and stays at 64,120 for grok-build, which is the per-client rule working rather than being overridden. tools/a_reply_is_sent_once.py is a new CI gate that asks the whole served surface; it was written first and observed to FAIL on exactly those six before the fix. The old one-tool Rust test keeps its three Rust-side assertions and now carries a warning not to mistake it for coverage. AGENTS.md and ci.yml register the gate. REPAIR: corrected_cause — the field is unreachable from add_change_event, so it is stated here in prose."
       }
     },
     {
@@ -271553,6 +271653,16 @@
       }
     },
     {
+      "node_id": "frag:art:a-reply-is-sent-once-gate",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered a_reply_is_sent_once.py"
+      }
+    },
+    {
       "node_id": "frag:art:a-revising-write-says-what-it-removed-test",
       "node_type": "Fragment",
       "properties": {
@@ -292683,6 +292793,20 @@
       }
     },
     {
+      "node_id": "ver:a-reply-is-sent-once-on-every-tool",
+      "node_type": "Verification",
+      "properties": {
+        "description": "tools/a_reply_is_sent_once.py, run in CI. It seeds a scratch graph from the committed export, calls every served tool that needs no arguments plus get_skill and find_skills by name, and for every reply carrying structuredContent asserts four things: the text block is not the payload again in any serialization, it is not empty, it names the field to read, and the same single signpost is used across the whole surface. Tools with no structured half are recognised on the wire and passed as document-shaped. It fails if it measured nothing, because a detector with nothing to run on reads exactly like one that ran clean. DISTINCT FROM ver:a-reply-is-sent-once, which states three of these properties in Rust against ONE tool. That one is kept; this is the one that covers the class.",
+        "findings": "First run 2026-09-20, against the unfixed build, FAILED on exactly six tools: get_instructions, list_skills, get_skill, find_skills, usage_report and design_identity, each reported as carrying the payload again beside its structuredContent. Observed to fail before the fix was written, which is the only evidence that the gate does anything. After the one-line delegation in tools/skills_tools.rs it measured 43 structured replies across 46 tool calls and passed. Two tools were recorded as document-shaped (graph_report_markdown, wall_check) and one skipped on a JSON-RPC error (manual_work_report), which is not this gate's question.",
+        "kind": "verification",
+        "last_run_at": "2026-09-20",
+        "level": "system",
+        "method": "measurement",
+        "name": "Every structured reply carries one payload and one signpost, asked of the whole served surface",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:a-reply-takes-the-shape-its-client-can-read",
       "node_type": "Verification",
       "properties": {
@@ -295994,7 +296118,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:22caf2ef77caf57a1978316c67cc13b21be5fe87af961236f7e8f304ac4c3845",
+  "prev_content_hash": "sha256:9385e9be60356c8624f947c76d344a7f46046be37d7e739f9d460c137db8c6d2",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -296592,8 +296716,8 @@
     "schema_version": 1
   },
   "taken_at": {
-    "branch": "settling-a-decision-records-which-option-won",
-    "commit": "e008f4b026df47145346c2ff9a03da8597dcc922",
+    "branch": "a-reply-carries-its-payload-once-on-every-tool",
+    "commit": "4fbca4e75a8a5e2b08e335612f05f78192ac6a6c",
     "dirty": true
   }
 }

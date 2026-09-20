@@ -46,6 +46,19 @@ This file is the third view: *what changed, and when*.
   generic edge tool by hand and wrote a script to verify direction.
 ### Fixed
 
+- **A reply carries its payload once, on every tool.** Six tools were still sending the whole
+  answer in both the text block and `structuredContent`: `get_instructions`, `list_skills`,
+  `get_skill`, `find_skills`, `usage_report` and `design_identity` — the tools a session opens
+  with. `get_instructions` cost 64,120 bytes on the wire for 31,374 of payload. The cause was a
+  second reply builder in `tools/skills_tools.rs` whose comment claimed it matched every other
+  tool; that was true when written and stopped being true when the signpost landed, and nothing
+  read it for 28 days. **The per-client reply shape was also inert on exactly those six**, because
+  it rewrites a reply only if it is already in signpost shape — so OpenCode's empty-block fallback
+  never fired on the tools carrying the instructions and the skills, and Grok was served correctly
+  by accident. All three measured clients now get the shape they were meant to. The invariant had
+  been pinned on one tool out of 191; `tools/a_reply_is_sent_once.py` asks the whole served
+  surface over the wire and fails if it measured nothing.
+
 - **`ility_report` bounds its reply.** It answered 30,301 characters against a 30,000 budget and was
   the only unbounded overflow of the 40 no-argument reads the gate measures. Nothing about the
   report changed: the design grew past the line. It took an empty request struct, which is why it

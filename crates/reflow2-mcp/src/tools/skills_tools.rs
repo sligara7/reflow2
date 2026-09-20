@@ -16,7 +16,7 @@
 //! FOUND BY RUNNING ADOPT OVER REFLOW2'S OWN SOURCE.
 
 use rmcp::handler::server::wrapper::Parameters;
-use rmcp::model::{CallToolResult, ContentBlock};
+use rmcp::model::CallToolResult;
 use rmcp::{ErrorData as McpError, tool, tool_router};
 use serde_json::json;
 
@@ -550,11 +550,27 @@ impl ReflowService {
     }
 }
 
-/// Same shape every other tool returns: structured content plus readable text.
+/// The signposted reply, which is what every other tool returns.
+///
+/// 🛑 THIS USED TO BE A SECOND REPLY BUILDER, and its doc-comment said "Same
+/// shape every other tool returns: structured content plus readable text."
+/// That was TRUE when it was written and stopped being true on 2026-08-23,
+/// when `json_result` replaced the duplicated text block with a one-line
+/// signpost (`fact:every-reply-was-sent-twice`). Nothing read this comment for
+/// 28 days, so six tools — `get_instructions`, `list_skills`, `get_skill`,
+/// `find_skills`, `usage_report`, `design_identity` — went on sending the
+/// payload twice to every client, 64,120 bytes on the wire for 31,374 of
+/// payload on the first call of a session.
+///
+/// AND THE COST WAS NOT ONLY BYTES: `content_policy::apply` rewrites a reply
+/// only if it is ALREADY in signpost shape, so the per-client rule was inert on
+/// exactly those six. OpenCode's empty-block fallback never fired on the tools
+/// carrying the instructions and the skills; Grok was served correctly by
+/// accident.
+///
+/// It now delegates rather than building, so there is ONE builder to change.
+/// `tools/a_reply_is_sent_once.py` asks the whole served surface, because the
+/// Rust test that owned this invariant asked one tool out of 191.
 fn structured(payload: serde_json::Value) -> Result<CallToolResult, McpError> {
-    let text = serde_json::to_string_pretty(&payload)
-        .map_err(|e| McpError::internal_error(e.to_string(), None))?;
-    let mut result = CallToolResult::structured(payload);
-    result.content = vec![ContentBlock::text(text)];
-    Ok(result)
+    crate::service::json_result(payload)
 }

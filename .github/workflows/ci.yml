@@ -228,6 +228,22 @@ jobs:
         # gate would pass having checked nothing — "no tool overflowed" and "I
         # could not make any tool overflow" must not share an exit code.
         run: python3 tools/replies_are_bounded.py
+      - name: A reply carries its payload once, on every tool (the class, not one tool)
+        # The invariant was pinned in tests/reply_is_sent_once.rs on ONE tool
+        # (detect_gaps) out of 191, in a crate that enumerates the served
+        # surface for a dozen other properties. Measured 2026-09-20: a second
+        # reply builder in tools/skills_tools.rs predated the signpost change
+        # and six tools were still sending the payload twice to every client —
+        # get_instructions at 64,120 bytes on the wire for 31,374 of payload.
+        #
+        # AND THE COST WAS NOT ONLY BYTES: content_policy::apply rewrites a
+        # reply only if it is ALREADY in signpost shape, so the per-client rule
+        # was inert on exactly those six, and OpenCode's empty-block fallback
+        # never fired on the tools carrying the instructions and the skills.
+        #
+        # ⚠️ IT SEEDS A REAL DESIGN FROM THE COMMITTED EXPORT AND FAILS IF IT
+        # MEASURED NOTHING, for the same reason as the gate above.
+        run: python3 tools/a_reply_is_sent_once.py
       - name: Seat identity survives every transport (one client, one seat)
         run: python3 tools/stateless_seat_probe.py
       - name: Phase-coverage trial (13/13 regression gate)

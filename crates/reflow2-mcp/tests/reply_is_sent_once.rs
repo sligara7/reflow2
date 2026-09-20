@@ -16,6 +16,15 @@
 //! same bytes and leave a client reading the wrong field with nothing —
 //! indistinguishable from reflow2 never having been configured, which is the
 //! outage `req:never-silently-absent` exists to end.
+//!
+//! 🛑 THIS FILE ASKS ONE TOOL, AND THAT WAS THE HOLE. It pins the property on
+//! `detect_gaps` and on nothing else, in a crate that enumerates the served
+//! surface for a dozen other properties. Measured 2026-09-20: a second reply
+//! builder in `tools/skills_tools.rs` predated the signpost change and six
+//! tools were still sending the payload twice to every client, 28 days later,
+//! with this test green throughout. `tools/a_reply_is_sent_once.py` now asks
+//! the WHOLE surface over the wire; keep this file for the three properties it
+//! states in Rust, and do not mistake it for coverage.
 
 use reflow2_mcp::service::*;
 use rmcp::handler::server::wrapper::Parameters;
