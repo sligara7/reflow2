@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:bef84cdf5621c2ceffb6bd6b818cc9115100324f5a07fd065b76de6a8a9b360e",
+  "content_hash": "sha256:fe1d9b7df3db5fc3f18c72fb0afcc5fc55ef5508489c3109b1f921641dc0235f",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -1410,6 +1410,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:temporal"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-revising-write-says-what-it-removed",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:tools-capture"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -4503,6 +4511,14 @@
         "evidence": "The three-legs finding — that vocabulary reaches a user's design only with a typed tool AND an instruction AND a detector that notices absence — is the same claim one level down: a mechanic present in one skill and enforced nowhere has an instruction and no detector. \"Speak the reader's domain\" is stated in the served instructions for every skill, carried by one and enforced for one, which is exactly the two-of-three failure that finding names."
       },
       "to_id": "fact:the-contracts-are-the-same-shape-and-the-code-says-so-twice"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "req:a-prohibition-written-into-prose-is-noticed-as-unfiled",
+      "properties": {
+        "evidence": "The accepted requirement that a prohibition in prose is noticed saw this class coming; what it did not cover is a consumer classifying it wrongly at the point of capture."
+      },
+      "to_id": "fact:the-schema-serves-the-types-and-not-the-rules-that-tell-them-apart-so-a-numeric-prohibition-was-filed-as-a-requirement"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -13289,6 +13305,18 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:preserved-on-write:fact:the-root-cause-detectors-measured-on-reflow2s-own-design-and-the-mirror-misses-its-own-origin",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:fact:the-schema-serves-the-types-and-not-the-rules-that-tell-them-apart-so-a-numeric-prohibition-was-filed-as-a-requirement",
+      "properties": {},
+      "to_id": "epoch:preserved-on-write"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:preserved-on-write:fact:the-served-instructions-name-no-way-to-ask-whether-a-thing-already-exists-and-one-consumer-rebuilt-four-that-did",
       "properties": {},
       "to_id": "epoch:preserved-on-write"
     },
@@ -24612,6 +24640,26 @@
     },
     {
       "edge_type": "CAUSES",
+      "from_id": "art:capture-intent-skill",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The capture skill routes what a model CAN place and says nothing about what it cannot, so the residue has no named destination and no tool carries the word a searcher would use.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:a-sentence-the-extraction-could-not-place-has-no-home-and-is-lost-after-one-render"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "art:capture-intent-skill",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The routing table is written as skill prose for an agent to read, so the one artefact that states how to tell the types apart is the one artefact a consumer of the served contract never sees.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:the-schema-serves-the-types-and-not-the-rules-that-tell-them-apart-so-a-numeric-prohibition-was-filed-as-a-requirement"
+    },
+    {
+      "edge_type": "CAUSES",
       "from_id": "art:dates",
       "properties": {
         "basis": "correlational",
@@ -24689,6 +24737,16 @@
         "validation_status": "unvalidated"
       },
       "to_id": "fact:the-defect-count-is-severity-blind-so-parked-ideas-are-reported-as-outstanding-debt"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "art:kit-instructions",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The instructions were written to teach the loop and grew by adding to that account; nothing in them was ever the place where 'ask whether it exists first' belonged, so the catalogue reached the tool list and never reached the instructions.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:the-served-instructions-name-no-way-to-ask-whether-a-thing-already-exists-and-one-consumer-rebuilt-four-that-did"
     },
     {
       "edge_type": "CAUSES",
@@ -25309,10 +25367,30 @@
       "from_id": "fact:a-revising-write-that-shrinks-a-field-reports-nothing-and-two-load-bearing-paragraphs-were-lost",
       "properties": {
         "basis": "correlational",
+        "evidence": "The two silent losses are what this reports.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "chg:a-revising-write-says-what-it-removed"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:a-revising-write-that-shrinks-a-field-reports-nothing-and-two-load-bearing-paragraphs-were-lost",
+      "properties": {
+        "basis": "correlational",
         "evidence": "The measured losses are what put this question on the table.",
         "validation_status": "unvalidated"
       },
       "to_id": "dec:idea-should-a-revising-write-say-what-it-removed"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:a-sentence-the-extraction-could-not-place-has-no-home-and-is-lost-after-one-render",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The lost residue is what raises the question.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "dec:idea-should-an-utterance-nobody-could-place-have-a-named-home"
     },
     {
       "edge_type": "CAUSES",
@@ -25980,6 +26058,26 @@
         "validation_status": "unvalidated"
       },
       "to_id": "fact:the-field-feedback-rule-was-broken-the-same-day-it-was-ruled-on-and-the-half-that-held-was-the-half-already-in-context"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:the-schema-serves-the-types-and-not-the-rules-that-tell-them-apart-so-a-numeric-prohibition-was-filed-as-a-requirement",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The misclassification is what puts the question on the table.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "dec:idea-should-the-rules-that-tell-the-types-apart-be-served-as-data"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:the-served-instructions-name-no-way-to-ask-whether-a-thing-already-exists-and-one-consumer-rebuilt-four-that-did",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "Four reinventions against a surface that already answered them is what raises the question.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "dec:idea-should-the-served-instructions-tell-a-reader-to-ask-whether-it-exists-first"
     },
     {
       "edge_type": "CAUSES",
@@ -30766,6 +30864,24 @@
         "action": "modified"
       },
       "to_id": "cap:planned-epochs"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-revising-write-says-what-it-removed",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:a-revising-write-says-what-it-removed-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-revising-write-says-what-it-removed",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
     },
     {
       "edge_type": "CHANGED",
@@ -53899,6 +54015,12 @@
       "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
+      "to_id": "cap:a-revising-write-says-what-it-removed"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
       "to_id": "cap:a-skill-is-found-by-describing-the-job-and-the-corpus-is-the-test"
     },
     {
@@ -57760,6 +57882,26 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-should-the-served-instructions-tell-a-reader-to-ask-whether-it-exists-first",
+      "properties": {
+        "evidence": "The line is only worth writing because the catalogue it points at is measured to work.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "cap:every-tool-carries-the-users-phrasing-and-the-corpus-is-the-test"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-should-the-served-instructions-tell-a-reader-to-ask-whether-it-exists-first",
+      "properties": {
+        "evidence": "The earlier idea asks the same question about the graph catalogue and already refuted the obvious answer: the rule is written in five skills and still does not fire.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-search-first-fires-without-being-remembered"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "dec:idea-should-the-spine-be-re-derived-from-the-actual-structure",
       "properties": {
         "evidence": "Whether re-carving can deliver the stated goal turns on whether the code has black-box boundaries to find, which is exactly what that node measures: 45 of 88 modules hang methods off one shared struct. If the struct is never split, no re-carving produces black boxes and options ①-④ are all about description rather than encapsulation.",
@@ -58565,6 +58707,26 @@
         "weight_basis": "estimated"
       },
       "to_id": "dec:idea-should-the-spine-be-re-derived-from-the-actual-structure"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "fact:the-schema-serves-the-types-and-not-the-rules-that-tell-them-apart-so-a-numeric-prohibition-was-filed-as-a-requirement",
+      "properties": {
+        "evidence": "That detector is what would notice the misclassification after the fact; measured 2026-09-20, its six phrasings miss flo2's actual sentence, so the two defects compound.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "cap:a-prohibition-living-in-prose-is-noticed-once-as-a-practice"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "fact:the-served-instructions-name-no-way-to-ask-whether-a-thing-already-exists-and-one-consumer-rebuilt-four-that-did",
+      "properties": {
+        "evidence": "That proposed requirement is the general mechanism both instances need: a discipline delivered at the tool that triggers it rather than from a document read once.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -60874,6 +61036,15 @@
     },
     {
       "edge_type": "DUPLICATES",
+      "from_id": "fact:the-served-instructions-name-no-way-to-ask-whether-a-thing-already-exists-and-one-consumer-rebuilt-four-that-did",
+      "properties": {
+        "basis": "suspected",
+        "evidence": "The same missing trigger, from the owner's own words on 2026-08-11 and from a consumer on 2026-09-19. Linked rather than merged because they name different catalogues — the graph before adding a node, the tool surface before building one — and both reasons matter."
+      },
+      "to_id": "dec:idea-search-first-fires-without-being-remembered"
+    },
+    {
+      "edge_type": "DUPLICATES",
       "from_id": "fact:the-upgrade-path-leaves-the-shared-server-on-the-old-binary",
       "properties": {
         "basis": "suspected",
@@ -61916,6 +62087,12 @@
         "note": "The capability exists in this shape — a claim with a reader, not an inferred bucket — because this decision chose that shape on Anthony's word."
       },
       "to_id": "dec:a-stale-finding-is-closed-by-a-claim-not-a-computation"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:a-revising-write-says-what-it-removed",
+      "properties": {},
+      "to_id": "dec:idea-should-a-revising-write-say-what-it-removed"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -72429,6 +72606,18 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "fact:the-schema-serves-the-types-and-not-the-rules-that-tell-them-apart-so-a-numeric-prohibition-was-filed-as-a-requirement",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:fact:the-schema-serves-the-types-and-not-the-rules-that-tell-them-apart-so-a-numeric-prohibition-was-filed-as-a-requirement"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "fact:the-served-instructions-name-no-way-to-ask-whether-a-thing-already-exists-and-one-consumer-rebuilt-four-that-did",
+      "properties": {},
+      "to_id": "snap:epoch:preserved-on-write:fact:the-served-instructions-name-no-way-to-ask-whether-a-thing-already-exists-and-one-consumer-rebuilt-four-that-did"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "ifc:core-api",
       "properties": {},
       "to_id": "snap:epoch:v0380:ifc:core-api"
@@ -73059,9 +73248,21 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "art:capture-intent-skill",
+      "properties": {},
+      "to_id": "fact:the-schema-serves-the-types-and-not-the-rules-that-tell-them-apart-so-a-numeric-prohibition-was-filed-as-a-requirement"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "art:docker-smoke-script",
       "properties": {},
       "to_id": "fact:the-smoke-test-was-verified-where-its-bug-could-not-appear-2026-09-14"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "art:kit-instructions",
+      "properties": {},
+      "to_id": "fact:the-served-instructions-name-no-way-to-ask-whether-a-thing-already-exists-and-one-consumer-rebuilt-four-that-did"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -73242,6 +73443,12 @@
       "from_id": "cap:delta-reconcile",
       "properties": {},
       "to_id": "fact:compare-designs-has-no-reply-budget-2026-09-13"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:every-tool-carries-the-users-phrasing-and-the-corpus-is-the-test",
+      "properties": {},
+      "to_id": "fact:flo2-2026-09-19-addendum-the-two-finders-worked-and-both-discoveries-came-from-them"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -74418,6 +74625,12 @@
       "from_id": "fact:twelve-near-match-refusals-across-two-designs-and-not-one-was-a-duplicate",
       "properties": {},
       "to_id": "fact:the-fifteenth-and-sixteenth-near-match-refusals-were-cross-type-and-distinct-too"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it",
+      "properties": {},
+      "to_id": "fact:a-sentence-the-extraction-could-not-place-has-no-home-and-is-lost-after-one-render"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -222835,6 +223048,15 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:a-revising-write-says-what-it-removed",
+      "properties": {
+        "at": "2026-09-20",
+        "note": "A write that shortens a field now says so, with the size. The finding stands as the measurement, and the pressure that caused the rewrites was removed separately by replace_text in v0.65.0."
+      },
+      "to_id": "fact:a-revising-write-that-shrinks-a-field-reports-nothing-and-two-load-bearing-paragraphs-were-lost"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:a-settled-decision-names-governed-prose-that-still-reads-open",
       "properties": {
         "at": "2026-09-09",
@@ -225547,6 +225769,15 @@
         "conformance": "verified"
       },
       "to_id": "cap:search-first-at-the-tool"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:a-revising-write-says-what-it-removed-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-revising-write-says-what-it-removed"
     },
     {
       "edge_type": "REALIZES",
@@ -231192,6 +231423,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:a-revising-write-says-what-it-removed",
+      "properties": {},
+      "to_id": "req:a-revising-write-says-what-it-removed"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:a-revising-write-says-whether-the-state-survived",
       "properties": {},
       "to_id": "req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue"
@@ -234968,6 +235205,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:a-shrink-is-reported-with-its-size-and-never-refused",
+      "properties": {},
+      "to_id": "cap:a-revising-write-says-what-it-removed"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:a-stale-write-is-refused",
       "properties": {},
       "to_id": "cap:a-write-can-be-conditional-on-what-was-read"
@@ -236861,6 +237104,14 @@
         "action": "created"
       },
       "to_id": "art:a-prose-field-that-swallowed-a-parameter-says-so"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:a-revising-write-says-what-it-removed-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:a-revising-write-says-what-it-removed-test"
     },
     {
       "edge_type": "YIELDED",
@@ -239506,6 +239757,18 @@
         "checksum": "sha256:ee98058fda54443ade6c2f284ea3df2588a5b7712e472e98ab9f7e3bcaf375f9",
         "location": "crates/reflow2-mcp/tests/a_prose_field_that_swallowed_a_parameter_says_so.rs",
         "name": "a_prose_field_that_swallowed_a_parameter_says_so.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:a-revising-write-says-what-it-removed-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:377c417b97806597bae49d1ef60833321b2d39b64b7d5d62f6f170614a9a6540",
+        "checksum_basis": "measured",
+        "location": "crates/reflow2-mcp/tests/a_revising_write_says_what_it_removed.rs",
+        "name": "a_revising_write_says_what_it_removed.rs",
         "status": "realized"
       }
     },
@@ -243974,7 +244237,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:d85bbe565cf1aa5a9c634dd16fc3917424bec852cfa823deb978f35dfa8b5d4f",
+        "checksum": "sha256:0924640daa9d9443df7feac9dd786c4b2ee35f30cc179fb48605921dae17678c",
         "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
@@ -245019,6 +245282,16 @@
       "properties": {
         "description": "`preserve_prior_state` snapshots the prior properties of a node whose revising write is about to replace a field that no existing snapshot holds. It runs at the six typed constructors AND at `create_node`, before the revision note is computed, so the note reports preservation rather than loss.\n\nSCOPED, and the scope is the design: nothing at risk means nothing taken. A write that replaces nothing, or replaces only fields already preserved, snapshots nothing. The trigger is the condition `prior_state_coverage` was already computing and the write was already reporting afterwards.\n\nBEST-EFFORT: a preserve that cannot be taken never fails the caller's write, and the note then warns exactly as it did before. Snapshots land in a standing `epoch:preserved-on-write`, created lazily, because a preserve is not part of anybody's round of work.\n\n📌 THIS IS THE OTHER HALF OF `cap:a-revising-write-says-whether-the-state-survived`, which COMPUTES whether the replaced state survived. That capability found the answer; this one makes the answer yes.",
         "name": "A revising write keeps a replaced value nothing else holds — and takes nothing when nothing is at risk",
+        "provenance": "authored",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "cap:a-revising-write-says-what-it-removed",
+      "node_type": "Capability",
+      "properties": {
+        "description": "As built 2026-09-20. A revision reply gained `shortened`: for every text field this call made shorter, the field, the characters before and after, and the number removed, ordered by the largest loss. Absent when nothing was removed, so an ordinary enrichment is unchanged and only a caller who actually shortened something is told. The revision `note` LEADS with the loss when there is one, because the rest of that note explains where the prior state lives and this says what left. Only text counts: a number changing is not a loss. 🛑 A REPORT, NEVER A GATE — refusing a shrink without a permission flag was considered and rejected, because deleting on purpose is a legitimate edit and the flag would tax every honest one. The prior value is still returned in `replaced`, which is what makes the loss recoverable rather than merely visible. Test: crates/reflow2-mcp/tests/a_revising_write_says_what_it_removed.rs, three cases including one asserting a drastic shortening still succeeds.",
+        "name": "A revising write says what it removed, with the size of the loss, and never refuses the shrink",
         "provenance": "authored",
         "status": "realized"
       }
@@ -248548,6 +248821,17 @@
         "name": "plan_epoch carries an existing epoch's status forward on a revise instead of resetting it to planned",
         "repair": "corrected_cause",
         "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:a-revising-write-says-what-it-removed",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-09-20",
+        "name": "A revising write says what it removed",
+        "rationale": "flo2 measured two load-bearing paragraphs lost in thirteen rewrites in one session, caught only by the author re-reading their own call. Promoted 2026-09-20 on Anthony's word and built third in the order he agreed; the notice-only option was chosen and the shrink-refusal rejected.",
+        "summary": "capture.rs: ShortenedField, the `shortened` list on Revision computed beside `replaced`, the note leading with the loss; one test file; CHANGELOG."
       }
     },
     {
@@ -262682,6 +262966,16 @@
       }
     },
     {
+      "node_id": "dec:idea-should-an-utterance-nobody-could-place-have-a-named-home",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Recorded as brainstorming on 2026-09-20 from flo2 F25, not as a proposal.\n\nTHE OBSERVATION: what a model could NOT turn into a design entry is, literally, the part of what the person said that the design does not yet understand — which makes it the best material for the next question to put to them. It is rendered once and lost.\n\nOPTIONS, in the reporter's own preference order.\n(a) A SENTENCE IN capture-intent saying unplaced utterances belong as Fragments with `fragment_type: note`. Costs a sentence, uses vocabulary that already exists, and is the cheapest thing that could work. COUNTER: a skill sentence reaches an agent following the skill and no consumer building against the surface — the same gap F24 reports, so this fix inherits that limitation.\n(b) A NAMED TOOL, so it is findable by find_tools from a job sentence like 'keep the things they said that I could not place'. Larger, and it is the leg the three-legs rule says is missing whenever a vocabulary exists and nothing points at it.\n(c) BOTH, which is what the three-legs rule actually asks for: a typed tool, an instruction, and a detector that notices absence. The detector half is undefined here and should not be invented to complete a pattern.\n\n⭐ THE PRECEDENT THE REPORTER CITES IS EXACT: `EVOLVES_INTO` on promotion. The edge existed, was correct, and no instruction pointed at it until bhome found it by accident on 2026-08-31. This is the same shape with `Fragment`.",
+        "kind": "exploratory",
+        "name": "OPEN — should a sentence the capture could not place have a named home, so the best material for the next question is not lost?",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-should-cap-pacelc-be-vocabulary-reflow2-offers",
       "node_type": "Decision",
       "properties": {
@@ -262909,6 +263203,26 @@
         "kind": "exploratory",
         "name": "OPEN — should the reachability gate attach each tool's parameters only to the types that tool actually writes, and should a property a detector READS be held to a stricter bar than one nothing reads?",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:idea-should-the-rules-that-tell-the-types-apart-be-served-as-data",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Recorded as brainstorming on 2026-09-20 from flo2 F24, not as a proposal.\n\nWHAT WOULD BE SERVED, per node type: the cue phrases in a user's own words, the type it is most often confused with, and a counter-example. All of it is already written, in the capture-intent skill's eleven-row routing table, and all of it is invisible to a consumer generating an extraction prompt from the schema.\n\nOPTIONS.\n(a) EXTEND `describe_schema` with the discrimination rules per type. The consumer already calls it for exactly this purpose, so nothing new has to be found. COUNTER: it widens a reply everyone gets for a use only some have, and that tool's reply is already large.\n(b) A SEPARATE SERVED READ, so it is paid for when wanted and findable by its own job sentence. COUNTER: one more tool on a surface the owner has been pruning.\n(c) SERVE THE SKILL'S TABLE AS-IS, as structured rows lifted from the markdown, so there is one source and no second copy to drift. ⭐ This is the option that keeps the three legs together: the agent reads the prose, the consumer reads the rows, and both come from the same table.\n(d) DO NOTHING; the routing lives in the skill and a consumer should fetch the skill. COUNTER, and it is decisive against: a consumer building an extraction prompt is not an agent following a skill, and telling it to parse skill markdown is the prose-parsing the black-box rule exists to end.\n\n⚠️ THE MEASURED COST OF NOT DOING IT is one misclassification on a live site: a numeric prohibition filed as a requirement, which the design's own skill says will report unsatisfied forever.",
+        "kind": "exploratory",
+        "name": "OPEN — should the rules that tell one node type from another be served as DATA, the way the types themselves are?",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-should-the-served-instructions-tell-a-reader-to-ask-whether-it-exists-first",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Recorded as brainstorming on 2026-09-20 from flo2's meta-point, not as a proposal. The reporter calls it the most useful thing in their addendum and they may be right.\n\nTHE MEASUREMENT: four things rebuilt that reflow2 already served, each filed upstream as 'reflow2 should add X'. The served instructions are 416 lines, name `get_skill` and `list_skills` twice between them, and name `find_tools` zero times. Both discoveries in the same addendum came from two find_tools calls once the reporter thought to make them.\n\nOPTIONS.\n(a) ONE LINE IN THE INSTRUCTIONS, their wording: 'before you build a capability against reflow2, search for it: find_tools takes a job description.' Cheapest by far, reaches every session unasked, and is the only option that acts before the work starts.\n(b) DELIVER IT AT THE STEP instead, as a rule naming the moments a capability is proposed — the mechanism this project already uses for rules that kept being broken. COUNTER: the moment a CONSUMER decides to build something is not a moment reflow2 sees, which is the same limit the memory-boundary rule ran into.\n(c) BOTH.\n(d) NOTHING, on the grounds that an agent that believes it knows the surface will not search whatever it is told. COUNTER: untested here, and the cost of (a) is one sentence.\n\n⚠️ WHAT THIS IS NOT, and the distinction matters: it is not that the tools are hard to find. Every served tool ranks for a job sentence and a held-out corpus proves it. It is that the one document every session receives unasked never says the catalogue exists.",
+        "kind": "exploratory",
+        "name": "OPEN — should the served instructions tell a reader to ask whether a thing already exists before building it?",
+        "status": "proposed"
       }
     },
     {
@@ -270693,6 +271007,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered a_prose_field_that_swallowed_a_parameter_says_so.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:a-revising-write-says-what-it-removed-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered a_revising_write_says_what_it_removed.rs"
       }
     },
     {
@@ -281401,6 +281725,26 @@
       }
     },
     {
+      "node_id": "snap:epoch:preserved-on-write:fact:the-schema-serves-the-types-and-not-the-rules-that-tell-them-apart-so-a-numeric-prohibition-was-filed-as-a-requirement",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"CAUSES\",\"other_type\":\"Artifact\",\"other_id\":\"art:capture-intent-skill\",\"properties\":{\"basis\":\"correlational\",\"evidence\":\"The routing table is written as skill prose for an agent to read, so the one artefact that states how to tell the types apart is the one artefact a consumer of the served contract never sees.\",\"validation_status\":\"unvalidated\"}},{\"direction\":\"in\",\"edge_type\":\"HAS_TEMPORAL_FACT\",\"other_type\":\"Artifact\",\"other_id\":\"art:capture-intent-skill\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"CAUSES\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-should-the-rules-that-tell-the-types-apart-be-served-as-data\",\"properties\":{\"basis\":\"correlational\",\"evidence\":\"The misclassification is what puts the question on the table.\",\"validation_status\":\"unvalidated\"}}]",
+        "state": "{\"basis\":\"measured\",\"confidence\":0.95,\"fact_type\":\"defect\",\"name\":\"The schema serves the TYPES and not the rules that tell them apart, and a numeric prohibition was filed as a requirement because of it\",\"source\":\"flo2 reflow2_feedback.md, 2026-09-19 addendum (F24, F25 and the meta-point)\",\"statement\":\"FLO2 F24, with a measured consequence on their live site the same day: \\\"the water can never drop below 68 degrees\\\" was recorded as a REQUIREMENT. That is a numeric prohibition, and reflow2's own routing table sends it to a Constraint — the table even carries the near-miss in bold: 'Not a Requirement.' reflow2's own capture-intent skill says conflating the two leaves prohibitions reporting unsatisfied forever.\\n\\nMEASURED 2026-09-20 on this tree. `describe_schema` answers with node types, their properties, their enums and which edges may join two types. The DISCRIMINATION RULES — the cue phrases, the near-miss each type is confused with, the counter-example — exist as a markdown table in getting-started/skills/capture-intent/SKILL.md, eleven rows, addressed to an agent reading a skill. `grep` for the rule's own words across the schema and the Rust surface finds them nowhere. So a consumer generating an extraction prompt FROM THE SCHEMA — which is exactly what the black-box rule and the toolsnaps-are-the-contract ruling tell it to do — gets six type names and none of what separates them.\\n\\n⭐ THE MATERIAL ALREADY EXISTS AND IS FULLY WRITTEN. The table has cue phrases in the user's own words ('it may only be A, B or C', 'a number with a unit'), the confusable neighbour, and the routing. It is trapped in prose meant for one reader. Served as data per node type, every consumer's extraction tracks reflow2 for free — which is the whole promise of the contract being the schemas.\\n\\n⚠️ AND THE SHAPE IS THE THREE-LEGS RULE AGAIN, one leg short in a new place: the typed tool exists, the instruction exists FOR AN AGENT, and the same instruction reaches no consumer building against the surface.\",\"steps\":[\"describe_schema\",\"capture-intent\"],\"subject_id\":\"art:capture-intent-skill\",\"valid_from\":\"2026-09-20\"}",
+        "target_id": "fact:the-schema-serves-the-types-and-not-the-rules-that-tell-them-apart-so-a-numeric-prohibition-was-filed-as-a-requirement",
+        "target_type": "TemporalFact"
+      }
+    },
+    {
+      "node_id": "snap:epoch:preserved-on-write:fact:the-served-instructions-name-no-way-to-ask-whether-a-thing-already-exists-and-one-consumer-rebuilt-four-that-did",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"CAUSES\",\"other_type\":\"Artifact\",\"other_id\":\"art:kit-instructions\",\"properties\":{\"basis\":\"correlational\",\"evidence\":\"The instructions were written to teach the loop and grew by adding to that account; nothing in them was ever the place where 'ask whether it exists first' belonged, so the catalogue reached the tool list and never reached the instructions.\",\"validation_status\":\"unvalidated\"}},{\"direction\":\"in\",\"edge_type\":\"HAS_TEMPORAL_FACT\",\"other_type\":\"Artifact\",\"other_id\":\"art:kit-instructions\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"CAUSES\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-should-the-served-instructions-tell-a-reader-to-ask-whether-it-exists-first\",\"properties\":{\"basis\":\"correlational\",\"evidence\":\"Four reinventions against a surface that already answered them is what raises the question.\",\"validation_status\":\"unvalidated\"}}]",
+        "state": "{\"basis\":\"measured\",\"confidence\":0.95,\"fact_type\":\"defect\",\"name\":\"The served working instructions never name the tool that answers \\\"does this already exist\\\", and one consumer rebuilt four things that did\",\"source\":\"flo2 reflow2_feedback.md, 2026-09-19 addendum (F24, F25 and the meta-point)\",\"statement\":\"FLO2'S META-POINT, and the reporter calls it the most useful thing in their addendum. FOUR TIMES flo2 has built something reflow2 already served — skill `audience`, skill `summary`, the subject/record split on loop findings, and now the ingest and topic tools. Every time the conclusion filed upstream was 'reflow2 should add X', and every time X existed.\\n\\nMEASURED 2026-09-20: the served working instructions (getting-started/AGENTS.md, the document `get_instructions` returns, 416 lines) mention `get_skill` and `list_skills` twice between them and name `find_tools` ZERO TIMES. The instructions describe the loop and name the constructors; nothing in them tells a reader that the surface can be ASKED whether a thing exists.\\n\\n⭐ SO THE RESIDUE IS NOT CAPABILITY, IT IS REFLEX — their word, and the evidence is in the same addendum: BOTH of its discoveries came from two `find_tools` calls phrased as jobs ('compose a prompt for a model that turns what a person said into design entries', 'the slice of the design relevant to this sentence'). The catalogue worked exactly as designed the moment it was reached for. What is missing is anything that prompts reaching for it BEFORE building.\\n\\nTHEIR PROPOSED LINE, costing one sentence: 'before you build a capability against reflow2, search for it: find_tools takes a job description.' They observe it would have saved four reinventions, and would have saved their own session writing two of the entries triaged earlier tonight against a surface that had already answered part of them.\\n\\n⚠️ NOTE WHAT THIS IS NOT. It is not the discoverability of the tools, which is measured and ratcheted; every tool ranks for a job sentence and the corpus proves it. It is that the one document every session receives unasked does not say the catalogue is there.\",\"steps\":[\"get_instructions\",\"find_tools\",\"find_skills\"],\"subject_id\":\"art:kit-instructions\",\"valid_from\":\"2026-09-20\"}",
+        "target_id": "fact:the-served-instructions-name-no-way-to-ask-whether-a-thing-already-exists-and-one-consumer-rebuilt-four-that-did",
+        "target_type": "TemporalFact"
+      }
+    },
+    {
       "node_id": "snap:epoch:preserved-on-write:rel:v0450",
       "node_type": "Snapshot",
       "properties": {
@@ -283411,6 +283755,24 @@
         "subject_id": "cap:what-next",
         "valid_from": "2026-08-14",
         "value": "{\"reported\":\"2026-08-14, Alex's Grok 4.6 session, Opportunities\",\"corroborates\":\"dec:idea-remaining-work-has-no-answer-in-the-graph - which lacked evidence from outside this project\",\"their_workaround\":\"an accepted Decision's PROSE as the MVP plan, plus Capability.status as the checklist\",\"identical_to\":\"the workaround this project reached for, independently\",\"the_finding\":\"when the graph cannot answer a daily question, people answer it from prose and the prose silently becomes load-bearing\",\"what_next_does_instead\":\"ranks open Decisions - what needs a HUMAN, a different question from what is left to BUILD\",\"root_already_recorded\":\"artifact layer is at COMPONENT granularity; see fact:the-build-list-is-suppressed-by-realized-via-component\"}"
+      }
+    },
+    {
+      "node_id": "fact:a-sentence-the-extraction-could-not-place-has-no-home-and-is-lost-after-one-render",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.85,
+        "fact_type": "defect",
+        "name": "A sentence the extraction could not place has no home, so the best material for the next question is rendered once and lost",
+        "source": "flo2 reflow2_feedback.md, 2026-09-19 addendum (F24, F25 and the meta-point)",
+        "statement": "FLO2 F25. Their extraction returns `unmatched`: the clauses it could not turn into design entries, verbatim. Their point is that these are the single best material for the next question to put to the person — they are, literally, the things said that the design does not yet understand. Today they are rendered once in a transcript and then gone.\n\nMEASURED 2026-09-20: the vocabulary DOES exist — `Fragment` with `fragment_type: note` — and nothing points at it for this. Of the served write tools, only `ingest_step`, `ingest_corpus_step` and `link_artifact` touch a Fragment at all, and each mints one as a side effect of something else (a corpus step, a registered file's provenance). `grep` finds no mention of Fragment, 'unmatched' or an unplaced utterance anywhere in the capture-intent skill.\n\n⭐ THE REPORTER NAMES THE SHAPE THEMSELVES and they are right: it is the `EVOLVES_INTO` story again — the vocabulary existed, no instruction pointed at it, and a consumer found the hole by needing it. reflow2 recorded that lesson on 2026-08-31 after bhome hit it. THEIR ASK IN PREFERENCE ORDER: (a) a sentence in capture-intent saying unplaced utterances belong as Fragments, or (b) a named tool so it is findable by find_tools. They prefer the cheap one.",
+        "steps": [
+          "capture-intent",
+          "ingest_step"
+        ],
+        "subject_id": "fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it",
+        "valid_from": "2026-09-20"
       }
     },
     {
@@ -287165,6 +287527,20 @@
       }
     },
     {
+      "node_id": "fact:flo2-2026-09-19-addendum-the-two-finders-worked-and-both-discoveries-came-from-them",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.9,
+        "fact_type": "status",
+        "name": "What worked in flo2's addendum: both discoveries came from the two finders, phrased as jobs",
+        "source": "flo2 reflow2_feedback.md, 2026-09-19 addendum (F24, F25 and the meta-point)",
+        "statement": "Recorded as evidence a regression check can read later, and as the counterweight to the meta-point's complaint. flo2: 'find_tools and the new find_skills are the right fix and they WORKED here: both discoveries in this addendum came from two find_tools calls, phrased as jobs … That is the tool working exactly as designed.'\n\nThe two queries, verbatim, both of which found what they needed: 'compose a prompt for a model that turns what a person said into design entries' and 'the slice of the design relevant to this sentence'. Neither names a tool; both are the job in the caller's own words, which is what the held-out corpus exists to keep true.\n\n⭐ WORTH KEEPING BECAUSE IT BOUNDS THE FIX: the catalogue does not need improving. What needs to change is whether anybody is told to ask it.",
+        "subject_id": "cap:every-tool-carries-the-users-phrasing-and-the-corpus-is-the-test",
+        "valid_from": "2026-09-20"
+      }
+    },
+    {
       "node_id": "fact:flo2-2026-09-19-evening-names-what-worked-determinism-the-cross-type-duplicate-guard-and-prose-currency",
       "node_type": "TemporalFact",
       "properties": {
@@ -290115,6 +290491,24 @@
       }
     },
     {
+      "node_id": "fact:the-schema-serves-the-types-and-not-the-rules-that-tell-them-apart-so-a-numeric-prohibition-was-filed-as-a-requirement",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.95,
+        "fact_type": "defect",
+        "name": "The schema serves the TYPES and not the rules that tell them apart, and a numeric prohibition was filed as a requirement because of it",
+        "source": "flo2 reflow2_feedback.md, 2026-09-19 addendum (F24, F25 and the meta-point)",
+        "statement": "FLO2 F24, with a measured consequence on their live site the same day: \"the water can never drop below 68 degrees\" was recorded as a REQUIREMENT. That is a numeric prohibition, and reflow2's own routing table sends it to a Constraint — the table even carries the near-miss in bold: 'Not a Requirement.' reflow2's own capture-intent skill says conflating the two leaves prohibitions reporting unsatisfied forever.\n\nMEASURED 2026-09-20 on this tree. `describe_schema` answers with node types, their properties, their enums and which edges may join two types. The DISCRIMINATION RULES — the cue phrases, the near-miss each type is confused with, the counter-example — exist as a markdown table in getting-started/skills/capture-intent/SKILL.md, eleven rows, addressed to an agent reading a skill. `grep` for the rule's own words across the schema and the Rust surface finds them nowhere. So a consumer generating an extraction prompt FROM THE SCHEMA — which is exactly what the black-box rule and the toolsnaps-are-the-contract ruling tell it to do — gets six type names and none of what separates them.\n\n⭐ THE MATERIAL ALREADY EXISTS AND IS FULLY WRITTEN. The table has cue phrases in the user's own words ('it may only be A, B or C', 'a number with a unit'), the confusable neighbour, and the routing. It is trapped in prose meant for one reader. Served as data per node type, every consumer's extraction tracks reflow2 for free — which is the whole promise of the contract being the schemas.\n\n⚠️ AND THE SHAPE IS THE THREE-LEGS RULE AGAIN, one leg short in a new place: the typed tool exists, the instruction exists FOR AN AGENT, and the same instruction reaches no consumer building against the surface.\n\nPRIOR ART FOUND ON A SECOND PASS, 2026-09-20, by running the root-cause skill's search step that the first pass skipped. The design already holds this ground twice over: req:a-prohibition-written-into-prose-is-noticed-as-unfiled (ACCEPTED) and cap:a-prohibition-living-in-prose-is-noticed-once-as-a-practice (REALIZED) — a detector, `prohibition_in_prose`, that scans every live Requirement, Capability, Component, Interface and accepted Decision for a prohibition that no Constraint covers, and reports it as one aggregate practice finding at severity 0.35.\n\n⭐ SO THE OBVIOUS READING — 'reflow2 cannot notice this' — IS FALSE, AND THE MEASUREMENT SAYS SOMETHING SHARPER. The detector's vocabulary is SIX fixed phrasings. Checked 2026-09-20 against flo2's actual sentence, the one filed as a requirement on their live site: it matches NONE of the six. So the misclassification was invisible not because nothing looks, but because what looks has a closed list of six ways of saying it and the field said it a seventh way.\n\nTHAT IS A SECOND, SEPARABLE DEFECT and it belongs to the same family this project keeps meeting: a declared vocabulary that does not reach the words people actually use. The first defect — the discrimination rules are not served as data — stands unchanged and is what stops a CONSUMER from classifying correctly in the first place. The second is what stops reflow2 from noticing afterwards. Fixing either one alone leaves the other.",
+        "steps": [
+          "describe_schema",
+          "capture-intent"
+        ],
+        "subject_id": "art:capture-intent-skill",
+        "valid_from": "2026-09-20"
+      }
+    },
+    {
       "node_id": "fact:the-se-deferrals-stated-precondition-has-been-met",
       "node_type": "TemporalFact",
       "properties": {
@@ -290159,6 +290553,25 @@
         "fact_type": "observation",
         "statement": "🛑 **CORRECTION: ALEX'S TWO 2026-08-14 REPORTS CAME FROM TWO DIFFERENT MACHINES WITH TWO DIFFERENT AGENTS, AND THIS SESSION TREATED THEM AS ONE.** Anthony, relaying Alex's own question about which feedback was being discussed, then clarifying the setup:\n\n```\n              MACHINE            OS       AGENT    PROJECTS        REPORT\nwork          work laptop        macOS    Claude   real work       the 5 ideas\nhome          personal laptop    macOS    Grok     personal        the Grok feedback.md\n```\n\n⚠️ ON `basis`: the enum offers only `measured` or `forecast`. The machine/agent/OS attribution is REPORTED — Anthony relaying Alex — not observed by reflow2. The kit VERSIONS below are genuinely measured. Marked `measured` because most load-bearing content is, with the distinction stated here rather than lost to a missing enum value.\n\n⚠️ WHAT THIS SESSION GOT WRONG. `fact:agent-feedback-corroborated-2026-08-14` describes the Grok file as *\"a Grok 4.6 session on one of Alex's projects\"*, which reads as the same context that produced the five ideas. It is not. Any inference treating the two as evidence about ONE install is unsound as stated.\n\n═══ THE STALE-KIT CLAIM, RESTATED HONESTLY ═══\n\nThis session repeatedly said *\"three independent signals that consumers run stale kits\"*, implying mutual reinforcement about one user. **They are three SEPARATE installs, each stale:**\n```\nwork / Claude / macOS ..... two of five notes describe behaviour fixed in\n                            #172/#174 -> INFERRED stale, NEVER MEASURED\nhome / Grok / macOS ....... kit-version.json reads 0.11.0 / 0ec473e,\n                            a 2026-07-25 tarball -> MEASURED\nthis dev machine / Linux .. kit stamp 0.28.0 / e2b05c7 -> MEASURED\n```\n⇒ WEAKER as evidence about Alex — only his HOME install was measured, and the five ideas came from WORK. STRONGER as evidence about the UPDATE PATH: three machines, at least two install routes, three versions, none current. **Systemic, not one person forgetting.**\n\n🎯 THE VERSION QUESTION NEEDS A MACHINE. Anthony texted Alex asking what `reflow2 --version` says; **he has two installs and the answer differs.** The WORK one matters most — it produced the five ideas behind `epoch:a-project-is-set-up-right-on-the-first-run` and has never been measured.\n\n═══ ⭐⭐ IT IMMEDIATELY FOUND A DEFECT IN WORK SHIPPED THE SAME HOUR ═══\n\n`cap:init-asks-which-harness` had just been built with a deliberate decision: **`grok` is NOT a registry entry**, because Grok CLI reads `.mcp.json` and a second entry would write the same file twice under two names. A test asserted it. **The reasoning was right and the ergonomics were hostile: `--harness=grok` returned `error: unknown harness 'grok'` and exit 1** — the install REFUSING a correct answer from a user naming his own tool. Learning that Alex runs Grok at home is what surfaced it.\n\nFIXED the same hour, keeping the reasoning and dropping the hostility: `HARNESS_ALIASES = {\"grok\": \"claude\"}` resolves the name without adding a config, the prompt line reads *\"Claude Code (also read by Grok CLI — choose this for Grok)\"*, and `grok,claude` collapses to one config rather than erroring. Four tests guard it, including that every alias points at a real harness and that no name is both an alias and an entry.\n\n📌 **A GENERAL LESSON, since `rule:a-lesson-is-generalised-before-it-is-built` now exists:** a registry that is CORRECT about what to install can still be WRONG about what to accept. The two are different questions — what files does this harness need, and what might a user call it — and collapsing them refuses real answers.\n\n═══ 📌 ENVIRONMENT FACTS NEW TO THE DESIGN ═══\n\n  · **EVERY SECOND-USER REPORT REFLOW2 HAS EVER RECEIVED IS FROM macOS**, and **every measurement reflow2 has ever made is on Linux** — including all of 2026-08-14's installer runs and the harness wizard itself. Whether `tools/install.sh`, the `~/.local/share/reflow2/kit` layout, the merge-driver registration and `--harness` behave identically on macOS is **unverified, and nothing in the design claims it**.\n  · **A TARBALL install is in use** (`0ec473e`), a different update route from a checkout. `user-iterative-release-preference` sets the goal at a ONE-WORD UPDATE; whether the tarball route reaches that is untested.\n\n⭐ THE BREADTH IS ITSELF THE FINDING: the second user exercises reflow2 across two agents (Claude, Grok) and two project classes (work, personal) on one OS reflow2 has never been tested on. For evidence purposes his two report streams should be read as **two users**, and the two agents mean the served skills are being read by two different models.",
         "subject_id": "proj:reflow2"
+      }
+    },
+    {
+      "node_id": "fact:the-served-instructions-name-no-way-to-ask-whether-a-thing-already-exists-and-one-consumer-rebuilt-four-that-did",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.95,
+        "fact_type": "defect",
+        "name": "The served working instructions never name the tool that answers \"does this already exist\", and one consumer rebuilt four things that did",
+        "source": "flo2 reflow2_feedback.md, 2026-09-19 addendum (F24, F25 and the meta-point)",
+        "statement": "FLO2'S META-POINT, and the reporter calls it the most useful thing in their addendum. FOUR TIMES flo2 has built something reflow2 already served — skill `audience`, skill `summary`, the subject/record split on loop findings, and now the ingest and topic tools. Every time the conclusion filed upstream was 'reflow2 should add X', and every time X existed.\n\nMEASURED 2026-09-20: the served working instructions (getting-started/AGENTS.md, the document `get_instructions` returns, 416 lines) mention `get_skill` and `list_skills` twice between them and name `find_tools` ZERO TIMES. The instructions describe the loop and name the constructors; nothing in them tells a reader that the surface can be ASKED whether a thing exists.\n\n⭐ SO THE RESIDUE IS NOT CAPABILITY, IT IS REFLEX — their word, and the evidence is in the same addendum: BOTH of its discoveries came from two `find_tools` calls phrased as jobs ('compose a prompt for a model that turns what a person said into design entries', 'the slice of the design relevant to this sentence'). The catalogue worked exactly as designed the moment it was reached for. What is missing is anything that prompts reaching for it BEFORE building.\n\nTHEIR PROPOSED LINE, costing one sentence: 'before you build a capability against reflow2, search for it: find_tools takes a job description.' They observe it would have saved four reinventions, and would have saved their own session writing two of the entries triaged earlier tonight against a surface that had already answered part of them.\n\n⚠️ NOTE WHAT THIS IS NOT. It is not the discoverability of the tools, which is measured and ratcheted; every tool ranks for a job sentence and the corpus proves it. It is that the one document every session receives unasked does not say the catalogue is there.\n\nPRIOR ART FOUND ON A SECOND PASS, 2026-09-20, by running the search step the first pass skipped — which is itself an instance of the thing being reported.\n\n⭐ ANTHONY ASKED FOR THIS ON 2026-08-11, IN HIS OWN WORDS, and it is recorded as dec:idea-search-first-fires-without-being-remembered: 'we need to make the search the graph first a requirement that is automatic.' That idea measured the same shape and reached the same conclusion — the rule is already written into FIVE served skills and still depends on somebody loading one, so the ask is not for the rule, it is for the TRIGGER. It also names the general mechanism, req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue (PROPOSED, unbuilt): a discipline that applies mid-task is delivered at the TOOL that triggers it, not from a catalogue read once at handshake.\n\n⚠️ THEY ARE NOT THE SAME ASK AND BOTH ARE TRUE. The 2026-08-11 idea is SEARCH THE GRAPH before adding a node, to avoid near-duplicate nodes. flo2's is SEARCH THE TOOL SURFACE before building a capability, to avoid reinventing something served. Different catalogue, different reader, same missing trigger — and the second has a measurement the first did not: four things rebuilt, each filed upstream as a missing feature.\n\n📌 AND THE HONEST NOTE ABOUT THIS RECORD: the first pass of this triage measured the instructions and formed a cause without searching for what the design already said, so it missed an idea in the owner's own words and an accepted requirement that is the mechanism for both. That is exactly the failure the triage skill's step 2 exists to prevent, and it cost one pass.",
+        "steps": [
+          "get_instructions",
+          "find_tools",
+          "find_skills"
+        ],
+        "subject_id": "art:kit-instructions",
+        "valid_from": "2026-09-20"
       }
     },
     {
@@ -291771,6 +292184,20 @@
         "level": "integration",
         "method": "test",
         "name": "A settling status on a constructor is refused without an approver and signed with one; setters report nobody's name; a check lands with its targets and its run",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:a-shrink-is-reported-with-its-size-and-never-refused",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-mcp/tests/a_revising_write_says_what_it_removed.rs: three tests. The first asserts the reported count equals the measured difference and that the prior value is still returned; the second that an addition reports nothing; the third that the write lands.",
+        "findings": "3 of 3 passing; full gate set green.",
+        "kind": "verification",
+        "last_run_at": "2026-09-20",
+        "level": "integration",
+        "method": "test",
+        "name": "A rewrite that drops a paragraph says so with the real size of the loss; an enrichment says nothing; a drastic shortening is reported and still succeeds",
         "status": "passing"
       }
     },
@@ -294850,7 +295277,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:07408b1729a36b7ee9c7010a43585448be9678508b5d907aa94594adc576b3a5",
+  "prev_content_hash": "sha256:bef84cdf5621c2ceffb6bd6b818cc9115100324f5a07fd065b76de6a8a9b360e",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -295448,8 +295875,8 @@
     "schema_version": 1
   },
   "taken_at": {
-    "branch": "a-composed-prompt-serves-its-pieces",
-    "commit": "b5a5eda844204a26de000a42274a1c9bc1cb00a6",
+    "branch": "a-revising-write-says-what-it-removed",
+    "commit": "1de8521c0be1412496140f3598a786588fca6bf4",
     "dirty": true
   }
 }
