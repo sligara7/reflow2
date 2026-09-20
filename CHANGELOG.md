@@ -31,6 +31,22 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **A composed prompt serves the pieces it was composed from, and a gap that has closed refuses in
+  a way a consumer can branch on.** flo2 F18 and F22, under the black-box rule: a consumer should
+  never have to read reflow2's prose to work. `gap_to_prompt` builds its prompt by joining the
+  gap's title and its why, and returned only the joined string — so flo2 split that string on the
+  literal `"Why it matters:"`, a marker in no schema, and declared it as its single breach of the
+  rule. The first reply now carries `gap: {id, title, why}` beside the prompts. The two-phase
+  protocol is unchanged: a consumer that wants a phrased question still fills `answers` and calls
+  again, and one that wants context for a model turn it is already paying for reads the pieces and
+  buys no second turn. And the refusal for a gap that has closed now carries
+  `reason: gap_closed` with the id in its data, so a consumer can tell a stale chip from any other
+  refusal without matching prose — flo2 was re-running gap detection before every send purely to
+  learn that, a whole graph computation per click.
+
+
 ### Fixed
 
 - **The gate that says every declared property has a typed writer now reads which TOOL writes which
