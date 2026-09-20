@@ -60,6 +60,21 @@
         "description": "The requirement's id — `req:<slug>` by convention, so the prefix names the type wherever the id appears. Calling again with an EXISTING id REVISES that node: what you pass overwrites, what you omit survives.",
         "type": "string"
       },
+      "kind": {
+        "default": null,
+        "description": "What KIND of need this is — `functional` / `nonfunctional` / `quality` /\n`business`. Optional: unset means nobody said, and `encoding_undecided`\nreports a design where some requirements say and some do not.\n\nOffered since 2026-09-20 (flo2 F19). It was declared, READ by that\ndetector, carried by 154 of 247 requirements written through the generic\nescape hatch, and accepted by no typed tool — so the documented creation\npath could not produce a requirement the detector was satisfied with, and\na person meeting \"5 Requirement(s) and none says what kind of need it is\"\nhad no way to answer it.",
+        "enum": [
+          "functional",
+          "nonfunctional",
+          "quality",
+          "business",
+          null
+        ],
+        "type": [
+          "string",
+          "null"
+        ]
+      },
       "name": {
         "default": null,
         "type": [

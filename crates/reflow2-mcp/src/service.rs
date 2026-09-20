@@ -1805,6 +1805,19 @@ pub struct RequirementReq {
     #[serde(default)]
     #[schemars(schema_with = "crate::enum_schema::requirement_concern_opt")]
     pub concern: Option<String>,
+    /// What KIND of need this is — `functional` / `nonfunctional` / `quality` /
+    /// `business`. Optional: unset means nobody said, and `encoding_undecided`
+    /// reports a design where some requirements say and some do not.
+    ///
+    /// Offered since 2026-09-20 (flo2 F19). It was declared, READ by that
+    /// detector, carried by 154 of 247 requirements written through the generic
+    /// escape hatch, and accepted by no typed tool — so the documented creation
+    /// path could not produce a requirement the detector was satisfied with, and
+    /// a person meeting "5 Requirement(s) and none says what kind of need it is"
+    /// had no way to answer it.
+    #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::requirement_kind_opt")]
+    pub kind: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -2652,6 +2665,14 @@ pub struct VerificationReq {
     /// When that run happened. Refused without `status`, for the same reason.
     #[serde(default)]
     pub last_run_at: Option<String>,
+    /// PATH TO THE TEST OR INSPECTION ARTIFACT — the file a reader opens to see
+    /// what this check actually does.
+    ///
+    /// Offered since 2026-09-20 (flo2 F19): the property was declared and
+    /// documented, and no typed tool accepted it, so the path had to go in
+    /// `description` or through the generic escape hatch.
+    #[serde(default)]
+    pub location: Option<String>,
 }
 
 /// One target of a Verification, for `add_verification`'s `verifies` list.

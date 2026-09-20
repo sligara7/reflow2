@@ -1460,6 +1460,7 @@ impl ReflowService {
             &[
                 ("priority", req.priority.as_deref()),
                 ("concern", req.concern.as_deref()),
+                ("kind", req.kind.as_deref()),
             ],
         )?;
         sign_as_approver(

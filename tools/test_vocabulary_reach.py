@@ -213,6 +213,88 @@ def main() -> int:
         finally:
             baseline.write_text(original)
 
+    # ── A WRITE TOOL THIS FILE CANNOT PLACE STOPS THE GATE ────────────────
+    # Until 2026-09-20 an unplaced tool had its parameter NAMES pooled into
+    # every node type: 54 tools, 109 names. That is why the instrument reported
+    # `0 HOLE` on a tree where `Requirement.kind` had no writer (excused by
+    # forecast_readiness and gate_on, which take a parameter called `kind`) and
+    # `Verification.location` had none (excused by register_alternative, whose
+    # `location` is a path to a design export). flo2 found both by being
+    # refused. Guessing quietly is the failure; refusing loudly is the fix.
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location("vocabulary_reach", SCRIPT)
+    vr = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(vr)
+
+    placed = set(vr.WRITES_TYPE) | vr.EDGE_ONLY | set(vr.POLYMORPHIC)
+    unplaced = sorted(
+        f.stem
+        for f in vr.TOOLSNAPS.glob("*.json")
+        if f.stem not in vr.GENERIC
+        and f.stem not in placed
+        and not (
+            (json.loads(f.read_text()).get("annotations") or {}).get("readOnlyHint") is True
+        )
+    )
+    check(
+        "every served write tool is placed in exactly one category",
+        not unplaced,
+        f"unplaced: {unplaced}",
+    )
+
+    overlap = sorted((set(vr.WRITES_TYPE) & vr.EDGE_ONLY) | (set(vr.POLYMORPHIC) & vr.EDGE_ONLY))
+    check("no tool is in two categories", not overlap, f"in two: {overlap}")
+
+    # The refusal itself: add a tool nobody has placed and the gate must stop
+    # with a non-zero exit rather than pooling its names.
+    invented = vr.TOOLSNAPS / "zz_unplaced_probe.json"
+    invented.write_text(
+        json.dumps(
+            {
+                "name": "zz_unplaced_probe",
+                "description": "A write tool no category claims.",
+                "inputSchema": {"type": "object", "properties": {"location": {"type": "string"}}},
+            }
+        )
+    )
+    try:
+        r = run("--check")
+        check(
+            "an unplaceable write tool stops the gate",
+            r.returncode != 0,
+            f"exit {r.returncode}",
+        )
+        check(
+            "and the refusal names it",
+            "zz_unplaced_probe" in (r.stdout + r.stderr),
+            (r.stdout + r.stderr)[-300:],
+        )
+    finally:
+        invented.unlink(missing_ok=True)
+
+    # A property is judged against ITS OWN type's writers, not every name the
+    # surface happens to use: the regression flo2 met, stated directly. Take a
+    # parameter that ONLY edge tools carry and assert it reaches no node type.
+    _, by_type, polymorphic = vr.tool_parameters()
+    edge_only_names: set[str] = set()
+    for tool in vr.EDGE_ONLY:
+        snap = vr.TOOLSNAPS / f"{tool}.json"
+        if snap.exists():
+            edge_only_names |= set(
+                ((json.loads(snap.read_text()).get("inputSchema") or {}).get("properties") or {})
+            )
+    typed_names: set[str] = set()
+    for names in by_type.values():
+        typed_names |= names
+    leaked = sorted((edge_only_names - typed_names - polymorphic) & {"coverage", "ruling", "criticality", "contribution", "proposal", "winner_id"})
+    check(
+        "an edge tool's own parameters reach no node type",
+        all(n not in typed_names for n in leaked) and bool(leaked),
+        f"expected some edge-only names to be absent from every type; got {leaked}",
+    )
+
     print()
     if failures:
         print(f"{len(failures)} check(s) FAILED")

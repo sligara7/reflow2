@@ -65,6 +65,7 @@ fn req(
         acted_at: None,
         priority: None,
         concern: None,
+        kind: None,
     }
 }
 

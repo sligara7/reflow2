@@ -81,6 +81,7 @@ fn req(id: &str) -> RequirementReq {
         acted_at: None,
         priority: None,
         concern: None,
+        kind: None,
     }
 }
 

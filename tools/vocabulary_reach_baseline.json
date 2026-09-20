@@ -1,5 +1,5 @@
 {
-  "_comment": "Every Type.property the served surface cannot write, SPLIT BY INTENT. `hole` = nothing can set it and somebody would want to. `machine_written` = an operation writes it and a caller parameter would be wrong, so `written_by` names that operation. `unused` = nothing writes it and nobody has carried it. A flat count conflated the first two and could not be read as a to-do list. `vocabulary_reach.py --check` fails when a NEW unreachable property appears that this file does not classify.",
+  "_comment": "Every Type.property the served surface cannot write, SPLIT BY INTENT. `hole` = nothing can set it and somebody would want to. `machine_written` = an operation writes it and a caller parameter would be wrong, so `written_by` names that operation. `unused` = nothing writes it and nobody has carried it. A flat count conflated the first two and could not be read as a to-do list. `vocabulary_reach.py --check` fails when a NEW unreachable property appears that this file does not classify. | 2026-09-20: the cross-type pool was removed from vocabulary_reach.py, so a property is judged against the tools that write ITS type. Eight entries were added in that pass, and Requirement.kind and Verification.location left this list by gaining real parameters.",
   "entries": [
     {
       "property": "Artifact.created_at",
@@ -19,6 +19,16 @@
       "reason": "0 of 295. A function signature or part number; declared, never wanted."
     },
     {
+      "property": "Component.location",
+      "kind": "hole",
+      "reason": "1 of 108 carries one, written through the generic escape hatch, and no typed tool accepts it. The schema calls it 'where it lives — a source dir, a physical location, a document path', which is the direct analogue of Artifact.location, and add_component does not take it. Recorded as a hole rather than given a parameter because one instance in 108 is not yet evidence that anyone wants it; the count is the thing to watch."
+    },
+    {
+      "property": "Constraint.rationale",
+      "kind": "unused",
+      "reason": "0 of 8. A constraint's reason is carried by its statement and by the decision that imposed it; the bare property has never been written."
+    },
+    {
       "property": "Decision.alternatives",
       "kind": "machine_written",
       "reason": "register_alternative writes the options considered. Hand-setting the JSON would let a caller claim a fork nobody registered.",
@@ -35,6 +45,12 @@
       "kind": "machine_written",
       "reason": "Minted by the reconcile pass that detected the drift.",
       "written_by": "reconcile_artifacts / reconcile_verification (drift.rs, verify.rs, fielded.rs)"
+    },
+    {
+      "property": "DriftEvent.name",
+      "kind": "machine_written",
+      "written_by": "the reconcile family (reconcile_artifacts, reconcile_verification, reconcile_deployment, reconcile_dependencies)",
+      "reason": "40 of 40. drift.rs composes it as '<artifact_id> drift' when it records the event. A caller-set name would let two drifts on one artifact read as unrelated, and the event is not something a caller creates by hand."
     },
     {
       "property": "DriftEvent.resolved",
@@ -82,6 +98,17 @@
       "reason": "0 of 221. Never written."
     },
     {
+      "property": "Fragment.status",
+      "kind": "machine_written",
+      "written_by": "the ingest pipeline (ingest_step, ingest_corpus_step) and link_artifact",
+      "reason": "334 of 334. `ingested` / `integrated` / `superseded` track where a fragment sits in the pipeline that minted it. A caller could only assert a position in a process it does not drive."
+    },
+    {
+      "property": "Fragment.summary",
+      "kind": "unused",
+      "reason": "0 of 334. Fragments carry a title and their content reference; a separate summary has never been written."
+    },
+    {
       "property": "Fragment.title",
       "kind": "machine_written",
       "reason": "Minted with the fragment.",
@@ -120,7 +147,7 @@
     {
       "property": "Question.context_setter",
       "kind": "unused",
-      "reason": "57 of 57 carry one, all written by the same gap_to_prompt path that writes `question` \u2014 but no setter appears in the source for it, so it is recorded as unwritten-by-the-surface pending a look at how it lands."
+      "reason": "57 of 57 carry one, all written by the same gap_to_prompt path that writes `question` — but no setter appears in the source for it, so it is recorded as unwritten-by-the-surface pending a look at how it lands."
     },
     {
       "property": "Question.prompt_id",
@@ -136,14 +163,30 @@
     {
       "property": "Question.rephrase_degraded",
       "kind": "machine_written",
-      "reason": "Records that phrasing fell back to raw gap text \u2014 a fact about the phrasing run, not a caller's claim.",
+      "reason": "Records that phrasing fell back to raw gap text — a fact about the phrasing run, not a caller's claim.",
       "written_by": "gap_to_prompt (detect.rs)"
+    },
+    {
+      "property": "Question.status",
+      "kind": "machine_written",
+      "written_by": "the question flow (detect.rs mints one `asked`; answer_question and withdraw_question move it)",
+      "reason": "64 of 64. The status records what has happened to the question — asked, answered, withdrawn — and each move has its own tool. A caller parameter on creation would let a question be born answered."
     },
     {
       "property": "Release.created_at",
       "kind": "unused",
       "reason": "0 of 54. Same no-clock reason; a release's date lives on its epoch.",
       "written_by": "(the core never reads the system time)"
+    },
+    {
+      "property": "Requirement.rationale",
+      "kind": "hole",
+      "reason": "8 of 247 carry one, written through the generic escape hatch, and no typed tool accepts it. `statement` says what the need IS; this would say why it exists. Recorded as a hole rather than given a parameter because eight uses in 247 is thin, and because the same ground may be better covered by the decision that motivated the requirement."
+    },
+    {
+      "property": "Requirement.source",
+      "kind": "unused",
+      "reason": "0 of 247. Where a requirement came from is carried by its provenance and by the fragment it was ingested from; the bare property has never been written."
     },
     {
       "property": "Resource.resource_type",

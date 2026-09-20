@@ -73,6 +73,14 @@
           "null"
         ]
       },
+      "location": {
+        "default": null,
+        "description": "PATH TO THE TEST OR INSPECTION ARTIFACT — the file a reader opens to see\nwhat this check actually does.\n\nOffered since 2026-09-20 (flo2 F19): the property was declared and\ndocumented, and no typed tool accepted it, so the path had to go in\n`description` or through the generic escape hatch.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
       "method": {
         "default": null,
         "description": "HOW the check was made. `test` (default) / `analysis` / `inspection` /\n`demonstration` — the four canonical methods — plus `measurement`,\n`observation` (watching it run in the field, unchanged), `review` and\n`simulation`.",
