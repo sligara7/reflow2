@@ -31,6 +31,21 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Changed
+
+- **A drawn relation is read back as a sentence, subject first.** flo2 landed two `BLOCKS` edges
+  asserting the reverse of what their own evidence prose said, in one session, and caught both only
+  by re-reading their own call. The reply labelled each edge `BLOCKS -> cmp:artifact-store`, which
+  omits the subject — and a reader who has just written the call supplies the subject they intended
+  rather than the one they sent. It now reads `req:deleting-an-artifact BLOCKS cmp:artifact-store`,
+  so the two directions no longer render alike and a reversal shows itself.
+
+- **The brainstorm skill names the direction flag.** It stated that direction is part of the claim
+  and that nothing would catch a reversal, and never named `incoming`, which has always existed.
+  Believing no such flag existed, flo2 drew two edges backwards, then routed two more through the
+  generic edge tool by hand and wrote a script to verify direction.
+
+
 ### Fixed
 
 - **`ility_report` bounds its reply.** It answered 30,301 characters against a 30,000 budget and was

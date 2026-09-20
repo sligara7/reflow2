@@ -234,11 +234,25 @@ impl DesignGraph {
             } else {
                 (node_type, node_id, &l.other_type, &l.other_id)
             };
-            let label = if l.incoming {
-                format!("{} <- {}", l.relation, l.other_id)
-            } else {
-                format!("{} -> {}", l.relation, l.other_id)
-            };
+            // THE EDGE IS READ BACK AS A SENTENCE, SUBJECT FIRST.
+            //
+            // flo2, 2026-09-19: they landed two BLOCKS edges asserting the
+            // reverse of what their own `evidence` prose said, in one session,
+            // and caught both only by re-reading their own call. The direction
+            // flag lets a caller draw the edge they meant; it does nothing to
+            // confirm they got it right.
+            //
+            // This label used to read `BLOCKS -> cmp:artifact-store`, which
+            // omits the subject and leaves the reader to supply it from memory
+            // — and a reader who has just written the call supplies what they
+            // INTENDED rather than what they sent. `req:deleting-an-artifact
+            // BLOCKS cmp:artifact-store` reads wrong immediately when it is
+            // wrong. Every relation is echoed this way rather than only the
+            // asymmetric ones, because the label already existed and a uniform
+            // shape is easier to read than a conditional one; it is the
+            // asymmetric relations (BLOCKS, CAUSES, DEPENDS_ON, EVOLVES_INTO,
+            // OBSOLETES) where being able to see it backwards earns the change.
+            let label = format!("{from_i} {} {to_i}", l.relation);
             let present = self
                 .outgoing(from_i, Some(&l.relation))?
                 .into_iter()
