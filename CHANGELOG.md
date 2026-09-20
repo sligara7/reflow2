@@ -31,6 +31,15 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Fixed
+
+- **`ility_report` bounds its reply.** It answered 30,301 characters against a 30,000 budget and was
+  the only unbounded overflow of the 40 no-argument reads the gate measures. Nothing about the
+  report changed: the design grew past the line. It took an empty request struct, which is why it
+  had nowhere to put a bound; it now takes the shared budget request and samples like its
+  neighbours, with counts never budgeted away.
+
+
 ### Added
 
 - **A revising write says what it removed.** flo2 measured thirteen full-field rewrites in one
