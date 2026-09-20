@@ -111,8 +111,15 @@ every single time.
 
    **Direction is part of the claim.** Every one of these reads as a sentence — *from RELATION to*.
    Say it out loud before you write it: "the old idea EVOLVES_INTO the new one", "this idea
-   DEPENDS_ON that one landing first". Backwards, the same edge asserts something false and nothing
-   will catch it.
+   DEPENDS_ON that one landing first". Backwards, the same edge asserts something false.
+
+   ⭐ **WHEN THE TRUE DIRECTION IS INBOUND, PASS `incoming: true` ON THAT LINK** — the edge is then
+   drawn *other → this node*, which is what you meant. The flag has always been there and this
+   skill did not name it: a user who believed no such flag existed drew two edges backwards, then
+   routed two more through `create_edge` by hand and wrote a script to check the direction (flo2,
+   2026-09-19). **And the reply now echoes each edge as a sentence with its subject first** —
+   `req:deleting-an-artifact BLOCKS cmp:artifact-store` — so read that line back before moving on.
+   It is the one place a reversal shows itself.
 3. **Two or three edges is a good outcome. Ten is a smell.** Relatedness is not similarity. If
    everything links to everything, the neighbourhood stops carrying information.
 4. **If nothing is honestly related, pass `note` to the same call** — *"searched; nearest were X

@@ -75,7 +75,7 @@ fn a_relation_is_drawn_with_its_reason() {
         .expect("review");
 
     assert_eq!(out.state, ReviewState::Linked);
-    assert_eq!(out.drawn, vec!["ANTICIPATES -> dec:b"]);
+    assert_eq!(out.drawn, vec!["dec:a ANTICIPATES dec:b"]);
     assert_eq!(out.note, None);
 
     let e = g.outgoing("dec:a", Some(edge::ANTICIPATES)).expect("edges");
@@ -210,7 +210,9 @@ fn direction_can_be_reversed_because_it_is_part_of_the_claim() {
     let out = g
         .review_relations(node::DECISION, "dec:a", &[l], None)
         .expect("review");
-    assert_eq!(out.drawn, vec!["EVOLVES_INTO <- dec:b"]);
+    // Read as a sentence, an inbound edge puts the OTHER node first — which is
+    // the whole claim, and what a bare arrow left the reader to supply.
+    assert_eq!(out.drawn, vec!["dec:b EVOLVES_INTO dec:a"]);
     assert!(
         g.outgoing("dec:a", Some(edge::EVOLVES_INTO))
             .expect("e")
@@ -245,7 +247,7 @@ fn re_reviewing_reports_what_was_already_there() {
         )
         .expect("second");
     assert!(out.drawn.is_empty());
-    assert_eq!(out.already_present, vec!["ANTICIPATES -> dec:b"]);
+    assert_eq!(out.already_present, vec!["dec:a ANTICIPATES dec:b"]);
     assert_eq!(
         g.outgoing("dec:a", Some(edge::ANTICIPATES))
             .expect("e")

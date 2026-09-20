@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:c041d52fb7c73f2b1c05693c0e4fd0e98bc6d1d616a7072b7a9520dce63fc2ec",
+  "content_hash": "sha256:22caf2ef77caf57a1978316c67cc13b21be5fe87af961236f7e8f304ac4c3845",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -1234,6 +1234,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:propagate"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-drawn-relation-is-read-back-as-a-sentence-and-the-skill-names-the-direction-flag",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:vocabulary"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -25979,6 +25987,16 @@
       "from_id": "fact:the-direction-flag-on-a-relation-exists-and-no-skill-names-it-so-two-edges-landed-reversed",
       "properties": {
         "basis": "correlational",
+        "evidence": "The unnamed flag and the two reversed edges are what this change answers, on both legs.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "chg:a-drawn-relation-is-read-back-as-a-sentence"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:the-direction-flag-on-a-relation-exists-and-no-skill-names-it-so-two-edges-landed-reversed",
+      "properties": {
+        "basis": "correlational",
         "evidence": "The two reversed edges are what put the echo question on the table; the flag answers the other half.",
         "validation_status": "unvalidated"
       },
@@ -28280,6 +28298,42 @@
         "action": "modified"
       },
       "to_id": "art:tools-temporal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-drawn-relation-is-read-back-as-a-sentence",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:a-drawn-relation-is-read-back-as-a-sentence-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-drawn-relation-is-read-back-as-a-sentence",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:brainstorm-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-drawn-relation-is-read-back-as-a-sentence",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:relate"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-drawn-relation-is-read-back-as-a-sentence",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-review-relations"
     },
     {
       "edge_type": "CHANGED",
@@ -54061,6 +54115,12 @@
       "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
+      "to_id": "cap:a-drawn-relation-is-read-back-as-a-sentence-and-the-skill-names-the-direction-flag"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
       "to_id": "cap:a-missing-field-refusal-names-the-fields-this-call-lacked"
     },
     {
@@ -62118,6 +62178,12 @@
       "from_id": "cap:a-decision-can-be-created-already-settled",
       "properties": {},
       "to_id": "decision:ack:cb4a5e22d8bd3a15"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:a-drawn-relation-is-read-back-as-a-sentence-and-the-skill-names-the-direction-flag",
+      "properties": {},
+      "to_id": "dec:idea-should-a-drawn-relation-be-echoed-back-as-a-sentence"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -223079,6 +223145,15 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:a-drawn-relation-is-read-back-as-a-sentence",
+      "properties": {
+        "at": "2026-09-20",
+        "note": "Both legs closed: the skill names the flag at the step where direction is decided, and the reply echoes the edge as a sentence so a reversal shows itself. The finding stands as the measurement."
+      },
+      "to_id": "fact:the-direction-flag-on-a-relation-exists-and-no-skill-names-it-so-two-edges-landed-reversed"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:a-moved-record-is-diffed-against-the-store-not-an-export",
       "properties": {
         "at": "2026-09-12",
@@ -225791,6 +225866,15 @@
         "conformance": "unchecked"
       },
       "to_id": "cap:a-design-says-what-fraction-of-a-kind-carries-a-relation"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:a-drawn-relation-is-read-back-as-a-sentence-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-drawn-relation-is-read-back-as-a-sentence-and-the-skill-names-the-direction-flag"
     },
     {
       "edge_type": "REALIZES",
@@ -231368,6 +231452,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:a-drawn-relation-is-read-back-as-a-sentence-and-the-skill-names-the-direction-flag",
+      "properties": {},
+      "to_id": "req:a-drawn-relation-is-read-back-as-a-sentence"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:a-finding-describes-the-walk-that-produced-it",
       "properties": {},
       "to_id": "req:a-report-says-what-it-swept-and-whether-its-checks-ran"
@@ -236745,6 +236835,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:the-two-directions-of-a-drawn-relation-do-not-read-alike",
+      "properties": {},
+      "to_id": "cap:a-drawn-relation-is-read-back-as-a-sentence-and-the-skill-names-the-direction-flag"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:the-two-feedback-rules-ride-the-triage-skill-and-the-root-cause-step",
       "properties": {},
       "to_id": "cap:triage-feedback-is-a-served-step-and-the-feedback-rules-are-delivered-on-it"
@@ -237148,6 +237244,14 @@
         "action": "created"
       },
       "to_id": "art:a-design-says-what-fraction-carries-a-relation-test"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:a-drawn-relation-is-read-back-as-a-sentence-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:a-drawn-relation-is-read-back-as-a-sentence-test"
     },
     {
       "edge_type": "YIELDED",
@@ -239787,6 +239891,18 @@
       }
     },
     {
+      "node_id": "art:a-drawn-relation-is-read-back-as-a-sentence-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:075c416a5863bab2afe8895248033115898984892df70778b9d95be462a8d25c",
+        "checksum_basis": "measured",
+        "location": "crates/reflow2-core/tests/a_drawn_relation_is_read_back_as_a_sentence.rs",
+        "name": "a_drawn_relation_is_read_back_as_a_sentence.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:a-fix-says-whether-it-corrected-the-cause-test",
       "node_type": "Artifact",
       "properties": {
@@ -240142,7 +240258,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:95cacba02844b22fa7880ada2f383d0f0602b0c074c33e2323b90b731ab3538f",
+        "checksum": "sha256:efc0b23bf8f83bc2f47167dbb8675c9032115e9a09e0805560c10613837bcb46",
         "checksum_basis": "measured",
         "granularity": "atomic",
         "location": "getting-started/skills/brainstorm/SKILL.md",
@@ -242445,7 +242561,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:8e0f99f550f050dc7b1f23c6ee9b8d7f3c58a51080aaf8873c338c5510b22ea5",
+        "checksum": "sha256:efe29094293d216d348f8be63b1c77467b0d59ef663eab906b0d4831daab01a5",
+        "checksum_basis": "measured",
         "location": "crates/reflow2-core/src/relate.rs",
         "name": "relate.rs",
         "status": "realized"
@@ -244022,7 +244139,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:23ce30979251fee34495cd72eeaa3f9cc070931eb20b1d2b0730a42fc55732ff",
+        "checksum": "sha256:de8c63b2e1e89290dd242bdf36c2cfb1b54333674aae61201b4b5173771b417b",
+        "checksum_basis": "measured",
         "location": "crates/reflow2-core/tests/review_relations.rs",
         "name": "review_relations.rs",
         "status": "realized"
@@ -245158,6 +245276,16 @@
         "provenance": "authored",
         "status": "realized",
         "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:a-drawn-relation-is-read-back-as-a-sentence-and-the-skill-names-the-direction-flag",
+      "node_type": "Capability",
+      "properties": {
+        "description": "As built 2026-09-20, closing both halves of flo2 F16. THE ECHO: review_relations labelled each edge `BLOCKS -> cmp:artifact-store`, which omits the subject — and a reader who has just written the call supplies the subject they INTENDED rather than the one they sent, which is how two reversed edges passed their author twice in one session. The label is now `{from} {RELATION} {to}`, so the two directions no longer render alike: outward reads `req:deleting BLOCKS cmp:store` and inbound reads `cmp:store BLOCKS req:deleting`. Applied to every relation rather than only the asymmetric ones, because the label already existed and a uniform shape reads better than a conditional one; the asymmetric relations are where it earns the change. THE INSTRUCTION: the brainstorm skill stated that direction is part of the claim and that nothing would catch a reversal, and never named `incoming`, which has always existed — so a user who believed no such flag existed drew two edges backwards, then routed two more through create_edge by hand and wrote a script to check direction. The skill now names the flag and tells the reader to read the echoed sentence back. Test: crates/reflow2-core/tests/a_drawn_relation_is_read_back_as_a_sentence.rs. Three existing assertions in tests/review_relations.rs pinned the old label and were updated, each keeping its own intent.",
+        "name": "A drawn relation is read back as a sentence with its subject, and the skill names the flag that draws an inbound one",
+        "provenance": "authored",
+        "status": "realized"
       }
     },
     {
@@ -248515,6 +248643,17 @@
       "properties": {
         "change_type": "new_feature",
         "name": "ChangeType gains `documentation` — 13 doc-only ChangeEvents were recorded under three labels that cannot all be right, and a fourth project reached for a word that is still not there"
+      }
+    },
+    {
+      "node_id": "chg:a-drawn-relation-is-read-back-as-a-sentence",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-09-20",
+        "name": "A drawn relation is read back as a sentence, and the brainstorm skill names the direction flag",
+        "rationale": "flo2 F16, promoted 2026-09-20 on Anthony's word and built fifth in the order he agreed. The echo was the remaining ask after the reporter corrected their own entry; the skill sentence closes the cause the finding names.",
+        "summary": "relate.rs: the drawn/already_present label is a sentence with its subject; brainstorm skill (+mirrors) names `incoming` and tells the reader to read the echo back; one new test; three existing assertions updated; CHANGELOG."
       }
     },
     {
@@ -271068,6 +271207,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered a_design_says_what_fraction_carries_a_relation.rs — the refusal case first"
+      }
+    },
+    {
+      "node_id": "frag:art:a-drawn-relation-is-read-back-as-a-sentence-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered a_drawn_relation_is_read_back_as_a_sentence.rs"
       }
     },
     {
@@ -295201,6 +295350,20 @@
       }
     },
     {
+      "node_id": "ver:the-two-directions-of-a-drawn-relation-do-not-read-alike",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-core/tests/a_drawn_relation_is_read_back_as_a_sentence.rs: three tests. The third is the one that matters — if the two directions rendered the same, the echo could not catch a reversal.",
+        "findings": "3 of 3 passing; the 14 existing review-relations tests pass with three assertions updated to the sentence form.",
+        "kind": "verification",
+        "last_run_at": "2026-09-20",
+        "level": "unit",
+        "method": "test",
+        "name": "An outgoing relation reads subject first, an inbound one reads with the other node as subject, and the two directions do not read alike",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:the-two-feedback-rules-ride-the-triage-skill-and-the-root-cause-step",
       "node_type": "Verification",
       "properties": {
@@ -295463,7 +295626,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:fe1d9b7df3db5fc3f18c72fb0afcc5fc55ef5508489c3109b1f921641dc0235f",
+  "prev_content_hash": "sha256:c041d52fb7c73f2b1c05693c0e4fd0e98bc6d1d616a7072b7a9520dce63fc2ec",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -296061,8 +296224,8 @@
     "schema_version": 1
   },
   "taken_at": {
-    "branch": "a-finding-says-when-the-state-is-normal-for-the-phase",
-    "commit": "88982c3a6966ed6dbd62fb039f57acdc902d971b",
+    "branch": "a-drawn-relation-is-read-back-as-a-sentence",
+    "commit": "ecc5e79f9dd08198a81f737d1acdd648327e9d8a",
     "dirty": true
   }
 }
