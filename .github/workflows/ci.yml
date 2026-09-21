@@ -66,6 +66,12 @@ jobs:
         run: python3 tools/skill_lint.py
       - name: Skill-lint suite (hermetic — the gate cross-check's own net, BL-159)
         run: python3 tools/test_skill_lint.py
+      - name: Gate-runner suite (hermetic — the runner must never pass having run nothing)
+        # tools/run_ci_gates.py executes the list ci.yml defines, reading it
+        # through skill_lint's parser rather than restating it. Its own failure
+        # mode is the one it exists to end: a first draft exited 0 on a filter
+        # that matched nothing and never returned a non-zero code at all.
+        run: python3 tools/test_run_ci_gates.py
       - name: Wall-check suite (hermetic — the declared decomposition vs the real source)
         run: python3 tools/test_wall_check.py
       - name: The launcher serves a release binary and builds nothing there

@@ -68,6 +68,25 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **The build's gate list is runnable, not only cross-checked.** `tools/run_ci_gates.py` runs every
+  gate `ci.yml` defines, in its order, reading the list through `skill_lint`'s parser rather than
+  keeping a fourth copy of it. Three records of the contract already existed and none executed, so
+  every session wanting a local pass rebuilt the list from memory — three sessions, three different
+  subsets, the worst running 17 of 48 with `cargo test` piped through `head -40`, which truncates
+  the report at the fortieth of roughly two hundred test binaries and can kill the run through the
+  closed pipe. Forty consecutive passes reads exactly like a clean sweep. Running zero gates is a
+  failure, a near-empty read of the workflow is refused as broken, and a failing gate fails the run
+  in the exit code. Its own first draft had both of those wrong, which is why
+  `tools/test_run_ci_gates.py` pins them.
+
+- **`tools/sweep_harness.py` is registered rather than deleted.** It was committed by accident in
+  #551 through a `git add -A tools` glob, and removing it as scratch was recommended by a session
+  that had not opened the file. It is the instrument behind the measurement that answered *"how
+  many of the 180 tools have you actually exercised"* — 479 calls over 179 tools, nothing crashing,
+  against an isolated copy that never opens the live graph. Deleting it would have made a cited
+  measurement unreproducible. It arrived by accident and has never been reviewed as a permanent
+  instrument, and unlike its neighbours it has no regression net; both are recorded.
+
 - **Settling a decision records which option won.** `set_decision_status` takes `chose`: which
   option won and why the others did not, in the settler's own words, written onto the Decision.
   flo2 settled two decisions correctly and left both still named "OPEN — is …?" with bodies ending
