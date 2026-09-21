@@ -3981,7 +3981,9 @@ pub struct ContributorReq {
     // is forgiven rather than defended — and forgiven QUIETLY: `id` stays the
     // one name the surface teaches, and `deny_unknown_fields` still refuses a
     // genuine typo.
-    /// Stable id (e.g. `who:ajs`, `who:claude-code`).
+    /// Stable id — `who:<slug>` by convention, so the prefix names the type
+    /// wherever the id appears (`who:claude-code` for an agent, initials or a
+    /// short handle for a person).
     #[serde(alias = "contributor_id")]
     pub id: String,
     #[serde(default)]
@@ -3991,7 +3993,7 @@ pub struct ContributorReq {
     #[schemars(schema_with = "crate::enum_schema::contributor_kind_opt")]
     pub kind: Option<String>,
     /// Short stable handle used to coordinate — e.g. the COORD board handle
-    /// (`@ajs`) or an agent's name — so the same contributor is recognisable
+    /// (`@<handle>`) or an agent's name — so the same contributor is recognisable
     /// across sessions without matching on the display name.
     #[serde(default)]
     pub handle: Option<String>,

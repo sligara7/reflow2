@@ -355,6 +355,7 @@ python3 tools/check_intent_authority.py docs/design/reflow2.json    # settled in
 python3 tools/check_consumer_reach.py docs/design/reflow2.json     # a capability claiming reach beyond this repo is realized by something a consumer gets
 python3 tools/vocabulary_reach.py --check                # a NEW declared property the surface cannot write
 python3 tools/check_command_surface.py                   # the skill/command copies still agree
+python3 tools/the_served_surface_names_no_real_person.py   # no served text names a real person from this design
 python3 tools/launch_serves_release.py                   # the launcher serves release and builds nothing there
 python3 tools/render_skills_and_tools.py --check         # docs/skills-and-tools.md rows and counts vs the served surface
 ```

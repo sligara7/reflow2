@@ -12,7 +12,7 @@ named. Made once and written down, that choice is a taxonomy the whole design ci
 forty times in passing, it is forty slightly different encodings that no computation can read
 as one thing — the fifth service that looks like the first four and is recorded differently.
 
-Alex measured the gap (2026-09-17): his repos already keep the taxonomy as accepted Decisions and
+A field user measured the gap (2026-09-17): his repos already keep the taxonomy as accepted Decisions and
 govern later captures by them, by hand; nothing in reflow2 helped write them and nothing noticed
 when they were missing. This skill is the missing bridge between structure and bulk capture.
 

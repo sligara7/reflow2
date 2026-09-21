@@ -53,7 +53,7 @@ Before reading code, list what else exists, because intent lives outside the imp
   `documents` to the Project with `doc_kind` `agent_instructions`, so the design knows the
   adapter exists and `reconcile_artifacts` notices when it goes stale; a design with a real
   number of artifacts and no registered adapter comes back as `agent_instructions_unregistered`.
-  Alex measured the residue after served skills (2026-09-17): "thin project adapters, not
+  A field user measured the residue after served skills (2026-09-17): "thin project adapters, not
   competing playbooks" — and nothing in reflow2 knew they were there. **And when there is no
   instruction file at all**, leave one: `reflow2 init .` when the kit is installed on this machine
   (pointer, hooks and MCP config), otherwise `get_instructions` with `section: pointer` and write
@@ -160,7 +160,7 @@ recorded.
   record them in bulk, decide ONCE how an instance of each is encoded (node type, the
   discriminator it always carries, the edges every instance has, the name pattern) as an accepted
   Decision the owner confirms, and govern every instance by it — the **establish-taxonomy**
-  skill. Alex's repos did this by hand and nothing helped; instances encoded differently under no
+  skill. One field user's repos did this by hand and nothing helped; instances encoded differently under no
   decision are reported as `encoding_undecided`.
 
 ## Phase 2 · Analyze — static, then dynamic
@@ -281,7 +281,7 @@ mistaken for a complete one.
 
 Adopt is breadth-first on purpose, and the warning above stands: a partial graph emits gaps
 indistinguishable from real ones. Since 2026-09-17 there is a way to work one region at a time
-WITHOUT that lie, on Alex's ask ("a native incremental adopt mode needing two primitives: a
+WITHOUT that lie, on a field user's ask ("a native incremental adopt mode needing two primitives: a
 frontier query and a deferred-derivation marker"):
 
 1. **Model the region** as Phase 1 says — coarse, both sides of every contract, nested.

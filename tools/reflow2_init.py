@@ -364,10 +364,19 @@ def binary_is_stale(binary: Path) -> str | None:
 # differently, but they all describe the same stdio process. One generator,
 # several files — a project opened in a different tool should just work.
 #
-#   .mcp.json       Claude Code (Grok CLI also loads it as a compatibility
-#                   source, so this one file covers both)
+#   .mcp.json       Claude Code, and GitHub Copilot CLI, which reads the same
+#                   workspace file (MEASURED 2026-08-14, see HARNESS_ALIASES)
 #   opencode.json   OpenCode — no .mcp.json compatibility
-#   .vscode/mcp.json  Copilot / VS Code — likewise
+#   .grok/config.toml  Grok — TOML, and it reads NOTHING ELSE
+#   .vscode/mcp.json  VS Code the editor — likewise
+#
+# 🛑 GROK DOES NOT READ `.mcp.json`. This file asserted for a month that it did,
+# and a user lost time to it: MEASURED 2026-09-20 against Grok Build 1.0.30,
+# `grok mcp list` run inside a project holding a valid reflow2 `.mcp.json`
+# answers "No MCP servers configured", and `grok mcp add --help` names its only
+# two sources — `~/.grok/config.toml` and `./.grok/config.toml`. So a Grok user
+# who answered "grok" got a file their tool never opens, which presents as
+# reflow2 not being registered for the project.
 #
 # `extract` pulls the binary path back out of an existing entry so a customised
 # config can be recognised and left alone.
@@ -413,6 +422,22 @@ MCP_CONFIGS = [
         "extra": {"$schema": "https://opencode.ai/config.json"},
     },
     {
+        # GROK IS THE ONE THAT IS NOT JSON. Its own `mcp add` writes exactly
+        # this shape, verified 2026-09-20 by running it and then `grok mcp
+        # list`, which printed the server back. `key` and `extract` are unused
+        # on the TOML path and left out rather than filled with a lie.
+        "harness": "grok",
+        "path": ".grok/config.toml",
+        "format": "toml",
+        "table": "mcp_servers.reflow2",
+        "entry": lambda b, g, x: {
+            "command": str(b),
+            "args": ["--graph-path", str(g), "--export-to", str(x), "--shared"],
+            "enabled": True,
+        },
+        "extra": {},
+    },
+    {
         "harness": "vscode",
         "path": ".vscode/mcp.json",
         "key": "servers",
@@ -427,30 +452,36 @@ MCP_CONFIGS = [
 
 # The harnesses `--harness` accepts, in the order the prompt offers them. The
 # key is what the user types and what the stamp records; `label` is what the
-# prompt shows. `grok` is deliberately absent as a separate entry — Grok CLI
-# reads `.mcp.json`, so it is served by `claude` and a second entry would write
-# the same file twice under two names (req:init-installs-only-the-harness-you-name).
+# prompt shows.
+#
+# ⭐ `grok` IS ITS OWN ENTRY AS OF 2026-09-20, and it was not before. It used to
+# resolve to `claude` on the belief that Grok reads `.mcp.json` as a
+# compatibility source. Measured false against Grok Build 1.0.30: it reads
+# `~/.grok/config.toml` or `./.grok/config.toml`, in TOML, and nothing else.
 HARNESSES = {
     "claude": "Claude Code",
     "opencode": "OpenCode",
+    "grok": "Grok",
     "vscode": "VS Code",
 }
 
 # Shown beside a harness in the prompt only — a note about what else the same
 # files serve, which would read as noise in a one-line summary.
 HARNESS_NOTES = {
-    "claude": "also Grok CLI and GitHub Copilot CLI — choose this for those",
+    "claude": "also GitHub Copilot CLI, which reads the same workspace file",
 }
 
 # Names that are a REAL answer to "which harness?" but are not their own entry,
 # because they read a config another entry already writes. They resolve rather
-# than being refused: `grok` is not a typo, it is somebody naming their own tool,
-# and answering "unknown harness 'grok'" to a Grok user is the install refusing
-# the correct answer. Kept OUT of HARNESSES so no second config file is written
-# for the same tool (2026-08-14, on learning the second user runs Grok at home
-# and Claude at work — both on macOS).
+# than being refused: a name that is not a typo but somebody naming their own
+# tool deserves the correct answer, not "unknown harness".
+#
+# 🛑 `grok` WAS HERE AND IS NOT ANY MORE. It was added 2026-08-14 on learning
+# that the second user runs Grok at home and Claude at work — a fact about the
+# PERSON. The config-location claim rode along unmeasured, and the Copilot entry
+# directly below shows the standard it should have met. Grok now has its own
+# entry in HARNESSES and its own file.
 HARNESS_ALIASES = {
-    "grok": "claude",
     # MEASURED 2026-08-14, not assumed. `copilot mcp --help` states its sources:
     #     User       ~/.copilot/mcp-config.json
     #     Workspace  .mcp.json or .github/mcp.json
@@ -606,6 +637,68 @@ def resolve_harnesses(
     )
 
 
+def _toml_block(table: str, entry: dict) -> str:
+    """The one table reflow2 owns, rendered as TOML.
+
+    Hand-rendered because the standard library can READ TOML (`tomllib`, 3.11+)
+    and cannot write it, and this installer is standard-library-only and
+    declares no minimum Python. The shape is fixed and small — a string, a list
+    of strings, a bool — so `json.dumps` produces valid TOML basic strings for
+    every value that appears here.
+    """
+    lines = [f"[{table}]", f"command = {json.dumps(entry['command'])}", "args = ["]
+    lines += [f"    {json.dumps(a)}," for a in entry["args"]]
+    lines += ["]", f"enabled = {'true' if entry.get('enabled', True) else 'false'}"]
+    return "\n".join(lines) + "\n"
+
+
+def _toml_table_span(text: str, table: str) -> tuple[int, int] | None:
+    """Where `[table]` begins and ends, or None. Its end is the next table
+    header at the start of a line, so everything else in the file is untouched
+    — which matters because this file is the user's whole Grok config, not
+    ours."""
+    m = re.search(rf"^\s*\[{re.escape(table)}\]\s*$", text, re.M)
+    if not m:
+        return None
+    nxt = re.search(r"^\s*\[", text[m.end():], re.M)
+    return m.start(), (m.end() + nxt.start() if nxt else len(text))
+
+
+def write_toml_mcp_config(path: Path, spec: dict, binary: Path, entry: dict,
+                          label: str, force: bool) -> str:
+    """Add or refresh reflow2's table in a TOML config, disturbing nothing else.
+
+    Surgical rather than parse-and-rewrite: a round trip through a writer we do
+    not have would reformat the user's file and drop their comments. Only the
+    bytes of our own table move.
+    """
+    table = spec["table"]
+    block = _toml_block(table, entry)
+    if not path.exists():
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(block, encoding="utf-8")
+        return label
+    text = path.read_text(encoding="utf-8")
+    span = _toml_table_span(text, table)
+    if span is None:
+        joiner = "" if text.endswith("\n\n") or not text.strip() else (
+            "\n" if text.endswith("\n") else "\n\n")
+        path.write_text(text + joiner + block, encoding="utf-8")
+        others = len(re.findall(r"^\s*\[mcp_servers\.", text, re.M))
+        return f"{label} (reflow2 added; {others} other server(s) untouched)" if others else label
+    start, end = span
+    current = text[start:end]
+    if not force:
+        pointed = re.search(r'^\s*command\s*=\s*"([^"]*)"', current, re.M)
+        if pointed and pointed.group(1) != str(binary):
+            return (f"{label} LEFT ALONE — its reflow2 entry points at "
+                    f"{pointed.group(1)}, not {binary} (re-run with --force-mcp)")
+        if current.strip() == block.strip():
+            return f"{label} unchanged"
+    path.write_text(text[:start] + block + text[end:], encoding="utf-8")
+    return label
+
+
 def write_mcp_config(project: Path, spec: dict, binary: Path, force: bool) -> str:
     """Add or refresh reflow2's server entry, disturbing nothing else.
 
@@ -649,6 +742,11 @@ def write_mcp_config(project: Path, spec: dict, binary: Path, force: bool) -> st
     export = Path(".") / "docs" / "design" / f"{project.name}.json"
     entry = spec["entry"](binary, graph, export)
     label = spec["path"]
+
+    # Not every harness keeps its MCP config in JSON, and assuming they all did
+    # is what shipped a Grok user a file their tool never opens.
+    if spec.get("format") == "toml":
+        return write_toml_mcp_config(path, spec, binary, entry, label, force)
 
     existing: dict = {}
     if path.exists():
@@ -1299,6 +1397,9 @@ def planned_changes(project: Path, harnesses: list[str]) -> list[str]:
         path = project / spec["path"]
         if not path.exists():
             changes.append(f"create  {spec['path']}")
+        elif spec.get("format") == "toml":
+            if _toml_table_span(path.read_text(encoding="utf-8"), spec["table"]) is None:
+                changes.append(f"update  {spec['path']} (add the reflow2 server)")
         else:
             try:
                 obj = json.loads(path.read_text())
