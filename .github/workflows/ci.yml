@@ -173,6 +173,15 @@ jobs:
         # table was written to fix. Verified to FAIL on all three drift shapes
         # before being wired here, not merely to pass on a clean tree.
         run: python3 tools/check_command_surface.py
+      - name: Nothing reflow2 serves names a real person from its own design
+        # Anthony asked 2026-09-20 whether he was turning up in other people's
+        # reflow2 projects by default. The shipped kit contains his id zero
+        # times and the server never invents a Contributor — and the binary
+        # carried `who:ajs` in four served places anyway, the worst being the
+        # only worked example on add_contributor's `id`, which is what an agent
+        # reads at the moment it invents one. The gate also caught a second
+        # person's first name in two schema files and two skill bodies.
+        run: python3 tools/the_served_surface_names_no_real_person.py
       - name: Merge-driver suite (real git branches, not a home-grown client)
         # Git is the client this contract is with, so git runs the test: two
         # branches editing different parts of one export must merge with no

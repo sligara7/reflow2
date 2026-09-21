@@ -16,14 +16,14 @@
       },
       "handle": {
         "default": null,
-        "description": "Short stable handle used to coordinate — e.g. the COORD board handle\n(`@ajs`) or an agent's name — so the same contributor is recognisable\nacross sessions without matching on the display name.",
+        "description": "Short stable handle used to coordinate — e.g. the COORD board handle\n(`@<handle>`) or an agent's name — so the same contributor is recognisable\nacross sessions without matching on the display name.",
         "type": [
           "string",
           "null"
         ]
       },
       "id": {
-        "description": "Stable id (e.g. `who:ajs`, `who:claude-code`).",
+        "description": "Stable id — `who:<slug>` by convention, so the prefix names the type\nwherever the id appears (`who:claude-code` for an agent, initials or a\nshort handle for a person).",
         "type": "string"
       },
       "kind": {

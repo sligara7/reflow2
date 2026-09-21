@@ -233,7 +233,11 @@ class InstallerTest(unittest.TestCase):
         # machine state carrying an absolute path, and the installer gitignores
         # it for exactly that reason. Asserting on the whole directory was a
         # proxy for "no copied kit files", and the proxy stopped meaning that.
-        for tree in (".claude/skills", ".grok/skills", ".grok"):
+        # `.grok` itself came off this list on 2026-09-20 for the same reason
+        # `.claude` did: it now holds `.grok/config.toml`, a real MCP config for
+        # a real harness. Banning the whole directory was a proxy for "no copied
+        # kit files", and the proxy stopped meaning that a second time.
+        for tree in (".claude/skills", ".grok/skills"):
             self.assertFalse((p / tree).exists(), f"{tree} must not exist")
         self.assertIn(
             ".claude/settings.local.json",
@@ -1090,39 +1094,75 @@ class HarnessChoice(unittest.TestCase):
         self.assertIn("--harness", note or "",
                       "telling someone it guessed is only useful with how to stop it")
 
-    def test_grok_is_served_by_the_claude_config_rather_than_a_name_of_its_own(self):
-        # Grok CLI reads .mcp.json. A separate entry would write the same file
-        # twice under two names and let a user "choose" a harness that installs
-        # nothing new.
-        self.assertNotIn("grok", init.HARNESSES)
+    def test_grok_has_its_own_config_because_it_does_not_read_mcp_json(self):
+        """⭐ THIS TEST ASSERTED THE OPPOSITE UNTIL 2026-09-20, and the belief it
+        encoded cost a user real time.
+
+        It used to read: "Grok CLI reads .mcp.json. A separate entry would write
+        the same file twice under two names", and it asserted
+        `assertNotIn("grok", init.HARNESSES)`. MEASURED against Grok Build
+        1.0.30: `grok mcp list`, run inside a project holding a valid reflow2
+        `.mcp.json`, answers "No MCP servers configured", and `grok mcp add
+        --help` names its only two sources — `~/.grok/config.toml` and
+        `./.grok/config.toml`. So the alias shipped Grok users a file their tool
+        never opens, which presents as reflow2 not being registered.
+
+        The Copilot test twelve lines below is what this one should have been:
+        it records the product's own help output and an end-to-end confirmation.
+        This one rested on a fact about the USER (he runs Grok at home) rather
+        than a measurement of the CLIENT."""
+        self.assertIn("grok", init.HARNESSES)
+        self.assertNotIn("grok", init.HARNESS_ALIASES,
+                         "grok must not resolve to another harness's file any more")
+        spec = next(s for s in init.MCP_CONFIGS if s["harness"] == "grok")
+        self.assertEqual(spec["path"], ".grok/config.toml")
+        self.assertEqual(spec["format"], "toml", "and it is NOT JSON")
         paths = [s["path"] for s in init.MCP_CONFIGS]
         self.assertEqual(len(paths), len(set(paths)),
                          "two harnesses must not claim the same config file")
 
-    def test_naming_grok_is_answered_rather_than_refused(self):
-        # Alex runs Grok at home and Claude at work (2026-08-14). Keeping `grok`
-        # out of the registry is right — it would write .mcp.json twice — but
-        # REFUSING the name is the install rejecting a correct answer. "unknown
-        # harness 'grok'" to a Grok user is worse than the clutter this feature
-        # removes, because it stops the install entirely.
+    def test_naming_grok_writes_the_toml_grok_actually_reads(self):
         p = self.project()
         chosen, why = init.resolve_harnesses(p, "grok", interactive=False)
-
-        self.assertEqual(chosen, ["claude"], "grok must resolve to the config it reads")
+        self.assertEqual(chosen, ["grok"])
         self.assertIsNone(why)
 
         self.install(p, chosen)
-        self.assertTrue((p / ".mcp.json").exists(),
-                        "a Grok user must end up with the config Grok CLI reads")
-        self.assertFalse((p / "opencode.json").exists())
+        cfg = p / ".grok" / "config.toml"
+        self.assertTrue(cfg.exists(), "a Grok user must get the config Grok reads")
+        body = cfg.read_text()
+        self.assertIn("[mcp_servers.reflow2]", body)
+        self.assertIn("--shared", body,
+                      "without it a second session is locked out of the store and "
+                      "falls back to the degraded surface — which looks like this same bug")
+        self.assertFalse((p / ".mcp.json").exists(),
+                         "and must NOT get Claude's file, which Grok never opens")
 
-    def test_naming_grok_and_claude_together_writes_one_config_not_two(self):
-        # They are the same file. Asking for both must not be an error, and must
-        # not produce a duplicate or a second entry.
+    def test_naming_grok_and_claude_together_writes_both_files(self):
+        """They are NOT the same file, which is the whole correction."""
         p = self.project()
         chosen, why = init.resolve_harnesses(p, "grok,claude", interactive=False)
         self.assertIsNone(why)
-        self.assertEqual(chosen, ["claude"])
+        self.assertEqual(sorted(chosen), ["claude", "grok"])
+
+        self.install(p, chosen)
+        self.assertTrue((p / ".mcp.json").exists())
+        self.assertTrue((p / ".grok" / "config.toml").exists())
+
+    def test_an_existing_grok_config_keeps_its_other_servers(self):
+        """The file is the user's WHOLE Grok config, not ours. A parse-and-
+        rewrite would reformat it and drop their comments, so only the bytes of
+        reflow2's own table may move."""
+        p = self.project()
+        (p / ".grok").mkdir(parents=True, exist_ok=True)
+        (p / ".grok" / "config.toml").write_text(
+            '# my notes\n[mcp_servers.other]\ncommand = "/bin/other"\nargs = []\n'
+        )
+        self.install(p, ["grok"])
+        body = (p / ".grok" / "config.toml").read_text()
+        self.assertIn("# my notes", body, "their comment must survive")
+        self.assertIn("[mcp_servers.other]", body, "their server must survive")
+        self.assertIn("[mcp_servers.reflow2]", body)
 
     def test_copilot_cli_is_served_by_the_claude_config_and_not_by_vscode(self):
         # MEASURED 2026-08-14 rather than assumed. `copilot mcp --help` names its
@@ -1149,10 +1189,13 @@ class HarnessChoice(unittest.TestCase):
         self.assertNotIn("Copilot", init.HARNESSES["vscode"])
 
     def test_an_alias_is_offered_where_someone_would_look_for_it(self):
-        # Resolving the name is not enough if nobody can discover it: a Grok
-        # user reading the prompt must be able to tell which line is theirs.
-        self.assertIn("grok", init.HARNESS_ALIASES)
-        self.assertIn("Grok", init.HARNESS_NOTES[init.HARNESS_ALIASES["grok"]])
+        # Resolving the name is not enough if nobody can discover it: a user
+        # reading the prompt must be able to tell which line is theirs. `grok`
+        # is no longer the example, because grok is now its own entry — the
+        # surviving alias is the one that IS genuinely served by another
+        # harness's file, and it was measured before it was believed.
+        self.assertIn("copilot", init.HARNESS_ALIASES)
+        self.assertIn("Copilot", init.HARNESS_NOTES[init.HARNESS_ALIASES["copilot"]])
 
     def test_every_alias_points_at_a_real_harness(self):
         # An alias to a name that does not exist would resolve to something

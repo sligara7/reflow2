@@ -46,6 +46,34 @@ This file is the third view: *what changed, and when*.
   generic edge tool by hand and wrote a script to verify direction.
 ### Fixed
 
+- **Nothing reflow2 serves names a real person any more.** Anthony asked whether he was somehow
+  turning up in other people's reflow2 projects by default. The shipped kit contains his id zero
+  times, and the server never creates a Contributor by itself or derives one from the environment,
+  the git config or the OS user — but the shipped binary carried his real id in four places, all
+  of them text served to every client. The worst was the only worked example on the field that
+  creates contributors: *"Stable id (e.g. `who:ajs`, `who:claude-code`)"*, which is what an agent
+  reads at the moment it invents one. Every example is now a placeholder. A new gate,
+  `tools/the_served_surface_names_no_real_person.py`, reads this design's own Contributors of kind
+  `person` and fails if any id, handle or display name appears in a served tool schema, a schema
+  file or a skill body. **It caught more than the hand search did**: a second user's first name was
+  shipped in two schema files and two skill bodies. Attribution stays in the graph, where it is
+  private to this project; the served text keeps the fact and the date. Another project's
+  identifiers were removed from `Constraint.limit_source` by hand, and the gate cannot see those
+  — it can only know the people this design records.
+
+- **Grok gets the config file Grok actually reads.** Starting a new project on Grok produced the
+  `.reflow2` folder and then a report that the MCP server was not registered. The installer
+  resolved the harness name `grok` to `claude` on the belief that Grok reads `.mcp.json` as a
+  compatibility source. **Measured against Grok Build 1.0.30: `grok mcp list`, run inside a project
+  holding a valid reflow2 `.mcp.json`, answers "No MCP servers configured"**, and `grok mcp add
+  --help` names its only two sources, `~/.grok/config.toml` and `./.grok/config.toml`, in TOML.
+  `grok` is now its own harness writing `.grok/config.toml`, with `--shared` like every other. The
+  write is surgical rather than a parse-and-rewrite, because that file is the user's whole Grok
+  config: only the bytes of reflow2's own table move, and their comments and other servers survive.
+  Verified end to end — after `reflow2_init.py --harness grok`, `grok mcp list` prints the server.
+  The belief was never measured; the Copilot entry twelve lines below it in the same file records
+  that product's own help output and an end-to-end confirmation, and is what this should have been.
+
 - **A reply carries its payload once, on every tool.** Six tools were still sending the whole
   answer in both the text block and `structuredContent`: `get_instructions`, `list_skills`,
   `get_skill`, `find_skills`, `usage_report` and `design_identity` — the tools a session opens
