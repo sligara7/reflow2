@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:af7caa2d514088846d10a0bc1b2e38f0ea8bb8267b77cba0e9e2c395004a9af7",
+  "content_hash": "sha256:25170b3a5325b01e7ee7b32d54eb8b83cca5d39180db9f2079e800a21f6a1a72",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -43340,6 +43340,24 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:grok-gets-the-config-file-grok-actually-reads",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:init"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:grok-gets-the-config-file-grok-actually-reads",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-init"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:holds-the-invitation-capture-intent",
       "properties": {
         "accepted_baseline": true,
@@ -51534,6 +51552,78 @@
         "action": "modified"
       },
       "to_id": "art:parallel-work-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-served-surface-names-no-real-person",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:adopt-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-served-surface-names-no-real-person",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:agent-instructions"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-served-surface-names-no-real-person",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:establish-taxonomy-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-served-surface-names-no-real-person",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-core"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-served-surface-names-no-real-person",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-structure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-served-surface-names-no-real-person",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-temporal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-served-surface-names-no-real-person",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-verify"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-served-surface-names-no-real-person",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
     },
     {
       "edge_type": "CHANGED",
@@ -230654,6 +230744,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:the-served-surface-names-no-real-person-gate",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-reply-takes-the-shape-its-client-can-read"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:the-server-keeps-the-export-current-test",
       "properties": {
         "completeness": "complete",
@@ -236560,6 +236659,18 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:nothing-reflow2-serves-names-a-real-person",
+      "properties": {},
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:nothing-reflow2-serves-names-a-real-person",
+      "properties": {},
+      "to_id": "art:the-served-surface-names-no-real-person-gate"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:nudge-path",
       "properties": {},
       "to_id": "cap:nudge-path-proven"
@@ -239859,6 +239970,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:the-served-surface-names-no-real-person-gate",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:the-served-surface-names-no-real-person-gate"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:the-server-keeps-the-export-current-test",
       "properties": {
         "action": "created"
@@ -240524,8 +240643,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:61d297a55066953d3e628ffbfbea3a1f63085986b2b1e7776d28c6d044065d73",
-        "checksum_basis": "measured",
+        "checksum": "sha256:bad943c903779601c496ea6863412c4669e68b4a6d9bf6e8c8dd1957fd25e0c9",
+        "checksum_basis": "asserted",
         "granularity": "atomic",
         "location": "getting-started/skills/adopt/SKILL.md",
         "name": "adopt/SKILL.md",
@@ -240551,7 +240670,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:4986f4f50988015171196952afc78c4594cbede50c844ac2d5c70e4588106b49",
+        "checksum": "sha256:73fe4ee9e0c610c8c5346a83c5382b92e2b211c495e631ab3d8f3015d8afeeb5",
         "checksum_basis": "asserted",
         "location": "AGENTS.md",
         "name": "AGENTS.md — the primary instruction file every agent reads before it knows reflow2 exists: commands, architecture, the rules for changing the project",
@@ -241533,8 +241652,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:2d87e73d61d09f2c3217868aacd0986b950ccab734390a5243dd3c4cf29e82d3",
-        "checksum_basis": "measured",
+        "checksum": "sha256:39189b65f1195f749b95e6ab8014e5632d396c07d8f7db4cda200fe4f0e13847",
+        "checksum_basis": "asserted",
         "description": "Six steps: recognise the moment (after adopt's breadth pass, after genesis seeding, or on encoding_undecided), list the categories in the user's words, decide the encoding per category (type, discriminator, edges, name pattern), put it to the owner and record it as an accepted Decision on their word, govern every instance with governed_by, and what the finding is and is not. The honest limit stated first: reflow2 cannot know a repository's categories.",
         "location": "getting-started/skills/establish-taxonomy/SKILL.md",
         "name": "establish-taxonomy/SKILL.md — decide once, per recurring category, how an instance is encoded, as an accepted Decision the owner confirms, and govern every instance by it",
@@ -242223,7 +242342,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:d0e35bd9cb84125490f04c3df6fcd76b43a91f967634b2b71856e99b3577942c",
+        "checksum": "sha256:1c813b06ff3b0886af1b583dee4df65cba3545d1dee81901af65fd05c3ade893",
+        "checksum_basis": "asserted",
         "granularity": "atomic",
         "location": "tools/reflow2_init.py",
         "name": "reflow2_init.py",
@@ -243307,7 +243427,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:25666817a106d14498ece7432d796396feaf80cbbdcd33660ddb9c9c1493acb3",
+        "checksum": "sha256:d66a847d0d38816950c0c44740c84d9262c2f6c5d66656ea214c991c256fff4f",
+        "checksum_basis": "asserted",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/core.yaml",
@@ -243405,7 +243526,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:5655be2e418e627cfc22bf57f2c9db68244c354f50810fd100d309b89ecea378",
+        "checksum": "sha256:40e01df00e6511102900a73ec404f36492131c532cdab61b08d98caffdbfce6f",
         "checksum_basis": "asserted",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
@@ -243420,8 +243541,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:81a999d137c9e749b9331e23b0cc717a31355b6fd47a606c64ae03c12ee8def6",
-        "checksum_basis": "measured",
+        "checksum": "sha256:dca7cde8ee7fea1fd7620cc86e21ca15d54ec9e98827e19d057ac0c17f5ee691",
+        "checksum_basis": "asserted",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/temporal.yaml",
@@ -243435,7 +243556,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:b8a8839af6ae96f5a8d9a46b90ad2d0687de2aec37e7089bb9fd8717d1e9fbf6",
+        "checksum": "sha256:da6e5463a0d12155e33133fc2a2712732e514304a08e4ed2af2ccbe28499364d",
+        "checksum_basis": "asserted",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/verify.yaml",
@@ -243577,7 +243699,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:d3920c4b0cfeec14c2a1a4588a2de1246040ac1a8ef7c68ac60f0c00221865e1",
+        "checksum": "sha256:32322643e164cfa7f7c780b725a33a21c7b6cb325639ac7380ce7390b1137335",
         "checksum_basis": "asserted",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
@@ -244500,7 +244622,8 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:0d7b362984bea837ac03aa87b576c3a6b127cbf54a7d543eec6607abb781582f",
+        "checksum": "sha256:007c9077eb5327a4ff9914dc50599db96be75dcc788de70004883f22ea072607",
+        "checksum_basis": "asserted",
         "granularity": "atomic",
         "location": "tools/test_init.py",
         "name": "test_init.py",
@@ -244896,6 +245019,19 @@
         "description": "Two hermetic tests over a scratch git repository. The first builds the shape dec:export-once-per-pr could not survive — a committed export on main, then TWO exports and a commit on a branch — and asserts both branch exports carry main's hash as prev_content_hash, so a squash lands one hop. The second asserts that outside a repository the on-disk chain still forms and the receipt says why. The first was shown to FAIL against the pre-fix behaviour before it was trusted.",
         "location": "crates/reflow2-mcp/tests/the_export_chains_from_main.rs",
         "name": "the_export_chains_from_main.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:the-served-surface-names-no-real-person-gate",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "test",
+        "checksum": "sha256:0206e4b08b39643c0c2643ec0168609c92b8e1edef14aaf0f0b690f5aa564ef9",
+        "checksum_basis": "measured",
+        "description": "The CI gate that stops reflow2 shipping a real person's identity to every project it is installed into. It reads this design's own Contributors of kind `person` and fails if any of their id, handle or display name appears in text reflow2 serves: the committed toolsnaps, which are goldens of tools/list; the schema files describe_schema reads out; and the skill bodies get_skill returns, taken from getting-started/skills, which is the source the kit ships rather than either mirror. It refuses to pass when it found no people to look for or fewer than fifty served texts, because a check with nothing to look at reads exactly like one that ran clean. Written 2026-09-20 after Anthony asked whether he was turning up in other people's projects by default; observed to fail first with nine hits, six of which a hand search had missed. Its honest limit is that it can only know the people THIS design records, so another project's identifiers, like the bhome artifact and IfcMCP tool name that were in Constraint.limit_source, had to be removed by hand and would not be caught if they returned.",
+        "location": "tools/the_served_surface_names_no_real_person.py",
+        "name": "the_served_surface_names_no_real_person.py",
         "status": "realized"
       }
     },
@@ -255759,6 +255895,18 @@
       }
     },
     {
+      "node_id": "chg:grok-gets-the-config-file-grok-actually-reads",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-09-20",
+        "name": "Grok becomes its own harness and gets the TOML config it actually reads",
+        "rationale": "THE BELIEF WAS NEVER MEASURED AND A USER PAID FOR IT. The alias was added 2026-08-14 on learning that the second user runs Grok at home and Claude at work — a fact about the PERSON. The config-location claim rode along with it, and the file then asserted for a month that Grok CLI loads .mcp.json as a compatibility source. Measured 2026-09-20 against Grok Build 1.0.30: `grok mcp list`, run inside a project holding a valid reflow2 .mcp.json, answers \"No MCP servers configured\", and `grok mcp add --help` names its only two sources, ~/.grok/config.toml and ./.grok/config.toml. So answering \"grok\" produced .reflow2/, a pointer file, and a config the tool never opens — which presents to the agent as reflow2 not being registered for the project, which is exactly how it was reported. THE STANDARD WAS ALREADY IN THE FILE, TWELVE LINES BELOW. The Copilot alias records that product's own help output and an end-to-end confirmation with `copilot mcp list`. One claim was measured and its neighbour was assumed, in the same block, in the same week. So the class is that reflow2 asserts where other products keep their MCP configuration, one product at a time, with no check — and a fix that only adds a grok entry leaves the next client to be guessed at. WHAT IS NOT BUILT AND WHY: a gate that runs each product's own list command inside a freshly installed directory cannot run in CI, where those binaries are absent. The honest form is a local instrument plus a recorded per-client measurement date, in the shape check_doc_versions already uses for version claims. Raised rather than built. ALSO NOT COLLAPSED INTO THIS: the same presentation was reported on 2026-09-14 at v0.60.2 from the latent two-tool surface never promoting, fixed in v0.61.0. Both are live explanations for a report and `grok mcp doctor` distinguishes them in one command.",
+        "subject": "system",
+        "summary": "reflow2_init.py stops resolving the harness name `grok` to `claude`. Grok is its own entry in HARNESSES with its own spec writing .grok/config.toml in TOML, carrying --graph-path, --export-to and --shared like every other harness. MCP_CONFIGS gains a `format` key so the framework can express a non-JSON harness at all, and both the apply path and the --check path dispatch on it. The write is surgical: _toml_table_span finds reflow2's own table and replaces only those bytes, because that file is the user's whole Grok config and a parse-and-rewrite would reformat it and drop their comments — the standard library can read TOML and cannot write it. Verified end to end on this box: after reflow2_init.py --harness grok, `grok mcp list` printed the server. Four tests in test_init.py asserted the old belief and were rewritten to assert the measurement; a fifth was added for preserving somebody else's servers and comments, and a sixth assertion banning the whole .grok directory came off for the same reason it came off .claude."
+      }
+    },
+    {
       "node_id": "chg:holds-the-invitation-capture-intent",
       "node_type": "ChangeEvent",
       "properties": {
@@ -258137,6 +258285,18 @@
       "properties": {
         "change_type": "scope_change",
         "name": "ci-gate documents all four of its failure modes and warns about ordering and piping; parallel-work stops telling users to export on every commit"
+      }
+    },
+    {
+      "node_id": "chg:the-served-surface-names-no-real-person",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-09-20",
+        "name": "Nothing reflow2 serves names a real person, and a gate keeps it that way",
+        "rationale": "THE QUESTION WAS A PRIVACY QUESTION AND THE ANSWER WAS NOT THE OBVIOUS ONE. Anthony asked whether he was in other people's reflow2 projects by default. Nothing ships him: the kit tarball contains the string zero times, the server never creates a Contributor by itself, never derives one from the environment, the git config or the OS user, and claim_region explicitly refuses an unknown contributor rather than minting one. What the shipped binary did carry was his real id as the ONLY worked example on add_contributor's id parameter, which is the text an agent reads at the exact moment it invents a contributor id. An example is not documentation when the reader is a model; it is a template. THE CLASS WAS VISIBLE IN THE SOURCE AND HAD ALREADY BEEN SOLVED ONCE, TWELVE LINES AWAY. reflow2_init.py's Copilot entry records that product's own help output and an end-to-end confirmation. The examples in the served surface were drawn from whatever real project was at hand instead, and one of them was a different customer's: art:ifc-shell-model and ifc_quantify are bhome's artifact and an IfcMCP tool, shipped to everybody. reflow2 is a wrench for other people's projects and its worked examples were coming from the hands that made it. WHAT THE GATE CAN AND CANNOT SEE, stated because the limit is real: it knows the people THIS design records, which is the population that can leak from here, and it cannot know that art:ifc-shell-model belongs to somebody else because bhome's design is not in this graph. A placeholder convention covers that case and is stated in AGENTS.md rather than checked. ATTRIBUTION IS NOT LOST, IT IS RELOCATED. Who filed a field report belongs in the graph, where it is private to this project and travels with the design; the served text keeps the fact and the date. That is the three-place rule applied to a surface nobody had applied it to.",
+        "subject": "system",
+        "summary": "Every real identifier is out of the served surface. add_contributor's `id` example becomes the house convention `who:<slug>` with an agent id beside it; `handle` offers `@<handle>`; Constraint.limit_source and Snapshot.target_id lose who:ajs; and another project's identifiers, art:ifc-shell-model and ifc_quantify, come out of limit_source by hand. tools/the_served_surface_names_no_real_person.py is a new CI gate reading this design's own Contributors of kind `person` and failing if any id, handle or display name appears in a served tool schema, a schema file describe_schema reads, or a skill body get_skill returns. Observed to FAIL first with nine hits, six of which the hand search had missed: a second user's first name was shipped in schema/structure.yaml, schema/verify.yaml and two skill bodies. Those attributions are now de-identified in the skill SOURCE under getting-started/skills, with both mirrors re-synced. The rank ratchet was re-run because a served description changed, and holds."
       }
     },
     {
@@ -274594,6 +274754,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered the_export_chains_from_main.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:the-served-surface-names-no-real-person-gate",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered the_served_surface_names_no_real_person.py"
       }
     },
     {
@@ -294889,6 +295059,20 @@
       }
     },
     {
+      "node_id": "ver:nothing-reflow2-serves-names-a-real-person",
+      "node_type": "Verification",
+      "properties": {
+        "description": "tools/the_served_surface_names_no_real_person.py, run in CI. Scope is this design's own Contributors of kind `person`, matched by id, handle and display name with word boundaries, against 230 served texts: the committed toolsnaps, the schema files describe_schema reads, and the skill bodies get_skill returns from getting-started/skills. It fails on an empty needle set or a short read of the surface, because a check with nothing to look at reads exactly like one that ran clean.",
+        "findings": "First run 2026-09-20, against the unfixed surface, FAILED with nine hits and was observed to fail before anything changed. Four were already known: who:ajs on add_contributor's id, @ajs on its handle, who:ajs on Constraint.limit_source and again on Snapshot.target_id. FIVE WERE NOT, and a hand search had missed all of them: the display name of a second real user appeared in schema/structure.yaml, schema/verify.yaml, and the adopt and establish-taxonomy skill bodies, the last of those three times. After the fix it checks 230 served texts against 6 needles from 2 people and passes. The rank ratchet was re-run because a served tool description changed, and both rank tests hold.",
+        "kind": "verification",
+        "last_run_at": "2026-09-20",
+        "level": "system",
+        "method": "inspection",
+        "name": "No served tool schema, schema file or skill body names a real person this design records",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:nudge-path",
       "node_type": "Verification",
       "properties": {
@@ -296420,7 +296604,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:b7b1a838e763c91977b86761ceaedad7b4f9396802a9ce86f66acd7e23794d32",
+  "prev_content_hash": "sha256:af7caa2d514088846d10a0bc1b2e38f0ea8bb8267b77cba0e9e2c395004a9af7",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -297018,8 +297202,8 @@
     "schema_version": 1
   },
   "taken_at": {
-    "branch": "the-gate-list-is-run-not-only-cross-checked",
-    "commit": "1343a5cc7bb1c9cd1d24deffd2dd5cf1517547b6",
+    "branch": "reflow2-names-no-real-person-and-knows-where-grok-keeps-its-config",
+    "commit": "ae7f9a6d8abfd837997fb5aabcf96d007742471d",
     "dirty": true
   }
 }
