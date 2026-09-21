@@ -31,6 +31,9 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+
+## [0.66.0] — 2026-09-21
+
 ### Changed
 
 - **A drawn relation is read back as a sentence, subject first.** flo2 landed two `BLOCKS` edges
