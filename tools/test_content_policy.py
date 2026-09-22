@@ -79,6 +79,36 @@ def main() -> int:
     check("opencode: no text block", (r.get("content") or []) == [], json.dumps(r.get("content"))[:120])
     check("opencode: structuredContent still present", r.get("structuredContent") is not None)
 
+    # 3b. ⭐ THE DEFAULT, ON THE WIRE — the case that decides whether a connector
+    #     works, and the one this file did not cover until 2026-09-21. Case 4
+    #     below proves the OVERRIDE works for an unnamed client; nothing proved
+    #     what an unnamed client gets with NO flag, which is what every
+    #     connector is: the policy is keyed by handshake name and cannot learn,
+    #     so Claude, ChatGPT and anything else unmeasured fall to the default.
+    #
+    #     It was Signpost, and that is the one shape flo2 measured as failing
+    #     both populations — a content-only reader gets one useless sentence,
+    #     and an empty-fallback reader is defeated by the block being non-empty
+    #     (fact:the-per-client-reply-shape-exists-and-its-DEFAULT-is-the-one-
+    #     shape-that-serves-neither-population-and-every-new-connector-is-
+    #     unknown). Duplicate assumes nothing about the client and is never
+    #     empty, so req:never-silently-absent still holds.
+    #
+    #     OBSERVED FAILING against the pre-change binary, where this returned
+    #     the signpost sentence instead of the payload.
+    for unmeasured in ("claude-ai", "chatgpt", "some-connector-nobody-has-measured"):
+        r = raw_result(unmeasured, "open_questions")
+        t = text_of(r)
+        try:
+            parsed = json.loads(t) if t is not None else None
+        except ValueError:
+            parsed = None
+        check(
+            f"{unmeasured} (unmeasured, no flag): text block is the payload, not a signpost",
+            parsed is not None and parsed == r.get("structuredContent"),
+            (t or "")[:120],
+        )
+
     # 4. The operator's flag overrides the per-client rule, for a client nobody named.
     r = raw_result("some-unknown-tui", "open_questions", extra=("--content-policy", "duplicate"))
     t = text_of(r)
