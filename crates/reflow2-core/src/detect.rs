@@ -711,6 +711,23 @@ pub enum GapSource {
     /// no IMPLEMENTS from any Artifact — a check on a number that no tool can
     /// re-run. Keyed on the set of checks.
     QuantityCheckWithoutExecutableForm,
+    /// The design declares a PUBLISHED boundary and marks not one Requirement
+    /// `published` — so a consumer who mirrors it correctly receives structure
+    /// and contracts with none of the reasoning behind them.
+    ///
+    /// ROOT-CAUSED against a real consumer 2026-09-22: reflow2 held 262
+    /// Requirements with 0 published and 3 published Interfaces; flo2's mirror
+    /// of it held 22 nodes — Artifacts, Components, Interfaces, a Project —
+    /// and zero Requirements, Capabilities or Decisions. The owner's symptom
+    /// was an agent that kept needing reminding the link existed, and an agent
+    /// that stops mentioning a resource which never answers anything is
+    /// behaving sensibly.
+    ///
+    /// ⭐ ASKS, NEVER JUDGES. Which requirements are promises is the owner's
+    /// call — `set_requirement_designation` says publishing is a commitment —
+    /// so this fires on ZERO and never on "too few". Aggregate, one per
+    /// design, keyed on the published boundaries.
+    PublishedSurfaceCarriesNoIntent,
     /// The design has live requirements and no Project has declared what
     /// closure means — which legs count and what share must close
     /// (`req:a-design-closes-against-a-declared-threshold-and-the-report-names-the-first-hole`).
@@ -815,6 +832,7 @@ impl GapSource {
             GapSource::QuantityCheckWithoutExecutableForm => {
                 "quantity_check_without_executable_form"
             }
+            GapSource::PublishedSurfaceCarriesNoIntent => "published_surface_carries_no_intent",
             GapSource::ClosureCriterionUndeclared => "closure_criterion_undeclared",
             GapSource::EncodingUndecided => "encoding_undecided",
             GapSource::ConventionDeliveredNowhere => "convention_delivered_nowhere",
@@ -923,6 +941,9 @@ impl GapSource {
             // acknowledged set stays acknowledged.
             GapSource::QuantityWithoutSource => false,
             GapSource::QuantityCheckWithoutExecutableForm => false,
+            // The owner's judgement and nobody else's: which of your needs are
+            // promises a consumer may rely on?
+            GapSource::PublishedSurfaceCarriesNoIntent => true,
             GapSource::ClosureCriterionUndeclared => true,
             GapSource::EncodingUndecided => true,
             GapSource::ConventionDeliveredNowhere => true,
@@ -2169,6 +2190,7 @@ impl DesignGraph {
         self.detect_unit_sweep(&mut gaps)?;
         self.detect_quantity_provenance(&mut gaps)?;
         self.detect_closure_criterion(&mut gaps)?;
+        self.detect_published_surface_carries_no_intent(&mut gaps)?;
         self.detect_encoding_undecided(&mut gaps)?;
         self.detect_repo_know_how(&mut gaps)?;
         self.detect_failing_verifications(&mut gaps)?;
@@ -5987,6 +6009,96 @@ impl DesignGraph {
     /// `closure_criterion_undeclared` — live requirements exist and no Project
     /// says what closure means. Silent with nothing to close: a design with no
     /// requirement has no closure to declare yet, and asking would be noise.
+    /// A design that publishes CONTRACTS and publishes no INTENT.
+    ///
+    /// See [`GapSource::PublishedSurfaceCarriesNoIntent`] for the measurement
+    /// that produced it. Two silences here are deliberate and neither is an
+    /// oversight:
+    ///
+    /// 🛑 SILENT WHEN NOTHING IS PUBLISHED. A design with no published
+    /// boundary has no consumer, and a design nobody consumes owes nobody a
+    /// promise. Asking every private design for one would fire on almost all
+    /// of them and be filtered out by the end of the week.
+    ///
+    /// 🛑 SILENT AT ONE. This fires on ZERO published requirements and never
+    /// on "too few", because how many promises a design owes is not something
+    /// any detector can know. One is enough to prove the owner has considered
+    /// the question, which is the whole ask.
+    fn detect_published_surface_carries_no_intent(
+        &self,
+        gaps: &mut Vec<GapCandidate>,
+    ) -> Result<(), DynoError> {
+        let published_boundaries: Vec<String> = self
+            .scan_live_nodes(node::INTERFACE)?
+            .into_iter()
+            .filter(|n| {
+                matches!(
+                    n.properties
+                        .get("designation")
+                        .and_then(crate::foundation::core::Value::as_str),
+                    // `both` publishes too: it consumes a contract and re-offers
+                    // it onward, so a consumer relies on it exactly as much.
+                    Some("published") | Some("both")
+                )
+            })
+            .map(|n| n.node_id)
+            .collect();
+        if published_boundaries.is_empty() {
+            return Ok(());
+        }
+
+        let requirements = self.scan_live_nodes(node::REQUIREMENT)?;
+        let published = requirements
+            .iter()
+            .filter(|n| {
+                n.properties
+                    .get("designation")
+                    .and_then(crate::foundation::core::Value::as_str)
+                    == Some("published")
+            })
+            .count();
+        if published > 0 {
+            return Ok(());
+        }
+
+        let affected = published_boundaries;
+        let boundary_count = affected.len();
+        gaps.push(GapCandidate {
+            id: gap_id(GapSource::PublishedSurfaceCarriesNoIntent, &affected),
+            gap_source: GapSource::PublishedSurfaceCarriesNoIntent,
+            scope: GapScope::Project,
+            severity: 0.45,
+            title: format!(
+                "{} published boundary(ies) and not one published requirement — a consumer \
+                 mirroring this design gets contracts with no reasoning",
+                affected.len()
+            ),
+            description: format!(
+                "`export_surface` carries published Interfaces, the artifacts that specify them, \
+                 published Requirements and the Project. This design publishes {} boundary(ies) \
+                 and 0 of its {} requirement(s), so everything a consumer mirrors is structure: \
+                 what the parts are and what they expose, and nothing about what any of it is \
+                 FOR. Measured on reflow2 itself 2026-09-22, a real consumer's mirror held 22 \
+                 nodes and not one Requirement, Capability or Decision. Mark the promises a \
+                 consumer is entitled to rely on with `set_requirement_designation` — the \
+                 behavioural commitments an ICD states in prose and no structural export can \
+                 carry. ONE is enough to answer this; which ones is your judgement and nobody \
+                 else's.",
+                affected.len(),
+                requirements.len()
+            ),
+            affected_ids: affected,
+            suggested_depth: 1,
+            evidence: format!(
+                "{} live Requirement(s), 0 with `designation: published`, against {} published \
+                 or both-designated Interface(s).",
+                requirements.len(),
+                boundary_count
+            ),
+        });
+        Ok(())
+    }
+
     fn detect_closure_criterion(&self, gaps: &mut Vec<GapCandidate>) -> Result<(), DynoError> {
         let live_reqs = self
             .scan_live_nodes(node::REQUIREMENT)?
