@@ -29,7 +29,7 @@ use reflow2_core::DesignGraph;
 
 /// The types the capture-intent routing table actually routes to. A type here
 /// with no discrimination block is a row of that table a consumer cannot see.
-const ROUTED: [&str; 8] = [
+const ROUTED: [&str; 9] = [
     "Requirement",
     "Capability",
     "Component",
@@ -38,6 +38,13 @@ const ROUTED: [&str; 8] = [
     "Constraint",
     "Artifact",
     "DesignRule",
+    // Added 2026-09-22 with the row for a sentence the extraction could not
+    // place (flo2 F25). `tools/check_discrimination_rules.py` derives the
+    // routed set from the table itself and caught this block's absence the
+    // moment the row landed; this list is the same claim pinned in Rust, and
+    // the two are kept in step by hand deliberately — a test that derived the
+    // list would pass whatever the table said.
+    "Fragment",
 ];
 
 fn graph() -> DesignGraph {

@@ -73,6 +73,29 @@ schema:
         created_at: { type: string }
       embedding_field: summary
       resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 88 }
+      discrimination:
+        cues:
+          - "a sentence you could NOT place"
+          - "the clause an extraction could not match"
+          - "something they said that the design does not yet understand"
+        confused_with:
+          - type: Requirement
+            why: >
+              A Requirement is intent that has been PLACED — somebody decided what it
+              is and what it asks for. A Fragment is raw material that has NOT been
+              placed: the sentence nobody could route yet. Filing an unplaced sentence
+              as a Requirement asserts a classification nobody made, which is the
+              failure the rest of this table exists to prevent.
+          - type: Decision
+            why: >
+              A Decision at `proposed` is a question somebody is TURNING OVER, with
+              options. A Fragment is the raw utterance before anyone has framed a
+              question from it — no options, no judgement, just what was said.
+        counter_example: >
+          "the water can never drop below 68 degrees" is NOT a Fragment — it places
+          cleanly as a numeric prohibition, so it is a Constraint. A Fragment is for
+          the sentence that places NOWHERE, which is precisely why it is the best
+          material for the next question to the person (flo2 F25).
       extraction_hint: >
         The unit of work by which content enters the graph: a chunk of design
         prose, a code change, a review note. Fragments are what the extraction
