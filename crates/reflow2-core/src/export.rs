@@ -692,6 +692,19 @@ pub struct SurfaceExport {
     /// The document: published Interfaces, what specifies them, and the parts on
     /// each side. Importable like any export.
     pub document: GraphExport,
+    /// The CHECKS this surface carries, sorted — every Verification whose
+    /// target the owner published.
+    ///
+    /// ⚠️ NAMED RATHER THAN MERELY COUNTED BECAUSE THEY DISCLOSE. A check
+    /// travels AS STORED, and `Verification.findings` is free text about what a
+    /// run found. Measured on this design 2026-09-22, the three checks that
+    /// would travel carried internal build paths (`target/debug/...`), internal
+    /// ChangeEvent ids and internal node counts in exactly that field. That is
+    /// a real disclosure, it is bounded (only checks on published targets
+    /// travel), and an owner should be able to READ WHICH ONES LEFT rather than
+    /// discover it in somebody else's graph. Reported, never repaired —
+    /// trimming a node would make it import as a lie.
+    pub evidence: Vec<String>,
     /// The published boundaries this surface is *about*, sorted.
     pub published: Vec<String>,
     /// Design nodes kept back as internal.
@@ -741,8 +754,14 @@ impl DesignGraph {
     /// What leaks internals is the graph *beneath* a component, and that is what
     /// is excluded.
     ///
-    /// **What stays home**: requirements, capabilities, decisions, verifications,
-    /// history, provenance, and every internal component and contract. All
+    /// Plus the **evidence for what was published**: any Verification whose
+    /// `VERIFIES` edge lands on a published Interface or a published
+    /// Requirement. Derived from the target's designation, never from a
+    /// designation of its own — see the carve-out below.
+    ///
+    /// **What stays home**: capabilities, decisions, history, provenance, every
+    /// internal component and contract, every requirement not designated
+    /// `published`, and every check whose target was not published. All
     /// counted, never silently dropped.
     ///
     /// **It does not join the file's hash chain.** `prev_content_hash` is left
@@ -786,6 +805,50 @@ impl DesignGraph {
         // withheld and still counted.
         let promises = self.published_promises()?;
         keep.extend(promises.iter().cloned());
+
+        // THE EVIDENCE FOR WHAT WAS PUBLISHED. A promise without its check is a
+        // claim nothing can re-run: delivery is computed as SATISFIED and
+        // REALIZED and A PASSING CHECK, so a consumer holding the promise alone
+        // cannot tell whether it currently HOLDS. Withholding the check
+        // reproduces, at the seam, the defect this design removed from its own
+        // insides on 2026-09-22 — 241 capabilities reading "verified" against 21
+        // with a check anything could re-run.
+        //
+        // 🛑 DERIVED, NOT A THIRD OPT-IN, and that choice is measured rather
+        // than aesthetic. Interfaces and Requirements each travel on an explicit
+        // `designation`; a third gate on Verification would reproduce the
+        // failure measured the same day, when this design held 262 requirements
+        // and had marked ZERO `published` because the vocabulary existed and
+        // nothing asked. THE OWNER ALREADY OPTED IN WHEN THEY PUBLISHED THE
+        // TARGET. So a check travels exactly when it verifies something the
+        // owner deliberately published — the same derived rule that already
+        // carries the parts either side of a contract and the artifacts that
+        // specify it.
+        //
+        // SCOPED TO THE COMMITMENTS, not to everything on the surface. A
+        // Component travels because a published contract needs its sides, not
+        // because anyone undertook anything about it, so a check on that
+        // component is internal evidence about an internal part and stays home.
+        //
+        // ⚠️ AND IT DISCLOSES WHAT THE CHECK SAYS. `Verification.findings` is
+        // free text about what a run found, and a surface exports nodes AS
+        // STORED — trimming one would make it import as a lie. A findings field
+        // holding internal paths or ids therefore leaves with the check. Bounded
+        // (only checks on published targets travel) and real; an owner should
+        // know it rather than discover it.
+        let commitments: BTreeSet<String> =
+            published.iter().chain(promises.iter()).cloned().collect();
+        let mut evidence: BTreeSet<String> = BTreeSet::new();
+        for v in self.scan_nodes(node::VERIFICATION)? {
+            let travels = self
+                .outgoing(&v.node_id, Some(edge::VERIFIES))?
+                .iter()
+                .any(|e| commitments.contains(&e.to_id));
+            if travels {
+                evidence.insert(v.node_id.clone());
+                keep.insert(v.node_id);
+            }
+        }
 
         // The Project, so a recipient knows whose surface this is.
         for p in self.scan_nodes(node::PROJECT)? {
@@ -900,6 +963,7 @@ impl DesignGraph {
 
         Ok(SurfaceExport {
             document,
+            evidence: evidence.into_iter().collect(),
             published: published.into_iter().collect(),
             withheld_nodes,
             withheld_edges,
