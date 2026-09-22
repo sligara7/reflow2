@@ -100,14 +100,43 @@ pub fn for_client(client_name: Option<&str>) -> ContentPolicy {
 /// names its MCP client `grok-shell-<server>` (`grok-shell-reflow2 1.0.13` in
 /// Alex's sidecar), and a test fixture once guessed `grok-build`. Both start
 /// with `grok`. OpenCode sends `opencode`.
+///
+/// ⭐ THE LIST IS OF CLIENTS THAT HAVE BEEN MEASURED, AND THE FALLBACK IS THE
+/// SHAPE THAT NEEDS NO MEASUREMENT. Until 2026-09-21 the fallback was
+/// `Signpost`, and that was the defect: this rule is keyed BY NAME and cannot
+/// learn, so every client nobody had measured got the one shape flo2 showed
+/// fails both populations — a content-only reader gets one useless sentence,
+/// and an empty-fallback reader is defeated by the text block being non-empty.
+/// Every connector is unknown BY CONSTRUCTION, which is precisely the
+/// population reflow2 is about to be pointed at.
+///
+/// `Duplicate` is the honest default because it assumes nothing: the payload
+/// is in `content` for a text-only reader and in `structuredContent` for a
+/// structured one, and it is never empty, so `req:never-silently-absent`
+/// holds. It costs at most twice a BOUNDED reply — `reply_budget` caps a JSON
+/// reply at 30,000 characters — which is the cost the 2026-08-23 decision
+/// could not have paid against an unbounded one.
+///
+/// 🛑 SO A NAME BELONGS HERE ONLY ONCE SOMEBODY HAS MEASURED IT. Adding one on
+/// a guess re-creates the defect for that client and does it quietly.
+/// `claude-code` is matched NARROWLY and deliberately: it reads
+/// `structuredContent` and is the daily driver here, so it pays nothing —
+/// while `claude-ai` and any other Claude surface are unmeasured connectors
+/// and must fall through to the default.
 pub fn by_client_name(client_name: Option<&str>) -> ContentPolicy {
     let name = client_name.unwrap_or("").trim().to_ascii_lowercase();
     if name.starts_with("grok") {
         ContentPolicy::Duplicate
     } else if name.contains("opencode") {
         ContentPolicy::Empty
-    } else {
+    } else if name.starts_with("claude-code") || name.starts_with("smoke_mcp") {
+        // MEASURED READERS OF `structuredContent`. `smoke_mcp` is this repo's
+        // own stdio harness: it asserts the signpost shape on the wire, and a
+        // harness that silently got a different shape from the one its gates
+        // are about would be testing something nobody runs.
         ContentPolicy::Signpost
+    } else {
+        ContentPolicy::Duplicate
     }
 }
 
@@ -182,7 +211,59 @@ mod tests {
         assert_eq!(by_client_name(Some("opencode")), ContentPolicy::Empty);
         assert_eq!(by_client_name(Some("claude-code")), ContentPolicy::Signpost);
         assert_eq!(by_client_name(Some("smoke_mcp")), ContentPolicy::Signpost);
-        assert_eq!(by_client_name(None), ContentPolicy::Signpost);
+    }
+
+    /// ⭐ AN UNMEASURED CLIENT GETS THE SHAPE THAT WORKS WITHOUT KNOWING HOW IT
+    /// RENDERS A RESULT — the default is `Duplicate`, not `Signpost`.
+    ///
+    /// Until 2026-09-21 the fallback was `Signpost`, and
+    /// `fact:the-per-client-reply-shape-exists-and-its-DEFAULT-is-the-one-shape-\
+    /// that-serves-neither-population-and-every-new-connector-is-unknown`
+    /// measured what that cost: the policy is keyed BY NAME and cannot learn,
+    /// so every client not called grok or opencode got the one shape flo2
+    /// showed fails both populations — a content-only client reads one useless
+    /// sentence, and an empty-fallback client is defeated by the text block
+    /// being non-empty. Every connector is unknown BY CONSTRUCTION: Claude,
+    /// ChatGPT and any future one have never handshaked here.
+    ///
+    /// `Duplicate` is the only shape that needs no knowledge of the client: the
+    /// payload is in `content` for a text-only reader AND in
+    /// `structuredContent` for a structured one, and it is never empty, so
+    /// `req:never-silently-absent` still holds. It costs at most twice a
+    /// BOUNDED reply, because `reply_budget` caps a JSON reply at 30,000
+    /// characters.
+    #[test]
+    fn an_unmeasured_client_gets_the_payload_not_a_signpost() {
+        for name in [
+            Some("claude-ai"),
+            Some("chatgpt"),
+            Some("some-connector-nobody-has-measured"),
+            None,
+        ] {
+            assert_eq!(
+                by_client_name(name),
+                ContentPolicy::Duplicate,
+                "an unmeasured client ({name:?}) must get the payload in the text block: the \
+                 policy is keyed by name and cannot learn, so a signpost default is what every \
+                 new connector gets, and it is the one shape that serves neither population"
+            );
+        }
+    }
+
+    /// The other half, and the reason this is not a blanket flip: a client
+    /// MEASURED to read `structuredContent` still pays nothing. Claude Code is
+    /// the daily driver on this project and reads the structured half, so
+    /// duplicating every payload into its text block would double the bytes
+    /// for no reader. The narrow match matters — `claude-code` is measured,
+    /// `claude-ai` is a connector nobody has measured, and the test above
+    /// requires them to differ.
+    #[test]
+    fn a_measured_structured_reader_still_pays_nothing() {
+        assert_eq!(by_client_name(Some("claude-code")), ContentPolicy::Signpost);
+        assert_eq!(
+            by_client_name(Some("Claude-Code 2.1")),
+            ContentPolicy::Signpost
+        );
     }
 
     /// `duplicate` puts the SAME payload in the text block, byte-for-byte as
