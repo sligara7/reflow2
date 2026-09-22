@@ -839,14 +839,70 @@ impl DesignGraph {
             &opts.artifact_id,
             Props::new().set("action", "created"),
         )?;
-        // Artifact REALIZES its target.
-        self.realizes(
-            &opts.artifact_id,
-            &opts.target_type,
-            &opts.target_id,
-            Some(completeness),
-            Some(conformance),
-        )?;
+        // WHICH EDGE — and it is the target's type that decides, not the
+        // caller.
+        //
+        // 🛑 A FILE REGISTERED AGAINST A VERIFICATION IS ITS EXECUTABLE FORM,
+        // SO IT IMPLEMENTS THE CHECK. REALIZES IS THE WRONG EDGE THERE, in the
+        // schema's own words on IMPLEMENTS: "Not REALIZES (that says a file
+        // implements a CAPABILITY; a check interrogates one rather than
+        // providing it)."
+        //
+        // Until 2026-09-22 this call drew REALIZES whatever the target was.
+        // Nothing refused it, because REALIZES is declared `to: "*"` — the
+        // exact hazard the note on IMPLEMENTS had warned about: "a wildcard
+        // would ACCEPT this pair and never MODEL it". The wildcard accepted it
+        // for months.
+        //
+        // ⭐ THE COST WAS NOT COSMETIC, because `has_executable_form` reads
+        // IMPLEMENTS. Doing the one thing the design instructs — the gap text
+        // for `quantity_check_without_executable_form` says "Name the file that
+        // IS the check … with link_artifact" — produced a check that still
+        // reported as having no runnable form, with nothing in the reply saying
+        // a second edge was owed. Measured on this design's own export the day
+        // it was found: 40 Verifications in exactly that state, while 30 of the
+        // 31 that DID have a form were drawn by hand with `create_edge`,
+        // bypassing this call. The route that worked was the one nothing
+        // pointed at.
+        if opts.target_type == node::VERIFICATION {
+            // `covers` is set only when the caller actually said how much of
+            // the check this file runs. Unstated, the schema's own default
+            // stands rather than this call inventing a claim
+            // (`req:defaults-do-not-assert`) — which is why it reads
+            // `opts.completeness` and not the defaulted local.
+            let covers = opts.completeness.as_deref().map(|c| match c {
+                "complete" => "whole",
+                // `stub` and `partial` both mean the file runs some of the
+                // check; `covers` has no third value and must not round a stub
+                // up to the whole thing.
+                _ => "partial",
+            });
+            // Nothing the caller said is dropped in silence: `conformance` has
+            // no home on IMPLEMENTS — it asks whether a file does what its
+            // target REQUIRES, which is not a question about a check's runner —
+            // so an explicitly stated one is carried across as prose.
+            let note = opts
+                .conformance
+                .as_deref()
+                .map(|c| format!("conformance stated at registration: {c}"));
+            self.create_edge(
+                edge::IMPLEMENTS,
+                node::ARTIFACT,
+                &opts.artifact_id,
+                node::VERIFICATION,
+                &opts.target_id,
+                Props::new().set_opt("covers", covers).set_opt("note", note),
+            )?;
+        } else {
+            // Artifact REALIZES its target — every other target type, unchanged.
+            self.realizes(
+                &opts.artifact_id,
+                &opts.target_type,
+                &opts.target_id,
+                Some(completeness),
+                Some(conformance),
+            )?;
+        }
         Ok(())
     }
 
