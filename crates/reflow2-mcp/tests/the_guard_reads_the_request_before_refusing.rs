@@ -91,6 +91,8 @@ async fn a_capability_is_not_refused_against_the_part_it_names_as_its_own_alloca
 async fn a_part_that_meets_a_requirement_reads_like_it_and_is_not_refused() {
     let s = svc().await;
     j!(s.add_requirement(Parameters(RequirementReq {
+        source: None,
+        provenance: None,
         id: "req:spot-at-sample".into(),
         name: Some("Spot at the sample under 30 by 5 microns".into()),
         statement: Some(WORDS.into()),

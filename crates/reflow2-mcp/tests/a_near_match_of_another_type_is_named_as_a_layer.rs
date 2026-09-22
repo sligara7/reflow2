@@ -80,6 +80,8 @@ const SHIPPED: &str = "The client stops attaching to a shared server running a d
 
 fn requirement(id: &str, name: &str, statement: &str) -> RequirementReq {
     RequirementReq {
+        source: None,
+        provenance: None,
         id: id.into(),
         name: Some(name.into()),
         statement: Some(statement.into()),

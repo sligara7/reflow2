@@ -57,6 +57,8 @@ async fn svc() -> ReflowService {
 
 fn req(id: &str, name: &str, statement: &str) -> RequirementReq {
     RequirementReq {
+        source: None,
+        provenance: None,
         id: id.into(),
         name: Some(name.into()),
         statement: Some(statement.into()),

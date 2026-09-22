@@ -1818,6 +1818,35 @@ pub struct RequirementReq {
     #[serde(default)]
     #[schemars(schema_with = "crate::enum_schema::requirement_kind_opt")]
     pub kind: Option<String>,
+    /// WHO OR WHAT STATED THIS NEED — a person, a regulation, a stakeholder,
+    /// or ANOTHER DESIGN that levied it on this one.
+    ///
+    /// ⭐ IT IS THE SECOND HALF OF THE MECHANISM THIS DESIGN ALREADY DOCUMENTS
+    /// FOR A CONSUMER'S ASK. `dec:idea-gap-flows-to-the-dependency` says a
+    /// levied requirement is expressible today as "add_requirement (lands
+    /// proposed) + authored_by <them> role=author + source '<their design>' +
+    /// provenance imported" — and until 2026-09-22 this constructor accepted
+    /// NEITHER of the last two, so the documented path could only be finished
+    /// through the generic escape hatch.
+    ///
+    /// MEASURED the day it was added: of 263 Requirements in this design,
+    /// **one** carried a `source` — the one written by hand that afternoon,
+    /// through `create_node`, while following the design's own instructions.
+    /// The property was declared, the instruction existed, and the tool could
+    /// not write it.
+    #[serde(default)]
+    pub source: Option<String>,
+    /// HOW THIS REQUIREMENT GOT HERE — `authored` (somebody wrote it here),
+    /// `imported` (it came from another design), `inferred`, `healed`,
+    /// `planned`, `reconciled`.
+    ///
+    /// The other half of the same mechanism, and the same measurement: 262 of
+    /// 263 Requirements read `authored`, which is the schema default, and the
+    /// single `imported` was written through the escape hatch. Omitting this
+    /// leaves the default exactly as it was — it adds a way to SAY, never an
+    /// obligation to.
+    #[serde(default)]
+    pub provenance: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]

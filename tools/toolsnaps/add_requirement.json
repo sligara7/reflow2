@@ -97,6 +97,22 @@
           "null"
         ]
       },
+      "provenance": {
+        "default": null,
+        "description": "HOW THIS REQUIREMENT GOT HERE — `authored` (somebody wrote it here),\n`imported` (it came from another design), `inferred`, `healed`,\n`planned`, `reconciled`.\n\nThe other half of the same mechanism, and the same measurement: 262 of\n263 Requirements read `authored`, which is the schema default, and the\nsingle `imported` was written through the escape hatch. Omitting this\nleaves the default exactly as it was — it adds a way to SAY, never an\nobligation to.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "source": {
+        "default": null,
+        "description": "WHO OR WHAT STATED THIS NEED — a person, a regulation, a stakeholder,\nor ANOTHER DESIGN that levied it on this one.\n\n⭐ IT IS THE SECOND HALF OF THE MECHANISM THIS DESIGN ALREADY DOCUMENTS\nFOR A CONSUMER'S ASK. `dec:idea-gap-flows-to-the-dependency` says a\nlevied requirement is expressible today as \"add_requirement (lands\nproposed) + authored_by <them> role=author + source '<their design>' +\nprovenance imported\" — and until 2026-09-22 this constructor accepted\nNEITHER of the last two, so the documented path could only be finished\nthrough the generic escape hatch.\n\nMEASURED the day it was added: of 263 Requirements in this design,\n**one** carried a `source` — the one written by hand that afternoon,\nthrough `create_node`, while following the design's own instructions.\nThe property was declared, the instruction existed, and the tool could\nnot write it.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
       "statement": {
         "default": null,
         "description": "The requirement statement.",
