@@ -139,6 +139,18 @@ pub struct VerificationCoverage {
     /// Neither `verified` nor unchecked: the state that made a tested
     /// brownfield system read as "0/20 verified" when it was invisible.
     pub capabilities_component_verified: usize,
+    /// Of `capabilities_verified`, how many rest on a check something can
+    /// actually RE-RUN — one with an artifact `IMPLEMENTS`ing it.
+    ///
+    /// ⭐ A NARROWING, never a second way to be verified, and never a verdict
+    /// on whether the check is any good. Measured on reflow2's own design
+    /// 2026-09-22: 312 Verifications, 311 `passing`, **282 with no executable
+    /// form** — so the line above it read "241/288 verified" while most of
+    /// that number was an assertion nobody could falsify. Reporting the two
+    /// apart is what stops "somebody ran this" and "somebody said this" being
+    /// one figure. See
+    /// `DesignGraph::has_runnable_passing_verification`, which is the predicate.
+    pub capabilities_verified_by_runnable_check: usize,
     pub artifacts: usize,
     /// Artifacts with a `VERIFIES` edge of their own, as opposed to being
     /// covered by the capability they realize.
@@ -1192,6 +1204,7 @@ impl DesignGraph {
             capabilities: 0,
             capabilities_verified: 0,
             capabilities_component_verified: 0,
+            capabilities_verified_by_runnable_check: 0,
             artifacts: 0,
             artifacts_verified: 0,
         };
@@ -1203,7 +1216,16 @@ impl DesignGraph {
         for n in self.scan_nodes(node::CAPABILITY)? {
             v.capabilities += 1;
             match self.capability_verification(&n.node_id)? {
-                crate::verify::CapabilityVerification::Verified => v.capabilities_verified += 1,
+                crate::verify::CapabilityVerification::Verified => {
+                    v.capabilities_verified += 1;
+                    // And separately: does anything RUN that check? Same
+                    // `passing` bar, plus an executable form. The two numbers
+                    // were one until 2026-09-22, which is how 282 checks
+                    // nothing could re-run read as a verified design.
+                    if self.has_runnable_passing_verification(&n.node_id)? {
+                        v.capabilities_verified_by_runnable_check += 1;
+                    }
+                }
                 crate::verify::CapabilityVerification::ComponentVerified => {
                     v.capabilities_component_verified += 1;
                 }
@@ -1724,6 +1746,23 @@ impl GraphReport {
                 v.artifacts_verified,
                 v.artifacts
             );
+            // ⭐ ITS OWN SENTENCE, AND SAID EVEN WHEN THE SPLIT IS ZERO —
+            // especially then. A clause that appears only when the news is
+            // good is how a reader concludes the silence means "all of them",
+            // and this design's own first reading was 241 verified with 21
+            // runnable. Folded into the line above it would have been a
+            // parenthesis beside another parenthesis; alone it is the
+            // sentence somebody quotes.
+            if v.capabilities_verified > 0 {
+                let _ = writeln!(
+                    m,
+                    "Of the {} verified, {} rest on a check something can re-run and {} on a \
+                     claim nothing implements.\n",
+                    v.capabilities_verified,
+                    v.capabilities_verified_by_runnable_check,
+                    v.capabilities_verified - v.capabilities_verified_by_runnable_check
+                );
+            }
         }
 
         // Where the design sits on the function-to-structure trajectory.
