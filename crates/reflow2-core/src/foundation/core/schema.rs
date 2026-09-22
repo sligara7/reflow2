@@ -40,6 +40,59 @@ pub struct NodeTypeDef {
     /// Hint for the LLM extraction prompt.
     #[serde(default)]
     pub extraction_hint: Option<String>,
+    /// What tells this type apart from the one it is confused with.
+    #[serde(default)]
+    pub discrimination: Option<Discrimination>,
+}
+
+/// The rules that DISTINGUISH one node type from its neighbour — the half of
+/// the vocabulary that decides a hard case.
+///
+/// `extraction_hint` says what a type IS, which is enough when the choice is
+/// obvious and useless when it is not. These three say how to tell it from the
+/// type it actually gets confused with.
+///
+/// ⭐ WHY THIS LIVES IN THE SCHEMA. flo2 F24, with a measured consequence on a
+/// live site on 2026-09-19: "the water can never drop below 68 degrees" was
+/// filed as a Requirement. It is a numeric prohibition, which reflow2's own
+/// routing table sends to a Constraint, and this design's own skill says
+/// conflating the two leaves prohibitions reporting unsatisfied forever. The
+/// rule that would have caught it existed — as a markdown table inside
+/// capture-intent's SKILL.md, addressed to an agent reading a skill. A
+/// consumer generating an extraction prompt from the SCHEMA, which is what the
+/// black-box rule tells it to do, could not see it.
+///
+/// 🛑 THE SKILL'S TABLE AND THIS MUST NOT DRIFT, and nothing about the types
+/// makes that automatic: `tools/check_discrimination_rules.py` is the gate that
+/// keeps them one contract, in the same shape `skill_lint` already keeps
+/// AGENTS.md and ci.yml one contract.
+#[derive(Debug, Clone, Default, Serialize, Deserialize)]
+pub struct Discrimination {
+    /// The words a PERSON actually says that route here — in their language,
+    /// not the schema's. Lifted from the capture-intent routing table's left
+    /// column, which is where they were written for a human reader.
+    #[serde(default)]
+    pub cues: Vec<String>,
+    /// The type(s) this is genuinely confused with, and why they differ. The
+    /// load-bearing half: a glossary lists types, a discriminator separates
+    /// them.
+    #[serde(default)]
+    pub confused_with: Vec<ConfusedWith>,
+    /// One sentence that LOOKS like this type and is not, with where it
+    /// belongs. A worked near-miss is what an extraction prompt can actually
+    /// carry.
+    #[serde(default)]
+    pub counter_example: Option<String>,
+}
+
+/// One neighbouring type, and the sentence that separates them.
+#[derive(Debug, Clone, Default, Serialize, Deserialize)]
+pub struct ConfusedWith {
+    /// The neighbouring node type's name, as declared.
+    #[serde(rename = "type")]
+    pub node_type: String,
+    /// What actually decides between them, in one sentence.
+    pub why: String,
 }
 
 /// Definition of an edge type.
@@ -397,6 +450,13 @@ impl Schema {
                     }
                     if node_def.extraction_hint.is_some() {
                         existing.extraction_hint = node_def.extraction_hint.clone();
+                    }
+                    // Overlay-wins, exactly like the hint above: an overlay
+                    // that redefines what a type IS must be able to redefine
+                    // how it is told apart, or the two halves of the same
+                    // description would disagree on a domain schema.
+                    if node_def.discrimination.is_some() {
+                        existing.discrimination = node_def.discrimination.clone();
                     }
                 })
                 .or_insert(node_def);

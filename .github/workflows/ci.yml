@@ -54,6 +54,15 @@ jobs:
         run: |
           python3 -m pip install --quiet pyyaml
           python3 tools/validate_schema.py
+      - name: Discrimination rules agree with capture-intent's routing table
+        # flo2 F24: the schema served the TYPES and not the rules that tell them
+        # apart, so a consumer building an extraction prompt from it could not
+        # choose correctly — and a numeric prohibition was filed as a Requirement
+        # on a live site. The rules now live in the schema per type, which puts
+        # the SAME contract in two places: here as data, and in capture-intent's
+        # markdown table as prose for an agent. This keeps them one contract, the
+        # way skill_lint already does for AGENTS.md and this file.
+        run: python3 tools/check_discrimination_rules.py
       - name: Installer suite (hermetic)
         run: python3 tools/test_init.py
       - name: Loop-nudge hook suite (hermetic)

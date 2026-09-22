@@ -338,6 +338,7 @@ cargo clippy -p reflow2-core --no-default-features --all-targets -- -D warnings
 cargo clippy -p reflow2-mcp --all-targets -- -D warnings
 cargo fmt --check
 python3 tools/validate_schema.py                         # after any schema/*.yaml edit
+python3 tools/check_discrimination_rules.py               # the schema's discrimination rules vs capture-intent's routing table — one contract, two records
 python3 tools/smoke_mcp.py                               # after any tool-surface change
 python3 tools/empty_speaks.py                            # an empty answer says WHICH empty — no bare zero on the wire
 python3 tools/refusal_speaks.py                          # a missing argument names the TOOL and what it wants — no bare serde string

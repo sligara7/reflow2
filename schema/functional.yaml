@@ -25,6 +25,26 @@ schema:
         delivery: { type: enum, values: [artifact, model], indexed: true, description: "ABSENT MEANS NOBODY SAID, and absence READS AS `artifact` in the computation — deliberately NOT a schema default, because a default would be materialised onto every existing capability when the export is read back, and a design whose export does not restore to itself is a backup that would not restore (`epoch:a-default-is-not-a-difference`). Found by the round-trip check the moment this property was added with a default. WHAT KIND of thing delivers this capability — and deliberately NOT whether it was delivered, which stays COMPUTED from the golden thread and is never asserted (req:completion-computed, dec:arrival-delta). Declaring the KIND is not declaring SUCCESS, which is the whole reason this is safe to let an author state. `artifact` (the default) means a file realizes it, and delivery needs BOTH an artifact and a passing check, exactly as before. `model` means the deliverable IS a change to the design — a re-decomposition, a retirement, a governance ruling, a correction to a model that was wrong about the world — so there is no file to point at and a passing check is the whole of the evidence. WHY IT EXISTS: measured 2026-08-20, `arrival_delta` reported an epoch's BOTH delivered capabilities as `outstanding`, because delivery required a file on disk and model work produces none. `outstanding` means \"nobody has said whether this was deferred or discontinued\" — a false statement about finished work, asked again every time. The natural response is to stop scheduling model work, which is most of what systems engineering is. THE REJECTED FIX, recorded so it is not retried: inferring `model` from the ABSENCE of an artifact. The commonest reason a capability has no file is that NOBODY HAS BUILT IT YET, so that rule would report unbuilt work as delivered the moment a check was attached — a false green in the dangerous direction. Same shape as `Interface.designation` and `Artifact.volatility`: the author declares what only they can know, and the computation earns the rest." }
       embedding_field: description
       resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 82 }
+      discrimination:
+        cues:
+          - "it does…"
+          - "it handles…"
+          - "it can…"
+        confused_with:
+          - type: Requirement
+            why: >
+              A Capability is the FUNCTION the system performs; a Requirement is the
+              NEED it serves. The Capability SATISFIES the Requirement — if you cannot
+              name a need it serves, it may be a function nobody asked for, which
+              `unmotivated_capability` reports.
+          - type: Component
+            why: >
+              A Capability is WHAT is done; a Component is WHAT PART does it. The
+              Capability is ALLOCATED_TO the Component. "reads the sensors" is the
+              capability, "the outdoor unit" is the component.
+        counter_example: >
+          "the outdoor unit" is NOT a Capability — it is the part that hosts one. If the
+          phrase names a box rather than an action, it is a Component.
       extraction_hint: >
         A discrete unit of capability the design must provide — a software
         function, a product feature, a mechanical action, a process step.
@@ -42,6 +62,19 @@ schema:
         exit_point: { type: string, description: "Capability name/id where the flow ends." }
       embedding_field: description
       resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 82 }
+      discrimination:
+        cues:
+          - "first this, then that — an ordered process"
+          - "the steps are…"
+        confused_with:
+          - type: Capability
+            why: >
+              A Flow is an ORDERED SEQUENCE of steps; a Capability is one function. If
+              the order matters and removing a step breaks the rest, it is a Flow, and
+              each step is PART_OF_FLOW.
+        counter_example: >
+          "it validates the payload" is one function, not a flow — there is no sequence.
+          A Flow needs at least two steps whose order is load-bearing.
       extraction_hint: >
         An ordered process that links Capabilities end to end (e.g. "user
         authentication flow", "assembly sequence"). Capabilities join a flow
