@@ -51,7 +51,33 @@ use crate::service::*;
 /// How many near matches to report. Small on purpose: a list nobody reads
 /// every time is worse than no list, which is why `unexpected_coupling` was
 /// retired as a gap.
-const NEAR_MATCH_LIMIT: usize = 3;
+///
+/// ⚠️ IT GOVERNS THE REFUSAL AS WELL AS THE REPORT. `refuse_unless_deliberate`
+/// reads the list AFTER this truncation, so raising it widens what can block a
+/// write, not only what a caller is shown. That is not a side effect to be
+/// tidied away — the two numbers being the same is what stops the guard
+/// refusing on a match it never showed.
+///
+/// WAS 3 UNTIL 2026-09-21, and the measurement that moved it
+/// (`fact:the-near-match-guard-shows-three-of-a-nine-way-tie-so-relevance-is-\
+/// decided-by-score-noise`): an idea was captured that substantially duplicated
+/// one open since 2026-08-26 and the guard said nothing. Replaying its own
+/// query, NINE non-self hits cleared the floor, three were shown, and the
+/// duplicated node sat at rank 4 — six THOUSANDTHS of a point behind rank 5 on
+/// a 245-point score.
+///
+/// 🛑 SO THIS NUMBER IS A CONTAINMENT, NOT A CORRECTION, and the next person to
+/// tune it should know why. [`NEAR_MATCH_RATIO`] sets the floor relative to the
+/// NEW NODE'S OWN score, and a node scored against its own text sits
+/// structurally far above every other hit — 474 against a next-best 283 in that
+/// measurement. So the floor lands in the MIDDLE of a dense band rather than at
+/// the edge of relevance, and ANY fixed cut then takes an arbitrary slice of a
+/// near-tie. Six buys margin; it does not change the shape. Correcting the
+/// cause means a cut derived from the distribution (break at the largest gap),
+/// or a baseline that is not the self-hit, or deciding BM25 rank is the wrong
+/// signal for this question. `chg:the-near-match-report-is-not-cut-at-three`
+/// records it as the containment it is.
+const NEAR_MATCH_LIMIT: usize = 6;
 
 /// How close to the NEW NODE'S OWN score a hit must be to count as near.
 ///
