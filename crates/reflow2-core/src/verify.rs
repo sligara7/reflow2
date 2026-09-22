@@ -80,6 +80,55 @@ impl DesignGraph {
         Ok(false)
     }
 
+    /// Whether a node has an incoming `VERIFIES` from a check that both
+    /// PASSES and has an executable form — something `IMPLEMENTS` it.
+    ///
+    /// ⭐ THE SECOND HALF IS THE WHOLE POINT, AND IT IS A COUNT RATHER THAN A
+    /// JUDGEMENT. MEASURED on reflow2's own design 2026-09-22: 312
+    /// Verifications, 311 reading `passing`, and **282 with nothing
+    /// implementing them** — so a coverage line saying "241/288 capability(ies)
+    /// verified" rested, for most of its number, on an assertion nobody could
+    /// re-run. The code beneath it was genuinely at 85% line coverage: the
+    /// TESTS were real, the RECORD of them was not, and an outside reader
+    /// reading the record called the project an AI coding project
+    /// (`fact:the-verification-record-is-mostly-unfalsifiable-and-the-ai-coding-project-critique-lands-on-that-half`).
+    ///
+    /// This does NOT decide whether a check is any good —
+    /// `dec:non-goal-reflow2-does-not-judge-whether-a-check-is-meaningful`
+    /// stands untouched. It reports a fact the graph already holds, which is
+    /// exactly what `has_executable_form` has meant in the loop digest all
+    /// along, rolled up to the thing being checked.
+    ///
+    /// Passing is still required. A check that something runs but that does
+    /// not pass counts here as nothing at all, or the narrowing would quietly
+    /// re-introduce the defect it exists to remove — counting the EXISTENCE of
+    /// a test rather than its RESULT, which is the reflow1 failure BL-30
+    /// already named once.
+    pub(crate) fn has_runnable_passing_verification(
+        &self,
+        node_id: &str,
+    ) -> Result<bool, DynoError> {
+        for e in self.incoming(node_id, Some(edge::VERIFIES))? {
+            let passing = self
+                .get_node(node::VERIFICATION, &e.from_id)?
+                .and_then(|v| {
+                    v.properties
+                        .get("status")
+                        .and_then(crate::foundation::core::Value::as_str)
+                        .map(|s| s == "passing")
+                })
+                .unwrap_or(false);
+            if passing
+                && !self
+                    .incoming(&e.from_id, Some(edge::IMPLEMENTS))?
+                    .is_empty()
+            {
+                return Ok(true);
+            }
+        }
+        Ok(false)
+    }
+
     /// Compute a capability's [`CapabilityVerification`] state. See the enum
     /// for why this is three-valued.
     /// Whether a capability has passing evidence ANYWHERE — its own check or

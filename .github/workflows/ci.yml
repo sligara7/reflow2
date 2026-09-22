@@ -173,6 +173,16 @@ jobs:
         run: python3 tools/check_consumer_reach.py docs/design/reflow2.json
       - name: Consumer-reach gate suite
         run: python3 tools/test_check_consumer_reach.py
+      - name: A capability does not NEWLY claim a check nothing can re-run
+        # Measured 2026-09-22: 241 of 291 capabilities read "verified" and 21 of
+        # those had a check anything IMPLEMENTS. The tests were real; the record
+        # of them was not. The 220 already in that state are grandfathered by id
+        # on dec:a-capability-may-not-newly-reach-verified-on-a-claim-alone and
+        # the set may only shrink — a SET and not a count, because a count stays
+        # still while one claim is earned and another is introduced.
+        run: python3 tools/check_verification_ratchet.py docs/design/reflow2.json
+      - name: Verification-ratchet suite (hermetic — it must never pass quietly)
+        run: python3 tools/test_check_verification_ratchet.py
       - name: Command surface agrees with itself
         # reflow2's own surface lives in several places — three skill dirs, a
         # command source and its copy, and an alias table in Rust — and until
