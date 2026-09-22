@@ -260,6 +260,8 @@ fn an_alias_is_not_a_loophole() {
 async fn the_handoff_lands_end_to_end() {
     let s = ReflowService::in_memory().expect("in-memory service");
     j!(s.add_requirement(Parameters(RequirementReq {
+        source: None,
+        provenance: None,
         id: "req:dry".into(),
         name: Some("Stay dry".into()),
         statement: Some("The unit survives rain.".into()),

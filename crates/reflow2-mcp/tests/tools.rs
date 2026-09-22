@@ -79,6 +79,8 @@ async fn seeded() -> ReflowService {
         status: None,
     })));
     j!(s.add_requirement(Parameters(RequirementReq {
+        source: None,
+        provenance: None,
         id: "req:physics".into(),
         name: Some("Realistic physics".into()),
         statement: Some("Ball flight must be plausible.".into()),
@@ -212,6 +214,8 @@ async fn genesis_bootstraps_then_detect_hands_off() {
 
     // The skill's job: seed P0/P1 only (no Components), then DETECT hands off.
     j!(s.add_requirement(Parameters(RequirementReq {
+        source: None,
+        provenance: None,
         id: "req:physics".into(),
         name: Some("Realistic physics".into()),
         statement: Some("Ball flight must be plausible.".into()),
@@ -1280,6 +1284,8 @@ async fn marking_a_requirement_dropped_stops_the_nagging() {
         status: None,
     })));
     j!(s.add_requirement(Parameters(RequirementReq {
+        source: None,
+        provenance: None,
         id: "req:maybe".into(),
         name: Some("Maybe".into()),
         statement: Some("We might not do this.".into()),
@@ -2540,6 +2546,8 @@ async fn a_read_after_a_write_does_not_carry_a_loop_debt_hint() {
     // the read - this is exactly the write->read boundary that used to cost a
     // full loop_status.
     j!(s.add_requirement(Parameters(RequirementReq {
+        source: None,
+        provenance: None,
         id: "req:latency".into(),
         name: Some("Low latency".into()),
         statement: Some("Input to render under 50ms.".into()),
@@ -2566,6 +2574,8 @@ async fn a_read_after_a_write_does_not_carry_a_loop_debt_hint() {
     // COUNTERWEIGHT: the WRITE-side hint is untouched - it is a static
     // sentence and costs nothing.
     let write = j!(s.add_requirement(Parameters(RequirementReq {
+        source: None,
+        provenance: None,
         id: "req:throughput".into(),
         name: Some("Throughput".into()),
         statement: Some("Sustain 60 frames.".into()),
@@ -3687,6 +3697,8 @@ async fn get_node_resolves_by_id_alone_and_refuses_a_collision() {
     // dec:idea-get-node-by-id-alone-since-the-prefix-names-the-type
     let s = ReflowService::in_memory().expect("service");
     j!(s.add_requirement(Parameters(RequirementReq {
+        source: None,
+        provenance: None,
         id: "req:solo".into(),
         name: Some("Solo".into()),
         statement: Some("A lone requirement.".into()),

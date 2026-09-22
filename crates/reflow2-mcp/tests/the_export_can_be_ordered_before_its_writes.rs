@@ -63,6 +63,8 @@ fn event(id: &str) -> AddChangeEventReq {
 
 fn requirement(id: &str) -> RequirementReq {
     RequirementReq {
+        source: None,
+        provenance: None,
         id: id.into(),
         name: Some("A need".into()),
         statement: Some("The system shall do the thing.".into()),

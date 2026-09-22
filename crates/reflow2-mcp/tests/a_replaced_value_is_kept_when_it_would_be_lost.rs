@@ -65,6 +65,8 @@ const SECOND: &str = "The outdoor unit sends deltas with a sequence number, and 
 
 fn requirement(statement: &str) -> RequirementReq {
     RequirementReq {
+        source: None,
+        provenance: None,
         id: "req:reading-transport".into(),
         name: Some("How a reading reaches the store".into()),
         statement: Some(statement.into()),

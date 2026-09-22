@@ -66,6 +66,8 @@ fn repo(name: &str) -> std::path::PathBuf {
 
 fn req(id: &str) -> RequirementReq {
     RequirementReq {
+        source: None,
+        provenance: None,
         id: id.into(),
         name: Some(id.into()),
         statement: Some(format!("Requirement {id} moves the content.")),

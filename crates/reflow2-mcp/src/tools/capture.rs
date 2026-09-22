@@ -1568,6 +1568,13 @@ impl ReflowService {
                 ("priority", req.priority.as_deref()),
                 ("concern", req.concern.as_deref()),
                 ("kind", req.kind.as_deref()),
+                // The two fields a LEVIED requirement needs, and the two the
+                // documented path could not write until 2026-09-22 — measured
+                // that day at 1 of 263 for `source` and 1 of 263 for a
+                // non-default `provenance`, both written by hand through
+                // `create_node` while following this design's own instructions.
+                ("source", req.source.as_deref()),
+                ("provenance", req.provenance.as_deref()),
             ],
         )?;
         sign_as_approver(
