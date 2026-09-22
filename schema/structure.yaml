@@ -23,6 +23,20 @@ schema:
         provenance: { type: enum, values: [authored, planned, inferred, healed, reconciled, imported], default: authored, indexed: true, description: "How this node entered the graph. Same vocabulary as Fragment.provenance." }
       embedding_field: purpose
       resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 82 }
+      discrimination:
+        cues:
+          - "the X part"
+          - "the bit that does the…"
+        confused_with:
+          - type: Capability
+            why: >
+              A Component is the PART; a Capability is what it DOES. Capabilities are
+              ALLOCATED_TO Components. If the phrase names an action rather than a box,
+              it is a Capability.
+        counter_example: >
+          "reads the sensors" is NOT a Component — it is the function a component
+          provides. A Component is something you could point at, draw a box around, or
+          hand to somebody to build.
       extraction_hint: >
         A buildable or organizational unit that hosts Capabilities — a
         microservice, a code module, a mechanical assembly, a document section.
@@ -99,6 +113,27 @@ schema:
         provenance: { type: enum, values: [authored, planned, inferred, healed, reconciled, imported], default: authored, indexed: true, description: "How this node entered the graph. Same vocabulary as Fragment.provenance." }
       embedding_field: description
       resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 82 }
+      discrimination:
+        cues:
+          - "where X meets Y"
+          - "what we hand over"
+          - "the format between us"
+        confused_with:
+          - type: Component
+            why: >
+              An Interface is the CONTRACT at a boundary; a Component is a thing on one
+              side of it. Record BOTH sides — `provides` on one, `consumes` on the
+              other — or the contract is invisible and a change to one side will not
+              tell you the other just broke.
+          - type: Artifact
+            why: >
+              An Interface is the AGREEMENT; an Artifact is the FILE that specifies it.
+              A JSON-schema or OpenAPI document is an Artifact with a SPECIFIES edge to
+              the Interface it defines; it is not the interface itself.
+        counter_example: >
+          "openapi.yaml" is NOT an Interface — it is an Artifact that SPECIFIES one. The
+          interface is the agreement the file describes, which survives the file being
+          renamed.
       extraction_hint: >
         A contract or connection point between Components (or between a
         Component and an Actor). One Component PROVIDES it; others CONSUME it.

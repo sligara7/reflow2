@@ -26,6 +26,28 @@ schema:
         volatility: { type: enum, values: [stable, append_only, living], indexed: true, description: "How this artifact's CONTENT is expected to behave over time, so drift detection can tell an expected change from a real one (BL-191). `stable` = a source file; any content change is drift worth reporting, and is what `drift.rs` reads when nobody said, because it is the safe reading — DELIBERATELY UNDEFAULTED (2026-08-15, music_graph F23), for the same reason as `granularity` above: the safe reading belongs in the reader, which already has it, not in the store, where it becomes an assertion nobody made. `append_only` = a log, a coordination bus, a changelog: it grows by design. `living` = a continuously-edited document. For the latter two a checksum change is EXPECTED and is reported as `expected_change` — still surfaced, never silently dropped, but not written to the drift ledger and not demanding a disposition on every reconcile forever. Measured before this existed: five coordination buses modelled per the adopt skill's own instruction produced five checksum_change divergences within minutes, all correct and all meaningless, and that ritual was owed again on every pass — the signal-trained-to-be-ignored failure, arrived at by following the skill correctly. ABSENCE still fires at full severity for every volatility, because a missing bus is a real finding. NOT here, and deliberately: shrink detection. A shrink is the genuinely alarming event for an append-only file, and a checksum cannot express it — it needs a size baseline nothing records, and the reporter's own caveat is that deliberate compaction shrinks these files, so the heuristic needs the design's consent rather than a bare rule." }
       embedding_field: description
       resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 85 }
+      discrimination:
+        cues:
+          - "here's the drawing / the spec / the doc"
+          - "here is our schema / data model / API contract — a JSON-schema, OpenAPI, protobuf, GraphQL or IDL file"
+        confused_with:
+          - type: Interface
+            why: >
+              An Artifact is the FILE; an Interface is the contract it describes. Draw
+              SPECIFIES from the file to the Interface, Capability or Component it
+              defines. ⚠️ SPECIFIES has no typed tool — `create_edge` is the only way to
+              draw it today.
+          - type: Capability
+            why: >
+              An Artifact REALIZES a Capability rather than being one. The file is
+              as-built; the capability is as-designed, and keeping them apart is what
+              lets a checksum say the build drifted from the design.
+        counter_example: >
+          A dated FIELD REPORT about the system's behaviour is an Artifact, but it
+          DOCUMENTS nothing and REALIZES nothing — its unattached state is correct and
+          deliberate (dec:a-dated-field-report-is-registered-and-parked). Giving it a
+          DOCUMENTS edge would assert it must track the design, and a field report is
+          correct precisely by NOT tracking it.
       extraction_hint: >
         A concrete, addressable deliverable that lives OUTSIDE the graph and is
         pointed to by `location` — a source file, an OpenAPI spec, a dataflow

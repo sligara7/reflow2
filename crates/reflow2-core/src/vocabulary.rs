@@ -28,7 +28,9 @@
 //! are byte-identical (the schema's backing `HashMap`s have no stable order).
 
 use crate::foundation::core::Value;
-use crate::foundation::core::{DynoError, EdgeEndpoint, EdgeTypeDef, NodeTypeDef, PropertyDef};
+use crate::foundation::core::{
+    Discrimination, DynoError, EdgeEndpoint, EdgeTypeDef, NodeTypeDef, PropertyDef,
+};
 
 use crate::nodes::node;
 use serde::Serialize;
@@ -86,6 +88,13 @@ pub struct NodeTypeSpec {
     /// The schema's own description of when to use this type.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub hint: Option<String>,
+    /// What tells this type apart from the one it is confused with — cue
+    /// phrases in a person's own words, the neighbouring type, and a worked
+    /// near-miss. `hint` says what the type IS; this says how to CHOOSE it,
+    /// which is the half a consumer building an extraction prompt needs and
+    /// could not see until 2026-09-22 (flo2 F24).
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub discrimination: Option<Discrimination>,
     pub properties: Vec<PropertySpec>,
 }
 
@@ -272,6 +281,7 @@ fn node_spec(name: &str, def: &NodeTypeDef) -> NodeTypeSpec {
     NodeTypeSpec {
         node_type: name.to_string(),
         hint: def.extraction_hint.as_ref().map(|h| h.trim().to_string()),
+        discrimination: def.discrimination.clone(),
         properties,
     }
 }

@@ -73,6 +73,32 @@ schema:
         designation: { type: enum, values: [internal, published], indexed: true, description: "Whether this requirement is a PROMISE THIS DESIGN PUBLISHES — a behavioural commitment a consumer is entitled to rely on — or internal intent nobody outside gets to see. `published` is what an ICD states in prose and what no structural export can carry: 'fails loud rather than falling back', 'ordering is preserved', 'an empty result means no match, not an error'. Read by `export_surface`, which withholds every `internal` requirement and carries every `published` one, so a promise travels with the boundary it constrains and every existing drift and reconcile check applies to it unchanged. Default `internal` on purpose (req:publishable-promise): most requirements are the design's own reasoning, and publishing one is a commitment that must be made deliberately — the same rule as Interface.designation. NOT a claim the promise is kept: whether it held is its verification and drift history, which is evidence rather than a property anyone sets." }
       embedding_field: statement
       resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 80 }
+      discrimination:
+        cues:
+          - "it has to…"
+          - "it needs to…"
+          - "it should deliver…"
+          - "the system must provide…"
+        confused_with:
+          - type: Constraint
+            why: >
+              A Requirement states what must be DELIVERED; a Constraint BOUNDS what is
+              allowed. The subject of the sentence is irrelevant — a prohibition or a
+              number with a unit is a Constraint even when it is phrased about the
+              thing rather than the team. Conflating them leaves prohibitions
+              reporting unsatisfied forever, because nothing can ever deliver a
+              prohibition.
+          - type: Capability
+            why: >
+              A Requirement is the NEED; a Capability is the FUNCTION that serves it.
+              "it must keep working offline" is the need, "polls the sensors from local
+              storage" is the function. One SATISFIES the other; they are not two
+              names for the same statement.
+        counter_example: >
+          "the water can never drop below 68 degrees" is NOT a Requirement. It is a
+          numeric prohibition, so it is a Constraint. Filed as a Requirement on a live
+          site on 2026-09-19 (flo2 F24), which is the misclassification this block
+          exists to prevent.
       extraction_hint: >
         A stated need or goal the design must satisfy — the bridge between raw
         intent and concrete Capabilities. Extract one per distinct need. A
@@ -101,6 +127,29 @@ schema:
         limit_measured_at: { type: string, description: "When a `measured` limit was taken, where the caller said — the same reason CONSTRAINS.measured_at exists: a measurement is a statement about a system at a moment and is the one basis that goes stale." }
       embedding_field: statement
       resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 80 }
+      discrimination:
+        cues:
+          - "must never…"
+          - "can never…"
+          - "cannot…"
+          - "may not…"
+          - "shall not…"
+          - "is not allowed to…"
+          - "it may only be A, B or C — a closed set of permitted values, an enum, a status list"
+          - "a number with a unit — under 200ms, no more than 40kg, £3k"
+        confused_with:
+          - type: Requirement
+            why: >
+              A Constraint BOUNDS what is allowed; a Requirement states what must be
+              DELIVERED. ⚠️ THE SUBJECT IS IRRELEVANT. Until 2026-09-22 this rule was
+              scoped to "we must never…" while Requirement claimed "it must never…",
+              so the routing turned on the pronoun — and a prohibition about the
+              THING went to the wrong type.
+        counter_example: >
+          "the outdoor unit must send a reading every five minutes" is NOT a
+          Constraint — nothing is bounded, a behaviour is required, so it is a
+          Requirement. The test is whether the sentence forbids or limits (Constraint)
+          or obliges (Requirement).
       extraction_hint: >
         A limit or rule the design MUST respect (vs. a Requirement, which is a
         goal to achieve). "Must run offline", "budget under $5k", "no PII
@@ -141,6 +190,29 @@ schema:
         enforced: { type: bool, description: "Whether violations are gate-blocking. THREE STATES: true = gate-blocking (and owes a detector); false = advisory; ABSENT = nobody has stated it, reported as unstated and never read as enforced. Never defaulted: whether breaking a rule should stop somebody's build is a policy about consequence, and it is the user's to state (the GATED_ON.min_level argument, one layer along)." }
       embedding_field: statement
       resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 80 }
+      discrimination:
+        cues:
+          - "we always…"
+          - "we never…"
+          - "how the team works, not what the thing does"
+          - "this is how we do X here — operational know-how attached to a part or a place"
+        confused_with:
+          - type: Constraint
+            why: >
+              A DesignRule governs how PEOPLE work — a review step, a house style, a
+              branching practice. A Constraint bounds what the DESIGNED THING may do.
+              "we always branch before pushing" is a rule; "the beam may not exceed
+              3 mrad" is a constraint.
+          - type: EnvironmentRule
+            why: >
+              A DesignRule is negotiable — the project chose it and can unchoose it. An
+              EnvironmentRule is what CANNOT be negotiated: a building code, a law, a
+              physical law. A flag default is a DesignRule; a fire regulation is not.
+        counter_example: >
+          "the backup command that actually works on this droplet" is a DesignRule with
+          category "runbook", NOT a Decision. Until 2026-09-18 the routing table had no
+          row for operational know-how and a droplet's whole run configuration went
+          into a Decision's prose because of it (flo2 F5).
       extraction_hint: >
         A chosen standard or convention the build adopts — a tech-stack choice,
         a coding/style convention, a preferred material, a methodology. Broader

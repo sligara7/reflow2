@@ -43,13 +43,13 @@ silently.)*
 
 | What they said | Where it goes |
 |---|---|
-| "it has to…", "it must never…", "it can't take longer than…" | **Requirement** → `add_requirement` |
+| "it has to…", "it needs to…", "it should deliver…", "the system must provide…" — something the thing must DO | **Requirement** → `add_requirement` |
 | "it does…", "it handles…", "it can…" | **Capability** → `add_capability` |
 | "the X part", "the bit that does the…" | **Component** → `add_component` |
 | "where X meets Y", "what we hand over", "the format between us" | **Interface** → `add_interface`, plus `provides` / `consumes` on BOTH sides |
-| "first this, then that" — an ordered process | **Flow** → `add_flow`, then `part_of_flow` per step |
+| "first this, then that", "the steps are…" — an ordered process | **Flow** → `add_flow`, then `part_of_flow` per step |
 | "it may only be A, B or C" — a closed set of permitted values, an enum, a status list | **Constraint** → `add_constraint` (`statement` carries the value set), then `constrains` what it binds |
-| "we must never…", "it is not allowed to…" — a prohibition with no number in it | **Constraint** → `add_constraint`. **Not a Requirement.** Only `name` and `statement` are required |
+| "must never…", "can never…", "cannot…", "may not…", "shall not…", "is not allowed to…" — a prohibition with no number in it, **whatever its subject** | **Constraint** → `add_constraint`. **Not a Requirement.** Only `name` and `statement` are required. ⚠️ THE SUBJECT IS IRRELEVANT and this row used to say "we must never…" while row 1 said "it must never…", so the routing turned on *it* vs *we* — a distinction nobody makes reliably. Measured 2026-09-22: that is why "the water can never drop below 68 degrees" was filed as a Requirement on a live site (flo2 F24) |
 | a number with a unit — "under 200ms", "no more than 40kg", "£3k" | **Constraint** → `add_constraint` with `quantity`/`unit`/`limit`/`direction`, then `constrains` each spender with its `contribution`, **its `unit` and its `source`** — the rollup adds only numbers in the constraint's own unit and reports the rest, and names a number nobody sourced. Say where the limit itself came from with `limit_basis` / `limit_source`; a number you made up is `asserted` by you, which is allowed and visible |
 | "here is our schema / data model / API contract" — a JSON-schema, OpenAPI, protobuf, GraphQL or IDL file | **Artifact** → `add_artifact`, then a `SPECIFIES` edge via `create_edge` to the Interface, Capability **or Component** it defines (set `format`: `json_schema`, `openapi`, `protobuf`…). The enums, field types and value sets live IN the file — you read it, the graph records where it is. ⚠️ `SPECIFIES` has **no typed tool**, so `create_edge` is the only way to draw it today |
 | "we always…", "we never…" — how the team works, not what the thing does | **DesignRule** — stop and use **governance-proposal**, which asks whether breaking it should fail a build |
