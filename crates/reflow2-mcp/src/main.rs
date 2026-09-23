@@ -1736,7 +1736,10 @@ where
             &reflow2_mcp::shared::Rendezvous {
                 url: format!("http://{bound}/"),
                 pid: std::process::id(),
-                graph_path: cfg.graph_path.clone(),
+                // ABSOLUTE, not as typed: every reader resolves this against
+                // its own cwd, so a relative path meant a different store to
+                // a client outside the project (`resolved_graph_path`).
+                graph_path: reflow2_mcp::shared::resolved_graph_path(&cfg.graph_path),
                 version: env!("CARGO_PKG_VERSION").to_string(),
                 // WHICH BUILD is about to serve, captured now so a later client
                 // can tell this daemon apart from a rebuild of the same version.
