@@ -75,10 +75,10 @@ class Server:
     self-contained — it ships in the consumer kit alone.
     """
 
-    def __init__(self, binary: str, graph_path: str) -> None:
+    def __init__(self, binary: str, graph_path: str, extra_args: tuple = ()) -> None:
         try:
             self.proc = subprocess.Popen(
-                [binary, "--graph-path", graph_path],
+                [binary, "--graph-path", graph_path, *extra_args],
                 stdin=subprocess.PIPE,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
@@ -212,13 +212,6 @@ def hash_file(path: str) -> str:
             h.update(chunk)
     return f"sha256:{h.hexdigest()}"
 
-
-# A location that is not a working-tree path at all. `add_artifact` invites a
-# URI ("Path / URI / content-hash"), and an artifact reached over the network
-# cannot be judged from a checkout — see the fourth-state comment in the
-# reconcile loop. Deliberately anchored and scheme-shaped rather than a bare
-# "://" search, so a path that merely contains those characters is unaffected.
-REMOTE_LOCATION = re.compile(r"^[A-Za-z][A-Za-z0-9+.-]*://")
 
 _TOML_SECTION = re.compile(r"^\s*\[([^\]]+)\]\s*$")
 _TOML_INLINE = re.compile(r"^\s*([A-Za-z0-9_.-]+)\s*=\s*\{(.+)\}\s*$")
@@ -903,7 +896,10 @@ def main() -> int:
         if imported.returncode != 0:
             die(2, f"could not import '{opts.export}':\n{imported.stderr.strip()}")
 
-        server = Server(opts.bin, graph)
+        # `--tree-root`: the imported copy lives in a temp dir, and registered
+        # locations are relative to the PROJECT — so the server is told where
+        # the tree is and does the measuring itself (see the reconcile below).
+        server = Server(opts.bin, graph, extra_args=("--tree-root", os.path.abspath(opts.root)))
         try:
             # ROUND TRIP FIRST, because it is the only check here that asks
             # whether the document can be READ BACK, and everything below this
@@ -917,72 +913,52 @@ def main() -> int:
             # Paged, not one reply: `exhaustive: true` below is a CLAIM, and it
             # was false by 20 artifacts until this used scan_all.
             artifacts = server.scan_all("Artifact")
-            observed = []
-            remote_located = []
-            for art in artifacts:
-                props = art.get("properties", {})
-                location = props.get("location") or props.get("name")
-                # A REMOTE LOCATION IS A FOURTH STATE, alongside missing,
-                # present-and-hashable, and the directory case below.
-                #
-                # `add_artifact`'s own served description says location is
-                # "Path / URI / content-hash" — so a published OpenAPI URL, a
-                # vendor datasheet or a standard is CORRECT modelling that the
-                # tool surface explicitly invites. This loop then joined it to
-                # the project root and asked the filesystem, which turns
-                # `https://…` into `./https:/…`, finds nothing, and reports
-                # `missing_artifact` — as-built DRIFT, a red build, for a
-                # design that did nothing wrong. Found 2026-08-22 by
-                # registering one.
-                #
-                # Treated exactly like the directory: present, unhashable,
-                # which the core already words as `no_baseline` — "cannot be
-                # judged, surfaced rather than treated as unchanged". reflow2
-                # performs no network I/O and is not about to start, so the
-                # honest answer is that this gate cannot judge it.
-                if location and REMOTE_LOCATION.match(location):
-                    remote_located.append((art["node_id"], location))
-                    observed.append({"artifact_id": art["node_id"], "present": True})
-                    continue
-                path = os.path.join(opts.root, location) if location else None
-                if not path or not os.path.exists(path):
-                    observed.append({"artifact_id": art["node_id"], "present": False})
-                    continue
-                # A DIRECTORY IS PRESENT AND UNHASHABLE, WHICH IS A THIRD STATE
-                # this loop did not have. It used to fall straight into
-                # hash_file() and raise IsADirectoryError out of main() — see
-                # below for why that exit code was the worse half of the bug.
-                #
-                # Reported as present WITHOUT a checksum, which the core already
-                # has a word for: `no_baseline`, "cannot be judged — surfaced
-                # rather than treated as unchanged". That is exactly true of a
-                # directory, and it is a note rather than a failure, so a
-                # consumer who registers one gets an honest "I could not judge
-                # this" instead of a crash or a quiet pass.
-                #
-                # ⭐ REFLOW2'S OWN GRAPH CANNOT REACH THIS LINE: 182 artifacts
-                # carry a location and NONE resolves to a directory, while
-                # dev_storyflow has 11. CI has run this gate on every push for
-                # weeks and never once executed this branch (reported by the
-                # api-boss fleet, 2026-08-15, and verified here).
-                if os.path.isdir(path):
-                    observed.append({"artifact_id": art["node_id"], "present": True})
-                    continue
-                observed.append(
-                    {
-                        "artifact_id": art["node_id"],
-                        "present": True,
-                        "checksum": hash_file(path),
-                    }
+            # ⭐ THE SERVER MEASURES, NOT THIS SCRIPT. The server was started
+            # with `--tree-root` at the project, so the reconcile below (no
+            # `observed`) hashes every registered file with the same code
+            # `loop_status` runs in a session. This loop used to build the
+            # observations itself, and its idea of what a location MEANS drifted
+            # from the server's on four shapes — a URI (not judged here, MISSING
+            # to the server, so flo2's session kept reporting twelve missing
+            # files after its CI went green), a path outside the project and a
+            # `..` escape (hashed here, refused by the server as outside the
+            # root), and `file#fragment` (missing here, measured there). One
+            # instrument said "note", the other "red build", about the same
+            # artifact in the same state. tools/test_one_meaning_for_an_artifact_location.py
+            # holds the two to one answer per shape.
+            #
+            # The reply budget is deliberately enormous for the same reason the
+            # gap budget is: a script reading a pipe wants every finding, and a
+            # trimmed answer is refused below rather than judged.
+            drift = server.call(
+                "reconcile_artifacts",
+                {"exhaustive": True, "budget_chars": opts.gap_reply_budget},
+            )
+            if "budget" in drift:
+                die(
+                    2,
+                    "the server trimmed its reconcile reply to fit a budget, so the gate "
+                    "would be judging a partial list — raise --gap-reply-budget",
                 )
+            measurement = drift.get("measurement", {})
+            if measurement.get("basis") != "measured":
+                die(2, f"the server did not measure the tree: {json.dumps(measurement)[:400]}")
 
-            # NO SILENT CAPS: an artifact this gate could not judge must say
-            # so, or "0 drift findings" reads as "everything was checked".
-            for node_id, location in sorted(remote_located):
+            # NO SILENT CAPS: an artifact nobody could judge must say so, or "0
+            # drift findings" reads as "everything was checked". The sentence is
+            # the SERVER'S (`reason`), so there is no second table of what a URI,
+            # a directory or an escape means kept here to drift from it.
+            for item in sorted(
+                measurement.get("unmeasurable", []), key=lambda u: u.get("artifact_id", "")
+            ):
                 notes.append(
-                    f"not judged: {node_id} is located at {location}, which is not a "
-                    f"working-tree path — this gate does no network I/O, so it can say "
-                    f"nothing about whether that artifact still matches the design"
+                    f"not judged: {item.get('artifact_id')} is located at "
+                    f"{item.get('location')} — {item.get('reason') or item.get('not_measured')}"
+                )
+            if measurement.get("without_location"):
+                notes.append(
+                    f"not judged: {measurement['without_location']} artifact(s) carry no "
+                    f"location, so there is nothing to measure"
                 )
 
             # ⭐ WHAT THE DESIGN HAS NEVER HEARD OF. Every check above this line
@@ -1089,9 +1065,6 @@ def main() -> int:
                     f"responsible moment (dec:idea-allocation-waits-for-the-last-responsible-moment)."
                 )
 
-            drift = server.call(
-                "reconcile_artifacts", {"observed": observed, "exhaustive": True}
-            )
             for finding in drift.get("findings", []):
                 kind = finding.get("kind")
                 what = f"{finding.get('artifact_id')}: {kind}"
