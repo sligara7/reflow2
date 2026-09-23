@@ -348,6 +348,7 @@ python3 tools/a_reply_is_sent_once.py                    # every structured repl
 python3 tools/skill_lint.py                              # after any skill or tool-surface edit
 python3 tools/test_run_ci_gates.py                       # the gate runner's own net — it must never report a pass having run nothing
 python3 tools/test_wall_check.py                         # the wall-check instrument's own net
+python3 tools/test_test_run_to_files.py                 # a real test run becomes per-file outcomes reconcile_verification reads
 python3 tools/test_latent_promotion.py                  # the latent server promotes itself in place, on any client (real binary)
 python3 tools/test_content_policy.py                    # a reply takes the shape its client can read (per-client content policy, on the wire)
 python3 tools/test_opencode_plugin.py                   # the OpenCode loop-nudge plugin, driven as OpenCode drives it (node)

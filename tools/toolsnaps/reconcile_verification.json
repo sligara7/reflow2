@@ -5,6 +5,29 @@
   "description": "Compare what a real test run REPORTED against what each Verification records — the P4 reconcile, last of the three feedback loops (BL-30): reconcile_artifacts asks about the code, this about the outcomes, reconcile_deployment about what runs. Supply one entry per check the run executed ('passed'/'failed'/'skipped'). A recorded 'passing' that the run failed is the dangerous direction and sorts first — the design believed proven what is actually broken. With record_events each divergence is a persistent DriftEvent (and unresolved_drift gap), auto-resolved when a later run agrees; the design-side answer is set_verification_status with what the run actually said. Ask for this when you have fresh test results and want the design's checks updated to match them.",
   "inputSchema": {
     "$defs": {
+      "ObservedFileReq": {
+        "additionalProperties": false,
+        "properties": {
+          "location": {
+            "description": "The test file, as a path relative to the project root.",
+            "type": "string"
+          },
+          "outcome": {
+            "description": "What the run reported for the whole file: `passed` / `failed` /\n`skipped`.",
+            "enum": [
+              "passed",
+              "failed",
+              "skipped"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "location",
+          "outcome"
+        ],
+        "type": "object"
+      },
       "ObservedVerificationReq": {
         "additionalProperties": false,
         "properties": {
@@ -51,15 +74,19 @@
         },
         "type": "array"
       },
+      "observed_by_file": {
+        "description": "The same run reported BY TEST FILE — the unit a test runner actually\nreports in. Each file resolves to the checks whose `location` is that\nfile or that an Artifact at that file IMPLEMENTS; a check covered by two\nfiles takes the worst outcome. Files the design names no check for come\nback in `unmapped_locations`. `tools/test_run_to_files.py` turns\ncargo-test output or JUnit XML into this list.",
+        "items": {
+          "$ref": "#/$defs/ObservedFileReq"
+        },
+        "type": "array"
+      },
       "record_events": {
         "default": false,
         "description": "Write a DriftEvent per divergence (off = look before you write).",
         "type": "boolean"
       }
     },
-    "required": [
-      "observed"
-    ],
     "type": "object"
   },
   "name": "reconcile_verification"

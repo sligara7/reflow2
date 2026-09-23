@@ -455,12 +455,20 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<ReconcileVerificationReq>,
     ) -> Result<CallToolResult, McpError> {
-        let observed: Vec<reflow2_core::ObservedVerification> = req
+        let mut observed: Vec<reflow2_core::ObservedVerification> = req
             .observed
             .into_iter()
             .map(|o| reflow2_core::ObservedVerification {
                 verification_id: o.verification_id,
                 outcome: o.outcome,
+            })
+            .collect();
+        let files: Vec<reflow2_core::ObservedFile> = req
+            .observed_by_file
+            .into_iter()
+            .map(|f| reflow2_core::ObservedFile {
+                location: f.location,
+                outcome: f.outcome,
             })
             .collect();
         let options = reflow2_core::VerifyReconcileOptions {
@@ -469,10 +477,21 @@ impl ReflowService {
             detected_at: req.detected_at,
         };
         let mut g = self.write_lock().await?;
-        ok_json(
-            g.reconcile_verification(&observed, &options)
-                .map_err(dyno_err)?,
-        )
+        let resolved = g.resolve_observed_files(&files).map_err(dyno_err)?;
+        observed.extend(resolved.observed);
+        let report = g
+            .reconcile_verification(&observed, &options)
+            .map_err(dyno_err)?;
+        let mut payload = serde_json::to_value(&report).map_err(ser_err)?;
+        if !files.is_empty()
+            && let Some(obj) = payload.as_object_mut()
+        {
+            obj.insert(
+                "unmapped_locations".into(),
+                serde_json::json!(resolved.unmapped_locations),
+            );
+        }
+        ok_json(payload)
     }
 
     #[tool(
