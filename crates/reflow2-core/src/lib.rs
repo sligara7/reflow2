@@ -45,6 +45,7 @@ pub mod depends;
 pub mod detect;
 pub mod dimensions;
 pub mod discover;
+pub mod doubt;
 pub mod drift;
 pub mod edge_prose;
 pub mod export;
@@ -137,6 +138,7 @@ pub use detect::{
 };
 pub use dimensions::{Dimension, DimensionDrift, DriftDirection};
 pub use discover::{DesignAtPath, DesignPathState, describe_at};
+pub use doubt::{BadNews, DecisionInDoubt, DoubtEvidence, DoubtReport};
 pub use drift::{
     DriftFinding, DriftKind, DriftReport, DriftSummary, ObservedArtifact, ReconcileOptions,
 };

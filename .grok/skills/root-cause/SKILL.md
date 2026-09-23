@@ -95,6 +95,7 @@ candidates arrive as evidence rather than as imagination.
 | **Change** | What moved near this, and when? | `propagate_from` on recent ChangeEvents touching the same subject |
 | **Governance** | Does this violate a Decision, DesignRule or Constraint already settled? | `detect_defects`; a `CONTRADICTS` edge is a cause somebody already predicted |
 | **Staleness** | Is a record here describing a world that has moved? | `invalidated_findings` — a finding that outlived its fix sends you down a dead path |
+| **Choice** | Does the failure stand behind a decision you already settled — a road worth re-opening? | `choices_in_doubt`, AFTER the failing run is fed back (`reconcile_verification` with `record_events`, by file with `observed_by_file`) — it lists every accepted decision the bad news reaches, unranked, and re-opens nothing |
 
 ⭐ **WHEN THE PROJECT IS A CODEBASE, THE ARTIFACT LAYER IS THE BRIDGE.** Symptom → the capability
 it belongs to → the artifacts that `REALIZES` it → the actual files. That path turns "something is

@@ -561,6 +561,34 @@ impl ReflowService {
     }
 
     #[tool(
+        description = "Which earlier design choices does bad news now put in doubt? Every failed \
+                       run, check recorded failing, unresolved drift and open defect finding is \
+                       walked back along the golden thread to the ACCEPTED choices governing what it \
+                       reaches, listed with the evidence and its path: a road that may be worth \
+                       re-opening. No threshold and no ranking: every such choice comes back, in id \
+                       order, and the owner judges. `held_up` beside each counts what held up under \
+                       it on a real run, computed now and never stored as a score. Nothing is \
+                       re-opened; that is the owner's act. News reaching no choice is named too. \
+                       An empty answer on a design that has never \
+                       fed a run back is not an all-clear; loop_status's loop_closure says which. \
+                       Ask for this when something went wrong and you want to know which earlier choice it calls into question.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn choices_in_doubt(
+        &self,
+        Parameters(req): Parameters<crate::reply_budget::BudgetReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let g = self.graph.read().await;
+        let full =
+            serde_json::to_value(g.decisions_in_doubt().map_err(dyno_err)?).map_err(ser_err)?;
+        ok_json(crate::reply_budget::bound_reply_sampling(
+            full,
+            req.budget(),
+            "Read one decision or one piece of evidence in full with get_node on its id.",
+        ))
+    }
+
+    #[tool(
         description = "Of your N things of kind X, how many carry relation R? The core                        \
                        traceability question, asked of ANY node type and ANY edge type the                      \
                        schema declares — how many Requirements have an incoming VERIFIES, how                   \
