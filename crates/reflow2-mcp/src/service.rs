@@ -3493,10 +3493,30 @@ pub struct ObservedVerificationReq {
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct ObservedFileReq {
+    /// The test file, as a path relative to the project root.
+    pub location: String,
+    /// What the run reported for the whole file: `passed` / `failed` /
+    /// `skipped`.
+    #[schemars(schema_with = "crate::enum_schema::observed_outcome_req")]
+    pub outcome: String,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct ReconcileVerificationReq {
     /// One entry per check the run actually executed. Checks not listed are
     /// not evidence of anything.
+    #[serde(default)]
     pub observed: Vec<ObservedVerificationReq>,
+    /// The same run reported BY TEST FILE — the unit a test runner actually
+    /// reports in. Each file resolves to the checks whose `location` is that
+    /// file or that an Artifact at that file IMPLEMENTS; a check covered by two
+    /// files takes the worst outcome. Files the design names no check for come
+    /// back in `unmapped_locations`. `tools/test_run_to_files.py` turns
+    /// cargo-test output or JUnit XML into this list.
+    #[serde(default)]
+    pub observed_by_file: Vec<ObservedFileReq>,
     /// Write a DriftEvent per divergence (off = look before you write).
     #[serde(default)]
     pub record_events: bool,

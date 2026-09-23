@@ -876,6 +876,39 @@ pub struct ObservedVerification {
     pub outcome: String,
 }
 
+/// One outcome a real run reported for a whole TEST FILE — the unit a test
+/// runner actually reports in. `location` is the path as the design records
+/// it (a Verification's `location`, or the `location` of an Artifact that
+/// IMPLEMENTS a Verification); `outcome` is `passed` / `failed` / `skipped`.
+///
+/// ⭐ WHY THIS EXISTS: a runner knows files and test names, never
+/// verification ids. Until it, feeding a run back meant hand-mapping every
+/// file to the check that names it, and on reflow2's own design that had
+/// never once been done — 318 checks, none ever compared to a run
+/// (`dec:step-4-is-built-on-real-runs-with-no-threshold-and-unscored-good-news`).
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+pub struct ObservedFile {
+    pub location: String,
+    pub outcome: String,
+}
+
+/// Observations by file, resolved to the checks they cover.
+#[derive(Debug, Clone, Default, serde::Serialize)]
+pub struct ResolvedFiles {
+    /// One entry per check some observed file covers. A check covered by two
+    /// files takes the WORST outcome (failed over skipped over passed): one
+    /// file failing is the check failing.
+    pub observed: Vec<ObservedVerification>,
+    /// Files the design names no check for. Not an error — a run exercises
+    /// far more than the design records — and reported so the mapping can be
+    /// seen rather than assumed.
+    pub unmapped_locations: Vec<String>,
+}
+
+fn normalise_location(l: &str) -> &str {
+    l.trim().trim_start_matches("./")
+}
+
 /// One divergence between a recorded status and an observed outcome.
 #[derive(Debug, Clone, serde::Serialize)]
 pub struct VerificationFinding {
@@ -1129,6 +1162,79 @@ impl DesignGraph {
             recorded_events,
             propagation_seeds,
             stamped,
+        })
+    }
+
+    /// Resolve per-FILE outcomes to the checks the design says those files
+    /// carry: a Verification whose own `location` is the file, or one an
+    /// Artifact at that location IMPLEMENTS. See [`ObservedFile`].
+    ///
+    /// An outcome outside passed/failed/skipped is passed through untouched,
+    /// so [`reconcile_verification`](Self::reconcile_verification) rejects it
+    /// by name exactly as it would a by-id observation.
+    pub fn resolve_observed_files(
+        &self,
+        files: &[ObservedFile],
+    ) -> Result<ResolvedFiles, DynoError> {
+        use std::collections::{BTreeMap, BTreeSet};
+        // location -> checks, built once.
+        let mut by_location: BTreeMap<String, BTreeSet<String>> = BTreeMap::new();
+        for v in self.scan_nodes(node::VERIFICATION)? {
+            if let Some(l) = v
+                .properties
+                .get("location")
+                .and_then(crate::foundation::core::Value::as_str)
+                .filter(|l| !l.is_empty())
+            {
+                by_location
+                    .entry(normalise_location(l).to_string())
+                    .or_default()
+                    .insert(v.node_id.clone());
+            }
+            for e in self.incoming(&v.node_id, Some(edge::IMPLEMENTS))? {
+                if let Some(a) = self.get_node(node::ARTIFACT, &e.from_id)?
+                    && let Some(l) = a
+                        .properties
+                        .get("location")
+                        .and_then(crate::foundation::core::Value::as_str)
+                        .filter(|l| !l.is_empty())
+                {
+                    by_location
+                        .entry(normalise_location(l).to_string())
+                        .or_default()
+                        .insert(v.node_id.clone());
+                }
+            }
+        }
+        let rank = |o: &str| match o {
+            "failed" => 3,
+            "skipped" => 1,
+            "passed" => 0,
+            _ => 4, // unknown outcomes survive so the reconcile names them
+        };
+        let mut worst: BTreeMap<String, String> = BTreeMap::new();
+        let mut unmapped = BTreeSet::new();
+        for f in files {
+            let Some(checks) = by_location.get(normalise_location(&f.location)) else {
+                unmapped.insert(f.location.clone());
+                continue;
+            };
+            for c in checks {
+                let keep = worst.get(c).is_some_and(|w| rank(w) >= rank(&f.outcome));
+                if !keep {
+                    worst.insert(c.clone(), f.outcome.clone());
+                }
+            }
+        }
+        Ok(ResolvedFiles {
+            observed: worst
+                .into_iter()
+                .map(|(verification_id, outcome)| ObservedVerification {
+                    verification_id,
+                    outcome,
+                })
+                .collect(),
+            unmapped_locations: unmapped.into_iter().collect(),
         })
     }
 

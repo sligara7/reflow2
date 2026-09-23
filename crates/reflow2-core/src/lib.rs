@@ -202,9 +202,9 @@ pub use temporal::{
     parse_snapshot_edges, parse_snapshot_state,
 };
 pub use verify::{
-    CapabilityVerification, InvalidatedFinding, InvalidationClaim, ObservedVerification,
-    UnclaimedFinding, UnclaimedFindings, VerificationDriftReport, VerificationFinding,
-    VerifyReconcileOptions,
+    CapabilityVerification, InvalidatedFinding, InvalidationClaim, ObservedFile,
+    ObservedVerification, ResolvedFiles, UnclaimedFinding, UnclaimedFindings,
+    VerificationDriftReport, VerificationFinding, VerifyReconcileOptions,
 };
 pub use vocabulary::{
     Coverage, DomainCoverage, EdgeQuery, EdgeTypeMatch, EdgeTypeSpec, EndpointMatch,
