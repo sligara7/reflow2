@@ -111,6 +111,9 @@ jobs:
           # never runs and never says why. tools/test_loop_nudge.py asserts this
           # line exists for exactly that reason.
           cp tools/graph_probe.py kit-stage/reflow2-kit/tools/
+          # The why skill tells a consumer to run it from <kit>/tools; a kit
+          # without it would send every interview to a file that is not there.
+          cp tools/why_history.py kit-stage/reflow2-kit/tools/
           cp -r getting-started kit-stage/reflow2-kit/
           printf '{"reflow2_version": "%s", "commit": "%s", "committed_at": "%s", "source": "release-tarball"}\n' \
             "$VERSION" "$COMMIT" "$COMMITTED_AT" > kit-stage/reflow2-kit/KIT_VERSION.json

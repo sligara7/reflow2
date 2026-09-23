@@ -31,6 +31,36 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **Record why an existing system is the way it is, from the person who designed it.** New skill
+  **why** (`/why`): an interview in two walks — *why does this feature exist?* and *why did it
+  change?* — where the git history only sets the questions and every answer is the designer's.
+  It records reasons, the needs and choices behind them, and "never undo this" rules, and nothing
+  about the code's structure. Adopt now points to it where the designer is available.
+
+- **`why_history.py` reads a repository's history as that interview's agenda**, in the kit beside
+  `reflow2_check.py`. It groups commits into the changes a person would recognise (a merged branch
+  or a pull request is one change), drops noise by rule and counts each rule (bots, lockfile-only
+  bumps, CI-only edits, formatting passes, small typo fixes), flags reverts, and prints one
+  feature's changes as a numbered page someone can answer in one message. What is already
+  explained is read from the design export, never kept in a second file. About a second on a
+  thousand commits.
+
+- **A recorded change can say how its reason is known, and which commits it was.**
+  `add_change_event` takes `rationale_basis` (`contemporaneous`, `recalled`, or `unknown` when
+  nobody who remains knows), `commits`, and — as `snapshot_before_change` already did — `repair`
+  and `stands_in_for`. Absent still means nobody said; nothing was backfilled.
+
+### Changed
+
+- **A reason recalled after the fact is never counted as a check of the system today.** The
+  confirmation ledger reports `recalled` and `unknown` changes to a capability as
+  `recalled_changes`, apart from `design_edits`, so one interview can no longer flip every feature
+  it touched from *unexamined* to *confirmed*. `repair_report` says how many of its unstated
+  repairs are recalled history (`unstated_recalled`), and its note names the tools that exist
+  instead of the renamed `record_change`.
+
 
 ## [0.67.0] — 2026-09-23
 

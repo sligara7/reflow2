@@ -30,6 +30,7 @@
     "root-cause": "find why this failed before we fix the symptom",
     "topic": "everything we have written down about batteries, all in one place",
     "triage-feedback": "work through this field report the way the rules require",
-    "where-am-i": "where does the design stand right now, in my own words"
+    "where-am-i": "where does the design stand right now, in my own words",
+    "why": "the agents can read our code but not what each change over the years was for, so interview me"
   }
 }

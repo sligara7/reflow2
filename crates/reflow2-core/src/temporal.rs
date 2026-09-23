@@ -358,6 +358,85 @@ impl Repair {
     }
 }
 
+/// HOW THE REASON ON A CHANGE IS KNOWN — mirrors `temporal.yaml`
+/// `ChangeEvent.rationale_basis`.
+///
+/// The `why` skill interviews a system's designer about changes found in its
+/// git history, often years after they were made
+/// (`dec:idea-a-change-justification-skill-walks-the-commit-history-and-asks-why`).
+/// The brainstorm's first counter-argument was that **memory is a
+/// reconstruction**: an answer given in 2026 about a 2021 revert is not a
+/// record written in 2021, and with nothing to say so it reads with exactly the
+/// same authority. This is the field that says so.
+///
+/// **Optional, and absent means nobody said** (`req:defaults-do-not-assert`).
+/// It is never inferred and never backfilled: most events written before it
+/// existed were written at the time, but "most" is a guess, and a guess on the
+/// record is a claim nobody made.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum RationaleBasis {
+    /// Written when the change was made, by someone making it.
+    Contemporaneous,
+    /// Given later, from memory, by someone who was there.
+    Recalled,
+    /// Asked for, and nobody who remains knows. Recorded once so the question
+    /// is never put again.
+    Unknown,
+}
+
+impl RationaleBasis {
+    /// The exact schema enum string.
+    pub fn as_str(self) -> &'static str {
+        match self {
+            RationaleBasis::Contemporaneous => "contemporaneous",
+            RationaleBasis::Recalled => "recalled",
+            RationaleBasis::Unknown => "unknown",
+        }
+    }
+
+    /// True for a reason told AFTER the fact — `recalled` or `unknown`. What
+    /// the confirmation ledger and `repair_report` key on: history told today
+    /// is not evidence about the system today.
+    pub fn is_after_the_fact(self) -> bool {
+        matches!(self, RationaleBasis::Recalled | RationaleBasis::Unknown)
+    }
+
+    /// Read a stored `rationale_basis`. An unrecognised value reads as `None`,
+    /// the same as absent: a reader never promotes a string it does not know
+    /// into a claim.
+    pub fn parse(s: &str) -> Option<Self> {
+        match s {
+            "contemporaneous" => Some(RationaleBasis::Contemporaneous),
+            "recalled" => Some(RationaleBasis::Recalled),
+            "unknown" => Some(RationaleBasis::Unknown),
+            _ => None,
+        }
+    }
+}
+
+/// Everything one ChangeEvent can say, for the caller that can say all of it —
+/// `add_change_event` on the tool surface.
+///
+/// A struct rather than a tenth positional parameter: the two constructors
+/// that predate it are called from thirty-eight places, nearly all passing
+/// `None` for everything past `detected_at`, and they are left as they were.
+#[derive(Debug, Clone)]
+pub struct ChangeEventRecord<'a> {
+    pub id: &'a str,
+    pub name: &'a str,
+    pub change_type: ChangeType,
+    pub subject: Option<ChangeSubject>,
+    pub summary: Option<&'a str>,
+    pub rationale: Option<&'a str>,
+    pub detected_at: Option<&'a str>,
+    pub repair: Option<&'a Repair>,
+    pub rationale_basis: Option<RationaleBasis>,
+    /// Comma-separated commit ids. Validated at the tool boundary; the core
+    /// stores what it is given.
+    pub commits: Option<&'a str>,
+}
+
 /// Why the design changed — mirrors `temporal.yaml` `ChangeEvent.change_type`.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "snake_case")]
@@ -1636,18 +1715,45 @@ impl DesignGraph {
         detected_at: Option<&str>,
         repair: Option<&Repair>,
     ) -> Result<StoredNode, DynoError> {
+        self.add_change_event_record(&ChangeEventRecord {
+            id,
+            name,
+            change_type,
+            subject,
+            summary,
+            rationale,
+            detected_at,
+            repair,
+            rationale_basis: None,
+            commits: None,
+        })
+    }
+
+    /// Write a ChangeEvent from a [`ChangeEventRecord`] — every field it can
+    /// carry, including how its reason is known and which commits it was made
+    /// in. The one writer the other two delegate to, so exactly one place
+    /// decides what a ChangeEvent stores.
+    pub fn add_change_event_record(
+        &mut self,
+        r: &ChangeEventRecord<'_>,
+    ) -> Result<StoredNode, DynoError> {
         self.upsert_node(
             node::CHANGE_EVENT,
-            id,
+            r.id,
             Props::new()
-                .set("name", name)
-                .set("change_type", change_type.as_str())
-                .set_opt("subject", subject.map(ChangeSubject::as_str))
-                .set_opt("summary", summary)
-                .set_opt("rationale", rationale)
-                .set_opt("detected_at", detected_at)
-                .set_opt("repair", repair.map(Repair::as_str))
-                .set_opt("stands_in_for", repair.and_then(Repair::stands_in_for)),
+                .set("name", r.name)
+                .set("change_type", r.change_type.as_str())
+                .set_opt("subject", r.subject.map(ChangeSubject::as_str))
+                .set_opt("summary", r.summary)
+                .set_opt("rationale", r.rationale)
+                .set_opt("detected_at", r.detected_at)
+                .set_opt("repair", r.repair.map(Repair::as_str))
+                .set_opt("stands_in_for", r.repair.and_then(Repair::stands_in_for))
+                .set_opt(
+                    "rationale_basis",
+                    r.rationale_basis.map(RationaleBasis::as_str),
+                )
+                .set_opt("commits", r.commits),
         )
     }
 

@@ -73,6 +73,16 @@ pub struct RepairReport {
     /// `contained_symptom` beside a large `unstated` means the design does not
     /// know what rests on a patch, not that little does.
     pub unstated: usize,
+    /// …and of THOSE, how many are history told after the fact
+    /// (`rationale_basis` `recalled` or `unknown`) — the `why` skill's record
+    /// of a designer explaining old fixes. Still unstated, and still counted
+    /// in `unstated`: nobody said, and this does not pretend otherwise. Split
+    /// out because the remedy differs. An unstated fix recorded at the time
+    /// is a question for whoever made it; one recalled years later was never
+    /// part of the interview's small set of questions, and on a project that
+    /// has just been interviewed it would otherwise swamp the number the
+    /// discipline is meant to move.
+    pub unstated_recalled: usize,
     /// The standing patches themselves, each naming the fix it stands in for.
     pub standing: Vec<StandingPatch>,
     /// The one line a reader needs first, stating which empty an empty answer is.
@@ -95,6 +105,7 @@ pub(crate) fn repair_report(g: &DesignGraph) -> Result<RepairReport, DynoError> 
     let mut corrected = 0usize;
     let mut contained = 0usize;
     let mut standing: Vec<StandingPatch> = Vec::new();
+    let mut unstated_recalled = 0usize;
 
     for ev in g.scan_live_nodes(node::CHANGE_EVENT)? {
         let prop = |k: &str| {
@@ -128,7 +139,15 @@ pub(crate) fn repair_report(g: &DesignGraph) -> Result<RepairReport, DynoError> 
                     }),
                 });
             }
-            _ => {}
+            _ => {
+                if prop("rationale_basis")
+                    .as_deref()
+                    .and_then(crate::temporal::RationaleBasis::parse)
+                    .is_some_and(crate::temporal::RationaleBasis::is_after_the_fact)
+                {
+                    unstated_recalled += 1;
+                }
+            }
         }
     }
     standing.sort_by(|a, b| a.change_event_id.cmp(&b.change_event_id));
@@ -143,13 +162,16 @@ pub(crate) fn repair_report(g: &DesignGraph) -> Result<RepairReport, DynoError> 
         format!(
             "NOBODY HAS SAID, for all {repairs} repair(s). This design has not yet recorded a \
              repair disposition, so 'nothing rests on a patch' is NOT what this report means — it \
-             means the question has never been answered. Pass `repair` to record_change.",
+             means the question has never been answered. Pass `repair` to add_change_event \
+             (or snapshot_before_change).{}",
+            recalled_clause(unstated_recalled),
         )
     } else if unstated > 0 {
         format!(
             "{contained} standing patch(es) out of {repairs} repair(s) — but {unstated} said \
              nothing, so this is a floor and not a total. The unstated ones are neither corrected \
-             nor contained; they are unanswered."
+             nor contained; they are unanswered.{}",
+            recalled_clause(unstated_recalled),
         )
     } else {
         format!(
@@ -163,9 +185,24 @@ pub(crate) fn repair_report(g: &DesignGraph) -> Result<RepairReport, DynoError> 
         corrected_cause: corrected,
         contained_symptom: contained,
         unstated,
+        unstated_recalled,
         standing,
         note,
     })
+}
+
+/// The sentence that says how much of `unstated` is recalled history — empty
+/// when none is, so a design that never ran the `why` skill reads exactly as
+/// it did before.
+fn recalled_clause(unstated_recalled: usize) -> String {
+    if unstated_recalled == 0 {
+        String::new()
+    } else {
+        format!(
+            " Of the unstated, {unstated_recalled} are fixes recalled after the fact (the reason \
+             was given later from memory, or is unknown), not fixes recorded when they were made."
+        )
+    }
 }
 
 impl DesignGraph {

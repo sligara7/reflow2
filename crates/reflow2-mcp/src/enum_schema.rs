@@ -103,6 +103,12 @@ schema_enum!(
     req
 );
 schema_enum!(change_event_subject_opt, "ChangeEvent", "subject", opt);
+schema_enum!(
+    change_event_rationale_basis_opt,
+    "ChangeEvent",
+    "rationale_basis",
+    opt
+);
 schema_enum!(component_tier_opt, "Component", "tier", opt);
 schema_enum!(component_kind_opt, "Component", "kind", opt);
 schema_enum!(component_status_opt, "Component", "status", opt);

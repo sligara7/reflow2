@@ -61,6 +61,10 @@ fn event(id: &str) -> AddChangeEventReq {
         rationale: None,
         affected: None,
         detected_at: None,
+        rationale_basis: None,
+        commits: None,
+        repair: None,
+        stands_in_for: None,
     }
 }
 
