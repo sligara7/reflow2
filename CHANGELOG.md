@@ -31,6 +31,9 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+
+## [0.68.0] — 2026-09-23
+
 ### Added
 
 - **Record why an existing system is the way it is, from the person who designed it.** New skill
@@ -60,6 +63,19 @@ This file is the third view: *what changed, and when*.
   it touched from *unexamined* to *confirmed*. `repair_report` says how many of its unstated
   repairs are recalled history (`unstated_recalled`), and its note names the tools that exist
   instead of the renamed `record_change`.
+
+- **`REALIZES` points only at a Capability, a Component or an Interface.** The schema allowed any
+  target, and on reflow2's own design all 44 links outside those three were the wrong link type:
+  29 onto changes (should be `CHANGED`), 7 onto requirements and 6 onto checks (a test `IMPLEMENTS`
+  a check that `VERIFIES` the requirement), 2 onto findings (`DOCUMENTS`). They were repaired in
+  the design first. `link_artifact` now refuses any other target before writing and names the link
+  that fits.
+
+  **Existing designs still import.** A legacy `REALIZES` onto a check becomes `IMPLEMENTS` on open
+  and on import, reported in `migrated_edges`; any other legacy target is refused by name, so a
+  design holding one says so instead of loading wrong. Proved against every committed design on
+  the maintainer's machine: one converted 5 links, four imported unchanged, and one is refused by
+  a pre-existing, unrelated case recorded for a ruling.
 
 
 ## [0.67.0] — 2026-09-23
