@@ -3544,7 +3544,7 @@ pub struct ReconcileVerificationReq {
     /// reports in. Each file resolves to the checks whose `location` is that
     /// file or that an Artifact at that file IMPLEMENTS; a check covered by two
     /// files takes the worst outcome. Files the design names no check for come
-    /// back in `unmapped_locations`. `tools/test_run_to_files.py` turns
+    /// back in `unmapped_locations`. `tools/run_to_files.py` turns
     /// cargo-test output or JUnit XML into this list.
     #[serde(default)]
     pub observed_by_file: Vec<ObservedFileReq>,
