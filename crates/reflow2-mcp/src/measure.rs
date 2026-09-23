@@ -27,6 +27,12 @@
 //!   shape (a sheet range of one drawing set). When the location as written is
 //!   absent and carries a `#`, the part before it is measured and the reply
 //!   names the path actually hashed.
+//! - **A URI is not a path.** `https://…` is a registration the tool surface
+//!   invites (`add_artifact`: "Path / URI / content-hash"). Joined to the root
+//!   it became `<root>/https:/…`, which does not exist, and was reported as a
+//!   MISSING file — while the CI gate, which had its own copy of this logic,
+//!   called the same artifact not judged. The server does no network I/O, so
+//!   a URI is named ([`NotMeasured::Remote`]) and never looked for on disk.
 
 use sha2::{Digest, Sha256};
 use std::collections::HashMap;
@@ -50,6 +56,10 @@ pub struct Measurement {
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize)]
 #[serde(tag = "why", rename_all = "snake_case")]
 pub enum NotMeasured {
+    /// The location is a URI (`scheme://…`), not a path. Nothing is fetched:
+    /// this server does no network I/O, so it cannot say whether the thing at
+    /// that address still matches.
+    Remote { location: String },
     /// This server does not hold a project tree: an in-memory design, a
     /// registry of designs served over HTTP, or a shared server on a box that
     /// does not hold the checkout.
@@ -75,6 +85,10 @@ impl NotMeasured {
                                     machine), so nothing can be measured here — pass the checksum \
                                     to assert it, or reconcile with `observed`"
                 .to_string(),
+            NotMeasured::Remote { location } => format!(
+                "{location:?} is a URI, not a path in the project — reflow2 does no network \
+                 I/O, so it cannot say whether that artifact still matches the design"
+            ),
             NotMeasured::OutsideRoot { location } => format!(
                 "{location:?} resolves outside the project root and is refused unread — a \
                  registered location is measured only under the directory the design lives in"
@@ -113,6 +127,13 @@ pub fn measure(
     location: &str,
     memo: Option<&MeasureMemo>,
 ) -> Result<Measurement, NotMeasured> {
+    // BEFORE the root is consulted: a URI is not measured whether or not this
+    // server holds a tree, and it must never reach the filesystem as a path.
+    if is_uri(location) {
+        return Err(NotMeasured::Remote {
+            location: location.to_string(),
+        });
+    }
     let canonical_root = std::fs::canonicalize(root).map_err(|_| NotMeasured::NoTree)?;
     let (candidate, measured_path) = resolve(&canonical_root, location)?;
     let meta = std::fs::symlink_metadata(&candidate).map_err(|_| NotMeasured::Absent {
@@ -166,6 +187,18 @@ pub fn measure(
         guard.insert(real, (len, mtime, out.clone()));
     }
     Ok(out)
+}
+
+/// `scheme://…`, where a scheme is a letter then letters, digits, `+`, `-` or
+/// `.` (RFC 3986 §3.1). Anchored and scheme-shaped rather than a search for
+/// `://`, so an ordinary path that happens to hold a colon stays a path.
+fn is_uri(location: &str) -> bool {
+    let Some((scheme, _)) = location.split_once("://") else {
+        return false;
+    };
+    let mut chars = scheme.chars();
+    chars.next().is_some_and(|c| c.is_ascii_alphabetic())
+        && chars.all(|c| c.is_ascii_alphanumeric() || matches!(c, '+' | '-' | '.'))
 }
 
 /// Join and bound WITHOUT touching the disk beyond existence: absolute
@@ -311,6 +344,34 @@ mod tests {
         assert!(matches!(
             measure(d.path(), "src", None).unwrap_err(),
             NotMeasured::NotAFile { .. }
+        ));
+    }
+
+    #[test]
+    fn a_uri_is_named_remote_and_never_looked_for_on_disk() {
+        let d = tree();
+        // Even when a directory of that shape exists under the root: a URI is
+        // never a path, so nothing under the tree can make it one.
+        std::fs::create_dir_all(d.path().join("https:/example.invalid")).unwrap();
+        std::fs::write(d.path().join("https:/example.invalid/spec.yaml"), b"x").unwrap();
+        for uri in [
+            "https://example.invalid/spec.yaml",
+            "s3://bucket/key",
+            "git+ssh://h/r",
+        ] {
+            let err = measure(d.path(), uri, None).unwrap_err();
+            assert!(matches!(err, NotMeasured::Remote { .. }), "{uri}: {err:?}");
+        }
+    }
+
+    #[test]
+    fn a_path_holding_a_colon_is_still_a_path() {
+        let d = tree();
+        std::fs::write(d.path().join("src/a:b.rs"), b"x").unwrap();
+        assert!(measure(d.path(), "src/a:b.rs", None).is_ok());
+        assert!(matches!(
+            measure(d.path(), "src/c:/d.rs", None).unwrap_err(),
+            NotMeasured::Absent { .. }
         ));
     }
 

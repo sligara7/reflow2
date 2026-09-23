@@ -50,6 +50,19 @@ struct Cli {
     #[arg(long = "export-to", value_name = "FILE")]
     export_to: Option<String>,
 
+    /// Measure registered files under this directory instead of the one the
+    /// store sits in (`<root>/.reflow2/graph` → `<root>`).
+    ///
+    /// ⭐ WHAT IT IS FOR: a design opened AWAY from its tree that must still be
+    /// measured against it. The CI gate (`tools/reflow2_check.py`) imports the
+    /// committed export into a temporary store and passes the project here, so
+    /// the file measurement in CI is this server's — the same code
+    /// `loop_status` runs — rather than a second copy of "what does a location
+    /// mean" kept in Python. The two copies disagreed on four location shapes
+    /// (tools/test_one_meaning_for_an_artifact_location.py).
+    #[arg(long = "tree-root", value_name = "DIR", conflicts_with_all = ["shared", "registry_root"])]
+    tree_root: Option<String>,
+
     /// Serve over HTTP on this address instead of stdio, so SEVERAL sessions
     /// share one design (`req:sessions-share-a-graph`). One process holds the
     /// graph — the store is single-writer, and with one server there is still
@@ -516,6 +529,7 @@ async fn call_one_tool(cli: &Cli, tool: &str) -> anyhow::Result<i32> {
         }
     };
 
+    let service = with_cli_tree_root(service, cli);
     let outcome = call_over_pipe(service, tool, arguments).await;
     if let Some(snapshot) = snapshot {
         snapshot.cleanup();
@@ -662,6 +676,14 @@ fn snapshot_dir(graph_path: &str) -> anyhow::Result<GraphSnapshot> {
 /// "another process won, wait for them" or "nobody can fix this, stop waiting".
 /// Getting those two out of step is exactly how a deliberate refusal reached a
 /// user as `CONNECT_TIMEOUT`.
+/// `--tree-root`, when given, over the root derived from the store's path.
+fn with_cli_tree_root(service: ReflowService, cli: &Cli) -> ReflowService {
+    match &cli.tree_root {
+        Some(root) => service.with_tree_root(root),
+        None => service,
+    }
+}
+
 fn is_lock_contention(text: &str) -> bool {
     text.contains("lock file") || text.contains("Resource temporarily unavailable")
 }
@@ -846,6 +868,7 @@ async fn main() -> anyhow::Result<()> {
         } else {
             service
         };
+        let service = with_cli_tree_root(service, &cli);
 
         // SAY IT ON THE WAY UP, and say what happens rather than which engine
         // is underneath. The handshake says it too, because an AGENT connecting
@@ -1351,11 +1374,14 @@ async fn main() -> anyhow::Result<()> {
         let (mut service, provenance) = ReflowService::new_reporting(&cli.graph_path)
             .map(|(svc, prov)| {
                 (
-                    if cli.read_only {
-                        svc.into_read_only()
-                    } else {
-                        svc
-                    },
+                    with_cli_tree_root(
+                        if cli.read_only {
+                            svc.into_read_only()
+                        } else {
+                            svc
+                        },
+                        &cli,
+                    ),
                     prov,
                 )
             })
@@ -1500,11 +1526,14 @@ async fn main() -> anyhow::Result<()> {
     // and explains itself beats one that dies before it can be asked.
     match ReflowService::new_reporting(&cli.graph_path).map(|(svc, prov)| {
         (
-            if cli.read_only {
-                svc.into_read_only()
-            } else {
-                svc
-            },
+            with_cli_tree_root(
+                if cli.read_only {
+                    svc.into_read_only()
+                } else {
+                    svc
+                },
+                &cli,
+            ),
             prov,
         )
     }) {

@@ -464,9 +464,13 @@ class Reflow2Check(unittest.TestCase):
         self.assertNotEqual(r.returncode, 2,
                             f"the gate must still RUN\n{r.stdout}\n{r.stderr}")
         # Present and unjudgeable is a NOTE, never a failure and never a silent
-        # pass: the design says a directory is there, and it is.
-        self.assertIn("no_baseline", r.stdout,
+        # pass: the design says a directory is there, and it is. Since
+        # 2026-09-23 the server measures and names it (`not_a_file`); the gate
+        # quotes that rather than wording its own `no_baseline`.
+        self.assertIn("not judged: art:dir", r.stdout,
                       f"a directory is present-but-unhashable\n{r.stdout}")
+        self.assertNotIn("DRIFT  art:dir", r.stdout,
+                         f"a directory is never drift\n{r.stdout}")
 
     def test_an_unexpected_fault_is_exit_2_not_a_gate_failure(self):
         """THE COUNTERWEIGHT THAT MATTERS, and it took two attempts to make it

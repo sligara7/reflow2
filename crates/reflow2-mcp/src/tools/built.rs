@@ -763,9 +763,15 @@ impl ReflowService {
                         realizes: None,
                     });
                 }
-                Err(why) => unmeasurable.push(
-                    json!({ "artifact_id": a.node_id, "location": location, "not_measured": why }),
-                ),
+                // The sentence travels with the tag, so a reader of this block
+                // (the CI gate among them) quotes the server's reason rather
+                // than keeping its own table of what each tag means.
+                Err(why) => unmeasurable.push(json!({
+                    "artifact_id": a.node_id,
+                    "location": location,
+                    "not_measured": why,
+                    "reason": why.reason(),
+                })),
             }
         }
         let block = json!({

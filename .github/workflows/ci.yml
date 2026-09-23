@@ -127,6 +127,8 @@ jobs:
         run: python3 tools/reflow2_check.py --export docs/design/reflow2.json
       - name: Coherence-gate suite (hermetic — the gate's own regression net, BL-88)
         run: python3 tools/test_reflow2_check.py
+      - name: The server and the CI gate give one answer about every artifact location (real binary)
+        run: python3 tools/test_one_meaning_for_an_artifact_location.py
       - name: A git diff is read as a design change, and an unmapped file is reported loudly (hermetic)
         run: python3 tools/test_impact_of_diff.py
       - name: The latent server promotes itself on any MCP client (real binary over stdio)
