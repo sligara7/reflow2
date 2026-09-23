@@ -214,6 +214,12 @@ jobs:
         run: python3 tools/test_shared_sessions.py
       - name: --export-to reaches the daemon, not just the client
         run: python3 tools/test_export_to_reaches_the_daemon.py
+      - name: A --shared client outside the project attaches to the running server
+        # fact:shared-attach-by-absolute-path-missed-the-running-server-and-spawned-a-rival-2026-09-22:
+        # a relative graph path in the rendezvous was read against the READER's
+        # cwd, so a hub or script outside the project spawned a rival that lost
+        # the store lock. Real binary, two clients, two folders.
+        run: python3 tools/test_shared_attach_from_another_folder.py
       - name: The usage ledger holds the verb and never the object (req:feedback-on-reflow2-is-computed-from-a-record-the-server-kept)
         # The ledger is written in the server's call_tool, which only a wire
         # call passes: this drives the real binary, writes a requirement with

@@ -333,17 +333,65 @@ pub async fn probe(url: &str) -> bool {
         .unwrap_or(false)
 }
 
+/// The store's path as EVERY reader will mean it: absolute and resolved.
+///
+/// This is what a daemon records in its rendezvous. It used to record the path
+/// as typed, and `.mcp.json` types `.reflow2/graph`, so the record meant a
+/// different store to every process that read it, depending on that process's
+/// own working directory. A client outside the project (a hub, a script) then
+/// resolved it to the wrong place, took a live server for another design's,
+/// and spawned a rival that lost the store lock
+/// (fact:shared-attach-by-absolute-path-missed-the-running-server-and-spawned-a-rival-2026-09-22).
+///
+/// The store exists by the time a rendezvous is published, so `canonicalize`
+/// normally answers. If it cannot, the path is still made absolute against
+/// this process's cwd, which is the one directory that gives it its meaning.
+pub fn resolved_graph_path(graph_path: &str) -> String {
+    let p = Path::new(graph_path);
+    let resolved = std::fs::canonicalize(p).unwrap_or_else(|_| {
+        if p.is_absolute() {
+            p.to_path_buf()
+        } else {
+            std::env::current_dir()
+                .map(|cwd| cwd.join(p))
+                .unwrap_or_else(|_| p.to_path_buf())
+        }
+    });
+    resolved.to_string_lossy().into_owned()
+}
+
+/// Where a rendezvous's recorded store is, read the way its WRITER meant it.
+///
+/// Current daemons record an absolute path (see [`resolved_graph_path`]). A
+/// daemon from an older build recorded the path as typed, usually relative, and
+/// a relative path means whatever its writer's cwd made it mean. On Linux that
+/// cwd is readable from `/proc/<pid>/cwd`, so the record is resolved against
+/// the directory the daemon actually runs in. Elsewhere, or if the process is
+/// gone, the path is left as it is and read against our own cwd, which is the
+/// old behaviour and errs toward re-electing rather than attaching.
+fn recorded_store(r: &Rendezvous) -> PathBuf {
+    let p = Path::new(&r.graph_path);
+    if p.is_absolute() {
+        return p.to_path_buf();
+    }
+    #[cfg(target_os = "linux")]
+    if let Ok(server_cwd) = std::fs::read_link(format!("/proc/{}/cwd", r.pid)) {
+        return server_cwd.join(p);
+    }
+    p.to_path_buf()
+}
+
 /// The same store, however the two paths are spelled?
 ///
 /// Compared canonically because the two sides are written by different people:
 /// an MCP config says `.reflow2/graph` (relative, so two worktrees do not
-/// collide) while the rendezvous records whatever that resolved to. A string
+/// collide) while the rendezvous records what that resolved to. A string
 /// compare would call those different and re-elect a server on every start.
 /// `canonicalize` needs the path to exist, so an un-created graph falls back to
 /// the literal — at which point there is no server to attach to anyway.
-fn same_store(a: &str, b: &str) -> bool {
-    let resolve = |p: &str| std::fs::canonicalize(p).unwrap_or_else(|_| PathBuf::from(p));
-    resolve(a) == resolve(b)
+fn same_store(a: impl AsRef<Path>, b: impl AsRef<Path>) -> bool {
+    let resolve = |p: &Path| std::fs::canonicalize(p).unwrap_or_else(|_| p.to_path_buf());
+    resolve(a.as_ref()) == resolve(b.as_ref())
 }
 
 /// Is this rendezvous about the graph we are opening?
@@ -365,7 +413,7 @@ fn is_for_this_graph(r: &Rendezvous, graph_path: &str) -> bool {
     // not the same as wrong — but it is not something to write a design through
     // either. Re-electing costs a second; attaching to the wrong store is
     // unbounded, so the tie breaks toward re-electing.
-    !r.graph_path.is_empty() && same_store(&r.graph_path, graph_path)
+    !r.graph_path.is_empty() && same_store(recorded_store(r), graph_path)
 }
 
 /// Attach this session to a server for `graph_path`, starting one if needed.
@@ -919,6 +967,105 @@ mod tests {
             dotted.to_str().unwrap()
         ));
         let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    /// A process whose working directory is `dir`, standing in for a daemon that
+    /// was started there. Only its pid and its cwd matter to these tests.
+    #[cfg(target_os = "linux")]
+    fn a_process_running_in(dir: &Path) -> std::process::Child {
+        std::process::Command::new("sleep")
+            .arg("30")
+            .current_dir(dir)
+            .spawn()
+            .expect("sleep must spawn")
+    }
+
+    #[cfg(target_os = "linux")]
+    fn a_store_under(root: &Path, project: &str) -> PathBuf {
+        let store = root.join(project).join(".reflow2").join("graph");
+        std::fs::create_dir_all(&store).unwrap();
+        store
+    }
+
+    /// THE HUB CASE, and the reason this test exists (2026-09-22,
+    /// fact:shared-attach-by-absolute-path-missed-the-running-server-and-spawned-a-rival-2026-09-22).
+    ///
+    /// A daemon started inside its project as `--graph-path .reflow2/graph`
+    /// recorded that string as typed. A client outside the project (a hub over
+    /// several designs, a script) opened the same store by its absolute path and
+    /// resolved the RELATIVE record against ITS OWN cwd. From the hub that named
+    /// the hub's own store, so the rendezvous read as another design's, a rival
+    /// was spawned, it lost the lock, and the session got `reflow2_unavailable`
+    /// after 30 s. A relative path in a record other processes read means
+    /// something different to every reader, so it is read against the cwd of the
+    /// process that wrote it.
+    #[cfg(target_os = "linux")]
+    #[test]
+    fn a_relative_record_is_read_against_the_servers_folder_not_the_readers() {
+        let root = std::env::temp_dir().join(format!("reflow2-relrec-{}", std::process::id()));
+        let store = a_store_under(&root, "child");
+        let mut server = a_process_running_in(&root.join("child"));
+        let mut r = rv_for(".reflow2/graph");
+        r.pid = server.id();
+        let attached = is_for_this_graph(&r, store.to_str().unwrap());
+        let _ = server.kill();
+        let _ = server.wait();
+        let _ = std::fs::remove_dir_all(&root);
+        assert!(
+            attached,
+            "a daemon that recorded `.reflow2/graph` from inside the project must be found by a \
+             client that opens the same store by its absolute path from somewhere else"
+        );
+    }
+
+    /// Regression cover for the copied-project guard, in the legacy shape: the
+    /// relative record travels with a `cp -r`, and it must still read as the
+    /// ORIGINAL's store, because that is where the process that wrote it runs.
+    #[cfg(target_os = "linux")]
+    #[test]
+    fn a_relative_record_copied_with_the_project_is_still_refused() {
+        let root = std::env::temp_dir().join(format!("reflow2-relcopy-{}", std::process::id()));
+        let _original = a_store_under(&root, "original");
+        let copy = a_store_under(&root, "copy");
+        let mut server = a_process_running_in(&root.join("original"));
+        let mut r = rv_for(".reflow2/graph");
+        r.pid = server.id();
+        let attached = is_for_this_graph(&r, copy.to_str().unwrap());
+        let _ = server.kill();
+        let _ = server.wait();
+        let _ = std::fs::remove_dir_all(&root);
+        assert!(
+            !attached,
+            "a relative record copied along with a project names the original's store, and the \
+             copy must not attach to the original's server"
+        );
+    }
+
+    /// THE CAUSE, pinned at the writer: what a daemon records must mean the same
+    /// store to every reader, so it is never left relative.
+    #[test]
+    fn the_recorded_graph_path_is_absolute_whatever_was_typed() {
+        let here = resolved_graph_path(".");
+        assert!(
+            Path::new(&here).is_absolute(),
+            "`.` must be recorded absolutely: {here}"
+        );
+        assert_eq!(
+            PathBuf::from(&here),
+            std::fs::canonicalize(".").unwrap(),
+            "an existing path is recorded canonically"
+        );
+        let not_yet = resolved_graph_path("no-such-dir-yet/.reflow2/graph");
+        assert!(
+            Path::new(&not_yet).is_absolute(),
+            "a path that does not exist yet is still made absolute: {not_yet}"
+        );
+        let already = "/tmp/some/abs/.reflow2/graph";
+        assert_eq!(
+            resolved_graph_path(already),
+            already,
+            "an absolute path is kept"
+        );
     }
 
     #[test]
