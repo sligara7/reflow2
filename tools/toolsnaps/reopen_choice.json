@@ -1,0 +1,44 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Revisit something you settled: take an earlier choice up again without losing the fact that it was once settled. Mints a NEW proposed choice that retires the original, which stays accepted and untouched, so the record keeps both the settlement and the revisiting. Pass the road originally taken's location (fork_point gives it) and it becomes the first alternative; omit it and nothing is invented. Refuses a choice that is not accepted, an id that exists, and a choice already being revisited. The owner's act: never run it on your own judgement. Ask for this when the owner has decided an earlier choice needs to be made again.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "decision_id": {
+        "description": "The ACCEPTED decision being re-opened. It stays accepted and untouched.",
+        "type": "string"
+      },
+      "name": {
+        "description": "The new decision's name — the question as it is now asked.",
+        "type": "string"
+      },
+      "new_id": {
+        "description": "The id of the NEW proposed decision that re-asks the question.",
+        "type": "string"
+      },
+      "reason": {
+        "description": "Why it is being re-opened: the evidence, in a sentence or two.\n`fork_point` lists the bad news behind the decision.",
+        "type": "string"
+      },
+      "road_taken_location": {
+        "default": null,
+        "description": "Where the road originally taken lives — `fork_point` gives it\n(`git:<commit>:<path>` or the epoch's export). Given, that road is\nregistered as the first alternative; omitted, nothing is invented.",
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "required": [
+      "decision_id",
+      "new_id",
+      "name",
+      "reason"
+    ],
+    "type": "object"
+  },
+  "name": "reopen_choice"
+}

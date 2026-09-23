@@ -79,6 +79,9 @@ NON_TOOL_TERMS = {
     # Choice bone names — the doubt trace only has evidence once a failing run
     # is fed back with them.
     "observed_by_file", "record_events",
+    # revise-design (2026-09-23): the reopen_choice FIELD that carries the
+    # road taken — naming it is how the road gets registered, not invented.
+    "road_taken_location",
     # feedback (2026-09-12): field names of usage_report's reply and the
     # disposition vocabulary the skill asks the agent to write.
     "never_called", "other", "refusals_by_tool", "unexplained",

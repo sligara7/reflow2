@@ -589,6 +589,75 @@ impl ReflowService {
     }
 
     #[tool(
+        description = "Where would going back to a settled choice start from? For one accepted \
+                       decision: the design version it is pinned to and that version's export \
+                       hash, what it governs, what has changed under it since, the bad news now \
+                       behind it, the roads registered beside it, and whether it was already \
+                       re-opened. When no version is recorded, the earliest committed export \
+                       containing it is found in git and returned as EARLIEST EVIDENCE, never as \
+                       when it was decided. Reads only; nothing is re-opened. \
+                       Ask for this when you are thinking of going back on an earlier choice and want to see what you would be returning to.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn fork_point(
+        &self,
+        Parameters(req): Parameters<crate::service::ForkPointReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let fp = {
+            let g = self.graph.read().await;
+            g.fork_point(&req.decision_id).map_err(dyno_err)?
+        };
+        let mut payload = serde_json::to_value(&fp).map_err(ser_err)?;
+        if fp.epoch.is_none() && fp.status == "accepted" {
+            let path = req
+                .export_path
+                .map(std::path::PathBuf::from)
+                .or_else(|| self.auto_export_status().map(|(p, _)| p.into()))
+                .or_else(|| self.tree_root().map(|r| r.join("docs/design/reflow2.json")));
+            let git = match path {
+                Some(p) => match crate::git::earliest_export_containing(&p, &req.decision_id) {
+                    Ok(ev) => serde_json::to_value(ev).map_err(ser_err)?,
+                    Err(why) => json!({ "not_found": why }),
+                },
+                None => json!({ "not_found": "no export path: pass export_path" }),
+            };
+            if let Some(obj) = payload.as_object_mut() {
+                obj.insert("earliest_evidence_in_git".into(), git);
+            }
+        }
+        ok_json(payload)
+    }
+
+    #[tool(
+        description = "Revisit something you settled: take an earlier choice up again without \
+                       losing the fact that it was once settled. Mints a NEW proposed choice that \
+                       retires the original, which stays accepted and untouched, so the record \
+                       keeps both the settlement and the revisiting. Pass the road originally \
+                       taken's location (fork_point gives it) and it becomes the first \
+                       alternative; omit it and nothing is invented. Refuses a choice that is not \
+                       accepted, an id that exists, and a choice already being revisited. The \
+                       owner's act: never run it on your own judgement. \
+                       Ask for this when the owner has decided an earlier choice needs to be made again.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn reopen_choice(
+        &self,
+        Parameters(req): Parameters<crate::service::ReopenDecisionReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.write_lock().await?;
+        ok_json(
+            g.reopen_decision(
+                &req.decision_id,
+                &req.new_id,
+                &req.name,
+                &req.reason,
+                req.road_taken_location.as_deref(),
+            )
+            .map_err(dyno_err)?,
+        )
+    }
+
+    #[tool(
         description = "Of your N things of kind X, how many carry relation R? The core                        \
                        traceability question, asked of ANY node type and ANY edge type the                      \
                        schema declares — how many Requirements have an incoming VERIFIES, how                   \

@@ -3493,6 +3493,37 @@ pub struct ObservedVerificationReq {
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct ForkPointReq {
+    /// The settled decision you might go back to (`dec:...`).
+    pub decision_id: String,
+    /// The committed design export to search when the decision is pinned to no
+    /// epoch. Defaults to the export this server keeps current, else
+    /// `docs/design/reflow2.json` under the project root.
+    #[serde(default)]
+    pub export_path: Option<String>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct ReopenDecisionReq {
+    /// The ACCEPTED decision being re-opened. It stays accepted and untouched.
+    pub decision_id: String,
+    /// The id of the NEW proposed decision that re-asks the question.
+    pub new_id: String,
+    /// The new decision's name — the question as it is now asked.
+    pub name: String,
+    /// Why it is being re-opened: the evidence, in a sentence or two.
+    /// `fork_point` lists the bad news behind the decision.
+    pub reason: String,
+    /// Where the road originally taken lives — `fork_point` gives it
+    /// (`git:<commit>:<path>` or the epoch's export). Given, that road is
+    /// registered as the first alternative; omitted, nothing is invented.
+    #[serde(default)]
+    pub road_taken_location: Option<String>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct ObservedFileReq {
     /// The test file, as a path relative to the project root.
     pub location: String,

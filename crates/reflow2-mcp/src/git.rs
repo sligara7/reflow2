@@ -246,3 +246,109 @@ pub fn taken_at(path: &Path) -> Option<reflow2_core::TakenAt> {
         dirty,
     })
 }
+
+/// The earliest committed design export that contains a node — the fork point's
+/// address for a decision the design never pinned to an epoch.
+///
+/// ⭐ EVIDENCE, NOT ORIGIN (`dec:step-4-fork-point-finds-its-address-in-git-and-reopen-is-one-call`):
+/// this is the first commit on HEAD's first-parent line whose export holds the
+/// id, which is when the RECORD first carried it — never claimed as when it was
+/// decided, the same rule `dec:temporal-backfill-from-releases` set.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct EarliestEvidence {
+    pub commit: String,
+    /// The commit date, `YYYY-MM-DD`.
+    pub date: String,
+    /// The export's own `content_hash` there — `None` for exports older than
+    /// the hash chain, which carry none.
+    pub content_hash: Option<String>,
+    /// `git:<commit>:<path>` — what `reopen_decision` takes as the road taken.
+    pub location: String,
+    /// How many committed exports were read to find it.
+    pub reads: usize,
+}
+
+/// Find [`EarliestEvidence`] for `node_id` in the history of `path`.
+///
+/// ⚠️ BISECTED, AND WHY: a pickaxe search (`git log -S`) over this repository's
+/// 750 committed exports measured 36 s on 2026-09-23; one `git show` of an
+/// export measured 0.3 s. A node, once recorded, stays in the export, so
+/// presence is monotonic along the first-parent line and ~10 reads find the
+/// boundary. If a node was deleted and re-added the answer is still A commit
+/// that introduced it, which the caller reports as evidence rather than origin.
+/// Every failure returns `Err` with the reason in words.
+pub fn earliest_export_containing(path: &Path, node_id: &str) -> Result<EarliestEvidence, String> {
+    let dir: PathBuf = path
+        .parent()
+        .filter(|p| !p.as_os_str().is_empty())
+        .map(PathBuf::from)
+        .unwrap_or_else(|| PathBuf::from("."));
+    let toplevel = git(&dir, &["rev-parse", "--show-toplevel"])
+        .ok_or_else(|| "the export is not inside a git work tree".to_string())?;
+    let root = std::fs::canonicalize(&toplevel).unwrap_or_else(|_| PathBuf::from(&toplevel));
+    let abs = std::fs::canonicalize(path).unwrap_or_else(|_| path.to_path_buf());
+    let rel = abs
+        .strip_prefix(&root)
+        .map_err(|_| "the export is outside the repository".to_string())?
+        .to_string_lossy()
+        .replace('\\', "/");
+    let list = git(
+        &root,
+        &[
+            "rev-list",
+            "--first-parent",
+            "--reverse",
+            "HEAD",
+            "--",
+            &rel,
+        ],
+    )
+    .ok_or_else(|| format!("git could not list the history of {rel}"))?;
+    let commits: Vec<&str> = list.lines().filter(|l| !l.is_empty()).collect();
+    if commits.is_empty() {
+        return Err(format!("{rel} has no committed history"));
+    }
+    let needle = format!("\"{node_id}\"");
+    let mut reads = 0usize;
+    let mut holds = |c: &str| -> Option<Vec<u8>> {
+        reads += 1;
+        let blob = git_bytes(&root, &["show", &format!("{c}:{rel}")])?;
+        let found = blob.windows(needle.len()).any(|w| w == needle.as_bytes());
+        found.then_some(blob)
+    };
+    let last = commits.len() - 1;
+    let Some(mut found_blob) = holds(commits[last]) else {
+        return Err(format!(
+            "no committed export of {rel} contains {node_id} — it has never been committed"
+        ));
+    };
+    let (mut lo, mut hi) = (0usize, last);
+    while lo < hi {
+        let mid = (lo + hi) / 2;
+        match holds(commits[mid]) {
+            Some(blob) => {
+                hi = mid;
+                found_blob = blob;
+            }
+            None => lo = mid + 1,
+        }
+    }
+    // `found_blob` is always the export at commits[hi]: it is set on every
+    // containing read, and `hi` moves only on one.
+    let commit = commits[hi].to_string();
+    let date = git(&root, &["show", "-s", "--format=%cs", &commit]).unwrap_or_default();
+    // The hash is the export's first key; read it without parsing 20 MB.
+    let head = String::from_utf8_lossy(&found_blob[..found_blob.len().min(400)]).to_string();
+    let content_hash = head
+        .split("\"content_hash\"")
+        .nth(1)
+        .and_then(|rest| rest.split('"').nth(1))
+        .map(str::to_string);
+    Ok(EarliestEvidence {
+        location: format!("git:{commit}:{rel}"),
+        commit,
+        date,
+        content_hash,
+        reads,
+    })
+}
