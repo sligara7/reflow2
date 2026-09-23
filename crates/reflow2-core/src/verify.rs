@@ -911,6 +911,11 @@ pub struct VerificationDriftReport {
     pub recorded_events: Vec<String>,
     /// Seeds for `propagate_from` — the diverging checks' VERIFIES targets.
     pub propagation_seeds: Vec<String>,
+    /// Checks stamped as COMPARED AGAINST A REAL RUN this pass — every
+    /// observed check, agreeing or not. Empty unless recording: the stamp is
+    /// what lets a design say a result ever came back into it, and before it
+    /// an agreeing run left no trace at all.
+    pub stamped: Vec<String>,
 }
 
 /// Options for a P4 reconcile pass (the same shape as its two siblings).
@@ -932,12 +937,18 @@ fn agrees(declared: &str, observed: &str) -> bool {
 impl DesignGraph {
     /// Compare what a real run reported against what the design records.
     ///
-    /// Never edits the design — the answer to a divergence is
+    /// Never edits a CLAIM — the answer to a divergence is
     /// [`set_verification_status`](Self::set_verification_status) with what
     /// the run actually said (or fixing the thing under test), confirmed by
     /// the next reconcile, which resolves the event on agreement. Recording
     /// is optional; resolution of this pass's own prior events is not, since
     /// a divergence no longer observed is answered by definition.
+    ///
+    /// With recording on, every observed check is also STAMPED with the run's
+    /// outcome and date (`last_reconciled_*`) — agreeing or not — because an
+    /// agreeing run used to leave no trace, and "no result has ever come back"
+    /// was then indistinguishable from "every result matched". `status` is
+    /// carried over untouched. Read by [`loop_closure`](Self::loop_closure).
     pub fn reconcile_verification(
         &mut self,
         observed: &[ObservedVerification],
@@ -948,6 +959,7 @@ impl DesignGraph {
         let mut unknown_ids = Vec::new();
         let mut rejected = Vec::new();
         let mut covered: Vec<String> = Vec::new();
+        let mut stamped: Vec<String> = Vec::new();
 
         for obs in observed {
             if !OBSERVED_OUTCOMES.contains(&obs.outcome.as_str()) {
@@ -962,6 +974,10 @@ impl DesignGraph {
                 continue;
             };
             covered.push(obs.verification_id.clone());
+            if options.record_events {
+                self.stamp_reconciled(&ver, &obs.outcome, options.detected_at.as_deref())?;
+                stamped.push(obs.verification_id.clone());
+            }
             let declared = ver
                 .properties
                 .get("status")
@@ -1100,6 +1116,8 @@ impl DesignGraph {
         propagation_seeds.dedup();
         unknown_ids.sort();
         rejected.sort();
+        stamped.sort();
+        stamped.dedup();
 
         Ok(VerificationDriftReport {
             findings,
@@ -1110,7 +1128,37 @@ impl DesignGraph {
             resolved_events,
             recorded_events,
             propagation_seeds,
+            stamped,
         })
+    }
+
+    /// Record on a check that a real run was compared against it — when, and
+    /// what the run reported. `status`, the design's claim, is carried over
+    /// untouched: the reconcile still never edits a claim, it only notes that
+    /// one was tested. A dated failure is also kept in `last_failed_run_at`,
+    /// which a later passing run does not clear, so a failure that came back
+    /// and was then fixed still reads as the loop having fired.
+    fn stamp_reconciled(
+        &mut self,
+        ver: &crate::foundation::store::StoredNode,
+        outcome: &str,
+        at: Option<&str>,
+    ) -> Result<(), DynoError> {
+        let failed_at = at.filter(|_| outcome == "failed");
+        let mut props = Props::new()
+            .set("last_reconciled_outcome", outcome)
+            .set_opt("last_reconciled_at", at)
+            .set_opt("last_failed_run_at", failed_at);
+        for (k, v) in &ver.properties {
+            let replaced = k == "last_reconciled_outcome"
+                || (k == "last_reconciled_at" && at.is_some())
+                || (k == "last_failed_run_at" && failed_at.is_some());
+            if !replaced {
+                props = props.set(k, v.clone());
+            }
+        }
+        self.create_node(node::VERIFICATION, &ver.node_id, props)?;
+        Ok(())
     }
 }
 

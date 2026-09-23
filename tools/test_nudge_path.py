@@ -233,7 +233,13 @@ class TheServerKnowsWhetherTheNetExists(unittest.TestCase):
             stderr=subprocess.PIPE,
             text=True,
             bufsize=1,
-            env={**os.environ, "RUST_LOG": "error"},
+            # HOME is the project, not the developer's: the server also counts
+            # a MACHINE-WIDE OpenCode plugin (~/.config/opencode/plugins/) as
+            # an installed nudge, so on a box that has one this test read the
+            # developer's machine instead of the bare project it builds.
+            # Measured 2026-09-22 — green in CI, red on the dev box the day
+            # that plugin was installed there.
+            env={**os.environ, "RUST_LOG": "error", "HOME": str(project)},
         )
         self.addCleanup(proc.terminate)
         proc.stdin.write(

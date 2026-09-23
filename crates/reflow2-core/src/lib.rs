@@ -61,6 +61,7 @@ pub mod identity;
 pub mod ility;
 pub mod ingest;
 pub mod llm;
+pub mod loop_closure;
 pub mod manual_work;
 pub mod maturity;
 pub mod merge;
@@ -166,6 +167,7 @@ pub use ingest::{
 pub use llm::{
     LlmBackend, LlmError, LlmParams, LlmRequest, LlmResponse, MockLlmBackend, complete_json,
 };
+pub use loop_closure::{LoopClosure, LoopClosureState};
 pub use maturity::{CoveredSeam, MaturityBand, MaturityProfile, SeamCoverage};
 pub use merge::{
     AutoResolution, ConflictKind, MergeAction, MergeApplyReport, MergeConflict, MergeError,

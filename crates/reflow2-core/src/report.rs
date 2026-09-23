@@ -482,6 +482,17 @@ pub struct LoopStatus {
     /// would make `clean` unreachable on any design whose last run was
     /// yesterday, which is the permanently-red-check failure rebuilt.
     pub verifications: Vec<VerificationRecency>,
+    /// Has a real result ever come back into this design? See
+    /// [`crate::loop_closure`]. Rides here because this is the call every
+    /// session already makes (step 3 of the ordering Anthony approved on
+    /// 2026-09-22), so the fact reaches a reader without a new tool to find.
+    ///
+    /// SAID IN `next`, NEVER COUNTED IN `clean`. Anthony: a user who never
+    /// comes back from the inspection has made a choice, and the design's job
+    /// is to SHOW it, not to hold it against them — so a design that has never
+    /// fed a run back can still be clean. It is in `next` rather than only
+    /// here because a field beside the list is measured not to be read.
+    pub loop_closure: crate::loop_closure::LoopClosure,
     /// The assigned decisions THEMSELVES, not only how many.
     ///
     /// `unsettled_assigned_decisions` counted them and nothing listed them, so
@@ -1170,6 +1181,21 @@ impl DesignGraph {
             None => next.is_empty(),
         };
 
+        // AFTER `clean`, deliberately: see `LoopStatus::loop_closure`. Only an
+        // unscoped answer says it — it is a fact about the design, and the
+        // scoped `next` already names what it leaves out.
+        let loop_closure = self.loop_closure()?;
+        if scope.is_none()
+            && loop_closure.state == crate::loop_closure::LoopClosureState::NeverClosed
+        {
+            next.push(format!(
+                "NO REAL RESULT HAS EVER COME BACK: {} Not counted against `clean` — feeding \
+                 runs back is the owner's choice — but say it when reporting status. The \
+                 route in is reconcile_verification with record_events and a detected_at.",
+                loop_closure.summary
+            ));
+        }
+
         Ok(LoopStatus {
             unsurfaced_gaps,
             unanswered_questions,
@@ -1185,6 +1211,7 @@ impl DesignGraph {
             deferrals_open,
             deferrals,
             verifications: self.verification_recency()?,
+            loop_closure,
             assigned_decisions,
             gaps_on_owned_ground,
             scope,

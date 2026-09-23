@@ -56,6 +56,9 @@ you. The standing rule is in AGENTS.md.
   says whether somebody has since done the work it was complaining about. `rerun_owed` is
   three-valued: null means a date is missing on one side and nobody can say — never read null
   as "no".
+- `loop_status` → `loop_closure` — **has a real test result ever come back into this design?**
+  `never_closed` means checks claim results and no real run has ever been compared against any of
+  them, so every pass on record is what somebody typed. Read it before quoting any pass rate.
 - `scan_nodes` for `Contributor` — who is in this design, and whether the person you are
   talking to has a recorded `description` of who they are. See **Who you are talking to**.
 
@@ -161,6 +164,14 @@ dump. Aim for something they could read in under a minute:
    the narrower thing: *"of the 193 needs you have written down, 151 have something built and
    passing behind them."* If the gap between those two readings matters here, `coverage_report`
    names the files no Artifact points at, which is the honest edge of what the graph can see.
+
+   ⭐ **THEN SAY WHETHER ANY OF THOSE PASSES WAS EVER CHECKED AGAINST A REAL RUN** — the
+   `loop_closure` summary, in one plain sentence. A design whose loop has `never_closed` holds
+   passes somebody recorded and no result that ever came back; say so beside the delivery line,
+   because the two read identically otherwise. It is a fact about the design and not a verdict on
+   the owner: feeding results back is their choice, and the design's job is only to make that
+   choice visible. `a_failure_came_back` is the healthy sign that the loop has actually fired, not
+   bad news. Skip it only for `nothing_to_close`.
 
 4. **The shape so far** — how many requirements, what the main parts are and how they connect.
    Name the parts, don't list node ids.

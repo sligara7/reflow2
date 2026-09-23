@@ -211,6 +211,24 @@
       "kind": "machine_written",
       "reason": "The node's property bag at the epoch, captured by record_change.",
       "written_by": "record_change (temporal.rs)"
+    },
+    {
+      "property": "Verification.last_failed_run_at",
+      "kind": "machine_written",
+      "reason": "reconcile_verification with record_events stamps the date of a run that reported the check FAILED, and a later pass does not clear it. A caller-set value would assert a run nobody fed back — the exact thing the stamp exists to tell apart from a typed claim (dec:a-reconcile-stamps-every-check-it-compared).",
+      "written_by": "reconcile_verification (verify.rs)"
+    },
+    {
+      "property": "Verification.last_reconciled_at",
+      "kind": "machine_written",
+      "reason": "reconcile_verification with record_events stamps the run's detected_at on every check it compared. A caller-set value would assert a run nobody fed back — the exact thing the stamp exists to tell apart from a typed claim (dec:a-reconcile-stamps-every-check-it-compared).",
+      "written_by": "reconcile_verification (verify.rs)"
+    },
+    {
+      "property": "Verification.last_reconciled_outcome",
+      "kind": "machine_written",
+      "reason": "reconcile_verification with record_events stamps what the real run REPORTED, agreeing or not. A caller-set value would assert a run nobody fed back — the exact thing the stamp exists to tell apart from a typed claim (dec:a-reconcile-stamps-every-check-it-compared).",
+      "written_by": "reconcile_verification (verify.rs)"
     }
   ]
 }
