@@ -109,8 +109,26 @@ schema:
 
     REALIZES:
       from: Artifact
-      to: "*"
-      extraction_hint: An Artifact implements/realizes a Capability or Component.
+      # ENUMERATED 2026-09-23 on Anthony's word
+      # (dec:realizes-is-restricted-to-capability-component-and-interface).
+      # It was `"*"`, and MEASURED before narrowing it: 412 Capability, 115
+      # Component, 1 Interface — and 44 edges onto other types, every one the
+      # wrong edge: 29 ChangeEvent (the change records its files with CHANGED),
+      # 7 Requirement (a test IMPLEMENTS a Verification that VERIFIES it), 6
+      # Verification (IMPLEMENTS), 2 TemporalFact (DOCUMENTS). All 44 were
+      # repaired to those edges before this line changed.
+      #
+      # ⚠️ THE VERIFIES LESSON, APPLIED IN ADVANCE: narrowing `to` makes every
+      # existing edge onto a dropped type unimportable, and an import is
+      # all-or-nothing. The one class with a single right answer — REALIZES
+      # onto a Verification, the only class found in the other designs on the
+      # maintainer's machine — is rewritten to IMPLEMENTS on open
+      # (migrate_realizes_onto_checks) and on import (reported in
+      # `migrated_edges`). Any other dropped target is refused BY NAME, naming
+      # the edge that fits (artifact::realizes_target_hint). Re-derive from live
+      # edges before ever trimming this list further.
+      to: ["Capability", "Component", "Interface"]
+      extraction_hint: An Artifact implements/realizes a Capability, a Component, or the Interface it serves. A file that IS a check IMPLEMENTS the Verification; one that describes something DOCUMENTS it; a change records its files with CHANGED.
       properties:
         completeness: { type: enum, values: [stub, partial, complete] }
         # Added 2026-08-16 for `dec:should-a-realizes-edge-say-that-nobody-checked-the-file-still-obeys-the-rule`.

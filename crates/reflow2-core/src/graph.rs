@@ -440,6 +440,10 @@ impl DesignGraph {
         // on-disk store uniform when nothing is stamped on it to key a
         // one-shot migration.
         graph.migrate_authored_by_roles()?;
+        // REALIZES onto a Verification became IMPLEMENTS on 2026-09-23 when
+        // REALIZES stopped accepting any target; a store written before then is
+        // brought over on open, the same way and for the same reason.
+        graph.migrate_realizes_onto_checks()?;
         Ok((graph, provenance))
     }
 
@@ -2358,6 +2362,48 @@ impl DesignGraph {
                 &e.to_id,
                 props,
             )?;
+            moved += 1;
+        }
+        Ok(moved)
+    }
+
+    /// Rewrite every stored `Artifact REALIZES Verification` as `Artifact
+    /// IMPLEMENTS Verification`, and return how many moved.
+    ///
+    /// The ONE class of the old wildcard's misuse with a single right answer:
+    /// a file registered against a check is that check's executable form,
+    /// which is what IMPLEMENTS says and what `link_artifact` has drawn since
+    /// #567. MEASURED before this was written: every refused REALIZES found
+    /// in the other designs on the maintainer's machine (dynograph-foundation
+    /// 3, qbench 5) was this class. Idempotent — one edge scan, runs on every
+    /// open like the AUTHORED_BY migration — so a store is uniform without a
+    /// one-shot marker. Other refused targets are NOT guessed at: they stay
+    /// and are named when an export carrying them is imported.
+    pub fn migrate_realizes_onto_checks(&mut self) -> Result<usize, DynoError> {
+        let index = self.node_type_index()?;
+        let mut moved = 0usize;
+        for e in self.engine.scan_all_edges(&self.graph_id)? {
+            if e.edge_type != edge::REALIZES
+                || index.get(&e.to_id).map(String::as_str) != Some(node::VERIFICATION)
+                || index.get(&e.from_id).map(String::as_str) != Some(node::ARTIFACT)
+            {
+                continue;
+            }
+            let already = self
+                .outgoing(&e.from_id, Some(edge::IMPLEMENTS))?
+                .iter()
+                .any(|x| x.to_id == e.to_id);
+            if !already {
+                self.create_edge(
+                    edge::IMPLEMENTS,
+                    node::ARTIFACT,
+                    &e.from_id,
+                    node::VERIFICATION,
+                    &e.to_id,
+                    Props::new(),
+                )?;
+            }
+            self.delete_edge(edge::REALIZES, &e.from_id, &e.to_id)?;
             moved += 1;
         }
         Ok(moved)
