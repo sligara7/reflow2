@@ -368,7 +368,7 @@ python3 tools/render_skills_and_tools.py --check         # docs/skills-and-tools
 > `test_degraded_server`, `test_nudge_path`, `test_loop_nudge`, `test_render_views`,
 > `test_stale_seat`, `test_reflow2_check`, `test_impact_of_diff`, `check_doc_versions`, `test_check_doc_versions`,
 > `test_skill_lint`, `self_host_uses_documents`, `test_check_intent_authority`, `test_check_consumer_reach`, `test_check_verification_ratchet`, `test_vocabulary_reach`,
-> `test_export_to_reaches_the_daemon`, `test_feedback_is_a_computed_tally`,
+> `test_export_to_reaches_the_daemon`, `test_shared_attach_from_another_folder`, `test_feedback_is_a_computed_tally`,
 > `test_a_lesson_is_served_at_the_step` — so **green here is not green
 > there**, and *"believe CI"* below is not a figure of speech. Run the ones your change touches;
 > [docs/sharpening.md](docs/sharpening.md) says which instrument covers what.
