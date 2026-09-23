@@ -317,6 +317,8 @@ async fn obsoleted_by_a_non_decision_is_not_a_discontinuation() {
 async fn it_is_not_a_capability_only_field() {
     let s = ReflowService::in_memory().expect("service");
     j!(s.add_requirement(Parameters(RequirementReq {
+        source: None,
+        provenance: None,
         id: "req:gone".into(),
         name: Some("A need we stopped having".into()),
         statement: Some("Withdrawn by decision.".into()),

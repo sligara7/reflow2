@@ -73,6 +73,8 @@ const IDEA: &str = "A lost reading heals itself because the outdoor unit sends c
 
 fn requirement(id: &str, name: &str) -> RequirementReq {
     RequirementReq {
+        source: None,
+        provenance: None,
         id: id.into(),
         name: Some(name.into()),
         statement: Some(IDEA.into()),
@@ -322,6 +324,8 @@ async fn a_requirement_promoted_from_the_idea_that_spawned_it_is_not_refused() {
         "rationale": "Counter: campaigns have participants stories do not."
     })).unwrap())));
     let out = j!(s.add_requirement(Parameters(RequirementReq {
+        source: None,
+        provenance: None,
         id: "req:a-campaign-is-a-story".into(),
         name: Some("A campaign is just another story with a longer arc".into()),
         statement: Some("A campaign is just another story with a longer arc and several authors, and is modelled as one.".into()),

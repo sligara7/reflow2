@@ -54,6 +54,8 @@ fn scratch(name: &str) -> std::path::PathBuf {
 
 fn req(id: &str) -> RequirementReq {
     RequirementReq {
+        source: None,
+        provenance: None,
         id: id.into(),
         name: Some(id.into()),
         statement: Some(format!("Requirement {id} exists so the design moves.")),

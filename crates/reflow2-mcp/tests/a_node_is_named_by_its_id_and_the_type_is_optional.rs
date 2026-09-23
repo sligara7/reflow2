@@ -25,6 +25,8 @@ macro_rules! j {
 async fn seeded() -> ReflowService {
     let s = ReflowService::in_memory().expect("service");
     j!(s.add_requirement(Parameters(RequirementReq {
+        source: None,
+        provenance: None,
         id: "req:fast".into(),
         name: Some("Fast".into()),
         statement: Some("Answer in under a second.".into()),

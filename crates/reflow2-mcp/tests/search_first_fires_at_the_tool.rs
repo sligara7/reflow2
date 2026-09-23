@@ -56,6 +56,8 @@ fn req(
     distinct_from: Option<Vec<String>>,
 ) -> RequirementReq {
     RequirementReq {
+        source: None,
+        provenance: None,
         id: id.into(),
         name: Some(name.into()),
         statement: Some(statement.into()),

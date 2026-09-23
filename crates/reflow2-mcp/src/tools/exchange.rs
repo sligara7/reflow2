@@ -272,6 +272,7 @@ impl ReflowService {
                 if chars > budget {
                     return ok_json(json!({
                         "published": surface.published,
+                        "evidence": surface.evidence,
                         "nodes": surface.document.nodes.len(),
                         "edges": surface.document.edges.len(),
                         "withheld_nodes": surface.withheld_nodes,
@@ -315,6 +316,7 @@ impl ReflowService {
                 ok_json(json!({
                     "path": path,
                     "published": surface.published,
+                    "evidence": surface.evidence,
                     "nodes": surface.document.nodes.len(),
                     "edges": surface.document.edges.len(),
                     "withheld_nodes": surface.withheld_nodes,

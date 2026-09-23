@@ -70,6 +70,8 @@ fn git(dir: &std::path::Path, args: &[&str]) -> String {
 
 fn req(id: &str) -> RequirementReq {
     RequirementReq {
+        source: None,
+        provenance: None,
         id: id.into(),
         name: Some(id.into()),
         statement: Some(format!(

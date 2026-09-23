@@ -104,6 +104,8 @@ fn decision(id: &str, status: Option<&str>, approver: Option<&str>) -> DecisionR
 
 fn requirement(id: &str, status: Option<&str>, approver: Option<&str>) -> RequirementReq {
     RequirementReq {
+        source: None,
+        provenance: None,
         id: id.into(),
         name: Some("A dropped reading costs nothing".into()),
         statement: Some("A lost packet must not lose a rainfall total.".into()),

@@ -55,6 +55,8 @@ const SECOND: &str = "Every reading carries the running total, and the receiver 
 
 fn req(id: &str, name: &str, statement: &str) -> RequirementReq {
     RequirementReq {
+        source: None,
+        provenance: None,
         id: id.into(),
         name: Some(name.into()),
         statement: Some(statement.into()),
