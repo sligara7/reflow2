@@ -694,6 +694,26 @@ impl DesignGraph {
             });
         }
 
+        // A TARGET A FILE CANNOT REALIZE IS REFUSED BEFORE ANYTHING IS WRITTEN,
+        // naming the edge that fits. REALIZES points only at a Capability, a
+        // Component or an Interface (`dec:realizes-is-restricted-to-capability-
+        // component-and-interface`); a Verification is routed to IMPLEMENTS
+        // below. Refused HERE rather than left to the schema, because the
+        // schema would refuse only the edge — after the Artifact and its
+        // Fragment were already written.
+        if opts.target_type != node::VERIFICATION
+            && let Some(hint) = realizes_target_hint(&opts.target_type)
+        {
+            return Err(DynoError::Validation {
+                node_type: edge::REALIZES.into(),
+                property: "target_type".into(),
+                message: format!(
+                    "a file cannot be linked to `{}` ({}) with link_artifact — {hint}",
+                    opts.target_id, opts.target_type
+                ),
+            });
+        }
+
         // THE NAME IN EFFECT: the caller's if they gave one, otherwise the one
         // the design already holds. Resolved rather than merely made optional,
         // because the provenance Fragment's `title` is a REQUIRED property and
@@ -1081,4 +1101,38 @@ pub struct ConformanceTally {
     /// Up to [`UNCHECKED_SAMPLE`] unchecked links, so the number is actionable
     /// and not merely alarming. `unchecked` carries the true total.
     pub unchecked_sample: Vec<String>,
+}
+
+/// The node types a file may REALIZE — what REALIZES is actually used for,
+/// measured before it was enumerated (`fact:37-of-the-38-non-obvious-realizes-
+/// edges-are-the-wrong-edge`): 412 Capability, 115 Component, 1 Interface
+/// right; 44 others wrong.
+pub const REALIZES_TARGETS: &[&str] = &[node::CAPABILITY, node::COMPONENT, node::INTERFACE];
+
+/// For a target a file may NOT realize, the edge that says what was meant —
+/// `None` for the three it may. Shared by `link_artifact`'s refusal and
+/// import's, so both name the same remedy.
+///
+/// Each line is the edge the REALIZES repair of 2026-09-23 actually wrote for
+/// that class, not a guess at one.
+pub fn realizes_target_hint(target_type: &str) -> Option<String> {
+    if REALIZES_TARGETS.contains(&target_type) {
+        return None;
+    }
+    Some(match target_type {
+        t if t == node::VERIFICATION => {
+            "a file that IS a check IMPLEMENTS it (link_artifact draws that for a Verification)"
+                .to_string()
+        }
+        t if t == node::CHANGE_EVENT => "a file does not realize a change — the change records \
+             the files it touched with CHANGED (change → artifact; add_change_event's `affected`)"
+            .to_string(),
+        t if t == node::REQUIREMENT => "a file does not realize a requirement — code REALIZES the \
+             Capability that SATISFIES it, and a test IMPLEMENTS a Verification that VERIFIES it"
+            .to_string(),
+        other => format!(
+            "a file realizes only a Capability, a Component or an Interface; a file that \
+             describes a {other} DOCUMENTS it"
+        ),
+    })
 }

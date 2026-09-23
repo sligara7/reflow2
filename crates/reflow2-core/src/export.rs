@@ -308,6 +308,12 @@ pub struct ImportReport {
     /// store already carries.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub adopted_identity: Option<String>,
+    /// Edges written as something other than they arrived, each named with
+    /// what it became. Today one rule: a legacy `Artifact REALIZES
+    /// Verification` becomes IMPLEMENTS (2026-09-23, when REALIZES stopped
+    /// accepting any target). Reported, never done in silence.
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub migrated_edges: Vec<String>,
     /// Node-reference properties whose value names a node that is neither in
     /// the document nor already in the graph. Reported, never a refusal.
     ///
@@ -575,6 +581,7 @@ impl DesignGraph {
             }
             let mut edges_written = 0;
             let mut skipped_edges = Vec::new();
+            let mut migrated_edges: Vec<String> = Vec::new();
             for (index, e) in doc.edges.iter().enumerate() {
                 let from = types
                     .get(e.from_id.as_str())
@@ -594,7 +601,25 @@ impl DesignGraph {
                         if e.edge_type == edge::AUTHORED_BY {
                             crate::graph::normalize_authored_by_props(&mut props);
                         }
-                        match self.create_edge(&e.edge_type, ft, &e.from_id, tt, &e.to_id, props) {
+                        // A legacy `Artifact REALIZES Verification` arrives as
+                        // the IMPLEMENTS it always meant (see
+                        // `migrate_realizes_onto_checks`) and is REPORTED, so a
+                        // design written before 2026-09-23 still restores. Its
+                        // REALIZES properties have no home on IMPLEMENTS.
+                        let mut edge_type = e.edge_type.as_str();
+                        if edge_type == edge::REALIZES
+                            && ft == node::ARTIFACT
+                            && tt == node::VERIFICATION
+                        {
+                            edge_type = edge::IMPLEMENTS;
+                            props.clear();
+                            migrated_edges.push(format!(
+                                "REALIZES {} -> {} became IMPLEMENTS (a file that is a check \
+                                 implements it)",
+                                e.from_id, e.to_id
+                            ));
+                        }
+                        match self.create_edge(edge_type, ft, &e.from_id, tt, &e.to_id, props) {
                             Ok(stored) => {
                                 edges_written += 1;
                                 for key in stored.properties.keys() {
@@ -605,10 +630,17 @@ impl DesignGraph {
                                     }
                                 }
                             }
-                            Err(err) => faults.push(format!(
-                                "edges[{index}] {} {} -> {}: {err}",
-                                e.edge_type, e.from_id, e.to_id
-                            )),
+                            Err(err) => {
+                                let hint = (e.edge_type == edge::REALIZES)
+                                    .then(|| crate::artifact::realizes_target_hint(tt))
+                                    .flatten()
+                                    .map(|h| format!(" — {h}"))
+                                    .unwrap_or_default();
+                                faults.push(format!(
+                                    "edges[{index}] {} {} -> {}: {err}{hint}",
+                                    e.edge_type, e.from_id, e.to_id
+                                ))
+                            }
                         }
                     }
                     _ => skipped_edges.push(format!(
@@ -649,6 +681,7 @@ impl DesignGraph {
                         .to_string()
                 }),
                 adopted_identity: adopted_identity.clone(),
+                migrated_edges,
                 dangling_node_refs,
                 materialized,
             })
