@@ -593,7 +593,7 @@ WRITE_OPS = frozenset({
     "link_artifact", "mirror_surface", "move_component", "operates_in", "owned_by",
     "part_of_flow", "performed_in", "pin_at_epoch", "plan_epoch", "precedes",
     "provides", "realizes", "reconcile_artifacts", "reconcile_deployment", "reconcile_verification",
-    "record_alias", "record_finding", "register_alternative", "release_claim", "release_includes",
+    "record_alias", "record_finding", "register_alternative", "release_claim", "release_includes", "reopen_choice",
     "release_includes_all", "replace_text", "report_manual_work", "require_resource", "review_relations",
     "satisfies", "schedule_for", "set_artifact_checksum", "set_artifact_checksums", "set_artifact_intent",
     "set_capability_delivery", "set_capability_signature", "set_capability_status", "set_closure_criterion", "set_decision_status",

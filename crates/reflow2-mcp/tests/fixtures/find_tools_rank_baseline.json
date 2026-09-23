@@ -94,10 +94,6 @@
     ],
     [
       "add_project",
-      "genesis"
-    ],
-    [
-      "add_project",
       "set_project_mode"
     ],
     [
@@ -147,10 +143,6 @@
     [
       "authored_by",
       "review_relations"
-    ],
-    [
-      "claim_report",
-      "design_identity"
     ],
     [
       "complies_with",

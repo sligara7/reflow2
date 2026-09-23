@@ -1,0 +1,29 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "Where would going back to a settled choice start from? For one accepted decision: the design version it is pinned to and that version's export hash, what it governs, what has changed under it since, the bad news now behind it, the roads registered beside it, and whether it was already re-opened. When no version is recorded, the earliest committed export containing it is found in git and returned as EARLIEST EVIDENCE, never as when it was decided. Reads only; nothing is re-opened. Ask for this when you are thinking of going back on an earlier choice and want to see what you would be returning to.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "decision_id": {
+        "description": "The settled decision you might go back to (`dec:...`).",
+        "type": "string"
+      },
+      "export_path": {
+        "default": null,
+        "description": "The committed design export to search when the decision is pinned to no\nepoch. Defaults to the export this server keeps current, else\n`docs/design/reflow2.json` under the project root.",
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "required": [
+      "decision_id"
+    ],
+    "type": "object"
+  },
+  "name": "fork_point"
+}

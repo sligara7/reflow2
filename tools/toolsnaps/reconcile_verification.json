@@ -75,7 +75,7 @@
         "type": "array"
       },
       "observed_by_file": {
-        "description": "The same run reported BY TEST FILE — the unit a test runner actually\nreports in. Each file resolves to the checks whose `location` is that\nfile or that an Artifact at that file IMPLEMENTS; a check covered by two\nfiles takes the worst outcome. Files the design names no check for come\nback in `unmapped_locations`. `tools/test_run_to_files.py` turns\ncargo-test output or JUnit XML into this list.",
+        "description": "The same run reported BY TEST FILE — the unit a test runner actually\nreports in. Each file resolves to the checks whose `location` is that\nfile or that an Artifact at that file IMPLEMENTS; a check covered by two\nfiles takes the worst outcome. Files the design names no check for come\nback in `unmapped_locations`. `tools/run_to_files.py` turns\ncargo-test output or JUnit XML into this list.",
         "items": {
           "$ref": "#/$defs/ObservedFileReq"
         },

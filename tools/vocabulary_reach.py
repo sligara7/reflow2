@@ -267,6 +267,9 @@ WRITES_TYPE = {
     "collapse_decision": "Decision",
     "set_closure_criterion": "Project",
     "register_alternative": "Artifact",
+    # reopen_choice (2026-09-23) mints ONE Decision from `name` and `reason`;
+    # the road-taken Artifact it may register is register_alternative's.
+    "reopen_choice": "Decision",
     "forecast_readiness": "ReadinessAssessment",
     # snapshot_before_change writes BOTH: the ChangeEvent it records and the
     # Snapshot it captures, whose target it names.
