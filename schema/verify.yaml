@@ -29,6 +29,22 @@ schema:
         # and by graph_report, so a retired check stops counting as live coverage.
         status: { type: enum, values: [planned, passing, failing, skipped, blocked, superseded], default: planned, indexed: true }
         last_run_at: { type: string }
+        # Added 2026-09-22 on Anthony's word (step 3 of his approved ordering).
+        #
+        # ⭐ WHY THE STAMP EXISTS: until it, a real run fed in by
+        # reconcile_verification that AGREED with the recorded status left no
+        # trace at all — only a disagreement minted a DriftEvent — so "no test
+        # result has ever come back into this design" and "results came back and
+        # every one matched" were the same graph. The loop-closure reading on
+        # loop_status cannot tell a design that closed its loop from one that
+        # never tried without it.
+        #
+        # SEPARATE FROM `status` ON PURPOSE: `status` is the design's CLAIM and
+        # the reconcile still never edits it. These say only that a real run was
+        # compared against the claim, when, and what the run said.
+        last_reconciled_at: { type: string, description: "When a real run was last compared against this check by reconcile_verification with recording on — its `detected_at`. Absent when the run was fed in undated, or never." }
+        last_reconciled_outcome: { type: enum, values: [passed, failed, skipped], description: "What the last real run compared against this check REPORTED. Never the design's claim — that stays in `status`, which a reconcile does not edit. Present means a result has come back into the design at least once." }
+        last_failed_run_at: { type: string, description: "When a real run last reported this check FAILED — kept when later runs pass, so a failure that was fed back and then fixed is still visible as the loop having fired. Written only when the run was dated." }
         # Added 2026-08-17 for req:a-finding-has-somewhere-to-put-its-evidence.
         #
         # ⭐ THE THIRD THING. `name` is what a list renders, `description` is what

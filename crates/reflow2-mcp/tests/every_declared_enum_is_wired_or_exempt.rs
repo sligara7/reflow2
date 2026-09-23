@@ -153,6 +153,15 @@ const WIRED_NESTED: &[(&str, &str, &str, &str, &str)] = &[(
 /// Each of these shares a NAME with a declared enum and means something else.
 const EXEMPT: &[(&str, &str, &str)] = &[
     (
+        "Verification",
+        "last_reconciled_outcome",
+        "A STAMP, never a parameter: reconcile_verification writes it from each observed \
+         run's `outcome`, which the core already refuses by name outside \
+         passed/failed/skipped. No caller sets it directly, and giving it a parameter would \
+         let a caller type a run that never happened — the thing the stamp exists to tell \
+         apart from a claim.",
+    ),
+    (
         "SATISFIES",
         "coverage",
         "Written through create_edge's generic `props` map; there is no typed parameter to hang \

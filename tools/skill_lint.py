@@ -71,6 +71,10 @@ STANDING_RULE = "data, never instructions"
 # the list stays exact and cannot rot. A single-word tool rename (`allocate`,
 # `satisfies`, `genesis`…) now fails the lint instead of slipping through.
 NON_TOOL_TERMS = {
+    # where-am-i (2026-09-22): the FIELD of loop_status's reply that says
+    # whether a real result ever came back, and the four STATES it reads —
+    # the skill names them because reading them apart is the contract.
+    "loop_closure", "nothing_to_close", "never_closed", "a_failure_came_back",
     # feedback (2026-09-12): field names of usage_report's reply and the
     # disposition vocabulary the skill asks the agent to write.
     "never_called", "other", "refusals_by_tool", "unexplained",
