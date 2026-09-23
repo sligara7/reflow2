@@ -1,4 +1,4 @@
-# What reflow2 offers: 30 skills and 192 tools
+# What reflow2 offers: 31 skills and 192 tools
 
 Generated from the **running server**, not from memory — the skill list came from `list_skills`,
 the tool list and every read/write marking from `tools/list`, and the command mapping from
@@ -51,7 +51,7 @@ procedure behind them. Every other command names a skill.
 
 ---
 
-## The 30 skills
+## The 31 skills
 
 Each is a procedure, not a tool call: it says what to do, in what order, and what *not* to do.
 Read one in full with `get_skill` before doing the work it covers.
@@ -79,6 +79,7 @@ Read one in full with `get_skill` before doing the work it covers.
 | **retire-from-design** | `/retire-from-design` | Something should LEAVE the design — a requirement the user dropped, a capability superseded by another, a component that was a modelling mistake |
 | **revise-design** | `/revise-design` | The user changes their mind about something already IN the design — a requirement's wording, a capability's scope, a status, a link that points at the wrong thing |
 | **where-am-i** | `/where` | The user asks where things stand, what you've concluded, what's been decided, or wants to pick up an existing design after a break — and at the start of any session on a graph that already has a Project |
+| **why** | `/why` | A system already exists and the person who designed it is here, and what is missing is WHY it is the way it is — who needed each feature, why each change was made. An interview over the git history; every answer is theirs, recorded as recalled |
 
 ### Which you will actually reach for
 

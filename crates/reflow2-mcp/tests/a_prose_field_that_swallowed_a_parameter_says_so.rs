@@ -171,6 +171,10 @@ async fn add_change_event_reports_it_too() {
             rationale: None,
             affected: None,
             detected_at: None,
+            rationale_basis: None,
+            commits: None,
+            repair: None,
+            stands_in_for: None,
         }))
         .await
         .expect("still lands");

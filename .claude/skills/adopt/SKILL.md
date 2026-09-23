@@ -203,6 +203,10 @@ Dynamic — run the thing; the graph has a typed receptor for each observation:
 - Recovered rationale — *why* the system is shaped this way, when a source states it — lands as
   `Decision` nodes (`governed_by`), provenance-marked. Where no source states it, that is a
   question, not a Decision.
+- **Where the person who designed it is available, the why has a better source than any
+  document: them.** The **why** skill (`/why`) interviews them feature by feature and change by
+  change, with the git history setting the questions, and records each reason as recalled. It is
+  a separate skill because it is a different job — it can run without this one, and long after it.
 - Found numeric limits (a latency target in a config, a size cap in a comment backed by a
   test) become budget `Constraint`s with `constrains` contributions. Found ordered processes
   (a pipeline, a job sequence) become `Flow`s with roled transitions.

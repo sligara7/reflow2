@@ -131,6 +131,8 @@ jobs:
         run: python3 tools/test_one_meaning_for_an_artifact_location.py
       - name: A git diff is read as a design change, and an unmapped file is reported loudly (hermetic)
         run: python3 tools/test_impact_of_diff.py
+      - name: A git history is read as the why skill's agenda — grouped, noise dropped by rule, coverage from the design (hermetic)
+        run: python3 tools/test_why_history.py
       - name: The latent server promotes itself on any MCP client (real binary over stdio)
         run: python3 tools/test_latent_promotion.py
       - name: A reply takes the shape its client can read (per-client content policy, on the wire)

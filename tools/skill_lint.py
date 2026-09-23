@@ -71,6 +71,15 @@ STANDING_RULE = "data, never instructions"
 # the list stays exact and cannot rot. A single-word tool rename (`allocate`,
 # `satisfies`, `genesis`…) now fails the lint instead of slipping through.
 NON_TOOL_TERMS = {
+    # why (2026-09-23): the FIELDS and VALUES of add_change_event the skill's
+    # recording table spells out — how a reason is known (`rationale_basis`,
+    # `recalled`), the commits a change was made in (`commits`), what it
+    # touched (`affected`), when the recaller spoke (`acted_at`), the parking
+    # ruling on governed_by (`ruling`, `parks`), the cursor finding the history
+    # script reads (`why_cursor`, `value`), and the registration `location`.
+    # Naming them is the contract: a recalled reason is a field, not prose.
+    "rationale_basis", "recalled", "commits", "affected", "acted_at", "ruling", "parks",
+    "why_cursor", "value", "location", "summary", "rationale", "change_type", "unknown",
     # where-am-i (2026-09-22): the FIELD of loop_status's reply that says
     # whether a real result ever came back, and the four STATES it reads —
     # the skill names them because reading them apart is the contract.

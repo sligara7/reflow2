@@ -108,8 +108,20 @@ pub struct ClaimConfirmation {
     /// The newest `last_confirmed_at` across those artifacts.
     pub last_confirmed_at: Option<String>,
     /// `ChangeEvent`s that `CHANGED` this capability itself — the design
-    /// moving on the record.
+    /// moving on the record. Excludes [`recalled_changes`](Self::recalled_changes).
     pub design_edits: usize,
+    /// `ChangeEvent`s on this capability whose reason was told AFTER THE FACT
+    /// (`rationale_basis` `recalled` or `unknown`) — the `why` skill's record
+    /// of a designer explaining the system's history.
+    ///
+    /// **Counted apart, and never as an examination.** Someone recalling in
+    /// 2026 why a button moved in 2020 says nothing about whether the
+    /// capability matches its code today, which is the only thing
+    /// `Confirmed` claims. Folded into `design_edits`, one interview session
+    /// would flip every feature it touched from `Unexamined` to `Confirmed`
+    /// with nobody having looked at the system — the false green this ledger
+    /// exists to prevent.
+    pub recalled_changes: usize,
     /// `detected_at` of the newest dated accept claim, when any accept is
     /// dated. Reported as-is; the core takes no clock and does not compare
     /// undated events.
@@ -334,7 +346,24 @@ pub fn confirmation_ledger(g: &dyn GraphRead) -> Result<ConfirmationLedger, Dyno
             }
         }
 
-        let design_edits = g.incoming(&cap.node_id, Some(edge::CHANGED))?.len();
+        let mut design_edits = 0usize;
+        let mut recalled_changes = 0usize;
+        for e in g.incoming(&cap.node_id, Some(edge::CHANGED))? {
+            let after_the_fact = g
+                .get_node(node::CHANGE_EVENT, &e.from_id)?
+                .and_then(|ev| {
+                    ev.properties
+                        .get("rationale_basis")
+                        .and_then(crate::foundation::core::Value::as_str)
+                        .and_then(crate::temporal::RationaleBasis::parse)
+                })
+                .is_some_and(crate::temporal::RationaleBasis::is_after_the_fact);
+            if after_the_fact {
+                recalled_changes += 1;
+            } else {
+                design_edits += 1;
+            }
+        }
 
         // BL-106 · the TIME axis. The newest dated run across this
         // capability's PASSING checks — passing only, because
@@ -409,6 +438,7 @@ pub fn confirmation_ledger(g: &dyn GraphRead) -> Result<ConfirmationLedger, Dyno
             confirmations,
             last_confirmed_at,
             design_edits,
+            recalled_changes,
             last_claim_at,
             last_verified_at,
             verification_freshness,

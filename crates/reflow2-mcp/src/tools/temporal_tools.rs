@@ -35,7 +35,7 @@ use reflow2_core::bulk::{
     AskedRecord as BulkAskedRecord, ChecksumAccept as BulkChecksumAccept, EdgeSpec as BulkEdgeSpec,
     GapAck as BulkGapAck, NodeSpec as BulkNodeSpec,
 };
-use reflow2_core::temporal::{ChangeRecord, Repair};
+use reflow2_core::temporal::{ChangeEventRecord, ChangeRecord, RationaleBasis, Repair};
 use reflow2_core::{
     AgentAnswer, AgentBackend, AskedQuestion, ChangeType, DEFAULT_SCOPE_DEPTH, DesignGraph,
     Dimension, DriftDisposition, DynoError, EpochType, GapCandidate, GenesisOptions, HealOptions,
@@ -144,6 +144,90 @@ fn set_epoch_prose(
         .upsert_node(reflow2_core::nodes::node::DESIGN_EPOCH, id, props)
         .map_err(dyno_err)?;
     Ok(Some(node))
+}
+
+/// Read `repair` + `stands_in_for` off a tool call — clause (b) of
+/// `req:a-fix-says-whether-it-corrected-the-cause`, enforced at the JSON
+/// boundary where the two arrive as separate optional fields.
+///
+/// ONE COPY, SHARED by `snapshot_before_change` and `add_change_event`, so the
+/// two tools that write a ChangeEvent cannot disagree about what a legal
+/// disposition is. REFUSED BOTH WAYS: a containment with nothing named is the
+/// invisible debt the requirement exists to end, and a stand-in without a
+/// containment is a claim about a fix that says it reached its cause —
+/// incoherent, and the likelier typo.
+fn parse_repair(
+    repair: Option<&str>,
+    stands_in_for: Option<String>,
+) -> Result<Option<Repair>, McpError> {
+    Ok(match (repair, stands_in_for) {
+        (None, None) => None,
+        (Some("corrected_cause"), None) => Some(Repair::CorrectedCause),
+        (Some("contained_symptom"), Some(stands_in_for)) => {
+            Some(Repair::ContainedSymptom { stands_in_for })
+        }
+        (Some("contained_symptom"), None) => {
+            return Err(McpError::invalid_params(
+                "`repair: contained_symptom` needs `stands_in_for`: what would the proper fix \
+                 be? A patch nobody wrote down is indistinguishable from a design decision six \
+                 weeks later, which is the cost this field exists to make visible. Say it in a \
+                 sentence — or pass `corrected_cause` if this fix did reach the cause.",
+                None,
+            ));
+        }
+        (None, Some(_)) | (Some("corrected_cause"), Some(_)) => {
+            return Err(McpError::invalid_params(
+                "`stands_in_for` only means something with `repair: contained_symptom` — it \
+                 names the fix a WORKAROUND is standing in for. A repair that corrected its \
+                 cause stands in for nothing, and one that said nothing has not claimed to be \
+                 either.",
+                None,
+            ));
+        }
+        (Some(other), _) => {
+            return Err(McpError::invalid_params(
+                format!(
+                    "unknown repair '{other}'. Legal values: corrected_cause, \
+                     contained_symptom. Omitting it is also a true answer and means nobody said."
+                ),
+                None,
+            ));
+        }
+    })
+}
+
+/// Validate `commits`: comma- or space-separated hex ids of 7–40 characters.
+/// Refused whole on the first bad token, naming it — a sha that is really a
+/// branch name or a PR number would sit on the record looking like a commit.
+fn parse_commits(commits: Option<&str>) -> Result<Option<String>, McpError> {
+    let Some(raw) = commits else {
+        return Ok(None);
+    };
+    let ids: Vec<&str> = raw
+        .split(|c: char| c == ',' || c.is_whitespace())
+        .filter(|t| !t.is_empty())
+        .collect();
+    if ids.is_empty() {
+        return Err(McpError::invalid_params(
+            "`commits` is empty. Pass one or more commit ids (hex, at least 7 characters), \
+             comma-separated — or leave the field out.",
+            None,
+        ));
+    }
+    for id in &ids {
+        let hex = id.chars().all(|c| c.is_ascii_hexdigit());
+        if !hex || id.len() < 7 || id.len() > 40 {
+            return Err(McpError::invalid_params(
+                format!(
+                    "`commits` holds {id:?}, which is not a commit id: expected hex, 7 to 40 \
+                     characters (`git log --format=%h` prints one). A branch name, tag or pull \
+                     request number belongs in `summary`. Nothing was written."
+                ),
+                None,
+            ));
+        }
+    }
+    Ok(Some(ids.join(",")))
 }
 
 #[tool_router(router = temporal_tools_router, vis = "pub")]
@@ -702,11 +786,12 @@ impl ReflowService {
                        behavioural, not file-shaped, so a normative document that changes what somebody DOES \
                        takes a real label instead. TEXT GOES IN `summary` (what changed — indexed and \
                        searchable) and `rationale` (why, and the lesson). THERE IS NO `description` FIELD: \
-                       reaching for one is the commonest mistake here, and it is refused rather than stored, so \
-                       write the two that exist. CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: \
+                       reaching for one is the commonest mistake here, and it is refused rather than stored. \
+                       CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: \
                        call it again with the same id and only what you are changing \u{2014} omitted fields \
                        keep their stored value, so correcting one never means re-sending a 2 KB field you did \
-                       not touch. Ask for this to record that something changed and why — log a change and the \
+                       not touch. A PAST change explained today? Set `rationale_basis`. \
+                       Ask for this to record that something changed and why — log a change and the \
                        reason.",
         annotations(read_only_hint = false)
     )]
@@ -743,6 +828,13 @@ impl ReflowService {
             .as_deref()
             .map(|s| parse_enum::<reflow2_core::ChangeSubject>(s, "change subject"))
             .transpose()?;
+        let rationale_basis = req
+            .rationale_basis
+            .as_deref()
+            .map(|s| parse_enum::<RationaleBasis>(s, "rationale basis"))
+            .transpose()?;
+        let commits = parse_commits(req.commits.as_deref())?;
+        let repair = parse_repair(req.repair.as_deref(), req.stands_in_for)?;
         let affected = req.affected.unwrap_or_default();
         let mut g = self.write_lock().await?;
         // Validate the whole list before writing anything: storage accepts
@@ -781,15 +873,18 @@ impl ReflowService {
             }
         }
         let event = g
-            .add_change_event(
-                &req.id,
-                &name,
+            .add_change_event_record(&ChangeEventRecord {
+                id: &req.id,
+                name: &name,
                 change_type,
                 subject,
-                req.summary.as_deref(),
-                req.rationale.as_deref(),
-                req.detected_at.as_deref(),
-            )
+                summary: req.summary.as_deref(),
+                rationale: req.rationale.as_deref(),
+                detected_at: req.detected_at.as_deref(),
+                repair: repair.as_ref(),
+                rationale_basis,
+                commits: commits.as_deref(),
+            })
             .map_err(dyno_err)?;
         let mut changed = Vec::new();
         for a in &affected {
@@ -905,48 +1000,9 @@ impl ReflowService {
         let target_type = self
             .resolve_type(req.target_type.as_deref(), &req.target_id, "target_type")
             .await?;
-        // CLAUSE (b) OF `req:a-fix-says-whether-it-corrected-the-cause`,
-        // enforced at the only place a caller can get it wrong. The core type
-        // makes a containment-without-a-stand-in unconstructable; this is the
-        // JSON boundary, where the two arrive as separate optional fields and
-        // the pairing has to be checked. REFUSED BOTH WAYS: a containment with
-        // nothing named is the invisible debt the requirement exists to end,
-        // and a stand-in without a containment is a claim about a fix that says
-        // it reached its cause — incoherent, and the likelier typo.
-        let repair = match (req.repair.as_deref(), req.stands_in_for) {
-            (None, None) => None,
-            (Some("corrected_cause"), None) => Some(Repair::CorrectedCause),
-            (Some("contained_symptom"), Some(stands_in_for)) => {
-                Some(Repair::ContainedSymptom { stands_in_for })
-            }
-            (Some("contained_symptom"), None) => {
-                return Err(McpError::invalid_params(
-                    "`repair: contained_symptom` needs `stands_in_for`: what would the proper fix \
-                     be? A patch nobody wrote down is indistinguishable from a design decision six \
-                     weeks later, which is the cost this field exists to make visible. Say it in a \
-                     sentence — or pass `corrected_cause` if this fix did reach the cause.",
-                    None,
-                ));
-            }
-            (None, Some(_)) | (Some("corrected_cause"), Some(_)) => {
-                return Err(McpError::invalid_params(
-                    "`stands_in_for` only means something with `repair: contained_symptom` — it \
-                     names the fix a WORKAROUND is standing in for. A repair that corrected its \
-                     cause stands in for nothing, and one that said nothing has not claimed to be \
-                     either.",
-                    None,
-                ));
-            }
-            (Some(other), _) => {
-                return Err(McpError::invalid_params(
-                    format!(
-                        "unknown repair '{other}'. Legal values: corrected_cause, \
-                         contained_symptom. Omitting it is also a true answer and means nobody said."
-                    ),
-                    None,
-                ));
-            }
-        };
+        // Clause (b) of `req:a-fix-says-whether-it-corrected-the-cause` — see
+        // `parse_repair`, shared with `add_change_event`.
+        let repair = parse_repair(req.repair.as_deref(), req.stands_in_for)?;
         let rec = ChangeRecord {
             epoch_id: &req.epoch_id,
             change_event_id: &req.change_event_id,

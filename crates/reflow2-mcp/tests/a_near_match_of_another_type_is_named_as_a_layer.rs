@@ -106,6 +106,10 @@ async fn seed_change_event(s: &ReflowService) {
         rationale: None,
         affected: None,
         detected_at: None,
+        rationale_basis: None,
+        commits: None,
+        repair: None,
+        stands_in_for: None,
     }))
     .await
     .expect("the change event records what shipped");

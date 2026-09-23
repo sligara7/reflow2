@@ -5331,6 +5331,38 @@ pub struct AddChangeEventReq {
     /// of their events; hand-written ones, which could not, dated 8%.
     #[serde(default)]
     pub detected_at: Option<String>,
+    /// HOW THE REASON IN `rationale` IS KNOWN: `contemporaneous` (written when
+    /// the change was made), `recalled` (given later, from memory, by someone
+    /// who was there — the `why` skill's interviews), or `unknown` (asked, and
+    /// nobody who remains knows; recorded once so it is never asked again).
+    ///
+    /// OPTIONAL, and absent means nobody said — never read as contemporaneous.
+    /// Set it whenever you record a change AFTER the fact: a reason recalled
+    /// years later otherwise reads with the authority of one written at the
+    /// time. A `recalled`/`unknown` change is not counted as an examination of
+    /// a capability by `confirmation_ledger`. Record who recalled it with
+    /// `authored_by` (its `acted_at` is when); date the change itself with
+    /// `detected_at`.
+    #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::change_event_rationale_basis_opt")]
+    pub rationale_basis: Option<String>,
+    /// The version-control commits the change was made in, comma-separated —
+    /// full or abbreviated hex ids, at least 7 characters each. Anything else
+    /// is refused. What lets a later reader open the change itself.
+    #[serde(default)]
+    pub commits: Option<String>,
+    /// FOR A REPAIR: `corrected_cause` (the class should not recur) or
+    /// `contained_symptom` (it can, and something is standing in the way).
+    /// OPTIONAL, and absent means nobody said — never inferred from
+    /// `change_type`. Same field, same rules as on `snapshot_before_change`;
+    /// `repair_report` reads it back.
+    #[serde(default)]
+    #[schemars(schema_with = "crate::enum_schema::repair_req")]
+    pub repair: Option<String>,
+    /// What the PROPER fix would be, in a sentence. REQUIRED with
+    /// `repair: contained_symptom` and refused without it.
+    #[serde(default)]
+    pub stands_in_for: Option<String>,
 }
 
 /// One node an event changed, for `add_change_event`'s `affected` list.
