@@ -55,6 +55,7 @@
     "create_edges": "link many pairs of items at once",
     "create_node": "add an item of a type no specific tool covers",
     "create_nodes": "add many items at once",
+    "choices_in_doubt": "a test just failed — which of the choices we made earlier might have been the wrong one",
     "decomposes": "split this requirement into smaller child requirements",
     "delete_edge": "remove a link between two items",
     "delete_node": "remove an item from the design",
