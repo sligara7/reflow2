@@ -32,6 +32,77 @@ This file is the third view: *what changed, and when*.
 ## [Unreleased]
 
 
+## [0.67.0] — 2026-09-23
+
+### Added
+
+- **A settled decision can be gone back to.** `fork_point` finds where a settled choice was made,
+  and `reopen_choice` re-opens it without un-accepting it, so a change of mind keeps the
+  deliberation that produced the first answer. The revise-design skill routes through them.
+
+- **Bad news is walked back to the choices behind it.** `choices_in_doubt` takes a failure or a
+  surprising finding and names the settled decisions it puts in doubt, each piece of evidence
+  stated once. The root-cause skill gains a bone that asks for it.
+
+- **A real test run can be fed back by file.** `reconcile_verification` takes `observed_by_file`,
+  resolved through each check's location or the artifact that implements it, and
+  `tools/run_to_files.py` converts cargo-test output, JUnit XML and script exit codes into that
+  form.
+
+- **`loop_status` says whether a real result ever came back.** A recorded reconcile now stamps each
+  check it compared (`last_reconciled_outcome`, `last_reconciled_at`, `last_failed_run_at`), and
+  the loop reports a design where no real run has ever closed the loop.
+
+- **A published contract carries its promise, and the evidence for it.** `detect_gaps` asks about a
+  design that publishes contracts but no requirement; `export_surface` carries the checks behind
+  what it published and names the ones that left. reflow2 publishes its first six requirements.
+
+- **The coverage report tells a check something can re-run from one somebody typed**, and a CI gate
+  forbids adding a new capability whose only evidence is a claim.
+
+- **`--tree-root <DIR>`** measures registered files under a directory other than the one the store
+  sits in, for a design opened away from its tree.
+
+- **The schema serves what tells the node types apart.** `describe_schema` carries each routed
+  type's cues, the types it is confused with and why, and a counter-example.
+
+### Changed
+
+- **An unplaced sentence has a home.** capture-intent sends a sentence the extraction cannot place
+  to a Fragment note, and the working instructions every consumer is served now say to ask
+  whether a thing already exists before building it, naming `find_tools` and `find_skills`.
+
+- **An unmeasured MCP client gets the payload, not a signpost.** Clients not known to read
+  `structuredContent` (every connector, so far) now receive the reply in the text block too;
+  `claude-code` keeps the signpost.
+
+### Fixed
+
+- **The server and the CI gate give one answer about an artifact's location.** A URI was "not
+  judged" to the gate and missing to `loop_status`; a path outside the project was hashed by one
+  and refused by the other; `file#fragment` was missing to the gate. The gate now asks the server
+  to measure, so one piece of code decides. A URI is named `remote` and never looked for on disk.
+
+- **A `--shared` client outside the project attaches to the server already holding it**, instead
+  of spawning a rival that loses the store lock and serves `reflow2_unavailable` after 30 s. The
+  rendezvous records the store as an absolute path.
+
+- **`link_artifact` draws `IMPLEMENTS` when the target is a check**, and the 46 `REALIZES` links it
+  had drawn in error are migrated.
+
+- **`add_requirement` takes `source` and `provenance`**, so recording a requirement levied by
+  someone else needs no second call.
+
+- **A crowded near-match band is no longer reported as three.** The duplicate guard shows up to six
+  close matches, which also governs when it refuses a write.
+
+- **The run converter is not named like a test** (so a test glob never runs it), and refuses a log
+  with no test target instead of reporting zero files.
+
+No upgrade note is owed: the schema stamp is unmoved against v0.66.0 (28 node types, 65 edge types,
+schema version 1). The only vocabulary addition is the values of the new
+`Verification.last_reconciled_outcome` property (`passed` / `failed` / `skipped`).
+
 ## [0.66.0] — 2026-09-21
 
 ### Changed
