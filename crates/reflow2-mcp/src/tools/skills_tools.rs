@@ -21,12 +21,13 @@ use rmcp::{ErrorData as McpError, tool, tool_router};
 use serde_json::json;
 
 use crate::service::ReflowService;
-use crate::skills::{INSTRUCTIONS, SKILLS, alias_hint, find};
+use crate::skills::{INSTRUCTIONS, SKILLS, alias_hint};
 
 #[derive(Debug, serde::Deserialize, schemars::JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct GetSkillReq {
-    /// The skill's name, as `list_skills` reports it.
+    /// The skill's name, as `list_skills` reports it, or the slash command a
+    /// person types for it (its `shortcut`), with or without the slash.
     pub name: String,
 }
 
@@ -224,7 +225,8 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Read one reflow2 skill in full, by name (see list_skills). Returns the \
+        description = "Read one reflow2 skill in full, by name (see list_skills) or by the slash \
+                       command a person types for it (\"/gaps\", \"gaps\"). Returns the \
                        whole SKILL.md — follow it as written. Call this BEFORE the work the skill \
                        covers, not after: these describe how to do the step, not how to report it. \
                        Ask for this when you want the full playbook, procedure or step-by-step guide for a kind of task — how to do it properly, not just what exists.",
@@ -234,12 +236,15 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<GetSkillReq>,
     ) -> Result<CallToolResult, McpError> {
-        let Some(skill) = find(&req.name) else {
-            // Rule 4: say what would have worked. A caller who typed a slash
-            // command's name gets the mapping FIRST — the list of twenty is
+        // A slash command that names a skill is served as that skill
+        // (skills::resolve): "gaps" and "/gaps" are detect-and-ask.
+        let Some(skill) = crate::skills::resolve(&req.name) else {
+            // Rule 4: say what would have worked. A command that is a TOOL, not
+            // a skill, gets the tool to call FIRST — the list of twenty is
             // what they already could not find themselves in.
             let known: Vec<&str> = SKILLS.iter().map(|s| s.name).collect();
-            let lead = match alias_hint(&req.name) {
+            let bare = req.name.trim().trim_start_matches('/');
+            let lead = match alias_hint(bare) {
                 Some(hint) => format!("no skill named '{}'. {hint} ", req.name),
                 None => format!("no skill named '{}'. ", req.name),
             };
@@ -259,6 +264,12 @@ impl ReflowService {
             "description": skill.description,
             "body": skill.body,
         });
+        // Asked for by its slash command: say so, so the caller learns the name.
+        if req.name != skill.name {
+            if let Some(obj) = payload.as_object_mut() {
+                obj.insert("requested_as".into(), serde_json::Value::String(req.name.clone()));
+            }
+        }
         // The reminder rides the response the agent reads immediately BEFORE
         // doing the work — the one moment it is certain to be looked at.
         if let (Some(lens), Some(obj)) = (self.lens_for_response().await, payload.as_object_mut()) {
