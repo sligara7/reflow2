@@ -265,10 +265,13 @@ impl ReflowService {
             "body": skill.body,
         });
         // Asked for by its slash command: say so, so the caller learns the name.
-        if req.name != skill.name {
-            if let Some(obj) = payload.as_object_mut() {
-                obj.insert("requested_as".into(), serde_json::Value::String(req.name.clone()));
-            }
+        if req.name != skill.name
+            && let Some(obj) = payload.as_object_mut()
+        {
+            obj.insert(
+                "requested_as".into(),
+                serde_json::Value::String(req.name.clone()),
+            );
         }
         // The reminder rides the response the agent reads immediately BEFORE
         // doing the work — the one moment it is certain to be looked at.

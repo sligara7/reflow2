@@ -137,10 +137,15 @@ async fn asking_by_the_typed_name_serves_the_skill() {
                 serde_json::from_value(serde_json::json!({ "name": typed })).expect("request"),
             ))
             .await
-            .unwrap_or_else(|e| panic!("'{typed}' names a skill and must be served: {}", e.message));
+            .unwrap_or_else(|e| {
+                panic!("'{typed}' names a skill and must be served: {}", e.message)
+            });
         let body = out.structured_content.expect("structured");
         assert_eq!(body["name"], served, "{typed}");
-        assert_eq!(body["requested_as"], typed, "the reply must say what was asked for");
+        assert_eq!(
+            body["requested_as"], typed,
+            "the reply must say what was asked for"
+        );
     }
 }
 
@@ -168,5 +173,10 @@ async fn a_skill_by_its_own_name_says_nothing_extra() {
         ))
         .await
         .expect("served");
-    assert!(out.structured_content.expect("structured").get("requested_as").is_none());
+    assert!(
+        out.structured_content
+            .expect("structured")
+            .get("requested_as")
+            .is_none()
+    );
 }
