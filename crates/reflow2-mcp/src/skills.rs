@@ -206,6 +206,34 @@ pub fn shortcut_for(skill_name: &str) -> String {
         .unwrap_or_else(|| format!("/{skill_name}"))
 }
 
+/// The skill a name means: the skill's own name, or a slash command that is
+/// served as a skill — each with or without its leading slash, so "gaps",
+/// "/gaps", "detect-and-ask" and "/detect-and-ask" all mean `detect-and-ask`.
+///
+/// # Why a slash command is SERVED, not refused
+///
+/// Until 2026-09-24 `get_skill("gaps")` refused and named the mapping in the
+/// refusal. The mapping has only one answer, so the refusal cost a caller a
+/// round trip for nothing. Measured on flo2's connector that day
+/// (flo2 `fact:first-skill-runs-through-the-doors-2026-09-24`): a chat model
+/// asked for `gaps`, was refused, and asked again for `detect-and-ask`.
+///
+/// ⚠️ A COMMAND THAT IS NOT A SKILL STILL REFUSES. `/debt`, `/decisions` and
+/// `/next` call a tool directly; there is no skill to serve, and the refusal
+/// names the tool to call instead (`alias_hint`).
+pub fn resolve(name: &str) -> Option<&'static EmbeddedSkill> {
+    let bare = name.trim().trim_start_matches('/');
+    find(bare).or_else(|| {
+        COMMAND_ALIASES
+            .iter()
+            .find(|(alias, _)| *alias == bare)
+            .and_then(|(_, target)| match target {
+                Ok(skill) => find(skill),
+                Err(_) => None,
+            })
+    })
+}
+
 /// The sentence that turns a refusal into an instruction, when the name asked
 /// for is a slash command rather than a skill.
 pub fn alias_hint(name: &str) -> Option<String> {
@@ -396,5 +424,26 @@ mod alias_tests {
     #[test]
     fn an_unknown_name_gets_no_hint() {
         assert!(alias_hint("definitely-not-a-command").is_none());
+    }
+
+    /// A slash command that names a skill resolves to it, with or without the
+    /// slash; a skill's own name resolves to itself; a command that is a TOOL
+    /// resolves to nothing, so its refusal can say which tool.
+    #[test]
+    fn a_slash_command_resolves_to_the_skill_it_names() {
+        use super::resolve;
+        for (asked, served) in [
+            ("gaps", "detect-and-ask"),
+            ("/gaps", "detect-and-ask"),
+            ("/where", "where-am-i"),
+            ("where-am-i", "where-am-i"),
+            ("/impact-check", "impact-check"),
+            ("  req  ", "capture-intent"),
+        ] {
+            assert_eq!(resolve(asked).map(|s| s.name), Some(served), "{asked}");
+        }
+        assert!(resolve("debt").is_none());
+        assert!(resolve("/decisions").is_none());
+        assert!(resolve("definitely-not-a-skill").is_none());
     }
 }

@@ -118,28 +118,65 @@ async fn an_unaliased_skill_still_states_its_shortcut() {
     assert_eq!(shortcut_of("link-ideas"), "/link-ideas");
 }
 
-/// The refusal path the alias table was originally written for, now covering
-/// the two names it had missed. Asking for a skill by the word a person types
-/// must say where that word is served, not hand back a list of twenty-five
-/// names none of which match.
+/// Asking for a skill by the word a person types SERVES that skill (since
+/// 2026-09-24; before, it refused and named the mapping, which cost every
+/// caller a round trip with only one possible answer). The reply says what was
+/// asked for, so the caller learns the skill's own name.
 #[tokio::test]
-async fn asking_by_the_typed_name_says_where_it_is_served() {
+async fn asking_by_the_typed_name_serves_the_skill() {
     let s = ReflowService::in_memory().expect("service");
-    for (typed, served) in [("what-is-this", "help"), ("where-does-it-go", "onboarding")] {
-        let err = s
+    for (typed, served) in [
+        ("what-is-this", "help"),
+        ("where-does-it-go", "onboarding"),
+        ("gaps", "detect-and-ask"),
+        ("/gaps", "detect-and-ask"),
+        ("/impact-check", "impact-check"),
+    ] {
+        let out = s
             .get_skill(Parameters(
                 serde_json::from_value(serde_json::json!({ "name": typed })).expect("request"),
             ))
             .await
-            .expect_err("a slash-command name is not a skill name");
-        let msg = err.message.to_string();
-        // 🛑 NOT merely `msg.contains(served)` — the refusal already lists all
-        // 25 skill names, so "help" and "onboarding" appear in it by accident
-        // and that assertion passed before the fix. It has to find the HINT.
-        assert!(
-            msg.contains(&format!("it is served as '{served}'")),
-            "the refusal must say where '{typed}' is served, not merely happen to contain the \
-             word in a list of every skill: {msg}"
+            .unwrap_or_else(|e| {
+                panic!("'{typed}' names a skill and must be served: {}", e.message)
+            });
+        let body = out.structured_content.expect("structured");
+        assert_eq!(body["name"], served, "{typed}");
+        assert_eq!(
+            body["requested_as"], typed,
+            "the reply must say what was asked for"
         );
     }
+}
+
+/// A command that is a TOOL, not a skill, still refuses — and the refusal
+/// names the tool, which is what it was written to do.
+#[tokio::test]
+async fn a_command_that_is_a_tool_refuses_and_names_the_tool() {
+    let s = ReflowService::in_memory().expect("service");
+    let err = s
+        .get_skill(Parameters(
+            serde_json::from_value(serde_json::json!({ "name": "/debt" })).expect("request"),
+        ))
+        .await
+        .expect_err("/debt is not a skill");
+    assert!(err.message.contains("loop_status"), "{}", err.message);
+}
+
+/// A skill asked for by its own name carries no `requested_as`.
+#[tokio::test]
+async fn a_skill_by_its_own_name_says_nothing_extra() {
+    let s = ReflowService::in_memory().expect("service");
+    let out = s
+        .get_skill(Parameters(
+            serde_json::from_value(serde_json::json!({ "name": "genesis" })).expect("request"),
+        ))
+        .await
+        .expect("served");
+    assert!(
+        out.structured_content
+            .expect("structured")
+            .get("requested_as")
+            .is_none()
+    );
 }

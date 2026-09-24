@@ -31,6 +31,15 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Changed
+
+- **`get_skill` serves the skill a slash command names**, where it used to refuse and name the
+  mapping. `"gaps"`, `"/gaps"`, `"/where"` and `"/impact-check"` each return their skill, and the
+  reply's `requested_as` says what was asked for. A command that is a *tool* (`/debt`,
+  `/decisions`, `/next`) still refuses and names the tool. Measured on flo2's connector: a chat
+  model asked for `gaps`, was refused, and had to ask again for `detect-and-ask`. Adds an optional
+  field to the result, so treat it as **minor** at cut time.
+
 
 ## [0.68.0] — 2026-09-23
 

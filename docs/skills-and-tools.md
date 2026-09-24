@@ -408,7 +408,7 @@ description, which an agent sees in the tool schema; this table is for a person 
 | `list_skills` | read | List the reflow2 skills this server carries — name and the full description an agent matches on to decide whether a skill applies |
 | `describe_designs` | **read** | Say what design lives at each given path, WITHOUT opening or writing anything — the sibling of design_identity, which answers only for the design THIS session is bound to. |
 | `get_instructions` | **read** | How to work THIS project with reflow2: the loop, the standing rules, and what to do first on an existing design. |
-| `get_skill` | **read** | Read one reflow2 skill in full, by name (see list_skills). |
+| `get_skill` | **read** | Read one reflow2 skill in full, by name (see list_skills) or by the slash command a person types for it ("/gaps", "gaps"). |
 | `list_skills` | **read** | List the reflow2 skills this server carries — name and the full description an agent matches on to decide whether a skill applies. |
 | `usage_report` | **write** | What this project's sessions actually asked reflow2 to do, and where reflow2 declined — computed from the usage ledger the server keeps beside the design (`<graph>.usage.jsonl`), never from an agent's memory. |
 | `find_skills` | **read** | Find the skill that fits a job you can describe but not name — the skills counterpart of find_tools. |
