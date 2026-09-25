@@ -31,6 +31,19 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **A session can say who it writes for, and every change it makes is credited to them.** New
+  tool **`writes_for`**: name a Contributor once, and every node the session creates or changes
+  from then on gets an `AUTHORED_BY` edge (role `author`) to them, without naming them on each
+  call. A single request can name someone else for itself in its `_meta` under
+  `reflow2/writes_for`, which is what a gateway carrying many people over one connection (flo2)
+  needs, and the only way on the sessionless transport (MCP 2026-07-28 and later), where a
+  session-level declaration is refused because it could not persist. **Attribution only, taken
+  on trust**: it never signs an approval, which still needs `approver` on the call that settles
+  something. The Contributor must already exist; a write for someone the design does not hold is
+  refused before anything is written. Declare nothing and nothing changes. No schema stamp change
+  (28 node types, 65 edge types): no upgrade note.
 
 ## [0.70.0] — 2026-09-24
 

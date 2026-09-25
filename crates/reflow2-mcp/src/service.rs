@@ -608,6 +608,76 @@ pub struct ReflowService {
     /// static, so the served surface a session is counted against is the one
     /// it is actually served (`rule:per-design-state-is-never-a-process-global`).
     write_tools: Arc<std::collections::HashSet<String>>,
+    /// Who THIS SESSION writes for, once it has said so with `writes_for`
+    /// (`req:a-session-names-the-person-it-writes-for-and-the-server-remembers-it`).
+    /// Fresh per session like the seat — a declaration is about one client —
+    /// and `None` until declared, which is today's behaviour exactly. A
+    /// request may still name someone else for itself in `_meta`
+    /// ([`WRITES_FOR_META`]), which is what a gateway multiplexing many people
+    /// over one session needs. ATTRIBUTION ONLY: see `reflow2_core::attribution`.
+    pub(crate) writes_for: Arc<std::sync::Mutex<Option<String>>>,
+}
+
+/// The request `_meta` key naming who ONE request writes for. It overrides the
+/// session's declaration for that request alone. A gateway that carries many
+/// people over one session (flo2) names the person on each call; a sessionless
+/// transport (MCP 2026-07-28 and later), where nothing outlives a request,
+/// can only say it this way.
+pub(crate) const WRITES_FOR_META: &str = "reflow2/writes_for";
+
+tokio::task_local! {
+    /// Who the tool call now being served writes for — the request's `_meta`
+    /// value, else the session's declaration, else nobody. Set by `call_tool`
+    /// around the handler and read by `write_lock`, which is how every write
+    /// the handler makes is credited without 115 write sites knowing.
+    static WRITES_FOR: Option<String>;
+}
+
+/// The graph, held for writing — a write guard that, when it is released,
+/// credits every node written under it to whoever the call writes for.
+///
+/// ⭐ Returned by [`ReflowService::write_lock`], so every mutating handler gets
+/// it without a change at any call site: it derefs to the graph. Crediting on
+/// DROP rather than after the handler returns means a handler that takes the
+/// lock twice has each hold's writes credited by that hold, and a write made
+/// by another session between them is never mistaken for this one's.
+pub(crate) struct GraphWrite<'a> {
+    guard: tokio::sync::RwLockWriteGuard<'a, DesignGraph>,
+    writes_for: Option<String>,
+}
+
+impl std::ops::Deref for GraphWrite<'_> {
+    type Target = DesignGraph;
+    fn deref(&self) -> &DesignGraph {
+        &self.guard
+    }
+}
+
+impl std::ops::DerefMut for GraphWrite<'_> {
+    fn deref_mut(&mut self) -> &mut DesignGraph {
+        &mut self.guard
+    }
+}
+
+impl Drop for GraphWrite<'_> {
+    fn drop(&mut self) {
+        let Some(who) = self.writes_for.take() else {
+            return;
+        };
+        let touched = self.guard.take_touch_log();
+        if touched.is_empty() {
+            return;
+        }
+        // Checked before the handler ran (`call_tool`), so this fails only if
+        // the call itself removed the contributor. The writes stand; only the
+        // credit is lost, and it is said where an operator will see it.
+        if let Err(e) = self.guard.credit_writes(&touched, &who) {
+            eprintln!(
+                "reflow2: {} write(s) could not be credited to {who}: {e}",
+                touched.len()
+            );
+        }
+    }
 }
 
 /// See [`ReflowService::read_hint`]. `computed_gen: None` means nothing has been
@@ -4081,6 +4151,28 @@ pub struct ContributorReq {
     pub description: Option<String>,
 }
 
+/// What `writes_for` refuses with when the named contributor is not in the
+/// design — said the same way whether the name came from the session or from
+/// one request's `_meta`.
+pub(crate) fn writes_for_refusal(who: &str, why: &str) -> String {
+    format!(
+        "This call writes for '{who}', and nothing was written: {why} (Named by this session's \
+         `writes_for`, or by the request's `_meta` key `{WRITES_FOR_META}`. The name is only ever \
+         used to credit writes — it never signs an approval.)"
+    )
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct WritesForReq {
+    /// The `Contributor` this session writes for — the PERSON when there is
+    /// one, or a project (e.g. `who:<project>`) for writes no person made. It
+    /// must already exist; `add_contributor` first. Omit it, or pass null, to
+    /// stop crediting this session's writes to anyone.
+    #[serde(default)]
+    pub contributor_id: Option<String>,
+}
+
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct AuthoredByReq {
@@ -5896,6 +5988,7 @@ impl ReflowService {
             write_gen: Arc::new(AtomicU64::new(0)),
             read_hint: Arc::new(std::sync::Mutex::new(ReadHintCache::default())),
             auto_export: None,
+            writes_for: Arc::new(std::sync::Mutex::new(None)),
         }
     }
 
@@ -6012,6 +6105,9 @@ impl ReflowService {
             session_reads: Arc::new(AtomicU64::new(0)),
             session_writes: Arc::new(AtomicU64::new(0)),
             write_tools: Arc::clone(&self.write_tools),
+            // Fresh per session: who one client writes for says nothing about
+            // the next client to connect.
+            writes_for: Arc::new(std::sync::Mutex::new(None)),
         }
     }
 
@@ -6032,9 +6128,7 @@ impl ReflowService {
     /// the read-side loop_hint knows the owed-set may have moved (BL-91). Every
     /// write site uses this in place of `self.graph.read()`; over-counting a
     /// non-mutating pass only costs one extra `loop_status`, never correctness.
-    pub(crate) async fn write_lock(
-        &self,
-    ) -> Result<tokio::sync::RwLockWriteGuard<'_, DesignGraph>, McpError> {
+    pub(crate) async fn write_lock(&self) -> Result<GraphWrite<'_>, McpError> {
         if self.read_only {
             // REFUSED LOUDLY, NAMING THE MODE AND THE REASON. A caller that
             // cannot tell "this server refuses writes" from "this write was
@@ -6059,7 +6153,14 @@ impl ReflowService {
         if let Some(auto) = &self.auto_export {
             auto.poke();
         }
-        Ok(self.graph.write().await)
+        // Who this call writes for, when anybody said: recording starts under
+        // the lock, so only this hold's writes are in the log it credits.
+        let writes_for = WRITES_FOR.try_with(Clone::clone).ok().flatten();
+        let mut guard = self.graph.write().await;
+        if writes_for.is_some() {
+            guard.begin_touch_log();
+        }
+        Ok(GraphWrite { guard, writes_for })
     }
 
     /// The read-side sibling of the write tools' `with_loop_hint` (BL-91,
@@ -6389,6 +6490,51 @@ impl ReflowService {
     /// rather than off a hand-kept list — the list would be one more thing
     /// nothing checks. The set is a property of the served surface (the same
     /// for every design this binary serves), so it is computed once.
+    /// Who a call writes for: the name its request carried in `_meta`
+    /// ([`WRITES_FOR_META`]), else what this session declared with
+    /// `writes_for`, else nobody. A blank name is nobody.
+    pub fn effective_writes_for(&self, from_request: Option<&str>) -> Option<String> {
+        from_request
+            .map(str::trim)
+            .filter(|s| !s.is_empty())
+            .map(String::from)
+            .or_else(|| self.writes_for.lock().ok().and_then(|w| w.clone()))
+    }
+
+    /// The refusal a WRITE gets when it writes for somebody who is not a
+    /// Contributor in this design — decided before the handler runs, so the
+    /// call writes nothing rather than writing and leaving it uncredited.
+    /// `None` when the call may go ahead (a read, nobody named, or a name that
+    /// exists).
+    pub async fn writes_for_precheck(
+        &self,
+        tool: &str,
+        writes_for: Option<&str>,
+    ) -> Option<String> {
+        let who = writes_for?;
+        if !self.is_write_tool(tool) {
+            return None;
+        }
+        self.graph
+            .read()
+            .await
+            .require_writes_for(who)
+            .err()
+            .map(|e| writes_for_refusal(who, &e.to_string()))
+    }
+
+    /// Run `call` the way `call_tool` runs a handler: writing for `writes_for`
+    /// (already resolved by [`Self::effective_writes_for`]). Public so the
+    /// crediting can be driven without an rmcp peer; `call_tool` does exactly
+    /// this around every handler.
+    pub async fn serving_for<T>(
+        &self,
+        writes_for: Option<String>,
+        call: impl std::future::Future<Output = T>,
+    ) -> T {
+        WRITES_FOR.scope(writes_for, call).await
+    }
+
     fn is_write_tool(&self, tool: &str) -> bool {
         self.write_tools.contains(tool)
     }
@@ -6530,8 +6676,24 @@ impl ServerHandler for ReflowService {
         // the required fields THIS call lacked rather than only what the
         // tool requires.
         let given = request.arguments.clone();
+        // WHO THIS CALL WRITES FOR (`reflow2_core::attribution`): the request's
+        // own `_meta`, else what this session declared, else nobody.
+        let writes_for =
+            self.effective_writes_for(context.meta.get(WRITES_FOR_META).and_then(|v| v.as_str()));
+        let unknown_writer = self
+            .writes_for_precheck(&tool_name, writes_for.as_deref())
+            .await;
         let tcc = rmcp::handler::server::tool::ToolCallContext::new(self, request, context);
-        let answer = self.tool_router.call(tcc).await;
+        let answer = match unknown_writer {
+            Some(refusal) => Ok(rmcp::model::CallToolResponse::Complete(
+                CallToolResult::error(vec![ContentBlock::text(refusal)]),
+            )),
+            None => {
+                WRITES_FOR
+                    .scope(writes_for, self.tool_router.call(tcc))
+                    .await
+            }
+        };
         self.record_usage(
             &tool_name,
             &answer,

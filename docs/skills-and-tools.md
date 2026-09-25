@@ -1,4 +1,4 @@
-# What reflow2 offers: 31 skills and 192 tools
+# What reflow2 offers: 31 skills and 193 tools
 
 Generated from the **running server**, not from memory — the skill list came from `list_skills`,
 the tool list and every read/write marking from `tools/list`, and the command mapping from
@@ -96,7 +96,7 @@ Read one in full with `get_skill` before doing the work it covers.
 
 ---
 
-## The 192 tools
+## The 193 tools
 
 `read` never changes the design. **write** does. That marking is the tool's own `readOnlyHint`
 annotation, read off the served surface — 58 read, 97 write.
@@ -390,6 +390,7 @@ description, which an agent sees in the tool schema; this table is for a person 
 | `release_claim` | **write** | Let a claimed region go, so colleagues reading `claim_report` stop seeing it as held. |
 | `claim_report` | **read** | Who holds what, and where two people are working the same ground. |
 | `mint_seat` | **read** | Mint a seat: a durable name for THIS session, to pass as `seat` on the tools that record who is working (claim_region). |
+| `writes_for` | **read** | Attribute every edit a session makes to one person: name them once, and each node written afterwards is credited to them as its author. |
 
 ### Ingest — reading an existing corpus in
 

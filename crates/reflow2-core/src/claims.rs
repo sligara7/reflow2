@@ -352,8 +352,10 @@ impl DesignGraph {
 ///
 /// WHAT IT CAN AND CANNOT KNOW, stated because the limit shapes the wording.
 /// reflow2 has no notion of who is at the keyboard: a `seat` names a session,
-/// never a person, and nothing binds a session to a `Contributor`. So this
-/// never asserts *"you are talking to X"*. It reports what the DESIGN holds —
+/// never a person. A session may SAY who it writes for (`writes_for`), but that
+/// is the caller's word, taken on trust to credit writes — not reflow2 knowing
+/// who is reading (`reflow2_core::attribution`). So this never asserts *"you
+/// are talking to X"*. It reports what the DESIGN holds —
 /// which people carry a recorded background — and leaves matching the reader to
 /// the agent, which is the only party in the room that can.
 ///

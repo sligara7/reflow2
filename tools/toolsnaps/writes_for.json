@@ -1,0 +1,22 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "Attribute every edit a session makes to one person: name them once, and each node written afterwards is credited to them as its author. They must already be a Contributor. Credit only — never an approval. One call can name someone else in its `_meta` under `reflow2/writes_for`, the only way when no session is kept. Omit contributor_id to stop.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "contributor_id": {
+        "default": null,
+        "description": "The `Contributor` this session writes for — the PERSON when there is\none, or a project (e.g. `who:<project>`) for writes no person made. It\nmust already exist; `add_contributor` first. Omit it, or pass null, to\nstop crediting this session's writes to anyone.",
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "type": "object"
+  },
+  "name": "writes_for"
+}

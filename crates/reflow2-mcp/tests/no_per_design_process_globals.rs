@@ -49,6 +49,17 @@ use std::path::{Path, PathBuf};
 /// belongs on the design handle and this list is the wrong fix.
 const ALLOWED: &[(&str, &str, &str)] = &[
     (
+        "reflow2-mcp/src/service.rs",
+        "WRITES_FOR",
+        "A tokio TASK-LOCAL, not a process-wide value: it holds who the ONE tool call \
+         now being served writes for, set by `call_tool` around that call's handler \
+         and gone when the call returns (req:a-session-names-the-person-it-writes-\
+         for-and-the-server-remembers-it). Two calls — on one design or on two — \
+         each see only their own value, so a second design open in the process \
+         cannot be given the first design's writer. The session's own declaration \
+         lives on the service (`ReflowService.writes_for`), per session.",
+    ),
+    (
         "reflow2-mcp/src/content_policy.rs",
         "OVERRIDE",
         "The operator's `--content-policy` / REFLOW2_CONTENT_POLICY, parsed once \
