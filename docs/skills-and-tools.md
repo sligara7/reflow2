@@ -390,7 +390,7 @@ description, which an agent sees in the tool schema; this table is for a person 
 | `release_claim` | **write** | Let a claimed region go, so colleagues reading `claim_report` stop seeing it as held. |
 | `claim_report` | **read** | Who holds what, and where two people are working the same ground. |
 | `mint_seat` | **read** | Mint a seat: a durable name for THIS session, to pass as `seat` on the tools that record who is working (claim_region). |
-| `writes_for` | **read** | Say, once, who THIS SESSION writes for — and every node it writes from then on is credited to that Contributor as its author, without naming them on each call. |
+| `writes_for` | **read** | Attribute every edit a session makes to one person: name them once, and each node written afterwards is credited to them as its author. |
 
 ### Ingest — reading an existing corpus in
 
