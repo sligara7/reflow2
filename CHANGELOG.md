@@ -31,6 +31,9 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+
+## [0.70.0] — 2026-09-24
+
 ### Added
 
 - **Jot a thought down now, sort it out later.** New skill **jot**: one sentence, recorded against
