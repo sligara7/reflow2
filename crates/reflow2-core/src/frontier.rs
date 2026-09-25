@@ -10,7 +10,7 @@
 //!
 //! * A DEFERRED-DERIVATION MARKER — a `TemporalFact` with
 //!   `fact_type: deferred_derivation` on the node whose intent is deliberately
-//!   left for later. The same shape as the `follow_up` marker `/log-issue`
+//!   left for later. The same shape as the `follow_up` marker `/jot`
 //!   writes: dated, keyed to a node, open until `valid_to` or an INVALIDATES
 //!   edge closes it. While open it QUIETS the intent findings on its subject
 //!   (`unmotivated_capability`, `unallocated_component`) — a regional pass no

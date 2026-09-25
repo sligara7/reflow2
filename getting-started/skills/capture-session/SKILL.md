@@ -246,8 +246,10 @@ whoever reads it.
 recorded here may have opened a question worth putting to the user while they are still around to
 answer it.
 
-**And read `follow_ups` out of that reply.** A session boundary is the moment the one-word
-captures (`/log-issue`) were waiting for: each open follow-up is put to the user, oldest first,
-and settled as one thing — a finding with a cause, a planned check, an idea, a change record, or
-closed as lapsed with a word — the way the log-issue skill's *Settling one, later* describes.
-Sorting them here, with the person present, is what lets the capture ask nothing at the time.
+**And read `follow_ups` out of that reply.** A session boundary is the moment the one-breath
+notes (`/jot`, `/note`, `/log-issue`) were waiting for: each open one is put to the user, oldest
+first, and settled as one thing, starting where its tag and `settle_toward` point — an issue toward
+a finding with a cause or a planned check, an idea toward brainstorm or capture-intent, an untagged
+one by asking what it is now — or closed as lapsed with a word, the way the jot skill's *Settling
+one, later* describes. Sorting them here, with the person present, is what lets the capture ask
+nothing at the time.
