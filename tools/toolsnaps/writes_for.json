@@ -1,0 +1,22 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "Say, once, who THIS SESSION writes for — and every node it writes from then on is credited to that Contributor as its author, without naming them on each call. Use it at the start of a session when you know whose work this is: the PERSON when there is one, or a project for writes no person made. The Contributor must already exist (add_contributor first). ATTRIBUTION ONLY, taken on trust: it never signs an approval — accepting, settling or approving still needs `approver` on the call that does it. Pass no contributor_id to stop. A single request can name someone else for itself in its `_meta` under `reflow2/writes_for`, which is the only way on the sessionless transport (MCP 2026-07-28 and later), where nothing outlives a request. Writes nothing itself. Ask for this to have this session's changes recorded as made by a particular person.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "contributor_id": {
+        "default": null,
+        "description": "The `Contributor` this session writes for — the PERSON when there is\none, or a project (e.g. `who:<project>`) for writes no person made. It\nmust already exist; `add_contributor` first. Omit it, or pass null, to\nstop crediting this session's writes to anyone.",
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "type": "object"
+  },
+  "name": "writes_for"
+}

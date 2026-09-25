@@ -98,6 +98,85 @@ impl ReflowService {
     }
 
     #[tool(
+        description = "Say, once, who THIS SESSION writes for — and every node it writes from \
+                       then on is credited to that Contributor as its author, without naming \
+                       them on each call. Use it at the start of a session when you know whose \
+                       work this is: the PERSON when there is one, or a project for writes no \
+                       person made. The Contributor must already exist (add_contributor first). \
+                       ATTRIBUTION ONLY, taken on trust: it never signs an approval — accepting, \
+                       settling or approving still needs `approver` on the call that does it. \
+                       Pass no contributor_id to stop. A single request can name someone else \
+                       for itself in its `_meta` under `reflow2/writes_for`, which is the only way \
+                       on the sessionless transport (MCP 2026-07-28 and later), where nothing \
+                       outlives a request. Writes nothing itself. Ask for this to have this \
+                       session's changes recorded as made by a particular person.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn writes_for(
+        &self,
+        Parameters(req): Parameters<WritesForReq>,
+        ctx: RequestContext<RoleServer>,
+    ) -> Result<CallToolResult, McpError> {
+        self.writes_for_inner(req, identity_is_per_request(&ctx))
+            .await
+    }
+
+    /// `writes_for` with the transport question already answered, so both
+    /// answers are testable without constructing an rmcp `Peer`.
+    pub async fn writes_for_inner(
+        &self,
+        req: WritesForReq,
+        identity_is_per_request: bool,
+    ) -> Result<CallToolResult, McpError> {
+        let who = req
+            .contributor_id
+            .map(|s| s.trim().to_string())
+            .filter(|s| !s.is_empty());
+        // 🛑 SESSIONLESS: a declaration would vanish with this request and
+        // every later write would silently go uncredited — refused loudly, the
+        // same call dec:stateless-seat-handle makes about a seat.
+        if identity_is_per_request {
+            return Err(McpError::invalid_params(
+                format!(
+                    "this request negotiated MCP {stateless}, where the transport has no sessions: \
+                     rmcp builds a handler per REQUEST, so a declaration made here would be gone \
+                     on your very next call and your writes would go uncredited without a word. \
+                     WHAT WORKS: name the contributor on EACH request that writes, in its `_meta` \
+                     under `{WRITES_FOR_META}`.",
+                    stateless = ProtocolVersion::STANDARD_HEADERS.as_str(),
+                ),
+                None,
+            ));
+        }
+        if let Some(id) = &who {
+            self.graph
+                .read()
+                .await
+                .require_writes_for(id)
+                .map_err(|e| {
+                    McpError::invalid_params(writes_for_refusal(id, &e.to_string()), None)
+                })?;
+        }
+        let before = {
+            let mut declared = self.writes_for.lock().map_err(|_| {
+                McpError::internal_error("the session's writes_for lock is poisoned", None)
+            })?;
+            std::mem::replace(&mut *declared, who.clone())
+        };
+        ok_json(json!({
+            "writes_for": who,
+            "was": before,
+            "scope": "this session — every node it writes from now on is credited to this \
+                      contributor as author, until the session ends or writes_for is called again",
+            "attribution_only": "It never signs an approval: accepting, settling or approving still \
+                                 needs `approver` on the call that does it.",
+            "per_request": format!(
+                "A request may name someone else for itself in its `_meta` under `{WRITES_FOR_META}`."
+            ),
+        }))
+    }
+
+    #[tool(
         description = "Mint a seat: a durable name for THIS session, to pass as `seat` on the \
                        tools that record who is working (claim_region). Call it once, keep the \
                        value, reuse it — a new seat per call is what it exists to avoid. \

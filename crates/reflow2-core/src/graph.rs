@@ -99,6 +99,12 @@ pub struct DesignGraph {
     /// pays it once per graph state (`dec:derived-scans-are-memoised-per-write-
     /// generation`). Interior mutability because the scans take `&self`.
     pub(crate) derived: std::sync::Mutex<DerivedMemo>,
+    /// Every node written while a caller is recording, in write order — the
+    /// set a session's declared contributor is credited with
+    /// (`req:a-session-names-the-person-it-writes-for-and-the-server-remembers-it`).
+    /// `None` means nobody is recording, which is every write that has not
+    /// asked, so the default costs nothing. See `crate::attribution`.
+    pub(crate) touch_log: Option<Vec<(String, String)>>,
 }
 
 /// What [`DesignGraph::derived`] holds. `generation` is the engine write
@@ -323,6 +329,7 @@ impl DesignGraph {
             graph_id: graph_id.to_string(),
             store_path: None,
             derived: Default::default(),
+            touch_log: None,
         })
     }
 
@@ -434,6 +441,7 @@ impl DesignGraph {
             graph_id: identity.graph_id,
             store_path: Some(path.to_string()),
             derived: Default::default(),
+            touch_log: None,
         };
         // Legacy AUTHORED_BY edges (single `role`) move to the set shape on
         // every open — idempotent, one edge scan, and the only way to make an
@@ -557,8 +565,17 @@ impl DesignGraph {
             widen_ints_for_float_props(&def.properties, &mut props);
         }
         self.refuse_dangling_node_refs(node_type, &props)?;
-        self.engine
-            .create_node(&self.graph_id, node_type, id, props)
+        let stored = self
+            .engine
+            .create_node(&self.graph_id, node_type, id, props)?;
+        // Every node write passes here (upsert and upsert-if-unchanged
+        // included), which is what lets a declared contributor be credited
+        // with ALL of a call's writes rather than the ones each constructor
+        // remembered to report (`crate::attribution`).
+        if let Some(log) = self.touch_log.as_mut() {
+            log.push((node_type.to_string(), id.to_string()));
+        }
+        Ok(stored)
     }
 
     /// Refuse a write whose property NAMES a node that does not exist.
@@ -2445,7 +2462,12 @@ impl DesignGraph {
     /// rather than lazy: it is the confusion actually observed, and the only
     /// other person-shaped node type, so a general cross-type scan would cost
     /// every caller a sweep to report a case that cannot arise.
-    fn require_contributor(&self, id: &str, tool: &str, verb: &str) -> Result<(), DynoError> {
+    pub(crate) fn require_contributor(
+        &self,
+        id: &str,
+        tool: &str,
+        verb: &str,
+    ) -> Result<(), DynoError> {
         if self.get_node(node::CONTRIBUTOR, id)?.is_some() {
             return Ok(());
         }

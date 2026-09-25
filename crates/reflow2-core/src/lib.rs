@@ -30,6 +30,7 @@ pub mod agent;
 pub mod allocate;
 pub mod alternatives;
 pub mod artifact;
+pub mod attribution;
 pub mod budget;
 pub mod bulk;
 pub mod claims;
