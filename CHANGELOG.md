@@ -31,6 +31,9 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+
+## [0.71.0] — 2026-09-25
+
 ### Added
 
 - **A session can say who it writes for, and every change it makes is credited to them.** New
