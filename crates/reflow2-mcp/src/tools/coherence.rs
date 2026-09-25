@@ -192,7 +192,7 @@ impl ReflowService {
                        ASKED to settle, structural defects, capabilities \
                        claiming realized/verified with no passing check, drift awaiting a disposition, and \
                        built capabilities nobody has checked against reality, and follow-ups (`/jot`) \
-                       nobody has settled, listed oldest first in `follow_ups`, each with its tag and where it settles. `clean: true` means nothing is \
+                       nobody has settled, listed oldest first and tagged in `follow_ups`. `clean: true` means nothing is \
                        owed, and those decisions are LISTED in `assigned_decisions`. Pass `contributor_id` to \
                        ask WHAT NEEDS THIS PERSON. Scoped, TWO things are attributed: decisions they were asked \
                        to settle, and open gaps standing on ground they OWN (`gaps_on_owned_ground`, each \
