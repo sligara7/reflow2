@@ -183,7 +183,23 @@ const COMMAND_ALIASES: &[(&str, Result<&str, &str>)] = &[
         "next",
         Err("no skill — it calls the `what_next` tool directly"),
     ),
+    // ADDED 2026-09-24 with `/jot` (req:a-jot-captures-an-idea-in-one-breath-
+    // and-sorts-it-later): ONE capture, THREE words. The word carries the tag,
+    // so nothing is asked at capture — `/note` tags the jot as an IDEA and
+    // `/log-issue` as an ISSUE. `/log-issue` was its own skill until then and
+    // keeps working exactly as before; it is now the issue-tagging word for
+    // the one skill. `get_skill` reports the word in `requested_as`, which is
+    // how the skill knows which tag to write.
+    ("note", Ok("jot")),
+    ("log-issue", Ok("jot")),
 ];
+
+/// Skills that answer to their OWN name as well as to aliases — so the word a
+/// person types for them is the name, not the first alias. `/jot` is reached
+/// as `/jot`; `/note` and `/log-issue` are the tagging words into it, and
+/// reporting either as jot's shortcut would tell a reader the untagged word
+/// does not exist.
+const ANSWERS_TO_ITS_OWN_NAME: &[&str] = &["jot"];
 
 /// What a person types to reach `skill_name`, including the leading slash.
 ///
@@ -199,6 +215,9 @@ const COMMAND_ALIASES: &[(&str, Result<&str, &str>)] = &[
 /// simply the skill's own name. Returning nothing for the unaliased majority
 /// would put the reader back to inferring, which is the defect.
 pub fn shortcut_for(skill_name: &str) -> String {
+    if ANSWERS_TO_ITS_OWN_NAME.contains(&skill_name) {
+        return format!("/{skill_name}");
+    }
     COMMAND_ALIASES
         .iter()
         .find(|(_, target)| matches!(target, Ok(skill) if *skill == skill_name))
@@ -445,5 +464,23 @@ mod alias_tests {
         assert!(resolve("debt").is_none());
         assert!(resolve("/decisions").is_none());
         assert!(resolve("definitely-not-a-skill").is_none());
+    }
+
+    /// `/jot` is one skill reached by three words, and its shortcut is its own
+    /// name — not whichever tagging word happens to sit first in the table.
+    /// `/log-issue` keeps reaching a capture, as it did when it was its own
+    /// skill.
+    #[test]
+    fn three_words_reach_the_one_jot_and_its_shortcut_is_jot() {
+        use super::{resolve, shortcut_for};
+        for asked in ["jot", "/jot", "note", "/note", "log-issue", "/log-issue"] {
+            assert_eq!(resolve(asked).map(|s| s.name), Some("jot"), "{asked}");
+        }
+        assert_eq!(shortcut_for("jot"), "/jot");
+        assert_eq!(
+            shortcut_for("detect-and-ask"),
+            "/gaps",
+            "an aliased skill still reports its alias"
+        );
     }
 }

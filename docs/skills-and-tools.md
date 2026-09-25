@@ -24,7 +24,7 @@ So the three ways anything here gets invoked:
 
 | how | what it looks like |
 |---|---|
-| **A person types a slash command** | `/gaps`, `/health`, `/optimize` — 23 commands, 21 of which name a skill |
+| **A person types a slash command** | `/gaps`, `/health`, `/optimize` — 36 commands, 33 of which name a skill |
 | **The agent calls a tool or `get_skill`** | The ordinary path. Skill descriptions are written as trigger conditions so an agent can recognise its own situation |
 | **A hook nudges the agent** | `loop_nudge.py` on SessionStart, PostToolUse and Stop — see below |
 
@@ -69,6 +69,7 @@ Read one in full with `get_skill` before doing the work it covers.
 | **governance-proposal** | `/rules` | The user states a rule the project follows rather than a thing it must do — "we always branch before pushing", "never edit generated files", a review step, a house style, a stack choice |
 | **impact-check** | `/impact-check` | Use BEFORE changing or removing anything in an existing design — a new feature, a tweaked requirement, "what if we add wind?" |
 | **ingest-corpus** | `/ingest-corpus` | Reflow2 is pointed at a FOLDER of documents rather than one — a directory of specifications, years of accumulated notes, a handover pack, "here is everything we ever wrote about this" |
+| **jot** | `/jot` (`/note`, `/log-issue`) | The user wants to get a thought down now and deal with it later, in one breath — the word they type is the tag: `/note` an idea, `/log-issue` an issue, `/jot` untagged |
 | **kpp-proposal** | `/kpp` | The user states a need that sounds like it MUST hold no matter what — a number with a unit, a "shall", something whose failure would sink the whole effort |
 | **link-artifacts** | `/link-artifacts` | Use right after you create or substantially change a real source file (Unity C#, a spec, a doc), to register it in the reflow2 graph as an Artifact that REALIZES the capability it implements — with a content hash so later edits are detectable |
 | **link-projects** | `/link-projects` | Two or more separate reflow2 projects need to work together — "link projectA and projectB", "how does our service talk to theirs", "make the interface between these two real" |

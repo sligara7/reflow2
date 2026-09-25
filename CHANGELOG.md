@@ -31,6 +31,28 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **Jot a thought down now, sort it out later.** New skill **jot**: one sentence, recorded against
+  the thing it is about in the person's own words, with nothing asked. Three words reach it, and
+  the word is the tag: **`/jot`** leaves the note untagged, **`/note`** tags it as an idea, and
+  **`/log-issue`** tags it as an issue. It is for the thought that arrives in the shower or on
+  the road, when working it through would lose it. Notes come back where follow-ups always did,
+  in `loop_status`'s `follow_ups`, and are settled later, at a boundary.
+
+### Changed
+
+- **`/log-issue` is now a word for the jot skill** rather than a skill of its own, and does exactly
+  what it did before, now tagging what it records as an issue. `get_skill("log-issue")` serves
+  `jot` with `requested_as: "log-issue"`. A consumer's installed `log-issue` skill folder is
+  simply no longer refreshed.
+- **`loop_status` shows each open follow-up's tag and where it settles.** Each row in
+  `follow_ups` gains `settle_toward`, and `tag` when the note has one. An issue goes toward
+  root-cause, an idea toward brainstorm or capture-intent, and an untagged one is sorted with the
+  person. The `next` line counts open notes by tag. The tag rides on `fact_type`
+  (`follow_up:issue`, `follow_up:idea`), so every follow-up captured before today still reads, as
+  untagged. No schema stamp change (28 node types, 65 edge types): no upgrade note.
+
 
 ## [0.69.0] — 2026-09-24
 

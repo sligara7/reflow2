@@ -459,7 +459,8 @@ pub struct LoopStatus {
     /// Follow-ups captured and never revisited: TemporalFacts with
     /// `fact_type: follow_up`, no `valid_to`, and nothing claiming to have
     /// answered them (no incoming INVALIDATES). The one-word capture
-    /// (`/log-issue`) is a door; this is the boundary read that keeps it from
+    /// (`/jot`, and its tagging words `/note` and `/log-issue`) is a door; this
+    /// is the boundary read that keeps it from
     /// being a drawer — a follow-up nobody ever settles is a to-do list by
     /// another name, which is the objection that killed a Task node type
     /// (dec:idea-a-one-word-capture-for-something-to-come-back-to, 2026-09-16).
@@ -545,6 +546,57 @@ pub struct FollowUp {
     /// When it was captured, when the capture said.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub captured_on: Option<String>,
+    /// What the word the person typed made it: `issue` (`/log-issue`),
+    /// `idea` (`/note`). Absent for a bare `/jot`, and for every follow-up
+    /// captured before tags existed — absent means nobody said, never "not an
+    /// issue". Read off `fact_type` (`follow_up:<tag>`), see [`follow_up_tag`].
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub tag: Option<String>,
+    /// Where settling it goes, by its tag — the half of
+    /// req:a-jot-captures-an-idea-in-one-breath-and-sorts-it-later that says
+    /// "settling follows the tag". A pointer for the session at the boundary;
+    /// settling stays the person's judgement.
+    pub settle_toward: String,
+}
+
+/// The `fact_type` every follow-up carries, bare or tagged.
+pub const FOLLOW_UP_FACT_TYPE: &str = "follow_up";
+
+/// Is this `fact_type` a follow-up, and with which tag? `follow_up` →
+/// untagged; `follow_up:issue` → `issue`; `follow_up:` (an empty tag) →
+/// untagged; anything else → not a follow-up at all. The tag rides on
+/// `fact_type` rather than a new property so that `follow_up` stays one
+/// convention one reader keys on, and every follow-up written before `/jot`
+/// still reads.
+pub fn follow_up_tag(fact_type: &str) -> Option<Option<&str>> {
+    let rest = fact_type.strip_prefix(FOLLOW_UP_FACT_TYPE)?;
+    if rest.is_empty() {
+        return Some(None);
+    }
+    let tag = rest.strip_prefix(':')?.trim();
+    Some((!tag.is_empty()).then_some(tag))
+}
+
+fn settle_toward(tag: Option<&str>) -> String {
+    match tag {
+        Some("issue") => {
+            "an issue: root-cause it, then close it with the finding that has a cause, \
+                          a planned check, or a word saying why it is dropped"
+                .to_string()
+        }
+        Some("idea") => {
+            "an idea: brainstorm it or capture it as intent (capture-intent), or close \
+                         it with a word saying why it is dropped"
+                .to_string()
+        }
+        None => "untagged: ask the person whether it is an issue, an idea or done, then settle it \
+                 that way"
+            .to_string(),
+        Some(other) => format!(
+            "tagged `{other}`: settle it with the person — a finding, a check, an idea, intent, \
+             or closed with a word"
+        ),
+    }
 }
 
 #[derive(Debug, Clone, serde::Serialize)]
@@ -770,7 +822,8 @@ impl DesignGraph {
     }
 
     /// Follow-ups captured and not yet settled, oldest first. A follow-up is
-    /// a TemporalFact with `fact_type: follow_up`; it is settled when it
+    /// a TemporalFact with `fact_type: follow_up`, bare or tagged
+    /// (`follow_up:issue`, `follow_up:idea` — [`follow_up_tag`]); it is settled when it
     /// carries a `valid_to`, or when something claims to have answered it
     /// (an incoming INVALIDATES edge — the same claim `invalidated_findings`
     /// reads). Deliberately nothing else: promoting it into a finding with a
@@ -785,9 +838,10 @@ impl DesignGraph {
                     .and_then(crate::foundation::core::Value::as_str)
                     .map(str::to_string)
             };
-            if prop("fact_type").as_deref() != Some("follow_up") {
+            let fact_type = prop("fact_type").unwrap_or_default();
+            let Some(tag) = follow_up_tag(&fact_type) else {
                 continue;
-            }
+            };
             if prop("valid_to").is_some_and(|v| !v.is_empty()) {
                 continue;
             }
@@ -804,6 +858,8 @@ impl DesignGraph {
                     .or_else(|| prop("name"))
                     .unwrap_or_default(),
                 captured_on: prop("valid_from"),
+                tag: tag.map(str::to_string),
+                settle_toward: settle_toward(tag),
             });
         }
         out.sort_by(|a, b| {
@@ -1084,11 +1140,25 @@ impl DesignGraph {
         // not-attributable count shrinks as a design records more ownership.
         // That is the whole payoff of OWNED_BY on this surface.
         if follow_ups_open > 0 {
+            // By tag, because settling follows the tag: the count alone read
+            // the same whether the pile was ten issues or ten ideas.
+            let count =
+                |t: Option<&str>| follow_ups.iter().filter(|f| f.tag.as_deref() == t).count();
+            let (issues, ideas, untagged) =
+                (count(Some("issue")), count(Some("idea")), count(None));
+            let other = follow_ups_open - issues - ideas - untagged;
+            let other = if other > 0 {
+                format!(", {other} otherwise tagged")
+            } else {
+                String::new()
+            };
             next.push(format!(
-                "{follow_ups_open} follow-up(s) captured and never revisited — listed in \
-                 `follow_ups`. Settle each: it becomes a finding with a cause (root-cause), \
-                 a planned check, an idea (brainstorm), or it is closed — `invalidates` from \
-                 the record that answered it, or `valid_to` on the fact if it simply lapsed"
+                "{follow_ups_open} follow-up(s) captured and never revisited ({issues} issue, \
+                 {ideas} idea, {untagged} untagged{other}) — listed in `follow_ups`, each with \
+                 `settle_toward`. An issue goes to root-cause, then a finding with a cause or a \
+                 planned check; an idea to brainstorm or capture-intent; an untagged one is sorted \
+                 with the person. Close each with `invalidates` from the record that answered it, \
+                 or `valid_to` on the fact if it simply lapsed"
             ));
         }
         if deferrals_open > 0 {

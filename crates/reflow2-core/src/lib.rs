@@ -191,8 +191,8 @@ pub use regions::{
     DEFAULT_REGION_DEPTH, DesignRegion, DesignRegions, REGION_SEED_TYPES, RegionCoverage,
 };
 pub use report::{
-    AllocationSummary, CertaintyBreakdown, FollowUp, GraphReport, LoopStatus, RankedDecision,
-    RequirementCertainty, ShapingDecision, WhatNext,
+    AllocationSummary, CertaintyBreakdown, FOLLOW_UP_FACT_TYPE, FollowUp, GraphReport, LoopStatus,
+    RankedDecision, RequirementCertainty, ShapingDecision, WhatNext, follow_up_tag,
 };
 pub use sanitize::{SanitizeReport, sanitize_text};
 pub use schema::load_schema;

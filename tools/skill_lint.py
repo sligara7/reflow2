@@ -94,12 +94,16 @@ NON_TOOL_TERMS = {
     # feedback (2026-09-12): field names of usage_report's reply and the
     # disposition vocabulary the skill asks the agent to write.
     "never_called", "other", "refusals_by_tool", "unexplained",
-    # log-issue (2026-09-16): the FIELDS of record_finding the skill spells out
-    # (fact_type, valid_from, confidence), the convention value the boundary
-    # read keys on (follow_up), and the field of loop_status's reply that
-    # capture-session reads back (follow_ups). Naming them is the contract:
-    # a follow-up is a fact_type, and the boundary read is the field.
+    # jot (2026-09-24, grown from log-issue of 2026-09-16): the FIELDS of
+    # record_finding the skill spells out (fact_type, valid_from, confidence),
+    # the convention value the boundary read keys on (follow_up; its tagged
+    # forms follow_up:idea and follow_up:issue are not read as terms), the field of get_skill's reply that tells the skill which word
+    # was typed (requested_as), and the fields of loop_status's reply that
+    # capture-session reads back (follow_ups, settle_toward). Naming them is
+    # the contract: a note is a fact_type, its tag rides on it, and the
+    # boundary read is the field.
     "fact_type", "valid_from", "confidence", "follow_up", "follow_ups",
+    "requested_as", "settle_toward",
     # FIELDS of `record_finding`, named in root-cause's step ⑧ because the pair
     # is the whole contract: a cause with no evidence is refused before anything
     # is written, and a skill that named only the tool would leave the reader to
