@@ -49,6 +49,16 @@ use std::path::{Path, PathBuf};
 /// belongs on the design handle and this list is the wrong fix.
 const ALLOWED: &[(&str, &str, &str)] = &[
     (
+        "reflow2-mcp/src/mcp_http.rs",
+        "CONFIG",
+        "The TLS client configuration `--remote` uses: the ring provider and the \
+         OS trust store's root certificates, loaded once. Which certificate \
+         authorities this machine trusts is a fact about the machine and the \
+         process, and a second design reached from the same process is checked \
+         against the same roots — the value could not differ per design. Built \
+         lazily, so a process that never goes remote never reads the store.",
+    ),
+    (
         "reflow2-mcp/src/service.rs",
         "WRITES_FOR",
         "A tokio TASK-LOCAL, not a process-wide value: it holds who the ONE tool call \

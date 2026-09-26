@@ -50,6 +50,18 @@ bytes = "1"
 http = "1"
 http-body = "1"
 tower-service = "0.3"
+# HTTPS for `--remote` ONLY (src/mcp_http.rs), added 2026-09-26 for
+# req:a-local-client-works-against-a-remote-reflow2-server-by-url, option (a)
+# settled by Anthony: the same binary reaches a remote reflow2 (api.flo2.io, or
+# an organization's shared server) over TLS, while local mode stays plain
+# loopback HTTP with no network at all (req:reflow2-keeps-working-entirely-on-
+# one-machine). `ring`, not the default aws-lc-rs, so the build needs no cmake;
+# the OPERATING SYSTEM's trust store, not a bundled one, so a company server
+# with an internally issued certificate is trusted the same way the machine
+# trusts it.
+rustls = { version = "0.23", default-features = false, features = ["ring", "std", "tls12", "logging"] }
+tokio-rustls = { version = "0.26", default-features = false, features = ["ring", "tls12", "logging"] }
+rustls-native-certs = "0.8"
 
 # `signal` so a shared server can remove its rendezvous on SIGTERM instead of
 # leaving a record pointing at a dead port; `process` so a session can spawn one.
