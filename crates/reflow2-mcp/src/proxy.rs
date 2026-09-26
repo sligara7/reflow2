@@ -19,7 +19,7 @@
 //! someone adds a push. If that ever changes, this file is where it breaks, and
 //! it breaks loudly (a message with no request to answer).
 
-use crate::mcp_http::{CALL_TIMEOUT, PROBE_TIMEOUT, post};
+use crate::mcp_http::{CALL_TIMEOUT, PROBE_TIMEOUT, SessionGone, post, post_with};
 use anyhow::{Context, bail};
 use std::sync::Arc;
 use tokio::io::{AsyncBufReadExt, AsyncWriteExt, BufReader};
@@ -272,4 +272,181 @@ fn forwarding_error(request: &str, why: &str) -> Option<String> {
         })
         .to_string(),
     )
+}
+
+// ─────────────────────────────────────────────────────────── remote mode
+//
+// ⭐ `--remote <url>` — req:a-local-client-works-against-a-remote-reflow2-server-by-url,
+// step 1 (2026-09-26). The agent talks stdio to THIS process exactly as it does
+// in shared mode; this process forwards to a reflow2 somewhere else — flo2's
+// api.flo2.io, or an organization's own shared server — carrying the person's
+// credential. The agent never sees the credential: it is added to the outbound
+// request here and appears in no reply, log line or error.
+//
+// What it does NOT do, and why: there is no local daemon to restart, so a dead
+// remote is answered with a readable error rather than a respawn. A remote that
+// FORGOT this session (restarted, or evicted it) is recovered once by replaying
+// the client's own handshake, the same move the gateway's own client makes.
+
+struct Remote {
+    url: String,
+    bearer: Option<String>,
+    session: Mutex<Option<String>>,
+    hello: Mutex<Option<String>>,
+}
+
+impl Remote {
+    async fn handshake(&self, hello: &str) -> anyhow::Result<Vec<String>> {
+        let (messages, sid) = post_with(
+            &self.url,
+            None,
+            hello.to_string(),
+            PROBE_TIMEOUT,
+            self.bearer.as_deref(),
+        )
+        .await?;
+        *self.session.lock().await = sid;
+        Ok(messages)
+    }
+
+    async fn send(&self, body: String) -> anyhow::Result<Vec<String>> {
+        let sid = self.session.lock().await.clone();
+        match post_with(
+            &self.url,
+            sid.as_deref(),
+            body.clone(),
+            CALL_TIMEOUT,
+            self.bearer.as_deref(),
+        )
+        .await
+        {
+            Ok((messages, _)) => Ok(messages),
+            // Only a server that SAYS it forgot the session is re-joined. Any
+            // other failure stands: after a timeout the change may have landed,
+            // and sending it again could apply it twice.
+            Err(first) if first.downcast_ref::<SessionGone>().is_some() => {
+                let Some(hello) = self.hello.lock().await.clone() else {
+                    return Err(first);
+                };
+                tracing::warn!(
+                    "the remote reflow2 server did not accept this session ({first:#}); re-joining once"
+                );
+                self.handshake(&hello).await.map_err(|_| first)?;
+                let sid = self.session.lock().await.clone();
+                let initialized =
+                    r#"{"jsonrpc":"2.0","method":"notifications/initialized"}"#.to_string();
+                let _ = post_with(
+                    &self.url,
+                    sid.as_deref(),
+                    initialized,
+                    PROBE_TIMEOUT,
+                    self.bearer.as_deref(),
+                )
+                .await;
+                post_with(
+                    &self.url,
+                    sid.as_deref(),
+                    body,
+                    CALL_TIMEOUT,
+                    self.bearer.as_deref(),
+                )
+                .await
+                .map(|(m, _)| m)
+            }
+            Err(e) => Err(e),
+        }
+    }
+}
+
+/// Forward this session's stdio JSON-RPC to a REMOTE reflow2 until stdin ends.
+pub async fn run_remote(url: &str, bearer: Option<String>) -> anyhow::Result<()> {
+    let up = Arc::new(Remote {
+        url: url.to_string(),
+        bearer,
+        session: Mutex::new(None),
+        hello: Mutex::new(None),
+    });
+    let out = Arc::new(Mutex::new(tokio::io::stdout()));
+    let mut lines = BufReader::new(tokio::io::stdin()).lines();
+    let mut tasks = tokio::task::JoinSet::new();
+
+    while let Some(line) = lines.next_line().await.context("reading stdin failed")? {
+        if line.trim().is_empty() {
+            continue;
+        }
+        // The handshake inline, before any concurrency: its reply may carry
+        // the session id every later request must quote.
+        if line.contains("\"initialize\"") {
+            *up.hello.lock().await = Some(line.clone());
+            let replies = match up.handshake(&line).await {
+                Ok(m) => m,
+                Err(e) => remote_error(&line, &up.url, &format!("{e:#}"))
+                    .into_iter()
+                    .collect(),
+            };
+            let mut w = out.lock().await;
+            for m in replies {
+                w.write_all(format!("{m}\n").as_bytes()).await?;
+            }
+            w.flush().await?;
+            continue;
+        }
+        let up = Arc::clone(&up);
+        let out = Arc::clone(&out);
+        tasks.spawn(async move {
+            let replies = match up.send(line.clone()).await {
+                Ok(messages) => messages,
+                Err(e) => remote_error(&line, &up.url, &format!("{e:#}"))
+                    .map(|m| vec![m])
+                    .unwrap_or_else(|| {
+                        tracing::error!("forwarding to the remote reflow2 server failed: {e:#}");
+                        Vec::new()
+                    }),
+            };
+            let mut w = out.lock().await;
+            for m in replies {
+                let _ = w.write_all(format!("{m}\n").as_bytes()).await;
+            }
+            let _ = w.flush().await;
+        });
+    }
+    while tasks.join_next().await.is_some() {}
+    Ok(())
+}
+
+/// The JSON-RPC error a remote-mode session gets when its request could not be
+/// answered: WHICH server, WHY, and that the design itself is not harmed.
+fn remote_error(request: &str, url: &str, why: &str) -> Option<String> {
+    let v: serde_json::Value = serde_json::from_str(request).ok()?;
+    let id = v.get("id")?.clone();
+    Some(
+        serde_json::json!({
+            "jsonrpc": "2.0",
+            "id": id,
+            "error": {
+                "code": -32000,
+                "message": format!(
+                    "reflow2 could not complete this with the remote design server at {url}: {}. \
+                     The design itself is not harmed. If this was a change and the connection dropped \
+                     after sending it, read the design before repeating it: it may already have landed.",
+                    why.trim_end_matches('.')
+                )
+            }
+        })
+        .to_string(),
+    )
+}
+
+/// Check a `--remote` URL before anything is sent to it. A credential is only
+/// ever sent over `https://`, or over plain `http://` to this machine: anywhere
+/// else it would cross a network in the clear, readable by anyone on the path.
+pub fn check_remote_url(url: &str, carries_credential: bool) -> anyhow::Result<()> {
+    let ep = crate::mcp_http::parse_endpoint(url)?;
+    if carries_credential && !ep.tls && !crate::mcp_http::is_loopback_host(&ep.host) {
+        bail!(
+            "refusing to send a credential to {url} over plain http:// — it would cross the \
+             network unencrypted. Use the server's https:// address."
+        );
+    }
+    Ok(())
 }

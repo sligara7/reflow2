@@ -172,6 +172,39 @@ struct Cli {
     #[arg(long)]
     shared: bool,
 
+    /// Work against a REMOTE reflow2 server instead of a design on this
+    /// machine: this process speaks stdio to the agent, exactly as `--shared`
+    /// does, and forwards every request to URL — flo2's api.flo2.io
+    /// (`https://api.flo2.io/g/<graph_id>/mcp`) or an organization's own
+    /// shared reflow2. Nothing is opened or created on disk.
+    ///
+    /// The credential, if the server wants one, comes from `--api-key-env` or
+    /// `--api-key-file` — never from the command line itself, where it would
+    /// land in shell history and be visible to other processes — and the agent
+    /// never sees it. A credential is sent only over https://, or plain http://
+    /// to this machine (req:a-local-client-works-against-a-remote-reflow2-server-by-url).
+    #[arg(
+        long,
+        value_name = "URL",
+        conflicts_with_all = ["shared", "serve_shared", "registry_root", "http", "stop_shared", "ephemeral"]
+    )]
+    remote: Option<String>,
+
+    /// With `--remote`: read the credential from this ENVIRONMENT VARIABLE
+    /// (its name, not its value), sent as `Authorization: Bearer <key>`.
+    #[arg(
+        long = "api-key-env",
+        value_name = "VAR",
+        requires = "remote",
+        conflicts_with = "api_key_file"
+    )]
+    api_key_env: Option<String>,
+
+    /// With `--remote`: read the credential from this FILE (trimmed). Keep it
+    /// readable by you alone; a file others can read is warned about.
+    #[arg(long = "api-key-file", value_name = "PATH", requires = "remote")]
+    api_key_file: Option<String>,
+
     /// Serve the design surface only where a design has been opted into — the
     /// mode a MACHINE-WIDE registration should use, so reflow2 can be installed
     /// once instead of once per project.
@@ -774,6 +807,14 @@ async fn main() -> anyhow::Result<()> {
             }
         }
     }
+    // `--remote`: nothing on this machine is opened. Forward and return.
+    if let Some(url) = cli.remote.clone() {
+        let bearer = remote_credential(&cli)?;
+        reflow2_mcp::proxy::check_remote_url(&url, bearer.is_some())?;
+        tracing::info!(remote = %url, credential = bearer.is_some(), "working against a remote reflow2 server");
+        return reflow2_mcp::proxy::run_remote(&url, bearer).await;
+    }
+
     // ⚠️ SAY WHAT IS ACTUALLY BEING OPENED. This logged `--graph-path` for every
     // invocation, including ones that never touch it — an ephemeral design opens
     // no directory at all, and a registry server opens whichever design is asked
@@ -1865,6 +1906,43 @@ where
             }
         });
     }
+}
+
+/// The `--remote` credential, from the environment variable or file named on
+/// the command line — never the key itself. `None` when neither was given
+/// (a server on a private network may want none).
+fn remote_credential(cli: &Cli) -> anyhow::Result<Option<String>> {
+    if let Some(var) = cli.api_key_env.as_deref() {
+        let key = std::env::var(var).map_err(|_| {
+            anyhow::anyhow!("--api-key-env names {var}, but {var} is not set in this environment")
+        })?;
+        let key = key.trim().to_string();
+        if key.is_empty() {
+            anyhow::bail!("--api-key-env names {var}, but {var} is empty");
+        }
+        return Ok(Some(key));
+    }
+    if let Some(path) = cli.api_key_file.as_deref() {
+        let raw = std::fs::read_to_string(path)
+            .map_err(|e| anyhow::anyhow!("could not read the key file {path}: {e}"))?;
+        #[cfg(unix)]
+        {
+            use std::os::unix::fs::PermissionsExt;
+            if let Ok(meta) = std::fs::metadata(path)
+                && meta.permissions().mode() & 0o077 != 0
+            {
+                tracing::warn!(
+                    "the key file {path} can be read by other users on this machine; `chmod 600 {path}` keeps it yours"
+                );
+            }
+        }
+        let key = raw.trim().to_string();
+        if key.is_empty() {
+            anyhow::bail!("the key file {path} is empty");
+        }
+        return Ok(Some(key));
+    }
+    Ok(None)
 }
 
 #[cfg(test)]

@@ -31,6 +31,20 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **Work a design on a remote reflow2 server from your own agent.** `reflow2-mcp --remote <url>`
+  speaks stdio to Claude Code, Grok Build or any MCP client exactly as a local reflow2 does, and
+  forwards to a reflow2 elsewhere over HTTPS: flo2's `https://api.flo2.io/g/<id>/mcp`, or your
+  organization's own server. A key, if the server wants one, is read from the environment
+  variable named by `--api-key-env VAR` or the file named by `--api-key-file PATH`, and never
+  from the command line itself. It is sent only as `Authorization: Bearer` and appears in no
+  reply, error or log line. A key is refused over plain `http://` to any host but this machine.
+  A refused key, a missing permission, a design that is not yours and an unreachable server each
+  come back as a readable error, never a hung call. Only a session the server says it forgot is
+  re-joined, and nothing else is re-sent. HTTPS uses the machine's own certificate store. Local
+  use is unchanged. Not yet: browser sign-in, a setup command, and writing the export and
+  measuring files on your machine. No tool-surface or schema change: no upgrade note.
 
 ## [0.71.0] — 2026-09-25
 

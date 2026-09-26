@@ -22,27 +22,96 @@ use http_body_util::{BodyExt, Full};
 use hyper::Request;
 use std::time::Duration;
 
-/// A parsed `http://host:port/path` — enough of a URL for loopback.
-struct Endpoint {
-    authority: String,
-    path: String,
+/// A parsed `http://host:port/path` or `https://host[:port]/path` — enough of
+/// a URL for loopback, and since 2026-09-26 for a remote reflow2 (`--remote`).
+pub(crate) struct Endpoint {
+    /// `host[:port]` exactly as written: what the `Host` header carries.
+    pub(crate) authority: String,
+    /// The host alone, for TLS server-name checking.
+    pub(crate) host: String,
+    /// Where to connect: the authority with the scheme's default port filled in.
+    pub(crate) connect: String,
+    pub(crate) path: String,
+    pub(crate) tls: bool,
 }
 
-fn parse_endpoint(url: &str) -> anyhow::Result<Endpoint> {
-    let rest = url
-        .strip_prefix("http://")
-        .context("the shared server URL must start with http://")?;
+pub(crate) fn parse_endpoint(url: &str) -> anyhow::Result<Endpoint> {
+    let (tls, rest) = if let Some(r) = url.strip_prefix("https://") {
+        (true, r)
+    } else if let Some(r) = url.strip_prefix("http://") {
+        (false, r)
+    } else {
+        bail!("a reflow2 server URL must start with http:// or https:// (got {url})");
+    };
     let (authority, path) = match rest.find('/') {
         Some(i) => (&rest[..i], &rest[i..]),
         None => (rest, "/"),
     };
     if authority.is_empty() {
-        bail!("the shared server URL has no host");
+        bail!("the reflow2 server URL has no host");
     }
+    // A bracketed IPv6 literal keeps its colons inside the brackets.
+    let (host, has_port) = match authority.rfind(':') {
+        Some(i) if !authority[i..].contains(']') => (&authority[..i], true),
+        _ => (authority, false),
+    };
+    let host = host
+        .trim_start_matches('[')
+        .trim_end_matches(']')
+        .to_string();
+    let connect = if has_port {
+        authority.to_string()
+    } else {
+        format!("{authority}:{}", if tls { 443 } else { 80 })
+    };
     Ok(Endpoint {
         authority: authority.to_string(),
+        host,
+        connect,
         path: path.to_string(),
+        tls,
     })
+}
+
+/// Is this host this machine? A key is only ever sent over plain `http://` to
+/// one of these; anywhere else it would cross a network in the clear.
+pub(crate) fn is_loopback_host(host: &str) -> bool {
+    host == "localhost"
+        || host.ends_with(".localhost")
+        || host == "::1"
+        || host
+            .parse::<std::net::Ipv4Addr>()
+            .is_ok_and(|a| a.is_loopback())
+}
+
+/// The TLS client configuration, built once: the OPERATING SYSTEM's trust
+/// store, so a company server with an internally issued certificate is trusted
+/// exactly as the machine trusts it. Certificates that fail to parse are
+/// skipped rather than fatal (a system store routinely holds a few), but an
+/// EMPTY store is an error, because every connection would then fail for a
+/// reason nobody could see.
+fn tls_config() -> anyhow::Result<std::sync::Arc<rustls::ClientConfig>> {
+    static CONFIG: std::sync::OnceLock<std::sync::Arc<rustls::ClientConfig>> =
+        std::sync::OnceLock::new();
+    if let Some(c) = CONFIG.get() {
+        return Ok(c.clone());
+    }
+    let mut roots = rustls::RootCertStore::empty();
+    let found = rustls_native_certs::load_native_certs();
+    let (added, _ignored) = roots.add_parsable_certificates(found.certs);
+    if added == 0 {
+        bail!(
+            "no trusted certificates were found on this machine, so no https:// server can be \
+             checked. Install the system's CA certificates (ca-certificates on Linux)."
+        );
+    }
+    let provider = std::sync::Arc::new(rustls::crypto::ring::default_provider());
+    let config = rustls::ClientConfig::builder_with_provider(provider)
+        .with_safe_default_protocol_versions()
+        .context("the TLS library refused its own default protocol versions")?
+        .with_root_certificates(roots)
+        .with_no_client_auth();
+    Ok(CONFIG.get_or_init(|| std::sync::Arc::new(config)).clone())
 }
 
 /// How long a probe waits before calling a server unreachable.
@@ -78,12 +147,33 @@ pub(crate) async fn post(
     body: String,
     limit: Duration,
 ) -> anyhow::Result<(Vec<String>, Option<String>)> {
-    tokio::time::timeout(limit, post_inner(url, session, body))
+    tokio::time::timeout(limit, post_inner(url, session, body, None))
         .await
         .map_err(|_| {
             anyhow::anyhow!(
                 "the shared reflow2 server at {url} accepted the request but did not answer within \
                  {}s. It may be wedged; `reflow2-mcp --graph-path <graph> --stop-shared` clears it.",
+                limit.as_secs()
+            )
+        })?
+}
+
+/// `post`, carrying a bearer credential — the remote client's door
+/// (`--remote`). The credential goes in the `Authorization` header and nowhere
+/// else: never into a log line, an error message or the reply.
+pub(crate) async fn post_with(
+    url: &str,
+    session: Option<&str>,
+    body: String,
+    limit: Duration,
+    bearer: Option<&str>,
+) -> anyhow::Result<(Vec<String>, Option<String>)> {
+    // Not the shared-mode hint: a remote server is someone else's to restart.
+    tokio::time::timeout(limit, post_inner(url, session, body, bearer))
+        .await
+        .map_err(|_| {
+            anyhow::anyhow!(
+                "the reflow2 server did not answer within {}s",
                 limit.as_secs()
             )
         })?
@@ -97,25 +187,65 @@ async fn post_inner(
     url: &str,
     session: Option<&str>,
     body: String,
+    bearer: Option<&str>,
 ) -> anyhow::Result<(Vec<String>, Option<String>)> {
     let ep = parse_endpoint(url)?;
-    let stream = tokio::net::TcpStream::connect(&ep.authority)
+    let stream = tokio::net::TcpStream::connect(&ep.connect)
         .await
-        .with_context(|| {
-            format!(
-                "could not reach the shared reflow2 server at {}",
-                ep.authority
-            )
-        })?;
+        .with_context(|| format!("could not reach the reflow2 server at {}", ep.authority))?;
+    if ep.tls {
+        let name = rustls::pki_types::ServerName::try_from(ep.host.clone())
+            .with_context(|| format!("{} is not a valid server name for TLS", ep.host))?;
+        let tls = tokio_rustls::TlsConnector::from(tls_config()?)
+            .connect(name, stream)
+            .await
+            .with_context(|| format!("the TLS handshake with {} failed", ep.authority))?;
+        exchange(tls, &ep, session, body, bearer).await
+    } else {
+        exchange(stream, &ep, session, body, bearer).await
+    }
+}
+
+/// The server no longer knows the session this request quoted: the MCP
+/// transport's 404 for a session id it has terminated, after which the spec
+/// has the client start a new session. Typed, so a caller re-joins on THIS and
+/// nothing else — a timeout or a refusal is not a forgotten session, and
+/// re-sending a change after a timeout can apply it twice.
+#[derive(Debug)]
+pub(crate) struct SessionGone(pub String);
+
+impl std::fmt::Display for SessionGone {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "the reflow2 server no longer knows this session (404): {}",
+            self.0
+        )
+    }
+}
+
+impl std::error::Error for SessionGone {}
+
+/// One HTTP/1.1 request over an already-connected stream, plain or TLS.
+async fn exchange<S>(
+    stream: S,
+    ep: &Endpoint,
+    session: Option<&str>,
+    body: String,
+    bearer: Option<&str>,
+) -> anyhow::Result<(Vec<String>, Option<String>)>
+where
+    S: tokio::io::AsyncRead + tokio::io::AsyncWrite + Unpin + Send + 'static,
+{
     let io = hyper_util::rt::TokioIo::new(stream);
     let (mut sender, conn) = hyper::client::conn::http1::handshake(io)
         .await
-        .context("HTTP handshake with the shared reflow2 server failed")?;
+        .context("HTTP handshake with the reflow2 server failed")?;
     tokio::spawn(async move {
         // The connection task ends when the response is done; a debug line is
         // right here because a closed keep-alive is normal, not an incident.
         if let Err(e) = conn.await {
-            tracing::debug!("connection to the shared server ended: {e}");
+            tracing::debug!("connection to the reflow2 server ended: {e}");
         }
     });
 
@@ -131,14 +261,17 @@ async fn post_inner(
     if let Some(s) = session {
         req = req.header("mcp-session-id", s);
     }
+    if let Some(key) = bearer {
+        req = req.header("authorization", format!("Bearer {key}"));
+    }
     let req = req
         .body(Full::new(Bytes::from(body)))
-        .context("could not build the request to the shared server")?;
+        .context("could not build the request to the reflow2 server")?;
 
     let res = sender
         .send_request(req)
         .await
-        .context("the shared reflow2 server did not answer")?;
+        .context("the reflow2 server did not answer")?;
     let session_id = res
         .headers()
         .get("mcp-session-id")
@@ -149,11 +282,35 @@ async fn post_inner(
         .into_body()
         .collect()
         .await
-        .context("could not read the shared server's reply")?
+        .context("could not read the reflow2 server's reply")?
         .to_bytes();
     let text = String::from_utf8_lossy(&collected).to_string();
+    if status == hyper::StatusCode::UNAUTHORIZED {
+        bail!(
+            "the reflow2 server at {} refused the credential (401 Unauthorized): the key is \
+             missing, wrong, expired or revoked. Check the key this client was given, or sign in again.",
+            ep.authority
+        );
+    }
+    if status == hyper::StatusCode::FORBIDDEN {
+        bail!(
+            "the reflow2 server at {} accepted who you are but not this request (403 Forbidden): \
+             the credential lacks the permission it needs, typically to CHANGE a design. {text}",
+            ep.authority
+        );
+    }
+    if status == hyper::StatusCode::NOT_FOUND && session.is_some() {
+        return Err(SessionGone(text).into());
+    }
+    if status == hyper::StatusCode::NOT_FOUND && bearer.is_some() {
+        bail!(
+            "the reflow2 server at {} has no such design for you (404): the id is wrong, or you \
+             are not a member of it.",
+            ep.authority
+        );
+    }
     if !status.is_success() {
-        bail!("the shared reflow2 server answered {status}: {text}");
+        bail!("the reflow2 server answered {status}: {text}");
     }
     Ok((extract_messages(&text), session_id))
 }
@@ -170,11 +327,19 @@ pub fn extract_messages(body: &str) -> Vec<String> {
         .any(|l| l.starts_with("data:") || l.starts_with("event:"));
     if !looks_like_sse {
         let t = body.trim();
-        return if t.is_empty() {
-            Vec::new()
-        } else {
-            vec![t.to_string()]
-        };
+        if t.is_empty() {
+            return Vec::new();
+        }
+        // A plain-JSON reply may be pretty-printed (flo2's gateway indents its
+        // replies), and a newline inside it would split one message into
+        // several broken lines on the client's stdio channel, which carries
+        // exactly one message per line. Re-serialize compactly; a body that is
+        // not JSON is passed through for the client to reject visibly.
+        return vec![
+            serde_json::from_str::<serde_json::Value>(t)
+                .map(|v| v.to_string())
+                .unwrap_or_else(|_| t.to_string()),
+        ];
     }
     body.lines()
         .filter_map(|l| l.strip_prefix("data:"))
@@ -241,6 +406,17 @@ mod tests {
         let got = extract_messages(r#"{"jsonrpc":"2.0","id":1,"result":{}}"#);
         assert_eq!(got.len(), 1);
         assert!(got[0].contains("\"id\":1"));
+    }
+
+    #[test]
+    fn a_pretty_printed_body_becomes_one_line() {
+        // flo2's gateway indents its replies; the stdio channel is one message per line.
+        let got =
+            extract_messages("{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 1,\n  \"result\": {}\n}\n");
+        assert_eq!(
+            got,
+            vec![r#"{"id":1,"jsonrpc":"2.0","result":{}}"#.to_string()]
+        );
     }
 
     #[test]
